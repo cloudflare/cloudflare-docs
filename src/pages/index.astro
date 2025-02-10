@@ -47,7 +47,7 @@ const topCards = [
 			{ text: "Setup 1.1.1.1", href: "/1.1.1.1/setup/" },
 			{
 				text: "Get started with Cloudflare",
-				href: "/learning-paths/get-started/",
+				href: "/learning-paths/get-started/concepts/",
 			},
 		],
 		cta: {
@@ -100,7 +100,10 @@ const topCards = [
 				text: "Browser Isolation",
 				href: "/cloudflare-one/policies/browser-isolation/",
 			},
-			{ text: "Replace your VPN", href: "/learning-paths/replace-vpn/" },
+			{
+				text: "Replace your VPN",
+				href: "/learning-paths/replace-vpn/concepts/",
+			},
 		],
 		cta: {
 			text: "View all Cloudflare One products",
@@ -217,7 +220,7 @@ const recommendedSection = {
 								<a
 									href={link.href}
 									target={link.target}
-									class="!text-black hover:!text-accent-600 dark:!text-accent-200 dark:hover:!text-white"
+									class="!text-black hover:!text-accent dark:!text-accent-high dark:hover:!text-black"
 								>
 									{link.text}
 								</a>
@@ -259,9 +262,3 @@ const recommendedSection = {
 		<FooterHeroBlock />
 	</div>
 </StarlightPage>
-
-<style>
-	html:not([data-has-sidebar]) {
-		--sl-content-width: 80rem;
-	}
-</style>

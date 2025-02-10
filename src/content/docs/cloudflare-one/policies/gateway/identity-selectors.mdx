@@ -80,9 +80,9 @@ Use this selector to create identity-based Gateway rules based on an IdP usernam
 | --------- | ------------------------------ |
 | User Name | `identity.name == "user-name"` |
 
-:::note[Gateway groups vs. Access groups]
+:::note[Gateway groups vs. Access rule groups]
 
-In Gateway, a **User Group** refers to a group in your IdP (for example, an Okta group). Gateway does not currently support applying DNS, HTTP, and Network policies to [Access groups](/cloudflare-one/identity/users/groups/). This is because Access groups may include criteria not available through the IdP, such as device location or IP address.
+In Gateway, a **User Group** refers to a group in your IdP (for example, an Okta group). Gateway does not currently support applying DNS, HTTP, and Network policies to [Access rule groups](/cloudflare-one/policies/access/groups/). This is because Access rule groups may include criteria not available through the IdP, such as device location or IP address.
 
 :::
 

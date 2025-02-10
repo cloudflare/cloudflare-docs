@@ -11,7 +11,7 @@ description: Build a rate limiter using Durable Objects and Workers.
 
 ---
 
-import { TabItem, Tabs, GlossaryTooltip } from "~/components"
+import { TabItem, Tabs, GlossaryTooltip, WranglerConfig } from "~/components"
 
 This example shows how to build a rate limiter using <GlossaryTooltip term="Durable Object">Durable Objects</GlossaryTooltip> and Workers that can be used to protect upstream resources, including third-party APIs that your application relies on and/or services that may be costly for you to invoke.
 
@@ -264,9 +264,7 @@ export class RateLimiter extends DurableObject {
 </TabItem>
 </Tabs>
 
-Finally, configure your `wrangler.toml` file to include a Durable Object [binding](/durable-objects/get-started/#5-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the namespace and class name chosen previously.
-
-import { WranglerConfig } from "~/components";
+Finally, configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/tutorial/#5-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the namespace and class name chosen previously.
 
 <WranglerConfig>
 

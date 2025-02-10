@@ -32,21 +32,11 @@ sidebar:
    | **Assertion Consumer Service URL** | `https://horizon.area1security.com/api/users/saml` |
    | **Name ID Format**                 | *Email*                                            |
 
-6. (Optional) Configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application.
+6. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
 
-7. Choose the **Identity providers** you want to enable for your application.
+7. Save the application.
 
-8. Turn on **Instant Auth** if you are selecting only one login method for your application, and would like your end users to skip the identity provider selection step.
-
-9. Select **Next**.
-
-## 2. Add an Access policy
-
-1. To control who can access your application, [create an Access policy](/cloudflare-one/policies/access/).
-
-2. Select **Next**.
-
-## 3. Configure SSO for Area 1
+## 2. Configure SSO for Area 1
 
 Finally, you will need to configure Area 1 to allow users to log in through Cloudflare Access.
 
@@ -74,6 +64,4 @@ Finally, you will need to configure Area 1 to allow users to log in through Clou
 
 7. Select **Update Settings**.
 
-8. In Zero Trust, select **Done**.
-
-Your application will appear on the **Applications** page. If you added the application to your App Launcher, you can test the integration by going to `<your-team-name>.cloudflareaccess.com`.
+If you added the application to your App Launcher, you can test the integration by going to `<your-team-name>.cloudflareaccess.com`.

@@ -13,7 +13,7 @@ languages:
   - SQL
 ---
 
-import { Render, PackageManagers, Stream } from "~/components";
+import { Render, PackageManagers, Stream, WranglerConfig } from "~/components";
 
 In this tutorial, you will learn how to use D1 to add comments to a static blog site. To do this, you will construct a new D1 database, and build a JSON API that allows the creation and retrieval of comments.
 
@@ -88,9 +88,7 @@ You will now create a D1 database. In Wrangler v2, there is support for the `wra
 npx wrangler d1 create d1-example
 ```
 
-Reference your created database in your Worker code by creating a [binding](/workers/runtime-apis/bindings/) inside of your `wrangler.toml` file, Wrangler's configuration file. Bindings allow us to access Cloudflare resources, like D1 databases, KV namespaces, and R2 buckets, using a variable name in code. In `wrangler.toml`, set up the binding `DB` and connect it to the `database_name` and `database_id`:
-
-import { WranglerConfig } from "~/components";
+Reference your created database in your Worker code by creating a [binding](/workers/runtime-apis/bindings/) inside of your Wrangler file, Wrangler's configuration file. Bindings allow us to access Cloudflare resources, like D1 databases, KV namespaces, and R2 buckets, using a variable name in code. In the `wrangler.toml / wrangler.json` file, set up the binding `DB` and connect it to the `database_name` and `database_id`:
 
 <WranglerConfig>
 
@@ -103,7 +101,7 @@ database_id = "4e1c28a9-90e4-41da-8b4b-6cf36e5abb29"
 
 </WranglerConfig>
 
-With your binding configured in your `wrangler.toml` file, you can interact with your database from the command line, and inside your Workers function.
+With your binding configured in your Wrangler file, you can interact with your database from the command line, and inside your Workers function.
 
 ## 4. Interact with D1
 
@@ -149,7 +147,7 @@ npx wrangler d1 execute d1-example --remote --file schemas/schema.sql
 
 ## 5. Execute SQL
 
-In earlier steps, you created a SQL database and populated it with initial data. Now, you will add a route to your Workers function to retrieve data from that database. Based on your `wrangler.toml` configuration in previous steps, your D1 database is now accessible via the `DB` binding. In your code, use the binding to prepare SQL statements and execute them, for example, to retrieve comments:
+In earlier steps, you created a SQL database and populated it with initial data. Now, you will add a route to your Workers function to retrieve data from that database. Based on your Wrangler configuration in previous steps, your D1 database is now accessible via the `DB` binding. In your code, use the binding to prepare SQL statements and execute them, for example, to retrieve comments:
 
 ```js
 app.get("/api/posts/:slug/comments", async (c) => {
@@ -205,7 +203,7 @@ With your application ready for deployment, use Wrangler to build and deploy you
 
 Begin by running `wrangler whoami` to confirm that you are logged in to your Cloudflare account. If you are not logged in, Wrangler will prompt you to login, creating an API key that you can use to make authenticated requests automatically from your local machine.
 
-After you have logged in, confirm that your `wrangler.toml` file is configured similarly to what is seen below. You can change the `name` field to a project name of your choice:
+After you have logged in, confirm that your Wrangler file is configured similarly to what is seen below. You can change the `name` field to a project name of your choice:
 
 
 

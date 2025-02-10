@@ -5,19 +5,18 @@ import { zodEnumFromObjKeys } from "~/util/helpers";
 type Props = z.infer<typeof props>;
 
 const mappings = {
-	data_center_cities: "over 330 cities",
-	total_bandwidth: "over 296 Tbps network capacity",
-	network_peers: "over 12,500 network peers",
+	data_center_cities: "over 335 cities",
+	total_bandwidth: "over 348 Tbps network capacity",
+	network_peers: "over 13,000 network peers",
 } as const satisfies Record<string, string>;
 
 const props = z.object({
 	id: zodEnumFromObjKeys(mappings),
 });
 
-// @ts-ignore
 const { id } = props.parse(Astro.props);
 
-let stat = mappings[id];
+const stat = mappings[id];
 ---
 
 {stat}

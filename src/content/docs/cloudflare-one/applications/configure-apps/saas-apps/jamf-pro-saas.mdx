@@ -33,13 +33,12 @@ This guide covers how to configure [Jamf Pro](https://learn.jamf.com/en-US/bundl
    * **Assertion Consumer Service URL**: Assertion Consumer Service value from Jamf Pro metadata file.
    * **Name ID format**: *Email*
 7. Copy the **SAML Metadata endpoint**.
-8. Select **Save configuration**.
-9. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
-10. Select **Done**.
+8. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
+9. Save the application.
 
 ## 3. Edit Access SAML Metadata
 
-1. Paste the **SAML Metdata endpoint** from application configuration in Cloudflare Zero Trust into a browser.
+1. Paste the **SAML Metadata endpoint** from application configuration in Cloudflare Zero Trust into a browser.
 2. Copy the file and paste it into a text editor.
 3. Change `WantAuthnRequestsSigned="true"` to `WantAuthnRequestsSigned="false"`.
 4. Set the file extension as `.xml` and save.
@@ -57,11 +56,7 @@ This guide covers how to configure [Jamf Pro](https://learn.jamf.com/en-US/bundl
 5. Turn on **Single Sign On**.
 
 :::note
-
-
 The Failover Login URL located on this page can be used to log in if your SSO does not work.
-
-
 :::
 
 ## 5. Test the Integration

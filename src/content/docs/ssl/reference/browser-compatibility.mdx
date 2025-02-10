@@ -33,9 +33,9 @@ To support non-SNI requests, you can:
 
   Note that `Legacy` custom certificates are not compatible with [BYOIP](/byoip/) and that, unlike [Universal SSL](/ssl/edge-certificates/universal-ssl/) or [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/), Cloudflare does not manage issuance and renewal for [custom certificates](/ssl/edge-certificates/custom-certificates/).
 
-* (BYOIP customers only) Enterprise customers can choose to bring your own IP prefix to Cloudflare Network and [specify the default SNI used for any handshake in the address map](/byoip/troubleshooting/#non-sni-support).
+* (BYOIP customers only) Enterprise customers can choose to bring their own IP prefix to the Cloudflare network and [specify the default SNI used for any non-SNI handshake in the address map](/byoip/address-maps/setup/#non-sni-support).
 
-* (Paid plans only) [Contact Cloudflare Support](/support/contacting-cloudflare-support/) and request a set of dedicated IPs for your zone.
+* (Paid plans only) [Contact Cloudflare Support](/support/contacting-cloudflare-support/) and request a set of non-SNI IPs for your zone.
 
 ## HTTPS records
 

@@ -22,7 +22,7 @@ Tag overrides take precedence over ruleset overrides. Only the rules with the sp
 
 ## Example 1
 
-This example uses the [Update ruleset](/ruleset-engine/rulesets-api/update/) operation to deploy the Cloudflare Managed Ruleset to a phase with only Joomla rules enabled. The `name`, `kind`, and `phase` fields are omitted from the request because they are immutable.
+This example uses the [Update a zone entry point ruleset](/ruleset-engine/rulesets-api/update/) operation to deploy the Cloudflare Managed Ruleset to a phase with only Joomla rules enabled. The `name`, `kind`, and `phase` fields are omitted from the request because they are immutable.
 
 <Details header="Example: Enable only Joomla rules using category overrides at the zone level">
 
@@ -178,10 +178,10 @@ The order of the overrides in the root ruleset affects whether rules in the depl
 
 The following table shows the status of the rules after the overrides.
 
-| Rule in managed ruleset | Tags                   | Rule status after overrides |
-| ----------------------- | ---------------------- | --------------------------- |
-| ManagedRule1            | drupal, dos            | disabled                    |
-| ManagedRule2            | drupal, dos, joomla    | enabled                     |
-| ManagedRule3            | dos, joomla, wordpress | disabled                    |
-| ManagedRule4            | drupal, wordpress      | disabled                    |
-| ManagedRule5            | (no tags)              | disabled                    |
+| Rule in managed ruleset | Tags                         | Rule status after overrides |
+| ----------------------- | ---------------------------- | --------------------------- |
+| ManagedRule1            | `drupal`, `dos`              | Disabled                    |
+| ManagedRule2            | `drupal`, `dos`, `joomla`    | Enabled                     |
+| ManagedRule3            | `dos`, `joomla`, `wordpress` | Disabled                    |
+| ManagedRule4            | `drupal`, `wordpress`        | Disabled                    |
+| ManagedRule5            | (no tags)                    | Disabled                    |

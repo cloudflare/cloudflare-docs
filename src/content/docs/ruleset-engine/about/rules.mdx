@@ -30,7 +30,7 @@ When you use `true` as the rule filter expression, this means "apply the rule to
 
 
 * A rule filter expression must evaluate to a boolean value (either `true` or `false`).
-* Rules of specific Cloudflare products, such as [Transform Rules](/rules/transform/), may include other expressions used to specify dynamic values. These expressions do not have to evaluate to a boolean value. 
+* Rules of specific Cloudflare products, such as [Transform Rules](/rules/transform/), may include other expressions used to specify dynamic values. These expressions do not have to evaluate to a boolean value.
   :::
 
 ### Field values during rule evaluation
@@ -45,5 +45,5 @@ For example:
 
 :::note
 
-If you want to use the original field values in rules evaluated later, you can use raw fields (for example, `raw.http.request.uri.path`) in their expressions. These special fields are immutable during the entire request evaluation workflow. For a list of raw fields, refer to [Fields](/ruleset-engine/rules-language/fields/). 
+If you want to use the original field values in rules evaluated later, you can use raw fields (for example, `raw.http.request.uri.path`) in their expressions. These special fields are immutable during the entire request evaluation workflow. For a list of raw fields, refer to the [Fields reference](/ruleset-engine/rules-language/fields/reference/).
 :::

@@ -11,7 +11,7 @@ head:
 
 ---
 
-import { CardGrid, Description, Feature, LinkTitleCard, Plan, RelatedProduct, LinkButton } from "~/components"
+import { Render, CardGrid, Description, Feature, LinkTitleCard, Plan, RelatedProduct, LinkButton } from "~/components"
 
 <Description>
 Create collaborative applications, real-time chat, multiplayer games and more without needing to coordinate state or manage infrastructure.
@@ -19,17 +19,23 @@ Create collaborative applications, real-time chat, multiplayer games and more wi
 
 <Plan type="paid" />
 
-Durable Objects provide a powerful compute API for coordinating multiple clients or users. Each Durable Object has private, transactional and strongly consistent storage attached.
+Durable Objects provide a building block for stateful applications and distributed systems.
 
-Use Durable Objects to build collaborative editing tools, interactive chat, multiplayer games and applications that need coordination among multiple clients, without requiring you to build serialization and coordination primitives on your own.
+Use Durable Objects to build applications that need coordination among multiple clients, like collaborative editing tools, interactive chat, multiplayer games, and deep distributed systems, without requiring you to build serialization and coordination primitives on your own.
 
-<LinkButton href="/durable-objects/get-started/walkthrough/">Get started</LinkButton>
+### What are Durable Objects?
+
+<Render file="what-are-durable-objects"/>
+
+For more information, refer to the full [What are Durable Objects?](/durable-objects/what-are-durable-objects/) page.
+
+<LinkButton href="/durable-objects/get-started/tutorial/">Get started</LinkButton>
 
 :::note[SQLite in Durable Objects Beta]
 
 The new beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. When deploying a new Durable Object class, users can [opt-in to a SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend) in order to access new [SQL API](/durable-objects/api/sql-storage/#exec) and [point-in-time-recovery API](/durable-objects/api/sql-storage/#point-in-time-recovery), part of Durable Objects Storage API.
 
-Storage API billing is not enabled for Durable Object classes using SQLite storage backend. SQLite-backed Durable Objects will incur [charges for requests and duration](/durable-objects/platform/pricing/#billing-metrics). We plan to enable Storage API billing for Durable Objects using SQLite storage backend in the first half of 2025 after advance notice with the following [pricing](/durable-objects/platform/pricing/#sql-storage-billing).
+Storage API billing is not enabled for Durable Object classes using SQLite storage backend. SQLite-backed Durable Objects will incur [charges for requests and duration](/durable-objects/platform/pricing/#billing-metrics). We plan to enable Storage API billing for Durable Objects using SQLite storage backend in the first half of 2025 after advance notice with the following [pricing](/durable-objects/platform/pricing/#sqlite-storage-backend).
 
 :::
 

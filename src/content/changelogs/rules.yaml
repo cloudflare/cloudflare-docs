@@ -5,6 +5,10 @@ productLink: "/rules/"
 productArea: Application performance
 productAreaLink: /fundamentals/reference/changelog/performance/
 entries:
+  - publish_date: "2025-01-29"
+    title: New Snippets code editor
+    description: |-
+      The new Snippets code editor is now live, allowing users to edit both Snippets code and rules from a single page. This update simplifies the workflow and introduces features such as code formatting, refactoring, and auto-complete. The updated editor is available within the Snippets interface.
   - publish_date: "2025-01-09"
     title: New Rules Overview page
     description: |-

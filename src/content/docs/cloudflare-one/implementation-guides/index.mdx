@@ -3,12 +3,48 @@ pcx_content_type: navigation
 title: Implementation guides
 sidebar:
   order: 3
-  group:
-    hideIndex: true
 head: []
 description: View implementation guides for Cloudflare Zero Trust.
 ---
 
-import { DirectoryListing } from "~/components";
+import { CardGrid, LinkTitleCard } from "~/components";
 
-<DirectoryListing />
+Implementation guides cover deployment steps and best practices for specific Cloudflare One use cases.
+
+<CardGrid>
+
+<LinkTitleCard
+	title="Secure your Internet Traffic and SaaS apps"
+	href="/learning-paths/secure-internet-traffic/concepts/"
+	icon="seti:lock"
+>
+	Provide your users and networks with a secure, performant, and flexible path
+	to the Internet.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Replace your VPN"
+	href="/learning-paths/replace-vpn/concepts/"
+	icon="seti:db"
+>
+	Give users secure, auditable network and application access.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Deploy Zero Trust Web Access"
+	href="/learning-paths/zero-trust-web-access/concepts/"
+	icon="laptop"
+>
+	Secure access to internal web applications without a device client.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Secure Microsoft 365 email with Email Security"
+	href="/learning-paths/secure-o365-email/concepts/"
+	icon="email"
+>
+	Use Cloudflare's Email Security to protect your Microsoft 365 email inbox from
+	phishing and malware attacks.
+</LinkTitleCard>
+
+</CardGrid>

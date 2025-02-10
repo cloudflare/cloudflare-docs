@@ -1,0 +1,21 @@
+releaseNotes: >-
+  This release contains a single change to the behavior of the client when WARP
+  session duration Gateway Network or HTTP policies are in place. No other bug
+  fixes or feature are included.
+   
+  **Notable updates**
+   
+  - Modified client behavior to no longer automatically open a new browser tab
+  when user needs to re-authenticate as this was causing some users to return to
+  their devices with 100s of tabs open. Instead the client will now use the
+  built in operating system notification framework to inform users of the need
+  to authenticate.
+   
+  **Known issues**
+
+  - No known issues
+version: 2022.7.285.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2022.7.285.1
+packageSize: 45307722
+releaseDate: 2022-07-25T16:31:14.588Z
+platformName: macOS

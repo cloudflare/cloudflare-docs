@@ -17,17 +17,9 @@ Using versions and deployments is useful if:
 - You want to monitor for performance differences when deploying new versions of your Worker.
 - You have a CI/CD pipeline configured for Workers but want to cut manual releases.
 
-:::note
-
-Versions and deployments are in **beta and under active development**. Refer to [Limits](/workers/configuration/versions-and-deployments/#limits) before using these features.
-
-Provide your feedback on versions and deployments through the [feedback form](https://www.cloudflare.com/lp/developer-week-deployments).
-
-:::
-
 ## Versions
 
-A version is defined by the state of code as well as the state of configuration in a Worker's [`wrangler.toml`](/workers/wrangler/configuration/) file. Versions track historical changes to [bundled code](/workers/wrangler/bundling/), [static assets](/workers/static-assets/) and changes to configuration like [bindings](/workers/runtime-apis/bindings/) and [compatibility date and compatibility flags](/workers/configuration/compatibility-dates/) over time.
+A version is defined by the state of code as well as the state of configuration in a Worker's [Wrangler configuration](/workers/wrangler/configuration/) file. Versions track historical changes to [bundled code](/workers/wrangler/bundling/), [static assets](/workers/static-assets/) and changes to configuration like [bindings](/workers/runtime-apis/bindings/) and [compatibility date and compatibility flags](/workers/configuration/compatibility-dates/) over time.
 
 Versions also track metadata associated with a version, including: the version ID, the user that created the version, deploy source, and timestamp. Optionally, a version message and version tag can be configured on version upload.
 
@@ -81,7 +73,7 @@ New versions are not created when you make changes to [resources connected to yo
 
 #### Via Wrangler
 
-Wrangler allows you to view the 10 most recent versions and deployments. Refer to the [`versions list`](/workers/wrangler/commands/#list-8) and [`deployments`](/workers/wrangler/commands/#list-9) documentation to view the commands.
+Wrangler allows you to view the 10 most recent versions and deployments. Refer to the [`versions list`](/workers/wrangler/commands/#list-4) and [`deployments`](/workers/wrangler/commands/#list-5) documentation to view the commands.
 
 #### Via the Cloudflare dashboard
 

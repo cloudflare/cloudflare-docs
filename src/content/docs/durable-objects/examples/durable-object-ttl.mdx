@@ -1,0 +1,119 @@
+---
+type: example
+summary: Implement a Time To Live (TTL) for Durable Object instances.
+tags:
+  - Durable Objects
+  - Alarms
+  - API
+pcx_content_type: example
+title: Durable Object Time To Live
+sidebar:
+  order: 4
+description: Use the Durable Objects Alarms API to implement a Time To Live (TTL) for Durable Object instances.
+---
+
+import { TabItem, Tabs, GlossaryTooltip, WranglerConfig } from "~/components";
+
+A common feature request for Durable Objects is a Time To Live (TTL) for Durable Object instances. Durable Objects give developers the tools to implement a custom TTL in only a few lines of code. This example demonstrates how to implement a TTL making use of <GlossaryTooltip term="alarm">`alarms`</GlossaryTooltip>. While this TTL will be extended upon every new request to the Durable Object, this can be customized based on a particular use case.
+
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+
+```js
+import { DurableObject } from "cloudflare:workers";
+
+// Durable Object
+export class MyDurableObject extends DurableObject {
+    // Time To Live (TTL) in milliseconds
+  timeToLiveMs = 1000;
+
+    constructor(ctx, env) {
+    super(ctx, env);
+
+    this.ctx.blockConcurrencyWhile(async () => {
+    await this.ctx.storage.setAlarm(Date.now() + this.timeToLiveMs);
+    });
+  }
+
+  async fetch(_request) {
+      // Increment the TTL immediately following every request to a Durable Object
+    await this.ctx.storage.setAlarm(Date.now() + this.timeToLiveMs);
+      ...
+   }
+
+  async alarm() {
+    await this.ctx.storage.deleteAll();
+  }
+}
+
+// Worker
+export default {
+  async fetch(request, env) {
+    const id = env.MY_DURABLE_OBJECT.idFromName("foo");
+        const stub = env.MY_DURABLE_OBJECT.get(id)
+    return await stub.fetch(request);
+  },
+};
+```
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+  MY_DURABLE_OBJECT: DurableObjectNamespace<MyDurableObject>;
+}
+
+// Durable Object
+export class MyDurableObject extends DurableObject {
+    // Time To Live (TTL) in milliseconds
+  timeToLiveMs = 1000;
+
+    constructor(ctx: DurableObjectState, env: Env) {
+    super(ctx, env);
+
+    this.ctx.blockConcurrencyWhile(async () => {
+    await this.ctx.storage.setAlarm(Date.now() + this.timeToLiveMs);
+    });
+  }
+
+  async fetch(_request: Request) {
+      // Increment the TTL immediately following every request to a Durable Object
+    await this.ctx.storage.setAlarm(Date.now() + this.timeToLiveMs);
+      ...
+   }
+
+  async alarm() {
+    await this.ctx.storage.deleteAll();
+  }
+}
+
+// Worker
+export default {
+  async fetch(request, env) {
+    const id = env.MY_DURABLE_OBJECT.idFromName("foo");
+        const stub = env.MY_DURABLE_OBJECT.get(id)
+    return await stub.fetch(request);
+  },
+} satisfies ExportedHandler<Env>;
+```
+
+</TabItem> </Tabs>
+
+To test and deploy this example, configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/tutorial/#5-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the namespace and class name chosen previously.
+
+<WranglerConfig>
+
+```toml title="wrangler.toml"
+name = "durable-object-ttl"
+
+[[durable_objects.bindings]]
+name = "MY_DURABLE_OBJECT"
+class_name = "MyDurableObject"
+
+[[migrations]]
+tag = "v1"
+new_classes = ["MyDurableObject"]
+```
+
+</WranglerConfig>

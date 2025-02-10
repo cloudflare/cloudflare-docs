@@ -15,6 +15,7 @@ sidebar:
   order: 2
 ---
 
+import { WranglerConfig } from "~/components";
 
 The easiest way to get started with [Workers AI](/workers-ai/) is to try it out in the [Multi-modal Playground](https://multi-modal.ai.cloudflare.com/) and the [LLM playground](https://playground.ai.cloudflare.com/). If you decide that you want to integrate your code with Workers AI, you may then decide to then use its [REST API endpoints](/workers-ai/get-started/rest-api/) or via a [Worker binding](/workers-ai/configuration/bindings/).
 
@@ -223,7 +224,7 @@ export default {
     	try {
         	bqJWT = await generateBQJWT(env);
     	} catch (e) {
-        	return new Response('An error has ocurred while generating the JWT', { status: 500 })
+        	return new Response('An error has occurred while generating the JWT', { status: 500 })
     	}
 	},
        ...
@@ -445,9 +446,7 @@ formattedResults = formattedResults?.map((formattedResult, i) => {
 
 ```
 
-Uncomment the following lines from the `wrangler.toml` file in your project:
-
-import { WranglerConfig } from "~/components";
+Uncomment the following lines from the Wrangler file in your project:
 
 <WranglerConfig>
 
@@ -597,7 +596,7 @@ export default {
 			bqJWT = await generateBQJWT(env);
 		} catch (error) {
 			console.log(error);
-			return new Response("An error has ocurred while generating the JWT", {
+			return new Response("An error has occurred while generating the JWT", {
 				status: 500,
 			});
 		}

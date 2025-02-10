@@ -1,6 +1,6 @@
 ---
 pcx_content_type: faq
-title: Getting started with Cloudflare Zero Trust
+title: Getting started with Cloudflare Zero Trust FAQ
 structured_data: true
 sidebar:
   order: 2
@@ -14,9 +14,9 @@ description: Review FAQs about getting started with Cloudflare Zero Trust.
 
 You can sign up today at [this link](https://dash.cloudflare.com/sign-up/teams). Follow the onboarding steps, choose a team name and a payment plan, and start protecting your network in just a few minutes.
 
-## What's a team domain/team name?
+## What is a team domain/team name?
 
-Your team domain is a unique subdomain assigned to your Cloudflare account; for example, `<your-team-name>.cloudflareaccess.com`. Setting up a team domain is an essential step in your Zero Trust configuration. This is where your users will find the apps you have secured behind Cloudflare Zero Trust — displayed in the [App Launcher](/cloudflare-one/applications/app-launcher/) — and will be able to make login requests to them. The customizable portion of your team domain is called **team name**. You can view your team name and team domain in Zero Trust under **Settings** > **Custom Pages**.
+Your team domain is a unique subdomain assigned to your Cloudflare account, for example, `<your-team-name>.cloudflareaccess.com`. [Setting up a team domain](/cloudflare-one/setup/#create-a-zero-trust-organization) is an essential step in your Zero Trust configuration. This is where your users will find the apps you have secured behind Cloudflare Zero Trust — displayed in the [App Launcher](/cloudflare-one/applications/app-launcher/) — and will be able to make login requests to them. The customizable portion of your team domain is called **team name**. You can view your team name and team domain in Zero Trust under **Settings** > **Custom Pages**.
 
 | team name        | team domain                             |
 | ---------------- | --------------------------------------- |
@@ -28,6 +28,20 @@ You can change your team name at any time, unless you have the Cloudflare dashbo
 
 If you change your team name, you need to update your organization's identity providers (IdPs) and the WARP client to reflect the new team name in order to avoid any mismatch errors.
 :::
+
+### Why is my old team name is still showing up on the Login page and App Launcher?
+
+After changing your team name, you will need to check your Block page, Login page, and App Launcher settings to make sure the new team name is reflected.
+
+To verify that your team name change is successfully rendering on the Block page, Login page and App Launcher:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Custom Pages**.
+2. Find the **Block page** and **Login page** > select **Customize** next to the page you would like to review first.
+3. Review that the value in **Your Organization's name** matches your new team name.
+4. If the desired name is not already displayed, change the value to your desired team name and select **Save**.
+5. Check both pages (**Block page** and **Login page**) to set **Your Organization's name** as your desired team name.
+
+The App Launcher will display the same team name set on the Login page, so you do not need to update the **Your Organization's name** field in the App Launcher page.
 
 ## How do I change my subscription plan?
 

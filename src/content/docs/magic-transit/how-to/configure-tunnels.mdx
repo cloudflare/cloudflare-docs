@@ -74,10 +74,12 @@ import { GlossaryTooltip, Render } from "~/components";
 
 <Render file="tunnel-endpoints/mt-egress" />
 
-### Legacy health checks system
+### Legacy bidirectional health checks
 
 <Render file="legacy-hc-system" />
 
 ## Next steps
 
 Now that you have set up your tunnel endpoints, you need to configure <GlossaryTooltip term="static route" link="/magic-transit/how-to/configure-static-routes/">static routes</GlossaryTooltip> to route your traffic through Cloudflare.
+
+If you are connecting to Cloudflare through a [Direct CNI connection](/network-interconnect/express-cni/), you can [configure BGP routing](/magic-transit/how-to/bgp-peering/) instead.

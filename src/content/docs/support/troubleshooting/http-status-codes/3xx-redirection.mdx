@@ -2,69 +2,142 @@
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/115003011091-3xx-Redirection
 title: 3xx Redirection
-
 ---
 
-## Overview
+3xx codes are a class of responses which indicate that the HTTP client must take another course of action to obtain the complete requested resource.
 
-3xx codes are a class of responses that suggest the User-Agent must follow another course of action to obtain the complete requested resource.
+The redirect location should be specified in one of the following ways:
 
-Redirect Location should be set in either:
+- In the `Location` header field of the response, which is useful for automatic redirection.
+- In the payload of the response, optionally including a hyperlink to the correct location.
 
-1. `Location` header field in the response, useful for automatic redirecting
-2. The payload of the response with a hyperlink (optional) to correction location
+## 300 Multiple Choices
 
-## **300 Multiple Choices** **(**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
+The 300 Multiple Choices status indicates that multiple options are available for the requested resource, and the client may select one.
 
-Multiple options for the resource that the client may follow. For instance, it could be used to present different format options for video, list files with different [extensions](https://en.wikipedia.org/wiki/File_extensions), or [word sense disambiguation](https://en.wikipedia.org/wiki/Word_sense_disambiguation).
+For more information, refer to [RFC 7231](https://tools.ietf.org/html/rfc7231).
 
-## **301 Moved Permanently** **(**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
+### Common use cases
 
-Permanent URL redirect for the resource requested. The target resource has been assigned a new permanent URI and any future references to this resource ought to use one of the enclosed URIs.
+The status is typically used when a resource is available in multiple representations or formats. For instance:
 
-Cloudflare is able to generate these responses, avoiding the need to send a request to the origin server’s response through the use of Page Rules. Read how Cloudflare can help generate redirects using [Redirect Rules](/rules/url-forwarding/).
+- Offering multiple versions of a video in different formats (for example, MP4, AVI).
+- Providing a list of files with different [extensions](https://en.wikipedia.org/wiki/File_extensions) or compression types.
+- Presenting [word sense disambiguation](https://en.wikipedia.org/wiki/Word_sense_disambiguation) options for a term with multiple meanings.
 
-## **302 Found (aka Temporary Redirect) (**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
+The response may include a `Location` header pointing to a preferred option or provide a payload with hyperlinks to the available choices, allowing the client to decide.
 
-Similar to a 301 redirect, but is intended for temporary purposes only. User-Agent may automatically follow the `Location` header, but should not replace the current URI with it as a 301.
+### Cloudflare-specific information
 
-Cloudflare is able to generate these responses, thus avoiding the need to send a request to the origin server’s response through the use of Page Rules. Read more How Cloudflare can help generate redirects using [Redirect Rules](/rules/url-forwarding/).
+Cloudflare generally bypasses the 300 Multiple Choices response for automated redirections to ensure optimal performance and user experience.
 
-## **303 See Other (since HTTP/1.1)** **(**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
+## 301 Moved Permanently
 
-User-Agent should follow this redirect with a GET request. *Note: differs from 301 in that the resource at the redirect is not necessarily equivalent to what was requested*
+The 301 Moved Permanently status indicates that the requested resource has been assigned a new permanent URI. All future references to this resource should use one of the enclosed URIs.
 
-* Intended to be used in response to a POST or DELETE request to signal the origin server received data correctly and to allow appropriate cache behaviour.
-* The original 303 response is not cacheable, but the response to the 2nd request (`GET`) may be since it’s under a different URI.
+For more information, refer to [RFC 7231](https://tools.ietf.org/html/rfc7231).
 
-## **304 Not Modified (**[**RFC 7232**](https://tools.ietf.org/html/rfc7232)**)**
+### Common use cases
 
-Signal to the client that the requested resource is available and valid in the cache. The origin server has not modified the resource that the request inquired about. Client can receive the payload for the specified resource without connecting to the origin server again thus it is redirecting the request to use the stored resource. Requirements for a cache that receives a 304 response are defined in [Section 4.3.4 of \[RFC7234\]](https://tools.ietf.org/html/rfc7234#section-4.3.4).
+This status is commonly used to inform clients that:
 
-Prior to this response, the client sent a conditional GET or HEAD request specifying what resource it currently has stored. Server is giving the client the “OK” to use this resource as the most updated version in order to reduce the amount of data transmission between client and server.
+- A resource has been permanently relocated to a new URI.
+- Search engines should update their indexes to reflect the new URI.
+- Bookmarks or other saved references should be updated.
 
-* Must not have message body
-* Must contain any of the headers that would have been set prior to the mirrored 200 response: `Cache-Control, Content-Location, Date, ETag, Expires,` or `Vary.`
+The response typically includes a `Location` header specifying the new URI. This enables automatic redirection by most User-Agents.
 
-When a request is made to Cloudflare that is stale and must be revalidated at the origin, Cloudflare will send a 304 response to confirm the version in our cache matched the version at origin. The response will include the `CF-Cache-Status: REVALIDATED` header and Cloudflare confirms the version using the `If-Modified-Since` header. For more information, refer to [ETag Headers](/cache/reference/etag-headers/).
+### Cloudflare-specific information
 
-## **305 Use Proxy (deprecated) (**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
+Cloudflare can generate 301 Moved Permanently responses without needing to query the origin server. For more information, refer to [Redirect Rules](/rules/url-forwarding/).
 
-Request must be fulfilled through proxy URI specified in `Location` header instead of through the origin. This status code has been deprecated due to security risks.
+## 302 Found
 
-## **306 Switch Proxy (deprecated) (**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
+The 302 Found status, also referred to as a temporary redirect, indicates that the requested resource is temporarily located at a different URI. Unlike a 301 Moved Permanently status, which denotes a permanent relocation, the 302 Found status is specifically intended for temporary use.
 
-Notification that following requests must be directed to the proxy specified.
+While the User-Agent may follow the `Location` header to retrieve the resource, it should not replace the current URI as it would for a 301 Moved Permanently.
 
-## **307 Temporary Redirect (**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
+For more information, refer to [RFC 7231](https://tools.ietf.org/html/rfc7231).
 
-A redirect similar to a 302 response except that the request method (e.g. GET, POST..) must not differ from what was used in the original request if automatically following the redirect.
+### Common use cases
 
-* User-Agent may automatically follow the `Location` header but should not replace the original URI
+This status is typically used to:
 
-**308 Permanent Redirect (**[**RFC 7538**](https://tools.ietf.org/html/rfc7538#section-3)**)**
+- Temporarily redirect traffic during maintenance or upgrades.
+- Direct users to an alternate resource without altering saved references.
+- A/B test different versions of a resource without making permanent changes.
 
-Permanent redirect similar to a 301 except the request method (e.g. GET, POST..) must not differ from what was used in the original request if automatically following the redirect.
+### Cloudflare-specific information
 
-* User-Agent should automatically follow the `Location` header
-* User-Agent should replace the original URI with the updated one in the Location or payload
+Cloudflare can generate these responses, eliminating the need to send a request to the origin serve. Learn more about how Cloudflare can help generate redirects with [Redirect Rules](/rules/url-forwarding/).
+
+## 303 See Other (since HTTP/1.1)
+
+The 303 See Other status indicates that the client should retrieve the resource at a different URI using a `GET` request. Unlike a 301 Moved Permanently redirect, the resource at the redirect location is not necessarily equivalent to the originally requested resource.
+
+For more information, refer to [RFC 7231](https://tools.ietf.org/html/rfc7231).
+
+### Common use cases
+
+The 303 status is typically used in response to a `POST` or `DELETE` request to indicate that the origin server has successfully processed the data and to support proper caching behavior.
+
+Although the initial 303 response is not cacheable, the response to the subsequent `GET` request can be cached, as it is tied to a distinct URI.
+
+### Cloudflare-specific information
+
+Cloudflare allows for the configuration of 303 redirects through [Redirect Rules](/rules/url-forwarding/), enabling seamless handling of these responses directly at the edge. This approach improves performance by avoiding unnecessary requests to the origin server.
+
+## 304 Not Modified
+
+The 304 Not Modified status indicates that the requested resource is available and valid in the client's cache. This means that the origin server has not modified the resource since the client's last request, allowing the client to use the cached resource without connecting to the origin server again. Requirements for caches receiving a 304 response are defined in [Section 4.3.4 of RFC 7234](https://tools.ietf.org/html/rfc7234#section-4.3.4).
+
+For more information, refer to [RFC 7232](https://tools.ietf.org/html/rfc7232).
+
+### Common use cases
+
+A 304 Not Modified response is used when the client sends a conditional `GET` or `HEAD` request to validate a cached resource. The server confirms that the cached version is still up to date, allowing the client to use it without re-downloading the resource. This helps reduce unnecessary data transmission and improves efficiency.
+
+A 304 response contains:
+
+- No message body: The 304 response itself does not include the actual resource (like an image or webpage content). Instead, it just confirms that the cached version is valid.
+- Required headers: The response includes important metadata (such as `Cache-Control`, `Content-Location`, `Date`, `ETag`, `Expires`, or `Vary`) that tells the client how to manage the cached resource. These headers are the same ones that would accompany the resource if it were sent with a 200 OK response.
+
+### Cloudflare-specific information
+
+When a stale request must be revalidated at the origin, Cloudflare sends a 304 response to confirm that the cached version matches the origin version. The response includes the `CF-Cache-Status: REVALIDATED` header, and Cloudflare validates the version using the `If-Modified-Since` header. For more information, refer to [ETag Headers](/cache/reference/etag-headers/).
+
+## 305 Use Proxy (deprecated)
+
+This status code indicates that the request must be routed through the proxy specified in the `Location` header instead of being sent directly to the origin server. However, due to security concerns, the 305 Use Proxy status code has been deprecated.
+
+## 306 Switch Proxy (deprecated)
+
+This status code indicates that subsequent requests should be sent through the specified proxy. However, the 306 Switch Proxy status code is deprecated and is no longer in use.
+
+## 307 Temporary Redirect
+
+The 307 Temporary Redirect status indicates that a requested resource has been temporarily moved to a different URI, as specified in the `Location` header. Unlike a 302 redirect, the original request method (for example, `GET` or `POST`) must remain unchanged when the redirect is followed automatically. This ensures that temporary changes to a resource's location do not disrupt the intended behavior of the request. User agents may automatically follow the redirect using the `Location` header, but should not replace the original URI for future requests.
+
+For more information, refer to [RFC 7231](https://tools.ietf.org/html/rfc7231).
+
+### Common use cases
+
+The 307 status is useful for temporarily relocating resources during server maintenance or upgrades while ensuring the original request method is preserved. It is also commonly used to direct traffic to temporary URLs for promotions, campaigns, or special events without altering the original URI for future requests.
+
+### Cloudflare-specific information
+
+Cloudflare can handle 307 Temporary Redirect responses efficiently, enabling temporary redirects without requiring changes at the origin server. This can be configured using [Redirect Rules](/rules/url-forwarding/).
+
+## 308 Permanent Redirect
+
+The 308 Permanent Redirect status indicates that the requested resource has been permanently moved to a new URI, as specified in the `Location` header. Unlike a 301 redirect, the original request method (for example, `GET`, `POST`) must remain unchanged when automatically following the redirect. User agents should follow the redirect using the `Location` header and replace the original URI with the new one for subsequent requests.
+
+For more information, refer to [RFC 7538](https://tools.ietf.org/html/rfc7538#section-3).
+
+### Common use cases
+
+The 308 Permanent Redirect status is commonly used for permanent resource relocation, API version upgrades, domain or path migrations, and maintaining method integrity in redirects. Additionally, it helps with SEO by transferring link equity to the new URI.
+
+### Cloudflare-specific information
+
+Cloudflare can handle 308 Permanent Redirects efficiently, ensuring redirection while maintaining request integrity. These redirects can be configured using [Redirect Rules](/rules/url-forwarding/).

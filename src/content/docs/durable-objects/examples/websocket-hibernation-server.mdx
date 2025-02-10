@@ -13,7 +13,7 @@ description: Build a WebSocket server using WebSocket Hibernation on Durable
 
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TabItem, Tabs, WranglerConfig } from "~/components"
 
 This example is similar to the [Build a WebSocket server](/durable-objects/examples/websocket-server/) example, but uses the WebSocket Hibernation API. The WebSocket Hibernation API should be preferred for WebSocket server applications built on Durable Objects, since it significantly decreases duration charge, and provides additional features that pair well with WebSocket applications. For more information, refer to [Use Durable Objects with WebSockets](/durable-objects/best-practices/websockets/).
 
@@ -177,9 +177,7 @@ export class WebSocketHibernationServer extends DurableObject {
 
 </TabItem> </Tabs>
 
-Finally, configure your `wrangler.toml` file to include a Durable Object [binding](/durable-objects/get-started/#5-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the namespace and class name chosen previously.
-
-import { WranglerConfig } from "~/components";
+Finally, configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/tutorial/#5-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the namespace and class name chosen previously.
 
 <WranglerConfig>
 

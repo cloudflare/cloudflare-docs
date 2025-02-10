@@ -10,11 +10,9 @@ import { Render } from "~/components"
 
 Learn best practices for building scalable Access applications and policies.
 
-## Use Access groups
+## Create reusable policy components
 
-Access groups are reusable sets of rules that you can quickly apply across multiple applications. This could be a definition such as "corporate users", which has both device posture check requirements and specific emails, or just “developers”, which references a group in your identity provider. If you have many applications that will need identical policy structure, we recommend building an Access group and referencing it across multiple applications.
-
-<Render file="access/access-group" product="cloudflare-one" />
+If you have many policies that contain duplicate rules, we recommend [building a rule group](/cloudflare-one/policies/access/groups/) and referencing it across multiple policies. For example, you could define a rule group for "corporate users", which has both device posture check requirements and specific emails, or just “developers”, which references a group in your identity provider.
 
 ## Define your domain structure
 

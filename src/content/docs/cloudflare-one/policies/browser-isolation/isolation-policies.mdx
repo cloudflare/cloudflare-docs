@@ -43,53 +43,79 @@ You can choose to disable isolation for certain destinations or categories. The 
 
 ## Policy settings
 
-The following optional settings appear in the Gateway HTTP policy builder when you select the _Isolate_ action. Enable these settings to [prevent data loss](https://blog.cloudflare.com/data-protection-browser/) when users interact with untrusted websites in the remote browser.
+The following optional settings appear in the Gateway HTTP policy builder when you select the _Isolate_ action. Configure these settings to [prevent data loss](https://blog.cloudflare.com/data-protection-browser/) when users interact with untrusted websites in the remote browser.
 
-### Disable copy / paste
+### Copy (from remote to client)
 
-Prohibits users from copying and pasting content between a remote web page and their local machine.
+```mermaid
+    flowchart LR
+			subgraph remotebrowser[Remote browser]
+        siteA["Isolated
+				website"]--Data-->remoteclip["Remote
+				clipboard"]
+      end
+			subgraph client[Client]
+        localclip["Local
+				clipboard"]
+      end
+			remoteclip-->localclip
+```
 
-### Disable printing
+- _Allow_: (Default) Users can copy content from an isolated website to their local clipboard.
+- _Allow only within isolated browser_: Users can only copy content from an isolated website to the remote clipboard. Users cannot copy content out of the remote browser to the local clipboard. You can use this setting alongside [**Paste (from client to remote)**: _Allow only within isolated browser_](/cloudflare-one/policies/browser-isolation/isolation-policies/#paste-from-client-to-remote) to only allow copy-pasting between isolated websites.
+- _Do not allow_: Prohibits users from copying content from an isolated website.
 
-Prohibits users from printing remote web pages to their local machine.
+### Paste (from client to remote)
 
-### Disable keyboard
+```mermaid
+    flowchart LR
+			subgraph client[Client]
+        localclip["Local
+				clipboard"]
+      end
+			subgraph remotebrowser[Remote browser]
+				remoteclip["Remote
+				clipboard"]-->siteA["Isolated
+				website"]
+      end
+			localclip--Data-->remoteclip
+```
 
-Prohibits users from performing keyboard input into the remote web page.
+- _Allow_: (Default) Users can paste content from their local clipboard to an isolated website.
+- _Allow only within isolated browser_: Users can only paste content from the remote clipboard to an isolated website. Users cannot paste content from their local clipboard to the remote browser. You can use this setting alongside [**Copy (from remote to client)**: _Allow only within isolated browser_](/cloudflare-one/policies/browser-isolation/isolation-policies/#copy-from-remote-to-client) to only allow copy-pasting between isolated websites.
+- _Do not allow_: Prohibits users from pasting content into an isolated website.
+
+### File downloads
+
+- _Allow_: (Default) User can download files from an isolated website to their local machine.
+- _Do not allow_: Prohibits users from downloading files from an isolated website to their local machine.
 
 :::note
-
-Mouse input remains available (to allow users to browse a website by following hyperlinks and scrolling). This does not prevent user input into third-party virtual keyboards within a remote web page.
-:::
-
-### Disable upload
-
-Prohibits users from uploading files from their local machine into a remote web page.
-
-:::note
-
-This option does not prevent files being uploaded to websites from third-party cloud file managers or files downloaded into the remote browser download bar from other isolated websites. To prevent files being uploaded from the remote browser into an isolated website, use HTTP Policies to block by [Upload Mime Type](/cloudflare-one/policies/gateway/http-policies/#download-and-upload-mime-type).
-:::
-
-### Disable download
-
-Prohibits users from exporting files from the remote browser to their local machine.
-
-:::note
-
 This option does not prevent files from being downloaded into the remote browser. To prevent files being downloaded into the remote browser, use HTTP Policies to block by [Download Mime Type](/cloudflare-one/policies/gateway/http-policies/#download-and-upload-mime-type).
 :::
 
-### Disable clipboard redirection
+### File uploads
 
-Prevents copying isolated content from the remote browser to their local clipboard and pasting content from their local clipboard into isolated pages.
+- _Allow_: (Default) Users can upload files from their local machine into an isolated website.
+- _Do not allow_: Prohibits users from uploading files from their local machine into an isolated website.
 
 :::note
-
-This option does not prevent clipboard interactions between isolated websites. Use [Disable copy / paste](/cloudflare-one/policies/browser-isolation/isolation-policies/#disable-copy--paste) to prohibit clipboard use on sensitive isolated applications.
-
-Disable copy / paste and Disable clipboard redirection are mutually exclusive and cannot be used in conjunction with each other.
+This option does not prevent files being uploaded to websites from third-party cloud file managers or files downloaded into the remote browser download bar from other isolated websites. To prevent files being uploaded from the remote browser into an isolated website, use HTTP Policies to block by [Upload Mime Type](/cloudflare-one/policies/gateway/http-policies/#download-and-upload-mime-type).
 :::
+
+### Keyboard
+
+- _Allow_: (Default) Users can perform keyboard inputs into an isolated website.
+- _Do not allow_: Prohibits users from performing keyboard inputs into an isolated website.
+
+:::note
+Mouse input remains available to allow users to browse a website by following hyperlinks and scrolling. This does not prevent user input into third-party virtual keyboards within an isolated website.
+:::
+
+### Printing
+
+- _Allow_: (Default) Users can print isolated web pages to their local machine.
+- _Do not allow_: Prohibits users from printing isolated web pages to their local machine.
 
 ## Common policies
 

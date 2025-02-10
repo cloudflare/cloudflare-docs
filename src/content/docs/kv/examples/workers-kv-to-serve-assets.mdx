@@ -80,7 +80,7 @@ To create a KV store via Wrangler:
    id = "<GENERATED_NAMESPACE_ID>"
    ```
 
-2. In your `wrangler.toml` file, add the following with the values generated in the terminal:
+2. In your Wrangler file, add the following with the values generated in the terminal:
 
    ```bash {3} title="wrangler.toml"
    [[kv_namespaces]]
@@ -90,7 +90,7 @@ To create a KV store via Wrangler:
 
    The [KV binding](/kv/concepts/kv-bindings/) `assets` is how your Worker will interact with the [KV namespace](/kv/concepts/kv-namespaces/). This binding will be provided as a runtime variable within your Workers code by the Workers runtime.
 
-   We'll also create a preview KV namespace. It is recommended to create a separate KV namespace when developing locally to avoid making changes to the production namespace. When developing locally against remote resources, the Wrangler CLI will only use the namespace specified by `preview_id` in the KV namespace configuration of the `wrangler.toml` file.
+   We'll also create a preview KV namespace. It is recommended to create a separate KV namespace when developing locally to avoid making changes to the production namespace. When developing locally against remote resources, the Wrangler CLI will only use the namespace specified by `preview_id` in the KV namespace configuration of the Wrangler file.
 
 3. In your terminal, run the following command:
 
@@ -113,7 +113,7 @@ To create a KV store via Wrangler:
    preview_id = "<GENERATED_PREVIEW_NAMESPACE_ID>"
    ```
 
-4. In your `wrangler.toml` file, add the additional preview_id below kv_namespaces with the values generated in the terminal:
+4. In your Wrangler file, add the additional preview_id below kv_namespaces with the values generated in the terminal:
 
    ```bash {4} title="wrangler.toml"
    [[kv_namespaces]]
@@ -141,7 +141,7 @@ npx wrangler kv key put index.html --path index.html --binding assets --preview 
 npx wrangler kv key put index.html --path index.html --binding assets --preview
 ```
 
-This will create a KV pair with the filename as key and the file content as value, within the our production and preview namespaces specified by your binding in your `wrangler.toml` file.
+This will create a KV pair with the filename as key and the file content as value, within the our production and preview namespaces specified by your binding in your Wrangler file.
 
 ## 4. Serve static assets from KV from your Worker application
 
@@ -377,7 +377,7 @@ Run `wrangler deploy` to deploy your Workers project to Cloudflare with the bind
 npx wrangler deploy
 ```
 
-Wrangler will automatically set your KV binding to use the production KV namespace set in our `wrangler.toml` file with the KV namespace id. Throughout this example, we uploaded our assets to both the preview and the production KV namespaces.
+Wrangler will automatically set your KV binding to use the production KV namespace set in our Wrangler file with the KV namespace id. Throughout this example, we uploaded our assets to both the preview and the production KV namespaces.
 
 We can now verify that our project is properly working by accessing our Workers default hostname and accessing `<WORKER-SUBDOMAIN>.<DEFAULT-ACCOUNT-HOSTNAME>.dev/index.html` or `<WORKER-SUBDOMAIN>.<DEFAULT-ACCOUNT-HOSTNAME>.dev/hello-world` to see our deployed Worker in action, generating responses from the values in our KV store.
 

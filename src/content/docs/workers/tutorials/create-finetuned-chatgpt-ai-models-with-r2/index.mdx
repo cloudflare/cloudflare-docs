@@ -15,7 +15,7 @@ sidebar:
   order: 1
 ---
 
-import { Render, PackageManagers } from "~/components";
+import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 In this tutorial, you will use the [OpenAI](https://openai.com) API and [Cloudflare R2](/r2) to create a [fine-tuned model](https://platform.openai.com/docs/guides/fine-tuning).
 
@@ -71,7 +71,7 @@ cd finetune-chatgpt-model
 
 Next, upload the fine-tune document to R2. R2 is a key-value store that allows you to store and retrieve files from within your Workers application. You will use [Wrangler](/workers/wrangler) to create a new R2 bucket.
 
-To create a new R2 bucket use the [`wrangler r2 bucket create`](/workers/wrangler/commands/#create-2) command. Note that you are logged in with your Cloudflare account. If not logged in via Wrangler, use the [`wrangler login`](/workers/wrangler/commands/#login) command.
+To create a new R2 bucket use the [`wrangler r2 bucket create`](/workers/wrangler/commands/#r2-bucket-create) command. Note that you are logged in with your Cloudflare account. If not logged in via Wrangler, use the [`wrangler login`](/workers/wrangler/commands/#login) command.
 
 ```sh
 npx wrangler r2 bucket create <BUCKET_NAME>
@@ -79,7 +79,7 @@ npx wrangler r2 bucket create <BUCKET_NAME>
 
 Replace `<BUCKET_NAME>` with your desired bucket name. Note that bucket names must be lowercase and can only contain dashes.
 
-Next, upload a file using the [`wrangler r2 object put`](/workers/wrangler/commands/#put-2) command.
+Next, upload a file using the [`wrangler r2 object put`](/workers/wrangler/commands/#r2-object-put) command.
 
 ```sh
 npx wrangler r2 object put <PATH> -f <FILE_NAME>
@@ -91,9 +91,7 @@ npx wrangler r2 object put <PATH> -f <FILE_NAME>
 
 A binding is how your Worker interacts with external resources such as the R2 bucket.
 
-To bind the R2 bucket to your Worker, add the following to your `wrangler.toml` file. Update the binding property to a valid JavaScript variable identifier. Replace `<YOUR_BUCKET_NAME>` with the name of the bucket you created in [step 2](#2-upload-a-fine-tune-document-to-r2):
-
-import { WranglerConfig } from "~/components";
+To bind the R2 bucket to your Worker, add the following to your Wrangler file. Update the binding property to a valid JavaScript variable identifier. Replace `<YOUR_BUCKET_NAME>` with the name of the bucket you created in [step 2](#2-upload-a-fine-tune-document-to-r2):
 
 <WranglerConfig>
 
@@ -119,7 +117,7 @@ You also need to install the [OpenAI Node API library](https://www.npmjs.com/pac
 npm install openai
 ```
 
-Next, open the `src/index.ts` file and replace the default code with the below code. Replace `<MY_BUCKET>` with the binding name you set in `wrangler.toml` file.
+Next, open the `src/index.ts` file and replace the default code with the below code. Replace `<MY_BUCKET>` with the binding name you set in Wrangler file.
 
 ```typescript
 import { Context, Hono } from "hono";
@@ -161,7 +159,7 @@ In `createFile`, your Worker reads the file from R2 and converts it to a `File` 
 
 The `GET /files` route listens for `GET` requests with a query parameter `file`, representing a filename of an uploaded fine-tune document in R2. The function uses the `createFile` function to manage the file upload process.
 
-Replace `<MY_BUCKET>` with the binding name you set in `wrangler.toml` file.
+Replace `<MY_BUCKET>` with the binding name you set in Wrangler file.
 
 ```typescript
 // New import added at beginning of file
@@ -239,7 +237,7 @@ app.get("/jobs", async (c) => {
 
 After you have created your Worker application and added the required functions, deploy the application.
 
-Before you deploy, you must set the `OPENAI_API_KEY` [secret](/workers/configuration/secrets/) for your application. Do this by running the [`wrangler secret put`](/workers/wrangler/commands/#put-3) command:
+Before you deploy, you must set the `OPENAI_API_KEY` [secret](/workers/configuration/secrets/) for your application. Do this by running the [`wrangler secret put`](/workers/wrangler/commands/#put) command:
 
 ```sh
 npx wrangler secret put OPENAI_API_KEY

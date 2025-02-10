@@ -13,7 +13,7 @@ languages:
   - SQL
 ---
 
-import { Render, PackageManagers } from "~/components";
+import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 In this tutorial, you will learn to build an API on Workers which will ingest and query time-series data stored in [Timescale](https://www.timescale.com/) (they make PostgreSQL faster in the cloud).
 
@@ -140,9 +140,7 @@ Hyperdrive will attempt to connect to your database with the provided credential
 
 :::
 
-This command outputs your Hyperdrive ID. You can now bind your Hyperdrive configuration to your Worker in your `wrangler.toml` configuration by replacing the content with the following:
-
-import { WranglerConfig } from "~/components";
+This command outputs your Hyperdrive ID. You can now bind your Hyperdrive configuration to your Worker in your Wrangler configuration by replacing the content with the following:
 
 <WranglerConfig>
 

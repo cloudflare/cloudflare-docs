@@ -13,6 +13,8 @@ description: Create a Durable Object that stores the last location it was
 
 ---
 
+import { WranglerConfig } from "~/components";
+
 This example shows you how Durable Objects are stateful, meaning in-memory state can be retained between requests. After a brief period of inactivity, the Durable Object will be evicted, and all in-memory state will be lost. The next request will reconstruct the object, but instead of showing the city of the previous request, it will display a message indicating that the object has been reinitialized. If you need your applications state to survive eviction, write the state to storage by using the [Storage API](/durable-objects/api/storage-api/), or by storing your data elsewhere.
 
 ```js
@@ -68,9 +70,7 @@ New Location: ${request.cf.city}`);
 }
 ```
 
-Finally, configure your `wrangler.toml` file to include a Durable Object [binding](/durable-objects/get-started/#5-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the namespace and class name chosen previously.
-
-import { WranglerConfig } from "~/components";
+Finally, configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/tutorial/#5-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the namespace and class name chosen previously.
 
 <WranglerConfig>
 

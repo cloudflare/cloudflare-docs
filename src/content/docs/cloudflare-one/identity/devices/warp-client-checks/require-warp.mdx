@@ -29,22 +29,20 @@ Cloudflare Zero Trust enables you to restrict access to your applications to dev
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
 2. Ensure that **Proxy** is enabled.
-3. Next, go to **Settings** > **WARP Client**.
-4. Scroll down to **WARP client checks** and select **Add new**.
-5. Select **WARP**.
-
-You are now ready to start requiring WARP for your Access applications.
+3. Go to **Settings** > **WARP Client**.
+4. In **WARP client checks**, select **Add new**.
+5. Select **WARP**, then select **Save**.
 
 ## 2. Add the check to an Access policy
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 
-2. Locate the application for which you want to require WARP.
+2. Locate the application for which you want to require WARP. Select **Configure**.
 
-3. Select **Edit**.
+3. In the **Policies** tab, create a new Access policy or edit an existing policy.
 
-4. To have an existing policy require WARP, select **Edit** for that specific policy. Then, add an **Include** or **Require** rule which uses the *WARP* selector.
+4. In the policy builder, add an Include or Require rule which uses the _WARP_ selector. Save the policy.
 
-5. Select **Save rule**.
+5. Save the Access application.
 
-Before granting access to the application, your policy will now check that the device is running the WARP client.
+Before granting access to the application, the policy will check that the device is running the WARP client.

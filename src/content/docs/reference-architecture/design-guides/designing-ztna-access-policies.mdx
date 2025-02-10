@@ -169,7 +169,7 @@ There are many different [types of selectors](/cloudflare-one/policies/access/#s
 
   You can configure this control by enabling the "gateway" device posture check and then requiring "gateway" in your application policies. Requiring "gateway" is more flexible than relying solely on the device agent because users can also on-ramp from Browser Isolation or a Magic WAN-connected site, both of which provide traffic logging and filtering. Additionally, when using the device agent, this allows you to guarantee that a user is coming from a compliant device that has passed a set of device posture checks.
 
-  Requiring the gateway is enforced continuously for [self-hosted applications](/cloudflare-one/applications/configure-apps/self-hosted-apps/). For SaaS apps, it is only enforced at the time of login. However, a dedicated egress IP can be leveraged in tandem to enforce that traffic always goes via Cloudflare Gateway.
+  Requiring the gateway is enforced continuously for [self-hosted applications](/cloudflare-one/applications/configure-apps/self-hosted-public-app/). For SaaS apps, it is only enforced at the time of login. However, a dedicated egress IP can be leveraged in tandem to enforce that traffic always goes via Cloudflare Gateway.
 
 - **Does the user belong to an existing group, or have specific identity attributes?**
   If your IdP supports SCIM, group membership information can be imported into Cloudflare, where it can be used in policies. Group information can also come from the SAML or OAuth data sent as part of authentication. In fact, when OIDC or SAML is used and claims are sent, they can be used in a policy. So if your users authenticate to your IDP using SAML, and the resulting token contains their "role," you can query that value in the rule.
@@ -237,7 +237,7 @@ Add an additional layer of access control by requiring users to obtain "temporar
 
 ### Access Groups
 
-One of the most important parts of defining ZTNA policies is to leverage reusable elements called [Access Groups](/cloudflare-one/identity/users/groups/). Each access group uses the same rules we've just described to define users, traffic or devices. These groups can then be used across many policies to allow, deny, bypass, or isolate access to an application.
+One of the most important parts of defining ZTNA policies is to leverage reusable elements called [Access Groups](/cloudflare-one/policies/access/groups/). Each access group uses the same rules we've just described to define users, traffic or devices. These groups can then be used across many policies to allow, deny, bypass, or isolate access to an application.
 
 For example, you can define "Employees" once as an Access Group, and then use that in every application policy where you want to refer to employees. Updates to this Access Group would then be reflected in every policy. This is also a good way to include nested logic (for example, users with a Linux device and has antivirus software enabled)
 
@@ -512,4 +512,4 @@ Related resources
 
 - [Cloudflare SASE reference architecture](/reference-architecture/architectures/sase/)
 - [Using Cloudflare SASE with Microsoft](/reference-architecture/architectures/cloudflare-sase-with-microsoft/)
-- [How to deploy Cloudflare ZTNA](/learning-paths/zero-trust-web-access/)
+- [How to deploy Cloudflare ZTNA](/learning-paths/zero-trust-web-access/concepts/)

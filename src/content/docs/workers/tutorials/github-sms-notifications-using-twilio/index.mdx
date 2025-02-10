@@ -8,7 +8,7 @@ languages:
   - JavaScript
 ---
 
-import { Render, PackageManagers } from "~/components";
+import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 In this tutorial, you will learn to build an SMS notification system on Workers to receive updates on a GitHub repository. Your Worker will send you a text update using Twilio when there is new activity on your repository.
 
@@ -147,15 +147,13 @@ function checkSignature(text, headers, githubSecretToken) {
 }
 ```
 
-To make this work, you need to use [`wrangler secret put`](/workers/wrangler/commands/#put-3) to set your `GITHUB_SECRET_TOKEN`. This token is the secret you picked earlier when configuring you GitHub webhook:
+To make this work, you need to use [`wrangler secret put`](/workers/wrangler/commands/#put) to set your `GITHUB_SECRET_TOKEN`. This token is the secret you picked earlier when configuring you GitHub webhook:
 
 ```sh
 npx wrangler secret put GITHUB_SECRET_TOKEN
 ```
 
-Add the nodejs_compat flag to your `wrangler.toml` file:
-
-import { WranglerConfig } from "~/components";
+Add the nodejs_compat flag to your Wrangler file:
 
 <WranglerConfig>
 
@@ -203,7 +201,7 @@ async function sendText(accountSid, authToken, message) {
 }
 ```
 
-To make this work, you need to set some secrets to hide your `ACCOUNT_SID` and `AUTH_TOKEN` from the source code. You can set secrets with [`wrangler secret put`](/workers/wrangler/commands/#put-3) in your command line.
+To make this work, you need to set some secrets to hide your `ACCOUNT_SID` and `AUTH_TOKEN` from the source code. You can set secrets with [`wrangler secret put`](/workers/wrangler/commands/#put) in your command line.
 
 ```sh
 npx wrangler secret put TWILIO_ACCOUNT_SID

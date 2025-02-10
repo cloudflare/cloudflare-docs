@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { Render, PackageManagers } from "~/components";
+import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 ## Prerequisites:
 
@@ -67,9 +67,25 @@ To upload and deploy the user Worker to the dispatch namespace, running the foll
 npx wrangler deploy --dispatch-namespace testing
 ```
 
-### 4. Create a dispatch Worker
+### 4. Create a dynamic dispatch Worker
 
-[Dispatch Workers](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dynamic-dispatch-worker) are used to execute user Workers from the dispatch namespace. You will now create a dispatch Worker and add logic it needs to route to the user Worker created in step 2.
+A [dynamic dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dynamic-dispatch-worker) is a specialized routing Worker that directs incoming requests to the appropriate user Workers in your dispatch namespace. Instead of using [Workers Routes](/workers/configuration/routing/routes/), dispatch Workers let you programmatically control request routing through code.
+
+#### Why use a dynamic dispatch Worker?
+
+* **Scale**: Perfect for routing thousands or millions of hostnames to different Workers, without needing to rely on [Workers Routes](/workers/configuration/routing/routes/)
+* **Custom routing logic**: Write code to determine exactly how requests should be routed. For example:
+   * Map hostnames directly to specific Workers
+   * Route requests based on subdomains
+   * Use request metadata or headers for routing decisions
+
+* **Add platform functionality**: Build in additional features at the routing layer.
+   * Run authentication checks before requests reach user Workers
+   * Sanitize incoming requests
+   * Attach useful context like user IDs or account information
+   * Transform requests or responses as needed
+
+**To create your dynamic dispatch Worker:**
 
 Navigate up a level from your user Worker's project directory:
 
@@ -77,7 +93,7 @@ Navigate up a level from your user Worker's project directory:
 cd ..
 ```
 
-Create your dispatch Worker. In this example, the dispatch Worker is called `my-dispatcher`.
+Create your dynamic dispatch Worker. In this example, the dispatch Worker is called `my-dispatcher`.
 
 <PackageManagers type="create" pkg="cloudflare@latest" args={"my-dispatcher"} />
 
@@ -97,9 +113,7 @@ Change to your project's directory:
 cd my-dispatcher
 ```
 
-Open the `wrangler.toml` file in your project directory, and add the dispatch namespace binding:
-
-import { WranglerConfig } from "~/components";
+Open the Wrangler file in your project directory, and add the dispatch namespace binding:
 
 <WranglerConfig>
 
@@ -121,8 +135,9 @@ export default {
 	},
 };
 ```
+This example shows a simple dynamic dispatch Worker that routes all requests to a single user Worker. For more advanced routing patterns, you could route based on hostname, path, custom metadata, or other request properties.
 
-Deploy your dispatch Worker:
+Deploy your dynamic dispatch Worker:
 
 ```sh
 npx wrangler deploy

@@ -11,7 +11,7 @@ description: Build a counter using Durable Objects and Workers with RPC methods.
 
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TabItem, Tabs, WranglerConfig } from "~/components"
 
 This example shows how to build a counter using Durable Objects and Workers with [RPC methods](/workers/runtime-apis/rpc) that can print, increment, and decrement a `name` provided by the URL query string parameter, for example, `?name=A`.
 
@@ -170,9 +170,7 @@ export class Counter extends DurableObject {
 
 </TabItem> </Tabs>
 
-Finally, configure your `wrangler.toml` file to include a Durable Object [binding](/durable-objects/get-started/#5-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the namespace and class name chosen previously.
-
-import { WranglerConfig } from "~/components";
+Finally, configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/tutorial/#5-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the namespace and class name chosen previously.
 
 <WranglerConfig>
 

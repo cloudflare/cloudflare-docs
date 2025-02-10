@@ -1,24 +1,26 @@
 ---
-title: WAF Managed Rules
+title: WAF Managed Rules configuration using Terraform
 pcx_content_type: how-to
 sidebar:
   order: 2
+  label: WAF Managed Rules
 head:
   - tag: title
-    content: Configure WAF Managed Rules with Terraform
+    content: WAF Managed Rules configuration using Terraform
 ---
 
 import { Details, Render, RuleID } from "~/components";
 
-This page provides examples of deploying and configuring WAF Managed Rules in your zone or account using Terraform. It covers the following configurations:
+This page provides examples of deploying and configuring [WAF Managed Rules](/waf/managed-rules/) in your zone or account using Terraform. It covers the following configurations:
 
-- [Deploy managed rulesets](#deploy-managed-rulesets)
+- [Deploy managed rulesets at the zone level](#deploy-managed-rulesets-at-the-zone-level)
+- [Deploy managed rulesets at the account level](#deploy-managed-rulesets-at-the-account-level)
 - [Configure skip rules](#configure-skip-rules)
 - [Configure payload logging](#configure-payload-logging)
 - [Configure overrides](#configure-overrides)
 - [Configure the OWASP paranoia level, score threshold, and action](#configure-the-owasp-paranoia-level-score-threshold-and-action)
 
-For more information on WAF Managed Rules, refer to [WAF Managed Rules](/waf/managed-rules/) in the Cloudflare WAF documentation. For more information on deploying and configuring rulesets using the Rulesets API, refer to [Work with managed rulesets](/ruleset-engine/managed-rulesets/) in the Ruleset Engine documentation.
+For more information on deploying and configuring rulesets using the Rulesets API, refer to [Work with managed rulesets](/ruleset-engine/managed-rulesets/) in the Ruleset Engine documentation.
 
 ## Before you start
 
@@ -26,15 +28,19 @@ For more information on WAF Managed Rules, refer to [WAF Managed Rules](/waf/man
 
 <Render file="find-ids-managed-rulesets" />
 
+The IDs of WAF managed rulesets are also available in the [WAF Managed Rules](/waf/managed-rules/#managed-rulesets) page.
+
 ### Import or delete existing rulesets
 
 <Render file="import-delete-existing-rulesets" />
 
 ---
 
-## Deploy managed rulesets
+## Deploy managed rulesets at the zone level
 
 The following example deploys two managed rulesets to the zone with ID `<ZONE_ID>` using Terraform, using a `cloudflare_ruleset` resource with two rules that execute the managed rulesets.
+
+<Render file="v4-code-snippets" />
 
 ```tf
 # Configure a ruleset at the zone level for the "http_request_firewall_managed" phase
@@ -69,16 +75,19 @@ resource "cloudflare_ruleset" "zone_level_managed_waf" {
 }
 ```
 
-<Details header="Account-level example configuration">
+## Deploy managed rulesets at the account level
 
-:::note[Before you start]
+:::note[Notes]
 
-- Account-level WAF configuration requires an Enterprise plan with a paid add-on.
+- [Account-level WAF configuration](/waf/account/) requires an Enterprise plan with a paid add-on.
 
 - Managed rulesets deployed at the account level will only apply to incoming traffic of zones on an Enterprise plan. The expression of your `execute` rule must end with `and cf.zone.plan eq "ENT"`.
-  :::
+
+:::
 
 The following example deploys two managed rulesets to the account with ID `<ACCOUNT_ID>` using Terraform, using a `cloudflare_ruleset` resource with two rules that execute the managed rulesets for two hostnames belonging to Enterprise zones.
+
+<Render file="v4-code-snippets" />
 
 ```tf
 resource "cloudflare_ruleset" "account_level_managed_waf" {
@@ -112,8 +121,6 @@ resource "cloudflare_ruleset" "account_level_managed_waf" {
 }
 ```
 
-</Details>
-
 ## Configure skip rules
 
 The following example adds two [skip rules](/waf/managed-rules/waf-exceptions/) (or exceptions) for the Cloudflare Managed Ruleset:
@@ -122,6 +129,8 @@ The following example adds two [skip rules](/waf/managed-rules/waf-exceptions/) 
 - The second rule will skip the execution of two rules belonging to the Cloudflare Managed Ruleset for specific URLs, according to the rule expression.
 
 Add the two skip rules to the `cloudflare_ruleset` resource before the rule that deploys the Cloudflare Managed Ruleset:
+
+<Render file="v4-code-snippets" />
 
 ```tf null {4-13,15-27}
 resource "cloudflare_ruleset" "zone_level_managed_waf" {
@@ -184,7 +193,9 @@ The following example adds three [overrides](/ruleset-engine/managed-rulesets/ov
 
 The following configuration includes the three overrides in the rule that executes the Cloudflare Managed Ruleset:
 
-```tf null {9-24}
+<Render file="v4-code-snippets" />
+
+```tf null {11-26}
   # (...)
 
   # Execute Cloudflare Managed Ruleset
@@ -223,7 +234,9 @@ This example enables [payload logging](/waf/managed-rules/payload-logging/) for 
 
 Building upon the rule that deploys the Cloudflare Managed Ruleset, the following rule configuration adds the `matched_data` object with the public key used to encrypt the payload:
 
-```tf null {9-11}
+<Render file="v4-code-snippets" />
+
+```tf null {11-13}
   # (...)
 
   # Execute Cloudflare Managed Ruleset
@@ -262,7 +275,9 @@ The following example rule of a `cloudflare_ruleset` Terraform resource performs
 - Sets the score threshold to `60` (_Low_).
 - Sets the ruleset action to `log`.
 
-```tf null {8-25}
+<Render file="v4-code-snippets" />
+
+```tf null {11-28}
   # (...)
 
   # Execute Cloudflare OWASP Core Ruleset

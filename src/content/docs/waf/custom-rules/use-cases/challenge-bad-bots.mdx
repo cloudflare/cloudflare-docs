@@ -13,9 +13,9 @@ Bot score ranges from 1 through 99. A low score indicates the request comes from
 
 These examples use:
 
-- [`cf.bot_management.score`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfbot_managementscore) to target requests from bots
-- [`cf.bot_management.verified_bot`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfbot_managementverified_bot) to identify requests from [known good bots](https://radar.cloudflare.com/verified-bots)
-- [`cf.bot_management.ja3_hash`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfbot_managementja3_hash) to target specific [JA3 Fingerprints](/bots/concepts/ja3-ja4-fingerprint/)
+- [`cf.bot_management.score`](/ruleset-engine/rules-language/fields/reference/cf.bot_management.score/) to target requests from bots
+- [`cf.bot_management.verified_bot`](/ruleset-engine/rules-language/fields/reference/cf.bot_management.verified_bot/) to identify requests from [known good bots](https://radar.cloudflare.com/verified-bots)
+- [`cf.bot_management.ja3_hash`](/ruleset-engine/rules-language/fields/reference/cf.bot_management.ja3_hash/) to target specific [JA3 Fingerprints](/bots/concepts/ja3-ja4-fingerprint/)
 
 ## Suggested rules
 
@@ -57,7 +57,7 @@ When a request is definitely automated (score of 1) or likely automated (scores 
 
 #### Exempt API traffic
 
-Since Bot Management detects automated users, you need to explicitly allow your **good** automated traffic⁠ — this includes your APIs and partner APIs.
+Since Bot Management detects automated users, you need to explicitly allow your **good** automated traffic⁠ — this includes your [APIs](https://www.cloudflare.com/learning/security/api/what-is-an-api/) and partner APIs.
 
 This example offers the same protection as the browser-only rule, but allows automated traffic to your API.
 

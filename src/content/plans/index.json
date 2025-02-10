@@ -1040,7 +1040,7 @@
 		},
 		"true_client_ip_header": {
 			"title": "True Client IP Header",
-			"link": "/fundamentals/reference/http-request-headers/#true-client-ip-enterprise-plan-only",
+			"link": "/fundamentals/reference/http-headers/#true-client-ip-enterprise-plan-only",
 			"properties": {
 				"availability": {
 					"title": "Availability",
@@ -3125,6 +3125,22 @@
 					"pro": "No",
 					"biz": "Yes",
 					"ent": "Yes"
+				},
+				"turnstile_widget_mode": {
+					"title": "Turnstile Widget Mode",
+					"link": "/waiting-room/how-to/create-waiting-room/",
+					"free": "No",
+					"pro": "No",
+					"biz": "Invisible only",
+					"ent": "Invisible (default)\n\n<em>With add-on</em>\nAll options"
+				},
+				"turnstile_fail_action": {
+					"title": "Turnstile Fail Action",
+					"link": "/waiting-room/how-to/create-waiting-room/",
+					"free": "No",
+					"pro": "No",
+					"biz": "Log only",
+					"ent": "Log only (default)\n\n<em>With add-on</em>\nInfinite queue"
 				}
 			}
 		}

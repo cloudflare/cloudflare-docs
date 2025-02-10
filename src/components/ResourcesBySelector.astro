@@ -27,7 +27,7 @@ const resources = await getCollection("docs", ({ data }) => {
 			const description = page.data.description;
 			return (
 				<li>
-					<a href={`/${page.slug}/`}>{page.data.title}</a>
+					<a href={`/${page.id}/`}>{page.data.title}</a>
 					{description && `: ${description}`}
 				</li>
 			);

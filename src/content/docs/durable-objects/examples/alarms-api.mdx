@@ -13,9 +13,13 @@ description: Use the Durable Objects Alarms API to batch requests to a Durable O
 
 ---
 
-import { GlossaryTooltip } from "~/components";
+import { GlossaryTooltip, WranglerConfig } from "~/components";
 
-This example implements an <GlossaryTooltip term="alarm">`alarm()`</GlossaryTooltip> handler that wakes the Durable Object once every 10 seconds to batch requests to a single Durable Object. The `alarm()` handler will delay processing until there is enough work in the queue.
+This example implements an <GlossaryTooltip term="alarm">`alarm()`</GlossaryTooltip> handler that allows batching of requests to a single Durable Object.
+
+When a request is received and no alarm is set, it sets an alarm for 10 seconds in the future. The `alarm()` handler processes all requests received within that 10-second window.
+
+If no new requests are received, no further alarms will be set until the next request arrives.
 
 ```js
 import { DurableObject } from 'cloudflare:workers';
@@ -74,9 +78,7 @@ export class Batcher extends DurableObject {
 
 The `alarm()` handler will be called once every 10 seconds. If an unexpected error terminates the Durable Object, the `alarm()` handler will be re-instantiated on another machine. Following a short delay, the `alarm()` handler will run from the beginning on the other machine.
 
-Finally, configure your `wrangler.toml` file to include a Durable Object [binding](/durable-objects/get-started/#5-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the namespace and class name chosen previously.
-
-import { WranglerConfig } from "~/components";
+Finally, configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/tutorial/#5-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the namespace and class name chosen previously.
 
 <WranglerConfig>
 

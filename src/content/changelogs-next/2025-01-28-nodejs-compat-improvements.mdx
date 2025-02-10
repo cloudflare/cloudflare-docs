@@ -1,0 +1,86 @@
+---
+title: Support for Node.js DNS, Net, and Timer APIs in Workers
+description: Node.js APIs from the node:dns, node:net, and node:timers modules are now available when using nodejs_compat.
+products:
+  - workers
+date: 2025-01-28T13:00:00Z
+---
+
+import { Render, PackageManagers, TypeScriptExample } from "~/components";
+
+When using a Worker with the [`nodejs_compat`](/workers/runtime-apis/nodejs/) compatibility flag enabled, you can now use the following Node.js APIs:
+
+- [`node:net`](/workers/runtime-apis/nodejs/net/)
+- [`node:dns`](/workers/runtime-apis/nodejs/dns/)
+- [`node:timers`](/workers/runtime-apis/nodejs/timers/)
+
+#### node:net
+
+You can use [`node:net`](https://nodejs.org/api/net.html) to create a direct connection to servers via a TCP sockets
+with [`net.Socket`](https://nodejs.org/api/net.html#class-netsocket).
+
+<TypeScriptExample filename="index.ts">
+```ts
+import net from "node:net";
+
+const exampleIP = "127.0.0.1";
+
+export default {
+  async fetch(req): Promise<Response> {
+    const socket = new net.Socket();
+    socket.connect(4000, exampleIP, function () {
+      console.log("Connected");
+    });
+
+    socket.write("Hello, Server!");
+    socket.end();
+
+    return new Response("Wrote to server", { status: 200 });
+  },
+} satisfies ExportedHandler;
+````
+</TypeScriptExample>
+
+Additionally, you can now use other APIs incliding [`net.BlockList`](https://nodejs.org/api/net.html#class-netblocklist) and
+[`net.SocketAddress`](https://nodejs.org/api/net.html#class-netsocketaddress).
+
+Note that [`net.Server`](https://nodejs.org/api/net.html#class-netserver) is not supported.
+
+#### node:dns
+
+You can use [`node:dns`](https://nodejs.org/api/dns.html) for name resolution via [DNS over HTTPS](/1.1.1.1/encryption/dns-over-https/) using
+[Cloudflare DNS](https://www.cloudflare.com/application-services/products/dns/) at 1.1.1.1.
+
+<TypeScriptExample filename="index.ts">
+```ts
+import dns from 'node:dns';
+
+let responese = await dns.promises.resolve4('cloudflare.com', 'NS');
+````
+
+</TypeScriptExample>
+
+All `node:dns` functions are available, except `lookup`, `lookupService`, and `resolve` which throw "Not implemented" errors when called.
+
+#### node:timers
+
+You can use [`node:timers`](https://nodejs.org/api/timers.html) to schedule functions to be called at some future period of time.
+
+This includes [`setTimeout`](https://nodejs.org/api/timers.html#settimeoutcallback-delay-args) for calling a function after a delay,
+[`setInterval`](https://nodejs.org/api/timers.html#setintervalcallback-delay-args) for calling a function repeatedly,
+and [`setImmediate`](https://nodejs.org/api/timers.html#setimmediatecallback-args) for calling a function in the next iteration of the event loop.
+
+<TypeScriptExample filename="index.ts">
+```ts
+import timers from "node:timers";
+
+console.log("first");
+timers.setTimeout(() => {
+  console.log("last");
+}, 10);
+
+timers.setTimeout(() => {
+  console.log("next");
+});
+```
+</TypeScriptExample>

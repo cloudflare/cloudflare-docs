@@ -61,7 +61,7 @@ export async function getWranglerChangelog(): Promise<
 	CollectionEntry<"changelogs">
 > {
 	const response = await fetch(
-		"https://api.github.com/repos/cloudflare/workers-sdk/releases",
+		"https://api.github.com/repos/cloudflare/workers-sdk/releases?per_page=100",
 	);
 
 	if (!response.ok) {
@@ -84,7 +84,6 @@ export async function getWranglerChangelog(): Promise<
 	releases = releases.filter((x) => x.name.startsWith("wrangler@"));
 
 	return {
-		// @ts-expect-error id is a union of on-disk YAML files but we're adding this one dynamically
 		id: "wrangler",
 		collection: "changelogs",
 		data: {

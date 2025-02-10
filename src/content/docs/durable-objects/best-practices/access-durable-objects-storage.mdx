@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { Render, GlossaryTooltip } from "~/components";
+import { Render, GlossaryTooltip, WranglerConfig } from "~/components";
 
 <GlossaryTooltip term="Durable Object">Durable Objects</GlossaryTooltip> are a powerful compute API that provides a compute with storage building block. Each Durable Object has its own private, transactional and strongly consistent storage. Durable Objects <GlossaryTooltip term="Storage API">Storage API</GlossaryTooltip> provides access to a Durable Object's attached storage.
 
@@ -56,9 +56,7 @@ The new beta version of Durable Objects is available where each Durable Object h
 
 :::
 
-To allow a new Durable Object class to use SQLite storage backend, use `new_sqlite_classes` on the migration in your Worker's `wrangler.toml` file:
-
-import { WranglerConfig } from "~/components";
+To allow a new Durable Object class to use SQLite storage backend, use `new_sqlite_classes` on the migration in your Worker's Wrangler file:
 
 <WranglerConfig>
 

@@ -1,0 +1,16 @@
+releaseNotes: |-
+  This release is a minor hotfix over the previous release (2022.2.95.0).
+
+  **Notable updates**
+  - Fixed an issue where the organization name became case sensitive and could cause a device to lose registration.
+
+
+  **Known issues**
+  No known issues
+
+  For releated Cloudflare for Teams documentation please see: https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp
+version: 2022.2.247.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2022.2.247.0
+packageSize: 88379392
+releaseDate: 2022-02-23T20:48:31.623Z
+platformName: Windows

@@ -1,212 +1,45 @@
 ---
-import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
-import { getCollection, type CollectionEntry } from "astro:content";
-import { marked } from "marked";
-import { CardGrid, LinkTitleCard, Description } from "~/components";
+import StarlightPage, {
+	type StarlightPageProps,
+} from "@astrojs/starlight/components/StarlightPage.astro";
+import { getCollection } from "astro:content";
+import LearningPathCatalog from "~/components/LearningPathCatalog.tsx";
 
-const frontmatter = {
-	title: "Learning paths",
-	description:
-		"Learning paths guide you through modules and projects so you can get started with Cloudflare as quickly as possible.",
-	template: "splash",
-} as const;
+// @ts-expect-error virtual module
+import iconCollection from "virtual:astro-icon";
+import { getIconData, iconToSVG } from "@iconify/utils";
+
+const props = {
+	frontmatter: {
+		title: "Learning paths",
+		description:
+			"Learning paths guide you through modules and projects so you can get started with Cloudflare as quickly as possible.",
+		template: "splash",
+	},
+	hideBreadcrumbs: true,
+} as StarlightPageProps;
 
 const learningPaths = await getCollection("learning-paths");
 
-function lpGroups(paths: Array<CollectionEntry<"learning-paths">>) {
-	const groups = paths.flatMap((p) => p.data.product_group ?? []);
-	const additional = paths.flatMap((p) => p.data.additional_groups ?? []);
+const data = learningPaths.map((lp) => lp.data);
 
-	const unique = [...new Set(groups.concat(additional))];
+const iconToSvg = (id: string) => {
+	const data = getIconData(iconCollection.local, id);
 
-	return unique.sort();
-}
+	if (!data) throw new Error(`Icon ${id} does not exist.`);
 
-function lpProducts(paths: Array<CollectionEntry<"learning-paths">>) {
-	const products = paths.flatMap((p) => p.data.products ?? []);
+	return iconToSVG(data);
+};
 
-	const unique = [...new Set(products)];
-
-	return unique.sort();
-}
-
-const groups = lpGroups(learningPaths);
-const products = lpProducts(learningPaths);
+const icons = {
+	"Cloudflare essentials": iconToSvg("fundamentals"),
+	"Application performance": iconToSvg("speed"),
+	"Application security": iconToSvg("ddos-protection"),
+	"Cloudflare One": iconToSvg("cloudflare-one"),
+	"Developer platform": iconToSvg("workers"),
+};
 ---
 
-<StarlightPage frontmatter={frontmatter}>
-	<Description>
-		{frontmatter.description}
-	</Description>
-	<div class="flex">
-		<div class="w-1/4 pr-4 hidden lg:block">
-			<div class="border-b-2 border-accent-600 dark:border-accent-200">
-				<h2>Filters</h2>
-			</div>
-			<div id="areas-filter">
-				<p>
-					<strong>Product areas</strong>
-				</p>
-				{
-					groups.map((group) => (
-						<>
-							<input type="checkbox" id={group} />
-							<label for={group}>{group}</label>
-							<br />
-						</>
-					))
-				}
-			</div>
-			<div id="products-filter">
-				<p>
-					<strong>Products</strong>
-				</p>
-				{
-					products.map((product) => (
-						<>
-							<input type="checkbox" id={product} />
-							<label for={product}>{product}</label>
-							<br />
-						</>
-					))
-				}
-			</div>
-		</div>
-		<div id="lp-grid" class="w-full">
-			<CardGrid>
-				{
-					learningPaths
-						.sort((a, b) => a.data.priority - b.data.priority)
-						.map((lp) => (
-							<div
-								class="[&>article]:h-full [&>article]:w-full"
-								data-groups={JSON.stringify(
-									[lp.data.product_group].concat(
-										lp.data.additional_groups ?? [],
-									),
-								)}
-								data-products={JSON.stringify(lp.data.products)}
-							>
-								<LinkTitleCard
-									title={lp.data.title}
-									href={lp.data.path}
-									set:html={marked.parse(lp.data.description)}
-								/>
-							</div>
-						))
-				}
-			</CardGrid>
-		</div>
-	</div>
+<StarlightPage {...props}>
+	<LearningPathCatalog paths={data} icons={icons} client:load />
 </StarlightPage>
-
-<script>
-	function getAreaFilters(): NodeListOf<HTMLInputElement> | undefined {
-		const groupFiltersContainer =
-			document.querySelector<HTMLDivElement>("#areas-filter");
-
-		if (!groupFiltersContainer) return undefined;
-
-		const groupFilters =
-			groupFiltersContainer.querySelectorAll<HTMLInputElement>("input");
-
-		if (!groupFilters) return undefined;
-
-		return groupFilters;
-	}
-
-	function getProductFilters(): NodeListOf<HTMLInputElement> | undefined {
-		const groupFiltersContainer =
-			document.querySelector<HTMLDivElement>("#products-filter");
-
-		if (!groupFiltersContainer) return undefined;
-
-		const groupFilters =
-			groupFiltersContainer.querySelectorAll<HTMLInputElement>("input");
-
-		if (!groupFilters) return undefined;
-
-		return groupFilters;
-	}
-
-	function getLearningPaths(): NodeListOf<HTMLDivElement> | undefined {
-		const learningPathsContainer =
-			document.querySelector<HTMLDivElement>("#lp-grid");
-
-		if (!learningPathsContainer) return undefined;
-
-		const learningPaths =
-			learningPathsContainer.querySelectorAll<HTMLDivElement>("[data-groups]");
-
-		if (!learningPaths) return undefined;
-
-		return learningPaths;
-	}
-
-	function filterProducts() {
-		const areaFilters = getAreaFilters();
-		const productFilters = getProductFilters();
-
-		if (!areaFilters || !productFilters) return;
-
-		const checkedAreas: Array<string> = [];
-		const checkedProducts: Array<string> = [];
-
-		for (const filter of areaFilters) {
-			if (filter.checked) {
-				checkedAreas.push(filter.id);
-			}
-		}
-
-		for (const filter of productFilters) {
-			if (filter.checked) {
-				checkedProducts.push(filter.id);
-			}
-		}
-
-		const learningPaths = getLearningPaths();
-
-		if (!learningPaths) return;
-
-		if (checkedAreas.length === 0 && checkedProducts.length === 0) {
-			learningPaths.forEach((card) => {
-				card.style.display = "";
-			});
-			return;
-		}
-
-		for (const learningPath of learningPaths) {
-			if (!learningPath.dataset.groups || !learningPath.dataset.products)
-				continue;
-
-			const groups: Array<string> = JSON.parse(learningPath.dataset.groups);
-			const products: Array<string> = JSON.parse(learningPath.dataset.products);
-
-			let show = true;
-
-			show = checkedAreas.some((v) => {
-				return groups.includes(v);
-			});
-
-			if (!show) {
-				show = checkedProducts.some((v) => {
-					return products.includes(v);
-				});
-			}
-
-			if (show) {
-				learningPath.style.display = "";
-			} else {
-				learningPath.style.display = "none";
-			}
-		}
-	}
-
-	getAreaFilters()?.forEach((input) => {
-		input.addEventListener("change", filterProducts);
-	});
-
-	getProductFilters()?.forEach((input) => {
-		input.addEventListener("change", filterProducts);
-	});
-</script>

@@ -7,7 +7,7 @@ head:
 description: Create, develop, and deploy your Cloudflare Workers with Wrangler commands.
 ---
 
-import { TabItem, Tabs, Render, Type, MetaInfo } from "~/components";
+import { TabItem, Tabs, Render, Type, MetaInfo, WranglerConfig } from "~/components";
 
 Wrangler offers a number of commands to manage your Cloudflare Workers.
 
@@ -27,7 +27,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`r2 bucket`](#r2-bucket) - Manage Workers R2 buckets.
 - [`r2 object`](#r2-object) - Manage Workers R2 objects.
 - [`secret`](#secret) - Manage the secret variables for a Worker.
-- [`secret:bulk`](#secretbulk) - Manage multiple secret variables for a Worker.
+- [`secret bulk`](#secretbulk) - Manage multiple secret variables for a Worker.
 - [`workflows`](#workflows) - Manage and configure Workflows.
 - [`tail`](#tail) - Start a session to livestream logs from a deployed Worker.
 - [`pages`](#pages) - Configure Cloudflare Pages.
@@ -40,6 +40,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`rollback`](#rollback) - Rollback to a recent deployment.
 - [`dispatch-namespace`](#dispatch-namespace) - Interact with a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dispatch-namespace).
 - [`mtls-certificate`](#mtls-certificate) - Manage certificates used for mTLS connections.
+- [`cert`](#cert) - Manage certificates used for mTLS and Certificate Authority (CA) chain connections.
 - [`types`](#types) - Generate types from bindings and module rules in configuration.
 - [`telemetry`](#telemetry) - Configure whether Wrangler can collect anonymous usage data.
 
@@ -146,7 +147,7 @@ wrangler init [<NAME>] [OPTIONS]
 ```
 
 - `NAME` <Type text="string" /> <MetaInfo text="optional (default: name of working directory)" />
-  - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/configuration/) file.
+  - The name of the Workers project. This is both the directory name and `name` property in the generated [Wrangler configuration](/workers/wrangler/configuration/) file.
 - `--yes` <Type text="boolean" /> <MetaInfo text="optional" />
   - Answer yes to any prompts for new projects.
 - `--from-dash` <Type text="string" /> <MetaInfo text="optional" />
@@ -172,7 +173,7 @@ wrangler generate [<NAME>] [TEMPLATE]
 ```
 
 - `NAME` <Type text="string" /> <MetaInfo text="optional (default: name of working directory)" />
-  - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/configuration/) file.
+  - The name of the Workers project. This is both the directory name and `name` property in the generated [Wrangler configuration](/workers/wrangler/configuration/) file.
 - `TEMPLATE` <Type text="string" /> <MetaInfo text="optional" />
   - The URL of a GitHub template, with a default [worker-template](https://github.com/cloudflare/worker-template). Browse a list of available templates on the [cloudflare/workers-sdk](https://github.com/cloudflare/workers-sdk/tree/main/templates#usage) repository.
 
@@ -202,7 +203,7 @@ Interact with a [Vectorize](/vectorize/) vector database.
 
 ### `create`
 
-Creates a new vector index, and provides the binding and name that you will put in your `wrangler.toml` file.
+Creates a new vector index, and provides the binding and name that you will put in your Wrangler file.
 
 ```sh
 npx wrangler vectorize create <INDEX_NAME> [--dimensions=<NUM_DIMENSIONS>] [--metric=<DISTANCE_METRIC>] [--description=<DESCRIPTION>]
@@ -429,7 +430,7 @@ wrangler dev [<SCRIPT>] [OPTIONS]
 
 :::note
 
-None of the options for this command are required. Many of these options can be set in your `wrangler.toml` file. Refer to the [`wrangler.toml` configuration](/workers/wrangler/configuration) documentation for more information.
+None of the options for this command are required. Many of these options can be set in your Wrangler file. Refer to the [Wrangler configuration](/workers/wrangler/configuration) documentation for more information.
 
 :::
 
@@ -440,7 +441,7 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
 :::
 
 - `SCRIPT` <Type text="string" />
-  - The path to an entry point for your Worker. Only required if your `wrangler.toml` does not include a `main` key (for example, `main = "index.js"`).
+  - The path to an entry point for your Worker. Only required if your `wrangler.toml / wrangler.json` file does not include a `main` key (for example, `main = "index.js"`).
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Name of the Worker.
 - `--no-bundle` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
@@ -490,11 +491,11 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
 - `--var` <Type text="key:value\[]" /> <MetaInfo text="optional" />
   - Array of `key:value` pairs to inject as variables into your code. The value will always be passed as a string to your Worker.
   - For example, `--var git_hash:$(git rev-parse HEAD) test:123` makes the `git_hash` and `test` variables available in your Worker's `env`.
-  - This flag is an alternative to defining [`vars`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
+  - This flag is an alternative to defining [`vars`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml / wrangler.json` file. If defined in both places, this flag's values will be used.
 - `--define` <Type text="key:value\[]" /> <MetaInfo text="optional" />
   - Array of `key:value` pairs to replace global identifiers in your code.
   - For example, `--define GIT_HASH:$(git rev-parse HEAD)` will replace all uses of `GIT_HASH` with the actual value at build time.
-  - This flag is an alternative to defining [`define`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
+  - This flag is an alternative to defining [`define`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml / wrangler.json` file. If defined in both places, this flag's values will be used.
 - `--tsconfig` <Type text="string" /> <MetaInfo text="optional" />
   - Path to a custom `tsconfig.json` file.
 - `--minify` <Type text="boolean" /> <MetaInfo text="optional" />
@@ -516,7 +517,7 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
-`wrangler dev` is a way to [locally test](/workers/testing/local-development/) your Worker while developing. With `wrangler dev` running, send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see `console.log` messages and exceptions appearing in your terminal.
+`wrangler dev` is a way to [locally test](/workers/local-development/) your Worker while developing. With `wrangler dev` running, send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see `console.log` messages and exceptions appearing in your terminal.
 
 ---
 
@@ -530,12 +531,12 @@ wrangler deploy [<SCRIPT>] [OPTIONS]
 
 :::note
 
-None of the options for this command are required. Also, many can be set in your `wrangler.toml` file. Refer to the [`wrangler.toml` configuration](/workers/wrangler/configuration/) documentation for more information.
+None of the options for this command are required. Also, many can be set in your Wrangler file. Refer to the [Wrangler configuration](/workers/wrangler/configuration/) documentation for more information.
 
 :::
 
 - `SCRIPT` <Type text="string" />
-  - The path to an entry point for your Worker. Only required if your `wrangler.toml` does not include a `main` key (for example, `main = "index.js"`).
+  - The path to an entry point for your Worker. Only required if your `wrangler.toml / wrangler.json` file does not include a `main` key (for example, `main = "index.js"`).
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Name of the Worker.
 - `--no-bundle` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
@@ -566,11 +567,11 @@ None of the options for this command are required. Also, many can be set in your
 - `--var` <Type text="key:value\[]" /> <MetaInfo text="optional" />
   - Array of `key:value` pairs to inject as variables into your code. The value will always be passed as a string to your Worker.
   - For example, `--var git_hash:$(git rev-parse HEAD) test:123` makes the `git_hash` and `test` variables available in your Worker's `env`.
-  - This flag is an alternative to defining [`vars`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
+  - This flag is an alternative to defining [`vars`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml / wrangler.json` file. If defined in both places, this flag's values will be used.
 - `--define` <Type text="key:value\[]" /> <MetaInfo text="optional" />
   - Array of `key:value` pairs to replace global identifiers in your code.
   - For example, `--define GIT_HASH:$(git rev-parse HEAD)` will replace all uses of `GIT_HASH` with the actual value at build time.
-  - This flag is an alternative to defining [`define`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
+  - This flag is an alternative to defining [`define`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml / wrangler.json` file. If defined in both places, this flag's values will be used.
 - `--triggers`, `--schedule`, `--schedules` <Type text="string[]" /> <MetaInfo text="optional" />
   - Cron schedules to attach to the deployed Worker. Refer to [Cron Trigger Examples](/workers/configuration/cron-triggers/#examples).
 - `--routes`, `--route` string\[] optional
@@ -619,7 +620,7 @@ wrangler delete [<SCRIPT>] [OPTIONS]
 ```
 
 - `SCRIPT` <Type text="string" />
-  - The path to an entry point for your Worker. Only required if your `wrangler.toml` does not include a `main` key (for example, `main = "index.js"`).
+  - The path to an entry point for your Worker. Only required if your `wrangler.toml / wrangler.json` file does not include a `main` key (for example, `main = "index.js"`).
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Name of the Worker.
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
@@ -629,547 +630,13 @@ wrangler delete [<SCRIPT>] [OPTIONS]
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
+---
+
 <Render file="wrangler-commands/kv" product="workers" />
 
 ---
 
-## `r2 bucket`
-
-Interact with buckets in an R2 store.
-
-:::note
-
-The `r2 bucket` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [the R2 API](/r2/api/workers/workers-api-reference/).
-:::
-
-### `create`
-
-Create a new R2 bucket.
-
-```txt
-wrangler r2 bucket create <NAME>
-```
-
-- `NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the new R2 bucket.
-- `--location` <Type text="string" /> <MetaInfo text="optional" />
-  - The optional [location hint](/r2/reference/data-location/#location-hints) that determines geographic placement of the R2 bucket.
-- `--storage-class` <Type text="'Standard|InfrequentAccess'" /> <MetaInfo text="optional" />
-  - The default storage class for objects uploaded to the bucket.
-- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
-  - The jurisdiction where the R2 bucket is created. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `info`
-
-Get information about an R2 bucket, including the bucket size and number of objects.
-
-```txt
-wrangler r2 bucket info <NAME>
-```
-
-- `NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the R2 bucket to get information about.
-- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
-  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `delete`
-
-Delete an R2 bucket.
-
-```txt
-wrangler r2 bucket delete <NAME>
-```
-
-- `NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the R2 bucket to delete.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `list`
-
-List R2 bucket in the current account.
-
-```txt
-wrangler r2 bucket list
-```
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `cors set`
-
-Set the [CORS configuration](/r2/buckets/cors/) for an R2 bucket from a JSON file.
-
-```txt
-wrangler r2 bucket cors set <NAME> [OPTIONS]
-```
-
-- `NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the R2 bucket to set the CORS configuration for.
-- `--file` <Type text="string" /> <MetaInfo text="required" />
-  - Path to the JSON file containing CORS configuration (file must be in format of request body of [put bucket CORS policy API](/api/operations/r2-put-bucket-cors-policy)).
-- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
-  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
-- `--force` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Skip confirmation when setting CORS configuration.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `cors delete`
-
-Clear the [CORS configuration](/r2/buckets/cors/) for an R2 bucket.
-
-```txt
-wrangler r2 bucket cors delete <NAME> [OPTIONS]
-```
-
-- `NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the R2 bucket to delete the CORS configuration for.
-- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
-  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
-- `--force` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Skip confirmation when clearing the CORS configuration.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `cors list`
-
-List the [CORS configuration](/r2/buckets/cors/) rules for an R2 bucket.
-
-```txt
-wrangler r2 bucket cors list <NAME> [OPTIONS]
-```
-
-- `NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the R2 bucket to list the CORS rules for.
-- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
-  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `dev-url enable`
-
-Enable public access via the [r2.dev URL](/r2/buckets/public-buckets/#enable-managed-public-access) for an R2 bucket.
-
-```txt
-wrangler r2 bucket dev-url enable <NAME> [OPTIONS]
-```
-
-- `NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the R2 bucket to enable public access via its r2.dev URL.
-- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
-  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
-- `--force` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Skip confirmation when enabling public access via r2.dev URL.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `dev-url disable`
-
-Disable public access via the [r2.dev URL](/r2/buckets/public-buckets/#enable-managed-public-access) for an R2 bucket.
-
-```txt
-wrangler r2 bucket dev-url disable <NAME> [OPTIONS]
-```
-
-- `NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the R2 bucket to disable public access via its r2.dev URL.
-- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
-  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
-- `--force` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Skip confirmation when disabling public access via r2.dev URL.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `dev-url get`
-
-Get the [r2.dev URL](/r2/buckets/public-buckets/#enable-managed-public-access) and status for an R2 bucket.
-
-```txt
-wrangler r2 bucket dev-url get <NAME> [OPTIONS]
-```
-
-- `NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the R2 bucket whose r2.dev URL status to retrieve.
-- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
-  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `domain add`
-
-Connect a [custom domain](/r2/buckets/public-buckets/#custom-domains) to an R2 bucket.
-
-```txt
-wrangler r2 bucket domain add <NAME> [OPTIONS]
-```
-
-- `NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the R2 bucket to connect a custom domain to.
-- `--domain` <Type text="string" /> <MetaInfo text="required" />
-  - The custom domain to connect to the R2 bucket.
-- `--zone-id` <Type text="string" /> <MetaInfo text="required" />
-  - The [zone ID](/fundamentals/setup/find-account-and-zone-ids/) associated with the custom domain.
-- `--min-tls` <Type text="'1.0'|'1.1'|'1.2'|'1.3'" /> <MetaInfo text="optional" />
-  - Set the minimum TLS version for the custom domain (defaults to 1.0 if not set).
-- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
-  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
-- `--force` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Skip confirmation when adding the custom domain.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `domain remove`
-
-Remove a [custom domain](/r2/buckets/public-buckets/#custom-domains) from an R2 bucket.
-
-```txt
-wrangler r2 bucket domain remove <NAME> [OPTIONS]
-```
-
-- `NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the R2 bucket to remove the custom domain from.
-- `--domain` <Type text="string" /> <MetaInfo text="required" />
-  - The custom domain to remove from the R2 bucket.
-- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
-  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
-- `--force` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Skip confirmation when removing the custom domain.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `domain update`
-
-Update settings for a [custom domain](/r2/buckets/public-buckets/#custom-domains) connected to an R2 bucket.
-
-```txt
-wrangler r2 bucket domain update <NAME> [OPTIONS]
-```
-
-- `NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the R2 bucket associated with the custom domain to update.
-- `--domain` <Type text="string" /> <MetaInfo text="required" />
-  - The custom domain whose settings will be updated.
-- `--min-tls` <Type text="'1.0'|'1.1'|'1.2'|'1.3'" /> <MetaInfo text="optional" />
-  - Update the minimum TLS version for the custom domain.
-- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
-  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `domain get`
-
-Get [custom domain](/r2/buckets/public-buckets/#custom-domains) connected to an R2 bucket.
-
-```txt
-wrangler r2 bucket domain get <NAME> [OPTIONS]
-```
-
-- `NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the R2 bucket whose custom domain to retrieve.
-- `--domain` <Type text="string" /> <MetaInfo text="required" />
-  - The custom domain to get information for.
-- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
-  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `domain list`
-
-List [custom domains](/r2/buckets/public-buckets/#custom-domains) for an R2 bucket.
-
-```txt
-wrangler r2 bucket domain list <NAME> [OPTIONS]
-```
-
-- `NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the R2 bucket whose connected custom domains will be listed.
-- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
-  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `lifecycle add`
-
-Add an [object lifecycle](/r2/buckets/object-lifecycles/) rule to an R2 bucket.
-
-```txt
-wrangler r2 bucket lifecycle add <NAME> [OPTIONS]
-```
-
-- `NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the R2 bucket to add a lifecycle rule to.
-- `--id` <Type text="string" /> <MetaInfo text="optional" />
-  - A unique identifier for the lifecycle rule.
-- `--prefix` <Type text="string" /> <MetaInfo text="optional" />
-  - Prefix condition for the lifecycle rule (leave empty for all prefixes).
-- `--expire-days` <Type text="number" /> <MetaInfo text="optional" />
-  - Sets the lifecycle rule action to expire objects after this number of days. Note you can provide only one of `--expire-days` or `--expire-date`.
-- `--expire-date` <Type text="string" /> <MetaInfo text="optional" />
-  - Sets the lifecycle rule action to expire objects after this date (YYYY-MM-DD). Note you can provide only one of `--expire-days` or `--expire-date`.
-- `--ia-transition-days` <Type text="number" /> <MetaInfo text="optional" />
-  - Sets the lifecycle rule action to transition objects to Infrequent Access storage after this number of days. Note you can provide only one of `--ia-transition-days` or `--ia-transition-date`.
-- `--ia-transition-date` <Type text="string" /> <MetaInfo text="optional" />
-  - Sets the lifecycle rule action to transition objects to Infrequent Access storage after this date (YYYY-MM-DD). Note you can provide only one of `--ia-transition-days` or `--ia-transition-date`.
-- `--abort-multipart-days` <Type text="number" /> <MetaInfo text="optional" />
-  - Sets the lifecycle rule action to abort incomplete multipart uploads after this number of days.
-- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
-  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
-- `--force` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Skip confirmation when adding the lifecycle rule.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `lifecycle remove`
-
-Remove an [object lifecycle](/r2/buckets/object-lifecycles/) rule from an R2 bucket.
-
-```txt
-wrangler r2 bucket lifecycle remove <NAME> [OPTIONS]
-```
-
-- `NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the R2 bucket to remove a lifecycle rule from.
-- `--id` <Type text="string" /> <MetaInfo text="required" />
-  - The unique identifier of the lifecycle rule to remove.
-- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
-  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `lifecycle list`
-
-List [object lifecycle](/r2/buckets/object-lifecycles/) rules for an R2 bucket.
-
-```txt
-wrangler r2 bucket lifecycle list <NAME> [OPTIONS]
-```
-
-- `NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the R2 bucket to list lifecycle rules for.
-- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
-  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `lifecycle set`
-
-Set the [object lifecycle](/r2/buckets/object-lifecycles/) configuration for an R2 bucket from a JSON file.
-
-```txt
-wrangler r2 bucket lifecycle set <NAME> [OPTIONS]
-```
-
-- `NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the R2 bucket to set lifecycle configuration for.
-- `--file` <Type text="string" /> <MetaInfo text="required" />
-  - Path to the JSON file containing lifecycle configuration (file must be in format of request body of [put object lifecycle configuration API](/api/resources/r2/subresources/buckets/subresources/lifecycle/methods/update/)).
-- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
-  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
-- `--force` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Skip confirmation when setting object lifecycle configuration.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `notification create`
-
-Create an [event notification](/r2/buckets/event-notifications/) rule for an R2 bucket.
-
-```txt
-wrangler r2 bucket notification create <NAME> [OPTIONS]
-```
-
-- `NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the R2 bucket to create an event notification rule for.
-- `--event-type` <Type text="'object-create'|'object-delete'[]" /> <MetaInfo text="required" />
-  - The [type of event(s)](/r2/buckets/event-notifications/#event-types) that will trigger event notifications.
-- `--queue` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the queue that will receive event notification messages.
-- `--prefix` <Type text="string" /> <MetaInfo text="optional" />
-  - The prefix that an object must match to emit event notifications (note: regular expressions are not supported).
-- `--suffix` <Type text="string" /> <MetaInfo text="optional" />
-  - The suffix that an object must match to emit event notifications (note: regular expressions are not supported).
-- `--description` <Type text="string" /> <MetaInfo text="optional" />
-  - A description that can be used to identify the event notification rule after creation.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `notification delete`
-
-Remove an event notification rule from a bucket's [event notification](/r2/buckets/event-notifications/) configuration.
-
-```txt
-wrangler r2 bucket notification delete <NAME> [OPTIONS]
-```
-
-- `NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the R2 bucket to delete an event notification rule for.
-- `--queue` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the queue that corresponds to the event notification rule. If no `rule` is provided, all event notification rules associated with the queue will be deleted.
-- `--rule` <Type text="string" /> <MetaInfo text="optional" />
-  - The ID of the event notification rule to delete.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `notification list`
-
-List the [event notification](/r2/buckets/event-notifications/) rules for a bucket.
-
-```txt
-wrangler r2 bucket notification list <NAME>
-```
-
-- `NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the R2 bucket to get event notification rules for.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `sippy enable`
-
-Enable [Sippy](/r2/data-migration/sippy/) incremental migration for a bucket.
-
-```txt
-wrangler r2 bucket sippy enable <NAME> [OPTIONS]
-```
-
-- `NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the R2 bucket to enable Sippy.
-- `--provider` <Type text="'AWS'|'GCS'" /> <MetaInfo text="required" />
-  - The provider of your source object storage bucket.
-- `--bucket` <Type text="string" /> <MetaInfo text="required" />
-  - The name of your source object storage bucket.
-- `--r2-key-id` <Type text="string" /> <MetaInfo text="required" />
-  - Your R2 Access Key ID. Requires read and write access.
-- `--r2-secret-access-key` <Type text="string" /> <MetaInfo text="required" />
-  - Your R2 Secret Access Key. Requires read and write access.
-- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
-  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
-- **AWS S3 provider-specific options:**
-- `--key-id` <Type text="string" /> <MetaInfo text="optional" />
-  - Your AWS Access Key ID. Requires [read and list access](/r2/data-migration/sippy/#amazon-s3).
-- `--secret-access-key` <Type text="string" /> <MetaInfo text="optional" />
-  - Your AWS Secret Access Key. Requires [read and list access](/r2/data-migration/sippy/#amazon-s3).
-- `--region` <Type text="string" /> <MetaInfo text="optional" />
-  - The AWS region where your S3 bucket is located. For example: `us-west-2`.
-- **Google Cloud Storage provider-specific options:**
-- `--service-account-key-file` <Type text="string" /> <MetaInfo text="optional" />
-  - The path to your Google Cloud service account key JSON file. This will read the service account key file and populate `client_email` and `private_key` options. Requires [read and list access](/r2/data-migration/sippy/#google-cloud-storage).
-- `--client-email` <Type text="string" /> <MetaInfo text="optional" />
-  - The client email for your Google Cloud service account key. Requires [read and list access](/r2/data-migration/sippy/#google-cloud-storage).
-- `--private-key` <Type text="string" /> <MetaInfo text="optional" />
-  - The private key for your Google Cloud service account key. Requires [read and list access](/r2/data-migration/sippy/#google-cloud-storage).
-- Note that you must provide either `service-account-key-file` or `client_email` and `private_key` for this command to run successfully.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `sippy disable`
-
-Disable [Sippy](/r2/data-migration/sippy/) incremental migration for a bucket.
-
-```txt
-wrangler r2 bucket sippy disable <NAME>
-```
-
-- `NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the R2 bucket to disable Sippy.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `sippy get`
-
-Get the status of [Sippy](/r2/data-migration/sippy/) incremental migration for a bucket.
-
-```txt
-wrangler r2 bucket sippy get <NAME>
-```
-
-- `NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the R2 bucket to get the status of Sippy.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
----
-
-## `r2 object`
-
-Interact with R2 objects.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-:::note
-
-The `r2 object` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [the R2 API](/r2/api/workers/workers-api-reference/).
-:::
-
-### `get`
-
-Fetch an object from an R2 bucket.
-
-```txt
-wrangler r2 object get <OBJECT_PATH> [OPTIONS]
-```
-
-- `OBJECT_PATH` <Type text="string" /> <MetaInfo text="required" />
-  - The source object path in the form of `{bucket}/{key}`.
-- `--local` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Interact with locally persisted data.
-- `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
-  - Specify directory for locally persisted data.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `put`
-
-Create an object in an R2 bucket.
-
-```txt
-wrangler r2 object put <OBJECT_PATH> [OPTIONS]
-```
-
-- `OBJECT_PATH` <Type text="string" /> <MetaInfo text="required" />
-  - The destination object path in the form of `{bucket}/{key}`.
-- `--file` <Type text="string" /> <MetaInfo text="optional" />
-  - The path of the file to upload. Note you must provide either `--file` or `--pipe`.
-- `--pipe` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Enables the file to be piped in, rather than specified with the `--file` option. Note you must provide either `--file` or `--pipe`.
-- `--content-type` <Type text="string" /> <MetaInfo text="optional" />
-  - A standard MIME type describing the format of the object data.
-- `--content-disposition` <Type text="string" /> <MetaInfo text="optional" />
-  - Specifies presentational information for the object.
-- `--content-encoding` <Type text="string" /> <MetaInfo text="optional" />
-  - Specifies what content encodings have been applied to the object and thus what decoding mechanisms must be applied to obtain the media-type referenced by the `Content-Type` header field.
-- `--content-language` <Type text="string" /> <MetaInfo text="optional" />
-  - The language the content is in.
-- `--cache-control` <Type text="string" /> <MetaInfo text="optional" />
-  - Specifies caching behavior along the request/reply chain.
-- `--expires` <Type text="string" /> <MetaInfo text="optional" />
-  - The date and time at which the object is no longer cacheable.
-- `--local` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Interact with locally persisted data.
-- `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
-  - Specify directory for locally persisted data.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `delete`
-
-Delete an object in an R2 bucket.
-
-```txt
-wrangler r2 object delete <OBJECT_PATH> [OPTIONS]
-```
-
-- `OBJECT_PATH` <Type text="string" /> <MetaInfo text="required" />
-  - The destination object path in the form of `{bucket}/{key}`.
-- `--local` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Interact with locally persisted data.
-- `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
-  - Specify directory for locally persisted data.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+<Render file="wrangler-commands/r2" product="workers" />
 
 ---
 
@@ -1190,7 +657,7 @@ wrangler secret put <KEY> [OPTIONS]
 - `KEY` <Type text="string" /> <MetaInfo text="required" />
   - The variable name for this secret to be accessed in the Worker.
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from a `wrangler.toml / wrangler.json` file.
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
 
@@ -1225,7 +692,7 @@ wrangler secret delete <KEY> [OPTIONS]
 - `KEY` <Type text="string" /> <MetaInfo text="required" />
   - The variable name for this secret to be accessed in the Worker.
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from the `wrangler.toml / wrangler.json` file.
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
 
@@ -1240,7 +707,7 @@ wrangler secret list [OPTIONS]
 ```
 
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from the `wrangler.toml / wrangler.json` file.
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment
 
@@ -1263,19 +730,21 @@ npx wrangler secret list
 
 ---
 
-## `secret:bulk`
+## `secret bulk`
 
 Upload multiple secrets for a Worker at once.
 
 ```txt
-wrangler secret:bulk [<FILENAME>] [OPTIONS]
+wrangler secret bulk [<FILENAME>] [OPTIONS]
 ```
 
 - `FILENAME` <Type text="string" /> <MetaInfo text="optional" />
+  - A file containing either [JSON](https://www.json.org/json-en.html) or the [.env](https://www.dotenv.org/docs/security/env) format
   - The JSON file containing key-value pairs to upload as secrets, in the form `{"SECRET_NAME": "secret value", ...}`.
+  - The `.env` file containing key-value pairs to upload as secrets, in the form `SECRET_NAME=secret value`.
   - If omitted, Wrangler expects to receive input from `stdin` rather than a file.
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from the `wrangler.toml / wrangler.json` file.
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
 
@@ -1291,7 +760,7 @@ The following is an example of uploading secrets from a JSON file redirected to 
 ```
 
 ```sh
-npx wrangler secret:bulk < secrets.json
+npx wrangler secret bulk < secrets.json
 ```
 
 ```sh output
@@ -1458,8 +927,6 @@ wrangler workflows trigger <WORKFLOW_NAME> <PARAMS> [OPTIONS]
 wrangler workflows trigger my-workflow '{"hello":"world"}'
 ```
 
-{/*
-
 ### `delete`
 
 Delete (unregister) a Workflow.
@@ -1471,7 +938,7 @@ wrangler workflows delete <WORKFLOW_NAME> [OPTIONS]
 - `WORKFLOW_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of a registered Workflow.
 
-*/}
+\*/}
 
 ## `tail`
 
@@ -1562,7 +1029,7 @@ wrangler pages dev [<DIRECTORY>] [OPTIONS]
 
 ### `download config`
 
-Download your Pages project config as a wrangler.toml file.
+Download your Pages project config as a `wrangler.toml / wrangler.json` file.
 
 ```txt
 wrangler pages download config <PROJECT_NAME>
@@ -1672,7 +1139,7 @@ wrangler pages deploy <BUILD_OUTPUT_DIRECTORY> [OPTIONS]
 ```
 
 - `BUILD_OUTPUT_DIRECTORY` <Type text="string" /> <MetaInfo text="optional" />
-  - The [directory](/pages/configuration/build-configuration/#framework-presets) of static files to upload. As of Wrangler 3.45.0, this is only required when your Pages project does not have a `wrangler.toml` file. Refer to the [Pages Functions configuration guide](/pages/functions/wrangler-configuration/) for more information.
+  - The [directory](/pages/configuration/build-configuration/#framework-presets) of static files to upload. As of Wrangler 3.45.0, this is only required when your Pages project does not have a Wrangler file. Refer to the [Pages Functions configuration guide](/pages/functions/wrangler-configuration/) for more information.
 - `--project-name` <Type text="string" /> <MetaInfo text="optional" />
   - The name of the project you want to deploy to.
 - `--branch` <Type text="string" /> <MetaInfo text="optional" />
@@ -1760,7 +1227,9 @@ wrangler pages secret bulk [<FILENAME>] [OPTIONS]
 ```
 
 - `FILENAME` <Type text="string" /> <MetaInfo text="optional" />
+  - A file containing either [JSON](https://www.json.org/json-en.html) or the [.env](https://www.dotenv.org/docs/security/env) format
   - The JSON file containing key-value pairs to upload as secrets, in the form `{"SECRET_NAME": "secret value", ...}`.
+  - The `.env` file containing key-value pairs to upload as secrets, in the form `SECRET_NAME=secret value`.
   - If omitted, Wrangler expects to receive input from `stdin` rather than a file.
 - `--project-name` <Type text="string" /> <MetaInfo text="optional" />
   - The name of your Pages project.
@@ -1970,7 +1439,7 @@ wrangler versions upload [OPTIONS]
 - `--message` <Type text="string" /> <MetaInfo text="optional" />
   - Add a version message. Accepts empty string.
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from the `wrangler.toml / wrangler.json` file.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
@@ -1983,7 +1452,7 @@ wrangler versions deploy [OPTIONS]
 ```
 
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from the `wrangler.toml / wrangler.json` file.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
@@ -2005,7 +1474,7 @@ wrangler versions list [OPTIONS]
 ```
 
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from the `wrangler.toml / wrangler.json` file.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
@@ -2020,7 +1489,7 @@ wrangler versions secret put <KEY> [OPTIONS]
 - `KEY` <Type text="string" /> <MetaInfo text="required" />
   - The variable name for this secret to be accessed in the Worker.
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from the `wrangler.toml / wrangler.json` file.
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
 
@@ -2037,7 +1506,7 @@ wrangler versions delete <KEY> [OPTIONS]
 - `KEY` <Type text="string" /> <MetaInfo text="required" />
   - The variable name for this secret to be accessed in the Worker.
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from the `wrangler.toml / wrangler.json` file.
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
 
@@ -2052,10 +1521,12 @@ wrangler versions secret bulk <FILENAME> [OPTIONS]
 ```
 
 - `FILENAME` <Type text="string" /> <MetaInfo text="optional" />
+  - A file containing either [JSON](https://www.json.org/json-en.html) or the [.env](https://www.dotenv.org/docs/security/env) format
   - The JSON file containing key-value pairs to upload as secrets, in the form `{"SECRET_NAME": "secret value", ...}`.
+  - The `.env` file containing key-value pairs to upload as secrets, in the form `SECRET_NAME=secret value`.
   - If omitted, Wrangler expects to receive input from `stdin` rather than a file.
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from the `wrangler.toml / wrangler.json` file.
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
 
@@ -2078,7 +1549,7 @@ wrangler triggers deploy [OPTIONS]
 ```
 
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from the `wrangler.toml / wrangler.json` file.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
@@ -2101,7 +1572,7 @@ wrangler deployments list [OPTIONS]
 ```
 
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from the `wrangler.toml / wrangler.json` file.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
@@ -2114,7 +1585,7 @@ wrangler deployments status
 ```
 
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from the `wrangler.toml / wrangler.json` file.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
@@ -2131,7 +1602,7 @@ wrangler rollback [<VERSION_ID>] [OPTIONS]
 - `VERSION_ID` <Type text="string" /> <MetaInfo text="optional" />
   - The ID of the version you wish to roll back to. If not supplied, the `rollback` command defaults to the version uploaded before the latest version.
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from `wrangler.toml`.
+  - Perform on a specific Worker rather than inheriting from the `wrangler.toml / wrangler.json` file.
 - `--message` <Type text="string" /> <MetaInfo text="optional" />
   - Add message for rollback. Accepts empty string. When specified, interactive prompts for rollback confirmation and message are skipped.
 
@@ -2249,9 +1720,7 @@ Issuer: CN=my-secured-origin.com,OU=my-team,O=my-org,L=San Francisco,ST=Californ
 Expires: 1/01/2025
 ```
 
-You can then add this certificate as a [binding](/workers/runtime-apis/bindings/) in your `wrangler.toml`:
-
-import { WranglerConfig } from "~/components";
+You can then add this certificate as a [binding](/workers/runtime-apis/bindings/) in your `wrangler.toml / wrangler.json` file:
 
 <WranglerConfig>
 
@@ -2324,6 +1793,135 @@ Deleted certificate 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d successfully
 
 ---
 
+## `cert`
+
+Manage mTLS client certificates and Certificate Authority (CA) chain certificates used for secured connections.
+
+These certificates can be used in Hyperdrive configurations, enabling them to present the certificate when connecting to an origin database that requires client authentication (mTLS) or a custom Certificate Authority (CA).
+
+### `upload mtls-certificate`
+
+Upload a client certificate.
+
+```txt
+wrangler cert upload mtls-certificate --cert <PATH> --key <PATH> [OPTIONS]
+```
+
+- `--cert` <Type text="string" /> <MetaInfo text="required" />
+  - A path to the TLS certificate to upload. Certificate chains are supported.
+- `--key` <Type text="string" /> <MetaInfo text="required" />
+  - A path to the private key to upload.
+- `--name` <Type text="string" /> <MetaInfo text="optional" />
+  - The name assigned to the mTLS certificate at upload.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+The following is an example of using the `upload` command to upload an mTLS certificate.
+
+```sh
+npx wrangler cert upload --cert cert.pem --key key.pem --name my-origin-cert
+```
+
+```sh output
+Uploading mTLS Certificate my-origin-cert...
+Success! Uploaded mTLS Certificate my-origin-cert
+ID: 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d
+Issuer: CN=my-secured-origin.com,OU=my-team,O=my-org,L=San Francisco,ST=California,C=US
+Expires: 1/01/2025
+```
+
+Note that the certificate and private keys must be in separate (typically `.pem`) files when uploading.
+
+### `upload certificate-authority`
+
+Upload a client certificate.
+
+```txt
+wrangler cert upload certificate-authority --ca-cert <PATH> [OPTIONS]
+```
+
+- `--ca-cert` <Type text="string" /> <MetaInfo text="required" />
+  - A path to the Certificate Authority (CA) chain certificate to upload.
+
+- `--name` <Type text="string" /> <MetaInfo text="optional" />
+  - The name assigned to the mTLS certificate at upload.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+The following is an example of using the `upload` command to upload an CA certificate.
+
+```sh
+npx wrangler cert upload certificate-authority --ca-cert server-ca-chain.pem --name SERVER_CA_CHAIN
+
+```
+
+```sh output
+Uploading CA Certificate SERVER_CA_CHAIN...
+Success! Uploaded CA Certificate SERVER_CA_CHAIN
+ID: 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d
+Issuer: CN=my-secured-origin.com,OU=my-team,O=my-org,L=San Francisco,ST=California,C=US
+Expires: 1/01/2025
+```
+
+### `list`
+
+List mTLS certificates associated with the current account ID. This will display both mTLS certificates and CA certificates.
+
+```txt
+wrangler cert list
+```
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+The following is an example of using the `list` command to upload an mTLS or CA certificate.
+
+```sh
+npx wrangler cert list
+```
+
+```sh output
+ID: 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d
+Name: my-origin-cert
+Issuer: CN=my-secured-origin.com,OU=my-team,O=my-org,L=San Francisco,ST=California,C=US
+Created on: 1/01/2023
+Expires: 1/01/2025
+
+ID: c5d004d1-8312-402c-b8ed-6194328d5cbe
+Issuer: CN=another-origin.com,OU=my-team,O=my-org,L=San Francisco,ST=California,C=US
+Created on: 1/01/2023
+Expires: 1/01/2025
+```
+
+### `delete`
+
+Delete a client certificate.
+
+```txt
+wrangler cert delete {--id <ID|--name <NAME>}
+```
+
+- `--id` <Type text="string" />
+  - The ID of the mTLS or CA certificate.
+- `--name` <Type text="string" />
+  - The name assigned to the mTLS or CA certificate at upload.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+The following is an example of using the `delete` command to delete an mTLS or CA certificate.
+
+```sh
+npx wrangler cert delete --id 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d
+```
+
+```sh output
+Are you sure you want to delete certificate 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d (my-origin-cert)? [y/n]
+yes
+Deleting certificate 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d...
+Deleted certificate 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d successfully
+```
+
+---
+
 ## `types`
 
 Generate types from bindings and module rules in configuration.
@@ -2357,6 +1955,10 @@ The minimum required Wrangler version to use this command is 3.66.0.
   - Leave the path blank to use the default option, e.g. `npx wrangler types --x-include-runtime`
   - A custom path must be relative to the project root, e.g. `./my-runtime-types.d.ts`
   - A custom path must have a `d.ts` extension.
+- `--strict-vars` <Type text="boolean" /> <MetaInfo text="optional (default: true)" />
+  - Control the types that Wrangler generates for `vars` bindings.
+  - If `true`, (the default) Wrangler generates literal and union types for bindings (e.g. `myEnv: 'my dev variable' | 'my prod variable'`).
+  - If `false`, Wrangler generates generic types (e.g. `myEnv: string`). This is useful when variables change frequently, especially when working across multiple environments.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
@@ -2388,7 +1990,7 @@ wrangler telemetry enable
 
 Check whether telemetry collection is currently enabled. The return result is specific to the directory where you have run the command.
 
-This will resolve the global status set by `wrangler telemetry disable / enable`, the environment variable [`WRANGLER_SEND_METRICS`](/workers/wrangler/system-environment-variables/#supported-environment-variables), and the [`send_metrics`](/workers/wrangler/configuration/#top-level-only-keys) key in `wrangler.toml`.
+This will resolve the global status set by `wrangler telemetry disable / enable`, the environment variable [`WRANGLER_SEND_METRICS`](/workers/wrangler/system-environment-variables/#supported-environment-variables), and the [`send_metrics`](/workers/wrangler/configuration/#top-level-only-keys) key in the `wrangler.toml / wrangler.json` file.
 
 ```txt
 wrangler telemetry status
