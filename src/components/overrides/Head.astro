@@ -65,8 +65,6 @@ if (currentSection) {
 		}
 
 		let ogImage = "https://developers.cloudflare.com/cf-twitter-card.png";
-		let changelogImage =
-			"https://developers.cloudflare.com/changelog-preview.png";
 
 		if (product.data.product.group) {
 			const group = product.data.product.group.toLowerCase();
@@ -97,10 +95,6 @@ if (currentSection) {
 				},
 				content: "",
 			});
-		}
-
-		if (currentSection === "changelog") {
-			ogImage = changelogImage;
 		}
 
 		const tags = [
@@ -142,6 +136,40 @@ if (currentSection) {
 			},
 			content: "",
 		});
+	}
+
+	if (currentSection === "changelog") {
+		let changelogImage =
+			"https://developers.cloudflare.com/changelog-preview.png";
+
+		const tags = [
+			{
+				tag: "meta",
+				attrs: {
+					name: "image",
+					content: changelogImage,
+				},
+				content: "",
+			},
+			{
+				tag: "meta",
+				attrs: {
+					name: "og:image",
+					content: changelogImage,
+				},
+				content: "",
+			},
+			{
+				tag: "meta",
+				attrs: {
+					name: "twitter:image",
+					content: changelogImage,
+				},
+				content: "",
+			},
+		] as const;
+
+		Astro.props.entry.data.head.push(...tags);
 	}
 }
 
