@@ -1,0 +1,30 @@
+---
+params:
+  - code
+---
+
+import { Code } from "~/components";
+
+#### Inline
+
+**Don't do this!**
+
+`{props.code}`
+
+**Do this!**
+
+<p><code>{props.code}</code></p>
+
+<hr />
+
+#### Codeblocks
+
+**Don't do this!**
+
+```js
+{props.code}
+```
+
+**Do this!**
+
+<Code code={props.code} lang="js" />
