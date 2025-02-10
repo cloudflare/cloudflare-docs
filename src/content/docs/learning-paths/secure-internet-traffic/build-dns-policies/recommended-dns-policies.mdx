@@ -33,7 +33,7 @@ curl --request POST \
   --header "Authorization: Bearer <API TOKEN>" \
 	--data '{
   "name": "All-DNS-Domain-Allowlist",
-  "description": "Organization-wide whitelist. Explicitly allow resolution of these DNS domains",
+  "description": "Organization-wide allowlist. Explicitly allow resolution of these DNS domains",
   "precedence": 0,
   "enabled": false,
   "action": "allow",
@@ -52,7 +52,7 @@ curl --request POST \
 resource "cloudflare_zero_trust_gateway_policy" "dns_whitelist_policy" {
   account_id  = var.account_id
   name        = "All-DNS-Domain-Allowlist"
-  description = "Organization-wide whitelist. Explicitly allow resolution of these DNS domains"
+  description = "Organization-wide allowlist. Explicitly allow resolution of these DNS domains"
   precedence  = 0
   enabled     = false
   action      = "allow"
@@ -163,6 +163,11 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_restrict_quarantined_users"
 <Details header="All-DNS-Application-Blocklist">
 
 <Render file="zero-trust/blocklist-application" />
+
+<Render
+	file="gateway/policies/dash-plus-api/dns-block-applications"
+	product="cloudflare-one"
+/>
 
 </Details>
 

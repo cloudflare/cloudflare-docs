@@ -101,35 +101,10 @@ Block content categories which go against your organization's acceptable use pol
 
 <Render file="gateway/policies/block-applications" product="cloudflare-one" />
 
-<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
-
-| Selector    | Operator | Value                     | Action |
-| ----------- | -------- | ------------------------- | ------ |
-| Application | in       | _Artificial Intelligence_ | Block  |
-
-</TabItem>
-
-<TabItem label="API">
-
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
---data '{
-  "name": "Block unauthorized applications",
-  "description": "Block access to unauthorized AI applications",
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "http"
-  ],
-  "traffic": "any(app.type.ids[*] in {25})",
-  "identity": "",
-  "device_posture": ""
-}'
-```
-
-</TabItem> </Tabs>
+<Render
+	file="gateway/policies/dash-plus-api/http-block-applications"
+	product="cloudflare-one"
+/>
 
 ## Check user identity
 

@@ -76,6 +76,11 @@ Bypass HTTP inspection for a custom list of domains identified as incompatible w
 
 <Render file="zero-trust/blocklist-application" />
 
+<Render
+	file="gateway/policies/dash-plus-api/http-block-applications"
+	product="cloudflare-one"
+/>
+
 </Details>
 
 <Details header="PrivilegedUsers-HTTP-Any-Isolate">

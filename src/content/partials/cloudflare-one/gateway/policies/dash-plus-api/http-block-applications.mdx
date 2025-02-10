@@ -1,0 +1,35 @@
+---
+{}
+---
+
+import { Tabs, TabItem } from "~/components";
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector    | Operator | Value                     | Action |
+| ----------- | -------- | ------------------------- | ------ |
+| Application | in       | _Artificial Intelligence_ | Block  |
+
+</TabItem>
+<TabItem label="API">
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "Block content categories",
+  "description": "Block access to unauthorized AI applications",
+  "enabled": true,
+  "action": "block",
+  "filters": [
+    "http"
+  ],
+  "traffic": "any(app.type.ids[*] in {25})",
+  "identity": "",
+  "device_posture": ""
+}'
+```
+
+</TabItem>
+</Tabs>
