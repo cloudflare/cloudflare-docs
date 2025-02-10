@@ -397,6 +397,42 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
 
 </TabItem> </Tabs>
 
+### Block Google Drive uploads
+
+Block file uploads from Google Drive.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector         | Operator      | Value                                  | Logic | Action |
+| ---------------- | ------------- | -------------------------------------- | ----- | ------ |
+| Application      | in            | _Google Drive_                         | And   | Block  |
+| Upload Mime Type | matches regex | `.*`                                   | And   |        |
+| Host             | is not        | `drivefrontend-pa.clients6.google.com` |       |        |
+
+</TabItem>
+
+<TabItem label="API">
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "Block Google Drive uploads",
+  "description": "Block file uploads to Google Drive",
+  "enabled": true,
+  "action": "block",
+  "filters": [
+    "http"
+  ],
+  "traffic": "any(app.ids[*] in {554}) and http.upload.mime matches \".*\" and not(http.request.host == \"drivefrontend-pa.clients6.google.com\")",
+  "identity": "",
+  "device_posture": ""
+}'
+```
+
+</TabItem> </Tabs>
+
 ### Block Gmail downloads
 
 Block file downloads from Gmail.

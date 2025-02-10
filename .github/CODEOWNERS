@@ -45,7 +45,8 @@
 
 # Changelogs
 
-/src/content/changelogs-next/ @elithrar @irvinebroque @jonesphillip @rita3ko @zaidf
+/src/content/changelogs-next/ @cloudflare/pm-changelogs
+/src/assets/images/changelog-next/ @cloudflare/pm-changelogs
 
 # Cloudflare One
 
