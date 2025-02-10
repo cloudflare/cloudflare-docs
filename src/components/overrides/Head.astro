@@ -64,12 +64,13 @@ if (currentSection) {
 			});
 		}
 
+		let ogImage = "https://developers.cloudflare.com/cf-twitter-card.png";
+		let changelogImage =
+			"https://developers.cloudflare.com/changelog-preview.png";
+
 		if (product.data.product.group) {
 			const group = product.data.product.group.toLowerCase();
 
-			let ogImage = "https://developers.cloudflare.com/cf-twitter-card.png";
-			let changelogImage =
-				"https://developers.cloudflare.com/changelog-preview.png";
 			const images: Record<string, string> = {
 				"cloudflare essentials":
 					"https://developers.cloudflare.com/core-services-preview.png",
@@ -88,39 +89,6 @@ if (currentSection) {
 				ogImage = images[group];
 			}
 
-			if (Astro.url.pathname.startsWith("/changelog/")) {
-				ogImage = changelogImage;
-			}
-
-			const tags = [
-				{
-					tag: "meta",
-					attrs: {
-						name: "image",
-						content: ogImage,
-					},
-					content: "",
-				},
-				{
-					tag: "meta",
-					attrs: {
-						name: "og:image",
-						content: ogImage,
-					},
-					content: "",
-				},
-				{
-					tag: "meta",
-					attrs: {
-						name: "twitter:image",
-						content: ogImage,
-					},
-					content: "",
-				},
-			] as const;
-
-			Astro.props.entry.data.head.push(...tags);
-
 			Astro.props.entry.data.head.push({
 				tag: "meta",
 				attrs: {
@@ -130,6 +98,39 @@ if (currentSection) {
 				content: "",
 			});
 		}
+
+		if (currentSection === "changelog") {
+			ogImage = changelogImage;
+		}
+
+		const tags = [
+			{
+				tag: "meta",
+				attrs: {
+					name: "image",
+					content: ogImage,
+				},
+				content: "",
+			},
+			{
+				tag: "meta",
+				attrs: {
+					name: "og:image",
+					content: ogImage,
+				},
+				content: "",
+			},
+			{
+				tag: "meta",
+				attrs: {
+					name: "twitter:image",
+					content: ogImage,
+				},
+				content: "",
+			},
+		] as const;
+
+		Astro.props.entry.data.head.push(...tags);
 	}
 
 	if (currentSection === "style-guide") {
