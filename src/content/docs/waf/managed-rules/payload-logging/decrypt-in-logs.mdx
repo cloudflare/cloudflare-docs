@@ -23,6 +23,8 @@ Refer to the Worker project's [README](https://github.com/cloudflare/matched-dat
 
 ## Structure of `encrypted_matched_data` property in Logpush
 
+Payload information includes the specific string that triggered the rule, along with the text that appears immediately before and after the match.
+
 Once you decrypt its value, the `encrypted_matched_data` property of the `Metadata` field in Logpush has a structure similar to the following:
 
 ```jsonc
@@ -41,7 +43,7 @@ Once you decrypt its value, the `encrypted_matched_data` property of the `Metada
 }
 ```
 
-The `before` and `after` properties will contain at most 25 bytes of content appearing before and after the matched text.
+The `before` and `after` properties are optional (there may be no content before/after the matched text) and will contain at most 25 bytes of content appearing before and after the match.
 
 Below are a few examples of payload matches:
 
