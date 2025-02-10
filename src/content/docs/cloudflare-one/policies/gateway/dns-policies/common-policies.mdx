@@ -63,34 +63,10 @@ Block [security categories](/cloudflare-one/policies/gateway/domain-categories/#
 
 The categories included in this policy are not always a security threat, but blocking them can help minimize the risk that your organization is exposed to. For more information, refer to [domain categories](/cloudflare-one/policies/gateway/domain-categories/).
 
-<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
-
-| Selector           | Operator | Value                                                     | Action |
-| ------------------ | -------- | --------------------------------------------------------- | ------ |
-| Content Categories | in       | _Questionable Content_, _Security Risks_, _Miscellaneous_ | Block  |
-
-</TabItem>
-
-<TabItem label="API">
-
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
---data '{
-  "name": "Block content categories",
-  "description": "Block common content categories that may pose a risk",
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "dns"
-  ],
-  "traffic": "any(dns.content_category[*] in {17 85 87 102 157 135 138 180 162 32 169 177 128 15 115 119 124 141 161})",
-  "identity": ""
-}'
-```
-
-</TabItem> </Tabs>
+<Render
+	file="gateway/policies/dash-plus-api/dns-block-content-categories"
+	product="cloudflare-one"
+/>
 
 ## Block unauthorized applications
 

@@ -92,35 +92,10 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
 
 Block content categories which go against your organization's acceptable use policy.
 
-<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
-
-| Selector           | Operator | Value                      | Action |
-| ------------------ | -------- | -------------------------- | ------ |
-| Content Categories | in       | _Adult Themes_, _Gambling_ | Block  |
-
-</TabItem>
-
-<TabItem label="API">
-
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
---data '{
-  "name": "Block content categories",
-  "description": "Block access to unauthorized adult and gambling applications",
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "http"
-  ],
-  "traffic": "any(http.request.uri.content_category[*] in {2 67 125 133 99})",
-  "identity": "",
-  "device_posture": ""
-}'
-```
-
-</TabItem> </Tabs>
+<Render
+	file="gateway/policies/dash-plus-api/http-block-content-categories"
+	product="cloudflare-one"
+/>
 
 ## Block unauthorized applications
 

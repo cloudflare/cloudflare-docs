@@ -44,12 +44,6 @@ resource "cloudflare_zero_trust_gateway_policy" "block_security_threats" {
   action      = "block"
   filters     = ["dns"]
   traffic     = "any(dns.security_category[*] in {68 178 80 83 176 175 117 131 134 151 153})"
-	rule_settings {
-			block_page_enabled = true
-			notification_settings {
-					enabled = true
-				}
-		}
 }
 ```
 

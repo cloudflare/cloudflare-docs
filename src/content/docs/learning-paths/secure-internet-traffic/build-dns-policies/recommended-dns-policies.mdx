@@ -149,8 +149,13 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_restrict_quarantined_users"
 <Details header="All-DNS-ContentCategories-Blocklist">
 
 <Render
-	file="zero-trust/blocklist-content-categories"
-	params={{ one: "DNS", two: "Security Risks" }}
+	file="zero-trust/content-categories-description"
+	params={{ policyType: "DNS" }}
+/>
+
+<Render
+	file="gateway/policies/dash-plus-api/dns-block-content-categories"
+	product="cloudflare-one"
 />
 
 </Details>
