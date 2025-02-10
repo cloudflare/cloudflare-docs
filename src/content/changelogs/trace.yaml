@@ -18,4 +18,4 @@ entries:
   - publish_date: "2024-03-12"
     title: Cloudflare Trace now supports grey-clouded hostnames
     description: |-
-      Even if the hostname is [not proxied by Cloudflare](/dns/manage-dns-records/reference/proxied-dns-records/#dns-only-records), Cloudflare Trace will now return all the configurations that Cloudflare would have applied to the request.
+      Even if the hostname is [not proxied by Cloudflare](/dns/proxy-status/#dns-only-records), Cloudflare Trace will now return all the configurations that Cloudflare would have applied to the request.

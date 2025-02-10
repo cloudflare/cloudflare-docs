@@ -61,7 +61,7 @@ Cloudflare determines this priority in the following order, assuming each record
 
    1. [New custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/) (belonging to a SaaS provider)
    2. [Legacy custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/reference/versioning/) (belonging to a SaaS provider)
-   3. [DNS](/dns/manage-dns-records/reference/proxied-dns-records/) (belonging to the logical DNS zone)
+   3. [DNS](/dns/proxy-status/) (belonging to the logical DNS zone)
 
 2. **Wildcard hostname match**:
 
@@ -82,8 +82,8 @@ Customer1 uses Cloudflare as authoritative DNS for the zone `shop.example.com`. 
 
 #### Scenario 2
 
-A customer has a [proxied](/dns/manage-dns-records/reference/proxied-dns-records/) DNS record for their domain. The customer's zone on Cloudflare is using a Free plan.
+A customer has a [proxied](/dns/proxy-status/) DNS record for their domain. The customer's zone on Cloudflare is using a Free plan.
 
 This customer is also using a SaaS provider that uses Cloudflare for SaaS. The SaaS provider is using a Cloudflare Enterprise plan.
 
-If the provider is using a wildcard custom hostname, then the original customer's plan limits will take precedence over the provider's plan limits (Cloudflare will treat the zone as a Free zone). To apply the Enterprise limits through Cloudflare for SaaS, the original customer's zone would need to either use a [DNS-only](/dns/manage-dns-records/reference/proxied-dns-records/) record or the SaaS provider would need to use an exact hostname match.
+If the provider is using a wildcard custom hostname, then the original customer's plan limits will take precedence over the provider's plan limits (Cloudflare will treat the zone as a Free zone). To apply the Enterprise limits through Cloudflare for SaaS, the original customer's zone would need to either use a [DNS-only](/dns/proxy-status/) record or the SaaS provider would need to use an exact hostname match.
