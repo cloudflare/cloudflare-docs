@@ -38,7 +38,7 @@ When you [add a domain](/fundamentals/setup/manage-domains/add-site/) to Cloudfl
 
 This means that:
 
-- A DNS query to the proxied record `blog.example.com` will be answered with a Cloudflare [anycast IP address](/fundamentals/concepts/cloudflare-ip-addresses/) instead of `192.0.2.1`. This ensures that respective HTTP/HTTPS requests for this name will be sent to Cloudflare's network and can be proxied, which allows the [benefits listed above](#benefits).
+- A DNS query to the proxied record `blog.example.com` will be answered with a Cloudflare [anycast IP address](/fundamentals/concepts/cloudflare-ip-addresses/) instead of `192.0.2.1`. This ensures that HTTP/HTTPS requests for this name will be sent to Cloudflare's network and can be proxied, which allows the [benefits listed above](#benefits).
 - A DNS query to the DNS-only record `shop.example.com` will be answered with the actual origin IP address, `192.0.2.2`. In addition to exposing your origin IP address and not benefitting from several features, Cloudflare cannot provide HTTP/HTTPS analytics on those requests (only DNS analytics).
 
 For further context, refer to [How Cloudflare works](/fundamentals/concepts/how-cloudflare-works/).
@@ -50,7 +50,6 @@ For further context, refer to [How Cloudflare works](/fundamentals/concepts/how-
 The sections below describe specific behaviors and expected outcomes when you have DNS records set to <GlossaryTooltip term="proxy status">proxied</GlossaryTooltip>. There may also be some [limitations](/dns/proxy-status/limitations/) in specific scenarios.
 
 ### Predefined time to live
-
 
 By default, all proxied records have a time to live (TTL) of **Auto**, which is set to 300 seconds. This value cannot be edited.
 
