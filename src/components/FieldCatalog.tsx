@@ -61,11 +61,13 @@ const FieldCatalog = ({ fields }: { fields: Fields }) => {
 		// On component load, check for deep-links to categories in the query param
 		const params = new URLSearchParams(window.location.search);
 		const categories = params.getAll("field-category");
+		const searchTerm = params.get("search-term");
 
-		if (!categories) return;
+		if (!categories && !searchTerm) return;
 
 		setFilters({
 			...filters,
+			search: searchTerm ?? "",
 			categories: categories,
 		});
 	}, []);
