@@ -1,0 +1,30 @@
+---
+title: "Cloud Connector Now Supports R2"
+description: Cloud Connector now integrates with Cloudflare R2 for object storage.
+products:
+  - rules
+date: 2024-11-22T11:00:00Z
+---
+
+[Cloud Connector](/rules/cloud-connector/) now supports routing matching incoming requests to [R2 object storage](/r2/), allowing seamless integration between [Cloudflare Rules](/rules/) and Cloudflare’s object storage solution. Now, you can route traffic to your R2 buckets based on URLs, headers, geolocation, and more.
+
+Configure Cloud Connector for R2:
+
+```bash
+curl --request PUT \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/cloud_connector/rules" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '[
+  {
+    "expression": "http.request.uri.path wildcard \"/images/*\"",
+    "provider": "cloudflare_r2",
+    "description": "Connect to R2 bucket containing images",
+    "parameters": {
+      "host": "mybucketcustomdomain.example.com"
+    }
+  }
+]'
+```
+
+For more details, visit [Cloud Connector documentation](/rules/cloud-connector/).

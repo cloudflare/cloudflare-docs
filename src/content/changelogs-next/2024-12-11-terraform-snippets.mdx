@@ -1,0 +1,36 @@
+---
+title: "Terraform Support for Snippets"
+description: Manage Cloudflare Snippets with Terraform for automated deployments.
+products:
+  - rules
+date: 2024-12-11T11:00:00Z
+---
+
+Cloudflare now supports managing [Snippets](/rules/snippets/) via [Terraform](/terraform/), allowing users to deploy and configure Snippet code and Snippet rules as part of infrastructure-as-code workflows.
+
+Example Terraform configuration:
+
+```tf
+resource "cloudflare_snippet" "my_snippet" {
+	zone_id  = "<ZONE_ID>"
+	name = "my_test_snippet_1"
+	main_module = "file1.js"
+	files {
+		name = "file1.js"
+		content = file("file1.js")
+	}
+}
+
+resource "cloudflare_snippet_rules" "cookie_snippet_rule" {
+	zone_id  = "<ZONE_ID>"
+	rules {
+		enabled = true
+		expression = "http.cookie eq \"a=b\""
+		description = "Trigger snippet on specific cookie"
+		snippet_name = "my_test_snippet_1"
+	}
+	depends_on = [cloudflare_snippet.my_snippet]
+}
+```
+
+For more details, refer to [Configure Snippets using Terraform](/rules/snippets/create-terraform/).
