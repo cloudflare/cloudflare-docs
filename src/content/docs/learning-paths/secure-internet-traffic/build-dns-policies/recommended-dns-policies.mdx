@@ -138,7 +138,7 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_restrict_quarantined_users"
 <Render file="zero-trust/blocklist-security-categories" />
 
 <Render
-	file="gateway/policies/dash-plus-api/dns-block-security-categories"
+	file="gateway/policies/dash-plus-api/dns/block-security-categories"
 	product="cloudflare-one"
 />
 
@@ -152,7 +152,7 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_restrict_quarantined_users"
 />
 
 <Render
-	file="gateway/policies/dash-plus-api/dns-block-content-categories"
+	file="gateway/policies/dash-plus-api/dns/block-content-categories"
 	product="cloudflare-one"
 />
 
@@ -163,7 +163,7 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_restrict_quarantined_users"
 <Render file="zero-trust/blocklist-application" />
 
 <Render
-	file="gateway/policies/dash-plus-api/dns-block-applications"
+	file="gateway/policies/dash-plus-api/dns/block-applications"
 	product="cloudflare-one"
 />
 
@@ -449,7 +449,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
 	--data '{
 	"name": "All-DNS-DomainHost-Blocklist",
   "description": "Block specific domains or hosts that are malicious or pose a threat to your organization.",
-  "precedence": 100,
+  "precedence": 90,
   "enabled": false,
   "action": "block",
   "filters": [
