@@ -27,7 +27,7 @@ To add a Custom Domain, you must have:
 1. An [active Cloudflare zone](/dns/zone-setups/).
 2. A Worker to invoke.
 
-Custom Domains can be attached to your Worker via the [Cloudflare dashboard](/workers/configuration/routing/custom-domains/#set-up-a-custom-domain-in-the-dashboard), [Wrangler](/workers/configuration/routing/custom-domains/#set-up-a-custom-domain-in-your-wranglertoml) or the [API](/api/resources/workers/subresources/domains/methods/list/).
+Custom Domains can be attached to your Worker via the [Cloudflare dashboard](/workers/configuration/routing/custom-domains/#set-up-a-custom-domain-in-the-dashboard), [Wrangler](/workers/configuration/routing/custom-domains/#set-up-a-custom-domain-in-your-wranglertoml--wranglerjson-file) or the [API](/api/resources/workers/subresources/domains/methods/list/).
 
 :::caution
 
@@ -80,7 +80,7 @@ routes = [
 
 ## Worker to Worker communication
 
-On the same zone, the only way for a Worker to communicate with another Worker running on a [route](/workers/configuration/routing/routes/#set-up-a-route), or on a [`workers.dev`](/workers/configuration/routing/routes/#routes-with-workersdev) subdomain, is via [service bindings](/workers/runtime-apis/bindings/service-bindings/).
+On the same zone, the only way for a Worker to communicate with another Worker running on a [route](/workers/configuration/routing/routes/#set-up-a-route), or on a [`workers.dev`](/workers/configuration/routing/routes/#_top) subdomain, is via [service bindings](/workers/runtime-apis/bindings/service-bindings/).
 
 On the same zone, if a Worker is attempting to communicate with a target Worker running on a Custom Domain rather than a route, the limitation is removed. Fetch requests sent on the same zone from one Worker to another Worker running on a Custom Domain will succeed without a service binding.
 

@@ -66,7 +66,7 @@ of the table are defined as follows:
 * `Confidence`: The level of confidence that we have on the event being a true hijacks. Values can be `High`, `Medium`, or `Low`.
 * `Tags`: The relevant evidence presented as short tags, presenting key facts we compiled using additional data sources, such as RPKI validation results or network relationship.
 
-You can also access the detection result programmatically via our [public API](https://developers.cloudflare.com/api/resources/radar/subresources/bgp/subresources/hijacks/subresources/events/methods/list/) ([CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) license).
+You can also access the detection result programmatically via our [public API](/api/resources/radar/subresources/bgp/subresources/hijacks/subresources/events/methods/list/) ([CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) license).
 
 ## Certificates
 
@@ -90,13 +90,13 @@ Cloudflare Speed Test measures latency multiple times over the course of the tes
 
 ## Content categories
 
-Cloudflare uses a variety of data sources to categorize domains. Using Cloudflare Radar, you can view the content categories associated with a given domain. Cloudflare customers using Cloudflare Gateway or 1.1.1.1 for Families can decide to block certain categories, like "Adult Content", in addition to security threats like malware and phishing.
+Cloudflare uses a variety of data sources to categorize domains. Using Cloudflare Radar, you can view the content categories associated with a given domain. Cloudflare customers using Cloudflare Gateway or [1.1.1.1 for Families](https://one.one.one.one/family/) can decide to block certain categories, like "Adult Content", in addition to security threats like malware and phishing.
 
 In some cases, a domain may be miscategorized. For example, a social media site might be categorized as "Shopping & Auctions". If you believe a domain is miscategorized, or a domain has not yet been categorized, please provide your suggested category using [this form](https://radar.cloudflare.com/domains/feedback) to bring it to our attention.
 
 ## Domain rankings
 
-Domain Rankings is based on our anonymized and aggregated 1.1.1.1 resolver data, complies with our [privacy policy](https://www.cloudflare.com/en-gb/privacypolicy/), and aims to identify the top most popular domains that reflect how people use the Internet globally. Domain Rankings’ popularity metric is best described as the estimated number of unique users that access a domain over some period of time.
+Domain Rankings is based on our anonymized and aggregated [1.1.1.1 resolver](https://one.one.one.one/dns/) data, complies with our [privacy policy](https://www.cloudflare.com/en-gb/privacypolicy/), and aims to identify the top most popular domains that reflect how people use the Internet globally. Domain Rankings’ popularity metric is best described as the estimated number of unique users that access a domain over some period of time.
 
 Trending domains are domains which are currently experiencing an increase in popularity. Domains Trending Today are domains spiking in popularity, reflecting increased interest potentially related to a particular event or a topic. Domains Trending This Week are domains that have steadily grown in popularity, reflecting an increase of their user base over the week.
 
@@ -112,7 +112,7 @@ An early warning signal that an Internet outage may be underway on a given netwo
 
 ## Internet services ranking
 
-Internet services ranking is based on our anonymized and aggregated 1.1.1.1 resolver data, complies with our [privacy policy](https://www.cloudflare.com/en-gb/privacypolicy/), and aims to identify the top most popular Internet services that reflect how people use the Internet globally. A service represents one or more domains aggregated together. Ranking popularity metric is best described as the estimated number of unique users that access domains associated with a service, over some period of time.
+Internet services ranking is based on our anonymized and aggregated [1.1.1.1 resolver](https://one.one.one.one/dns/) data, complies with our [privacy policy](https://www.cloudflare.com/en-gb/privacypolicy/), and aims to identify the top most popular Internet services that reflect how people use the Internet globally. A service represents one or more domains aggregated together. Ranking popularity metric is best described as the estimated number of unique users that access domains associated with a service, over some period of time.
 
 ## Internet traffic trends
 
@@ -162,7 +162,7 @@ The Post-Quantum Encryption Adoption graph shows the share of HTTPS requests to 
 
 A [robots.txt](https://www.cloudflare.com/learning/bots/what-is-robots-txt/) file contains instructions for bots that tell them which webpages they can and cannot access.
 
-The data displayed for robots.txt is based on successfully parsed robots.txt files from the top 10,000 domains. From these files, we count the occurrences of each user agent under the "Allow" and "Disallow" directives. A user agent is classified as "fully allowed" or "fully disallowed" if the directive value is "*". Otherwise, if the user agent is only allowed or disallowed to crawl specific paths, it is classified as "partially allowed" or "partially disallowed."
+The data displayed for robots.txt is based on successfully parsed robots.txt files from the top 10,000 domains. From these files, we count the occurrences of each user agent under the `Allow` and `Disallow` directives. A user agent is classified as "fully allowed" or "fully disallowed" if the directive value is `*`. Otherwise, if the user agent is only allowed or disallowed to crawl specific paths, it is classified as "partially allowed" or "partially disallowed."
 
 Currently, we only include AI-focused user agents listed in the [ai.robots.txt](https://github.com/ai-robots-txt/ai.robots.txt) repository.
 
