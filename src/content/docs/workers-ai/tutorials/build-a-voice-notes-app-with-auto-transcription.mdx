@@ -104,7 +104,7 @@ This API makes use of Workers AI to transcribe the voice recordings. To use Work
 
 <Render file="ai-local-usage-charges" product="workers" />
 
-Add the `AI` binding to the `wrangler.toml` file.
+Add the `AI` binding to the Wrangler file.
 
 ```toml title="wrangler.toml"
 [ai]
@@ -153,7 +153,7 @@ The above code does the following:
 
 ## 3. Create an API endpoint for uploading audio recordings to R2
 
-Before uploading the audio recordings to `R2`, you need to create a bucket first. You will also need to add the R2 binding to your `wrangler.toml` file and regenerate the Cloudflare type definitions.
+Before uploading the audio recordings to `R2`, you need to create a bucket first. You will also need to add the R2 binding to your Wrangler file and regenerate the Cloudflare type definitions.
 
 Create an `R2` bucket.
 
@@ -181,7 +181,7 @@ pnpm dlx wrangler r2 bucket create <BUCKET_NAME>
 </TabItem>
 </Tabs>
 
-Add the storage binding to your `wrangler.toml` file.
+Add the storage binding to your Wrangler file.
 
 ```toml title="wrangler.toml"
 [[r2_buckets]]
@@ -254,7 +254,7 @@ pnpm dlx wrangler d1 create <DB_NAME>
 </TabItem>
 </Tabs>
 
-Add the D1 bindings to the `wrangler.toml` file. You can get the `DB_ID` from the output of the `d1 create` command.
+Add the D1 bindings to the Wrangler file. You can get the `DB_ID` from the output of the `d1 create` command.
 
 ```toml title="wrangler.toml"
 [[d1_databases]]

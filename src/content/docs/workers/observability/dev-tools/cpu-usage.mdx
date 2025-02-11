@@ -17,18 +17,18 @@ for security purposes. However, measuring CPU execution times is possible in loc
 When using DevTools to monitor CPU usage, it may be difficult to replicate specific behavior you are
 seeing in production. To mimic production behavior, make sure the requests you send to the local Worker
 are similar to requests in production. This might mean sending a large volume of requests, making requests
-to specific routes, or using production-like data with the [--remote flag](/workers/testing/local-development/#develop-using-remote-resources-and-bindings).
+to specific routes, or using production-like data with the [--remote flag](/workers/local-development/#develop-using-remote-resources-and-bindings).
 
 ## Taking a profile
 
 To generate a CPU profile:
 
 - Run `wrangler dev` to start your Worker
-- Hit <kbd>d</kbd> from your terminal to open DevTools
-- Click on the "Profiler" tab
-- Click `Start` to begin recording CPU usage
+- Press the `D` key from your terminal to open DevTools
+- Select the "Profiler" tab
+- Select `Start` to begin recording CPU usage
 - Send requests to your Worker from a new tab
-- Click `Stop`
+- Select `Stop`
 
 You now have a CPU profile.
 
@@ -64,7 +64,7 @@ export default {
 You want to find which part of the code causes slow response times. How do you use DevTool profiling to identify the
 CPU-heavy code and fix the issue?
 
-First, as mentioned above, you open DevTools by hitting <kbd>d</kbd> after running `wrangler dev`. Then, you
+First, as mentioned above, you open DevTools by pressing the `D` key after running `wrangler dev`. Then, you
 navigate to the "Profiler" tab and take a profile by pressing `Start` and sending a request.
 
 ![CPU Profile](~/assets/images/workers/observability/profile.png)

@@ -6,47 +6,46 @@ sidebar:
 
 ---
 
-Access policies are properties of applications. When setting up an Access application, you will be prompted to create at least one policy for the application. You can go back and create, edit, or delete policies at any time.
+import {Tabs, TabItem } from "~/components";
+
+Access policies define the users who can log in to your Access applications. You can create, edit, or delete policies at any time and reuse policies across multiple applications.
 
 ## Create a policy
 
-To create an Access policy for an existing application:
+To create a reusable Access policy:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
-2. Locate the application for which you want to create the policy and select **Edit**.
-3. Select **Add a policy**.
-4. Enter a **Policy name**. This name will identify your policy in the list of application policies.
-5. Choose an [**Action**](/cloudflare-one/policies/access/#actions) for the policy.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Policies**.
+2. Select **Add a policy**.
+3. Enter a **Policy name**.
+4. Choose an [**Action**](/cloudflare-one/policies/access/#actions) for the policy.
+5. Choose a [**Session duration**](/cloudflare-one/identity/users/session-management/) for the policy.
 6. Configure as many [**Rules**](/cloudflare-one/policies/access/#rule-types) as needed.
-7. Select **Add policy**.
-8. Rearrange the rows in the policy table to match your desired [order of precedence](/cloudflare-one/policies/access/#order-of-execution).
-9. Select **Save application**.
+7. (Optional) Configure additional settings for users who match this policy:
+	- [Isolate application](/cloudflare-one/policies/access/isolate-application/).
+	- [Purpose justificaton](/cloudflare-one/policies/access/require-purpose-justification/)
+	- [Temporary authentication](/cloudflare-one/policies/access/temporary-auth/)
+8. Select **Save**.
 
-Your new policy is now in effect.
+You can now add this policy to an [Access application](/cloudflare-one/applications/).
 
 ## Edit a policy
 
-To make changes to an existing policy:
+To make changes to an existing Access policy:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
-2. Locate the application for which you want to change the policies and select **Edit**. You will see a list of existing policies.
-3. Locate the policy you want to update and select **Edit**.
-4. Once you have made the necessary changes, select **Save policy**.
-5. Select **Save application**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Policies**.
+2. Locate the policy you want to update and select **Configure**.
+3. Once you have made the necessary changes, select **Save**.
 
-The updated policy is now in effect.
+The updated policy is now in effect for all associated Access applications.
 
 ## Delete a policy
 
-To delete an Access policy:
+To delete a reusable Access policy:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
-2. Locate the application for which you want to delete the policy and select **Edit**. You will see a list of existing policies.
-3. Locate the policy you want to delete and select **Delete**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Policies** and locate the policy you want to delete.
+2. If the policy is used by an application, remove the policy from all associated applications.
+3. Select **Delete**.
 4. A pop-up message will ask you to confirm your decision to delete the policy. Select **Delete**.
-5. Select **Save application**.
-
-Your policy has now been deleted.
 
 ## Test your policies
 
@@ -55,12 +54,37 @@ You can test your policies against an existing user identity to see if they woul
 To check if a user has access to an application:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
-2. Locate the application you want to test and select **Edit**.
-3. Select **Test your policies**.
-4. Enter the user's email address and select **Check user**.
+2. Locate the application you want to test and select **Configure**.
+3. Go to the **Policies** tab and select **Test policies**.
+4. Enter the user's email address and select **Test policies**.
 
 The policy tester reports the following information:
 
 * Whether the user is allowed or denied access to the application based on all configured policies.
 * The user's identity from their most recent Access login attempt.
 * Whether the user matches individual Allow, Block, or Bypass policies.
+
+## Legacy policies
+
+Legacy policies are scoped to a specific application and cannot be added to newly created Access applications.
+
+### Migrate to reusable policies
+
+To migrate legacy policies to reusable policies:
+
+1. [Create a reusable policy](#create-a-policy) that will replace the legacy policy.
+2. Go to the Access application associated with the legacy policy.
+3. Add the reusable policy to the application and remove the legacy policy.
+4. Repeat these steps for each legacy policy. If you have duplicate legacy policies, you can replace them with a single reusable policy.
+
+### Convert a legacy policy
+
+You can use the API to convert a legacy policy into a reusable policy. To convert a legacy policy, make a `PUT` request with an empty request body:
+
+```bash
+curl --request PUT \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps/{app_id}/policies/{policy_id}/make_reusable \
+--header "Authorization: Bearer <API_TOKEN>"
+```
+
+The policy is now removed from the applications endpoint (`/access/apps/{app_id}/policies`) and managed using the [reusable policies endpoints](/api/resources/zero_trust/subresources/access/subresources/policies/)(`/access/policies/{policy_id}`).

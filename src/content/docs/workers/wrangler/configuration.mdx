@@ -9,10 +9,10 @@ description: Use a configuration file to customize the
   Platform products.
 ---
 
-import { Render, Type, MetaInfo } from "~/components";
+import { Render, Type, MetaInfo, WranglerConfig } from "~/components";
 import { FileTree } from "@astrojs/starlight/components";
 
-Wrangler optionally uses a `wrangler.json`/`wrangler.jsonc`/`wrangler.toml` file to customize the development and deployment setup for a Worker.
+Wrangler optionally uses a `wrangler.json`/`wrangler.jsonc`/Wrangler file to customize the development and deployment setup for a Worker.
 
 :::note
 
@@ -23,8 +23,6 @@ As of Wrangler v3.91.0 Wrangler supports both JSON (`wrangler.json` or `wrangler
 It is best practice to treat Wrangler's configuration file as the [source of truth](#source-of-truth) for configuring a Worker.
 
 ## Sample Wrangler configuration
-
-import { WranglerConfig } from "~/components";
 
 <WranglerConfig>
 
@@ -441,7 +439,7 @@ A [browser binding](/workers/runtime-apis/bindings/) will provide your Worker wi
 
 - `binding` <Type text="string" /> <MetaInfo text="required" />
 
-  - The binding name used to refer to the D1 database. The value (string) you set will be used to reference this database in your Worker. The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_DB"` or `binding = "productionDB"` would both be valid names for the binding.
+  - The binding name used to refer to the browser binding. The value (string) you set will be used to reference this headless browser in your Worker. The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "HEAD_LESS"` or `binding = "simulatedBrowser"` would both be valid names for the binding.
 
 Example:
 
@@ -474,9 +472,7 @@ To bind D1 databases to your Worker, assign an array of the below object to the 
 
 - `preview_database_id` <Type text="string" /> <MetaInfo text="optional" />
 
-  - The preview ID of this D1 database. If provided, `wrangler dev` will use this ID. Otherwise, it will use `database_id`. This option is required when using `wrangler dev --remote`.
-
-  - The ID of the database. The database ID is available when you first use `wrangler d1 create` or when you call `wrangler d1 list`, and uniquely identifies your database.
+  - The preview ID of this D1 database. If provided, `wrangler dev` uses this ID. Otherwise, it uses `database_id`. This option is required when using `wrangler dev --remote`.
 
 - `migrations_dir` <Type text="string" /> <MetaInfo text="optional" />
 
@@ -485,7 +481,7 @@ To bind D1 databases to your Worker, assign an array of the below object to the 
 
 :::note
 
-When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production database. Refer to [Local development and testing](/workers/testing/local-development/) for more details.
+When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production database. Refer to [Local development and testing](/workers/local-development/) for more details.
 
 :::
 
@@ -682,7 +678,7 @@ To bind KV namespaces to your Worker, assign an array of the below object to the
 
 :::note
 
-When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production namespace. Refer to [Local development and testing](/workers/testing/local-development/) for more details.
+When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production namespace. Refer to [Local development and testing](/workers/local-development/) for more details.
 
 :::
 
@@ -807,7 +803,7 @@ To bind R2 buckets to your Worker, assign an array of the below object to the `r
 
 :::note
 
-When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production bucket. Refer to [Local development and testing](/workers/testing/local-development/) for more details.
+When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production bucket. Refer to [Local development and testing](/workers/local-development/) for more details.
 
 :::
 
@@ -928,7 +924,7 @@ To create a [binding](/workers/runtime-apis/bindings/) to an mTLS certificate fo
 
   - The ID of the certificate. Wrangler displays this via the `mtls-certificate upload` and `mtls-certificate list` commands.
 
-Example of a Wrangler configuration file that includes an mTLS certificate binding:
+Example of a `wrangler.toml / wrangler.json` file that includes an mTLS certificate binding:
 
 <WranglerConfig>
 
@@ -986,9 +982,9 @@ The following options are available under the `assets` key.
 
   - The binding name used to refer to the assets. Optional, and only useful when a Worker script is set with `main`.
 
-- `experimental_serve_directly` <Type text="boolean" /> <MetaInfo text="optional, defaults to true" />
+- `run_worker_first` <Type text="boolean" /> <MetaInfo text="optional, defaults to false" />
 
-  - Controls whether static assets are fetched directly, or a Worker script is invoked. Learn more about fetching assets when using [`experimental_serve_directly`](/workers/static-assets/routing/#invoking-worker-script-ahead-of-assets).
+  - Controls whether static assets are fetched directly, or a Worker script is invoked. Learn more about fetching assets when using [`run_worker_first`](/workers/static-assets/routing/#invoking-worker-script-ahead-of-assets).
 
 - `html_handling`: <Type text={'"auto-trailing-slash" | "force-trailing-slash" | "drop-trailing-slash" | "none"'} /> <MetaInfo text={'optional, defaults to "auto-trailing-slash"'} />
 
@@ -1160,7 +1156,7 @@ export default fetch;
 
 You can use module aliasing to provide your own polyfill implementation of a Node.js API that is not yet available in the Workers runtime.
 
-For example, let’s say the NPM package you rely on calls [`fs.readFile`](https://nodejs.org/api/fs.html#fsreadfilepath-options-callback). You can alias the fs module by adding the following to your Worker’s wrangler.toml:
+For example, let's say the NPM package you rely on calls [`fs.readFile`](https://nodejs.org/api/fs.html#fsreadfilepath-options-callback). You can alias the fs module by adding the following to your Worker's `wrangler.toml / wrangler.json` file:
 
 <WranglerConfig>
 
@@ -1206,7 +1202,7 @@ upload_source_maps = true
 
 - `bucket` <Type text="string" /> <MetaInfo text="required" />
 
-  - The directory containing your static assets. It must be a path relative to your Wrangler configuration file.
+  - The directory containing your static assets. It must be a path relative to your `wrangler.toml / wrangler.json` file.
 
 - `include` <Type text="string[]" /> <MetaInfo text="optional" />
 
@@ -1252,13 +1248,13 @@ For example, if both `https_proxy` and `http_proxy` are set, Wrangler will only 
 
 ## Source of truth
 
-We recommend treating your Wrangler configuration file as the source of truth for your Worker configuration, and to avoid making changes to your Worker via the Cloudflare dashboard if you are using Wrangler.
+We recommend treating your `wrangler.toml / wrangler.json` file as the source of truth for your Worker configuration, and to avoid making changes to your Worker via the Cloudflare dashboard if you are using Wrangler.
 
-If you need to make changes to your Worker from the Cloudflare dashboard, the dashboard will generate a TOML snippet for you to copy into your Wrangler configuration file, which will help ensure your Wrangler configuration file is always up to date.
+If you need to make changes to your Worker from the Cloudflare dashboard, the dashboard will generate a TOML snippet for you to copy into your `wrangler.toml / wrangler.json` file, which will help ensure your `wrangler.toml / wrangler.json` file is always up to date.
 
-If you change your environment variables in the Cloudflare dashboard, Wrangler will override them the next time you deploy. If you want to disable this behavior, add `keep_vars = true` to your Wrangler configuration file.
+If you change your environment variables in the Cloudflare dashboard, Wrangler will override them the next time you deploy. If you want to disable this behavior, add `keep_vars = true` to your `wrangler.toml / wrangler.json` file.
 
-If you change your routes in the dashboard, Wrangler will override them in the next deploy with the routes you have set in your Wrangler configuration file. To manage routes via the Cloudflare dashboard only, remove any route and routes keys from your Wrangler configuration file. Then add `workers_dev = false` to your Wrangler configuration file. For more information, refer to [Deprecations](/workers/wrangler/deprecations/#other-deprecated-behavior).
+If you change your routes in the dashboard, Wrangler will override them in the next deploy with the routes you have set in your `wrangler.toml / wrangler.json` file. To manage routes via the Cloudflare dashboard only, remove any route and routes keys from your `wrangler.toml / wrangler.json` file. Then add `workers_dev = false` to your `wrangler.toml / wrangler.json` file. For more information, refer to [Deprecations](/workers/wrangler/deprecations/#other-deprecated-behavior).
 
 Wrangler will not delete your secrets (encrypted environment variables) unless you run `wrangler secret delete <key>`.
 
@@ -1292,14 +1288,14 @@ This file must contain only a single JSON object of the form:
 { "configPath": "../../path/to/wrangler.json" }
 ```
 
-When this `config.json` file exists, Wrangler will follow the `configPath` (relative to the `.wrangler/deploy/config.json` file) to find the generated Wrangler configuration file to load and use in the current command.
+When this `config.json` file exists, Wrangler will follow the `configPath` (relative to the `.wrangler/deploy/config.json` file) to find the generated `wrangler.toml / wrangler.json` file to load and use in the current command.
 Wrangler will display messaging to the user to indicate that the configuration has been redirected to a different file than the user's configuration file.
 
 ### Custom build tool example
 
 A common example of using a redirected configuration is where a custom build tool, or framework, wants to modify the user's configuration to be used when deploying, by generating a new configuration in a `dist` directory.
 
-- First, the user writes code that uses Cloudflare Workers resources, configured via a user's `wrangler.toml` file.
+- First, the user writes code that uses Cloudflare Workers resources, configured via a user's Wrangler file.
 
   ```toml
   name = "my-worker"

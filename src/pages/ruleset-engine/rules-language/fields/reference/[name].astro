@@ -1,0 +1,128 @@
+---
+import type { GetStaticPaths } from "astro";
+import { marked } from "marked";
+import { getEntry } from "astro:content";
+import StarlightPage, {
+	type StarlightPageProps,
+} from "@astrojs/starlight/components/StarlightPage.astro";
+import { Code, Aside, Type } from "~/components";
+import FieldBadges from "~/components/fields/FieldBadges.tsx";
+
+export const getStaticPaths = (async () => {
+	const fields = await getEntry("fields", "index");
+
+	if (!fields) {
+		throw new Error("Failed to load fields");
+	}
+
+	return fields.data.entries.map((entry) => {
+		return {
+			params: {
+				name: entry.name,
+			},
+			props: { field: entry },
+		};
+	});
+}) satisfies GetStaticPaths;
+
+const { name } = Astro.params;
+const { field } = Astro.props;
+
+// disable conversion of relative links to absolute links
+// set in /src/pages/changelog/index/index.xml.ts
+marked.use({ walkTokens: null });
+
+const description = field.description;
+
+// Strong type coercion needed due to Starlight's component override for hideTitle
+const starlightPageProps = {
+	frontmatter: {
+		title: field.name,
+		description: field.summary,
+	},
+	hideTitle: true,
+} as StarlightPageProps;
+---
+
+<StarlightPage {...starlightPageProps}>
+	<div class="align-center flex">
+		<div>
+			<h1
+				id="_top"
+				class="!-mt-4 !mb-2 flex items-center !text-2xl !font-bold !leading-none"
+			>
+				{name}
+			</h1>
+		</div>
+	</div>
+
+	<code>{field.name}</code>
+	<Type text={field.data_type} />
+
+	<p class="mt-3" set:html={marked.parseInline(field.summary)} />
+
+	{
+		description && (
+			<>
+				<div set:html={marked.parse(description)} />
+			</>
+		)
+	}
+
+	{
+		field.example_value && (
+			<>
+				<p id="example-value">Example value:</p>
+				<Code code={field.example_value} lang="txt" />
+			</>
+		)
+	}
+
+	{
+		field.example_block && (
+			<>
+				<p id="example-block">Example usage:</p>
+				<Code code={field.example_block} lang="txt" />
+			</>
+		)
+	}
+
+	{
+		field.name.startsWith("http.request.body") &&
+			!(field.name === "http.request.body.size") && (
+				<Aside type="caution">
+					<p>
+						All <code>http.request.body.*</code> fields (except{" "}
+						<a href="/ruleset-engine/rules-language/fields/reference/http.request.body.size/">
+							<code>http.request.body.size</code>
+						</a>
+						) handle a given maximum body size, which varies per plan. For
+						Enterprise customers, the maximum body size analyzed by Cloudflare
+						is 128 KB; for lower Cloudflare plans, the maximum size is lower.
+						You cannot define expressions that rely on request body data beyond
+						the maximum size set for your plan. If the request body is larger,
+						the body fields will contain a truncated value and the{" "}
+						<a href="/ruleset-engine/rules-language/fields/reference/http.request.body.truncated/">
+							<code>http.request.body.truncated</code>
+						</a>{" "}
+						field will be set to <code>true</code>. The{" "}
+						<a href="/ruleset-engine/rules-language/fields/reference/http.request.body.size/">
+							<code>http.request.body.size</code>
+						</a>{" "}
+						field will contain the full size of the request without any
+						truncation.
+					</p>
+					<p>
+						The maximum body size applies only to the values of HTTP body fields
+						— the origin server will still receive the complete request body.
+					</p>
+				</Aside>
+			)
+	}
+
+	<div class="!mt-8">
+		<span class="text-xs"
+			>Categories: <FieldBadges badges={field.categories as string[]} /></span
+		>
+	</div>
+</StarlightPage>

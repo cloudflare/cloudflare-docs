@@ -5,6 +5,10 @@ productLink: "/stream/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-01-30"
+    title: Expanded Language Support for Generated Captions
+    description: |-
+      Eleven new languages are now supported for transcription when using [generated captions](/stream/edit-videos/adding-captions/#generate-a-caption), available for free for video stored in Stream.
   - publish_date: "2024-08-15"
     title: Full HD encoding for Portrait Videos
     description: |-

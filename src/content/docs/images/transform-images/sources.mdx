@@ -1,0 +1,66 @@
+---
+pcx_content_type: how-to
+title: Define source origin
+sidebar:
+  order: 2
+---
+
+When optimizing remote images, you can specify which origins can be used as the source for transformed images. By default, Cloudflare accepts only source images from the zone where your transformations are served.
+
+On this page, you will learn how to define and manage the origins for the source images that you want to optimize.
+
+:::note
+The allowed origins setting applies to requests from Cloudflare Workers.
+
+If you use a Worker to optimize remote images via a `fetch()` subrequest, then this setting may conflict with existing logic that handles source images.
+:::
+
+## How it works
+
+In the Cloudflare dashboard, go to **Images** > **Transformations** and select the zone where you want to serve transformations.
+
+To get started, you must have [transformations enabled on your zone](/images/get-started/#enable-transformations).
+
+In **Sources**, you can configure the origins for transformations on your zone.
+
+![Enable allowed origins from the Cloudflare dashboard](~/assets/images/images/allowed-origins.png)
+
+## Allow source images only from allowed origins
+
+You can restrict source images to **allowed origins**, which applies transformations only to source images from a defined list.
+
+By default, your accepted sources are set to **allowed origins**. Cloudflare will always allow source images from the same zone where your transformations are served.
+
+If you request a transformation with a source image from outside your **allowed origins**, then the image will be rejected. For example, if you serve transformations on your zone `a.com` and do not define any additional origins, then `a.com/image.png` can be used as a source image, but `b.com/image.png` will return an error.
+
+To define a new origin:
+
+1. From **Sources**, select **Add origin**.
+2. Under **Domain**, specify the domain for the source image. Only valid web URLs will be accepted.
+
+![Add the origin for source images in the Cloudflare dashboard](~/assets/images/images/add-origin.png)
+
+  When you add a root domain, subdomains are not accepted. In other words, if you add `b.com`, then source images from `media.b.com` will be rejected.
+
+  To support individual subdomains, define an additional origin such as `media.b.com`. If you add only `media.b.com` and not the root domain, then source images from the root domain (`b.com`) and other subdomains (`cdn.b.com`) will be rejected.
+
+  To support all subdomains, use the `*` wildcard at the beginning of the root domain. For example, `*.b.com` will accept source images from the root domain (like `b.com/image.png`) as well as from subdomains (like `media.b.com/image.png` or `cdn.b.com/image.png`).
+
+3. Optionally, you can specify the **Path** for the source image. If no path is specified, then source images from all paths on this domain are accepted.
+
+  Cloudflare checks whether the defined path is at the beginning of the source path. If the defined path is not present at the beginning of the path, then the source image will be rejected.
+
+  For example, if you define an origin with domain `b.com` and path `/themes`, then `b.com/themes/image.png` will be accepted but `b.com/media/themes/image.png` will be rejected.
+
+4. Select **Add**. Your origin will now appear in your list of allowed origins.
+5. Select **Save**. These changes will take effect immediately.
+
+When you configure **allowed origins**, only the initial URL of the source image is checked. Any redirects, including URLs that leave your zone, will be followed, and the resulting image will be transformed.
+
+If you change your accepted sources to **any origin**, then your list of sources will be cleared and reset to default.
+
+## Allow source images from any origin
+
+When your accepted sources are set to **any origin**, any publicly available image can be used as the source image for transformations on this zone.
+
+**Any origin** is less secure and may allow third parties to serve transformations on your zone.

@@ -26,7 +26,7 @@ If we require more information to address your pull request, the `more-informati
   - Example: [Access] fix broken link in example_file.md
 - Pull request descriptions
   - Use bullet points to summarize the changes in the commits
-  - Add any other information you think is helpful or needs addressed. If your PR fixes an open issue, indicate that your PR is addressing the issue and provide a link to the issue.
+  - Add any other information you think is helpful or needs to be addressed. If your PR fixes an open issue, indicate that your PR is addressing the issue and provide a link to the issue.
 
 ## Package manager
 
@@ -35,7 +35,7 @@ If we require more information to address your pull request, the `more-informati
 
 ## Wrangler config
 
-If you're adding a code snippet to the docs that represents a Wrangler config file (`wrangler.toml`, `wrangler.json`, or `wrangler.jsonc`) make sure you wrap it with the `<WranglerConfig>` component, which ensure it's rendered as both JSON and TOML e.g.
+If you are adding a code snippet to the docs that represents a Wrangler config file (`wrangler.toml`, `wrangler.json`, or `wrangler.jsonc`) make sure you wrap it with the `<WranglerConfig>` component, which ensures it is rendered as both JSON and TOML. For example:
 
 ````
 

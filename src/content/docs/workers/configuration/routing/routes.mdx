@@ -3,6 +3,8 @@ pcx_content_type: concept
 title: Routes
 ---
 
+import { WranglerConfig } from "~/components";
+
 ## Background
 
 Routes allow users to map a URL pattern to a Worker. When a request comes in to the Cloudflare network that matches the specified URL pattern, your Worker will execute on that route.
@@ -47,13 +49,11 @@ To set up a route in the dashboard:
 4. Select the zone and enter the route pattern.
 5. Select **Add route**.
 
-### Set up a route in `wrangler.toml`
+### Set up a route in the `wrangler.toml / wrangler.json` file
 
 Before you set up a route, make sure you have a DNS record set up for the [domain](/dns/manage-dns-records/how-to/create-zone-apex/) or [subdomain](/dns/manage-dns-records/how-to/create-subdomain/) you would like to route to.
 
-To configure a route using your `wrangler.toml` file, refer to the following example.
-
-import { WranglerConfig } from "~/components";
+To configure a route using your Wrangler file, refer to the following example.
 
 <WranglerConfig>
 

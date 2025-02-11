@@ -38,6 +38,8 @@ After your token has been successfully created, review your **Secret Access Key*
 
 Update your [`cloudflare.tf`](/terraform/tutorial/initialize-terraform/) file to include a [backend](https://developer.hashicorp.com/terraform/language/settings/backends/configuration) for the `<YOUR_BUCKET_NAME>` bucket you created above.
 
+<Render file="v4-code-snippets" />
+
 ```tf
 terraform {
   backend "s3" {

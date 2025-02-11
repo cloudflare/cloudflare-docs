@@ -108,7 +108,7 @@ This command requires `--binding` or `--namespace-id`.
 :::
 
 - `--binding` <Type text="string" />
-  - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete.
+  - The binding name of the namespace, as stored in the Wrangler file, to delete.
 - `--namespace-id` <Type text="string" />
   - The ID of the namespace to delete.
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
@@ -179,7 +179,7 @@ This command requires a `--binding` or `--namespace-id` flag.
 - `--path` <MetaInfo text="optional" />
   - When defined, the value is loaded from the file at `--path` rather than reading it from the `VALUE` argument. This is ideal for security-sensitive operations because it avoids saving keys and values into your terminal history.
 - `--binding` string
-  - The binding name of the namespace, as stored in the `wrangler.toml` file, to write to.
+  - The binding name of the namespace, as stored in the Wrangler file, to write to.
 - `--namespace-id` <Type text="string" />
   - The ID of the namespace to write to.
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
@@ -253,7 +253,7 @@ This command requires `--binding` or `--namespace-id`.
 :::
 
 - `--binding` <Type text="string" />
-  - The binding name of the namespace, as stored in the `wrangler.toml` file, to list from.
+  - The binding name of the namespace, as stored in the Wrangler file, to list from.
 - `--namespace-id` <Type text="string" />
   - The ID of the namespace to list from.
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
@@ -303,7 +303,7 @@ Exactly one of `--binding` or `--namespace-id` is required.
 - `KEY` <Type text="string" /> <MetaInfo text="required" />
   - The key value to get.
 - `--binding` <Type text="string" />
-  - The binding name of the namespace, as stored in the `wrangler.toml` file, to get from.
+  - The binding name of the namespace, as stored in the Wrangler file, to get from.
 - `--namespace-id` <Type text="string" />
   - The ID of the namespace to get from.
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
@@ -345,7 +345,7 @@ Exactly one of `--binding` or `--namespace-id` is required.
 - `KEY` <Type text="string" /> <MetaInfo text="required" />
   - The key value to get.
 - `--binding` <Type text="string" />
-  - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete from.
+  - The binding name of the namespace, as stored in the Wrangler file, to delete from.
 - `--namespace-id` <Type text="string" />
   - The ID of the namespace to delete from.
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
@@ -399,7 +399,7 @@ This command requires `--binding` or `--namespace-id`.
 - `FILENAME` <Type text="string" /> <MetaInfo text="required" />
   - The JSON file containing an array of key-value pairs to write to the namespace.
 - `--binding` <Type text="string" />
-  - The binding name of the namespace, as stored in the `wrangler.toml` file, to write to.
+  - The binding name of the namespace, as stored in the Wrangler file, to write to.
 - `--namespace-id` <Type text="string" />
   - The ID of the namespace to write to.
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
@@ -483,7 +483,7 @@ This command requires `--binding` or `--namespace-id`.
 - `FILENAME` <Type text="string" /> <MetaInfo text="required" />
   - The JSON file containing an array of keys to delete from the namespace.
 - `--binding` <Type text="string" />
-  - The binding name of the namespace, as stored in the `wrangler.toml` file, to delete from.
+  - The binding name of the namespace, as stored in the Wrangler file, to delete from.
 - `--namespace-id` <Type text="string" />
   - The ID of the namespace to delete from.
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
@@ -497,12 +497,18 @@ This command requires `--binding` or `--namespace-id`.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
-This command takes a JSON file as an argument containing an array of keys to delete.
+This command takes a JSON file as an argument containing the keys to delete.
 
 The following is an example of the JSON input:
 
 ```json
 ["test_key_1", "test_key_2"]
+```
+
+The command also accepts keys in the format output from `wrangler kv key list`:
+
+```json
+[{ "name": "test_key_1" }, { "name": "test_key_2" }]
 ```
 
 The following is an example of deleting all the keys found in the `allthethingsdelete.json` file.

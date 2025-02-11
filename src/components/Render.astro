@@ -1,6 +1,6 @@
 ---
 import { z } from "astro:schema";
-import { getEntry } from "astro:content";
+import { render, getEntry } from "astro:content";
 
 type Props = z.infer<typeof props>;
 
@@ -38,7 +38,7 @@ if (partial.data.params) {
 		);
 }
 
-const { Content } = await partial.render();
+const { Content } = await render(partial);
 ---
 
 <Content {...params} />

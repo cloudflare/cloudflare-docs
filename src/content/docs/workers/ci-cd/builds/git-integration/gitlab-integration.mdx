@@ -1,0 +1,56 @@
+---
+pcx_content_type: reference
+title: GitLab integration
+description: Learn how to manage your GitLab integration for Workers Builds
+sidebar:
+  order: 2
+---
+
+Cloudflare supports connecting your GitLab repository to your Cloudflare Worker, and will automatically deploy your code every time you push a change to a selected branch.
+
+## Features
+
+Beyond automatic builds and deployments, the Cloudflare GitLab integration lets you monitor builds directly in GitLab, keeping you informed without leaving your workflow.
+
+:::note[Upcoming features]
+In Beta, Workers Builds supports automatic builds and deployments only from a single selected branch (e.g. `main`).
+
+Support for building and deploying preview versions from multiple branches will be added soon, along with the ability to generate [Preview URLs](/workers/configuration/previews/) for pull requests (PRs).
+:::
+
+### Commit Status
+
+If you have one or multiple Workers connected to a repository (i.e. a [monorepo](/workers/ci-cd/builds/advanced-setups/#monorepos)), you can check on the status of each build within GitLab via [GitLab commit status](https://docs.gitlab.com/ee/user/project/merge_requests/status_checks.html).
+
+You can see the statuses by selecting the status icon next to a commit or by going to **Build** > **Pipelines** within your GitLab repository. In the example below, you can select on the green check mark to see the results of the check run.
+
+![GitLab Status](~/assets/images/workers/platform/ci-cd/gl-status-checks.png)
+
+Check runs will appear like the following in your repository. You can select one of the statuses to view the build on the Cloudflare Dashboard.
+
+![GitLab Commit Status](~/assets/images/workers/platform/ci-cd/gl-commit-status.png)
+
+Note that when using [build watch paths](/workers/ci-cd/builds/build-watch-paths/), only projects that trigger a build will generate a commit status.
+
+## Manage access
+
+You can deploy projects to Cloudflare Workers from your company or side project on GitLab using the Cloudflare Pages app.
+
+### Organizational access
+
+When you authorize Cloudflare Workers to access your GitLab account, you automatically give Cloudflare Workers access to organizations, groups, and namespaces accessed by your GitLab account.  Managing access to these organizations and groups is handled by GitLab.
+
+### Remove access
+
+You can remove Cloudflare Workers' access to your GitLab account by navigating to [Authorized Applications page](https://gitlab.com/-/profile/applications) on GitLab. Find the applications called Cloudflare Pages and select the **Revoke** button to revoke access.
+
+Note that the GitLab application Cloudflare Workers is shared between Workers and Pages projects, and removing access to GitLab will disable new builds for Workers and Pages, though your previous deployments will continue to be hosted by Cloudflare Workers.
+
+### Reinstall the Cloudflare GitLab App
+
+1. Go to your application settings page on GitLab: [https://gitlab.com/-/profile/applications](https://gitlab.com/-/profile/applications)
+2. Click the "Revoke" button on your Cloudflare Workers installation if it exists.
+3. Go back to the [**Workers & Pages** overview](https://dash.cloudflare.com) page. Select **Create application** > **Pages** > **Connect to Git**.
+4. Select the **+ Add account** button, select the GitLab account you want to add, and then select **Install & Authorize**.
+5. You should be redirected to the create project page with your GitLab account or organization in the account list.
+6. Attempt to make a new deployment with your project which was previously broken.

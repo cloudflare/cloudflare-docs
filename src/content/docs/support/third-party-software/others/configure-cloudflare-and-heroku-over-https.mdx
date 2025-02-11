@@ -92,7 +92,7 @@ Once the certificate status changes to **• Active Certificate**, incoming tr
 
 ### Step 4b - Force all traffic over HTTPS
 
-To ensure all traffic to your site is encrypted, Cloudflare lets you force an automatic HTTPS redirect.  To configure this, consult: [How do I redirect all visitors to HTTPS/SSL?](https://support.cloudflare.com/hc/articles/200170536)
+To ensure all traffic to your site is encrypted, Cloudflare lets you force an automatic HTTPS redirect.  To configure this, consult: [How do I redirect all visitors to HTTPS/SSL?](/ssl/troubleshooting/faq/#how-do-i-redirect-all-visitors-to-httpsssl)
 
 You can then use a cURL command to verify that all requests are being forced over HTTPS.
 
@@ -111,6 +111,6 @@ Server: cloudflare
 CF-RAY: 3e1e77d5c42b8c52-SFO-DOG
 ```
 
-If SSL was not working for your domain (e.g. your SSL certificate has not yet been issued), you would see a [525](https://support.cloudflare.com/hc/articles/115003011431#525error) or [526](https://support.cloudflare.com/hc/articles/115003011431#526error) HTTP response after the redirect.
+If SSL was not working for your domain (for example, your SSL certificate has not yet been issued), you would see a [525](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-525-ssl-handshake-failed) or [526](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-526-invalid-ssl-certificate) HTTP response after the redirect.
 
 Please note that the issuing of a Universal SSL certificate typically takes up to 24 hours. Our paid SSL certificates issue within 10-15 minutes.

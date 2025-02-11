@@ -6,7 +6,7 @@ description: Worker Bindings that allow for interaction with other Cloudflare Re
 
 ---
 
-import { DirectoryListing } from "~/components"
+import { DirectoryListing, WranglerConfig } from "~/components"
 
 Bindings allow your Worker to interact with resources on the Cloudflare Developer Platform.
 
@@ -17,8 +17,6 @@ The following bindings available today:
 ## What is a binding?
 
 When you declare a binding on your Worker, you grant it a specific capability, such as being able to read and write files to an [R2](/r2/) bucket. For example:
-
-import { WranglerConfig } from "~/components";
 
 <WranglerConfig>
 

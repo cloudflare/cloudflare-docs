@@ -2,9 +2,9 @@
 import type { Props } from "@astrojs/starlight/props";
 import Default from "@astrojs/starlight/components/TableOfContents.astro";
 
-import { FeedbackPrompt } from "~/components";
+import FeedbackPrompt from "../FeedbackPrompt.tsx";
 ---
 
 <Default {...Astro.props} />
 <br />
-<FeedbackPrompt />
+<FeedbackPrompt client:idle />

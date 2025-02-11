@@ -3,7 +3,6 @@ pcx_content_type: concept
 title: Troubleshoot and debug
 sidebar:
   order: 10
-
 ---
 
 Troubleshoot and debug errors commonly associated with connecting to a database with Hyperdrive.
@@ -39,9 +38,15 @@ Hyperdrive may also encounter `ErrorResponse` wire protocol messages sent by you
 
 | Error Message                                          | Details                                                                                         | Recommended fixes                                                                                                                                                                                                                                                                              |
 | ------------------------------------------------------ | ----------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `Internal error.`                                      | Something is broken on our side.                                                                | Check for an ongoing incident affecting Hyperdrive, and contact Cloudflare Support.                                                                                                                                                                                                            |
+| `Internal error.`                                      | Something is broken on our side.                                                                | Check for an ongoing incident affecting Hyperdrive, and contact Cloudflare Support.  Retrying the query is appropriate, if it makes sense for your usage pattern.                                                                                                                              |
 | `Failed to acquire a connection from the pool.`        | Hyperdrive timed out while waiting for a connection to your database, or cannot connect at all. | If you are seeing this error intermittently, your Hyperdrive pool is being exhausted because too many connections are being held open for too long by your worker. This can be caused by a myriad of different issues, but long-running queries/transactions are a common offender.            |
 | `Server connection attempt failed: connection_refused` | Hyperdrive is unable to create new connections to your origin database.                         | A network firewall or access control list (ACL) is likely rejecting requests from Hyperdrive. Ensure you have allowed connections from the public Internet. Sometimes, this can be caused by your database host provider refusing incoming connections when you go over your connection limit. |
+
+### Node errors
+
+| Error Message                                    | Details                                                                                                               | Recommended fixes                                                                                                            |
+| ------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `Uncaught Error: No such module "node:<module>"` | Your Cloudflare Workers project or a library that it imports is trying to access a Node module that is not available. | Enable [Node.js compatibility](/workers/runtime-apis/nodejs/) for your Cloudflare Workers project to maximize compatibility. |
 
 ### Improve performance
 

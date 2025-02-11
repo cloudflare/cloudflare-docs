@@ -1,0 +1,16 @@
+releaseNotes: |-
+  This release is a minor hotfix over the previous release (2022.2.69.0).
+
+  **Notable updates**
+  - Fixed an issue where the organization name became case sensitive and could cause a device to lose registration.
+
+
+  **Known issues**
+  No known issues
+
+  For releated Cloudflare for Teams documentation please see: https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp
+version: 2022.2.248.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2022.2.248.0
+packageSize: 42949868
+releaseDate: 2022-02-23T20:58:41.089Z
+platformName: macOS

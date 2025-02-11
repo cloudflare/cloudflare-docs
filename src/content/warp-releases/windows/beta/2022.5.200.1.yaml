@@ -1,0 +1,32 @@
+releaseNotes: >-
+  This release contains bug fixes from the previous beta release
+   
+  **Notable updates**
+   
+  - Fixed issue with warp-cli where enable/disable with wifi was allowed in Zero
+  Trust mode
+
+  - Fixed issue where we would not properly re-enforce the DNS server values we
+  set (127.0.2.2, 127.0.2.3, fd01:db8:1111::2, and fd01:db8:1111::3)
+
+  - Fixed issue where we don't always properly restore the users original DNS
+  server values
+
+  - Fixed issue where we don't properly restore DNS servers values on device
+  shutdown
+
+  - Fixed issue where connection was toggled off after upgrade
+
+  - Fixed issue where we get multiple desktop notifications after wake from
+  sleep
+
+
+  **Known issues**
+
+  - This version requires at least Windows 10.0.19042. If you are running a
+  prior version of Windows, please delay upgrading.
+version: 2022.5.200.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2022.5.200.1
+packageSize: 91090944
+releaseDate: 2022-05-24T18:31:28.344Z
+platformName: Windows

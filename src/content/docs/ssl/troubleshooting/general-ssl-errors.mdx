@@ -56,7 +56,7 @@ It is possible for [Cloudflare Support](/support/contacting-cloudflare-support/
 - Purchase an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager) that covers `dev.www.example.com`.
 - Upload a [Custom SSL certificate](/ssl/edge-certificates/custom-certificates) that covers `dev.www.example.com`.
 - Enable [Total TLS](/ssl/edge-certificates/additional-options/total-tls).
-- If you have a valid certificate for the second level subdomains at your origin web server, change the DNS record for `dev.www` to [DNS Only (grey cloud)](/dns/manage-dns-records/reference/proxied-dns-records/).
+- If you have a valid certificate for the second level subdomains at your origin web server, change the DNS record for `dev.www` to [DNS Only (grey cloud)](/dns/proxy-status/).
 
 ---
 
@@ -83,7 +83,7 @@ Temporarily pausing Cloudflare will allow the HTTPS traffic to be served properl
 
 If your domain is on a [full setup](/dns/zone-setups/full-setup/), review your DNS records.
 
-Cloudflare SSL/TLS certificates only apply for traffic [proxied through Cloudflare](/dns/manage-dns-records/reference/proxied-dns-records/). If SSL errors only occur for hostnames not proxied to Cloudflare, proxy those hostnames through Cloudflare.
+Cloudflare SSL/TLS certificates only apply for traffic [proxied through Cloudflare](/dns/proxy-status/). If SSL errors only occur for hostnames not proxied to Cloudflare, proxy those hostnames through Cloudflare.
 
 #### Partial DNS setup
 
@@ -133,7 +133,7 @@ You are getting the error `NET::ERR_CERT_COMMON_NAME_INVALID` in your browser.
 ### Resolution
 
 - Make sure that you are using a browser that supports [SNI (Server Name Indication)](https://www.cloudflare.com/learning/ssl/what-is-sni/). Refer to [Browser compatibility](/ssl/reference/browser-compatibility/) for more details.
-- Ensure that the hostname you are accessing is set to [proxied (orange cloud)](/dns/manage-dns-records/reference/proxied-dns-records/) in the DNS tab of your Cloudflare Dashboard.
+- Ensure that the hostname you are accessing is set to [proxied (orange cloud)](/dns/proxy-status/) in the DNS tab of your Cloudflare Dashboard.
 - If the hostname you are accessing is a second level subdomain (such as `dev.www.example.com`), you'll need to either:
   - Purchase an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager) that covers `dev.www.example.com`.
   - Upload a [Custom SSL certificate](/ssl/edge-certificates/custom-certificates) that covers `dev.www.example.com`.

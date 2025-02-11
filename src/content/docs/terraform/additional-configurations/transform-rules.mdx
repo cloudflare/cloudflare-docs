@@ -1,21 +1,21 @@
 ---
-title: Transform Rules
+title: Transform Rules configuration using Terraform
 pcx_content_type: how-to
 sidebar:
   order: 6
+  label: Transform Rules
 head:
   - tag: title
-    content: Configure Transform Rules with Terraform
+    content: Transform Rules configuration using Terraform
 ---
 
 import { Render } from "~/components";
 
-This page provides examples of creating Transform Rules in a zone using Terraform. The examples cover the following scenarios:
+This page provides examples of creating [Transform Rules](/rules/transform/) in a zone using Terraform. The examples cover the following scenarios:
 
 - [Create a Rewrite URL Rule](#create-a-rewrite-url-rule)
 - [Create an HTTP Request Header Modification Rule](#create-an-http-request-header-modification-rule)
-
-For more information on Transform Rules, refer to [Transform Rules](/rules/transform/).
+- [Create an HTTP Response Header Modification Rule](#create-an-http-response-header-modification-rule)
 
 ## Before you start
 
@@ -32,6 +32,8 @@ For more information on Transform Rules, refer to [Transform Rules](/rules/trans
 ## Create a Rewrite URL Rule
 
 The following example creates a Rewrite URL Rule that rewrites requests for `example.com/old-folder` to `example.com/new-folder`:
+
+<Render file="v4-code-snippets" />
 
 ```tf
 resource "cloudflare_ruleset" "transform_url_rewrite" {
@@ -68,6 +70,8 @@ The following configuration example performs the following adjustments to HTTP r
 - Adds a `my-header-1` header to the request with a static value.
 - Adds a `my-header-2` header to the request with a dynamic value defined by an expression.
 - Deletes the `existing-header` header from the request, if it exists.
+
+<Render file="v4-code-snippets" />
 
 ```tf
 resource "cloudflare_ruleset" "transform_modify_request_headers" {
@@ -116,6 +120,8 @@ The following configuration example performs the following adjustments to HTTP r
 - Adds a `my-header-1` header to the response with a static value.
 - Adds a `my-header-2` header to the response with a dynamic value defined by an expression.
 - Deletes the `existing-header` header from the response, if it exists.
+
+<Render file="v4-code-snippets" />
 
 ```tf
 resource "cloudflare_ruleset" "transform_modify_response_headers" {

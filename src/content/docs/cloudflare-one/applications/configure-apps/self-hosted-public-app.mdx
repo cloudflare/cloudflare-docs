@@ -1,0 +1,48 @@
+---
+pcx_content_type: how-to
+title: Publish a self-hosted application to the Internet
+sidebar:
+  order: 2
+  label: Self-hosted public application
+---
+
+import { Render } from "~/components"
+
+You can securely publish internal tools and applications by adding Cloudflare Access as an authentication layer between the end user and your origin server.
+
+## Prerequisites
+
+- An [active domain on Cloudflare](/fundamentals/setup/manage-domains/add-site/)
+- Domain uses either a [full setup](/dns/zone-setups/full-setup/) or a [partial (`CNAME`) setup](/dns/zone-setups/partial-setup/)
+
+## 1. Add your application to Access
+
+<Render file="access/self-hosted-app" />
+
+## 2. Connect your origin to Cloudflare
+
+[Set up a Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/) to publish your internal application. Only users who match your Access policies will be granted access.
+
+:::note
+We recommend [creating an Access application](#1-add-your-application-to-access) before setting up the tunnel route. If you do not have an Access application in place, public hostname routes in Tunnel are available to anyone on the Internet.
+:::
+
+If your application is already publicly routable, a Tunnel is not strictly required. However, you will then need to protect your origin IP using [other methods](/fundamentals/security/protect-your-origin-server/).
+
+## 3. Validate the Access token
+
+<Render file="access/secure-tunnel-with-access" />
+
+Users can now connect to your self-hosted application after authenticating with Cloudflare Access.
+
+## Product compatibility
+
+When using Access self-hosted applications, the majority of Cloudflare products will be compatible with your application.
+
+However, the following products are not supported:
+
+* [Automatic Signed Exchanges](/speed/optimization/other/signed-exchanges/)
+* [Automatic Platform Optimization](/automatic-platform-optimization)
+* [Zaraz](/zaraz)
+
+You can disable Automatic Signed Exchanges and Zaraz for a specific application - instead of across your entire zone - using a [Configuration Rule](/rules/configuration-rules/) scoped to the application domain.

@@ -32,7 +32,7 @@ export default {
 } as ExportedHandler<{ ASSETS: Fetcher }>;
 ```
 
-This looks like a Worker — but it does not need its own `wrangler.toml` file. You can think of it purely as code that `@cloudflare/next-on-pages` will then use to wrap the output of the build that is deployed to your Cloudflare Pages project.
+This looks like a Worker — but it does not need its own Wrangler file. You can think of it purely as code that `@cloudflare/next-on-pages` will then use to wrap the output of the build that is deployed to your Cloudflare Pages project.
 
 2. Pass the entrypoint argument to the next-on-pages CLI with the path to your handler.
 

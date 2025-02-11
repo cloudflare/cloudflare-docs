@@ -14,6 +14,10 @@ import { TabItem, Tabs } from "~/components";
 
 This option is extremely useful when you want site visitors to access the endpoint closest to them, which improves page-loading performance.
 
+:::note
+Custom load balancing rules are incompatible with Geo steering. As a result, any custom rule applied to Geo-steered Load Balancers will not function as expected.
+:::
+
 ## Pool assignment
 
 You can assign multiple pools to the same area and the load balancer will use them in failover order. Any options not explicitly defined — whether in data centers, countries, or regions — will fall back to using default pools and failover.

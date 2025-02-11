@@ -4,7 +4,7 @@ title: Block page
 sidebar:
   order: 11
 banner:
-  content: The default global Cloudflare root certificate will expire on 2025-02-02. If you installed the default Cloudflare certificate before 2024-10-17, you must <a href="/cloudflare-one/connections/connect-devices/user-side-certificates/#generate-a-cloudflare-root-certificate">generate a new certificate</a> and activate it for your Zero Trust organization to avoid inspection errors.
+  content: The default global Cloudflare root certificate expired on 2025-02-02. If you installed the default Cloudflare certificate before 2024-10-17, you must <a href="/cloudflare-one/connections/connect-devices/user-side-certificates/#generate-a-cloudflare-root-certificate">generate a new certificate</a> and activate it for your Zero Trust organization to avoid inspection errors.
 ---
 
 import { Render } from "~/components";
@@ -15,15 +15,15 @@ Configuring a custom block page in Zero Trust helps avoid this confusion. Your b
 
 Gateway supports custom block pages for DNS and HTTP policies.
 
-:::caution[Third-party filtering conflict]
+:::caution[Default Cloudflare certificate expiring]
+The default Cloudflare root certificate expires on 2025-02-02.
 
-<Render file="gateway/third-party-warning" />
-
+If your organization is still using the default Cloudflare certificate, you will need to use a new certificate to display the block page. For more information, refer to [User-side certificates](/cloudflare-one/connections/connect-devices/user-side-certificates/) or [Troubleshooting](/cloudflare-one/faq/troubleshooting/#as-of-february-2-2025-my-end-user-devices-browser-is-returning-a-your-connection-is-not-private-warning).
 :::
 
 ## Prerequisites
 
-In order to display the block page as the URL of the blocked domain, your devices must have a [Cloudflare certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/manual-deployment/) installed. Enterprise users can also [deploy their own root CA certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/custom-certificate/).
+In order to display the block page as the URL of the blocked domain, your devices must have a [Cloudflare certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/manual-deployment/) installed. Enterprise users can also [deploy their own root CA certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/custom-certificate/). If you do not install a certificate, the block page [will not display correctly](#certificate-error).
 
 ## Turn on the block page
 
@@ -63,7 +63,20 @@ You can add a Mailto link to your custom block page, which allows users to direc
 
 ## Limitations
 
-If your users receive a security risk warning in their browser when visiting a blocked page, check that you have correctly [installed a Cloudflare certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/manual-deployment/) on their devices.
+### Certificate error
+
+If your users receive a security risk warning in their browser when visiting a blocked page, check that you have correctly [installed a certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/manual-deployment/) on their devices. If a certificate is not installed or the installed certificate is invalid or expired, your user's browser may:
+
+- Display an **HTTP Response Code: 526** error page, indicating an insecure upstream.
+- Close the connection and fail to display any pages.
+
+For more information on fixing certificate issues, refer to [Troubleshooting](/cloudflare-one/faq/troubleshooting/#as-of-february-2-2025-my-end-user-devices-browser-is-returning-a-your-connection-is-not-private-warning).
+
+### Third-party filtering conflict
+
+<Render file="gateway/third-party-warning" />
+
+### Data center and IP address matching
 
 If an HTTP request that matches a block policy does not arrive at the same Cloudflare data center as its DNS query, Gateway will display the default block page instead of your custom block page.
 

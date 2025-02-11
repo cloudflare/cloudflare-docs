@@ -26,7 +26,7 @@ Refer to [How Cloudflare determines the request rate](/waf/rate-limiting-rules/r
 
 - Rate limiting rules are not designed to allow a precise number of requests to reach the origin server. In some situations, there may be a delay (up to a few seconds) between detecting a request and updating internal counters. Due to this delay, excess requests could still reach the origin server before Cloudflare enforces a mitigation action (such as blocking or challenging) in our global network.
 
-- Applying rate limiting rules to verified bots might affect Search Engine Optimization (SEO). For more information, refer to [Improve SEO](/fundamentals/basic-tasks/improve-seo/).
+- Applying rate limiting rules to verified bots might affect Search Engine Optimization (SEO). For more information, refer to [Improve SEO](/fundamentals/performance/improve-seo/).
 
 ---
 
@@ -43,6 +43,8 @@ Refer to the following resources:
 - [Create a rate limiting rule in the dashboard for a zone](/waf/rate-limiting-rules/create-zone-dashboard/)
 - [Create a rate limiting rule via API for a zone](/waf/rate-limiting-rules/create-api/)
 
+For Terraform examples, refer to [Rate limiting rules configuration using Terraform](/terraform/additional-configurations/rate-limiting-rules/).
+
 ---
 
 ## Related resources
@@ -50,3 +52,5 @@ Refer to the following resources:
 - [Rate limiting rulesets](/waf/account/rate-limiting-rulesets/): Some Enterprise customers can create rate limiting rulesets at the account level that they can deploy to multiple Enterprise zones.
 
 - [Cloudflare Rate Limiting (previous version, now deprecated)](/waf/reference/legacy/old-rate-limiting/): Documentation for the previous version of rate limiting rules (billed based on usage).
+
+- [Learning Center: What is rate limiting?](https://www.cloudflare.com/learning/bots/what-is-rate-limiting/)

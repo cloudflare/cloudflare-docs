@@ -10,7 +10,7 @@ languages:
   - Rust
 ---
 
-import { Render } from "~/components";
+import { Render, WranglerConfig } from "~/components";
 
 This tutorial will teach you how to read and write to KV directly from Rust
 using [workers-rs](https://github.com/cloudflare/workers-rs).
@@ -50,9 +50,7 @@ In the terminal, use Wrangler to create a KV namespace for `cities`. This genera
 npx wrangler kv:namespace create cities
 ```
 
-To add this configuration to your project, open the `wrangler.toml` file and create an entry for `kv_namespaces` above the build command:
-
-import { WranglerConfig } from "~/components";
+To add this configuration to your project, open the Wrangler file and create an entry for `kv_namespaces` above the build command:
 
 <WranglerConfig>
 

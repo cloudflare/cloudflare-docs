@@ -1,0 +1,17 @@
+---
+title: Increased Workflows limits and improved instance queueing.
+description: More steps per Workflow + pause/resume now supported
+products:
+  - workflows
+date: 2025-01-15
+---
+
+[Workflows](/workflows/) (beta) now allows you to define up to 1024 [steps](/workflows/build/workers-api/#workflowstep). `sleep` steps do not count against this limit.
+
+We've also added:
+
+* `instanceId` as property to the [`WorkflowEvent`](/workflows/build/workers-api/#workflowevent) type, allowing you to retrieve the current instance ID from within a running Workflow instance
+* Improved queueing logic for Workflow instances beyond the current maximum concurrent instances, reducing the cases where instances are stuck in the queued state.
+* Support for [`pause` and `resume`](/workflows/build/workers-api/#pause) for Workflow instances in a queued state.
+
+We're continuing to work on increases to the number of concurrent Workflow instances, steps, and support for a new `waitForEvent` API over the coming weeks.

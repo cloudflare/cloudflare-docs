@@ -13,9 +13,13 @@ import { Render } from "~/components"
 	params={{
 		productName: "Magic WAN",
 		productPath: "/magic-wan/reference/tunnel-health-checks/",
-		legacyHCs: "/magic-wan/reference/tunnel-health-checks/#legacy-health-checks-system",
+		legacyHCs: "/magic-wan/reference/tunnel-health-checks/#legacy-bidirectional-health-checks",
 		asnProduct: "<br /> Magic WAN customers should also be aware of the following: <br /> <ul><li>The Cloudflare side ASN will be included in the <code>AS_PATH</code> of announced routes to any BGP enabled interconnect.</li><li>The customer chooses their device ASN, which should be different to the Cloudflare-side ASN.</li></ul>",
 		mtLimitations: " ",
 		productGatewayOrEgress: "Magic WAN with Gateway"
 	}}
 />
+
+## Next steps
+
+Now that you have configured your tunnels and BGP peering, the next step is to create a site. <Render file="sites-brief" />

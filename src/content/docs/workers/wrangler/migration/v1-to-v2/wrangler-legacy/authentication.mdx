@@ -21,7 +21,7 @@ To set up Wrangler to work with your Cloudflare user, use the following commands
 
 - `login`: a command that opens a Cloudflare account login page to authorize Wrangler.
 - `config`: an alternative to `login` that prompts you to enter your `email` and `api` key.
-- `whoami`: run this command to confirm that your configuration is appropriately set up. When successful, this command will print out your account email and your `account_id` needed for your project's `wrangler.toml` file.
+- `whoami`: run this command to confirm that your configuration is appropriately set up. When successful, this command will print out your account email and your `account_id` needed for your project's Wrangler file.
 
 ### Using environment variables
 
@@ -41,7 +41,7 @@ CF_EMAIL=cloudflareEmail CF_API_KEY=veryLongAPI wrangler publish
 
 You can also specify or override the target Zone ID by defining the `CF_ZONE_ID` environment variable.
 
-Defining environment variables inline will override the default credentials stored in `wrangler config` or in your `wrangler.toml` file.
+Defining environment variables inline will override the default credentials stored in `wrangler config` or in your Wrangler file.
 
 ---
 

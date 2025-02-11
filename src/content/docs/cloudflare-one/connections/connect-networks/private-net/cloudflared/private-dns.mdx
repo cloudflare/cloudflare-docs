@@ -13,7 +13,7 @@ By default, the WARP client sends DNS requests to [1.1.1.1](/1.1.1.1/), Cloudfla
 
 2. Under **Networks** > **Routes**, verify that the IP address of your internal DNS resolver is included in the tunnel.
 
-3. [Enable the Gateway proxy](/cloudflare-one/policies/gateway/proxy/#enable-the-gateway-proxy) for TCP and UDP.
+3. [Enable the Gateway proxy](/cloudflare-one/policies/gateway/proxy/#turn-on-the-gateway-proxy) for TCP and UDP.
 
 4. Next, [create a Local Domain Fallback entry](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) that points to the internal DNS resolver. For example, you can instruct the WARP client to resolve all requests for `myorg.privatecorp` through an internal resolver at `10.0.0.25` rather than attempting to resolve this publicly.
 

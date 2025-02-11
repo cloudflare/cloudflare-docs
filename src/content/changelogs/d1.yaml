@@ -5,6 +5,13 @@ productLink: "/d1/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-02-04"
+    title: Fixed bug with D1 read-only access via UI and /query REST API.
+    description: |-
+      Fixed a bug with D1 permissions which allowed users with read-only roles via the UI and users with read-only API tokens via the `/query` [REST API](/api/resources/d1/subresources/database/methods/query/) to execute queries that modified databases. UI actions via the `Tables` tab, such as creating and deleting tables, were incorrectly allowed with read-only access. However, UI actions via the `Console` tab were not affected by this bug and correctly required write access.
+      
+      Write queries with read-only access will now fail. If you relied on the previous incorrect behavior, please assign the correct roles to users or permissions to API tokens to perform D1 write queries.
+
   - publish_date: "2025-01-13"
     title: D1 will begin enforcing its free tier limits from the 10th of February 2025.
     description: |-
@@ -15,6 +22,19 @@ entries:
       To ensure uninterrupted service, upgrade your account to the [Workers Paid plan](/workers/platform/pricing/) from the [plans page](https://dash.cloudflare.com/?account=/workers/plans). The minimum monthly billing amount is $5. Refer to [Workers Paid plan](/workers/platform/pricing/) and [D1 limits](/d1/platform/limits/).
 
       For better insight into your current usage, refer to your [billing metrics](/d1/observability/billing/) for rows read and rows written, which can be found on the [D1 dashboard](https://dash.cloudflare.com/?account=/workers/d1) or GraphQL API.
+
+  - publish_date: "2025-01-07"
+    title: D1 Worker API request latency decreases by 40-60%.
+    description: |-
+      D1 lowered end-to-end Worker API request latency by 40-60% by eliminating redundant network round trips for each request.
+
+      ![D1 Worker API latency](/images/d1/faster-d1-worker-api.png)
+
+      *p50, p90, and p95 request latency aggregated across entire D1 service. These latencies are a reference point and should not be viewed as your exact workload improvement.*
+
+      For each request to a D1 database, at least two network round trips were eliminated. One round trip was due to a bug that is now fixed. The remaining removed round trips are due to avoiding creating a new TCP connection for each request when reaching out to the datacenter hosting the database.
+
+      The removal of redundant network round trips also applies to D1\'s [REST API](/api/resources/d1/subresources/database/methods/query/). However, the REST API still depends on Cloudflare's centralized datacenters for authentication, which reduces the relative performance improvement.
 
   - publish_date: "2024-08-23"
     title: D1 alpha databases have stopped accepting SQL queries
