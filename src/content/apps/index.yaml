@@ -1,343 +1,342 @@
-entries:
-  - link: https://github.com/craigsdennis/phoney-ai
-    name: Phoney AI
-    description: This application uses Cloudflare Workers AI, Twilio, and AssemblyAI. Your phone is an input and output device.
-    tags: [AI, Twilio, Hono]
-    products: [Workers AI, Workers]
-    languages: [JavaScript]
-    cloudflare: true
-    author: craig
-    updated: 2024-03-01
-  - link: https://github.com/craigsdennis/image-model-streamlit-workers-ai
-    name: Image Model Streamlit starters
-    description: Collection of Streamlit applications that are making use of Cloudflare Workers AI.
-    tags: [AI, Streamlit]
-    products: [Workers AI]
-    languages: [Python]
-    author: craig
-    cloudflare: true
-    updated: 2024-03-01
-  - link: https://github.com/craigsdennis/vanilla-chat-workers-ai
-    name: Vanilla JavaScript Chat Application using Cloudflare Workers AI
-    description: A web based chat interface built on Cloudflare Pages that allows for exploring Text Generation models on Cloudflare Workers AI. Design is built using tailwind.
-    tags: [AI, Tailwind, Hono]
-    products: [Workers AI, Pages, Workers]
-    languages: [TypeScript]
-    author: craig
-    cloudflare: true
-    updated: 2024-03-01
-  - link: https://github.com/craigsdennis/whatever-ify-workers-ai
-    name: Whatever-ify
-    description: Turn yourself into...whatever. Take a photo, get a description, generate a scene and character, then generate an image based on that calendar.
-    tags: [AI, Hono]
-    products: [Workers AI, Pages, Workers]
-    languages: [TypeScript]
-    author: craig
-    cloudflare: true
-    updated: 2024-04-01
-  - link: https://github.com/craigsdennis/comically-bad-art-workers-ai-streamlit
-    name: Comically Bad Art Generation
-    description: This app uses the wonderful Python UI Framework Streamlit and Cloudflare Workers AI.
-    tags: [AI, Streamlit]
-    products: [Workers AI]
-    languages: [Python]
-    author: craig
-    cloudflare: true
-    updated: 2024-05-01
-  - link: https://github.com/craigsdennis/floor-is-llava-workers-ai
-    name: Floor is Llava
-    description: This is an example repo to explore using the AI Vision model Llava hosted on Cloudflare Workers AI. This is a SvelteKit app hosted on Pages.
-    tags: [AI, SvelteKit]
-    products: [Workers AI, Pages, Workers]
-    languages: [TypeScript]
-    cloudflare: true
-    updated: 2024-05-23
-  - link: https://github.com/craigsdennis/hackathon-helper-workers-ai
-    name: Hackathon Helper
-    description: A series of starters for Hackathons. Get building quicker! Python, Streamlit, Workers, and Pages starters for all your AI needs!
-    tags: [AI, Streamlit, Hono]
-    products: [Workers, Workers AI, Pages]
-    languages: [JavaScript, Python]
-    cloudflare: true
-    updated: 2024-06-12
-  - link: https://github.com/craigsdennis/lightbulb-moment-tool-calling
-    name: Homie - Home Automation using Function Calling
-    description: A home automation tool that uses AI Function calling to change the color of lightbulbs in your home.
-    tags: [AI, Hono]
-    products: [Workers AI, Workers]
-    languages: [TypeScript]
-    cloudflare: true
-    updated: 2024-06-17
-  - link: https://github.com/craigsdennis/shorty-dot-dev
-    name: shrty.dev
-    description: A URL shortener that makes use of KV and Workers Analytics Engine. The admin interface uses Function Calling. Go Shorty!
-    tags: [AI, Hono]
-    products: [Workers AI, KV, Workers]
-    languages: [TypeScript]
-    cloudflare: true
-    updated: 2024-07-02
-  - link: https://github.com/elizabethsiegle/cfworkers-ai-translate
-    name: Multimodal AI Translator
-    description: This application uses Cloudflare Workers AI to perform multimodal translation of languages via audio and text in the browser.
-    tags: [AI]
-    products: [Workers, Workers AI]
-    languages: [JavaScript]
-    author: lizzie
-    cloudflare: true
-    updated: 2024-05-28
-  - link: https://github.com/elizabethsiegle/cf-ai-lora-news-summarizer
-    name: LoRA News Summarizer
-    description: This application uses Cloudflare Workers AI, Streamlit, and Beautiful Soup to summarize input news article URLs in a variety of tones.
-    tags: [AI, Streamlit]
-    products: [Workers AI]
-    languages: [Python]
-    author: lizzie
-    cloudflare: true
-    updated: 2024-07-08
-  - link: https://github.com/elizabethsiegle/nbafinals-cloudflare-ai-hono-durable-objects
-    name: NBA Finals Polling and Predictor
-    description: This stateful polling application uses Cloudflare Workers AI, Cloudflare Pages, Cloudflare Durable Objects, and Hono to keep track of users' votes for different basketball teams and generates personal predictions for the series.
-    tags: [AI, Hono]
-    products: [Workers AI, Pages, Durable Objects]
-    languages: [TypeScript]
-    author: lizzie
-    cloudflare: true
-    updated: 2024-06-06
-  - link: https://github.com/elizabethsiegle/cf-workers-ai-obj-detection-webcam
-    name: Workers AI Object Detector
-    description: Detect objects from a webcam in a Cloudflare Worker web app with detr-resnet-50 hosted on Cloudflare using Cloudflare Workers AI.
-    tags: [AI]
-    products: [Workers, Workers AI]
-    languages: [JavaScript]
-    author: lizzie
-    cloudflare: true
-    updated: 2024-05-23
-  - link: https://github.com/elizabethsiegle/star-wars-fanfic-generator-streamlit-astra-cf
-    name: Fanfic Generator
-    description: This application uses Cloudflare Workers AI, Streamlit, and AstraDB to generate personal scifi fanfiction.
-    tags: [AI, Streamlit, AstraDB]
-    products: [Workers AI]
-    languages: [Python]
-    author: lizzie
-    cloudflare: true
-    updated: 2024-06-29
-  - link: https://github.com/harshil1712/nextjs-r2-demo
-    name: Upload Image to R2 starter
-    description: Upload images to Cloudflare R2 from a Next.js application.
-    tags: [NextJS]
-    products: [R2, Pages]
-    languages: [TypeScript]
-    author: harshil
-    cloudflare: true
-    updated: 2024-06-21
-  - link: https://github.com/harshil1712/remix-d1-auth-template
-    name: Remix Authentication Starter
-    description: Implement authenticating to a Remix app and store user data in Cloudflare D1.
-    tags: [Remix]
-    products: [D1]
-    languages: [TypeScript]
-    author: harshil
-    cloudflare: true
-    updated: 2024-07-09
-  - link: https://github.com/cloudflare/turnstile-demo-workers
-    name: Turnstile Demo
-    description: A simple demo with a Turnstile-protected form, using Cloudflare Workers. With the code in this repository, we demonstrate implicit rendering and explicit rendering.
-    tags: []
-    products: [Turnstile, Workers]
-    languages: [JavaScript]
-    cloudflare: true
-    updated: 2024-02-15
-  - link: https://github.com/cloudflare/doom-workers
-    name: Multiplayer Doom Workers
-    description: A WebAssembly Doom port with multiplayer support running on top of Cloudflare's global network using Workers, WebSockets, Pages, and Durable Objects.
-    tags: [WebSockets]
-    products: [Pages, Durable Objects, Workers]
-    languages: [JavaScript]
-    cloudflare: true
-    updated: 2023-06-15
-  - link: https://github.com/cloudflare/hyperdrive-demo
-    name: Hyperdrive demo
-    description: A Remix app that connects to a database behind Cloudflare's Hyperdrive, making regional databases feel like they're globally distributed.
-    tags: [Remix]
-    products: [Hyperdrive]
-    languages: [TypeScript]
-    cloudflare: true
-    updated: 2024-04-04
-  - link: https://github.com/cloudflare/d1-northwind
-    name: D1 Northwind Demo
-    description: This is a demo of the Northwind dataset, running on Cloudflare Workers, and D1 - Cloudflare's SQL database, running on SQLite.
-    tags: [Tailwind, React, Remix]
-    products: [Workers, D1]
-    languages: [TypeScript, SQL]
-    cloudflare: true
-    updated: 2023-07-12
-  - link: https://github.com/cloudflare/workers-chat-demo
-    name: Cloudflare Workers Chat Demo
-    description: This is a demo app written on Cloudflare Workers utilizing Durable Objects to implement real-time chat with stored history.
-    tags: [WebSockets]
-    products: [Workers, Durable Objects]
-    languages: [JavaScript]
-    cloudflare: true
-    updated: 2024-03-05
-  - link: https://github.com/cloudflare/js-rpc-and-entrypoints-demo
-    name: JavaScript-native RPC on Cloudflare Workers <> Named Entrypoints
-    description: This is a collection of examples of communicating between multiple Cloudflare Workers using the remote-procedure call (RPC) system that is built into the Workers runtime.
-    tags: [RPC, Discord]
-    products: [Workers, D1, Access]
-    languages: [TypeScript]
-    cloudflare: true
-    updated: 2024-04-16
-  - link: https://github.com/harshil1712/jobs-at-conf-demo
-    name: Jobs At Conf
-    description: A job lisiting website to add jobs you find at in-person conferences. Built with Cloudflare Pages, R2, D1, Queues, and Workers AI.
-    tags: [Next.js]
-    products: [D1, R2, Workers AI, Queues, Pages]
-    languages: [TypeScript]
-    author: harshil
-    cloudflare: true
-    updated: 2024-07-29
-  - link: https://github.com/cloudflare/queues-web-crawler
-    name: Queues Web Crawler
-    description: An example use-case for Queues, a web crawler built on Browser Rendering and Puppeteer. The crawler finds the number of links to Cloudflare.com on the site, and archives a screenshot to Workers KV.
-    tags: []
-    products: [KV, Browser Rendering, Workers, Pages, Queues]
-    languages: [TypeScript]
-    cloudflare: true
-    updated: 2023-06-15
-  - link: https://github.com/cloudflare/workers-for-platforms-example
-    name: Workers for Platforms Example Project
-    description: Explore how you could manage thousands of Workers with a single Cloudflare Workers account.
-    tags: [Hono]
-    products: [D1, Workers, Workers for Platforms]
-    languages: [TypeScript]
-    cloudflare: true
-    updated: 2024-04-03
-  - link: https://github.com/cloudflare/dmarc-email-worker
-    name: DMARC Email Worker
-    description: A Cloudflare worker script to process incoming DMARC reports, store them, and produce analytics.
-    tags: []
-    products: [R2, Workers, Email Workers]
-    languages: [TypeScript]
-    cloudflare: true
-    updated: 2023-03-17
-  - link: https://github.com/cloudflare/pages-fns-with-wasm-demo
-    name: Pages Functions with WebAssembly
-    description: This is a demo application that exemplifies the use of Wasm module imports inside Pages Functions code.
-    tags: []
-    products: [Pages]
-    languages: [Rust]
-    cloudflare: true
-    updated: 2023-03-22
-  - link: https://github.com/cloudflare/orange
-    name: Orange Meets
-    description: Orange Meets is a demo WebRTC application built using Cloudflare Calls.
-    tags: []
-    products: [Calls]
-    languages: [TypeScript]
-    cloudflare: true
-    updated: 2024-07-05
-  - link: https://github.com/cloudflare/calls-examples/tree/main/whip-whep-server
-    name: WHIP-WHEP Server
-    description: WHIP and WHEP server implemented on top of Calls API.
-    tags: []
-    products: [Calls]
-    languages: [TypeScript]
-    cloudflare: true
-    updated: 2022-06-12
-  - link: https://github.com/cloudflare/calls-examples/tree/main/echo
-    name: Calls Echo Demo
-    description: Demonstrates a local stream alongside a remote echo stream.
-    tags: []
-    products: [Calls]
-    languages: [JavaScript]
-    cloudflare: true
-    updated: 2025-05-10
-  - link: https://github.com/cloudflare/calls-examples/tree/main/echo-datachannels
-    name: Calls DataChannel Test
-    description: This example establishes two datachannels, one publishes data and the other one subscribes, the test measures how fast a message travels to and from the server.
-    tags: []
-    products: [Calls]
-    languages: [JavaScript]
-    cloudflare: true
-    updated: 2022-06-04
-  - link: https://github.com/cloudflare/wildebeest
-    name: Wildebeest
-    description: Wildebeest is an ActivityPub and Mastodon-compatible server whose goal is to allow anyone to operate their Fediverse server and identity on their domain without needing to keep infrastructure, with minimal setup and maintenance, and running in minutes.
-    tags: []
-    products: [Workers, Pages, Durable Objects, Queues, D1, Access, Images]
-    languages: [TypeScript]
-    cloudflare: true
-    updated: 2023-07-31
-  - link: https://github.com/cloudflare/workers-access-external-auth-example
-    name: Access External Auth Rule Example Worker
-    description: This is a worker that allows you to quickly setup an external evalutation rule in Cloudflare Access.
-    tags: []
-    products: [Workers, Access]
-    languages: [JavaScript]
-    cloudflare: true
-    updated: 2022-08-01
-  - link: https://github.com/lauragift21/staff-directory
-    name: Staff Directory demo
-    description: Built using the powerful combination of HonoX for backend logic, Cloudflare Pages for fast and secure hosting, and Cloudflare D1 for seamless database management.
-    tags: [Hono]
-    products: [Pages, D1]
-    languages: [TypeScript]
-    author: gift
-    cloudflare: true
-    updated: 2024-03-18
-  - link: https://github.com/atinux/atidraw
-    name: Atidraw
-    description: A web application made with Nuxt that lets you to create, enhance, and share your drawings with the world. Harnessing the power of Cloudflare R2 and Cloudflare AI to store and enhance your drawings.
-    tags: [Nuxt]
-    products: [Pages, R2, Workers AI]
-    languages: [TypeScript]
-    cloudflare: false
-    updated: 2024-08-12
-  - link: https://github.com/atinux/atidone
-    name: Atidone
-    description: A full-stack application made with Nuxt, Cloudflare D1 and Authentication to store your todos on the web.
-    tags: [Nuxt]
-    products: [Pages, D1]
-    languages: [TypeScript]
-    cloudflare: false
-    updated: 2024-08-12
-  - link: https://github.com/atinux/atinotes
-    name: Atinotes
-    description: Store Markdown notes in Cloudflare KV with this full-stack application made with Nuxt & deployed on Cloudflare Pages.
-    tags: [Nuxt]
-    products: [Pages, KV]
-    languages: [TypeScript]
-    cloudflare: false
-    updated: 2024-08-12
-  - link: https://github.com/Flosciante/nuxt-image-gallery
-    name: Nuxt Image Gallery
-    description: A web application to create an image gallery with Cloudflare R2 with a built-in image editor.
-    tags: [Nuxt]
-    products: [Pages, R2]
-    languages: [TypeScript]
-    cloudflare: false
-    updated: 2024-08-29
-  - link: https://github.com/ra-jeev/hub-chat
-    name: AI Chat
-    description: A full-stack application made with Nuxt to chat with various Cloudflare Workers AI LLM.
-    tags: [Nuxt]
-    products: [Pages, Workers AI]
-    languages: [TypeScript]
-    cloudflare: false
-    updated: 2024-08-29
-  - link: https://github.com/craigsdennis/gamertown-workers-ai-vectorize
-    name: Gamertown Customer Support Assistant
-    description: A RAG based AI Chat app that uses Vectorize to access video game data for employees of Gamertown.
-    tags: [AI, Hono, Vectorize]
-    products: [Workers, Workers AI, Vectorize]
-    languages: [TypeScript]
-    cloudflare: true
-    updated: 2024-09-12
-  - link: https://github.com/atinux/flux-ai-image-generator
-    name: Flux Schnell Image Generator
-    description: An application to generate images with AI using Flux-1 Schnell and store them in Cloudflare R2.
-    tags: [Nuxt]
-    products: [Pages, Workers AI, R2]
-    languages: [TypeScript]
-    cloudflare: false
-    updated: 2024-10-07
+- link: https://github.com/craigsdennis/phoney-ai
+  id: Phoney AI
+  description: This application uses Cloudflare Workers AI, Twilio, and AssemblyAI. Your phone is an input and output device.
+  tags: [AI, Twilio, Hono]
+  products: [Workers AI, Workers]
+  languages: [JavaScript]
+  cloudflare: true
+  author: craig
+  updated: 2024-03-01
+- link: https://github.com/craigsdennis/image-model-streamlit-workers-ai
+  id: Image Model Streamlit starters
+  description: Collection of Streamlit applications that are making use of Cloudflare Workers AI.
+  tags: [AI, Streamlit]
+  products: [Workers AI]
+  languages: [Python]
+  author: craig
+  cloudflare: true
+  updated: 2024-03-01
+- link: https://github.com/craigsdennis/vanilla-chat-workers-ai
+  id: Vanilla JavaScript Chat Application using Cloudflare Workers AI
+  description: A web based chat interface built on Cloudflare Pages that allows for exploring Text Generation models on Cloudflare Workers AI. Design is built using tailwind.
+  tags: [AI, Tailwind, Hono]
+  products: [Workers AI, Pages, Workers]
+  languages: [TypeScript]
+  author: craig
+  cloudflare: true
+  updated: 2024-03-01
+- link: https://github.com/craigsdennis/whatever-ify-workers-ai
+  id: Whatever-ify
+  description: Turn yourself into...whatever. Take a photo, get a description, generate a scene and character, then generate an image based on that calendar.
+  tags: [AI, Hono]
+  products: [Workers AI, Pages, Workers]
+  languages: [TypeScript]
+  author: craig
+  cloudflare: true
+  updated: 2024-04-01
+- link: https://github.com/craigsdennis/comically-bad-art-workers-ai-streamlit
+  id: Comically Bad Art Generation
+  description: This app uses the wonderful Python UI Framework Streamlit and Cloudflare Workers AI.
+  tags: [AI, Streamlit]
+  products: [Workers AI]
+  languages: [Python]
+  author: craig
+  cloudflare: true
+  updated: 2024-05-01
+- link: https://github.com/craigsdennis/floor-is-llava-workers-ai
+  id: Floor is Llava
+  description: This is an example repo to explore using the AI Vision model Llava hosted on Cloudflare Workers AI. This is a SvelteKit app hosted on Pages.
+  tags: [AI, SvelteKit]
+  products: [Workers AI, Pages, Workers]
+  languages: [TypeScript]
+  cloudflare: true
+  updated: 2024-05-23
+- link: https://github.com/craigsdennis/hackathon-helper-workers-ai
+  id: Hackathon Helper
+  description: A series of starters for Hackathons. Get building quicker! Python, Streamlit, Workers, and Pages starters for all your AI needs!
+  tags: [AI, Streamlit, Hono]
+  products: [Workers, Workers AI, Pages]
+  languages: [JavaScript, Python]
+  cloudflare: true
+  updated: 2024-06-12
+- link: https://github.com/craigsdennis/lightbulb-moment-tool-calling
+  id: Homie - Home Automation using Function Calling
+  description: A home automation tool that uses AI Function calling to change the color of lightbulbs in your home.
+  tags: [AI, Hono]
+  products: [Workers AI, Workers]
+  languages: [TypeScript]
+  cloudflare: true
+  updated: 2024-06-17
+- link: https://github.com/craigsdennis/shorty-dot-dev
+  id: shrty.dev
+  description: A URL shortener that makes use of KV and Workers Analytics Engine. The admin interface uses Function Calling. Go Shorty!
+  tags: [AI, Hono]
+  products: [Workers AI, KV, Workers]
+  languages: [TypeScript]
+  cloudflare: true
+  updated: 2024-07-02
+- link: https://github.com/elizabethsiegle/cfworkers-ai-translate
+  id: Multimodal AI Translator
+  description: This application uses Cloudflare Workers AI to perform multimodal translation of languages via audio and text in the browser.
+  tags: [AI]
+  products: [Workers, Workers AI]
+  languages: [JavaScript]
+  author: lizzie
+  cloudflare: true
+  updated: 2024-05-28
+- link: https://github.com/elizabethsiegle/cf-ai-lora-news-summarizer
+  id: LoRA News Summarizer
+  description: This application uses Cloudflare Workers AI, Streamlit, and Beautiful Soup to summarize input news article URLs in a variety of tones.
+  tags: [AI, Streamlit]
+  products: [Workers AI]
+  languages: [Python]
+  author: lizzie
+  cloudflare: true
+  updated: 2024-07-08
+- link: https://github.com/elizabethsiegle/nbafinals-cloudflare-ai-hono-durable-objects
+  id: NBA Finals Polling and Predictor
+  description: This stateful polling application uses Cloudflare Workers AI, Cloudflare Pages, Cloudflare Durable Objects, and Hono to keep track of users' votes for different basketball teams and generates personal predictions for the series.
+  tags: [AI, Hono]
+  products: [Workers AI, Pages, Durable Objects]
+  languages: [TypeScript]
+  author: lizzie
+  cloudflare: true
+  updated: 2024-06-06
+- link: https://github.com/elizabethsiegle/cf-workers-ai-obj-detection-webcam
+  id: Workers AI Object Detector
+  description: Detect objects from a webcam in a Cloudflare Worker web app with detr-resnet-50 hosted on Cloudflare using Cloudflare Workers AI.
+  tags: [AI]
+  products: [Workers, Workers AI]
+  languages: [JavaScript]
+  author: lizzie
+  cloudflare: true
+  updated: 2024-05-23
+- link: https://github.com/elizabethsiegle/star-wars-fanfic-generator-streamlit-astra-cf
+  id: Fanfic Generator
+  description: This application uses Cloudflare Workers AI, Streamlit, and AstraDB to generate personal scifi fanfiction.
+  tags: [AI, Streamlit, AstraDB]
+  products: [Workers AI]
+  languages: [Python]
+  author: lizzie
+  cloudflare: true
+  updated: 2024-06-29
+- link: https://github.com/harshil1712/nextjs-r2-demo
+  id: Upload Image to R2 starter
+  description: Upload images to Cloudflare R2 from a Next.js application.
+  tags: [NextJS]
+  products: [R2, Pages]
+  languages: [TypeScript]
+  author: harshil
+  cloudflare: true
+  updated: 2024-06-21
+- link: https://github.com/harshil1712/remix-d1-auth-template
+  id: Remix Authentication Starter
+  description: Implement authenticating to a Remix app and store user data in Cloudflare D1.
+  tags: [Remix]
+  products: [D1]
+  languages: [TypeScript]
+  author: harshil
+  cloudflare: true
+  updated: 2024-07-09
+- link: https://github.com/cloudflare/turnstile-demo-workers
+  id: Turnstile Demo
+  description: A simple demo with a Turnstile-protected form, using Cloudflare Workers. With the code in this repository, we demonstrate implicit rendering and explicit rendering.
+  tags: []
+  products: [Turnstile, Workers]
+  languages: [JavaScript]
+  cloudflare: true
+  updated: 2024-02-15
+- link: https://github.com/cloudflare/doom-workers
+  id: Multiplayer Doom Workers
+  description: A WebAssembly Doom port with multiplayer support running on top of Cloudflare's global network using Workers, WebSockets, Pages, and Durable Objects.
+  tags: [WebSockets]
+  products: [Pages, Durable Objects, Workers]
+  languages: [JavaScript]
+  cloudflare: true
+  updated: 2023-06-15
+- link: https://github.com/cloudflare/hyperdrive-demo
+  id: Hyperdrive demo
+  description: A Remix app that connects to a database behind Cloudflare's Hyperdrive, making regional databases feel like they're globally distributed.
+  tags: [Remix]
+  products: [Hyperdrive]
+  languages: [TypeScript]
+  cloudflare: true
+  updated: 2024-04-04
+- link: https://github.com/cloudflare/d1-northwind
+  id: D1 Northwind Demo
+  description: This is a demo of the Northwind dataset, running on Cloudflare Workers, and D1 - Cloudflare's SQL database, running on SQLite.
+  tags: [Tailwind, React, Remix]
+  products: [Workers, D1]
+  languages: [TypeScript, SQL]
+  cloudflare: true
+  updated: 2023-07-12
+- link: https://github.com/cloudflare/workers-chat-demo
+  id: Cloudflare Workers Chat Demo
+  description: This is a demo app written on Cloudflare Workers utilizing Durable Objects to implement real-time chat with stored history.
+  tags: [WebSockets]
+  products: [Workers, Durable Objects]
+  languages: [JavaScript]
+  cloudflare: true
+  updated: 2024-03-05
+- link: https://github.com/cloudflare/js-rpc-and-entrypoints-demo
+  id: JavaScript-native RPC on Cloudflare Workers <> Named Entrypoints
+  description: This is a collection of examples of communicating between multiple Cloudflare Workers using the remote-procedure call (RPC) system that is built into the Workers runtime.
+  tags: [RPC, Discord]
+  products: [Workers, D1, Access]
+  languages: [TypeScript]
+  cloudflare: true
+  updated: 2024-04-16
+- link: https://github.com/harshil1712/jobs-at-conf-demo
+  id: Jobs At Conf
+  description: A job lisiting website to add jobs you find at in-person conferences. Built with Cloudflare Pages, R2, D1, Queues, and Workers AI.
+  tags: [Next.js]
+  products: [D1, R2, Workers AI, Queues, Pages]
+  languages: [TypeScript]
+  author: harshil
+  cloudflare: true
+  updated: 2024-07-29
+- link: https://github.com/cloudflare/queues-web-crawler
+  id: Queues Web Crawler
+  description: An example use-case for Queues, a web crawler built on Browser Rendering and Puppeteer. The crawler finds the number of links to Cloudflare.com on the site, and archives a screenshot to Workers KV.
+  tags: []
+  products: [KV, Browser Rendering, Workers, Pages, Queues]
+  languages: [TypeScript]
+  cloudflare: true
+  updated: 2023-06-15
+- link: https://github.com/cloudflare/workers-for-platforms-example
+  id: Workers for Platforms Example Project
+  description: Explore how you could manage thousands of Workers with a single Cloudflare Workers account.
+  tags: [Hono]
+  products: [D1, Workers, Workers for Platforms]
+  languages: [TypeScript]
+  cloudflare: true
+  updated: 2024-04-03
+- link: https://github.com/cloudflare/dmarc-email-worker
+  id: DMARC Email Worker
+  description: A Cloudflare worker script to process incoming DMARC reports, store them, and produce analytics.
+  tags: []
+  products: [R2, Workers, Email Workers]
+  languages: [TypeScript]
+  cloudflare: true
+  updated: 2023-03-17
+- link: https://github.com/cloudflare/pages-fns-with-wasm-demo
+  id: Pages Functions with WebAssembly
+  description: This is a demo application that exemplifies the use of Wasm module imports inside Pages Functions code.
+  tags: []
+  products: [Pages]
+  languages: [Rust]
+  cloudflare: true
+  updated: 2023-03-22
+- link: https://github.com/cloudflare/orange
+  id: Orange Meets
+  description: Orange Meets is a demo WebRTC application built using Cloudflare Calls.
+  tags: []
+  products: [Calls]
+  languages: [TypeScript]
+  cloudflare: true
+  updated: 2024-07-05
+- link: https://github.com/cloudflare/calls-examples/tree/main/whip-whep-server
+  id: WHIP-WHEP Server
+  description: WHIP and WHEP server implemented on top of Calls API.
+  tags: []
+  products: [Calls]
+  languages: [TypeScript]
+  cloudflare: true
+  updated: 2022-06-12
+- link: https://github.com/cloudflare/calls-examples/tree/main/echo
+  id: Calls Echo Demo
+  description: Demonstrates a local stream alongside a remote echo stream.
+  tags: []
+  products: [Calls]
+  languages: [JavaScript]
+  cloudflare: true
+  updated: 2025-05-10
+- link: https://github.com/cloudflare/calls-examples/tree/main/echo-datachannels
+  id: Calls DataChannel Test
+  description: This example establishes two datachannels, one publishes data and the other one subscribes, the test measures how fast a message travels to and from the server.
+  tags: []
+  products: [Calls]
+  languages: [JavaScript]
+  cloudflare: true
+  updated: 2022-06-04
+- link: https://github.com/cloudflare/wildebeest
+  id: Wildebeest
+  description: Wildebeest is an ActivityPub and Mastodon-compatible server whose goal is to allow anyone to operate their Fediverse server and identity on their domain without needing to keep infrastructure, with minimal setup and maintenance, and running in minutes.
+  tags: []
+  products: [Workers, Pages, Durable Objects, Queues, D1, Access, Images]
+  languages: [TypeScript]
+  cloudflare: true
+  updated: 2023-07-31
+- link: https://github.com/cloudflare/workers-access-external-auth-example
+  id: Access External Auth Rule Example Worker
+  description: This is a worker that allows you to quickly setup an external evalutation rule in Cloudflare Access.
+  tags: []
+  products: [Workers, Access]
+  languages: [JavaScript]
+  cloudflare: true
+  updated: 2022-08-01
+- link: https://github.com/lauragift21/staff-directory
+  id: Staff Directory demo
+  description: Built using the powerful combination of HonoX for backend logic, Cloudflare Pages for fast and secure hosting, and Cloudflare D1 for seamless database management.
+  tags: [Hono]
+  products: [Pages, D1]
+  languages: [TypeScript]
+  author: gift
+  cloudflare: true
+  updated: 2024-03-18
+- link: https://github.com/atinux/atidraw
+  id: Atidraw
+  description: A web application made with Nuxt that lets you to create, enhance, and share your drawings with the world. Harnessing the power of Cloudflare R2 and Cloudflare AI to store and enhance your drawings.
+  tags: [Nuxt]
+  products: [Pages, R2, Workers AI]
+  languages: [TypeScript]
+  cloudflare: false
+  updated: 2024-08-12
+- link: https://github.com/atinux/atidone
+  id: Atidone
+  description: A full-stack application made with Nuxt, Cloudflare D1 and Authentication to store your todos on the web.
+  tags: [Nuxt]
+  products: [Pages, D1]
+  languages: [TypeScript]
+  cloudflare: false
+  updated: 2024-08-12
+- link: https://github.com/atinux/atinotes
+  id: Atinotes
+  description: Store Markdown notes in Cloudflare KV with this full-stack application made with Nuxt & deployed on Cloudflare Pages.
+  tags: [Nuxt]
+  products: [Pages, KV]
+  languages: [TypeScript]
+  cloudflare: false
+  updated: 2024-08-12
+- link: https://github.com/Flosciante/nuxt-image-gallery
+  id: Nuxt Image Gallery
+  description: A web application to create an image gallery with Cloudflare R2 with a built-in image editor.
+  tags: [Nuxt]
+  products: [Pages, R2]
+  languages: [TypeScript]
+  cloudflare: false
+  updated: 2024-08-29
+- link: https://github.com/ra-jeev/hub-chat
+  id: AI Chat
+  description: A full-stack application made with Nuxt to chat with various Cloudflare Workers AI LLM.
+  tags: [Nuxt]
+  products: [Pages, Workers AI]
+  languages: [TypeScript]
+  cloudflare: false
+  updated: 2024-08-29
+- link: https://github.com/craigsdennis/gamertown-workers-ai-vectorize
+  id: Gamertown Customer Support Assistant
+  description: A RAG based AI Chat app that uses Vectorize to access video game data for employees of Gamertown.
+  tags: [AI, Hono, Vectorize]
+  products: [Workers, Workers AI, Vectorize]
+  languages: [TypeScript]
+  cloudflare: true
+  updated: 2024-09-12
+- link: https://github.com/atinux/flux-ai-image-generator
+  id: Flux Schnell Image Generator
+  description: An application to generate images with AI using Flux-1 Schnell and store them in Cloudflare R2.
+  tags: [Nuxt]
+  products: [Pages, Workers AI, R2]
+  languages: [TypeScript]
+  cloudflare: false
+  updated: 2024-10-07

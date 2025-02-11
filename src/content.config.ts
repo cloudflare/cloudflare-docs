@@ -3,7 +3,7 @@ import { z, defineCollection } from "astro:content";
 import { docsLoader, i18nLoader } from "@astrojs/starlight/loaders";
 import { docsSchema, i18nSchema } from "@astrojs/starlight/schema";
 
-import { glob } from "astro/loaders";
+import { glob, file } from "astro/loaders";
 
 import {
 	appsSchema,
@@ -95,11 +95,11 @@ export const collections = {
 		schema: workersAiModelsSchema,
 	}),
 	videos: defineCollection({
-		loader: dataLoader("videos"),
+		loader: file("src/content/videos/index.yaml"),
 		schema: videosSchema,
 	}),
 	apps: defineCollection({
-		loader: dataLoader("apps"),
+		loader: file("src/content/apps/index.yaml"),
 		schema: appsSchema,
 	}),
 	"warp-releases": defineCollection({
