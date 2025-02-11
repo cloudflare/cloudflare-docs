@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ChangeEvent } from "react";
 import FieldBadges from "./fields/FieldBadges";
 import Markdown from "react-markdown";
 import type { CollectionEntry } from "astro:content";
@@ -95,19 +95,17 @@ const FieldCatalog = ({ fields }: { fields: Fields }) => {
 								className="mr-2"
 								value={category}
 								checked={filters.categories.includes(category)}
-								onClick={(e) => {
-									const target = e.target as HTMLInputElement;
-
-									if (target.checked) {
+								onChange={(e: ChangeEvent<HTMLInputElement>) => {
+									if (e.target.checked) {
 										setFilters({
 											...filters,
-											categories: [...filters.categories, target.value],
+											categories: [...filters.categories, e.target.value],
 										});
 									} else {
 										setFilters({
 											...filters,
 											categories: filters.categories.filter(
-												(f) => f !== target.value,
+												(f) => f !== e.target.value,
 											),
 										});
 									}
