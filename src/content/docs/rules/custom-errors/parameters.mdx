@@ -18,7 +18,7 @@ Rule parameters are the following:
 
 - **`asset_name`** <Type text="String"/> <MetaInfo text="Optional"/>
   - The name of the [custom error asset](#custom-error-assets) you previously uploaded. The asset may include [error tokens](/rules/custom-errors/error-tokens/) that will be replaced with real values before sending the error response to the visitor.
-	- A custom error rule can only reference an asset defined in the same scope as the rule (that is, in the same zone or account).
+  - A custom error rule can only reference an asset defined in the same scope as the rule (that is, in the same zone or account).
   - You must provide either the `asset_name` or the `content` parameter.
 - **`content`** <Type text="String"/> <MetaInfo text="Optional"/>
   - The response body to return. It can include [error tokens](/rules/custom-errors/error-tokens/) that will be replaced with real values before sending the error response to the visitor.
@@ -46,7 +46,7 @@ If you create an HTML error response, make sure the `referrer` meta tag is not p
 
 ## Custom error assets
 
-A custom error asset corresponds to a full HTML page (including images, CSS, and JavaScript code) collected by Cloudflare based on a URL you provide, to be served to visitors as an error page. You can use a custom error asset in [custom error rules](#custom-error-rules) as the error response that will be served to visitors under certain conditions. Those conditions are defined in the expression of the custom error rule.
+A custom error asset corresponds to a web resource such as an HTML web page (including any referenced images, CSS, and JavaScript code) that Cloudflare fetches and saves based on a URL you provide, to be served to visitors as an error page.
 
 Custom error assets have the following parameters:
 
@@ -62,9 +62,9 @@ Custom error assets have the following parameters:
   - A string describing the custom error asset.
   - Example value: `"Standard 5xx error template page"`.
 - **`url`** <Type text="String"/> <MetaInfo text="Required"/>
-  - The URL of the error page you want to store at Cloudflare to be served to visitors according to your [custom error rules](#custom-error-rules).
+  - The URL of the page you want Cloudflare to fetch and store, to be served later to visitors as error pages according to the configured [custom error rules](#custom-error-rules).
   - Example value: `"https://example.com/errors/500.html"`.
-  - When you create or update an asset and provide a URL, Cloudflare collects the images, CSS, and JavaScript code used in the page, minifies the content, and saves it internally.
-  - The HTML content of the page at the specified URL may include [error tokens](/rules/custom-errors/error-tokens/) that will be replaced with real values before sending the error response to the visitor.
+  - When you create or update an asset and provide a URL, Cloudflare collects any images, CSS, and JavaScript code used in the page, minifies the content, and saves it internally.
+  - The content of the page at the specified URL may include [error tokens](/rules/custom-errors/error-tokens/) that will be replaced with real values before sending the error response to the visitor.
   - If you update an asset and provide the same URL, Cloudflare will fetch the URL again, along with its resources, and store it internally.
   - The maximum asset size is 1.5 MB.

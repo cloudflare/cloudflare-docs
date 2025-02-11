@@ -22,7 +22,7 @@ To perform the same operations at the account level, use the corresponding accou
 
 ### Create a custom error asset
 
-The following `POST` request creates new a custom error asset in a zone:
+The following `POST` request creates new a custom error asset in a zone based on the provided URL:
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_pages/assets" \
@@ -72,7 +72,7 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_pages/assets" 
 			"url": "https://example.com/errors/500_template.html",
 			"last_updated": "2025-02-10T11:36:07.810215Z",
 			"size_bytes": 2048
-		},
+		}
 		// ...
 	],
 	"success": true,
@@ -121,6 +121,8 @@ curl --request PUT \
 }
 ```
 
+You can update the asset description and URL. You cannot update the asset name after creation.
+
 If you provide the same URL when updating an asset, Cloudflare will fetch the URL again, along with its resources.
 
 To update an asset at the account level, use the account-level endpoint:
@@ -131,7 +133,7 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/custom_pages/assets/{
 
 ### Get a custom error asset
 
-The following `GET` request retrieves an existing custom error asset at the zone level named `500_error_template`:
+The following `GET` request retrieves the details of an existing custom error asset at the zone level named `500_error_template`:
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_pages/assets/500_error_template" \
@@ -189,9 +191,9 @@ The first rule in the `http_custom_errors` phase ruleset that matches will be ap
 
 The provided examples use the following fields in their rule expressions:
 
-- [`http.response.code`](/ruleset-engine/rules-language/fields/reference/http.response.code/): Represents the HTTP status code returned to the client, either set by a Cloudflare product or returned by the origin server. Use this field to customize the error response for error codes returned by the origin server or by a Cloudflare product such as a Worker.
+- [`http.response.code`](/ruleset-engine/rules-language/fields/reference/http.response.code/): Represents the HTTP status code returned to the client, either set by a Cloudflare product or returned by the origin server. Use this field to customize the response for error codes returned by the origin server or by a Cloudflare product such as a Worker.
 
-- [`cf.response.1xxx_code`](/ruleset-engine/rules-language/fields/reference/cf.response.1xxx_code/): Contains the specific error code for Cloudflare-generated errors. This field will only work for Cloudflare-generated errors such as [52x](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/) and [1xxx](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/).
+- [`cf.response.1xxx_code`](/ruleset-engine/rules-language/fields/reference/cf.response.1xxx_code/): Contains the specific error code for Cloudflare-generated errors. This field will only work for Cloudflare-generated errors such as [52X](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/) and [1XXX](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/).
 
 ### General procedure
 
@@ -204,9 +206,9 @@ Follow this workflow to create a custom error rule for a given zone via API:
 
 To create a custom error rule at the account level, use the corresponding account-level API endpoints.
 
-### Custom JSON response for all 5xx errors
+### Custom JSON response for all 5XX errors
 
-This example configures a custom JSON error response for all 5xx errors (`500`-`599`) in the zone with ID `{zone_id}`. The HTTP status code of the custom error response will be set to `530`.
+This example configures a custom JSON error response for all 5XX errors (`500`-`599`) in the zone with ID `{zone_id}`. The HTTP status code of the custom error response will be set to `530`.
 
 ```bash
 curl --request PUT \
