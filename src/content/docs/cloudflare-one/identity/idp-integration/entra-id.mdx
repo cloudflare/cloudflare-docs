@@ -53,6 +53,12 @@ To retrieve those values:
 
 12. Name the client secret and choose an expiration period.
 
+:::note
+
+When the client secret expires, users will be unable to log in through Access. Take note of your expiry date to prevent login errors and renew your client secret when necessary.
+
+:::
+
 13. After the client secret is created, copy its **Value** field. Store the client secret in a safe place, as it can only be viewed immediately after creation.
 
     ![Location of client secret in Azure](~/assets/images/cloudflare-one/identity/azure/client-cert-value.png)
@@ -120,7 +126,7 @@ The Microsoft Entra ID integration allows you to synchronize IdP groups and auto
 
 <Render
 	file="access/enable-scim-on-dashboard"
-	params={{ idp: "Entra ID", and: " and ", supportgroups: "Support groups"}}
+	params={{ idp: "Entra ID", and: " and ", supportgroups: "Support groups" }}
 />
 
 ### 2. Configure SCIM in Entra ID
@@ -139,9 +145,9 @@ SCIM requires a separate enterprise application from the one created during [ini
 
 5. Once the SCIM application is created, [assign users and groups to the application](https://learn.microsoft.com/entra/identity/enterprise-apps/assign-user-or-group-access-portal).
 
-	:::note
-	Groups in this SCIM application should match the groups in your other [Cloudflare Access enterprise application](/cloudflare-one/identity/idp-integration/entra-id/#set-up-entra-id-as-an-identity-provider). Because SCIM group membership updates will overwrite any groups in a user's identity, assigning the same groups to each app ensures consistent policy evaluation.
-	:::
+   :::note
+   Groups in this SCIM application should match the groups in your other [Cloudflare Access enterprise application](/cloudflare-one/identity/idp-integration/entra-id/#set-up-entra-id-as-an-identity-provider). Because SCIM group membership updates will overwrite any groups in a user's identity, assigning the same groups to each app ensures consistent policy evaluation.
+   :::
 
 6. Go to **Provisioning** and select **Get started**.
 
@@ -159,7 +165,7 @@ SCIM requires a separate enterprise application from the one created during [ini
 
 To check which users and groups were synchronized, select **View provisioning logs**.
 
-<Render file="access/verify-scim-provisioning"/>
+<Render file="access/verify-scim-provisioning" />
 
 ### Provisioning attributes
 
@@ -207,38 +213,39 @@ Access and Gateway policies for an Entra group will also apply to all [nested gr
 ## Force user interaction during WARP reauthentication
 
 You can require users to re-enter their credentials into Entra ID whenever they [re-authenticate their WARP session](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/). To configure this setting:
+
 1. Make a `GET` request to the [Identity Providers endpoint](/api/resources/zero_trust/subresources/identity_providers/) and copy the response for the Entra ID identity provider.
 2. [Update the Entra ID identity provider](/api/resources/zero_trust/subresources/identity_providers/methods/update/) using a `PUT` request. In the request body, include all existing configurations and set the `prompt` parameter to either `login` or `select_account`. For example,
-	```sh {17}
-	curl --request PUT \
-	https://api.cloudflare.com/client/v4/accounts/{account_id}/access/identity_providers/{identity_provider_id} \
-	--header "Authorization: Bearer <API_TOKEN>" \
-	--header "Content-Type: application/json" \
-	--data '{
-			"id": "f174e90a-fafe-4643-bbbc-4a0ed4fc8415",
-			"type": "azureAD",
-			"uid": "f174e90a-fafe-4643-bbbc-4a0ed4fc8415",
-			"name": "Entra ID",
-			"version": "31e74e9b4f033e16b604552091a72295",
-			"config": {
-				"azure_cloud": "default",
-				"client_id": "<CLIENT_ID>",
-				"conditional_access_enabled": false,
-				"directory_id": "<AZURE_DIRECTORY_ID>",
-				"redirect_url": "https://<TEAM_NAME>.cloudflareaccess.com/cdn-cgi/access/callback",
-				"prompt": "login",
-				"support_groups": true
-			},
-			"scim_config": {
-				"enabled": true,
-				"user_deprovision": true,
-				"seat_deprovision": false,
-				"group_member_deprovision": false,
-				"identity_update_behavior": "automatic"
-			},
-			"scim_base_url": "https://<TEAM_NAME>.cloudflareaccess.com/populations/f174e90a-fafe-4643-bbbc-4a0ed4fc8415/scim/v2"
-	}'
-	```
+   ```sh {17}
+   curl --request PUT \
+   https://api.cloudflare.com/client/v4/accounts/{account_id}/access/identity_providers/{identity_provider_id} \
+   --header "Authorization: Bearer <API_TOKEN>" \
+   --header "Content-Type: application/json" \
+   --data '{
+   		"id": "f174e90a-fafe-4643-bbbc-4a0ed4fc8415",
+   		"type": "azureAD",
+   		"uid": "f174e90a-fafe-4643-bbbc-4a0ed4fc8415",
+   		"name": "Entra ID",
+   		"version": "31e74e9b4f033e16b604552091a72295",
+   		"config": {
+   			"azure_cloud": "default",
+   			"client_id": "<CLIENT_ID>",
+   			"conditional_access_enabled": false,
+   			"directory_id": "<AZURE_DIRECTORY_ID>",
+   			"redirect_url": "https://<TEAM_NAME>.cloudflareaccess.com/cdn-cgi/access/callback",
+   			"prompt": "login",
+   			"support_groups": true
+   		},
+   		"scim_config": {
+   			"enabled": true,
+   			"user_deprovision": true,
+   			"seat_deprovision": false,
+   			"group_member_deprovision": false,
+   			"identity_update_behavior": "automatic"
+   		},
+   		"scim_base_url": "https://<TEAM_NAME>.cloudflareaccess.com/populations/f174e90a-fafe-4643-bbbc-4a0ed4fc8415/scim/v2"
+   }'
+   ```
 
 ## Example API Configuration
 
