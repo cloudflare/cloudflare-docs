@@ -9,7 +9,7 @@ import { Details, Render, Tabs, TabItem } from "~/components";
 
 We recommend you add the following DNS policies to build an Internet and SaaS app security strategy for your organization.
 
-<Details header="All-DNS-Domain-Allowlist">
+## All-DNS-Domain-Allowlist
 
 Allowlist any known domains and hostnames. With this policy, you ensure that your users can access your organization's domains even if the domains fall under a blocked category, such as **Newly Seen Domains** or **Login Screens**.
 
@@ -39,7 +39,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
   "filters": [
     "dns"
   ],
-  "traffic": "any(dns.domains[*] in $<Global Whitelist UUID>) or dns.fqdn in $<Global Whitelist UUID>"
+  "traffic": "any(dns.domains[*] in $<KNOWN_DOMAINS_LIST_UUID>) or dns.fqdn in $<KNOWN_DOMAINS_LIST_UUID>"
 }'
 ```
 
@@ -62,9 +62,8 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_whitelist_policy" {
 
 </TabItem>
 </Tabs>
-</Details>
 
-<Details header="Quarantined-Users-DNS-Restricted-Access">
+## Quarantined-Users-DNS-Restricted-Access
 
 <Render file="zero-trust/blocklist-restricted-users" />
 
@@ -95,7 +94,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
   "filters": [
     "dns"
   ],
-	"traffic": "not(any(dns.domains[*] in $<Allowed Remediation Domains list UUID>)) or not(any(dns.domains[*] in $<Allowed Remediation Domains list UUID>))",
+	"traffic": "not(any(dns.domains[*] in $<ALLOWED_REMEDIATION_DOMAINS_LIST_UUID>)) or not(any(dns.domains[*] in $<ALLOWED_REMEDIATION_DOMAINS_LIST_UUID>))",
   "identity": "any(identity.groups.name[*] in {\"Quarantined Users\"})",
 	"rule_settings": {
     "block_page_enabled": true,
@@ -131,9 +130,8 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_restrict_quarantined_users"
 
 </TabItem>
 </Tabs>
-</Details>
 
-<Details header="All-DNS-SecurityCategories-Blocklist">
+## All-DNS-SecurityCategories-Blocklist
 
 <Render file="zero-trust/blocklist-security-categories" />
 
@@ -142,9 +140,7 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_restrict_quarantined_users"
 	product="cloudflare-one"
 />
 
-</Details>
-
-<Details header="All-DNS-ContentCategories-Blocklist">
+## All-DNS-ContentCategories-Blocklist
 
 <Render
 	file="zero-trust/content-categories-description"
@@ -156,9 +152,7 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_restrict_quarantined_users"
 	product="cloudflare-one"
 />
 
-</Details>
-
-<Details header="All-DNS-Application-Blocklist">
+## All-DNS-Application-Blocklist
 
 <Render file="zero-trust/blocklist-application" />
 
@@ -167,9 +161,7 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_restrict_quarantined_users"
 	product="cloudflare-one"
 />
 
-</Details>
-
-<Details header="All-DNS-GeoCountryIP-Blocklist">
+## All-DNS-GeoCountryIP-Blocklist
 
 Block websites hosted in countries categorized as high risk. The designation of such countries may result from your organization's users or through the implementation of regulations including [EAR](https://www.tradecompliance.pitt.edu/embargoed-and-sanctioned-countries), [OFAC](https://orpa.princeton.edu/export-controls/sanctioned-countries), and [ITAR](https://www.tradecompliance.pitt.edu/embargoed-and-sanctioned-countries).
 
@@ -229,9 +221,8 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_geolocation_block_policy" {
 
 </TabItem>
 </Tabs>
-</Details>
 
-<Details header="All-DNS-DomainTopLevel-Blocklist">
+## All-DNS-DomainTopLevel-Blocklist
 
 Block frequently misused top-level domains (TLDs) to reduce security risks, especially when there is no discernible advantage to be gained from allowing access. Similarly, restricting access to specific country-level TLDs may be necessary to comply with regulations such as [OFAC](https://orpa.princeton.edu/export-controls/sanctioned-countries) and [ITAR](https://www.tradecompliance.pitt.edu/embargoed-and-sanctioned-countries).
 
@@ -291,9 +282,8 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_blacklist_policy" {
 
 </TabItem>
 </Tabs>
-</Details>
 
-<Details header="All-DNS-DomainPhishing-Blocklist">
+## All-DNS-DomainPhishing-Blocklist
 
 Block misused domains to protect your users against sophisticated phishing attacks, such as domains that specifically target your organization. For example, the following policy blocks specific keywords associated with an organization or its authentication services (such as `okta`, `2fa`, `cloudflare` and `sso`) while still allowing access to known domains.
 
@@ -355,9 +345,8 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_phishing_domains_block" {
 
 </TabItem>
 </Tabs>
-</Details>
 
-<Details header="All-DNS-ResolvedIP-Blocklist">
+## All-DNS-ResolvedIP-Blocklist
 
 Block specific IP addresses that are malicious or pose a threat to your organization.
 
@@ -388,7 +377,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
   "filters": [
     "dns"
   ],
-  "traffic": "any(dns.resolved_ips[*] in $<IP Blocklist UUID>)",
+  "traffic": "any(dns.resolved_ips[*] in $<IP_BLOCKLIST_UUID>)",
   "rule_settings": {
     "block_page_enabled": true,
     "block_reason": "This domain was blocked due to being classified as a security risk to the organization"
@@ -419,9 +408,8 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_resolvedip_blocklist_rule" 
 
 </TabItem>
 </Tabs>
-</Details>
 
-<Details header="All-DNS-DomainHost-Blocklist">
+## All-DNS-DomainHost-Blocklist
 
 <Render
 	file="zero-trust/blocklist-domain-host"
@@ -486,5 +474,3 @@ resource "cloudflare_zero_trust_gateway_policy" "block_dns_domain_host" {
 
 </TabItem>
 </Tabs>
-
-</Details>
