@@ -26,7 +26,7 @@ A Tail Worker is automatically invoked after the invocation of a producer Worker
 To configure a Tail Worker:
 
 1. [Create a Worker](/workers/get-started/guide) to serve as the Tail Worker.
-2. Add a [`tail()`](/workers/runtime-apis/handlers/tail/) handler to your Worker. The `tail()` handler is invoked every time the producer Worker a Tail Worker is connected to is invoked. The following Worker code is a Tail Worker that sends its data to an HTTP endpoint:
+2. Add a [`tail()`](/workers/runtime-apis/handlers/tail/) handler to your Worker. The `tail()` handler is invoked every time the producer Worker to which a Tail Worker is connected is invoked. The following Worker code is a Tail Worker that sends its data to an HTTP endpoint:
 
 ```js
 export default {

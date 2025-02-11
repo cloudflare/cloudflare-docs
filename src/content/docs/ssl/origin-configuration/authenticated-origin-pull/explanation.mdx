@@ -15,14 +15,14 @@ When visitors request content from your domain, Cloudflare first attempts to ser
 
 Authenticated Origin Pulls makes sure that all of these `origin pulls` come from Cloudflare. Put another way, Authenticated Origin Pulls ensures that any HTTPS requests outside of Cloudflare will not receive a response from your origin.
 
-This block also applies for requests to [unproxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/#dns-only-records) in Cloudflare.
+This block also applies for requests to [unproxied DNS records](/dns/proxy-status/#dns-only-records) in Cloudflare.
 
 :::caution
 
 
 Note that the certificate Cloudflare provides for you to [set up Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/) is not exclusive to your account, only guaranteeing that a request is coming from the Cloudflare network.
 
-For more strict security, you should set up Authenticated Origin Pulls with your own certificate and consider [other security measures for your origin](/fundamentals/basic-tasks/protect-your-origin-server/).
+For more strict security, you should set up Authenticated Origin Pulls with your own certificate and consider [other security measures for your origin](/fundamentals/security/protect-your-origin-server/).
 
 
 :::

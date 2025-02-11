@@ -7,66 +7,22 @@ params:
 
 import { GlossaryTooltip, Markdown, Render, TabItem, Tabs } from "~/components";
 
-### 1. Create a site
+### 1. Add a Connector on-ramp
 
-Sites represent the local network where you have installed your Magic WAN Connector - for example, a branch office location.
+You need to add your Connector to your Cloudflare dashboard and configure its settings before connecting it to the Internet.
 
-You need to create a site and set up all the settings associated with it before you can connect your Magic WAN Connector to the Internet.
-
-To add a site:
-
-<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+To add a Connector on-ramp:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Magic WAN** > **Sites**.
-3. Select **Create** to create a new site and start the configuration wizard.
-4. Add a name and description for your new site.
-5. (Optional) In **Site location**, you can add the geographical coordinates for your site. If you add geographical coordinates, your site will show up in the [Site Analytics overview map](/magic-wan/analytics/site-analytics/).
-6. Under **Connector**, select **Add Connector**. This will show you a list of Magic WAN Connector devices associated with your account. <Markdown text={props.noConnectorShows} />
-7. If you have more than one Connector, choose the one that corresponds to the site you are creating. Connectors are identified by a serial number, also known as a service tag. Use this information to choose the right Connector. Select **Add Connector** when you are ready to proceed.
-8. The Connector will be added to your site with an **Interrupt window** defined. The interrupt window is the time period when the Magic WAN Connector software can update, which may result in interruption to existing connections. You can change this later. Refer to [Interrupt window](/magic-wan/configuration/connector/maintenance/interrupt-service-window/) for more details on how to define when the Connector can update its systems.
-9. Select **Next** to proceed to creating your WAN and LAN networks.
-
-</TabItem> <TabItem label="API">
-
-<Render file="connector/account-id-api-key" product="magic-wan" />
-
-Create a `POST` request [using the API](/api/resources/magic_transit/subresources/sites/methods/create/) to create a site.
-
-Example:
-
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-	"name": "<SITE_NAME>"
-	"description": "<SITE_DESCRIPTION>",
-}'
-```
-
-```json output
-{
-	"result": {
-		"site": {
-			"id": "<SITE_ID>",
-			"name": "<SITE_NAME>",
-			"description": "<SITE_DESCRIPTION>",
-			"connector_id": null,
-			"secondary_connector_id": null,
-			"ha_mode": false
-		}
-	},
-	"success": true,
-	"errors": [],
-	"messages": []
-}
-```
-
-Take note of the site `id` parameter, as you will need it to create WANs and LANs.
-
-</TabItem> </Tabs>
+2. Go to **Magic WAN** > **Connector on-ramps (beta)**.
+3. Select **Add**.
+4. In **Name**, enter a descriptive name for your Connector. Optionally, you can also add a description for it.
+5. You need to decide if you want to turn on high availability for the Connector. Refer to [About high availability configurations](#about-high-availability-configurations) for more information.
+6. Select **Create and continue**.
+7. Select **Add Connector**. This will show you a list of Magic WAN Connector devices associated with your account. <Markdown text={props.noConnectorShows} />
+8. If you have more than one Connector, choose the one that corresponds to the on-ramp you are creating. Connectors are identified by a serial number, also known as a service tag. Use this information to choose the right Connector. Select **Select Connector** when you are ready to proceed.
+9. The Connector will be added to your account with an **Interrupt window** defined. The interrupt window is the time period when the Magic WAN Connector software can update, which may result in interruption to existing connections. You can change this later. Refer to [Interrupt window](/magic-wan/configuration/connector/maintenance/interrupt-service-window/) for more details on how to define when the Connector can update its systems.
+10. Select **Continue** to proceed to creating your WAN and LAN networks.
 
 ### 2. Create a WAN
 
@@ -132,7 +88,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{sit
    - **Next hop**: The address of the L3 router to which the Connector should forward packets for this subnet.
    - **Static NAT prefix**: Optional setting. If you want to enable NAT for a routed subnet, supply an "external" prefix for the overlay-facing side of the NAT to use. It must be the same size as **Prefix**. <br /> Refer to [Routed subnets](/magic-wan/configuration/connector/network-options/routed-subnets/) for more information.
 8. Select **Save**.
-9. Select **Save and exit** to finish your configuration. Tunnels and <GlossaryTooltip term="static route">static routes</GlossaryTooltip> will be automatically created and associated with your site once the Magic WAN Connector boots up (refer to the next step).
+9. Select **Done** to finish your configuration. Tunnels and <GlossaryTooltip term="static route">static routes</GlossaryTooltip> will be automatically created for your Magic WAN Connector, once it boots up.
 
 </TabItem> <TabItem label="API">
 
@@ -173,3 +129,7 @@ Magic WAN Connector supports different types of DHCP configurations. Connector c
 - [Reserve IP addresses](/magic-wan/configuration/connector/network-options/dhcp/dhcp-static-address-reservation/) for specific devices on your network.
 
 Refer to [DHCP options](/magic-wan/configuration/connector/network-options/dhcp/) to learn more.
+
+### 4. Add your Connector to a site
+
+After finishing your Connector configuration, you need to add it to a site. <Render file="sites-brief" />
