@@ -19,8 +19,8 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
 --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
-  "name": "Block security threats",
-  "description": "Block all default Cloudflare DNS security categories",
+  "name": "All-DNS-SecurityCategories-Blocklist",
+  "description": "Block security categories based on Cloudflare's threat intelligence",
   "precedence": 20,
   "enabled": true,
   "action": "block",
@@ -39,7 +39,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 resource "cloudflare_zero_trust_gateway_policy" "block_security_threats" {
   account_id  = var.account_id
   name        = "All-DNS-SecurityCategories-Blocklist"
-  description = "Block all default Cloudflare DNS security categories"
+  description = "Block security categories based on Cloudflare's threat intelligence"
   precedence  = 20
 	enabled     = false
   action      = "block"

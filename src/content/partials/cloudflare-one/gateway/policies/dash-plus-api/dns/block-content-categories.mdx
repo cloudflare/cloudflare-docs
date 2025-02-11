@@ -18,7 +18,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
 --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
-  "name": "Block content categories",
+  "name": "All-DNS-ContentCategories-Blocklist",
   "description": "Block common content categories that may pose a risk",
   "precedence": 30,
   "enabled": true,
@@ -37,7 +37,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 ```tf
 resource "cloudflare_zero_trust_gateway_policy" "block_content_categories" {
   account_id  = var.account_id
-  name        = "Block content categories"
+  name        = "All-DNS-ContentCategories-Blocklist"
   description = "Block common content categories that may pose a risk"
   enabled     = true
   action      = "block"

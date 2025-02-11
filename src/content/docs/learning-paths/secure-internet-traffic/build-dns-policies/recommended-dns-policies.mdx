@@ -28,11 +28,11 @@ Allowlist any known domains and hostnames. With this policy, you ensure that you
 
 ```sh
 curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
-  --header "Content-Type: application/json" \
-  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-	--data '{
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
   "name": "All-DNS-Domain-Allowlist",
-  "description": "Organization-wide allowlist. Explicitly allow resolution of these DNS domains",
+  "description": "Allowlist any known domains and hostnames",
   "precedence": 0,
   "enabled": false,
   "action": "allow",
@@ -51,7 +51,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
 resource "cloudflare_zero_trust_gateway_policy" "dns_whitelist_policy" {
   account_id  = var.account_id
   name        = "All-DNS-Domain-Allowlist"
-  description = "Organization-wide allowlist. Explicitly allow resolution of these DNS domains"
+  description = "Allowlist any known domains and hostnames"
   precedence  = 0
   enabled     = false
   action      = "allow"
@@ -83,11 +83,11 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_whitelist_policy" {
 
 ```sh
 curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
-  --header "Content-Type: application/json" \
-  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-	--data '{
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
   "name": "Quarantined-Users-DNS-Restricted-Access",
-  "description": "Restrict quarantined users traffic to corporate policy remediation domains, so that quarantined users can obtain help and/or remediate their security posture",
+  "description": "Restrict access for users included in an identity provider (IdP) user group for risky users",
   "precedence": 10,
   "enabled": false,
   "action": "block",
@@ -95,13 +95,8 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
     "dns"
   ],
 	"traffic": "not(any(dns.domains[*] in $<ALLOWED_REMEDIATION_DOMAINS_LIST_UUID>)) or not(any(dns.domains[*] in $<ALLOWED_REMEDIATION_DOMAINS_LIST_UUID>))",
-  "identity": "any(identity.groups.name[*] in {\"Quarantined Users\"})",
-	"rule_settings": {
-    "block_page_enabled": true,
-    "notification_settings": {
-      "enabled": true
-    }
-	}'
+  "identity": "any(identity.groups.name[*] in {\"Quarantined Users\"})"
+}'
 ```
 
 </TabItem>
@@ -112,19 +107,13 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
 resource "cloudflare_zero_trust_gateway_policy" "dns_restrict_quarantined_users" {
   account_id  = var.account_id
   name        = "Quarantined-Users-DNS-Restricted-Access"
-  description = "Restrict quarantined users traffic to corporate policy remediation domains, so that quarantined users can obtain help and/or remediate their security posture"
+  description = "Restrict access for users included in an identity provider (IdP) user group for risky users"
   precedence  = 10
   enabled     = false
   action      = "block"
   filters     = ["dns"]
   traffic     = "not(any(dns.domains[*] in ${"$"}${cloudflare_zero_trust_list.allowed_remediation_domains.id})) or not(any(dns.domains[*] in ${"$"}${cloudflare_zero_trust_list.allowed_remediation_domains.id}))"
 	identity		=	"any(identity.groups.name[*] in {\"Quarantined Users\"})"
-	rule_settings {
-			block_page_enabled = true
-			notification_settings {
-					enabled = true
-				}
-		}
 }
 ```
 
@@ -179,9 +168,9 @@ Block websites hosted in countries categorized as high risk. The designation of 
 
 ```sh
 curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
-  --header "Content-Type: application/json" \
-  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-	--data '{
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
 	"name": "All-DNS-GeoCountryIP-Blocklist",
   "description": "Block traffic hosted in countries categorized as high security risks",
   "precedence": 50,
@@ -190,11 +179,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
   "filters": [
     "dns"
   ],
-  "traffic": "any(dns.dst.geo.country[*] in {\"AF\" \"BY\" \"CD\" \"CU\" \"IR\" \"IQ\" \"KP\" \"MM\" \"RU\" \"SD\" \"SY\" \"UA\" \"ZW\"})",
-  "rule_settings": {
-    "block_page_enabled": true,
-    "block_reason": "This domain was blocked due to being classified as a security risk to the organization"
-    }
+  "traffic": "any(dns.dst.geo.country[*] in {\"AF\" \"BY\" \"CD\" \"CU\" \"IR\" \"IQ\" \"KP\" \"MM\" \"RU\" \"SD\" \"SY\" \"UA\" \"ZW\"})"
 }'
 ```
 
@@ -212,10 +197,6 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_geolocation_block_policy" {
   action      = "block"
   filters     = ["dns"]
   traffic     = "any(dns.dst.geo.country[*] in {\"AF\" \"BY\" \"CD\" \"CU\" \"IR\" \"IQ\" \"KP\" \"MM\" \"RU\" \"SD\" \"SY\" \"UA\" \"ZW\"})"
-  rule_settings {
-      block_page_enabled = true
-      block_page_reason = "This domain was blocked due to being classified as a security risk to the organization"
-    }
 }
 ```
 
@@ -240,9 +221,9 @@ Block frequently misused top-level domains (TLDs) to reduce security risks, espe
 
 ```sh
 curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
-  --header "Content-Type: application/json" \
-  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-	--data '{
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
   "name": "All-DNS-DomainTopLevel-Blocklist",
   "description": "Block DNS queries of known risky TLDs",
   "precedence": 60,
@@ -251,12 +232,8 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
   "filters": [
     "dns"
   ],
-  "traffic": "any(dns.domains[*] matches \"[.](cn|ru)$ or [.](rest|hair|top|live|cfd|boats|beauty|mom|skin|okinawa)$ or [.](zip|mobi)$\")",
-  "rule_settings": {
-    "block_page_enabled": true,
-    "block_reason": "This domain was blocked due to being classified as a security risk to the organization"
-    }
-  }'
+  "traffic": "any(dns.domains[*] matches \"[.](cn|ru)$ or [.](rest|hair|top|live|cfd|boats|beauty|mom|skin|okinawa)$ or [.](zip|mobi)$\")"
+}'
 ```
 
 </TabItem>
@@ -273,10 +250,6 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_blacklist_policy" {
   action      = "block"
   filters     = ["dns"]
   traffic     = "any(dns.domains[*] matches \"[.](cn|ru)$ or [.](rest|hair|top|live|cfd|boats|beauty|mom|skin|okinawa)$ or [.](zip|mobi)$\")"
-  rule_settings {
-      block_page_enabled = true
-      block_page_reason = "This domain was blocked due to being classified as a security risk to the organization"
-    }
 }
 ```
 
@@ -302,9 +275,9 @@ Block misused domains to protect your users against sophisticated phishing attac
 
 ```sh
 curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
-  --header "Content-Type: application/json" \
-  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-	--data '{
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
 	"name": "All-DNS-DomainPhishing-Blocklist",
   "description": "Block misused domains used in phishing campaigns",
   "precedence": 70,
@@ -313,13 +286,8 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
   "filters": [
     "dns"
   ],
-  "traffic": "any(dns.domains[*] matches \".*okta.*|.*cloudflare.*|.*mfa.*|.sso.*\") and not(any(dns.domains[*] in $<Known Phishing Domains List UUID>))",
-  "rule_settings": {
-    "block_page_enabled": true,
-    "block_reason": "This domain was blocked due to being classified as a security risk to the organization"
-    }
-
-		}'
+  "traffic": "any(dns.domains[*] matches \".*okta.*|.*cloudflare.*|.*mfa.*|.sso.*\") and not(any(dns.domains[*] in $<KNOWN_DOMAINS_LIST_UUID>))"
+}'
 ```
 
 </TabItem>
@@ -336,10 +304,6 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_phishing_domains_block" {
   action      = "block"
   filters     = ["dns"]
   traffic     = "any(dns.domains[*] matches \".*okta.*|.*cloudflare.*|.*mfa.*|.sso.*\") and not(any(dns.domains[*] in ${"$"}${cloudflare_zero_trust_list.known_phishing_domains_list.id}))"
-  rule_settings {
-      block_page_enabled = true
-      block_page_reason = "This domain was blocked due to being classified as a security risk to the organization"
-    }
 }
 ```
 
@@ -366,9 +330,9 @@ Block specific IP addresses that are malicious or pose a threat to your organiza
 
 ```sh
 curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
-  --header "Content-Type: application/json" \
-  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-	--data '{
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
 	"name": "All-DNS-ResolvedIP-Blocklist",
   "description": "Block specific IP addresses deemed to be a risk to the Organization",
   "precedence": 80,
@@ -377,12 +341,8 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
   "filters": [
     "dns"
   ],
-  "traffic": "any(dns.resolved_ips[*] in $<IP_BLOCKLIST_UUID>)",
-  "rule_settings": {
-    "block_page_enabled": true,
-    "block_reason": "This domain was blocked due to being classified as a security risk to the organization"
-    }
-	}'
+  "traffic": "any(dns.resolved_ips[*] in $<IP_BLOCKLIST_UUID>)"
+}'
 ```
 
 </TabItem>
@@ -399,10 +359,6 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_resolvedip_blocklist_rule" 
   action      = "block"
   filters     = ["dns"]
   traffic     = "any(dns.resolved_ips[*] in ${"$"}${cloudflare_zero_trust_list.ip_blocklist.id}"
-  rule_settings {
-      block_page_enabled = true
-      block_page_reason = "This domain was blocked due to being classified as a security risk to the organization"
-    }
 }
 ```
 
@@ -432,9 +388,9 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_resolvedip_blocklist_rule" 
 
 ```sh
 curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
-  --header "Content-Type: application/json" \
-  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN>" \
-	--data '{
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN>" \
+--data '{
 	"name": "All-DNS-DomainHost-Blocklist",
   "description": "Block specific domains or hosts that are malicious or pose a threat to your organization.",
   "precedence": 90,
@@ -443,12 +399,8 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
   "filters": [
     "dns"
   ],
-  "traffic": "any(dns.domains[*] in $<DOMAIN_BLOCKLIST_UUID>) and dns.fqdn in $<HOST_BLOCKLIST_UUID> and dns.fqdn matches \".*example\\.com\"",
-  "rule_settings": {
-    "block_page_enabled": true,
-    "block_reason": "This domain was blocked due to being classified as a security risk to the organization"
-    }
-	}'
+  "traffic": "any(dns.domains[*] in $<DOMAIN_BLOCKLIST_UUID>) and dns.fqdn in $<HOST_BLOCKLIST_UUID> and dns.fqdn matches \".*example\\.com\""
+}'
 ```
 
 </TabItem>
@@ -465,10 +417,6 @@ resource "cloudflare_zero_trust_gateway_policy" "block_dns_domain_host" {
   action      = "block"
   filters     = ["dns"]
   traffic     = "any(dns.domains[*] in ${"$"}${cloudflare_zero_trust_list.domain_blocklist.id}) and dns.fqdn in ${"$"}${cloudflare_zero_trust_list.host_blocklist.id} and dns.fqdn matches \".*example\\.com\""
-  rule_settings = {
-    block_page_enabled = true
-    block_reason = "This domain was blocked due to being classified as a security risk to the organization"
-  }
 }
 ```
 

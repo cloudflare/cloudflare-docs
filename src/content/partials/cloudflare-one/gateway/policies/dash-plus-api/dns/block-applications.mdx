@@ -18,7 +18,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
 --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN>" \
 --data '{
-  "name": "Block unauthorized applications",
+  "name": "All-DNS-Application-Blocklist",
   "description": "Block access to unauthorized AI applications",
   "precedence": 40,
   "enabled": true,
