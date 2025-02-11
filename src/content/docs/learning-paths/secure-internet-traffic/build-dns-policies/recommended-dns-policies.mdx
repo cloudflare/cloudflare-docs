@@ -449,7 +449,24 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_resolvedip_blocklist_rule" 
 <TabItem label="API">
 
 ```sh
-
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
+  --header "Content-Type: application/json" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN>" \
+	--data '{
+	"name": "All-DNS-DomainHost-Blocklist",
+  "description": "Block specific domains or hosts that are malicious or pose a threat to your organization.",
+  "precedence": 100,
+  "enabled": false,
+  "action": "block",
+  "filters": [
+    "dns"
+  ],
+  "traffic": "any(dns.domains[*] in $<DOMAIN_BLOCKLIST_UUID>) and dns.fqdn in $<HOST_BLOCKLIST_UUID> and dns.fqdn matches \".*example\\.com\"",
+  "rule_settings": {
+    "block_page_enabled": true,
+    "block_reason": "This domain was blocked due to being classified as a security risk to the organization"
+    }
+	}'
 ```
 
 </TabItem>
@@ -457,7 +474,20 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_resolvedip_blocklist_rule" 
 <TabItem label="Terraform">
 
 ```tf
-
+resource "cloudflare_zero_trust_gateway_policy" "block_dns_domain_host" {
+  account_id  = var.account_id
+  name        = "All-DNS-DomainHost-Blocklist"
+  description = "Block specific domains or hosts that are malicious or pose a threat to your organization."
+  precedence  = 100
+  enabled     = false
+  action      = "block"
+  filters     = ["dns"]
+  traffic     = "any(dns.domains[*] in ${"$"}${cloudflare_zero_trust_list.domain_blocklist.id}) and dns.fqdn in ${"$"}${cloudflare_zero_trust_list.host_blocklist.id} and dns.fqdn matches \".*example\\.com\""
+  rule_settings = {
+    block_page_enabled = true
+    block_reason = "This domain was blocked due to being classified as a security risk to the organization"
+  }
+}
 ```
 
 </TabItem>
