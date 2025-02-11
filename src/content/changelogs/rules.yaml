@@ -5,6 +5,10 @@ productLink: "/rules/"
 productArea: Application performance
 productAreaLink: /fundamentals/reference/changelog/performance/
 entries:
+  - publish_date: "2025-02-11"
+    title: "Custom Errors (beta): Stored assets and account-level rules"
+    description: |-
+      Cloudflare introduces [Custom Errors](/rules/custom-errors/) (beta), expanding on Custom Error Responses with new asset storage capabilities. With custom error assets, you can now retrieve and store externally hosted error pages at Cloudflare edge and reference them in custom error rules, eliminating the need to define error content inline. Additionally, Custom Errors now support account-level rules and assets, enabling consistent error handling across multiple zones.
   - publish_date: "2025-01-29"
     title: New Snippets code editor
     description: |-
