@@ -21,6 +21,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --data '{
   "name": "Block security threats",
   "description": "Block all default Cloudflare DNS security categories",
+  "precedence": 20,
   "enabled": true,
   "action": "block",
   "filters": [

@@ -20,6 +20,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --data '{
   "name": "Block unauthorized applications",
   "description": "Block access to unauthorized AI applications",
+  "precedence": 40,
   "enabled": true,
   "action": "block",
   "filters": [

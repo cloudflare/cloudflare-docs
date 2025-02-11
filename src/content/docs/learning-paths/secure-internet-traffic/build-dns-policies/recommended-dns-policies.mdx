@@ -27,10 +27,9 @@ Allowlist any known domains and hostnames. With this policy, you ensure that you
 <TabItem label="API">
 
 ```sh
-curl --request POST \
-  --url https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
-  --header 'Content-Type: application/json' \
-  --header "Authorization: Bearer <API TOKEN>" \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
+  --header "Content-Type: application/json" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 	--data '{
   "name": "All-DNS-Domain-Allowlist",
   "description": "Organization-wide allowlist. Explicitly allow resolution of these DNS domains",
@@ -84,10 +83,9 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_whitelist_policy" {
 <TabItem label="API">
 
 ```sh
-curl --request POST \
-  --url https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
-  --header 'Content-Type: application/json' \
-  --header "Authorization: Bearer <API TOKEN>" \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
+  --header "Content-Type: application/json" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 	--data '{
   "name": "Quarantined-Users-DNS-Restricted-Access",
   "description": "Restrict quarantined users traffic to corporate policy remediation domains, so that quarantined users can obtain help and/or remediate their security posture",
@@ -188,10 +186,9 @@ Block websites hosted in countries categorized as high risk. The designation of 
 <TabItem label="API">
 
 ```sh
-curl --request POST \
-  --url https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
-  --header 'Content-Type: application/json' \
-  --header "Authorization: Bearer <API TOKEN>" \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
+  --header "Content-Type: application/json" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 	--data '{
 	"name": "All-DNS-GeoCountryIP-Blocklist",
   "description": "Block traffic hosted in countries categorized as high security risks",
@@ -251,10 +248,9 @@ Block frequently misused top-level domains (TLDs) to reduce security risks, espe
 <TabItem label="API">
 
 ```sh
-curl --request POST \
-  --url https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
-  --header 'Content-Type: application/json' \
-  --header "Authorization: Bearer <API TOKEN>" \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
+  --header "Content-Type: application/json" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 	--data '{
   "name": "All-DNS-DomainTopLevel-Blocklist",
   "description": "Block DNS queries of known risky TLDs",
@@ -315,10 +311,9 @@ Block misused domains to protect your users against sophisticated phishing attac
 <TabItem label="API">
 
 ```sh
-curl --request POST \
-  --url https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
-  --header 'Content-Type: application/json' \
-  --header "Authorization: Bearer <API TOKEN>" \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
+  --header "Content-Type: application/json" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 	--data '{
 	"name": "All-DNS-DomainPhishing-Blocklist",
   "description": "Block misused domains used in phishing campaigns",
@@ -381,10 +376,9 @@ Block specific IP addresses that are malicious or pose a threat to your organiza
 <TabItem label="API">
 
 ```sh
-curl --request POST \
-  --url https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
-  --header 'Content-Type: application/json' \
-  --header "Authorization: Bearer <API TOKEN>" \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
+  --header "Content-Type: application/json" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 	--data '{
 	"name": "All-DNS-ResolvedIP-Blocklist",
   "description": "Block specific IP addresses deemed to be a risk to the Organization",
@@ -478,7 +472,7 @@ resource "cloudflare_zero_trust_gateway_policy" "block_dns_domain_host" {
   account_id  = var.account_id
   name        = "All-DNS-DomainHost-Blocklist"
   description = "Block specific domains or hosts that are malicious or pose a threat to your organization."
-  precedence  = 100
+  precedence  = 90
   enabled     = false
   action      = "block"
   filters     = ["dns"]

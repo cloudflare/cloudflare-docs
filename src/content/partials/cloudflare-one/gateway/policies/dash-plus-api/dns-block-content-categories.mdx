@@ -20,6 +20,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --data '{
   "name": "Block content categories",
   "description": "Block common content categories that may pose a risk",
+  "precedence": 30,
   "enabled": true,
   "action": "block",
   "filters": [
