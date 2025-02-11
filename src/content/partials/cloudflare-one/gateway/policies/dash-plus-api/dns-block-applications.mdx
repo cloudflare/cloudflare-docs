@@ -11,7 +11,6 @@ import { Tabs, TabItem } from "~/components";
 | Application | in       | _Artificial Intelligence_ | Block  |
 
 </TabItem>
-
 <TabItem label="API">
 
 ```bash
@@ -29,6 +28,23 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
   "traffic": "any(app.type.ids[*] in {25})",
   "identity": ""
 }'
+```
+
+</TabItem>
+
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "block_unauthorized_apps" {
+  account_id  = var.account_id
+  name        = "All-DNS-Application-Blocklist"
+  description = "Block access to unauthorized AI applications"
+  enabled     = true
+  action      = "block"
+  filters     = ["dns"]
+  traffic     = "any(app.type.ids[*] in {25})"
+  identity    = ""
+}
 ```
 
 </TabItem> </Tabs>
