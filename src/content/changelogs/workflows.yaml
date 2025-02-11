@@ -5,6 +5,10 @@ productLink: "/workflows/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-02-11"
+    title: "Performance improvements"
+    description: |-
+      Improved Workflows execution mechanism that prevents Workflows instances to get stuck.
   - publish_date: "2025-01-23"
     title: "Major bugfixes and improvements"
     description: |-
