@@ -6,9 +6,9 @@ productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
   - publish_date: "2025-02-11"
-    title: "Performance improvements"
+    title: "Behavior improvements"
     description: |-
-      Improved Workflows execution mechanism that prevents Workflows instances to get stuck.
+      Improved Workflows execution that prevents Workflows instances from getting stuck, and allows stuck instances to become unstuck.
   - publish_date: "2025-01-23"
     title: "Major bugfixes and improvements"
     description: |-
