@@ -18,7 +18,7 @@ Wrangler offers APIs to programmatically interact with your Cloudflare Workers.
 
 ## `unstable_startWorker`
 
-This API exposes the internals of Wrangler's dev server, and allows you to customise how it runs. For example, you could use `unstable_startWorker()` to run integration tests against your Worker (the below example is with `node:test`, but this should work in any testing framework):
+This API exposes the internals of Wrangler's dev server, and allows you to customise how it runs. For example, you could use `unstable_startWorker()` to run integration tests against your Worker. This example uses `node:test`, but should apply to any testing framework:
 
 ```js
 import assert from "node:assert";
