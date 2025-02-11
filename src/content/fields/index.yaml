@@ -608,7 +608,7 @@ entries:
 
   - name: cf.tls_cipher
     data_type: String
-    categories: [Request]
+    categories: [Request, SSL/TLS]
     keywords: [request, ssl, tls, client, visitor]
     summary: The cipher for the connection to Cloudflare.
     example_value: |-
@@ -784,7 +784,7 @@ entries:
 
   - name: cf.tls_client_extensions_sha1
     data_type: String
-    categories: [Request]
+    categories: [Request, SSL/TLS]
     keywords: [request, ssl, tls, client, visitor]
     summary: The SHA-1 fingerprint of TLS client extensions, encoded in Base64.
     example_value: |-
@@ -792,7 +792,7 @@ entries:
 
   - name: cf.tls_client_hello_length
     data_type: Number
-    categories: [Request]
+    categories: [Request, SSL/TLS]
     keywords: [request, ssl, tls, client, visitor]
     summary: The length of the client hello message sent in a [TLS handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake).
     description: |-
@@ -802,7 +802,7 @@ entries:
 
   - name: cf.tls_client_random
     data_type: String
-    categories: [Request]
+    categories: [Request, SSL/TLS]
     keywords: [request, ssl, tls, client, visitor]
     summary: The value of the 32-byte random value provided by the client in a [TLS handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake), encoded in Base64.
     description: |-
@@ -812,7 +812,7 @@ entries:
 
   - name: cf.tls_version
     data_type: String
-    categories: [Request]
+    categories: [Request, SSL/TLS]
     keywords: [request, ssl, tls, client, visitor]
     summary: The TLS version of the connection to Cloudflare.
     example_value: |-
