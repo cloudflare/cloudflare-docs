@@ -27,7 +27,7 @@ Matched payload information includes the specific string that triggered a rule, 
 
 Once you decrypt its value, the `encrypted_matched_data` property of the `Metadata` field in Logpush has a structure similar to the following:
 
-```jsonc
+```json
 {
 	// for fields with only one match (such as URI or user agent fields):
 	"<match_location>": {
@@ -37,13 +37,21 @@ Once you decrypt its value, the `encrypted_matched_data` property of the `Metada
 	},
 	// for fields with possible multiple matches (such as form, header, or body fields):
 	"<match_location>": [
-			{ "before": "<text_before_match_1>", "content": "<matched_text_1>", "after": "<text_after_match_1>" },
-			{ "before": "<text_before_match_2>", "content": "<matched_text_2>", "after": "<text_after_match_2>" }
+		{
+			"before": "<text_before_match_1>",
+			"content": "<matched_text_1>",
+			"after": "<text_after_match_1>"
+		},
+		{
+			"before": "<text_before_match_2>",
+			"content": "<matched_text_2>",
+			"after": "<text_after_match_2>"
+		}
 	]
 }
 ```
 
-The `before` and `after` properties are optional (there may be no content before/after the matched text) and will contain at most 25 bytes of content appearing before and after the match.
+The `before` and `after` properties are optional (there may be no content before/after the matched text) and will contain at most 15 bytes of content appearing before and after the match.
 
 Below are a few examples of payload matches:
 
@@ -52,7 +60,7 @@ Below are a few examples of payload matches:
 	"http.request.uri": {
 		"before": "/admin",
 		"content": "/.git/",
-		"after": "config",
+		"after": "config"
 	}
 }
 ```
@@ -60,7 +68,7 @@ Below are a few examples of payload matches:
 ```json title="Header value match"
 {
 	"http.request.headers.values[3]": [
-		{ "content": "phar://", "after": "example" },
+		{ "content": "phar://", "after": "example" }
 	]
 }
 ```
@@ -70,7 +78,7 @@ Below are a few examples of payload matches:
 	"http.request.body.raw": {
 		"before": "NY>",
 		"content": "<!ENTITY xxe SYSTEM \"file:///dev/random\">] > ",
-		"after": "<foo>&xxe;</foo>",
+		"after": "<foo>&xxe;</foo>"
 	}
 }
 ```
