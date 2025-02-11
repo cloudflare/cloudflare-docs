@@ -429,6 +429,38 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_resolvedip_blocklist_rule" 
 
 <Details header="All-DNS-DomainHost-Blocklist">
 
-<Render file="zero-trust/blocklist-domain-host" params={{ one: "DNS" }} />
+<Render
+	file="zero-trust/blocklist-domain-host"
+	params={{ blocklistPolicyType: "DNS" }}
+/>
+
+<Tabs syncKey="dashPlusAPI">
+
+<TabItem label="Dashboard">
+
+| Selector | Operator      | Value              | Logic | Action |
+| -------- | ------------- | ------------------ | ----- | ------ |
+| Domain   | in list       | _Domain Blocklist_ | Or    | Block  |
+| Host     | in list       | _Host Blocklist_   | Or    |        |
+| Host     | matches regex | `.*example\.com`   |       |        |
+
+</TabItem>
+
+<TabItem label="API">
+
+```sh
+
+```
+
+</TabItem>
+
+<TabItem label="Terraform">
+
+```tf
+
+```
+
+</TabItem>
+</Tabs>
 
 </Details>

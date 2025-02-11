@@ -70,6 +70,12 @@ Bypass HTTP inspection for a custom list of domains identified as incompatible w
 
 <Render file="zero-trust/blocklist-domain-host" params={{ one: "HTTP" }} />
 
+| Selector | Operator      | Value              | Logic | Action |
+| -------- | ------------- | ------------------ | ----- | ------ |
+| Domain   | in list       | _Domain Blocklist_ | Or    | Block  |
+| Host     | in list       | _Host Blocklist_   | Or    |        |
+| Host     | matches regex | `.*example\.com`   |       |        |
+
 </Details>
 
 <Details header="All-HTTP-Application-Blocklist">
