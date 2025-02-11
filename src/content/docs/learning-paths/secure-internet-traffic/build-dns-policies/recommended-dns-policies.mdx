@@ -34,7 +34,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
   "name": "All-DNS-Domain-Allowlist",
   "description": "Allowlist any known domains and hostnames",
   "precedence": 0,
-  "enabled": false,
+  "enabled": true,
   "action": "allow",
   "filters": [
     "dns"
@@ -53,7 +53,7 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_whitelist_policy" {
   name        = "All-DNS-Domain-Allowlist"
   description = "Allowlist any known domains and hostnames"
   precedence  = 0
-  enabled     = false
+  enabled     = true
   action      = "allow"
   filters     = ["dns"]
   traffic     = "any(dns.domains[*] in ${"$"}${cloudflare_zero_trust_list.domain_whitelist.id}) or dns.fqdn in ${"$"}${cloudflare_zero_trust_list.domain_whitelist.id}"
@@ -89,7 +89,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
   "name": "Quarantined-Users-DNS-Restricted-Access",
   "description": "Restrict access for users included in an identity provider (IdP) user group for risky users",
   "precedence": 10,
-  "enabled": false,
+  "enabled": true,
   "action": "block",
   "filters": [
     "dns"
@@ -109,7 +109,7 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_restrict_quarantined_users"
   name        = "Quarantined-Users-DNS-Restricted-Access"
   description = "Restrict access for users included in an identity provider (IdP) user group for risky users"
   precedence  = 10
-  enabled     = false
+  enabled     = true
   action      = "block"
   filters     = ["dns"]
   traffic     = "not(any(dns.domains[*] in ${"$"}${cloudflare_zero_trust_list.allowed_remediation_domains.id})) or not(any(dns.domains[*] in ${"$"}${cloudflare_zero_trust_list.allowed_remediation_domains.id}))"
@@ -174,7 +174,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
 	"name": "All-DNS-GeoCountryIP-Blocklist",
   "description": "Block traffic hosted in countries categorized as high security risks",
   "precedence": 50,
-  "enabled": false,
+  "enabled": true,
   "action": "block",
   "filters": [
     "dns"
@@ -193,7 +193,7 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_geolocation_block_policy" {
   name        = "All-DNS-GeoCountryIP-Blocklist"
   description = "Block traffic hosted in countries categorized as high security risks"
   precedence  = 50
-  enabled     = false
+  enabled     = true
   action      = "block"
   filters     = ["dns"]
   traffic     = "any(dns.dst.geo.country[*] in {\"AF\" \"BY\" \"CD\" \"CU\" \"IR\" \"IQ\" \"KP\" \"MM\" \"RU\" \"SD\" \"SY\" \"UA\" \"ZW\"})"
@@ -227,7 +227,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
   "name": "All-DNS-DomainTopLevel-Blocklist",
   "description": "Block DNS queries of known risky TLDs",
   "precedence": 60,
-  "enabled": false,
+  "enabled": true,
   "action": "block",
   "filters": [
     "dns"
@@ -246,7 +246,7 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_blacklist_policy" {
   name        = "All-DNS-DomainTopLevel-Blocklist"
   description = "Block DNS queries of known risky TLDs"
   precedence  = 60
-  enabled     = false
+  enabled     = true
   action      = "block"
   filters     = ["dns"]
   traffic     = "any(dns.domains[*] matches \"[.](cn|ru)$ or [.](rest|hair|top|live|cfd|boats|beauty|mom|skin|okinawa)$ or [.](zip|mobi)$\")"
@@ -281,7 +281,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
 	"name": "All-DNS-DomainPhishing-Blocklist",
   "description": "Block misused domains used in phishing campaigns",
   "precedence": 70,
-  "enabled": false,
+  "enabled": true,
   "action": "block",
   "filters": [
     "dns"
@@ -300,7 +300,7 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_phishing_domains_block" {
   name        = "All-DNS-DomainPhishing-Blocklist"
   description = "Block misused domains used in phishing campaigns"
   precedence  = 70
-  enabled     = false
+  enabled     = true
   action      = "block"
   filters     = ["dns"]
   traffic     = "any(dns.domains[*] matches \".*okta.*|.*cloudflare.*|.*mfa.*|.sso.*\") and not(any(dns.domains[*] in ${"$"}${cloudflare_zero_trust_list.known_phishing_domains_list.id}))"
@@ -336,7 +336,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
 	"name": "All-DNS-ResolvedIP-Blocklist",
   "description": "Block specific IP addresses deemed to be a risk to the Organization",
   "precedence": 80,
-  "enabled": false,
+  "enabled": true,
   "action": "block",
   "filters": [
     "dns"
@@ -355,7 +355,7 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_resolvedip_blocklist_rule" 
   name        = "All-DNS-ResolvedIP-Blocklist"
   description = "Block specific IP addresses deemed to be a risk to the Organization"
   precedence  = 80
-  enabled     = false
+  enabled     = true
   action      = "block"
   filters     = ["dns"]
   traffic     = "any(dns.resolved_ips[*] in ${"$"}${cloudflare_zero_trust_list.ip_blocklist.id}"
@@ -394,7 +394,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
 	"name": "All-DNS-DomainHost-Blocklist",
   "description": "Block specific domains or hosts that are malicious or pose a threat to your organization.",
   "precedence": 90,
-  "enabled": false,
+  "enabled": true,
   "action": "block",
   "filters": [
     "dns"
@@ -413,7 +413,7 @@ resource "cloudflare_zero_trust_gateway_policy" "block_dns_domain_host" {
   name        = "All-DNS-DomainHost-Blocklist"
   description = "Block specific domains or hosts that are malicious or pose a threat to your organization."
   precedence  = 90
-  enabled     = false
+  enabled     = true
   action      = "block"
   filters     = ["dns"]
   traffic     = "any(dns.domains[*] in ${"$"}${cloudflare_zero_trust_list.domain_blocklist.id}) and dns.fqdn in ${"$"}${cloudflare_zero_trust_list.host_blocklist.id} and dns.fqdn matches \".*example\\.com\""

@@ -41,7 +41,7 @@ resource "cloudflare_zero_trust_gateway_policy" "block_security_threats" {
   name        = "All-DNS-SecurityCategories-Blocklist"
   description = "Block security categories based on Cloudflare's threat intelligence"
   precedence  = 20
-	enabled     = false
+	enabled     = true
   action      = "block"
   filters     = ["dns"]
   traffic     = "any(dns.security_category[*] in {68 178 80 83 176 175 117 131 134 151 153})"
