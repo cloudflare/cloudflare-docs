@@ -130,7 +130,11 @@ Create a D1 database using the following command:
 npx wrangler d1 create auth-js-d1-example-db
 ```
 
-When finished you should see instructions to add the database binding to your `wrangler.toml`. Example binding:
+When finished you should see instructions to add the database binding to your [Wrangler configuration file](/workers/wrangler/configuration/). Example binding:
+
+import { WranglerConfig} from "~/components";
+
+<WranglerConfig>
 
 ```toml title="wrangler.toml"
 [[d1_databases]]
@@ -138,6 +142,8 @@ binding = "DB"
 database_name = "auth-js-d1-example-db"
 database_id = "<unique-ID-for-your-database>"
 ```
+
+</WranglerConfig>
 
 Now, within your `env.d.ts`, add your D1 binding, like:
 
