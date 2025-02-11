@@ -25,7 +25,7 @@ const FieldCatalog = ({ fields }: { fields: Fields }) => {
 	const categories = [
 		...new Set(
 			fields
-				.map((field) => field.categories)
+				.map((field) => field.categories ?? [])
 				.flat()
 				.sort(),
 		),
@@ -61,13 +61,13 @@ const FieldCatalog = ({ fields }: { fields: Fields }) => {
 		// On component load, check for deep-links to categories in the query param
 		const params = new URLSearchParams(window.location.search);
 		const categories = params.getAll("field-category");
-		const searchTerm = params.get("search-term");
+		const searchTerm = params.get("search-term") ?? "";
 
 		if (!categories && !searchTerm) return;
 
 		setFilters({
 			...filters,
-			search: searchTerm ?? "",
+			search: searchTerm,
 			categories: categories,
 		});
 	}, []);
@@ -94,7 +94,7 @@ const FieldCatalog = ({ fields }: { fields: Fields }) => {
 								type="checkbox"
 								className="mr-2"
 								value={category}
-								checked={filters.categories.includes(category ?? "")}
+								checked={filters.categories.includes(category)}
 								onClick={(e) => {
 									const target = e.target as HTMLInputElement;
 
