@@ -204,7 +204,7 @@ curl --request POST \
   "traffic": "any(dns.dst.geo.country[*] in {\"AF\" \"BY\" \"CD\" \"CU\" \"IR\" \"IQ\" \"KP\" \"MM\" \"RU\" \"SD\" \"SY\" \"UA\" \"ZW\"})",
   "rule_settings": {
     "block_page_enabled": true,
-    "block_reason": "This domain was blocked due to being classified as a security risk to the organisation"
+    "block_reason": "This domain was blocked due to being classified as a security risk to the organization"
     }
 }'
 ```
@@ -225,7 +225,7 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_geolocation_block_policy" {
   traffic     = "any(dns.dst.geo.country[*] in {\"AF\" \"BY\" \"CD\" \"CU\" \"IR\" \"IQ\" \"KP\" \"MM\" \"RU\" \"SD\" \"SY\" \"UA\" \"ZW\"})"
   rule_settings {
       block_page_enabled = true
-      block_page_reason = "This domain was blocked due to being classified as a security risk to the organisation"
+      block_page_reason = "This domain was blocked due to being classified as a security risk to the organization"
     }
 }
 ```
@@ -267,7 +267,7 @@ curl --request POST \
   "traffic": "any(dns.domains[*] matches \"[.](cn|ru)$ or [.](rest|hair|top|live|cfd|boats|beauty|mom|skin|okinawa)$ or [.](zip|mobi)$\")",
   "rule_settings": {
     "block_page_enabled": true,
-    "block_reason": "This domain was blocked due to being classified as a security risk to the organisation"
+    "block_reason": "This domain was blocked due to being classified as a security risk to the organization"
     }
   }'
 ```
@@ -288,7 +288,7 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_blacklist_policy" {
   traffic     = "any(dns.domains[*] matches \"[.](cn|ru)$ or [.](rest|hair|top|live|cfd|boats|beauty|mom|skin|okinawa)$ or [.](zip|mobi)$\")"
   rule_settings {
       block_page_enabled = true
-      block_page_reason = "This domain was blocked due to being classified as a security risk to the organisation"
+      block_page_reason = "This domain was blocked due to being classified as a security risk to the organization"
     }
 }
 ```
@@ -331,7 +331,7 @@ curl --request POST \
   "traffic": "any(dns.domains[*] matches \".*okta.*|.*cloudflare.*|.*mfa.*|.sso.*\") and not(any(dns.domains[*] in $<Known Phishing Domains List UUID>))",
   "rule_settings": {
     "block_page_enabled": true,
-    "block_reason": "This domain was blocked due to being classified as a security risk to the organisation"
+    "block_reason": "This domain was blocked due to being classified as a security risk to the organization"
     }
 
 		}'
@@ -353,7 +353,7 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_phishing_domains_block" {
   traffic     = "any(dns.domains[*] matches \".*okta.*|.*cloudflare.*|.*mfa.*|.sso.*\") and not(any(dns.domains[*] in ${"$"}${cloudflare_zero_trust_list.known_phishing_domains_list.id}))"
   rule_settings {
       block_page_enabled = true
-      block_page_reason = "This domain was blocked due to being classified as a security risk to the organisation"
+      block_page_reason = "This domain was blocked due to being classified as a security risk to the organization"
     }
 }
 ```
@@ -397,7 +397,7 @@ curl --request POST \
   "traffic": "any(dns.resolved_ips[*] in $<IP Blocklist UUID>)",
   "rule_settings": {
     "block_page_enabled": true,
-    "block_reason": "This domain was blocked due to being classified as a security risk to the organisation"
+    "block_reason": "This domain was blocked due to being classified as a security risk to the organization"
     }
 	}'
 ```
@@ -418,7 +418,7 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_resolvedip_blocklist_rule" 
   traffic     = "any(dns.resolved_ips[*] in ${"$"}${cloudflare_zero_trust_list.ip_blocklist.id}"
   rule_settings {
       block_page_enabled = true
-      block_page_reason = "This domain was blocked due to being classified as a security risk to the organisation"
+      block_page_reason = "This domain was blocked due to being classified as a security risk to the organization"
     }
 }
 ```
