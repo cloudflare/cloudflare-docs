@@ -89,3 +89,12 @@ Implicitly deny all of your internal IP ranges included in a list. We recommend 
 | Selector       | Operator | Value                  | Action |
 | -------------- | -------- | ---------------------- | ------ |
 | Destination IP | in list  | _Internal Network IPs_ | Block  |
+
+## All-NET-ApplicationAccess-Allow
+
+Only allow network traffic from known and approved devices.
+
+<Render
+	file="gateway/policies/dash-plus-api/network/enforce-device-posture"
+	product="cloudflare-one"
+/>

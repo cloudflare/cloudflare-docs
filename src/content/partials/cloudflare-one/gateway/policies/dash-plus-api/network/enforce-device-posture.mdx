@@ -31,12 +31,8 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
     "l4"
   ],
   "traffic": "any(net.sni.domains[*] == \"internalapp.com\")",
-	"device_posture": "not(any(device_posture.checks.passed[*] in {\"<Device Serial Numbers List UUID>\"}))",
-  "rule_settings": {
-    "block_page_enabled": true,
-    "block_reason": "This domain/IP was explicitly blocked by your network administrator. Please reach out to your helpdesk for assistance"
-    }
-	}'
+	"device_posture": "not(any(device_posture.checks.passed[*] in {\"<DEVICE_SERIAL_NUMBERS_LIST_UUID>\"}))"
+}'
 ```
 
 To get the UUIDs of your device posture checks, use the [List device posture rules](/api/resources/zero_trust/subresources/devices/subresources/posture/methods/list/) endpoint.
@@ -55,10 +51,6 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_resolvedip_blocklist_rule" 
   filters     = ["l4"]
   traffic     = "any(net.sni.domains[*] == \"internalapp.com\")"
 	posture			=	"not(any(device_posture.checks.passed[*] in {\"${"$"}${cloudflare_zero_trust_list.allowed_devices_sn_list.id}\"}))"
-  rule_settings {
-      block_page_enabled = true
-      block_page_reason = "This domain/IP was explicitly blocked by your network administrator. Please reach out to your helpdesk for assistance"
-    }
 }
 ```
 
