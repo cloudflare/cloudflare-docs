@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FieldBadges from "./fields/FieldBadges";
 import Markdown from "react-markdown";
 import type { CollectionEntry } from "astro:content";
@@ -57,6 +57,19 @@ const FieldCatalog = ({ fields }: { fields: Fields }) => {
 		return true;
 	});
 
+	useEffect(() => {
+		// On component load, check for deep-links to categories in the query param
+		const params = new URLSearchParams(window.location.search);
+		const categories = params.getAll("field-category");
+
+		if (!categories) return;
+
+		setFilters({
+			...filters,
+			categories: categories,
+		});
+	}, []);
+
 	return (
 		<div className="md:flex">
 			<div className="mr-8 w-full md:w-1/4">
@@ -79,6 +92,7 @@ const FieldCatalog = ({ fields }: { fields: Fields }) => {
 								type="checkbox"
 								className="mr-2"
 								value={category}
+								checked={filters.categories.includes(category ?? "")}
 								onClick={(e) => {
 									const target = e.target as HTMLInputElement;
 
@@ -122,7 +136,7 @@ const FieldCatalog = ({ fields }: { fields: Fields }) => {
 						>
 							<div className="-mb-1 flex items-center">
 								<span
-									className="font-semibold text-lg text-ellipsis overflow-hidden whitespace-nowrap"
+									className="overflow-hidden text-ellipsis whitespace-nowrap text-lg font-semibold"
 									title={`${field.name}: ${field.data_type}`}
 								>
 									{field.name}
