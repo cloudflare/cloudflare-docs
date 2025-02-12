@@ -5,6 +5,10 @@ productLink: "/cloudflare-one/applications/configure-apps/"
 productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
+   - publish_date: "2025-02-12"
+    title: Access Policies Support Filtering
+    description: |-
+      Access policies can now be filtered by: action, rule groups used, applications assigned to, and policy selectors used
   - publish_date: "2025-02-11"
     title: Private self-hosted applications and reusable policies GA
     description: |-
