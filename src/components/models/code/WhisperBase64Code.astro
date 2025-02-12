@@ -12,47 +12,32 @@ const props = z.object({
 
 const { name } = props.parse(Astro.props);
 
-const worker = `
+const worker = `import { Buffer } from 'node:buffer';
 export interface Env {
     AI: Ai;
 }
-
 const URL = "https://pub-dbcf9f0bd3af47ca9d40971179ee62de.r2.dev/02f6edc0-1f7b-4272-bd17-f05335104725/audio.mp3";
-
 export default {
     async fetch(request, env, ctx): Promise<Response> {
         const mp3 = await fetch(URL);
         if (!mp3.ok) {
-            throw new Error('Response error from mp3');
-        }
-
+      		throw new Error(\`Response status: \${mp3.status}\`);
+    		}
         const mp3Buffer = await mp3.arrayBuffer();
-
-        // Convert ArrayBuffer to Base64 using a loop
-        const base64 = arrayBufferToBase64(mp3Buffer);
-
+        const base64 = Buffer.from(mp3Buffer, 'binary').toString("base64");
         try {
-            const res = await env.AI.run("audio-analysis", {
-                audio: base64
+            const res = await env.AI.run("${name}", {
+                "audio": base64
             });
             return Response.json(res);
-        } catch (e) {
-            console.log("AI Service Error:", e);
         }
-
-        return new Response(JSON.stringify({ message: "Fallback response" }));
+        catch (e) {
+            console.log(JSON.stringify(env.AI));
+        }
+        return new Response(JSON.stringify({ho:"to"}));
     },
-};
-
-// Utility to convert ArrayBuffer to Base64 using a loop
-function arrayBufferToBase64(buffer: ArrayBuffer): string {
-    const bytes = new Uint8Array(buffer);
-    let binary = '';
-    for (let i = 0; i < bytes.length; i++) {
-        binary += String.fromCharCode(bytes[i]);
-    }
-    return btoa(binary);
-}`;
+} satisfies ExportedHandler<Env>
+ `;
 ---
 
 <Details header="Workers - TypeScript">
