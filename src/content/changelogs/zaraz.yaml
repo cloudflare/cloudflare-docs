@@ -5,6 +5,9 @@ productLink: "/zaraz/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-02-11"
+    description: |
+      * **Logpush**: Add Logpush support for Zaraz
   - publish_date: "2024-12-16"
     description: |
       * **Consent Management**: Allow forcing the consent modal language

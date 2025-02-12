@@ -17,7 +17,9 @@ export const GET: APIRoute = async (context) => {
 
 	marked.use({ walkTokens });
 
-	const changelogs = await getCollection("changelogs");
+	const changelogs = await getCollection("changelogs", (e) => {
+		return e.id !== "api-deprecations";
+	});
 
 	changelogs.push(await getWranglerChangelog());
 

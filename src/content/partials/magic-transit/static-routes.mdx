@@ -1,11 +1,72 @@
 ---
 params:
+  - magicProduct?
+  - productName
+  - BGPpath
+  - anycastURL
+  - trafficSteering
+  - magicWANecmp?
   - createPath
   - tunnelEndpoints
-  - ipRanges
+  - ipRanges?
 ---
 
-import { GlossaryTooltip, Markdown, Render, TabItem, Tabs } from "~/components";
+import { GlossaryTooltip, Markdown, AnchorHeading, Render, TabItem, Tabs } from "~/components";
+
+:::note
+If you are connecting to Cloudflare via a [Direct CNI connection](/network-interconnect/express-cni/), refer to <a href={props.BGPpath}>BGP peering</a> to learn how to take advantage of this routing protocol. If not, continue reading.
+:::
+
+{props.productName} uses a static configuration to route your traffic through <GlossaryTooltip term="anycast" link={props.anycastURL}>anycast tunnels</GlossaryTooltip> from Cloudflare's global network to your locations.
+
+You must assign a route priority to each tunnel-subnet pair in your configuration, as follows:
+
+- Lower values have greater priority.
+- When the priority values for prefix entries match, Cloudflare uses equal-cost multi-path (ECMP) packet forwarding to route traffic. {props.magicWANecmp} For more on how Cloudflare uses ECMP packet forwarding, refer to <GlossaryTooltip term="traffic steering" link={props.trafficSteering}>Traffic steering</GlossaryTooltip>.
+
+You can also create and edit static routes using the [Magic Static Routes API](/api/resources/magic_transit/subresources/routes/methods/list/).
+
+## Edge routing configuration example
+
+| Prefix            | NextHop        | Priority |
+| ----------------- | -------------- | -------- |
+| `10.10.10.100/24` | `TUNNEL_1_IAD` | `100`    |
+| `10.10.10.100/24` | `TUNNEL_2_IAD` | `100`    |
+| `10.10.10.100/24` | `TUNNEL_3_ATL` | `100`    |
+| `10.10.10.100/24` | `TUNNEL_4_ATL` | `100`    |
+| `10.10.10.100/24` | `TUNNEL_1_IAD` | `200`    |
+| `10.10.10.100/24` | `TUNNEL_2_IAD` | `200`    |
+| `10.10.10.100/24` | `TUNNEL_3_ATL` | `100`    |
+| `10.10.10.100/24` | `TUNNEL_4_ATL` | `100`    |
+
+Optionally, you can assign weights to distribute traffic more effectively among multiple tunnels. The weight values determine the proportion of traffic directed to each tunnel, with higher weights resulting in a greater share of traffic. The maximum weight value is `256`.
+
+In the example below, `TUNNEL_2_IAD` is likely to receive twice as much traffic as `TUNNEL_1_IAD`.
+
+| Prefix            | NextHop        | Priority | Weight |
+| ----------------- | -------------- | -------- | ------ |
+| `10.10.10.100/24` | `TUNNEL_1_IAD` | `100`    | `64`  |
+| `10.10.10.100/24` | `TUNNEL_2_IAD` | `100`    | `128`  |
+| `10.10.10.100/24` | `TUNNEL_3_ATL` | `100`    | `192`  |
+| `10.10.10.100/24` | `TUNNEL_4_ATL` | `100`    | `255`  |
+
+{ props.magicProduct === "Magic Transit" && (
+  <>
+    <AnchorHeading title="Map route prefixes smaller than `/24`" depth={2} />
+		<p>You must provide your prefixes and the tunnels that should be mapped to for Cloudflare to route your traffic from our global network to your data centers via anycast tunnels. Use the table below as reference.</p>
+		<Markdown
+    text={`
+  | Prefix            | NextHop        |
+  | ----------------- | -------------- |
+  | \`103.21.244.0/29\` | \`TUNNEL_1_IAD\` |
+  | \`103.21.244.8/29\` | \`TUNNEL_2_ATL\` |
+  `}
+    inline={false}
+  />
+		<p>The minimum advertising prefix is <code>/24</code>, but because Cloudflare uses anycast tunnels as an outer wrapper for your traffic, we can route prefixes within that <code>/24</code> to different tunnel endpoints. For example, you can send <code>x.x.x.0/29</code> to Data Center 1 and <code>x.x.x.8/29</code> to Data Center 2. This is helpful when you operate in an environment with constrained IP resources.</p>
+  </>
+  )
+}
 
 ## Scoped routes for anycast GRE or IPsec tunnels
 
@@ -179,3 +240,4 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/routes/{route_i
 ```
 
 </TabItem> </Tabs>
+

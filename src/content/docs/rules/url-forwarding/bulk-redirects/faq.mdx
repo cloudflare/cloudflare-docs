@@ -41,3 +41,9 @@ Use the `raw.http.request.full_uri` field both in the rule expression and in the
 ## Do Bulk Redirects take precedence over Page Rules?
 
 Yes. Bulk Redirects take precedence over Page Rules redirects. For more information on the execution order of Rules products, refer to [Execution order](/rules/url-forwarding/#execution-order).
+
+## Can I purge an entire Bulk Redirect List in one API call?
+
+If your [Bulk Redirect List](/rules/url-forwarding/bulk-redirects/concepts/#bulk-redirect-lists) contains 500,001 or more items, you will not be able to purge the entire list in a single API call. Instead, you must make multiple calls to [Delete List Items](/api/resources/rules/subresources/lists/subresources/items/methods/delete/) API end-point, deleting a maximum of 100,000 items per request.
+
+For example, to delete a list with 1,000,000 items, you would need to issue at least 10 API requests.

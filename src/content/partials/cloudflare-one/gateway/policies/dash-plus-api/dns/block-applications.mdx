@@ -1,0 +1,51 @@
+---
+{}
+---
+
+import { Tabs, TabItem } from "~/components";
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector    | Operator | Value                     | Action |
+| ----------- | -------- | ------------------------- | ------ |
+| Application | in       | _Artificial Intelligence_ | Block  |
+
+</TabItem>
+<TabItem label="API">
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN>" \
+--data '{
+  "name": "All-DNS-Application-Blocklist",
+  "description": "Block access to unauthorized AI applications",
+  "precedence": 40,
+  "enabled": true,
+  "action": "block",
+  "filters": [
+    "dns"
+  ],
+  "traffic": "any(app.type.ids[*] in {25})",
+  "identity": ""
+}'
+```
+
+</TabItem>
+
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "block_unauthorized_apps" {
+  account_id  = var.account_id
+  name        = "All-DNS-Application-Blocklist"
+  description = "Block access to unauthorized AI applications"
+  enabled     = true
+  action      = "block"
+  filters     = ["dns"]
+  traffic     = "any(app.type.ids[*] in {25})"
+  identity    = ""
+}
+```
+
+</TabItem> </Tabs>

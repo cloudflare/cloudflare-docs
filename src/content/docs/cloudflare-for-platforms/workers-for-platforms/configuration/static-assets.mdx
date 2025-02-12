@@ -218,7 +218,11 @@ Once this PUT request succeeds, the files are served on the User Worker. Request
 
 If you prefer a CLI-based approach and your platform setup allows direct publishing, you can use Wrangler to deploy both your Worker code and static assets. Wrangler bundles and uploads static assets (from a specified directory) along with your Worker script, so you can manage everything in one place.
 
-Create or update your `wrangler.toml` to specify where Wrangler should look for static files:
+Create or update your [Wrangler configuration file](/workers/wrangler/configuration/) to specify where Wrangler should look for static files:
+
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
 
 ```toml
 name = "my-static-site"
@@ -229,6 +233,8 @@ compatibility_date = "2025-01-29"
 directory = "./public"
 binding = "ASSETS"
 ```
+
+</WranglerConfig>
 
 * `directory`: The local folder containing your static files (for example, `./public`).
 * `binding`: The binding name used to reference these assets within your Worker code.

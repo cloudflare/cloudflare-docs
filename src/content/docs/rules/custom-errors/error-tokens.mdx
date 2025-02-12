@@ -5,17 +5,13 @@ sidebar:
   order: 4
 head:
   - tag: title
-    content: Custom error response tokens
-
+    content: Custom error tokens
 ---
 
-A custom response may include the following error tokens, which will be replaced with their real values before sending the response to the visitor:
-
-
+A custom error asset or inline response may include the following error tokens, which will be replaced with their real values before sending the response to the visitor:
 
 | Token           | Description                                                              |
 | --------------- | ------------------------------------------------------------------------ |
 | `::CLIENT_IP::` | The visitor's IP address.                                                |
 | `::RAY_ID::`    | A unique identifier given to every request that goes through Cloudflare. |
 | `::GEO::`       | The country or region associated with the visitor's IP address.          |
-

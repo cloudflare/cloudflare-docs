@@ -415,6 +415,7 @@
 /email-security/setup/api-deployment/office365-api/ /email-security/setup/post-delivery-deployment/api/office365-api/ 301
 /email-security/email-configuration/retract-settings/gmail-retraction/ /email-security/deployment/api/setup/gsuite-bcc-setup/add-retraction/ 301
 /cloudflare-one/insights/email-monitoring/email-security-logs/ /cloudflare-one/insights/email-monitoring/enable-logs/ 301
+/cloudflare-one/insights/email-monitoring/phishing-report/ /cloudflare-one/insights/email-monitoring/download-disposition-report/ 301 
 
 
 # firewall
@@ -999,6 +1000,7 @@
 /rules/url-forwarding/bulk-redirects/use-cases/ /rules/url-forwarding/examples/ 301
 /rules/url-forwarding/single-redirects/examples/ /rules/url-forwarding/examples/ 301
 /rules/url-forwarding/dynamic-redirects/parameters/ /rules/url-forwarding/single-redirects/settings/ 301
+/rules/transform/manage/ /rules/transform/ 301
 
 # ruleset engine
 /ruleset-engine/rules-language/fields/standard-fields/ /ruleset-engine/rules-language/fields/reference/ 301
@@ -1842,20 +1844,13 @@
 /http-applications/* /version-management/:splat 301
 /http3/* https://www.cloudflare.com/learning/performance/what-is-http3/ 301
 /railgun/* / 301
-/rules/bulk-redirects/* /rules/url-forwarding/bulk-redirects/:splat 301
-/rules/url-forwarding/dynamic-redirects/* /rules/url-forwarding/single-redirects/:splat 301
 /ssl/ssl-tls/* /ssl/reference/:splat 301
 /ssl/reference/cipher-suites/* /ssl/edge-certificates/additional-options/cipher-suites/:splat 301
 /ssl/reference/migration-guides/digicert-update/* /ssl/reference/migration-guides/ 301
 /support/account-management-billing/billing-cloudflare-add-on-services/* https://www.cloudflare.com/plans/ 301
 /tenant/tutorial/* /tenant/get-started/ 301
-/waf/managed-rulesets/* /waf/managed-rules/:splat 301
-/firewall/recipes/* /waf/custom-rules/use-cases/:splat 301
 /workers/wrangler-legacy/* /workers/wrangler/migration/v1-to-v2/wrangler-legacy/:splat 301
-/waf/custom-rulesets/* /waf/account/custom-rulesets/:splat 301
-/waf/custom-rules/custom-rulesets/* /waf/account/custom-rulesets/:splat 301
-/waf/exposed-credentials-check/* /waf/managed-rules/check-for-exposed-credentials/:splat 301
-/waf/security-events/* /waf/analytics/security-events/:splat 301
+/firewall/recipes/* /waf/custom-rules/use-cases/:splat 301
 /web3/polygon-gateway/* /web3/ 301
 /vectorize/configuration/* /vectorize/best-practices/:splat 301
 
@@ -1904,15 +1899,6 @@
 ## Secure your Internet Traffic
 /learning-paths/secure-internet-traffic/connect-devices/* /learning-paths/secure-internet-traffic/connect-devices-networks/:splat 301
 
-
-# Old WAF changelog entries
-/waf/change-log/2019-* /waf/change-log/historical-2019/ 301
-/waf/change-log/2020-* /waf/change-log/historical-2020/ 301
-/waf/change-log/2021-* /waf/change-log/historical-2021/ 301
-/waf/change-log/2022-* /waf/change-log/historical-2022/ 301
-/waf/change-log/2023-* /waf/change-log/historical-2023/ 301
-/waf/change-log/2024-* /waf/change-log/historical-2024/ 301
-
 # Cloudflare for SaaS
 /ssl/ssl-for-saas/common-tasks/* /cloudflare-for-platforms/cloudflare-for-saas/ 301
 /ssl/ssl-for-saas/reference/* /cloudflare-for-platforms/cloudflare-for-saas/reference/ 301
@@ -1927,6 +1913,24 @@
 /magic-wan/third-party/* /magic-wan/configuration/manually/third-party/:splat 301
 /magic-wan/connector/* /magic-wan/configuration/connector/:splat 301
 /magic-wan/configuration/connector/dhcp/* /magic-wan/configuration/connector/network-options/dhcp/:splat 301
+
+# Rules
+/rules/bulk-redirects/* /rules/url-forwarding/bulk-redirects/:splat 301
+/rules/url-forwarding/dynamic-redirects/* /rules/url-forwarding/single-redirects/:splat 301
+/rules/custom-error-responses/* /rules/custom-errors/:splat 301
+
+# WAF
+/waf/managed-rulesets/* /waf/managed-rules/:splat 301
+/waf/custom-rulesets/* /waf/account/custom-rulesets/:splat 301
+/waf/custom-rules/custom-rulesets/* /waf/account/custom-rulesets/:splat 301
+/waf/exposed-credentials-check/* /waf/managed-rules/check-for-exposed-credentials/:splat 301
+/waf/security-events/* /waf/analytics/security-events/:splat 301
+/waf/change-log/2019-* /waf/change-log/historical-2019/ 301
+/waf/change-log/2020-* /waf/change-log/historical-2020/ 301
+/waf/change-log/2021-* /waf/change-log/historical-2021/ 301
+/waf/change-log/2022-* /waf/change-log/historical-2022/ 301
+/waf/change-log/2023-* /waf/change-log/historical-2023/ 301
+/waf/change-log/2024-* /waf/change-log/historical-2024/ 301
 
 # Workers
 /workers/reference/apis/* /workers/runtime-apis/:splat 301

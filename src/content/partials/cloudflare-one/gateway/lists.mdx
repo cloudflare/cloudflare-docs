@@ -49,9 +49,8 @@ You can now use this list in the policy builder by choosing the _in list_ operat
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/lists \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
+--header "Authorization: Bearer <API_TOKEN>" \
 --data '{
   "description": "Private application IPs",
   "items": [{"value": "10.226.0.177/32"},{"value": "10.226.1.177/32"}],

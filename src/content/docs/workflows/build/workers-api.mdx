@@ -123,7 +123,7 @@ Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-
 
 :::note[Workflows beta]
 
-Workflows currently requires you to bind to a Workflow via the `wrangler.toml / wrangler.json` file, and does not yet support bindings via the Workers dashboard.
+Workflows currently requires you to bind to a Workflow via the [Wrangler configuration file](/workers/wrangler/configuration/), and does not yet support bindings via the Workers dashboard.
 
 :::
 
@@ -161,7 +161,7 @@ Visit the documentation on [calling Workflows from Pages](/workflows/build/call-
 
 You can also bind to a Workflow that is defined in a different Worker script from the script your Workflow definition is in. To do this, provide the `script_name` key with the name of the script to the `[[workflows]]` binding definition in your Wrangler configuration.
 
-For example, if your Workflow is defined in a Worker script named `billing-worker`, but you are calling it from your `web-api-worker` script, your `wrangler.toml / wrangler.json` file would resemble the following:
+For example, if your Workflow is defined in a Worker script named `billing-worker`, but you are calling it from your `web-api-worker` script, your [Wrangler configuration file](/workers/wrangler/configuration/) would resemble the following:
 
 <WranglerConfig>
 

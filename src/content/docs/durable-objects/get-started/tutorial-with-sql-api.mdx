@@ -58,7 +58,7 @@ Running `create cloudflare@latest` will install [Wrangler](/workers/wrangler/ins
 	}}
 />
 
-This will create a new directory, which will include either a `src/index.js` or `src/index.ts` file to write your code and a [`wrangler.json`](/workers/wrangler/configuration/) configuration file.
+This will create a new directory, which will include either a `src/index.js` or `src/index.ts` file to write your code and a [`wrangler.jsonc`](/workers/wrangler/configuration/) configuration file.
 
 Move into your new directory:
 
@@ -203,7 +203,7 @@ Refer to [Access a Durable Object from a Worker](/durable-objects/best-practices
 
 ## 5. Configure Durable Object bindings
 
-[Bindings](/workers/runtime-apis/bindings/) allow your Workers to interact with resources on the Cloudflare developer platform. The Durable Object bindings in your Worker project's `wrangler.toml / wrangler.json` file will include a binding name (for this guide, use `MY_DURABLE_OBJECT`) and the class name (`MyDurableObject`).
+[Bindings](/workers/runtime-apis/bindings/) allow your Workers to interact with resources on the Cloudflare developer platform. The Durable Object bindings in your Worker project's [Wrangler configuration file](/workers/wrangler/configuration/) will include a binding name (for this guide, use `MY_DURABLE_OBJECT`) and the class name (`MyDurableObject`).
 
 <WranglerConfig>
 

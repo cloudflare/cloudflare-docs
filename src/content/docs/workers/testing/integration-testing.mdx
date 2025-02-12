@@ -108,7 +108,7 @@ try {
 
 ## [Miniflare's API](/workers/testing/miniflare/writing-tests/)
 
-If you would like to write integration tests for multiple Workers, need direct access to [bindings](/workers/runtime-apis/bindings/) outside your Worker in tests, or have another advanced use case, consider using [Miniflare's API](/workers/testing/miniflare) directly. Miniflare is the foundation for the other testing tools on this page, exposing a JavaScript API for the [`workerd` runtime](https://github.com/cloudflare/workerd) and local simulators for the other Developer Platform products. Unlike `unstable_startWorker()`, Miniflare does not automatically load options from your Wrangler configuration file. Refer to the [Writing tests](/workers/testing/miniflare/writing-tests/) page for an example of how to use Miniflare together with `node:test`.
+If you would like to write integration tests for multiple Workers, need direct access to [bindings](/workers/runtime-apis/bindings/) outside your Worker in tests, or have another advanced use case, consider using [Miniflare's API](/workers/testing/miniflare) directly. Miniflare is the foundation for the other testing tools on this page, exposing a JavaScript API for the [`workerd` runtime](https://github.com/cloudflare/workerd) and local simulators for the other Developer Platform products. Unlike `unstable_startWorker()`, Miniflare does not automatically load options from your [Wrangler configuration file](/workers/wrangler/configuration/). Refer to the [Writing tests](/workers/testing/miniflare/writing-tests/) page for an example of how to use Miniflare together with `node:test`.
 
 ```js
 import assert from "node:assert";

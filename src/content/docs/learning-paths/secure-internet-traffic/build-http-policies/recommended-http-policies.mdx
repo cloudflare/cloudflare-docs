@@ -3,87 +3,79 @@ title: Recommended HTTP policies
 pcx_content_type: learning-unit
 sidebar:
   order: 5
-
 ---
 
-import { Details, Render } from "~/components"
+import { Render } from "~/components";
 
 We recommend you add the following HTTP policies to build an Internet and SaaS app security strategy for your organization.
 
-
-<Details header="All-HTTP-Application-InspectBypass">
+## All-HTTP-Application-InspectBypass
 
 Bypass HTTP inspection for applications that use embedded certificates. This will help avoid any certificate pinning errors that may arise from an initial rollout.
 
-<Render file="gateway/policies/do-not-inspect-applications" product="cloudflare-one" />
+<Render
+	file="gateway/policies/do-not-inspect-applications"
+	product="cloudflare-one"
+/>
 
-
-</Details>
-
-
-<Details header="Android-HTTP-Application-InspectionBypass">
+## Android-HTTP-Application-InspectionBypass
 
 Bypass HTTPS inspection for Android applications (such as Google Drive) that use certificate pinning, which is incompatible with Gateway inspection.
 
 | Selector                     | Operator | Value                             | Logic | Action         |
 | ---------------------------- | -------- | --------------------------------- | ----- | -------------- |
-| Application                  | in       | *Google Drive*                    | And   | Do Not Inspect |
-| Passed Device Posture Checks | in       | *OS Version Android (OS version)* |       |                |
+| Application                  | in       | _Google Drive_                    | And   | Do Not Inspect |
+| Passed Device Posture Checks | in       | _OS Version Android (OS version)_ |       |                |
 
-
-</Details>
-
-
-<Details header="All-HTTP-Domain-Inspection-Bypass">
+## All-HTTP-Domain-Inspection-Bypass
 
 Bypass HTTP inspection for a custom list of domains identified as incompatible with TLS inspection.
 
 | Selector | Operator | Value                    | Logic | Action         |
 | -------- | -------- | ------------------------ | ----- | -------------- |
-| Domain   | in list  | *DomainInspectionBypass* | Or    | Do Not Inspect |
-| Domain   | in list  | *Known Domains*          |       |                |
+| Domain   | in list  | _DomainInspectionBypass_ | Or    | Do Not Inspect |
+| Domain   | in list  | _Known Domains_          |       |                |
 
-
-</Details>
-
-
-<Details header="All-HTTP-SecurityRisks-Blocklist">
+## All-HTTP-SecurityRisks-Blocklist
 
 <Render file="zero-trust/blocklist-security-categories" />
 
 | Selector       | Operator | Value                | Action |
 | -------------- | -------- | -------------------- | ------ |
-| Security Risks | in       | *All security risks* | Block  |
+| Security Risks | in       | _All security risks_ | Block  |
 
+## All-HTTP-ContentCategories-Blocklist
 
-</Details>
+<Render
+	file="zero-trust/content-categories-description"
+	params={{ policyType: "HTTP" }}
+/>
 
+<Render
+	file="gateway/policies/dash-plus-api/http/block-content-categories"
+	product="cloudflare-one"
+/>
 
-<Details header="All-HTTP-ContentCategories-Blocklist">
-
-<Render file="zero-trust/blocklist-content-categories" params={{ one: "HTTP", two: "Questionable Content, Security Risks, Miscellaneous, Adult Themes, Gambling" }} />
-
-
-</Details>
-
-
-<Details header="All-HTTP-DomainHost-Blocklist">
+## All-HTTP-DomainHost-Blocklist
 
 <Render file="zero-trust/blocklist-domain-host" params={{ one: "HTTP" }} />
 
+| Selector | Operator      | Value              | Logic | Action |
+| -------- | ------------- | ------------------ | ----- | ------ |
+| Domain   | in list       | _Domain Blocklist_ | Or    | Block  |
+| Host     | in list       | _Host Blocklist_   | Or    |        |
+| Host     | matches regex | `.*example\.com`   |       |        |
 
-</Details>
-
-
-<Details header="All-HTTP-Application-Blocklist">
+## All-HTTP-Application-Blocklist
 
 <Render file="zero-trust/blocklist-application" />
 
+<Render
+	file="gateway/policies/dash-plus-api/http/block-applications"
+	product="cloudflare-one"
+/>
 
-</Details>
-
-
-<Details header="PrivilegedUsers-HTTP-Any-Isolate">
+## PrivilegedUsers-HTTP-Any-Isolate
 
 Isolate traffic for privileged users who regularly access critical systems or execute actions such as threat analysis and malware testing.
 
@@ -91,33 +83,22 @@ Security teams often need to perform threat analysis or malware testing that cou
 
 | Selector         | Operator | Value              | Action  |
 | ---------------- | -------- | ------------------ | ------- |
-| User Group Names | in       | *Privileged Users* | Isolate |
+| User Group Names | in       | _Privileged Users_ | Isolate |
 
-
-</Details>
-
-
-<Details header="Quarantined-Users-HTTP-Restricted-Access">
+## Quarantined-Users-HTTP-Restricted-Access
 
 <Render file="zero-trust/blocklist-restricted-users" />
 
 | Selector         | Operator    | Value                           | Logic | Action |
 | ---------------- | ----------- | ------------------------------- | ----- | ------ |
-| Destination IP   | not in list | *Quarantined-Users-IPAllowlist* | And   | Block  |
-| User Group Names | in          | *Quarantined Users*             |       |        |
+| Destination IP   | not in list | _Quarantined-Users-IPAllowlist_ | And   | Block  |
+| User Group Names | in          | _Quarantined Users_             |       |        |
 
-
-</Details>
-
-
-<Details header="All-HTTP-Domain-Isolate">
+## All-HTTP-Domain-Isolate
 
 Isolate high risk domains or create a custom list of known risky domains to avoid data exfiltration or malware infection. Ideally, your incident response teams can update the blocklist with an [API automation](/security-center/intel-apis/) to provide real-time threat protection.
 
 | Selector           | Operator | Value                              | Logic | Action  |
 | ------------------ | -------- | ---------------------------------- | ----- | ------- |
-| Content Categories | in       | *New Domain*, *Newly Seen Domains* | Or    | Isolate |
-| Domain             | in list  | *Domain Isolation*                 |       |         |
-
-
-</Details>
+| Content Categories | in       | _New Domain_, _Newly Seen Domains_ | Or    | Isolate |
+| Domain             | in list  | _Domain Isolation_                 |       |         |

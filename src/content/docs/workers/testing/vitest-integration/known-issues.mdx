@@ -33,3 +33,31 @@ Using WebSockets with Durable Objects with the [`isolatedStorage`](/workers/test
 ### Returning non-primitive values from RPC methods
 
 In order to return non-primitive values (objects or classes extending `RpcTarget`, for instance) from RPC methods, you must use the `using` keyword. Refer to [https://developers.cloudflare.com/workers/runtime-apis/rpc/lifecycle#explicit-resource-management](https://developers.cloudflare.com/workers/runtime-apis/rpc/lifecycle#explicit-resource-management) for more details. An [example test](https://github.com/cloudflare/workers-sdk/tree/main/fixtures/vitest-pool-workers-examples/rpc/test/unit.test.ts#L155) is included in the `workers-sdk` repository.
+
+### Module resolution
+
+If you encounter module resolution issues such as: `Error: Cannot use require() to import an ES Module` or `Error: No such module`, you can bundle these dependencies using the [deps.optimizer](https://vitest.dev/config/#deps-optimizer) option:
+
+```tsx
+import { defineWorkersConfig } from "@cloudflare/vitest-pool-workers/config";
+
+export default defineWorkersConfig({
+	test: {
+		deps: {
+			optimizer: {
+				ssr: {
+					enabled: true,
+					include: ["your-package-name"],
+				},
+			},
+		},
+		poolOptions: {
+			workers: {
+				// ...
+			},
+		},
+	},
+});
+```
+
+You can find an example in the [Recipes](/workers/testing/vitest-integration/recipes) page.

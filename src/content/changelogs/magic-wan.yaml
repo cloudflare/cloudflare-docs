@@ -5,6 +5,10 @@ productLink: "/magic-wan/"
 productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
+  - publish_date: "2024-12-12"
+    title: LAN Policy improvements for the Magic WAN Connector
+    description: |-
+      Magic WAN Connector LAN Policy now supports unidirectional traffic flows and port-ranges.
   - publish_date: "2024-12-17"
     title: Magic WAN Connector configurable health checks
     description: |-
