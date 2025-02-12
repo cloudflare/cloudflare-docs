@@ -4,7 +4,7 @@ params:
   - productName
 ---
 
-import { AnchorHeading } from "~/components";
+import { AnchorHeading, Render } from "~/components";
 import { Image } from 'astro:assets';
 import dsr from "~/assets/images/magic-transit/mtu-mss/dsr.png"
 import tunnel from "~/assets/images/magic-transit/mtu-mss/tcp-mss.png"
@@ -102,21 +102,7 @@ Cloudflare only recommends applying a MSS clamp to adjust the size of TCP packet
 
 { props.magicProduct === "Magic Transit" && (
   <>
-    <p>The MSS value depends on how your network is set up.</p>
-		<ul>
-				<li><strong>Magic Transit ingress-only traffic (DSR):</strong>
-						<ul>
-								<li><strong>On your edge router transit ports:</strong> Apply a TCP MSS clamp with a maximum of 1,436 bytes.</li>
-								<li><strong>On any IPsec/GRE tunnels with third parties on your Magic Transit prefix:</strong> Apply the MSS clamp on the internal tunnel interface (most likely on a separate firewall behind the GRE-terminating router) to reduce the current value by 24 bytes.</li>
-						</ul>
-				</li>
-				<li><strong>For Magic Transit ingress + egress traffic:</strong>
-						<ul>
-								<li><strong>On the Magic Transit GRE tunnel internal interface:</strong> Meaning where the Magic Transit egress traffic will traverse. This may be done automatically once the tunnel is configured but it depends on your devices. The TCP MSS clamp should be 1,436 bytes maximum.</li>
-								<li><strong>On any IPsec/GRE tunnels with third parties on your Magic Transit prefix:</strong> On the internal tunnel interface (most likely on a separate firewall behind the GRE-terminating router) to reduce its current value by 24 bytes.</li>
-						</ul>
-				</li>
-		</ul>
+    <Render file="mtu-mss/mss-clamping-gre" />
   </>
   )
 }
@@ -134,21 +120,7 @@ Cloudflare only recommends applying a MSS clamp to adjust the size of TCP packet
 
 { props.magicProduct === "Magic Transit" && (
   <>
-    <p>For IPsec tunnels, the value you need to specify depends on how your network is set up. The MSS clamping value will be lower than for GRE tunnels, however, since the physical interface will see IPsec-encrypted packets, not TCP packets, and MSS clamping will not apply to those.</p>
-		<ul>
-				<li><strong>Magic Transit ingress-only traffic (DSR):</strong>
-						<ul>
-								<li><strong>On your edge router transit ports:</strong> TCP MSS clamp should be 1,360 bytes maximum.</li>
-								<li><strong>On any IPsec/GRE tunnels with third parties on your Magic Transit prefix:</strong> on the internal tunnel interface (most likely on a separate firewall behind the GRE-terminating router) to reduce its current value by 140 bytes.</li>
-						</ul>
-				</li>
-				<li><strong>Magic Transit ingress + egress traffic:</strong>
-						<ul>
-								<li><strong>On your edge router:</strong> Apply this on your Magic Transit IPsec tunnel internal interface (that is, where the Magic Transit egress traffic will traverse). This may be done automatically once the tunnel is configured but it depends on your devices. TCP MSS clamp should be 1,360 bytes maximum.</li>
-								<li><strong>On any IPsec/GRE tunnels with third parties on your Magic Transit prefix:</strong> on the internal tunnel interface (most likely on a separate firewall behind the IPsec-terminating device in your premises) to reduce its current value by 140 bytes.</li>
-						</ul>
-				</li>
-		</ul>
+    <Render file="mtu-mss/mss-clamping-ipsec" />
   </>
   )
 }
