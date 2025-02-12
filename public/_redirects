@@ -415,6 +415,7 @@
 /email-security/setup/api-deployment/office365-api/ /email-security/setup/post-delivery-deployment/api/office365-api/ 301
 /email-security/email-configuration/retract-settings/gmail-retraction/ /email-security/deployment/api/setup/gsuite-bcc-setup/add-retraction/ 301
 /cloudflare-one/insights/email-monitoring/email-security-logs/ /cloudflare-one/insights/email-monitoring/enable-logs/ 301
+/cloudflare-one/insights/email-monitoring/phishing-report/ /cloudflare-one/insights/email-monitoring/download-disposition-report/ 301 
 
 
 # firewall
