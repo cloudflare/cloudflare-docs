@@ -2,6 +2,7 @@
 import { z } from "astro:schema";
 import { Code } from "@astrojs/starlight/components";
 import Details from "~/components/Details.astro";
+import Render from "~/components/Render.astro";
 
 type Props = z.infer<typeof props>;
 
@@ -11,6 +12,7 @@ const props = z.object({
 
 const { name } = props.parse(Astro.props);
 
+const worker = `
 export interface Env {
     AI: Ai;
 }
@@ -50,9 +52,11 @@ function arrayBufferToBase64(buffer: ArrayBuffer): string {
         binary += String.fromCharCode(bytes[i]);
     }
     return btoa(binary);
-}` ;
+}`;
 ---
 
 <Details header="Workers - TypeScript">
 	<Code code={worker} lang="ts" />
 </Details>
+
+<Render file="nodejs-compat-howto" product="workers" />
