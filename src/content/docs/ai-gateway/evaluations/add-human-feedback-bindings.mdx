@@ -35,7 +35,7 @@ Use the [`patchLog()`](/ai-gateway/integrations/worker-binding-methods/#31-patch
 
 ```javascript
 await env.AI.gateway("my-gateway").patchLog(myLogId, {
-	feedback: 1, // both fields are optional; set values that fit your use case
+	feedback: 1, // all fields are optional; set values that fit your use case
 	score: 100,
 	metadata: {
 		user: "123", // Optional metadata to provide additional context
@@ -45,8 +45,8 @@ await env.AI.gateway("my-gateway").patchLog(myLogId, {
 
 ## Feedback parameters explanation
 
-- `feedback`: A boolean-like value (0 or 1) indicating whether the response was satisfactory.
-- `score`: An integer representing the quality or usefulness of the response.
+- `feedback`: is either `-1` for negative or `1` to positive, `0` is considered not evaluated.
+- `score`: A number between 0 and 100.
 - `metadata`: An object containing additional contextual information.
 
 ### patchLog: Send Feedback
