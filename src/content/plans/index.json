@@ -328,7 +328,7 @@
 					"free": 10,
 					"pro": 25,
 					"biz": 50,
-					"ent": 125
+					"ent": 300
 				}
 			}
 		},
@@ -1106,10 +1106,10 @@
 				},
 				"url_redirects": {
 					"title": "URL redirects across lists",
-					"free": "20",
-					"pro": "500",
-					"biz": "500",
-					"ent": "10,000"
+					"free": "10,000",
+					"pro": "25,000",
+					"biz": "50,000",
+					"ent": "1,000,000"
 				}
 			}
 		},
@@ -1127,10 +1127,10 @@
 				},
 				"num_rules": {
 					"title": "Number of rules",
-					"free": 5,
+					"free": 10,
 					"pro": 25,
 					"biz": 50,
-					"ent": 125
+					"ent": 300
 				}
 			}
 		},
@@ -1151,7 +1151,7 @@
 					"free": 10,
 					"pro": 25,
 					"biz": 50,
-					"ent": 125
+					"ent": 300
 				}
 			}
 		},
@@ -1172,7 +1172,35 @@
 					"free": 10,
 					"pro": 25,
 					"biz": 50,
-					"ent": 125
+					"ent": 300
+				}
+			}
+		},
+		"custom_errors": {
+			"title": "Custom Errors",
+			"link": "/rules/custom-errors/",
+			"properties": {
+				"availability": {
+					"title": "Availability",
+					"summary": "Available on all plans",
+					"free": "No",
+					"pro": "Yes",
+					"biz": "Yes",
+					"ent": "Yes"
+				},
+				"num_rules": {
+					"title": "Number of rules",
+					"free": 0,
+					"pro": 25,
+					"biz": 50,
+					"ent": 300
+				},
+				"num_assets": {
+					"title": "Number of assets",
+					"free": 0,
+					"pro": 25,
+					"biz": 50,
+					"ent": 300
 				}
 			}
 		},
@@ -1193,7 +1221,7 @@
 					"free": 10,
 					"pro": 25,
 					"biz": 50,
-					"ent": 125
+					"ent": 300
 				},
 				"override_host_header": {
 					"title": "Override Host header",
@@ -1262,9 +1290,9 @@
 				"rules": {
 					"title": "Number of snippets",
 					"free": 0,
-					"pro": 10,
-					"biz": 25,
-					"ent": 50
+					"pro": 25,
+					"biz": 50,
+					"ent": 300
 				},
 				"subrequests": {
 					"title": "Number of [[GLOSSARY_TOOLTIP_SNIPPETS_SUBREQUEST]]",
@@ -1292,7 +1320,7 @@
 					"free": 10,
 					"pro": 25,
 					"biz": 50,
-					"ent": 125
+					"ent": 300
 				},
 				"p_wildcard_support": {
 					"title": "Wildcard support",
@@ -1327,7 +1355,7 @@
 					"free": 10,
 					"pro": 25,
 					"biz": 50,
-					"ent": 100
+					"ent": 300
 				},
 				"regex_support": {
 					"title": "Regex support",
