@@ -44,7 +44,7 @@ Refer to [SFP+ port information](/magic-wan/configuration/connector/configure-ha
 ## Set up Cloudflare dashboard
 
 <Render
-	file="connector/create-site"
+	file="connector/connector-onramps"
 	params={{
 		wan: "refers to the physical Magic WAN Connector Ethernet port that you are using for your WAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose the number corresponding to the port that you are using in Connector. <br> If you need a throughput higher than 1 Gbps, you can use one of the SFP+ ports. Refer to [SFP+ port information](/magic-wan/configuration/connector/configure-hardware-connector/sfp-port-information/) for more information on the hardware supported.",
 		lan: "refers to the physical Magic WAN Connector Ethernet port that you are using for your LAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose a number corresponding to the port that you are using in Connector. <br> If you need a throughput higher than 1 Gbps, you can use one of the SFP+ ports. Refer to [SFP+ port information](/magic-wan/configuration/connector/configure-hardware-connector/sfp-port-information/) for more information on the hardware supported.",
@@ -133,16 +133,15 @@ Make sure you complete the setup workflow and activate your Magic WAN Connector 
 :::
 
 1. Connect Magic WAN Connector to a DHCP port with access to the Internet.
-2. [Create a site](#1-create-a-site) in the Cloudflare dashboard.
-3. Associate a Connector to it.
-4. Create a [DHCP WAN](#2-create-a-wan).
-5. [Active](#activate-connector) and power on your Connector.
-6. Wait 60 seconds.
-7. Make changes to the [WAN settings](#2-create-a-wan) in the Cloudflare dashboard to a static IP set up.
-8. Wait 60 seconds again.
-9. Magic WAN Connector will go offline. This is normal and expected behavior.
-10. Adjust your physical connections as required to match the static configuration.
-11. Magic WAN Connector comes back online.
+2. [Add a Connector on-ramp](#1-add-a-connector-on-ramp) in the Cloudflare dashboard.
+3. Create a [DHCP WAN](#2-create-a-wan).
+4. [Activate](#activate-connector) and power on your Connector.
+5. Wait 60 seconds.
+6. Make changes to the [WAN settings](#2-create-a-wan) in the Cloudflare dashboard to a static IP set up.
+7. Wait 60 seconds again.
+8. Magic WAN Connector will go offline. This is normal and expected behavior.
+9. Adjust your physical connections as required to match the static configuration.
+10. Magic WAN Connector comes back online.
 
 ---
 

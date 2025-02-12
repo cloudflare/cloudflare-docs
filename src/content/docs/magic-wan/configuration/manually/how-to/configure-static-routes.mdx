@@ -14,3 +14,7 @@ import { Render } from "~/components"
 <Render file="static-routes/static-routes1" product="magic-transit" params={{ productName: "Magic WAN", BGPpath: "/magic-wan/configuration/manually/how-to/bgp-peering/", anycastURL: "/magic-wan/reference/tunnels/", trafficSteering: "/magic-wan/reference/traffic-steering/", magicWANecmp: "The maximum number of routes you can have with the same priority is 64." }} />
 
 <Render file="static-routes/static-routes3" product="magic-transit" params={{ createPath: "Magic WAN > Configuration", tunnelEndpoints: "/magic-wan/configuration/manually/how-to/configure-tunnels/", ipRanges: "<br /> When using Magic WAN and Cloudflare Tunnel together, remember to consider the IP ranges utilized in the static routes of Cloudflare Tunnel when selecting static routes for Magic WAN. For more information, refer to [Cloudflare Tunnel](/magic-wan/zero-trust/cloudflare-tunnel/).<br>" }} />
+
+## Next steps
+
+Now that you have configured your tunnels and static routes, the next step is to create a site. <Render file="sites-brief" />

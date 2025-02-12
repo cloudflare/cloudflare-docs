@@ -104,7 +104,7 @@ You cannot use the same license key twice, or reuse a key once the virtual machi
 ## Set up Cloudflare dashboard
 
 <Render
-	file="connector/create-site"
+	file="connector/connector-onramps"
 	params={{
 		wan: "needs to correspond to the virtual network interface on the Virtual Connector instance you have set up in VMware. Following our example from the previous steps, you need to choose port `1` since that is what corresponds to the `eno1` port we set up in VMware.",
 		lan: "needs to correspond to the virtual LAN interface on the Virtual Connector instance you have set up in VMware. Following our example from the previous steps, you need to choose port `2` since that is what corresponds to the `eno2` port we set up in VMware.",
@@ -126,7 +126,7 @@ You cannot use the same license key twice, or reuse a key once the virtual machi
 ## Boot your Virtual Connector
 
 1. Go to **Virtual Machines** in VMware, and boot up Virtual Connector's VM.
-2. The Virtual Connector will make a request to Cloudflare. This is the step where Virtual Connector registers your provided license key and [downloads the site configuration](#1-create-a-site) for its connected site.
+2. The Virtual Connector will make a request to Cloudflare. This is the step where Virtual Connector registers your provided license key and downloads the [configuration you provided](#1-add-a-connector-on-ramp).
 3. The Virtual Connector will set up the LAN and WAN connections according to the configuration downloaded from the site you created on the Cloudflare dashboard. The Virtual Connector will also establish IPsec tunnels.
 4. If successful, the [tunnel health checks](/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/) will show as healthy.
 5. If you do not see a [healthy heartbeat](/magic-wan/configuration/connector/maintenance/heartbeat/) the Cloudflare dashboard, reboot the Virtual Connector's VM in VMware.
@@ -142,15 +142,14 @@ Make sure you complete the setup workflow and activate your Virtual Connector be
 :::
 
 1. Connect the machine where you installed the VM with Virtual Connector to a DHCP port with access to the Internet.
-2. [Create a site](#1-create-a-site) in the Cloudflare dashboard.
-3. Associate a Connector to it.
-4. Create a [DHCP WAN](#2-create-a-wan).
-5. [Active](#activate-connector) and boot your Virtual Connector.
-6. Wait 60 seconds.
-7. Make changes to the [WAN settings](#2-create-a-wan) in the Cloudflare dashboard to a static IP set up.
-8. Wait 60 seconds again.
-9. Modify your [Port Groups](#deploy-the-virtual-connector-on-vmware) as needed to change the source from which the WAN port obtains its IP address.
-10. Reboot your virtual machine.
+2. [Add a Connector on-ramp](#1-add-a-connector-on-ramp) in the Cloudflare dashboard.
+3. Create a [DHCP WAN](#2-create-a-wan).
+4. [Activate](#activate-connector) and boot your Virtual Connector.
+5. Wait 60 seconds.
+6. Make changes to the [WAN settings](#2-create-a-wan) in the Cloudflare dashboard to a static IP set up.
+7. Wait 60 seconds again.
+8. Modify your [Port Groups](#deploy-the-virtual-connector-on-vmware) as needed to change the source from which the WAN port obtains its IP address.
+9. Reboot your virtual machine.
 
 ---
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState, type ChangeEvent } from "react";
 import FieldBadges from "./fields/FieldBadges";
 import Markdown from "react-markdown";
 import type { CollectionEntry } from "astro:content";
@@ -25,7 +25,7 @@ const FieldCatalog = ({ fields }: { fields: Fields }) => {
 	const categories = [
 		...new Set(
 			fields
-				.map((field) => field.categories)
+				.map((field) => field.categories ?? [])
 				.flat()
 				.sort(),
 		),
@@ -57,6 +57,21 @@ const FieldCatalog = ({ fields }: { fields: Fields }) => {
 		return true;
 	});
 
+	useEffect(() => {
+		// On component load, check for deep-links to categories in the query param
+		const params = new URLSearchParams(window.location.search);
+		const categories = params.getAll("field-category");
+		const searchTerm = params.get("search-term") ?? "";
+
+		if (!categories && !searchTerm) return;
+
+		setFilters({
+			...filters,
+			search: searchTerm,
+			categories: categories,
+		});
+	}, []);
+
 	return (
 		<div className="md:flex">
 			<div className="mr-8 w-full md:w-1/4">
@@ -79,19 +94,18 @@ const FieldCatalog = ({ fields }: { fields: Fields }) => {
 								type="checkbox"
 								className="mr-2"
 								value={category}
-								onClick={(e) => {
-									const target = e.target as HTMLInputElement;
-
-									if (target.checked) {
+								checked={filters.categories.includes(category)}
+								onChange={(e: ChangeEvent<HTMLInputElement>) => {
+									if (e.target.checked) {
 										setFilters({
 											...filters,
-											categories: [...filters.categories, target.value],
+											categories: [...filters.categories, e.target.value],
 										});
 									} else {
 										setFilters({
 											...filters,
 											categories: filters.categories.filter(
-												(f) => f !== target.value,
+												(f) => f !== e.target.value,
 											),
 										});
 									}
@@ -122,7 +136,7 @@ const FieldCatalog = ({ fields }: { fields: Fields }) => {
 						>
 							<div className="-mb-1 flex items-center">
 								<span
-									className="font-semibold text-lg text-ellipsis overflow-hidden whitespace-nowrap"
+									className="overflow-hidden text-ellipsis whitespace-nowrap text-lg font-semibold"
 									title={`${field.name}: ${field.data_type}`}
 								>
 									{field.name}

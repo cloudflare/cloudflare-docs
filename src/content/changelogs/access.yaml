@@ -5,6 +5,10 @@ productLink: "/cloudflare-one/applications/configure-apps/"
 productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
+  - publish_date: "2025-02-11"
+    title: Private self-hosted applications and reusable policies GA
+    description: |-
+      [Private self-hosted applications](/cloudflare-one/applications/non-http/self-hosted-private-app/) and [reusable Access policies](/cloudflare-one/policies/access/policy-management/) are now generally available (GA) for all customers.
   - publish_date: "2025-01-21"
     title: Access Applications support private hostnames/IPs and reusable Access policies.
     description: |-

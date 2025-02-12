@@ -39,7 +39,7 @@ As far as cache is concerned, the asset in the `fetch` request (`https://notexam
 
 Purging the end user URL, `https://example.com/hello`, will not work because that is not the URL that cache sees. You need to confirm in your Worker which URL you are actually fetching, so you can purge the correct asset.
 
-In the previous example, `https://notexample.com/hello` is not proxied through Cloudflare. If `https://notexample.com/hello` was proxied ([orange-clouded](/dns/manage-dns-records/reference/proxied-dns-records/#proxied-records)) through Cloudflare, then you must own `notexample.com` and purge `https://notexample.com/hello` from the `notexample.com` zone.
+In the previous example, `https://notexample.com/hello` is not proxied through Cloudflare. If `https://notexample.com/hello` was proxied ([orange-clouded](/dns/proxy-status/)) through Cloudflare, then you must own `notexample.com` and purge `https://notexample.com/hello` from the `notexample.com` zone.
 
 To better understand the example, review the following diagram:
 
