@@ -999,6 +999,7 @@
 /rules/url-forwarding/bulk-redirects/use-cases/ /rules/url-forwarding/examples/ 301
 /rules/url-forwarding/single-redirects/examples/ /rules/url-forwarding/examples/ 301
 /rules/url-forwarding/dynamic-redirects/parameters/ /rules/url-forwarding/single-redirects/settings/ 301
+/rules/transform/manage/ /rules/transform/ 301
 
 # ruleset engine
 /ruleset-engine/rules-language/fields/standard-fields/ /ruleset-engine/rules-language/fields/reference/ 301
