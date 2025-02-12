@@ -614,10 +614,10 @@
 /fundamentals/basic-tasks/prevent-ddos-attacks-external/ /fundamentals/security/prevent-ddos-attacks-external/ 301
 /fundamentals/basic-tasks/protect-your-origin-server/ /fundamentals/security/protect-your-origin-server/ 301
 /fundamentals/basic-tasks/pci-scans/ /fundamentals/security/pci-scans/ 301
-/fundamentals/basic-tasks/trace-request/ /fundamentals/security/trace-request/ 301
-/fundamentals/basic-tasks/trace-request/how-to/ /fundamentals/security/trace-request/how-to/ 301
-/fundamentals/basic-tasks/trace-request/limitations/ /fundamentals/security/trace-request/limitations/ 301
-/fundamentals/basic-tasks/trace-request/changelog/ /fundamentals/security/trace-request/changelog/ 301
+/fundamentals/basic-tasks/trace-request/ /fundamentals/trace-request/ 301
+/fundamentals/basic-tasks/trace-request/how-to/ /fundamentals/trace-request/how-to/ 301
+/fundamentals/basic-tasks/trace-request/limitations/ /fundamentals/trace-request/limitations/ 301
+/fundamentals/basic-tasks/trace-request/changelog/ /fundamentals/trace-request/changelog/ 301
 
 # gateway
 /gateway/about/ /cloudflare-one/policies/gateway/ 301
