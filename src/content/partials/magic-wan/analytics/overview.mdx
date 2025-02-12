@@ -2,18 +2,23 @@
 params:
   - magicProduct?
   - productName
-  - mwanSiteAnalytics?
   - analyticsAnchorHeading
   - networkAnalyticsURL
   - traceRoutes
   - graphQl
 ---
 
-import { Markdown } from "~/components";
+import { AnchorHeading } from "~/components";
 
 {props.productName} customers can follow the troubleshooting steps listed below to gather information at the beginning of a troubleshooting process, then move to more detailed network data collection and analysis to identify the root cause of a problem.
 
-{props.mwanSiteAnalytics}
+
+{ props.magicProduct === "Magic WAN" && (
+  <>
+		<ul><li>Overview in <a href="#magic-wan-site-analytics">Magic WAN Site Analytics</a></li></ul>
+  </>
+  )
+}
 - Analyze network traffic data over time in <a href={props.analyticsAnchorHeading}>{props.productName} Network Analytics</a>
 - Perform more detailed troubleshooting with:
   - [Traceroutes](#traceroutes)
@@ -28,7 +33,7 @@ import { Markdown } from "~/components";
   )
 }
 
-## {props.productName} Network Analytics
+<AnchorHeading depth={2} title={`${props.productName} Network Analytics`} />
 
 Network Analytics provides detailed analytics on {props.productName} traffic over time. Customers can filter data on specific traffic characteristics and view traffic analytics over time.
 
@@ -52,12 +57,12 @@ GraphQL Analytics provides customers with a GraphQL API that they can query to r
 
  <ul>
     <li>
-      <a href={`/${props.graphQlPath}/analytics/query-bandwidth/`}>
+      <a href={`${props.graphQl}analytics/query-bandwidth/`}>
         Querying {props.productName} tunnel bandwidth analytics with GraphQL
       </a>
     </li>
     <li>
-      <a href={`/${props.graphQlPath}/analytics/query-tunnel-health/`}>
+      <a href={`${props.graphQl}analytics/query-tunnel-health/`}>
         Querying {props.productName} tunnel health check results with GraphQL
       </a>
     </li>
