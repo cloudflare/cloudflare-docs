@@ -21,7 +21,7 @@ export default {
     async fetch(request, env, ctx): Promise<Response> {
         const mp3 = await fetch(URL);
         if (!mp3.ok) {
-      		throw new Error(\`Response status: \${mp3.status}\`);
+      		return Response.json({ error: \`Failed to fetch MP3: \${mp3.status}\` });
     		}
         const mp3Buffer = await mp3.arrayBuffer();
         const base64 = Buffer.from(mp3Buffer, 'binary').toString("base64");
@@ -32,9 +32,9 @@ export default {
             return Response.json(res);
         }
         catch (e) {
-            console.log(JSON.stringify(env.AI));
+            console.error(e);
+            return Response.json({ error: "An unexpected error occurred" });
         }
-        return new Response(JSON.stringify({ho:"to"}));
     },
 } satisfies ExportedHandler<Env>
  `;
