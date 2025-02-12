@@ -326,7 +326,7 @@ export default {
 
 ### `await` your steps
 
-When calling `step.do` or `step.sleep`, you must ensure you use `await` to avoid introducing bugs and race conditions into your Workflow code.
+When calling `step.do` or `step.sleep`, use `await` to avoid introducing bugs and race conditions into your Workflow code.
 
 If you don't call `await step.do` or `await step.sleep`, you create a dangling Promise. This occurs when a Promise is created but not properly `await`ed, leading to potential bugs and race conditions.
 
