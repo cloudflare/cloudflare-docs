@@ -36,7 +36,7 @@ In order to return non-primitive values (objects or classes extending `RpcTarget
 
 ### Module resolution
 
-If you encounter module resolution issues—such as: `Error: Cannot use require() to import an ES Module` or `Error: No such module`—you can bundle these dependencies using the [deps.optimizer](https://vitest.dev/config/#deps-optimizer) option:
+If you encounter module resolution issues such as: `Error: Cannot use require() to import an ES Module` or `Error: No such module`, you can bundle these dependencies using the [deps.optimizer](https://vitest.dev/config/#deps-optimizer) option:
 
 ```tsx
 import { defineWorkersConfig } from "@cloudflare/vitest-pool-workers/config";
