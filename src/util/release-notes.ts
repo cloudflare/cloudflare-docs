@@ -2,39 +2,41 @@ import { z } from "astro:schema";
 import { getCollection } from "astro:content";
 import { type CollectionEntry } from "astro:content";
 
-export async function getChangelogs(opts?: {
-	filter?: Parameters<typeof getCollection<"changelogs">>[1];
+export async function getReleaseNotes(opts?: {
+	filter?: Parameters<typeof getCollection<"release-notes">>[1];
 	wranglerOnly?: boolean;
 	deprecationsOnly?: boolean;
 }) {
-	let changelogs;
+	let releaseNotes;
 
 	if (opts?.wranglerOnly) {
-		changelogs = [await getWranglerChangelog()];
+		releaseNotes = [await getWranglerReleases()];
 	} else if (opts?.filter) {
-		changelogs = await getCollection("changelogs", opts.filter);
+		releaseNotes = await getCollection("release-notes", opts.filter);
 	} else {
-		changelogs = await getCollection("changelogs");
+		releaseNotes = await getCollection("release-notes");
 	}
 
-	if (!changelogs) {
+	if (!releaseNotes) {
 		throw new Error(
-			`[getChangelogs] Unable to find any changelogs with ${JSON.stringify(opts)}`,
+			`[getReleaseNotes] Unable to find any releaseNotes with ${JSON.stringify(opts)}`,
 		);
 	}
 
 	if (opts?.deprecationsOnly) {
-		changelogs = changelogs.filter((x) => x.id === "api-deprecations");
+		releaseNotes = releaseNotes.filter((x) => x.id === "api-deprecations");
 	} else {
-		changelogs = changelogs.filter((x) => x.id !== "api-deprecations");
+		releaseNotes = releaseNotes.filter((x) => x.id !== "api-deprecations");
 	}
 
-	const products = [...new Set(changelogs.flatMap((x) => x.data.productName))];
+	const products = [
+		...new Set(releaseNotes.flatMap((x) => x.data.productName)),
+	];
 	const productAreas = [
-		...new Set(changelogs.flatMap((x) => x.data.productArea)),
+		...new Set(releaseNotes.flatMap((x) => x.data.productArea)),
 	];
 
-	const mapped = changelogs.flatMap((product) => {
+	const mapped = releaseNotes.flatMap((product) => {
 		return product.data.entries.map((entry) => {
 			return {
 				product: product.data.productName,
@@ -54,11 +56,11 @@ export async function getChangelogs(opts?: {
 	const grouped = Object.entries(Object.groupBy(mapped, (entry) => entry.date));
 	const entries = grouped.sort().reverse();
 
-	return { products, productAreas, changelogs: entries };
+	return { products, productAreas, releaseNotes: entries };
 }
 
-export async function getWranglerChangelog(): Promise<
-	CollectionEntry<"changelogs">
+export async function getWranglerReleases(): Promise<
+	CollectionEntry<"release-notes">
 > {
 	const response = await fetch(
 		"https://api.github.com/repos/cloudflare/workers-sdk/releases?per_page=100",
@@ -66,7 +68,7 @@ export async function getWranglerChangelog(): Promise<
 
 	if (!response.ok) {
 		throw new Error(
-			`[GetWranglerChangelog] Received ${response.status} response from GitHub API.`,
+			`[GetWranglerReleases] Received ${response.status} response from GitHub API.`,
 		);
 	}
 
@@ -85,7 +87,7 @@ export async function getWranglerChangelog(): Promise<
 
 	return {
 		id: "wrangler",
-		collection: "changelogs",
+		collection: "release-notes",
 		data: {
 			link: "/workers/platform/changelog/wrangler/",
 			productName: "wrangler",

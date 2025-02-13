@@ -5,10 +5,10 @@ import StarlightPage, {
 import { Aside } from "~/components";
 import { marked } from "marked";
 import { format } from "date-fns";
-import { getChangelogs } from "~/util/changelogs";
+import { getReleaseNotes } from "~/util/release-notes";
 import { getEntry } from "astro:content";
 
-const { products, productAreas, changelogs } = await getChangelogs();
+const { products, productAreas, releaseNotes } = await getReleaseNotes();
 
 const props = {
 	frontmatter: {
@@ -59,7 +59,7 @@ const props = {
 		}
 	</select>
 	{
-		changelogs.map(([date, entries]) => (
+		releaseNotes.map(([date, entries]) => (
 			<div class="md:grid md:grid-cols-[18%_82%]" data-date={date}>
 				<div>
 					<h4 class="text-nowrap">{format(date, "do MMMM yyyy")}</h4>

@@ -1,7 +1,7 @@
 ---
 import { getEntry, type CollectionEntry } from "astro:content";
 import { marked } from "marked";
-import { getChangelogs } from "~/util/changelogs";
+import { getReleaseNotes } from "~/util/release-notes";
 import AnchorHeading from "~/components/AnchorHeading.astro";
 import { entryToString } from "~/util/container";
 
@@ -9,58 +9,65 @@ const page = await getEntry("docs", Astro.params.slug!);
 
 if (!page) {
 	throw new Error(
-		`[ProductChangelog] Failed to find entry for ${Astro.params.slug}.`,
+		`[ProductReleaseNotes] Failed to find entry for ${Astro.params.slug}.`,
 	);
 }
 
-if (!page.data.changelog_file_name && !page.data.changelog_product_area_name) {
+if (
+	!page.data.release_notes_file_name &&
+	!page.data.release_notes_product_area_name
+) {
 	throw new Error(
-		`[ProductChangelog] ${Astro.params.slug} does not have a 'changelog_file_name' or 'changaelog_product_area_name' frontmatter property.`,
+		`[ProductReleaseNotes] ${Astro.params.slug} does not have a 'release_notes_file_name' or 'changaelog_product_area_name' frontmatter property.`,
 	);
 }
 
-if (page.data.changelog_file_name && page.data.changelog_file_name.length > 1) {
+if (
+	page.data.release_notes_file_name &&
+	page.data.release_notes_file_name.length > 1
+) {
 	throw new Error(
-		`[ProductChangelog] This component cannot be used on files that have more than 1 entry in their 'changelog_file_name' frontmatter property.`,
+		`[ProductReleaseNotes] This component cannot be used on files that have more than 1 entry in their 'release_notes_file_name' frontmatter property.`,
 	);
 }
 
 const name =
-	page.data.changelog_product_area_name ?? page.data.changelog_file_name?.[0];
+	page.data.release_notes_product_area_name ??
+	page.data.release_notes_file_name?.[0];
 
-let changelogs;
+let releaseNotes;
 
-if (page.data.changelog_product_area_name) {
+if (page.data.release_notes_product_area_name) {
 	const opts = {
-		filter: (entry: CollectionEntry<"changelogs">) => {
+		filter: (entry: CollectionEntry<"release-notes">) => {
 			return entry.data.productArea === name;
 		},
 	};
-	({ changelogs } = await getChangelogs(opts));
+	({ releaseNotes } = await getReleaseNotes(opts));
 } else {
 	if (name === "wrangler") {
 		const opts = {
 			wranglerOnly: true,
 		};
-		({ changelogs } = await getChangelogs(opts));
+		({ releaseNotes } = await getReleaseNotes(opts));
 	} else if (name === "api-deprecations") {
 		const opts = {
 			deprecationsOnly: true,
 		};
-		({ changelogs } = await getChangelogs(opts));
+		({ releaseNotes } = await getReleaseNotes(opts));
 	} else {
 		const opts = {
-			filter: (entry: CollectionEntry<"changelogs">) => {
+			filter: (entry: CollectionEntry<"release-notes">) => {
 				return entry.id === name;
 			},
 		};
-		({ changelogs } = await getChangelogs(opts));
+		({ releaseNotes } = await getReleaseNotes(opts));
 	}
 }
 
-if (!changelogs) {
+if (!releaseNotes) {
 	throw new Error(
-		`[ProductChangelog] Failed to find changelog called ${name}.`,
+		`[ProductReleaseNotes] Failed to find release notes called ${name}.`,
 	);
 }
 ---
@@ -75,7 +82,7 @@ if (!changelogs) {
 	)
 }
 {
-	changelogs.map(([date, entries]) => (
+	releaseNotes.map(([date, entries]) => (
 		<div data-date={date}>
 			{(entries ?? []).map(async (entry) => {
 				let description;
@@ -102,7 +109,7 @@ if (!changelogs) {
 								<AnchorHeading depth={2} title={page.data.title} />
 							</a>
 							<p class="text-xs">{entry.date}</p>
-							{page.data.changelog_product_area_name && (
+							{page.data.release_notes_product_area_name && (
 								<h3 class="!mt-4">
 									<a href={entry.productLink}>{entry.product}</a>
 								</h3>
@@ -116,7 +123,7 @@ if (!changelogs) {
 						<>
 							<AnchorHeading depth={2} title={date} />
 							<div data-product={entry.product.toLowerCase()}>
-								{page.data.changelog_product_area_name && (
+								{page.data.release_notes_product_area_name && (
 									<h3 class="!mt-4">
 										<a href={entry.productLink}>{entry.product}</a>
 									</h3>

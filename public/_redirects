@@ -7,6 +7,13 @@
 /changelog/index.xml /release-notes/index.xml 301
 /deprecations/ /fundamentals/api/reference/deprecations/ 301
 
+# changelog
+/changelog/rss.xml /changelog/rss/index.xml 301
+
+## legacy
+/changelog/index.xml /release-notes/index.xml 301
+
+
 # 1dot1_redirect
 /1.1.1.1/1.1.1.1-for-families/ /1.1.1.1/setup/ 301
 /1.1.1.1/1.1.1.1-for-families/android/ /1.1.1.1/setup/android/ 301

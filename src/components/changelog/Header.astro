@@ -4,7 +4,7 @@ import { z } from "astro:schema";
 import { getEntry, type CollectionEntry } from "astro:content";
 
 import { StarlightIcon } from "..";
-import HeroImage from "~/assets/images/changelog-next/hero.svg";
+import HeroImage from "~/assets/images/changelog/hero.svg";
 
 type Props = z.input<typeof props>;
 
@@ -14,9 +14,7 @@ const props = z.object({
 
 const { notes } = props.parse(Astro.props);
 
-async function uniqueProducts(
-	notes: Array<CollectionEntry<"changelogs-next">>,
-) {
+async function uniqueProducts(notes: Array<CollectionEntry<"changelog">>) {
 	const unique = [
 		...new Set(notes.flatMap((e) => e.data.products.map((p) => p.id))),
 	];
@@ -39,7 +37,7 @@ const products = await uniqueProducts(notes);
 		<p>
 			New updates and improvements at Cloudflare.
 			<a
-				href="/changelog/rss.xml"
+				href="/changelog/rss/index.xml"
 				class="dark:!hover:text-[#79B1FF] -mx-2 whitespace-nowrap px-2 text-[#056DFF] no-underline hover:rounded-[4px] hover:bg-[#DCEBFF] hover:!text-[#056DFF] dark:text-[#79B1FF] dark:hover:bg-[#002B66] max-sm:block"
 			>
 				Subscribe to RSS
