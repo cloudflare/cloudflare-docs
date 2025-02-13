@@ -4,7 +4,6 @@
 /dashboard-landing/ / 301
 /tutorials/ /search/?content_type%5B0%5D=Tutorial 301
 /sitemap.xml /sitemap-index.xml
-/changelog/index.xml /release-notes/index.xml 301
 /deprecations/ /fundamentals/api/reference/deprecations/ 301
 
 # changelog
@@ -12,7 +11,6 @@
 
 ## legacy
 /changelog/index.xml /release-notes/index.xml 301
-
 
 # 1dot1_redirect
 /1.1.1.1/1.1.1.1-for-families/ /1.1.1.1/setup/ 301
