@@ -24,7 +24,7 @@ entries:
     description: |-
       Previously, in local dev, the output field would return the list of successful steps outputs in the workflow. This is not expected behavior compared to production workflows (where the output is the actual return of the run function).
 
-      This release makes it so that output is equal to production behavior.
+      This release aligns the local dev output field behavior with the production behavior.
   - publish_date: "2024-12-19"
     title: "Better instance control, improved queued logic, and step limit increased"
     description: |-
