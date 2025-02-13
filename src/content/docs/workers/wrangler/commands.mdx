@@ -1254,6 +1254,25 @@ wrangler queues create <name> [OPTIONS]
   - The name of the queue to create.
 - `--delivery-delay-secs` <Type text="number" /> <MetaInfo text="optional" />
   - How long a published message should be delayed for, in seconds. Must be a positive integer.
+- `--message-retention-period-secs` <Type text="number" /> <MetaInfo text="optional" />
+  - How long a published message is retained on the Queue. Must be a positive integer between 60 and 1209600 (14 days). Defaults to 345600 (4 days).
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+### `update`
+
+Updae an existing Queue.
+
+```txt
+wrangler queues update <name> [OPTIONS]
+```
+
+- `name` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the queue to update.
+- `--delivery-delay-secs` <Type text="number" /> <MetaInfo text="optional" />
+  - How long a published message should be delayed for, in seconds. Must be a positive integer.
+- `--message-retention-period-secs` <Type text="number" /> <MetaInfo text="optional" />
+  - How long a published message is retained on the Queue. Must be a positive integer between 60 and 1209600 (14 days). Defaults to 345600 (4 days).
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
