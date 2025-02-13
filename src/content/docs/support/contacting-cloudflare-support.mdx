@@ -124,11 +124,21 @@ _Text_
 
 - har, txt, csv, eml, css, html, json, tf
 
+_Packet Capture_
+
+- pcap, pcapng, cap
+
 Cloudflare Support only accepts the WARP diagnostics as compressed files.
 Please do not upload ZIP or RAR files when sharing HAR files, and please do not share compressed documents like DOCX, XLSX or PPTX.
 
 The maximum file size is **20 MB**.
 If you need to share a larger file, please provide a link to the file using Google Drive or a similar sharing platform of your choice.
+
+When sending Cloudflare Support packet captures, please do the following: 
+
+1. Filter for relevant traffic. Use a display filter and then save [export specified packets](https://www.wireshark.org/docs/wsug_html_chunked/ChIOExportSection.html) to reduce the file size.
+2. Include the name of the device and interface/tunnel in the file name.
+3. Describe what each packet capture shows.
 
 ### View open support cases
 
