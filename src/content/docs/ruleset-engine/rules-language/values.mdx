@@ -146,7 +146,7 @@ It is not possible to define your own arrays. You can only use arrays returned b
 
 <Render
 	file="rules-language-missing-value-behavior"
-	params={{ one: "an out-of-bounds array index" }}
+	params={{ errorDescription: "an out-of-bounds array index" }}
 />
 
 You can only use `[*]` multiple times in the same expression if applied to the same array. Also, you can only use `[*]` in the first argument of a function call.
@@ -217,7 +217,7 @@ It is not possible to define your own maps. You can only use maps returned by fi
 
 <Render
 	file="rules-language-missing-value-behavior"
-	params={{ one: "a non-existing key in a map" }}
+	params={{ errorDescription: "a non-existing key in a map" }}
 />
 
 ## Lists
