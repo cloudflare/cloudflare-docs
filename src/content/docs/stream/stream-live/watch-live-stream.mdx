@@ -22,21 +22,21 @@ HLS and DASH manifests.
 ## View by Live Input ID or Video ID
 
 Whether you use the Stream Player or a custom player with a manifest, you can
-reference the Live Input ID or a specific Video ID. The difference is what
+reference the Live Input ID or a specific Video ID. The main difference is what
 happens when a broadcast concludes.
 
 Use a Live Input ID in instances where a player should always show the active
 broadcast, if there is one, or a "Stream has not started" message if the input
-is idle. Best for cases where a page is dedicated to a creator, channel,
+is idle. Best for cases where a page is dedicated to a creator, channel, or
 recurring program. The Live Input ID is provisioned for you when you create the
 input; it will not change.
 
 Use a Video ID in instances where a player should be used to display a single
 broadcast or its recording once the broadcast has conluded. Best for cases where
 a page is dedicated to a one-time event, specific episode/occurance, or date.
-There is a _new_ Video ID generated for each broadcast when it starts.
+There is a _new_ Video ID generated for each broadcast _when it starts._
 
-Using DVR mode, explaind below, there are additional considerations.
+Using DVR mode, explained below, there are additional considerations.
 
 Stream's URLs are all templatized for easy generation:
 
@@ -149,6 +149,8 @@ state for previously recorded video is `ready`.
   ],
 }
 ```
+
+These will reference the Video ID.
 
 ## Live input status
 

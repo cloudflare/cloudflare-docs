@@ -9,7 +9,9 @@ sidebar:
 Stream Live supports "DVR mode" on an opt-in basis to allow viewers to rewind,
 resume, and fast-forward a live broadcast. To enable DVR mode, simply add the
 `dvrEnabled=true` query parameter to the Stream Player embed source or the HLS
-manigest URL. For example:
+manifest URL.
+
+**Stream Player Embed Format**
 
 ``` html title="Stream Player Embed Code"
 <div style="position: relative; padding-top: 56.25%;">
@@ -31,6 +33,8 @@ When DVR mode is enabled the Stream Player will:
   forward to the live edge.
 - If the viewer pauses the player, it will resume playback from that time instead
   of jumping forward to the live edge.
+
+**HLS Manifest URL Format**
 
 ``` text title="HLS Manifest"
 https://customer-<CODE>.cloudflarestream.com/<INPUT_ID|VIDEO_ID>/manifest/video.m3u8?dvrEnabled=true
