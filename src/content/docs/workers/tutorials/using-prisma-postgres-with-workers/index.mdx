@@ -167,7 +167,7 @@ export default {
 			datasourceUrl: env.DATABASE_URL,
 		}).$extends(withAccelerate());
 
-		await prisma.user.create({
+		const user = await prisma.user.create({
 			data: {
 				email: `Jon${Math.ceil(Math.random() * 1000)}@gmail.com`,
 				name: "Jon Doe",
@@ -176,7 +176,10 @@ export default {
 
 		const userCount = await prisma.user.count();
 
-		return new Response(`Number of users in the database: ${userCount}`);
+		return new Response(`\
+Created new user: ${user.name} (${user.email}).
+Number of users in the database: ${userCount}.
+		`);
 	},
 } satisfies ExportedHandler<Env>;
 ```
