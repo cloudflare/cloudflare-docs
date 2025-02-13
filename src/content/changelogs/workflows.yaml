@@ -20,7 +20,7 @@ entries:
 
       Also, this release makes Workflows execution more reliable for accounts with high loads.
   - publish_date: "2025-01-09"
-    title: "Improved Wrangler local dev experience for step's output, matching production"
+    title: "Improved Wrangler local dev experience for steps' output, matching production"
     description: |-
       Previously, in local dev, the output field would return the list of successful steps outputs in the workflow. This is not expected behavior compared to production workflows (where the output is the actual return of the run function).
 
