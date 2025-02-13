@@ -3,7 +3,7 @@
 ---
 import { Tabs, TabItem } from "~/components"
 
-Controls amount of invisible metadata (EXIF data) that should be preserved. 
+Controls amount of invisible metadata (EXIF data) that should be preserved.
 
 Color profiles and EXIF rotation are applied to the image even if the metadata is discarded. Content Credentials (C2PA metadata) may be preserved if the [setting is enabled](/images/transform-images/preserve-content-credentials).
 
@@ -23,12 +23,12 @@ Options include:
 
 <Tabs>
   <TabItem label="URL format">
-    ```js 
+    ```js
     metadata=copyright
     ```
   </TabItem>
   <TabItem label="Workers">
-  ```js 
+  ```js
   cf: {image: {metadata: "copyright"}}
   ```
   </TabItem>
@@ -36,16 +36,16 @@ Options include:
 
 * `keep`\
   Preserves most of EXIF metadata, including GPS location if present.
-  If C2PA metadata preservation is enabled, then this option will preserve all Content Credentials. 
+  If C2PA metadata preservation is enabled, then this option will preserve all Content Credentials.
 
 <Tabs>
   <TabItem label="URL format">
-    ```js 
+    ```js
     metadata=keep
     ```
   </TabItem>
   <TabItem label="Workers">
-  ```js 
+  ```js
   cf: {image: {metadata: "keep"}}
   ```
   </TabItem>
@@ -56,12 +56,12 @@ Options include:
 
 <Tabs>
   <TabItem label="URL format">
-    ```js 
+    ```js
     metadata=none
     ```
   </TabItem>
   <TabItem label="Workers">
-  ```js 
+  ```js
   cf: {image: {metadata: "none"}}
   ```
   </TabItem>
