@@ -64,7 +64,8 @@ You can find an example in the [Recipes](/workers/testing/vitest-integration/rec
 
 ### Importing modules from global setup file
 
-While Vitest is instructed to resolve packages for the `workerd` runtime, it runs your global setup file in the NodeJS environment. This is why you might encounter issue importing pacakges like [Postgres.js](https://github.com/cloudflare/workers-sdk/issues/6465) that export non-node version for `workerd`. To get around this issue, you can create a wrapper that uses Vite's SSR module loader to import your global setup file under the correct conditions. Then, adjust your Vitest configuration to point to this wrapper. For example:
+Although Vitest is set up to resolve packages for the `workerd` runtime, it runs your global setup file in the Node.js environment. This can cause issues when importing packages like [Postgres.js](https://github.com/cloudflare/workers-sdk/issues/6465), which exports a non-Node version for `workerd`.
+To work around this, you can create a wrapper that uses Vite's SSR module loader to import the global setup file under the correct conditions. Then, adjust your Vitest configuration to point to this wrapper. For example:
 
 ```ts
 // File: global-setup-wrapper.ts
