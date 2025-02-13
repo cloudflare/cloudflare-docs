@@ -34,7 +34,7 @@ Depending on the characteristics of a request, Cloudflare will choose an appropr
 <Render
 	file="challenge-issues"
 	product="rules"
-	params={{ one: "Rules features" }}
+	params={{ featureName: "Rules features" }}
 />
 
 #### Available products
@@ -143,10 +143,8 @@ The challenge page is an interstitial page and users will see it regardless of h
 
 ## Proxied hostnames
 
-<Render file="proxied-hostnames" product="turnstile" /> <Render
-	file="challenge-behavior"
-	product="turnstile"
-/>
+<Render file="proxied-hostnames" product="turnstile" />
+<Render file="challenge-behavior" product="turnstile" />
 
 ---
 
