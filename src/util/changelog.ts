@@ -1,5 +1,10 @@
 import type { RSSFeedItem } from "@astrojs/rss";
-import { getCollection, getEntries, type CollectionEntry } from "astro:content";
+import {
+	getCollection,
+	getEntries,
+	getEntry,
+	type CollectionEntry,
+} from "astro:content";
 import { entryToString } from "~/util/container";
 
 import { unified, type PluggableList } from "unified";
@@ -22,20 +27,30 @@ export async function getChangelogs({
 		entries = entries.filter((e) => filter(e));
 	}
 
-	entries = entries.map((e) => {
-		const slug = e.id.split("/").slice(1).join("/");
-		const folder = e.id.split("/")[0];
-		const product = { collection: "products", id: folder } as const;
+	entries = await Promise.all(
+		entries.map(async (e) => {
+			const slug = e.id.split("/").slice(1).join("/");
+			const folder = e.id.split("/")[0];
+			const product = { collection: "products", id: folder } as const;
 
-		if (!e.data.products.some((p) => p.id === product.id)) {
-			e.data.products.push(product);
-		}
+			const isValidProduct = await getEntry(product);
 
-		return {
-			...e,
-			id: slug,
-		};
-	});
+			if (!isValidProduct) {
+				throw new Error(
+					`[getChangelogs] ${e.id} is not located inside a valid product folder (received ${folder})`,
+				);
+			}
+
+			if (!e.data.products.some((p) => p.id === product.id)) {
+				e.data.products.push(product);
+			}
+
+			return {
+				...e,
+				id: slug,
+			};
+		}),
+	);
 
 	return entries.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 }
