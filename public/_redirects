@@ -4,8 +4,13 @@
 /dashboard-landing/ / 301
 /tutorials/ /search/?content_type%5B0%5D=Tutorial 301
 /sitemap.xml /sitemap-index.xml
-/changelog/index.xml /release-notes/index.xml 301
 /deprecations/ /fundamentals/api/reference/deprecations/ 301
+
+# changelog
+/changelog/rss.xml /changelog/rss/index.xml 301
+
+## legacy
+/changelog/index.xml /release-notes/index.xml 301
 
 # 1dot1_redirect
 /1.1.1.1/1.1.1.1-for-families/ /1.1.1.1/setup/ 301
@@ -415,7 +420,7 @@
 /email-security/setup/api-deployment/office365-api/ /email-security/setup/post-delivery-deployment/api/office365-api/ 301
 /email-security/email-configuration/retract-settings/gmail-retraction/ /email-security/deployment/api/setup/gsuite-bcc-setup/add-retraction/ 301
 /cloudflare-one/insights/email-monitoring/email-security-logs/ /cloudflare-one/insights/email-monitoring/enable-logs/ 301
-/cloudflare-one/insights/email-monitoring/phishing-report/ /cloudflare-one/insights/email-monitoring/download-disposition-report/ 301 
+/cloudflare-one/insights/email-monitoring/phishing-report/ /cloudflare-one/insights/email-monitoring/download-disposition-report/ 301
 
 
 # firewall
@@ -571,6 +576,7 @@
 /fundamentals/get-started/basic-tasks/account-security/securing-a-compromised-account/ /fundamentals/setup/account/account-security/secure-a-compromised-account/ 301
 /fundamentals/get-started/basic-tasks/account-security/review-audit-logs/ /fundamentals/setup/account/account-security/review-audit-logs/ 301
 /fundamentals/get-started/basic-tasks/account-security/manage-active-sessions/ /fundamentals/setup/account/account-security/manage-active-sessions/ 301
+/fundamentals/basic-tasks/minimize-downtime/ /fundamentals/performance/minimize-downtime/ 301
 /fundamentals/get-started/reference/cloudflare-site-crawling/ /fundamentals/reference/cloudflare-site-crawling/ 301
 /fundamentals/get-started/reference/content-security-policies/ /fundamentals/reference/policies-compliances/content-security-policies/ 301
 /fundamentals/get-started/reference/cloudflare-ray-id/ /fundamentals/reference/cloudflare-ray-id/ 301
@@ -614,10 +620,14 @@
 /fundamentals/basic-tasks/prevent-ddos-attacks-external/ /fundamentals/security/prevent-ddos-attacks-external/ 301
 /fundamentals/basic-tasks/protect-your-origin-server/ /fundamentals/security/protect-your-origin-server/ 301
 /fundamentals/basic-tasks/pci-scans/ /fundamentals/security/pci-scans/ 301
-/fundamentals/basic-tasks/trace-request/ /fundamentals/security/trace-request/ 301
-/fundamentals/basic-tasks/trace-request/how-to/ /fundamentals/security/trace-request/how-to/ 301
-/fundamentals/basic-tasks/trace-request/limitations/ /fundamentals/security/trace-request/limitations/ 301
-/fundamentals/basic-tasks/trace-request/changelog/ /fundamentals/security/trace-request/changelog/ 301
+/fundamentals/basic-tasks/trace-request/ /fundamentals/trace-request/ 301
+/fundamentals/basic-tasks/trace-request/how-to/ /fundamentals/trace-request/how-to/ 301
+/fundamentals/basic-tasks/trace-request/limitations/ /fundamentals/trace-request/limitations/ 301
+/fundamentals/basic-tasks/trace-request/changelog/ /fundamentals/trace-request/changelog/ 301
+/fundamentals/security/trace-request/ /fundamentals/trace-request/ 301
+/fundamentals/security/trace-request/how-to/ /fundamentals/trace-request/how-to/ 301
+/fundamentals/security/trace-request/limitations/ /fundamentals/trace-request/limitations/ 301
+/fundamentals/security/trace-request/changelog/ /fundamentals/trace-request/changelog/ 301
 
 # gateway
 /gateway/about/ /cloudflare-one/policies/gateway/ 301

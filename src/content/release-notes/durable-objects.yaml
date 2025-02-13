@@ -5,6 +5,9 @@ productLink: "/durable-objects/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-02-11"
+    description: |-
+      - When Durable Objects generate an "internal error" exception in response to certain failures, the exception message may provide a reference ID that customers can include in support communication for easier error identification. For example, an exception with the new message might look like: `internal error; reference = 0123456789abcdefghijklmn`.
   - publish_date: "2024-10-07"
     title: Alarms re-enabled in (beta) SQLite-backed Durable Object classes
     description: |-

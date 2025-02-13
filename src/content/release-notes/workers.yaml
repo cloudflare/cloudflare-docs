@@ -5,6 +5,9 @@ productLink: "/workers/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-02-11"
+    description: |-
+      - When Workers generate an "internal error" exception in response to certain failures, the exception message may provide a reference ID that customers can include in support communication for easier error identification.  For example, an exception with the new message might look like: `internal error; reference = 0123456789abcdefghijklmn`.
   - publish_date: "2025-01-31"
     description: |-
       - Updated v8 to version 13.3.

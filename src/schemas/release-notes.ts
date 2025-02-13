@@ -1,6 +1,6 @@
 import { z } from "astro:schema";
 
-export const changelogsSchema = z.object({
+export const releaseNotesSchema = z.object({
 	link: z.string(),
 	productName: z.string(),
 	productLink: z.string(),

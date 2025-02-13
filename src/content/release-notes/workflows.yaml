@@ -5,6 +5,26 @@ productLink: "/workflows/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-02-11"
+    title: "Behavior improvements"
+    description: |-
+      Improved Workflows execution that prevents Workflows instances from getting stuck, and allows stuck instances to become unstuck.
+
+      Also, improved the reliability of Workflows step retry counts, and improved Instance ID validation.
+  - publish_date: "2025-01-23"
+    title: "Major bugfixes and improvements"
+    description: |-
+      With this release, some bug were fixed:
+        * `event.timestamp` is now `Date`, fixing a regression.
+        *  Fixed issue where instances without metadata were not terminated as expected.
+
+      Also, this release makes Workflows execution more reliable for accounts with high loads.
+  - publish_date: "2025-01-09"
+    title: "Improved Wrangler local dev experience for steps' output, matching production"
+    description: |-
+      Previously, in local dev, the output field would return the list of successful steps outputs in the workflow. This is not expected behavior compared to production workflows (where the output is the actual return of the run function).
+
+      This release aligns the local dev output field behavior with the production behavior.
   - publish_date: "2024-12-19"
     title: "Better instance control, improved queued logic, and step limit increased"
     description: |-

@@ -7,7 +7,7 @@ sidebar:
     hideIndex: true
 description: Build and deploy an MCP server on Cloudflare Workers
 ---
-[Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction) is an open standard that allows AI assistants & LLMs to interact with services directly. If you want users to access your service or product straight from their AI assistant, you can enable this by spinning up an MCP server for your application. 
+[Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction) is an open standard that allows AI assistants & LLMs to interact with services directly. If you want users to access your service or product straight from their AI assistant, you can enable this by spinning up an MCP server for your application.
 
 ## Building an MCP Server on Cloudflare Workers
 
@@ -19,14 +19,14 @@ Once deployed, your Worker becomes an MCP server that AI assistants (as long as 
 - **Minimal setup & built-in boilerplate:** The Worker automatically handles API routing, server management, and MCP protocol compliance. The [workers-mcp](https://www.npmjs.com/package/workers-mcp) package bootstraps your MCP server, allowing you to focus on your service logic.
 - **Automatic documentation:** Public methods annotated with JSDoc are automatically documented and exposed as MCP tools. This means AI assistants can quickly understand how to interact with your service, making tool discovery and integration much easier.
 - **Scalability & performance:** Deploy your MCP server on Cloudflare's global edge network so that users can make fast, performant requests from their LLMs. Cloudflare will handle traffic spikes and high load, ensuring your service remains available and responsive.
-- **Expand MCP server capabilities:** Easily connect to Workers AI, D1, Durable Objects, and other Cloudflare services to add more functionality to your MCP Server. 
+- **Expand MCP server capabilities:** Easily connect to Workers AI, D1, Durable Objects, and other Cloudflare services to add more functionality to your MCP Server.
 
 ## Get Started
 
 Follow these steps to create and deploy your own MCP server on Cloudflare Workers.
 
 
-### 1. Create a new Worker 
+### 1. Create a new Worker
 
 If you haven't already, install [Wrangler](https://developers.cloudflare.com/workers/wrangler/) and log in:
 
@@ -95,7 +95,7 @@ This converts your Cloudflare Worker into an MCP server, enabling interactions w
 - **ProxyToSelf:** MCP servers must follow a specific request/response format. ProxyToSelf ensures that incoming requests are properly routed to the correct MCP tools. Without this, you would need to manually parse requests and validate responses.
 
 
-**Note:** Every public method that is annotated with JSDoc becomes an MCP tool that is discoverable by AI assistants. 
+**Note:** Every public method that is annotated with JSDoc becomes an MCP tool that is discoverable by AI assistants.
 
 
 ### 5. Deploy the MCP Server
@@ -104,10 +104,10 @@ Update your [Wrangler configuration file](/workers/wrangler/configuration/) with
 wrangler deploy
 ```
 
-Your MCP server is now deployed globally and all your public class methods are exposed as MCP tools that AI assistants can now interact with. 
+Your MCP server is now deployed globally and all your public class methods are exposed as MCP tools that AI assistants can now interact with.
 
 ### Expanding the MCP Server Capabilities
-Use existing Cloudflare products to expand the functionality of your MCP server. You can: 
+Use existing Cloudflare products to expand the functionality of your MCP server. You can:
 - Send emails using [Email Routing](/email-routing/)
 - Capture and share website previews using [Browser Rendering](/browser-rendering/)
 - Store and manage sessions, user data, or other persistent information with [Durable Objects](/durable-objects/)
