@@ -89,13 +89,15 @@ entries:
     general_definition: |-
       a unique DoH subdomain for each DNS location in Cloudflare Zero Trust used in WARP client settings.
 
+  - term: DNS location
+    general_definition: |-
+      DNS locations are a collection of DNS endpoints which can be mapped to physical entities such as offices, homes, or data centers.
+    associated_products:
+      - DNS
+
   - term: fleet
     general_definition: |-
       a fleet is a collection of user devices. All devices in a fleet have WARP installed and are connected to a [Cloudflare Zero Trust organization](/cloudflare-one/setup/#create-a-zero-trust-organization).
-
-  - term: DoH subdomain
-    general_definition: |-
-      a unique DoH subdomain for each DNS location in Cloudflare Zero Trust used in WARP client settings.
 
   - term: identity provider
     general_definition: |-
