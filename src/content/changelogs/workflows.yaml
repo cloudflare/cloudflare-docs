@@ -15,8 +15,8 @@ entries:
     title: "Major bugfixes and improvements"
     description: |-
       With this release, some bug were fixed:
-        * `event.timestamp` is now `Date`, fixing a regression
-        *  Fixed issue where instances without metadata were not terminated as expected
+        * `event.timestamp` is now `Date`, fixing a regression.
+        *  Fixed issue where instances without metadata were not terminated as expected.
 
       Also, this release makes Workflows execution more reliable for accounts with high loads.
   - publish_date: "2025-01-09"
