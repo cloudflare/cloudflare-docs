@@ -99,13 +99,11 @@ Note that Cloudflare Workers don't support `.env` files. You will use a file cal
 
 ### 2.3. Prepare environment variables
 
-Create a `.dev.vars` file in the root of your application and copy the `DATABASE_URL` from the `.env` file. You can also do this via the CLI:
+Rename the `.env` file in the root of your application to  `.dev.vars` file:
 
 ```sh
-cp .env .dev.vars
+mv .env .dev.vars
 ```
-
-Then, you can remove the `.env` file.
 
 ### 2.4. Apply database schema changes
 
