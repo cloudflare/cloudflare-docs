@@ -10,7 +10,7 @@ entries:
     description: |-
       Improved Workflows execution that prevents Workflows instances from getting stuck, and allows stuck instances to become unstuck.
 
-      Also, improved reliability of Workflows step retry counts, and improved Instance ID validation.
+      Also, improved the reliability of Workflows step retry counts, and improved Instance ID validation.
   - publish_date: "2025-01-23"
     title: "Major bugfixes and improvements"
     description: |-
