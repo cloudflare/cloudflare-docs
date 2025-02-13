@@ -194,7 +194,7 @@ Visit `https://localhost:8787` to see your app in action.
 
 ## 4. Deploy the application to Cloudflare
 
-Use the [`npx wrangler secret put` command](/workers/configuration/secrets/#adding-secrets-to-your-project) to upload the `DATABASE_URL`:
+When the application is deployed to Cloudflare, it needs access to the `DATABASE_URL` environment variable that's defined locally in `.dev.vars`. You can use the [`npx wrangler secret put`](/workers/configuration/secrets/#adding-secrets-to-your-project) command to upload the `DATABASE_URL` to the deployment environment:
 
 ```sh
 npx wrangler secret put DATABASE_URL
