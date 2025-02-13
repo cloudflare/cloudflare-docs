@@ -6,7 +6,7 @@ description: >
   and replay Live content during broadcasts.
 products:
   - stream
-date: 2025-02-12T12:00:00Z
+date: 2025-02-14T12:00:00Z
 ---
 
 
@@ -24,6 +24,22 @@ pick the best experiences for their applications.
 ## How to get started
 
 This feature is already available to all customers. When building a player embed
-code or manifest URL, add `dvrEnabled=true` as a query parameter. There are some
-things to be aware of when using this option. For more information, refer to
-[@TODO PLACEHOLDER](/)
+code or manifest URL, add `dvrEnabled=true` as a query parameter.
+
+``` html title="Player Embed Code"
+<div style="position: relative; padding-top: 56.25%;">
+  <iframe
+    src="https://customer-<CODE>.cloudflarestream.com/<INPUT_ID|VIDEO_ID>/iframe?dvrEnabled=true"
+    style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
+    allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+    allowfullscreen="true"
+  ></iframe>
+</div>
+```
+
+``` text title="HLS Manifest"
+https://customer-<CODE>.cloudflarestream.com/<INPUT_ID|VIDEO_ID>/manifest/video.m3u8?dvrEnabled=true
+```
+
+There are some things to be aware of when using this option. For more
+information, refer to [DVR for Live](/stream/stream-live/dvr-for-live/).

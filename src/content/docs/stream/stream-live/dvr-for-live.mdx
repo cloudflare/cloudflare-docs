@@ -11,7 +11,7 @@ resume, and fast-forward a live broadcast. To enable DVR mode, simply add the
 `dvrEnabled=true` query parameter to the Stream Player embed source or the HLS
 manigest URL. For example:
 
-``` html title="Embed Code"
+``` html title="Stream Player Embed Code"
 <div style="position: relative; padding-top: 56.25%;">
   <iframe
     src="https://customer-<CODE>.cloudflarestream.com/<INPUT_ID|VIDEO_ID>/iframe?dvrEnabled=true"
@@ -28,7 +28,7 @@ When DVR mode is enabled the Stream Player will:
   the timeline will automatically scale to show the growing duration of the broadcast.
 - The "LIVE" indicator will show grey if the viewer is behind the live edge or
   red if they are watching the latest content. Clicking that indicator will jump
-  back to the live edge.
+  forward to the live edge.
 - If the viewer pauses the player, it will resume playback from that time instead
   of jumping forward to the live edge.
 
@@ -72,3 +72,4 @@ When using DVR Mode on a Live Input ID URL:
   than Version 6, which Stream Live and On-Demand currently use. HLS v8 offers
   extremely broad compatibility but may not work with certain old player libraries
   or older devices.
+- DVR Mode is not available for DASH manifests.
