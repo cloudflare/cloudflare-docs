@@ -95,7 +95,7 @@ Once the command has terminated, it has created:
 - A `prisma` folder containing `schema.prisma`, where you will define your database schema.
 - An `.env` file in the project root, which will contain the Prisma Postgres database url `DATABASE_URL=<your-prisma-postgres-database-url>`.
 
-You will use a `.dev.vars` file instead of the created `.env` file.
+Note that Cloudflare Workers don't support `.env` files. You will use a file called `.dev.vars` instead of the `.env` file that was just created.
 
 ### 2.3. Prepare environment variables
 
