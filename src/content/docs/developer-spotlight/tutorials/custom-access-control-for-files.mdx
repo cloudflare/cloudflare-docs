@@ -110,7 +110,7 @@ bucket_name = "<YOUR_BUCKET_NAME>"
 
 Now that you have prepared the Wrangler configuration, you should update the `worker-configuration.d.ts` file to include the new bindings.
 This file will then provide TypeScript with the correct type definitions for the bindings, which allows for type checking and code completion in your editor.
-You could either update it manually or run the following command in the directory of your project to update it automatically based on the `wrangler.toml / wrangler.json` file (recommended).
+You could either update it manually or run the following command in the directory of your project to update it automatically based on the [Wrangler configuration file](/workers/wrangler/configuration/) (recommended).
 
 ```sh
 npm run cf-typegen

@@ -5,13 +5,13 @@ sidebar:
   order: 2
 ---
 
-import { Details, GlossaryTooltip, Render } from "~/components";
+import { GlossaryTooltip, Render } from "~/components";
 
 We recommend you add the following network policies to build an Internet and SaaS app security strategy for your organization.
 
 For more information on building network policies, refer to [Network policies](/cloudflare-one/policies/gateway/network-policies/).
 
-<Details header="Quarantined-Users-NET-Restricted-Access">
+## Quarantined-Users-NET-Restricted-Access
 
 <Render file="zero-trust/blocklist-restricted-users" />
 
@@ -22,9 +22,7 @@ For more information on building network policies, refer to [Network policies](/
 | Domain SNI       | not in list | _Quarantined-Users-DomainAllowlist_ | And   |        |
 | User Group Names | in          | _Quarantined Users_                 |       |        |
 
-</Details>
-
-<Details header="Posture-Fail-NET-Restricted-Access">
+## Posture-Fail-NET-Restricted-Access
 
 Restrict access for devices where baseline posture checks have not passed. If posture checks are integrated with service providers such as Crowdstrike or Intune via the API, this policy dynamically blocks access for devices that do not meet predetermined security requirements.
 
@@ -37,9 +35,7 @@ Restrict access for devices where baseline posture checks have not passed. If po
 
 You can add a number of WARP client device posture checks as needed, such as [Disk encryption](/cloudflare-one/identity/devices/warp-client-checks/disk-encryption/) and [Domain joined](/cloudflare-one/identity/devices/warp-client-checks/domain-joined/). For more information on device posture checks, refer to [Enforce device posture](/cloudflare-one/identity/devices/).
 
-</Details>
-
-<Details header="FinanceUsers-NET-HTTPS-FinanceServers (example)">
+## FinanceUsers-NET-HTTPS-FinanceServers (example)
 
 Allow HTTPS access for user groups. For example, the following policy gives finance users access to any known financial applications:
 
@@ -48,9 +44,7 @@ Allow HTTPS access for user groups. For example, the following policy gives fina
 | Destination IP   | in list  | _Finance Servers_ | And   | Allow  |
 | User Group Names | in       | _Finance Users_   |       |        |
 
-</Details>
-
-<Details header="All-NET-Internet-Blocklist">
+## All-NET-Internet-Blocklist
 
 Block traffic to destination IPs, <GlossaryTooltip term="Server Name Indication (SNI)">SNIs</GlossaryTooltip>, and domain SNIs that are malicious or pose a threat to your organization.
 
@@ -66,9 +60,7 @@ Block traffic to destination IPs, <GlossaryTooltip term="Server Name Indication 
 The **Detected Protocol** selector is only available for Enterprise users. For more information, refer to [Protocol detection](/cloudflare-one/policies/gateway/network-policies/protocol-detection/).
 :::
 
-</Details>
-
-<Details header="All-NET-SSH-Internet-Allowlist">
+## All-NET-SSH-Internet-Allowlist
 
 Allow SSH traffic to specific endpoints on the Internet for specific users. You can create a similar policy for other non-web endpoints that required access.
 
@@ -81,9 +73,7 @@ Optionally, you can include a selector to filter by source IP or IdP group.
 | Detected Protocol | is       | _SSH_               | And   |        |
 | User Group Names  | in       | _SSH-Allowed-Users_ |       |        |
 
-</Details>
-
-<Details header="All-NET-NO-HTTP-HTTPS-Internet-Deny">
+## All-NET-NO-HTTP-HTTPS-Internet-Deny
 
 Block all non-web traffic towards the Internet. By using the **Detected Protocol** selector, you will ensure alternative ports for HTTP and HTTPS are allowed.
 
@@ -92,9 +82,7 @@ Block all non-web traffic towards the Internet. By using the **Detected Protocol
 | Destination IP    | not in list | _InternalNetwork_ | And   | Block  |
 | Detected Protocol | not in      | _HTTP_, _HTTP2_   |       |        |
 
-</Details>
-
-<Details header="All-NET-InternalNetwork-ImplicitDeny">
+## All-NET-InternalNetwork-ImplicitDeny
 
 Implicitly deny all of your internal IP ranges included in a list. We recommend you place this policy at the [bottom of your policy list](/learning-paths/secure-internet-traffic/understand-policies/order-of-enforcement/#order-of-precedence) to ensure you explicitly approve traffic defined in the above policies.
 
@@ -102,4 +90,11 @@ Implicitly deny all of your internal IP ranges included in a list. We recommend 
 | -------------- | -------- | ---------------------- | ------ |
 | Destination IP | in list  | _Internal Network IPs_ | Block  |
 
-</Details>
+## All-NET-ApplicationAccess-Allow
+
+Only allow network traffic from known and approved devices.
+
+<Render
+	file="gateway/policies/dash-plus-api/network/enforce-device-posture"
+	product="cloudflare-one"
+/>

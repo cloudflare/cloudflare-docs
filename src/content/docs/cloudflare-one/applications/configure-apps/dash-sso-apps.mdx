@@ -3,12 +3,11 @@ pcx_content_type: how-to
 title: Cloudflare dashboard SSO application
 sidebar:
   order: 4
-
 ---
 
-import { FeatureTable } from "~/components"
+import { FeatureTable } from "~/components";
 
-By adding a Dashboard SSO application to your Cloudflare Zero Trust account, you can enforce single sign-on (SSO) to the Cloudflare dashboard with the identity provider (IdP) of your choice. SSO will be enforced for every user in your email domain.
+By adding a Cloudflare Dashboard SSO application to your Cloudflare Zero Trust account, you can enforce single sign-on (SSO) to the Cloudflare dashboard with the identity provider (IdP) of your choice. SSO will be enforced for every user in your email domain.
 
 ## Availability
 
@@ -16,7 +15,7 @@ By adding a Dashboard SSO application to your Cloudflare Zero Trust account, you
 
 ## Prerequisites
 
-All users in your email domain must exist as a member in your Cloudflare account and IdP.  To add users to your Cloudflare account, refer to [Manage Cloudflare account access](/fundamentals/setup/manage-members/).
+All users in your email domain must exist as a member in your Cloudflare account and IdP. To add users to your Cloudflare account, refer to [Manage Cloudflare account access](/fundamentals/setup/manage-members/).
 
 ## 1. Set up an IdP
 
@@ -32,15 +31,15 @@ Once your SSO domain is approved, a new **SSO App** application will appear unde
 
 ### SSO domain requirements
 
-* The email domain must belong to your organization. Public email providers such as `@gmail.com` are not allowed.
-* Every user with that email domain must be an employee in your organization. For example, university domains such as `@harvard.edu` are not allowed because they include student emails.
-* Your SSO domain can include multiple email domains.
+- The email domain must belong to your organization. Public email providers such as `@gmail.com` are not allowed.
+- Every user with that email domain must be an employee in your organization. For example, university domains such as `@harvard.edu` are not allowed because they include student emails.
+- Your SSO domain can include multiple email domains.
 
 ## 3. Enable dashboard SSO
 
 :::note
 
-We recommend noting down your [Global API key](/fundamentals/api/get-started/keys/) in case you need to [disable SSO](#option-2-disable-dashboard-sso) later.
+Cloudflare recommends carefully storing your [Global API key](/fundamentals/api/get-started/keys/) to access when necessary. You will need your Global API key when you [disable SSO](#option-2-disable-dashboard-sso).
 :::
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Authentication**.
@@ -58,8 +57,10 @@ We recommend noting down your [Global API key](/fundamentals/api/get-started/key
 
 Cloudflare dashboard SSO does not support:
 
-* Users with plus-addressed emails, such as `example+2@domain.com`. If you have users like this added to your Cloudflare organization, they will be unable to login with SSO.
-* IdP initiated logins (such as a tile in Okta). All login attempts must originate from `https://dash.cloudflare.com`. You can create a bookmark for this URL in your IdP to assist users.
+- Users with plus-addressed emails, such as `example+2@domain.com`. If you have users like this added to your Cloudflare organization, they will be unable to login with SSO.
+- IdP-initiated logins (such as a tile in Okta). All login attempts must originate from `https://dash.cloudflare.com`. You can create a bookmark for this URL in your IdP to assist users.
+- Adding a separate email-based policy to the SSO application that does not match your SSO domain policy. As your account team must [approve and create your SSO domain](/cloudflare-one/applications/configure-apps/dash-sso-apps/#2-contact-your-account-team) based on the [SSO domain requirements](/cloudflare-one/applications/configure-apps/dash-sso-apps/#sso-domain-requirements), adding a new domain policy on your own will not work.
+- Deleting the auto-generated `allow email domain` policy. If this policy was deleted, your organization's administrators would not be able to access the Cloudflare dashboard.
 
 ## Bypass dashboard SSO
 
@@ -163,12 +164,12 @@ curl --request PATCH \
 
 ```json title="Response"
 {
-  "result": {
-    "id": "2828"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"id": "2828"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 

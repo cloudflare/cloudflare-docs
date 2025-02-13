@@ -3,10 +3,9 @@ title: Cloudflare Workers
 pcx_content_type: learning-unit
 sidebar:
   order: 3
-
 ---
 
-import { Render, WorkersArchitectureDiagram } from "~/components"
+import { Render, WorkersArchitectureDiagram } from "~/components";
 
 Cloudflare Workers gives developers the power to deploy serverless code instantly to Cloudflare's global network.
 
@@ -24,7 +23,7 @@ The [Workers runtime](https://blog.cloudflare.com/workerd-open-source-workers-ru
 
 ## Execution
 
-The Cloudflare Workers runtime runs in every data center of [Cloudflare's global network of over 300 cities](https://www.cloudflare.com/network/). Every Worker run within its own isolate. Isolate architecture is what makes Workers efficient.
+The Cloudflare Workers runtime runs in every data center of [Cloudflare's global network](https://www.cloudflare.com/network/). Every Worker run within its own isolate. Isolate architecture is what makes Workers efficient.
 
 ### Isolates
 
@@ -42,17 +41,17 @@ Workers uses [isolates](/workers/reference/how-workers-works/#isolates): lightwe
 
 By reading this page, you have learned:
 
-* The basics of how Worker projects are organized.
-* The fundamentals of how Workers execute on the Cloudflare network.
-* How the request to response flow executes.
+- The basics of how Worker projects are organized.
+- The fundamentals of how Workers execute on the Cloudflare network.
+- How the request to response flow executes.
 
 In the next module, you build and deploy your first Worker to the Cloudflare global network.
 
 ## Related resources
 
-* [Cloud computing without containers](https://blog.cloudflare.com/cloud-computing-without-containers) - A blog post detailing the containers versus isolates difference in the context of Cloudflare.
-* [How Workers works](/workers/reference/how-workers-works/) - Learn the difference between the Workers runtime versus traditional browsers and Node.js.
-* [How the cache works](/workers/reference/how-the-cache-works/) - Learn how Workers interacts with the Cloudflare cache.
+- [Cloud computing without containers](https://blog.cloudflare.com/cloud-computing-without-containers) - A blog post detailing the containers versus isolates difference in the context of Cloudflare.
+- [How Workers works](/workers/reference/how-workers-works/) - Learn the difference between the Workers runtime versus traditional browsers and Node.js.
+- [How the cache works](/workers/reference/how-the-cache-works/) - Learn how Workers interacts with the Cloudflare cache.
 
 ## Feedback
 

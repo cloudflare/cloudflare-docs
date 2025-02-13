@@ -12,7 +12,7 @@ In the following sections, we will give you some details about how to configure 
 
 ## Regional Services
 
-To configure Regional Services for hostnames [proxied](/dns/manage-dns-records/reference/proxied-dns-records/) through Cloudflare and ensure that processing of requesting objects from a [R2 Bucket](/r2/buckets/) occurs only in-region, follow these steps:
+To configure Regional Services for hostnames [proxied](/dns/proxy-status/) through Cloudflare and ensure that processing of requesting objects from a [R2 Bucket](/r2/buckets/) occurs only in-region, follow these steps:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select an account.
 2. Go to the **R2** tab.
@@ -32,7 +32,7 @@ The following instructions will show you how to set up a Logpush job using an S3
 
 <Details header="Generate a token for a specific bucket (recommended)">
 
-Go to the R2 section of your Cloudflare dashboard and select **Manage R2 API Tokens** to generate a token directly tied to your specific bucket. You can follow the instructions in the [Authentication](/r2/api/s3/tokens/) section. 
+Go to the R2 section of your Cloudflare dashboard and select **Manage R2 API Tokens** to generate a token directly tied to your specific bucket. You can follow the instructions in the [Authentication](/r2/api/s3/tokens/) section.
 
 </Details>
 
@@ -40,7 +40,7 @@ Go to the R2 section of your Cloudflare dashboard and select **Manage R2 API Tok
 
 You can generate a API token in **Manage Account** > **Account API Tokens** or you can create a user-specific token:
 
-1. Go to **My Profile** > **API Tokens** 
+1. Go to **My Profile** > **API Tokens**
 2. Select **Create Token** > **Create Custom Token**
 3. Choose **Account** > **Workers R2 Storage** > **Edit** to set permissions.
 4. To test your token, copy the `curl` command and paste it into a terminal.
@@ -71,12 +71,12 @@ The result:
 ```
 
 5. Generate a SHA-256 hash of the token:
-      
+
 ```bash
 echo -n "<token>" | shasum -a 256
 ```
 
-This command will output a hash similar to `dxxxx391b`. 
+This command will output a hash similar to `dxxxx391b`.
 
 </Details>
 

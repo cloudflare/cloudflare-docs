@@ -31,9 +31,9 @@ To disable the `workers.dev` route for a Worker:
 4. On `workers.dev` click "Disable".
 5. Confirm you want to disable.
 
-### Disabling `workers.dev` in the `wrangler.toml / wrangler.json` file
+### Disabling `workers.dev` in the Wrangler configuration file
 
-To disable the `workers.dev` route for a Worker, include the following in your Worker's Wrangler file:
+To disable the `workers.dev` route for a Worker, include the following in your Worker's  [Wrangler configuration file](/workers/wrangler/configuration/):
 
 <WranglerConfig>
 
@@ -45,7 +45,7 @@ workers_dev = false
 
 When you redeploy your Worker with this change, the `workers.dev` route will be disabled. Disabling your `workers.dev` route does not disable Preview URLs. Learn how to [disable Preview URLs](/workers/configuration/previews/#disabling-preview-urls).
 
-If you do not specify `workers_dev = false` but add a [`routes` component](/workers/wrangler/configuration/#routes) to your `wrangler.toml / wrangler.json` file, the value of `workers_dev` will be inferred as `false` on the next deploy.
+If you do not specify `workers_dev = false` but add a [`routes` component](/workers/wrangler/configuration/#routes) to your [Wrangler configuration file](/workers/wrangler/configuration/), the value of `workers_dev` will be inferred as `false` on the next deploy.
 
 :::caution
 

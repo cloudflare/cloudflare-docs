@@ -72,7 +72,7 @@ Create a new project named `hyperdrive-tutorial` by running:
 This will create a new `hyperdrive-tutorial` directory. Your new `hyperdrive-tutorial` directory will include:
 
 - A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/index.ts`.
-- A [`wrangler.json`](/workers/wrangler/configuration/) configuration file. `wrangler.json` is how your `hyperdrive-tutorial` Worker will connect to Hyperdrive.
+- A [`wrangler.jsonc`](/workers/wrangler/configuration/) configuration file. `wrangler.jsonc` is how your `hyperdrive-tutorial` Worker will connect to Hyperdrive.
 
 ### Enable Node.js compatibility
 
@@ -195,7 +195,19 @@ export default {
 		// Hyperdrive generates a unique connection string you can pass to
 		// supported drivers, including node-postgres, Postgres.js, and the many
 		// ORMs and query builders that use these drivers.
-		const sql = postgres(env.HYPERDRIVE.connectionString);
+		const sql = postgres(
+            env.HYPERDRIVE.connectionString,
+            {
+                // Workers limit the number of concurrent external connections, so be sure to limit
+                // the size of the local connection pool that postgres.js may establish.
+                max: 5,
+
+                // If you are using array types in your Postgres schema, it is necessary to fetch
+                // type information to correctly de/serialize them. However, if you are not using
+                // those, disabling this will save you an extra round-trip every time you connect.
+                fetch_types: false,
+            },
+        );
 
 		try {
 			// Test query

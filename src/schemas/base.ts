@@ -73,6 +73,7 @@ export const baseSchema = z.object({
 	summary: z.string().optional(),
 	goal: z.string().array().optional(),
 	operation: z.string().array().optional(),
+	noindex: z.boolean().optional(),
 	sidebar: z
 		.object({
 			order: z.number().optional(),

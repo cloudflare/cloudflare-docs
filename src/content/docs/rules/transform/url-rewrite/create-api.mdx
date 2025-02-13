@@ -24,7 +24,10 @@ When creating a rewrite URL rule via API, make sure you:
 
 <Render
 	file="rules-creation-workflow"
-	params={{ one: "a rewrite URL rule", two: "http_request_transform" }}
+	params={{
+		ruleName: "a rewrite URL rule",
+		phaseName: "http_request_transform",
+	}}
 />
 
 Make sure your API token has the [required permissions](#required-api-token-permissions) to perform the API operations.

@@ -8,7 +8,7 @@ head:
     content: DNSSEC for Secondary DNS
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { Render, TabItem, Tabs, GlossaryTooltip } from "~/components";
 
 [DNS Security Extensions (DNSSEC)](https://www.cloudflare.com/learning/dns/dns-security/) increase security by adding cryptographic signatures to DNS records. When you use multiple providers and Cloudflare is secondary, you have a few options to enable DNSSEC for records served by Cloudflare.
 
@@ -82,9 +82,7 @@ If your primary DNS provider uses NSEC3 instead of NSEC, Cloudflare will fail to
 2. Enable DNSSEC for your zone at Cloudflare, using either the Dashboard or the API.
 
 :::caution
-
-Pre-signed DNSSEC does not support [Secondary DNS Overrides](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/) nor [Load Balancing](/load-balancing/).
-
+Pre-signed DNSSEC does not support [Secondary DNS Overrides](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/) nor [Load Balancing](/load-balancing/). Once you enable pre-signed DNSSEC, Cloudflare will treat all your DNS records as <GlossaryTooltip term="proxy status">DNS-only</GlossaryTooltip>.
 :::
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">

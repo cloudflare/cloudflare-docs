@@ -60,7 +60,7 @@ If you have a workflow that is limited by an upstream API and/or system, you may
 You can configure the concurrency of your consumer Worker in two ways:
 
 1. Set concurrency settings in the Cloudflare dashboard
-2. Set concurrency settings via the `wrangler.toml / wrangler.json` file
+2. Set concurrency settings via the [Wrangler configuration file](/workers/wrangler/configuration/)
 
 ### Set concurrency settings in the Cloudflare dashboard
 
@@ -76,7 +76,7 @@ To remove a fixed maximum value, select **auto (recommended)**.
 
 Note that if you are writing messages to a queue faster than you can process them, messages may eventually reach the [maximum retention period](/queues/platform/limits/) set for that queue. Individual messages that reach that limit will expire from the queue and be deleted.
 
-### Set concurrency settings in the `wrangler.toml / wrangler.json` file
+### Set concurrency settings in the [Wrangler configuration file](/workers/wrangler/configuration/)
 
 :::note
 

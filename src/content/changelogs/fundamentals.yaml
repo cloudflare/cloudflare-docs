@@ -5,6 +5,14 @@ productLink: "/fundamentals/"
 productArea: Core platform
 productAreaLink: /fundamentals/reference/changelog/platform/
 entries:
+  - publish_date: "2025-01-28"
+    title: Terraform Provider is now automatically generated
+    description: |-
+      With the version 5 release of Cloudflare's Terraform Provider, Terraform resources are now being automatically generated based on OpenAPI Schemas. This change brings alignment across our SDKs, API Documentation, and now Terraform Provider. The new provider boosts coverage by increasing API properties to 100%, adding 25% more resources, and more than 200 additional data sources. 
+
+      Warning: Version 5 of the Cloudflare Terraform Provider is a ground-up rewrite of the provider and introduces breaking changes.
+
+      Refer to the [upgrade guide](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/guides/version-5-upgrade) for best practices, or the [blog post on automatically generating Cloudflare’s Terraform Provider](https://blog.cloudflare.com/automatically-generating-cloudflares-terraform-provider/) for more information.
   - publish_date: "2024-12-18"
     title: Use account owned tokens to manage other account owned tokens
     description: |-

@@ -4,8 +4,9 @@ title: Settings
 head:
   - tag: title
     content: Zaraz settings
-
 ---
+
+import { Plan } from "~/components";
 
 To configure Zaraz's general settings, select [**Zaraz**](https://dash.cloudflare.com/?to=/:account/:zone/zaraz) > **Settings**. Make sure you save your changes, by selecting the **Save** button after making them.
 
@@ -92,3 +93,11 @@ The options are:
 ### Context Enricher
 
 Refer to the [Context Enricher](/zaraz/advanced/context-enricher/) for more information on this setting.
+
+### Logpush
+
+<Plan type="enterprise" />
+
+Send Zaraz events logs to an external storage service.
+
+Refer to [Logpush](/zaraz/advanced/logpush/) for more information on this setting.

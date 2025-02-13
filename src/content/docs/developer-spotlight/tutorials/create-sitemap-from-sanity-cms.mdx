@@ -74,11 +74,11 @@ yarn add @sanity/client
 
 ## Configure Wrangler
 
-A default `wrangler.json` was generated in the previous step.
+A default `wrangler.jsonc` was generated in the previous step.
 
 The Wrangler file is a configuration file used to specify project settings and deployment configurations in a structured format.
 
-For this tutorial your `wrangler.toml / wrangler.json` file should be similar to the following:
+For this tutorial your [Wrangler configuration file](/workers/wrangler/configuration/) should be similar to the following:
 
 <WranglerConfig>
 
@@ -102,7 +102,7 @@ You must update the `[vars]` section to match your needs. See the inline comment
 
 :::caution
 
-Secrets do not belong in `wrangler.toml / wrangler.json` files. If you need to add secrets, use `.dev.vars` for local secrets and the `wranger secret put` command for deploying secrets. For more information, refer to [Secrets](/workers/configuration/secrets/).
+Secrets do not belong in [Wrangler configuration file](/workers/wrangler/configuration/)s. If you need to add secrets, use `.dev.vars` for local secrets and the `wranger secret put` command for deploying secrets. For more information, refer to [Secrets](/workers/configuration/secrets/).
 
 :::
 

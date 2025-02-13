@@ -323,3 +323,34 @@ export default {
 };
 ```
 </TypeScriptExample>
+
+### `await` your steps
+
+When calling `step.do` or `step.sleep`, use `await` to avoid introducing bugs and race conditions into your Workflow code.
+
+If you don't call `await step.do` or `await step.sleep`, you create a dangling Promise. This occurs when a Promise is created but not properly `await`ed, leading to potential bugs and race conditions.
+
+This happens when you do not use the `await` keyword or fail to chain `.then()` methods to handle the result of a Promise. For example, calling `fetch(GITHUB_URL)` without awaiting its response will cause subsequent code to execute immediately, regardless of whether the fetch completed. This can cause issues like premature logging, exceptions being swallowed (and not terminating the Workflow), and lost return values (state).
+
+<TypeScriptExample filename="index.ts">
+```ts
+export class MyWorkflow extends WorkflowEntrypoint {
+	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
+		// 🔴 Bad: The step isn't await'ed, and any state or errors is swallowed before it returns.
+	  const issues = step.do(`fetch issues from GitHub`, async () => {
+				// The step will return before this call is done
+		    let issues = await getIssues(event.payload.repoName)
+				return issues
+		})
+
+		// ✅ Good: The step is correctly await'ed.
+	  const issues = await step.do(`fetch issues from GitHub`, async () => {
+		    let issues = await getIssues(event.payload.repoName)
+				return issues
+		})
+
+		// Rest of your Workflow goes here!
+	}
+}
+```
+</TypeScriptExample>

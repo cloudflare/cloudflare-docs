@@ -5,6 +5,10 @@ productLink: "/load-balancing/"
 productArea: Application performance
 productAreaLink: /fundamentals/reference/changelog/performance/
 entries:
+  - publish_date: "2025-02-10"
+    title: Fix for Cloudflare Tunnel Consistency
+    description: |-
+      Fixes to improve the consistency of Cloudflare Tunnel handling within Cloudflare Load Balancers. These changes ensure more reliable and predictable routing, particularly when tunnels are involved.
   - publish_date: "2025-01-24"
     title: Update to Cloudflare Tunnel Steering
     description: |-

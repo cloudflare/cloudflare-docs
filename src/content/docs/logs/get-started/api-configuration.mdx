@@ -257,11 +257,6 @@ These parameters can be used to gain control of batch size in the case that a de
 2. **max\_upload\_records** (optional): The maximum number of log lines per batch. This setting must be between 1,000 and 1,000,000 lines. Note that you cannot specify a minimum number of log lines per batch; this means that log files may contain many fewer lines than this.
 3. **max\_upload\_interval\_seconds** (optional): The maximum interval in seconds for log batches. This setting must be between 30 and 300 seconds. Note that you cannot specify a minimum interval for log batches; this means that log files may be sent in shorter intervals than this.
 
-:::note[Note]
-
-Parameters **max\_upload\_bytes** and **max\_upload\_records** are not configurable for Edge Log Delivery.
-:::
-
 ## Custom fields
 
 You can add custom fields to your HTTP request log entries in the form of HTTP request headers, HTTP response headers, and cookies. Custom fields configuration applies to all the Logpush jobs in a zone that use the HTTP requests dataset. To learn more, refer to [Custom fields](/logs/reference/custom-fields/).

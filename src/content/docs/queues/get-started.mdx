@@ -40,7 +40,7 @@ To create a producer Worker, run:
 	}}
 />
 
-This will create a new directory, which will include both a `src/index.ts` Worker script, and a [`wrangler.json`](/workers/wrangler/configuration/) configuration file. After you create your Worker, you will create a Queue to access.
+This will create a new directory, which will include both a `src/index.ts` Worker script, and a [`wrangler.jsonc`](/workers/wrangler/configuration/) configuration file. After you create your Worker, you will create a Queue to access.
 
 Move into the newly created directory:
 
@@ -68,7 +68,7 @@ You cannot change your queue name after you have set it. After you create your q
 
 To expose your queue to the code inside your Worker, you need to connect your queue to your Worker by creating a binding. [Bindings](/workers/runtime-apis/bindings/) allow your Worker to access resources, such as Queues, on the Cloudflare developer platform.
 
-To create a binding, open your newly generated `wrangler.toml / wrangler.json` file and add the following:
+To create a binding, open your newly generated `wrangler.jsonc` file and add the following:
 
 <WranglerConfig>
 
@@ -106,7 +106,7 @@ export default {
 } satisfies ExportedHandler<Env>;
 ```
 
-Replace `MY_QUEUE` with the name you have set for your binding from your `wrangler.toml / wrangler.json` file.
+Replace `MY_QUEUE` with the name you have set for your binding from your `wrangler.jsonc` file.
 
 Also add the queue to `Env` interface in `index.ts`.
 
@@ -172,7 +172,7 @@ export default {
 } satisfies ExportedHandler<Env>;
 ```
 
-Replace `MY_QUEUE` with the name you have set for your binding from your `wrangler.toml / wrangler.json` file.
+Replace `MY_QUEUE` with the name you have set for your binding from your `wrangler.jsonc` file.
 
 Every time messages are published to the queue, your consumer Worker's `queue` handler (`async queue`) is called and it is passed one or more messages.
 
