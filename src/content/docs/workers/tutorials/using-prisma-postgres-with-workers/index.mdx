@@ -99,7 +99,7 @@ Note that Cloudflare Workers don't support `.env` files. You will use a file cal
 
 ### 2.3. Prepare environment variables
 
-Rename the `.env` file in the root of your application to  `.dev.vars` file:
+Rename the `.env` file in the root of your application to `.dev.vars` file:
 
 ```sh
 mv .env .dev.vars
@@ -198,7 +198,11 @@ When the application is deployed to Cloudflare, it needs access to the `DATABASE
 npx wrangler secret put DATABASE_URL
 ```
 
-When prompted, paste the `DATABASE_URL` value (from `.dev.vars`).
+When prompted, paste the `DATABASE_URL` value (from `.dev.vars`). If you're logged in via the Wrangler CLI, you'll see a prompt asking if you'd like to create a new Worker. Confirm by choosing "yes":
+
+```sh
+✔ There doesn't seem to be a Worker called "prisma-postgres-worker". Do you want to create a new Worker with that name and add secrets to it? … yes
+```
 
 Then execute the following command to deploy your project to Cloudflare Workers:
 
