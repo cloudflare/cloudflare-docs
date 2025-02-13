@@ -3,7 +3,7 @@ import { execSync } from "node:child_process";
 import { CONTENT_BASE_PATH } from "./constants";
 
 export const filenameToPath = (filename: string) => {
-	let segments = filename
+	const segments = filename
 		.replace(CONTENT_BASE_PATH, "")
 		.replace(".mdx", "")
 		.split("/")
