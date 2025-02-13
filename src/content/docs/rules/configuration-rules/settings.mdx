@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Configuration Rules settings
-
 ---
 
-import { Details, Render } from "~/components"
+import { Details, Render } from "~/components";
 
 You can change the configuration settings described below in a configuration rule.
 
@@ -18,7 +17,6 @@ You can change the configuration settings described below in a configuration rul
 [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/) prevents end users from seeing `Mixed content` errors by rewriting URLs from `http` to `https` for resources or links on your website that can be served with HTTPS.
 
 Use this setting to turn on or off Automatic HTTPS Rewrites for matching requests.
-
 
 <Details header="API information">
 
@@ -32,7 +30,6 @@ API configuration property name: `"automatic_https_rewrites"` (boolean).
 
 <Render file="configuration-rule-link-to-examples" />
 
-
 </Details>
 
 ## Browser Integrity Check
@@ -40,7 +37,6 @@ API configuration property name: `"automatic_https_rewrites"` (boolean).
 [Browser Integrity Check](/waf/tools/browser-integrity-check/) blocks access to pages based on specific HTTP headers commonly abused by spammers.
 
 Use this setting to turn on or off Browser Integrity Check for matching requests.
-
 
 <Details header="API information">
 
@@ -54,7 +50,6 @@ API configuration property name: `"bic"` (boolean).
 
 <Render file="configuration-rule-link-to-examples" />
 
-
 </Details>
 
 ## Disable Apps
@@ -62,7 +57,6 @@ API configuration property name: `"bic"` (boolean).
 [Cloudflare Apps](/support/more-dashboard-apps/cloudflare-apps/), now deprecated, is a platform for sharing high-quality apps that anyone with a website can use.
 
 Use this setting to turn off all active Cloudflare Apps for matching requests.
-
 
 <Details header="API information">
 
@@ -76,7 +70,6 @@ API configuration property name: `"disable_apps"` (boolean).
 
 <Render file="configuration-rule-link-to-examples" />
 
-
 </Details>
 
 ## Disable Real User Monitoring (RUM)
@@ -85,8 +78,7 @@ API configuration property name: `"disable_apps"` (boolean).
 
 Use this setting to turn off Web Analytics for matching requests.
 
-<Render file="configuration-rule-wins-over-rum-rule" params={{ one: "Configuration rules", two: "Web Analytics rules" }} />
-
+<Render file="configuration-rule-wins-over-rum-rule" />
 
 <Details header="API information">
 
@@ -100,7 +92,6 @@ API configuration property name: `"disable_rum"` (boolean).
 
 <Render file="configuration-rule-link-to-examples" />
 
-
 </Details>
 
 ## Disable Zaraz
@@ -108,7 +99,6 @@ API configuration property name: `"disable_rum"` (boolean).
 [Cloudflare Zaraz](/zaraz/) gives you complete control over third-party tools and services for your website, and allows you to offload them to the Cloudflare global network.
 
 Use this setting to turn off Zaraz for matching requests.
-
 
 <Details header="API information">
 
@@ -122,7 +112,6 @@ API configuration property name: `"disable_zaraz"` (boolean).
 
 <Render file="configuration-rule-link-to-examples" />
 
-
 </Details>
 
 ## Hotlink Protection
@@ -130,7 +119,6 @@ API configuration property name: `"disable_zaraz"` (boolean).
 [Hotlink Protection](/waf/tools/scrape-shield/hotlink-protection/) prevents your images from being used by other sites, potentially reducing the bandwidth consumed by your origin server.
 
 Use this setting to turn on or off Hotlink Protection for matching requests.
-
 
 <Details header="API information">
 
@@ -144,7 +132,6 @@ API configuration property name: `"hotlink_protection"` (boolean).
 
 <Render file="configuration-rule-link-to-examples" />
 
-
 </Details>
 
 ## Email Obfuscation
@@ -152,7 +139,6 @@ API configuration property name: `"hotlink_protection"` (boolean).
 [Email Obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/) helps in spam prevention by hiding email addresses appearing in your pages from email harvesters and other bots, while remaining visible to your site visitors.
 
 Use this setting to turn on or off Email Obfuscation for matching requests.
-
 
 <Details header="API information">
 
@@ -166,7 +152,6 @@ API configuration property name: `"email_obfuscation"` (boolean).
 
 <Render file="configuration-rule-link-to-examples" />
 
-
 </Details>
 
 ## Fonts
@@ -174,7 +159,6 @@ API configuration property name: `"email_obfuscation"` (boolean).
 [Cloudflare Fonts](/speed/optimization/content/fonts/) rewrites Google Fonts to be delivered from a website's own origin, eliminating the need to rely on third-party font providers.
 
 Use this setting to turn on or off Cloudflare Fonts for matching requests.
-
 
 <Details header="API information">
 
@@ -188,7 +172,6 @@ API configuration property name: `"fonts"` (boolean).
 
 <Render file="configuration-rule-link-to-examples" />
 
-
 </Details>
 
 ## Mirage
@@ -196,7 +179,6 @@ API configuration property name: `"fonts"` (boolean).
 [Mirage](/speed/optimization/images/mirage/) accelerates image delivery for your visitors based on their device.
 
 Use this setting to turn on or off Mirage for matching requests.
-
 
 <Details header="API information">
 
@@ -210,7 +192,6 @@ API configuration property name: `"mirage"` (boolean).
 
 <Render file="configuration-rule-link-to-examples" />
 
-
 </Details>
 
 ## Opportunistic Encryption
@@ -218,7 +199,6 @@ API configuration property name: `"mirage"` (boolean).
 [Opportunistic Encryption](/ssl/edge-certificates/additional-options/opportunistic-encryption/) allows browsers to access HTTP URIs over an encrypted TLS channel.
 
 Use this setting to turn on or off Opportunistic Encryption for matching requests.
-
 
 <Details header="API information">
 
@@ -232,7 +212,6 @@ API configuration property name: `"opportunistic_encryption"` (boolean).
 
 <Render file="configuration-rule-link-to-examples" />
 
-
 </Details>
 
 ## Polish
@@ -241,12 +220,11 @@ API configuration property name: `"opportunistic_encryption"` (boolean).
 
 Use this setting to configure Polish for matching requests:
 
-* Off
-* Lossless
-* Lossy
+- Off
+- Lossless
+- Lossy
 
 Refer to [Compression options](/images/polish/compression/#compression-options) for more information on these values.
-
 
 <Details header="API information">
 
@@ -262,7 +240,6 @@ API values: `"off"`, `"lossless"`, `"lossy"`.
 
 <Render file="configuration-rule-link-to-examples" />
 
-
 </Details>
 
 ## Rocket Loader
@@ -270,7 +247,6 @@ API values: `"off"`, `"lossless"`, `"lossy"`.
 [Rocket Loader](/speed/optimization/content/rocket-loader/) prioritizes your website's content (such as text, images, and fonts) by deferring the loading of all your JavaScript code until after rendering.
 
 Use this setting to turn on or off Rocket Loader for matching requests.
-
 
 <Details header="API information">
 
@@ -284,7 +260,6 @@ API configuration property name: `"rocket_loader"` (boolean).
 
 <Render file="configuration-rule-link-to-examples" />
 
-
 </Details>
 
 ## Security Level
@@ -293,15 +268,14 @@ API configuration property name: `"rocket_loader"` (boolean).
 
 Use this setting to select the security level for matching requests:
 
-* Off
-* Essentially Off
-* Low
-* Medium
-* High
-* I'm Under Attack
+- Off
+- Essentially Off
+- Low
+- Medium
+- High
+- I'm Under Attack
 
 Refer to [Security levels](/waf/tools/security-level/#security-levels) for more information on these values.
-
 
 <Details header="API information">
 
@@ -317,7 +291,6 @@ API values: `"off"`, `"essentially_off"`, `"low"`, `"medium"`, `"high"`, `"under
 
 <Render file="configuration-rule-link-to-examples" />
 
-
 </Details>
 
 ## SSL
@@ -326,14 +299,13 @@ API values: `"off"`, `"essentially_off"`, `"low"`, `"medium"`, `"high"`, `"under
 
 Use this setting to configure the SSL/TLS encryption mode for matching requests:
 
-* Off
-* Flexible
-* Full
-* Strict
-* Origin Pull
+- Off
+- Flexible
+- Full
+- Strict
+- Origin Pull
 
 Refer to [Available encryption modes](/ssl/origin-configuration/ssl-modes/#available-encryption-modes) for more information on these values.
-
 
 <Details header="API information">
 
@@ -349,7 +321,6 @@ API values: `"off"`, `"flexible"`, `"full"`, `"strict"`, `"origin_pull"`.
 
 <Render file="configuration-rule-link-to-examples" />
 
-
 </Details>
 
 ## SXG
@@ -357,7 +328,6 @@ API values: `"off"`, `"flexible"`, `"full"`, `"strict"`, `"origin_pull"`.
 [Signed Exchanges (SXG)](/speed/optimization/other/signed-exchanges/) is an open standard that makes it possible to cryptographically authenticate the origin of a resource independently of how it is delivered.
 
 Use this setting to turn on or off signed exchanges for matching requests.
-
 
 <Details header="API information">
 
@@ -370,6 +340,5 @@ API configuration property name: `"sxg"` (boolean).
 ```
 
 <Render file="configuration-rule-link-to-examples" />
-
 
 </Details>
