@@ -44,7 +44,7 @@ $ npx run wrangler queues update --delivery-delay-secs 60 --message-retention-pe
 	* Defaults to 345600 (4 days).
 	* Must be between 60 and 1209600 (14 days)
 
-## Producer worker configuration
+## Producer Worker configuration
 
 A producer is a [Cloudflare Worker](/workers/) that writes to one or more queues. A producer can accept messages over HTTP, asynchronously write messages when handling requests, and/or write to a queue from within a [Durable Object](/durable-objects/). Any Worker can write to a queue.
 
