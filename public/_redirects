@@ -571,6 +571,7 @@
 /fundamentals/get-started/basic-tasks/account-security/securing-a-compromised-account/ /fundamentals/setup/account/account-security/secure-a-compromised-account/ 301
 /fundamentals/get-started/basic-tasks/account-security/review-audit-logs/ /fundamentals/setup/account/account-security/review-audit-logs/ 301
 /fundamentals/get-started/basic-tasks/account-security/manage-active-sessions/ /fundamentals/setup/account/account-security/manage-active-sessions/ 301
+/fundamentals/basic-tasks/minimize-downtime/ /fundamentals/performance/minimize-downtime/ 301
 /fundamentals/get-started/reference/cloudflare-site-crawling/ /fundamentals/reference/cloudflare-site-crawling/ 301
 /fundamentals/get-started/reference/content-security-policies/ /fundamentals/reference/policies-compliances/content-security-policies/ 301
 /fundamentals/get-started/reference/cloudflare-ray-id/ /fundamentals/reference/cloudflare-ray-id/ 301
