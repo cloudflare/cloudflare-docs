@@ -163,12 +163,15 @@ This error occurs when the source URL of a URL redirect includes a port (for exa
 
 ### Common causes
 
+Possible causes of this error are: 
+
+- The source URL is configured to include a custom or non-standard port.
+- A copy-pasted URL from another environment or system includes a port.
+- A development or testing URL was mistakenly used in the redirect configuration.
 
 ### Resolution
 
 Remove the port from the redirect source URL. Refer to [Supported URL components in Bulk Redirects](/rules/url-forwarding/bulk-redirects/reference/url-components/) for details on the supported URL components for redirect source URLs.
-
-***
 
 ## Error 10053: Invalid redirect source URL with query string
 
@@ -176,27 +179,30 @@ This error occurs when the source URL of a URL redirect includes a query string 
 
 ### Common causes
 
+Possible causes of this error are: 
+
+- The source URL is copied from a browser or external source that includes query parameters (for example, https://example.com/page?param=value).
+- Misconfiguration or oversight during the URL setup includes unnecessary query strings.
+- An attempt to redirect based on specific query parameters rather than the path alone.
+
 ### Resolution
 
 Remove the query string from the redirect source URL. Refer to [Supported URL components in Bulk Redirects](/rules/url-forwarding/bulk-redirects/reference/url-components/) for details on the supported URL components for redirect source URLs.
 
-***
-
 ## Error 10054: Invalid redirect source URL with fragment
 
-This error occurs when the source URL of a URL redirect includes a fragment component (for example, `https://example.com/search/#fragment`).
-
-Fragment components are not part of an HTTP request; they are an indication for the browser to scroll to a specific location once the page has loaded.
+This error occurs when the source URL of a URL redirect includes a fragment component (for example, `https://example.com/search/#fragment`). Fragment components are not part of an HTTP request; they are an indication for the browser to scroll to a specific location once the page has loaded.
 
 ### Common causes
 
+Possible causes of this error are:
+
+- The source URL is copied from a browser or external source that includes a fragment (for example, #section1).
+- A fragment was inadvertently added during URL configuration or editing.
+
 ### Resolution
 
-Remove the fragment from the redirect source URL.
-
-Refer to [Supported URL components in Bulk Redirects](/rules/url-forwarding/bulk-redirects/reference/url-components/) for details on the supported URL components for redirect source URLs.
-
-***
+Remove the fragment from the redirect source URL. Refer to [Supported URL components in Bulk Redirects](/rules/url-forwarding/bulk-redirects/reference/url-components/) for details on the supported URL components for redirect source URLs.
 
 ## Error 10055: Query string settings incompatible with redirect target URL
 
@@ -204,14 +210,17 @@ This error occurs when you enable the **Preserve query string** option of a URL 
 
 ### Common causes
 
+Possible causes of this error are:
+
+- The **Preserve query string** option is enabled without consideration of the target URL's existing query string.
+- A query string was added to the target URL after the redirect configuration was created.
+
 ### Resolution
 
 Perform one of the following:
 
-* Disable the **Preserve query string** option in the URL redirect
-* Remove the query string component from the redirect target URL
-
-***
+- Disable the **Preserve query string** option in the URL redirect
+- Remove the query string component from the redirect target URL
 
 ## Error 10056: The add list items operation contains different types of list items
 
@@ -219,14 +228,18 @@ This error occurs when there are different types of list items (for example, IP 
 
 ### Common causes
 
+Possible causes of this error are:
+
+- Mixing different types of items (for example, IP addresses and URL redirects) in a single add operation.
+- Copying and pasting list items without verifying that they match the intended list type.
+- Misconfiguration or oversight when creating or updating the list.
+
 ### Resolution
 
 Remove the list items that do not apply to the list type. This means:
 
-* Removing IP addresses from a request to add items to a Bulk Redirect List
-* Removing URL redirects from a request to add items to an IP list
-
-***
+- Removing IP addresses from a request to add items to a Bulk Redirect List.
+- Removing URL redirects from a request to add items to an IP list.
 
 ## Error 10058: List items incompatible with list type
 
@@ -234,15 +247,19 @@ This error occurs when you are adding items to a list (either IP list, hostname 
 
 ### Common causes
 
+Possible causes of this error are:
+
+- Attempting to add IP addresses to a hostname or Bulk Redirect List.
+- Adding URL redirects to an IP list or hostname list.
+- Misconfiguration or confusion regarding the intended list type.
+
 ### Resolution
 
 Make sure you are adding the items to the correct list:
 
-* Custom lists with IP addresses (IP lists) can only contain IP addresses as list items
-* Custom lists with hostnames can only contain hostnames as list items
-* Bulk Redirect Lists can only contain URL redirects as list items
-
-***
+- Custom lists with IP addresses (IP lists) can only contain IP addresses as list items.
+- Custom lists with hostnames can only contain hostnames as list items.
+- Bulk Redirect Lists can only contain URL redirects as list items.
 
 ## Error 10059: Maximum number of repeated URL source paths exceeded
 
@@ -250,13 +267,15 @@ This error occurs when you have more than the maximum number of URL redirects wi
 
 ### Common causes
 
+Possible causes of this error are:
+
+- Multiple Bulk Redirect Lists contain redirects with the same source URL path.
+- Overlapping or duplicate configurations across different lists and domains.
+- Mismanagement of redirects, leading to excessive duplication of source URL paths.
+
 ### Resolution
 
-Review the path of your source URLs so that you do not have more than the maximum number of URL redirects sharing the same URL path in your account, regardless of their domain or the list they belong to.
-
-Refer to [URL redirect parameters](/rules/url-forwarding/bulk-redirects/reference/parameters/) for more information on the current limits.
-
-***
+Review the path of your source URLs so that you do not have more than the maximum number of URL redirects sharing the same URL path in your account, regardless of their domain or the list they belong to. Refer to [URL redirect parameters](/rules/url-forwarding/bulk-redirects/reference/parameters/) for more information on the current limits.
 
 ## Error 10060: Missing scheme in redirect target URL
 
@@ -264,8 +283,11 @@ This error occurs when the target URL of a URL redirect does not include a schem
 
 ### Common causes
 
+Possible causes of this error are:
+
+- The target URL is missing the http or https scheme due to a typo.
+- The URL was copied from a source that did not include the scheme.
+
 ### Resolution
 
-Review the target URL of the URL redirect and ensure that it contains a scheme (for example, `https`).
-
-Refer to [Supported URL components in Bulk Redirects](/rules/url-forwarding/bulk-redirects/reference/url-components/) for details on the required URL components for redirect target URLs.
+Review the target URL of the URL redirect and ensure that it contains a scheme (for example, `https`). Refer to [Supported URL components in Bulk Redirects](/rules/url-forwarding/bulk-redirects/reference/url-components/) for details on the required URL components for redirect target URLs.
