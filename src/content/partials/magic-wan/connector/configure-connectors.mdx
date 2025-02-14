@@ -13,9 +13,6 @@ params:
 
 import { AnchorHeading, Aside, Card, Code, GlossaryTooltip, Markdown, Render, TabItem, Tabs } from "~/components";
 
-import Mermaid from "~/components/Mermaid.jsx";
-
-
 { props.magicWord === "virtual" && (
 	<>
 		<p>Virtual Magic WAN Connector (Virtual Connector) is a virtual appliance alternative to the hardware based Magic WAN Connector appliance. These two versions of Connector are identical otherwise.</p>
@@ -315,8 +312,8 @@ After finishing your Connector configuration, you need to add it to a site. <Ren
 		<p>There are several deployment options for Magic WAN Connector. Connector can act like a DHCP server for your local network, or integrate with your local setup and have static IP addresses assigned to it.</p>
 		<p>When Connector acts like the WAN router for your site, deployment will be something like this:</p>
 
-		<Mermaid chart={`
-		flowchart LR
+		<pre class="mermaid">
+		{`flowchart LR
 		accTitle: Magic WAN Connector set up as a DHCP server, and connecting to the Internet.
     a(Magic WAN Connector)--> b(Internet) --> c(Cloudflare)
 
@@ -326,13 +323,13 @@ After finishing your Connector configuration, you need to add it to a site. <Ren
     end
 
     classDef orange fill:#f48120,color: black
-    class a,c orange
-		`} />
+    class a,c orange`}
+		</pre>
 
 		<p>In the example below, the Connector sits behind the WAN router in your site, and on-ramps only some of the existing LANs to Cloudflare.</p>
 
-		<Mermaid chart={`
-		flowchart LR
+		<pre class="mermaid">
+		{`flowchart LR
 		accTitle: Magic WAN Connector connects to the router in the site, and only some of the LANs connect to Connector.
     a(Magic WAN Connector)--> b((Site's router)) --> c(Internet) --> i(Cloudflare)
 
@@ -344,8 +341,8 @@ After finishing your Connector configuration, you need to add it to a site. <Ren
     end
 
     classDef orange fill:#f48120,color: black
-    class a,i orange
-		`} />
+    class a,i orange`}
+		</pre>
 
 		<p>Refer to <a href="/reference-architecture/diagrams/sase/magic-wan-connector-deployment/">Magic WAN Connector deployment options</a> for a high-level explanation of the deployment options that make sense to most environments, as well as a few advanced use cases.</p>
 
