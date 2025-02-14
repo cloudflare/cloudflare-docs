@@ -46,22 +46,22 @@ Your Markdown file needs to have several special values to pull in the changelog
 ---
 pcx_content_type: changelog
 title: Changelog
-changelog_file_name:
+release_notes_file_name:
   - queues
 sidebar:
   order: 4
 ---
 
-import { ProductChangelog } from "~/components";
+import { ProductReleaseNotes } from "~/components";
 
-{/* <!-- Actual content lives in /src/content/changelogs/queues.yaml. Update the file there for new entries to appear here. For more details, refer to https://developers.cloudflare.com/style-guide/documentation-content-strategy/content-types/changelog/#yaml-file --> */}
+{/* <!-- Actual content lives in /src/content/release-notes/queues.yaml. Update the file there for new entries to appear here. For more details, refer to https://developers.cloudflare.com/style-guide/documentation-content-strategy/content-types/changelog/#yaml-file --> */}
 
-<ProductChangelog />
+<ProductReleaseNotes />
 ```
 
 ### YAML file
 
-The `<ProductChangelog>` component renders data that lives in a file within the [`/src/content/changelogs` folder](https://github.com/cloudflare/cloudflare-docs/tree/production/src/content/changelogs).
+The `<ProductReleaseNotes>` component renders data that lives in a file within the [`/src/content/changelogs` folder](https://github.com/cloudflare/cloudflare-docs/tree/production/src/content/changelogs).
 
 - `link` string required
 
@@ -117,7 +117,7 @@ entries:
     description: |-
       Queue consumers will soon automatically scale up concurrently as a queues' backlog grows in order to keep overall message processing latency down. Concurrency will be enabled on all existing queues by 2023-03-28.
 
-      **To opt-out, or to configure a fixed maximum concurrency**, set `max_concurrency = 1` in your `wrangler.toml` file or via [the queues dashboard](https://dash.cloudflare.com/?to=/:account/queues).
+      **To opt-out, or to configure a fixed maximum concurrency**, set `max_concurrency = 1` in your Wrangler file or via [the queues dashboard](https://dash.cloudflare.com/?to=/:account/queues).
 
       **To opt-in, you do not need to take any action**: your consumer will begin to scale out as needed to keep up with your message backlog. It will scale back down as the backlog shrinks, and/or if a consumer starts to generate a higher rate of errors. To learn more about how consumers scale, refer to the [consumer concurrency](/queues/learning/consumer-concurrency/) documentation.
   - publish_date: "2023-03-02"

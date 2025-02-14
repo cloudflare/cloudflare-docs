@@ -76,6 +76,6 @@ entries:
     general_definition: |-
       the proxy status of a DNS record defines whether requests for your domain will route through Cloudflare (`proxied`) or not (`DNS-only`).
 
-      When a [DNS record is proxied](/dns/manage-dns-records/reference/proxied-dns-records/), requests are processed according to your configurations, and Cloudflare can optimize, cache, and protect your domain. Refer to [How Cloudflare works](/fundamentals/concepts/how-cloudflare-works/) for details.
+      When a [DNS record is proxied](/dns/proxy-status/), requests are processed according to your configurations, and Cloudflare can optimize, cache, and protect your domain. Refer to [How Cloudflare works](/fundamentals/concepts/how-cloudflare-works/) for details.
     associated_products:
       - Fundamentals

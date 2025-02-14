@@ -6,7 +6,7 @@ description: Customize how your code is compiled, before being processed by Wran
 
 ---
 
-import { Render, Type, MetaInfo } from "~/components"
+import { Render, Type, MetaInfo, WranglerConfig } from "~/components"
 
 Custom builds are a way for you to customize how your code is compiled, before being processed by Wrangler.
 
@@ -17,7 +17,7 @@ With the release of Wrangler v2, it is no longer necessary to use custom builds 
 
 ## Configure custom builds
 
-Custom builds are configured by adding a `[build]` section in your `wrangler.toml`, and using the following options for configuring your custom build.
+Custom builds are configured by adding a `[build]` section in your [Wrangler configuration file](/workers/wrangler/configuration/), and using the following options for configuring your custom build.
 
 
 
@@ -36,8 +36,6 @@ Custom builds are configured by adding a `[build]` section in your `wrangler.tom
 
 
 Example:
-
-import { WranglerConfig } from "~/components";
 
 <WranglerConfig>
 

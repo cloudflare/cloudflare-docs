@@ -1,0 +1,27 @@
+---
+import { getEntries } from "astro:content";
+import { reference } from "astro:content";
+import { z } from "astro:schema";
+
+import { Badge } from "@astrojs/starlight/components";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	products: z.array(reference("products")),
+});
+
+const { products } = await props.parseAsync(Astro.props);
+
+const data = await getEntries(products);
+---
+
+<div class="flex flex-row gap-2">
+	{
+		data.map((product) => (
+			<a href={product.data.product.url} class="no-underline">
+				<Badge text={product.data.product.title} variant="tip" />
+			</a>
+		))
+	}
+</div>

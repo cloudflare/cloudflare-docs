@@ -6,10 +6,21 @@ import { TabItem, Tabs } from "~/components";
 
 ## Create a list from a CSV file
 
-Here is a [sample CSV file](/cloudflare-one/static/list-test.csv) of URLs that you can use for testing. When formatting the CSV:
+To test uploading CSV lists, you can download a [sample CSV file](/cloudflare-one/static/list-test.csv) of IP address ranges or copy the following into a file:
 
-- Each line should be a single entry.
-- Trailing whitespaces are not allowed.
+```csv title="list-test.csv"
+value,description
+192.0.2.0/24,This is an IP address range in CIDR format
+198.51.100.0/24,This is also an IP address range
+203.0.113.0/24,This is the third IP address range
+
+```
+
+When you format a CSV file for upload:
+
+- Each line should be a single entry that includes a value and an optional description.
+- A header row must be present for Zero Trust to recognize descriptions.
+- Trailing whitespace characters are not allowed.
 - CRLF (Windows) and LF (Unix) line endings are valid.
 
 To upload the list to Zero Trust:
@@ -37,10 +48,9 @@ You can now use this list in the policy builder by choosing the _in list_ operat
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/lists \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/lists \
 --header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "description": "Private application IPs",
   "items": [{"value": "10.226.0.177/32"},{"value": "10.226.1.177/32"}],

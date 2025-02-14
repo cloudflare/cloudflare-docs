@@ -26,13 +26,13 @@ General settings enable and control the use of the Advanced TCP Protection and t
 
 Thresholds are based on your network's unique traffic and are configured by Cloudflare. The sensitivity levels manipulate the thresholds.
 
-When you get access to Advanced DDoS Protection systems, there are no configured thresholds in your account.
+When you get access to Advanced DDoS Protection systems, you are automatically provisioned with default settings in monitoring mode.
 
 Thresholds are based on your network's individual behavior, derived from your traffic profile as monitored by Cloudflare. Defining the thresholds will effectively determine what the _High_, _Medium_, and _Low_ [sensitivities](/ddos-protection/advanced-ddos-systems/concepts/#burst-sensitivity) will be for your specific case.
 
-Ask your Implementation Manager to configure initial threshold values. Separate thresholds need to be configured for Advanced TCP Protection and Advanced DNS Protection.
+If needed, you can change the sensitivity levels that will manipulate the thresholds for Advanced TCP Protection and Advanced DNS Protection from the default settings.
 
-Once thresholds are configured, the Implementation Manager will let you know that Advanced DDoS Protection systems have been initialized and can be configured and enabled.
+Once thresholds are configured, the Advanced DDoS Protection systems have been initialized and enabled in monitoring mode.
 
 ### Prefixes
 
@@ -44,7 +44,7 @@ You cannot add unapproved prefixes to Advanced DDoS Protection systems. Contact 
 
 ### Rules
 
-[Create a rule](/ddos-protection/advanced-ddos-systems/how-to/create-rule/) for Advanced TCP and Advanced DNS Protection (as needed) to enable mitigation. 
+[Create a rule](/ddos-protection/advanced-ddos-systems/how-to/create-rule/) for Advanced TCP and Advanced DNS Protection (as needed) to enable mitigation.
 
 You can create a rule for SYN Flood Protection and another rule for Out-of-state TCP Protection, both with global scope and in monitoring mode. These rules will apply to all received <GlossaryTooltip term="data packet">packets</GlossaryTooltip>.
 

@@ -17,7 +17,7 @@ This guide will instruct you through installing and setting up the `@cloudflare/
 
 - Make sure that your Worker is developed using the ES modules format. To migrate from the service worker format to the ES modules format, refer to the [Migrate to the ES modules format](/workers/reference/migrate-to-module-workers/) guide.
 
-- In your project's `wrangler.toml` configuration file, define a [compatibility date](/workers/configuration/compatibility-dates/) of `2022-10-31` or higher, and include `nodejs_compat` in your [compatibility flags](/workers/wrangler/configuration/#use-runtime-apis-directly).
+- In your project's [Wrangler configuration file](/workers/wrangler/configuration/), define a [compatibility date](/workers/configuration/compatibility-dates/) of `2022-10-31` or higher, and include `nodejs_compat` in your [compatibility flags](/workers/configuration/compatibility-flags).
 
 ## Install Vitest and `@cloudflare/vitest-pool-workers`
 
@@ -39,7 +39,7 @@ Currently, the `@cloudflare/vitest-pool-workers` package _only_ works with Vites
 ## Define Vitest configuration
 
 If you do not already have a `vitest.config.js` or `vitest.config.ts` file, you will need to create one and define the following configuration.
-You can reference a `wrangler.toml` file to leverage its `main` entry point, [compatibility settings](/workers/configuration/compatibility-dates/), and [bindings](/workers/runtime-apis/bindings/).
+You can reference a Wrangler file to leverage its `main` entry point, [compatibility settings](/workers/configuration/compatibility-dates/), and [bindings](/workers/runtime-apis/bindings/).
 
 ```js
 import { defineWorkersConfig } from "@cloudflare/vitest-pool-workers/config";

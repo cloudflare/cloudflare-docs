@@ -8,6 +8,8 @@ head:
     content: Cloudflare Queues - Pull consumers
 ---
 
+import { WranglerConfig } from "~/components";
+
 A pull-based consumer allows you to pull from a queue over HTTP from any environment and/or programming language outside of Cloudflare Workers. A pull-based consumer can be useful when your message consumption rate is limited by upstream infrastructure or long-running tasks.
 
 ## How to choose between push or pull consumer
@@ -34,13 +36,11 @@ To configure a pull-based consumer and receive messages from a queue, you need t
 
 ## 1. Enable HTTP pull
 
-You can enable HTTP pull or change a queue from push-based to pull-based via `wrangler.toml`, the `wrangler` CLI, or via the [Cloudflare dashboard](https://dash.cloudflare.com/).
+You can enable HTTP pull or change a queue from push-based to pull-based via the [Wrangler configuration file](/workers/wrangler/configuration/), the `wrangler` CLI, or via the [Cloudflare dashboard](https://dash.cloudflare.com/).
 
-### wrangler.toml
+### Wrangler configuration file
 
-A HTTP consumer can be configured in `wrangler.toml` by setting `type = "http_pull"` in the consumer configuration:
-
-import { WranglerConfig } from "~/components";
+A HTTP consumer can be configured in the [Wrangler configuration file](/workers/wrangler/configuration/) by setting `type = "http_pull"` in the consumer configuration:
 
 <WranglerConfig>
 
@@ -75,7 +75,7 @@ wrangler queues consumer worker remove $QUEUE-NAME $SCRIPT_NAME
 
 :::note
 
-If you remove the Worker consumer with `wrangler` but do not delete the `[[queues.consumer]]` configuration from `wrangler.toml`, subsequent deployments of your Worker will fail when they attempt to add a conflicting consumer configuration.
+If you remove the Worker consumer with `wrangler` but do not delete the `[[queues.consumer]]` configuration from your [Wrangler configuration file](/workers/wrangler/configuration/), subsequent deployments of your Worker will fail when they attempt to add a conflicting consumer configuration.
 
 Ensure you remove the consumer configuration first.
 
@@ -127,7 +127,7 @@ let resp = await fetch(
 			authorization: `Bearer ${QUEUES_API_TOKEN}`,
 		},
 		// Optional - you can provide an empty object '{}' and the defaults will apply.
-		body: JSON.stringify({ visibility_timeout: 6000, batch_size: 50 }),
+		body: JSON.stringify({ visibility_timeout_ms: 6000, batch_size: 50 }),
 	},
 );
 ```

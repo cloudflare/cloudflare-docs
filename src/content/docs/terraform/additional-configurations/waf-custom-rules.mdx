@@ -1,16 +1,17 @@
 ---
-title: WAF custom rules
+title: WAF custom rules configuration using Terraform
 pcx_content_type: how-to
 sidebar:
   order: 5
+  label: WAF custom rules
 head:
   - tag: title
-    content: Configure WAF custom rules with Terraform
+    content: WAF custom rules configuration using Terraform
 ---
 
 import { Render, GlossaryTooltip } from "~/components";
 
-This page provides examples of creating WAF custom rules in a zone or account using Terraform. The examples cover the following scenarios:
+This page provides examples of creating [WAF custom rules](/waf/custom-rules/) in a zone or account using Terraform. The examples cover the following scenarios:
 
 - Zone-level configurations:
   - [Add a custom rule to a zone](#add-a-custom-rule-to-a-zone)
@@ -19,8 +20,6 @@ This page provides examples of creating WAF custom rules in a zone or account us
 - Account-level configurations:
   - [Create and deploy a custom ruleset](#create-and-deploy-a-custom-ruleset)
   - [Add a custom rule checking for exposed credentials](#add-a-custom-rule-checking-for-exposed-credentials)
-
-For more information on custom rules, refer to [Custom rules](/waf/custom-rules/) in the Cloudflare WAF documentation.
 
 ## Before you start
 
@@ -39,6 +38,8 @@ For more information on custom rules, refer to [Custom rules](/waf/custom-rules/
 ### Add a custom rule to a zone
 
 The following example configures a custom rule in the zone entry point ruleset for the `http_request_firewall_custom` phase for zone with ID `<ZONE_ID>`. The rule will block all traffic on non-standard HTTP(S) ports:
+
+<Render file="v4-code-snippets" />
 
 ```tf
 resource "cloudflare_ruleset" "zone_custom_firewall" {
@@ -62,10 +63,12 @@ resource "cloudflare_ruleset" "zone_custom_firewall" {
 ### Add a custom rule challenging requests with leaked credentials
 
 :::note
-For more information on enabling leaked credentials detection using Terraform, refer to the [leaked credentials detection](/waf/detections/leaked-credentials/get-started/#1-turn-on-leaked-credentials-detection) documentation.
+For more information on enabling leaked credentials detection using Terraform, refer to the [leaked credentials detection](/waf/detections/leaked-credentials/get-started/#1-turn-on-the-detection) documentation.
 :::
 
 This example adds a custom rule that challenges requests with leaked credentials by using one of the [leaked credentials fields](/waf/detections/leaked-credentials/#leaked-credentials-fields) in the rule expression.
+
+<Render file="v4-code-snippets" />
 
 ```tf
 resource "cloudflare_ruleset" "zone_custom_firewall_leaked_creds" {
@@ -93,6 +96,8 @@ For more information on enabling malicious uploads detection using Terraform, re
 :::
 
 This example adds a custom rule that blocks requests with one or more <GlossaryTooltip term="content object">content objects</GlossaryTooltip> considered malicious by using one of the [content scanning fields](/waf/detections/malicious-uploads/#content-scanning-fields) in the rule expression.
+
+<Render file="v4-code-snippets" />
 
 ```tf
 resource "cloudflare_ruleset" "zone_custom_firewall_malicious_uploads" {
@@ -125,6 +130,8 @@ You can only create and deploy custom rulesets at the account level.
 
 The following configuration creates the custom ruleset with a single rule:
 
+<Render file="v4-code-snippets" />
+
 ```tf
 resource "cloudflare_ruleset" "account_firewall_custom_ruleset" {
   account_id  = "<ACCOUNT_ID>"
@@ -148,6 +155,8 @@ resource "cloudflare_ruleset" "account_firewall_custom_ruleset" {
 /> <br />
 
 The following configuration deploys the custom ruleset at the account level. It defines a dependency on the `account_firewall_custom_ruleset` resource and uses the ID of the created custom ruleset in `action_parameters`:
+
+<Render file="v4-code-snippets" />
 
 ```tf
 resource "cloudflare_ruleset" "account_firewall_custom_entrypoint" {
@@ -181,6 +190,8 @@ The following configuration creates a custom ruleset with a single rule that [ch
 
 You can only add exposed credential checks to rules in a custom ruleset (that is, a ruleset with `kind = "custom"`).
 
+<Render file="v4-code-snippets" />
+
 ```tf
 resource "cloudflare_ruleset" "account_firewall_custom_ruleset_exposed_creds" {
   account_id  = "<ACCOUNT_ID>"
@@ -212,6 +223,8 @@ resource "cloudflare_ruleset" "account_firewall_custom_ruleset_exposed_creds" {
 <Render file="add-new-rule" params={{ one: "rule" }} /> <br />
 
 The following configuration deploys the custom ruleset. It defines a dependency on the `account_firewall_custom_ruleset_exposed_creds` resource and obtains the ID of the created custom ruleset:
+
+<Render file="v4-code-snippets" />
 
 ```tf
 resource "cloudflare_ruleset" "account_firewall_custom_entrypoint" {

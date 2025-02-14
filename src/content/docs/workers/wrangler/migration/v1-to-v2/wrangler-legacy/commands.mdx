@@ -8,7 +8,7 @@ head:
     content: Commands - Wrangler v1 (deprecated)
 ---
 
-import { Render, Type, MetaInfo } from "~/components";
+import { Render, Type, MetaInfo, WranglerConfig } from "~/components";
 
 <Render file="wrangler-v1-deprecation" />
 
@@ -28,7 +28,7 @@ Default values indicated by =value.
 
 - `$NAME` =worker optional
 
-  - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/configuration/) file.
+  - The name of the Workers project. This is both the directory name and `name` property in the generated [Wrangler configuration](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/configuration/) file.
 
 - `$TEMPLATE` =[https://github.com/cloudflare/worker-template](https://github.com/cloudflare/worker-template) optional
 
@@ -45,7 +45,7 @@ Default values indicated by =value.
 
 ## init
 
-Create a skeleton `wrangler.toml` in an existing directory. This command can be used as an alternative to `generate` if you prefer to clone a template repository yourself or you already have a JavaScript project and would like to use Wrangler.
+Create a skeleton [Wrangler configuration file](/workers/wrangler/configuration/) in an existing directory. This command can be used as an alternative to `generate` if you prefer to clone a template repository yourself or you already have a JavaScript project and would like to use Wrangler.
 
 ```sh
 wrangler init [$NAME] [--type=$TYPE] [--site]
@@ -55,7 +55,7 @@ Default values indicated by =value.
 
 - `$NAME` =(Name of working directory) optional
 
-  - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/configuration/) file.
+  - The name of the Workers project. This is both the directory name and `name` property in the generated [Wrangler configuration](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/configuration/) file.
 
 - `--type=$TYPE` =webpack optional
 
@@ -68,7 +68,7 @@ Default values indicated by =value.
 
 ## build
 
-Build your project (if applicable). This command looks at your `wrangler.toml` file and reacts to the [`"type"` value](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/configuration/#keys) specified.
+Build your project (if applicable). This command looks at your Wrangler file and reacts to the [`"type"` value](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/configuration/#keys) specified.
 
 When using `type = "webpack"`, Wrangler will build the Worker using its internal webpack installation. When using `type = "javascript"` , the [`build.command`](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/configuration/#build-1), if defined, will run.
 
@@ -132,7 +132,7 @@ You can also use environment variables to authenticate, or `wrangler login` to a
 
 ## publish
 
-Publish your Worker to Cloudflare. Several keys in your `wrangler.toml` file determine whether you are publishing to a `*.workers.dev` subdomain or a custom domain. However, custom domains must be proxied (orange-clouded) through Cloudflare. Refer to the [Get started guide](/workers/configuration/routing/custom-domains/) for more information.
+Publish your Worker to Cloudflare. Several keys in your Wrangler file determine whether you are publishing to a `*.workers.dev` subdomain or a custom domain. However, custom domains must be proxied (orange-clouded) through Cloudflare. Refer to the [Get started guide](/workers/configuration/routing/custom-domains/) for more information.
 
 ```sh
 wrangler publish [--env $ENVIRONMENT_NAME]
@@ -141,11 +141,11 @@ wrangler publish [--env $ENVIRONMENT_NAME]
 - `--env` optional
   - If defined, Wrangler will load the matching environment's configuration before building and deploying. Refer to [Environments](/workers/wrangler/environments/) for more information.
 
-To use this command, the following fields are required in your `wrangler.toml` file:
+To use this command, the following fields are required in your Wrangler file:
 
 - `name` string
 
-  - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/configuration/) file.
+  - The name of the Workers project. This is both the directory name and `name` property in the generated [Wrangler configuration](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/configuration/) file.
 
 - `type` string
 
@@ -162,14 +162,14 @@ When you publish changes to an existing Worker script, all new requests will aut
 
 To publish to [`*.workers.dev`](https://workers.dev), you will first need to have a subdomain registered. You can register a subdomain by executing the [`wrangler subdomain`](#subdomain) command.
 
-After you have registered a subdomain, add `workers_dev` to your `wrangler.toml` file.
+After you have registered a subdomain, add `workers_dev` to your Wrangler file.
 
 - `workers_dev` bool
   - When `true`, indicates that the Worker should be deployed to a `*.workers.dev` domain.
 
 ### Publishing to your own domain
 
-To publish to your own domain, specify these three fields in your `wrangler.toml` file.
+To publish to your own domain, specify these three fields in your Wrangler file.
 
 - `zone_id` string
 
@@ -225,7 +225,7 @@ wrangler dev [--env $ENVIRONMENT_NAME] [--ip <ip>] [--port <port>] [--host <host
 - `--upstream-protocol` optional
   - The protocol to forward requests to host on, defaults to `https`.
 
-These arguments can also be set in your `wrangler.toml` file. Refer to the [`wrangler dev` configuration](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/configuration/#dev) documentation for more information.
+These arguments can also be set in your Wrangler file. Refer to the [`wrangler dev` configuration](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/configuration/#dev) documentation for more information.
 
 ### Usage
 
@@ -268,7 +268,7 @@ wrangler tail [--format $FORMAT] [--status $STATUS] [OPTIONS]
 
 After starting `wrangler tail` in a directory with a project, you will receive a live feed of console and exception logs for each request your Worker receives.
 
-Like all Wrangler commands, run `wrangler tail` from your Worker’s root directory (the directory with your `wrangler.toml` file).
+Like all Wrangler commands, run `wrangler tail` from your Worker’s root directory (the directory with your Wrangler file).
 
 :::caution[Legacy issues with existing cloudflared configuration]
 
@@ -305,7 +305,7 @@ Default values indicated by =value.
 
 ### kv_namespaces
 
-If you are using [kv_namespaces](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/configuration/#kv_namespaces) with `wrangler preview`, you will need to specify a `preview_id` in your `wrangler.toml` file before you can start the session. This is so that you do not accidentally write changes to your production namespace while you are developing. You may make `preview_id` equal to `id` if you would like to preview with your production namespace, but you should ensure that you are not writing values to KV that would break your production Worker.
+If you are using [kv_namespaces](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/configuration/#kv_namespaces) with `wrangler preview`, you will need to specify a `preview_id` in your Wrangler file before you can start the session. This is so that you do not accidentally write changes to your production namespace while you are developing. You may make `preview_id` equal to `id` if you would like to preview with your production namespace, but you should ensure that you are not writing values to KV that would break your production Worker.
 
 To create a `preview_id` run:
 
@@ -437,7 +437,7 @@ wrangler secret list --env ENVIRONMENT_NAME
 
 The `kv` subcommand allows you to store application data in the Cloudflare network to be accessed from Workers using [Workers KV](https://www.cloudflare.com/products/workers-kv/). KV operations are scoped to your account, so in order to use any of these commands, you:
 
-- must configure an `account_id` in your project's `wrangler.toml` file.
+- must configure an `account_id` in your project's Wrangler file.
 - run all `wrangler kv:<command>` operations in your terminal from the project's root directory.
 
 ### Getting started
@@ -445,7 +445,7 @@ The `kv` subcommand allows you to store application data in the Cloudflare netwo
 To use Workers KV with your Worker, the first thing you must do is create a KV namespace. This is done with
 the `kv:namespace` subcommand.
 
-The `kv:namespace` subcommand takes a new binding name as its argument. A Workers KV namespace will be created using a concatenation of your Worker’s name (from your `wrangler.toml` file) and the binding name you provide:
+The `kv:namespace` subcommand takes a new binding name as its argument. A Workers KV namespace will be created using a concatenation of your Worker’s name (from your Wrangler file) and the binding name you provide:
 
 ```sh
 wrangler kv:namespace create "MY_KV"
@@ -460,7 +460,7 @@ kv_namespaces = [
 ]
 ```
 
-Successful operations will print a new configuration block that should be copied into your `wrangler.toml` file. Add the output to the existing `kv_namespaces` configuration if already present. You can now access the binding from within a Worker:
+Successful operations will print a new configuration block that should be copied into your Wrangler file. Add the output to the existing `kv_namespaces` configuration if already present. You can now access the binding from within a Worker:
 
 ```js
 let value = await MY_KV.get("my-key");
@@ -490,9 +490,7 @@ Additionally, KV namespaces can be used with environments. This is useful for wh
 a KV binding like `MY_KV`, and you want to be able to have these bindings point to different namespaces (like
 one for staging and one for production).
 
-A `wrangler.toml` file with two environments:
-
-import { WranglerConfig } from "~/components";
+A Wrangler file with two environments:
 
 <WranglerConfig>
 
@@ -540,7 +538,7 @@ Most `kv` commands require you to specify a namespace. A namespace can be specif
    wrangler kv:key get --namespace-id=06779da6940b431db6e566b4846d64db "my key"
    ```
 
-Most `kv` subcommands also allow you to specify an environment with the optional `--env` flag. This allows you to publish Workers running the same code but with different namespaces. For example, you could use separate staging and production namespaces for KV data in your `wrangler.toml` file:
+Most `kv` subcommands also allow you to specify an environment with the optional `--env` flag. This allows you to publish Workers running the same code but with different namespaces. For example, you could use separate staging and production namespaces for KV data in your Wrangler file:
 
 
 
@@ -566,7 +564,7 @@ kv_namespaces = [
 
 </WranglerConfig>
 
-With the `wrangler.toml` file above, you can specify `--env production` when you want to perform a KV action on the namespace `MY_KV` under `env.production`. For example, with the `wrangler.toml` file above, you can get a value out of a production KV instance with:
+With the Wrangler file above, you can specify `--env production` when you want to perform a KV action on the namespace `MY_KV` under `env.production`. For example, with the Wrangler file above, you can get a value out of a production KV instance with:
 
 ```sh
 wrangler kv:key get --binding "MY_KV" --env=production "my key"
@@ -716,7 +714,7 @@ wrangler kv:key put --binding= [--namespace-id=] $KEY $VALUE
 
 - `--preview` optional
 
-  - Interact with a preview namespace instead of production. Pass this to the `wrangler.toml` file’s `kv_namespaces.preview_id` instead of `kv_namespaces.id`.
+  - Interact with a preview namespace instead of production. Pass this to the Wrangler file’s `kv_namespaces.preview_id` instead of `kv_namespaces.id`.
 
 - `--ttl` optional
 
@@ -816,7 +814,7 @@ wrangler kv:key get --binding= [--env=] [--preview] [--namespace-id=] "$KEY"
   - If defined, the operation will only apply to the specified environment. Refer to [Environments](/workers/wrangler/environments/) for more information.
 
 - `--preview` optional
-  - Interact with a preview namespace instead of production. Pass this to use your `wrangler.toml` file’s `kv_namespaces.preview_id` instead of `kv_namespaces.id`
+  - Interact with a preview namespace instead of production. Pass this to use your Wrangler file’s `kv_namespaces.preview_id` instead of `kv_namespaces.id`
 
 ##### Usage
 
@@ -850,7 +848,7 @@ wrangler kv:key delete --binding= [--env=] [--preview] [--namespace-id=] "$KEY"
   - Perform on a specific environment specified as `$ENVIRONMENT_NAME`.
 
 - `--preview` optional
-  - Interact with a preview namespace instead of production. Pass this to use your `wrangler.toml`’s `kv_namespaces.preview_id` instead of `kv_namespaces.id`
+  - Interact with a preview namespace instead of production. Pass this to use your Wrangler configuration file's `kv_namespaces.preview_id` instead of `kv_namespaces.id`
 
 ##### Usage
 
@@ -889,7 +887,7 @@ wrangler kv:bulk put --binding= [--env=] [--preview] [--namespace-id=] $FILENAME
   - If defined, the changes will only apply to the specified environment. Refer to [Environments](/workers/wrangler/environments/) for more information.
 
 - `--preview` optional
-  - Interact with a preview namespace instead of production. Pass this to use your `wrangler.toml` file’s `kv_namespaces.preview_id` instead of `kv_namespaces.id`
+  - Interact with a preview namespace instead of production. Pass this to use your Wrangler file’s `kv_namespaces.preview_id` instead of `kv_namespaces.id`
 
 This command takes a JSON file as an argument with a list of key-value pairs to upload. An example of JSON input:
 
@@ -971,7 +969,7 @@ wrangler kv:bulk delete --binding= [--env=] [--preview] [--namespace-id=] $FILEN
   - If defined, the changes will only apply to the specified environment. Refer to [Environments](/workers/wrangler/environments/) for more information.
 
 - `--preview` optional
-  - Interact with a preview namespace instead of production. Pass this to use your `wrangler.toml` file’s `kv_namespaces.preview_id` instead of `kv_namespaces.id`
+  - Interact with a preview namespace instead of production. Pass this to use your Wrangler file’s `kv_namespaces.preview_id` instead of `kv_namespaces.id`
 
 This command takes a JSON file as an argument with a list of key-value pairs to delete. An example of JSON input:
 
@@ -1009,7 +1007,7 @@ y
 
 ## Environment variables
 
-Wrangler supports any `wrangler.toml` keys passed in as environment variables. This works by passing in `CF_` + any uppercased TOML key. For example:
+Wrangler supports any [Wrangler configuration file](/workers/wrangler/configuration/) keys passed in as environment variables. This works by passing in `CF_` + any uppercased TOML key. For example:
 
 `CF_NAME=my-worker CF_ACCOUNT_ID=1234 wrangler dev`
 

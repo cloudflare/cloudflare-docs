@@ -6,7 +6,7 @@ sidebar:
 ---
 
 :::note
-This implementation requires an active [Zone](/fundamentals/setup/accounts-and-zones/#zones), a valid [Edge Certificate](/ssl/edge-certificates/), and [proxied](/dns/manage-dns-records/reference/proxied-dns-records/) hostname. <br />
+This implementation requires an active [Zone](/fundamentals/setup/accounts-and-zones/#zones), a valid [Edge Certificate](/ssl/edge-certificates/), and [proxied](/dns/proxy-status/) hostname. <br />
 
 API Shield is not required to use mTLS. <br />
 
@@ -63,7 +63,7 @@ Use the values from the previous step.
 
 mTLS is verified and checked in the [Cloudflare WAF phase](/waf/reference/phases/). This is done by creating WAF [Custom Rules](/waf/custom-rules/) using the dynamic fields.
 
-All Client Certificate details can be found in the [`cf.tls_*`](/ruleset-engine/rules-language/fields/dynamic-fields/#cftls_cipher) dynamic fields in the [Cloudflare Ruleset Engine](/ruleset-engine/).
+All Client Certificate details can be found in the [`cf.tls_*`](/ruleset-engine/rules-language/fields/reference/?field-category=mTLS&field-category=SSL/TLS) fields in the [Cloudflare Ruleset Engine](/ruleset-engine/).
 
 Example WAF Custom Rule with action block:
 

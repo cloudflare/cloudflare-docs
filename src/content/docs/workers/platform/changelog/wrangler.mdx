@@ -1,7 +1,7 @@
 ---
 pcx_content_type: changelog
 title: Wrangler
-changelog_file_name:
+release_notes_file_name:
   - wrangler
 head:
   - tag: title
@@ -9,8 +9,8 @@ head:
 description: Review recent changes to Cloudflare Wrangler.
 ---
 
-import { ProductChangelog } from "~/components";
+import { ProductReleaseNotes } from "~/components";
 
-{/* <!-- All changelog entries are pulled directly from https://api.github.com/repos/cloudflare/workers-sdk/releases and manipulated in the src/util/changelogs.ts file (getWranglerChangelog() function). This is unique compared to other changelog entries. --> */}
+{/* <!-- All changelog entries are pulled directly from https://api.github.com/repos/cloudflare/workers-sdk/releases and manipulated in the src/util/release-notes.ts file (getWranglerChangelog() function). This is unique compared to other changelog entries. --> */}
 
-<ProductChangelog />
+<ProductReleaseNotes />

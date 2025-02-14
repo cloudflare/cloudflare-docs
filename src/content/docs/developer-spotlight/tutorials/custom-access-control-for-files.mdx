@@ -17,7 +17,7 @@ spotlight:
   author_bio_source: GitHub
 ---
 
-import { Render, PackageManagers } from "~/components";
+import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 This tutorial gives you an overview on how to create a TypeScript-based Cloudflare Worker which allows you to control file access based on a simple username and password authentication. To achieve this, we will use a [D1 database](/d1/) for user management and an [R2 bucket](/r2/) for file storage.
 
@@ -70,9 +70,7 @@ Replace `<YOUR_DATABASE_NAME>` with the name you want to use for your database. 
 
 After the database is successfully created, you will see the data for the binding displayed as an output.
 The binding declaration will start with `[[d1_databases]]` and contain the binding name, database name and ID.
-To use the database in your worker, you will need to add the binding to your `wrangler.toml` file, by copying the declaration and pasting it into the wrangler file, as shown in the example below.
-
-import { WranglerConfig } from "~/components";
+To use the database in your worker, you will need to add the binding to your Wrangler file, by copying the declaration and pasting it into the wrangler file, as shown in the example below.
 
 <WranglerConfig>
 
@@ -96,7 +94,7 @@ npx wrangler r2 bucket create <YOUR_BUCKET_NAME>
 ```
 
 This works similar to the D1 database creation, where you will need to replace `<YOUR_BUCKET_NAME>` with the name you want to use for your bucket.
-To do this, go to the `wrangler.toml` file again and then add the following lines:
+To do this, go to the Wrangler file again and then add the following lines:
 
 
 
@@ -112,7 +110,7 @@ bucket_name = "<YOUR_BUCKET_NAME>"
 
 Now that you have prepared the Wrangler configuration, you should update the `worker-configuration.d.ts` file to include the new bindings.
 This file will then provide TypeScript with the correct type definitions for the bindings, which allows for type checking and code completion in your editor.
-You could either update it manually or run the following command in the directory of your project to update it automatically based on the wrangler configuration file (recommended).
+You could either update it manually or run the following command in the directory of your project to update it automatically based on the [Wrangler configuration file](/workers/wrangler/configuration/) (recommended).
 
 ```sh
 npm run cf-typegen

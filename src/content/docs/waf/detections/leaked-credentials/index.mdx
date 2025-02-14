@@ -7,7 +7,7 @@ sidebar:
     label: Leaked credentials
 ---
 
-The leaked credentials [traffic detection](/waf/detections/) scans incoming requests for previously leaked credentials (usernames and passwords) previously leaked from data breaches.
+The leaked credentials [traffic detection](/waf/detections/) scans incoming requests for previously leaked credentials (usernames and passwords) previously leaked from [data breaches](https://www.cloudflare.com/learning/security/what-is-a-data-breach/).
 
 :::note
 If you are currently using [Exposed Credentials Check](/waf/managed-rules/check-for-exposed-credentials/) (a previous implementation) and want to upgrade to leaked credentials detection, refer to our [upgrade guide](/waf/managed-rules/check-for-exposed-credentials/upgrade-to-leaked-credentials-detection/).
@@ -26,7 +26,7 @@ In addition, leaked credentials detection provides a [managed transform](/rules/
 One common approach used in web applications when detecting the use of stolen credentials is to warn end users about the situation and ask them to update their password. You can do this based on the managed header received at your origin server.
 
 :::note
-Cloudflare may detect leaked credentials either because an attacker is performing a credential stuffing attack or because a legitimate end user is reusing a previously leaked password.
+Cloudflare may detect leaked credentials either because an attacker is performing a [credential stuffing](https://www.cloudflare.com/learning/bots/what-is-credential-stuffing/) attack or because a legitimate end user is reusing a previously leaked password.
 :::
 
 ## Availability
@@ -75,11 +75,11 @@ When specifying a custom detection location, only the location of the username f
 Expressions used to specify custom detection locations can include the following fields and functions:
 
 - Fields:
-  - [`http.request.body.form`](/ruleset-engine/rules-language/fields/http-request-body/#httprequestbodyform)
-  - [`http.request.body.multipart`](/ruleset-engine/rules-language/fields/http-request-body/#httprequestbodymultipart)
-  - [`http.request.body.raw`](/ruleset-engine/rules-language/fields/http-request-body/#httprequestbodyraw)
-  - [`http.request.headers`](/ruleset-engine/rules-language/fields/http-request-header/#httprequestheaders)
-  - [`http.request.uri.query`](/ruleset-engine/rules-language/fields/standard-fields/#httprequesturiquery)
+  - [`http.request.body.form`](/ruleset-engine/rules-language/fields/reference/http.request.body.form/)
+  - [`http.request.body.multipart`](/ruleset-engine/rules-language/fields/reference/http.request.body.multipart/)
+  - [`http.request.body.raw`](/ruleset-engine/rules-language/fields/reference/http.request.body.raw/)
+  - [`http.request.headers`](/ruleset-engine/rules-language/fields/reference/http.request.headers/)
+  - [`http.request.uri.query`](/ruleset-engine/rules-language/fields/reference/http.request.uri.query/)
 - Functions:
   - [`lookup_json_string()`](/ruleset-engine/rules-language/functions/#lookup_json_string)
   - [`url_decode()`](/ruleset-engine/rules-language/functions/#url_decode)
@@ -96,8 +96,8 @@ For instructions on configuring a custom detection location, refer to [Get start
 | Similar Password Leaked     | [`cf.waf.credential_check.username_password_similar`][4]    | Enterprise plan    |
 | Authentication detected     | [`cf.waf.auth_detected`][5]                                 | Enterprise plan    |
 
-[1]: /ruleset-engine/rules-language/fields/dynamic-fields/#cfwafcredential_checkpassword_leaked
-[2]: /ruleset-engine/rules-language/fields/dynamic-fields/#cfwafcredential_checkusername_and_password_leaked
-[3]: /ruleset-engine/rules-language/fields/dynamic-fields/#cfwafcredential_checkusername_leaked
-[4]: /ruleset-engine/rules-language/fields/dynamic-fields/#cfwafcredential_checkusername_password_similar
-[5]: /ruleset-engine/rules-language/fields/dynamic-fields/#cfwafauth_detected
+[1]: /ruleset-engine/rules-language/fields/reference/cf.waf.credential_check.password_leaked/
+[2]: /ruleset-engine/rules-language/fields/reference/cf.waf.credential_check.username_and_password_leaked/
+[3]: /ruleset-engine/rules-language/fields/reference/cf.waf.credential_check.username_leaked/
+[4]: /ruleset-engine/rules-language/fields/reference/cf.waf.credential_check.username_password_similar/
+[5]: /ruleset-engine/rules-language/fields/reference/cf.waf.auth_detected/

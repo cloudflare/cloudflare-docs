@@ -146,7 +146,7 @@ It is not possible to define your own arrays. You can only use arrays returned b
 
 <Render
 	file="rules-language-missing-value-behavior"
-	params={{ one: "an out-of-bounds array index" }}
+	params={{ errorDescription: "an out-of-bounds array index" }}
 />
 
 You can only use `[*]` multiple times in the same expression if applied to the same array. Also, you can only use `[*]` in the first argument of a function call.
@@ -172,7 +172,7 @@ For maps where the values have an `Array` type, you cannot directly use [operato
 
 ### Examples
 
-The following example is based on the [`http.request.headers`](/ruleset-engine/rules-language/fields/http-request-header/) field with a data type of `Map<Array<String>>`, where array elements are of `String` data type.
+The following example is based on the [`http.request.headers`](/ruleset-engine/rules-language/fields/reference/http.request.headers/) field with a data type of `Map<Array<String>>`, where array elements are of `String` data type.
 
 If an incoming HTTP request included a single `Accept: application/json` HTTP header, the following expressions would evaluate to the indicated values:
 
@@ -184,7 +184,7 @@ any(http.request.headers["accept"][*] == "application/json") # ==> true
 any(http.request.headers["accept"][*] == "text/plain")       # ==> false
 ```
 
-The following example is based on the [`http.request.uri.args`](/ruleset-engine/rules-language/fields/uri/#httprequesturiargs) field with a data type of `Map<Array<String>>`, where array elements are of `String` data type.
+The following example is based on the [`http.request.uri.args`](/ruleset-engine/rules-language/fields/reference/http.request.uri.args/) field with a data type of `Map<Array<String>>`, where array elements are of `String` data type.
 
 If an HTTP request included three `filter` URI arguments `waf`, `botm`, and `cdn`, the following expressions would evaluate to the indicated values:
 
@@ -217,7 +217,7 @@ It is not possible to define your own maps. You can only use maps returned by fi
 
 <Render
 	file="rules-language-missing-value-behavior"
-	params={{ one: "a non-existing key in a map" }}
+	params={{ errorDescription: "a non-existing key in a map" }}
 />
 
 ## Lists

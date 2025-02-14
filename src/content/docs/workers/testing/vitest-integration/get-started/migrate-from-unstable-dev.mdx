@@ -28,7 +28,7 @@ it("dispatches fetch event", () => {
 })
 ```
 
-With the Workers Vitest integration, you can accomplish the same goal using `SELF` from `cloudflare:test`. `SELF` is a [service binding](/workers/runtime-apis/bindings/service-bindings/) to the default export defined by the `main` option in your `wrangler.toml`. This `main` Worker runs in the same isolate as tests so any global mocks will apply to it too.
+With the Workers Vitest integration, you can accomplish the same goal using `SELF` from `cloudflare:test`. `SELF` is a [service binding](/workers/runtime-apis/bindings/service-bindings/) to the default export defined by the `main` option in your [Wrangler configuration file](/workers/wrangler/configuration/). This `main` Worker runs in the same isolate as tests so any global mocks will apply to it too.
 
 ```js
 import { SELF } from "cloudflare:test";
@@ -46,7 +46,7 @@ With the Workers Vitest integration, there is no need to stop a Worker via `work
 
 ## Import Wrangler configuration
 
-Via the `unstable_dev` API, you can reference a `wrangler.toml` configuration file by adding it as an option:
+Via the `unstable_dev` API, you can reference a [Wrangler configuration file](/workers/wrangler/configuration/) by adding it as an option:
 
 ```js
 await unstable_dev("src/index.ts", {
@@ -54,7 +54,7 @@ await unstable_dev("src/index.ts", {
 });
 ```
 
-With the Workers Vitest integration, you can now set this reference to `wrangler.toml` in `vitest.config.js` for all of your tests:
+With the Workers Vitest integration, you can now set this reference to a [Wrangler configuration file](/workers/wrangler/configuration/) in `vitest.config.js` for all of your tests:
 
 ```js null {5-7}
 export default defineWorkersConfig({

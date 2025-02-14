@@ -48,7 +48,7 @@ cd my-first-worker
 
 In your project directory, C3 will have generated the following:
 
-* `wrangler.toml`: Your [Wrangler](/workers/wrangler/configuration/#sample-wranglertoml-configuration) configuration file.
+* `wrangler.jsonc`: Your [Wrangler](/workers/wrangler/configuration/#sample-wrangler-configuration) configuration file.
 * `index.js` (in `/src`): A minimal `'Hello World!'` Worker written in [ES module](/workers/reference/migrate-to-module-workers/) syntax.
 * `package.json`: A minimal Node dependencies configuration file.
 * `package-lock.json`: Refer to [`npm` documentation on `package-lock.json`](https://docs.npmjs.com/cli/v9/configuring-npm/package-lock-json).
@@ -78,8 +78,8 @@ npm create cloudflare@latest -- --template <SOURCE>
 Your existing template folder must contain the following files, at a minimum, to meet the requirements for Cloudflare Workers:
 
 - `package.json`
-- `wrangler.toml` [See sample Wrangler configuration](/workers/wrangler/configuration/#sample-wranglertoml-configuration)
-- `src/` containing a worker script referenced from `wrangler.toml`
+- `wrangler.jsonc` [See sample Wrangler configuration](/workers/wrangler/configuration/#sample-wrangler-configuration)
+- `src/` containing a worker script referenced from `wrangler.jsonc`
 
 </Details>
 
@@ -191,7 +191,7 @@ Preview your Worker at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`.
 
 <Details header="Seeing 523 errors?">
 
-If you see [`523` errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-523-origin-is-unreachable) when pushing your  `*.workers.dev` subdomain for the first time, wait a minute or so and the errors will resolve themselves.
+If you see [`523` errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-523-origin-is-unreachable) when pushing your `*.workers.dev` subdomain for the first time, wait a minute or so and the errors will resolve themselves.
 
 </Details>
 
@@ -199,6 +199,7 @@ If you see [`523` errors](/support/troubleshooting/cloudflare-errors/troubleshoo
 
 To do more:
 
+- Push your project to a GitHub or GitLab respoitory then [connect to builds](/workers/ci-cd/builds/#get-started) to enable automatic builds and deployments.
 - Visit the [Cloudflare dashboard](https://dash.cloudflare.com/) for simpler editing.
 - Review our [Examples](/workers/examples/) and [Tutorials](/workers/tutorials/) for inspiration.
 - Set up [bindings](/workers/runtime-apis/bindings/) to allow your Worker to interact with other resources and unlock new functionality.

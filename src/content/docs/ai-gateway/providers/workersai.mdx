@@ -9,6 +9,15 @@ import { Render } from "~/components";
 
 Use AI Gateway for analytics, caching, and security on requests to [Workers AI](/workers-ai/). Workers AI integrates seamlessly with AI Gateway, allowing you to execute AI inference via API requests or through an environment binding for Workers scripts. The binding simplifies the process by routing requests through your AI Gateway with minimal setup.
 
+## Prerequisites
+
+When making requests to Workers AI, ensure you have the following:
+
+- Your AI Gateway Account ID.
+- Your AI Gateway gateway name.
+- An active Workers AI API token.
+- The name of the Workers AI model you want to use.
+
 ## REST API
 
 To interact with a REST API, update the URL used for your request:
@@ -105,6 +114,6 @@ Workers AI supports the following parameters for AI gateways:
 - `id` string
   - Name of your existing [AI Gateway](/ai-gateway/get-started/#create-gateway). Must be in the same account as your Worker.
 - `skipCache` boolean(default: false)
-  - Controls whether the request should [skip the cache](/ai-gateway/configuration/caching/#skip-cache-cf-skip-cache).
+  - Controls whether the request should [skip the cache](/ai-gateway/configuration/caching/#skip-cache-cf-aig-skip-cache).
 - `cacheTtl` number
-  - Controls the [Cache TTL](/ai-gateway/configuration/caching/#cache-ttl-cf-cache-ttl).
+  - Controls the [Cache TTL](/ai-gateway/configuration/caching/#cache-ttl-cf-aig-cache-ttl).

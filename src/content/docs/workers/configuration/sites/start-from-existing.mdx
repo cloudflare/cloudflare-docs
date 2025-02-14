@@ -1,6 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Start from existing
+noindex: true
 sidebar:
   order: 1
 ---
@@ -21,7 +22,7 @@ To deploy a pre-existing static site project, start with a pre-generated site. W
 
 ## Getting started
 
-1. Run the `wrangler init` command in the root of your project’s directory to generate a basic Worker:
+1. Run the `wrangler init` command in the root of your project's directory to generate a basic Worker:
 
    ```sh
    wrangler init -y
@@ -29,12 +30,12 @@ To deploy a pre-existing static site project, start with a pre-generated site. W
 
    This command adds/update the following files:
 
-   - `wrangler.toml`: The file containing project configuration.
+   - `wrangler.jsonc`: The file containing project configuration.
    - `package.json`: Wrangler `devDependencies` are added.
    - `tsconfig.json`: Added if not already there to support writing the Worker in TypeScript.
    - `src/index.ts`: A basic Cloudflare Worker, written in TypeScript.
 
-2. Add your site’s build/output directory to the `wrangler.toml` file:
+2. Add your site's build/output directory to the Wrangler file:
 
    <WranglerConfig>
 
@@ -124,9 +125,7 @@ async function handleEvent(event) {
    npx wrangler deploy
    ```
 
-6. Deploy your site to a [custom domain](/workers/configuration/routing/custom-domains/) that you own and have already attached as a Cloudflare zone. Add a `route` property to the `wrangler.toml` file.
-
-
+6. Deploy your site to a [custom domain](/workers/configuration/routing/custom-domains/) that you own and have already attached as a Cloudflare zone. Add a `route` property to the Wrangler file.
 
    <WranglerConfig>
 

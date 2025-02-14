@@ -26,7 +26,7 @@ export async function GET(request) {
 }
 ```
 
-Add bindings to your Pages project by [adding them to your `wrangler.toml` configuration file](/pages/functions/wrangler-configuration/).
+Add bindings to your Pages project by adding them to your [Wrangler configuration file](/pages/functions/wrangler-configuration/).
 
 ## TypeScript type declarations for bindings
 
@@ -59,7 +59,7 @@ interface CloudflareEnv {
 
 ## Other Cloudflare APIs (`cf`, `ctx`)
 
-Access context about the incoming request from the [`cf` object](/workers/runtime-apis/request/#incomingrequestcfproperties), as well as [lifecycle methods from the `ctx` object](/workers/runtime-apis/handlers/fetch/#lifecycle-methods) from the return value of [`getRequestContext()`](https://github.com/cloudflare/next-on-pages/blob/main/packages/next-on-pages/src/api/getRequestContext.ts):
+Access context about the incoming request from the [`cf` object](/workers/runtime-apis/request/#incomingrequestcfproperties), as well as [lifecycle methods from the `ctx` object](/workers/runtime-apis/handlers/fetch/) from the return value of [`getRequestContext()`](https://github.com/cloudflare/next-on-pages/blob/main/packages/next-on-pages/src/api/getRequestContext.ts):
 
 ```js
 import { getRequestContext } from "@cloudflare/next-on-pages";

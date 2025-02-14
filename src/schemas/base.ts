@@ -66,13 +66,14 @@ export const baseSchema = z.object({
 			"This is used to automatically add the LastReviewed component to a page. Refer to https://developers.cloudflare.com/style-guide/components/last-reviewed/.",
 		),
 	spotlight: spotlightAuthorDetails,
-	changelog_file_name: z.string().array().optional(),
-	changelog_product_area_name: z.string().optional(),
+	release_notes_file_name: z.string().array().optional(),
+	release_notes_product_area_name: z.string().optional(),
 	products: z.string().array().optional(),
 	languages: z.string().array().optional(),
 	summary: z.string().optional(),
 	goal: z.string().array().optional(),
 	operation: z.string().array().optional(),
+	noindex: z.boolean().optional(),
 	sidebar: z
 		.object({
 			order: z.number().optional(),

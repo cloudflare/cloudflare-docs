@@ -1,0 +1,1866 @@
+entries:
+  - name: http.cookie
+    data_type: String
+    categories: [Request, Headers]
+    keywords: [request, cookie, header, client, visitor]
+    summary: The entire cookie as a string.
+    example_value: |-
+      "session=8521F670545D7865F79C3D7BEDC29CCE;-background=light"
+
+  - name: http.host
+    data_type: String
+    categories: [Request, URI]
+    keywords: [request, uri, url, domain, client, visitor]
+    summary: The hostname used in the full request URI.
+    example_value: |-
+      "www.example.org"
+
+  - name: http.referer
+    data_type: String
+    categories: [Request, Headers]
+    keywords: [request, header, referer, referrer, client, visitor]
+    summary: The HTTP `Referer` request header, which contains the address of the web page that linked to the currently requested page.
+    example_value: |-
+      "https://developer.example.org/en-US/docs/Web/JavaScript"
+
+  - name: http.request.full_uri
+    data_type: String
+    categories: [Request, URI]
+    keywords: [request, uri, url, client, visitor]
+    summary: The full URI as received by the web server.
+    description: |-
+      The value will not include the `#fragment` part, which is not sent to web servers.
+    example_value: |-
+      "https://www.example.org/articles/index?section=539061&expand=comments"
+
+  - name: http.request.method
+    data_type: String
+    categories: [Request]
+    keywords: [request, client, visitor]
+    summary: The HTTP method, returned as a string of uppercase characters.
+    example_value: |-
+      "GET"
+
+  - name: http.request.cookies
+    data_type: Map<Array<String>>
+    categories: [Request, Headers]
+    keywords: [request, header, client, visitor]
+    plan_info_label: Pro or above
+    summary: The `Cookie` HTTP header associated with a request represented as a Map (associative array).
+    description: |-
+      Requires a Cloudflare Pro, Business, or Enterprise plan.
+
+      The cookie names are URL decoded. If two cookies have the same name after decoding, their value arrays are merged.
+
+      The cookie values are not pre-processed and retain the original case used in the request.
+    example_value: |-
+      { "app": ["test"] }
+    example_block: |-
+      any(http.request.cookies["app"][*] == "test")
+
+  - name: http.request.timestamp.sec
+    data_type: Integer
+    categories: [Request]
+    keywords: [request, timestamp, client, visitor]
+    summary: The timestamp when Cloudflare received the request, expressed as UNIX time in seconds.
+    description: |-
+      The field value is 10 digits long.
+
+      When validating HMAC tokens in an expression, pass this field as the `currentTimestamp` argument to the [`is_timed_hmac_valid_v0()`](/ruleset-engine/rules-language/functions/#hmac-validation) validation function.
+
+      To obtain the timestamp milliseconds, use the [`http.request.timestamp.msec`](/ruleset-engine/rules-language/fields/reference/http.request.timestamp.msec/) field.
+    example_value: |-
+      1484063137
+
+  - name: http.request.timestamp.msec
+    data_type: Integer
+    categories: [Request]
+    keywords: [request, timestamp, client, visitor]
+    summary: The millisecond when Cloudflare received the request, between 0–999.
+    description: |-
+      To obtain the complete timestamp, use both [`http.request.timestamp.sec`](/ruleset-engine/rules-language/fields/reference/http.request.timestamp.sec/) and [`http.request.timestamp.msec`](/ruleset-engine/rules-language/fields/reference/http.request.timestamp.msec/) fields.
+    example_value: |-
+      857
+
+  - name: http.request.uri
+    data_type: String
+    categories: [Request, URI]
+    keywords: [request, uri, url, path, query, query string, client, visitor]
+    summary: The URI path and query string of the request.
+    example_value: |-
+      "/articles/index?section=539061&expand=comments"
+
+  - name: http.request.uri.path
+    data_type: String
+    categories: [Request, URI]
+    keywords: [request, uri, url, path, client, visitor]
+    summary: The URI path of the request.
+    example_value: |-
+      "/articles/index"
+
+  - name: http.request.uri.path.extension
+    data_type: String
+    categories: [Request, URI]
+    keywords: [request, uri, url, path, client, visitor]
+    summary: The lowercased file extension in the URI path without the dot (`.`) character.
+    description: |-
+      This corresponds to the string after the last dot in the URI path, excluding the query string.
+
+      If the first character of the last path segment is a dot and the segment does not contain other dot characters, the field value will be an empty string (`""`). Having a dot as the first character does not represent a file extension and is commonly used in UNIX-like systems to denote a hidden file or directory.
+
+      Example values:
+
+      - If the URI path is `/articles/index.html`, the field value will be `"html"`.
+      - If the URI path is `/articles/index.`, the field value will be an empty string (`""`).
+
+      Example values:
+
+      | URI path       | Field value |
+      | -------------- | ----------- |
+      | `/foo`         | `""`        |
+      | `/foo.mp3`     | `"mp3"`     |
+      | `/.mp3`        | `""`        |
+      | `/.foo.mp3`    | `"mp3"`     |
+      | `/foo.tar.bz2` | `"bz2"`     |
+      | `/foo.`        | `""`        |
+      | `/foo.MP3`     | `"mp3"`     |
+
+  - name: http.request.uri.query
+    data_type: String
+    categories: [Request, URI]
+    keywords: [request, uri, url, query, query string, client, visitor]
+    summary: The entire query string, without the `?` delimiter.
+    example_value: |-
+      "section=539061&expand=comments"
+
+  - name: http.user_agent
+    data_type: String
+    categories: [Request, Headers]
+    keywords: [request, header, agent, user-agent, browser, client, visitor]
+    summary: The HTTP `User-Agent` request header, which contains a characteristic string to identify the client operating system and web browser.
+    example_value: |-
+      "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36"
+
+  - name: http.request.version
+    data_type: String
+    categories: [Request]
+    keywords: [request, protocol, client, visitor]
+    summary: The version of the HTTP protocol used. Use this field when different checks are needed for different versions.
+    description: |-
+      Example values:
+
+      - `"HTTP/1.1"`
+      - `"HTTP/3"`
+
+  - name: http.x_forwarded_for
+    data_type: String
+    categories: [Request, Headers]
+    keywords: [request, header, proxy, ip, client, visitor]
+    summary: The full value of the `X-Forwarded-For` HTTP header.
+    example_value: |-
+      "203.0.113.195, 70.41.3.18"
+
+  - name: ip.src
+    data_type: IP address
+    categories: [Request]
+    keywords: [request, proxy, ip, client, visitor]
+    summary: The client TCP IP address, which may be adjusted to reflect the actual address of the client using HTTP headers such as `X-Forwarded-For` or `X-Real-IP`.
+    example_value: |-
+      93.184.216.34
+
+  - name: ip.src.lat
+    data_type: String
+    categories: [Request, Geolocation]
+    keywords: [request, location, geolocation, client, visitor]
+    summary: The latitude associated with the client IP address.
+    example_value: |-
+      "37.78044"
+
+  - name: ip.src.lon
+    data_type: String
+    categories: [Request, Geolocation]
+    keywords: [request, location, geolocation, client, visitor]
+    summary: The longitude associated with the client IP address.
+    example_value: |-
+      "-122.39055"
+
+  - name: ip.src.city
+    data_type: String
+    categories: [Request, Geolocation]
+    keywords: [request, location, geolocation, client, visitor]
+    summary: The city associated with the client IP address.
+    example_value: |-
+      "San Francisco"
+
+  - name: ip.src.postal_code
+    data_type: String
+    categories: [Request, Geolocation]
+    keywords: [request, location, geolocation, zip, zip code, client, visitor]
+    summary: The postal code associated with the incoming request.
+    example_value: |-
+      "78701"
+
+  - name: ip.src.metro_code
+    data_type: String
+    categories: [Request, Geolocation]
+    keywords: [request, location, geolocation, dma, client, visitor]
+    summary: The metro code or Designated Market Area (DMA) code associated with the incoming request.
+    example_value: |-
+      "635"
+
+  - name: ip.src.region
+    data_type: String
+    categories: [Request, Geolocation]
+    keywords: [request, location, geolocation, state, client, visitor]
+    summary: The region name associated with the incoming request.
+    example_value: |-
+      "Texas"
+
+  - name: ip.src.region_code
+    data_type: String
+    categories: [Request, Geolocation]
+    keywords: [request, location, geolocation, state, client, visitor]
+    summary: The region code associated with the incoming request.
+    example_value: |-
+      "TX"
+
+  - name: ip.src.timezone.name
+    data_type: String
+    categories: [Request, Geolocation]
+    keywords:
+      [request, location, geolocation, time zone, clock, client, visitor]
+    summary: The name of the timezone associated with the incoming request.
+    description: |-
+      This field is only available in rewrite expressions of [Transform Rules](/rules/transform/).
+    example_value: |-
+      "America/Chicago"
+
+  - name: ip.src.asnum
+    data_type: Number
+    categories: [Request, Geolocation]
+    keywords:
+      [request, location, geolocation, asn, ip.geoip.asnum, client, visitor]
+    summary: The 16-bit or 32-bit integer representing the Autonomous System (AS) number associated with the client IP address.
+    description: |-
+      This field has the same value as the `ip.geoip.asnum` field, which is deprecated. The `ip.geoip.asnum` field is still available for new and existing rules, but you should use the `ip.src.asnum` field instead.
+
+      _GeoIP is the registered trademark of MaxMind, Inc._
+
+  - name: ip.src.continent
+    data_type: String
+    categories: [Request, Geolocation]
+    keywords:
+      [request, location, geolocation, ip.geoip.continent, client, visitor]
+    summary: The continent code associated with the client IP address.
+    description: |-
+      Values:
+
+      - `"AF"`: Africa
+      - `"AN"`: Antarctica
+      - `"AS"`: Asia
+      - `"EU"`: Europe
+      - `"NA"`: North America
+      - `"OC"`: Oceania
+      - `"SA"`: South America
+      - `"T1"`: Tor network
+
+      This field has the same value as the `ip.geoip.continent` field, which is deprecated. The `ip.geoip.continent` field is still available for new and existing rules, but you should use the `ip.src.continent` field instead.
+
+      _GeoIP is the registered trademark of MaxMind, Inc._
+
+  - name: ip.src.country
+    data_type: String
+    categories: [Request, Geolocation]
+    keywords:
+      [request, location, geolocation, ip.geoip.country, client, visitor]
+    summary: The 2-letter country code in [ISO 3166-1 Alpha 2](https://www.iso.org/obp/ui/#search/code/) format.
+    example_value: |-
+      "GB"
+    description: |-
+      For more information on the ISO 3166-1 Alpha 2 format, refer to [ISO 3166-1 Alpha 2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) on Wikipedia.
+
+      This field has the same value as the `ip.geoip.country` field, which is deprecated. The `ip.geoip.country` field is still available for new and existing rules, but you should use the `ip.src.country` field instead.
+
+      _GeoIP is the registered trademark of MaxMind, Inc._
+
+  - name: ip.src.subdivision_1_iso_code
+    data_type: String
+    categories: [Request, Geolocation]
+    keywords:
+      [
+        request,
+        location,
+        geolocation,
+        ip.geoip.subdivision_1_iso_code,
+        region,
+        client,
+        visitor,
+      ]
+    plan_info_label: Business or above
+    summary: The ISO 3166-2 code for the first-level region associated with the IP address.
+    example_value: |-
+      "GB-ENG"
+    description: |-
+      When the actual value is not available, this field contains an empty string.
+
+      Requires a Cloudflare Business or Enterprise plan.
+
+      For more information on the ISO 3166-2 standard and the available regions, refer to [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) on Wikipedia.
+
+      This field has the same value as the `ip.geoip.subdivision_1_iso_code` field, which is deprecated. The `ip.geoip.subdivision_1_iso_code` field is still available for new and existing rules, but you should use the `ip.src.subdivision_1_iso_code` field instead.
+
+      _GeoIP is the registered trademark of MaxMind, Inc._
+
+  - name: ip.src.subdivision_2_iso_code
+    data_type: String
+    categories: [Request, Geolocation]
+    keywords:
+      [
+        request,
+        location,
+        geolocation,
+        ip.geoip.subdivision_2_iso_code,
+        region,
+        client,
+        visitor,
+      ]
+    plan_info_label: Business or above
+    summary: The ISO 3166-2 code for the second-level region associated with the IP address.
+    example_value: |-
+      "GB-SWK"
+    description: |-
+      When the actual value is not available, this field contains an empty string.
+
+      Requires a Cloudflare Business or Enterprise plan.
+
+      For more information on the ISO 3166-2 standard and the available regions, refer to [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) on Wikipedia.
+
+      This field has the same value as the `ip.geoip.subdivision_2_iso_code` field, which is deprecated. The `ip.geoip.subdivision_2_iso_code` field is still available for new and existing rules, but you should use the `ip.src.subdivision_2_iso_code` field instead.
+
+      _GeoIP is the registered trademark of MaxMind, Inc._
+
+  - name: ip.src.is_in_european_union
+    data_type: Boolean
+    categories: [Request, Geolocation]
+    keywords:
+      [
+        request,
+        location,
+        geolocation,
+        ip.geoip.is_in_european_union,
+        country,
+        client,
+        visitor,
+      ]
+    plan_info_label: Business or above
+    summary: Whether the request originates from a country in the European Union (EU).
+    description: |-
+      Requires a Cloudflare Business or Enterprise plan.
+
+      Countries in the EU (from geolocation data):
+
+      | Country code | Country name    |
+      | ------------ | --------------- |
+      | `AT`         | Austria         |
+      | `AX`         | Åland Islands   |
+      | `BE`         | Belgium         |
+      | `BG`         | Bulgaria        |
+      | `CY`         | Cyprus          |
+      | `CZ`         | Czechia         |
+      | `DE`         | Germany         |
+      | `DK`         | Denmark         |
+      | `EE`         | Estonia         |
+      | `ES`         | Spain           |
+      | `FI`         | Finland         |
+      | `FR`         | France          |
+      | `GF`         | French Guiana   |
+      | `GP`         | Guadeloupe      |
+      | `GR`         | Greece          |
+      | `HR`         | Croatia         |
+      | `HU`         | Hungary         |
+      | `IE`         | Ireland         |
+      | `IT`         | Italy           |
+      | `LT`         | Lithuania       |
+      | `LU`         | Luxembourg      |
+      | `LV`         | Latvia          |
+      | `MF`         | Saint Martin    |
+      | `MQ`         | Martinique      |
+      | `MT`         | Malta           |
+      | `NL`         | The Netherlands |
+      | `PL`         | Poland          |
+      | `PT`         | Portugal        |
+      | `RE`         | Réunion         |
+      | `RO`         | Romania         |
+      | `SE`         | Sweden          |
+      | `SI`         | Slovenia        |
+      | `SK`         | Slovakia        |
+      | `YT`         | Mayotte         |
+
+      The EU country list was obtained from MaxMind's GeoIP2 database on 2023-12-05. For details on obtaining up-to-date country information, refer to the [MaxMind website](https://dev.maxmind.com/geoip/geolite2-free-geolocation-data).
+
+      This field has the same value as the `ip.geoip.is_in_european_union` field, which is deprecated. The `ip.geoip.is_in_european_union` field is still available for new and existing rules, but you should use the `ip.src.is_in_european_union` field instead.
+
+      _GeoIP is the registered trademark of MaxMind, Inc._
+
+  - name: raw.http.request.full_uri
+    data_type: String
+    categories: [Request, URI, Raw fields]
+    keywords: [request, uri, url, raw, client, visitor]
+    summary: The raw full URI as received by the web server without any transformation.
+    description: |-
+      The value will not include the `#fragment` part, which is not sent to web servers.
+
+      This is the raw field version of the [`http.request.full_uri`](/ruleset-engine/rules-language/fields/reference/http.request.full_uri/) field. Raw fields, prefixed with `raw.`, preserve original request values for later evaluations. These fields are immutable during the entire request evaluation workflow, and they are not affected by the actions of previously matched rules.
+
+      **Note**: This raw field may include some basic normalization done by Cloudflare's HTTP server. However, this can change in the future.
+
+  - name: raw.http.request.uri.path
+    data_type: String
+    categories: [Request, URI, Raw fields]
+    keywords: [request, uri, url, path, raw, client, visitor]
+    summary: The raw URI path and query string of the request without any transformation.
+    description: |-
+      This is the raw field version of the [`http.request.uri`](/ruleset-engine/rules-language/fields/reference/http.request.uri/) field. Raw fields, prefixed with `raw.`, preserve original request values for later evaluations. These fields are immutable during the entire request evaluation workflow, and they are not affected by the actions of previously matched rules.
+
+      **Note**: This raw field may include some basic normalization done by Cloudflare's HTTP server. However, this can change in the future.
+
+  - name: raw.http.request.uri.path.extension
+    data_type: String
+    categories: [Request, URI, Raw fields]
+    keywords: [request, uri, url, path, raw, client, visitor]
+    summary: The raw file extension in the request URI path without any transformation.
+    description: |-
+      This is the raw field version of the [`http.request.uri.path.extension`](/ruleset-engine/rules-language/fields/reference/http.request.uri.path.extension/) field. Raw fields, prefixed with `raw.`, preserve original request values for later evaluations. These fields are immutable during the entire request evaluation workflow, and they are not affected by the actions of previously matched rules.
+
+  - name: raw.http.request.uri.query
+    data_type: String
+    categories: [Request, URI, Raw fields]
+    keywords: [request, uri, url, query, query string, raw, client, visitor]
+    summary: The entire query string without the `?` delimiter and without any transformation.
+    description: |-
+      This is the raw field version of the [`http.request.uri.query`](/ruleset-engine/rules-language/fields/reference/http.request.uri.query/) field. Raw fields, prefixed with `raw.`, preserve original request values for later evaluations. These fields are immutable during the entire request evaluation workflow, and they are not affected by the actions of previously matched rules.
+
+      **Note**: This raw field may include some basic normalization done by Cloudflare's HTTP server. However, this can change in the future.
+
+  - name: ssl
+    data_type: Boolean
+    categories: [Request]
+    keywords: [request, tls, https, client, visitor]
+    summary: Returns `true` when the HTTP connection to the client is encrypted.
+
+  - name: cf.api_gateway.auth_id_present
+    data_type: Boolean
+    categories: [Request]
+    keywords: [request, session, api shield, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: Indicates whether the request contained an API session authentication token, as defined by API Shield's saved [session identifiers](/api-shield/get-started/#session-identifiers).
+
+  - name: cf.api_gateway.request_violates_schema
+    data_type: Boolean
+    categories: [Request]
+    keywords: [request, api shield, client, visitor]
+    summary: Indicates whether the request [violated the schema](/api-shield/security/schema-validation/) assigned to the respective saved endpoint.
+
+  - name: cf.api_gateway.fallthrough_detected
+    data_type: Boolean
+    categories: [Request]
+    keywords: [request, api shield, client, visitor]
+    summary: Indicates whether the request matched a saved endpoint in [Endpoint Management](/api-shield/management-and-monitoring/).
+
+  - name: cf.bot_management.verified_bot
+    data_type: Boolean
+    categories: [Request, Bots]
+    keywords: [request, bots, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: Indicates whether the request originated from a known good bot or crawler.
+    description: |-
+      Provides the same information as [`cf.client.bot`](/ruleset-engine/rules-language/fields/reference/cf.client.bot/).
+
+      Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
+
+  - name: cf.verified_bot_category
+    data_type: String
+    categories: [Request, Bots]
+    keywords: [request, bots, client, visitor]
+    summary: Provides the type and purpose of a verified bot.
+    description: |-
+      For more details, refer to [Verified Bot Categories](/bots/reference/verified-bot-categories/).
+
+  - name: cf.bot_management.score
+    data_type: Number
+    categories: [Request, Bots]
+    keywords: [request, bots, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: Represents the likelihood that a request originates from a bot using a score from 1–99.
+    description: |-
+      A low score indicates that the request comes from a bot or an automated agent. A high score indicates that a human issued the request.
+
+      Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
+
+  - name: cf.bot_management.static_resource
+    data_type: Number
+    categories: [Request, Bots]
+    keywords: [request, bots, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: Indicates whether static resources should be included when you create a rule using [`cf.bot_management.score`](/ruleset-engine/rules-language/fields/reference/cf.bot_management.score/).
+    description: |-
+      For more details, refer to [Static resource protection](/bots/reference/static-resources/).
+
+      Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
+
+  - name: cf.bot_management.ja3_hash
+    data_type: String
+    categories: [Request, Bots]
+    keywords: [request, bots, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: Provides an SSL/TLS fingerprint to help you identify potential bot requests.
+    description: |-
+      For more details, refer to [JA3/JA4 Fingerprint](/bots/concepts/ja3-ja4-fingerprint/).
+
+      Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
+
+  - name: cf.bot_management.ja4
+    data_type: String
+    categories: [Request, Bots]
+    keywords: [request, bots, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: Provides an SSL/TLS fingerprint to help you identify potential bot requests.
+    description: |-
+      For more details, refer to [JA3/JA4 Fingerprint](/bots/concepts/ja3-ja4-fingerprint/).
+
+      Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
+
+  - name: cf.bot_management.js_detection.passed
+    data_type: Boolean
+    categories: [Request, Bots]
+    keywords: [request, bots, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: Indicates whether the visitor has previously passed a JS Detection.
+    description: |-
+      For more details, refer to [JavaScript detections](/bots/reference/javascript-detections/).
+
+      Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
+
+  - name: cf.bot_management.detection_ids
+    data_type: Array<Number>
+    categories: [Request, Bots]
+    keywords: [request, bots, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: List of IDs that correlate to the Bot Management heuristic detections made on a request.
+    description: |-
+      Use this field to explicitly match a specific heuristic or to exclude a heuristic in a rule. You can have multiple heuristic detections on the same request.
+
+      Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
+    example_block: |-
+      any(cf.bot_management.detection_ids[*] eq 33554817)
+
+  - name: cf.client.bot
+    data_type: Boolean
+    categories: [Request, Bots]
+    keywords: [request, bots, client, visitor]
+    summary: Indicates whether the request originated from a known good bot or crawler.
+    description: |-
+      Provides the same information as [`cf.bot_management.verified_bot`](/ruleset-engine/rules-language/fields/reference/cf.bot_management.verified_bot/).
+
+  - name: cf.edge.server_ip
+    data_type: IP address
+    categories: [Request]
+    keywords: [request, cloudflare, client, visitor]
+    summary: Represents the global network's IP address to which the HTTP request has resolved.
+    description: |-
+      This field is only meaningful for [BYOIP customers](/byoip/).
+
+  - name: cf.edge.server_port
+    data_type: IP address
+    categories: [Request]
+    keywords: [request, cloudflare, client, visitor]
+    summary: Represents the port number at which the Cloudflare global network received the request.
+    description: |-
+      Use this field to filter traffic on a specific port. The value is a port number in the range 1–65535.
+
+  - name: cf.hostname.metadata
+    data_type: String
+    categories: [Request]
+    keywords: [request, cloudflare, saas, platforms, client, visitor]
+    summary: Returns the string representation of the per-hostname [custom metadata](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/custom-metadata/) JSON object set by SSL for SaaS customers.
+
+  - name: cf.random_seed
+    data_type: Bytes
+    categories: [Request]
+    keywords: [request, cloudflare, client, visitor]
+    summary: Returns per-request random bytes that you can use in the [`uuidv4()`](/ruleset-engine/rules-language/functions/#uuidv4) function.
+
+  - name: cf.ray_id
+    data_type: String
+    categories: [Request]
+    keywords: [request, cloudflare, client, visitor]
+    summary: The Ray ID of the current request.
+    description: |-
+      A [Ray ID](/fundamentals/reference/cloudflare-ray-id/) is an identifier given to every request that goes through Cloudflare.
+
+  - name: cf.threat_score
+    data_type: Number
+    categories: [Request]
+    keywords: [request, cloudflare, score, client, visitor]
+    summary: Represents a Cloudflare threat score from 0–100, where 0 indicates low risk.
+    description: |-
+      Values above 10 may represent spammers or bots, and values above 40 identify bad actors on the Internet. It is rare to see values above 60. A common recommendation is to challenge requests with a score above 10 and to block those above 50.
+
+  - name: cf.tls_cipher
+    data_type: String
+    categories: [Request, SSL/TLS]
+    keywords: [request, ssl, tls, client, visitor]
+    summary: The cipher for the connection to Cloudflare.
+    example_value: |-
+      "AES128-SHA256"
+
+  - name: cf.tls_client_auth.cert_revoked
+    data_type: Boolean
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor]
+    summary: Indicates whether the request presented a valid but revoked client certificate.
+    description: |-
+      When `true`, the [`cf.tls_client_auth.cert_verified`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_verified/) field is also `true`.
+
+      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+
+  - name: cf.tls_client_auth.cert_verified
+    data_type: Boolean
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor]
+    summary: Returns `true` when a request presents a valid client certificate.
+    description: |-
+      Also returns `true` when a request includes a valid certificate that was revoked (refer to [`cf.tls_client_auth.cert_revoked`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_revoked/)).
+
+      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+
+  - name: cf.tls_client_auth.cert_presented
+    data_type: Boolean
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor]
+    summary: Returns `true` when a request presents a certificate (valid or not).
+    description: |-
+      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+
+  - name: cf.tls_client_auth.cert_issuer_dn
+    data_type: String
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor]
+    summary: The Distinguished Name (DN) of the Certificate Authority (CA) that issued the certificate included in the request.
+    description: |-
+      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+    example_value: |-
+      "CN=Access Testing CA,OU=TX,O=Access Testing,L=Austin,ST=Texas,C=US"
+
+  - name: cf.tls_client_auth.cert_subject_dn
+    data_type: String
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor]
+    summary: The Distinguished Name (DN) of the owner (or requester) of the certificate included in the request.
+    description: |-
+      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+    example_value: |-
+      "CN=James Royal,OU=Access Admins,O=Access,L=Austin,ST=Texas,C=US"
+
+  - name: cf.tls_client_auth.cert_issuer_dn_rfc2253
+    data_type: String
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor]
+    summary: The Distinguished Name (DN) of the Certificate Authority (CA) that issued the certificate in the request in [RFC 2253](https://datatracker.ietf.org/doc/html/rfc2253) format.
+    description: |-
+      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+    example_value: |-
+      "CN=Access Testing CA,OU=TX,O=Access Testing,L=Austin,ST=Texas,C=US"
+
+  - name: cf.tls_client_auth.cert_subject_dn_rfc2253
+    data_type: String
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor]
+    summary: The Distinguished Name (DN) of the owner (or requester) of the certificate in the request in [RFC 2253](https://datatracker.ietf.org/doc/html/rfc2253) format.
+    description: |-
+      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+    example_value: |-
+      "CN=James Royal,OU=Access Admins,O=Access,L=Austin,ST=Texas,C=US"
+
+  - name: cf.tls_client_auth.cert_issuer_dn_legacy
+    data_type: String
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor]
+    summary: The Distinguished Name (DN) of the Certificate Authority (CA) that issued the certificate in the request in a legacy format.
+    description: |-
+      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+    example_value: |-
+      "/C=US/ST=Texas/L=Austin/O=Access Testing/OU=TX/CN=Access Testing CA"
+
+  - name: cf.tls_client_auth.cert_subject_dn_legacy
+    data_type: String
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor]
+    summary: The Distinguished Name (DN) of the owner (or requester) of the certificate in the request in a legacy format.
+    description: |-
+      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+    example_value: |-
+      "/C=US/ST=Texas/L=Austin/O=Access/OU=Access Admins/CN=James Royal"
+
+  - name: cf.tls_client_auth.cert_serial
+    data_type: String
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor]
+    summary: Serial number of the certificate in the request.
+    description: |-
+      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+    example_value: |-
+      "527E0F20A20EA2A4146C78390F34CE7AF0878CA4"
+
+  - name: cf.tls_client_auth.cert_issuer_serial
+    data_type: String
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor]
+    summary: Serial number of the direct issuer of the certificate in the request.
+    description: |-
+      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+    example_value: |-
+      "2688201DBA77402EA87118876F2E1B24CF8B0395"
+
+  - name: cf.tls_client_auth.cert_fingerprint_sha256
+    data_type: String
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor]
+    summary: The SHA-256 fingerprint of the certificate in the request.
+    description: |-
+      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+    example_value: |-
+      "af363dc85bc942a892d3cee9796190fdb36d89cd588a4f1cb17c74a943439714"
+
+  - name: cf.tls_client_auth.cert_fingerprint_sha1
+    data_type: String
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor]
+    summary: The SHA-1 fingerprint of the certificate in the request.
+    description: |-
+      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+    example_value: |-
+      "933ad5282c560ae3f482a43ecd73bc9de878a190"
+
+  - name: cf.tls_client_auth.cert_not_before
+    data_type: String
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor]
+    summary: The certificate in the request is not valid before this date.
+    description: |-
+      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+    example_value: |-
+      "Mar 21 13:35:00 2022 GMT"
+
+  - name: cf.tls_client_auth.cert_not_after
+    data_type: String
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor]
+    summary: The certificate in the request is not valid after this date.
+    description: |-
+      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+    example_value: |-
+      "Mar 21 13:35:00 2023 GMT"
+
+  - name: cf.tls_client_auth.cert_ski
+    data_type: String
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor]
+    summary: The Subject Key Identifier (SKI) of the certificate in the request.
+    description: |-
+      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+    example_value: |-
+      "27846FAE6EAC4A8DAD9101B519CF1EB460242831"
+
+  - name: cf.tls_client_auth.cert_issuer_ski
+    data_type: String
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor]
+    summary: The Subject Key Identifier (SKI) of the direct issuer of the certificate in the request.
+    description: |-
+      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+    example_value: |-
+      "8204924CF49D471E855862706D889F58F6B784D3"
+
+  - name: cf.tls_client_extensions_sha1
+    data_type: String
+    categories: [Request, SSL/TLS]
+    keywords: [request, ssl, tls, client, visitor]
+    summary: The SHA-1 fingerprint of TLS client extensions, encoded in Base64.
+    example_value: |-
+      "OWFiM2I5ZDc0YWI0YWYzZmFkMGU0ZjhlYjhiYmVkMjgxNTU5YTU2Mg=="
+
+  - name: cf.tls_client_hello_length
+    data_type: Number
+    categories: [Request, SSL/TLS]
+    keywords: [request, ssl, tls, client, visitor]
+    summary: The length of the client hello message sent in a [TLS handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake).
+    description: |-
+      Specifically, the length of the bytestring of the client hello.
+    example_value: |-
+      508
+
+  - name: cf.tls_client_random
+    data_type: String
+    categories: [Request, SSL/TLS]
+    keywords: [request, ssl, tls, client, visitor]
+    summary: The value of the 32-byte random value provided by the client in a [TLS handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake), encoded in Base64.
+    description: |-
+      For more details, refer to [RFC 8446](https://datatracker.ietf.org/doc/html/rfc8446#section-4.1.2).
+    example_value: |-
+      "YWJjZA=="
+
+  - name: cf.tls_version
+    data_type: String
+    categories: [Request, SSL/TLS]
+    keywords: [request, ssl, tls, client, visitor]
+    summary: The TLS version of the connection to Cloudflare.
+    example_value: |-
+      "TLSv1.2"
+
+  - name: cf.waf.content_scan.has_obj
+    data_type: Boolean
+    categories: [Request]
+    keywords:
+      [
+        request,
+        cloudflare,
+        content scanning,
+        malicious uploads,
+        client,
+        visitor,
+      ]
+    plan_info_label: Enterprise add-on
+    summary: Indicates whether the request contains at least one content object.
+    description: |-
+      Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
+
+  - name: cf.waf.content_scan.has_malicious_obj
+    data_type: Boolean
+    categories: [Request]
+    keywords:
+      [
+        request,
+        cloudflare,
+        content scanning,
+        malicious uploads,
+        client,
+        visitor,
+      ]
+    plan_info_label: Enterprise add-on
+    summary: Indicates whether the request contains at least one malicious content object.
+    description: |-
+      Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
+
+  - name: cf.waf.content_scan.num_malicious_obj
+    data_type: Integer
+    categories: [Request]
+    keywords:
+      [
+        request,
+        cloudflare,
+        content scanning,
+        malicious uploads,
+        client,
+        visitor,
+      ]
+    plan_info_label: Enterprise add-on
+    summary: The number of malicious content objects detected in the request (zero or greater).
+    description: |-
+      Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
+
+  - name: cf.waf.content_scan.has_failed
+    data_type: Boolean
+    categories: [Request]
+    keywords:
+      [
+        request,
+        cloudflare,
+        content scanning,
+        malicious uploads,
+        client,
+        visitor,
+      ]
+    plan_info_label: Enterprise add-on
+    summary: Indicates whether the file scanner was unable to scan all the content objects detected in the request.
+    description: |-
+      Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
+  - name: cf.waf.content_scan.num_obj
+    data_type: Integer
+    categories: [Request]
+    keywords:
+      [
+        request,
+        cloudflare,
+        content scanning,
+        malicious uploads,
+        client,
+        visitor,
+      ]
+    plan_info_label: Enterprise add-on
+    summary: The number of content objects detected in the request (zero or greater).
+    description: |-
+      Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
+
+  - name: cf.waf.content_scan.obj_sizes
+    data_type: Array<Integer>
+    categories: [Request]
+    keywords:
+      [
+        request,
+        cloudflare,
+        content scanning,
+        malicious uploads,
+        client,
+        visitor,
+      ]
+    plan_info_label: Enterprise add-on
+    summary: An array of file sizes in bytes, in the order the content objects were detected in the request.
+    description: |-
+      Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
+
+  - name: cf.waf.content_scan.obj_types
+    data_type: Array<String>
+    categories: [Request]
+    keywords:
+      [
+        request,
+        cloudflare,
+        content scanning,
+        malicious uploads,
+        client,
+        visitor,
+      ]
+    plan_info_label: Enterprise add-on
+    summary: An array of file types in the order the content objects were detected in the request.
+    description: |-
+      If Cloudflare cannot determine the file type of a content object, the corresponding value in the `obj_types` array will be `application/octet-stream`.
+
+      Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
+
+  - name: cf.waf.content_scan.obj_results
+    data_type: Array<String>
+    categories: [Request]
+    keywords:
+      [
+        request,
+        cloudflare,
+        content scanning,
+        malicious uploads,
+        client,
+        visitor,
+      ]
+    plan_info_label: Enterprise add-on
+    summary: An array of scan results in the order the content objects were detected in the request.
+    description: |-
+      The possible values are: `clean`, `suspicious`, `infected`, and `not scanned`.
+
+      Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
+
+  - name: cf.waf.score
+    data_type: Number
+    categories: [Request]
+    keywords: [request, cloudflare, attack score, waf score, client, visitor]
+    plan_info_label: Enterprise
+    summary: A global score from 1–99 that combines the score of each WAF attack vector into a single score.
+    description: |-
+      This is the standard [WAF attack score](/waf/detections/attack-score/) to detect variants of attack patterns.
+
+      Requires a Cloudflare Enterprise plan. You must also enable [attack score detection](/waf/detections/attack-score/).
+
+  - name: cf.waf.score.sqli
+    data_type: Number
+    categories: [Request]
+    keywords: [request, cloudflare, attack score, waf score, client, visitor]
+    plan_info_label: Enterprise
+    summary: An attack score from 1–99 classifying the SQL injection (SQLi) attack vector.
+    description: |-
+      Requires a Cloudflare Enterprise plan. You must also enable [attack score detection](/waf/detections/attack-score/).
+
+  - name: cf.waf.score.xss
+    data_type: Number
+    categories: [Request]
+    keywords: [request, cloudflare, attack score, waf score, client, visitor]
+    plan_info_label: Enterprise
+    summary: An attack score from 1–99 classifying the cross-site scripting (XSS) attack vector.
+    description: |-
+      Requires a Cloudflare Enterprise plan. You must also enable [attack score detection](/waf/detections/attack-score/).
+
+  - name: cf.waf.score.rce
+    data_type: Number
+    categories: [Request]
+    keywords: [request, cloudflare, attack score, waf score, client, visitor]
+    plan_info_label: Enterprise
+    summary: An attack score from 1–99 classifying the command injection or Remote Code Execution (RCE) attack vector.
+    description: |-
+      Requires a Cloudflare Enterprise plan. You must also enable [attack score detection](/waf/detections/attack-score/).
+
+  - name: cf.waf.score.class
+    data_type: String
+    categories: [Request]
+    keywords: [request, cloudflare, attack score, waf score, client, visitor]
+    plan_info_label: Business or above
+    summary: The attack score class of the current request, based on the WAF attack score.
+    description: |-
+      Can have one of the following values: `attack`, `likely_attack`, `likely_clean`, `clean`.
+
+      Requires a Cloudflare Business plan or above. You must also enable [attack score detection](/waf/detections/attack-score/).
+
+  - name: cf.waf.auth_detected
+    data_type: Boolean
+    categories: [Request]
+    keywords:
+      [
+        request,
+        cloudflare,
+        leaked credentials,
+        exposed credentials,
+        client,
+        visitor,
+      ]
+    plan_info_label: Enterprise
+    summary: Indicates whether the Cloudflare WAF detected authentication credentials in the request.
+    description: |-
+      Requires a Cloudflare Enterprise plan. You must also enable [leaked credentials detection](/waf/detections/leaked-credentials/).
+
+  - name: cf.waf.credential_check.password_leaked
+    data_type: Boolean
+    categories: [Request]
+    keywords:
+      [
+        request,
+        cloudflare,
+        leaked credentials,
+        exposed credentials,
+        client,
+        visitor,
+      ]
+    summary: Indicates whether the password detected in the request was previously leaked.
+    description: |-
+      Only available when [leaked credentials detection](/waf/detections/leaked-credentials/) is enabled.
+
+  - name: cf.waf.credential_check.username_leaked
+    data_type: Boolean
+    categories: [Request]
+    keywords:
+      [
+        request,
+        cloudflare,
+        leaked credentials,
+        exposed credentials,
+        client,
+        visitor,
+      ]
+    plan_info_label: Enterprise
+    summary: Indicates whether the username detected in the request was previously leaked.
+    description: |-
+      Requires a Cloudflare Enterprise plan. You must also enable [leaked credentials detection](/waf/detections/leaked-credentials/).
+
+  - name: cf.waf.credential_check.username_and_password_leaked
+    data_type: Boolean
+    categories: [Request]
+    keywords:
+      [
+        request,
+        cloudflare,
+        authentication,
+        leaked credentials,
+        exposed credentials,
+        client,
+        visitor,
+      ]
+    plan_info_label: Pro or above
+    summary: Indicates whether the auth credentials detected in the request (username-password pair) were previously leaked.
+    description: |-
+      Requires a Cloudflare Pro plan or above. You must also enable [leaked credentials detection](/waf/detections/leaked-credentials/).
+
+  - name: cf.waf.credential_check.username_password_similar
+    data_type: Boolean
+    categories: [Request]
+    keywords:
+      [
+        request,
+        cloudflare,
+        leaked credentials,
+        exposed credentials,
+        client,
+        visitor,
+      ]
+    plan_info_label: Enterprise
+    summary: Indicates whether a similar version of the username and password credentials detected in the request were previously leaked.
+    description: |-
+      Requires a Cloudflare Enterprise plan. You must also enable [leaked credentials detection](/waf/detections/leaked-credentials/).
+
+  - name: cf.worker.upstream_zone
+    data_type: String
+    categories: [Request]
+    keywords: [request, cloudflare, workers]
+    summary: Identifies whether a request comes from a worker or not.
+    description: |-
+      When a request comes from a worker, this field will hold the name of the zone for that worker. Otherwise, `cf.worker.upstream_zone` is empty.
+
+  - name: cf.bot_management.corporate_proxy
+    data_type: Boolean
+    categories: [Request, Bots]
+    keywords: [request, bots, proxy, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: Indicates whether the incoming request comes from an identified Enterprise-only cloud-based corporate proxy or secure web gateway.
+    description: |-
+      Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
+    example_block: |-
+      not cf.bot_management.verified_bot
+      and not cf.bot_management.static_resource
+      and not cf.bot_management.corporate_proxy
+      and cf.bot_management.score lt 30
+
+  - name: http.request.jwt.claims.aud
+    data_type: Map<Array<String>>
+    categories: [Request, JWT validation]
+    keywords: [request, jwt, api shield, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: The `aud` (audience) claim identifies the recipients that the JSON Web Token (JWT) is intended for.
+    description: |-
+      Each principal intended to process the JWT must identify itself with a value in the audience claim. In the general case, the `aud` value is an array of case-sensitive strings, each containing a `StringOrURI` value. For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
+
+      For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
+
+  - name: http.request.jwt.claims.aud.names
+    data_type: Array<String>
+    categories: [Request, JWT validation]
+    keywords: [request, jwt, api shield, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: The `aud` (audience) claim identifies the recipients that the JSON Web Token (JWT) is intended for.
+    description: |-
+      Each principal intended to process the JWT must identify itself with a value in the audience claim. In the general case, the `aud` value is an array of case-sensitive strings, each containing a `StringOrURI` value. For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
+
+      For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
+
+  - name: http.request.jwt.claims.aud.values
+    data_type: Array<String>
+    categories: [Request, JWT validation]
+    keywords: [request, jwt, api shield, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: The `aud` (audience) claim identifies the recipients that the JSON Web Token (JWT) is intended for.
+    description: |-
+      Each principal intended to process the JWT must identify itself with a value in the audience claim. In the general case, the `aud` value is an array of case-sensitive strings, each containing a `StringOrURI` value. For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
+
+      For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
+
+  - name: http.request.jwt.claims.iat.sec
+    data_type: Map<Array<Integer>>
+    categories: [Request, JWT validation]
+    keywords: [request, jwt, api shield, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: The `iat` (issued at) claim identifies the time (number of seconds) at which the JWT was issued.
+    description: |-
+      For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
+
+      For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
+
+  - name: http.request.jwt.claims.iat.sec.names
+    data_type: Array<String>
+    categories: [Request, JWT validation]
+    keywords: [request, jwt, api shield, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: The `iat` (issued at) claim identifies the time (number of seconds) at which the JWT was issued.
+    description: |-
+      For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
+
+      For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
+
+  - name: http.request.jwt.claims.iat.sec.values
+    data_type: Array<Integer>
+    categories: [Request, JWT validation]
+    keywords: [request, jwt, api shield, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: The `iat` (issued at) claim identifies the time (number of seconds) at which the JWT was issued.
+    description: |-
+      For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
+
+      For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
+
+  - name: http.request.jwt.claims.iss
+    data_type: Map<Array<String>>
+    categories: [Request, JWT validation]
+    keywords: [request, jwt, api shield, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: The `iss` (issuer) claim identifies the principal that issued the JWT.
+    description: |-
+      For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
+
+      For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
+
+  - name: http.request.jwt.claims.iss.names
+    data_type: Array<String>
+    categories: [Request, JWT validation]
+    keywords: [request, jwt, api shield, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: The `iss` (issuer) claim identifies the principal that issued the JWT.
+    description: |-
+      For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
+
+      For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
+
+  - name: http.request.jwt.claims.iss.values
+    data_type: Array<String>
+    categories: [Request, JWT validation]
+    keywords: [request, jwt, api shield, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: The `iss` (issuer) claim identifies the principal that issued the JWT.
+    description: |-
+      For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
+
+      For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
+
+  - name: http.request.jwt.claims.jti
+    data_type: Map<Array<String>>
+    categories: [Request, JWT validation]
+    keywords: [request, jwt, api shield, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: The `jti` (JWT ID) claim provides a unique identifier for the JWT.
+    description: |-
+      For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
+
+      For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
+
+  - name: http.request.jwt.claims.jti.names
+    data_type: Array<String>
+    categories: [Request, JWT validation]
+    keywords: [request, jwt, api shield, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: The `jti` (JWT ID) claim provides a unique identifier for the JWT.
+    description: |-
+      For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
+
+      For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
+
+  - name: http.request.jwt.claims.jti.values
+    data_type: Array<String>
+    categories: [Request, JWT validation]
+    keywords: [request, jwt, api shield, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: The `jti` (JWT ID) claim provides a unique identifier for the JWT.
+    description: |-
+      For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
+
+      For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
+
+  - name: http.request.jwt.claims.nbf.sec
+    data_type: Map<Array<Integer>>
+    categories: [Request, JWT validation]
+    keywords: [request, jwt, api shield, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: The `nbf` (not before) claim identifies the time (number of seconds) before which the JWT must not be accepted for processing.
+    description: |-
+      For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
+
+      For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
+
+  - name: http.request.jwt.claims.nbf.sec.names
+    data_type: Array<String>
+    categories: [Request, JWT validation]
+    keywords: [request, jwt, api shield, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: The `nbf` (not before) claim identifies the time (number of seconds) before which the JWT must not be accepted for processing.
+    description: |-
+      For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
+
+      For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
+
+  - name: http.request.jwt.claims.nbf.sec.values
+    data_type: Array<Integer>
+    categories: [Request, JWT validation]
+    keywords: [request, jwt, api shield, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: The `nbf` (not before) claim identifies the time (number of seconds) before which the JWT must not be accepted for processing.
+    description: |-
+      For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
+
+      For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
+
+  - name: http.request.jwt.claims.sub
+    data_type: Map<Array<String>>
+    categories: [Request, JWT validation]
+    keywords: [request, jwt, api shield, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: The `sub` (subject) claim identifies the principal that is the subject of the JWT.
+    description: |-
+      The claims in a JWT are normally statements about the subject. For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
+
+      For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
+
+  - name: http.request.jwt.claims.sub.names
+    data_type: Array<String>
+    categories: [Request, JWT validation]
+    keywords: [request, jwt, api shield, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: The `sub` (subject) claim identifies the principal that is the subject of the JWT.
+    description: |-
+      The claims in a JWT are normally statements about the subject. For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
+
+      For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
+
+  - name: http.request.jwt.claims.sub.values
+    data_type: Array<String>
+    categories: [Request, JWT validation]
+    keywords: [request, jwt, api shield, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: The `sub` (subject) claim identifies the principal that is the subject of the JWT.
+    description: |-
+      The claims in a JWT are normally statements about the subject. For details, refer to the [Registered Claim Names](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1) in RFC 7519.
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
+
+      For more information on validating JSON Web Tokens, refer to [JSON Web Tokens Validation](/api-shield/security/jwt-validation/) in the API Shield documentation.
+
+  - name: http.request.uri.args
+    data_type: Map<Array<String>>
+    categories: [Request, URI]
+    keywords: [request, uri, url, arguments, query string, client, visitor]
+    summary: The HTTP URI arguments associated with a request represented as a Map (associative array).
+    description: |-
+      When an argument repeats, the array contains multiple items in the order they appear in the request.
+
+      The values are not pre-processed and retain the original case used in the request.
+
+      - **Decoding**: No decoding performed
+      - **Non-ASCII**: Preserved
+    example_value: |-
+      {"search": ["red+apples"]}
+    example_block: |-
+      any(http.request.uri.args["search"][*] == "red+apples")
+
+  - name: http.request.uri.args.names
+    data_type: Array<String>
+    categories: [Request, URI]
+    keywords: [request, uri, url, arguments, query string, client, visitor]
+    summary: The names of the arguments in the HTTP URI query string.
+    description: |-
+      When a name repeats, the array contains multiple items in the order that they appear in the request.
+
+      The names are not pre-processed and retain the original case used in the request.
+
+      - **Decoding**: No decoding performed
+      - **Non-ASCII**: Preserved
+    example_value: |-
+      ["search"]
+    example_block: |-
+      any(http.request.uri.args.names[*] == "search")
+
+  - name: http.request.uri.args.values
+    data_type: Array<String>
+    categories: [Request, URI]
+    keywords: [request, uri, url, arguments, query string, client, visitor]
+    summary: The values of arguments in the HTTP URI query string.
+    description: |-
+      The values are not pre-processed and retain the original case used in the request. They are in the same order as in the request.
+
+      Duplicated values are listed multiple times.
+
+      - **Decoding**: No decoding performed
+      - **Non-ASCII**: Preserved
+    example_value: |-
+      ["red+apples"]
+    example_block: |-
+      any(http.request.uri.args.values[*] == "red+apples")
+
+  - name: raw.http.request.uri.args
+    data_type: Map<Array<String>>
+    categories: [Request, URI, Raw fields]
+    keywords: [request, uri, url, arguments, query string, raw, client, visitor]
+    summary: The raw HTTP URI arguments associated with a request represented as a Map (associative array).
+    description: |-
+      This is the raw field version of the [`http.request.uri.args`](/ruleset-engine/rules-language/fields/reference/http.request.uri.args/) field. Raw fields, prefixed with `raw.`, preserve original request values for later evaluations. These fields are immutable during the entire request evaluation workflow, and they are not affected by the actions of previously matched rules.
+
+  - name: raw.http.request.uri.args.names
+    data_type: Array<String>
+    categories: [Request, URI, Raw fields]
+    keywords: [request, uri, url, arguments, query string, raw, client, visitor]
+    summary: The raw names of the arguments in the HTTP URI query string.
+    description: |-
+      This is the raw field version of the [`http.request.uri.args.names`](/ruleset-engine/rules-language/fields/reference/http.request.uri.args.names/) field. Raw fields, prefixed with `raw.`, preserve original request values for later evaluations. These fields are immutable during the entire request evaluation workflow, and they are not affected by the actions of previously matched rules.
+
+  - name: raw.http.request.uri.args.values
+    data_type: Array<String>
+    categories: [Request, URI, Raw fields]
+    keywords: [request, uri, url, arguments, query string, raw, client, visitor]
+    summary: The raw values of arguments in the HTTP URI query string.
+    description: |-
+      This is the raw field version of the [`http.request.uri.args.values`](/ruleset-engine/rules-language/fields/reference/http.request.uri.args.values/) field. Raw fields, prefixed with `raw.`, preserve original request values for later evaluations. These fields are immutable during the entire request evaluation workflow, and they are not affected by the actions of previously matched rules.
+
+  - name: http.request.headers
+    data_type: Map<Array<String>>
+    categories: [Request, Headers]
+    keywords: [request, client, visitor]
+    summary: The HTTP request headers represented as a Map (or associative array).
+    description: |-
+      The keys of the associative array are the names of HTTP request headers converted to lowercase.
+
+      When there are repeating headers, the array includes them in the order they appear in the request.
+
+      The request header values are not pre-processed and retain the original case used in the request.
+
+      - **Decoding**: No decoding performed
+      - **Whitespace**: Preserved
+      - **Non-ASCII**: Preserved
+    example_value: |-
+      {"content-type": ["application/json"]}
+    example_block: |-
+      any(http.request.headers["content-type"][*] == "application/json")
+
+  - name: http.request.headers.names
+    data_type: Array<String>
+    categories: [Request, Headers]
+    keywords: [request, client, visitor]
+    summary: The names of the headers in the HTTP request.
+    description: |-
+      The names are not pre-processed and retain the original case used in the request.
+
+      The order of header names is not guaranteed but will match [`http.request.headers.values`](/ruleset-engine/rules-language/fields/reference/http.request.headers.values/).
+
+      Duplicate headers are listed multiple times.
+
+      - **Decoding**: No decoding performed
+      - **Whitespace**: Preserved
+      - **Non-ASCII**: Preserved
+
+      **Note**: In HTTP/2, the names of HTTP headers are always in lowercase. Recent versions of the `curl` tool [enable HTTP/2 by default](https://curl.se/docs/manpage.html#--http2) for HTTPS connections.
+    example_value: |-
+      ["content-type"]
+    example_block: |-
+      any(http.request.headers.names[*] == "content-type")
+
+  - name: http.request.headers.values
+    data_type: Array<String>
+    categories: [Request, Headers]
+    keywords: [request, client, visitor]
+    summary: The values of the headers in the HTTP request.
+    description: |-
+      The values are not pre-processed and retain the original case used in the request.
+
+      The order of header values is not guaranteed but will match [`http.request.headers.names`](/ruleset-engine/rules-language/fields/reference/http.request.headers.names/).
+
+      Duplicate headers are listed multiple times.
+
+      - **Decoding**: No decoding performed
+      - **Whitespace**: Preserved
+      - **Non-ASCII**: Preserved
+
+      **Note**: In HTTP/2, the names of HTTP headers are always in lowercase. Recent versions of the `curl` tool [enable HTTP/2 by default](https://curl.se/docs/manpage.html#--http2) for HTTPS connections.
+    example_value: |-
+      Example 1: ["application/json"]
+      Example 2: ["This header value is longer than 10 bytes"]
+
+    example_block: |-
+      # Example 1: Check for specific header value.
+      any(http.request.headers.values[*] == "application/json")
+
+      # Example 2: Match requests according to the specified operator and the length/size entered for the header value.
+      any(len(http.request.headers.values[*])[*] gt 10)
+
+  - name: http.request.headers.truncated
+    data_type: Boolean
+    categories: [Request, Headers]
+    keywords: [request, client, visitor]
+    summary: Indicates whether the HTTP request contains too many headers.
+    description: |-
+      When `true`, [`http.request.headers`](/ruleset-engine/rules-language/fields/reference/http.request.headers), [`http.request.headers.names`](/ruleset-engine/rules-language/fields/reference/http.request.headers.names), and [`http.request.headers.values`](/ruleset-engine/rules-language/fields/reference/http.request.headers.values) may not contain all of the headers sent in the HTTP request.
+
+  - name: http.request.accepted_languages
+    data_type: Array<String>
+    categories: [Request, Headers]
+    keywords: [request, client, visitor]
+    summary: List of language tags provided in the [`Accept-Language`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language) HTTP request header.
+    description: |-
+      Language tags are sorted by weight (`;q=<weight>`, with a default weight of `1`) in descending order.
+
+      If the HTTP header is not present in the request or is empty, `http.request.accepted_languages[0]` will return a "[missing value](/ruleset-engine/rules-language/values/#notes)", which the [`concat()`](/ruleset-engine/rules-language/functions/#concat) function will handle as an empty string.
+
+      If the HTTP header includes the language tag `*` it will not be stored in the array.
+
+      **Note**: This field is only available in [Transform Rules](/rules/transform/).
+    example_block: |-
+      # Example 1: Request with header "Accept-Language: fr-CH, fr;q=0.8, en;q=0.9, de;q=0.7, *;q=0.5".
+      # In this case:
+      http.request.accepted_languages[0] ==> "fr-CH"
+      http.request.accepted_languages    ==> ["fr-CH", "en", "fr", "de"]
+
+      # Example 2: Request without an `Accept-Language` HTTP header and a URI of "https://www.example.com/my-path".
+      # In this case:
+      concat("/", http.request.accepted_languages[0], http.request.uri.path) ==> "//my-path"
+
+  - name: http.request.body.raw
+    data_type: String
+    categories: [Request, Body, Raw fields]
+    keywords: [request, body, raw, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: The unaltered HTTP request body.
+    description: |-
+      When the value of [`http.request.body.truncated`](/ruleset-engine/rules-language/fields/reference/http.request.body.truncated/) is `true`, the return value may be truncated.
+
+      - **Decoding**: No decoding performed
+      - **Whitespace**: Preserved
+      - **Non-ASCII**: Preserved
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
+
+  - name: http.request.body.truncated
+    data_type: Boolean
+    categories: [Request, Body]
+    keywords: [request, body, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: Indicates whether the HTTP request body is truncated.
+    description: |-
+      When `true`, `http.request.body.*` fields may not contain all of the HTTP request body.
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
+
+  - name: http.request.body.size
+    data_type: Number
+    categories: [Request, Body]
+    keywords: [request, body, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: The total size of the HTTP request body (in bytes).
+    description: |-
+      This field may have a value larger than the one returned by `len(http.request.body.raw)`, since the [`http.request.body.raw`](/ruleset-engine/rules-language/fields/reference/http.request.body.raw/) field only considers the request body up to a maximum size that varies according to your Cloudflare plan.
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
+
+  - name: http.request.body.form
+    data_type: Map<Array<String>>
+    categories: [Request, Body]
+    keywords: [request, body, form, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: The HTTP request body of a form represented as a Map (or associative array).
+    description: |-
+      Populated when the `Content-Type` header is `application/x-www-form-urlencoded`.
+
+      The values are not pre-processed and retain the original case used in the request.
+
+      When a field repeats, then the array contains multiple items in the order they are in the request.
+
+      The return value may be truncated if [`http.request.body.truncated`](/ruleset-engine/rules-language/fields/reference/http.request.body.truncated) is `true`.
+
+      - **Decoding**: No decoding performed
+      - **Whitespace**: Preserved
+      - **Non-ASCII**: Preserved
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
+    example_value: |-
+      {username": ["admin"]}
+    example_block: |-
+      any(http.request.body.form["username"][*] == "admin")
+
+  - name: http.request.body.form.names
+    data_type: Array<String>
+    categories: [Request, Body]
+    keywords: [request, body, form, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: The names of the form fields in an HTTP request.
+    description: |-
+      Populated when the `Content-Type` header is `application/x-www-form-urlencoded`.
+
+      Names are not pre-processed and retain the original case used in the request. They are listed in the same order as in the request.
+
+      Duplicate names are listed multiple times.
+
+      The return value may be truncated if [`http.request.body.truncated`](/ruleset-engine/rules-language/fields/reference/http.request.body.truncated) is `true`.
+
+      - **Decoding**: No decoding performed
+      - **Whitespace**: Preserved
+      - **Non-ASCII**: Preserved
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
+    example_value: |-
+      ["username"]
+    example_block: |-
+      any(http.request.body.form.names[*] == "username")
+
+  - name: http.request.body.form.values
+    data_type: Array<String>
+    categories: [Request, Body]
+    keywords: [request, body, form, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: The values of the form fields in an HTTP request.
+    description: |-
+      Populated when the `Content-Type` header is `application/x-www-form-urlencoded`.
+
+      Values are not pre-processed and retain the original case used in the request. They are listed in the same order as in the request.
+
+      Duplicated values are listed multiple times.
+
+      The return value may be truncated if [`http.request.body.truncated`](/ruleset-engine/rules-language/fields/reference/http.request.body.truncated) is `true`.
+
+      - **Decoding**: No decoding performed
+      - **Whitespace**: Preserved
+      - **Non-ASCII**: Preserved
+
+      Requires a Cloudflare Enterprise plan with a paid add-on.
+    example_value: |-
+      ["admin"]
+    example_block: |-
+      any(http.request.body.form.values[*] == "admin")
+
+  - name: http.request.body.mime
+    data_type: String
+    categories: [Request, Body]
+    keywords: [request, body, client, visitor]
+    summary: The MIME type of the request detected from the request body.
+    description: |-
+      Supports the most common MIME types of the following general categories: video, audio, image, application, text.
+    example_value: |-
+      "image/jpeg"
+    example_block: |-
+      http.request.body.mime in {"image/bmp" "image/gif" "image/jpeg" "image/png" "image/tiff"}
+
+  - name: http.request.body.multipart
+    data_type: Map<Array<String>>
+    categories: [Request, Body]
+    keywords: [request, body, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: A Map (or associative array) representation of multipart names to multipart values in the request body.
+    description: |-
+      Requires a Cloudflare Enterprise plan with a paid add-on.
+    example_value: |-
+      {"username": ["alice_doe"], "role": ["editor"], "picture": [<binary_content_of_file>]}
+    example_block: |-
+      any(http.request.body.multipart["role"][*] == "admin")
+
+  - name: http.request.body.multipart.names
+    data_type: Array<Array<String>>
+    categories: [Request, Body]
+    keywords: [request, body, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: List of multipart names for every part in the multipart body.
+    description: |-
+      Requires a Cloudflare Enterprise plan with a paid add-on.
+    example_value: |-
+      [["username"], ["picture"]]
+    example_block: |-
+      any(http.request.body.multipart.names[*][0] == "picture")
+
+  - name: http.request.body.multipart.values
+    data_type: Array<String>
+    categories: [Request, Body]
+    keywords: [request, body, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: List of multipart values for every part in the multipart body.
+    description: |-
+      Requires a Cloudflare Enterprise plan with a paid add-on.
+    example_value: |-
+      ["alice_doe", <binary_content_of_file>]
+    example_block: |-
+      any(http.request.body.multipart.values[*] == "alice_doe")
+
+  - name: http.request.body.multipart.content_types
+    data_type: Array<Array<String>>
+    categories: [Request, Body]
+    keywords: [request, body, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: List of `Content-Type` headers for each part in the multipart body.
+    description: |-
+      Requires a Cloudflare Enterprise plan with a paid add-on.
+    example_value: |-
+      [["text/plain"], ["image/jpeg"]]
+    example_block: |-
+      any(http.request.body.multipart.content_types[*][0] == "application/octet-stream")
+
+  - name: http.request.body.multipart.content_dispositions
+    data_type: Array<Array<String>>
+    categories: [Request, Body]
+    keywords: [request, body, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: List of `Content-Disposition` headers for each part in the multipart body.
+    description: |-
+      Requires a Cloudflare Enterprise plan with a paid add-on.
+    example_value: |-
+      [["form-data; name=\"username\""], ["form-data; name=\"picture\""]]
+    example_block: |-
+      any(http.request.body.multipart.content_dispositions[*][0] in {"form-data; name=\"username\"" "form-data; name=\"picture\""})
+
+  - name: http.request.body.multipart.content_transfer_encodings
+    data_type: Array<Array<String>>
+    categories: [Request, Body]
+    keywords: [request, body, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: List of `Content-Transfer-Encoding` headers for each part in the multipart body.
+    description: |-
+      Requires a Cloudflare Enterprise plan with a paid add-on.
+    example_value: |-
+      [["quoted-printable"], ["base64"]]
+    example_block: |-
+      any(http.request.body.multipart.content_transfer_encodings[*][0] == "binary")
+
+  - name: http.request.body.multipart.filenames
+    data_type: Array<Array<String>>
+    categories: [Request, Body]
+    keywords: [request, body, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: List of filenames for each part in the multipart body.
+    description: |-
+      Requires a Cloudflare Enterprise plan with a paid add-on.
+    example_value: |-
+      [["file1.txt"], ["photo.jpg"]]
+    example_block: |-
+      any(http.request.body.multipart.filenames[*][0] in {"token.txt" "password.txt"})
+
+  - name: http.response.code
+    data_type: Integer
+    categories: [Response]
+    keywords: [response]
+    summary: The HTTP status code returned to the client, either set by a Cloudflare product or returned by the origin server.
+    example_value: |-
+      403
+
+  - name: http.response.headers
+    data_type: Map<Array<String>>
+    categories: [Response, Headers]
+    keywords: [response]
+    summary: The HTTP response headers represented as a Map (or associative array).
+    description: |-
+      When there are repeating headers, the array includes them in the order they appear in the response. The keys convert to lowercase.
+
+      - **Decoding**: No decoding performed
+      - **Whitespace**: Preserved
+      - **Non-ASCII**: Preserved
+    example_value: |-
+      {"server": ["nginx"]}
+    example_block: |-
+      any(http.response.headers["server"][*] == "nginx")
+
+  - name: http.response.headers.names
+    data_type: Array<String>
+    categories: [Response, Headers]
+    keywords: [response]
+    summary: The names of the headers in the HTTP response.
+    description: |-
+      The names are not pre-processed and retain the original case used in the response.
+
+      The order of header names is not guaranteed but will match [`http.response.headers.values`](/ruleset-engine/rules-language/fields/reference/http.response.headers.values/).
+
+      Duplicate headers are listed multiple times.
+
+      - **Decoding**: No decoding performed
+      - **Whitespace**: Preserved
+      - **Non-ASCII**: Preserved
+    example_value: |-
+      ["content-type"]
+    example_block: |-
+      any(http.response.headers.names[*] == "content-type")
+
+  - name: http.response.headers.values
+    data_type: Array<String>
+    categories: [Response, Headers]
+    keywords: [response]
+    summary: The values of the headers in the HTTP response.
+    description: |-
+      The values are not pre-processed and retain the original case used in the response.
+
+      The order of header values is not guaranteed but will match [`http.response.headers.names`](/ruleset-engine/rules-language/fields/reference/http.response.headers.names/).
+
+      Duplicate headers are listed multiple times.
+
+      - **Decoding**: No decoding performed
+      - **Whitespace**: Preserved
+      - **Non-ASCII**: Preserved
+    example_value: |-
+      Example 1: ["application/json"]
+      Example 2: ["This header value is longer than 10 bytes"]
+    example_block: |-
+      # Example 1: Check for specific header value.
+      any(http.response.headers.values[*] == "application/json")
+
+      # Example 2: Match requests according to the specified operator and the length/size entered for the header value.
+      any(len(http.response.headers.values[*])[*] gt 10)
+
+  - name: http.response.content_type.media_type
+    data_type: String
+    categories: [Response, Headers]
+    keywords: [response]
+    summary: The lowercased content type (including subtype and suffix) without any extra parameters, based on the response's `Content-Type` header.
+    description: |-
+      The field value will not include parameters such as `charset`.
+
+      Example values:
+
+      | Content-Type header                     | Field value         |
+      | --------------------------------------- | ------------------- |
+      | `text/html`                             | `"text/html"`       |
+      | `text/html; charset=utf-8`              | `"text/html"`       |
+      | `text/html+extra`                       | `"text/html+extra"` |
+      | `text/html+extra; charset=utf-8`        | `"text/html+extra"` |
+      | `text/HTML`                             | `"text/html"`       |
+      | `text/html; charset=utf-8; other=value` | `"text/html"`       |
+
+  - name: cf.response.1xxx_code
+    data_type: Integer
+    categories: [Response]
+    keywords: [response, cloudflare]
+    summary: Contains the specific code for 1XXX Cloudflare errors.
+    description: |-
+      Use this field to differentiate between 1XXX errors associated with the same HTTP status code. The default value is `0`.
+
+      For a list of 1XXX errors, refer to [Troubleshooting Cloudflare 1XXX errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/).
+
+      **Note**: This field is only available in [HTTP response header modifications](/rules/transform/response-header-modification/) and [Custom Errors](/rules/custom-errors/).
+    example_value: |-
+      1020
+
+  - name: cf.response.error_type
+    data_type: String
+    categories: [Response]
+    keywords: [response, cloudflare]
+    summary: A string with the type of error in the response being returned.
+    description: |-
+      The default value is an empty string (`""`).
+
+      The available values are the following:
+
+      - `"managed_challenge"`
+      - `"iuam"`
+      - `"legacy_challenge"`
+      - `"ip_ban"`
+      - `"waf"`
+      - `"5xx"`
+      - `"1xxx"`
+      - `"always_online"`
+      - `"country_challenge"`
+      - `"ratelimit"`
+
+      You can use this field to customize the response for a specific type of error (for example, all 1XXX errors or all WAF block actions).
+
+      **Note**: This field is only available in [HTTP response header modifications](/rules/transform/response-header-modification/) and [Custom Errors](/rules/custom-errors/).

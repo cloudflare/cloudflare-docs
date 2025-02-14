@@ -28,7 +28,7 @@ import { Render } from "~/components";
 
 7. Under **With the same characteristics**, add one or more characteristics that will define the request counters for rate limiting purposes. Each value combination will have its own counter to determine the rate. Refer to [How Cloudflare determines the request rate](/waf/rate-limiting-rules/request-rate/) for more information.
 
-8. (Optional) To define an expression that specifies the conditions for incrementing the rate counter, enable **Use custom counting expression** and set the expression. By default, the counting expression is the same as the rule expression. The counting expression can include [response fields](/ruleset-engine/rules-language/fields/http-request-response/).
+8. (Optional) To define an expression that specifies the conditions for incrementing the rate counter, enable **Use custom counting expression** and set the expression. By default, the counting expression is the same as the rule expression. The counting expression can include [response fields](/ruleset-engine/rules-language/fields/reference/?field-category=Response).
 
 9. Under **When rate exceeds**, define the maximum number of requests and the time period to consider when determining the rate.
 
@@ -46,5 +46,9 @@ import { Render } from "~/components";
 
 <Render
 	file="custom-response-blocked-requests"
-	params={{ one: "rate limiting", two: "429", three: "30 KB" }}
+	params={{
+		responseType: "rate limiting",
+		defaultStatusCode: "429",
+		maxBodySize: "30 KB",
+	}}
 />

@@ -1,0 +1,46 @@
+---
+pcx_content_type: how-to
+title: Logpush
+sidebar:
+  order: 11
+---
+
+import { Plan } from "~/components";
+
+Send Zaraz logs to an external storage provider like R2, S3, etc.
+
+This is an Enterprise only feature.
+
+## Setup
+
+To configure logpush support for Zaraz please follow these steps
+
+### 1. Create a logpush job
+
+Navigate to your Website (Zone) and from the left sidebar find **Analytics and Logs**.
+
+Under this **Analytics and Logs** section navigate to **Logpush**
+
+Click on **Create a Logpush Job** and follow the steps described in the [Logpush documentation](/logs/get-started/).
+
+When it comes to selecting a dataset please make sure to select **Zaraz Events**
+
+### 2. Enable Logpush from Zaraz settings
+
+Navigate to your website's [Zaraz settings](https://dash.cloudflare.com/?to=/:account/:zone/zaraz/settings)
+
+Enable **Export Zaraz Logs**.
+
+## Fields
+
+Logs will have the following fields
+
+| Field          | Type     | Description                                                                                                                                                                    |
+| -------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| RequestHeaders | `JSON`   | The headers that were sent with the request.                                                                                                                                   |
+| URL            | `String` | The Zaraz URL to which the request was made.                                                                                                                                |
+| IP             | `String` | The originating IP.                                                                                                                                                            |
+| Body           | `JSON`   | The body that was sent along with the request.                                                                                                                                 |
+| Event Type     | `String` | Can be one of the following: `server_request`, `server_response`, `action_triggered`, `ecommerce_triggered`, `client_request`, `component_error`. |
+| Event Details  | `JSON`   | Details about the event.                                                                                                                                                       |
+| TimestampStart | `String` | The time at which the event occured.                                                                                                                                           |

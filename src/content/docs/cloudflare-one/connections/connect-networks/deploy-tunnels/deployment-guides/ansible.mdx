@@ -34,7 +34,7 @@ Terraform and Ansible require an unencrypted SSH key to connect to the GCP serve
    ssh-keygen -t rsa -f ~/.ssh/gcp_ssh -C <username in GCP>
    ```
 
-2. When prompted for a passphrase, press <kbd>Enter</kbd> twice to leave it blank. Terraform cannot decode encrypted private keys.
+2. When prompted for a passphrase, press the `Enter` key twice to leave it blank. Terraform cannot decode encrypted private keys.
 
 Two files will be generated: `gcp_ssh` which contains the private key, and `gcp_ssh.pub` which contains the public key.
 
@@ -323,4 +323,4 @@ It may take several minutes for the GCP instance and tunnel to come online. You 
 
 ## 7. Test the connection
 
-You can now SSH to the GCP server through the new `ssh_app.<zone>` hostname. For instructions on how to connect, refer to our [SSH guide](/cloudflare-one/connections/connect-networks/use-cases/ssh/#2-connect-as-a-user).
+You can now SSH to the GCP server through the new `ssh_app.<zone>` hostname. For instructions on how to connect, refer to our [SSH guide](/cloudflare-one/connections/connect-networks/use-cases/ssh/).

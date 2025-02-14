@@ -1,170 +1,137 @@
 ---
-import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
-import { Aside } from "~/components";
-import { marked } from "marked";
-import { format } from "date-fns";
-import { getChangelogs } from "~/util/changelogs";
+import StarlightPage, {
+	type StarlightPageProps,
+} from "@astrojs/starlight/components/StarlightPage.astro";
+import { render } from "astro:content";
 
-const { products, productAreas, changelogs } = await getChangelogs();
+import Header from "~/components/changelog/Header.astro";
+import ProductPills from "~/components/changelog/ProductPills.astro";
+
+import { Steps } from "~/components";
+import { format } from "date-fns";
+import { getChangelogs } from "~/util/changelog";
+
+const notes = await getChangelogs({});
+
+const props = {
+	frontmatter: {
+		title: "Changelogs",
+		tableOfContents: false,
+		template: "splash",
+	},
+	hideTitle: true,
+	hideBreadcrumbs: true,
+} as StarlightPageProps;
 ---
 
-<StarlightPage frontmatter={{ title: "Changelogs", template: "splash" }}>
-	<Aside>
-		Looking for API deprecations? They can be found on our <a
-			href="/deprecations/">dedicated deprecations page.</a
-		>
-	</Aside>
-	<p id="productDescription">
-		Subscribe to all Changelog posts via <a href="/changelog/index.xml">RSS</a>.
-	</p>
-	<p id="productAreaDescription" style="display:none">
-		Subscribe to all Changelog posts via <a
-			class="rssLink"
-			href="/changelog/index.xml">RSS</a
-		>.
-	</p>
-	<p>
-		Unless otherwise noted, all dates refer to the release date of the change.
-	</p>
-	<br />
-	<label for="products">Product:</label>
-	<select name="products" id="products" class="mr-4">
-		<option value="all">Select...</option>
-		{
-			products.map((product) => (
-				<option value={product.toLowerCase()}>{product}</option>
-			))
-		}
-	</select>
-	<label for="productAreas">Product area:</label>
-	<select name="productAreas" id="productAreas">
-		<option value="all">Select...</option>
-		{
-			productAreas.map((productAreas) => (
-				<option value={productAreas.toLowerCase()}>{productAreas}</option>
-			))
-		}
-	</select>
+<StarlightPage {...props}>
+	<Header notes={notes} />
 	{
-		changelogs.map(([date, entries]) => (
-			<div class="md:grid md:grid-cols-[18%_82%]" data-date={date}>
-				<div>
-					<h4 class="text-nowrap">{format(date, "do MMMM yyyy")}</h4>
+		notes.map(async (entry) => {
+			const date = format(entry.data.date, "MMM dd, yyyy");
+
+			const productIds = JSON.stringify(
+				entry.data.products.map((product) => product.id),
+			);
+
+			const { Content } = await render(entry);
+
+			return (
+				<div class="!mt-0 sm:flex" data-products={productIds}>
+					<time
+						datetime={entry.data.date.toISOString()}
+						class="whitespace-nowrap leading-6 sm:pr-4 sm:text-right"
+					>
+						<strong class="text-xs">{date}</strong>
+					</time>
+					<Steps>
+						<ol class="!mt-0 overflow-x-auto">
+							<li class="!pb-16">
+								<div>
+									<h3 class="leading-none">
+										<a
+											href={`/changelog/${entry.id}/`}
+											class="mb-4 !text-black no-underline hover:underline"
+										>
+											{entry.data.title}
+										</a>
+									</h3>
+									<ProductPills products={entry.data.products} />
+								</div>
+								<p>
+									<Content />
+								</p>
+							</li>
+						</ol>
+					</Steps>
 				</div>
-				<div class="!mt-0">
-					{entries?.map((entry) => (
-						<div
-							data-product={entry.product.toLowerCase()}
-							data-productArea={entry.productAreaName.toLowerCase()}
-						>
-							<h3>
-								<a href={entry.link}>{entry.product}</a>
-							</h3>
-							{["WAF", "DDoS protection"].includes(entry.product) && (
-								<p
-									set:html={marked.parse(
-										entry.scheduled
-											? "**" +
-													"Scheduled changes for " +
-													(entry.date ?? "") +
-													"**"
-											: "**" + (entry.date ?? "") + "**",
-									)}
-								/>
-							)}
-							{entry.title && (
-								<p set:html={marked.parse("**" + (entry.title ?? "") + "**")} />
-							)}
-							{["WAF", "DDoS protection"].includes(entry.product) ? (
-								<p
-									set:html={marked.parse(
-										"For more details, refer to the [changelog page](" +
-											entry.link +
-											").",
-									)}
-								/>
-							) : (
-								<p set:html={marked.parse(entry.description ?? "")} />
-							)}
-						</div>
-					))}
-				</div>
-			</div>
-		))
+			);
+		})
 	}
 </StarlightPage>
 
 <script>
-	import StickyHeader from "@codingheads/sticky-header";
-
-	const navHeightRem = getComputedStyle(document.body).getPropertyValue(
-		"--sl-nav-height",
-	);
-	const navHeightPx = Number(navHeightRem.split("rem")[0]) * 16 + 16;
-
-	const headers = document.querySelectorAll<HTMLElement>(
-		"[data-date] > div > h4",
-	);
-	headers.forEach(
-		(header) => new StickyHeader(header, { offset: 0 - navHeightPx }),
+	const filter = document.querySelector<HTMLSelectElement>(
+		"#changelogs-next-filter",
 	);
 
-	const productFilter = document.querySelector<HTMLSelectElement>("#products");
-	productFilter?.addEventListener("change", filterEntries);
+	filter?.addEventListener("change", () => {
+		const entries = document.querySelectorAll<HTMLElement>("[data-products]");
 
-	const productAreaFilter =
-		document.querySelector<HTMLSelectElement>("#productAreas");
-	productAreaFilter?.addEventListener("change", filterEntries);
+		if (!entries) return;
 
-	function filterEntries() {
-		const dates = document.querySelectorAll<HTMLElement>("[data-date]");
+		const value = filter.value;
 
-		for (const date of dates) {
-			const entries = date.querySelectorAll<HTMLElement>("[data-product]");
+		if (value === "all") {
+			entries.forEach((entry) => (entry.style.display = ""));
 
-			if (
-				productAreaFilter?.value === "all" &&
-				productFilter?.value === "all"
-			) {
-				dates.forEach((x) => {
-					x.style.display = "";
-				});
-				entries.forEach((x) => {
-					x.style.display = "";
-				});
-				continue;
-			}
+			return;
+		}
 
-			let entriesHidden = 0;
+		for (const entry of entries) {
+			if (!entry.dataset.products) continue;
 
-			for (const entry of entries) {
-				const product = entry.dataset.product;
-				const productArea = entry.dataset.productarea;
+			const products = JSON.parse(entry.dataset.products);
 
-				if (
-					(productFilter?.value === product ||
-						productFilter?.value === "all") &&
-					(productAreaFilter?.value === productArea ||
-						productAreaFilter?.value === "all")
-				) {
-					entry.style.display = "";
-					date.style.display = "";
-				} else {
-					entry.style.display = "none";
-					entriesHidden++;
-				}
-			}
+			const show = products.includes(value);
 
-			if (entriesHidden >= entries.length) {
-				date.style.display = "none";
+			if (show) {
+				entry.style.display = "";
+			} else {
+				entry.style.display = "none";
 			}
 		}
-	}
+	});
 </script>
 
 <style>
-	h4.sticky-pinned {
-		top: var(--sl-nav-height);
-		background-color: var(--sl-color-bg);
+	:root {
+		.sl-container {
+			--sl-content-width: 50rem !important;
+			margin-inline: auto !important;
+		}
+
+		.feedback-prompt-content {
+			display: none !important;
+		}
+
+		#footer-links {
+			justify-content: center;
+		}
+	}
+
+	.sl-steps {
+		--bullet-size: 24px !important;
+
+		& > li {
+			padding-inline-start: calc(var(--bullet-size) + 2.5rem) !important;
+
+			&::before {
+				content: "•" !important;
+				font-size: calc(var(--bullet-size) * 2) !important;
+				line-height: calc(var(--bullet-size) / 1.5) !important;
+				color: var(--orange-accent-200) !important;
+			}
+		}
 	}
 </style>

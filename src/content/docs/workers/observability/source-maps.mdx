@@ -9,7 +9,7 @@ sidebar:
 
 ---
 
-import { Render } from "~/components"
+import { Render, WranglerConfig } from "~/components"
 
 <Render file="source-maps" product="workers" />
 
@@ -23,9 +23,7 @@ Support for uploading source maps is available now in open beta. Minimum require
 
 ## Source Maps
 
-To enable source maps, add the following to your Worker's [`wrangler.toml`](/workers/wrangler/configuration/) file:
-
-import { WranglerConfig } from "~/components";
+To enable source maps, add the following to your Worker's [Wrangler configuration](/workers/wrangler/configuration/):
 
 <WranglerConfig>
 

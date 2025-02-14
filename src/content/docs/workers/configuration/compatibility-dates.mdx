@@ -6,6 +6,8 @@ head: []
 description: Opt into a specific version of the Workers runtime for your Workers project.
 ---
 
+import { WranglerConfig } from "~/components";
+
 Cloudflare regularly updates the Workers runtime. These updates apply to all Workers globally and should never cause a Worker that is already deployed to stop functioning. Sometimes, though, some changes may be backwards-incompatible. In particular, there might be bugs in the runtime API that existing Workers may inadvertently depend upon. Cloudflare implements bug fixes that new Workers can opt into while existing Workers will continue to see the buggy behavior to prevent breaking deployed Workers.
 
 The compatibility date and flags are how you, as a developer, opt into these runtime changes. [Compatibility flags](/workers/configuration/compatibility-flags) will often have a date in which they are enabled by default, and so, by specifying a `compatibility_date` for your Worker, you can quickly enable all of these various compatibility flags up to, and including, that date.
@@ -23,9 +25,7 @@ However, even though you do not need to update the `compatibility_date` field, i
 
 #### Via Wrangler
 
-The compatibility date can be set in a Worker's [`wrangler.toml`](/workers/wrangler/configuration/) file.
-
-import { WranglerConfig } from "~/components";
+The compatibility date can be set in a Worker's [Wrangler configuration file](/workers/wrangler/configuration/).
 
 <WranglerConfig>
 

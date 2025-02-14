@@ -13,6 +13,8 @@ languages:
   - SQL
 ---
 
+import { WranglerConfig } from "~/components";
+
 In this tutorial, you will learn how to use D1 to build a staff directory. This application will allow users to access information about an organization's employees and give admins the ability to add new employees directly within the app.
 To do this, you will first need to set up a [D1 database](/d1/get-started/) to manage data seamlessly, then you will develop and deploy your application using the [HonoX Framework](https://github.com/honojs/honox) and [Cloudflare Pages](/pages).
 
@@ -68,11 +70,9 @@ To create a database for your project, use the Cloudflare CLI tool, [Wrangler](/
 npx wrangler d1 create staff-directory
 ```
 
-After creating your database, you will need to set up a [binding](/workers/runtime-apis/bindings/) in the Wrangler configuration file to integrate your database with your application.
+After creating your database, you will need to set up a [binding](/workers/runtime-apis/bindings/) in the [Wrangler configuration file](/workers/wrangler/configuration/) to integrate your database with your application.
 
-This binding enables your application to interact with Cloudflare resources such as D1 databases, KV namespaces, and R2 buckets. To configure this, create a `wrangler.toml` file in your project's root directory and input the basic setup information:
-
-import { WranglerConfig } from "~/components";
+This binding enables your application to interact with Cloudflare resources such as D1 databases, KV namespaces, and R2 buckets. To configure this, create a Wrangler file in your project's root directory and input the basic setup information:
 
 <WranglerConfig>
 
@@ -83,7 +83,7 @@ compatibility_date = "2023-12-01"
 
 </WranglerConfig>
 
-Next, add the database binding details to your `wrangler.toml` file. This involves specifying a binding name (in this case, `DB`), which will be used to reference the database within your application, along with the `database_name` and `database_id` provided when you created the database:
+Next, add the database binding details to your Wrangler file. This involves specifying a binding name (in this case, `DB`), which will be used to reference the database within your application, along with the `database_name` and `database_id` provided when you created the database:
 
 
 
@@ -173,7 +173,7 @@ To execute the schema locally and seed data into your local directory, pass the 
 
 ## 5. Create SQL statements
 
-After setting up your D1 database and configuring the `wrangler.toml` file as outlined in previous steps, your database is accessible in your code through the `DB` binding. This allows you to directly interact with the database by preparing and executing SQL statements. In the following step, you will learn how to use this binding to perform common database operations such as retrieving data and inserting new records.
+After setting up your D1 database and configuring the Wrangler file as outlined in previous steps, your database is accessible in your code through the `DB` binding. This allows you to directly interact with the database by preparing and executing SQL statements. In the following step, you will learn how to use this binding to perform common database operations such as retrieving data and inserting new records.
 
 ### Retrieve data from database
 
@@ -377,7 +377,7 @@ Use the `wrangler r2 bucket create` command to create a bucket:
 wrangler r2 bucket create employee-avatars
 ```
 
-Once the bucket is created, add the R2 bucket binding to your `wrangler.toml` file:
+Once the bucket is created, add the R2 bucket binding to your Wrangler file:
 
 
 
@@ -428,7 +428,7 @@ if (imageFile instanceof File) {
 
 With your application ready for deployment, you can use Wrangler to build and deploy your project to the Cloudflare Network. Ensure you are logged in to your Cloudflare account by running the `wrangler whoami` command. If you are not logged in, Wrangler will prompt you to login by creating an API key that you can use to make authenticated requests automatically from your computer.
 
-After successful login, confirm that your `wrangler.toml` file is configured similarly to the code block below:
+After successful login, confirm that your Wrangler file is configured similarly to the code block below:
 
 
 

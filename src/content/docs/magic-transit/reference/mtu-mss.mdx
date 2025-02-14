@@ -7,18 +7,10 @@ sidebar:
 
 import { Render } from "~/components";
 
-<Render file="mtu-mss/mtu-mss" params={{ productName: "Magic Transit" }} />
-
-## MSS with Magic Transit and Direct Server Return
-
-<Render file="mtu-mss/mt-dsr" />
-
-## MSS clamping recommendations
-
-### GRE tunnels as off-ramp
-
-<Render file="mtu-mss/mss-clamping-gre" />
-
-### IPsec tunnels
-
-<Render file="mtu-mss/mss-clamping-ipsec" />
+<Render
+	file="mtu-mss/mtu-mss"
+	params={{
+		magicProduct: "Magic Transit",
+		productName: "Magic Transit"
+		}}
+/>

@@ -5,12 +5,16 @@ head:
   - tag: title
     content: Git integration guide
 description: Connect your Git provider to Pages.
-
 ---
 
-import { Details, Render } from "~/components"
+import { Details, Render } from "~/components";
 
-In this guide, you will get started with Cloudflare Pages, and deploy your first website to the Pages platform through Git integration.
+In this guide, you will get started with Cloudflare Pages and deploy your first website to the Pages platform through Git integration. The Git integration enables automatic builds and deployments every time you push a change to your connected [GitHub](/pages/configuration/git-integration/github-integration/) or [GitLab](/pages/configuration/git-integration/gitlab-integration/) repository.
+
+:::caution[You cannot switch to Direct Upload later]
+If you deploy using the Git integration, you cannot switch to [Direct Upload](/pages/get-started/direct-upload/) later. However, if you already use a Git-integrated project and do not want to trigger deployments every time you push a commit, you can [disable automatic deployments](/pages/configuration/git-integration/#disable-automatic-deployments) on all branches. Then, you can use Wrangler to deploy directly to your Pages projects and make changes to your Git repository without automatically triggering a build.
+
+:::
 
 ## Connect your Git provider to Pages
 

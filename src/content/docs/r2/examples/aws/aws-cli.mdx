@@ -10,6 +10,17 @@ import { Render } from "~/components";
 
 With the [`aws`](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) CLI installed, you may run [`aws configure`](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html#cli-configure-quickstart-config) to configure a new profile. You will be prompted with a series of questions for the new profile's details.
 
+:::note[Compatibility]
+Client versions `2.23.0` and `1.37.0` introduced a modification to the default checksum behavior from the client that is currently incompatible with R2 APIs.
+
+To mitigate, users can use `2.22.35` or `1.36.40`, or alternatively, add the CRC32 checksum flag to the cli command:
+
+```sh
+aws s3api put-object --bucket sdk-example --key sdk.png --body file/path --checksum-algorithm CRC32
+```
+
+:::
+
 ```shell
 aws configure
 ```

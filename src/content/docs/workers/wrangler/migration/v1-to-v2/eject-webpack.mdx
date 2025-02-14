@@ -6,9 +6,11 @@ sidebar:
 
 ---
 
+import { WranglerConfig } from "~/components";
+
 This guide describes the steps to migrate a webpack project from Wrangler v1 to Wrangler v2. After completing this guide, [update your Wrangler version](/workers/wrangler/migration/v1-to-v2/update-v1-to-v2/).
 
-Previous versions of Wrangler offered rudimentary support for [webpack](https://webpack.js.org/) with the `type` and `webpack_config` keys in [`wrangler.toml`](/workers/wrangler/configuration/). Starting with Wrangler v2, Wrangler no longer supports the `type` and `webpack_config` keys, but you can still use webpack with your Workers.
+Previous versions of Wrangler offered rudimentary support for [webpack](https://webpack.js.org/) with the `type` and `webpack_config` keys in the [Wrangler configuration file](/workers/wrangler/configuration/). Starting with Wrangler v2, Wrangler no longer supports the `type` and `webpack_config` keys, but you can still use webpack with your Workers.
 
 As a developer using webpack with Workers, you may be in one of four categories:
 
@@ -28,7 +30,7 @@ Wrangler v2 supports the `[build]` key, so your Workers will continue to build u
 
 ### I use `type = webpack`, but do not provide my own configuration and let Wrangler take care of it.
 
-Wrangler will continue to take care of it. Remove `type = webpack` from your `wrangler.toml` file.
+Wrangler will continue to take care of it. Remove `type = webpack` from your Wrangler file.
 
 ### I use `type = webpack` and `webpack_config = <path/to/webpack.config.js>` to handle JSX, TypeScript, WebAssembly, HTML files, and other non-standard filetypes.
 
@@ -36,7 +38,7 @@ As of Wrangler v2, Wrangler has built-in support for this use case. Refer to [Bu
 
 The Workers runtime handles JSX and TypeScript. You can `import` any modules you need into your code and the Workers runtime includes them in the built Worker automatically.
 
-You should remove the `type` and `webpack_config` keys from your `wrangler.toml` file.
+You should remove the `type` and `webpack_config` keys from your Wrangler file.
 
 ### I use `type = webpack` and `webpack_config = <path/to/webpack.config.js>` to perform code-transforms and/or other code-modifying functionality.
 
@@ -99,11 +101,9 @@ module.exports = {
 }
 ```
 
-4. Remove unsupported entries from your `wrangler.toml`.
+4. Remove unsupported entries from your [Wrangler configuration file](/workers/wrangler/configuration/).
 
-Remove the `type` and `webpack_config` keys from your `wrangler.toml` file, as they are not supported anymore.
-
-import { WranglerConfig } from "~/components";
+Remove the `type` and `webpack_config` keys from your Wrangler file, as they are not supported anymore.
 
 <WranglerConfig>
 

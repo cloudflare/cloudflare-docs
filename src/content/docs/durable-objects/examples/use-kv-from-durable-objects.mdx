@@ -11,19 +11,17 @@ description: Read and write to/from KV within a Durable Object
 
 ---
 
-import { GlossaryTooltip } from "~/components";
+import { GlossaryTooltip, WranglerConfig } from "~/components";
 
 The following Worker script shows you how to configure a <GlossaryTooltip term="Durable Object">Durable Object</GlossaryTooltip> to read from and/or write to a [Workers KV namespace](/kv/concepts/how-kv-works/). This is useful when using a Durable Object to coordinate between multiple clients, and allows you to serialize writes to KV and/or broadcast a single read from KV to hundreds or thousands of clients connected to a single Durable Object [using WebSockets](/durable-objects/best-practices/websockets/).
 
 Prerequisites:
 
 * A [KV namespace](/kv/api/) created via the Cloudflare dashboard or the [wrangler CLI](/workers/wrangler/install-and-update/).
-* A [configured binding](/kv/concepts/kv-bindings/) for the `kv_namespace` in the Cloudflare dashboard or `wrangler.toml` file.
+* A [configured binding](/kv/concepts/kv-bindings/) for the `kv_namespace` in the Cloudflare dashboard or Wrangler file.
 * A [Durable Object namespace binding](/workers/wrangler/configuration/#durable-objects).
 
-Configure your `wrangler.toml` file as follows:
-
-import { WranglerConfig } from "~/components";
+Configure your Wrangler file as follows:
 
 <WranglerConfig>
 

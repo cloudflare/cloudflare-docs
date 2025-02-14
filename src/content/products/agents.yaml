@@ -1,0 +1,28 @@
+name: Agents
+
+product:
+  title: Agents
+  url: /agents/
+  group: Developer platform
+  preview_tryout: true
+
+meta:
+  title: Cloudflare Agents
+  description: Build AI-powered agents that can autonomously perform tasks, persist state, browse the web, and communicate back to users in real-time over any channel.
+  author: "@cloudflare"
+
+resources:
+  community: https://community.cloudflare.com/c/developers/workers/40
+  dashboard_link: https://dash.cloudflare.com/?to=/:account/workers
+  learning_center: https://www.cloudflare.com/learning/serverless/what-is-serverless/
+  discord: https://discord.com/invite/cloudflaredev
+
+externals:
+  - title: Workers home
+    url: https://workers.cloudflare.com
+  - title: Playground
+    url: https://workers.cloudflare.com/playground
+  - title: Pricing
+    url: https://workers.cloudflare.com/#plans
+  - title: Discord
+    url: https://discord.cloudflare.com

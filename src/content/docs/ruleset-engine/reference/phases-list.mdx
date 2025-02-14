@@ -3,18 +3,15 @@ title: Phases list
 pcx_content_type: reference
 sidebar:
   order: 1
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 The following tables list the [phases](/ruleset-engine/about/phases/) of Cloudflare products powered by the Ruleset Engine, in the order those phases are executed. Some products such as the Cloudflare Web Application Firewall have more than one associated phase.
 
 ## Network layer
 
-Network-layer phases apply to packets received on the Cloudflare global network.
-
-
+[Network-layer](https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/) phases apply to packets received on the Cloudflare global network.
 
 | Phase name       | Used in product/feature                                                                          |
 | ---------------- | ------------------------------------------------------------------------------------------------ |
@@ -23,43 +20,38 @@ Network-layer phases apply to packets received on the Cloudflare global network.
 | `mt_managed`     | [Magic Firewall managed rulesets](/magic-firewall/how-to/enable-managed-rulesets/)               |
 | `mt_ids_managed` | [Magic Firewall Intrusion Detection System (IDS)](/magic-firewall/about/ids/)                    |
 
-
-
 ## Application layer
 
-Application-layer phases apply to requests received on the Cloudflare global network.
+[Application-layer](https://www.cloudflare.com/learning/ddos/what-is-layer-7/) phases apply to requests received on the Cloudflare global network.
 
 ### Request phases
 
 The phases execute in the order they appear in the table.
 
+| Phase name                      | Used in product/feature                                                                 |
+| ------------------------------- | --------------------------------------------------------------------------------------- |
+| `http_request_sanitize`         | [URL normalization](/rules/normalization/)                                              |
+| `http_request_dynamic_redirect` | [Single Redirects](/rules/url-forwarding/single-redirects/)                             |
+| `http_request_transform`        | [Rewrite URL Rules](/rules/transform/url-rewrite/)                                      |
+| _N/A_ (internal phase)          | [Waiting Room Rules](/waiting-room/additional-options/waiting-room-rules/)              |
+| `http_config_settings`          | [Configuration Rules](/rules/configuration-rules/)                                      |
+| `http_request_origin`           | [Origin Rules](/rules/origin-rules/)                                                    |
+| `ddos_l7`\*                     | [HTTP DDoS Attack Protection](/ddos-protection/managed-rulesets/http/)                  |
+| `http_request_api_gateway`      | [API Gateway](/api-shield/api-gateway/)                                                 |
+| `http_request_firewall_custom`  | [Custom rules (Web Application Firewall)](/waf/custom-rules/)                           |
+| `http_ratelimit`                | [Rate limiting rules (WAF)](/waf/rate-limiting-rules/)                                  |
+| _N/A_ (internal phase)          | [API Shield](/api-shield/)                                                              |
+| `http_request_firewall_managed` | [WAF Managed Rules](/waf/managed-rules/)                                                |
+| `http_request_sbfm`             | [Super Bot Fight Mode](/bots/get-started/pro/)                                          |
+| _N/A_ (internal phase)          | [Cloudflare Access](/cloudflare-one/policies/access/)                                   |
+| `http_request_redirect`         | [Bulk Redirects](/rules/url-forwarding/bulk-redirects/)                                 |
+| _N/A_ (internal phase)          | [Managed Transforms](/rules/transform/managed-transforms/)                              |
+| `http_request_late_transform`   | [HTTP Request Header Modification Rules](/rules/transform/request-header-modification/) |
+| `http_request_cache_settings`   | [Cache Rules](/cache/how-to/cache-rules/)                                               |
+| `http_request_snippets`         | [Snippets](/rules/snippets/)                                                            |
+| `http_request_cloud_connector`  | [Cloud Connector](/rules/cloud-connector/)                                              |
 
-
-| Phase name                          | Used in product/feature                                                                                |
-| ----------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| `http_request_sanitize`             | [URL normalization](/rules/normalization/)                                                             |
-| `http_request_dynamic_redirect`     | [Single Redirects](/rules/url-forwarding/single-redirects/)                                            |
-| `http_request_transform`            | [Rewrite URL Rules](/rules/transform/url-rewrite/)                                                     |
-| *N/A* (internal phase)              | [Waiting Room Rules](/waiting-room/additional-options/waiting-room-rules/)                             |
-| `http_config_settings`              | [Configuration Rules](/rules/configuration-rules/)                                                     |
-| `http_request_origin`               | [Origin Rules](/rules/origin-rules/)                                                                   |
-| `ddos_l7`\*                         | [HTTP DDoS Attack Protection](/ddos-protection/managed-rulesets/http/)                                 |
-| `http_request_api_gateway`          | [API Gateway](/api-shield/api-gateway/)                                                                |
-| `http_request_firewall_custom`      | [Custom rules (Web Application Firewall)](/waf/custom-rules/)                                          |
-| `http_ratelimit`                    | [Rate limiting rules (WAF)](/waf/rate-limiting-rules/)                                                 |
-| *N/A* (internal phase)              | [API Shield](/api-shield/)                                                                             |
-| `http_request_firewall_managed`     | [WAF Managed Rules](/waf/managed-rules/)                                                               |
-| `http_request_sbfm`                 | [Super Bot Fight Mode](/bots/get-started/pro/)                                                         |
-| *N/A* (internal phase)              | [Cloudflare Access](/cloudflare-one/policies/access/)                                                  |
-| `http_request_redirect`             | [Bulk Redirects](/rules/url-forwarding/bulk-redirects/)                                                |
-| *N/A* (internal phase)              | [Managed Transforms](/rules/transform/managed-transforms/)                                             |
-| `http_request_late_transform`       | [HTTP Request Header Modification Rules](/rules/transform/request-header-modification/)                |
-| `http_request_cache_settings`       | [Cache Rules](/cache/how-to/cache-rules/)                                                              |
-| `http_request_snippets`             | [Snippets](/rules/snippets/)                                                                           |
-| `http_request_cloud_connector`      | [Cloud Connector](/rules/cloud-connector/)                                                             |
-
-
-\* *This phase is for configuration purposes only — the corresponding rules will not be executed at this stage in the request handling process.*
+\* _This phase is for configuration purposes only — the corresponding rules will not be executed at this stage in the request handling process._
 
 <Render file="bfm-change-notice" product="bots" />
 
@@ -67,14 +59,12 @@ The phases execute in the order they appear in the table.
 
 The phases execute in the order they appear in the table.
 
-
-
-| Phase name                        | Used in product/feature                                                                              |
-| --------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| `http_custom_errors`              | [Custom Error Responses](/rules/custom-error-responses/)                                             |
-| *N/A* (internal phase)            | [Managed Transforms](/rules/transform/managed-transforms/)                                           |
-| `http_response_headers_transform` | [HTTP Response Header Modification Rules](/rules/transform/response-header-modification/)            |
-| `http_ratelimit`                  | [Rate limiting rules](/waf/rate-limiting-rules/) (when they use response information)                |
-| `http_response_compression`       | [Compression Rules](/rules/compression-rules/)                                                       |
-| `http_response_firewall_managed`  | [Cloudflare Sensitive Data Detection](/waf/managed-rules/) (Data Loss Prevention)                    |
-| `http_log_custom_fields`          | [Logpush custom fields](/logs/reference/custom-fields/)                                              |
+| Phase name                        | Used in product/feature                                                                   |
+| --------------------------------- | ----------------------------------------------------------------------------------------- |
+| `http_custom_errors`              | [Custom Errors](/rules/custom-errors/)                                                    |
+| _N/A_ (internal phase)            | [Managed Transforms](/rules/transform/managed-transforms/)                                |
+| `http_response_headers_transform` | [HTTP Response Header Modification Rules](/rules/transform/response-header-modification/) |
+| `http_ratelimit`                  | [Rate limiting rules](/waf/rate-limiting-rules/) (when they use response information)     |
+| `http_response_compression`       | [Compression Rules](/rules/compression-rules/)                                            |
+| `http_response_firewall_managed`  | [Cloudflare Sensitive Data Detection](/waf/managed-rules/) (Data Loss Prevention)         |
+| `http_log_custom_fields`          | [Logpush custom fields](/logs/reference/custom-fields/)                                   |

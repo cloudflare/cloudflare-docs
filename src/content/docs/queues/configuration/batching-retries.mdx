@@ -5,6 +5,8 @@ sidebar:
   order: 2
 ---
 
+import { WranglerConfig } from "~/components";
+
 ## Batching
 
 When configuring a [consumer Worker](/queues/reference/how-queues-works#consumers) for a queue, you can also define how messages are batched as they are delivered.
@@ -87,7 +89,7 @@ export default {
 
 You can also acknowledge or negatively acknowledge messages at a batch level with `ackAll()` and `retryAll()`. Calling `ackAll()` on the batch of messages (`MessageBatch`) delivered to your consumer Worker has the same behaviour as a consumer Worker that successfully returns (does not throw an error).
 
-Note that calls to `ack()`, `retry()` and their `ackAll()` / `retryAll` equivalents follow the below precedence rules:
+Note that calls to `ack()`, `retry()` and their `ackAll()` / `retryAll()` equivalents follow the below precedence rules:
 
 - If you call `ack()` on a message, subsequent calls to `ack()` or `retry()` are silently ignored.
 - If you call `retry()` on a message and then call `ack()`: the `ack()` is ignored. The first method call wins in all cases.
@@ -194,9 +196,7 @@ npx wrangler@latest queues consumer worker add $QUEUE-NAME $WORKER_SCRIPT_NAME -
 npx wrangler@latest queues consumer http add $QUEUE-NAME --retry-delay-secs=60
 ```
 
-Delays can also be configured in [`wrangler.toml`](/workers/wrangler/configuration/#queues) with the `delivery_delay` setting for producers (when sending) and/or the `retry_delay` (when retrying) per-consumer:
-
-import { WranglerConfig } from "~/components";
+Delays can also be configured in the [Wrangler configuration file](/workers/wrangler/configuration/#queues) with the `delivery_delay` setting for producers (when sending) and/or the `retry_delay` (when retrying) per-consumer:
 
 <WranglerConfig>
 
@@ -213,7 +213,7 @@ import { WranglerConfig } from "~/components";
 
 </WranglerConfig>
 
-If you use both the `wrangler` CLI and `wrangler.toml` to change the settings associated with a queue or a queue consumer, the most recent configuration change will take effect.
+If you use both the `wrangler` CLI and the [Wrangler configuration file](/workers/wrangler/configuration/) to change the settings associated with a queue or a queue consumer, the most recent configuration change will take effect.
 
 Refer to the [Queues REST API documentation](/api/resources/queues/subresources/consumers/methods/get/) to learn how to configure message delays and retry delays programmatically.
 

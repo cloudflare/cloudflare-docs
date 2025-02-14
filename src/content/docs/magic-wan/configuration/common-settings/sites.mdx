@@ -1,0 +1,133 @@
+---
+title: Set up a site
+pcx_content_type: how-to
+sidebar:
+  order: 2
+  badge:
+    text: Beta
+---
+
+import { Details } from "~/components"
+
+Sites represent the local network of a data center, office, or other physical location, and combine all on-ramps available there. Sites also allow you to check, at a glance, the state of your on-ramps and set up health alert settings so that you get notified when there are issues with the site's on-ramps.
+
+To use a site, start by setting up your on-ramps. These can be [GRE or IPsec tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/), a [Magic WAN Connector](/magic-wan/configuration/connector/), or a direct [CNI link](/magic-wan/network-interconnect/). When you are finished setting these up, refer to the steps below to learn how to set up a site.
+
+## Add a site
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Magic WAN** > **Network overview (beta)**.
+3. Select **Create site**. If this is not the first time you are adding a site, you will have the option **Add site** instead.
+4. Add a name and description for your new site. Optionally, you can also add the geographical coordinates for your site in **Latitude** and **Longitude**. If you add geographical coordinates, once created your site's location will show in the map.
+5. Select **Create and continue**.
+6. Choose one or more on-ramps for your site from the list. Remember to only choose the on-ramps available to that particular site, as the list might show on-ramps available on other locations.
+7. Select **Continue**.
+8. In **Define alert settings** you set up alerts to notify you when there are issues with your site's on-ramps. If you want to set up alerts later, select **Skip this for now** to complete your setup. Otherwise, continue reading.
+9. In **Magic WAN Health Check Alert** > **Notification name**, enter a name for the site's alert.
+9. Under **Alert settings**, choose how you want to be notified when there is an issue. You can add webhooks as well as email addresses.
+10. In **Alert sensitivity level** define the threshold for Magic Tunnel health alerts to be fired. Available options are _Low_, _Medium_, and _High_. Refer to [Magic Tunnels background information](/magic-wan/reference/magic-tunnels/) for more information.
+11. Select **Complete setup** to finish setting up your site.
+
+Your site is now set up. If you have other sites you need to set up, repeat the steps above. If you did not set up alerts, we strongly recommend that you do it. Otherwise you will not be notified when there is a problem with one of your on-ramps.
+
+---
+
+## Site analytics
+
+After adding your sites, the Network overview (beta) section of the dashboard provides a summary of the connectivity status and traffic analytics for all your sites. This is a great place to start if you receive a Magic WAN alert, need to begin the troubleshooting process, or are performing routine monitoring.
+
+Network overview (beta) has the following data types available:
+
+<Details header="Geographic map summary">
+	- [Aggregate Magic WAN site health](#site-health)
+	- [Magic WAN availability status for sites](#no-status-available)
+	- [Magic WAN site geographic location](#no-location-set)
+</Details>
+
+<Details header="Magic WAN site data table">
+	- Site Name
+	- Site Health
+	- Site Tunnel Names
+	- Site Tunnel Statuses
+	- Site Traffic Sent
+	- Site Traffic Received
+</Details>
+
+<Details header="Magic WAN site data">
+	- Traffic Sent by Tunnel
+	- Traffic Received by Tunnel
+</Details>
+
+To start using Magic WAN site analytics:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Select **Magic WAN** > **Network overview (beta)**.
+
+You will have access to an overview map with all your active sites, and any alerts for sites that are unhealthy or have no status available to them.
+
+Review the topics below to learn more about the options available to you.
+
+### Network map and traffic overview
+
+The network map section shows all the sites configured with Magic WAN. At a glance, you can check:
+
+- How many active sites you have
+- Location for sites in a map (if you set up their geographic location)
+- Sites that are healthy or unhealthy
+- Sites that have no status available
+- Sites that have no location set
+
+Just below the map, Traffic overview shows a more granular list of your sites and their status.
+
+#### Site health
+
+Sites can be healthy or unhealthy, and Magic WAN uses this information to route traffic. Refer to [Set thresholds for Magic WAN site health](#set-thresholds-for-magic-wan-site-health) to learn more about this topic.
+
+#### No status available
+
+The status of a site refers to its health. If your sites show a **No status available** message, this means you did not configure your alert settings when creating your site. Refer to [Configure Magic Tunnel health alerts](/magic-wan/configuration/common-settings/configure-magic-tunnel-alerts/) to learn how to create an alert for your site.
+
+#### No location set
+
+The dashboard shows you the number of sites with no location set, meaning sites for which you did not set up a geographic location. To add a location to a site, find the site you want to add location to, and select **no location set** to edit its location settings. Refer to [Set geographic coordinates](#set-geographic-coordinates) for more information.
+
+
+### Traffic overview
+
+Traffic overview aggregates all Magic WAN sites configured in your account. Here, you can check at-a-glance information about each site like:
+
+- Site status
+- Traffic sent and received
+
+Select one of your sites to have access to a more detailed view of its traffic, including traffic by tunnel.
+
+---
+
+## Edit a site
+
+### Add or remove on-ramps
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Magic WAN** > **Network overview (beta)**.
+3. Find your site in **Traffic overview** > select the three dots in front of it > **Edit**.
+4. Select **On-ramps**.
+5. Select **Add** to add a new on-ramp.
+6. If you want to remove an on-ramp, select the three dots in front of your on-ramp > **Remove**.
+
+### Set geographic coordinates
+
+If you add geographic coordinates to your site, it will show up in the Network map. To set up or edit geographic coordinates to an existing site:
+
+1. Go to **Magic WAN** > **Network overview (beta)**.
+2. Find your site in **Traffic overview** > select the three dots in front of it > **Edit**.
+3. In **Basic information**, edit your site's **Latitude** and **Longitude** coordinates.
+4. Select **Save**.
+
+### Set thresholds for Magic WAN site health
+
+When you set up an alert for your site, you will be notified when there is an issue with one or more on-ramps. These alerts are sent when the percentage of successful health checks for a Magic WAN on-ramp drops below the selected service-level objective (SLO). Setting health alerts will also show unhealthy tunnels in the Network map and in the Traffic overview sections.
+
+To set up health alerts:
+
+1. Configure [Magic Tunnel health alerts](/magic-wan/configuration/common-settings/configure-magic-tunnel-alerts/) across all of the Magic Tunnels associated with each Magic WAN site.
+2. After configuring Magic Tunnel health alerts, any Magic WAN site with a Magic Tunnel (on-ramp) that is outside of its SLO threshold will be labeled unhealthy in Network map and Traffic overview.

@@ -13,7 +13,7 @@ description: Send invoice when shopping cart is checked out and paid for
 
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TabItem, Tabs, WranglerConfig } from "~/components"
 
 In this example, we implement a Workflow for an e-commerce website that is triggered every time a shopping cart is created.
 
@@ -201,9 +201,7 @@ Here's a minimal package.json:
 }
 ```
 
-And finally wrangler.toml:
-
-import { WranglerConfig } from "~/components";
+And finally [Wrangler configuration file](/workers/wrangler/configuration/):
 
 <WranglerConfig>
 

@@ -10,7 +10,7 @@ languages:
   - TypeScript
 ---
 
-import { Render, PackageManagers } from "~/components";
+import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 This tutorial explains how to create a TypeScript-based Cloudflare Workers project that can securely access files from and upload files to a [Cloudflare R2](/r2/) bucket. Cloudflare R2 allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
 
@@ -66,9 +66,7 @@ npx wrangler r2 bucket list
 
 After your new R2 bucket is ready, use it inside your Worker application.
 
-Use your R2 bucket inside your Worker project by modifying the `wrangler.toml` configuration file to include an R2 bucket [binding](/workers/runtime-apis/bindings/). Add the following R2 bucket binding to your `wrangler.toml` file:
-
-import { WranglerConfig } from "~/components";
+Use your R2 bucket inside your Worker project by modifying the [Wrangler configuration file](/workers/wrangler/configuration/) to include an R2 bucket [binding](/workers/runtime-apis/bindings/). Add the following R2 bucket binding to your Wrangler file:
 
 <WranglerConfig>
 

@@ -1,39 +1,24 @@
-{
-	import.meta.env.PROD ? (
-		<>
-			<script
-				src="https://ot.www.cloudflare.com/public/vendor/onetrust/scripttemplates/otSDKStub.js"
-				type="text/javascript"
-				charset="UTF-8"
-				data-domain-script="b1e05d49-f072-4bae-9116-bdb78af15448"
-				is:inline
-			/>
-			<script type="text/javascript" is:inline>
-				function OptanonWrapper() {}
-			</script>
-		</>
-	) : (
-		<>
-			<script
-				src="https://ot.www.cloudflare.com/public/vendor/onetrust/scripttemplates/otSDKStub.js"
-				type="text/javascript"
-				charset="UTF-8"
-				data-domain-script="b1e05d49-f072-4bae-9116-bdb78af15448-test"
-				is:inline
-			/>
-			<script type="text/javascript" is:inline>
-				function OptanonWrapper() {}
-			</script>
-		</>
-	)
-}
-<span class="DocsFooter--content-additional-wrapper">
-	<!-- OneTrust Cookies Settings button start -->
-	<a role="button" id="ot-sdk-btn" class="ot-sdk-show-settings"
-		>Cookie Settings</a
-	>
-	<!-- OneTrust Cookies Settings button end -->
-</span>
+---
+const isProduction = import.meta.env.PROD;
+
+const uuid = isProduction
+	? "b1e05d49-f072-4bae-9116-bdb78af15448"
+	: "b1e05d49-f072-4bae-9116-bdb78af15448-test";
+---
+
+<script
+	src="https://ot.www.cloudflare.com/public/vendor/onetrust/scripttemplates/otSDKStub.js"
+	type="text/javascript"
+	charset="UTF-8"
+	data-domain-script={uuid}
+	is:inline></script>
+<script type="text/javascript" is:inline>
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	function OptanonWrapper() {}
+</script>
+<!-- OneTrust Cookies Settings button start -->
+<button id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</button>
+<!-- OneTrust Cookies Settings button end -->
 
 <style>
 	#ot-sdk-btn.ot-sdk-show-settings {
@@ -43,6 +28,7 @@
 		line-height: inherit !important;
 		padding: inherit !important;
 		font-family: var(--sl-font-family) !important;
+		background-color: inherit !important;
 	}
 
 	#ot-sdk-btn.ot-sdk-show-settings:hover {

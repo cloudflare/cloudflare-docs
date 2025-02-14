@@ -1,0 +1,24 @@
+---
+link: "/security-center/changelog/"
+productName: Security Center
+productLink: "/security-center/"
+productArea: Application security
+productAreaLink: /fundamentals/reference/changelog/security/
+entries:
+  - publish_date: "2025-02-03"
+    description: |-
+      - Security Center now has a role called Brand Protection. This role gives you access to the Brand Protection feature on the API and Cloudflare dashboard. Brand Protection role also gives you access to the Investigate platform, where you can consume the Threat Intel API and URL scanner API calls. 
+  - publish_date: "2025-01-20"
+    description: |-
+      - On the URL scanner, customers who search for a report will now get a list of all reports related to that specific hostname. A hash is also available in the security report. By selecting the hash, the dashboard will list reports containing the same hash.
+  - publish_date: "2024-07-22"
+    description: |-
+      - Customers can now archive multiple Security Insights at the same time. Go to **Security Center** > **Security Insights** and select the insights to archive.
+
+  - publish_date: "2024-09-19"
+    description: |-
+      - Customers can now create a `security.txt` file file to provide the security research team with a standardized way to report vulnerabilities.
+
+  - publish_date: "2024-09-23"
+    description: |-
+      - Customers can now export all matches from a saved query. Select your **Query name** > select the three dots > **Export matches**.

@@ -79,7 +79,7 @@ export default defineConfig({
 });
 ```
 
-This module in turn loads a plugin which adds bindings to the event context in dev:
+This module in turn loads a plugin which adds bindings to the request context in dev:
 
 ```typescript
 import { NitroApp } from "nitropack";
@@ -102,15 +102,15 @@ export default defineNitroPlugin((nitroApp: NitroApp) => {
 });
 ```
 
-In the code above, the `getPlatformProxy` helper function will automatically detect any bindings defined in your project's `wrangler.toml` file and emulate those bindings in local development. Review [Wrangler configuration information on bindings](/workers/wrangler/configuration/#bindings) for more information on how to configure bindings in `wrangler.toml`.
+In the code above, the `getPlatformProxy` helper function will automatically detect any bindings defined in your project's Wrangler file and emulate those bindings in local development. You may wish to refer to [Wrangler configuration information on bindings](/workers/wrangler/configuration/#bindings).
 
-A new type definition for the `Env` type (used by `context.cloudflare.env`) can be generated from `wrangler.toml` with the following command:
+A new type definition for the `Env` type (used by `context.cloudflare.env`) can be generated from the [Wrangler configuration file](/workers/wrangler/configuration/) with the following command:
 
 ```sh
 npm run cf-typegen
 ```
 
-This should be done any time you add new bindings to `wrangler.toml`.
+This should be done any time you add new bindings to your Wrangler configuration.
 
 ### Setup bindings in deployed applications
 

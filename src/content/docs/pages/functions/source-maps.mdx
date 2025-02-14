@@ -9,7 +9,7 @@ sidebar:
 
 ---
 
-import { Render } from "~/components"
+import { Render, WranglerConfig } from "~/components"
 
 <Render file="source-maps" product="workers" />
 
@@ -23,9 +23,7 @@ Support for uploading source maps for Pages is available now in open beta. Minim
 
 ## Source Maps
 
-To enable source maps, provide the `--upload-source-maps` flag to [`wrangler pages deploy`](/workers/wrangler/commands/#deploy-1) or add the following to your Pages application's [`wrangler.toml`](/pages/functions/wrangler-configuration/) file if you are using the Pages build environment:
-
-import { WranglerConfig } from "~/components";
+To enable source maps, provide the `--upload-source-maps` flag to [`wrangler pages deploy`](/workers/wrangler/commands/#deploy-1) or add the following to your Pages application's [Wrangler configuration file](/pages/functions/wrangler-configuration/) if you are using the Pages build environment:
 
 <WranglerConfig>
 

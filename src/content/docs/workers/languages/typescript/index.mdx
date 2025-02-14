@@ -24,7 +24,7 @@ This means the correct TypeScript types for your Worker depend on:
 1. Your Worker's [Compatibility Date](/workers/configuration/compatibility-dates/).
 2. Your Worker's [Compatibility Flags](/workers/configuration/compatibility-flags/).
 
-For example, if you have `compatibility_flags = ["nodejs_als"]` in your `wrangler.toml`, then the runtime will allow you to use the [`AsyncLocalStorage`](https://nodejs.org/api/async_context.html#class-asynclocalstorage) class in your worker code, but you will not see this reflected in the type definitions in `@cloudflare/workers-types`.
+For example, if you have `compatibility_flags = ["nodejs_als"]` in your [Wrangler configuration file](/workers/wrangler/configuration/), then the runtime will allow you to use the [`AsyncLocalStorage`](https://nodejs.org/api/async_context.html#class-asynclocalstorage) class in your worker code, but you will not see this reflected in the type definitions in `@cloudflare/workers-types`.
 
 In order to solve this issue, and to ensure that your type definitions are always up-to-date with your compatibility settings, you can dynamically generate the runtime types (as of `wrangler 3.66.0`):
 
@@ -70,12 +70,6 @@ yarn remove @cloudflare/workers-types
 pnpm uninstall @cloudflare/workers-types
 ```
 
-</TabItem> <TabItem label="bun">
-
-```sh
-bun remove @cloudflare/workers-types
-```
-
 </TabItem> </Tabs>
 
 ##### Generate runtime types using wrangler
@@ -102,7 +96,7 @@ Note that if you have specified a custom path for the runtime types file, you sh
 
 When switching to `wrangler types --experimental-include-runtime`, you'll want to ensure that your development process always uses the most up-to-date types. The main thing to remember here is that - regardless of your specific framework or build tools - you should run the `wrangler types --experimental-include-runtime` command before any development tasks that rely on TypeScript. This ensures your editor and build tools always have access to the latest types.
 
-Most projects will have existing build and development scripts scripts, as well as some type-checking. In the example below, we're adding the `wrangler types --experimental-include-runtime` before the type-checking script in the project:
+Most projects will have existing build and development scripts, as well as some type-checking. In the example below, we're adding the `wrangler types --experimental-include-runtime` before the type-checking script in the project:
 
 ```json
 {
@@ -114,7 +108,7 @@ Most projects will have existing build and development scripts scripts, as well 
 }
 ```
 
-In CI, you may have a separate build and test commands. It is best practice to run `wrangler types --experimental-include-runtime` before other CI commands. For example:
+In CI, you may have separate build and test commands. It is best practice to run `wrangler types --experimental-include-runtime` before other CI commands. For example:
 
 <Tabs> <TabItem label="npm">
 
@@ -140,14 +134,6 @@ In CI, you may have a separate build and test commands. It is best practice to r
 - run: pnpm test
 ```
 
-</TabItem> <TabItem label="bun">
-
-```yaml
-- run: bun run generate-types
-- run: bun run build
-- run: bun test
-```
-
 </TabItem> </Tabs>
 
 By integrating the `wrangler types --experimental-include-runtime` command into your workflow this way, you ensure that your development environment, builds, and CI processes always use the most accurate and up-to-date types for your Cloudflare Worker, regardless of your specific framework or tooling choices.
@@ -156,7 +142,7 @@ By integrating the `wrangler types --experimental-include-runtime` command into 
 
 #### Transitive loading of `@types/node` overrides `@cloudflare/workers-types`
 
-You project's dependencies may load the `@types/node` package on their own. As of `@types/node@20.8.4` that package now overrides `Request`, `Response` and `fetch` types (possibly others) specified by `@cloudflare/workers-types` causing type errors.
+Your project's dependencies may load the `@types/node` package on their own. As of `@types/node@20.8.4` that package now overrides `Request`, `Response` and `fetch` types (possibly others) specified by `@cloudflare/workers-types` causing type errors.
 
 The way to get around this issue currently is to pin the version of `@types/node` to `20.8.3` in your `package.json` like this:
 

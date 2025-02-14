@@ -18,7 +18,12 @@ For using only the Cloudflare provider, see [Terraform](/r2/examples/terraform/)
 
 :::
 
-With [`terraform`](https://developer.hashicorp.com/terraform/downloads) installed, create `main.tf` and copy the content below replacing with your Account ID and R2 credentials.
+With [`terraform`](https://developer.hashicorp.com/terraform/downloads) installed:
+
+1. Create `main.tf` file, or edit your existing Terraform configuration
+2. Populate the endpoint URL at `endpoints.s3` with your [Cloudflare account ID](/fundamentals/setup/find-account-and-zone-ids/)
+3. Populate `access_key` and `secret_key` with the corresponding [R2 API credentials](/r2/api/s3/tokens/).
+4. Ensure that `skip_region_validation = true`, `skip_requesting_account_id = true`, and `skip_credentials_validation = true` are set in the provider configuration.
 
 ```hcl
 terraform {
@@ -36,6 +41,8 @@ provider "aws" {
   access_key = <R2 Access Key>
   secret_key = <R2 Secret Key>
 
+	# Required for R2.
+	# These options disable S3-specific validation on the client (Terraform) side.
   skip_credentials_validation = true
   skip_region_validation      = true
   skip_requesting_account_id  = true

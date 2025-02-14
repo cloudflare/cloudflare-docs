@@ -10,23 +10,20 @@ import { GlossaryTooltip } from "~/components"
 
 To bring your own IPs, you must work with your account team to understand everything you need to ensure a smooth transition during the onboarding process.
 
-:::note
-
-BYOIP is ingress only. 
-:::
-
-## Overview
-
 Cloudflare requires a service-specific configuration for your prefixes, as well as some requirements common to all BYOIP customers regardless of service type. These requirements are common to all products compatible with BYOIP, such as [Magic Transit](/magic-transit/), [Spectrum](/spectrum/), and [CDN services](/cache/).
 
 ## Prerequisites
 
 There are two major prerequisites before Cloudflare can begin onboarding your IP space.
 
-1. You must verify your [Internet Routing Registry (IRR)](/byoip/concepts/irr-entries/) records are up to date with the correct prefix or ASN information.
-2. Cloudflare must receive a [Letter of Agency (LOA)](/byoip/concepts/loa/) to announce your prefixes, which we will share with our transit partners as evidence that we are allowed to announce the route.
+1. Cloudflare must receive a [Letter of Agency (LOA)](/byoip/concepts/loa/) to announce your prefixes, which we will share with our transit partners as evidence that we are allowed to announce the route.
+2. You must verify that your [Internet Routing Registry (IRR)](/byoip/concepts/irr-entries/) records are up to date and contain:
+    - `route` or `route6` objects matching the exact prefixes you want to onboard
+    - `origin` matching the correct ASN you want to onboard
 
-Optionally, if you use the <GlossaryTooltip term="Resource Public Key Infrastructure (RPKI)">Resource Public Key Infrastructure (RPKI)</GlossaryTooltip> protocol to sign your routes, Cloudflare can help with this as well. Contact your account team if you are interested in using RPKI.
+:::caution[RPKI validation]
+You are not required to use <GlossaryTooltip term="Resource Public Key Infrastructure (RPKI)">Resource Public Key Infrastructure (RPKI)</GlossaryTooltip>. However, if you do, make sure your <GlossaryTooltip term="Route Origin Authorization (ROA)">ROAs</GlossaryTooltip> are accurate. You can use [Cloudflare's RPKI Portal](https://rpki.cloudflare.com/?view=validator) and a second source such as [Routinator](https://rpki-validator.ripe.net/ui/) to double check your prefixes.
+:::
 
 After onboarding, [Border Gateway Protocol (BGP)](https://www.cloudflare.com/learning/security/glossary/what-is-bgp/) announcements for customer prefixes can be controlled with the [Dynamic Advertisement](/byoip/concepts/dynamic-advertisement/) API or via the Cloudflare dashboard.
 
@@ -47,5 +44,5 @@ To protect your network using a Cloudflare IP address, contact your account mana
 
 :::note
 
-When you use a Cloudflare-managed IP space, you do not need to provide a Letter of Agency (LOA) and advertise your prefixes that are associated with bringing your own IP. 
+When you use a Cloudflare-managed IP space, you do not need to provide a Letter of Agency (LOA) and advertise your prefixes that are associated with bringing your own IP.
 :::

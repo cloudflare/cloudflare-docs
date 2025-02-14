@@ -1,0 +1,79 @@
+---
+link: "/hyperdrive/platform/changelog/"
+productName: Hyperdrive
+productLink: "/hyperdrive/"
+productArea: Developer platform
+productAreaLink: /workers/platform/changelog/platform/
+entries:
+  - publish_date: "2025-01-28"
+    title: Hyperdrive automatically configures your Cloudflare Tunnel to connect to your private database.
+    description: |-
+      When creating a Hyperdrive configuration for a private database, you only need to provide your database credentials and set up a Cloudflare Tunnel within the private network where your database is accessible.
+
+      Hyperdrive will automatically create the Cloudflare Access, Service Token and Policies needed to secure and restrict your Cloudflare Tunnel to the Hyperdrive configuration.
+
+      Refer to [documentation on how to configure Hyperdrive to connect to a private database](/hyperdrive/configuration/connect-to-private-database/).
+  - publish_date: "2024-12-11"
+    title: Hyperdrive now caches queries in all Cloudflare locations decreasing cache hit latency by up to 90%
+    description: |-
+      Hyperdrive query caching now happens in all locations where Hyperdrive can be accessed. When making a query in a location that has cached the query result, your latency may be decreased by up to 90%.
+
+      Refer to [documentation on how Hyperdrive caches query results](/hyperdrive/configuration/how-hyperdrive-works/#query-caching).
+  - publish_date: "2024-11-19"
+    title: Hyperdrive now supports clear-text password authentication
+    description: |-
+      When connecting to a database that requires secure clear-text password authentication over TLS, Hyperdrive will now support this authentication method.
+
+      Refer to the documentation to see [all PostgreSQL authentication modes supported by Hyperdrive](/hyperdrive/reference/supported-databases#supported-postgresql-authentication-modes).
+  - publish_date: "2024-10-30"
+    title: New Hyperdrive configurations to private databases using Tunnels are validated before creation
+    description: |-
+      When creating a new Hyperdrive configuration to a private database using Tunnels, Hyperdrive will verify that it can connect to the database to ensure that your Tunnel and Access application have been properly configured. This makes it easier to debug connectivity issues. 
+
+      Refer to [documentation on connecting to private databases](/hyperdrive/configuration/connect-to-private-database/) for more information.
+  - publish_date: "2024-09-20"
+    title: The `node-postgres` (pg) driver is now supported for Pages applications using Hyperdrive.
+    description: |-
+      The popular `pg` ([node-postgres](https://github.com/brianc/node-postgres) driver no longer requires the legacy `node_compat` mode, and can now be used in both Workers and Pages for connecting to Hyperdrive. This uses the new (improved) Node.js compatibility in Workers and Pages. 
+
+      You can set [`compatibility_flags = ["nodejs_compat_v2"]`](/workers/runtime-apis/nodejs/) in your `wrangler.toml` or via the Pages dashboard to benefit from this change. Visit the [Hyperdrive documentation on supported drivers](/hyperdrive/configuration/connect-to-postgres/#supported-drivers) to learn more about the driver versions supported by Hyperdrive.
+  - publish_date: "2024-08-19"
+    title: Improved caching for Postgres.js
+    description: |-
+      Hyperdrive now better caches [Postgres.js](https://github.com/porsager/postgres) queries to reduce queries to the origin database.
+  - publish_date: "2024-08-13"
+    title: Hyperdrive audit logs now available in the Cloudflare Dashboard
+    description: |-
+      Actions that affect Hyperdrive configs in an account will now appear in the audit logs for that account.
+  - publish_date: "2024-05-24"
+    title: Increased configuration limits
+    description: |-
+      You can now create up to 25 Hyperdrive configurations per account, up from the previous maximum of 10.
+
+      Refer to [Limits](/hyperdrive/platform/limits/) to review the limits that apply to Hyperdrive.
+  - publish_date: "2024-05-22"
+    title: Driver performance improvements
+    description: |-
+      Compatibility improvements to how Hyperdrive interoperates with the popular [Postgres.js](https://github.com/porsager/postgres) driver have been released. These improvements allow queries made via Postgres.js to be correctly cached (when enabled) in Hyperdrive.
+
+      Developers who had previously set `prepare: false` can remove this configuration when establishing a new Postgres.js client instance.
+
+      Read the [documentation on supported drivers](/hyperdrive/configuration/connect-to-postgres/#supported-drivers) to learn more about database driver interoperability with Hyperdrive.
+  - publish_date: "2024-04-01"
+    title: Hyperdrive is now Generally Available
+    description: |-
+      Hyperdrive is now Generally Available and ready for production applications.
+
+      Read the [announcement blog](https://blog.cloudflare.com/making-full-stack-easier-d1-ga-hyperdrive-queues) to learn more about the Hyperdrive and the roadmap, including upcoming support for MySQL databases.
+  - publish_date: "2024-03-19"
+    title: Improved local development configuration
+    description: |-
+      Hyperdrive now supports a `WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>` environmental variable for configuring local development to use a test/non-production database, in addition to the `localConnectionString` configuration in `wrangler.toml`.
+
+      Refer to [Local development](/hyperdrive/configuration/local-development/) for instructions on how to configure Hyperdrive locally.
+  - publish_date: "2023-09-28"
+    title: Hyperdrive now available
+    description: |-
+      Hyperdrive is now available in public beta to any developer with a Workers paid plan.
+
+      To start using Hyperdrive, visit the [get started](/hyperdrive/get-started/) guide or read the [announcement blog](https://blog.cloudflare.com/hyperdrive-making-regional-databases-feel-distributed/) to learn more.

@@ -15,6 +15,15 @@ https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/huggingface
 
 When making requests to HuggingFace Inference API, replace `https://api-inference.huggingface.co/models/` in the URL you’re currently using with `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/huggingface`. Note that the model you’re trying to access should come right after, for example `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/huggingface/bigcode/starcoder`.
 
+## Prerequisites
+
+When making requests to HuggingFace, ensure you have the following:
+
+- Your AI Gateway Account ID.
+- Your AI Gateway gateway name.
+- An active HuggingFace API token.
+- The name of the HuggingFace model you want to use.
+
 ## Examples
 
 ### cURL

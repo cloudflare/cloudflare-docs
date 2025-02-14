@@ -3,8 +3,9 @@ title: Create an allowlist or blocklist
 pcx_content_type: learning-unit
 sidebar:
   order: 2
-
 ---
+
+import { Tabs, TabItem } from "~/components";
 
 In the context of DNS filtering, a blocklist is a list of known harmful domains or IP addresses. An allowlist is a list of allowed domains or IP addresses, such as the domains of essential corporate applications.
 
@@ -12,8 +13,56 @@ Gateway supports creating [lists](/cloudflare-one/policies/gateway/lists/) of UR
 
 ## Example list policy
 
+<Tabs syncKey="dashPlusAPI">
+
+<TabItem label="Dashboard">
+
 The following DNS policy will allow access to all approved corporate domains included in a list called **Corporate Domains**.
 
 | Selector | Operator | Value               | Action |
 | -------- | -------- | ------------------- | ------ |
-| Domain   | in list  | *Corporate Domains* | Allow  |
+| Domain   | in list  | _Corporate Domains_ | Allow  |
+
+</TabItem>
+
+<TabItem label="API">
+
+```sh
+curl  https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
+  --header 'Content-Type: application/json' \
+  --header "Authorization: Bearer <API_TOKEN>" \
+	--data '{
+  "name": "All-DNS-CorporateDomain-AllowList",
+  "description": "Allow access to the corporate domains defined under the Corporate Domains list",
+  "precedence": 1,
+  "enabled": true,
+  "action": "allow",
+  "filters": [
+    "dns"
+  ],
+  "traffic": "any(dns.domains[*] in $<CORPORATE_DOMAINS_LIST_UUID>)"
+}'
+```
+
+</TabItem>
+
+<TabItem label="Terraform">
+
+To create a new DNS policy using **Terraform** to allow access to all approved corporate domains included in a list called **Corporate Domains**.
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "allow_corporate_domain_access" {
+  account_id  = var.account_id
+  name        = "All-DNS-CorporateDomain-AllowList"
+  description = "Allow access to the corporate domains defined under the Corporate Domains list"
+  precedence  = 1
+  enabled     = false
+  action      = "allow"
+  filters     = ["dns"]
+  traffic     = "any(dns.domains[*] in $<Corporate Domains List UUID>)"
+}
+```
+
+</TabItem>
+
+</Tabs>

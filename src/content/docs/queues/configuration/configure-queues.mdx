@@ -9,27 +9,45 @@ head:
 
 ---
 
+import { WranglerConfig, Type } from "~/components";
+
 Cloudflare Queues can be configured using [Wrangler](/workers/wrangler/install-and-update/), the command-line interface for Cloudflare's Developer Platform, which includes [Workers](/workers/), [R2](/r2/), and other developer products.
 
-Each Worker has a `wrangler.toml` configuration file that specifies environment variables, triggers, and resources, such as a Queue. To enable Worker-to-resource communication, you must set up a [binding](/workers/runtime-apis/bindings/) in your Worker project's `wrangler.toml` file.
+
+Each Producer and Consumer Worker has a [Wrangler configuration file](/workers/wrangler/configuration/) that specifies environment variables, triggers, and resources, such as a queue. To enable Worker-to-resource communication, you must set up a [binding](/workers/runtime-apis/bindings/) in your Worker project's Wrangler file.
 
 Use the options below to configure your queue.
 
 :::note
 
 
-Below are options for Queues, refer to the Wrangler documentation for a full reference of [`wrangler.toml`](/workers/wrangler/configuration/).
+Below are options for queues, refer to the Wrangler documentation for a full reference of the [Wrangler configuration file](/workers/wrangler/configuration/).
 
 
 :::
 
-## Producer
+## Queue configuration
+The following queue level settings can be configured using Wrangler:
+
+```sh
+$ npx run wrangler queues update --delivery-delay-secs 60 --message-retention-period-secs 3000
+```
+
+* `--delivery-delay-secs` <Type text="number" /> <Type text="optional" />
+	* How long a published message is delayed for, before it is delivered to consumers.
+	* Must be between 0 and 43200 (12 hours).
+	* Defaults to 0.
+
+* `--message-retention-period-secs`  <Type text="number" /> <Type text="optional" />
+	* How long messages are retained on the Queue.
+	* Defaults to 345600 (4 days).
+	* Must be between 60 and 1209600 (14 days)
+
+## Producer Worker configuration
 
 A producer is a [Cloudflare Worker](/workers/) that writes to one or more queues. A producer can accept messages over HTTP, asynchronously write messages when handling requests, and/or write to a queue from within a [Durable Object](/durable-objects/). Any Worker can write to a queue.
 
-To produce to a queue, set up a binding in your `wrangler.toml` file. These options should be used when a Worker wants to send messages to a queue.
-
-import { WranglerConfig } from "~/components";
+To produce to a queue, set up a binding in your Wrangler file. These options should be used when a Worker wants to send messages to a queue.
 
 <WranglerConfig>
 
@@ -43,21 +61,19 @@ import { WranglerConfig } from "~/components";
 
 
 
-* <code>queue</code> string
+* <code>queue</code> <Type text="string" />
 
-  * The name of the Queue.
+  * The name of the queue.
 
-* <code>binding</code> string
+* <code>binding</code> <Type text="string" />
 
   * The name of the binding, which is a JavaScript variable.
 
 
 
-## Consumer
+## Consumer Worker Configuration
 
-## Workers
-
-To consume messages from one or more queues, set up a binding in your `wrangler.toml` file. These options should be used when a Worker wants to receive messages from a queue.
+To consume messages from one or more queues, set up a binding in your Wrangler file. These options should be used when a Worker wants to receive messages from a queue.
 
 
 
@@ -78,32 +94,32 @@ Refer to [Limits](/queues/platform/limits) to review the maximum values for each
 
 
 
-* <code>queue</code> string
+* <code>queue</code> <Type text="string" />
 
-  * The name of the Queue.
+  * The name of the queue.
 
-* <code>max\_batch\_size</code> number optional
+* <code>max\_batch\_size</code> <Type text="number" /> <Type text="optional" />
 
   * The maximum number of messages allowed in each batch.
   * Defaults to `10` messages.
 
-* <code>max\_batch\_timeout</code> number optional
+* <code>max\_batch\_timeout</code> <Type text="number" /> <Type text="optional" />
 
   * The maximum number of seconds to wait until a batch is full.
   * Defaults to `5` seconds.
 
-* <code>max\_retries</code> number optional
+* <code>max\_retries</code> <Type text="number" /> <Type text="optional" />
 
   * The maximum number of retries for a message, if it fails or [`retryAll()`](/queues/configuration/javascript-apis/#messagebatch) is invoked.
   * Defaults to `3` retries.
 
-* <code>dead\_letter\_queue</code> string optional
+* <code>dead\_letter\_queue</code> <Type text="string" /> <Type text="optional" />
 
-  * The name of another Queue to send a message if it fails processing at least `max_retries` times.
+  * The name of another queue to send a message if it fails processing at least `max_retries` times.
   * If a `dead_letter_queue` is not defined, messages that repeatedly fail processing will eventually be discarded.
-  * If there is no Queue with the specified name, it will be created automatically.
+  * If there is no queue with the specified name, it will be created automatically.
 
-* <code>max\_concurrency</code> number optional
+* <code>max\_concurrency</code> <Type text="number" /> <Type text="optional" />
 
   * The maximum number of concurrent consumers allowed to run at once. Leaving this unset will mean that the number of invocations will scale to the [currently supported maximum](/queues/platform/limits/).
   * Refer to [Consumer concurrency](/queues/configuration/consumer-concurrency/) for more information on how consumers autoscale, particularly when messages are retried.

@@ -18,7 +18,7 @@ head:
 description: Example of how to use Queues to handle rate limits of external APIs.
 ---
 
-import { Render, PackageManagers } from "~/components";
+import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 This tutorial explains how to use Queues to handle rate limits of external APIs by building an application that sends email notifications using [Resend](https://www.resend.com/). However, you can use this pattern to handle rate limits of any external API.
 
@@ -73,11 +73,9 @@ Creating queue rate-limit-queue.
 Created queue rate-limit-queue.
 ```
 
-### Add Queue bindings to `wrangler.toml`
+### Add Queue bindings to your [Wrangler configuration file](/workers/wrangler/configuration/)
 
-In your `wrangler.toml` file, add the following:
-
-import { WranglerConfig } from "~/components";
+In your Wrangler file, add the following:
 
 <WranglerConfig>
 
@@ -97,7 +95,7 @@ max_retries = 3
 
 It is important to include the `max_batch_size` of two to the consumer queue is important because the Resend API has a default rate limit of two requests per second. This batch size allows the queue to process the message in the batch size of two. If the batch size is less than two, the queue will wait for 10 seconds to collect the next message. If no more messages are available, the queue will process the message in the batch. For more information, refer to the [Batching, Retries and Delays documentation](/queues/configuration/batching-retries)
 
-Your final `wrangler.toml` file should look similar to the example below.
+Your final Wrangler file should look similar to the example below.
 
 
 

@@ -1,0 +1,86 @@
+---
+pcx_content_type: how-to
+title: Secure a private IP or hostname
+sidebar:
+  order: 3
+  label: Add a self-hosted private application
+---
+
+import { Render } from "~/components";
+
+You can configure a self-hosted Access application to manage access to specific IPs or hostnames on your private network.
+
+:::note
+This feature replaces the legacy [private network app type](/cloudflare-one/applications/non-http/legacy-private-network-app/).
+:::
+
+## Prerequisites
+
+- Private IPs and hostnames are reachable over Cloudflare WARP, Magic WAN or Browser Isolation. For more details, refer to [Connect a private network](/cloudflare-one/connections/connect-networks/private-net/).
+- Private hostnames route to your custom DNS resolver through [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) or [Gateway resolver policies](/cloudflare-one/policies/gateway/resolver-policies/).
+- [Gateway TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) must be enabled if you would like to present a login page in the browser and issue an authorization JWT to your origin. Otherwise, users will receive a pop-up notification from the WARP client and all session management will be handled in the WARP client.
+
+## Add your application to Access
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
+
+2. Select **Add an application**.
+
+3. Select **Self-hosted**.
+
+4. Enter any name for the application.
+
+5. In **Session Duration**, choose how often the user's [application token](/cloudflare-one/identity/authorization-cookie/application-token/) should expire.
+
+   Cloudflare checks every HTTPS request to your application for a valid application token. If the user's application token (and global token) has expired, they will be prompted to reauthenticate with the IdP. For more information, refer to [Session management](/cloudflare-one/identity/users/session-management/). If the application is non-HTTPS or you do not have TLS decryption turned on, the session is tracked by the WARP client per application.
+
+6. Add the private IP and/or private hostname that represents the application. You can use [wildcards](/cloudflare-one/policies/access/app-paths/) with private hostnames to protect multiple parts of an application that share a root path.
+
+	:::note
+	Private hostnames are currently only available over port `443` over HTTPS and the application must have a valid Server Name Indicator (SNI).
+	:::
+
+7. Add [Access policies](/cloudflare-one/policies/access/) to control who can connect to your application. All Access applications are deny by default -- a user must match an Allow policy before they are granted access.
+
+8. Configure how users will authenticate:
+
+		1. Select the [**Identity providers**](/cloudflare-one/identity/idp-integration/) you want to enable for your application.
+
+		2. (Recommended) If you plan to only allow access via a single IdP, turn on **Instant Auth**. End users will not be shown the [Cloudflare Access login page](/cloudflare-one/applications/login-page/). Instead, Cloudflare will redirect users directly to your SSO login event.
+
+		3. (Recommended) Turn on **WARP authentication identity** to allow users to authenticate to the application using their [WARP session identity](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/). We recommend turning this on if your application is not in the browser and cannot handle a `302` redirect.
+
+9. Select **Next**.
+
+10. (Optional) Configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application.
+
+11. <Render file="access/access-block-page" product="cloudflare-one" />
+
+12. Select **Next**.
+
+13. (Optional) Configure advanced settings. These settings only apply to private hostnames and require Gateway TLS decryption.
+
+		- [**Cross-Origin Resource Sharing (CORS) settings**](/cloudflare-one/identity/authorization-cookie/cors/)
+		- [**Cookie settings**](/cloudflare-one/identity/authorization-cookie/#cookie-settings)
+		- **Browser rendering settings**:
+				- [Automatic `cloudflared` authentication](/cloudflare-one/applications/non-http/cloudflared-authentication/automatic-cloudflared-authentication/)
+				- [Browser rendering for SSH and VNC](/cloudflare-one/applications/non-http/browser-rendering/)
+		- **401 Response for Service Auth policies**: Return a `401` response code when a user (or machine) makes a request to the application without the correct [service token](/cloudflare-one/identity/service-tokens/).
+
+14. Select **Save**.
+
+Users can now connect to your private application after authenticating with Cloudflare Access.
+
+## Modify order of precedence in Gateway
+
+By default, Cloudflare will evaluate a private application's Access policies after evaluating all Gateway network policies. To evaluate Access private applications before or after specific Gateway policies, create the following [Gateway network policy](/cloudflare-one/policies/gateway/network-policies/):
+
+| Selector                            | Operator | Value | Action |
+| ----------------------------------- | -------- | ----- | ------ |
+| All Access App Private Destinations | is       | on    | Allow  |
+
+You can move this policy in the Gateway policy builder to change its [order of precedence](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence).
+
+:::note
+Users must pass the policies in your Access application before they are granted access. The Gateway Allow policy is strictly for routing and connectivity purposes.
+:::

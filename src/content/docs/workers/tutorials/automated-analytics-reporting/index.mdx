@@ -16,8 +16,7 @@ languages:
   - JavaScript
 ---
 
-import { Render, PackageManagers } from "~/components";
-import { TabItem, Tabs } from "~/components";
+import { Render, PackageManagers, TabItem, Tabs, WranglerConfig } from "~/components";
 
 In this tutorial, you will create a [Cloudflare Worker](https://workers.cloudflare.com/) that fetches analytics data about your account from Cloudflare's [GraphQL Analytics API](https://developers.cloudflare.com/analytics/graphql-api/). You will be able to view the account analytics data in your browser and receive a scheduled email report.
 
@@ -93,10 +92,11 @@ yarn add mimetext
 
 </TabItem> </Tabs>
 
-## 2. Update wrangler.toml file
+## 2. Update Wrangler configuration file
 
-[`wrangler.toml`](https://developers.cloudflare.com/workers/wrangler/configuration/) is the configuration file for your Worker. It was created when you ran `c3` CLI. Open `wrangler.toml` in your code editor and update it with the following configuration:
+[`wrangler.jsonc`](/workers/wrangler/configuration/) contains the configuration for your Worker. It was created when you ran `c3` CLI. Open `wrangler.jsonc` in your code editor and update it with the following configuration:
 
+<WranglerConfig>
 ```toml
 name = "account-analytics"
 main = "src/index.js"
@@ -130,6 +130,7 @@ RECIPIENT_EMAIL = "<>"
 # This value will be used as the subject of the email
 EMAIL_SUBJECT = "Cloudflare Analytics Report"
 ```
+</WranglerConfig>
 
 Before you continue, update the following:
 
@@ -408,7 +409,7 @@ async function sendEmail(env, content) {
 This function sends an email with the formatted analytics data to the specified recipient email address using Cloudflare's Email Routing service.
 
 :::note
-`sendEmail` function uses multiple environment variables that are set in the `wrangler.toml` file.
+`sendEmail` function uses multiple environment variables that are set in the Wrangler file.
 :::
 
 ## 4. Test the Worker

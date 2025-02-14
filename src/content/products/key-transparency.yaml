@@ -4,6 +4,7 @@ product:
   title: Key Transparency Auditor
   url: /key-transparency/
   group: Application security
+  additional_groups: [Privacy]
 
 meta:
   title: Key Transparency Auditor

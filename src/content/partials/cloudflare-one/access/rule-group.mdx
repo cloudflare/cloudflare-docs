@@ -1,0 +1,57 @@
+---
+{}
+---
+
+import { TabItem, Tabs } from "~/components";
+
+To create an Access rule group:
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Rule groups**.
+2. Select **Add a group**.
+3. Enter a name for the group (for example, `Lisbon-team`).
+4. Specify as many rules as needed to define your user group. For example, the following rules define a team based in Lisbon, Portugal:
+
+   | Rule type | Selector         | Value       |
+   | --------- | ---------------- | ----------- |
+   | Include   | Country          | `Portugal`  |
+   | Require   | Emails Ending In | `@team.com` |
+
+5. Select **Save**.
+
+</TabItem>
+
+<TabItem label="API">
+
+Send a `POST` request to the [`/access/groups`](/api/resources/zero_trust/subresources/access/subresources/groups/methods/create/) endpoint:
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/access/groups \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "name": "Lisbon-team",
+  "include": [
+    {
+      "geo": {
+        "country_code": "PT"
+      }
+    }
+  ],
+  "exclude": [],
+  "require": [
+    {
+      "email_domain": {
+        "domain": "team.com"
+      }
+    }
+  ],
+  "is_default": false
+}'
+```
+
+</TabItem> </Tabs>
+
+You can now add this group to an Access policy using the _Rule groups_ selector.

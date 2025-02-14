@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Render, TabItem, Tabs, PackageManagers } from "~/components";
+import { Render, TabItem, Tabs, PackageManagers, WranglerConfig } from "~/components";
 
 This guide will instruct you through:
 
@@ -13,6 +13,8 @@ This guide will instruct you through:
 - Using Durable Objects SQL API to query a Durable Object's private, embedded SQLite database.
 - Instantiating and communicating with a Durable Object from another Worker.
 - Deploying a Durable Object and a Worker that communicates with a Durable Object.
+
+If you wish to learn more about Durable Objects, refer to [What are Durable Objects?](/durable-objects/what-are-durable-objects/).
 
 :::note[SQLite in Durable Objects Beta]
 
@@ -56,7 +58,7 @@ Running `create cloudflare@latest` will install [Wrangler](/workers/wrangler/ins
 	}}
 />
 
-This will create a new directory, which will include either a `src/index.js` or `src/index.ts` file to write your code and a [`wrangler.toml`](/workers/wrangler/configuration/) configuration file.
+This will create a new directory, which will include either a `src/index.js` or `src/index.ts` file to write your code and a [`wrangler.jsonc`](/workers/wrangler/configuration/) configuration file.
 
 Move into your new directory:
 
@@ -138,7 +140,7 @@ export class MyDurableObject extends DurableObject {
 In the code above, you have:
 
 1. Defined a RPC method, `sayHello()`, that can be called by a Worker to communicate with a Durable Object.
-2. Accessed a Durable Object's attached storage, which is a private SQLite database only accesible to the object, using [SQL API](/durable-objects/api/sql-storage/#exec) methods (`sql.exec()`) available on `ctx.storage` .
+2. Accessed a Durable Object's attached storage, which is a private SQLite database only accessible to the object, using [SQL API](/durable-objects/api/sql-storage/#exec) methods (`sql.exec()`) available on `ctx.storage` .
 3. Returned an object representing the single row query result using `one()`, which checks that the query result has exactly one row.
 4. Return the `greeting` column from the row object result.
 
@@ -201,9 +203,7 @@ Refer to [Access a Durable Object from a Worker](/durable-objects/best-practices
 
 ## 5. Configure Durable Object bindings
 
-[Bindings](/workers/runtime-apis/bindings/) allow your Workers to interact with resources on the Cloudflare developer platform. The Durable Object bindings in your Worker project's `wrangler.toml` will include a binding name (for this guide, use `MY_DURABLE_OBJECT`) and the class name (`MyDurableObject`).
-
-import { WranglerConfig } from "~/components";
+[Bindings](/workers/runtime-apis/bindings/) allow your Workers to interact with resources on the Cloudflare developer platform. The Durable Object bindings in your Worker project's [Wrangler configuration file](/workers/wrangler/configuration/) will include a binding name (for this guide, use `MY_DURABLE_OBJECT`) and the class name (`MyDurableObject`).
 
 <WranglerConfig>
 
@@ -225,9 +225,9 @@ The `[[durable_objects.bindings]]` section contains the following fields:
 
 A migration is a mapping process from a class name to a runtime state. You perform a migration when creating a new Durable Object class, or when renaming, deleting or transferring an existing Durable Object class.
 
-Migrations are performed through the `[[migrations]]` configurations key in your `wrangler.toml` file.
+Migrations are performed through the `[[migrations]]` configurations key in your Wrangler file.
 
-The Durable Object migration to create a new Durable Object class with SQLite storage backend will look like the following in your Worker's `wrangler.toml` file:
+The Durable Object migration to create a new Durable Object class with SQLite storage backend will look like the following in your Worker's Wrangler file:
 
 
 

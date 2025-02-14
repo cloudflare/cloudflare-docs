@@ -4,9 +4,9 @@ import { getCollection } from "astro:content";
 import StarlightPage, {
 	type StarlightPageProps,
 } from "@astrojs/starlight/components/StarlightPage.astro";
-import { LinkButton, Tabs, TabItem, Code, Aside } from "~/components";
-import ModelInfo from "~/components/models/ModelInfo.jsx";
-import ModelBadges from "~/components/models/ModelBadges.jsx";
+import { LinkButton, Tabs, TabItem, Code, Aside, Badge } from "~/components";
+import ModelInfo from "~/components/models/ModelInfo.tsx";
+import ModelBadges from "~/components/models/ModelBadges.tsx";
 import SchemaViewer from "~/components/models/SchemaViewer.astro";
 
 import TextGenerationCode from "~/components/models/code/TextGenerationCode.astro";
@@ -22,6 +22,7 @@ import TranslationCode from "~/components/models/code/TranslationCode.astro";
 import StableDiffusionV15Img2ImgCode from "~/components/models/code/StableDiffusion-v1-5-img2imgCode.astro";
 import StableDiffusionV15InpaintingCode from "~/components/models/code/StableDiffusion-v1-5-inpaintingCode.astro";
 import Flux1Schnell from "~/components/models/code/Flux-1-Schnell.astro";
+import WhisperBase64Code from "~/components/models/code/WhisperBase64Code.astro";
 
 import { authorData } from "~/components/models/data";
 
@@ -88,6 +89,10 @@ if (model.name === "@cf/black-forest-labs/flux-1-schnell") {
 	CodeExamples = Flux1Schnell;
 }
 
+if (model.name === "@cf/openai/whisper-large-v3-turbo") {
+	CodeExamples = WhisperBase64Code;
+}
+
 const description = model.description;
 const terms = model.properties.find((x) => x.property_id === "terms");
 
@@ -120,12 +125,16 @@ const starlightPageProps = {
 ---
 
 <StarlightPage {...starlightPageProps}>
-	<div class="flex align-center">
+	<div class="align-center flex">
 		{
 			author ? (
-				<img class="mr-4 w-12 h-12 block" src={author.logo} />
+				<img
+					class="mr-4 block h-12 w-12"
+					src={author.logo}
+					alt={`${author.name} logo`}
+				/>
 			) : (
-				<div class="w-12 h-12 mr-4 rounded-md bg-gray-100 text-gray-400 uppercase text-2xl font-black flex justify-center items-center">
+				<div class="mr-4 flex h-12 w-12 items-center justify-center rounded-md bg-gray-100 text-2xl font-black uppercase text-gray-400">
 					{model.name.split("/")[1].substring(0, 1)}
 				</div>
 			)
@@ -133,27 +142,36 @@ const starlightPageProps = {
 		<div>
 			<h1
 				id="_top"
-				class="!-mt-4 !mb-0 !leading-none !text-4xl !font-bold flex items-center"
+				class="!-mt-4 !mb-0 flex items-center !text-4xl !font-bold !leading-none"
 			>
 				{name}
-				{
-					isBeta && (
-						<span class="ml-3 font-normal mt-2 bg-orange-200 text-orange-900 rounded-full px-2 py-0.5 text-xs">
-							Beta
-						</span>
-					)
-				}
+				{isBeta && <Badge text="Beta" variant="caution" class="ml-3 mt-2" />}
 			</h1>
-			<span class="block -mt-1"><ModelInfo model={model} /></span>
+			<span class="-mt-1 block"><ModelInfo model={model} /></span>
 		</div>
 	</div>
 
-	<span class="font-mono text-gray-400 text-sm mt-4 block">{model.name}</span>
+	<span class="mt-4 block font-mono text-sm text-gray-400">{model.name}</span>
 
-	<p class="mt-3 !mb-2">{description}</p>
+	<p class="!mb-2 mt-3">{description}</p>
 	{terms && <a href={terms.value}>Terms and License</a>}
 	<ModelBadges model={model} />
 
+	{
+		model.name === "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b" && (
+			<Aside>
+				<p>
+					This model has a specialized pricing structure that's separate from
+					the standard Workers AI pricing plan. The pricing for
+					<code>@cf/deepseek-ai/deepseek-r1-distill-qwen-32b</code> is:
+					<ul>
+						<li>$0.50 per 1M input token</li>
+						<li>$4.88 per 1M output token</li>
+					</ul>
+				</p>
+			</Aside>
+		)
+	}
 	{
 		model.name === "@cf/meta/llama-3.2-11b-vision-instruct" && (
 			<Aside>
@@ -210,6 +228,7 @@ const starlightPageProps = {
 	}
 
 	<h2 id="Parameters">Parameters</h2>
+	<p><span class="text-red-500">*</span> indicates a required field</p>
 	<h3 id="Input">Input</h3>
 	<SchemaViewer schema={model.schema.input} />
 

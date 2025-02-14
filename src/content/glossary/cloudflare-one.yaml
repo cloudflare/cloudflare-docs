@@ -1,10 +1,6 @@
 ---
 productName: Cloudflare One
 entries:
-  - term: Access group
-    general_definition: |-
-      a set of rules that can be configured once and then quickly applied across many Access applications.
-
   - term: App Launcher
     general_definition: |-
       the App Launcher portal provides end users with a single dashboard to open applications secured by Cloudflare Zero Trust.
@@ -35,7 +31,7 @@ entries:
 
   - term: Cloudflare Access
     general_definition: |-
-      Cloudflare Access replaces corporate VPNs with Cloudflare’s network. It verifies attributes such as identity and device posture to grant users secure access to internal tools.
+      Cloudflare Access replaces corporate VPNs with Cloudflare's network. It verifies attributes such as identity and device posture to grant users secure access to internal tools.
 
   - term: Cloudflare Browser Isolation
     general_definition: |-
@@ -67,7 +63,7 @@ entries:
 
   - term: Cloudflare Zero Trust
     general_definition: |-
-      Cloudflare Zero Trust provides the power of Cloudflare’s global network to your internal teams and infrastructure. It empowers users with secure, fast, and seamless access to any device on the Internet.
+      Cloudflare Zero Trust provides the power of Cloudflare's global network to your internal teams and infrastructure. It empowers users with secure, fast, and seamless access to any device on the Internet.
 
   - term: daemon
     general_definition: |-
@@ -98,6 +94,10 @@ entries:
       DNS locations are a collection of DNS endpoints which can be mapped to physical entities such as offices, homes, or data centers.
     associated_products:
       - DNS
+
+  - term: fleet
+    general_definition: |-
+      a fleet is a collection of user devices. All devices in a fleet have WARP installed and are connected to a [Cloudflare Zero Trust organization](/cloudflare-one/setup/#create-a-zero-trust-organization).
 
   - term: identity provider
     general_definition: |-
@@ -146,6 +146,10 @@ entries:
   - term: RDP
     general_definition: |-
       Remote Desktop Protocol (RDP) allows remote desktop connections to a computer, often used on Windows and Mac operating systems.
+
+  - term: Rule group
+    general_definition: |-
+      a set of Access rules that can be configured once and then quickly applied across many Access policies.
 
   - term: SafeSearch
     general_definition: |-

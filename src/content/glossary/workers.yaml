@@ -43,7 +43,7 @@ entries:
 
   - term: environment
     general_definition: |-
-      [Environments](/workers/wrangler/environments/) allow you to deploy the same Worker application with different configuration for each environment. Only available for use with `wrangler.toml`.
+      [Environments](/workers/wrangler/environments/) allow you to deploy the same Worker application with different configuration for each environment. Only available for use with a [Wrangler configuration file](/workers/wrangler/configuration/).
 
   - term: environment variable
     general_definition: |-
@@ -111,7 +111,7 @@ entries:
 
   - term: version
     general_definition: |-
-      A [version](/workers/configuration/versions-and-deployments/#versions) is defined by the state of code as well as the state of configuration in a Worker's `wrangler.toml` file.
+      A [version](/workers/configuration/versions-and-deployments/#versions) is defined by the state of code as well as the state of configuration in a Worker's Wrangler file.
 
   - term: V8
     general_definition: |-
@@ -129,6 +129,6 @@ entries:
     general_definition: |-
       [Wrangler](/learning-paths/workers/get-started/c3-and-wrangler/) is the Cloudflare Developer Platform command-line interface (CLI) that allows you to manage projects, such as Workers, created from the Cloudflare Developer Platform product offering.
 
-  - term: wrangler.toml
+  - term: wrangler.toml / wrangler.json / wrangler.jsonc
     general_definition: |-
-      The [configuration](/workers/wrangler/configuration/) file used to customize the development and deployment setup for a Worker or a Pages Function.
+      The [configuration](/workers/wrangler/configuration/) used to customize the development and deployment setup for a Worker or a Pages Function. 

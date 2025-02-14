@@ -1,0 +1,85 @@
+.sl-badge {
+	/* Unset Starlight styling */
+	border: none;
+	font-family: var(--__sl-font);
+	overflow-wrap: unset;
+
+	/* Apply styling from https://www.npmjs.com/package/@cloudflare/component-label */
+	align-items: center;
+	border-radius: 50px;
+	display: inline-flex;
+	font-size: 12px;
+	font-weight: 400;
+	line-height: 1;
+	user-select: none;
+	white-space: nowrap;
+	padding: 4px 8px;
+}
+
+:root {
+	.sl-badge {
+		&.note {
+			background-color: theme("colors.cl1.blue.8") !important;
+			color: theme("colors.cl1.blue.2") !important;
+		}
+
+		&.danger {
+			background-color: theme("colors.cl1.red.8") !important;
+			color: theme("colors.cl1.red.2") !important;
+		}
+
+		&.success {
+			background-color: theme("colors.cl1.green.8") !important;
+			color: theme("colors.cl1.green.2") !important;
+		}
+
+		&.caution {
+			background-color: theme("colors.cl1.orange.8") !important;
+			color: theme("colors.cl1.orange.2") !important;
+		}
+
+		&.tip {
+			background-color: theme("colors.cl1.violet.8") !important;
+			color: theme("colors.cl1.violet.1") !important;
+		}
+
+		&.default {
+			background-color: theme("colors.cl1.gray.9") !important;
+			color: theme("colors.cl1.gray.2") !important;
+		}
+	}
+}
+
+:root[data-theme="dark"] {
+	.sl-badge {
+		&.note {
+			background-color: theme("colors.cl1.blue.7") !important;
+			color: theme("colors.cl1.blue.0") !important;
+		}
+
+		&.danger {
+			background-color: theme("colors.cl1.red.8") !important;
+			color: theme("colors.cl1.red.0") !important;
+		}
+
+		&.success {
+			background-color: theme("colors.cl1.green.7") !important;
+			color: theme("colors.cl1.green.0") !important;
+		}
+
+		&.caution {
+			background-color: theme("colors.cl1.orange.8") !important;
+			color: theme("colors.cl1.orange.0") !important;
+		}
+
+		&.tip {
+			background-color: theme("colors.cl1.violet.8") !important;
+			color: theme("colors.cl1.violet.0") !important;
+		}
+
+		&.default {
+			background-color: theme("colors.cl1.gray.8") !important;
+			color: theme("colors.cl1.gray.3") !important;
+		}
+	}
+}

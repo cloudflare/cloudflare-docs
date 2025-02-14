@@ -1,0 +1,70 @@
+---
+import type { Props } from "@astrojs/starlight/props";
+import Default from "@astrojs/starlight/components/Page.astro";
+
+import { generateDescription, generateTableOfContents } from "~/util/props";
+import { getSidebar, flattenSidebar, type SidebarEntry } from "~/util/sidebar";
+
+type Group = Extract<Props["sidebar"][0], { type: "group" }>;
+
+const props = Astro.props;
+const data = props.entry.data;
+
+const html = await Astro.slots.render("default");
+
+if (props.toc) {
+	props.toc.items = await generateTableOfContents(html);
+}
+
+if (props.hasSidebar) {
+	(props.sidebar as unknown as Group) = await getSidebar(Astro);
+
+	if (props.pagination) {
+		const flattened = flattenSidebar(
+			props.sidebar.entries as unknown as SidebarEntry[],
+		);
+
+		const idx = flattened.findIndex((entry) => entry.isCurrent);
+
+		let prev = flattened[idx - 1];
+		let next = flattened[idx + 1];
+
+		if (prev?.attrs["data-group-label"]) {
+			prev = {
+				...prev,
+				label: prev.attrs["data-group-label"],
+			};
+		}
+
+		if (next?.attrs["data-group-label"]) {
+			next = {
+				...next,
+				label: next.attrs["data-group-label"],
+			};
+		}
+
+		props.pagination.prev = prev;
+		props.pagination.next = next;
+	}
+}
+
+if (data.description) {
+	data.description = await generateDescription({
+		markdown: data.description,
+	});
+} else {
+	data.description = await generateDescription({ html });
+}
+
+if (data.updated) {
+	data.lastUpdated = undefined;
+}
+---
+
+<Default {...Astro.props} set:html={html} />
+
+<style>
+	html:not([data-has-toc]) {
+		--sl-content-width: 67.5rem;
+	}
+</style>

@@ -1,12 +1,13 @@
 ---
 pcx_content_type: configuration
 title: Webpack
+description: Learn how to migrate from Wrangler v1 to v2 using webpack. This guide covers configuration, custom builds, and compatibility for Cloudflare Workers.
 sidebar:
   order: 5
 
 ---
 
-import { Render } from "~/components"
+import { Render, WranglerConfig } from "~/components"
 
 <Render file="wrangler-v1-deprecation" />
 
@@ -14,11 +15,9 @@ Wrangler allows you to develop modern ES6 applications with support for modules.
 
 :::note[Configuration and webpack version]
 
+Wrangler includes `webpack@4`. If you want to use `webpack@5`, or another bundler like esbuild or Rollup, you must set up [custom builds](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/configuration/#build) in your Wrangler file.
 
-Wrangler includes `webpack@4`. If you want to use `webpack@5`, or another bundler like esbuild or Rollup, you must set up [custom builds](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/configuration/#build) in your `wrangler.toml` file.
-
-You must set `type = "webpack"` in your `wrangler.toml` file to use Wrangler's webpack integration. If you are encountering warnings about specifying `webpack_config`, refer to [backwards compatibility](#backwards-compatibility).
-
+You must set `type = "webpack"` in your Wrangler file to use Wrangler's webpack integration. If you are encountering warnings about specifying `webpack_config`, refer to [backwards compatibility](#backwards-compatibility).
 
 :::
 
@@ -39,7 +38,7 @@ The default configuration sets `target` to `webworker`. This is the correct valu
 
 ## Bring your own configuration
 
-You can tell Wrangler to use a custom webpack configuration file by setting `webpack_config` in your `wrangler.toml` file. Always set `target` to `webworker`.
+You can tell Wrangler to use a custom webpack configuration file by setting `webpack_config` in your Wrangler file. Always set `target` to `webworker`.
 
 ### Example
 
@@ -50,8 +49,6 @@ module.exports = {
   mode: 'production',
 };
 ```
-
-import { WranglerConfig } from "~/components";
 
 <WranglerConfig>
 
@@ -161,6 +158,6 @@ module.exports = {
 
 ## Backwards compatibility
 
-If you are using `wrangler@1.6.0` or earlier, a `webpack.config.js` file at the root of your project is loaded automatically. This is not always obvious, which is why versions of Wrangler after `wrangler@1.6.0` require you to specify a `webpack_config` value in your `wrangler.toml` file.
+If you are using `wrangler@1.6.0` or earlier, a `webpack.config.js` file at the root of your project is loaded automatically. This is not always obvious, which is why versions of Wrangler after `wrangler@1.6.0` require you to specify a `webpack_config` value in your Wrangler file.
 
-When [upgrading from `wrangler@1.6.0`](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/install-update/), you may encounter webpack configuration warnings. To resolve this, add `webpack_config = "webpack.config.js"` to your `wrangler.toml` file.
+When [upgrading from `wrangler@1.6.0`](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/install-update/), you may encounter webpack configuration warnings. To resolve this, add `webpack_config = "webpack.config.js"` to your Wrangler file.

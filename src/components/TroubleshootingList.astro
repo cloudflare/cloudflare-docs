@@ -9,7 +9,7 @@ const resources = await getCollection("docs", (entry) => {
 	return (
 		entry.data.pcx_content_type &&
 		troubleshootingTypes.includes(entry.data.pcx_content_type) &&
-		entry.slug.startsWith(`${currentSection}/`)
+		entry.id.startsWith(`${currentSection}/`)
 	);
 });
 ---
@@ -25,7 +25,7 @@ const resources = await getCollection("docs", (entry) => {
 	<tbody>
 		{
 			resources.map(async (resource) => {
-				const segments = resource.slug.split("/").slice(1, -1);
+				const segments = resource.id.split("/").slice(1, -1);
 				const location = [];
 
 				for (let i = 0; i < segments.length; i++) {
@@ -60,7 +60,7 @@ const resources = await getCollection("docs", (entry) => {
 				return (
 					<tr>
 						<td>
-							<a href={`/${resource.slug}/`}>{title}</a>
+							<a href={`/${resource.id}/`}>{title}</a>
 						</td>
 						<td>{location.join(" > ")}</td>
 						<td>

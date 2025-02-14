@@ -135,11 +135,11 @@ For example, if `http.request.uri.path` is `"/welcome.html"`, then `ends_with(ht
 ### `len`
 
 {/* prettier-ignore */}
-<code>len(<Type text="String | Bytes" />)</code>: <Type text="Integer" />
+<code>len(<Type text="String | Bytes | Array" />)</code>: <Type text="Integer" />
 
-Returns the byte length of a String or Bytes field.
+Returns the byte length of a String or Bytes value, or the number of elements in an array.
 
-For example, if `http.host` is `"example.com"`, then `len(http.host)` will return `11`.
+For example, if the value of `http.host` is `"example.com"`, then `len(http.host)` will return `11`.
 
 ### `lookup_json_integer`
 
@@ -274,7 +274,7 @@ For example, if `http.request.uri.path` is `"/blog/first-post"`, then `starts_wi
 {/* prettier-ignore */}
 <code>substring(field <Type text="String | Bytes" />, start <Type text="Integer" />, end <Type text="Integer" /> <MetaInfo text='optional' />)</code>: <Type text="String" />
 
-Returns part of the `field` value (the value of a String or Bytes [field](/ruleset-engine/rules-language/fields/)) from the `start` byte index up to (but excluding) the `end` byte index. The first byte in `field` has index `0`. If you do not provide the optional `end` index, the function returns the part of the string from `start` index to the end of the string.
+Returns part of the `field` value (the value of a String or Bytes [field](/ruleset-engine/rules-language/fields/reference/)) from the `start` byte index up to (but excluding) the `end` byte index. The first byte in `field` has index `0`. If you do not provide the optional `end` index, the function returns the part of the string from `start` index to the end of the string.
 
 The `start` and `end` indexes can be negative integer values, which allows you to access characters from the end of the string instead of the beginning.
 
@@ -347,6 +347,9 @@ url_decode("%2520", "r")   will return " "
 
 // Using url_decode() with the any() function:
 any(url_decode(http.request.body.form.values[*])[*] contains "an xss attack")
+
+// Using the u option to match a specific alphabet
+url_decode(http.request.uri.path) matches "(?u)\p{Hangul}+"
 ```
 
 ### `uuidv4`
@@ -354,7 +357,7 @@ any(url_decode(http.request.body.form.values[*])[*] contains "an xss attack")
 {/* prettier-ignore */}
 <code>uuidv4(source <Type text="Bytes" />)</code>: <Type text="String" />
 
-Generates a random UUIDv4 (Universally Unique Identifier, version 4) based on the given argument (a source of randomness). To obtain an array of random bytes, use the [`cf.random_seed`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfrandom_seed) field.
+Generates a random UUIDv4 (Universally Unique Identifier, version 4) based on the given argument (a source of randomness). To obtain an array of random bytes, use the [`cf.random_seed`](/ruleset-engine/rules-language/fields/reference/cf.random_seed/) field.
 
 For example, `uuidv4(cf.random_seed)` will return a UUIDv4 similar to `49887398-6bcf-485f-8899-f15dbef4d1d5`.
 

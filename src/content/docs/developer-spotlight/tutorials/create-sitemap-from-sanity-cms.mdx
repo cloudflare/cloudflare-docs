@@ -17,7 +17,7 @@ spotlight:
   author_bio_source: LinkedIn
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, WranglerConfig, PackageManagers } from "~/components";
 
 In this tutorial, you will put together a Cloudflare Worker that creates and serves a sitemap using data from [Sanity.io](https://www.sanity.io), a headless CMS.
 
@@ -44,25 +44,7 @@ While you can create Workers in the Cloudflare dashboard, it is a best practice 
 
 Create a new Worker project using [C3](/pages/get-started/c3/) (`create-cloudflare` CLI):
 
-<Tabs> <TabItem label="pnpm">
-
-```sh
-pnpm create cloudflare@latest
-```
-
-</TabItem> <TabItem label="npm">
-
-```sh
-npm create cloudflare@latest
-```
-
-</TabItem> <TabItem label="yarn">
-
-```sh
-yarn create cloudflare@latest
-```
-
-</TabItem> </Tabs>
+<PackageManagers type="create" pkg="cloudflare@latest" />
 
 In this tutorial, the Worker will be named `cms-sitemap`.
 
@@ -90,15 +72,13 @@ yarn add @sanity/client
 
 </TabItem> </Tabs>
 
-## Configure wrangler.toml
+## Configure Wrangler
 
-A default `wrangler.toml` was generated in the previous step.
+A default `wrangler.jsonc` was generated in the previous step.
 
-The `wrangler.toml` file is a configuration file used to specify project settings and deployment configurations in a structured format.
+The Wrangler file is a configuration file used to specify project settings and deployment configurations in a structured format.
 
-For this tutorial your `wrangler.toml` should be similar to the following:
-
-import { WranglerConfig } from "~/components";
+For this tutorial your [Wrangler configuration file](/workers/wrangler/configuration/) should be similar to the following:
 
 <WranglerConfig>
 
@@ -122,7 +102,7 @@ You must update the `[vars]` section to match your needs. See the inline comment
 
 :::caution
 
-Secrets do not belong in `wrangler.toml`. If you need to add secrets, use `.dev.vars` for local secrets and the `wranger secret put` command for deploying secrets. For more information, refer to [Secrets](/workers/configuration/secrets/).
+Secrets do not belong in [Wrangler configuration file](/workers/wrangler/configuration/)s. If you need to add secrets, use `.dev.vars` for local secrets and the `wranger secret put` command for deploying secrets. For more information, refer to [Secrets](/workers/configuration/secrets/).
 
 :::
 
@@ -145,7 +125,7 @@ Paste the following code into the existing `index.ts|js` file:
  * - Open a browser tab at http://localhost:8787/ to see your worker in action
  * - Run `npm run deploy` to publish your worker
  *
- * Bind resources to your worker in `wrangler.toml`. After adding bindings, a type definition for the
+ * Bind resources to your worker in Wrangler config file. After adding bindings, a type definition for the
  * `Env` object can be regenerated with `npm run cf-typegen`.
  *
  * Learn more at https://developers.cloudflare.com/workers/

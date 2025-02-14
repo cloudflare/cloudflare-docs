@@ -6,6 +6,8 @@ sidebar:
   badge:
     variant: tip
     text: New
+banner:
+  content: The default global Cloudflare root certificate expired on 2025-02-02. If you installed the default Cloudflare certificate before 2024-10-17, you must <a href="/cloudflare-one/connections/connect-devices/user-side-certificates/#generate-a-cloudflare-root-certificate">generate a new certificate</a> and activate it for your Zero Trust organization to avoid inspection errors.
 ---
 
 import { Badge, Details, Tabs, TabItem, Render } from "~/components";
@@ -18,12 +20,12 @@ import { Badge, Details, Tabs, TabItem, Render } from "~/components";
 
 | System   | Availability |
 | -------- | ------------ |
-| Windows  | ✅            |
-| macOS    | ✅            |
-| Linux    | ✅            |
-| iOS      | ✅            |
-| Android  | ✅            |
-| ChromeOS | ✅            |
+| Windows  | ✅           |
+| macOS    | ✅           |
+| Linux    | ✅           |
+| iOS      | ✅           |
+| Android  | ✅           |
+| ChromeOS | ✅           |
 
 </Details>
 
@@ -70,13 +72,12 @@ If a user is connected to a target in VNET-A and needs to connect to a target in
 
 | System   | Availability | Minimum WARP version |
 | -------- | ------------ | -------------------- |
-| Windows  | ✅            | 2024.9.346.0        |
-| macOS    | ✅            | 2024.9.346.0        |
-| Linux    | ✅            | 2024.9.346.0        |
-| iOS      | ❌            |                     |
-| Android  | ❌            |                     |
-| ChromeOS | ❌            |                     |
-
+| Windows  | ✅           | 2024.9.346.0         |
+| macOS    | ✅           | 2024.9.346.0         |
+| Linux    | ✅           | 2024.9.346.0         |
+| iOS      | ❌           |                      |
+| Android  | ❌           |                      |
+| ChromeOS | ❌           |                      |
 
 </Details>
 
@@ -87,14 +88,24 @@ warp-cli target list
 ```
 
 ```sh output
-╭──────────────────────────────────────┬──────────┬──────┬────────────────────────────────┬───────────────────────────────────────────────────┬───────────╮
-│ Target ID                            │ Protocol │ Port │ Attributes                     │ IP (Virtual Network)                              │ Usernames │
-├──────────────────────────────────────┼──────────┼──────┼────────────────────────────────┼───────────────────────────────────────────────────┼───────────┤
-│ 0192027a-ef8a-7966-aff6-4576475db365 │ SSH      │ 22   │ hostname: digital-ocean-target │ 10.116.0.3 (a663a21c-76e5-4e3c-8296-d856682269f9) │ root      │
-├──────────────────────────────────────┼──────────┼──────┼────────────────────────────────┼───────────────────────────────────────────────────┼───────────┤
-│ 0192027a-ef8a-7966-aff6-4576475db365 │ SSH      │ 23   │ hostname: digital-ocean-target │ 10.116.0.3 (a663a21c-76e5-4e3c-8296-d856682269f9) │ root      │
-╰──────────────────────────────────────┴──────────┴──────┴────────────────────────────────┴───────────────────────────────────────────────────┴───────────╯
+╭──────────────────────────────────────┬──────────┬───────┬───────────────────────┬──────────────────────┬────────────╮
+│ Target ID                            │ Protocol │ Port  │ Attributes            │ IP (Virtual Network) │ Usernames  │
+├──────────────────────────────────────┼──────────┼───────┼───────────────────────┼──────────────────────┼────────────┤
+│ 0193f22a-9df3-78e3-b5bb-7ab631903306 │ SSH      │ 22    │ hostname: do-target   │ 10.116.0.3 (a1net)   │ alice      │
+├──────────────────────────────────────┼──────────┼───────┼───────────────────────┼──────────────────────┼────────────┤
+│ 0193f22a-9df3-78e3-b5bb-7ab631903306 │ SSH      │ 23    │ hostname: do-target   │ 10.116.0.3 (a1net)   │ root       │
+├──────────────────────────────────────┼──────────┼───────┼───────────────────────┼──────────────────────┼────────────┤
+│ 01943cff-6130-7989-8bff-cbc02b59a2b1 │ SSH      │ 80    │ hostname: az-target   │ 172.16.0.0 (b1net)   │ alice, bob │
+╰──────────────────────────────────────┴──────────┴───────┴───────────────────────┴──────────────────────┴────────────╯
 ```
+
+You can optionally add flags to filter the output. For example:
+
+```sh
+warp-cli target list --attribute hostname=do-target --username root
+```
+
+To view all available filters, type `warp-cli target list --help`.
 
 ## Revoke a user's session
 
@@ -111,3 +122,17 @@ The following [Access policy selectors](/cloudflare-one/policies/access/#selecto
 - Authentication method
 - Device posture
 - Entra group, GitHub organization, Google Workspace group, Okta group
+
+## Modify order of precedence in Gateway
+
+By default, Cloudflare will evaluate Access infrastructure application policies after evaluating all Gateway network policies. To evaluate Access infrastructure applications before or after specific Gateway policies, create the following [Gateway network policy](/cloudflare-one/policies/gateway/network-policies/):
+
+| Selector               | Operator | Value | Action |
+| ---------------------- | -------- | ----- | ------ |
+| All Access App Targets | is       | on    | Allow  |
+
+You can move this policy in the Gateway policy builder to change its [order of precedence](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence).
+
+:::note
+Users must pass the policies in your Access application before they are granted access. The Gateway Allow policy is strictly for routing and connectivity purposes.
+:::

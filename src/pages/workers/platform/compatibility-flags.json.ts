@@ -19,10 +19,10 @@ export async function GET() {
 		}
 
 		// omit sort_date from output
-		const { sort_date, ...data } = x.data;
+		const { sort_date: _, ...data } = x.data;
 		return {
 			...data,
-			description: x.body.trim(),
+			description: x.body?.trim(),
 			experimental: x.data.experimental ?? false,
 		};
 	});

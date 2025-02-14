@@ -4,13 +4,13 @@ import type { InferGetStaticPropsType, GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
 
 export const getStaticPaths = (async () => {
-	const entries = await getCollection("docs");
+	const entries = await getCollection("docs", (e) => Boolean(e.body));
 
 	return entries.map((entry) => {
 		return {
 			params: {
 				// https://llmstxt.org/: (URLs without file names should append index.html.md instead.)
-				entry: entry.slug + "/index",
+				entry: entry.id + "/index",
 			},
 			props: {
 				entry,

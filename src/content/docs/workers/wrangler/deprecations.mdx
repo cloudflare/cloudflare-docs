@@ -86,13 +86,13 @@ Refer to the following list for common fields that are no longer required.
   Here are the Wrangler v1 commands that are no longer supported:
 * `wrangler preview` - Use the `wrangler dev` command, for running your worker in your local environment.
 * `wrangler generate` - If you want to use a starter template, clone its GitHub repository and manually initialize it.
-* `wrangler route` - Routes are defined in the `wrangler.toml` configuration file.
+* `wrangler route` - Routes are defined in the [Wrangler configuration file](/workers/wrangler/configuration/).
 * `wrangler report` - If you find a bug, report it at [Wrangler issues](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 * `wrangler build` - If you wish to access the output from bundling your Worker, use `wrangler publish --outdir=path/to/output`.
 
 #### New fields
 
-These are new fields that can be added to your `wrangler.toml`.
+These are new fields that can be added to your [Wrangler configuration file](/workers/wrangler/configuration/).
 
 * **`main`**: `string`, optional
 
@@ -128,7 +128,7 @@ A few configuration fields which were previously required, are now optional in p
 
   The `account_id` field is not required for any of the commands. Any relevant commands will check if you are logged in, and if not, will prompt you to log in. Once logged in, it will use your account ID and will not prompt you again until your login session expires. If you have multiple account IDs, you will be presented with a list of accounts to choose from.
 
-  You can still configure `account_id` in your `wrangler.toml` file, or as an environment variable `CLOUDFLARE_ACCOUNT_ID`. This makes startup faster and bypasses the list of choices if you have multiple IDs. The `CLOUDFLARE_API_TOKEN` environment variable is also useful for situations where it is not possible to login interactively. To learn more, visit [Running in CI/CD](/workers/ci-cd/external-cicd/).
+  You can still configure `account_id` in your Wrangler file, or as an environment variable `CLOUDFLARE_ACCOUNT_ID`. This makes startup faster and bypasses the list of choices if you have multiple IDs. The `CLOUDFLARE_API_TOKEN` environment variable is also useful for situations where it is not possible to login interactively. To learn more, visit [Running in CI/CD](/workers/ci-cd/external-cicd/).
 
 * **`workers_dev`** `boolean`, default: `true` when no routes are present
 
@@ -194,11 +194,11 @@ Create the `workers.dev` subdomain in **Workers & Pages** > select your Worker >
 
 The `wrangler route` command is no longer available to configure a route for a Worker.
 
-Routes are specified in the `wrangler.toml` configuration file.
+Routes are specified in the [Wrangler configuration file](/workers/wrangler/configuration/).
 
 ### Other deprecated behavior
 
-* Cloudflare dashboard-defined routes will not be added alongside Wrangler-defined routes. Wrangler-defined routes are the `route` or `routes` key in your `wrangler.toml`. If both are defined, only routes defined in `wrangler.toml` will be valid. To manage routes via the Cloudflare dashboard only, remove any `route` and `routes` keys from and add `workers_dev = false` to your `wrangler.toml` file.
+* Cloudflare dashboard-defined routes will not be added alongside Wrangler-defined routes. Wrangler-defined routes are the `route` or `routes` key in your `wrangler.toml`. If both are defined, only routes defined in `wrangler.toml` will be valid. To manage routes via the Cloudflare dashboard only, remove any `route` and `routes` keys from and add `workers_dev = false` to your Wrangler file.
 
 * Wrangler will no longer use `index.js` in the directory where `wrangler dev` is called as the entry point to a Worker. Use the `main` configuration field, or explicitly pass it as a command line argument, for example: `wrangler dev index.js`.
 
@@ -256,7 +256,7 @@ Routes are specified in the `wrangler.toml` configuration file.
 
 | Property              | v1 | v2 | Notes                                                                                                                                            |
 | --------------------- | -- | -- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `type = "webpack"`    | ✅  | ❌  | Removed, refer to [this guide](/workers/wrangler/migration/v1-to-v2/eject-webpack/#migrate-webpack-projects-from-wrangler-version-1) to migrate. |
+| `type = "webpack"`    | ✅  | ❌  | Removed, refer to [this guide](/workers/wrangler/migration/v1-to-v2/eject-webpack/) to migrate. |
 | `type = "rust"`       | ✅  | ❌  | Removed, use [`workers-rs`](https://github.com/cloudflare/workers-rs) instead.                                                                   |
 | `type = "javascript"` | ✅  | 🚧 | No longer required, can be omitted.                                                                                                              |
 

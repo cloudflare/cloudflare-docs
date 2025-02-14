@@ -1,6 +1,9 @@
 ---
-import { getEntry } from "astro:content";
+import { getCollection } from "astro:content";
 import { z } from "astro:schema";
+
+import { process } from "~/util/rehype";
+import rehypeExternalLinks from "~/plugins/rehype/external-links";
 
 type Props = z.infer<typeof props>;
 
@@ -13,29 +16,34 @@ const props = z.object({
 
 const { type, tags, products, cloudflareOnly } = props.parse(Astro.props);
 
-const resources = await getEntry(type, "index");
-
-const filtered = resources.data.entries.filter((entry) => {
+const resources = await getCollection(type, (e) => {
 	return (
-		(cloudflareOnly ? entry.cloudflare : true) &&
-		(tags ? entry.tags?.some((v: string) => tags.includes(v)) : true) &&
+		(cloudflareOnly ? e.data.cloudflare : true) &&
+		(tags ? e.data.tags?.some((v: string) => tags.includes(v)) : true) &&
 		(products
-			? entry.products?.some((v: string) => products.includes(v))
+			? e.data.products?.some((v: string) => products.includes(v))
 			: true)
 	);
 });
 
-filtered.sort((a, b) => Number(b.updated) - Number(a.updated));
+if (!resources) {
+	throw new Error("Failed to load data");
+}
+
+resources.sort((a, b) => Number(b.data.updated) - Number(a.data.updated));
 ---
 
 <ul>
 	{
-		filtered.map((entry) => {
-			const title = "name" in entry ? entry.name : entry.title;
+		resources.map(async (e) => {
+			const anchor = await process(`<a href=${e.data.link}>${e.id}:</a>`, [
+				rehypeExternalLinks,
+			]);
+
 			return (
 				<li>
-					<a href={entry.link}>{title}:</a>
-					<span>{entry.description}</span>
+					<Fragment set:html={anchor} />
+					<span>{e.data.description}</span>
 				</li>
 			);
 		})

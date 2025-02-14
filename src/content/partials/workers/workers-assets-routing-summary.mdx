@@ -6,7 +6,7 @@ When using Workers Assets, Cloudflare will first attempt to serve any static ass
 
 For example, if you have requests for `/logo.png` and `/blog/hello-world.html` in your assets directory, and make requests for `/logo.png` and `/blog/hello-world`, those files will be served respectively. The [`html_handling`](/workers/static-assets/routing/#html_handling) option allows you to customize the serving of HTML files if you have specific needs around redirects and trailing slashes.
 
-If a request does not match a static asset, Cloudflare will then invoke your Worker script module, if one is present. This can be configured with the [`main`](/workers/wrangler/configuration/#inheritable-keys) property in `wrangler.toml`.
+If a request does not match a static asset, Cloudflare will then invoke your Worker script module, if one is present. This can be configured with the [`main`](/workers/wrangler/configuration/#inheritable-keys) property in the [Wrangler configuration file](/workers/wrangler/configuration/).
 
 Finally, if a request does not match any static assets, and either a Worker script module is not present, or from within that Worker script module, the [asset binding](/workers/static-assets/binding/)'s `fetch` method is called (e.g. `env.ASSETS.fetch(request)`), Cloudflare will fall back to evaluating the [`not_found_handling`](/workers/static-assets/routing/#not_found_handling) behavior. By default, it will serve a null-body 404-status response, but this can be configured to instead serve custom HTML 404 pages, or to serve a single-page application (SPA).
 

@@ -6,16 +6,16 @@ sidebar:
 
 ---
 
-Cloudflare Access allows you to secure your web applications by acting as an identity aggregator, or proxy. Users can only log in to the application if they meet the criteria you want to introduce.
+Cloudflare Access allows you to secure your web applications by acting as an identity aggregator, or proxy. You can use signals from your existing identity providers (IdPs), device posture providers, and [other rules](/cloudflare-one/policies/access/#selectors) to control who can log in to the application.
 
 ![Cloudflare Access verifies a user's identity before granting access to your application.](~/assets/images/cloudflare-one/applications/diagram-saas.jpg)
 
-You can protect two types of web applications: SaaS and self-hosted.
+You can protect the following types of web applications:
 
-* [**SaaS applications**](/cloudflare-one/applications/configure-apps/saas-apps/) consist of applications your team relies on that are not hosted by your organization. Examples include Salesforce and Workday. To secure SaaS applications, you must integrate Cloudflare Access with the SaaS application's SSO configuration.
+- [**SaaS applications**](/cloudflare-one/applications/configure-apps/saas-apps/) consist of applications your team relies on that are not hosted by your organization. Examples include Salesforce and Workday. To secure SaaS applications, you must integrate Cloudflare Access with the SaaS application's SSO configuration.
 
-* [**Self-hosted applications**](/cloudflare-one/applications/configure-apps/self-hosted-apps/) consist of internal applications that you host in your own environment. These can be the data center versions of tools like the Atlassian suite or applications created by your own team. To secure self-hosted applications, you must use Cloudflare's DNS ([full setup](/dns/zone-setups/full-setup/) or [partial CNAME setup](/dns/zone-setups/partial-setup/)) and [connect the application](/cloudflare-one/connections/connect-networks/) to Cloudflare.
+- **Self-hosted applications** consist of internal applications that you host in your own environment. These can be the data center versions of tools like the Atlassian suite or applications created by your own team. Setup requirements for a self-hosted application depend on whether the application is publicly accessible on the Internet or restricted to users on a private network.
+	- [**Public hostname applications**](/cloudflare-one/applications/configure-apps/self-hosted-public-app/) are web applications that have public DNS records. Anyone on the Internet can access the application by entering the URL in their browser and authenticating through Cloudflare Access. Securing access to a public website requires a Cloudflare DNS [full setup](/dns/zone-setups/full-setup/) or [partial CNAME setup](/dns/zone-setups/partial-setup/).
+	- [**Private network applications**](/cloudflare-one/applications/non-http/self-hosted-private-app/) do not have public DNS records, meaning they are not reachable from the public Internet. To connect using a private IP or private hostname, the user's traffic must route through Cloudflare Gateway. The preferred method is to install the WARP client on the user's device, but you could also forward device traffic from a [network location](/magic-wan/) or use an agentless option such as [PAC files](/cloudflare-one/connections/connect-devices/agentless/pac-files/) or [Clientless Web Isolation](/cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/).
 
-* [**Cloudflare Dashboard SSO**](/cloudflare-one/applications/configure-apps/dash-sso-apps/) are a special type of SaaS application that manages SSO settings for the Cloudflare dashboard and has limited permissions for administrator edits.
-
-* [**Private network applications**](/cloudflare-one/connections/connect-networks/private-net/) are self-hosted applications that do not have public DNS records, meaning they are not reachable from the public Internet. To allow remote users to access these applications, you must [connect the private network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/) to Cloudflare.
+- [**Cloudflare Dashboard SSO**](/cloudflare-one/applications/configure-apps/dash-sso-apps/) is a special type of SaaS application that manages SSO settings for the Cloudflare dashboard and has limited permissions for administrator edits.

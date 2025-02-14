@@ -5,7 +5,7 @@ head: []
 description: Node.js APIs available in Cloudflare Workers
 ---
 
-import { DirectoryListing } from "~/components";
+import { DirectoryListing, WranglerConfig } from "~/components";
 
 When you write a Worker, you may need to import packages from [npm](https://www.npmjs.com/). Many npm packages rely on APIs from the [Node.js runtime](https://nodejs.org/en/about), and will not work unless these Node.js APIs are available.
 
@@ -14,13 +14,12 @@ Cloudflare Workers provides a subset of Node.js APIs in two forms:
 1. As built-in APIs provided by the Workers Runtime
 2. As polyfills that [Wrangler](/workers/wrangler/) adds to your Worker's code
 
-You can view which APIs are supported using the [Node.js compatability matrix](https://workers-nodejs-compat-matrix.pages.dev).
+You can view which APIs are supported using the [Node.js compatibility matrix](https://workers-nodejs-compat-matrix.pages.dev).
 
 ## Get Started
 
-To enable both built-in runtime APIs and polyfills for your Worker or Pages project, add the [`nodejs_compat`](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag) [compatibility flag](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag) to your `wrangler.toml`, and set your compatibility date to September 23rd, 2024 or later.
+To enable built-in Node.js APIs and add polyfills, you need to add the `nodejs_compat` compatibility flag to your wrangler configuration. This also enables `nodejs_compat_v2` as long as your compatibility date is 2024-09-23 or later. [Learn more about the Node.js compatibility flag and v2](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag).
 
-import { WranglerConfig } from "~/components";
 
 <WranglerConfig>
 
@@ -30,10 +29,6 @@ compatibility_date = "2024-09-23"
 ```
 
 </WranglerConfig>
-
-:::note
-As of September 23rd, 2024, the `nodejs_compat` compatibility flag enables the exact same behavior as the `nodejs_compat_v2` compatibility flag, as long as your compatibility date is set to September 23rd, 2024 or later.
-:::
 
 ## Built-in Node.js Runtime APIs
 
@@ -45,7 +40,7 @@ Unless otherwise specified, implementations of Node.js APIs in Workers are inten
 
 ## Node.js API Polyfills
 
-When you enable the `nodejs_compat` compatability flag and set your compatibility date to `2024-09-23` or later, in addition to enabling Node.js APIs in the Workers Runtime, [Wrangler](/workers/wrangler/) will use [unenv](https://github.com/unjs/unenv) to automatically detect uses of Node.js APIs, and add polyfills where relevant.
+To enable built-in Node.js APIs and add polyfills, you need to add the `nodejs_compat` compatibility flag to your wrangler configuration. This also enables `nodejs_compat_v2` as long as your compatibility date is 2024-09-23 or later. [Learn more about the Node.js compatibility flag and v2](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag).
 
 Adding polyfills maximizes compatibility with existing npm packages, while recognizing that not all APIs from Node.js make sense in the context of serverless functions.
 
@@ -59,7 +54,7 @@ Calling these mocked methods will either noop or will throw an error with a mess
 
 This allows you to import packages that use these Node.js modules, even if certain methods are not supported.
 
-For a full list of APIs supported, including information on which are mocked, see the [Node.js compatability matrix](https://workers-nodejs-compat-matrix.pages.dev).
+For a full list of APIs supported, including information on which are mocked, see the [Node.js compatibility matrix](https://workers-nodejs-compat-matrix.pages.dev).
 
 If an API you wish to use is missing and you want to suggest that Workers support it, please add a post or comment in the
 [Node.js APIs discussions category](https://github.com/cloudflare/workerd/discussions/categories/node-js-apis) on GitHub.
@@ -67,8 +62,6 @@ If an API you wish to use is missing and you want to suggest that Workers suppor
 ## Enable only AsyncLocalStorage
 
 To enable only the Node.js `AsyncLocalStorage` API, use the `nodejs_als` compatibility flag.
-
-
 
 <WranglerConfig>
 

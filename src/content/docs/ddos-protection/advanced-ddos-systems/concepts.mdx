@@ -58,7 +58,8 @@ Besides defining rules with one of the above scopes, you must also select the [p
 The Advanced TCP Protection system constantly learns your TCP connections to mitigate DDoS attacks. Advanced TCP Protection rules can have one of the following execution modes: monitoring, mitigation (enabled), or disabled.
 
 - **Monitoring**
-  - In this mode, Advanced TCP Protection will not impact any packets. Instead, the protection system will learn your legitimate TCP connections and show you what it would have mitigated. Check Network Analytics to visualize what actions Advanced TCP Protection would have taken on incoming packets, according to the current configuration.
+  - In this mode, Advanced TCP Protection will not impact any packets. Instead, the protection system will learn your legitimate TCP connections and show you what it would have mitigated. Check Network Analytics to visualize what actions Advanced TCP Protection would have taken on incoming packets, according to the current configuration. <Render file="log-and-monitor-behavior-link" />
+
 
 - **​​Mitigation (Enabled)**
   - In this mode, Advanced TCP Protection will learn your legitimate TCP connections and perform mitigation actions on incoming TCP DDoS attacks based on the rule configuration (burst and rate sensitivity) and your [allowlist](/ddos-protection/advanced-ddos-systems/concepts/#allowlist).
@@ -99,7 +100,9 @@ The default rate sensitivity and recommended setting is _Low_. You should only i
 
 ## Filter
 
-<Render file="atp-filter-definition" /> The filter expression can reference source and destination IP addresses and ports. Each system component (SYN flood protection and out-of-state TCP protection) should have one or more [rules](#rule), but filters are optional.
+<Render file="atp-filter-definition" />
+
+The filter expression can reference source and destination IP addresses and ports. Each system component (SYN flood protection and out-of-state TCP protection) should have one or more [rules](#rule), but filters are optional.
 
 Each system component has its own filters. You can configure a filter for each execution mode:
 

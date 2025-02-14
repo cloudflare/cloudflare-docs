@@ -5,6 +5,8 @@ sidebar:
   order: 6
 ---
 
+import { WranglerConfig } from "~/components";
+
 Hyperdrive can be used when developing and testing your Workers locally by connecting to any local database instance running on your machine directly. Local development uses [Wrangler](/workers/wrangler/install-and-update/), the command-line interface for Workers, to manage local development sessions and state.
 
 ## Configure local development
@@ -19,10 +21,10 @@ If you are new to Hyperdrive and/or Cloudflare Workers, refer to [Hyperdrive tut
 
 To specify a database to connect to when developing locally, you can:
 
-- **Recommended** Create a `WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>` environmental variable with the connection string of your database. `<BINDING_NAME>` is the name of the binding assigned to your Hyperdrive in your `wrangler.toml` or Pages configuration. This allows you to avoid committing potentially sensitive credentials to source control in your `wrangler.toml`, if your test/development database is not ephemeral. If you have configured multiple Hyperdrive bindings, replace `<BINDING_NAME>` with the unique binding name for each.
-- Set `localConnectionString` in `wrangler.toml`.
+- **Recommended** Create a `WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>` environmental variable with the connection string of your database. `<BINDING_NAME>` is the name of the binding assigned to your Hyperdrive in your [Wrangler configuration file](/workers/wrangler/configuration/) or Pages configuration. This allows you to avoid committing potentially sensitive credentials to source control in your Wrangler configuration file, if your test/development database is not ephemeral. If you have configured multiple Hyperdrive bindings, replace `<BINDING_NAME>` with the unique binding name for each.
+- Set `localConnectionString` in the Wrangler configuration file.
 
-If both the `WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>` environmental variable and `localConnectionString` in `wrangler.toml` are set, `wrangler dev` will use the environmental variable instead. Use `unset WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>` to unset any existing environmental variables.
+If both the `WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>` environmental variable and `localConnectionString` in the Wrangler configuration file are set, `wrangler dev` will use the environmental variable instead. Use `unset WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>` to unset any existing environmental variables.
 
 For example, to use the environmental variable, export the environmental variable before running `wrangler dev`:
 
@@ -33,9 +35,7 @@ export WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_TEST_DB="postgres://user:pass
 npx wrangler dev
 ```
 
-To configure a `localConnectionString` in `wrangler.toml`, ensure your Hyperdrive bindings have a `localConnectionString` property set:
-
-import { WranglerConfig } from "~/components";
+To configure a `localConnectionString` in the [Wrangler configuration file](/workers/wrangler/configuration/), ensure your Hyperdrive bindings have a `localConnectionString` property set:
 
 <WranglerConfig>
 

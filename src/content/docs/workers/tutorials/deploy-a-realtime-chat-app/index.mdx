@@ -10,7 +10,7 @@ languages:
   - JavaScript
 ---
 
-import { Render } from "~/components";
+import { Render, WranglerConfig } from "~/components";
 
 In this tutorial, you will deploy a serverless, real-time chat application that runs using [Durable Objects](/durable-objects/).
 
@@ -48,11 +48,9 @@ Your application will be deployed to your `*.workers.dev` subdomain.
 
 To deploy your application to a custom domain within the Cloudflare dashboard, go to your Worker > **Triggers** > **Add Custom Domain**.
 
-To deploy your application to a custom domain using Wrangler, open your project's `wrangler.toml`.
+To deploy your application to a custom domain using Wrangler, open your project's [Wrangler configuration file](/workers/wrangler/configuration/).
 
-To configure a route in your `wrangler.toml`, add the following to your environment:
-
-import { WranglerConfig } from "~/components";
+To configure a route in your Wrangler configuration file, add the following to your environment:
 
 <WranglerConfig>
 
@@ -64,11 +62,9 @@ routes = [
 
 </WranglerConfig>
 
-If you have specified your zone ID in the environment of your `wrangler.toml`, you will not need to write it again in object form.
+If you have specified your zone ID in the environment of your Wrangler configuration file, you will not need to write it again in object form.
 
-To configure a subdomain in your `wrangler.toml`, add the following to your environment:
-
-
+To configure a subdomain in your Wrangler configuration file, add the following to your environment:
 
 <WranglerConfig>
 
@@ -89,7 +85,7 @@ To test your live application:
 
 ## Uninstall your application
 
-To uninstall your chat application, modify your `wrangler.toml` file to remove the `durable_objects` bindings and add a `deleted_classes` migration:
+To uninstall your chat application, modify your Wrangler file to remove the `durable_objects` bindings and add a `deleted_classes` migration:
 
 
 

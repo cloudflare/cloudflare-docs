@@ -1,0 +1,45 @@
+---
+title: Troubleshooting Cloudflare origin CA
+pcx_content_type: troubleshooting
+description: Troubleshoot issues like NET::ERR_CERT_AUTHORITY_INVALID when using Cloudflare origin CA.
+sidebar:
+  order: 2
+  label: Troubleshooting
+---
+
+import { GlossaryTooltip, Render } from "~/components";
+
+Consider the following common issues and troubleshooting steps when using [Cloudflare origin CA](/ssl/origin-configuration/origin-ca/).
+
+## NET::ERR_CERT_AUTHORITY_INVALID
+
+### Cause
+<Render file="origin-ca-pause-error" />
+
+This also means that SSL Labs or similar SSL validators are expected to flag the certificate as invalid.
+
+### Solutions
+
+- Make sure the [proxy status](/dns/proxy-status/) of your DNS records and any [page rules](/rules/page-rules/) (if existing) are set up correctly. If so, you can try to turn proxying off and then on again and wait a few minutes.
+- If you must have direct connections between clients and your origin server, consider installing a publicly trusted certificate at your origin instead. This process is done outside of Cloudflare, where you should issue the certificate directly from a <GlossaryTooltip term="Certificate Authority (CA)">certificate authority (CA)</GlossaryTooltip> of your choice. You can still use Full (strict) [encryption mode](/ssl/origin-configuration/ssl-modes/), as long as the CA is listed on the [Cloudflare trust store](https://github.com/cloudflare/cfssl_trust).
+
+## The issuer of this certificate could not be found
+
+### Cause
+Some origin web servers require that you upload the Cloudflare origin CA root certificate or certificate chain.
+
+### Solution
+Use the following links to download either an ECC or an RSA version and upload to your origin web server:
+
+* [Cloudflare Origin ECC PEM](/ssl/static/origin_ca_ecc_root.pem) (do not use with Apache cPanel)
+* [Cloudflare Origin RSA PEM](/ssl/static/origin_ca_rsa_root.pem)
+
+## The certificate is not trusted in all web browsers
+
+### Cause
+Apache cPanel requires that you upload the Cloudflare origin CA root certificate or certificate chain.
+
+### Solution
+Use the following link to download an RSA version of the root certificate and upload it to your origin web server:
+
+* [Cloudflare Origin RSA PEM](/ssl/static/origin_ca_rsa_root.pem)

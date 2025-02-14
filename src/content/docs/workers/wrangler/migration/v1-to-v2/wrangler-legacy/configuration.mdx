@@ -6,26 +6,25 @@ sidebar:
 head:
   - tag: title
     content: Configuration - Wrangler v1 (deprecated)
+description: Learn how to configure your Cloudflare Worker using Wrangler v1. This guide covers top-level and environment-specific settings, key types, and deployment options.
 
 ---
 
-import { Render } from "~/components"
+import { Render, WranglerConfig } from "~/components"
 
 <Render file="wrangler-v1-deprecation" />
 
 ## Background
 
-Your project will need some configuration before you can publish your Worker. Configuration is done through changes to keys and values stored in a `wrangler.toml` file located in the root of your project directory. You must manually edit this file to edit your keys and values before you can publish.
+Your project will need some configuration before you can publish your Worker. Configuration is done through changes to keys and values stored in a Wrangler file located in the root of your project directory. You must manually edit this file to edit your keys and values before you can publish.
 
 ***
 
 ## Environments
 
-The top-level configuration is the collection of values you specify at the top of your `wrangler.toml` file. These values will be inherited by all environments, unless otherwise defined in the environment.
+The top-level configuration is the collection of values you specify at the top of your Wrangler file. These values will be inherited by all environments, unless otherwise defined in the environment.
 
-The layout of a top-level configuration in a `wrangler.toml` file is displayed below:
-
-import { WranglerConfig } from "~/components";
+The layout of a top-level configuration in a Wrangler file is displayed below:
 
 <WranglerConfig>
 
@@ -48,7 +47,7 @@ routes = ["example.com/*"]
 
 </WranglerConfig>
 
-Environment configuration (optional): the configuration values you specify under an `[env.name]` in your `wrangler.toml` file.
+Environment configuration (optional): the configuration values you specify under an `[env.name]` in your Wrangler file.
 
 Environments allow you to deploy the same project to multiple places under multiple names. These environments are utilized with the `--env` or `-e` flag on the [commands](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/commands/) that are deploying live Workers:
 
@@ -107,9 +106,9 @@ To deploy this example Worker to the `helloworld` environment, you would run `wr
 
 ## Keys
 
-There are three types of keys in a `wrangler.toml` file:
+There are three types of keys in a Wrangler file:
 
-* Top level only keys are required to be configured at the top level of your `wrangler.toml` file only; multiple environments on the same project must share this key's value.
+* Top level only keys are required to be configured at the top level of your Wrangler file only; multiple environments on the same project must share this key's value.
 
 * Inherited keys can be configured at the top level and/or environment. If the key is defined only at the top level, the environment will use the key's value from the top level. If the key is defined in the environment, the environment value will override the top-level value.
 
@@ -334,7 +333,7 @@ entry-point = "workers-site"
 
 * `bucket` required
 
-  * The directory containing your static assets. It must be a path relative to your `wrangler.toml` file. Example: `bucket = "./public"`
+  * The directory containing your static assets. It must be a path relative to your Wrangler file. Example: `bucket = "./public"`
 
 * `entry-point` optional
 
@@ -359,7 +358,7 @@ For exceptionally large pages, Workers Sites may not be ideal. There is a 25 MiB
 #### Exclusively including files/directories
 
 If you want to include only a certain set of files or directories in your `bucket`, add an `include` field to your
-`[site]` section of your `wrangler.toml` file:
+`[site]` section of your Wrangler file:
 
 
 
@@ -378,7 +377,7 @@ Wrangler will only upload files or directories matching the patterns in the `inc
 
 #### Excluding files/directories
 
-If you want to exclude files or directories in your `bucket`, add an `exclude` field to your `[site]` section of your `wrangler.toml` file:
+If you want to exclude files or directories in your `bucket`, add an `exclude` field to your `[site]` section of your Wrangler file:
 
 
 
@@ -654,7 +653,7 @@ Defaults:
 format = "modules"
 main = "./worker.mjs"
 
-# You do not need to include these default rules in your `wrangler.toml`, they are implicit.
+# You do not need to include these default rules in your [Wrangler configuration file](/workers/wrangler/configuration/), they are implicit.
 # The default rules are treated as the last two rules in the list.
 
 [[build.upload.rules]]
@@ -686,7 +685,7 @@ globs = ["**/*.js", "**/*.cjs"]
 
 ## Example
 
-To illustrate how these levels are applied, here is a `wrangler.toml` file using multiple environments:
+To illustrate how these levels are applied, here is a Wrangler file using multiple environments:
 
 
 

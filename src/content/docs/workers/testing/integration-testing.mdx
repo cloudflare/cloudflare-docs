@@ -8,6 +8,7 @@ description: Test multiple units of your Worker working together.
 ---
 
 import { Render } from "~/components";
+import { LinkButton } from "@astrojs/starlight/components";
 
 Integration tests test multiple units of your Worker together by sending HTTP requests to your Worker and asserting on the HTTP responses. As an example, consider the following Worker:
 
@@ -76,7 +77,7 @@ it("dispatches fetch event", async () => {
 
 Instead of running the Worker-under-test in the same Worker as the test runner like `SELF`, this example defines the Worker-under-test as an _auxiliary_ Worker. This means the Worker runs in a separate isolate to the test runner, with a different global scope. The Worker-under-test runs in an environment closer to production, but Vite transformations and hot-module-reloading aren't applied to the Worker—you must compile your TypeScript to JavaScript beforehand.
 
-Auxiliary Workers cannot be configured from `wrangler.toml` files. You must use Miniflare [`WorkerOptions`](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare#interface-workeroptions) in `vitest.config.ts`.
+Auxiliary Workers cannot be configured from Wrangler files. You must use Miniflare [`WorkerOptions`](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare#interface-workeroptions) in `vitest.config.ts`.
 
 :::note
 
@@ -84,32 +85,30 @@ This method is less recommended than `SELF` for integration tests because of its
 
 :::
 
-## Wrangler's `unstable_dev()` API
+## [Wrangler's `unstable_startWorker()` API](/workers/wrangler/api/#unstable_startworker)
 
-If you do not want to use Vitest and would like to write integration tests for a single Worker, consider using [Wrangler's `unstable_dev()` API](/workers/wrangler/api/#unstable_dev). `unstable_dev()` allows you to start an HTTP server similar to [`wrangler dev`](/workers/wrangler/commands/#dev) that you can send HTTP requests to. `unstable_dev()` will automatically load options from your Wrangler configuration file. Note that `unstable_dev()` is an experimental API subject to breaking changes.
+:::caution
+`unstable_startWorker()` is an experimental API subject to breaking changes.
+:::
+
+If you do not want to use Vitest and would like to write integration tests for a single Worker, consider using [Wrangler's `unstable_startWorker()` API](/workers/wrangler/api/#unstable_startworker). This API exposes the internals of Wrangler's dev server, and allows you to customise how it runs.
 
 ```js
 import assert from "node:assert";
-import { unstable_dev } from "wrangler";
+import { unstable_startWorker } from "wrangler";
 
-const worker = await unstable_dev("./index.mjs");
+const worker = await unstable_startWorker({ config: "wrangler.json" });
 try {
 	const response = await worker.fetch("/?a=1&b=2");
 	assert.strictEqual(await response.text(), "3");
 } finally {
-	await worker.stop();
+	await worker.dispose();
 }
 ```
 
-:::note
+## [Miniflare's API](/workers/testing/miniflare/writing-tests/)
 
-If you have been using `unstable_dev()` for integration testing and want to migrate to Cloudflare's Vitest integration, refer to the [Migrate from `unstable_dev` migration guide](/workers/testing/vitest-integration/get-started/migrate-from-unstable-dev/) for more information.
-
-:::
-
-## Miniflare's API
-
-If you would like to write integration tests for multiple Workers, need direct access to [bindings](/workers/runtime-apis/bindings/) outside your Worker in tests, or have another advanced use case, consider using [Miniflare's API](/workers/testing/miniflare) directly. Miniflare is the foundation for the other testing tools on this page, exposing a JavaScript API for the [`workerd` runtime](https://github.com/cloudflare/workerd) and local simulators for the other Developer Platform products. Unlike `unstable_dev()`, Miniflare does not automatically load options from your Wrangler configuration file.
+If you would like to write integration tests for multiple Workers, need direct access to [bindings](/workers/runtime-apis/bindings/) outside your Worker in tests, or have another advanced use case, consider using [Miniflare's API](/workers/testing/miniflare) directly. Miniflare is the foundation for the other testing tools on this page, exposing a JavaScript API for the [`workerd` runtime](https://github.com/cloudflare/workerd) and local simulators for the other Developer Platform products. Unlike `unstable_startWorker()`, Miniflare does not automatically load options from your [Wrangler configuration file](/workers/wrangler/configuration/). Refer to the [Writing tests](/workers/testing/miniflare/writing-tests/) page for an example of how to use Miniflare together with `node:test`.
 
 ```js
 import assert from "node:assert";

@@ -1,6 +1,14 @@
 ---
-import { getCollection, getEntry, type InferEntrySchema } from "astro:content";
+import { getCollection, getEntry, type CollectionEntry } from "astro:content";
 import { formatDistance } from "date-fns";
+
+import { process } from "~/util/rehype";
+import rehypeExternalLinks from "~/plugins/rehype/external-links";
+
+type DocsEntry = CollectionEntry<"docs">;
+type VideoEntry = CollectionEntry<"videos">;
+
+const tutorials: Array<DocsEntry | VideoEntry> = [];
 
 const currentSection = Astro.params.slug?.split("/")[0];
 const currentProduct = await getEntry("products", currentSection!);
@@ -13,12 +21,12 @@ if (!currentProduct) {
 
 const productTitle = currentProduct.data.product.title;
 
-const tutorials = await getCollection("docs", (entry) => {
+const docs = await getCollection("docs", (entry) => {
 	return (
 		// pcx_content_type: tutorial
 		entry.data.pcx_content_type === "tutorial" &&
 		// /src/content/r2/**/*.mdx
-		(entry.slug.startsWith(`${currentSection}/`) ||
+		(entry.id.startsWith(`${currentSection}/`) ||
 			// products: [R2]
 			entry.data.products?.some(
 				(v: string) => v.toUpperCase() === productTitle.toUpperCase(),
@@ -26,28 +34,17 @@ const tutorials = await getCollection("docs", (entry) => {
 	);
 });
 
-type VideoEntry = InferEntrySchema<"videos">["entries"][number];
-type FinalTutorials = {
-	slug?: string;
-	data: InferEntrySchema<"docs"> | VideoEntry;
-}[];
-const finalTutorials: FinalTutorials = tutorials.map((x) => ({
-	slug: x.slug,
-	data: x.data,
-}));
+tutorials.push(...docs);
 
-const videos = await getEntry("videos", "index");
-const filteredVideos = videos.data.entries.filter((x) =>
-	x.products.some(
+const videos = await getCollection("videos", (entry) => {
+	return entry.data.products.some(
 		(v: string) => v.toUpperCase() === productTitle.toUpperCase(),
-	),
-);
+	);
+});
 
-if (filteredVideos) {
-	filteredVideos.forEach((x) => finalTutorials.push({ data: x }));
-}
+tutorials.push(...videos);
 
-finalTutorials.sort((a, b) => Number(b.data.updated) - Number(a.data.updated));
+tutorials.sort((a, b) => Number(b.data.updated) - Number(a.data.updated));
 
 const timeAgo = (date?: Date) => {
 	if (!date) return undefined;
@@ -66,13 +63,23 @@ const timeAgo = (date?: Date) => {
 	</thead>
 	<tbody>
 		{
-			finalTutorials.map((tutorial) => {
-				// @ts-expect-error TODO: improve types
-				const href = tutorial.slug ? `/${tutorial.slug}` : tutorial.data.link;
+			tutorials.map(async (tutorial) => {
+				const title =
+					tutorial.collection === "docs" ? tutorial.data.title : tutorial.id;
+
+				const href =
+					tutorial.collection === "docs"
+						? `/${tutorial.id}/`
+						: tutorial.data.link;
+
+				const anchor = await process(`<a href=${href}>${title}</a>`, [
+					rehypeExternalLinks,
+				]);
+
 				return (
 					<tr>
 						<td>
-							<a href={href}>{tutorial.data.title}</a>
+							<Fragment set:html={anchor} />
 						</td>
 						<td>{timeAgo(tutorial.data.updated)}</td>
 						<td>{tutorial.data.content_type}</td>

@@ -1,8 +1,9 @@
 export * from "./apps";
 export * from "./base";
-export * from "./changelogs-next";
-export * from "./changelogs";
+export * from "./changelog";
+export * from "./release-notes";
 export * from "./compatibility-flags";
+export * from "./fields";
 export * from "./glossary";
 export * from "./learning-paths";
 export * from "./notifications";
@@ -10,4 +11,5 @@ export * from "./pages-build-environment";
 export * from "./pages-framework-presets";
 export * from "./partials";
 export * from "./videos";
+export * from "./warp-releases";
 export * from "./workers-ai-models";

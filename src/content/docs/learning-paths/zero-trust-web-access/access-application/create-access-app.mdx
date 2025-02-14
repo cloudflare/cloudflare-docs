@@ -8,19 +8,12 @@ sidebar:
 
 import { Render } from "~/components"
 
-<Render file="access/self-hosted-intro" product="cloudflare-one" />
+Cloudflare Access allows you to securely publish internal tools and applications to the Internet by providing an authentication layer between the end user and your origin server. You can use signals from your existing identity providers (IdPs), device posture providers, and [other rules](/cloudflare-one/policies/access/#selectors) to control who can access your application.
+
 Each application can have multiple policies with different constraints depending on what user group is accessing the application. For example, you can create one policy that requires corporate users to present specific device posture checks or mutual TLS authentication events, and a second policy for contractors which does not require these attributes.
 
 ## Add your application to Access
 
 <Render file="access/self-hosted-app" product="cloudflare-one" />
-
-## Add an Access policy
-
-<Render file="access/self-hosted-policy" product="cloudflare-one" />
-
-## (Optional) Configure advanced settings
-
-<Render file="access/self-hosted-settings" product="cloudflare-one" />
 
 When users go to the application, they will be prompted to login with your identity provider.

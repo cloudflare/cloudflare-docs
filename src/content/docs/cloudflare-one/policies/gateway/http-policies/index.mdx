@@ -4,7 +4,7 @@ title: HTTP policies
 sidebar:
   order: 4
 banner:
-  content: The default global Cloudflare root certificate will expire on 2025-02-02. If you installed the default Cloudflare certificate before 2024-10-17, you must <a href="/cloudflare-one/connections/connect-devices/user-side-certificates/#generate-a-cloudflare-root-certificate">generate a new certificate</a> and activate it for your Zero Trust organization to avoid inspection errors.
+  content: The default global Cloudflare root certificate expired on 2025-02-02. If you installed the default Cloudflare certificate before 2024-10-17, you must <a href="/cloudflare-one/connections/connect-devices/user-side-certificates/#generate-a-cloudflare-root-certificate">generate a new certificate</a> and activate it for your Zero Trust organization to avoid inspection errors.
 ---
 
 import { Details, InlineBadge, Render } from "~/components";
@@ -85,7 +85,7 @@ The Allow action allows outbound traffic to reach destinations you specify withi
 
 | Selector           | Operator | Value       | Action |
 | ------------------ | -------- | ----------- | ------ |
-| Content Categories | in       | `Education` | Allow  |
+| Content Categories | in       | _Education_ | Allow  |
 
 #### Untrusted certificates
 
@@ -397,14 +397,20 @@ Policies created using the URL selector are case-sensitive.
 
 Gateway matches HTTP traffic against the following selectors, or criteria:
 
+### All Access Private App Destinations
+
+<Render file="gateway/selectors/all-access-private-app-destinations" />
+
+### All Access App Targets
+
+<Render file="gateway/selectors/all-access-app-targets" />
+
 ### Application
 
 <Render file="gateway/selectors/application" params={{ one: "HTTP" }} />
 
 :::caution[Multiple API selectors required for Terraform]
-
 When using Terraform to create a policy with the [Do Not Inspect](#do-not-inspect) action, you must use the `app.hosts_ids` and `app.supports_ids` selectors. For example, to create a Do Not Inspect policy for Google Cloud Platform traffic, create a policy with both `any(app.hosts_ids[*] in {1245})` and `any(app.supports_ids[*] in {1245})`.
-
 :::
 
 ### Content Categories

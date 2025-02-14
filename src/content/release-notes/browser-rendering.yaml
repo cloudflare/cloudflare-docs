@@ -1,0 +1,23 @@
+---
+link: "/browser-rendering/changelog/"
+productName: Browser Rendering
+productLink: "/browser-rendering/"
+productArea: Developer platform
+productAreaLink: /workers/platform/changelog/platform/
+entries:
+  - publish_date: "2025-01-31"
+    title: Increased limits
+    description: |-
+      * Increased the limits on the number of concurrent browsers, and browsers per minute from 2 to 10.
+  - publish_date: "2024-08-08"
+    title: Update puppeteer to 21.1.0
+    description: |-
+      * Rebased the fork on the original implementation up till version 21.1.0
+  - publish_date: "2024-04-02"
+    title: Browser Rendering Available for everyone
+    description: |-
+      * Browser Rendering is now out of beta and available to all customers with Workers Paid Plan. Analytics and logs are available in Cloudflare's dashboard, under "Worker & Pages".
+  - publish_date: "2023-05-19"
+    title: Browser Rendering Beta
+    description: |-
+      * Beta Launch

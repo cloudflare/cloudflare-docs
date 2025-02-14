@@ -5,7 +5,6 @@ import { differenceInCalendarDays } from "date-fns";
 import "tippy.js/dist/tippy.css";
 
 import { getEntry } from "astro:content";
-import { getPageDescription } from "~/util/description";
 
 const currentSection = Astro.url.pathname.split("/")[1];
 
@@ -69,6 +68,7 @@ if (currentSection) {
 			const group = product.data.product.group.toLowerCase();
 
 			let ogImage = "https://developers.cloudflare.com/cf-twitter-card.png";
+
 			const images: Record<string, string> = {
 				"cloudflare essentials":
 					"https://developers.cloudflare.com/core-services-preview.png",
@@ -137,16 +137,56 @@ if (currentSection) {
 			content: "",
 		});
 	}
+
+	if (currentSection === "changelog") {
+		let changelogImage =
+			"https://developers.cloudflare.com/changelog-preview.png";
+
+		const tags = [
+			{
+				tag: "meta",
+				attrs: {
+					name: "image",
+					content: changelogImage,
+				},
+				content: "",
+			},
+			{
+				tag: "meta",
+				attrs: {
+					name: "og:image",
+					content: changelogImage,
+				},
+				content: "",
+			},
+			{
+				tag: "meta",
+				attrs: {
+					name: "twitter:image",
+					content: changelogImage,
+				},
+				content: "",
+			},
+		] as const;
+
+		Astro.props.entry.data.head.push(...tags);
+	}
 }
 
-Astro.props.entry.data.description ??= await getPageDescription(
-	// @ts-expect-error TODO: improve types
-	Astro.props.entry,
-	Astro.locals,
-);
+// Add noindex tag if present in frontmatter
+
+if (Astro.props.entry.data.noindex) {
+	Astro.props.entry.data.head.push({
+		tag: "meta",
+		attrs: {
+			name: "robots",
+			content: "noindex",
+		},
+		content: "",
+	});
+}
 
 // Adding metadata used for reporting and search indexing
-
 // content type
 if (Astro.props.entry.data.pcx_content_type) {
 	const contentType = Astro.props.entry.data.pcx_content_type;

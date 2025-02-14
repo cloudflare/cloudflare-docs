@@ -41,7 +41,8 @@ Traditionally, Cloudflare maintains a very large pool of egress IPs that are use
 
 :::caution[Warning]
 
-[BYOIP](/byoip/) cannot be used as an Aegis egress IP.
+Each dedicated egress pool can consist of either IPs from a [BYOIP prefix](/byoip/) or Cloudflare-leased IPs. A single dedicated egress pool cannot contain both BYOIPs and leased IPs.
+
 :::
 
 ## Benefits

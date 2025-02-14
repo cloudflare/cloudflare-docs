@@ -19,7 +19,7 @@ head:
 description: Example of how to use Queues and Browser Rendering to power a web crawler.
 ---
 
-import { Render, PackageManagers } from "~/components";
+import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 This tutorial explains how to build and deploy a web crawler with Queues, [Browser Rendering](/browser-rendering/), and [Puppeteer](/browser-rendering/platform/puppeteer/).
 
@@ -82,11 +82,9 @@ binding = "crawler_screenshots"
 id = "<GENERATED_NAMESPACE_ID>"
 ```
 
-### Add KV bindings to wrangler.toml
+### Add KV bindings to the [Wrangler configuration file](/workers/wrangler/configuration/)
 
-Then, in your `wrangler.toml` file, add the following with the values generated in the terminal:
-
-import { WranglerConfig } from "~/components";
+Then, in your Wrangler file, add the following with the values generated in the terminal:
 
 <WranglerConfig>
 
@@ -137,7 +135,7 @@ Created queue queues-web-crawler.
 
 ### Add Queue bindings to wrangler.toml
 
-Then, in your `wrangler.toml` file, add the following:
+Then, in your Wrangler file, add the following:
 
 
 
@@ -157,7 +155,7 @@ binding = "CRAWLER_QUEUE"
 
 Adding the `max_batch_timeout` of 60 seconds to the consumer queue is important because Browser Rendering has a limit of two new browsers per minute per account. This timeout waits up to a minute before collecting queue messages into a batch. The Worker will then remain under this browser invocation limit.
 
-Your final `wrangler.toml` file should look similar to the one below.
+Your final Wrangler file should look similar to the one below.
 
 
 

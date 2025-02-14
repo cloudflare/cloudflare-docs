@@ -1,0 +1,381 @@
+---
+pcx_content_type: integration-guide
+title: Microsoft Azure VPN Gateway
+---
+
+This tutorial provides information on how to connect Cloudflare Magic WAN to your Azure Virtual Network, using the Azure Virtual Network Gateway.
+
+## Prerequisites
+
+You will need to have an existing Resource group, Virtual Network, and Virtual Machine created in your Azure account. Refer to [Microsoft's documentation](https://learn.microsoft.com/en-us/azure/virtual-network/) to learn more on how to create these.
+
+## Configure Azure Virtual Network Gateway
+
+### 1. Create a Gateway subnet
+
+You should already have a Virtual Network (VNET) created with a subnet assigned to it. The next step is to create a gateway subnet that Azure will use for addressing services related to Azure's Virtual Network Gateway. If you already have a gateway subnet, Azure will prevent you from creating a second one. If that is your case, update your gateway subnet settings.
+
+1. Go to your **Virtual Network** > **Subnets**.
+2. Select the option to add a **Gateway subnet**.
+3. Configure the subnet address range. The gateway subnet must be contained by the address space of the virtual network, and have a subnet mask of `/27` or greater.
+4. Make sure all other settings are set to **None**.
+
+### 2. Create a Virtual Network Gateway
+
+The Virtual Network Gateway is used to form the tunnel to the devices on your premises.
+
+:::note
+This configuration guide applies to Azure Virtual Network Gateway which includes the functionality found in the Azure VPN Gateway.
+
+
+Active/Active and Active/Standby configurations are both supported. Two Azure public IP addresses and two Magic WAN IPsec tunnels are required for the Active/Active configuration.
+:::
+
+#### Active/Active configuration
+
+1. Create a Virtual Network Gateway.
+2. Create two new public IP addresses or use existing IPs. Take note of the public IP addresses assigned to the Virtual Network Gateway as these will be the **Customer endpoint** for Magic WAN's IPsec tunnels configuration.
+3. Navigate to the Virtual Network Gateway created earlier.
+4. In **Configuration**, enable **Active-active mode** and disable **Gateway Private IPs**.
+5. Select **Create**.
+
+#### Active/Standby configuration
+
+1. Create a Virtual Network Gateway.
+2. Create a new public IP address or use an existing IP. Take note of the public IP address assigned to the Virtual Network Gateway as this will be the **Customer endpoint** for Magic WAN's IPsec tunnels configuration.
+3. Select the resource group and VNET you have already created.
+4. In **Configuration**, disable **Active-active mode** and **Gateway Private IPs**.
+5. Select **Create**.
+
+:::note
+The time it takes for Azure to fully provision the Virtual Network Gateway depends on the deployment region.
+:::
+
+## Configure Magic WAN
+
+1. Create an [IPsec tunnel](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) in the Cloudflare dashboard.
+2. Make sure you have the following settings:
+   1. **Interface address**: As the Azure Local Network Gateway will only permit specifying the lower IP address in a `/31` subnet, add the upper IP address within the `/31` subnet selected in [step 2 of the Configure Azure section](#2-configure-local-network-gateway-for-magic-ipsec-tunnel-health-checks). Refer to [Tunnel endpoints](/magic-wan/configuration/manually/how-to/configure-tunnels/) for more details.
+   2. **Customer endpoint**: The Public IP associated with your Azure Virtual Network Gateway. For example, `40.xxx.xxx.xxx`.
+   3. **Cloudflare endpoint**: Use the Cloudflare anycast address you have received from your account team. This will also be the IP address corresponding to the Local Network Gateway in Azure. For example, `162.xxx.xxx.xxx`.
+   4. **Health check rate**: Leave the default option (Medium) selected.
+   5. **Health check type**: Leave the default option (Reply) selected.
+   6. **Health check direction**: Leave default option (Bidirectional) selected.
+   7. **Health check target**: Select **Custom**.
+   8. **Target address**: Enter the same address that is used in the **Customer endpoint** field.
+   9. **Add pre-shared key later**: Select this option to create a PSK that will be used later in Azure.
+   10. **Replay protection**: **Enable**.
+3. If you are using the Active/Active configuration, select **Add IPsec tunnel** and repeat step 2 to create the second Magic WAN IPsec tunnel. Use the same **Cloudflare endpoint** as for the first tunnel.
+4. Select **Add Tunnels** when you are finished.
+5.The Cloudflare dashboard will show you a list of your tunnels. Edit the tunnel(s) you have created > select **Generate a new pre-shared key** > copy the generated key. If using the Active/Active configuration, select **Change to a new custom pre-shared key** on the second tunnel and use the PSK generated for the first tunnel.
+6. Create [static routes](/magic-wan/configuration/manually/how-to/configure-static-routes/) for your Azure Virtual Network subnets, specifying the newly created tunnel as the next hop.
+
+:::note
+Both tunnels in an Active/Active configuration must use the same **Cloudflare endpoint**, because an Active/Active Azure VPN connection creates two tunnels to the same remote address.
+:::
+
+## Complete the Azure Configuration
+
+### 1. Create a Local Network Gateway
+
+The Local Network Gateway typically refers to your on-premises location. In this case, the Local Network Gateway represents the Cloudflare side of the connection.
+
+We recommend creating a Local Network Gateway for your Cloudflare IPsec tunnel.
+
+1. Create a new local network gateway.
+2. In **Instance details** > **Endpoint**, select **IP address** and enter the Cloudflare anycast address in the IP address field.
+3. In **Address space(s)**, specify the address range of any subnets you wish to access remotely through the Magic WAN connection. For example, if you want to reach a network with an IP range of `192.168.1.0/24`, and this network is connected to your Magic WAN tenant, you would add `192.168.1.0/24` to the local network gateway address space.
+4. Go to the **Advanced** tab > **BGP settings**, and make sure you select **No**.
+
+:::note
+A single Cloudflare anycast address must be used in both Active/Active and Active/Standby configurations.
+:::
+
+### 2. Configure Local Network Gateway for Magic IPsec tunnel health checks
+
+Magic WAN uses [Tunnel Health Checks](/magic-wan/reference/tunnel-health-checks/) to monitor whether a tunnel is available.
+
+Tunnel health checks make use of ICMP probes sent from the Cloudflare side of the Magic IPsec tunnel to the remote endpoint (Azure). Probes are sent from the tunnel's interface address, which you specify in two places:
+
+1. **Cloudflare Dashboard:** In your Magic IPsec tunnel configuration as the address of the virtual tunnel interface (VTI) (so that Cloudflare knows what address to send probes from). Cloudflare requires this address in CIDR notation with a `/31` netmask.
+2. **Azure Portal:** In your VPN site's address space (so that Azure routes probe responses back over the tunnel). Azure requires this address in CIDR notation with a `/32` netmask.
+
+Cloudflare recommends customers select a unique `/31` subnet ([RFC 1918 - Address Allocation for Private Internets](https://datatracker.ietf.org/doc/html/rfc1918)) for each IPsec tunnel which is treated as a Point-to-Point Link and provides the ideal addressing scheme to satisfy both requirements.
+
+Example:
+- Select 10.252.3.55/31 as your unique point-to-point link subnet.
+- In the Cloudflare dashboard, set `10.252.3.55/31` as your tunnel's **IPv4 Interface address** (refer to [Configure Magic WAN](#configure-magic-wan)).
+- In the Azure portal, add `10.252.3.55/32` to your Local Network Gateway's **Address space**.
+
+:::note
+It is important to ensure the subnet selected for the Interface Address does not overlap with any other subnet.
+:::
+
+:::note
+Refer to RFC 3021 for more information on using 31-bit prefixes on [IPv4 Point-to-Point Links](https://datatracker.ietf.org/doc/html/rfc3021).
+:::
+
+To configure the Address Space for the Local Network Gateway to support Tunnel Health Checks:
+
+1. Edit the Local Network Gateway configured in the previous section.
+2. Select **Connections**.
+3. Under **Address Space(s)** add the Interface Address of the Magic IPsec Tunnel from the Cloudflare dashboard in CIDR notation (for example, `10.252.3.55/32`).
+4. If using an Active/Active configuration, add the Interface Address of the second Magic IPsec Tunnel from the Cloudflare Dashboard in CIDR notation (for example, `10.252.3.55/32`) under **Address Space(s)**.
+4. Select **Save**.
+
+:::note
+The Magic IPsec Tunnel Interface Address should be entered as a `/31` in the Cloudflare Dashboard, but as a `/32` when configuring the Local Network Gateway Address Space(s) in the Azure portal.
+:::
+
+### 3. Create an IPsec VPN Connection
+
+Choose the following settings when creating your VPN Connection:
+
+1. **Virtual network gateway**: Select the Virtual Network Gateway you have created in step 2.
+2. **Local network gateway**: Select the Local Network Gateway created in step 3.
+3. **Use Azure Private IP Address**: **Disabled**
+4. **BGP**: **Disabled**
+5. **IPsec / IKE policy**: **Custom**
+   1. **IKE Phase 1**
+      1. **Encryption**: _GCMAES256_
+      2. **Integrity/PRF**: _SHA384_
+      3. **DH Group**: _ECP384_
+   2. **IKE Phase 2(IPsec)**
+      1. **IPsec Encryption**: _GCMAES256_
+      2. **IPsec Integrity**: _GCMAES256_
+      3. **PFS Group**: _ECP384_
+   3. **IPsec SA lifetime in KiloBytes**: `0`
+   4. **IPsec SA lifetime in seconds**: `28800`
+   5. **Use policy based traffic selector**: **Disable**
+   6. **DPD timeout in seconds**: `45`
+   7. **Connection mode**: **Default**
+   8. **Use custom traffic selectors**: **Disabled**
+6. After the connection is created, select **Settings** > **Authentication**, and input your PSK (this will need to match the PSK used by the Magic WAN configuration).
+
+Repeat this process to define the settings for the Connection to the Local Network Gateway that corresponds to the redundant Cloudflare anycast IP address.
+
+### 4. Route all Internet traffic through Magic WAN and Cloudflare Gateway
+
+Cloudflare Zero Trust customers can route Internet-bound traffic through Magic WAN to the Internet through Cloudflare Gateway.
+
+Microsoft does not permit specifying a default route (`0.0.0.0/0`) under Address Space in the Local Network Gateway. However, it is possible to work around this limitation through the use of route summarization.
+
+1. Go to **Local network gateways** and select the desired object.
+2. Go to **Configuration** > **Address Space(s)** and specify the following two subnets: `0.0.0.0/1` & `128.0.0.0/1`.
+3. Do not remove the subnet configured to support the Tunnel Health Checks.
+4. Select **Save**
+
+## Install Cloudflare Zero Trust CA Certificate
+
+If you opt to route all Internet bound traffic through Magic WAN and want to take advantage of [HTTPS TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/), it will be necessary to install and trust the Cloudflare Zero Trust root CA certificate on your user's devices. You can either install the certificate provided by Cloudflare (default option), or generate your own custom certificate and upload it to Cloudflare.
+
+More details on how to install the root CA certificate can be found in [User-side certificates](/cloudflare-one/connections/connect-devices/user-side-certificates/) in the Cloudflare Zero Trust documentation.
+
+Once the root CA certificate is installed, open a web browser or use curl to validate Internet connectivity:
+
+```sh
+curl https://ipinfo.io
+```
+
+```json output
+{
+	"ip": "104.xxx.xxx.225",
+	"city": "Reston",
+	"region": "Virginia",
+	"country": "US",
+	"loc": "xx.xxxx,-xx.xxxx",
+	"org": "AS13335 Cloudflare, Inc.",
+	"postal": "20190",
+	"timezone": "America/New_York",
+	"readme": "https://ipinfo.io/missingauth"
+}
+```
+
+:::note
+ICMP (ping/traceroute) will work to remote Magic WAN sites, but is not forwarded to the Internet. Please ensure you validate connectivity via HTTP.
+:::
+
+## Validate connectivity and disable Azure Virtual Network Gateway anti-replay protection
+
+Once you have determined that connectivity has been established, Cloudflare recommends you disable anti-replay protection for the Azure Virtual Network Gateway site-to-site VPN connection. This can be accomplished through Microsoft Azure API.
+
+1. Determine the API token via PowerShell:
+
+```powershell
+Get-AzAccessToken
+```
+
+```txt output
+Token: eyJ0e<REDACTED>AH-PdSPg
+ExpiresOn : 04/08/2024 23:32:47 +00:00
+Type      : Bearer
+TenantId  : xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+UserId    : user@domain.com
+```
+
+2. Issue the API call to display the details of the site-to-site VPN Connection associated with the Azure Virtual Network Gateway (`GET` request):
+
+```bash
+curl --location 'https://management.azure.com/subscriptions/{{subscriptionId}}/resourceGroups/{{resourceGroupName}}/providers/Microsoft.Network/virtualNetworkGateways/{{virtualNetworkGatewayName}}?api-version=2022-05-01' \
+--header 'Authorization: Bearer eyJ0e<REDACTED>AH-PdSPg'
+```
+
+3. Copy/paste the entire response into a text editor:
+
+```json
+{
+    "name": "{{virtualNetworkGatewayName}}",
+    "id": "/subscriptions/{{subscriptionId}}/resourceGroups/{{resourceGroupName}}/providers/Microsoft.Network/virtualNetworkGateways/{{virtualNetworkGatewayName}}",
+    "etag": "W/\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"",
+    "type": "Microsoft.Network/virtualNetworkGateways",
+    "location": "eastus"
+    },
+    "properties": {
+        "provisioningState": "Succeeded",
+        "resourceGuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+        "packetCaptureDiagnosticState": "None",
+        "enablePrivateIpAddress": false,
+        "isMigrateToCSES": false,
+        "ipConfigurations": [
+            {
+                "name": "default",
+                "id": "/subscriptions/{{subscriptionId}}/resourceGroups/{{resourceGroupName}}/providers/Microsoft.Network/virtualNetworkGateways/{{virtualNetworkGatewayName}}/ipConfigurations/default",
+                "etag": "W/\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"",
+                "type": "Microsoft.Network/virtualNetworkGateways/ipConfigurations",
+                "properties": {
+                    "provisioningState": "Succeeded",
+                    "privateIPAllocationMethod": "Dynamic",
+                    "publicIPAddress": {
+                        "id": "/subscriptions/{{subscriptionId}}/resourceGroups/{{resourceGroupName}}/providers/Microsoft.Network/publicIPAddresses/{{virtualNetworkGatewayPublicIpAddress}}"
+                    },
+                    "subnet": {
+                        "id": "/subscriptions/{{subscriptionId}}/resourceGroups/{{resourceGroupName}}/providers/Microsoft.Network/virtualNetworks/{{virtualNetworkGatewayName}}/subnets/GatewaySubnet"
+                    }
+                }
+            }
+        ],
+        "natRules": [],
+        "virtualNetworkGatewayPolicyGroups": [],
+        "enableBgpRouteTranslationForNat": false,
+        "disableIPSecReplayProtection": false,
+        "sku": {
+            "name": "VpnGw2AZ",
+            "tier": "VpnGw2AZ",
+            "capacity": 2
+        },
+        "gatewayType": "Vpn",
+        "vpnType": "RouteBased",
+        "enableBgp": false,
+        "activeActive": false,
+        "bgpSettings": {
+            "asn": 65515,
+            "bgpPeeringAddress": "172.25.40.30",
+            "peerWeight": 0,
+            "bgpPeeringAddresses": [
+                {
+                    "ipconfigurationId": "/subscriptions/{{subscriptionId}}/resourceGroups/{{resourceGroupName}}/providers/Microsoft.Network/virtualNetworkGateways/{{virtualNetworkGatewayName}}/ipConfigurations/default",
+                    "defaultBgpIpAddresses": [
+                        "172.25.40.30"
+                    ],
+                    "customBgpIpAddresses": [],
+                    "tunnelIpAddresses": [
+                        "{{CF ANYCAST IP}}"
+                    ]
+                }
+            ]
+        },
+        "gatewayDefaultSite": {
+            "id": "/subscriptions/{{subscriptionId}}/resourceGroups/{{resourceGroupName}}/providers/Microsoft.Network/localNetworkGateways/{{localNetworkGatewayName}}"
+        },
+        "vpnGatewayGeneration": "Generation2",
+        "allowRemoteVnetTraffic": false,
+        "allowVirtualWanTraffic": false
+    }
+}
+```
+
+4. Locate the line that controls disabling IPsec anti-replay protection, and change it from `false` to `true`:
+
+```txt
+"disableIPSecReplayProtection": true
+```
+
+5. Upload the entire response in a subsequent API call (`PUT` request):
+
+```bash
+curl --location --request PUT \
+'https://management.azure.com/subscriptions/{{subscriptionId}}/resourceGroups/{{resourceGroupName}}/providers/Microsoft.Network/virtualNetworkGateways/{{virtualNetworkGatewayName}}?api-version=2022-05-01' \
+--header "Authorization: Bearer eyJ0e<REDACTED>AH-PdSPg" \
+--header "Content-Type: application/json" \
+--data '{
+    "name": "{{virtualNetworkGatewayName}}",
+    "id": "/subscriptions/{{subscriptionId}}/resourceGroups/{{resourceGroupName}}/providers/Microsoft.Network/virtualNetworkGateways/{{virtualNetworkGatewayName}}",
+    "etag": "W/\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"",
+    "type": "Microsoft.Network/virtualNetworkGateways",
+    "location": "eastus"
+    },
+    "properties": {
+        "provisioningState": "Succeeded",
+        "resourceGuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+        "packetCaptureDiagnosticState": "None",
+        "enablePrivateIpAddress": false,
+        "isMigrateToCSES": false,
+        "ipConfigurations": [
+            {
+                "name": "default",
+                "id": "/subscriptions/{{subscriptionId}}/resourceGroups/{{resourceGroupName}}/providers/Microsoft.Network/virtualNetworkGateways/{{virtualNetworkGatewayName}}/ipConfigurations/default",
+                "etag": "W/\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"",
+                "type": "Microsoft.Network/virtualNetworkGateways/ipConfigurations",
+                "properties": {
+                    "provisioningState": "Succeeded",
+                    "privateIPAllocationMethod": "Dynamic",
+                    "publicIPAddress": {
+                        "id": "/subscriptions/{{subscriptionId}}/resourceGroups/{{resourceGroupName}}/providers/Microsoft.Network/publicIPAddresses/{{virtualNetworkGatewayPublicIpAddress}}"
+                    },
+                    "subnet": {
+                        "id": "/subscriptions/{{subscriptionId}}/resourceGroups/{{resourceGroupName}}/providers/Microsoft.Network/virtualNetworks/{{virtualNetworkGatewayName}}/subnets/GatewaySubnet"
+                    }
+                }
+            }
+        ],
+        "natRules": [],
+        "virtualNetworkGatewayPolicyGroups": [],
+        "enableBgpRouteTranslationForNat": false,
+        "disableIPSecReplayProtection": true,
+        "sku": {
+            "name": "VpnGw2AZ",
+            "tier": "VpnGw2AZ",
+            "capacity": 2
+        },
+        "gatewayType": "Vpn",
+        "vpnType": "RouteBased",
+        "enableBgp": false,
+        "activeActive": false,
+        "bgpSettings": {
+            "asn": 65515,
+            "bgpPeeringAddress": "172.25.40.30",
+            "peerWeight": 0,
+            "bgpPeeringAddresses": [
+                {
+                    "ipconfigurationId": "/subscriptions/{{subscriptionId}}/resourceGroups/{{resourceGroupName}}/providers/Microsoft.Network/virtualNetworkGateways/{{virtualNetworkGatewayName}}/ipConfigurations/default",
+                    "defaultBgpIpAddresses": [
+                        "172.25.40.30"
+                    ],
+                    "customBgpIpAddresses": [],
+                    "tunnelIpAddresses": [
+                        "{{CF ANYCAST IP}}"
+                    ]
+                }
+            ]
+        },
+        "gatewayDefaultSite": {
+            "id": "/subscriptions/{{subscriptionId}}/resourceGroups/{{resourceGroupName}}/providers/Microsoft.Network/localNetworkGateways/{{localNetworkGatewayName}}"
+        },
+        "vpnGatewayGeneration": "Generation2",
+        "allowRemoteVnetTraffic": false,
+        "allowVirtualWanTraffic": false
+    }
+}'
+```
+
+6. Leave the replay protection setting checked in the Cloudflare dashboard, and wait several minutes before validating connectivity again.

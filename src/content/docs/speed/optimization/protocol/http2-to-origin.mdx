@@ -27,7 +27,7 @@ If you wish to disable HTTP/2 to Origin, you can follow these steps:
 
 ## Connection multiplexing
 
-Connection multiplexing is enabled by default on Free, Pro and Business zones. Enterprise zones will be enabled at a later date.
+Connection multiplexing is enabled by default on Free, Pro and Business zones. Enterprise zones can enable multiplexing manually and configure concurrent requests per connection.
 
 HTTP/2 uses multiplexing to allow multiple concurrent requests and responses over a single TCP connection. If your origin does not support multiplexing, enabling HTTP/2 to origin may result in 5xx errors, particularly 520s.
 

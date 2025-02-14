@@ -4,6 +4,7 @@ product:
   title: Browser Rendering
   url: /browser-rendering/
   group: Developer platform
+  additional_groups: [AI]
 
 meta:
   title: Browser Rendering docs

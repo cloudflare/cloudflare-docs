@@ -54,101 +54,28 @@ To get the UUIDs of your lists, use the [List Zero Trust lists](/api/resources/z
 
 Block [security categories](/cloudflare-one/policies/gateway/domain-categories/#security-categories) such as Command & Control, Botnet and Malware based on Cloudflare's threat intelligence.
 
-<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
-
 <Render
-	file="gateway/policies/block-security-categories"
+	file="gateway/policies/dash-plus-api/dns/block-security-categories"
 	product="cloudflare-one"
 />
-
-</TabItem>
-
-<TabItem label="API">
-
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
---data '{
-  "name": "Block security threats",
-  "description": "Block all default Cloudflare DNS security categories",
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "dns"
-  ],
-  "traffic": "any(dns.security_category[*] in {68 178 80 83 176 175 117 131 134 151 153})",
-  "identity": ""
-}'
-```
-
-</TabItem> </Tabs>
 
 ## Block content categories
 
 The categories included in this policy are not always a security threat, but blocking them can help minimize the risk that your organization is exposed to. For more information, refer to [domain categories](/cloudflare-one/policies/gateway/domain-categories/).
 
-<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
-
-| Selector           | Operator | Value                                                     | Action |
-| ------------------ | -------- | --------------------------------------------------------- | ------ |
-| Content Categories | in       | _Questionable Content_, _Security Risks_, _Miscellaneous_ | Block  |
-
-</TabItem>
-
-<TabItem label="API">
-
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
---data '{
-  "name": "Block content categories",
-  "description": "Block common content categories that may pose a risk",
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "dns"
-  ],
-  "traffic": "any(dns.content_category[*] in {17 85 87 102 157 135 138 180 162 32 169 177 128 15 115 119 124 141 161})",
-  "identity": ""
-}'
-```
-
-</TabItem> </Tabs>
+<Render
+	file="gateway/policies/dash-plus-api/dns/block-content-categories"
+	product="cloudflare-one"
+/>
 
 ## Block unauthorized applications
 
 <Render file="gateway/policies/block-applications" product="cloudflare-one" />
 
-<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
-
-| Selector    | Operator | Value                     | Action |
-| ----------- | -------- | ------------------------- | ------ |
-| Application | in       | _Artificial Intelligence_ | Block  |
-
-</TabItem>
-
-<TabItem label="API">
-
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
---data '{
-  "name": "Block unauthorized applications",
-  "description": "Block access to unauthorized AI applications",
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "dns"
-  ],
-  "traffic": "any(app.type.ids[*] in {25})",
-  "identity": ""
-}'
-```
-
-</TabItem> </Tabs>
+<Render
+	file="gateway/policies/dash-plus-api/dns/block-applications"
+	product="cloudflare-one"
+/>
 
 ## Block banned countries
 

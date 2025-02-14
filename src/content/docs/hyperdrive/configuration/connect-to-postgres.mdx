@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { TabItem, Tabs, Render } from "~/components";
+import { TabItem, Tabs, Render, WranglerConfig } from "~/components";
 
 Hyperdrive supports PostgreSQL and PostgreSQL-compatible databases, [popular drivers](#supported-drivers) and Object Relational Mapper (ORM) libraries that use those drivers.
 
@@ -17,7 +17,7 @@ New to Hyperdrive? Refer to the [Get started guide](/hyperdrive/get-started/) to
 
 :::
 
-To create a Hyperdrive that connects to an existing PostgreSQL database, use the [wrangler](/workers/wrangler/install-and-update/) CLI or the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers-and-pages/hyperdrive).
+To create a Hyperdrive that connects to an existing PostgreSQL database, use the [wrangler](/workers/wrangler/install-and-update/) CLI or the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/hyperdrive).
 
 When using wrangler, replace the placeholder value provided to `--connection-string` with the connection string for your database:
 
@@ -26,9 +26,7 @@ When using wrangler, replace the placeholder value provided to `--connection-str
 npx wrangler hyperdrive create my-first-hyperdrive --connection-string="postgres://user:password@database.host.example.com:5432/databasenamehere"
 ```
 
-The command above will output the ID of your Hyperdrive, which you will need to set in the `wrangler.toml` configuration file for your Workers project:
-
-import { WranglerConfig } from "~/components";
+The command above will output the ID of your Hyperdrive, which you will need to set in the [Wrangler configuration file](/workers/wrangler/configuration/) for your Workers project:
 
 <WranglerConfig>
 
@@ -52,17 +50,23 @@ Refer to the [Examples documentation](/hyperdrive/examples/) for step-by-step gu
 
 Hyperdrive uses Workers [TCP socket support](/workers/runtime-apis/tcp-sockets/#connect) to support TCP connections to databases. The following table lists the supported database drivers and the minimum version that works with Hyperdrive:
 
-| Driver                        | Documentation                                                                | Minimum Version Required | Notes                                                                                                                                                                                                        |
-| ----------------------------- | ---------------------------------------------------------------------------- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Postgres.js (**recommended**) | [Postgres.js documentation](https://github.com/porsager/postgres)                     | `postgres@3.4.4`         | Supported in both Workers & Pages.                                                                                                                                                                           |
-| node-postgres - `pg`          | [node-postgres - `pg` documentation](https://node-postgres.com/)                      | `pg@8.13.0`              | `8.11.4` introduced a bug with URL parsing and will not work. `8.11.5` fixes this. Requires `compatibility_flags = ["nodejs_compat"]` and `compatibility_date = "2024-09-23"` - refer to [Node.js compatibility](/workers/runtime-apis/nodejs). Requires wrangler `3.78.7` or later. |
-| Drizzle                       | [Drizzle documentation](https://orm.drizzle.team/)                                    | `0.26.2`^                |                                                                                                                                                                                                              |
-| Kysely                        | [Kysely documentation](https://kysely.dev/)                                           | `0.26.3`^                |                                                                                                                                                                                                              |
-| [rust-postgres](https://github.com/sfackler/rust-postgres) | [rust-postgres documentation](https://docs.rs/postgres/latest/postgres/) | `v0.19.8` | Use the [`query_typed`](https://docs.rs/postgres/latest/postgres/struct.Client.html#method.query_typed) method for best performance. |
+| Driver                                                     | Documentation                                                            | Minimum Version Required | Notes                                                                                                                                                                                                                                                                                |
+| ---------------------------------------------------------- | ------------------------------------------------------------------------ | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Postgres.js (**recommended**)                              | [Postgres.js documentation](https://github.com/porsager/postgres)        | `postgres@3.4.4`         | Supported in both Workers & Pages.                                                                                                                                                                                                                                                   |
+| node-postgres - `pg`                                       | [node-postgres - `pg` documentation](https://node-postgres.com/)         | `pg@8.13.0`              | `8.11.4` introduced a bug with URL parsing and will not work. `8.11.5` fixes this. Requires `compatibility_flags = ["nodejs_compat"]` and `compatibility_date = "2024-09-23"` - refer to [Node.js compatibility](/workers/runtime-apis/nodejs). Requires wrangler `3.78.7` or later. |
+| Drizzle                                                    | [Drizzle documentation](https://orm.drizzle.team/)                       | `0.26.2`^                |                                                                                                                                                                                                                                                                                      |
+| Kysely                                                     | [Kysely documentation](https://kysely.dev/)                              | `0.26.3`^                |                                                                                                                                                                                                                                                                                      |
+| [rust-postgres](https://github.com/sfackler/rust-postgres) | [rust-postgres documentation](https://docs.rs/postgres/latest/postgres/) | `v0.19.8`                | Use the [`query_typed`](https://docs.rs/postgres/latest/postgres/struct.Client.html#method.query_typed) method for best performance.                                                                                                                                                 |
 
 ^ _The marked libraries use `node-postgres` as a dependency._
 
 Other drivers and ORMs not listed may also be supported: this list is not exhaustive.
+
+### Database drivers and Node.js compatibility
+
+[Node.js compatibility](/workers/runtime-apis/nodejs/) is required for database drivers, including Postgres.js, and needs to be configured for your Workers project.
+
+<Render file="nodejs_compat" product="workers" />
 
 ## Supported TLS (SSL) modes
 
@@ -104,7 +108,7 @@ Install the `node-postgres` driver:
 npm install pg
 ```
 
-**Ensure you have `compatibility_flags` and `compatibility_date` set in your `wrangler.toml` configuration file** as shown below:
+**Ensure you have `compatibility_flags` and `compatibility_date` set in your [Wrangler configuration file](/workers/wrangler/configuration/)** as shown below:
 
 <Render file="nodejs-compat-wrangler-toml" product="workers" />
 
@@ -114,7 +118,7 @@ Create a new `Client` instance and pass the Hyperdrive parameters:
 import { Client } from "pg";
 
 export interface Env {
-	// If you set another name in wrangler.toml as the value for 'binding',
+	// If you set another name in the Wrangler configuration file as the value for 'binding',
 	// replace "HYPERDRIVE" with the variable name you defined.
 	HYPERDRIVE: Hyperdrive;
 }

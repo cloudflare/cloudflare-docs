@@ -14,7 +14,7 @@ Create a new `sql` instance and pass the Hyperdrive parameters:
 import postgres from "postgres";
 
 export interface Env {
-	// If you set another name in wrangler.toml as the value for 'binding',
+	// If you set another name in the Wrangler configuration file as the value for 'binding',
 	// replace "HYPERDRIVE" with the variable name you defined.
 	HYPERDRIVE: Hyperdrive;
 }
@@ -23,7 +23,19 @@ export default {
 	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
 		// NOTE: if `prepare: false` is passed when connecting, performance will
 		// be slower but still correctly supported.
-		const sql = postgres(env.HYPERDRIVE.connectionString);
+		const sql = postgres(
+            env.HYPERDRIVE.connectionString,
+            {
+                // Workers limit the number of concurrent external connections, so be sure to limit
+                // the size of the local connection pool that postgres.js may establish.
+                max: 5,
+
+                // If you are using array types in your Postgres schema, it is necessary to fetch
+                // type information to correctly de/serialize them. However, if you are not using
+                // those, disabling this will save you an extra round-trip every time you connect.
+                fetch_types: false,
+            },
+        );
 
 		try {
 			// A very simple test query

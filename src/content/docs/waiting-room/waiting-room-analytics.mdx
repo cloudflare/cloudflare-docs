@@ -101,6 +101,16 @@ Queueing may occur below your configured limits, and active users may sometimes 
 
 The New users per minute chart shows how many new users per minute passed through the waiting room to your origin compared to your configured New users per minute target threshold. Like the Active users chart, you can zoom in by highlighting to the left and right of the time period you are interested in, which will update the other chart as well as summary values. As you zoom out, each data point is averaged. Therefore, as you zoom in, values may fluctuate.
 
+### Turnstile Widget Traffic
+
+The Turnstile widget traffic chart shows the number of challenges issued per minute and the distribution of traffic seen with these challenges. Traffic is categorized into three main categories: 
+
+- Likely Human - This represents the number of challenges that were successfully solved. 
+- Likely Bots - This represents the number of unsolved challenges.
+- Bots - This represents the number of failed challenges.
+
+If your waiting room has the infinite queue option enabled, you will see a line on the graph representing the number of refresh requests from bots in the infinite queue.
+
 ## ​​GraphQL Analytics
 
 You can query your Waiting Room analytics data via GraphQL API. Waiting Room analytics provides near real-time visibility into your Waiting Room, allowing you to visualize the traffic to your application and how it is managed respecting the configured limits.

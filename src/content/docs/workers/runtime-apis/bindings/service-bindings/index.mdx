@@ -8,9 +8,11 @@ description: Facilitate Worker-to-Worker communication.
 
 ---
 
+import { WranglerConfig } from "~/components";
+
 ## About Service bindings
 
-[Service bindings](/workers/runtime-apis/bindings/service-bindings/) allow one worker to call into another, without going through a publicly-accessible URL. A Service binding allows Worker A to call a method on Worker B, or to forward a request from Worker A to Worker B.
+Service bindings allow one Worker to call into another, without going through a publicly-accessible URL. A Service binding allows Worker A to call a method on Worker B, or to forward a request from Worker A to Worker B.
 
 Service bindings provide the separation of concerns that microservice or service-oriented architectures provide, without configuration pain, performance overhead or need to learn RPC protocols.
 
@@ -28,11 +30,9 @@ Service bindings are commonly used to:
 
 ## Configuration
 
-You add a Service binding by modifying the `wrangler.toml` of the caller — the Worker that you want to be able to initiate requests.
+You add a Service binding by modifying the [Wrangler configuration file](/workers/wrangler/configuration/) of the caller — the Worker that you want to be able to initiate requests.
 
-For example, if you want Worker A to be able to call Worker B — you'd add the following to the `wrangler.toml` for Worker A:
-
-import { WranglerConfig } from "~/components";
+For example, if you want Worker A to be able to call Worker B — you'd add the following to the [Wrangler configuration file](/workers/wrangler/configuration/) for Worker A:
 
 <WranglerConfig>
 
@@ -128,7 +128,7 @@ Your worker has access to the following bindings:
   - ANOTHER_WORKER: another-worker [not connected]
 ```
 
-Wrangler also supports running multiple Workers at once with one command. To try it out, pass multiple `-c` flags to Wrangler, like this: `wrangler dev -c wrangler.toml -c ../other-worker/wrangler.toml`. The first config will be treated as the _primary_ worker, which will be exposed over HTTP as usual at `http://localhost:8787`. The remaining config files will be treated as _secondary_ and will only be accessible via a service binding from the primary worker.
+Wrangler also supports running multiple Workers at once with one command. To try it out, pass multiple `-c` flags to Wrangler, like this: `wrangler dev -c wrangler.json -c ../other-worker/wrangler.json`. The first config will be treated as the _primary_ worker, which will be exposed over HTTP as usual at `http://localhost:8787`. The remaining config files will be treated as _secondary_ and will only be accessible via a service binding from the primary worker.
 
 :::caution
 

@@ -22,7 +22,13 @@ sidebar:
   order: 2
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import {
+	Render,
+	TabItem,
+	Tabs,
+	PackageManagers,
+	WranglerConfig,
+} from "~/components";
 
 E-commerce and media sites often work on increasing the average transaction value to boost profitability. One of the strategies to increase the average transaction value is "cross-selling," which involves recommending related products. Cloudflare offers a range of products designed to build mechanisms for retrieving data related to the products users are viewing or requesting. In this tutorial, you will experience developing functionalities necessary for cross-selling by creating APIs for related product searches and product recommendations.
 
@@ -61,25 +67,11 @@ First, let's create a Cloudflare Workers project.
 To efficiently create and manage multiple APIs, let's use [`Hono`](https://hono.dev). Hono is an open-source application framework released by a Cloudflare Developer Advocate. It is lightweight and allows for the creation of multiple API paths, as well as efficient request and response handling.
 Open your command line interface (CLI) and run the following command:
 
-<Tabs> <TabItem label="npm">
-
-```sh
-npm create cloudflare@latest cross-sell-api -- --framework hono
-```
-
-</TabItem> <TabItem label="yarn">
-
-```sh
-yarn create cloudflare@latest cross-sell-api -- --framework hono
-```
-
-</TabItem> <TabItem label="pnpm">
-
-```sh
-pnpm create cloudflare@latest cross-sell-api -- --framework hono
-```
-
-</TabItem> </Tabs>
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"cross-sell-api --framework=hono"}
+/>
 
 If this is your first time running the `C3` command, you will be asked whether you want to install it. Confirm that the package name for installation is `create-cloudflare` and answer `y`.
 
@@ -173,26 +165,24 @@ Let's start implementing step-by-step.
 
 ### Bind Workers AI and Vectorize to your Worker
 
-This API requires the use of Workers AI and Vectorize. To use these resources from a Worker, you will need to first create the resources then [bind](/workers/runtime-apis/bindings/#what-is-a-binding) them to a Worker. First, let's create a Vectorize index with Wrangler using the command `wrangler vectorize create {index_name} --dimensions={number_of_dimensions} --metric={similarity_metric}`. The values for `dimensions` and `metric` depend on the type of [Text Embedding Model](/workers-ai/models/#text-embeddings) you are using for data vectorization (Embedding). For example, if you are using the `bge-large-en-v1.5` model, the command is:
+This API requires the use of Workers AI and Vectorize. To use these resources from a Worker, you will need to first create the resources then [bind](/workers/runtime-apis/bindings/#what-is-a-binding) them to a Worker. First, let's create a Vectorize index with Wrangler using the command `wrangler vectorize create {index_name} --dimensions={number_of_dimensions} --metric={similarity_metric}`. The values for `dimensions` and `metric` depend on the type of [Text Embedding Model](/workers-ai/models/) you are using for data vectorization (Embedding). For example, if you are using the `bge-large-en-v1.5` model, the command is:
 
 ```sh
 npx wrangler vectorize create stripe-products --dimensions=1024 --metric=cosine
 ```
 
-When this command executes successfully, you will see a message like the following. It provides the items you need to add to `wrangler.toml` to bind the Vectorize index with your Worker application. Copy the three lines starting with `[[vectorize]]`.
+When this command executes successfully, you will see a message like the following. It provides the items you need to add to the [Wrangler configuration file](/workers/wrangler/configuration/) to bind the Vectorize index with your Worker application.
 
 ```sh
 ✅ Successfully created a new Vectorize index: 'stripe-products'
-📋 To start querying from a Worker, add the following binding configuration into 'wrangler.toml':
+📋 To start querying from a Worker, add the following binding configuration into your Wrangler configuration file:
 
 [[vectorize]]
 binding = "VECTORIZE_INDEX"
 index_name = "stripe-products"
 ```
 
-To use the created Vectorize index from your Worker, let's add the binding. Open `wrangler.toml` and add the copied lines.
-
-import { WranglerConfig } from "~/components";
+To use the created Vectorize index from your Worker, let's add the binding. Open the [Wrangler configuration file](/workers/wrangler/configuration/) and add the copied lines.
 
 <WranglerConfig>
 
@@ -208,9 +198,7 @@ index_name = "stripe-products"
 
 </WranglerConfig>
 
-Additionally, let's add the configuration to use Workers AI in `wrangler.toml`.
-
-
+Additionally, let's add the configuration to use Workers AI in the [Wrangler configuration file](/workers/wrangler/configuration/).
 
 <WranglerConfig>
 

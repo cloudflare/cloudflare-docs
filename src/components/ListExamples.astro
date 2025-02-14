@@ -1,16 +1,17 @@
 ---
 import { z } from "astro:schema";
-import { getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 import { marked } from "marked";
 
 import { CardGrid } from "@astrojs/starlight/components";
 import LinkTitleCard from "~/components/LinkTitleCard.astro";
 
 type Props = z.infer<typeof props>;
+type Data = keyof CollectionEntry<"docs">["data"];
 
 const props = z.object({
 	directory: z.string().optional(),
-	filters: z.string().array().optional(),
+	filters: z.custom<Data>().array().optional(),
 	additionalProducts: z.string().array().optional(),
 });
 
@@ -27,7 +28,7 @@ if (directory) {
 const examples = await getCollection("docs", (entry) => {
 	return (
 		entry.data.pcx_content_type === "example" &&
-		((target && entry.slug.startsWith(target)) ||
+		((target && entry.id.startsWith(target)) ||
 			(additionalProducts !== undefined &&
 				entry.data.products?.some((v: string) =>
 					additionalProducts?.includes(v),
@@ -36,13 +37,15 @@ const examples = await getCollection("docs", (entry) => {
 });
 
 const filterValues: Record<string, string[]> = {};
+
 if (filters) {
 	for (const filter of filters) {
 		const values = examples.flatMap((x) =>
-			// @ts-expect-error indexing frontmatter with string
 			filter in x.data ? x.data[filter] : [],
 		);
-		const unique = [...new Set(values)];
+
+		const unique = [...new Set(values.flatMap((v) => v?.toString() ?? []))];
+
 		filterValues[filter] = unique;
 	}
 }
@@ -51,13 +54,13 @@ if (filters) {
 {
 	filters && (
 		<>
-			<div id="filters" class="flex not-content">
+			<div id="filters" class="not-content flex">
 				{filters.map((filter) => (
-					<div class="flex flex-col mr-6">
+					<div class="mr-6 flex flex-col">
 						<label for={filter}>
 							{filter[0].toUpperCase() + filter.slice(1)}
 						</label>
-						<select id={filter} class="w-52 h-8 mt-2">
+						<select id={filter} class="mt-2 h-8 w-52">
 							<option value="all">Select...</option>
 							{filterValues[filter]
 								.sort((a, b) => a.localeCompare(b))
@@ -79,16 +82,14 @@ if (filters) {
 			examples
 				.sort((a, b) => a.data.title.localeCompare(b.data.title))
 				.map((example) => {
-					const filterAttributes = {};
+					const filterAttributes: { [index: string]: any } = {};
+
 					if (filters) {
 						for (const filter of filters) {
 							const hasFilterableProperty = filter in example.data;
 
 							if (hasFilterableProperty) {
-								// @ts-expect-error can't use TS generics inside JSX
-								filterAttributes[`data-${filter}`] =
-									// @ts-expect-error indexing frontmatter with string
-									example.data[filter];
+								filterAttributes[`data-${filter}`] = example.data[filter];
 							}
 						}
 					}
@@ -96,7 +97,7 @@ if (filters) {
 					return (
 						<LinkTitleCard
 							title={example.data.title}
-							href={`/${example.slug}/`}
+							href={`/${example.id}/`}
 							data-example
 							{...filterAttributes}
 							set:html={marked.parse(

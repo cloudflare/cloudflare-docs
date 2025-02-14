@@ -5,7 +5,14 @@ sidebar:
   order: 30
 ---
 
-- Two new browsers per minute per account.
-- Two concurrent browsers per account.
-- By default, a browser instance gets killed if it does not get any [devtools](https://chromedevtools.github.io/devtools-protocol/) command for 60 seconds, freeing one instance. Users can optionally increase this by using the `keep_alive` [option](/browser-rendering/platform/puppeteer/#keep-alive).
-- `browser.close()` releases the browser instance.
+import { Render } from "~/components"
+
+| Feature                                       | Limit                                                         |
+| --------------------------------------------- | ------------------------------------------------------------- |
+| Concurrent browsers per account               | 10 per account	[^1] 						                            	  |
+| New browser instances per minute              | 10 per minute [^1]                                    					|
+| Browser timeout                               | 60 seconds [^1][^2]                                           |
+
+[^1]: Contact our team to request increases to this limit.
+[^2]: By default, a browser instance gets killed if it does not get any [devtools](https://chromedevtools.github.io/devtools-protocol/) command for 60 seconds, freeing one instance. Users can optionally increase this by using the `keep_alive` [option](/browser-rendering/platform/puppeteer/#keep-alive). `browser.close()` releases the browser instance.
+close()` releases the browser instance.

@@ -1,0 +1,457 @@
+---
+updated: 2025-01-13
+difficulty: Intermediate
+content_type: 📝 Tutorial
+pcx_content_type: tutorial
+title: Setup Fullstack Authentication with Next.js, Auth.js, and Cloudflare D1
+products:
+  - Workers
+  - D1
+languages:
+  - TypeScript
+spotlight:
+  author: Mackenly Jones
+  author_bio_link: https://github.com/mackenly
+  author_bio_source: GitHub
+---
+
+import {
+	Render,
+	PackageManagers,
+	Type,
+	TypeScriptExample,
+	FileTree,
+} from "~/components";
+
+In this tutorial, you will build a [Next.js app](/workers/frameworks/framework-guides/nextjs/) with authentication powered by Auth.js, Resend, and [Cloudflare D1](/d1/).
+
+Before continuing, make sure you have a Cloudflare account and have installed and [authenticated Wrangler](https://developers.cloudflare.com/workers/wrangler/commands/#login). Some experience with HTML, CSS, and JavaScript/TypeScript is helpful but not required. In this tutorial, you will learn:
+
+- How to create a Next.js application and run it on Cloudflare Workers
+- How to bind a Cloudflare D1 database to your Next.js app and use it to store authentication data
+- How to use Auth.js to add serverless fullstack authentication to your Next.js app
+
+You can find the finished code for this project on [GitHub](https://github.com/mackenly/auth-js-d1-example).
+
+## Prerequisites
+
+<Render file="prereqs" product="workers" />
+
+3. Create or login to a [Resend account](https://resend.com/signup) and get an [API key](https://resend.com/docs/dashboard/api-keys/introduction#add-api-key).
+4. [Install and authenticate Wrangler](/workers/wrangler/install-and-update/).
+
+## 1. Create a Next.js app using Workers
+
+From within the repository or directory where you want to create your project run:
+
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"auth-js-d1-example --framework=next --experimental"}
+/>
+
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		category: "web-framework",
+		framework: "Next.js",
+	}}
+/>
+
+This will create a new Next.js project using [OpenNext](https://opennext.js.org/cloudflare) that will run in a Worker using [Workers Static Assets](/workers/frameworks/framework-guides/nextjs/#static-assets).
+
+Before we get started, open your project's `tsconfig.json` file and add the following to the `compilerOptions` object to allow for top level await needed to let our application get the Cloudflare context:
+
+```json title="tsconfig.json"
+{
+	"compilerOptions": {
+		"target": "ES2022",
+	}
+}
+```
+
+Throughout this tutorial, we'll add several values to Cloudflare Secrets. For [local development](/workers/configuration/secrets/#local-development-with-secrets), add those same values to a file in the top level of your project called `.dev.vars` and make sure it is not committed into version control. This will let you work with Secret values locally. Go ahead and copy and paste the following into `.dev.vars` for now and replace the values as we go.
+
+```sh title=".dev.vars"
+AUTH_SECRET = "<replace-me>"
+AUTH_RESEND_KEY = "<replace-me>"
+AUTH_EMAIL_FROM = "onboarding@resend.dev"
+AUTH_URL = "http://localhost:8787/"
+```
+
+:::note[Manually set URL]
+Within the Workers environment, the `AUTH_URL` doesn't always get picked up automatically by Auth.js, hence why we're specifying it manually here (we'll need to do the same for prod later).
+:::
+
+## 2. Install Auth.js
+
+Following the [installation instructions](https://authjs.dev/getting-started/installation?framework=Next.js) from Auth.js, begin by installing Auth.js:
+
+<PackageManagers pkg="next-auth@beta" />
+
+Now run the following to generate an `AUTH_SECRET`:
+
+```sh
+npx auth secret
+```
+
+Now, deviating from the standard Auth.js setup, locate your generated secret (likely in a file named `.env.local`) and [add the secret to your Workers application](/workers/configuration/secrets/#adding-secrets-to-your-project) by running the following and completing the steps to add a secret's value that we just generated:
+
+```sh
+npx wrangler secret put AUTH_SECRET
+```
+
+After adding the secret, update your `.dev.vars` file to include an `AUTH_SECRET` value (this secret should be different from the one you generated earlier for security purposes):
+
+```sh title=".dev.vars"
+# ...
+AUTH_SECRET = "<replace-me>"
+# ...
+```
+
+Next, go into the newly generated `env.d.ts` file and add the following to the <Type text="CloudflareEnv" /> interface:
+
+```ts title="env.d.ts"
+interface CloudflareEnv {
+	AUTH_SECRET: string;
+}
+```
+
+## 3. Install Cloudflare D1 Adapter
+
+Now, install the Auth.js D1 adapter by running:
+
+<PackageManagers pkg="@auth/d1-adapter" />
+
+Create a D1 database using the following command:
+
+```sh title="Create D1 database"
+npx wrangler d1 create auth-js-d1-example-db
+```
+
+When finished you should see instructions to add the database binding to your [Wrangler configuration file](/workers/wrangler/configuration/). Example binding:
+
+import { WranglerConfig} from "~/components";
+
+<WranglerConfig>
+
+```toml title="wrangler.toml"
+[[d1_databases]]
+binding = "DB"
+database_name = "auth-js-d1-example-db"
+database_id = "<unique-ID-for-your-database>"
+```
+
+</WranglerConfig>
+
+Now, within your `env.d.ts`, add your D1 binding, like:
+
+```ts title="env.d.ts"
+interface CloudflareEnv {
+	DB: D1Database;
+	AUTH_SECRET: string;
+}
+```
+
+## 4. Configure Credentials Provider
+
+Auth.js provides integrations for many different [credential providers](https://authjs.dev/getting-started/authentication) such as Google, GitHub, etc. For this tutorial we're going to use [Resend for magic links](https://authjs.dev/getting-started/authentication/email). You should have already created a Resend account and have an [API key](https://resend.com/docs/dashboard/api-keys/introduction#add-api-key).
+
+Using either a [Resend verified domain email address](https://resend.com/docs/dashboard/domains/introduction) or `onboarding@resend.dev`, add a new Secret to your Worker containing the email your magic links will come from:
+
+```sh title="Add Resend email to secrets"
+npx wrangler secret put AUTH_EMAIL_FROM
+```
+
+Next, ensure the `AUTH_EMAIL_FROM` environment variable is updated in your `.dev.vars` file with the email you just added as a secret:
+
+```sh title=".dev.vars"
+# ...
+AUTH_EMAIL_FROM = "onboarding@resend.dev"
+# ...
+```
+
+Now [create a Resend API key](https://resend.com/docs/dashboard/api-keys/introduction) with `Sending access` and add it to your Worker's Secrets:
+
+```sh title="Add Resend API key to secrets"
+npx wrangler secret put AUTH_RESEND_KEY
+```
+
+As with previous secrets, update your `.dev.vars` file with the new secret value for `AUTH_RESEND_KEY` to use in local development:
+
+```sh title=".dev.vars"
+# ...
+AUTH_RESEND_KEY = "<replace-me>"
+# ...
+```
+
+After adding both of those Secrets, your `env.d.ts` should now include the following:
+
+```ts title="env.d.ts"
+interface CloudflareEnv {
+	DB: D1Database;
+	AUTH_SECRET: string;
+	AUTH_RESEND_KEY: string;
+	AUTH_EMAIL_FROM: string;
+}
+```
+
+Credential providers and database adapters are provided to Auth.js through a configuration file called `auth.ts`. Create a file within your `src/app/` directory called `auth.ts` with the following contents:
+
+<TypeScriptExample filename="src/app/auth.ts">
+```ts
+import NextAuth from "next-auth";
+import { NextAuthResult } from "next-auth";
+import { D1Adapter } from "@auth/d1-adapter";
+import Resend from "next-auth/providers/resend";
+import { getCloudflareContext } from "@opennextjs/cloudflare";
+
+const authResult = async (): Promise<NextAuthResult> => {
+	return NextAuth({
+		providers: [
+			Resend({
+				apiKey: (await getCloudflareContext()).env.AUTH_RESEND_KEY,
+				from: (await getCloudflareContext()).env.AUTH_EMAIL_FROM,
+			}),
+		],
+		adapter: D1Adapter((await getCloudflareContext()).env.DB),
+	});
+};
+
+export const { handlers, signIn, signOut, auth } = await authResult();
+```
+</TypeScriptExample>
+
+Now, lets add the route handler and middleware used to authenticate and persist sessions.
+
+Create a new directory structure and route handler within `src/app/api/auth/[...nextauth]` called `route.ts`. The file should contain:
+
+<TypeScriptExample filename="src/app/api/auth/[...nextauth]/route.ts">
+```ts
+import { handlers } from "../../../auth";
+
+export const { GET, POST } = handlers;
+```
+</TypeScriptExample>
+
+Now, within the `src/` directory, create a `middleware.ts` file to persist session data containing the following:
+
+<TypeScriptExample filename="src/middleware.ts">
+```ts
+export { auth as middleware } from "./app/auth";
+```
+</TypeScriptExample>
+
+## 5. Create Database Tables
+
+The D1 adapter requires that tables be created within your database. It [recommends](https://authjs.dev/getting-started/adapters/d1#migrations) using the exported `up()` method to complete this. Within `src/app/api/` create a directory called `setup` containing a file called `route.ts`. Within this route handler, add the following code:
+
+<TypeScriptExample filename="src/app/api/setup/route.ts">
+```ts
+import type { NextRequest } from 'next/server';
+import { up } from "@auth/d1-adapter";
+import { getCloudflareContext } from "@opennextjs/cloudflare";
+
+export async function GET(request: NextRequest) {
+    try {
+        await up((await getCloudflareContext()).env.DB)
+    } catch (e: any) {
+        console.log(e.cause.message, e.message)
+    }
+    return new Response('Migration completed');
+}
+
+```
+</TypeScriptExample>
+
+You'll need to run this once on your production database to create the necessary tables. If you're following along with this tutorial, we'll run it together in a few steps.
+
+:::note[Clean up]
+Running this multiple times won't hurt anything since the tables are only created if they do not already exist, but it's a good idea to remove this route from your production code once you've run it since you won't need it anymore.
+:::
+
+Before we go further, make sure you've created all of the necessary files:
+<FileTree>
+- src/
+  - app/
+    - api/
+      - auth/
+        - [...nextauth]/
+          - route.ts
+      - setup/
+        - route.ts
+    - auth.ts
+    - page.ts
+  - middleware.ts
+- env.d.ts
+- wrangler.toml
+</FileTree>
+
+## 6. Build Sign-in Interface
+We've completed the backend steps for our application. Now, we need a way to sign in. First, let's install [shadcn](https://ui.shadcn.com/):
+```sh title="Install shadcn"
+npx shadcn@latest init -d
+```
+
+Next, run the following to add a few components:
+```sh title="Add components"
+npx shadcn@latest add button input card avatar label
+```
+
+To make it easy, we've provided a basic sign-in interface for you below that you can copy into your app. You will likely want to customize this to fit your needs, but for now, this will let you sign in, see your account details, and update your user's name.
+
+Replace the contents of `page.ts` from within the `app/` directory with the following:
+
+```ts title="src/app/page.ts"
+import { redirect } from 'next/navigation';
+import { signIn, signOut, auth } from './auth';
+import { updateRecord } from '@auth/d1-adapter';
+import { getCloudflareContext } from '@opennextjs/cloudflare';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Label } from '@/components/ui/label';
+
+async function updateName(formData: FormData): Promise<void> {
+	'use server';
+	const session = await auth();
+	if (!session?.user?.id) {
+		return;
+	}
+	const name = formData.get('name') as string;
+	if (!name) {
+		return;
+	}
+	const query = `UPDATE users SET name = $1 WHERE id = $2`;
+	await updateRecord((await getCloudflareContext()).env.DB, query, [name, session.user.id]);
+	redirect('/');
+}
+
+export default async function Home() {
+	const session = await auth();
+	return (
+		<main className="flex items-center justify-center min-h-screen bg-background">
+			<Card className="w-full max-w-md">
+				<CardHeader className="space-y-1">
+					<CardTitle className="text-2xl font-bold text-center">{session ? 'User Profile' : 'Login'}</CardTitle>
+					<CardDescription className="text-center">
+						{session ? 'Manage your account' : 'Welcome to the auth-js-d1-example demo'}
+					</CardDescription>
+				</CardHeader>
+				<CardContent>
+					{session ? (
+						<div className="space-y-4">
+							<div className="flex items-center space-x-4">
+								<Avatar>
+									<AvatarImage src={session.user?.image || ''} alt={session.user?.name || ''} />
+									<AvatarFallback>{session.user?.name?.[0] || 'U'}</AvatarFallback>
+								</Avatar>
+								<div>
+									<p className="font-medium">{session.user?.name || 'No name set'}</p>
+									<p className="text-sm text-muted-foreground">{session.user?.email}</p>
+								</div>
+							</div>
+							<div>
+								<p className="text-sm font-medium">User ID: {session.user?.id}</p>
+							</div>
+							<form action={updateName} className="space-y-2">
+								<Label htmlFor="name">Update Name</Label>
+								<Input id="name" name="name" placeholder="Enter new name" />
+								<Button type="submit" className="w-full">
+									Update Name
+								</Button>
+							</form>
+						</div>
+					) : (
+						<form
+							action={async (formData) => {
+								'use server';
+								await signIn('resend', { email: formData.get('email') as string });
+							}}
+							className="space-y-4"
+						>
+							<div className="space-y-2">
+								<Input
+									type="email"
+									name="email"
+									placeholder="Email"
+									autoCapitalize="none"
+									autoComplete="email"
+									autoCorrect="off"
+									required
+								/>
+							</div>
+							<Button className="w-full" type="submit">
+								Sign in with Resend
+							</Button>
+						</form>
+					)}
+				</CardContent>
+				{session && (
+					<CardFooter>
+						<form
+							action={async () => {
+								'use server';
+								await signOut();
+								Response.redirect('/');
+							}}
+						>
+							<Button type="submit" variant="outline" className="w-full">
+								Sign out
+							</Button>
+						</form>
+					</CardFooter>
+				)}
+			</Card>
+		</main>
+	);
+}
+```
+
+## 7. Preview and Deploy
+
+Now, it's time to preview our app. Run the following to preview your application:
+
+<PackageManagers
+	type="run"
+	args={"preview"}
+/>
+
+:::caution[Windows support]
+OpenNext has [limited Windows support](https://opennext.js.org/cloudflare#windows-support) and recommends using WSL2 if developing on Windows.
+:::
+
+You should see our login form. But wait, we're not done yet. Remember to create your database tables by visiting `/api/setup`. You should see `Migration completed`. This means your database is ready to go.
+
+Navigate back to your application's homepage. Enter your email and sign in (use the same email as your Resend account if you used the `onboarding@resend.dev` address). You should receive an email in your inbox (check spam). Follow the link to sign in. If everything is configured correctly, you should now see a basic user profile letting your update your name and sign out.
+
+Now let's deploy our application to production. From within the project's directory run:
+
+<PackageManagers
+	type="run"
+	args={"deploy"}
+/>
+
+This will build and deploy your application as a Worker. Note that you may need to select which account you want to deploy your Worker to. After your app is deployed, Wrangler should give you the URL on which it was deployed. It might look something like this: `https://auth-js-d1-example.example.workers.dev`. Add your URL to your Worker using:
+
+```sh title="Add URL to secrets"
+npx wrangler secret put AUTH_URL
+```
+
+After the changes are deployed, you should now be able to access and try out your new application.
+
+You have successfully created, configured, and deployed a fullstack Next.js application with authentication powered by Auth.js, Resend, and Cloudflare D1.
+
+## Related resources
+
+To build more with Workers, refer to [Tutorials](/workers/tutorials/).
+
+Find more information about the tools and services used in this tutorial at:
+
+- [Auth.js](https://authjs.dev/getting-started)
+- [Resend](https://resend.com/)
+- [Cloudflare D1](/d1/)
+
+If you have any questions, need assistance, or would like to share your project, join the Cloudflare Developer community on [Discord](https://discord.cloudflare.com) to connect with other developers and the Cloudflare team.

@@ -6,6 +6,7 @@
 		"unifiedjs.vscode-mdx",
 		"bradlc.vscode-tailwindcss",
 		"redhat.vscode-yaml",
-		"esbenp.prettier-vscode"
+		"esbenp.prettier-vscode",
+		"dbaeumer.vscode-eslint"
 	]
 }

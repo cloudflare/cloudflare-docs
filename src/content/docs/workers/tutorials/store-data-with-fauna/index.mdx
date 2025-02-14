@@ -10,7 +10,7 @@ languages:
   - TypeScript
 ---
 
-import { Render, TabItem, Tabs, PackageManagers } from "~/components";
+import { Render, TabItem, Tabs, PackageManagers, WranglerConfig } from "~/components";
 
 In this tutorial, you learn how to store and retrieve data in your Cloudflare Workers applications by building a REST API that manages an inventory catalog using [Fauna](https://fauna.com/) as its data layer.
 
@@ -112,9 +112,7 @@ Then, move into your newly created directory:
 cd fauna-workers
 ```
 
-Update the `wrangler.toml` file to set the name for the Worker.
-
-import { WranglerConfig } from "~/components";
+Update the Wrangler file to set the name for the Worker.
 
 <WranglerConfig>
 
@@ -163,7 +161,7 @@ The integration creates a new Fauna authentication key and stores the key's secr
 
 :::note
 
-You can mange the generated Fauna key in the Fauna Dashboard. See the [Clouflare Fauna integration docs](/workers/databases/native-integrations/fauna).
+You can manage the generated Fauna key in the Fauna Dashboard. See the [Clouflare Fauna integration docs](/workers/databases/native-integrations/fauna).
 
 :::
 

@@ -43,7 +43,7 @@ To create a new custom rate limiting ruleset:
 
    The available characteristics depend on your Cloudflare plan and product subscriptions.
 
-10. (Optional) To define an expression that specifies the conditions for incrementing the rate counter, enable **Use custom counting expression** and set the expression. By default, the counting expression is the same as the rule expression. The counting expression can include [response fields](/ruleset-engine/rules-language/fields/http-request-response/).
+10. (Optional) To define an expression that specifies the conditions for incrementing the rate counter, enable **Use custom counting expression** and set the expression. By default, the counting expression is the same as the rule expression. The counting expression can include [response fields](/ruleset-engine/rules-language/fields/reference/?field-category=Response).
 
 11. Under **When rate exceeds**, define the maximum number of requests and the time period to consider when determining the rate.
 
@@ -85,5 +85,9 @@ The **Deployed custom rate limiting rulesets** list will show a rule for each de
 
 <Render
 	file="custom-response-blocked-requests"
-	params={{ one: "rate limiting", two: "429", three: "30 KB" }}
+	params={{
+		responseType: "rate limiting",
+		defaultStatusCode: "429",
+		maxBodySize: "30 KB",
+	}}
 />

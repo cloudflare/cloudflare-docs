@@ -1,0 +1,40 @@
+releaseNotes: >-
+  This release primarily contains bug fixes, no new features are included in
+  this release
+   
+  **Notable updates**
+   
+  - Improved connection time on slow network connections
+
+  - Improved reliability of opening the browser for registration or
+  authentication requests. We now try multiple times and will display an error
+  message if it fails to open
+
+  - Fixed DNS fallback timeouts and related performance issues
+
+  - Fixed issue where coming out of sleep on some systems could take an
+  unreasonably long time to connect
+
+  - Fixed InvalidPacket error in logs that indicated the client needed to reset
+  its connection
+
+  - Fixed UI issue where client would improperly show connection type as 1.1.1.1
+  when in include split tunnel mode with WARP
+   
+
+   
+
+   
+  **Known issues**
+
+  - Device posture check results stop sending after 24 hours (or possibly even
+  sooner)
+
+  - If you are having issues with upgrading to new beta, please uninstall
+  current app, install the GA version from https://1.1.1.1/ and participate in
+  beta program from Preferences->Advanced.
+version: 2022.9.214.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2022.9.214.1
+packageSize: 49610678
+releaseDate: 2022-09-22T18:34:26.398Z
+platformName: macOS

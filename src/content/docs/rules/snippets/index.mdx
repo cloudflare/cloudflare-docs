@@ -2,7 +2,7 @@
 pcx_content_type: concept
 title: Snippets
 sidebar:
-  order: 3
+  order: 4
   group:
     badge:
       text: Beta
@@ -17,7 +17,10 @@ Cloudflare Snippets (beta) provide a powerful and flexible way to customize the 
 
 For code samples addressing common use cases, please refer to the [Examples](/rules/snippets/examples/) section.
 
-<Render file="rules-requirements" params={{ one: "Snippets require" }} />
+<Render
+	file="rules-requirements"
+	params={{ sentenceIntro: "Snippets require" }}
+/>
 
 ## Snippets elements
 
@@ -26,13 +29,15 @@ To create and deploy a Snippet, you need to define the following elements:
 - **Code snippet**: JavaScript code to be executed during the request-handling process.
 - **Snippet rule**: A [filter expression](/ruleset-engine/rules-language/expressions/) that determines which requests the Snippet will be applied to. Each Snippet can only be associated with one Snippet Rule.
 
-For more information, refer to the [How it works](/rules/snippets/how-it-works/) and [Create in the dashboard](/rules/snippets/create-dashboard/) sections.
+For more information, refer to the [How it works](/rules/snippets/how-it-works/) and [Create a snippet in the dashboard](/rules/snippets/create-dashboard/) sections.
 
 ## Templates
 
 <Render file="rules-templates" />
 
 ## Availability
+
+<Render file="rules-new-limits" />
 
 <FeatureTable id="rules.snippets" />
 

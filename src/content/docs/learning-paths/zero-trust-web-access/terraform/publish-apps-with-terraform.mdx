@@ -30,7 +30,7 @@ Create a `.tf` file and copy-paste the following example. Fill in your API token
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Networks** > **Tunnels**.
 2. Select the tunnel name.
-3. Copy the **Tunnel ID**. 
+3. Copy the **Tunnel ID**.
 
 </Details>
 
@@ -67,7 +67,7 @@ variable "tunnel_id" {
 
 :::caution
 
-To prevent accidentally exposing your Cloudflare credentials, do not save this file in your version control system. Learn more about [tracking a Terraform configuration](/terraform/tutorial/track-history/). 
+To prevent accidentally exposing your Cloudflare credentials, do not save this file in your version control system. Learn more about [tracking a Terraform configuration](/terraform/tutorial/track-history/).
 :::
 
 ## 3. Configure Cloudflare resources
@@ -106,7 +106,7 @@ resource "cloudflare_tunnel_config" "example_config" {
 
 :::note
 
-Public hostname configurations must include a catch-all ingress rule at the bottom of the file. 
+Public hostname configurations must include a catch-all ingress rule at the bottom of the file.
 :::
 
 ### Create an Access application
@@ -152,5 +152,5 @@ Users can now access the private application by going to the public URL and auth
 
 :::note
 
-If you need to modify the Access application, Access policy or DNS record, you must make the changes via Terraform. Changes made via the dashboard will break Terraform’s state. To prevent this from happening, [set the dashboard to read-only](/cloudflare-one/api-terraform/#set-dashboard-to-read-only). 
+If you need to modify the Access application, Access policy or DNS record, you must make the changes via Terraform. Changes made via the dashboard will break Terraform's state. To prevent this from happening, [set the dashboard to read-only](/cloudflare-one/api-terraform/#set-dashboard-to-read-only).
 :::

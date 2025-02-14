@@ -8,7 +8,7 @@ head:
     content: Get started
 ---
 
-import { Render, PackageManagers } from "~/components";
+import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 Cloudflare Queues is a flexible messaging queue that allows you to queue messages for asynchronous processing. By following this guide, you will create your first queue, a Worker to publish messages to that queue, and a consumer Worker to consume messages from that queue.
 
@@ -40,7 +40,7 @@ To create a producer Worker, run:
 	}}
 />
 
-This will create a new directory, which will include both a `src/index.ts` Worker script, and a [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. After you create your Worker, you will create a Queue to access.
+This will create a new directory, which will include both a `src/index.ts` Worker script, and a [`wrangler.jsonc`](/workers/wrangler/configuration/) configuration file. After you create your Worker, you will create a Queue to access.
 
 Move into the newly created directory:
 
@@ -68,9 +68,7 @@ You cannot change your queue name after you have set it. After you create your q
 
 To expose your queue to the code inside your Worker, you need to connect your queue to your Worker by creating a binding. [Bindings](/workers/runtime-apis/bindings/) allow your Worker to access resources, such as Queues, on the Cloudflare developer platform.
 
-To create a binding, open your newly generated `wrangler.toml` configuration file and add the following:
-
-import { WranglerConfig } from "~/components";
+To create a binding, open your newly generated `wrangler.jsonc` file and add the following:
 
 <WranglerConfig>
 
@@ -108,7 +106,7 @@ export default {
 } satisfies ExportedHandler<Env>;
 ```
 
-Replace `MY_QUEUE` with the name you have set for your binding from your `wrangler.toml`.
+Replace `MY_QUEUE` with the name you have set for your binding from your `wrangler.jsonc` file.
 
 Also add the queue to `Env` interface in `index.ts`.
 
@@ -124,7 +122,7 @@ In a production application, you would likely use a [`try...catch`](https://deve
 
 ### Publish your producer Worker
 
-With your `wrangler.toml` file and `index.ts` file configured, you are ready to publish your producer Worker. To publish your producer Worker, run:
+With your Wrangler file and `index.ts` file configured, you are ready to publish your producer Worker. To publish your producer Worker, run:
 
 ```sh
 npx wrangler deploy
@@ -174,7 +172,7 @@ export default {
 } satisfies ExportedHandler<Env>;
 ```
 
-Replace `MY_QUEUE` with the name you have set for your binding from your `wrangler.toml`.
+Replace `MY_QUEUE` with the name you have set for your binding from your `wrangler.jsonc` file.
 
 Every time messages are published to the queue, your consumer Worker's `queue` handler (`async queue`) is called and it is passed one or more messages.
 
@@ -188,7 +186,7 @@ After you have configured your consumer Worker, you are ready to connect it to y
 
 Each queue can only have one consumer Worker connected to it. If you try to connect multiple consumers to the same queue, you will encounter an error when attempting to publish that Worker.
 
-To connect your queue to your consumer Worker, open your `wrangler.toml` file and add this to the bottom:
+To connect your queue to your consumer Worker, open your Wrangler file and add this to the bottom:
 
 
 
@@ -215,7 +213,7 @@ In your consumer Worker, you are using queues to auto batch messages using the `
 
 ### Publish your consumer Worker
 
-With your `wrangler.toml` file and `index.ts` file configured, publish your consumer Worker by running:
+With your Wrangler file and `index.ts` file configured, publish your consumer Worker by running:
 
 ```sh
 npx wrangler deploy
@@ -241,7 +239,7 @@ With `wrangler tail` running, your consumer Worker will start logging the reques
 
 If you refresh less than 10 times, it may take a few seconds for the messages to appear because batch timeout is configured for 10 seconds. After 10 seconds, messages should arrive in your terminal.
 
-If you get errors when you refresh, check that the queue name you created in [step 2](/queues/get-started/#2-create-a-queue) and the queue you referenced in your `wrangler.toml` file is the same. You should ensure that your producer Worker is returning `Success` and is not returning an error.
+If you get errors when you refresh, check that the queue name you created in [step 2](/queues/get-started/#2-create-a-queue) and the queue you referenced in your Wrangler file is the same. You should ensure that your producer Worker is returning `Success` and is not returning an error.
 
 By completing this guide, you have now created a queue, a producer Worker that publishes messages to that queue, and a consumer Worker that consumes those messages from it.
 

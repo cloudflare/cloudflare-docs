@@ -1,0 +1,31 @@
+releaseNotes: >-
+  This release contains new features and improvements from the last release. In
+  particular, we have made significant changes to how local settings (MDM) are
+  processed and how they work with new devices settings in the dashboard.
+
+
+  **Notable updates** 
+
+  - Added support for Gateway session duration enforcement allowing you to force
+  re-authentication after a specified time.
+
+  - Fixed issue where context menu would remain after you quit the GUI.
+
+  - Fixed wake from sleep issue where DNS requests could fail.
+
+  - Improved overall stability of Windows installer.
+
+
+  **Known issues** 
+
+  - If you change organizations by pushing a new mdm.xml file while the user is
+  already logged in to an organization the client will get in to a bad state and
+  need to be uninstalled.
+
+  - Any change to the mdm.xml file will require the user to re-authenticate when
+  they shouldn't have to.
+version: 2022.1.189.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2022.1.189.1
+packageSize: 88473600
+releaseDate: 2022-01-26T19:07:51.514Z
+platformName: Windows

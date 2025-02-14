@@ -2,7 +2,7 @@
 pcx_content_type: concept
 title: Transform Rules
 sidebar:
-  order: 4
+  order: 5
 ---
 
 import { FeatureTable, Render } from "~/components";
@@ -20,11 +20,14 @@ To configure Transform Rules in the dashboard, go to the **Transform Rules** pag
 
 <Render
 	file="snippets-alternative"
-	params={{ one: "header modifications and rewrite logic" }}
+	params={{ suffix: "header modifications and rewrite logic" }}
 />
 <br />
 
-<Render file="rules-requirements" params={{ one: "Transform Rules require" }} />
+<Render
+	file="rules-requirements"
+	params={{ sentenceIntro: "Transform Rules require" }}
+/>
 
 ## Get started
 
@@ -37,6 +40,8 @@ Alternatively, create a transform rule from scratch in the dashboard or via Clou
 - [HTTP response header modification rules](/rules/transform/response-header-modification/create-dashboard/)
 - [Managed Transforms](/rules/transform/managed-transforms/)
 
+For Terraform examples, refer to [Transform Rules configuration using Terraform](/terraform/additional-configurations/transform-rules/).
+
 Refer to [Rules language](/ruleset-engine/rules-language/) for more information on building expressions for Transform Rules.
 
 ## Availability
@@ -44,6 +49,8 @@ Refer to [Rules language](/ruleset-engine/rules-language/) for more information 
 Cloudflare Transform Rules are available to all customers. Support for regular expressions depends on your Cloudflare plan.
 
 This table outlines the Transform Rules features available with each customer plan:
+
+<Render file="rules-new-limits" />
 
 <FeatureTable id="rules.transform_rules" />
 
@@ -62,10 +69,10 @@ Request and response fields are immutable within each [phase](/ruleset-engine/ab
 
 <Render
 	file="challenge-issues"
-	params={{ one: "Rules features such as Transform Rules" }}
+	params={{ featureName: "Rules features such as Transform Rules" }}
 />
 
 <Render
 	file="troubleshoot-rules-with-trace"
-	params={{ one: "Transform Rules" }}
+	params={{ rulesFeatureName: "Transform Rules" }}
 />

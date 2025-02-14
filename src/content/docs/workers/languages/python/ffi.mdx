@@ -8,6 +8,8 @@ head:
 
 ---
 
+import { WranglerConfig } from "~/components";
+
 Via [Pyodide](https://pyodide.org/en/stable/), Python Workers provide a [Foreign Function Interface (FFI)](https://en.wikipedia.org/wiki/Foreign_function_interface) to JavaScript. This allows you to:
 
 * Use [bindings](/workers/runtime-apis/bindings/) to resources on Cloudflare, including [Workers AI](/workers-ai/), [Vectorize](/vectorize/), [R2](/r2/), [KV](/kv/), [D1](/d1/), [Queues](/queues/), [Durable Objects](/durable-objects/), [Service Bindings](/workers/runtime-apis/bindings/service-bindings/) and more.
@@ -20,9 +22,7 @@ The details of Pyodide's Foreign Function Interface are documented [here](https:
 
 Bindings allow your Worker to interact with resources on the Cloudflare Developer Platform. When you declare a binding on your Worker, you grant it a specific capability, such as being able to read and write files to an [R2](/r2/) bucket.
 
-For example, to access a [KV](/kv) namespace from a Python Worker, you would declare the following in your Worker's [`wrangler.toml`](/workers/wrangler/configuration/):
-
-import { WranglerConfig } from "~/components";
+For example, to access a [KV](/kv) namespace from a Python Worker, you would declare the following in your Worker's [Wrangler configuration file](/workers/wrangler/configuration/):
 
 <WranglerConfig>
 

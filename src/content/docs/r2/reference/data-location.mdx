@@ -5,6 +5,8 @@ sidebar:
   order: 7
 ---
 
+import { WranglerConfig } from "~/components";
+
 Learn how the location of data stored in R2 is determined and about the different available inputs that control the physical location where objects in your buckets are stored.
 
 ## Automatic (recommended)
@@ -77,9 +79,7 @@ Use Jurisdictional Restrictions when you need to ensure data is stored and proce
 
 ### Using jurisdictions from Workers
 
-To access R2 buckets that belong to a jurisdiction from [Workers](/workers/), you will need to specify the jurisdiction as well as the bucket name as part of your [bindings](/r2/api/workers/workers-api-usage/#3-bind-your-bucket-to-a-worker) in your `wrangler.toml`:
-
-import { WranglerConfig } from "~/components";
+To access R2 buckets that belong to a jurisdiction from [Workers](/workers/), you will need to specify the jurisdiction as well as the bucket name as part of your [bindings](/r2/api/workers/workers-api-usage/#3-bind-your-bucket-to-a-worker) in your [Wrangler configuration file](/workers/wrangler/configuration/):
 
 <WranglerConfig>
 

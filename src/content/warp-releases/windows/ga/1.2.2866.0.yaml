@@ -1,0 +1,18 @@
+releaseNotes: |-
+  This release contains some minor improvements and fixes from the last release. 
+
+  **Notable updates**
+
+  - Fixed an issue where you would incorrectly recieve an "SSL Certificate Missing" error message when you had trouble connecting to WARP
+
+  **Known issues**
+
+  - You are unable to subscribe to WARP+ via the Desktop apps. You must subscribe first on your mobile device and then copy/paste your license key into the Accounts page on desktop
+  - To opt-out of the beta please uninstall via the instructions here: https://developers.cloudflare.com/warp-client/warp-for-everyone/setting-up/windows#how-to-remove-application and install from from the link here: https://developers.cloudflare.com/warp-client/warp-for-everyone/setting-up/requirements#windows
+
+  For a complete list of known issues please visit https://developers.cloudflare.com/warpclient/known-issues-and-faq
+version: 1.2.2866.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/1.2.2866.0
+packageSize: 78401536
+releaseDate: 2021-01-06T23:07:55.956Z
+platformName: Windows

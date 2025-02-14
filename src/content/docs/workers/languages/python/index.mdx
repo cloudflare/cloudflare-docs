@@ -11,6 +11,8 @@ head:
 description: Write Workers in 100% Python
 ---
 
+import { WranglerConfig } from "~/components";
+
 Cloudflare Workers provides first-class support for Python, including support for:
 
 - The majority of Python's [Standard library](/workers/languages/python/stdlib/)
@@ -121,10 +123,7 @@ the Python `fetch` handler and can be used to access
 [secrets](/workers/configuration/secrets/),and
 [bindings](/workers/runtime-apis/bindings/).
 
-For example, let's try setting and using an environment variable in a Python
-Worker. First, add the environment variable to your Worker's `wrangler.toml`:
-
-import { WranglerConfig } from "~/components";
+For example, let us try setting and using an environment variable in a Python Worker. First, add the environment variable to your Worker's [Wrangler configuration file](/workers/wrangler/configuration/):
 
 <WranglerConfig>
 

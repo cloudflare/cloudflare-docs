@@ -22,7 +22,7 @@ Use a URL rewrite to return the content of a URL while displaying a different UR
 
 You cannot rewrite the hostname using a rewrite URL rule. To rewrite the hostname, use an [origin rule](/rules/origin-rules/) or a [Page Rule](/rules/page-rules/how-to/override-url-or-ip-address/).
 
-<Render file="snippets-alternative" params={{ one: "rewrite logic" }} />
+<Render file="snippets-alternative" params={{ suffix: "rewrite logic" }} />
 
 :::
 
@@ -33,10 +33,13 @@ Rewrite URL rules can perform static or dynamic rewrites:
 - **Static rewrite**: Replaces a given part of a request URL (path or query string) with a static string.
 - **Dynamic rewrite**: Supports more advanced scenarios where you use a rewrite expression to define the resulting path or query string.
 
-Create rewrite URL rules [in the dashboard](/rules/transform/url-rewrite/create-dashboard/) or [via API](/rules/transform/url-rewrite/create-api/).
+Create rewrite URL rules [in the dashboard](/rules/transform/url-rewrite/create-dashboard/), [via Cloudflare API](/rules/transform/url-rewrite/create-api/), or [using Terraform](/terraform/additional-configurations/transform-rules/#create-a-rewrite-url-rule).
 
 ## Serve images from custom paths
 
 When using Cloudflare Images, you can use URL rewrites to serve images from a custom path. For more information, refer to [Serve images from custom domains](/images/manage-images/serve-images/serve-from-custom-domains/).
 
-<Render file="troubleshoot-rules-with-trace" params={{ one: "URL rewrites" }} />
+<Render
+	file="troubleshoot-rules-with-trace"
+	params={{ rulesFeatureName: "URL rewrites" }}
+/>

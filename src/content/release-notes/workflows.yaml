@@ -1,0 +1,65 @@
+---
+link: "/workflows/reference/changelog/"
+productName: Workflows
+productLink: "/workflows/"
+productArea: Developer platform
+productAreaLink: /workers/platform/changelog/platform/
+entries:
+  - publish_date: "2025-02-11"
+    title: "Behavior improvements"
+    description: |-
+      Improved Workflows execution that prevents Workflows instances from getting stuck, and allows stuck instances to become unstuck.
+
+      Also, improved the reliability of Workflows step retry counts, and improved Instance ID validation.
+  - publish_date: "2025-01-23"
+    title: "Major bugfixes and improvements"
+    description: |-
+      With this release, some bug were fixed:
+        * `event.timestamp` is now `Date`, fixing a regression.
+        *  Fixed issue where instances without metadata were not terminated as expected.
+
+      Also, this release makes Workflows execution more reliable for accounts with high loads.
+  - publish_date: "2025-01-09"
+    title: "Improved Wrangler local dev experience for steps' output, matching production"
+    description: |-
+      Previously, in local dev, the output field would return the list of successful steps outputs in the workflow. This is not expected behavior compared to production workflows (where the output is the actual return of the run function).
+
+      This release aligns the local dev output field behavior with the production behavior.
+  - publish_date: "2024-12-19"
+    title: "Better instance control, improved queued logic, and step limit increased"
+    description: |-
+      Workflows can now be terminated and pause instances from a queued state and the ID of an instance is now exposed via the `WorkflowEvent` parameter.
+
+      Also, the mechanism to queue instances was improved to force miss-behaved queued instances to be automatically errored.
+
+      Workflows now allow you to define up to 1024 steps in a single Workflow definition, up from the previous limit of 512. This limit will continue to increase during the course of the open beta.
+  - publish_date: "2024-12-09"
+    title: "New queue instances logic"
+    description: |-
+      Introduction of a new mechanism to queue instances, which will prevent instances from getting stuck on queued status forever.
+  - publish_date: "2024-11-30"
+    title: "Step limit increased"
+    description: |-
+      Workflows now allow you to define up to 512 steps in a single Workflow definition, up from the previous limit of 256. This limit will continue to increase during the course of the open beta.
+
+      If you have Workflows that need more steps, we recommend delegating additional work to other Workflows by [triggering a new Workflow](/workflows/build/trigger-workflows/) from within a step and passing any state as [parameters to that Workflow instance](/workflows/build/events-and-parameters/).
+  - publish_date: "2024-11-21"
+    title: "Fixed create instance API in Workers bindings"
+    description: |-
+      You can now call `create()` without any arguments when using the [Workers API](/workflows/build/workers-api/#create) for Workflows. Workflows will automatically generate the ID of the Workflow on your behalf.
+
+      This addresses a bug that caused calls to `create()` to fail when provided with no arguments.
+  - publish_date: "2024-11-20"
+    title: "Multiple Workflows in local development now supported"
+    description: |-
+      Local development with `wrangler dev` now correctly supports multiple Workflow definitions per script.
+
+      There is no change to production Workflows, where multiple Workflow definitions per Worker script was already supported.
+  - publish_date: "2024-10-23"
+    title: "Workflows is now in public beta!"
+    description: |-
+      Workflows, a new product for building reliable, multi-step workflows using Cloudflare Workers, is now in public beta. The public beta is available to any user with a [free or paid Workers plan](/workers/platform/pricing/).
+
+      A Workflow allows you to define multiple, independent steps that encapsulate errors, automatically retry, persist state, and can run for seconds, minutes, hours or even days. A Workflow can be useful for post-processing data from R2 buckets before querying it, automating a Workers AI RAG pipeline, or managing user signup flows and lifecycle emails.
+
+      You can learn more about Workflows in [our announcement blog](https://blog.cloudflare.com/building-workflows-durable-execution-on-workers/), or start building in our [get started guide](/workflows/get-started/guide/).

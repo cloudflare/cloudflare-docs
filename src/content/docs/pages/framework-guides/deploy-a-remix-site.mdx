@@ -3,7 +3,7 @@ pcx_content_type: how-to
 title: Remix
 ---
 
-import { PagesBuildPreset, Render, PackageManagers } from "~/components";
+import { PagesBuildPreset, Render, PackageManagers, WranglerConfig } from "~/components";
 
 [Remix](https://remix.run/) is a framework that is focused on fully utilizing the power of the web. Like Cloudflare Workers, it uses modern JavaScript APIs, and it places emphasis on web fundamentals such as meaningful HTTP status codes, caching and optimizing for both usability and performance.
 
@@ -82,9 +82,9 @@ A [binding](/pages/functions/bindings/) allows your application to interact with
 
 Remix uses Wrangler's [`getPlatformProxy`](/workers/wrangler/api/#getplatformproxy) to simulate the Cloudflare environment locally. You configure `getPlatformProxy` in your project's `vite.config.ts` file via [`cloudflareDevProxyVitePlugin`](https://remix.run/docs/en/main/future/vite#cloudflare-proxy).
 
-To bind resources in local development, you need to configure the bindings in the `wrangler.toml` file. Refer to [Bindings](/workers/wrangler/configuration/#bindings) to learn more.
+To bind resources in local development, you need to configure the bindings in the Wrangler file. Refer to [Bindings](/workers/wrangler/configuration/#bindings) to learn more.
 
-Once you have configured the bindings in the `wrangler.toml` file, the proxies are then available within `context.cloudflare` in your `loader` or `action` functions:
+Once you have configured the bindings in the Wrangler file, the proxies are then available within `context.cloudflare` in your `loader` or `action` functions:
 
 ```typescript
 export const loader = ({ context }: LoaderFunctionArgs) => {
@@ -96,7 +96,7 @@ export const loader = ({ context }: LoaderFunctionArgs) => {
 
 :::note[Correcting the env type]
 
-You may have noticed that `context.cloudflare.env` is not typed correctly when you add additional bindings in `wrangler.toml`.
+You may have noticed that `context.cloudflare.env` is not typed correctly when you add additional bindings in the [Wrangler configuration file](/workers/wrangler/configuration/).
 
 To fix this, run `npm run typegen` to generate the missing types. This will update the `Env` interface defined in `worker-configuration.d.ts`.
 After running the command, you can access the bindings in your `loader` or `action` using `context.cloudflare.env` as shown above.
@@ -113,9 +113,7 @@ Once you have configured the bindings in the Cloudflare dashboard, the proxies a
 As an example, you will bind and query a D1 database in a Remix application.
 
 1. Create a D1 database. Refer to the [D1 documentation](/d1/) to learn more.
-2. Configure bindings for your D1 database in the `wrangler.toml` file:
-
-import { WranglerConfig } from "~/components";
+2. Configure bindings for your D1 database in the Wrangler file:
 
 <WranglerConfig>
 

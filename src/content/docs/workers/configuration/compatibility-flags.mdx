@@ -6,7 +6,7 @@ head: []
 description: Opt into a specific features of the Workers runtime for your Workers project.
 ---
 
-import { CompatibilityFlags } from "~/components";
+import { CompatibilityFlags, WranglerConfig, Render } from "~/components";
 
 Compatibility flags enable specific features. They can be useful if you want to help the Workers team test upcoming changes that are not yet enabled by default, or if you need to hold back a change that your code depends on but still want to apply other compatibility changes.
 
@@ -18,11 +18,9 @@ You may provide a list of `compatibility_flags`, which enable or disable specifi
 
 #### Via Wrangler
 
-Compatibility flags can be set in a Worker's [`wrangler.toml`](/workers/wrangler/configuration/) file.
+Compatibility flags can be set in a Worker's [Wrangler configuration file](/workers/wrangler/configuration/).
 
 This example enables the specific flag `formdata_parser_supports_files`, which is described [below](/workers/configuration/compatibility-flags/#formdata-parsing-supports-file). As of the specified date, `2021-09-14`, this particular flag was not yet enabled by default, but, by specifying it in `compatibility_flags`, we can enable it anyway. `compatibility_flags` can also be used to disable changes that became the default in the past.
-
-import { WranglerConfig } from "~/components";
 
 <WranglerConfig>
 
@@ -46,16 +44,17 @@ Compatibility flags can be set when uploading a Worker using the [Workers Script
 ## Node.js compatibility flag
 
 :::note
-You can opt into improved Node.js compatibility by using `nodejs_compat_v2` instead of `nodejs_compat`. This provides the functionality of `nodejs_compat`, but
-additionally you can import Node.js modules without the `node:` prefix and use polyfilled Node.js modules and globals that are not available with `nodejs_compat`.
+[The `nodejs_compat` flag](/workers/runtime-apis/nodejs/) also enables `nodejs_compat_v2` as long as your compatibility date is 2024-09-23 or later. The v2 flag improves runtime Node.js compatibility by bundling additional polyfills and globals into your Worker. However, this improvement increases bundle size.
 
-On September 23, 2024, `nodejs_compat` will use the improved Node.js compatibility currently enabled with `nodejs_compat_v2`. This will require updating your
-compatibility_date to 2024-09-23 or later.
+If your compatibility date is 2024-09-22 or before and you want to enable v2, add the `nodejs_compat_v2` in addition to the `nodejs_compat` flag.
+If your compatibility date is after 2024-09-23, but you want to disable v2 to avoid increasing your bundle size, add the `no_nodejs_compat_v2` in addition to the `nodejs_compat flag`.
 :::
 
-A [growing subset](/workers/runtime-apis/nodejs/) of Node.js APIs are available directly as [Runtime APIs](/workers/runtime-apis/nodejs), with no need to add polyfills to your own code. To enable these APIs in your Worker, add the `nodejs_compat` compatibility flag to your `wrangler.toml`:
+A [growing subset](/workers/runtime-apis/nodejs/) of Node.js APIs are available directly as [Runtime APIs](/workers/runtime-apis/nodejs), with no need to add polyfills to your own code. To enable these APIs in your Worker, add the `nodejs_compat` compatibility flag to your [Wrangler configuration file](/workers/wrangler/configuration/):
 
+<Render file="nodejs_compat" product="workers" />
 
+A [growing subset](/workers/runtime-apis/nodejs/) of Node.js APIs are available directly as [Runtime APIs](/workers/runtime-apis/nodejs), with no need to add polyfills to your own code. To enable these APIs in your Worker, only the `nodejs_compat` compatibility flag is required:
 
 <WranglerConfig>
 
@@ -68,8 +67,6 @@ compatibility_flags = [ "nodejs_compat" ]
 As additional Node.js APIs are added, they will be made available under the `nodejs_compat` compatibility flag. Unlike most other compatibility flags, we do not expect the `nodejs_compat` to become active by default at a future date.
 
 The Node.js `AsyncLocalStorage` API is a particularly useful feature for Workers. To enable only the `AsyncLocalStorage` API, use the `nodejs_als` compatibility flag.
-
-
 
 <WranglerConfig>
 

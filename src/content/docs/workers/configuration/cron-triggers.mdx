@@ -5,6 +5,8 @@ head: []
 description: Enable your Worker to be executed on a schedule.
 ---
 
+import { WranglerConfig } from "~/components";
+
 ## Background
 
 Cron Triggers allow users to map a cron expression to a Worker using a [`scheduled()` handler](/workers/runtime-apis/handlers/scheduled/) that enables Workers to be executed on a schedule.
@@ -34,13 +36,11 @@ Refer to the following examples to write your code:
 
 After you have updated your Worker code to include a `"scheduled"` event, you must update your Worker project configuration.
 
-#### Via `wrangler.toml`
+#### Via the [Wrangler configuration file](/workers/wrangler/configuration/)
 
-If a Worker is managed with Wrangler, Cron Triggers should be exclusively managed through the [`wrangler.toml`](/workers/wrangler/configuration/) file.
+If a Worker is managed with Wrangler, Cron Triggers should be exclusively managed through the [Wrangler configuration file](/workers/wrangler/configuration/).
 
-Refer to the example below for a sample `wrangler.toml` Cron Triggers configuration:
-
-import { WranglerConfig } from "~/components";
+Refer to the example below for a Cron Triggers configuration:
 
 <WranglerConfig>
 
@@ -55,7 +55,7 @@ crons = [ "*/3 * * * *", "0 15 1 * *", "59 23 LW * *" ]
 
 </WranglerConfig>
 
-You also can set a different Cron Trigger for each [environment](/workers/wrangler/environments/) in your `wrangler.toml`. You need to put the `[triggers]` table under your chosen environment. For example:
+You also can set a different Cron Trigger for each [environment](/workers/wrangler/environments/) in your [Wrangler configuration file](/workers/wrangler/configuration/). You need to put the `[triggers]` table under your chosen environment. For example:
 
 
 
@@ -173,7 +173,7 @@ To delete a Cron Trigger on a deployed Worker via the dashboard:
 
 :::note
 
-You can only delete Cron Triggers using the Cloudflare dashboard (and not through your `wrangler.toml` file).
+You can only delete Cron Triggers using the Cloudflare dashboard (and not through your Wrangler file).
 
 :::
 
@@ -198,5 +198,5 @@ Green Compute can be configured at the account level:
 
 ## Related resources
 
-- [Triggers](/workers/wrangler/configuration/#triggers) - Review `wrangler.toml` syntax for Cron Triggers.
+- [Triggers](/workers/wrangler/configuration/#triggers) - Review Wrangler configuration file syntax for Cron Triggers.
 - Learn how to access Cron Triggers in [ES modules syntax](/workers/reference/migrate-to-module-workers/) for an optimized experience.

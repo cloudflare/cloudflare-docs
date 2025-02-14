@@ -60,7 +60,7 @@ If you already have an existing `A`, `AAAA`, or `CNAME` record, be aware that th
 
 ## SSL/TLS coverage
 
-Due to internal limitations, Cloudflare [Universal SSL certificates](/ssl/edge-certificates/universal-ssl/) do not cover load balancing hostnames by default. This behavior will be corrected in the future.
+Due to internal limitations, on [Partial (CNAME) setup](/dns/zone-setups/partial-setup/) the Cloudflare [Universal SSL certificates](/ssl/edge-certificates/universal-ssl/) do not cover load balancing hostnames by default. This behavior will be corrected in the future.
 
 As a current workaround for a domain or first-level subdomain (`lb.example.com`), create a [proxied `CNAME`/`A`/`AAAA` record](/dns/manage-dns-records/how-to/create-dns-records/) for that hostname.
 

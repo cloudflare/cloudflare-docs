@@ -43,7 +43,7 @@ The methods [`D1PreparedStatement::run`](/d1/worker-api/prepared-statements/#run
 const someVariable = `Bs Beverages`;
 const stmt = env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bind(someVariable);
 const returnValue = await stmt.run();
-return Response.json(result)
+return Response.json(returnValue)
 ```
 ```js
 {

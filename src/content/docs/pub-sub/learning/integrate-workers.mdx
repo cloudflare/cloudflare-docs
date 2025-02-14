@@ -5,6 +5,8 @@ sidebar:
   order: 2
 ---
 
+import { WranglerConfig } from "~/components";
+
 Once of the most powerful features of Pub/Sub is the ability to connect [Cloudflare Workers](/workers/) — powerful serverless functions that run on the edge — and filter, aggregate and mutate every message published to that broker. Workers can also mirror those messages to other sources, including writing to [Cloudflare R2 storage](/r2/), external databases, or other cloud services beyond Cloudflare, making it easy to persist or analyze incoming message payloads and data at scale.
 
 There are three ways to integrate a Worker with Pub/Sub:
@@ -80,15 +82,13 @@ You should receive a success response that resembles the example below, with the
 ]
 ```
 
-Copy the array of public keys into your `wrangler.toml` as an environmental variable:
+Copy the array of public keys into your [Wrangler configuration file](/workers/wrangler/configuration/) as an environmental variable:
 
 :::note
 
 Your public keys will be unique to your own Pub/Sub Broker: you should ensure you're copying the keys associated with your own Broker.
 
 :::
-
-import { WranglerConfig } from "~/components";
 
 <WranglerConfig>
 

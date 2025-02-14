@@ -6,7 +6,7 @@ pcx_content_type: tutorial
 title: Send SSO attributes to Access-protected origins with Workers
 ---
 
-import { Render, GlossaryTooltip, PackageManagers } from "~/components"
+import { Render, GlossaryTooltip, PackageManagers, WranglerConfig } from "~/components"
 
 This tutorial will walk you through extending the single-sign-on (SSO) capabilities of [Cloudflare Access](/cloudflare-one/policies/access/) with our serverless computing platform, [Cloudflare Workers](/workers/). Specifically, this guide will demonstrate how to modify requests sent to your secured origin to include additional information from the Cloudflare Access authentication event.
 
@@ -33,7 +33,7 @@ This approach allows you to:
 
 ## Before you begin
 
-- Add a [self-hosted application](/cloudflare-one/applications/configure-apps/self-hosted-apps/) to Cloudflare Access.
+- Add a [self-hosted application](/cloudflare-one/applications/configure-apps/self-hosted-public-app/) to Cloudflare Access.
 - Enable the [Disk encryption](/cloudflare-one/identity/devices/warp-client-checks/disk-encryption/) and [Firewall](/cloudflare-one/identity/devices/warp-client-checks/firewall/) device posture checks.
 - Install [Wrangler](/workers/wrangler/install-and-update/) on your local machine.
 
@@ -185,9 +185,7 @@ Below is an example of a user identity that includes the `disk_encryption` and `
 
 ## 3. Route the Worker to your application
 
-In `wrangler.toml`, [set up a route](/workers/configuration/routing/routes/) that maps the Worker to your Access application domain:
-
-import { WranglerConfig } from "~/components";
+In the [Wrangler configuration file](/workers/wrangler/configuration/), [set up a route](/workers/configuration/routing/routes/) that maps the Worker to your Access application domain:
 
 <WranglerConfig>
 

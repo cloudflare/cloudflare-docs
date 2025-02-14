@@ -17,7 +17,7 @@ You may already have a reasonably complex Worker and/or it would be tedious to s
 :::note
 
 
-When using a `_worker.js` file, the entire `/functions` directory is ignored – this includes its routing and middleware characteristics. Instead, the `_worker.js` file is deployed as is and must be written using the [Module Worker syntax](/workers/reference/migrate-to-module-workers/).
+When using a `_worker.js` file, the entire `/functions` directory is ignored - this includes its routing and middleware characteristics. Instead, the `_worker.js` file is deployed as is and must be written using the [Module Worker syntax](/workers/reference/migrate-to-module-workers/).
 
 
 :::
@@ -29,10 +29,10 @@ By migrating to Cloudflare Pages, you will be able to access features like [prev
 Workers Sites projects consist of the following pieces:
 
 1. An application built with a [static site tool](/pages/how-to/) or a static collection of HTML, CSS and JavaScript files.
-2. If using a static site tool, a build directory (called `bucket` in `wrangler.toml`) where the static project builds your HTML, CSS, and JavaScript files.
+2. If using a static site tool, a build directory (called `bucket` in the [Wrangler configuration file](/pages/functions/wrangler-configuration/)) where the static project builds your HTML, CSS, and JavaScript files.
 3. A Worker application for serving that build directory. For most projects, this is likely to be the `workers-site` directory.
 
-When moving to Cloudflare Pages, remove the Workers application and any associated `wrangler.toml` configuration files or build output. Instead, note and record your `build` command (if you have one), and the `bucket` field, or build directory, from the `wrangler.toml` file in your project's directory.
+When moving to Cloudflare Pages, remove the Workers application and any associated Wrangler configuration files or build output. Instead, note and record your `build` command (if you have one), and the `bucket` field, or build directory, from the Wrangler file in your project's directory.
 
 ## Migrate headers and redirects
 

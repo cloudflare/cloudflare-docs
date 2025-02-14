@@ -1,11 +1,12 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
-// @ts-ignore virtual module
+// @ts-expect-error virtual module
 import iconCollection from "virtual:astro-icon";
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
 import { getIconData, iconToSVG } from "@iconify/utils";
 import ProductCatalog from "~/components/ProductCatalog";
 import type { ProductData } from "~/components/ProductCatalog";
+import type { StarlightPageProps } from "@astrojs/starlight/props";
 
 let products: CollectionEntry<"products">[] = await getCollection(
 	"products",
@@ -31,20 +32,17 @@ let productData: ProductData[] = products.map((product) => {
 	};
 });
 
-const frontmatter = {
-	title: "Products",
-	description:
-		"API reference, how-to guides, tutorials, example code, and more.",
-	template: "splash",
-} as const;
+const props = {
+	frontmatter: {
+		title: "Products",
+		description:
+			"API reference, how-to guides, tutorials, example code, and more.",
+		template: "splash",
+	},
+	hideBreadcrumbs: true,
+} as StarlightPageProps;
 ---
 
-<StarlightPage frontmatter={frontmatter}>
+<StarlightPage {...props}>
 	<ProductCatalog products={productData} client:load />
 </StarlightPage>
-
-<style>
-	html:not([data-has-sidebar]) {
-		--sl-content-width: 75rem;
-	}
-</style>

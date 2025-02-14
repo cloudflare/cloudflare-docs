@@ -13,6 +13,12 @@ You can create Cloud Connector rules using the [Terraform Cloudflare provider](h
 
 To get started with Terraform for Cloudflare configuration, refer to [Terraform: Get started](/terraform/installing/).
 
+## Required permissions
+
+The [API token](/fundamentals/api/get-started/create-token/) used by Terraform must have at least the following permission:
+
+- _Zone_ > _Cloud Connector_ > _Write_
+
 ## Example configuration
 
 The following example Terraform configuration creates Cloud Connector rules for various [supported providers](/rules/cloud-connector/providers/) to route traffic between them based on URI paths:

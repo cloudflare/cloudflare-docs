@@ -3,6 +3,8 @@ pcx_content_type: how-to
 title: Add custom HTTP headers
 ---
 
+import { WranglerConfig } from "~/components";
+
 :::note
 
 Cloudflare provides HTTP header customization for Pages projects by adding a `_headers` file to your project. Refer to the [documentation](/pages/configuration/headers/) for more information.
@@ -64,9 +66,7 @@ cd custom-headers-example
 npm install
 ```
 
-To operate your Workers function alongside your Pages application, deploy it to the same custom domain as your Pages application. To do this, update the `wrangler.toml` file in your project with your account and zone details:
-
-import { WranglerConfig } from "~/components";
+To operate your Workers function alongside your Pages application, deploy it to the same custom domain as your Pages application. To do this, update the Wrangler file in your project with your account and zone details:
 
 <WranglerConfig>
 
@@ -83,7 +83,7 @@ zone_id = "FILL-IN-YOUR-ZONE-ID"
 
 If you do not know how to find your Account ID and Zone ID, refer to [our guide](/fundamentals/setup/find-account-and-zone-ids/).
 
-Once you have configured your `wrangler.toml`, run `npx wrangler deploy` in your terminal to deploy your Worker:
+Once you have configured your [Wrangler configuration file](/pages/functions/wrangler-configuration/) , run `npx wrangler deploy` in your terminal to deploy your Worker:
 
 ```sh
 npx wrangler deploy

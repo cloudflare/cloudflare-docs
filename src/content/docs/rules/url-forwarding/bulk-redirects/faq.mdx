@@ -6,17 +6,16 @@ sidebar:
 head:
   - tag: title
     content: FAQ — Bulk Redirects
-
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip } from "~/components";
 
 Below you will find answers to the most commonly asked questions regarding Bulk Redirects.
 
 To troubleshoot errors related to Bulk Redirects:
 
-* Refer to [Troubleshooting Cloudflare 10XXX Errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-10xxx-errors/) for more information on runtime errors.
-* Use [Cloudflare Trace](/fundamentals/basic-tasks/trace-request/) to determine if a rule is triggering for a specific URL.
+- Refer to [Troubleshooting Cloudflare 10XXX Errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-10xxx-errors/) for more information on runtime errors.
+- Use [Cloudflare Trace](/fundamentals/trace-request/) to determine if a rule is triggering for a specific URL.
 
 ## What happens if the same source URL appears in two different Bulk Redirect Lists?
 
@@ -41,3 +40,9 @@ Use the `raw.http.request.full_uri` field both in the rule expression and in the
 ## Do Bulk Redirects take precedence over Page Rules?
 
 Yes. Bulk Redirects take precedence over Page Rules redirects. For more information on the execution order of Rules products, refer to [Execution order](/rules/url-forwarding/#execution-order).
+
+## Can I purge an entire Bulk Redirect List in one API call?
+
+If your [Bulk Redirect List](/rules/url-forwarding/bulk-redirects/concepts/#bulk-redirect-lists) contains 500,001 or more items, you will not be able to purge the entire list in a single API call. Instead, you must make multiple calls to [Delete List Items](/api/resources/rules/subresources/lists/subresources/items/methods/delete/) API end-point, deleting a maximum of 100,000 items per request.
+
+For example, to delete a list with 1,000,000 items, you would need to issue at least 10 API requests.

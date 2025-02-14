@@ -6,17 +6,17 @@ description: Configure your Worker to present a client certificate to services
   that enforce an mTLS connection.
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, WranglerConfig } from "~/components";
 
 When using [HTTPS](https://www.cloudflare.com/learning/ssl/what-is-https/), a server presents a certificate for the client to authenticate in order to prove their identity. For even tighter security, some services require that the client also present a certificate.
 
 This process - known as [mTLS](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/) - moves authentication to the protocol of TLS, rather than managing it in application code. Connections from unauthorized clients are rejected during the TLS handshake instead.
 
-To present a client certificate when communicating with a service, create a mTLS certificate [binding](/workers/runtime-apis/bindings/) in your Worker project's `wrangler.toml` file. This will allow your Worker to present a client certificate to a service on your behalf.
+To present a client certificate when communicating with a service, create a mTLS certificate [binding](/workers/runtime-apis/bindings/) in your Worker project's Wrangler file. This will allow your Worker to present a client certificate to a service on your behalf.
 
 :::caution
 
-Currently, mTLS for Workers cannot be used for requests made to a service that is a [proxied zone](/dns/manage-dns-records/reference/proxied-dns-records/) on Cloudflare. If your Worker presents a client certificate to a service proxied by Cloudflare, Cloudflare will return a `520` error.
+Currently, mTLS for Workers cannot be used for requests made to a service that is a [proxied zone](/dns/proxy-status/) on Cloudflare. If your Worker presents a client certificate to a service proxied by Cloudflare, Cloudflare will return a `520` error.
 
 :::
 
@@ -31,9 +31,7 @@ The `wrangler mtls-certificate upload` command requires the [SSL and Certificate
 npx wrangler mtls-certificate upload --cert cert.pem --key key.pem --name my-client-cert
 ```
 
-Then, update your Worker project's `wrangler.toml` file to create an mTLS certificate binding:
-
-import { WranglerConfig } from "~/components";
+Then, update your Worker project's Wrangler file to create an mTLS certificate binding:
 
 <WranglerConfig>
 

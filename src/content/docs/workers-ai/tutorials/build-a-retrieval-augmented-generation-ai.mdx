@@ -1,11 +1,12 @@
 ---
-updated: 2024-08-19
+updated: 2024-11-21
 difficulty: Beginner
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Build a Retrieval Augmented Generation (RAG) AI
 products:
   - Workers
+  - D1
   - Vectorize
 tags:
   - AI
@@ -16,7 +17,7 @@ sidebar:
   order: 2
 ---
 
-import { Details, Render, PackageManagers } from "~/components";
+import { Details, Render, PackageManagers, WranglerConfig } from "~/components";
 
 This guide will instruct you through setting up and deploying your first application with Cloudflare AI. You will build a fully-featured AI-powered application, using tools like Workers AI, Vectorize, D1, and Cloudflare Workers.
 
@@ -24,7 +25,7 @@ At the end of this tutorial, you will have built an AI tool that allows you to s
 
 <Render file="prereqs" product="workers" />
 
-You will also need access to [Vectorize](/vectorize/platform/pricing/).
+You will also need access to [Vectorize](/vectorize/platform/pricing/). During this tutorial, we will show how you can optionally integrate with [Anthropic Claude](http://anthropic.com) as well. You will need an [Anthropic API key](https://docs.anthropic.com/en/api/getting-started) to do so.
 
 ## 1. Create a new Worker project
 
@@ -52,7 +53,7 @@ In your project directory, C3 has generated several files.
 
 <Details header="What files did C3 create?">
 
-1. `wrangler.toml`: Your [Wrangler](/workers/wrangler/configuration/#sample-wranglertoml-configuration) configuration file.
+1. `wrangler.jsonc`: Your [Wrangler](/workers/wrangler/configuration/#sample-wrangler-configuration) configuration file.
 2. `worker.js` (in `/src`): A minimal `'Hello World!'` Worker written in [ES module](/workers/reference/migrate-to-module-workers/) syntax.
 3. `package.json`: A minimal Node dependencies configuration file.
 4. `package-lock.json`: Refer to [`npm` documentation on `package-lock.json`](https://docs.npmjs.com/cli/v9/configuring-npm/package-lock-json).
@@ -88,11 +89,9 @@ You will now be able to go to [http://localhost:8787](http://localhost:8787) to 
 
 ## 3. Adding the AI binding
 
-To begin using Cloudflare's AI products, you can add the `ai` block to `wrangler.toml`. This will set up a binding to Cloudflare's AI models in your code that you can use to interact with the available AI models on the platform.
+To begin using Cloudflare's AI products, you can add the `ai` block to the [Wrangler configuration file](/workers/wrangler/configuration/). This will set up a binding to Cloudflare's AI models in your code that you can use to interact with the available AI models on the platform.
 
 This example features the [`@cf/meta/llama-3-8b-instruct` model](/workers-ai/models/llama-3-8b-instruct/), which generates text.
-
-import { WranglerConfig } from "~/components";
 
 <WranglerConfig>
 
@@ -145,7 +144,7 @@ To begin using Vectorize, create a new embeddings index using `wrangler`. This i
 npx wrangler vectorize create vector-index --dimensions=768 --metric=cosine
 ```
 
-Then, add the configuration details for your new Vectorize index to `wrangler.toml`:
+Then, add the configuration details for your new Vectorize index to the [Wrangler configuration file](/workers/wrangler/configuration/):
 
 
 
@@ -171,9 +170,7 @@ Create a new D1 database using `wrangler`:
 npx wrangler d1 create database
 ```
 
-Then, paste the configuration details output from the previous command into `wrangler.toml`:
-
-
+Then, paste the configuration details output from the previous command into the [Wrangler configuration file](/workers/wrangler/configuration/):
 
 <WranglerConfig>
 
@@ -200,7 +197,46 @@ Now, we can add a new note to our database using `wrangler d1 execute`:
 npx wrangler d1 execute database --remote --command "INSERT INTO notes (text) VALUES ('The best pizza topping is pepperoni')"
 ```
 
-## 5. Creating notes and adding them to Vectorize
+## 5. Creating a workflow
+
+Before we begin creating notes, we will introduce a [Cloudflare Workflow](/workflows). This will allow us to define a durable workflow that can safely and robustly execute all the steps of the RAG process.
+
+To begin, add a new `[[workflows]]` block to your [Wrangler configuration file](/workers/wrangler/configuration/):
+
+<WranglerConfig>
+
+```toml
+# ... existing wrangler configuration
+
+[[workflows]]
+name = "rag"
+binding = "RAG_WORKFLOW"
+class_name = "RAGWorkflow"
+```
+
+</WranglerConfig>
+
+In `src/index.js`, add a new class called `RAGWorkflow` that extends `Workflow`:
+
+```js
+export class RAGWorkflow {
+	async run(event, step) {
+		await step.do('example step', async () => {
+			console.log("Hello World!")
+		})
+	}
+}
+```
+
+This class will define a single workflow step that will log "Hello World!" to the console. You can add as many steps as you need to your workflow.
+
+On its own, this workflow will not do anything. To execute the workflow, we will call the `RAG_WORKFLOW` binding, passing in any parameters that the workflow needs to properly complete. Here is an example of how we can call the workflow:
+
+```js
+env.RAG_WORKFLOW.create({ params: { text } })
+```
+
+## 6. Creating notes and adding them to Vectorize
 
 To expand on your Workers function in order to handle multiple routes, we will add `hono`, a routing library for Workers. This will allow us to create a new route for adding notes to our database. Install `hono` using `npm`:
 
@@ -225,61 +261,69 @@ app.get("/", async (c) => {
 export default app;
 ```
 
-This will establish a route at the root path `/` that is functionally equivalent to the previous version of your application. Now, we can add a new route for adding notes to our database.
+This will establish a route at the root path `/` that is functionally equivalent to the previous version of your application.
+
+Now, we can update our workflow to begin adding notes to our database, and generating the related embeddings for them.
 
 This example features the [`@cf/baai/bge-base-en-v1.5` model](/workers-ai/models/bge-base-en-v1.5/), which can be used to create an embedding. Embeddings are stored and retrieved inside [Vectorize](/vectorize/), Cloudflare's vector database. The user query is also turned into an embedding so that it can be used for searching within Vectorize.
 
 ```js
-app.post("/notes", async (c) => {
-	const { text } = await c.req.json();
-	if (!text) {
-		return c.text("Missing text", 400);
+export class RAGWorkflow {
+	async run(event, step) {
+		const { text } = event.params
+
+		const record = await step.do(`create database record`, async () => {
+			const query = "INSERT INTO notes (text) VALUES (?) RETURNING *"
+
+			const { results } = await env.DATABASE.prepare(query)
+				.bind(text)
+				.run()
+
+			const record = results[0]
+			if (!record) throw new Error("Failed to create note")
+			return record;
+		})
+
+		const embedding = await step.do(`generate embedding`, async () => {
+			const embeddings = await env.AI.run('@cf/baai/bge-base-en-v1.5', { text: text })
+			const values = embeddings.data[0]
+			if (!values) throw new Error("Failed to generate vector embedding")
+			return values
+		})
+
+		await step.do(`insert vector`, async () => {
+			return env.VECTOR_INDEX.upsert([
+				{
+					id: record.id.toString(),
+					values: embedding,
+				}
+			]);
+		})
 	}
-
-	const { results } = await c.env.DB.prepare(
-		"INSERT INTO notes (text) VALUES (?) RETURNING *",
-	)
-		.bind(text)
-		.run();
-
-	const record = results.length ? results[0] : null;
-
-	if (!record) {
-		return c.text("Failed to create note", 500);
-	}
-
-	const { data } = await c.env.AI.run("@cf/baai/bge-base-en-v1.5", {
-		text: [text],
-	});
-	const values = data[0];
-
-	if (!values) {
-		return c.text("Failed to generate vector embedding", 500);
-	}
-
-	const { id } = record;
-	const inserted = await c.env.VECTOR_INDEX.upsert([
-		{
-			id: id.toString(),
-			values,
-		},
-	]);
-
-	return c.json({ id, text, inserted });
-});
+}
 ```
 
-This function does the following things:
+The workflow does the following things:
 
-1. Parse the JSON body of the request to get the `text` field.
+1. Accepts a `text` parameter.
 2. Insert a new row into the `notes` table in D1, and retrieve the `id` of the new row.
 3. Convert the `text` into a vector using the `embeddings` model of the LLM binding.
 4. Upsert the `id` and `vectors` into the `vector-index` index in Vectorize.
-5. Return the `id` and `text` of the new note as JSON.
 
 By doing this, you will create a new vector representation of the note, which can be used to retrieve the note later.
 
-## 6. Querying Vectorize to retrieve notes
+To complete the code, we will add a route that allows users to submit notes to the database. This route will parse the JSON request body, get the `note` parameter, and create a new instance of the workflow, passing the parameter:
+
+```js
+app.post('/notes', async (c) => {
+	const { text } = await c.req.json();
+	if (!text) return c.text("Missing text", 400);
+	await c.env.RAG_WORKFLOW.create({ params: { text } })
+	return c.text("Created note", 201);
+})
+```
+
+## 7. Querying Vectorize to retrieve notes
 
 To complete your code, you can update the root path (`/`) to query Vectorize. You will convert the query into a vector, and then use the `vector-index` index to find the most similar vectors.
 
@@ -337,7 +381,6 @@ app.get('/', async (c) => {
   )
 
   return c.text(answer);
-
 });
 
 app.onError((err, c) => {
@@ -347,7 +390,80 @@ app.onError((err, c) => {
 export default app;
 ```
 
-## 7. Deleting notes and vectors
+## 8. Adding Anthropic Claude model (optional)
+
+If you are working with larger documents, you have the option to use Anthropic's [Claude models](https://claude.ai/), which have large context windows and are well-suited to RAG workflows.
+
+To begin, install the `@anthropic-ai/sdk` package:
+
+```sh
+npm install @anthropic-ai/sdk
+```
+
+In `src/index.js`, you can update the `GET /` route to check for the `ANTHROPIC_API_KEY` environment variable. If it's set, we can generate text using the Anthropic SDK. If it isn't set, we'll fall back to the existing Workers AI code:
+
+```js
+import Anthropic from '@anthropic-ai/sdk';
+
+app.get('/', async (c) => {
+  // ... Existing code
+	const systemPrompt = `When answering the question or responding, use the context provided, if it is provided and relevant.`
+
+	let modelUsed: string = ""
+	let response = null
+
+	if (c.env.ANTHROPIC_API_KEY) {
+		const anthropic = new Anthropic({
+			apiKey: c.env.ANTHROPIC_API_KEY
+		})
+
+		const model = "claude-3-5-sonnet-latest"
+		modelUsed = model
+
+		const message = await anthropic.messages.create({
+			max_tokens: 1024,
+			model,
+			messages: [
+				{ role: 'user', content: question }
+			],
+			system: [systemPrompt, notes ? contextMessage : ''].join(" ")
+		})
+
+		response = {
+			response: message.content.map(content => content.text).join("\n")
+		}
+	} else {
+		const model = "@cf/meta/llama-3.1-8b-instruct"
+		modelUsed = model
+
+		response = await c.env.AI.run(
+			model,
+			{
+				messages: [
+					...(notes.length ? [{ role: 'system', content: contextMessage }] : []),
+					{ role: 'system', content: systemPrompt },
+					{ role: 'user', content: question }
+				]
+			}
+		)
+	}
+
+	if (response) {
+		c.header('x-model-used', modelUsed)
+		return c.text(response.response)
+	} else {
+		return c.text("We were unable to generate output", 500)
+	}
+})
+```
+
+Finally, you'll need to set the `ANTHROPIC_API_KEY` environment variable in your Workers application. You can do this by using `wrangler secret put`:
+
+```sh
+$ npx wrangler secret put ANTHROPIC_API_KEY
+```
+
+## 9. Deleting notes and vectors
 
 If you no longer need a note, you can delete it from the database. Any time that you delete a note, you will also need to delete the corresponding vector from Vectorize. You can implement this by building a `DELETE /notes/:id` route in your `src/index.js` file:
 
@@ -364,7 +480,85 @@ app.delete("/notes/:id", async (c) => {
 });
 ```
 
-## 8. Deploy your project
+## 10. Text splitting (optional)
+
+For large pieces of text, it is recommended to split the text into smaller chunks. This allows LLMs to more effectively gather relevant context, without needing to retrieve large pieces of text.
+
+To implement this, we'll add a new NPM package to our project, `@langchain/textsplitters':
+
+```sh
+npm install @cloudflare/textsplitters
+```
+
+The `RecursiveCharacterTextSplitter` class provided by this package will split the text into smaller chunks. It can be customized to your liking, but the default config works in most cases:
+
+```js
+import { RecursiveCharacterTextSplitter } from "@langchain/textsplitters";
+
+const text = "Some long piece of text...";
+
+const splitter = new RecursiveCharacterTextSplitter({
+	// These can be customized to change the chunking size
+	// chunkSize: 1000,
+	// chunkOverlap: 200,
+});
+
+const output = await splitter.createDocuments([text]);
+console.log(output) // [{ pageContent: 'Some long piece of text...' }]
+```
+
+To use this splitter, we'll update the workflow to split the text into smaller chunks. We'll then iterate over the chunks and run the rest of the workflow for each chunk of text:
+
+```js
+export class RAGWorkflow {
+	async run(event, step) {
+		const env = this.env
+		const { text } = event.payload;
+		let texts = await step.do('split text', async () => {
+			const splitter = new RecursiveCharacterTextSplitter();
+			const output = await splitter.createDocuments([text]);
+			return output.map(doc => doc.pageContent);
+		})
+
+		console.log("RecursiveCharacterTextSplitter generated ${texts.length} chunks")
+
+		for (const index in texts) {
+			const text = texts[index]
+			const record = await step.do(`create database record: ${index}/${texts.length}`, async () => {
+				const query = "INSERT INTO notes (text) VALUES (?) RETURNING *"
+
+				const { results } = await env.DATABASE.prepare(query)
+					.bind(text)
+					.run()
+
+				const record = results[0]
+				if (!record) throw new Error("Failed to create note")
+				return record;
+			})
+
+			const embedding = await step.do(`generate embedding: ${index}/${texts.length}`, async () => {
+				const embeddings = await env.AI.run('@cf/baai/bge-base-en-v1.5', { text: text })
+				const values = embeddings.data[0]
+				if (!values) throw new Error("Failed to generate vector embedding")
+				return values
+			})
+
+			await step.do(`insert vector: ${index}/${texts.length}`, async () => {
+				return env.VECTOR_INDEX.upsert([
+					{
+						id: record.id.toString(),
+						values: embedding,
+					}
+				]);
+			})
+		}
+	}
+}
+```
+
+Now, when large pieces of text are submitted to the `/notes` endpoint, they will be split into smaller chunks, and each chunk will be processed by the workflow.
+
+## 11. Deploy your project
 
 If you did not deploy your Worker during [step 1](/workers/get-started/guide/#1-create-a-new-worker-project), deploy your Worker via Wrangler, to a `*.workers.dev` subdomain, or a [Custom Domain](/workers/configuration/routing/custom-domains/), if you have one configured. If you have not configured any subdomain or domain, Wrangler will prompt you during the publish process to set one up.
 

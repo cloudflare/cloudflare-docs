@@ -8,6 +8,28 @@ sidebar:
 
 import { Render } from "~/components"
 
-If you encounter issues when solving a challenge, try the following:
+## Challenge loops
+
+You may encounter a challenge loop where the challenge keeps reappearing without being solved. This is in very specific cases where we detect strong bot signals. If you are a legitimate human, you can follow the troubleshooting guide below to resolve the issue or submit a feedback report. Challenge loops can happen for several reasons:
+
+- **Network issues**: Poor or unstable network connections can prevent the challenge from being completed.
+- **Browser configuration**: Some browser settings or extensions may block the scripts needed to execute the challenge.
+- **Unsupported browsers**: Using a browser that is not supported by Turnstile.
+- **JavaScript disabled**: Turnstile relies on JavaScript to function properly.
+- **Detection errors**: If Turnstile suspects bot-like behavior, you may encounter repeated challenges for verification.
+
+Most challenges are quick and should take only a few seconds to complete. If it takes longer, ensure your network is stable and follow the [troubleshooting steps](#troubleshooting).
+
+:::note
+If the issue persists, try switching to a different network or device to rule out any issues with your browser environment.
+
+Make sure that your browser is updated to the latest version.
+:::
+
+## Troubleshooting
+
+Follow the steps below to ensure that your environment is properly configured.
 
 <Render file="troubleshooting-steps" />
+
+If none of the above resolves your issue, contact the website administrator with the [error code](/turnstile/troubleshooting/client-side-errors/error-codes/) and Ray ID or submit a [feedback report](/turnstile/troubleshooting/feedback-reports/) through the Turnstile widget by selecting **Submit Feedback**. 

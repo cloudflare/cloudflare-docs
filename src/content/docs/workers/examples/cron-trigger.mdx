@@ -13,7 +13,7 @@ sidebar:
 description: Set a Cron Trigger for your Worker.
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, WranglerConfig } from "~/components";
 
 <Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 
@@ -46,9 +46,7 @@ export default {
 
 Refer to [Cron Triggers](/workers/configuration/cron-triggers/) for more information on how to add a Cron Trigger.
 
-If you are deploying with Wrangler, set the cron syntax (once per hour as shown below) by adding this to your `wrangler.toml` file:
-
-import { WranglerConfig } from "~/components";
+If you are deploying with Wrangler, set the cron syntax (once per hour as shown below) by adding this to your Wrangler file:
 
 <WranglerConfig>
 
@@ -63,7 +61,7 @@ crons = ["0 * * * *"]
 
 </WranglerConfig>
 
-You also can set a different Cron Trigger for each [environment](/workers/wrangler/environments/) in your `wrangler.toml`. You need to put the `[triggers]` table under your chosen environment. For example:
+You also can set a different Cron Trigger for each [environment](/workers/wrangler/environments/) in your [Wrangler configuration file](/workers/wrangler/configuration/). You need to put the `[triggers]` table under your chosen environment. For example:
 
 
 

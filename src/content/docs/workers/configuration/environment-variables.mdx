@@ -6,7 +6,7 @@ description: Environment variables are a type of binding that allow you to attac
 
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TabItem, Tabs, WranglerConfig } from "~/components"
 
 ## Background
 
@@ -16,7 +16,7 @@ Text strings and JSON values are not encrypted and are useful for storing applic
 
 ## Add environment variables via Wrangler
 
-Text and JSON values are defined via the `[vars]` configuration in your `wrangler.toml` file. In the following example, `API_HOST` and `API_ACCOUNT_ID` are text values and `SERVICE_X_DATA` is a JSON value.
+Text and JSON values are defined via the `[vars]` configuration in your Wrangler file. In the following example, `API_HOST` and `API_ACCOUNT_ID` are text values and `SERVICE_X_DATA` is a JSON value.
 
 <Render file="envvar-example" />
 
@@ -52,8 +52,6 @@ export default {
 
 To define environment variables for different environments, refer to the example below:
 
-import { WranglerConfig } from "~/components";
-
 <WranglerConfig>
 
 ```toml
@@ -72,14 +70,14 @@ SERVICE_X_DATA = { URL = "service-x-api.prod.example", MY_ID = 456 }
 
 </WranglerConfig>
 
-For local development with `wrangler dev`, variables in `wrangler.toml` are automatically overridden by any values defined in a `.dev.vars` file located in the root directory of your worker. This is useful for providing values you do not want to check in to source control.
+For local development with `wrangler dev`, variables in the [Wrangler configuration file](/workers/wrangler/configuration/) are automatically overridden by any values defined in a `.dev.vars` file located in the root directory of your worker. This is useful for providing values you do not want to check in to source control.
 
 ```shell
 API_HOST = "localhost:4000"
 API_ACCOUNT_ID = "local_example_user"
 ```
 
-Alternatively, you can specify per-environment values in `wrangler.toml` and provide an `environment` value via the `env` flag when developing locally like so `wrangler dev --env=local`.
+Alternatively, you can specify per-environment values in the [Wrangler configuration file](/workers/wrangler/configuration/) and provide an `environment` value via the `env` flag when developing locally like so `wrangler dev --env=local`.
 
 ## Add environment variables via the dashboard
 

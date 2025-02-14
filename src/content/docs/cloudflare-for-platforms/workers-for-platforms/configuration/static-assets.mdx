@@ -1,0 +1,263 @@
+---
+pcx_content_type: concept
+title: Static assets
+description: Host static assets on Cloudflare's global network and deliver faster load times worldwide with Workers for Platforms.
+---
+Workers for Platforms lets you deploy front-end applications at scale. By hosting static assets on Cloudflare's global network, you can deliver faster load times worldwide and eliminate the need for external infrastructure. You can also combine these static assets with dynamic logic in Cloudflare Workers, providing a full-stack experience for your customers.
+
+### What you can build
+
+#### Static sites
+Host and serve HTML, CSS, JavaScript, and media files directly from Cloudflare's network, ensuring fast loading times worldwide. This is ideal for blogs, landing pages, and documentation sites.
+
+#### Full-stack applications
+Combine asset hosting with Cloudflare Workers to power dynamic, interactive applications. Store and retrieve data using Cloudflare KV, D1, and R2 Storage, allowing you to serve both front-end assets and backend logic from a single Worker.
+
+### Benefits
+
+#### Global caching for faster performance
+Cloudflare automatically caches static assets at data centers worldwide, reducing latency and improving load times by up to 2x for users everywhere.
+
+#### Scalability without infrastructure management
+Your applications scale automatically to handle high traffic without requiring you to provision or manage infrastructure. Cloudflare dynamically adjusts to demand in real time.
+
+#### Unified deployment for static and dynamic content
+Deploy front-end assets alongside server-side logic, all within Cloudflare Workers. This eliminates the need for a separate hosting provider and ensures a streamlined deployment process.
+
+---
+
+## Deploy static assets to User Workers
+
+It is common that, as the Platform, you will be responsible for uploading static assets on behalf of your end users. This often looks like this:
+
+1. Your user uploads files (HTML, CSS, images) through your interface.
+2. Your platform interacts with the Workers for Platforms APIs to attach the static assets to the User Worker script.
+
+Once you receive the static files from your users (for a new or updated site), complete the following steps to attach the files to the corresponding User Worker:
+
+1. Create an Upload Session
+2. Upload file contents
+3. Deploy/Update the Worker
+
+After these steps are completed, the User Worker's static assets will be live on the Cloudflare's global network.
+
+### 1. Create an Upload Session
+
+Before sending any file data, you need to tell Cloudflare which files you intend to upload. That list of files is called a manifest. Each item in the manifest includes:
+
+* A file path (for example, `"/index.html"` or `"/assets/logo.png"`)
+* A hash (32-hex characters) representing the file contents
+* The file size in bytes
+
+#### Example manifest (JSON)
+
+```json
+{
+  "/index.html": {
+    "hash": "08f1dfda4574284ab3c21666d1ee8c7d4",
+    "size": 1234
+  },
+  "/styles.css": {
+    "hash": "36b8be012ee77df5f269b11b975611d3",
+    "size": 5678
+  }
+}
+```
+
+To start the upload process, send a POST request to the Create Assets Upload Session [API endpoint](/api/resources/workers_for_platforms/subresources/dispatch/subresources/namespaces/subresources/scripts/subresources/asset_upload/methods/create/).
+
+```bash
+POST /accounts/{account_id}/workers/dispatch/namespaces/{namespace}/scripts/{script_name}/assets-upload-session
+```
+
+Path Parameters:
+* `namespace`: Name of the Workers for Platforms dispatch namespace
+* `script_name`: Name of the User Worker
+
+In the request body, include a JSON object listing each file path along with its hash and size. This helps Cloudflare identify which files you intend to upload and allows Cloudflare to check if any of them are already stored.
+
+#### Sample request
+
+```bash
+curl -X POST \
+  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/dispatch/namespaces/$NAMESPACE_NAME/scripts/$SCRIPT_NAME/assets-upload-session" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $API_TOKEN" \
+  --data '{
+    "manifest": {
+      "/index.html": {
+        "hash": "08f1dfda4574284ab3c21666d1ee8c7d4",
+        "size": 1234
+      },
+      "/styles.css": {
+        "hash": "36b8be012ee77df5f269b11b975611d3",
+        "size": 5678
+      }
+    }
+  }'
+```
+
+#### Generating the hash
+
+You can compute a SHA-256 digest of the file contents, then truncate or otherwise represent it consistently as a 32-hex-character string. Make sure to do it the same way each time so Cloudflare can reliably match files across uploads.
+
+#### API Response
+
+If all the files are already stored on Cloudflare, the response will only return the JWT token. If new or updated files are needed, the response will return:
+
+* `jwt`: An upload token (valid for 1 hour) which will be used in the API request to upload the file contents (Step 2).
+* `buckets`: An array of file-hash groups indicating which files to upload together. Files that have been recently uploaded won't appear in buckets, since Cloudflare already has them.
+
+:::note
+This step alone does not store files on Cloudflare. You must upload the actual file data in the next step.
+:::
+
+### 2. Upload File Contents
+
+If the response to the Upload Session API returns `buckets`, that means you have new or changed files that need to be uploaded to Cloudflare.
+
+Use the [Workers Assets Upload API](https://developers.cloudflare.com/api/resources/workers/subresources/assets/subresources/upload/) to transmit the raw file bytes in base64-encoded format for any missing or changed files. Once uploaded, Cloudflare will store these files so they can then be attached to a User Worker.
+
+#### API Request Authentication
+
+Unlike most Cloudflare API calls that use an account-wide API token in the Authorization header, uploading file contents requires using the short-lived JWT token returned in the `jwt` field of the `assets-upload-session` response.
+
+Include it as a Bearer token in the header:
+
+```bash
+Authorization: Bearer <upload-session-token>
+```
+
+This token is valid for one hour and must be supplied for each upload request to the Workers Assets Upload API.
+
+#### File fields (multipart/form-data)
+You must send the files as multipart/form-data with base64-encoded content:
+
+* Field name: The file hash (for example, `36b8be012ee77df5f269b11b975611d3`)
+* Field value: A Base64-encoded string of the file's raw bytes
+
+#### Example: Uploading multiple files within a single bucket
+
+If your Upload Session response listed a single "bucket" containing two file hashes:
+
+```json
+"buckets": [
+  [
+    "08f1dfda4574284ab3c21666d1ee8c7d4",
+    "36b8be012ee77df5f269b11b975611d3"
+  ]
+]
+```
+
+You can upload both files in one request, each as a form-data field:
+
+```bash
+curl -X POST \
+  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/assets/upload?base64=true" \
+  -H "Authorization: Bearer <upload-session-token>" \
+  -F "08f1dfda4574284ab3c21666d1ee8c7d4=<BASE64_OF_INDEX_HTML>" \
+  -F "36b8be012ee77df5f269b11b975611d3=<BASE64_OF_STYLES_CSS>"
+```
+
+* `<upload-session-token>` is the token from step 1's assets-upload-session response
+* `<BASE64_OF_INDEX_HTML>` is the Base64-encoded content of index.html
+* `<BASE64_OF_STYLES_CSS>` is the Base64-encoded content of styles.css
+
+If you have multiple buckets (for example, `[["hashA"], ["hashB"], ["hashC"]]`), you might need to repeat this process for each bucket, making one request per bucket group.
+
+Once every file in the manifest has been uploaded, a status code of `201` will be returned, with the `jwt` field present. This JWT is a final "completion" token which can be used to create a deployment of a Worker with this set of assets. This completion token is valid for 1 hour.
+
+```json
+{
+  "success": true,
+  "errors": [],
+  "messages": [],
+  "result": {
+    "jwt": "<completion-token>"
+  }
+}
+```
+
+`<completion-token>` indicates that Cloudflare has successfully received and stored the file contents specified by your manifest. You will use this `<completion-token>` in Step 3 to finalize the attachment of these files to the Worker.
+
+### 3. Deploy the User Worker with static assets
+
+Now that Cloudflare has all the files it needs (from the previous upload steps), you must attach them to the User Worker by making a PUT request to the [Upload User Worker API](https://developers.cloudflare.com/api/resources/workers_for_platforms/subresources/dispatch/subresources/namespaces/subresources/scripts/methods/update/). This final step links the static assets to the User Worker using the completion token you received after uploading file contents.
+
+You can also specify any optional settings under the `assets.config` field to customize how your files are served (for example, to handle trailing slashes in HTML paths).
+
+#### API request example
+
+```bash
+curl -X PUT \
+  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/dispatch/namespaces/$NAMESPACE_NAME/scripts/$SCRIPT_NAME" \
+  -H "Content-Type: multipart/form-data" \
+  -H "Authorization: Bearer $API_TOKEN" \
+  -F 'metadata={
+    "main_module": "index.js",
+    "assets": {
+      "jwt": "<completion-token>",
+      "config": {
+        "html_handling": "auto-trailing-slash"
+      }
+    },
+    "compatibility_date": "2025-01-24"
+  };type=application/json' \
+  -F 'index.js=@/path/to/index.js;type=application/javascript'
+```
+
+* The `"jwt": "<completion-token>"` links the newly uploaded files to the Worker
+* Including "html_handling" (or other fields under "config") is optional and can customize how static files are served
+* If the user's Worker code has not changed, you can omit the code file or re-upload the same index.js
+
+Once this PUT request succeeds, the files are served on the User Worker. Requests routed to that Worker will serve the new or updated static assets.
+
+---
+
+## Deploying static assets with Wrangler
+
+If you prefer a CLI-based approach and your platform setup allows direct publishing, you can use Wrangler to deploy both your Worker code and static assets. Wrangler bundles and uploads static assets (from a specified directory) along with your Worker script, so you can manage everything in one place.
+
+Create or update your [Wrangler configuration file](/workers/wrangler/configuration/) to specify where Wrangler should look for static files:
+
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
+```toml
+name = "my-static-site"
+main = "./src/index.js"
+compatibility_date = "2025-01-29"
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+```
+
+</WranglerConfig>
+
+* `directory`: The local folder containing your static files (for example, `./public`).
+* `binding`: The binding name used to reference these assets within your Worker code.
+
+### 1. Organize your files
+
+Place your static files (HTML, CSS, images, etc.) in the specified directory (in this example, `./public`). Wrangler will detect and bundle these files when you publish your Worker.
+
+If you need to reference these files in your Worker script to serve them dynamically, you can use the `ASSETS` binding like this:
+
+```js
+export default {
+  async fetch(request, env, ctx) {
+    return env.ASSETS.fetch(request);
+  },
+};
+```
+### 2. Deploy the User Worker with the static assets
+
+Run Wrangler to publish both your Worker code and the static assets:
+
+```bash
+npx wrangler deploy --name <USER_WORKER_NAME> --dispatch-namespace <NAMESPACE_NAME>
+```
+
+Wrangler will automatically detect your static files, bundle them, and upload them to Cloudflare along with your Worker code.

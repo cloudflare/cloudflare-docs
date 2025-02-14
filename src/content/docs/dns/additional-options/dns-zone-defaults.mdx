@@ -1,11 +1,10 @@
 ---
 pcx_content_type: how-to
-title: Zone defaults
+title: Configure DNS zone defaults
 sidebar:
   order: 3
+  label: Zone defaults
 ---
-
-# Configure DNS zone defaults
 
 While there are default values for DNS settings that Cloudflare applies to all new zones, Enterprise accounts have the option to configure their own DNS zone defaults according to their preference.
 
@@ -16,7 +15,7 @@ DNS zone defaults are only applied at the moment a new zone is created and will 
 ## Steps
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Go to **Manage Account** > **Configurations** > **DNS Settings**.
+2. Go to **Manage Account** > **Configurations** > **DNS Settings**. If these options are not displayed on your Cloudflare dashboard, you may need to reach out to your account team to have them added.
 3. For **DNS zone defaults**, select **Configure defaults**.
 
 The values you select for the listed settings will be automatically applied to new zones as you add them to your Cloudflare account.
@@ -33,6 +32,6 @@ For primary zones:
 
 For secondary zones:
 
-- [Secondary DNS override](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/): Enable the options to use Cloudflare [proxy](/dns/manage-dns-records/reference/proxied-dns-records/) and add `CNAME` records at your zone apex.
+- [Secondary DNS override](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/): Enable the options to use Cloudflare [proxy](/dns/proxy-status/) and add `CNAME` records at your zone apex.
 
   Multi-provider DNS does not apply as a setting for secondary zones, as this is already a required behavior for this setup. `SOA` record and the `NS` record TTL are defined on your external DNS provider and only transferred into Cloudflare.

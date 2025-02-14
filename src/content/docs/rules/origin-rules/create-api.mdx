@@ -24,7 +24,7 @@ When creating an origin rule via API, make sure you:
 
 <Render
 	file="rules-creation-workflow"
-	params={{ one: "an origin rule", two: "http_request_origin" }}
+	params={{ ruleName: "an origin rule", phaseName: "http_request_origin" }}
 />
 
 Make sure your API token has the [required permissions](#required-api-token-permissions) to perform the API operations.
@@ -242,4 +242,4 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 
 The API token used in API requests to manage origin rules must have at least the following permission:
 
-- _Origin_ > _Edit_
+- _Zone_ > _Origin Rules_ > _Edit_

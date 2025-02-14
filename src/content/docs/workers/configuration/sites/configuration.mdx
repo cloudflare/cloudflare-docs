@@ -1,49 +1,41 @@
 ---
 pcx_content_type: configuration
 title: Workers Sites configuration
+noindex: true
 sidebar:
   order: 4
-
 ---
 
-import { Render } from "~/components"
+import { Render, WranglerConfig } from "~/components";
 
 <Render file="workers_sites" />
 
 Workers Sites require the latest version of [Wrangler](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler).
 
-## wrangler.toml
+## Wrangler configuration file
 
-There are a few specific configuration settings for Workers Sites in your `wrangler.toml` file:
+There are a few specific configuration settings for Workers Sites in your Wrangler file:
 
+- `bucket` required
 
+  - The directory containing your static assets, path relative to your [Wrangler configuration file](/workers/wrangler/configuration/). Example: `bucket = "./public"`.
 
-* `bucket` required
+- `include` optional
 
-  * The directory containing your static assets, path relative to your `wrangler.toml`. Example: `bucket = "./public"`.
+  - A list of gitignore-style patterns for files or directories in `bucket` you exclusively want to upload. Example: `include = ["upload_dir"]`.
 
-* `include` optional
-
-  * A list of gitignore-style patterns for files or directories in `bucket` you exclusively want to upload. Example: `include = ["upload_dir"]`.
-
-* `exclude` optional
-  * A list of gitignore-style patterns for files or directories in `bucket` you want to exclude from uploads. Example: `exclude = ["ignore_dir"]`.
-
-
+- `exclude` optional
+  - A list of gitignore-style patterns for files or directories in `bucket` you want to exclude from uploads. Example: `exclude = ["ignore_dir"]`.
 
 To learn more about the optional `include` and `exclude` fields, refer to [Ignoring subsets of static assets](#ignoring-subsets-of-static-assets).
 
 :::note
 
-
 If your project uses [environments](/workers/wrangler/environments/), make sure to place `site` above any environment-specific configuration blocks.
-
 
 :::
 
-Example of a `wrangler.toml`:
-
-import { WranglerConfig } from "~/components";
+Example of a [Wrangler configuration file](/workers/wrangler/configuration/):
 
 <WranglerConfig>
 
@@ -80,9 +72,7 @@ This means that you should use gitignore semantics when declaring which director
 
 ### Exclusively including files/directories
 
-If you want to include only a certain set of files or directories in your `bucket`, you can add an `include` field to your `[site]` section of your `wrangler.toml` file:
-
-
+If you want to include only a certain set of files or directories in your `bucket`, you can add an `include` field to your `[site]` section of your Wrangler file:
 
 <WranglerConfig>
 
@@ -98,9 +88,7 @@ Wrangler will only upload files or directories matching the patterns in the `inc
 
 ### Excluding files/directories
 
-If you want to exclude files or directories in your `bucket`, you can add an `exclude` field to your `[site]` section of your `wrangler.toml` file:
-
-
+If you want to exclude files or directories in your `bucket`, you can add an `exclude` field to your `[site]` section of your Wrangler file:
 
 <WranglerConfig>
 
@@ -122,9 +110,9 @@ If you provide both `include` and `exclude` fields, the `include` field will be 
 
 Wrangler will always ignore:
 
-* `node_modules`
-* Hidden files and directories
-* Symlinks
+- `node_modules`
+- Hidden files and directories
+- Symlinks
 
 #### More about include/exclude patterns
 

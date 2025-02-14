@@ -14,7 +14,7 @@ sidebar:
   order: 2
 ---
 
-import { Render, PackageManagers } from "~/components";
+import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 By following this guide, you will create a Worker that uses the Browser Rendering API along with [Durable Objects](/durable-objects/) to take screenshots from web pages and store them in [R2](/r2/).
 
@@ -69,13 +69,11 @@ wrangler r2 bucket list
 
 After running the `list` command, you will see all bucket names, including the ones you have just created.
 
-## 5. Configure `wrangler.toml`
+## 5. Configure your Wrangler configuration file
 
-Configure your `browser-worker` project's [`wrangler.toml`](/workers/wrangler/configuration/) file by adding a browser [binding](/workers/runtime-apis/bindings/) and a [Node.js compatibility flag](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag). Browser bindings allow for communication between a Worker and a headless browser which allows you to do actions such as taking a screenshot, generating a PDF and more.
+Configure your `browser-worker` project's [Wrangler configuration file](/workers/wrangler/configuration/) by adding a browser [binding](/workers/runtime-apis/bindings/) and a [Node.js compatibility flag](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag). Browser bindings allow for communication between a Worker and a headless browser which allows you to do actions such as taking a screenshot, generating a PDF and more.
 
-Update your `wrangler.toml` configuration file with the Browser Rendering API binding, the R2 bucket you created and a Durable Object:
-
-import { WranglerConfig } from "~/components";
+Update your Wrangler configuration file with the Browser Rendering API binding, the R2 bucket you created and a Durable Object:
 
 <WranglerConfig>
 
