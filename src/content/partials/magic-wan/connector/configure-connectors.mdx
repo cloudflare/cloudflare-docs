@@ -417,10 +417,6 @@ After finishing your Connector configuration, you need to add it to a site. <Ren
   )
 }
 
-
-
-
-
 When you are ready to connect your Magic WAN Connector to the Cloudflare network:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
@@ -486,6 +482,113 @@ When you are ready to connect your Magic WAN Connector to the Cloudflare network
 			<li>Modify your <a href="#deploy-the-virtual-connector-on-vmware">Port Groups</a> as needed to change the source from which the WAN port obtains its IP address.</li>
 			<li>Reboot your virtual machine.</li>
 		</ol>
+  </>
+  )
+}
+
+{ props.magicWord === "hardware" && (
+  <>
+	<AnchorHeading title="Bootstrap via Serial Console" depth={2} />
+	<p>Advanced users can locally configure their Magic WAN Connector to work in a static IP configuration. This local method does not require having access to a DHCP Internet connection. However it does require being comfortable with using tools to access the serial port on Magic WAN Connector as well as using a serial terminal client to access the Connector's environment.</p>
+	<p>Below is a detailed description of how to use the serial port to configure your Magic WAN Connector locally.</p>
+
+	<AnchorHeading title="Equipment required" depth={3} />
+	<p>To access the serial port on Magic WAN Connector you will need the following equipment:</p>
+	<ul>
+		<li>The Magic WAN Connector appliance</li>
+		<li>A Phillips-head screwdriver</li>
+		<li>A micro-USB to USB-A cable (there should be one included in the packaging of your Connector)</li>
+		<li>A computer with an available USB port</li>
+		<li>A serial terminal client</li>
+		<li>Optional: if needed, a USB-A to USB-C converter dongle if your computer requires it</li>
+	</ul>
+
+	<AnchorHeading title="1. Access Magic WAN Connector's serial port" depth={3} />
+	<ol>
+		<li>Using the Phillips screwdriver, loosen the screw covering the serial console panel on the back of the Magic WAN Connector and turn the panel out of the way.
+			<ol>
+					<li>Pictures and more instructions can be found on <a href="https://www.dell.com/support/kbdoc/en-us/000134440/how-to-access-console-port-of-dell-emc-networking-virtual-edge-platform-1405-series" target="_blank" rel="noopener noreferrer">Dell's Technical Documents</a>.</li>
+			</ol>
+		</li>
+		<li>Connect your computer to the Magic WAN Connector using the USB cable.</li>
+	</ol>
+
+	<AnchorHeading title="Default password to access Connector" depth={4} />
+	<p>Your Connector's default password is the serial number (also known as a Service Tag for Dell devices), all uppercase plus an "!" (for example, <code>A1B2C3D!</code>)</p>
+
+	<AnchorHeading title="2. Install a serial terminal client" depth={3} />
+	<p>To access Magic WAN Connector's environment you need a serial terminal client. Follow the instructions below on how to install one based on your operating system.</p>
+
+	<AnchorHeading title="Windows" depth={4} />
+	<p>Cloudflare recommends using PuTTY for Windows. Download PuTTY from the <a href="https://www.putty.org/" target="_blank" rel="noopener noreferrer">official website</a> and then install it.</p>
+	<ol>
+		<li>Check the COM port of the USB to UART device in the Windows Device Manager. It should show up as something similar to <code>Silicon Labs CP210x USB to UART Bridge (COMX)</code>.</li>
+		<li>Take note of the value in the parentheses (COMX).
+			<ol>
+					<li>Refer to the <a href="https://infohub.delltechnologies.com/l/virtual-edge-platform-vep-1405-series-diag-os-and-tools-release-notes/bios-installation-and-configuration" target="_blank" rel="noopener noreferrer">Dell Documentation Page</a> for more details on creating a serial console connection.</li>
+			</ol>
+		</li>
+		<li>Launch PuTTY.</li>
+		<li>Under <strong>Category</strong>, make sure that <strong>Session</strong> (the first item) is selected.</li>
+		<li>Under <strong>Connection type</strong>, select <strong>Serial</strong>.</li>
+		<li>In the <strong>Serial Line</strong>, type in the COM port found in step 2 (for example, <code>COM1</code>).</li>
+		<li>In the <strong>Speed</strong>, enter <code>115200</code>.</li>
+		<li>Select <strong>Open</strong> on the bottom of the dialog box. A terminal window should pop up.</li>
+		<li>The screen may need to be manually refreshed when a new device is connected. You can do that by pressing <code>CTRL + C</code>.</li>
+	</ol>
+
+	<AnchorHeading title="macOS" depth={4} />
+	<p>Cloudflare recommends installing Screen for macOS. You can install Screen via <code>brew install screen</code>. If you do not have <code>brew</code> installed, follow the instructions on <a href="https://brew.sh/" target="_blank" rel="noopener noreferrer">Brew's Official Website</a> to install it.</p>
+	<ol>
+		<li>Open the macOS Terminal.</li>
+		<li>Run <code>ls /dev/cu.*</code> to list the connected serial devices.</li>
+		<li>The command should return an output similar to <code>/dev/cu.usbserial-0001</code>. Copy this output to the clipboard or note this down somewhere else.</li>
+		<li>Run <code>sudo screen -adRUS {`<`}PATH_FROM_STEP_3{`>`} 115200</code>.</li>
+		<li>The screen may need to be manually refreshed when a new device is connected. You can do that by pressing <code>CMD + C</code>.</li>
+	</ol>
+
+	<AnchorHeading title="Linux" depth={4} />
+	<p>Cloudflare recommends installing Screen for Linux. You can install Screen via your package manager of choice. For example, for Debian/Ubuntu, install by running <code>sudo apt update && sudo apt install screen</code></p>
+
+	<ol>
+		<li>Open Terminal.</li>
+		<li>List the connected serial devices by running <code>ls /dev/serial/by-id/*</code>.</li>
+		<li>The command should return an output similar to <code>/dev/serial/by-id/usb-Silicon_Labs_CP2102_USB_to_UART_Bridge_Controller_0001-if00-port0</code>. Copy this to the clipboard or note this down.</li>
+		<li>Run <code>sudo screen -adRUS {`<`}THE PATH FROM STEP 3{`>`}; 115200</code>.</li>
+		<li>The screen may need to be manually refreshed when a new device is connected. You can do that by pressing <code>CTRL + C</code>.</li>
+	</ol>
+
+	<AnchorHeading title="Configure a static IP on Magic WAN Connector" depth={3} />
+
+<ol>
+	<li>Log into the Connector.
+		<ol>
+				<li>You will be prompted to change your password if you attempt to log in with the default password.</li>
+		</ol>
+	</li>
+	<li>From the menu, go to <strong>Bootstrap</strong> with the arrow keys and select it with the Enter key.</li>
+	<li>Select the Jack (physical port) you want to configure for the initialization of the connector.</li>
+	<li>Enter the VLAN tag (if applicable) of the network. Leave it blank if untagged.</li>
+	<li>Select whether the network is DHCP or static:
+		<ol>
+			<li><Aside>The main reason to use the bootstrapper is if every network the Connector is plugged into is either static, behind a VLAN, or both. If you find yourself here and configuring a network with DHCP and no VLAN, you are probably not in the right place. See the section on configuring your Connector via the dashboard.</Aside></li>
+		</ol>
+	</li>
+	<li>Enter the IP address you would like the connector to have in CIDR form (for example, <code>10.0.0.2/24</code>).</li>
+	<li>Enter the IP address of the Internet gateway (this must be in the same subnet as the previous IP address you entered and must not be the same address).</li>
+	<li>Select <strong>Save</strong> and confirm that you want to use the new settings.</li>
+	<li>The Connector will download the rest of the settings from Cloudflare. The last heartbeat of the Connector should update once it has made contact with Cloudflare.</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
   </>
   )
 }
