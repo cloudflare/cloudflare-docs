@@ -45,6 +45,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx tsx bin/post-preview-url-comment/index.ts
+        continue-on-error: true
       - uses: actions/cache/save@v4
         if: always()
         with:
