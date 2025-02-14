@@ -400,7 +400,7 @@ After finishing your Connector configuration, you need to add it to a site. <Ren
 { props.magicWord === "hardware" && (
   <>
 		<p>When the Connector is first activated, you need to have Internet connection. If you chose to set up your Connector with DCHP you will need to have one of the Connector ports connected to the Internet through a device that supports DHCP. This is required so that the Connector can reach the Cloudflare global network and download the required configurations that you <a href="#1-add-a-connector-on-ramp">set up</a>.</p>
-		<p> If you set up your connector with a static IP through the bootstrap method, you do not need a DHCP port. Refer to <a href="#dhcp-vs-static-ip-connections"> DHCP vs static IP connections</a> for more information.</p>
+		<p> If you set up your Connector with a static IP through the bootstrap method, you do not need a DHCP port. Refer to <a href="#dhcp-vs-static-ip-connections"> DHCP vs static IP connections</a> for more information.</p>
 
 		<Aside type="caution">Remember that if you chose the DHCP method you have to connect Magic WAN Connector through a route that supports DHCP for its first connection to the Internet. Otherwise, the Connector will not work.</Aside>
   </>
@@ -517,7 +517,7 @@ When you are ready to connect your Magic WAN Connector to the Cloudflare network
 		<p>Your Connector's default password is the serial number (also known as a Service Tag for Dell devices), all uppercase plus an "!" (for example, <code>A1B2C3D!</code>)</p>
 
 		<AnchorHeading title="2. Install a serial terminal client" depth={3} />
-		<p>To access Magic WAN Connector's environment you need a serial terminal client. Follow the instructions below on how to install one based on your operating system.</p>
+		<p>To access Magic WAN Connector's environment you need a serial terminal client. Follow the instructions below to install one, based on your operating system.</p>
 
 		<AnchorHeading title="Windows" depth={4} />
 		<p>Cloudflare recommends using PuTTY for Windows. Download PuTTY from the <a href="https://www.putty.org/" target="_blank" rel="noopener noreferrer">official website</a> and then install it.</p>
@@ -558,7 +558,7 @@ When you are ready to connect your Magic WAN Connector to the Cloudflare network
 			<li>The screen may need to be manually refreshed when a new device is connected. You can do that by pressing <code>CTRL + C</code>.</li>
 		</ol>
 
-		<AnchorHeading title="Configure a static IP on Magic WAN Connector" depth={3} />
+		<AnchorHeading title="3. Configure a static IP on Magic WAN Connector" depth={3} />
 		<ol>
 			<li>Log into the Connector.
 				<ol>
@@ -568,11 +568,11 @@ When you are ready to connect your Magic WAN Connector to the Cloudflare network
 			<li>From the menu, go to <strong>Bootstrap</strong> with the arrow keys and select it with the Enter key.</li>
 			<li>Select the Jack (physical port) you want to configure for the initialization of the connector.</li>
 			<li>Enter the VLAN tag (if applicable) of the network. Leave it blank if untagged.</li>
-			<li>Select whether the network is DHCP or static:
-				<ol>
-					<li><Aside>The main reason to use the bootstrapper is if every network the Connector is plugged into is either static, behind a VLAN, or both. If you find yourself here and configuring a network with DHCP and no VLAN, you are probably not in the right place. See the section on configuring your Connector via the dashboard.</Aside></li>
-				</ol>
-			</li>
+			<li>Select whether the network is DHCP or static.</li>
+
+			<Aside>The main reason to use the bootstrapper is if every network the Connector is plugged into is either static, behind a VLAN, or both. If you find yourself here and configuring a network with DHCP and no VLAN, you are probably not in the right place. See the section on configuring your Connector <a href="#set-up-cloudflare-dashboard">via the dashboard</a>.</Aside>
+
+
 			<li>Enter the IP address you would like the connector to have in CIDR form (for example, <code>10.0.0.2/24</code>).</li>
 			<li>Enter the IP address of the Internet gateway (this must be in the same subnet as the previous IP address you entered and must not be the same address).</li>
 			<li>Select <strong>Save</strong> and confirm that you want to use the new settings.</li>
