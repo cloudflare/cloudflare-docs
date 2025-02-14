@@ -487,3 +487,16 @@ To set up a high availability configuration:
 13. Select **Save**.
 14. From the **High availability probing link** drop-down menu, select the port that should be used to monitor the node's health. Cloudflare recommends you choose a reliable interface as the HA probing link. The primary and secondary node's probing link should be connected over a switch, and cannot be a direct connection.
 15. <Markdown text={props.finalInstructions} />
+
+---
+
+## IP sec tunnels and static routes
+
+Magic WAN Connector automatically creates [IPsec tunnels](/magic-wan/reference/tunnels/#ipsec-tunnels) and [static routes](/magic-wan/reference/traffic-steering/) for you. You cannot configure these manually.
+
+To check the IPsec tunnels and static routes created by your Magic WAN Connector:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Magic WAN** > **Sites**.
+3. Select the name of the site for which you want to check the Connector's IPsec tunnels and static routes, and select **Edit**.
+4. Select **Tunnels** to check IPsec tunnels, and **Routes** for the static routes.
