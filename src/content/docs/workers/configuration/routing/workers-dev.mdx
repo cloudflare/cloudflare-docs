@@ -52,10 +52,6 @@ If you do not specify `workers_dev = false` but add a [`routes` component](/work
 If you disable your `workers.dev` route in the Cloudflare dashboard but do not update your Worker's Wrangler file with `workers_dev = false`, the `workers.dev` route will be re-enabled the next time you deploy your Worker with Wrangler.
 :::
 
-## Limitations
-
-- You cannot currently secure `workers.dev` URLs behind [Cloudflare Access](/cloudflare-one/policies/access/). This is a temporary limitation, we are working to remove it.
-
 ## Related resources
 
 - [Announcing `workers.dev`](https://blog.cloudflare.com/announcing-workers-dev)
