@@ -497,12 +497,18 @@ This command requires `--binding` or `--namespace-id`.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
-This command takes a JSON file as an argument containing an array of keys to delete.
+This command takes a JSON file as an argument containing the keys to delete.
 
 The following is an example of the JSON input:
 
 ```json
 ["test_key_1", "test_key_2"]
+```
+
+The command also accepts keys in the format output from `wrangler kv key list`:
+
+```json
+[{ "name": "test_key_1" }, { "name": "test_key_2" }]
 ```
 
 The following is an example of deleting all the keys found in the `allthethingsdelete.json` file.

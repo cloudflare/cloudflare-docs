@@ -6,6 +6,7 @@ sidebar:
 head:
   - tag: title
     content: Configuration - Wrangler v1 (deprecated)
+description: Learn how to configure your Cloudflare Worker using Wrangler v1. This guide covers top-level and environment-specific settings, key types, and deployment options.
 
 ---
 
@@ -652,7 +653,7 @@ Defaults:
 format = "modules"
 main = "./worker.mjs"
 
-# You do not need to include these default rules in your `wrangler.toml / wrangler.json` file, they are implicit.
+# You do not need to include these default rules in your [Wrangler configuration file](/workers/wrangler/configuration/), they are implicit.
 # The default rules are treated as the last two rules in the list.
 
 [[build.upload.rules]]

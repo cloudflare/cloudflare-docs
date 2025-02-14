@@ -7,10 +7,9 @@ sidebar:
 head:
   - tag: title
     content: Create a configuration rule via API
-
 ---
 
-import { Details, Render } from "~/components"
+import { Details, Render } from "~/components";
 
 Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create configuration rules via API.
 
@@ -18,18 +17,23 @@ Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create configuration ru
 
 When creating a configuration rule via API, make sure you:
 
-* Set the rule action to `set_config`.
-* Define the parameters in the `action_parameters` field according to the [settings](/rules/configuration-rules/settings/) you wish to override for matching requests.
-* Deploy the rule to the `http_config_settings` phase at the zone level.
+- Set the rule action to `set_config`.
+- Define the parameters in the `action_parameters` field according to the [settings](/rules/configuration-rules/settings/) you wish to override for matching requests.
+- Deploy the rule to the `http_config_settings` phase at the zone level.
 
 ## Procedure
 
-<Render file="rules-creation-workflow" params={{ one: "a configuration rule", two: "http_config_settings" }} />
+<Render
+	file="rules-creation-workflow"
+	params={{
+		ruleName: "a configuration rule",
+		phaseName: "http_config_settings",
+	}}
+/>
 
 Make sure your API token has the [required permissions](#required-api-token-permissions) to perform the API operations.
 
 ## Example requests
-
 
 <Details header="Example: Add a rule that enables Email Obfuscation and Browser Integrity Check">
 
@@ -55,9 +59,7 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 }'
 ```
 
-
 </Details>
-
 
 <Details header="Example: Add a rule that turns on I'm Under Attack mode for the admin area">
 
@@ -82,13 +84,12 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 }'
 ```
 
-
 </Details>
 
-***
+---
 
 ## Required API token permissions
 
 The API token used in API requests to manage configuration rules must have at least the following permission:
 
-* *Zone* > *Config Rules* > *Edit*
+- _Zone_ > _Config Rules_ > _Edit_

@@ -25,13 +25,13 @@ This will then start serving your Pages project. You can press `b` to open the b
 
 :::note
 
-If you have a [`wrangler.toml / wrangler.json` file](/pages/functions/wrangler-configuration/) file configured for your Pages project, you can run [`wrangler pages dev`](/workers/wrangler/commands/#dev-1) without specifying a directory.
+If you have a [Wrangler configuration file](/pages/functions/wrangler-configuration/) file configured for your Pages project, you can run [`wrangler pages dev`](/workers/wrangler/commands/#dev-1) without specifying a directory.
 
 :::
 
 ### HTTPS support
 
-To serve your local development server over HTTPS with a self-signed certificate, you can [set `local_protocol` via the `wrangler.toml / wrangler.json` file](/pages/functions/wrangler-configuration/#local-development-settings) or you can pass the `--local-protocol=https` argument to [`wrangler pages dev`](/workers/wrangler/commands/#dev-1):
+To serve your local development server over HTTPS with a self-signed certificate, you can [set `local_protocol` via the [Wrangler configuration file](/pages/functions/wrangler-configuration/#local-development-settings) or you can pass the `--local-protocol=https` argument to [`wrangler pages dev`](/workers/wrangler/commands/#dev-1):
 
 ```sh
 npx wrangler pages dev --local-protocol=https <DIRECTORY-OF-ASSETS>

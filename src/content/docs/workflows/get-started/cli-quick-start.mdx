@@ -45,7 +45,7 @@ npm create cloudflare@latest workflows-starter -- --template "cloudflare/workflo
 This will create a new folder called `workflows-tutorial`, which contains two files:
 
 * `src/index.ts` - this is where your Worker script, including your Workflows definition, is defined.
-* `wrangler.json` - the configuration for your Workers project and your Workflow.
+* wrangler.jsonc - the [Wrangler configuration file](/workers/wrangler/configuration/) for your Workers project and your Workflow.
 
 Open the `src/index.ts` file in your text editor. This file contains the following code, which is the most basic instance of a Workflow definition:
 
@@ -198,7 +198,7 @@ For example, the following Worker will fetch the status of an existing Workflow 
 import { WorkflowEntrypoint, WorkflowStep, WorkflowEvent} from 'cloudflare:workers';
 
 interface Env {
-  // Matches the binding definition in your `wrangler.toml / wrangler.json` file
+  // Matches the binding definition in your Wrangler configuration file
   MY_WORKFLOW: Workflow;
 }
 

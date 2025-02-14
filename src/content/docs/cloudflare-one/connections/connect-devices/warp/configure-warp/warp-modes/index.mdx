@@ -3,7 +3,6 @@ pcx_content_type: reference
 title: WARP modes
 sidebar:
   order: 2
-
 ---
 
 You can deploy the WARP client in different modes to control the types of traffic sent to Cloudflare Gateway. The WARP mode determines which Zero Trust features are available on the device.
@@ -34,16 +33,14 @@ This mode is best suited for organizations that want to proxy network and HTTP t
 
 :::note
 
-
-* This mode disables all features that rely on WARP for DNS resolution, including [domain-based split tunneling](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#domain-based-split-tunnels) and [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/).
-* Only available on Windows, Linux, and macOS.
-
+- This mode disables all features that rely on WARP for DNS resolution, including [domain-based split tunneling](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#domain-based-split-tunnels) and [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/).
+- Only available on Windows, Linux, and macOS.
 
 :::
 
 ## Proxy mode
 
-This mode is best suited for organizations that want to filter traffic directed to specific applications.
+Proxy mode is best suited for organizations that want to filter traffic directed to specific applications.
 
 | DNS filtering | HTTP filtering | Features enabled                                                                                                                          |
 | ------------- | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
@@ -51,10 +48,9 @@ This mode is best suited for organizations that want to filter traffic directed 
 
 :::note
 
-
-* Proxy mode can only be used by applications/operating systems that support SOCKS5/HTTPS proxy communication.
-* Only available on Windows, Linux, and macOS.
-
+- Proxy mode can only be used by applications/operating systems that support SOCKS5/HTTPS proxy communication.
+- Only available on Windows, Linux, and macOS.
+- Proxy mode has a timeout limit of 10 seconds for requests. If a request goes above the 10 second limit, Cloudflare will drop the connection.
 
 :::
 

@@ -1,0 +1,51 @@
+---
+link: "/fundamentals/changelog/"
+productName: Cloudflare Fundamentals
+productLink: "/fundamentals/"
+productArea: Core platform
+productAreaLink: /fundamentals/reference/changelog/platform/
+entries:
+  - publish_date: "2025-01-28"
+    title: Terraform Provider is now automatically generated
+    description: |-
+      With the version 5 release of Cloudflare's Terraform Provider, Terraform resources are now being automatically generated based on OpenAPI Schemas. This change brings alignment across our SDKs, API Documentation, and now Terraform Provider. The new provider boosts coverage by increasing API properties to 100%, adding 25% more resources, and more than 200 additional data sources. 
+
+      Warning: Version 5 of the Cloudflare Terraform Provider is a ground-up rewrite of the provider and introduces breaking changes.
+
+      Refer to the [upgrade guide](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/guides/version-5-upgrade) for best practices, or the [blog post on automatically generating Cloudflare’s Terraform Provider](https://blog.cloudflare.com/automatically-generating-cloudflares-terraform-provider/) for more information.
+  - publish_date: "2024-12-18"
+    title: Use account owned tokens to manage other account owned tokens
+    description: |-
+      Cloudflare's token management now allows users to set up a primary account owned token where they can manage all other account owned tokens. 
+
+      Refer to [Account owned tokens documentation](/fundamentals/api/get-started/account-owned-tokens/) for more details.
+  - publish_date: "2024-12-16"
+    title: Cloudflare API docs are now automatically generated
+    description: |- 
+      Cloudflare's API documentation is now being automatically generated based on OpenAPI Schemas, and we have retired our old documentation. The move to OpenAPI Schemas allows us to ensure greater consistency and quality across our API documentation. The documentation now also includes examples of how to call the API using curl or our SDKs. 
+
+      Refer to the [Cloudflare API documentation](/api/), or the [blog post on our transition to OpenAPI](https://blog.cloudflare.com/open-api-transition/) for more information. 
+  - publish_date: "2024-12-06"
+    title: Dashboard SCIM is now fully self-serve
+    description: |-
+      Dashboard SCIM is now self-serve. Previously, users configuring SCIM required assistance from Cloudflare to configure SCIM to onboard users. Now, with account owned tokens, SCIM can be configured by Enterprise customers that use Okta or Microsoft Entra without any assistance from Cloudflare.
+
+      Refer to the [SCIM documentation](/fundamentals/setup/account/account-security/scim-setup/) for more details.
+  - publish_date: "2024-09-26"
+    title: Account owned tokens
+    description: |-
+      Account owned tokens are now generally available. Unlike user-owned tokens, account owned tokens are tied with the Cloudflare account instead of the user that created them. This ensures that long term integrations like CI/CD are not broken if the user that set it up leaves your organization.
+
+      Refer to the [Account owned tokens documentation](/fundamentals/api/get-started/account-owned-tokens/) or the [blog post](https://blog.cloudflare.com/account-owned-tokens-automated-actions-zaraz/) for more details.
+  - publish_date: "2024-09-24"
+    title: Terraform v5 SDK preview
+    description: |-
+      The Terraform v5 Provider is now available as a preview. This new provider is automatically generated based on the OpenAPI Specifications for our REST API, and provides improved user experiences overall.
+
+      Refer to the [Terraform documentation](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/guides/version-5-upgrade) or the [blog post](https://blog.cloudflare.com/automatically-generating-cloudflares-terraform-provider/) for more details.
+  - publish_date: "2024-09-24"
+    title: API Documentation Preview
+    description: |-
+      Cloudflare's API documentation is now [available in preview](https://developers.cloudflare.com/api-next/) with new automatically generated documentation. This documentation includes code snippets that refer to language-specific SDKs to make it easier to get started than ever.
+
+      Refer to the [blog post](https://blog.cloudflare.com/automatically-generating-cloudflares-terraform-provider/) for more details.

@@ -6,7 +6,7 @@ sidebar:
   order: 1
 ---
 
-import { Render } from "~/components";
+import { Render, GlossaryTooltip } from "~/components";
 
 ## Is Cloudflare a free DNS (domain nameserver) provider?
 
@@ -63,6 +63,12 @@ If you are an Enterprise customer and require more DNS records, contact your acc
 ## Which record types can Cloudflare proxy?
 
 Only `A`, `AAAA`, and `CNAME` records can be proxied. Cloudflare will not proxy any other [DNS record types](/dns/manage-dns-records/reference/dns-record-types/).
+
+---
+
+## How do I add ANAME records on Cloudflare?
+
+<Render file="aname-alias-callout" />
 
 ---
 
@@ -198,7 +204,7 @@ Alternatively, you can also:
 
 ## What IP should I use for parked domain / redirect-only / originless setup?
 
-In the case a placeholder address is needed for “originless” setups, use the IPv6 reserved address `100::` or the IPv4 reserved address `192.0.2.0` in your Cloudflare DNS to create a [proxied DNS record](/dns/manage-dns-records/reference/proxied-dns-records/) that can use Cloudflare [Redirect Rules](/rules/url-forwarding/), [Page Rules](/rules/page-rules/), or [Cloudflare Workers](/workers/).
+In the case a placeholder address is needed for “originless” setups, use the IPv6 reserved address `100::` or the IPv4 reserved address `192.0.2.0` in your Cloudflare DNS to create a [proxied DNS record](/dns/proxy-status/) that can use Cloudflare [Redirect Rules](/rules/url-forwarding/), [Page Rules](/rules/page-rules/), or [Cloudflare Workers](/workers/).
 
 ---
 

@@ -41,7 +41,7 @@ If you have multiple distinct services you are providing your customers, you sho
 
 A dynamic dispatch Worker is written by Cloudflare’s platform customers to run their own logic before dispatching (routing) the request to user Workers. In addition to routing, it can be used to run authentication, create boilerplate functions and sanitize responses.
 
-The dynamic dispatch Worker calls user Workers from the dispatch namespace and executes them. The dynamic dispatch Worker is configured with a [dispatch namespace binding](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/#4-create-a-dispatch-worker). The binding is the entrypoint for all requests to user Workers.
+The dynamic dispatch Worker calls user Workers from the dispatch namespace and executes them. The dynamic dispatch Worker is configured with a [dispatch namespace binding](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/#4-create-a-dynamic-dispatch-worker). The binding is the entrypoint for all requests to user Workers.
 
 ### User Workers
 

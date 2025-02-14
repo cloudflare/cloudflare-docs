@@ -8,7 +8,7 @@ product:
 
 meta:
   title: Cloudflare Durable Objects docs
-  description: Cloudflare Durable Objects provide low-latency coordination and consistent permanent storage for the Workers platform.
+  description: A special kind of Cloudflare Worker which uniquely combines compute with storage.
   author: "@cloudflare"
 
 resources:

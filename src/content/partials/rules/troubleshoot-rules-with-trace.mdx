@@ -1,10 +1,10 @@
 ---
-inputParameters: rulesFeatureName
-
+params:
+  - rulesFeatureName
 ---
 
-import { Markdown } from "~/components"
+import { Markdown } from "~/components";
 
 ## Troubleshooting
 
-When troubleshooting {props.one}, use [Cloudflare Trace](/fundamentals/basic-tasks/trace-request/) to determine if a rule is triggering for a specific URL.
+When troubleshooting {props.rulesFeatureName}, use [Cloudflare Trace](/fundamentals/trace-request/) to determine if a rule is triggering for a specific URL.

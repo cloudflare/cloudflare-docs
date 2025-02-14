@@ -1,0 +1,16 @@
+---
+title: Terraform v5 Provider is now generally available
+description: Cloudflare's new automatically generated Terraform provider is now available as v5.0.0
+products:
+  - fundamentals
+date: 2025-02-03
+---
+![Screenshot of Terraform defining a Zone](~/assets/images/changelog/2024-02-03-terraform-v5-screenshot.png)
+
+Cloudflare's v5 Terraform Provider is now generally available. With this release, Terraform resources are now automatically generated based on OpenAPI Schemas. This change brings alignment across our SDKs, API documentation, and now Terraform Provider. The new provider boosts coverage by increasing support for API properties to 100%, adding 25% more resources, and more than 200 additional data sources. Going forward, this will also reduce the barriers to bringing more resources into Terraform across the broader Cloudflare API. This is a small, but important step to making more of our platform manageable through GitOps, making it easier for you to manage Cloudflare just like you do your other infrastructure.
+
+The Cloudflare Terraform Provider v5 is a ground-up rewrite of the provider and introduces breaking changes for some resource types. Please refer to the [upgrade guide](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/guides/version-5-upgrade) for best practices, or the [blog post on automatically generating Cloudflare's Terraform Provider](https://blog.cloudflare.com/automatically-generating-cloudflares-terraform-provider/) for more information about the approach.
+
+For more info
+* [Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs)
+* [Documentation on using Terraform with Cloudflare](https://developers.cloudflare.com/terraform/)

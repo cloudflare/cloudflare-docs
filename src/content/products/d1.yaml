@@ -8,7 +8,7 @@ product:
 
 meta:
   title: Cloudflare D1 docs
-  description: Documentation for Cloudflare D1, a SQL database.
+  description: Managed, serverless database with SQLite's SQL semantics, built-in disaster recovery, and Worker and HTTP API access.
   author: "@cloudflare"
 
 resources:

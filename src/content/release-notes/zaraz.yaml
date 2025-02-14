@@ -1,0 +1,154 @@
+---
+link: "/zaraz/changelog/"
+productName: Zaraz
+productLink: "/zaraz/"
+productArea: Developer platform
+productAreaLink: /workers/platform/changelog/platform/
+entries:
+  - publish_date: "2025-02-11"
+    description: |
+      * **Logpush**: Add Logpush support for Zaraz
+  - publish_date: "2024-12-16"
+    description: |
+      * **Consent Management**: Allow forcing the consent modal language
+      - **Zaraz Debugger**: Log the response status and body for server-side requests 
+      * **Monitoring**: Introduce "Advanced Monitoring" with new reports such as geography, user timeline, funnel, retention and more 
+      * **Monitoring**: Show information about server-side requests success rate
+      - **Zaraz Types**: Update the `zaraz-types` package
+      - **Custom HTML Managed Component**: Apply syntax highlighting for inlined JavaScript code
+  - publish_date: "2024-11-12"
+    description: |
+      * **Facebook Component**: Update to version 21 of the API, and fail gracefully when e-commerce payload doesn't match schema
+      - **Zaraz Monitoring**: Show all response status codes from the Zaraz server-side requests in the dashboard
+      - **Zaraz Debugger**: Fix a bug that broke the display when Custom HTML included backticks
+      - **Context Enricher**: It's now possible to programatically edit the Zaraz `config` itself, in addition to the `system` and `client` objects
+      - **Rocker Loader**: Issues with using Zaraz next to Rocket Loader were fixed
+      - **Automatic Actions**: The tools setup flow now fully supports configuring Automatic Actions
+      - **Bing Managed Component**: Issues with setting the currency field were fixed
+      - **Improvement**: The allowed size for a Zaraz config was increased by 250x
+      - **Improvement**: The Zaraz runtime should run faster due to multiple code optimizations
+      - **Bugfix**: Fixed an issue that caused the dashboard to sometimes show "E-commerce" option for tools that do not support it
+  - publish_date: "2024-09-17"
+    description: |
+      * **Automatic Actions**: E-commerce support is now integrated with Automatic Actions
+      * **Consent Management**: Support styling the Consent Modal when CSP is enabled
+      * **Consent Management**: Fix an issue that could cause tools to load before consent was granted when TCF is enabled
+      * **Zaraz Debugger**: Remove redundant messages related to empty values
+      * **Amplitude Managed Component**: Respect the EU endpoint setting
+  - publish_date: "2024-08-23"
+    description: |
+      * **Automatic Actions**: Automatic Event Tracking is now fully available
+      * **Consent Management**: Fixed issues with rendering the Consent modal on iOS
+      * **Zaraz Debugger**: Remove redundant messages related to `__zarazEcommerce`
+      * **Zaraz Debugger**: Fixed bug that prevented the debugger to load when certain Custom HTML tools were used
+  - publish_date: "2024-08-15"
+    description: |
+      * **Automatic Actions**: Automatic Pageview tracking is now fully available
+      * **Google Analytics 4**: Support Google Consent signals when using e-commerce tracking
+      * **HTTP Events API**: Ignore bot score detection on the HTTP Events API endpoint
+      * **Zaraz Debugger**: Show client-side network requests initiated by Managed Components
+  - publish_date: "2024-08-12"
+    description: |
+      * **Automatic Actions**: New tools now support Automatic Pageview tracking
+      * **HTTP Events API**: Respect Google consent signals
+  - publish_date: "2024-07-23"
+    description: |-
+      * **Embeds**: Add support for server-side rendering of X (Twitter) and Instagram embeds
+      * **CSP Compliance**: Remove `eval` dependency
+      * **Google Analytics 4 Managed Component**: Allow customizing the document title and client ID fields
+      * **Custom HTML Managed Component**: Scripts included in a Custom HTML will preserve their running order
+      * **Google Ads Managed Component**: Allow linking data with Google Analytics 4 instances
+      * **TikTok Managed Component**: Use the new TikTok Events API v2
+      * **Reddit Managed Component**: Support custom events
+      * **Twitter Managed Component**: Support setting the `event_id`, using custom fields, and improve conversion tracking
+      * **Bugfix**: Cookie life-time cannot exceed one year anymore
+      * **Bugfix**: Zaraz Debugger UI does not break when presenting really long lines of information
+  - publish_date: "2024-06-21"
+    description: |-
+      * **Dashboard**: Add an option to disable the automatic `Pageview` event
+  - publish_date: "2024-06-18"
+    description: |-
+      * **Amplitude Managed Component**: Allow users to choose data center
+      * **Bing Managed Component**: Fix e-commerce events handling
+      * **Google Analytics 4 Managed Component**: Mark e-commerce events as conversions
+      * **Consent Management**: Fix IAB Consent Mode tools not showing with purposes
+  - publish_date: "2024-05-03"
+    description: |-
+      * **Dashboard**: Add setting for Google Consent mode default
+      * **Bugfix**: Cookie values are now decoded
+      * **Bugfix**: Ensure context enricher worker can access the `context.system.consent` object
+      * **Google Ads Managed Component**: Add conversion linker on pageviews without sending a pageview event
+      * **Pinterest Conversion API Managed Component**: Bugfix handling of partial e-commerce event payloads
+  - publish_date: "2024-04-19"
+    description: |-
+      * **Instagram Managed Component**: Improve performance of Instagram embeds
+      * **Mixpanel Managed Component**: Include `gclid` and `fbclid` values in Mixpanel requests if available
+      * **Consent Management**: Ensure consent platform is enabled when using IAB TCF compliant mode when there's at least one TCF-approved vendor configured
+      * **Bugfix**: Ensure track data payload keys take priority over preset-keys when using enrich-payload feature for custom actions
+  - publish_date: "2024-04-08"
+    description: |-
+      * **Consent Management**: Add `consent` object to `context.system` for finer control over consent preferences
+      * **Consent Management**: Add support for IAB-compliant consent mode
+      * **Consent Management**: Add "zarazConsentChoicesUpdated" event
+      * **Consent Management**: Modal now respects system dark mode prefs when present
+      * **Google Analytics 4 Managed Component**: Add support for Google Consent Mode v2
+      * **Google Ads Managed Component**: Add support for Google Consent Mode v2
+      * **Twitter Managed Component**: Enable tweet embeds
+      * **Bing Managed Component**: Support running without setting cookies
+      * **Bugfix**: `client.get` for Custom Managed Components fixed
+      * **Bugfix**: Prevent duplicate pageviews in monitoring after consent granting
+      * **Bugfix**: Prevent Managed Component routes from blocking origin routes unintentionally
+  - publish_date: "2024-02-15"
+    description: |-
+      * **Single Page Applications**: Introduce `zaraz.spaPageview()` for manually triggering SPA pageviews
+      * **Pinterest Managed Component**: Add ecommerce support
+      * **Google Ads Managed Component**: Append url and rnd params to pagead/landing endpoint
+      * **Bugfix**: Add noindex robots headers for Zaraz GET endpoint responses
+      * **Bugfix**: Gracefully handle responses from custom Managed Components without mapped endpoints
+  - publish_date: "2024-02-05"
+    description: |-
+      * **Dashboard**: rename "tracks" to "events" for consistency
+      * **Pinterest Conversion API Managed Component**: update parameters sent to api
+      * **HTTP Managed Component**: update _settings prefix usage handling
+      * **Bugfix**: better minification of client-side js
+      * **Bugfix**: fix bug where anchor link click events were not bubbling when using click listener triggers
+      * **API update**: begin migration support from deprecated `tool.neoEvents` array to `tool.actions` object config schema migration
+  - publish_date: "2023-12-19"
+    description: |-
+      * **Google Analytics 4 Managed Component**: Fix Google Analytics 4 average engagement time metric.
+  - publish_date: "2023-11-13"
+    description: |-
+      * **HTTP Request Managed Component**: Re-added `__zarazTrack` property.
+  - publish_date: "2023-10-31"
+    description: |-
+      * **Google Analytics 4 Managed Component**: Remove `debug_mode` key if falsy or `false`.
+  - publish_date: "2023-10-26"
+    description: |-
+      * **Custom HTML**: Added support for non-JavaScript script tags.
+  - publish_date: "2023-10-20"
+    description: |-
+      * **Bing Managed Component**: Fixed an issue where some events were not being sent to Bing even after being triggered.
+      * **Dashboard**: Improved welcome screen for new Zaraz users.
+  - publish_date: "2023-10-03"
+    description: |-
+      * **Bugfix**: Fixed an issue that prevented some server-side requests from arriving to their destination
+      * **Google Analytics 4 Managed Component**: Add support for `dbg` and `ir` fields.
+  - publish_date: "2023-09-13"
+    description: |-
+      * **Consent Management**: Add support for custom button translations.
+      * **Consent Management**: Modal stays fixed when scrolling.
+      * **Google Analytics 4 Managed Component**: `hideOriginalIP` and `ga-audiences` can be set from tool event.
+  - publish_date: "2023-09-11"
+    description: |-
+      * **Reddit Managed Component**: Support new "Account ID" formats (e.g. "ax_xxxxx").
+  - publish_date: "2023-09-06"
+    description: |-
+      * **Consent Management**: Consent cookie name can now be customized.
+  - publish_date: "2023-09-05"
+    description: |-
+      * **Segment Managed Component**: API Endpoint can be customized.
+  - publish_date: "2023-08-21"
+    description: |-
+      * **TikTok Managed Component**: Support setting `ttp` and `event_id`.
+      * **Consent Management**: Accessibility improvements.
+      * **Facebook Managed Component**: Support for using "Limited Data Use" features.

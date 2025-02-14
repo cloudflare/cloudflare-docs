@@ -1,0 +1,643 @@
+---
+params:
+  - magicWord
+  - productName
+  - productNameType
+  - wan
+  - lan
+  - noConnectorShows
+  - shippedLanguage
+  - hardSoftConn
+  - finalInstructions
+---
+
+import { AnchorHeading, Aside, Card, Code, GlossaryTooltip, Markdown, Render, TabItem, Tabs } from "~/components";
+
+{ props.magicWord === "virtual" && (
+	<>
+		<p>Virtual Magic WAN Connector (Virtual Connector) is a virtual appliance alternative to the hardware based Magic WAN Connector appliance. These two versions of Connector are identical otherwise.</p>
+	</>
+	)
+}
+
+## Prerequisites
+
+{ props.magicWord === "hardware" && (
+  <>
+    <p>You need to purchase <a href="https://www.cloudflare.com/magic-wan/">Magic WAN</a> before you can purchase and use the Magic WAN Connector. The Magic WAN Connector can function as your primary edge device for your network, or be deployed in-line with existing network gear.</p>
+		<p>You also need to purchase a Magic WAN Connector before you can start configuring your settings in the Cloudflare dashboard. After buying a Magic WAN Connector, the device will be registered with your Cloudflare account and show up in your Cloudflare dashboard.</p>
+		<p>Contact your account representative to learn more about purchasing options for the Magic WAN Connector device.</p>
+  </>
+  )
+}
+
+{ props.magicWord === "virtual" && (
+  <>
+    <p>Before you can install Virtual Connector, you need an Enterprise account with Magic WAN enabled. Additionally, you need to have a VMware host with sufficient compute, memory, and storage to run the virtual machine with Virtual Connector. This includes:</p>
+		<ul>
+    	<li>Intel x86 CPU architecture</li>
+    	<li>ESXi hypervisor 7.0U1 or higher</li>
+    	<li>4 virtual CPUs per virtual connector (We recommend deployment with a 1:1 virtual CPU to physical core allocation to avoid CPU over contention which will cause packet loss.)</li>
+    	<li>8 GB of RAM per virtual connector</li>
+    	<li>8 GB of disk per virtual connector</li>
+    	<li>One vSwitch port group or VLAN with access to the Internet (for example, through a WAN)</li>
+    	<li>One or more vSwitch port group or VLAN that will be the internal LAN</li>
+		</ul>
+		<p>Refer to <a href="https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.esxi.install.doc/GUID-B2F01BF5-078A-4C7E-B505-5DFFED0B8C38.html" target="_blank" rel="noopener noreferrer">VMware's documentation</a> for more information on how to install ESXi and configure a virtual machine.</p>
+  </>
+  )
+}
+
+---
+
+## Before you begin
+
+You can install up to two {props.productName}s for redundancy at each of your sites. If one of your Connectors fail, traffic will fail over to the other Connector ensuring that you never lose connectivity to that site.
+
+In this type of high availability (HA) configuration, you will choose a reliable LAN interface as the HA link which will be used to monitor the health of the peer connector. HA links can be dedicated links or can be shared with other LAN traffic.
+
+You must decide the type of configuration you want for your site from the beginning: no redundancy or with redundancy. You cannot add redundancy after finishing configuring your dashboard settings. If, at a later stage, you decide to enable redundancy, you will need to delete your Connector on-ramp in the Cloudflare dashboard, and start again.
+
+<Card title="Do you need a high availability configuration?" icon="information">
+
+- If you need a high availability configuration for your premises, refer to
+  [About high availability configurations](#about-high-availability-configurations) for more information
+  and learn how to configure your Connector in this mode.
+
+- If you do not need a high availability configuration for you premises, proceed to [Set up Cloudflare dashboard](#set-up-cloudflare-dashboard).
+
+</Card>
+
+:::caution
+You cannot enable high availability for an existing Connector on-ramp. To add high availability to an existing Connector on-ramp in the Cloudflare dashboard, you need to delete the on-ramp and start again. Plan accordingly to create a high availability configuration from the start if needed.
+:::
+
+---
+
+## DHCP vs static IP connections
+
+{ props.magicWord === "hardware" && (
+  <>
+    <p>At first boot, Magic WAN Connector needs to reach out to Cloudflare to download your settings and go through the activation process. If any of the networks plugged into your Connector are DHCP enabled, does not use a VLAN, and have an Internet connection, that process is handled automatically. However, if all of the networks require more information to utilize, (such as a network with static IPs, or tagged VLAN networks) your Magic WAN Connector might need some more information to proceed. There are couple of ways to provide that information. Choose the one that fits your workflow: </p>
+
+		<AnchorHeading title="Option one - Activate on a DHCP Network" depth={3} />
+		<ol>
+				<li>Connect Magic WAN Connector to a DHCP port with access to the Internet.</li>
+				<li>Go through the <a href="#set-up-cloudflare-dashboard">setup flow</a> below and activate your Connector.</li>
+				<li>Refer to <a href="#wan-with-a-static-ip-address">WAN with a static IP address</a>.</li>
+		</ol>
+
+		<AnchorHeading title="Option two - Bootstrap via Serial Console" depth={3} />
+		<p>Refer to the <a href="#bootstrap-via-serial-console"> Bootstrap workflow</a>.</p>
+
+  </>
+  )
+}
+
+{ props.magicWord === "virtual" && (
+  <>
+    <p>Virtual Connector uses a DHCP connection at first boot to download your settings and go through the activation process. However, if you need to use a static IP in your Virtual Connector, and this is a fresh install:</p>
+		<ol>
+    	<li>Connect the machine with your Virtual Connector VM to a DHCP port with access to the Internet.</li>
+    	<li>Go through the <a href="#set-up-cloudflare-dashboard">setup flow</a> below and activate your Connector.</li>
+    	<li>Refer to <a href="#wan-with-a-static-ip-address">WAN with a static IP address</a>.</li>
+		</ol>
+  </>
+  )
+}
+
+
+---
+
+{ props.magicWord === "hardware" && (
+  <>
+		<AnchorHeading title="Port speeds" depth={2} />
+    <p>The hardware version of the Magic WAN connector includes two <a href="https://en.wikipedia.org/wiki/Small_Form-factor_Pluggable" target="_blank" rel="noopener noreferrer">SFP+ ports</a> that support 10G throughput, as well as six RJ45 ports that support 1G throughput.</p>
+		<p>Refer to <a href="/magic-wan/configuration/connector/configure-hardware-connector/sfp-port-information/">SFP+ port information</a> for details on this topic.</p>
+  </>
+  )
+}
+
+{ props.magicWord === "virtual" && (
+  <>
+		<AnchorHeading title="Obtain the Virtual Connector image" depth={2} />
+
+		<p>Contact your account team at Cloudflare to obtain the Virtual Connector <a href="https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.vm_admin.doc/GUID-AE61948B-C2EE-436E-BAFB-3C7209088552.html" target="_blank" rel="noopener noreferrer">OVA package</a> and license keys. The OVA image includes the files required to install and configure the virtual machine (VM) for Virtual Connector with the appropriate settings.</p>
+		<p>This image can be deployed multiple times to create several instances of a Virtual Connector, in different locations or on the same ESXi host.</p>
+		<p>You will consume one license key for each instance created. For example, if you want to deploy 10 Virtual Connectors you should request 10 license keys, and your account team will create 10 Connector instances in your Cloudflare dashboard.</p>
+
+		<AnchorHeading title="Deploy the Virtual Connector on VMware" depth={2} />
+
+		<p>The following instructions assume you already have VMware ESXi hypervisor installed with sufficient resources. Refer to <a href="#prerequisites">Prerequisites</a> for more information.</p>
+		<ol>
+
+			<li>When setting up your VMware ESXi, you need to create port groups for Virtual Connector. Go to <strong>Networking</strong> {'>'} <strong>Port groups</strong>, and prepare your vSwitch port groups and/or VLANs for your desired network topology. For example, a simple deployment typically has:
+				<ul>
+					<li>A WAN port group where the Virtual Connector will get an IP address (static or DHCP) that has access to the Internet.</li>
+					<li>A LAN port group, where the Virtual Connector will act as default router, and possibly DHCP server.</li>
+					<li>A null, or unused, port group for allocating unused virtual interfaces in the Virtual Connector. You can, for example, create a null port group with the name of <code>Null port group</code>, and a <strong>VLAN ID</strong> of <code>999</code>.</li>
+				</ul>
+
+			<Aside title="VLAN tagging">
+			<p>Virtual Connector supports creating subinterfaces through the use of <a href="https://en.wikipedia.org/wiki/IEEE_802.1Q" target="_blank" rel="noopener noreferrer">802.1Q VLAN tagging.</a></p>
+			<p>Use VLAN ID <code>0</code> when:</p>
+			<ul>
+				<li>Connected to a Port Group or Distributed Port Group that is associated with a specific VLAN.</li>
+				<li>Connected to a Port Group or Distributed Port Group that is configured as a trunk that requires untagged packets.</li>
+			</ul>
+			<p>You can also configure subinterfaces on the Virtual Connector by associating the network interface with a Port Group or Distributed Port Group trunk and specifying a VLAN ID in addition to the port associated with the network interface (VLAN ID <code>1</code>-<code>4094</code>).</p>
+			<p>Refer to <a href="https://kb.vmware.com/s/article/1003825" target="_blank" rel="noopener noreferrer">VMware's documentation</a> for more information.</p></Aside></li>
+
+			<li>Extract the files in the OVA image provided by your Cloudflare account team. For example:
+
+			<Code lang="sh" code="tar -xvf mconn-2024-1-3.ova" />
+
+			Take note of the folder where you are extracting the files to, as you will need to refer to that folder when creating the VM.
+			</li>
+
+			<li>Go to <strong>Virtual Machines</strong> {`>`} <strong>Create/Register VM</strong> wizard to start deploying the Virtual Connector.</li>
+
+			<li>Select <strong>Deploy a virtual machine from an OVF or OVA file</strong> {`>`} <strong>Next</strong>.</li>
+
+			<li>Choose a descriptive name for your virtual machine.</li>
+
+			<li>Upload the files you have extracted from the OVA image. These include <code>mconn.ovf</code>, <code>mconn.nvram</code>, and <code>mconn.vmdk</code>.</li>
+
+			<li>Select where you want to save the files extracted from the OVA image {`>`} <strong>Next</strong>.</li>
+
+			<li>In <strong>Networking mappings</strong>, select assignments for your desired topology according to the port groups you set up previously:</li>
+				<ol>
+					<li>For example, map <code>eno1</code> port to <code>VM Network</code> to create your WAN, and <code>eno2</code> to <code>LAN0</code> to act as your LAN port.</li>
+					<li>Allocate any unused ports to the <code>null</code> port group.</li>
+					<li>Take note of your configuration. You will need this information to configure your network in the Cloudflare dashboard.</li>
+				</ol>
+
+			<li>In <strong>Disk provisioning</strong>, select <strong>Thin</strong>.</li>
+
+			<li>Before completing the deployment wizard, disable <strong>Power on automatically</strong>. This is important so that you can configure the license key prior to boot.</li>
+
+			<li>Configure the virtual machine with the license key your account team provided you:</li>
+			<ol>
+				<li>Select the Virtual Connector's VM {`>`} <strong>Settings</strong>.</li>
+
+				<li>Go to <strong>VM Options</strong> {`>`} <strong>Advanced</strong> {`>`} <strong>Edit Configuration</strong>.</li>
+
+				<li>Select <strong>Add parameter</strong> to add your license key. Scroll down to the last entry (this is where VMware adds the new parameter), and add the following two new entries:</li>
+					<ul>
+					<li><strong>Key</strong>: <code>guestinfo.cloudflare.identity</code></li>
+					<li><strong>Value</strong>: <code>{`<YOUR_LICENSE_KEY>`}</code></li>
+					</ul>
+			</ol>
+			<Aside>You cannot use the same license key twice, or reuse a key once the virtual machine has been registered with Cloudflare. You need a new key from your account team for every new Virtual Connector.</Aside>
+
+			<li>Select <strong>Save</strong> to finish configuring your Virtual Connector.</li>
+
+			<li>Continue setup in your <a href="#set-up-cloudflare-dashboard">Cloudflare dashboard.</a></li>
+		</ol>
+
+  </>
+  )
+}
+
+---
+
+## Set up Cloudflare dashboard
+
+### 1. Add a Connector on-ramp
+
+You need to add your Connector to your Cloudflare dashboard and configure its settings before connecting it to the Internet.
+
+To add a Connector on-ramp:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Magic WAN** > **Connector on-ramps (beta)**.
+3. Select **Add**.
+4. In **Name**, enter a descriptive name for your Connector. Optionally, you can also add a description for it.
+5. You need to decide if you want to turn on high availability for the Connector. Refer to [About high availability configurations](#about-high-availability-configurations) for more information.
+6. Select **Create and continue**.
+7. Select **Add Connector**. This will show you a list of Magic WAN Connector devices associated with your account. <Markdown text={props.noConnectorShows} />
+8. If you have more than one Connector, choose the one that corresponds to the on-ramp you are creating. Connectors are identified by a serial number, also known as a service tag. Use this information to choose the right Connector. Select **Select Connector** when you are ready to proceed.
+9. The Connector will be added to your account with an **Interrupt window** defined. The interrupt window is the time period when the Magic WAN Connector software can update, which may result in interruption to existing connections. You can change this later. Refer to [Interrupt window](/magic-wan/configuration/connector/maintenance/interrupt-service-window/) for more details on how to define when the Connector can update its systems.
+10. Select **Continue** to proceed to creating your WAN and LAN networks.
+
+### 2. Create a WAN
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. In **WAN configuration**, select **Create**. You can create one or more [wide area networks (WANs)](https://www.cloudflare.com/learning/network-layer/what-is-a-wan/). Configuring multiple WANs will create multiple <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels (one IPsec tunnel per WAN port). This allows the Connector to failover between circuits according to their <GlossaryTooltip term="tunnel health-check" link="/magic-wan/reference/tunnel-health-checks/">health</GlossaryTooltip>.
+2. In **Interface name**, enter a descriptive name for your WAN.
+3. **Interface number** <Markdown text={props.wan} />
+4. In **VLAN ID**, enter a number between `0` and `4094` to specify a [VLAN ID](/magic-wan/configuration/connector/reference/#vlan-id).
+5. In **Priority**, choose the priority for your WAN. Lower numbers have higher priority. Refer to <GlossaryTooltip term="traffic steering" link="/magic-wan/reference/traffic-steering/">Traffic steering</GlossaryTooltip> to learn more about how Cloudflare calculates priorities.
+6. In **Health check rate** configure the health check frequency for your site. Options are `low`, `mid`, and `high`. Refer to [Update tunnel health checks frequency](/magic-wan/configuration/common-settings/tunnel-health-checks/) for more information.
+7. **Addressing**: Select **DHCP**. This is needed the first time you set up your Connector to successfully download all settings to the machine and activate it. If you need a static IP address in your network environment:
+	1. Continue the set up flow below to activate your Connector.
+	2. Refer to [WAN with a static IP address](#wan-with-a-static-ip-address). If you choose a static IP, you also need to specify the static IP and gateway addresses.
+
+  <div class="medium-img">
+
+![An example of how to configure you Magic WAN Connector WAN](~/assets/images/magic-wan/connector/wan-config.png)
+
+  </div>
+
+8. Select **Save** when you are finished.
+
+</TabItem> <TabItem label="API">
+
+<Render file="connector/account-id-api-key" product="magic-wan" />
+
+Make a `POST` request [using the API](/api/resources/magic_transit/subresources/sites/subresources/wans/methods/create/) to create a WAN.
+
+The `static_addressing` object is optional. Omit it if you are using DHCP. If you are using static addressing, add the `secondary_address` parameter when your site is in high availability (HA) mode.
+
+Example:
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/wans \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+	"name": "<YOUR_WAN_NAME>",
+	"physport": 1,
+	"priority": 0,
+	"vlan_tag": 0
+}'
+```
+
+</TabItem> </Tabs>
+
+### 3. Create a LAN
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. In **LAN configuration**, select **Create**.
+2. Enter a descriptive name for your LAN in **Interface name**.
+3. **Interface number** <Markdown text={props.lan} />
+4. In **VLAN ID**, specify a [VLAN ID](/magic-wan/configuration/connector/reference/#vlan-id) to create virtual LANs.
+5. In **Static addressing** > **Static address** give your Connector's LAN interface its IP address. You can also enable the following options if they suit your use case:
+   - **This is a DHCP server**: If your Connector is a [DHCP server](/magic-wan/configuration/connector/network-options/dhcp/dhcp-server/).
+   - **This is a DHCP relay**: If your Connector is a [DHCP relay](/magic-wan/configuration/connector/network-options/dhcp/dhcp-relay/).
+6. (Optional) In **Directly attached subnet** > **Static NAT prefix**, enter a CIDR prefix to enable NAT (network address translation). The prefix you enter here should be the same size as the prefix entered in **Static addressing**. For example, both networks have a subnet mask of `/24`: `192.168.100.0/24` and `10.10.100.0/24`.
+7. (Optional) If your LAN contains additional subnets behind a layer 3 router, select **Add routed subnet** under **Routed subnets** to add them:
+   - **Prefix**: The CIDR prefix for the subnet behind the L3 router.
+   - **Next hop**: The address of the L3 router to which the Connector should forward packets for this subnet.
+   - **Static NAT prefix**: Optional setting. If you want to enable NAT for a routed subnet, supply an "external" prefix for the overlay-facing side of the NAT to use. It must be the same size as **Prefix**. <br /> Refer to [Routed subnets](/magic-wan/configuration/connector/network-options/routed-subnets/) for more information.
+8. Select **Save**.
+9. Select **Done** to finish your configuration. Tunnels and <GlossaryTooltip term="static route">static routes</GlossaryTooltip> will be automatically created for your Magic WAN Connector, once it boots up.
+
+</TabItem> <TabItem label="API">
+
+<Render file="connector/account-id-api-key" product="magic-wan" />
+
+Make a `POST` request [using the API](/api/resources/magic_transit/subresources/sites/subresources/lans/methods/create/) to create a LAN.
+
+Example:
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/lans \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+	"name": "<YOUR_LAN_NAME>",
+	"physport": 2,
+	"static_addressing": {
+		"address": "172.16.14.0/24"
+	},
+	"vlan_tag": 0
+}'
+```
+
+</TabItem> </Tabs>
+
+#### Network segmentation
+
+After setting up your LANs, you can configure your Connector to enable communication between them without traffic leaving your premises. Refer to [Network segmentation](/magic-wan/configuration/connector/network-options/network-segmentation/) for more information.
+
+#### DHCP options
+
+Magic WAN Connector supports different types of DHCP configurations. Connector can:
+
+- Connect to a DHCP server or use a static IP address instead of connecting to a DHCP server.
+- Act as a [DHCP server](/magic-wan/configuration/connector/network-options/dhcp/dhcp-server/).
+- Use [DHCP relay](/magic-wan/configuration/connector/network-options/dhcp/dhcp-relay/) to connect to a DHCP server outside the location your Magic WAN Connector is in.
+- [Reserve IP addresses](/magic-wan/configuration/connector/network-options/dhcp/dhcp-static-address-reservation/) for specific devices on your network.
+
+Refer to [DHCP options](/magic-wan/configuration/connector/network-options/dhcp/) to learn more.
+
+### 4. Add your Connector to a site
+
+After finishing your Connector configuration, you need to add it to a site. <Render file="sites-brief" />
+
+{ props.magicWord === "hardware" && (
+  <>
+		<AnchorHeading title="Set up your Magic WAN Connector" depth={2} />
+
+		<AnchorHeading title="Device installation" depth={3} />
+		<p>There are several deployment options for Magic WAN Connector. Connector can act like a DHCP server for your local network, or integrate with your local setup and have static IP addresses assigned to it.</p>
+		<p>When Connector acts like the WAN router for your site, deployment will be something like this:</p>
+
+		<pre class="mermaid">
+		{`flowchart LR
+		accTitle: Magic WAN Connector set up as a DHCP server, and connecting to the Internet.
+    a(Magic WAN Connector)--> b(Internet) --> c(Cloudflare)
+
+    subgraph Customer site
+    d[LAN 1] --> a
+    e[LAN 2] --> a
+    end
+
+    classDef orange fill:#f48120,color: black
+    class a,c orange`}
+		</pre>
+
+		<p>In the example below, the Connector sits behind the WAN router in your site, and on-ramps only some of the existing LANs to Cloudflare.</p>
+
+		<pre class="mermaid">
+		{`flowchart LR
+		accTitle: Magic WAN Connector connects to the router in the site, and only some of the LANs connect to Connector.
+    a(Magic WAN Connector)--> b((Site's router)) --> c(Internet) --> i(Cloudflare)
+
+    subgraph Customer site
+    d[LAN 1] --> a
+    e[LAN 2] --> a
+    g(LAN 3) --> b
+    h(LAN 4) --> b
+    end
+
+    classDef orange fill:#f48120,color: black
+    class a,i orange`}
+		</pre>
+
+		<p>Refer to <a href="/reference-architecture/diagrams/sase/magic-wan-connector-deployment/">Magic WAN Connector deployment options</a> for a high-level explanation of the deployment options that make sense to most environments, as well as a few advanced use cases.</p>
+
+		<AnchorHeading title="Firewall settings required" depth={4} />
+		<p>If there is a firewall deployed upstream of the Magic WAN Connector, configure the firewall to allow the following traffic:</p>
+
+		<Markdown
+			text={`
+	| Protocol/port | Destination IP/URL | Purpose |
+	| --- | --- |--- |
+	| \`UDP/53\` | DNS destination IP \`1.1.1.1\` | Needed to allow DNS traffic to Cloudflare DNS servers. Cloudflare uses this port for DNS lookups of control plane API. |
+	| \`TCP/443\` | - | The Connector will open outbound HTTPS connections over this port for control plane operations. |
+	| \`UDP/4500\` | Destination IP \`162.159.64.1\` | Needed for Connector's initialization and discovery traffic through outbound connections. |
+	| \`UDP/4500\` | Destination IP - Cloudflare anycast IPs | Needed for the Cloudflare anycast IPs assigned to your account for tunnel outbound connections. This traffic is tunnel traffic. |
+	| \`TCP/7844\`, \`UDP/7844\` | Outbound connections | This is for debugging facilities in the Connector. |
+	| \`UDP/123\` | \`http://time.cloudflare.com/\` | Needed for Magic WAN Connector to periodically contact Cloudflare's Time Services. |
+	`}
+		inline={false}
+	/>
+
+  </>
+  )
+}
+
+## Activate Connector
+
+{props.shippedLanguage}, and will only establish a connection to the Cloudflare network when it is activated. Cloudflare recommends leaving it deactivated until you finish [setting it up in the dashboard](#1-add-a-connector-on-ramp).
+
+{ props.magicWord === "hardware" && (
+  <>
+		<p>When the Connector is first activated, you need to have Internet connection. If you chose to set up your Connector with DHCP you will need to have one of the Connector ports connected to the Internet through a device that supports DHCP. This is required so that the Connector can reach the Cloudflare global network and download the required configurations that you <a href="#1-add-a-connector-on-ramp">set up</a>.</p>
+		<p> If you set up your Connector with a static IP through the bootstrap method, you do not need a DHCP port. Refer to <a href="#dhcp-vs-static-ip-connections"> DHCP vs static IP connections</a> for more information.</p>
+
+		<Aside type="caution">Remember that if you chose the DHCP method you have to connect Magic WAN Connector through a route that supports DHCP for its first connection to the Internet. Otherwise, the Connector will not work.</Aside>
+  </>
+  )
+}
+
+{ props.magicWord === "virtual" && (
+  <>
+		<p>When the Connector is first activated, one of the ports must be connected to the Internet through a device that supports DHCP. This is required so that the Connector can reach the Cloudflare global network and download the required configurations that you <a href="#1-add-a-connector-on-ramp">set up</a>.</p>
+
+		<Aside type="caution">Remember to connect Magic WAN Connector through a route that supports DHCP for its first connection to the Internet. Otherwise, the Connector will not work.</Aside>
+
+  </>
+  )
+}
+
+When you are ready to connect your Magic WAN Connector to the Cloudflare network:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Magic WAN** > **Configuration** > **Connectors**.
+3. Find the Connector you want to activate, select the three dots next to it > **Edit**. Make sure you verify the serial number to choose the right connector you want to activate.
+4. In the new window, the **Status** dropdown will show as **Deactivated**. Select it to change the status to **Activated**.
+5. The **Interrupt window** is the time period when the Magic WAN Connector software can update, which may result in interruption to existing connections. Choose a time period to minimize disruption to your sites. Refer to [Interrupt window](/magic-wan/configuration/connector/maintenance/interrupt-service-window/) for more details on how to define when the Connector can update its systems.
+6. Select **Update**.
+
+{ props.magicWord === "virtual" && (
+  <>
+		<AnchorHeading title="Boot your Virtual Connector" depth={2} />
+		<ol>
+			<li>Go to <strong>Virtual Machines</strong> in VMware, and boot up Virtual Connector's VM.</li>
+			<li>The Virtual Connector will make a request to Cloudflare. This is the step where Virtual Connector registers your provided license key and downloads the <a href="#1-add-a-connector-on-ramp">configuration you provided</a>.</li>
+			<li>The Virtual Connector will set up the LAN and WAN connections according to the configuration downloaded from the site you created on the Cloudflare dashboard. The Virtual Connector will also establish IPsec tunnels.</li>
+			<li>If successful, the <a href="/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/">tunnel health checks</a> will show as healthy.</li>
+			<li>If you do not see a <a href="/magic-wan/configuration/connector/maintenance/heartbeat/">healthy heartbeat</a> on the Cloudflare dashboard, reboot the Virtual Connector's VM in VMware.</li>
+		</ol>
+  </>
+  )
+}
+
+---
+
+## WAN with a static IP address
+
+{ props.magicWord === "hardware" && (
+  <>
+    <p>After activating your Connector, you can use it in a network configuration with the WAN interface set to a static IP address — that is, an Internet configuration that is not automatically set by DHCP. To use your Connector on a network configuration with a static IP, follow the steps below.</p>
+
+		<Aside type="caution">Make sure you complete the setup workflow and activate your Magic WAN Connector before changing the WAN settings to a static IP.</Aside>
+
+		<ol>
+			<li>Connect Magic WAN Connector to a DHCP port with access to the Internet.</li>
+			<li><a href="#1-add-a-connector-on-ramp">Add a Connector on-ramp</a> in the Cloudflare dashboard.</li>
+			<li>Create a <a href="#2-create-a-wan">DHCP WAN</a>.</li>
+			<li><a href="#activate-connector">Activate</a> and power on your Connector.</li>
+			<li>Wait 60 seconds.</li>
+			<li>Make changes to the <a href="#2-create-a-wan">WAN settings</a> in the Cloudflare dashboard to a static IP set up.</li>
+			<li>Wait 60 seconds again.</li>
+			<li>Magic WAN Connector will go offline. This is normal and expected behavior.</li>
+			<li>Adjust your physical connections as required to match the static configuration.</li>
+			<li>Magic WAN Connector comes back online.</li>
+		</ol>
+  </>
+  )
+}
+
+{ props.magicWord === "virtual" && (
+  <>
+		<p>After activating your Virtual Connector, you can use it in a network configuration with the WAN interface set to a static IP address - that is, an Internet configuration that is not automatically set by DHCP. To use your Virtual Connector on a network configuration with a static IP, follow the steps below.</p>
+		<Aside type="caution">Make sure you complete the setup workflow and activate your Virtual Connector before changing the WAN settings to a static IP.</Aside>
+
+		<ol>
+			<li>Connect the machine where you installed the VM with Virtual Connector to a DHCP port with access to the Internet.</li>
+			<li><a href="#1-add-a-connector-on-ramp">Add a Connector on-ramp</a> in the Cloudflare dashboard.</li>
+			<li>Create a <a href="#2-create-a-wan">DHCP WAN</a>.</li>
+			<li><a href="#activate-connector">Activate</a> and boot your Virtual Connector.</li>
+			<li>Wait 60 seconds.</li>
+			<li>Make changes to the <a href="#2-create-a-wan">WAN settings</a> in the Cloudflare dashboard to a static IP set up.</li>
+			<li>Wait 60 seconds again.</li>
+			<li>Modify your <a href="#deploy-the-virtual-connector-on-vmware">Port Groups</a> as needed to change the source from which the WAN port obtains its IP address.</li>
+			<li>Reboot your virtual machine.</li>
+		</ol>
+  </>
+  )
+}
+
+{ props.magicWord === "hardware" && (
+  <>
+		<AnchorHeading title="Bootstrap via Serial Console" depth={2} />
+		<p>Advanced users can locally configure their Magic WAN Connector to work in a static IP configuration. This local method does not require having access to a DHCP Internet connection. However, it does require being comfortable with using tools to access the serial port on Magic WAN Connector as well as using a serial terminal client to access the Connector's environment.</p>
+		<p>Below is a detailed description of how to use the serial port to configure your Magic WAN Connector locally.</p>
+
+		<AnchorHeading title="Equipment required" depth={3} />
+		<p>To access the serial port on Magic WAN Connector you will need the following equipment:</p>
+		<ul>
+			<li>The Magic WAN Connector appliance</li>
+			<li>A Phillips-head screwdriver</li>
+			<li>A micro-USB to USB-A cable (there should be one included in the packaging of your Connector)</li>
+			<li>A computer with an available USB port</li>
+			<li>A serial terminal client</li>
+			<li>Optional: if needed, a USB-A to USB-C converter dongle if your computer requires it</li>
+		</ul>
+
+		<AnchorHeading title="1. Access Magic WAN Connector's serial port" depth={3} />
+		<ol>
+			<li>Using the Phillips screwdriver, loosen the screw covering the serial console panel on the back of the Magic WAN Connector and turn the panel out of the way.
+				<ol>
+						<li>Pictures and more instructions can be found on <a href="https://www.dell.com/support/kbdoc/en-us/000134440/how-to-access-console-port-of-dell-emc-networking-virtual-edge-platform-1405-series" target="_blank" rel="noopener noreferrer">Dell's Technical Documents</a>.</li>
+				</ol>
+			</li>
+			<li>Connect your computer to the Magic WAN Connector using the USB cable.</li>
+		</ol>
+
+		<AnchorHeading title="Default password to access Connector" depth={4} />
+		<p>Your Connector's default password is the serial number (also known as a Service Tag for Dell devices), all uppercase followed by an "!" (for example, <code>A1B2C3D!</code>)</p>
+
+		<AnchorHeading title="2. Install a serial terminal client" depth={3} />
+		<p>To access Magic WAN Connector's environment you need a serial terminal client. Follow the instructions below to install one, based on your operating system.</p>
+
+		<AnchorHeading title="Windows" depth={4} />
+		<p>Cloudflare recommends using PuTTY for Windows. Download PuTTY from the <a href="https://www.putty.org/" target="_blank" rel="noopener noreferrer">official website</a> and then install it.</p>
+		<ol>
+			<li>Check the COM port of the USB to UART device in the Windows Device Manager. It should show up as something similar to <code>Silicon Labs CP210x USB to UART Bridge (COMX)</code>.</li>
+			<li>Take note of the value in the parentheses (COMX).
+				<ol>
+						<li>Refer to the <a href="https://infohub.delltechnologies.com/l/virtual-edge-platform-vep-1405-series-diag-os-and-tools-release-notes/bios-installation-and-configuration" target="_blank" rel="noopener noreferrer">Dell Documentation Page</a> for more details on creating a serial console connection.</li>
+				</ol>
+			</li>
+			<li>Launch PuTTY.</li>
+			<li>Under <strong>Category</strong>, make sure that <strong>Session</strong> (the first item) is selected.</li>
+			<li>Under <strong>Connection type</strong>, select <strong>Serial</strong>.</li>
+			<li>In the <strong>Serial Line</strong>, type in the COM port found in step 2 (for example, <code>COM1</code>).</li>
+			<li>In the <strong>Speed</strong>, enter <code>115200</code>.</li>
+			<li>Select <strong>Open</strong> on the bottom of the dialog box. A terminal window should pop up.</li>
+			<li>The screen may need to be manually refreshed when a new device is connected. You can do that by pressing <code>CTRL + C</code>.</li>
+		</ol>
+
+		<AnchorHeading title="macOS" depth={4} />
+		<p>Cloudflare recommends installing Screen for macOS. You can install Screen via <code>brew install screen</code>. If you do not have <code>brew</code> installed, follow the instructions on <a href="https://brew.sh/" target="_blank" rel="noopener noreferrer">Brew's Official Website</a> to install it.</p>
+		<ol>
+			<li>Open the macOS Terminal.</li>
+			<li>Run <code>ls /dev/cu.*</code> to list the connected serial devices.</li>
+			<li>The command should return an output similar to <code>/dev/cu.usbserial-0001</code>. Copy this output to the clipboard or note this down somewhere else.</li>
+			<li>Run <code>sudo screen -adRUS {`<`}PATH_FROM_STEP_3{`>`} 115200</code>.</li>
+			<li>The screen may need to be manually refreshed when a new device is connected. You can do that by pressing <code>CMD + C</code>.</li>
+		</ol>
+
+		<AnchorHeading title="Linux" depth={4} />
+		<p>Cloudflare recommends installing Screen for Linux. You can install Screen via your package manager of choice. For example, for Debian/Ubuntu, install by running <code>sudo apt update && sudo apt install screen</code></p>
+
+		<ol>
+			<li>Open Terminal.</li>
+			<li>List the connected serial devices by running <code>ls /dev/serial/by-id/*</code>.</li>
+			<li>The command should return an output similar to <code>/dev/serial/by-id/usb-Silicon_Labs_CP2102_USB_to_UART_Bridge_Controller_0001-if00-port0</code>. Copy this to the clipboard or note this down.</li>
+			<li>Run <code>sudo screen -adRUS {`<`}THE PATH FROM STEP 3{`>`}; 115200</code>.</li>
+			<li>The screen may need to be manually refreshed when a new device is connected. You can do that by pressing <code>CTRL + C</code>.</li>
+		</ol>
+
+		<AnchorHeading title="3. Configure a static IP on Magic WAN Connector" depth={3} />
+		<ol>
+			<li>Log into the Connector.
+				<ol>
+						<li>You will be prompted to change your password if you attempt to log in with the default password.</li>
+				</ol>
+			</li>
+			<li>From the menu, go to <strong>Bootstrap</strong> with the arrow keys and select it with the Enter key.</li>
+			<li>Select the Jack (physical port) you want to configure for the initialization of the connector.</li>
+			<li>Enter the VLAN tag (if applicable) of the network. Leave it blank if untagged.</li>
+			<li>Select whether the network is DHCP or static.</li>
+
+			<Aside>The main reason to use the bootstrapper is if every network the Connector is plugged into is either static, behind a VLAN, or both. If you find yourself here and configuring a network with DHCP and no VLAN, you are probably not in the right place. See the section on configuring your Connector <a href="#set-up-cloudflare-dashboard">via the dashboard</a>.</Aside>
+
+
+			<li>Enter the IP address you would like the connector to have in CIDR form (for example, <code>10.0.0.2/24</code>).</li>
+			<li>Enter the IP address of the Internet gateway (this must be in the same subnet as the previous IP address you entered and must not be the same address).</li>
+			<li>Select <strong>Save</strong> and confirm that you want to use the new settings.</li>
+			<li>The Connector will download the rest of the settings from Cloudflare. The last heartbeat of the Connector should update once it has made contact with Cloudflare.</li>
+		</ol>
+  </>
+  )
+}
+
+---
+
+## About high availability configurations
+
+{props.hardSoftConn} When you set up a site in high availability, the WANs and LANs in your Connectors have the same configuration but are replicated on two nodes. In case of failure of a Connector, the other Connector becomes the active node, taking over configuration of the LAN gateway IP and allowing traffic to continue without disruption.
+
+Because Connectors in high availability configurations share a single site, you need to set up:
+
+- **Static address**: The IP for the primary node in your site.
+- **Secondary static address**: The IP for the secondary node in your site.
+- **Virtual static address**: The IP that the LAN south of the Connector will forward traffic to, which is the LAN's gateway IP.
+
+Make sure all IPs are part of the same subnet.
+
+For detailed information about the expected behavior of high availability configurations, refer to [High availability configurations](/magic-wan/configuration/connector/reference/#high-availability-configurations).
+
+### Create a high availability configuration
+
+You cannot enable high availability for an existing site. To add high availability to an existing site in the Cloudflare dashboard, you need to delete the site and start again.
+
+To set up a high availability configuration:
+
+1. Follow the steps in [Add a Connector on-ramp](#1-add-a-connector-on-ramp) up until step 4.
+2. After naming your site, select **Turn on high availability**.
+3. Select **Create and continue**.
+4. Select **Add Connector**.
+5. From the list, choose your first Connector > **Add Connector**.
+6. Back on the previous screen, select **Add secondary Connector**.
+7. From the list, choose your second Connector > **Add Connector**.
+8. Select **Continue** to [Create a WAN](#2-create-a-wan). If you are configuring a static IP, configure the IP for the primary node as the static address, and the IP for the secondary node as the secondary static address.
+9. To create a LAN, follow the steps mentioned above in [Create a LAN](#3-create-a-lan) up until step 4.
+10. In **Static address**, enter the IP for the primary node in your site. For example, `192.168.10.1/24`.
+11. In **Secondary static address**, enter the IP for the secondary node in your site. For example, `192.168.10.2/24`.
+12. In **Virtual static address**, enter the IP that the LAN south of the Connector will forward traffic to. For example, `192.168.10.3/24`.
+13. Select **Save**.
+14. From the **High availability probing link** drop-down menu, select the port that should be used to monitor the node's health. Cloudflare recommends you choose a reliable interface as the HA probing link. The primary and secondary node's probing link should be connected over a switch, and cannot be a direct connection.
+15. <Markdown text={props.finalInstructions} />
+
+---
+
+## IPsec tunnels and static routes
+
+Magic WAN Connector automatically creates [IPsec tunnels](/magic-wan/reference/tunnels/#ipsec-tunnels) and [static routes](/magic-wan/reference/traffic-steering/) for you. You cannot configure these manually.
+
+To check the IPsec tunnels and static routes created by your Magic WAN Connector:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Magic WAN** > **Sites**.
+3. Select the name of the site for which you want to check the Connector's IPsec tunnels and static routes, and select **Edit**.
+4. Select **Tunnels** to check IPsec tunnels, and **Routes** for the static routes.
+
+---
+
+## Next steps
+
+- [Network options](/magic-wan/configuration/connector/network-options/)
+- [Maintenance](/magic-wan/configuration/connector/maintenance/)
+- [Reference information](/magic-wan/configuration/connector/reference/)
+- [Troubleshooting](/magic-wan/configuration/connector/troubleshooting/)

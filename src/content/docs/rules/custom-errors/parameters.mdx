@@ -1,0 +1,70 @@
+---
+title: Parameters
+pcx_content_type: reference
+sidebar:
+  order: 3
+head:
+  - tag: title
+    content: Custom errors parameters
+---
+
+import { Type, MetaInfo } from "~/components";
+
+## Custom error rules
+
+Custom error rules define when a custom error gets triggered and the content that is served to visitors.
+
+Rule parameters are the following:
+
+- **`asset_name`** <Type text="String"/> <MetaInfo text="Optional"/>
+  - The name of the [custom error asset](#custom-error-assets) you previously uploaded. The asset may include [error tokens](/rules/custom-errors/error-tokens/) that will be replaced with real values before sending the error response to the visitor.
+  - A custom error rule can only reference an asset defined in the same scope as the rule (that is, in the same zone or account).
+  - You must provide either the `asset_name` or the `content` parameter.
+- **`content`** <Type text="String"/> <MetaInfo text="Optional"/>
+  - The response body to return. It can include [error tokens](/rules/custom-errors/error-tokens/) that will be replaced with real values before sending the error response to the visitor.
+  - You must provide either the `asset_name` or the `content` parameter.
+  - The maximum content size is 10 KB.
+- **`content_type`** <Type text="String"/> <MetaInfo text="Required"/>
+  - The content type of the returned response. Must be one of the following:
+    - `text/html`
+    - `text/plain`
+    - `application/json`
+    - `text/xml`
+- **`status_code`** <Type text="Integer"/> <MetaInfo text="Optional"/>
+  - The HTTP status code of the response. If provided, this value will override the current response status code.
+  - The status code must be between `400` and `999`.
+
+:::caution
+
+If you create an HTML error response, make sure the `referrer` meta tag is not present in the HTML code since it will disrupt [Cloudflare challenges](/waf/reference/cloudflare-challenges/):
+
+```html
+<meta name="referrer" (...) />
+```
+
+:::
+
+## Custom error assets
+
+A custom error asset corresponds to a web resource such as an HTML web page (including any referenced images, CSS, and JavaScript code) that Cloudflare fetches and saves based on a URL you provide, to be served to visitors as an error page.
+
+Custom error assets have the following parameters:
+
+- **`name`** <Type text="String"/> <MetaInfo text="Required"/>
+  - The name of the custom error asset.
+  - Example value: `"500_error_template"`.
+  - An asset name can contain the following characters:
+    - Uppercase and lowercase letters (`A-Z` and `a-z`)
+    - Numbers (`0-9`)
+    - The underscore (`_`) character
+  - The maximum length is 200 characters.
+- **`description`** <Type text="String"/> <MetaInfo text="Optional"/>
+  - A string describing the custom error asset.
+  - Example value: `"Standard 5xx error template page"`.
+- **`url`** <Type text="String"/> <MetaInfo text="Required"/>
+  - The URL of the page you want Cloudflare to fetch and store, to be served later to visitors as error pages according to the configured [custom error rules](#custom-error-rules).
+  - Example value: `"https://example.com/errors/500.html"`.
+  - When you create or update an asset and provide a URL, Cloudflare collects any images, CSS, and JavaScript code used in the page, minifies the content, and saves it internally.
+  - The content of the page at the specified URL may include [error tokens](/rules/custom-errors/error-tokens/) that will be replaced with real values before sending the error response to the visitor.
+  - If you update an asset and provide the same URL, Cloudflare will fetch the URL again, along with its resources, and store it internally.
+  - The maximum asset size is 1.5 MB.

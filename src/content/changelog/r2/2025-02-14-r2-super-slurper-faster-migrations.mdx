@@ -1,0 +1,17 @@
+---
+title: Super Slurper now transfers data to R2 up to 5x faster
+description: Get started on Workers by choosing a template or importing a Git repository
+products:
+  - r2
+date: 2025-02-14T19:00:00Z
+---
+
+[Super Slurper](/r2/data-migration/super-slurper/) now transfers data from cloud object storage providers like AWS S3 and Google Cloud Storage to [Cloudflare R2](/r2/) up to 5x faster than it did before.
+
+We moved from a centralized service to a distributed system built on the Cloudflare Developer Platform — using [Cloudflare Workers](/workers/), [Durable Objects](/durable-objects/), and [Queues](/queues/) — to both improve performance and increase system concurrency capabilities (and we'll share more details about how we did it soon!)
+
+![Super Slurper Objects Migrated](~/assets/images/r2/slurper-objects-over-time-border.png)
+
+_Time to copy 75,000 objects from AWS S3 to R2 decreased from 15 minutes 30 seconds (old) to 3 minutes 25 seconds (after performance improvements)_
+
+For more information on Super Slurper and how to migrate data from existing object storage to R2, refer to our [documentation](/r2/data-migration/super-slurper/).
