@@ -26,8 +26,9 @@ manifest URL.
 
 When DVR mode is enabled the Stream Player will:
 
-- Show a timeline the viewer can scrub/seek. For example, when watching an on-demand video,
-  the timeline will automatically scale to show the growing duration of the broadcast.
+- Show a timeline the viewer can scrub/seek, similar to watching an on-demand
+  video. The timeline will automatically scale to show the growing duration of
+  the broadcast while it is live.
 - The "LIVE" indicator will show grey if the viewer is behind the live edge or
   red if they are watching the latest content. Clicking that indicator will jump
   forward to the live edge.
@@ -70,9 +71,10 @@ DVR Mode on a Live Input ID URL:
 - When using DVR Mode and a player/manifest created using a Live Input ID, the
   player may stall when trying to switch quality levels if a viewer is still
   watching after a broadcast has concluded.
-- There is no enforced limit to the maximum duration of a DVR manifest; however,
-  performance may be degraded for DVR manifests longer than three hours.
-- DVR Mode relies on Version 8 of the HLS manifest specification. Stream uses
+- Performance may be degraded for DVR-enabled broadcasts longer than three hours.
+  Manifests are limited to a maxiumum of 7,200 segments. Segment length is
+  determined by the keyframe interval, also called GOP size.
+- DVR Mode relies on Version 8 of the HLS manifest specification. Stream usesW
   HLS Version 6 in all other contexts. HLS v8 offers extremely broad compatibility
   but may not work with certain old player libraries or older devices.
 - DVR Mode is not available for DASH manifests.
