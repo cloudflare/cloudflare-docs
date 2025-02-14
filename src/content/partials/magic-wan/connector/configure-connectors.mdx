@@ -78,7 +78,7 @@ You cannot enable high availability for an existing Connector on-ramp. To add hi
 
 { props.magicWord === "hardware" && (
   <>
-    <p>At first boot, Magic WAN Connector needs to reach out to Cloudflare to download your settings and go through the activation process. If any of the networks plugged into your Connector are DHCP enabled, do not use a VLAN, and have an Internet connection, that process is handled automatically. However, if all of the networks require more information to utilize, (such as a network with static IPs, or tagged VLAN networks) your Magic WAN Connector might need some more information to proceed. There are couple of ways to provide that information, feel free to choose the one that fits your workflow: </p>
+    <p>At first boot, Magic WAN Connector needs to reach out to Cloudflare to download your settings and go through the activation process. If any of the networks plugged into your Connector are DHCP enabled, do not use a VLAN, and have an Internet connection, that process is handled automatically. However, if all of the networks require more information to utilize, (such as a network with static IPs, or tagged VLAN networks) your Magic WAN Connector might need some more information to proceed. There are couple of ways to provide that information. Feel free to choose the one that fits your workflow: </p>
 
 		<AnchorHeading title="Option one - Activate on a DHCP Network" depth={3} />
 		<ol>
@@ -399,7 +399,7 @@ After finishing your Connector configuration, you need to add it to a site. <Ren
 
 { props.magicWord === "hardware" && (
   <>
-		<p>When the Connector is first activated, you need to have Internet connection. If you chose to set up your Connector with DCHP you will need to have one of the Connector ports connected to the Internet through a device that supports DHCP. This is required so that the Connector can reach the Cloudflare global network and download the required configurations that you <a href="#1-add-a-connector-on-ramp">set up</a>.</p>
+		<p>When the Connector is first activated, you need to have Internet connection. If you chose to set up your Connector with DHCP you will need to have one of the Connector ports connected to the Internet through a device that supports DHCP. This is required so that the Connector can reach the Cloudflare global network and download the required configurations that you <a href="#1-add-a-connector-on-ramp">set up</a>.</p>
 		<p> If you set up your Connector with a static IP through the bootstrap method, you do not need a DHCP port. Refer to <a href="#dhcp-vs-static-ip-connections"> DHCP vs static IP connections</a> for more information.</p>
 
 		<Aside type="caution">Remember that if you chose the DHCP method you have to connect Magic WAN Connector through a route that supports DHCP for its first connection to the Internet. Otherwise, the Connector will not work.</Aside>
