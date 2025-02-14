@@ -38,10 +38,10 @@ curl -X POST https://api.cloudflare.com/client/v4/zones/$ZONE_ID/custom_hostname
 
 You can also:
 
-* [Upload](/api/resources/custom_hostnames/methods/create/) an RSA or ECDSA certificate to a custom hostname with only an ECDSA or RSA certificate, respectively
+* [Upload](/api/resources/custom_hostnames/methods/create/) an RSA or ECDSA certificate to a custom hostname with an existing ECDSA or RSA certificate, respectively.
 
-* [Replace](/api/resources/custom_hostnames/subresources/certificate_pack/subresources/certificates/methods/update/) the RSA or ECDSA certificate with a certificate of its same type
+* [Replace](/api/resources/custom_hostnames/subresources/certificate_pack/subresources/certificates/methods/update/) the RSA or ECDSA certificate with a certificate of its same type.
 
-* [Delete](/api/resources/custom_hostnames/subresources/certificate_pack/subresources/certificates/methods/delete/) the RSA or ECDSA certificate (if the custom hostname has both an RSA and ECDSA uploaded)
+* [Delete](/api/resources/custom_hostnames/subresources/certificate_pack/subresources/certificates/methods/delete/) the RSA or ECDSA certificate (if the custom hostname has both an RSA and ECDSA uploaded).
 
 This feature is available for Business and Enterprise customers who have purchased custom certificates.
