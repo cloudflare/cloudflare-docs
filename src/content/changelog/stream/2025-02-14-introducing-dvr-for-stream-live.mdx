@@ -9,7 +9,6 @@ products:
 date: 2025-02-14T12:00:00Z
 ---
 
-
 Previously, all viewers watched "the live edge," or the latest content of the
 broadcast, synchronously. If a viewer paused for more than a few seconds,
 the player would automatically "catch up" when playback started again. Seeking
@@ -21,25 +20,6 @@ embed or manifest URL to enable the DVR experience for their viewers. By
 offering this feature as an opt-in adjustment, our customers are empowered to
 pick the best experiences for their applications.
 
-## How to get started
-
-This feature is already available to all customers. When building a player embed
-code or manifest URL, add `dvrEnabled=true` as a query parameter.
-
-``` html title="Player Embed Code"
-<div style="position: relative; padding-top: 56.25%;">
-  <iframe
-    src="https://customer-<CODE>.cloudflarestream.com/<INPUT_ID|VIDEO_ID>/iframe?dvrEnabled=true"
-    style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
-    allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-    allowfullscreen="true"
-  ></iframe>
-</div>
-```
-
-``` text title="HLS Manifest"
-https://customer-<CODE>.cloudflarestream.com/<INPUT_ID|VIDEO_ID>/manifest/video.m3u8?dvrEnabled=true
-```
-
-There are some things to be aware of when using this option. For more
-information, refer to [DVR for Live](/stream/stream-live/dvr-for-live/).
+When building a player embed code or manifest URL, just add `dvrEnabled=true` as
+a query parameter. There are some things to be aware of when using this option.
+For more information, refer to [DVR for Live](/stream/stream-live/dvr-for-live/).

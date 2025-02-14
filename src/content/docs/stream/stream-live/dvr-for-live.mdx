@@ -11,7 +11,7 @@ resume, and fast-forward a live broadcast. To enable DVR mode, simply add the
 `dvrEnabled=true` query parameter to the Stream Player embed source or the HLS
 manifest URL.
 
-**Stream Player Embed Format**
+## Stream Player embed format
 
 ``` html title="Stream Player Embed Code"
 <div style="position: relative; padding-top: 56.25%;">
@@ -34,7 +34,7 @@ When DVR mode is enabled the Stream Player will:
 - If the viewer pauses the player, it will resume playback from that time instead
   of jumping forward to the live edge.
 
-**HLS Manifest URL Format**
+## HLS Manifest URL format
 
 ``` text title="HLS Manifest"
 https://customer-<CODE>.cloudflarestream.com/<INPUT_ID|VIDEO_ID>/manifest/video.m3u8?dvrEnabled=true
@@ -67,13 +67,12 @@ When using DVR Mode on a Live Input ID URL:
 
 ## Known Limitations
 
-- When using DVR Mode and a player/manifest created using a Live Input ID, if a
-  viewer is still watching after a broadcast has concluded, the player may stall
-  when trying to switch quality levels.
+- When using DVR Mode and a player/manifest created using a Live Input ID, the
+  player may stall when trying to switch quality levels if a viewer is still
+  watching after a broadcast has concluded.
 - There is no enforced limit to the maximum duration of a DVR manifest, however
   performance may be degraded for DVR manifests longer than 3 hours.
-- DVR Mode relies on Version 8 of the HLS manifest specification, which is newer
-  than Version 6, which Stream Live and On-Demand currently use. HLS v8 offers
-  extremely broad compatibility but may not work with certain old player libraries
-  or older devices.
+- DVR Mode relies on Version 8 of the HLS manifest specification. Stream uses
+  HLS Version 6 in all other contexts. HLS v8 offers extremely broad compatibility
+  but may not work with certain old player libraries or older devices.
 - DVR Mode is not available for DASH manifests.
