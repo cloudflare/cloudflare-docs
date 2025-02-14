@@ -562,9 +562,9 @@ metadata: Record<string, string>;
 };
 
 export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
-async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
-// Can access bindings on `this.env`
-// Can access params on `event.payload`
+	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
+	// Can access bindings on `this.env`
+	// Can access params on `event.payload`
 
     const files = await step.do('my first step', async () => {
       // Fetch a list of files from $SOME_SERVICE
@@ -628,14 +628,22 @@ let url = new URL(req.url);
       });
     }
 
+    const data = await req.json()
+
     // Spawn a new instance and return the ID and status
-    let instance = await env.MY_WORKFLOW.create();
+    let instance = await env.MY_WORKFLOW.create({
+    	// Define an ID for the Workflow instance
+    	id: crypto.randomUUID(),
+     	// Pass data to the Workflow instance
+      // Available on the WorkflowEvent
+     	params: data,
+    });
+
     return Response.json({
       id: instance.id,
       details: await instance.status(),
     });
-
-},
+  },
 };
 </code>
 
@@ -743,46 +751,6 @@ curl "<https://api.cloudflare.com/client/v4/accounts/{account_id}/analytics_engi
  </example>
 
 </code_examples>
-
-<api_patterns>
-<pattern id="websocket_coordination">
-<description>
-Fan-in/fan-out for WebSockets. Uses the Hibernatable WebSockets API within Durable Objects. Does NOT use the legacy addEventListener API.
-</description>
-<implementation>
-export class WebSocketHibernationServer extends DurableObject {
- async fetch(request: Request, env: Env, ctx: ExecutionContext) {
-  // Creates two ends of a WebSocket connection.
-  const webSocketPair = new WebSocketPair();
-  const [client, server] = Object.values(webSocketPair);
-
-    // Call this to accept the WebSocket connection.
-    // Do NOT call server.accept() (this is the legacy approach and is not preferred)
-    this.ctx.acceptWebSocket(server);
-
-    return new Response(null, {
-          status: 101,
-          webSocket: client,
-    });
-  },
-
-  async webSocketMessage(ws: WebSocket, message: string | ArrayBuffer): void | Promise<void> {
-   // Invoked on each WebSocket message.
-    ws.send(message)
-  },
-
-  async webSocketClose(ws: WebSocket, code: number, reason: string, wasClean: boolean) void | Promise<void> {
-   // Invoked when a client closes the connection.
-   ws.close(code, "<message>");
-  },
-
-  async webSocketError(ws: WebSocket, error: unknown): void | Promise<void> {
-   // Handle WebSocket errors
-  }
-}
-</implementation>
-</pattern>
-</api_patterns>
 
 <user_prompt>
 {user_prompt}
