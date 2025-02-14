@@ -99,7 +99,7 @@ You cannot enable high availability for an existing Connector on-ramp. To add hi
   <>
 		<AnchorHeading title="Obtain the Virtual Connector image" depth={2} />
 
-		<p>Contact your account team at Cloudflare to obtain the Virtual Connector <a href="https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.vm_admin.doc/GUID-AE61948B-C2EE-436E-BAFB-3C7209088552.html">OVA package</a> and license keys. The OVA image includes the files required to install and configure the virtual machine (VM) for Virtual Connector with the appropriate settings.</p>
+		<p>Contact your account team at Cloudflare to obtain the Virtual Connector <a href="https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.vm_admin.doc/GUID-AE61948B-C2EE-436E-BAFB-3C7209088552.html" target="_blank" rel="noopener noreferrer">OVA package</a> and license keys. The OVA image includes the files required to install and configure the virtual machine (VM) for Virtual Connector with the appropriate settings.</p>
 		<p>This image can be deployed multiple times to create several instances of a Virtual Connector, in different locations or on the same ESXi host.</p>
 		<p>You will consume one license key for each instance created. For example, if you want to deploy 10 Virtual Connectors you should request 10 license keys, and your account team will create 10 Connector instances in your Cloudflare dashboard.</p>
 
@@ -116,14 +116,14 @@ You cannot enable high availability for an existing Connector on-ramp. To add hi
 				</ul>
 
 			<Aside title="VLAN tagging">
-			<p>Virtual Connector supports creating subinterfaces through the use of [802.1Q VLAN tagging](https://en.wikipedia.org/wiki/IEEE_802.1Q).</p>
+			<p>Virtual Connector supports creating subinterfaces through the use of <a href="https://en.wikipedia.org/wiki/IEEE_802.1Q" target="_blank" rel="noopener noreferrer">802.1Q VLAN tagging.</a></p>
 			<p>Use VLAN ID <code>0</code> when:</p>
 			<ul>
 				<li>Connected to a Port Group or Distributed Port Group that is associated with a specific VLAN.</li>
 				<li>Connected to a Port Group or Distributed Port Group that is configured as a trunk that requires untagged packets.</li>
 			</ul>
-			<p>You can also configure subinterfaces on the Virtual Connector by associating the network interface with a Port Group or Distributed Port Group trunk and specifying a VLAN ID in addition to the port associated with the network interface (VLAN ID `1`-`4094`).</p>
-			<p>Refer to <a href="https://kb.vmware.com/s/article/1003825">VMWare's documentation</a> for more information.</p></Aside></li>
+			<p>You can also configure subinterfaces on the Virtual Connector by associating the network interface with a Port Group or Distributed Port Group trunk and specifying a VLAN ID in addition to the port associated with the network interface (VLAN ID <code>1</code>-<code>4094</code>).</p>
+			<p>Refer to <a href="https://kb.vmware.com/s/article/1003825" target="_blank" rel="noopener noreferrer">VMWare's documentation</a> for more information.</p></Aside></li>
 
 			<li>Extract the files in the OVA image provided by your Cloudflare account team. For example:
 
