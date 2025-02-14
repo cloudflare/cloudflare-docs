@@ -14,7 +14,7 @@ By default, Queues retain messages for 4 days. Previously, it was impossible to 
 
 With this update, you can retain messages for up to 14 days. Or if you want your consumer to only consume newer messages, you can set the message expiry period to be as short as 60 seconds.
 
-You can customize the retention period on the Queues settings page on the dashboard, or using Wrangler:
+You can customize the retention period on the Queues settings page on the dashboard or using Wrangler:
 ```bash title="Update message retention period"
 $ wrangler queues update my-queue --message-retention-period-secs 600
 ```
