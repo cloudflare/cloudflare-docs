@@ -8,7 +8,7 @@ product:
 
 meta:
   title: Hyperdrive
-  description: Documentation for Hyperdrive, a service for dramatically speeding up access to your database.
+  description: Service which accelerates queries you make to existing databases.
   author: "@cloudflare"
 
 resources:
