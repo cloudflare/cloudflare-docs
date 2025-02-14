@@ -46,7 +46,7 @@ import Mermaid from "~/components/Mermaid.jsx";
     	<li>One vSwitch port group or VLAN with access to the Internet (for example, through a WAN)</li>
     	<li>One or more vSwitch port group or VLAN that will be the internal LAN</li>
 		</ul>
-		<p>Refer to <a href="https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.esxi.install.doc/GUID-B2F01BF5-078A-4C7E-B505-5DFFED0B8C38.html">VMware's documentation</a> for more information on how to install ESXi and configure a virtual machine.</p>
+		<p>Refer to <a href="https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.esxi.install.doc/GUID-B2F01BF5-078A-4C7E-B505-5DFFED0B8C38.html" target="_blank" rel="noopener noreferrer">VMware's documentation</a> for more information on how to install ESXi and configure a virtual machine.</p>
   </>
   )
 }
@@ -55,7 +55,7 @@ import Mermaid from "~/components/Mermaid.jsx";
 
 ## Before you begin
 
-You can install up to two Magic WAN Connectors for redundancy at each of your sites. If one of your Connectors fail, traffic will fail over to the other Connector ensuring that you never lose connectivity to that site.
+You can install up to two {props.productName}s for redundancy at each of your sites. If one of your Connectors fail, traffic will fail over to the other Connector ensuring that you never lose connectivity to that site.
 
 In this type of high availability (HA) configuration, you will choose a reliable LAN interface as the HA link which will be used to monitor the health of the peer connector. HA links can be dedicated links or can be shared with other LAN traffic.
 
@@ -359,7 +359,7 @@ After finishing your Connector configuration, you need to add it to a site. <Ren
 	| \`UDP/53\` | DNS destination IP \`1.1.1.1\` | Needed to allow DNS traffic to Cloudflare DNS servers. Cloudflare uses this port for DNS lookups of control plane API |
 	| \`TCP/443\` | - | The Connector will open outbound HTTPS connections over this port for control plane operations. |
 	| \`UDP/4500\` | Destination IP \`162.159.64.1\` | Needed for Connector's initialization and discovery traffic through outbound connections. |
-	| \`UDP/4500\` | Destination IP - Cloudflare anycast IPs | Needed for the Cloudflare <GlossaryTooltip term="anycast" link="/magic-wan/configuration/manually/how-to/configure-tunnels/">anycast IPs</GlossaryTooltip> assigned to your account for tunnel outbound connections. This traffic is tunnel traffic. |
+	| \`UDP/4500\` | Destination IP - Cloudflare anycast IPs | Needed for the Cloudflare anycast IPs assigned to your account for tunnel outbound connections. This traffic is tunnel traffic. |
 	| \`TCP/7844\`, \`UDP/7844\` | Outbound connections | This is for debugging facilities in the Connector. |
 	| \`UDP/123\` | \`http://time.cloudflare.com/\` | Needed for Magic WAN Connector to periodically contact Cloudflare's Time Services. |
 	`}
@@ -406,8 +406,6 @@ When you are ready to connect your Magic WAN Connector to the Cloudflare network
 ---
 
 ## WAN with a static IP address
-
-{props.shippedLanguage}, and will only establish a connection to the Cloudflare network when it is activated. Cloudflare recommends leaving it deactivated until you finish [setting it up in the dashboard](#1-add-a-connector-on-ramp).
 
 { props.magicWord === "hardware" && (
   <>
