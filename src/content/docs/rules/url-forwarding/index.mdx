@@ -2,7 +2,7 @@
 pcx_content_type: concept
 title: Redirects
 sidebar:
-  order: 5
+  order: 6
 ---
 
 import { FeatureTable, Render } from "~/components";
@@ -19,7 +19,7 @@ Use the following Cloudflare products to perform URL redirects, according to you
 
 <Render
 	file="rules-requirements"
-	params={{ one: "Single Redirects and Bulk Redirects require" }}
+	params={{ sentenceIntro: "Single Redirects and Bulk Redirects require" }}
 />
 
 ## Redirect Rules templates
@@ -32,6 +32,8 @@ Single Redirects and Bulk Redirects are available on all Cloudflare plans. The e
 
 ### Bulk redirects
 
+<Render file="rules-new-limits" />
+
 <FeatureTable id="rules.bulk_redirects" />
 
 For _URL redirects across lists_, this table provides the default quota for the Enterprise plan. Bulk Redirects supports several million URL redirects — to get more redirects, contact your account team.
@@ -39,6 +41,8 @@ For _URL redirects across lists_, this table provides the default quota for the 
 Bulk Redirects features and quotas are per account and they depend on the highest Cloudflare plan on your account.
 
 ### Single Redirects
+
+<Render file="rules-new-limits" />
 
 <FeatureTable id="rules.single_redirects" />
 
@@ -50,5 +54,5 @@ Single Redirects features and quotas are per zone and depend on the zone plan.
 
 <Render
 	file="troubleshoot-rules-with-trace"
-	params={{ one: "URL redirects" }}
+	params={{ rulesFeatureName: "URL redirects" }}
 />

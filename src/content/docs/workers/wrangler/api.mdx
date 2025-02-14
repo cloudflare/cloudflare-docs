@@ -12,8 +12,38 @@ import { Render, TabItem, Tabs, Type, MetaInfo, WranglerConfig } from "~/compone
 
 Wrangler offers APIs to programmatically interact with your Cloudflare Workers.
 
+- [`unstable_startWorker`](#unstable_startworker) - Start a server for running integration tests against your Worker.
 - [`unstable_dev`](#unstable_dev) - Start a server for running either end-to-end (e2e) or integration tests against your Worker.
 - [`getPlatformProxy`](#getplatformproxy) - Get proxies and values for emulating the Cloudflare Workers platform in a Node.js process.
+
+## `unstable_startWorker`
+
+This API exposes the internals of Wrangler's dev server, and allows you to customise how it runs. For example, you could use `unstable_startWorker()` to run integration tests against your Worker. This example uses `node:test`, but should apply to any testing framework:
+
+```js
+import assert from "node:assert";
+import test, { after, before, describe } from "node:test";
+import { unstable_startWorker } from "wrangler";
+
+describe("worker", () => {
+	let worker;
+
+	before(async () => {
+		worker = await unstable_startWorker({ config: "wrangler.json" });
+	});
+
+	test("hello world", async () => {
+		assert.strictEqual(
+			await (await worker.fetch("http://example.com")).text(),
+			"Hello world",
+		);
+	});
+
+	after(async () => {
+		await worker.dispose();
+	});
+});
+```
 
 ## `unstable_dev`
 
@@ -25,9 +55,9 @@ By default, `unstable_dev` will perform integration tests against a local server
 
 :::note
 
-The `unstable_dev()` function has an `unstable_` prefix because the API is experimental and may change in the future.
+The `unstable_dev()` function has an `unstable_` prefix because the API is experimental and may change in the future. We recommend migrating to the `unstable_startWorker()` API, documented above.
 
-`unstable_dev()` has no known bugs and is safe to use. If you discover any bugs, open a [GitHub issue](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+If you have been using `unstable_dev()` for integration testing and want to migrate to Cloudflare's Vitest integration, refer to the [Migrate from `unstable_dev` migration guide](/workers/testing/vitest-integration/get-started/migrate-from-unstable-dev/) for more information.
 
 :::
 
@@ -335,8 +365,6 @@ The bindings supported by `getPlatformProxy` are:
   - To use a Durable Object binding with `getPlatformProxy`, always [specify a `script_name`](/workers/wrangler/configuration/#durable-objects) and have the target Worker run in a separate terminal via [`wrangler dev`](/workers/wrangler/commands/#dev).
 
     For example, you might have the following file read by `getPlatformProxy`.
-
-
 
     <WranglerConfig>
 

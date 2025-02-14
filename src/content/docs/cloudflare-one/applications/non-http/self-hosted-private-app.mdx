@@ -6,7 +6,7 @@ sidebar:
   label: Add a self-hosted private application
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 You can configure a self-hosted Access application to manage access to specific IPs or hostnames on your private network.
 
@@ -75,12 +75,11 @@ Users can now connect to your private application after authenticating with Clou
 
 By default, Cloudflare will evaluate a private application's Access policies after evaluating all Gateway network policies. To evaluate Access private applications before or after specific Gateway policies, create the following [Gateway network policy](/cloudflare-one/policies/gateway/network-policies/):
 
+| Selector                            | Operator | Value | Action |
+| ----------------------------------- | -------- | ----- | ------ |
+| All Access App Private Destinations | is       | on    | Allow  |
 
-| Selector | Operator | Value        | Action |
-| -------- | -------- | ------------ | ------ |
-| All Access Private Apps | is       | `Enabled` | Allow  |
-
-You can now drag and drop this policy in the Gateway policy builder to change its [order of precedence](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence).
+You can move this policy in the Gateway policy builder to change its [order of precedence](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence).
 
 :::note
 Users must pass the policies in your Access application before they are granted access. The Gateway Allow policy is strictly for routing and connectivity purposes.
