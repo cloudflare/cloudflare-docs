@@ -5,6 +5,10 @@ productLink: "/magic-wan/"
 productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
+  - publish_date: "2024-12-14"
+    title: Local console access for bootstrapping Magic WAN Connector
+    description: |-
+      Magic WAN Connector can now be configured to connect to the Cloudflare network via a static IP assignment through local console.
   - publish_date: "2024-12-12"
     title: LAN Policy improvements for the Magic WAN Connector
     description: |-
