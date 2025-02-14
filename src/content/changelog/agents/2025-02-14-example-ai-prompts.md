@@ -1,6 +1,6 @@
 ---
 title: Build AI Agents with Example Prompts
-description:
+description: Build applications on Workers with our prompt examples.
 products:
   - agents
   - workers
