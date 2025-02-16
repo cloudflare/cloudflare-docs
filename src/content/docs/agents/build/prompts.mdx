@@ -9,6 +9,8 @@ import { Tabs, TabItem, GlossaryTooltip, Type, Badge, TypeScriptExample } from "
 
 ## Prompting <Badge text="Beta" variant="caution" size="small" />
 
+When building, iterating on or debugging applications using AI tools and Large Language Models (LLMs), a well-structured and extensive prompt helps provide the model with clearer guidelines & examples that can dramatically improve output.
+
 We're providing an extensive example prompt that can help you build apps and AI agents using Cloudflare Workers and your preferred AI model.
 
 ```md collapse={30-10000}
@@ -754,10 +756,11 @@ curl "<https://api.cloudflare.com/client/v4/accounts/{account_id}/analytics_engi
 The prompt above adopts several best practices, including:
 
 * Using `<xml>` tags to structure the prompt
-* Including clear API and usage examples for specific products and use-cases
+* API and usage examples for products and use-cases
 * Guidance on how to generate configuration (e.g. `wrangler.jsonc`) as part of the models response.
+* Recommendations on Cloudflare products to use for specific storage or state need
 
-### Using the prompt
+## Using the prompt
 
 :::note
 
@@ -839,7 +842,9 @@ export default {
 </TypeScriptExample>
 
 
-### Additional resources
+## Additional resources
+
+To get the most out of AI models and tools, we recommend reading the following guides on prompt engineering and structure:
 
 * OpenAI's [prompt engineering](https://platform.openai.com/docs/guides/prompt-engineering) guide and [best practices](https://platform.openai.com/docs/guides/reasoning-best-practices) for using reasoning models.
 * The [prompt engineering](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview) guide from Anthropic
