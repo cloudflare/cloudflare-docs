@@ -15,7 +15,7 @@ entries:
       [REST API](/workers-ai/get-started/rest-api/) is an application programming interface that allows developers to interact with Workers AI services over HTTP, enabling model management and inference requests.
   - term: API Tokens
     general_definition: |-
-      [API Tokens](https://developers.cloudflare.com/workers-ai/get-started/rest-api/) are authentication credentials used to securely access and manage Workers AI resources via the REST API.
+      [API Tokens](/workers-ai/get-started/rest-api/) are authentication credentials used to securely access and manage Workers AI resources via the REST API.
   - term: Cloudflare Dashboard
     general_definition: |-
       [Cloudflare Dashboard](https://developers.cloudflare.com/workers-ai/get-started/dashboard/) is a web-based interface that allows users to manage Workers AI services, including model deployment and monitoring.
