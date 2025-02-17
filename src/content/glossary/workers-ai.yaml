@@ -27,7 +27,7 @@ entries:
       [Prompt Templates](/workers-ai/guides/prompting/) are predefined structures that guide the input provided to AI models, enhancing consistency and effectiveness in responses.
   - term: Worker Bindings
     general_definition: |-
-      [Worker Bindings](https://developers.cloudflare.com/workers-ai/configuration/bindings/) are configurations that connect Workers scripts to external resources, such as AI models, enabling seamless integration and functionality.
+      [Worker Bindings](/workers-ai/configuration/bindings/) are configurations that connect Workers scripts to external resources, such as AI models, enabling seamless integration and functionality.
   - term: Environment Variables
     general_definition: |-
       [Environment Variables](/workers-ai/configuration/bindings/) are dynamic values that can be used within Workers to manage configuration settings, including those related to AI integrations.
