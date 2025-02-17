@@ -3,7 +3,7 @@ productName: Workers AI
 entries:
   - term: Workers AI
     general_definition: |-
-      [Workers AI](https://developers.cloudflare.com/workers-ai/) is a Cloudflare service that enables running machine learning models on Cloudflare's global network, utilizing serverless GPUs. It allows developers to integrate AI capabilities into their applications using Workers, Pages, or via the REST API.
+      [Workers AI](/workers-ai/) is a Cloudflare service that enables running machine learning models on Cloudflare's global network, utilizing serverless GPUs. It allows developers to integrate AI capabilities into their applications using Workers, Pages, or via the REST API.
   - term: Serverless GPUs
     general_definition: |-
       [Serverless GPUs](https://developers.cloudflare.com/workers-ai/) are Graphics Processing Units provided by Cloudflare in a serverless environment, enabling scalable and efficient execution of machine learning models without the need for managing underlying hardware.
