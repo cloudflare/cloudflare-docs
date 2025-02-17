@@ -66,6 +66,10 @@ Above, the visibility level is set as `Unlisted`, which means that the scan repo
 
 There will also be three screenshots taken of the webpage, one per target device type. The [`User-Agent`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) will be set as "XXX-my-user-agent". Note that you can set any custom HTTP header, including [Authorization](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization).
 
+:::note[Header]
+Successful scans are subject to a retention policy of 12 months. Failed scans older than 30 days will be deleted.
+:::
+
 ### Get scan report
 
 Once the URL Scan submission is made, the current progress can be checked by calling `https://api.cloudflare.com/client/v4/accounts/{account_id}/urlscanner/v2/result/{scan_id}`. The `scan_id` will be the `uuid` value returned in the previous response.
