@@ -33,7 +33,7 @@ entries:
       [Environment Variables](/workers-ai/configuration/bindings/) are dynamic values that can be used within Workers to manage configuration settings, including those related to AI integrations.
   - term: Model Catalog
     general_definition: |-
-      [Model Catalog](https://developers.cloudflare.com/workers-ai/models/) is a curated collection of AI models available within Workers AI, providing developers with a variety of pre-trained models for different tasks.
+      [Model Catalog](/workers-ai/models/) is a curated collection of AI models available within Workers AI, providing developers with a variety of pre-trained models for different tasks.
   - term: Fine-Tuning
     general_definition: |-
       [Fine-Tuning](/workers-ai/fine-tunes/) is a general term for modifying an AI model by continuing to train it with additional data.
