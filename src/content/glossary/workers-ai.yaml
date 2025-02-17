@@ -48,7 +48,7 @@ entries:
       [An AI model](/workers-ai/models) is a trained system that processes input data to generate predictions, decisions, or outputs based on patterns it has learned.
   - term: Workers KV
     general_definition: |-
-      [Workers KV](https://developers.cloudflare.com/kv/)is a data storage that allows you to store and retrieve data globally.
+      [Workers KV](/kv/)is a data storage that allows you to store and retrieve data globally.
   - term: D1
     general_definition: |-
       [D1](https://developers.cloudflare.com/d1/) is Cloudflare's managed, serverless database with SQLite's SQL semantics, built-in disaster recovery, and Worker and HTTP API access.
