@@ -21,7 +21,7 @@ entries:
       [Cloudflare Dashboard](/workers-ai/get-started/dashboard/) is a web-based interface that allows users to manage Workers AI services, including model deployment and monitoring.
   - term: Prompt Engineering
     general_definition: |-
-      [Prompt Engineering](https://developers.cloudflare.com/workers-ai/guides/prompting/) is the practice of designing and refining input prompts to effectively elicit desired responses from AI models.
+      [Prompt Engineering](/workers-ai/guides/prompting/) is the practice of designing and refining input prompts to effectively elicit desired responses from AI models.
   - term: Prompt Templates
     general_definition: |-
       [Prompt Templates](/workers-ai/guides/prompting/) are predefined structures that guide the input provided to AI models, enhancing consistency and effectiveness in responses.
