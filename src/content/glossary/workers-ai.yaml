@@ -51,7 +51,7 @@ entries:
       [Workers KV](/kv/)is a data storage that allows you to store and retrieve data globally.
   - term: D1
     general_definition: |-
-      [D1](https://developers.cloudflare.com/d1/) is Cloudflare's managed, serverless database with SQLite's SQL semantics, built-in disaster recovery, and Worker and HTTP API access.
+      [D1](/d1/) is Cloudflare's managed, serverless database with SQLite's SQL semantics, built-in disaster recovery, and Worker and HTTP API access.
   - term: Inference
     general_definition: |-
       [Inference](https://developers.cloudflare.com/workers-ai/fine-tunes/public-loras/#running-inference-with-public-loras) refers to the process of using a trained machine learning model to make predictions or generate outputs based on new data.
