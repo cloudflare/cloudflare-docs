@@ -9,7 +9,7 @@ entries:
       [Serverless GPUs](/workers-ai/) are graphics processing units provided by Cloudflare in a serverless environment, enabling scalable and efficient execution of machine learning models without the need for managing underlying hardware.
   - term: Wrangler CLI
     general_definition: |-
-      [Wrangler CLI](https://developers.cloudflare.com/workers-ai/get-started/workers-wrangler/) is a command-line tool for building and deploying Cloudflare Workers, facilitating the integration of AI models into applications.
+      [Wrangler CLI](/workers-ai/get-started/workers-wrangler/) is a command-line tool for building and deploying Cloudflare Workers, facilitating the integration of AI models into applications.
   - term: REST API
     general_definition: |-
       [REST API](/workers-ai/get-started/rest-api/) is an application programming interface that allows developers to interact with Workers AI services over HTTP, enabling model management and inference requests.
