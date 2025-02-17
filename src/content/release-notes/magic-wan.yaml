@@ -9,6 +9,10 @@ entries:
     title: Local console access for bootstrapping Magic WAN Connector
     description: |-
       Magic WAN Connector can now be configured to connect to the Cloudflare network via a static IP assignment through local console.
+  - publish_date: "2025-02-14"
+    title: Sites feature available to all Magic WAN customers
+    description: |-
+      All Magic WAN customers now have full access to the Magic WAN sites feature. Customers can configure a Magic WAN site either with or without a Magic WAN connector.
   - publish_date: "2024-12-12"
     title: LAN Policy improvements for the Magic WAN Connector
     description: |-
