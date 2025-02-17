@@ -19,16 +19,16 @@ This wrapper method enables you to do embedded function calling. You pass it the
 
 * `AI Binding`Ai
   * The AI binding, such as `env.AI`.
-* `model`BaseAiTextGenerationModels 
+* `model`BaseAiTextGenerationModels
   * The ID of the model that supports function calling. For example, `@hf/nousresearch/hermes-2-pro-mistral-7b`.
-* `input`Object 
-  * `messages`RoleScopedChatInput\[] 
-  * `tools`AiTextGenerationToolInputWithFunction\[] 
-* `config`Object 
-  * `streamFinalResponse`boolean  optional 
-  * `maxRecursiveToolRuns`number  optional 
-  * `strictValidation`boolean  optional 
-  * `verbose`boolean  optional 
+* `input`Object
+  * `messages`RoleScopedChatInput\[]
+  * `tools`AiTextGenerationToolInputWithFunction\[]
+* `config`Object
+  * `streamFinalResponse`boolean  optional
+  * `maxRecursiveToolRuns`number  optional
+  * `strictValidation`boolean  optional
+  * `verbose`boolean  optional
   * `trimFunction`boolean  optional  - For the `trimFunction`, you can pass it `autoTrimTools`, which is another helper method we've devised to automatically choose the correct tools (using an LLM) before sending it off for inference. This means that your final inference call will have fewer input tokens.
 
 
@@ -40,11 +40,11 @@ This method lets you automatically create tool schemas based on OpenAPI specs, s
 
 
 
-* `spec`string 
+* `spec`string
   * The OpenAPI specification in either JSON or YAML format, or a URL to a remote OpenAPI specification.
 * `config`Config  optional  - Configuration options for the createToolsFromOpenAPISpec function
-  * `overrides`ConfigRule\[]  optional 
-  * `matchPatterns`RegExp\[]  optional 
+  * `overrides`ConfigRule\[]  optional
+  * `matchPatterns`RegExp\[]  optional
   * `options` Object  optional  \{
       `verbose` boolean  optional
     \}
