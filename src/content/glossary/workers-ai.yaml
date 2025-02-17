@@ -30,7 +30,7 @@ entries:
       [Worker Bindings](https://developers.cloudflare.com/workers-ai/configuration/bindings/) are configurations that connect Workers scripts to external resources, such as AI models, enabling seamless integration and functionality.
   - term: Environment Variables
     general_definition: |-
-      [Environment Variables](https://developers.cloudflare.com/workers-ai/configuration/bindings/) are dynamic values that can be used within Workers to manage configuration settings, including those related to AI integrations.
+      [Environment Variables](/workers-ai/configuration/bindings/) are dynamic values that can be used within Workers to manage configuration settings, including those related to AI integrations.
   - term: Model Catalog
     general_definition: |-
       [Model Catalog](https://developers.cloudflare.com/workers-ai/models/) is a curated collection of AI models available within Workers AI, providing developers with a variety of pre-trained models for different tasks.
