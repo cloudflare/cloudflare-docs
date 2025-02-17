@@ -18,7 +18,7 @@ entries:
       [API Tokens](/workers-ai/get-started/rest-api/) are authentication credentials used to securely access and manage Workers AI resources via the REST API.
   - term: Cloudflare Dashboard
     general_definition: |-
-      [Cloudflare Dashboard](https://developers.cloudflare.com/workers-ai/get-started/dashboard/) is a web-based interface that allows users to manage Workers AI services, including model deployment and monitoring.
+      [Cloudflare Dashboard](/workers-ai/get-started/dashboard/) is a web-based interface that allows users to manage Workers AI services, including model deployment and monitoring.
   - term: Prompt Engineering
     general_definition: |-
       [Prompt Engineering](https://developers.cloudflare.com/workers-ai/guides/prompting/) is the practice of designing and refining input prompts to effectively elicit desired responses from AI models.
