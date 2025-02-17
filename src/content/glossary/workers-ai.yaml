@@ -36,7 +36,7 @@ entries:
       [Model Catalog](https://developers.cloudflare.com/workers-ai/models/) is a curated collection of AI models available within Workers AI, providing developers with a variety of pre-trained models for different tasks.
   - term: Fine-Tuning
     general_definition: |-
-      [Fine-Tuning](https://developers.cloudflare.com/workers-ai/fine-tunes/) is a general term for modifying an AI model by continuing to train it with additional data.
+      [Fine-Tuning](/workers-ai/fine-tunes/) is a general term for modifying an AI model by continuing to train it with additional data.
   - term: LoRA Adapters
     general_definition: |-
       [LoRA Adapters](/workers-ai/fine-tunes/loras/) (Low-Rank Adaptation adapters) are used in machine learning to fine-tune models efficiently by adjusting a small number of parameters, allowing for customization of AI models in Workers AI.[Public LoRA Adapters](/workers-ai/fine-tunes/public-loras/) are pre-trained Low-Rank Adaptation adapters available for public use.
