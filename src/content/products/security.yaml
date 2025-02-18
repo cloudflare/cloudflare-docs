@@ -6,7 +6,7 @@ product:
   show: false
 
 meta:
-  title: Cloudflare Security
+  title: Cloudflare Security docs
   description: Documentation for Cloudflare app security products (with new user interface currently in beta).
   author: "@cloudflare"
 
