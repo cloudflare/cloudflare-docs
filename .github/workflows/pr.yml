@@ -29,14 +29,14 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.HOLOPIN_LABELER }}
       - name: External comment
-        run: gh pr comment "$NUMBER" --body "Howdy and thanks for contributing to our repo.\n\nWe generally get around to reviewing new, external PRs within **2 weeks**.\n\nIf it's been longer than then without any movement, try tagging the **Assignees** in a comment."
+        run: gh pr comment "$NUMBER" --body "Howdy and thanks for contributing to our repo. We review new, external PRs within **2 weeks**. If it's been longer than then without any movement, tag the PR **Assignees** in a comment."
         if: steps.check_if_contributor_is_external.outputs.is_external == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
           NUMBER: ${{ github.event.pull_request.number }}
       - name: Internal comment
-        run: gh pr comment "$NUMBER" --body "Howdy and thanks for contributing to our repo.\n\nWe generally get around to reviewing internal PRs with **1 week**. If it's something urgent or has been sitting without any movement for more than that, start a thread in the `Developer Docs` space internally."
+        run: gh pr comment "$NUMBER" --body "Howdy and thanks for contributing to our repo. We review internal PRs with **1 week**. If it's something urgent or has been sitting without a comment, start a thread in the *Developer Docs* space internally."
         if: steps.check_if_contributor_is_external.outputs.is_external == 'false'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
