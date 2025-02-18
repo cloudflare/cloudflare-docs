@@ -340,7 +340,7 @@ const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 export class MyWorkflow extends WorkflowEntrypoint {
 	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
-		// ✅ Good: The `Promise.race` is surround by a `step.do`, ensuring deterministic caching behavior.
+		// ✅ Good: The `Promise.race` is surrounded by a `step.do`, ensuring deterministic caching behavior.
 		const race_return = await step.do(
 			'Promise step',
 			async () => {
