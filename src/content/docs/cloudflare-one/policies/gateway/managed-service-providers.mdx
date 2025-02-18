@@ -50,7 +50,7 @@ flowchart TD
     n1 ~~~ n2
     n2 ~~~ n3
     A["Tenant"] --Administers--> s1
-    s1 --> s2 & s3
+    s1 -- "Applies policies to" --> s2 & s3
 
     n1@{ shape: lean-l}
     n2@{ shape: lean-l}
@@ -61,6 +61,27 @@ flowchart TD
 
 ### Siloed accounts
 
-{/* TODO: convert second diagram from blog post to mermaid flowchart */}
-
 In a siloed account configuration, each account operates independently within the same tenant. Each account manages its own security policies, resources, and configurations separately.
+
+```mermaid
+flowchart TD
+%% Accessibility
+ accTitle: How Gateway policies work in a siloed account configuration
+ accDescr: Flowchart describing the order of precedence Gateway applies policies in a siloed account configuration.
+
+%% Flowchart
+ subgraph s1["Siloed account A"]
+        n1["Block social media"]
+  end
+ subgraph s2["Siloed account C"]
+        n2["Block instant messaing"]
+  end
+ subgraph s3["Siloed account B"]
+        n3["Block news"]
+  end
+    A["Tenant"] -- Administers --> s1 & s3 & s2
+
+    n1@{ shape: lean-l}
+    n2@{ shape: lean-l}
+    n3@{ shape: lean-l}
+```
