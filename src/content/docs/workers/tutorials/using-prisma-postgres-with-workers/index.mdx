@@ -85,17 +85,17 @@ Initialize Prisma in your application:
 npx prisma@latest init --db
 ```
 
-If you don't have a [Prisma Data Platform](https://console.prisma.io/) account yet, or if you are not logged in, the command will prompt you to log in using one of the available authentication providers. A browser window will open so you can log in or create an account. Return to the CLI after you have completed this step.
+If you do not have a [Prisma Data Platform](https://console.prisma.io/) account yet, or if you are not logged in, the command will prompt you to log in using one of the available authentication providers. A browser window will open so you can log in or create an account. Return to the CLI after you have completed this step.
 
 Once logged in (or if you were already logged in), the CLI will prompt you to select a project name and a database region.
 
-Once the command has terminated, it has created:
+Once the command has terminated, it will have created:
 
 - A project in your [Platform Console](https://console.prisma.io/) containing a Prisma Postgres database instance.
 - A `prisma` folder containing `schema.prisma`, where you will define your database schema.
 - An `.env` file in the project root, which will contain the Prisma Postgres database url `DATABASE_URL=<your-prisma-postgres-database-url>`.
 
-Note that Cloudflare Workers don't support `.env` files. You will use a file called `.dev.vars` instead of the `.env` file that was just created.
+Note that Cloudflare Workers do not support `.env` files. You will use a file called `.dev.vars` instead of the `.env` file that was just created.
 
 ### 2.3. Prepare environment variables
 
@@ -143,7 +143,7 @@ Run the migration script to apply changes to the database:
 npm run migrate
 ```
 
-When prompted, provide a name for the migration (e.g., `init`).
+When prompted, provide a name for the migration (for example, `init`).
 
 After these steps are complete, Prisma ORM is fully set up and connected to your Prisma Postgres database.
 
@@ -207,13 +207,13 @@ Every time you refresh the page, a new user is created. The number displayed wil
 
 ## 4. Deploy the application to Cloudflare
 
-When the application is deployed to Cloudflare, it needs access to the `DATABASE_URL` environment variable that's defined locally in `.dev.vars`. You can use the [`npx wrangler secret put`](/workers/configuration/secrets/#adding-secrets-to-your-project) command to upload the `DATABASE_URL` to the deployment environment:
+When the application is deployed to Cloudflare, it needs access to the `DATABASE_URL` environment variable that is defined locally in `.dev.vars`. You can use the [`npx wrangler secret put`](/workers/configuration/secrets/#adding-secrets-to-your-project) command to upload the `DATABASE_URL` to the deployment environment:
 
 ```sh
 npx wrangler secret put DATABASE_URL
 ```
 
-When prompted, paste the `DATABASE_URL` value (from `.dev.vars`). If you're logged in via the Wrangler CLI, you'll see a prompt asking if you'd like to create a new Worker. Confirm by choosing "yes":
+When prompted, paste the `DATABASE_URL` value (from `.dev.vars`). If you are logged in via the Wrangler CLI, you will see a prompt asking if you'd like to create a new Worker. Confirm by choosing "yes":
 
 ```sh
 ✔ There doesn't seem to be a Worker called "prisma-postgres-worker". Do you want to create a new Worker with that name and add secrets to it? … yes
@@ -227,7 +227,7 @@ npm run deploy
 
 The `wrangler` CLI will bundle and upload your application.
 
-If you’re not already logged in, the `wrangler` CLI will open a browser window prompting you to log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
+If you are not already logged in, the `wrangler` CLI will open a browser window prompting you to log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
 
 :::note
 If you belong to multiple accounts, select the account where you want to deploy the project.
