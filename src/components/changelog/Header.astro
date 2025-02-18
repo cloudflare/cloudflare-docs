@@ -1,0 +1,78 @@
+---
+import { Image } from "astro:assets";
+import { z } from "astro:schema";
+import { getEntry, type CollectionEntry } from "astro:content";
+
+import { StarlightIcon } from "..";
+import HeroImage from "~/assets/images/changelog/hero.svg";
+
+type Props = z.input<typeof props>;
+
+const props = z.object({
+	notes: z.any().array().default([]),
+});
+
+const { notes } = props.parse(Astro.props);
+
+async function uniqueProducts(notes: Array<CollectionEntry<"changelog">>) {
+	const unique = [
+		...new Set(notes.flatMap((e) => e.data.products.map((p) => p.id))),
+	];
+
+	return Promise.all(
+		unique.map(async (product) => {
+			return getEntry("products", product)!;
+		}),
+	);
+}
+
+const products = await uniqueProducts(notes);
+---
+
+<div
+	class="bg-linear-to-r mb-16 ml-[calc(50%-50vw)] flex w-screen items-center justify-evenly border-b-2 bg-gradient-to-r from-[#FFE9CB99] to-[#FFFFFF99] p-4 dark:border-b-[#2C2C2C] dark:from-[#FBAD411F] dark:to-[#2C2C2C00] max-sm:flex-col-reverse sm:h-[18.75rem]"
+>
+	<div class="text-center sm:text-left">
+		<h1>Changelog</h1>
+		<p>
+			New updates and improvements at Cloudflare.
+			<a
+				href="/changelog/rss/index.xml"
+				class="dark:!hover:text-[#79B1FF] -mx-2 whitespace-nowrap px-2 text-[#056DFF] no-underline hover:rounded-[4px] hover:bg-[#DCEBFF] hover:!text-[#056DFF] dark:text-[#79B1FF] dark:hover:bg-[#002B66] max-sm:block"
+			>
+				Subscribe to RSS
+				<StarlightIcon name="rss" size="18px" class="!inline align-text-top" />
+			</a>
+		</p>
+		{
+			products.length > 0 && (
+				<div>
+					<select id="changelogs-next-filter" class="mt-2 h-8 w-52">
+						<option value="all">All products</option>
+						{products
+							.sort((a, b) => a.id.localeCompare(b.id))
+							.map(async (product) => {
+								return (
+									<option value={product.id}>
+										{product.data.product.title}
+									</option>
+								);
+							})}
+					</select>
+				</div>
+			)
+		}
+	</div>
+	<Image src={HeroImage} alt="hero image" height="240" class="!mt-0" />
+</div>
+
+<style is:global>
+	.sl-markdown-content {
+		margin-top: 0px !important;
+	}
+
+	.content-panel {
+		padding-top: 0 !important;
+		overflow-x: hidden;
+	}
+</style>

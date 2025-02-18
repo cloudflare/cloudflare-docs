@@ -77,7 +77,7 @@ This example defines a [custom ruleset](/ruleset-engine/custom-rulesets/) with a
 
 ```tf
 resource "cloudflare_ruleset" "account_rl" {
-  account_id  = <ACCOUNT_ID>
+  account_id  = "<ACCOUNT_ID>"
   name        = "Rate limiting rules for APIs"
   description = ""
   kind        = "custom"

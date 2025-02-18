@@ -2,7 +2,7 @@
 pcx_content_type: concept
 title: Origin Rules
 sidebar:
-  order: 6
+  order: 7
 head:
   - tag: title
     content: Origin Rules
@@ -21,17 +21,22 @@ The origin rule expression will determine when these overrides will be applied.
 
 <Render
 	file="snippets-alternative"
-	params={{ one: "and customized modifications" }}
+	params={{ suffix: "and customized modifications" }}
 />
 <br />
 
-<Render file="rules-requirements" params={{ one: "Origin Rules require" }} />
+<Render
+	file="rules-requirements"
+	params={{ sentenceIntro: "Origin Rules require" }}
+/>
 
 ## Rules templates
 
 <Render file="rules-templates" />
 
 ## Availability
+
+<Render file="rules-new-limits" />
 
 <FeatureTable id="rules.origin_rules" />
 
@@ -45,4 +50,7 @@ If you override the hostname with an origin rule (via `Host` header override or 
 
 Like [Page Rules](/rules/page-rules/), an origin rule performing a `Host` header override will update the SNI value of the original request to the same value of the `Host` header. To set an SNI value different from the `Host` header override, add an SNI override in the same origin rule or create a separate origin rule for this purpose.
 
-<Render file="troubleshoot-rules-with-trace" params={{ one: "origin rules" }} />
+<Render
+	file="troubleshoot-rules-with-trace"
+	params={{ rulesFeatureName: "origin rules" }}
+/>

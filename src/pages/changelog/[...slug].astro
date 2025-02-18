@@ -1,0 +1,77 @@
+---
+import StarlightPage, {
+	type StarlightPageProps,
+} from "@astrojs/starlight/components/StarlightPage.astro";
+import type { GetStaticPaths } from "astro";
+import { render } from "astro:content";
+import Header from "~/components/changelog/Header.astro";
+import ProductPills from "~/components/changelog/ProductPills.astro";
+import { format } from "date-fns";
+import { getChangelogs } from "~/util/changelog";
+
+export const getStaticPaths = (async () => {
+	const notes = await getChangelogs({});
+
+	return notes.map((note) => {
+		return {
+			params: {
+				slug: note.id,
+			},
+			props: {
+				note,
+			},
+		};
+	});
+}) satisfies GetStaticPaths;
+
+const { note } = Astro.props;
+
+const { Content, headings } = await render(note);
+
+const props = {
+	frontmatter: {
+		title: note.data.title,
+		template: "splash",
+	},
+	headings,
+	hideTitle: true,
+	hideBreadcrumbs: true,
+} as StarlightPageProps;
+---
+
+<StarlightPage {...props}>
+	<Header />
+	<div class="mt-0! mb-10">
+		<a href="/changelog/" class="no-underline">
+			<span class="text-accent">← </span>
+			<span class="text-black">Back to all posts</span>
+		</a>
+	</div>
+	<div>
+		<h2>{note.data.title}</h2>
+		<div>
+			<strong
+				>{format(note.data.date, "MMM dd, yyyy")}, {
+					format(note.data.date, "hh:mm a")
+				}</strong
+			>
+			<ProductPills products={note.data.products} />
+		</div>
+		<div>
+			<Content />
+		</div>
+	</div>
+</StarlightPage>
+
+<style>
+	:root {
+		.sl-container {
+			--sl-content-width: 50rem !important;
+			margin-inline: auto !important;
+		}
+
+		#footer-links {
+			justify-content: center;
+		}
+	}
+</style>

@@ -2,12 +2,31 @@
 title: Resources by selector
 ---
 
+import { Type, MetaInfo } from "~/components";
+
+The `ResourcesBySelector` component allows you to pull in documentation resources based on the `pcx_content_type`, `tags` and `products` frontmatter properties.
+
+## Component
+
 ```mdx live
 import { ResourcesBySelector } from "~/components";
 
 <ResourcesBySelector
-    types={["example"]}
-    tags={["Authentication Method"]}
-    products={["Cloudflare One"]}
+	tags={["AI"]}
+	types={["reference-architecture","design-guide","reference-architecture-diagram"]}
 />
 ```
+
+### Inputs
+
+- `types` <Type text="string[]" />
+
+	An array of `pcx_content_type` values to filter by.
+
+- `tags` <Type text="string[]" /> <MetaInfo text="optional" />
+
+	An array of `tags` values to filter by.
+
+- `products` <Type text="string[]" /> <MetaInfo text="optional" />
+
+	An array of `products` values to filter by.

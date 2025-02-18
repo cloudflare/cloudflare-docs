@@ -33,3 +33,77 @@ Using WebSockets with Durable Objects with the [`isolatedStorage`](/workers/test
 ### Returning non-primitive values from RPC methods
 
 In order to return non-primitive values (objects or classes extending `RpcTarget`, for instance) from RPC methods, you must use the `using` keyword. Refer to [https://developers.cloudflare.com/workers/runtime-apis/rpc/lifecycle#explicit-resource-management](https://developers.cloudflare.com/workers/runtime-apis/rpc/lifecycle#explicit-resource-management) for more details. An [example test](https://github.com/cloudflare/workers-sdk/tree/main/fixtures/vitest-pool-workers-examples/rpc/test/unit.test.ts#L155) is included in the `workers-sdk` repository.
+
+### Module resolution
+
+If you encounter module resolution issues such as: `Error: Cannot use require() to import an ES Module` or `Error: No such module`, you can bundle these dependencies using the [deps.optimizer](https://vitest.dev/config/#deps-optimizer) option:
+
+```tsx
+import { defineWorkersConfig } from "@cloudflare/vitest-pool-workers/config";
+
+export default defineWorkersConfig({
+	test: {
+		deps: {
+			optimizer: {
+				ssr: {
+					enabled: true,
+					include: ["your-package-name"],
+				},
+			},
+		},
+		poolOptions: {
+			workers: {
+				// ...
+			},
+		},
+	},
+});
+```
+
+You can find an example in the [Recipes](/workers/testing/vitest-integration/recipes) page.
+
+### Importing modules from global setup file
+
+Although Vitest is set up to resolve packages for the `workerd` runtime, it runs your global setup file in the Node.js environment. This can cause issues when importing packages like [Postgres.js](https://github.com/cloudflare/workers-sdk/issues/6465), which exports a non-Node version for `workerd`.
+To work around this, you can create a wrapper that uses Vite's SSR module loader to import the global setup file under the correct conditions. Then, adjust your Vitest configuration to point to this wrapper. For example:
+
+```ts
+// File: global-setup-wrapper.ts
+import { createServer } from "vite"
+
+// Import the actual global setup file with the correct setup
+const mod = await viteImport("./global-setup.ts")
+
+export default mod.default;
+
+// Helper to import the file with default node setup
+async function viteImport(file: string) {
+  const server = await createServer({
+    root: import.meta.dirname,
+    configFile: false,
+    server: { middlewareMode: true, hmr: false, watch: null, ws: false },
+    optimizeDeps: { noDiscovery: true },
+    clearScreen: false,
+  });
+  const mod = await server.ssrLoadModule(file);
+  await server.close();
+  return mod;
+}
+```
+
+```ts
+// File: vitest.config.ts
+import { defineWorkersConfig } from "@cloudflare/vitest-pool-workers/config";
+
+export default defineWorkersConfig({
+	test: {
+		// Replace the globalSetup with the wrapper file
+		globalSetup: ["./global-setup-wrapper.ts"],
+		poolOptions: {
+			workers: {
+				// ...
+			},
+		},
+	},
+});
+```

@@ -2,7 +2,7 @@
 pcx_content_type: concept
 title: URL normalization
 sidebar:
-  order: 11
+  order: 13
 ---
 
 import { GlossaryTooltip, Render } from "~/components";
@@ -12,7 +12,6 @@ Cloudflare provides a URL normalization feature to modify the URLs of incoming r
 When you enable URL normalization, all incoming URLs are normalized before they pass to subsequent global network features that accept a URL input, such as WAF custom rules, Workers, and Access. Rule expressions that filter traffic based on URLs will therefore trigger correctly, regardless of the format of the incoming URL. When URL normalization is disabled, Cloudflare forwards the URL to origin in its original form.
 
 :::caution
-
 When traffic is proxied via Cloudflare, essential request URL normalization is always applied regardless whether URL normalization is enabled for a specific zone. For example, you cannot disable the conversion of two or more adjacent slashes into a single slash in a request URL by turning off URL normalization.
 :::
 
@@ -20,7 +19,7 @@ URL normalization does not perform any <GlossaryTooltip term="redirect">redirect
 
 <Render
 	file="rules-requirements"
-	params={{ one: "URL normalization requires" }}
+	params={{ sentenceIntro: "URL normalization requires" }}
 />
 
 ---

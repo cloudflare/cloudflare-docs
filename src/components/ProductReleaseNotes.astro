@@ -1,0 +1,140 @@
+---
+import { getEntry, type CollectionEntry } from "astro:content";
+import { marked } from "marked";
+import { getReleaseNotes } from "~/util/release-notes";
+import AnchorHeading from "~/components/AnchorHeading.astro";
+import { entryToString } from "~/util/container";
+
+const page = await getEntry("docs", Astro.params.slug!);
+
+if (!page) {
+	throw new Error(
+		`[ProductReleaseNotes] Failed to find entry for ${Astro.params.slug}.`,
+	);
+}
+
+if (
+	!page.data.release_notes_file_name &&
+	!page.data.release_notes_product_area_name
+) {
+	throw new Error(
+		`[ProductReleaseNotes] ${Astro.params.slug} does not have a 'release_notes_file_name' or 'changaelog_product_area_name' frontmatter property.`,
+	);
+}
+
+if (
+	page.data.release_notes_file_name &&
+	page.data.release_notes_file_name.length > 1
+) {
+	throw new Error(
+		`[ProductReleaseNotes] This component cannot be used on files that have more than 1 entry in their 'release_notes_file_name' frontmatter property.`,
+	);
+}
+
+const name =
+	page.data.release_notes_product_area_name ??
+	page.data.release_notes_file_name?.[0];
+
+let releaseNotes;
+
+if (page.data.release_notes_product_area_name) {
+	const opts = {
+		filter: (entry: CollectionEntry<"release-notes">) => {
+			return entry.data.productArea === name;
+		},
+	};
+	({ releaseNotes } = await getReleaseNotes(opts));
+} else {
+	if (name === "wrangler") {
+		const opts = {
+			wranglerOnly: true,
+		};
+		({ releaseNotes } = await getReleaseNotes(opts));
+	} else if (name === "api-deprecations") {
+		const opts = {
+			deprecationsOnly: true,
+		};
+		({ releaseNotes } = await getReleaseNotes(opts));
+	} else {
+		const opts = {
+			filter: (entry: CollectionEntry<"release-notes">) => {
+				return entry.id === name;
+			},
+		};
+		({ releaseNotes } = await getReleaseNotes(opts));
+	}
+}
+
+if (!releaseNotes) {
+	throw new Error(
+		`[ProductReleaseNotes] Failed to find release notes called ${name}.`,
+	);
+}
+---
+
+{
+	page.data.pcx_content_type === "changelog" && (
+		<p>
+			<a href={`/${page.id}/index.xml`} target="_blank">
+				Subscribe to RSS
+			</a>
+		</p>
+	)
+}
+{
+	releaseNotes.map(([date, entries]) => (
+		<div data-date={date}>
+			{(entries ?? []).map(async (entry) => {
+				let description;
+				if (entry.individual_page) {
+					const link = entry.individual_page;
+
+					if (!link)
+						throw new Error(
+							`Changelog entry points to individual page but no link is provided`,
+						);
+
+					const page = await getEntry("docs", link.slice(1, -1));
+
+					if (!page)
+						throw new Error(
+							`Changelog entry points to ${link.slice(1, -1)} but unable to find entry with that slug`,
+						);
+
+					description = (await entryToString(page, Astro.locals)) ?? page.body;
+
+					return (
+						<div data-product={entry.product.toLowerCase()}>
+							<a href={entry.individual_page} class="no-underline">
+								<AnchorHeading depth={2} title={page.data.title} />
+							</a>
+							<p class="text-xs">{entry.date}</p>
+							{page.data.release_notes_product_area_name && (
+								<h3 class="!mt-4">
+									<a href={entry.productLink}>{entry.product}</a>
+								</h3>
+							)}
+							{<Fragment set:html={description} />}
+						</div>
+					);
+				} else {
+					description = marked.parse(entry.description as string);
+					return (
+						<>
+							<AnchorHeading depth={2} title={date} />
+							<div data-product={entry.product.toLowerCase()}>
+								{page.data.release_notes_product_area_name && (
+									<h3 class="!mt-4">
+										<a href={entry.productLink}>{entry.product}</a>
+									</h3>
+								)}
+								{entry.title && <strong>{entry.title}</strong>}
+								{<Fragment set:html={description} />}
+							</div>
+						</>
+					);
+				}
+			})}
+		</div>
+	))
+}

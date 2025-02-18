@@ -1,0 +1,50 @@
+---
+{}
+---
+
+import { Tabs, TabItem } from "~/components";
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector           | Operator | Value                                                     | Action |
+| ------------------ | -------- | --------------------------------------------------------- | ------ |
+| Content Categories | in       | _Questionable Content_, _Security Risks_, _Miscellaneous_ | Block  |
+
+</TabItem>
+<TabItem label="API">
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "All-DNS-ContentCategories-Blocklist",
+  "description": "Block common content categories that may pose a risk",
+  "precedence": 30,
+  "enabled": true,
+  "action": "block",
+  "filters": [
+    "dns"
+  ],
+  "traffic": "any(dns.content_category[*] in {17 85 87 102 157 135 138 180 162 32 169 177 128 15 115 119 124 141 161})",
+  "identity": ""
+}'
+```
+
+</TabItem>
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "block_content_categories" {
+  account_id  = var.account_id
+  name        = "All-DNS-ContentCategories-Blocklist"
+  description = "Block common content categories that may pose a risk"
+  enabled     = true
+  action      = "block"
+  filters     = ["dns"]
+  traffic     = "any(dns.content_category[*] in {17 85 87 102 157 135 138 180 162 32 169 177 128 15 115 119 124 141 161})"
+  identity    = ""
+}
+```
+
+</TabItem> </Tabs>

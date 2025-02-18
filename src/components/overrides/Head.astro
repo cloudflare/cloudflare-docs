@@ -68,6 +68,7 @@ if (currentSection) {
 			const group = product.data.product.group.toLowerCase();
 
 			let ogImage = "https://developers.cloudflare.com/cf-twitter-card.png";
+
 			const images: Record<string, string> = {
 				"cloudflare essentials":
 					"https://developers.cloudflare.com/core-services-preview.png",
@@ -136,6 +137,53 @@ if (currentSection) {
 			content: "",
 		});
 	}
+
+	if (currentSection === "changelog") {
+		let changelogImage =
+			"https://developers.cloudflare.com/changelog-preview.png";
+
+		const tags = [
+			{
+				tag: "meta",
+				attrs: {
+					name: "image",
+					content: changelogImage,
+				},
+				content: "",
+			},
+			{
+				tag: "meta",
+				attrs: {
+					name: "og:image",
+					content: changelogImage,
+				},
+				content: "",
+			},
+			{
+				tag: "meta",
+				attrs: {
+					name: "twitter:image",
+					content: changelogImage,
+				},
+				content: "",
+			},
+		] as const;
+
+		Astro.props.entry.data.head.push(...tags);
+	}
+}
+
+// Add noindex tag if present in frontmatter
+
+if (Astro.props.entry.data.noindex) {
+	Astro.props.entry.data.head.push({
+		tag: "meta",
+		attrs: {
+			name: "robots",
+			content: "noindex",
+		},
+		content: "",
+	});
 }
 
 // Adding metadata used for reporting and search indexing

@@ -18,7 +18,7 @@ To optimize your website or web application, Cloudflare acts as a [DNS provider]
 
 We support a few different [setups](/dns/zone-setups/) for using Cloudflare as a DNS provider. A [full DNS setup](/dns/zone-setups/full-setup/) is the most common, where Cloudflare becomes the primary authoritative DNS provider for your domain, after you [connect your domain to Cloudflare](/fundamentals/setup/manage-domains/connect-your-domain/). This means we respond to DNS queries for your domain, and you [manage its DNS records](/dns/manage-dns-records/how-to/create-dns-records/) via the Cloudflare dashboard or API.
 
-When Cloudflare receives a DNS query for your domain, our response is determined by the configuration [set in your DNS table](/dns/manage-dns-records/how-to/create-dns-records/), including the value of the record, the record's [proxy eligibility](/dns/manage-dns-records/reference/proxied-dns-records/#proxy-eligibility), and its [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/).
+When Cloudflare receives a DNS query for your domain, our response is determined by the configuration [set in your DNS table](/dns/manage-dns-records/how-to/create-dns-records/), including the value of the record, the record's [proxy eligibility](/dns/proxy-status/limitations/#proxy-eligibility), and its [proxy status](/dns/proxy-status/).
 
 If the [domain's status](/dns/zone-setups/reference/domain-status/) is active and the queried DNS record is set to `proxied`, then Cloudflare responds with an [anycast IP address](/fundamentals/concepts/cloudflare-ip-addresses/), **instead of** the value defined in your DNS table. This effectively re-routes the `HTTP/HTTPS` requests to the Cloudflare network, instead of directly reaching the targeted the [origin server](https://www.cloudflare.com/learning/cdn/glossary/origin-server/).
 
@@ -26,7 +26,7 @@ In contrast, if the queried DNS record is set to `DNS only`, meaning the proxy i
 
 ### How Cloudflare works as a reverse proxy
 
-All DNS records in your DNS table have a [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/), indicating whether or not `HTTP/HTTPS` traffic for that record will route through Cloudflare on its way between the client and the origin server. If the [domain's status](/dns/zone-setups/reference/domain-status/) is active, all `HTTP/HTTPS` requests for [proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/#proxied-records) route through Cloudflare.
+All DNS records in your DNS table have a [proxy status](/dns/proxy-status/), indicating whether or not `HTTP/HTTPS` traffic for that record will route through Cloudflare on its way between the client and the origin server. If the [domain's status](/dns/zone-setups/reference/domain-status/) is active, all `HTTP/HTTPS` requests for [proxied DNS records](/dns/proxy-status/) route through Cloudflare.
 
 As these requests pass through our network, they are processed according to your [configuration](/fundamentals/setup/manage-domains/connect-your-domain/#domain-configurations). Subsequently, legitimate requests are forwarded to the origin server.
 
@@ -34,7 +34,7 @@ Refer to our [Load Balancing reference architecture](/reference-architecture/arc
 
 :::note
 
-Proxying is on by default for records that serve `HTTP/HTTPS` traffic (`A`, `AAAA`, and `CNAME` records). To proxy `HTTP/HTTPS` traffic on [non-standard ports](/fundamentals/reference/network-ports/) or to proxy a `TCP-` or `UDP-` based application, use [Cloudflare Spectrum](/spectrum/). 
+Proxying is on by default for records that serve `HTTP/HTTPS` traffic (`A`, `AAAA`, and `CNAME` records). To proxy `HTTP/HTTPS` traffic on [non-standard ports](/fundamentals/reference/network-ports/) or to proxy a `TCP-` or `UDP-` based application, use [Cloudflare Spectrum](/spectrum/).
 :::
 
 In the Cloudflare dashboard, find out which DNS records are proxied by selecting your domain and navigating to the **DNS records** tab.

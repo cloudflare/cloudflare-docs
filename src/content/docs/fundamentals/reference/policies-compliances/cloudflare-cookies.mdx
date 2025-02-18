@@ -23,11 +23,7 @@ When enabling session affinity with [Cloudflare Load Balancer](/load-balancing/u
 The `__cflb` cookie allows Cloudflare to return an end user to the same customer origin for a specific period of time configured by the customer. This allows the end user to have a seamless experience (for example, this cookie is used for keeping an end user’s items in a shopping cart while they continue to navigate around the website). This cookie is a session cookie that lasts from several seconds up to 24 hours.
 
 :::note
-
-
 Currently Cloudflare only supports Session Affinity in "orange-cloud" (proxied) mode.
-
-
 :::
 
 ### \_\_cf\_bm cookie for Cloudflare bot products
@@ -39,11 +35,7 @@ This cookie expires after 30 minutes of continuous inactivity by the end user. T
 A separate `__cf_bm` cookie is generated for each site that an end user visits, as Cloudflare does not track users from site to site or from session to session. The `__cf_bm` cookie is generated independently by Cloudflare, and does not correspond to any user ID or other identifiers in a customer’s web application.
 
 :::note
-
-
 Bot Management is available to Enterprise customers as an add-on service. Contact your Cloudflare account team to enable Bot Management for your site. Non-Enterprise customers can enable [Bot Fight Mode or Super Bot Fight Mode](/bots/).
-
-
 :::
 
 <Render file="disable-cf-bm-cookie" product="bots" />
@@ -51,6 +43,10 @@ Bot Management is available to Enterprise customers as an add-on service. Contac
 ### \_\_cfseq cookie for Cloudflare bot products
 
 <Render file="sequence-rules" product="bots" params={{ one: "Sequence rules", two: "/bots/concepts/sequence-rules/" }} />
+
+### cf_clearance cookie for Cloudflare bot products
+
+The `cf_clearance` cookie is required for [JavaScript detections](/bots/reference/javascript-detections/). JavaScript detections are stored in the `cf_clearance` cookie. 
 
 ### cf\_ob\_info and cf\_use\_ob cookie for Cloudflare Always Online
 

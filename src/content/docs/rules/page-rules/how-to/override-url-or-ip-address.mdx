@@ -49,7 +49,7 @@ To configure a resolve override in Page Rules, do the following:
 
 :::caution[Important remarks]
 
-- Page Rules require a [proxied DNS record](/dns/manage-dns-records/reference/proxied-dns-records) to work. Page Rules will not apply to subdomains that do not exist in DNS or are not being directed to Cloudflare.
+- Page Rules require a [proxied DNS record](/dns/proxy-status/) to work. Page Rules will not apply to subdomains that do not exist in DNS or are not being directed to Cloudflare.
 
 - The _Resolve Override_ setting only allows override of the hostname, not the path. If you need to modify the path also, you will need to either use a [Worker](/workers/runtime-apis/request/#the-cf-property-requestinitcfproperties) or combine the page rule with a [transform rule](/rules/transform/url-rewrite/).
 

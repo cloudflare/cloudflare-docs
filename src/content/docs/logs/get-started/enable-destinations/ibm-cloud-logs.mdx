@@ -1,0 +1,148 @@
+---
+title: Enable IBM Cloud Logs
+pcx_content_type: how-to
+sidebar:
+  order: 99
+head:
+  - tag: title
+    content: Enable Logpush IBM Cloud Logs
+
+---
+
+Cloudflare Logpush supports pushing logs directly to IBM Cloud Logs via API. The dashboard functionality will later be added. 
+
+## Manage via API
+
+To set up an IBM Cloud Logs job:
+
+1. Create a job with the appropriate endpoint URL and authentication parameters.
+2. Enable the job to begin pushing logs.
+
+:::note[Note]
+Ensure Log Share permissions are enabled, before attempting to read or configure a Logpush job. For more information refer to the [Roles section](/logs/get-started/permissions/#roles).
+:::
+
+### 1. Create a job
+
+To create a job, make a `POST` request to the Logpush jobs endpoint with the following fields:
+    
+- **name** (optional) - Use your domain name as the job name.
+- **output_options** (optional) - This parameter is used to define the desired output format and structure. Below are the configurable fields:
+    - output_type
+    - timestamp_format
+    - batch_prefix and batch_suffix
+    - record_prefix and record_suffix
+    - record_delimiter
+- **destination_conf** - A log destination consisting of Instance ID, Region and [IBM API Key](https://cloud.ibm.com/docs/account?topic=account-iamtoken_from_apikey) in the string format below.
+
+`ibmcl://<INSTANCE_ID>.ingress.<REGION>.logs.cloud.ibm.com/logs/v1/singles?ibm_api_key=<IBM_API_KEY>`
+
+- **max_upload_records** (optional) - The maximum number of log lines per batch. This must be at least 1,000 lines or more. Note that there is no way to specify a minimum number of log lines per batch. This means that log files may contain many fewer lines than specified.
+- **max_upload_bytes** (optional) - The maximum uncompressed file size for a batch of logs. We recommend a default value of 2 MB per upload based on IBM's limits, which our system will enforce for this destination. Since minimum file sizes cannot be set, log files may be smaller than the specified batch size.
+- **dataset** - The category of logs you want to receive. Refer to [Log fields](/logs/reference/log-fields/) for the full list of supported datasets.
+
+Example request using cURL:
+
+```bash
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "name": "<DOMAIN_NAME>",
+  "output_options": {
+    "output_type": "ndjson",
+    "timestamp_format": "rfc3339",
+    "batch_prefix": "[",
+    "batch_suffix": "]",
+    "record_prefix": "{\"applicationName\":\"ibm-platform-log\",\"subsystemName\":\"internet-svcs:logpush\",\"text\":{",
+    "record_suffix": "}}",
+    "record_delimiter": ","
+  },
+  "destination_conf": "ibmcl://<INSTANCE_ID>.ingress.<REGION>.logs.cloud.ibm.com/logs/v1/singles?ibm_api_key=<IBM_API_KEY>",
+  "max_upload_bytes": 2000000,
+  "dataset": "http_requests",
+  "enabled": true
+}'
+```
+
+Response:
+
+```json
+{
+  "errors": [],
+  "messages": [],
+  "result": {
+    "dataset": "http_requests",
+    "destination_conf": "ibmcl://<INSTANCE_ID>.ingress.<REGION>.logs.cloud.ibm.com/logs/v1/singles?ibm_api_key=<IBM_API_KEY>",
+    "enabled": true,
+    "error_message": null,
+    "id": <JOB_ID>,
+    "kind": "",
+    "last_complete": null,
+    "last_error": null,
+    "output_options": {
+      "output_type": "ndjson",
+      "timestamp_format": "rfc3339",
+      "batch_prefix": "[",
+      "batch_suffix": "]",
+      "record_prefix": "{\"applicationName\":\"ibm-platform-log\",\"subsystemName\":\"internet-svcs:logpush\",\"text\":{",
+      "record_suffix": "}}",
+      "record_delimiter": ","
+    },
+    "logstream": true,
+    "max_upload_bytes": 2000000,
+    "name": "<DOMAIN_NAME>"
+  },
+  "success": true
+}
+```
+
+### 2. Enable (update) a job
+
+To enable a job, make a `PUT` request to the Logpush jobs endpoint. You will use the job ID returned from the previous step in the URL and send `{"enabled": true}` in the request body.
+
+Example request using cURL:
+
+```bash
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs/{job_id} \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>" \
+--header "Content-Type: application/json" \
+--data '{
+  "enabled": true
+}'
+```
+
+Response:
+
+```json
+{
+  "errors": [],
+  "messages": [],
+  "result": {
+    "dataset": "http_requests",
+    "destination_conf": "ibmcl://<INSTANCE_ID>.ingress.<REGION>.logs.cloud.ibm.com/logs/v1/singles?ibm_api_key=<IBM_API_KEY>",
+    "enabled": true,
+    "error_message": null,
+    "id": <JOB_ID>,
+    "kind": "",
+    "last_complete": null,
+    "last_error": null,
+    "output_options": {
+      "output_type": "ndjson",
+      "timestamp_format": "rfc3339",
+      "batch_prefix": "[",
+      "batch_suffix": "]",
+      "record_prefix": "{\"applicationName\":\"ibm-platform-log\",\"subsystemName\":\"internet-svcs:logpush\",\"text\":{",
+      "record_suffix": "}}",
+      "record_delimiter": ","
+    },
+    "logstream": true,
+    "max_upload_bytes": 2000000,
+    "name": "<DOMAIN_NAME>"
+  },
+  "success": true
+}
+```

@@ -9,7 +9,7 @@ sidebar:
 updated: 2024-02-26
 ---
 
-import { Render } from "~/components";
+import { Render, PublicStats } from "~/components";
 
 ## Introduction
 
@@ -21,7 +21,7 @@ Cloudflare Load Balancing is a SaaS offering that allows organizations to host a
 - Adapting to changing traffic demands and ensuring the infrastructure can accommodate growth.
 - Helping applications and services resist Distributed Denial of Service (DDoS) attacks.
 
-Cloudflare Load Balancing is built on Cloudflare’s connectivity cloud, ​​a unified, intelligent platform of programmable cloud-native services that enable secure any-to-any connectivity between all networks (enterprise and Internet), cloud environments, applications, and users. It is one of the largest global networks, with data centers spanning more than 310 cities in over 120 countries and interconnection with over 13,000 other networks. It also has a greater presence in core Internet exchanges than many other large technology companies.
+Cloudflare Load Balancing is built on Cloudflare’s connectivity cloud, ​​a unified, intelligent platform of programmable cloud-native services that enable secure any-to-any connectivity between all networks (enterprise and Internet), cloud environments, applications, and users. It is one of the largest global networks, with data centers spanning <PublicStats id="data_center_cities" /> and interconnection with <PublicStats id="network_peers" />. It also has a greater presence in core Internet exchanges than many other large technology companies.
 
 As a result, Cloudflare operates within \~50 ms of \~95% of the world’s Internet-connected population. And since all Cloudflare services are designed to run across every network location, all requests are routed, inspected, and filtered close to their source, resulting in strong performance and consistent user experiences.
 
@@ -158,7 +158,7 @@ Cloudflare has offered cloud-based GTM since 2016 and started adding Private Net
 
 ### Inherent advantages in the Cloudflare architecture
 
-Cloudflare Load Balancing is built on Cloudflare’s connectivity cloud, ​​a unified, intelligent platform of programmable cloud-native services that enable any-to-any connectivity between all networks (enterprise and Internet), cloud environments, applications, and users. It is one of the largest global networks, with data centers spanning more than 310 cities in over 120 countries and interconnection with over 13,000 other networks. It also has a greater presence in core Internet exchanges than many other large technology companies.
+Cloudflare Load Balancing is built on Cloudflare’s connectivity cloud, ​​a unified, intelligent platform of programmable cloud-native services that enable any-to-any connectivity between all networks (enterprise and Internet), cloud environments, applications, and users. It is one of the largest global networks, with data centers spanning <PublicStats id="data_center_cities" /> and interconnection with <PublicStats id="network_peers" />. It also has a greater presence in core Internet exchanges than many other large technology companies.
 
 As a result, Cloudflare operates within \~50 ms of \~95% of the world’s Internet-connected population. And since all Cloudflare services are designed to run across every network location, all traffic is connected, inspected, and filtered close to the source for the best performance and consistent user experience.
 
@@ -771,7 +771,7 @@ Cloudflare offers additional security layers that can be used in conjunction wit
 
 ## Summary
 
-The Cloudflare global anycast network is a powerful platform for load balancing. A load balancing configuration in Cloudflare is accessible in over 310 cities across the world and has virtually unlimited capacity and bandwidth.
+The Cloudflare global anycast network is a powerful platform for load balancing. A load balancing configuration in Cloudflare is accessible in <PublicStats id="data_center_cities" /> across the world and has virtually unlimited capacity and bandwidth.
 
 These load balancers operate within approximately 50ms of about 95% of the Internet-connected population, including endpoints that allow Cloudflare Load Balancers to perform both GTM and Private Network Load Balancing. Cloudflare now combines these two distinct load balancing concepts into a single load balancer. This helps enable organizations to steer traffic to geographically-relevant data centers, then select the proper endpoint to handle the request.
 

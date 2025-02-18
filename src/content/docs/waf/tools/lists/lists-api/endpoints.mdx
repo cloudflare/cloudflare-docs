@@ -52,7 +52,7 @@ When you make requests to a list while a bulk operation on that list is in progr
 
 - **Operation**: [Get list items](/api/resources/rules/subresources/lists/subresources/items/methods/list/)
 - **Method and endpoints**: `GET accounts/{account_id}/rules/lists/{list_id}/items[?search={query}]`
-- **Notes**: 
+- **Notes**:
   - Fetches items in a list (all items, by default).
   - Items are sorted in ascending order.
   - In the case of IP lists, CIDRs are sorted by IP address, then by the subnet mask.
@@ -63,22 +63,22 @@ When you make requests to a list while a bulk operation on that list is in progr
 - **Operation**: [Get a list item](/api/resources/rules/subresources/lists/subresources/items/methods/get/)
 - **Method and endpoints**: `GET accounts/{account_id}/rules/lists/{list_id}/items/{item_id}`
 - **Notes**: Fetches an item from a list by ID
-     
+
 ### Create list items
 
 - **Operation**: [Create list items](/api/resources/rules/subresources/lists/subresources/items/methods/create/)
 - **Method and endpoints**: `POST accounts/{account_id}/rules/lists/{list_id}/items`
-- **Notes**: 
+- **Notes**:
   - Appends a new item or items to a list.
   - Replaces entries that already exist in the list, does not delete any items.
   - Overwrites the `comment` of the original item.
   - The response includes an `operation_id`.
-   
+
 ### Update all list items
 
 - **Operation**: [Update all list items](/api/resources/rules/subresources/lists/subresources/items/methods/update/)
 - **Method and endpoints**: `PUT accounts/{account_id}/rules/lists/{list_id}/items`
-- **Notes**: 
+- **Notes**:
   - Deletes all current items in the list and replaces them with `items`.
   - When `items` is empty, deletes **all** items in the list.
   - The response includes an `operation_id`.
@@ -87,6 +87,6 @@ When you make requests to a list while a bulk operation on that list is in progr
 
 - **Operation**: [Delete list items](/api/resources/rules/subresources/lists/subresources/items/methods/delete/)
 - **Method and endpoints**: `DELETE accounts/{account_id}/rules/lists/{list_id}/items`
-- **Notes**: 
+- **Notes**:
   - Deletes specified list items.
   - The response includes an `operation_id`.

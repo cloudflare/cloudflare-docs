@@ -1,0 +1,153 @@
+---
+link: "/rules/changelog/"
+productName: Rules
+productLink: "/rules/"
+productArea: Application performance
+productAreaLink: /fundamentals/reference/changelog/performance/
+entries:
+  - publish_date: "2025-02-12"
+    title: "Increased Cloudflare Rules limits"
+    description: |-
+      Cloudflare has upgraded and streamlined limits for [Cloudflare Rules](/rules/) products, making them easier to understand and more consistent across plans. This improvement provides greater scalability, flexibility, and a simplified experience for users managing multiple rule types.
+
+      **Improved limits by product:** 
+      - [Bulk Redirects](/rules/url-forwarding/bulk-redirects/)  
+        - Free: **20** → **10,000** URL redirects across lists
+        - Pro: **500** → **25,000** URL redirects across lists
+        - Business: **500** → **50,000** URL redirects across lists 
+        - Enterprise: **10,000** → **1,000,000** URL redirects across lists 
+      - [Cloud Connector](/rules/cloud-connector/) 
+        - Free: **5** → **10** connectors
+        - Enterprise: **125** → **300** connectors
+      - [Custom Errors](/rules/custom-errors/)  
+        - Pro: **5** → **25** error assets and rules
+        - Business: **20** → **50** error assets and rules
+        - Enterprise: **50** → **300** error assets and rules
+      - [Snippets](/rules/snippets/)  
+        - Pro: **10** → **25** code snippets and rules
+        - Business: **25** → **50** code snippets and rules
+        - Enterprise: **50** → **300** code snippets and rules
+      - [Cache Rules](/cache/how-to/cache-rules/), [Configuration Rules](/rules/configuration-rules/), [Compression Rules](/rules/compression-rules/), [Origin Rules](/rules/origin-rules/), [Single Redirects](/rules/url-forwarding/single-redirects/), and [Transform Rules](/rules/transform/)
+        - Enterprise: **125** → **300** rules
+
+      These changes are rolling out gradually. Some customers may still see previous limits until the rollout is fully completed in the first half of 2025. For more details, refer to the [Cloudflare Rules documentation](/rules/).
+  - publish_date: "2025-02-11"
+    title: "Custom Errors (beta): Stored assets and account-level rules"
+    description: |-
+      Cloudflare introduces [Custom Errors](/rules/custom-errors/) (beta), expanding on Custom Error Responses with new asset storage capabilities. With custom error assets, you can now retrieve and store externally hosted error pages at Cloudflare edge and reference them in custom error rules, eliminating the need to define error content inline. Additionally, Custom Errors now support account-level rules and assets, enabling consistent error handling across multiple zones.
+  - publish_date: "2025-01-29"
+    title: New Snippets code editor
+    description: |-
+      The new Snippets code editor is now live, allowing users to edit both Snippets code and rules from a single page. This update simplifies the workflow and introduces features such as code formatting, refactoring, and auto-complete. The updated editor is available within the Snippets interface.
+  - publish_date: "2025-01-09"
+    title: New Rules Overview page
+    description: |-
+      The new **Rules Overview** interface consolidates Cloudflare Rules products into a single, intuitive page, simplifying navigation and rule management. Key features include:
+
+      - **Unified interface**: Manage all rules in one place — no more navigating through multiple menu tabs.
+      - **Search across rules**: Quickly locate specific rules.
+      - **Clear rule order**: View and manage rules by their execution sequence for streamlined configuration.
+      - **Enhanced visibility**: Instantly view the filter (conditions) and action (outcome) for every rule.
+      - **Faster debugging**: Use Trace directly from the zone-level interface for simple, quick troubleshooting.
+
+      The new page is available in the Cloudflare dashboard at **Rules** > **Overview**.
+  - publish_date: "2024-12-11"
+    title: Snippets support in the Cloudflare provider for Terraform
+    description: |-
+      You can now manage Snippets using Terraform. For more information, refer to [Configure Snippets using Terraform](/rules/snippets/create-terraform/).
+  - publish_date: "2024-11-22"
+    title: Support for Cloudflare R2 object storage in Cloud Connector
+    description: |-
+      You can now connect to R2 buckets in [Cloud Connector](/rules/cloud-connector/).
+  - publish_date: "2024-10-23"
+    title: Simplified user interface for URL Rewrites with wildcard support
+    description: |-
+      The new simplified user interface for [URL Rewrites](/rules/transform/url-rewrite/) is now live, making it easier for users to configure URL rewrites with wildcard support. This update streamlines the process by eliminating the need for complex functions in rule creation.
+      The updated user interface is available at **Rules** > **Transform Rules** > **Rewrite URL**. For more information, refer to the [wildcard support documentation](/rules/transform/url-rewrite/reference/parameters/#wildcard-matching-and-replacement).
+  - publish_date: "2024-09-20"
+    title: Automatic DNS Validation for Cloudflare Rules
+    description: |-
+      The Cloudflare dashboard now automatically validates [DNS records](/dns/proxy-status/) and [Cloudflare for SaaS custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/) for rules targeting specific hostnames or URLs. To prevent misconfigured rules and ensure smoother deployments, you will get proactive warnings for missing or misconfigured DNS records and custom hostnames.
+
+  - publish_date: "2024-09-17"
+    title: Compression Rules available to all plans with Zstandard support
+    description: |-
+      [Compression Rules](/rules/compression-rules/) now support Zstandard compression and are available in all Cloudflare plans. Users in the Free plan will gradually get access throughout 2024.
+
+  - publish_date: "2024-09-13"
+    title: Snippets now available in beta
+    description: |-
+      [Cloudflare Snippets](/rules/snippets/) have transitioned from alpha to beta.
+
+  - publish_date: "2024-09-10"
+    title: wildcard_replace() function now supported in URL rewrites
+    description: |-
+      You can now use the [`wildcard_replace()`](/ruleset-engine/rules-language/functions/#wildcard_replace) function in rewrite expressions of [URL rewrites](/rules/transform/url-rewrite/).
+
+  - publish_date: "2024-09-05"
+    title: New Rules Templates for one-click rule creation
+    description: |-
+      The new **Rules** > **Templates** page in the Cloudflare dashboard allows you to create common rules with a single click, featuring dozens of pre-built templates. You can also access these templates directly from each product's rule builder. Also, explore the [Examples gallery](/rules/examples/) in the developer docs for real-world use cases and inspiration.
+
+  - publish_date: "2024-08-22"
+    title: Simplified UI for Single Redirects with wildcard support
+    description: |-
+      The simplified UI for [Single Redirects](/rules/url-forwarding/single-redirects/) is now available to all users, making URL redirects easier and more intuitive. This update builds on the recent [wildcard support](/ruleset-engine/rules-language/functions/#wildcard_replace) in Ruleset Engine products.
+      Access the new UI under **Rules > Redirect Rules**. Learn more about wildcard support and our open-source Rust crate in the [blog post](https://blog.cloudflare.com/wildcard-rules).
+
+  - publish_date: "2024-08-20"
+    title: Cloud Connector now available to all customers
+    description: |-
+      Cloud Connector (beta) is now available to all customers. For setup details, refer to the [documentation](/rules/cloud-connector/), explore [examples](/rules/cloud-connector/examples/), and check out the [blog post](https://blog.cloudflare.com/cloud-connector).
+
+  - publish_date: "2024-08-16"
+    title: Cloud Connector now available to all free customers
+    description: |-
+      Cloud Connector (beta) is now available to all free and a subset of paid customers. This rollout will be [gradually extended](/rules/cloud-connector/#availability) to all Cloudflare users, simplifying multi-cloud management and enhancing integration with Cloudflare's Connectivity Cloud. For more information, refer to the [blog post](https://blog.cloudflare.com/cloud-connector).
+
+  - publish_date: "2024-08-12"
+    title: Cloudflare Snippets limits have been upgraded
+    description: |-
+      Cloudflare Snippets (alpha) now allow multiple subrequests depending on your plan. For more information, refer to the [Availability](/rules/snippets/#availability).
+
+  - publish_date: "2024-07-31"
+    title: Wildcard support added to Ruleset Engine products
+    description: |-
+      Wildcards are now supported across our Ruleset Engine-based products, including Single Redirects, Cache Rules, Transform Rules, WAF, Waiting Room, and more:
+      * You can now use the `wildcard` and `strict wildcard` operators with any string field in the Ruleset Engine, such as full URI, host, headers, cookies, user-agent, and country. For more details, refer to [Operators](/ruleset-engine/rules-language/operators/) and [Wildcard matching](/ruleset-engine/rules-language/operators/#wildcard-matching).
+      * In [Single Redirects](/rules/url-forwarding/single-redirects/), the `wildcard_replace()` function allows you to use segments matched by the `wildcard` and `strict wildcard` operators in redirect URL targets. For more information, refer to [Functions](/ruleset-engine/rules-language/functions/#wildcard_replace).
+
+  - publish_date: "2024-07-01"
+    title: Cloudflare Snippets now available to all paid customers
+    description: |-
+      Cloudflare Snippets (alpha) are now available to all paid customers.
+
+  - publish_date: "2024-06-03"
+    title: Cloudflare Snippets now available to all Enterprise customers
+    description: |-
+      Cloudflare Snippets (alpha) are now available to all Enterprise customers. Customers in other paid plans will gradually get access throughout 2024.
+
+  - publish_date: "2024-05-14"
+    title: Page Rules migration
+    description: |-
+      The [Page Rules migration guide](/rules/reference/page-rules-migration/) is now available for users interested in transitioning to modern Rules features instead of Page Rules. Explore the guide for detailed instructions on migrating your configurations.
+
+  - publish_date: "2024-05-13"
+    title: New Configuration Rules setting for Web Analytics (RUM)
+    description: |-
+      You can now turn off Cloudflare Web Analytics, also known as Real User Monitoring (RUM), for specific requests using a configuration rule.
+
+  - publish_date: "2024-04-29"
+    title: New Configuration Rules setting for Cloudflare Fonts
+    description: |-
+      You can now turn on or off Cloudflare Fonts for specific requests using a configuration rule.
+
+  - publish_date: "2024-03-22"
+    title: New TLS fields in rule expressions
+    description: |-
+      Customers can now use new fields `cf.tls_client_hello_length` (the length of the client hello message sent in a TLS handshake), `cf.tls_client_random` (the value of the 32-byte random value provided by the client in a TLS handshake), and `cf.tls_client_extensions_sha1` (the SHA-1 fingerprint of TLS client extensions) in various products built on Ruleset Engine.
+
+  - publish_date: "2024-03-20"
+    title: Origin Rules now allow port numbers in Host Header Override
+    description: |-
+      Customers can now use arbitrary port numbers in Host Header Override in Origin Rules. Previously, only hostname was allowed as a value (for example, `example.com`). Now, you can set the value to `hostname:port` (for example, `example.com:1234`) as well.

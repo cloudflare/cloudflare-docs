@@ -22,7 +22,7 @@ Although it is possible to add discrete bindings for non-contiguous CIDR blocks,
 
 <Details header="Example">
 
-**Magic Transit protected prefix:** `203.0.113.100/24`
+**Magic Transit protected prefix:** `203.0.113.0/24`
 
 **IPs to upgrade to the CDN:**
 
@@ -58,11 +58,11 @@ At this point, continuing the [example](#before-you-begin), you should have a ma
 | Variables      | Description                                                                                                                                       |
 | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `{service_id}` | The ID of the CDN service within Cloudflare. <br /><br /> Example: `969xxxxxxxx000xxx0000000x00001bf`                                             |
-| `{prefix_id}`  | The ID of the Magic Transit protected prefix (`203.0.113.100/24`) you want to configure. <br /><br /> Example: `6b25xxxxxxx000xxx0000000x0000cfc` |
+| `{prefix_id}`  | The ID of the Magic Transit protected prefix (`203.0.113.0/24`) you want to configure. <br /><br /> Example: `6b25xxxxxxx000xxx0000000x0000cfc` |
 
 </Example>
 
-4. To confirm you currently only have a Magic Transit service binding and that it spans across your entire prefix, make a `GET` request to the [List Service Bindings](/api/resources/addressing/subresources/prefixes/subresources/bgp/subresources/bindings/methods/list/) endpoint. Replace the `{prefix_id}` in the URI path by the actual prefix ID you got from the previous step.
+4. To confirm you currently only have a Magic Transit service binding and that it spans across your entire prefix, make a `GET` request to the [List Service Bindings](/api/resources/addressing/subresources/prefixes/subresources/service_bindings/methods/list/) endpoint. Replace the `{prefix_id}` in the URI path by the actual prefix ID you got from the previous step.
 
 <Example>
 
@@ -79,7 +79,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/addressing/prefi
 Once a service binding is created (or deleted), it will take four to six hours to propagate across Cloudflare's global network. Services for the IP addresses in scope will likely be disrupted during this window.
 :::
 
-1. Make a `POST` request to the [Create service binding](/api/resources/addressing/subresources/prefixes/subresources/bgp/subresources/bindings/methods/create/) endpoint, indicating the IP address you want to bind to the CDN. Specify the **corresponding network mask** as needed.
+1. Make a `POST` request to the [Create service binding](/api/resources/addressing/subresources/prefixes/subresources/service_bindings/methods/create/) endpoint, indicating the IP address you want to bind to the CDN. Specify the **corresponding network mask** as needed.
 
 <Example>
 
@@ -119,11 +119,11 @@ In the response body, the initial provisioning state should be `provisioning`.
 
 </Example>
 
-You can periodically check the service binding status using the [List Service Bindings](/api/resources/addressing/subresources/prefixes/subresources/bgp/subresources/bindings/methods/list/) endpoint.
+You can periodically check the service binding status using the [List Service Bindings](/api/resources/addressing/subresources/prefixes/subresources/service_bindings/methods/list/) endpoint.
 
 ## 3. Create address maps
 
-Once you have configured your IPs to have CDN service, you can use <GlossaryTooltip term="address map" link="/byoip/address-maps/">address maps</GlossaryTooltip> to specify which IPs should be used by Cloudflare in DNS responses when a record is <GlossaryTooltip term="proxy status" link="/dns/manage-dns-records/reference/proxied-dns-records/#proxied-records">proxied</GlossaryTooltip>.
+Once you have configured your IPs to have CDN service, you can use <GlossaryTooltip term="address map" link="/byoip/address-maps/">address maps</GlossaryTooltip> to specify which IPs should be used by Cloudflare in DNS responses when a record is <GlossaryTooltip term="proxy status" link="/dns/proxy-status/">proxied</GlossaryTooltip>.
 
 You can choose between two different scopes:
 
@@ -193,7 +193,7 @@ While the DNS record proxy status and address map will determine how Cloudflare'
 At this point, if an address map for a zone `example.com` specifies that Cloudflare should use `203.0.113.100` for proxied records and the above record exists in the same zone, you can expect the following:
 
 1. Cloudflare responds to DNS requests with `203.0.113.100`.
-2. Cloudflare proxies requests through the CDN and then routes the requests via [GRE](/magic-transit/reference/tunnels/) or [CNI](/magic-transit/network-interconnect/) to the origin server `203.0.113.150` (Magic Transit protected prefix).
+2. Cloudflare proxies requests through the CDN and then routes the requests via [GRE](/magic-transit/reference/tunnels/) or [CNI](/magic-transit/network-interconnect/) to the origin server `203.0.113.150` (which is within the Magic Transit protected prefix).
 3. Depending on whether Magic Transit is implemented with [direct server return model or with Magic Transit egress](/magic-transit/how-to/configure-tunnels/#bidirectional-vs-unidirectional-health-checks), the origin server responds back to Cloudflare either:
 
    - Directly over the Internet in a Magic Transit direct server return model

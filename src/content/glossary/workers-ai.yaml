@@ -1,0 +1,57 @@
+---
+productName: Workers AI
+entries:
+  - term: Workers AI
+    general_definition: |-
+      [Workers AI](/workers-ai/) is a Cloudflare service that enables running machine learning models on Cloudflare's global network, utilizing serverless GPUs. It allows developers to integrate AI capabilities into their applications using Workers, Pages, or via the REST API.
+  - term: Serverless GPUs
+    general_definition: |-
+      [Serverless GPUs](/workers-ai/) are graphics processing units provided by Cloudflare in a serverless environment, enabling scalable and efficient execution of machine learning models without the need for managing underlying hardware.
+  - term: Wrangler CLI
+    general_definition: |-
+      [Wrangler CLI](/workers-ai/get-started/workers-wrangler/) is a command-line tool for building and deploying Cloudflare Workers, facilitating the integration of AI models into applications.
+  - term: REST API
+    general_definition: |-
+      [REST API](/workers-ai/get-started/rest-api/) is an application programming interface that allows developers to interact with Workers AI services over HTTP, enabling model management and inference requests.
+  - term: API Tokens
+    general_definition: |-
+      [API Tokens](/workers-ai/get-started/rest-api/) are authentication credentials used to securely access and manage Workers AI resources via the REST API.
+  - term: Cloudflare Dashboard
+    general_definition: |-
+      [Cloudflare Dashboard](/workers-ai/get-started/dashboard/) is a web-based interface that allows users to manage Workers AI services, including model deployment and monitoring.
+  - term: Prompt Engineering
+    general_definition: |-
+      [Prompt Engineering](/workers-ai/guides/prompting/) is the practice of designing and refining input prompts to effectively elicit desired responses from AI models.
+  - term: Prompt Templates
+    general_definition: |-
+      [Prompt Templates](/workers-ai/guides/prompting/) are predefined structures that guide the input provided to AI models, enhancing consistency and effectiveness in responses.
+  - term: Worker Bindings
+    general_definition: |-
+      [Worker Bindings](/workers-ai/configuration/bindings/) are configurations that connect Workers scripts to external resources, such as AI models, enabling seamless integration and functionality.
+  - term: Environment Variables
+    general_definition: |-
+      [Environment Variables](/workers-ai/configuration/bindings/) are dynamic values that can be used within Workers to manage configuration settings, including those related to AI integrations.
+  - term: Model Catalog
+    general_definition: |-
+      [Model Catalog](/workers-ai/models/) is a curated collection of AI models available within Workers AI, providing developers with a variety of pre-trained models for different tasks.
+  - term: Fine-Tuning
+    general_definition: |-
+      [Fine-Tuning](/workers-ai/fine-tunes/) is a general term for modifying an AI model by continuing to train it with additional data.
+  - term: LoRA Adapters
+    general_definition: |-
+      [LoRA Adapters](/workers-ai/fine-tunes/loras/) (Low-Rank Adaptation adapters) are used in machine learning to fine-tune models efficiently by adjusting a small number of parameters, allowing for customization of AI models in Workers AI.[Public LoRA Adapters](/workers-ai/fine-tunes/public-loras/) are pre-trained Low-Rank Adaptation adapters available for public use.
+  - term: Function Calling
+    general_definition: |-
+      [Function Calling](/workers-ai/function-calling/) enables people to take Large Language Models (LLMs) and use the model response to execute functions or interact with external APIs.
+  - term: AI models
+    general_definition: |-
+      [An AI model](/workers-ai/models) is a trained system that processes input data to generate predictions, decisions, or outputs based on patterns it has learned.
+  - term: Workers KV
+    general_definition: |-
+      [Workers KV](/kv/)is a data storage that allows you to store and retrieve data globally.
+  - term: D1
+    general_definition: |-
+      [D1](/d1/) is Cloudflare's managed, serverless database with SQLite's SQL semantics, built-in disaster recovery, and Worker and HTTP API access.
+  - term: Inference
+    general_definition: |-
+      [Inference](/workers-ai/fine-tunes/public-loras/#running-inference-with-public-loras) refers to the process of using a trained machine learning model to make predictions or generate outputs based on new data.

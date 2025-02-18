@@ -3,121 +3,422 @@ title: Recommended DNS policies
 pcx_content_type: learning-unit
 sidebar:
   order: 3
-
 ---
 
-import { Details, Render } from "~/components"
+import { Render, Tabs, TabItem } from "~/components";
 
 We recommend you add the following DNS policies to build an Internet and SaaS app security strategy for your organization.
 
-
-<Details header="All-DNS-Domain-Allowlist">
+## All-DNS-Domain-Allowlist
 
 Allowlist any known domains and hostnames. With this policy, you ensure that your users can access your organization's domains even if the domains fall under a blocked category, such as **Newly Seen Domains** or **Login Screens**.
 
+<Tabs syncKey="dashPlusAPI">
+
+<TabItem label="Dashboard">
+
 | Selector | Operator | Value           | Logic | Action |
 | -------- | -------- | --------------- | ----- | ------ |
-| Domain   | in list  | *Known Domains* | Or    | Allow  |
-| Host     | in list  | *Known Domains* |       |        |
+| Domain   | in list  | _Known Domains_ | Or    | Allow  |
+| Host     | in list  | _Known Domains_ |       |        |
 
+</TabItem>
 
-</Details>
+<TabItem label="API">
 
+```sh
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "All-DNS-Domain-Allowlist",
+  "description": "Allowlist any known domains and hostnames",
+  "precedence": 0,
+  "enabled": true,
+  "action": "allow",
+  "filters": [
+    "dns"
+  ],
+  "traffic": "any(dns.domains[*] in $<KNOWN_DOMAINS_LIST_UUID>) or dns.fqdn in $<KNOWN_DOMAINS_LIST_UUID>"
+}'
+```
 
-<Details header="Quarantined-Users-DNS-Restricted-Access">
+</TabItem>
+
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "dns_whitelist_policy" {
+  account_id  = var.account_id
+  name        = "All-DNS-Domain-Allowlist"
+  description = "Allowlist any known domains and hostnames"
+  precedence  = 0
+  enabled     = true
+  action      = "allow"
+  filters     = ["dns"]
+  traffic     = "any(dns.domains[*] in ${"$"}${cloudflare_zero_trust_list.domain_whitelist.id}) or dns.fqdn in ${"$"}${cloudflare_zero_trust_list.domain_whitelist.id}"
+}
+```
+
+</TabItem>
+</Tabs>
+
+## Quarantined-Users-DNS-Restricted-Access
 
 <Render file="zero-trust/blocklist-restricted-users" />
 
-| Selector         | Operator | Value               | Logic | Action |
-| ---------------- | -------- | ------------------- | ----- | ------ |
-| Domain           | in list  | *Known Domains*     | Or    | Block  |
-| Host             | in list  | *Known Domains*     | And   |        |
-| User Group Names | in       | *Quarantined Users* |       |        |
+<Tabs syncKey="dashPlusAPI">
 
+<TabItem label="Dashboard">
 
-</Details>
+| Selector         | Operator    | Value                         | Logic | Action |
+| ---------------- | ----------- | ----------------------------- | ----- | ------ |
+| Domain           | not in list | _Allowed Remediation Domains_ | Or    | Block  |
+| Host             | not in list | _Allowed Remediation Domains_ | And   |        |
+| User Group Names | in          | _Quarantined Users_           |       |        |
 
+</TabItem>
 
-<Details header="All-DNS-SecurityCategories-Blocklist">
+<TabItem label="API">
+
+```sh
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "Quarantined-Users-DNS-Restricted-Access",
+  "description": "Restrict access for users included in an identity provider (IdP) user group for risky users",
+  "precedence": 10,
+  "enabled": true,
+  "action": "block",
+  "filters": [
+    "dns"
+  ],
+	"traffic": "not(any(dns.domains[*] in $<ALLOWED_REMEDIATION_DOMAINS_LIST_UUID>)) or not(any(dns.domains[*] in $<ALLOWED_REMEDIATION_DOMAINS_LIST_UUID>))",
+  "identity": "any(identity.groups.name[*] in {\"Quarantined Users\"})"
+}'
+```
+
+</TabItem>
+
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "dns_restrict_quarantined_users" {
+  account_id  = var.account_id
+  name        = "Quarantined-Users-DNS-Restricted-Access"
+  description = "Restrict access for users included in an identity provider (IdP) user group for risky users"
+  precedence  = 10
+  enabled     = true
+  action      = "block"
+  filters     = ["dns"]
+  traffic     = "not(any(dns.domains[*] in ${"$"}${cloudflare_zero_trust_list.allowed_remediation_domains.id})) or not(any(dns.domains[*] in ${"$"}${cloudflare_zero_trust_list.allowed_remediation_domains.id}))"
+	identity		=	"any(identity.groups.name[*] in {\"Quarantined Users\"})"
+}
+```
+
+</TabItem>
+</Tabs>
+
+## All-DNS-SecurityCategories-Blocklist
 
 <Render file="zero-trust/blocklist-security-categories" />
 
-<Render file="gateway/policies/block-security-categories" product="cloudflare-one" />
+<Render
+	file="gateway/policies/dash-plus-api/dns/block-security-categories"
+	product="cloudflare-one"
+/>
 
+## All-DNS-ContentCategories-Blocklist
 
-</Details>
+<Render
+	file="zero-trust/content-categories-description"
+	params={{ policyType: "DNS" }}
+/>
 
+<Render
+	file="gateway/policies/dash-plus-api/dns/block-content-categories"
+	product="cloudflare-one"
+/>
 
-<Details header="All-DNS-ContentCategories-Blocklist">
-
-<Render file="zero-trust/blocklist-content-categories" params={{ one: "DNS", two: "Security Risks" }} />
-
-
-</Details>
-
-
-<Details header="All-DNS-Application-Blocklist">
+## All-DNS-Application-Blocklist
 
 <Render file="zero-trust/blocklist-application" />
 
+<Render
+	file="gateway/policies/dash-plus-api/dns/block-applications"
+	product="cloudflare-one"
+/>
 
-</Details>
-
-
-<Details header="All-DNS-GeoCountryIP-Blocklist">
+## All-DNS-GeoCountryIP-Blocklist
 
 Block websites hosted in countries categorized as high risk. The designation of such countries may result from your organization's users or through the implementation of regulations including [EAR](https://www.tradecompliance.pitt.edu/embargoed-and-sanctioned-countries), [OFAC](https://orpa.princeton.edu/export-controls/sanctioned-countries), and [ITAR](https://www.tradecompliance.pitt.edu/embargoed-and-sanctioned-countries).
 
+<Tabs syncKey="dashPlusAPI">
+
+<TabItem label="Dashboard">
+
 | Selector                        | Operator | Value                                                                                                                                                           | Action |
 | ------------------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ |
-| Resolved Country IP Geolocation | in       | *Afghanistan*, *Belarus*, *Congo (Kinshasa)*, *Cuba*, *Iran*, *Iraq*, *Korea (North)*, *Myanmar*, *Russian Federation*, *Sudan*, *Syria*, *Ukraine*, *Zimbabwe* | Block  |
+| Resolved Country IP Geolocation | in       | _Afghanistan_, _Belarus_, _Congo (Kinshasa)_, _Cuba_, _Iran_, _Iraq_, _Korea (North)_, _Myanmar_, _Russian Federation_, _Sudan_, _Syria_, _Ukraine_, _Zimbabwe_ | Block  |
 
+</TabItem>
 
-</Details>
+<TabItem label="API">
 
+```sh
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+	"name": "All-DNS-GeoCountryIP-Blocklist",
+  "description": "Block traffic hosted in countries categorized as high security risks",
+  "precedence": 50,
+  "enabled": true,
+  "action": "block",
+  "filters": [
+    "dns"
+  ],
+  "traffic": "any(dns.dst.geo.country[*] in {\"AF\" \"BY\" \"CD\" \"CU\" \"IR\" \"IQ\" \"KP\" \"MM\" \"RU\" \"SD\" \"SY\" \"UA\" \"ZW\"})"
+}'
+```
 
-<Details header="All-DNS-DomainTopLevel-Blocklist">
+</TabItem>
+
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "dns_geolocation_block_policy" {
+  account_id  = var.account_id
+  name        = "All-DNS-GeoCountryIP-Blocklist"
+  description = "Block traffic hosted in countries categorized as high security risks"
+  precedence  = 50
+  enabled     = true
+  action      = "block"
+  filters     = ["dns"]
+  traffic     = "any(dns.dst.geo.country[*] in {\"AF\" \"BY\" \"CD\" \"CU\" \"IR\" \"IQ\" \"KP\" \"MM\" \"RU\" \"SD\" \"SY\" \"UA\" \"ZW\"})"
+}
+```
+
+</TabItem>
+</Tabs>
+
+## All-DNS-DomainTopLevel-Blocklist
 
 Block frequently misused top-level domains (TLDs) to reduce security risks, especially when there is no discernible advantage to be gained from allowing access. Similarly, restricting access to specific country-level TLDs may be necessary to comply with regulations such as [OFAC](https://orpa.princeton.edu/export-controls/sanctioned-countries) and [ITAR](https://www.tradecompliance.pitt.edu/embargoed-and-sanctioned-countries).
+
+<Tabs syncKey="dashPlusAPI">
+
+<TabItem label="Dashboard">
 
 | Selector | Operator      | Value                                                                                                    | Action |
 | -------- | ------------- | -------------------------------------------------------------------------------------------------------- | ------ |
 | Domain   | matches regex | `[.](cn\|ru)$ or [.](rest\|hair\|top\|live\|cfd\|boats\|beauty\|mom\|skin\|okinawa)$ or [.](zip\|mobi)$` | Block  |
 
+</TabItem>
 
-</Details>
+<TabItem label="API">
 
+```sh
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "All-DNS-DomainTopLevel-Blocklist",
+  "description": "Block DNS queries of known risky TLDs",
+  "precedence": 60,
+  "enabled": true,
+  "action": "block",
+  "filters": [
+    "dns"
+  ],
+  "traffic": "any(dns.domains[*] matches \"[.](cn|ru)$ or [.](rest|hair|top|live|cfd|boats|beauty|mom|skin|okinawa)$ or [.](zip|mobi)$\")"
+}'
+```
 
-<Details header="All-DNS-DomainPhishing-Blocklist">
+</TabItem>
+
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "dns_blacklist_policy" {
+  account_id  = var.account_id
+  name        = "All-DNS-DomainTopLevel-Blocklist"
+  description = "Block DNS queries of known risky TLDs"
+  precedence  = 60
+  enabled     = true
+  action      = "block"
+  filters     = ["dns"]
+  traffic     = "any(dns.domains[*] matches \"[.](cn|ru)$ or [.](rest|hair|top|live|cfd|boats|beauty|mom|skin|okinawa)$ or [.](zip|mobi)$\")"
+}
+```
+
+</TabItem>
+</Tabs>
+
+## All-DNS-DomainPhishing-Blocklist
 
 Block misused domains to protect your users against sophisticated phishing attacks, such as domains that specifically target your organization. For example, the following policy blocks specific keywords associated with an organization or its authentication services (such as `okta`, `2fa`, `cloudflare` and `sso`) while still allowing access to known domains.
 
+<Tabs syncKey="dashPlusAPI">
+
+<TabItem label="Dashboard">
+
 | Selector | Operator      | Value                                       | Logic | Action |
 | -------- | ------------- | ------------------------------------------- | ----- | ------ |
-| Domain   | not in list   | *Known Domains*                             | And   | Block  |
+| Domain   | not in list   | _Known Domains_                             | And   | Block  |
 | Domain   | matches regex | `.*okta.*\|.*cloudflare.*\|.*mfa.*\|.sso.*` |       |        |
 
+</TabItem>
 
-</Details>
+<TabItem label="API">
 
+```sh
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+	"name": "All-DNS-DomainPhishing-Blocklist",
+  "description": "Block misused domains used in phishing campaigns",
+  "precedence": 70,
+  "enabled": true,
+  "action": "block",
+  "filters": [
+    "dns"
+  ],
+  "traffic": "any(dns.domains[*] matches \".*okta.*|.*cloudflare.*|.*mfa.*|.sso.*\") and not(any(dns.domains[*] in $<KNOWN_DOMAINS_LIST_UUID>))"
+}'
+```
 
-<Details header="All-DNS-ResolvedIP-Blocklist">
+</TabItem>
+
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "dns_phishing_domains_block" {
+  account_id  = var.account_id
+  name        = "All-DNS-DomainPhishing-Blocklist"
+  description = "Block misused domains used in phishing campaigns"
+  precedence  = 70
+  enabled     = true
+  action      = "block"
+  filters     = ["dns"]
+  traffic     = "any(dns.domains[*] matches \".*okta.*|.*cloudflare.*|.*mfa.*|.sso.*\") and not(any(dns.domains[*] in ${"$"}${cloudflare_zero_trust_list.known_phishing_domains_list.id}))"
+}
+```
+
+</TabItem>
+</Tabs>
+
+## All-DNS-ResolvedIP-Blocklist
 
 Block specific IP addresses that are malicious or pose a threat to your organization.
 
 <Render file="zero-trust/threat-intelligence-automation" />
 
+<Tabs syncKey="dashPlusAPI">
+
+<TabItem label="Dashboard">
+
 | Selector    | Operator | Value          | Action |
 | ----------- | -------- | -------------- | ------ |
-| Resolved IP | in list  | *IP Blocklist* | Block  |
+| Resolved IP | in list  | _IP Blocklist_ | Block  |
 
+</TabItem>
 
-</Details>
+<TabItem label="API">
 
+```sh
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+	"name": "All-DNS-ResolvedIP-Blocklist",
+  "description": "Block specific IP addresses deemed to be a risk to the Organization",
+  "precedence": 80,
+  "enabled": true,
+  "action": "block",
+  "filters": [
+    "dns"
+  ],
+  "traffic": "any(dns.resolved_ips[*] in $<IP_BLOCKLIST_UUID>)"
+}'
+```
 
-<Details header="All-DNS-DomainHost-Blocklist">
+</TabItem>
 
-<Render file="zero-trust/blocklist-domain-host" params={{ one: "DNS" }} />
+<TabItem label="Terraform">
 
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "dns_resolvedip_blocklist_rule" {
+  account_id  = var.account_id
+  name        = "All-DNS-ResolvedIP-Blocklist"
+  description = "Block specific IP addresses deemed to be a risk to the Organization"
+  precedence  = 80
+  enabled     = true
+  action      = "block"
+  filters     = ["dns"]
+  traffic     = "any(dns.resolved_ips[*] in ${"$"}${cloudflare_zero_trust_list.ip_blocklist.id}"
+}
+```
 
-</Details>
+</TabItem>
+</Tabs>
+
+## All-DNS-DomainHost-Blocklist
+
+<Render
+	file="zero-trust/blocklist-domain-host"
+	params={{ blocklistPolicyType: "DNS" }}
+/>
+
+<Tabs syncKey="dashPlusAPI">
+
+<TabItem label="Dashboard">
+
+| Selector | Operator      | Value              | Logic | Action |
+| -------- | ------------- | ------------------ | ----- | ------ |
+| Domain   | in list       | _Domain Blocklist_ | Or    | Block  |
+| Host     | in list       | _Host Blocklist_   | Or    |        |
+| Host     | matches regex | `.*example\.com`   |       |        |
+
+</TabItem>
+
+<TabItem label="API">
+
+```sh
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN>" \
+--data '{
+	"name": "All-DNS-DomainHost-Blocklist",
+  "description": "Block specific domains or hosts that are malicious or pose a threat to your organization.",
+  "precedence": 90,
+  "enabled": true,
+  "action": "block",
+  "filters": [
+    "dns"
+  ],
+  "traffic": "any(dns.domains[*] in $<DOMAIN_BLOCKLIST_UUID>) and dns.fqdn in $<HOST_BLOCKLIST_UUID> and dns.fqdn matches \".*example\\.com\""
+}'
+```
+
+</TabItem>
+
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "block_dns_domain_host" {
+  account_id  = var.account_id
+  name        = "All-DNS-DomainHost-Blocklist"
+  description = "Block specific domains or hosts that are malicious or pose a threat to your organization."
+  precedence  = 90
+  enabled     = true
+  action      = "block"
+  filters     = ["dns"]
+  traffic     = "any(dns.domains[*] in ${"$"}${cloudflare_zero_trust_list.domain_blocklist.id}) and dns.fqdn in ${"$"}${cloudflare_zero_trust_list.host_blocklist.id} and dns.fqdn matches \".*example\\.com\""
+}
+```
+
+</TabItem>
+</Tabs>

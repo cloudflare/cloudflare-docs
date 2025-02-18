@@ -1,19 +1,11 @@
 {
+	"extends": "../tsconfig.json",
 	"compilerOptions": {
-		"esModuleInterop": true,
-		"skipLibCheck": true,
-		"target": "ESNext",
-		"allowJs": true,
-		"resolveJsonModule": true,
-		"moduleDetection": "force",
-		"isolatedModules": true,
-		"verbatimModuleSyntax": true,
-		"strict": true,
-		"noUncheckedIndexedAccess": true,
-		"noImplicitOverride": true,
-		"module": "Preserve",
-		"noEmit": true,
-		"lib": ["ESNext"],
-		"types": ["../.wrangler/types/runtime.d.ts", "../worker-configuration.d.ts"]
-	}
+		"target": "esnext",
+		"module": "esnext",
+		"lib": ["esnext"],
+		"types": ["@cloudflare/workers-types", "@cloudflare/vitest-pool-workers"]
+	},
+	"include": ["*.ts"],
+	"exclude": []
 }

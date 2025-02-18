@@ -14,7 +14,7 @@ This page provides information about some of the different types of DNS records 
 
 ## IP address resolution
 
-At least one **IP address resolution** record is required for each domain on Cloudflare. These records are the only ones you can [proxy](/dns/manage-dns-records/reference/proxied-dns-records/) through Cloudflare.
+At least one **IP address resolution** record is required for each domain on Cloudflare. These records are the only ones you can [proxy](/dns/proxy-status/) through Cloudflare.
 
 ### A and AAAA
 
@@ -38,14 +38,14 @@ These records include the following fields:
 * **TTL**: Time to live, which controls how long DNS resolvers should cache a response before revalidating it.
   * If the **Proxy Status** is **Proxied**, this value defaults to **Auto**, which is 300 seconds.
   * If the **Proxy Status** is **DNS Only**, you can customize the value.
-* **Proxy status**: For more details, refer to [Proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/).
+* **Proxy status**: For more details, refer to [Proxied DNS records](/dns/proxy-status/).
 
 #### Example API call
 
 When creating A or AAAA records [using the API](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records):
 
 * The `content` of the records is an IP address (IPv4 for A or IPv6 for AAAA).
-* The `proxied` field affects the record's [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/).
+* The `proxied` field affects the record's [proxy status](/dns/proxy-status/).
 
 <Render file="api-field-definitions" />
 
@@ -107,7 +107,7 @@ These records include the following fields:
 * **TTL**: Time to live, which controls how long DNS resolvers should cache a response before revalidating it.
   * If the **Proxy Status** is **Proxied**, this value defaults to **Auto**, which is 300 seconds.
   * If the **Proxy Status** is **DNS Only**, you can customize the value.
-* **Proxy status**: For more details, refer to [Proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/).
+* **Proxy status**: For more details, refer to [Proxied DNS records](/dns/proxy-status/).
 
 You can use CNAME records to point to other CNAME records (`www.example2.com` --> `www.example1.com` --> `www.example.com`), but the final record must point to a hostname with a valid IP address (and therefore a valid A or AAAA record) if this hostname is meant to proxy traffic.
 
@@ -118,7 +118,7 @@ Cloudflare uses a process called CNAME flattening to deliver better performance.
 When creating CNAME records [using the API](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records):
 
 * The `content` of the records is a [fully qualified domain name](https://en.wikipedia.org/wiki/Fully_qualified_domain_name).
-* The `proxied` field affects the record's [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/)
+* The `proxied` field affects the record's [proxy status](/dns/proxy-status/)
 
 <Render file="api-field-definitions" />
 
@@ -302,7 +302,7 @@ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" \
 
 Service Binding (SVCB) and HTTPS Service (HTTPS) records allow you to provide a client with information about how it should connect to a server upfront, without the need of an initial plaintext HTTP connection.
 
-If your domain has [HTTP/2 or HTTP/3 enabled](/speed/optimization/protocol/) and [proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/), Cloudflare automatically generates HTTPS records on the fly, to advertise to clients how they should connect to your server.
+If your domain has [HTTP/2 or HTTP/3 enabled](/speed/optimization/protocol/) and [proxied DNS records](/dns/proxy-status/), Cloudflare automatically generates HTTPS records on the fly, to advertise to clients how they should connect to your server.
 
 For more details and context, refer to the [announcement blog post](https://blog.cloudflare.com/speeding-up-https-and-http-3-negotiation-with-dns/) and [RFC 9460](https://www.rfc-editor.org/rfc/rfc9460.html).
 

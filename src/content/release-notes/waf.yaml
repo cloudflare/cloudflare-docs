@@ -1,0 +1,27 @@
+---
+link: "/waf/change-log/"
+productName: WAF
+productLink: "/waf/"
+productArea: Application security
+productAreaLink: /fundamentals/reference/changelog/security/
+entries:
+  - publish_date: "2025-02-18"
+    scheduled_date: "2025-02-24"
+    individual_page: true
+    scheduled: true
+    link: "/waf/change-log/scheduled-changes/"
+  - publish_date: "2025-02-18"
+    individual_page: true
+    link: "/waf/change-log/2025-02-18/"
+  - publish_date: "2025-02-11"
+    individual_page: true
+    link: "/waf/change-log/2025-02-11/"
+  - publish_date: "2025-01-21"
+    individual_page: true
+    link: "/waf/change-log/2025-01-21/"
+  - publish_date: "2025-01-13"
+    individual_page: true
+    link: "/waf/change-log/2025-01-13/"
+  - publish_date: "2025-01-06"
+    individual_page: true
+    link: "/waf/change-log/2025-01-06/"

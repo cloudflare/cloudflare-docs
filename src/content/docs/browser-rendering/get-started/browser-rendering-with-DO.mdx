@@ -71,9 +71,9 @@ After running the `list` command, you will see all bucket names, including the o
 
 ## 5. Configure your Wrangler configuration file
 
-Configure your `browser-worker` project's [`wrangler.toml / wrangler.json` file](/workers/wrangler/configuration/) by adding a browser [binding](/workers/runtime-apis/bindings/) and a [Node.js compatibility flag](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag). Browser bindings allow for communication between a Worker and a headless browser which allows you to do actions such as taking a screenshot, generating a PDF and more.
+Configure your `browser-worker` project's [Wrangler configuration file](/workers/wrangler/configuration/) by adding a browser [binding](/workers/runtime-apis/bindings/) and a [Node.js compatibility flag](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag). Browser bindings allow for communication between a Worker and a headless browser which allows you to do actions such as taking a screenshot, generating a PDF and more.
 
-Update your `wrangler.toml / wrangler.json` file with the Browser Rendering API binding, the R2 bucket you created and a Durable Object:
+Update your Wrangler configuration file with the Browser Rendering API binding, the R2 bucket you created and a Durable Object:
 
 <WranglerConfig>
 

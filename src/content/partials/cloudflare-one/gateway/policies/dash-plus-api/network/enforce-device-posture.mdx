@@ -1,0 +1,58 @@
+---
+{}
+---
+
+import { Tabs, TabItem, Render } from "~/components";
+
+In the following example, you can use a list of [device serial numbers](/cloudflare-one/identity/devices/warp-client-checks/corp-device/) to ensure users can only access an application if they connect with the WARP client from a company device:
+
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Dashboard">
+
+<Render
+	file="gateway/policies/enforce-device-posture"
+	product="cloudflare-one"
+/>
+
+</TabItem>
+<TabItem label="API">
+
+```sh
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
+  --header "Content-Type: application/json" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+	--data '{
+	"name": "All-NET-ApplicationAccess-Allow",
+  "description": "Ensure access to the application comes from authorized WARP clients",
+  "precedence": 5000,
+  "enabled": false,
+  "action": "block",
+  "filters": [
+    "l4"
+  ],
+  "traffic": "any(net.sni.domains[*] == \"internalapp.com\")",
+	"device_posture": "not(any(device_posture.checks.passed[*] in {\"<DEVICE_SERIAL_NUMBERS_LIST_UUID>\"}))"
+}'
+```
+
+To get the UUIDs of your device posture checks, use the [List device posture rules](/api/resources/zero_trust/subresources/devices/subresources/posture/methods/list/) endpoint.
+
+</TabItem>
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "dns_resolvedip_blocklist_rule" {
+  account_id  = var.account_id
+  name        = "All-NET-ApplicationAccess-Allow"
+  description = "Ensure access to the application comes from authorized WARP clients"
+  precedence  = 5000
+  enabled     = false
+  action      = "block"
+  filters     = ["l4"]
+  traffic     = "any(net.sni.domains[*] == \"internalapp.com\")"
+	posture			=	"not(any(device_posture.checks.passed[*] in {\"${"$"}${cloudflare_zero_trust_list.allowed_devices_sn_list.id}\"}))"
+}
+```
+
+</TabItem>
+</Tabs>

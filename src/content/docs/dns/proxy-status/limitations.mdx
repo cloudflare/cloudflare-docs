@@ -1,0 +1,39 @@
+---
+pcx_content_type: concept
+title: Proxying limitations
+sidebar:
+  order: 2
+  label: Limitations
+---
+
+import { Render, GlossaryTooltip } from "~/components";
+
+This page describes expected limitations when <GlossaryTooltip term="proxy status">proxying DNS records</GlossaryTooltip>. For further information about proxying, refer to [How Cloudflare works](/fundamentals/concepts/how-cloudflare-works/).
+
+## Proxy eligibility
+
+Only A, AAAA, and CNAME DNS records that serve HTTP or HTTPS traffic can be proxied. Other record types cannot be proxied.
+
+If you encounter a CNAME record that you cannot proxy — usually associated with another CDN provider — a proxied version of that record will cause connectivity errors. Cloudflare is purposely preventing that record from being proxied to protect you from a misconfiguration.
+
+### Pre-signed DNSSEC
+
+If you use Cloudflare as your [secondary DNS provider](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/) and leverage [Secondary DNS Overrides](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/) to set records to proxied, note that opting for [Pre-signed DNSSEC](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/dnssec-for-secondary/) will cause Cloudflare to treat your records as DNS-only.
+
+## Ports and protocols
+
+To proxy HTTP/HTTPS traffic on [non-standard ports](/fundamentals/reference/network-ports/) or to proxy a TCP or UDP based application, use [Cloudflare Spectrum](/spectrum/).
+
+## Pending domains
+
+<Render file="onboard-warning" product="dns" />
+
+This means that DNS records — even those set to [proxy traffic through Cloudflare](#proxied-records) — will be [DNS-only](/dns/proxy-status/#dns-only-records) until your zone has been activated and any requests to your DNS records will return your origin server's IP address.
+
+If this warning is still present after 24 hours, refer to [Troubleshooting](/dns/troubleshooting/).
+
+For enhanced security, we recommend rolling your origin IP addresses at your hosting provider after your zone has been activated. This action prevents your origin IPs from being leaked during onboarding.
+
+## Windows authentication
+
+Because Microsoft Integrated Windows Authentication, NTLM, and Kerberos violate HTTP/1.1 specifications, they are not compatible with proxied DNS records.

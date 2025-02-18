@@ -65,7 +65,7 @@ Monitors define the criteria based on which an endpoint will be considered healt
 
 You can name the monitor after the parameters you have defined. For example: `HTTP - 200 - Follow Redirects`.
 
-This way you can easily remember the criteria a certain monitor is using when you decide to attach it to other endpoints as well. 
+This way you can easily remember the criteria a certain monitor is using when you decide to attach it to other endpoints as well.
 :::
 
 6. Select **Save** to confirm.
@@ -82,7 +82,7 @@ To support the [use cases](#use-cases) mentioned above, and assuming you only ha
 
 The endpoint pointing to [Cloudflare Pages](/pages/) must have **host header** filled in with the project domain (`<project>.pages.dev`) for it to resolve correctly. You can find a reference table for correct setup in Step 8 below.
 
-Failing to add the host header will result in [response code mismatch error](/load-balancing/troubleshooting/common-error-codes/#response-code-mismatch-error) for the monitor, and [Error 1000: DNS points to prohibited IP](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/#error-1000-dns-points-to-prohibited-ip) for visitors (if the load balancer is enabled despite the unhealthy monitor status). 
+Failing to add the host header will result in [response code mismatch error](/load-balancing/troubleshooting/common-error-codes/#response-code-mismatch-error) for the monitor, and [Error 1000: DNS points to prohibited IP](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/#error-1000-dns-points-to-prohibited-ip) for visitors (if the load balancer is enabled despite the unhealthy monitor status).
 :::
 
 1. Go to **Traffic** > **Load Balancing**.
@@ -103,14 +103,14 @@ Failing to add the host header will result in [response code mismatch error](/lo
 
   :::caution
 
-  As exemplified in Step 8 below, when using Cloudflare as an endpoint, **do not** specify one of Cloudflare's anycast IP addresses. Because these IPs can change at any time, you should use a hostname instead. 
+  As exemplified in Step 8 below, when using Cloudflare as an endpoint, **do not** specify one of Cloudflare's anycast IP addresses. Because these IPs can change at any time, you should use a hostname instead.
   :::
 * The endpoint [weight](/load-balancing/understand-basics/traffic-steering/origin-level-steering/#weights), which can be set to `1`. Since each pool will only have one endpoint, the endpoint weight will not make a difference in this case.
 * A [hostname](/load-balancing/additional-options/override-http-host-headers/) by selecting **Add host header**.
 
   :::caution
 
-  If your production website is hosted on a platform like Cloudflare Pages, where you have a default subdomain (`example.pages.dev`) and then configure a [custom domain](/pages/configuration/custom-domains) (`my-app.com`), you will need to add a host header to avoid failing the health monitor request. 
+  If your production website is hosted on a platform like Cloudflare Pages, where you have a default subdomain (`example.pages.dev`) and then configure a [custom domain](/pages/configuration/custom-domains) (`my-app.com`), you will need to add a host header to avoid failing the health monitor request.
   :::
 
 6. Finish configuring the first pool with the following information:
@@ -198,7 +198,7 @@ If you have used a temporary hostname for your load balancer, follow the steps b
 
 :::caution[Important]
 
-After you confirm everything is working correctly, make sure you re-enable the pools within the load balancer. 
+After you confirm everything is working correctly, make sure you re-enable the pools within the load balancer.
 :::
 
 ## Route production traffic to load balancer

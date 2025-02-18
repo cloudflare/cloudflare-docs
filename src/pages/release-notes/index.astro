@@ -1,0 +1,184 @@
+---
+import StarlightPage, {
+	type StarlightPageProps,
+} from "@astrojs/starlight/components/StarlightPage.astro";
+import { Aside } from "~/components";
+import { marked } from "marked";
+import { format } from "date-fns";
+import { getReleaseNotes } from "~/util/release-notes";
+import { getEntry } from "astro:content";
+
+const { products, productAreas, releaseNotes } = await getReleaseNotes();
+
+const props = {
+	frontmatter: {
+		title: "Release notes",
+		template: "splash",
+	},
+	hideBreadcrumbs: true,
+} as StarlightPageProps;
+---
+
+<StarlightPage {...props}>
+	<Aside>
+		Looking for API deprecations? They can be found on our <a
+			href="/fundamentals/api/reference/deprecations/"
+			>dedicated deprecations page.</a
+		>
+	</Aside>
+	<p id="productDescription">
+		Subscribe to all release notes via <a href="/release-notes/index.xml">RSS</a
+		>.
+	</p>
+	<p id="productAreaDescription" style="display:none">
+		Subscribe to all release-notes via <a
+			class="rssLink"
+			href="/release-notes/index.xml">RSS</a
+		>.
+	</p>
+	<p>
+		Unless otherwise noted, all dates refer to the release date of the change.
+	</p>
+	<br />
+	<label for="products">Product:</label>
+	<select name="products" id="products" class="mr-4">
+		<option value="all">Select...</option>
+		{
+			products.map((product) => (
+				<option value={product.toLowerCase()}>{product}</option>
+			))
+		}
+	</select>
+	<label for="productAreas">Product area:</label>
+	<select name="productAreas" id="productAreas">
+		<option value="all">Select...</option>
+		{
+			productAreas.map((productAreas) => (
+				<option value={productAreas.toLowerCase()}>{productAreas}</option>
+			))
+		}
+	</select>
+	{
+		releaseNotes.map(([date, entries]) => (
+			<div class="md:grid md:grid-cols-[18%_82%]" data-date={date}>
+				<div>
+					<h4 class="text-nowrap">{format(date, "do MMMM yyyy")}</h4>
+				</div>
+				<div class="!mt-0">
+					{entries?.map(async (entry) => {
+						let title = entry.title;
+						let description = entry.description || "";
+
+						if (entry.individual_page) {
+							const page = await getEntry(
+								"docs",
+								entry.individual_page.slice(1, -1),
+							);
+
+							if (!page) {
+								throw new Error(
+									`[Changelog] Unable to load page ${entry.individual_page}.`,
+								);
+							}
+
+							title = `${entry.product} - ${page.data.title}`;
+							description = `For more details, refer to the dedicated page for [${title}](${entry.individual_page}).`;
+						}
+
+						return (
+							<div
+								data-product={entry.product.toLowerCase()}
+								data-productArea={entry.productAreaName.toLowerCase()}
+							>
+								<h3>
+									<a href={entry.productLink}>{entry.product}</a>
+								</h3>
+								{title && (
+									<p>
+										<strong>{title}</strong>
+									</p>
+								)}
+								<Fragment set:html={marked.parse(description)} />
+							</div>
+						);
+					})}
+				</div>
+			</div>
+		))
+	}
+</StarlightPage>
+
+<script>
+	import StickyHeader from "@codingheads/sticky-header";
+
+	const navHeightRem = getComputedStyle(document.body).getPropertyValue(
+		"--sl-nav-height",
+	);
+	const navHeightPx = Number(navHeightRem.split("rem")[0]) * 16 + 16;
+
+	const headers = document.querySelectorAll<HTMLElement>(
+		"[data-date] > div > h4",
+	);
+	headers.forEach(
+		(header) => new StickyHeader(header, { offset: 0 - navHeightPx }),
+	);
+
+	const productFilter = document.querySelector<HTMLSelectElement>("#products");
+	productFilter?.addEventListener("change", filterEntries);
+
+	const productAreaFilter =
+		document.querySelector<HTMLSelectElement>("#productAreas");
+	productAreaFilter?.addEventListener("change", filterEntries);
+
+	function filterEntries() {
+		const dates = document.querySelectorAll<HTMLElement>("[data-date]");
+
+		for (const date of dates) {
+			const entries = date.querySelectorAll<HTMLElement>("[data-product]");
+
+			if (
+				productAreaFilter?.value === "all" &&
+				productFilter?.value === "all"
+			) {
+				dates.forEach((x) => {
+					x.style.display = "";
+				});
+				entries.forEach((x) => {
+					x.style.display = "";
+				});
+				continue;
+			}
+
+			let entriesHidden = 0;
+
+			for (const entry of entries) {
+				const product = entry.dataset.product;
+				const productArea = entry.dataset.productarea;
+
+				if (
+					(productFilter?.value === product ||
+						productFilter?.value === "all") &&
+					(productAreaFilter?.value === productArea ||
+						productAreaFilter?.value === "all")
+				) {
+					entry.style.display = "";
+					date.style.display = "";
+				} else {
+					entry.style.display = "none";
+					entriesHidden++;
+				}
+			}
+
+			if (entriesHidden >= entries.length) {
+				date.style.display = "none";
+			}
+		}
+	}
+</script>
+
+<style>
+	h4.sticky-pinned {
+		top: var(--sl-nav-height);
+		background-color: var(--sl-color-bg);
+	}
+</style>

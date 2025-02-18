@@ -1,0 +1,51 @@
+---
+{}
+---
+
+import { Tabs, TabItem, Render } from "~/components";
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+<Render
+	file="gateway/policies/block-security-categories"
+	product="cloudflare-one"
+/>
+
+</TabItem>
+<TabItem label="API">
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "All-DNS-SecurityCategories-Blocklist",
+  "description": "Block security categories based on Cloudflare's threat intelligence",
+  "precedence": 20,
+  "enabled": true,
+  "action": "block",
+  "filters": [
+    "dns"
+  ],
+  "traffic": "any(dns.security_category[*] in {68 178 80 83 176 175 117 131 134 151 153})",
+  "identity": ""
+}'
+```
+
+</TabItem>
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "block_security_threats" {
+  account_id  = var.account_id
+  name        = "All-DNS-SecurityCategories-Blocklist"
+  description = "Block security categories based on Cloudflare's threat intelligence"
+  precedence  = 20
+	enabled     = true
+  action      = "block"
+  filters     = ["dns"]
+  traffic     = "any(dns.security_category[*] in {68 178 80 83 176 175 117 131 134 151 153})"
+}
+```
+
+</TabItem> </Tabs>
