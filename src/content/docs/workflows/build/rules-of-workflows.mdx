@@ -330,7 +330,7 @@ export class MyWorkflow extends WorkflowEntrypoint {
 ```
 </TypeScriptExample>
 
-To ensure consistency we suggest to surround the `Promise.race()` or `Promise.any()` within a `step.do()`, as this will ensure caching consistency across multiple passages.
+To ensure consistency, we suggest to surround the `Promise.race()` or `Promise.any()` within a `step.do()`, as this will ensure caching consistency across multiple passages.
 
 <TypeScriptExample filename="index.ts">
 ```ts
