@@ -7,7 +7,7 @@ sidebar:
 
 import { Badge } from "~/components";
 
-You can forward [HTTP](/cloudflare-one/policies/gateway/initial-setup/http/) and [network](/cloudflare-one/policies/gateway/initial-setup/network/) traffic to Gateway for logging and filtering. Gateway can proxy both outbound traffic and traffic directed to resources connected via a Cloudflare Tunnel, GRE tunnel, or IPsec tunnel.
+You can forward [HTTP](/cloudflare-one/policies/gateway/initial-setup/http/) and [network](/cloudflare-one/policies/gateway/initial-setup/network/) traffic to Gateway for logging and filtering. Gateway can proxy both outbound traffic and traffic directed to resources connected via a Cloudflare Tunnel, GRE tunnel, or IPsec tunnel. When a user connects to the Gateway proxy, Gateway will accept the connection and establish a new, separate connection to the origin server.
 
 The Gateway proxy is required for filtering HTTP and network traffic via the WARP client in Gateway with WARP mode. To proxy HTTP traffic without deploying the WARP client, you can configure [PAC files](/cloudflare-one/connections/connect-devices/agentless/pac-files/) on your devices.
 
@@ -17,7 +17,7 @@ Gateway uses the [Happy Eyeballs algorithm](https://datatracker.ietf.org/doc/htm
 
 1. The user's browser initiates the TCP handshake by sending Gateway a TCP SYN segment.
 2. Gateway sends a SYN segment to the origin server.
-3. If the origin server sends a SYN-ACK segment back, Gateway establishes distinct TCP connections between the user and Gateway and between Gateway and the origin server.
+3. If the origin server sends a SYN-ACK segment back, Gateway establishes separate TCP connections between the user and Gateway and between Gateway and the origin server.
 4. Gateway inspects and filters traffic received from the user.
 5. If the traffic passes inspection, Gateway proxies traffic bidirectionally between the user and the origin server.
 
