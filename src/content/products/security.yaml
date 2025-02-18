@@ -1,0 +1,15 @@
+name: Security
+
+product:
+  title: Security
+  url: /security/
+  show: false
+
+meta:
+  title: Cloudflare Security
+  description: Documentation for Cloudflare app security products (with new user interface currently in beta).
+  author: "@cloudflare"
+
+externals:
+  - title: Cloudflare homepage
+    url: https://cloudflare.com
