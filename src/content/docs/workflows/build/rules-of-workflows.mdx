@@ -369,7 +369,7 @@ export class MyWorkflow extends WorkflowEntrypoint {
 		return await step.do(
 			'Another step',
 			async () => {
-				// This step will return `second`, as the `Promise.race` was surround by `step.do` method.
+				// This step will return `second` because the `Promise.race` was surround by the `step.do` method.
 				return race_return;
 			},
 		);
