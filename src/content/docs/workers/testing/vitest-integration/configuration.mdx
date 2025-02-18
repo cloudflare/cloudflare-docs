@@ -125,7 +125,7 @@ export default defineWorkersProject(async () => {
 
 ```
 
-### readD1Migrations(migrationsPath)
+### `readD1Migrations(migrationsPath)`
 
 Reads all [D1 migrations](/d1/reference/migrations/) stored at `migrationsPath` and returns them ordered by migration number. Each migration will have its contents split into an array of individual SQL queries. Call the [`applyD1Migrations()`](/workers/testing/vitest-integration/test-apis/#d1) function inside a test or [setup file](https://vitest.dev/config/#setupfiles) to apply migrations. Refer to the [D1 recipe](https://github.com/cloudflare/workers-sdk/tree/main/fixtures/vitest-pool-workers-examples/d1) for an example project using migrations.
 
