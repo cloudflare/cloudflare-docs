@@ -67,7 +67,7 @@ export default defineWorkersConfig({
 });
 ```
 
-### defineWorkersProject(options)
+### `defineWorkersProject(options)`
 
 Similar to [`defineWorkersConfig()`](#defineworkersconfigoptions), this ensures Vitest is configured to use the Workers integration with the correct module resolution settings, and provides type checking for [WorkersPoolOptions](#workerspooloptions), except it should be used in place of the [`defineProject()`](https://vitest.dev/guide/workspace) function from Vitest. It also accepts a `Promise` of `options`, or an optionally-`async` function returning `options`.
 
