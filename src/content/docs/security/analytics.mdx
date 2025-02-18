@@ -16,30 +16,30 @@ Use Security Analytics as your starting point to understand and analyze traffic 
 
 The **Traffic** tab displays information about all incoming HTTP requests for your domain, including requests not handled by Cloudflare security products.
 
-Use this tab to perform the following tasks:
+In this tab you can perform several tasks:
 
 - View the traffic distribution for your domain.
 - Understand which traffic is being mitigated by Cloudflare security products, and where non-mitigated traffic is being served from (Cloudflare global network or [origin server](https://www.cloudflare.com/learning/cdn/glossary/origin-server/)).
-- Analyze suspicious traffic and create tailored custom security rules based on applied filters.
+- Analyze suspicious traffic and create tailored custom [security rules](/security/rules/) based on applied filters.
 - [Find an appropriate rate limit](/waf/rate-limiting-rules/find-rate-limit/) for incoming traffic.
+
+For information on how to use the **Traffic** tab, refer to [Security Analytics](/waf/analytics/security-analytics/).
 
 If you need to modify existing security-related rules you already configured, consider also using the [Events](#events) tab. This tab displays information about requests affected by Cloudflare security products.
 
 :::note
-
-The **Traffic** tab corresponds to the [Security Analytics](/waf/analytics/security-analytics/) page in the previous dashboard navigation structure.
-
-Some page elements of the Security Analytics page will appear in a different order, or they may be unavailable in the **Traffic** tab, such as Insights or the score-based analyses sidebar.
-
+The **Traffic** tab includes functionality available in the [Security Analytics](/waf/analytics/security-analytics/) page in the previous dashboard navigation structure. However, some page elements will appear in a different order, or they may be unavailable in the **Traffic** tab, such as Insights or the score-based analyses sidebar.
 :::
 
 ## Events
 
-Use the Events tab to review <GlossaryTooltip term="mitigated request">mitigated requests</GlossaryTooltip> and to tailor your security configurations.
+Use the **Events** tab to review <GlossaryTooltip term="mitigated request">mitigated requests</GlossaryTooltip> and to tailor your security configurations.
 
-The Events tab displays information about requests actioned or flagged by Cloudflare security products. Each incoming HTTP request might generate one or more security events. The page only shows these events, not the HTTP requests themselves.
+The **Events** tab displays information about requests actioned or flagged by Cloudflare security products. Each incoming HTTP request might generate one or more security events. The tab only shows these events, not the HTTP requests themselves. To obtain information on all incoming HTTP requests, use the [Traffic](#traffic) tab.
 
 Users on a Free plan can view summarized events by date in the **Activity log**. Customers on paid plans have access to additional graphs and dashboards that summarize the most relevant information about the current behavior of Cloudflare's security features on your zone.
+
+For more information on the **Events** tab, refer to [Security Events](/waf/analytics/security-events/).
 
 :::note
 The **Events** tab corresponds to the [Security Events](/waf/analytics/security-events/) page in the previous dashboard navigation structure.
@@ -49,7 +49,7 @@ The **Events** tab corresponds to the [Security Events](/waf/analytics/security-
 
 Use API sequences to discover how users interact with your API, by tracking the order of API session requests over time. API sequences will group and highlight popular user journeys across your API.
 
-Once you configure [session identifiers](/api-shield/management-and-monitoring/session-identifiers/), the **API sequences** tab will start grouping and highlighting important user journeys (sequences) across your API.
+Once you configure <GlossaryTooltip term="session identifier" link="/api-shield/management-and-monitoring/session-identifiers/">session identifiers</GlossaryTooltip>, the **API sequences** tab will start grouping and highlighting important user journeys (sequences) across your API.
 
 To configure session identifiers, go to **Security** > **Settings** > **All settings** tab and select **Edit** next to **Session identifiers**.
 
@@ -59,5 +59,5 @@ For more information on how Cloudflare identifies API sequences and how you can 
 - [Sequence mitigation](/api-shield/security/sequence-mitigation/)
 
 :::note
-The **API sequences** tab includes functionality available in [API Shield](/waf/analytics/security-events/) in the previous dashboard navigation structure.
+The **API sequences** tab includes functionality available in [API Shield](/api-shield/) in the previous dashboard navigation structure.
 :::
