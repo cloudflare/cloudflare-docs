@@ -285,7 +285,7 @@ export class MyWorkflow extends WorkflowEntrypoint {
 
 ### Take care with `Promise.race()` and `Promise.any()`
 
-Workflows allow the usage steps within the `Promise.race()` or `Promise.any()` methods, as a way to achieve concurrent steps execution. However, some considerations must be taken.
+Workflows allows the usage steps within the `Promise.race()` or `Promise.any()` methods as a way to achieve concurrent steps execution. However, some considerations must be taken.
 
 Due to the nature Workflows's instance lifecycle, and given that a step inside a Promise will run until they finished, the step that is returned during the first passage, may not be the actual cached step, as [steps are cached by their names](#name-steps-deterministically).
 
