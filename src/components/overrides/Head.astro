@@ -6,6 +6,8 @@ import "tippy.js/dist/tippy.css";
 
 import { getEntry } from "astro:content";
 
+const noIndexProductsList = ["style-guide", "security"];
+
 const currentSection = Astro.url.pathname.split("/")[1];
 
 if (currentSection) {
@@ -127,7 +129,7 @@ if (currentSection) {
 		}
 	}
 
-	if (currentSection === "style-guide") {
+	if (noIndexProductsList.includes(currentSection)) {
 		Astro.props.entry.data.head.push({
 			tag: "meta",
 			attrs: {
