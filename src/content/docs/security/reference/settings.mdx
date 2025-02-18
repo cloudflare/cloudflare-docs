@@ -15,7 +15,7 @@ This page describes the settings available in **Security** > **Settings** for a 
 
 In web application firewall detections you can perform the following tasks:
 
-- Enable one or WAF managed rulesets, provided by Cloudflare and updated regularly:
+- Enable one or more WAF managed rulesets, provided by Cloudflare and updated regularly:
   - [Cloudflare Managed Ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/)
   - [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/)
 - Enable one or more [detections](/waf/detections/) to run on your incoming traffic:
@@ -25,21 +25,50 @@ In web application firewall detections you can perform the following tasks:
 
 Refer to each linked page for details.
 
+:::note
+The web application firewall detections page includes features and settings from the [Cloudflare WAF](/waf/) in the previous dashboard navigation structure.
+:::
+
 ### DDoS protection
 
 To do.
 
 ### Automated traffic protection
 
-To do.
+In automated traffic protection you can perform the following tasks:
+
+- Enable [Bot fight mode](/bots/get-started/free/) (depending on your Cloudflare plan).
+- Enable [Super Bot fight mode](/bots/get-started/pro/) (depending on your Cloudflare plan).
+- Review information about [Bot Management](/bots/plans/bm-subscription/) (always enabled if included in your Enterprise subscriptions).
+- Turn on [Block AI Bots](/bots/concepts/bot/#ai-bots).
+
+:::note
+The automated traffic protection page includes features and settings from [Bots](/bots/) in the previous dashboard navigation structure.
+:::
 
 ### API security
 
-To do.
+In API security you can perform the following tasks:
 
-### Client-side security
+- Review information about [Endpoint Discovery](/api-shield/security/api-discovery/) (always enabled if included in your Enterprise subscriptions).
+- Enable [Sequence Discovery](/api-shield/security/sequence-analytics/) (requires that you configure a [session identifier](/api-shield/management-and-monitoring/session-identifiers/)).
+- Enable [Schema Validation](/api-shield/security/schema-validation/) (requires that you upload a schema or apply a learned schema).
+- Enable [JWT Validation](/api-shield/security/jwt-validation/) (requires that you add a [JWT configuration](/api-shield/security/jwt-validation/configure/#token-configurations)).
 
-To do.
+:::note
+The API security page includes features and settings from [API Shield](/api-shield/) in the previous dashboard navigation structure.
+:::
+
+### Client-side protection
+
+In client-side protection you can perform the following tasks:
+
+- Enable [continuous script monitoring](/page-shield/how-it-works/) (previously you enabled [Page Shield](/page-shield/)).
+- [Create a client-side rule](/security/rules/#security-rules) (previously you created a Page Shield policy; depends on your Enterprise subscriptions).
+
+:::note
+The client-side protection page includes features and settings from [Page Shield](/page-shield/) in the previous dashboard navigation structure.
+:::
 
 ## All settings
 
@@ -48,11 +77,11 @@ This section allows you to configure multiple security-related settings. The fol
 | Setting                                                                                                 | Location in previous dashboard navigation             |
 | ------------------------------------------------------------------------------------------------------- | ----------------------------------------------------- |
 | [Endpoint labels](/api-shield/management-and-monitoring/endpoint-labels/)                               | **Security** > **Settings** > **Labels**              |
-| [Session identifiers](/api-shield/management-and-monitoring/session-identifiers/)                       | **Security** > **API Shield** > **Settings**          |
+| [Session identifiers](/api-shield/management-and-monitoring/session-identifiers/#rule-form)             | **Security** > **API Shield** > **Settings**          |
 | [Uploaded schemas](/api-shield/security/schema-validation/)                                             | **Security** > **API Shield** > **Schema Validation** |
 | [Learned schemas](/api-shield/security/schema-validation/)                                              | **Security** > **API Shield** > **Schema Validation** |
-| [Token configurations](/api-shield/security/jwt-validation/configure/#token-configurations)             | **Security** > **API Shield** > **Settings**          |
-| [Alerts: client-side protection](/page-shield/reference/alerts/)                                        | **Security** > **Page Shield** > **Settings**         |
+| [Token configurations](/api-shield/security/jwt-validation/#add-a-token-validation-configuration)       | **Security** > **API Shield** > **Settings**          |
+| [Alerts: client-side protection](/page-shield/detection/configure-alerts/#rule-form)                    | **Security** > **Page Shield** > **Settings**         |
 | [Reporting endpoint](/page-shield/reference/settings/#reporting-endpoint)                               | **Security** > **Page Shield** > **Settings**         |
 | [Custom username and password location](/waf/detections/leaked-credentials/#custom-detection-locations) | **Security** > **Settings**                           |
 | [Custom content location](/waf/detections/malicious-uploads/#custom-scan-expressions)                   | **Security** > **Settings**                           |
