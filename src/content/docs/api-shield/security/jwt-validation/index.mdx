@@ -35,7 +35,8 @@ To automatically keep your JWKS up to date when your identity provider refreshes
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
 2. Go to **Security** > **API Shield** > **API Rules**.
-3. Add a name for your rule.
+3. <a id="rule-form"/>
+   Add a name for your rule.
 4. Select a hostname to protect requests with saved endpoints using the rule.
 5. Deselect any endpoints that you want JWT Validation to ignore (for example, an endpoint used to generate a JWT).
 6. Select the Token Validation Configuration that corresponds to the incoming requests.

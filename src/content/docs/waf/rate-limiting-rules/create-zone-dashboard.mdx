@@ -18,9 +18,10 @@ import { Render } from "~/components";
 
 3. To create a new empty rule, select **Create rule**. To duplicate an existing rule, select the three dots next to it > **Duplicate**.
 
-   ![The Create rate limiting rule page in the Cloudflare dashboard](~/assets/images/waf/custom-rules/rate-limiting-create.png)
+4. <a id="rule-form" />
+   Enter a descriptive name for the rule in **Rule name**.
 
-4. Enter a descriptive name for the rule in **Rule name**.
+   ![The Create rate limiting rule page in the Cloudflare dashboard](~/assets/images/waf/custom-rules/rate-limiting-create.png)
 
 5. Under **If incoming requests match**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**.
 
