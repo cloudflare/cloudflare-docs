@@ -51,7 +51,9 @@ The following APIs are exported from the `@cloudflare/vitest-pool-workers/config
 
 ### `defineWorkersConfig(options)`
 
-Ensures Vitest is configured to use the Workers integration with the correct module resolution settings, and provides type checking for [WorkersPoolOptions](#workerspooloptions). This should be used in place of the [`defineConfig()`](https://vitest.dev/config/file.html) function from Vitest. It also accepts a `Promise` of `options`, or an optionally-`async` function returning `options`.
+Ensures Vitest is configured to use the Workers integration with the correct module resolution settings, and provides type checking for [WorkersPoolOptions](#workerspooloptions). This should be used in place of the [`defineConfig()`](https://vitest.dev/config/file.html) function from Vitest.
+
+It also accepts a `Promise` of `options`, or an optionally-`async` function returning `options`.
 
 ```ts
 import { defineWorkersConfig } from "@cloudflare/vitest-pool-workers/config";
