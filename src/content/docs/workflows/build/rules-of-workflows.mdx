@@ -243,7 +243,7 @@ export class MyWorkflow extends WorkflowEntrypoint {
 
 ### Name steps deterministically
 
-Steps should be named deterministically (ie, not using the current date/time, randomness, etc). This ensures that their state is cached, and prevents the step from being rerun unnecessarily. Step names act as the "cache key" in your Workflow.
+Steps should be named deterministically (that is, not using the current date/time, randomness, etc). This ensures that their state is cached, and prevents the step from being rerun unnecessarily. Step names act as the "cache key" in your Workflow.
 
 <TypeScriptExample filename="index.ts">
 ```ts
