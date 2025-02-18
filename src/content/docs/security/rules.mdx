@@ -16,20 +16,25 @@ To create a security rule:
 
 1. (Optional) Select **Templates**, and then select a template from the list. You can customize the default configuration of the template before deploying the new rule. Refer to the resources listed in the next step.
 
-1. Select **Create rule** > select the type of rule you want to create. Refer to the following resources about each type of rule:
+2. Select **Create rule** > select the type of rule you want to create. Refer to the following resources about each rule type:
 
-- [Custom rules](/waf/custom-rules/create-dashboard/#rule-form)
-- [Rate limiting rules](/waf/rate-limiting-rules/create-zone-dashboard/#rule-form)
-- [API sequence rules](/api-shield/security/sequence-mitigation/#rule-form)
-- [API JWT validation rules](/api-shield/security/jwt-validation/#rule-form) (requires a [token configuration](/security/reference/settings/#all-settings))
-- [Managed rules](/waf/managed-rules/)
-- [Client-side rules](page-shield/policies/create-dashboard/#rule-form) (previously known as Page Shield policies)
-- [IP Access rules](/waf/tools/ip-access-rules/create/)
-- [User agent blocking rules](/waf/tools/user-agent-blocking/#create-a-user-agent-blocking-rule)
-- [Zone lockdown rules](/waf/tools/zone-lockdown/#create-a-zone-lockdown-rule)
+   - [Custom rule](/waf/custom-rules/create-dashboard/#rule-form)
+   - [Rate limiting rule](/waf/rate-limiting-rules/create-zone-dashboard/#rule-form)
+   - [API sequence rule](/api-shield/security/sequence-mitigation/#rule-form)
+   - [API JWT validation rule](/api-shield/security/jwt-validation/#rule-form) (requires a [token configuration](/security/reference/settings/#all-settings))
+   - [Managed rule exception](/waf/managed-rules/waf-exceptions/define-dashboard/#2-define-basic-exception-parameters)
+   - [Client-side rule](page-shield/policies/create-dashboard/#rule-form) (previously known as Page Shield policy)
 
-:::note
+:::note[Notes]
+
 The **Security rules** tab includes functionality available in different products in the previous dashboard navigation structure, such as the [WAF](/waf/), [API Shield](/api-shield/), and [Page Shield](/page-shield/).
+
+The tab may show additional rule types if you have configured at least one of the following:
+
+- [IP Access rules](/waf/tools/ip-access-rules/)
+- [User agent blocking rules](/waf/tools/user-agent-blocking/)
+- [Zone lockdown rules](/waf/tools/zone-lockdown/)
+
 :::
 
 ## Website resources
