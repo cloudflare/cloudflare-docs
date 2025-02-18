@@ -114,6 +114,24 @@ More narrow permissions may be used, however this is the set of permissions that
 
 To [test](/cloudflare-one/identity/idp-integration/#test-idps-in-zero-trust) that your connection is working, select **Test**.
 
+#### UPN and email
+
+If your organization's UPNs do not match users' email addresses, you must add a custom claim for email. For example, if your organization's email format is `user@domain.com` but the UPN is `u908080@domain.com`, you must create an email claim if you are configuring email-based policies.
+
+By default, Cloudflare will first look for the unique claim name you created and configured in the Cloudflare dashboard to represent email (for example, `email_identifier`) in the `id_token` JSON response. If you did not configure a unique claim name, Cloudflare will then look for an `email` claim. Last, if neither claim exists, Cloudflare will look for the UPN claim.
+
+To receive an email claim in the `id_token` from Microsoft Entra, you must:
+
+1. In the [Microsoft Entra admin center](https://entra.microsoft.com/), go to **Application** > **App registration** > select the relevant application > **Manage** > **Token configuration**.
+2. Add a claim for email.
+
+   ![Email claim for Entra](~/assets/images/cloudflare-one/identity/azure/entra-email-claim.png)
+
+   The example above includes both a UPN claim and an email claim. Because an email claim was created in the Microsoft Entra configuration, Cloudflare will look for the `email` key-value pair in the JSON response.
+
+3. If you gave your email claim another name than `email`, you must update your configuration in the Cloudflare dashboard. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication** > **Azure AD** > **Edit**.
+4. Under **Optional configurations** > **Email claim**, enter the name of the claim representing your organization's email addresses.
+
 ## Synchronize users and groups
 
 The Microsoft Entra ID integration allows you to synchronize IdP groups and automatically deprovision users using [SCIM](/cloudflare-one/identity/users/scim/).

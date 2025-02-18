@@ -3,13 +3,14 @@ import StarlightPage, {
 	type StarlightPageProps,
 } from "@astrojs/starlight/components/StarlightPage.astro";
 import type { GetStaticPaths } from "astro";
-import { getCollection, render } from "astro:content";
-import Header from "~/components/changelog-next/Header.astro";
-import ProductPills from "~/components/changelog-next/ProductPills.astro";
+import { render } from "astro:content";
+import Header from "~/components/changelog/Header.astro";
+import ProductPills from "~/components/changelog/ProductPills.astro";
 import { format } from "date-fns";
+import { getChangelogs } from "~/util/changelog";
 
 export const getStaticPaths = (async () => {
-	const notes = await getCollection("changelogs-next");
+	const notes = await getChangelogs({});
 
 	return notes.map((note) => {
 		return {

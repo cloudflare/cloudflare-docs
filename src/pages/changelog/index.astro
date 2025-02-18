@@ -2,17 +2,16 @@
 import StarlightPage, {
 	type StarlightPageProps,
 } from "@astrojs/starlight/components/StarlightPage.astro";
-import { getCollection, render } from "astro:content";
+import { render } from "astro:content";
 
-import Header from "~/components/changelog-next/Header.astro";
-import ProductPills from "~/components/changelog-next/ProductPills.astro";
+import Header from "~/components/changelog/Header.astro";
+import ProductPills from "~/components/changelog/ProductPills.astro";
 
 import { Steps } from "~/components";
 import { format } from "date-fns";
+import { getChangelogs } from "~/util/changelog";
 
-const notes = await getCollection("changelogs-next");
-
-notes.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const notes = await getChangelogs({});
 
 const props = {
 	frontmatter: {

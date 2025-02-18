@@ -10,17 +10,17 @@ When cropping with `fit: "cover"` and `fit: "crop"`, this parameter defines the 
 
 <Tabs>
   <TabItem label="URL format">
-    ```js 
+    ```js
     gravity=auto
     ```
   </TabItem>
   <TabItem label="URL format alias">
-    ```js 
+    ```js
     g=auto
     ```
   </TabItem>
   <TabItem label="Workers">
-  ```js 
+  ```js
   cf: {image: {gravity: "auto"}}
   ```
   </TabItem>
@@ -37,7 +37,7 @@ You must subtract the height of the image before you calculate the focal point.
 
 <Tabs>
   <TabItem label="URL format">
-    ```js 
+    ```js
     gravity=left
 
     or
@@ -46,12 +46,12 @@ You must subtract the height of the image before you calculate the focal point.
     ```
   </TabItem>
   <TabItem label="Workers">
-  ```js 
+  ```js
   cf: {image: {gravity: "right"}}
 
   or
 
-  cf: {image: {gravity: {x:0.5, y:0.2}}}  
+  cf: {image: {gravity: {x:0.5, y:0.2}}}
   ```
   </TabItem>
 </Tabs>

@@ -12,6 +12,10 @@ When you add a domain to Cloudflare, you may also need to create or review the D
 
 Usually, the zone apex record makes your domain accessible by visitors. In this case, the necessary record type ([A, AAAA, or CNAME](/dns/manage-dns-records/reference/dns-record-types/#ip-address-resolution)) and its content will depend on the provider that [hosts](/fundamentals/setup/manage-domains/#host-your-domain) your website or application. If you are using Cloudflare Pages, refer to [Custom domains](/pages/configuration/custom-domains/). If you are using other providers, look for their guidance on how to connect domains managed on external DNS services.
 
+### ANAME or ALIAS
+
+<Render file="aname-alias-callout" />
+
 ## Zone apex record
 
 To create a zone apex record, use `@` for the record **Name**, as in the following example.

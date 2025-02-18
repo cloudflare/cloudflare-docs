@@ -85,5 +85,9 @@ The **Deployed custom rate limiting rulesets** list will show a rule for each de
 
 <Render
 	file="custom-response-blocked-requests"
-	params={{ one: "rate limiting", two: "429", three: "30 KB" }}
+	params={{
+		responseType: "rate limiting",
+		defaultStatusCode: "429",
+		maxBodySize: "30 KB",
+	}}
 />

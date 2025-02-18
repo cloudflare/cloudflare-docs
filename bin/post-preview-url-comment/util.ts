@@ -3,18 +3,22 @@ import { execSync } from "node:child_process";
 import { CONTENT_BASE_PATH } from "./constants";
 
 export const filenameToPath = (filename: string) => {
-	return filename
+	const segments = filename
 		.replace(CONTENT_BASE_PATH, "")
 		.replace(".mdx", "")
 		.split("/")
-		.filter(Boolean)
+		.filter(Boolean);
+
+	const changelogIdx = segments.findIndex((s) => s === "changelog");
+
+	if (changelogIdx !== -1) {
+		segments.splice(changelogIdx + 1, 1);
+	}
+
+	return segments
 		.flatMap((segment) => {
 			if (segment === "docs") {
 				return [];
-			}
-
-			if (segment === "changelogs-next") {
-				segment = "changelog";
 			}
 
 			const slugified = slug(segment);

@@ -122,3 +122,17 @@ The following [Access policy selectors](/cloudflare-one/policies/access/#selecto
 - Authentication method
 - Device posture
 - Entra group, GitHub organization, Google Workspace group, Okta group
+
+## Modify order of precedence in Gateway
+
+By default, Cloudflare will evaluate Access infrastructure application policies after evaluating all Gateway network policies. To evaluate Access infrastructure applications before or after specific Gateway policies, create the following [Gateway network policy](/cloudflare-one/policies/gateway/network-policies/):
+
+| Selector               | Operator | Value | Action |
+| ---------------------- | -------- | ----- | ------ |
+| All Access App Targets | is       | on    | Allow  |
+
+You can move this policy in the Gateway policy builder to change its [order of precedence](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence).
+
+:::note
+Users must pass the policies in your Access application before they are granted access. The Gateway Allow policy is strictly for routing and connectivity purposes.
+:::

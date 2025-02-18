@@ -77,7 +77,7 @@ async function run(): Promise<void> {
 				(file) =>
 					file.filename.endsWith(".mdx") &&
 					(file.filename.startsWith(`${CONTENT_BASE_PATH}/docs/`) ||
-						file.filename.startsWith(`${CONTENT_BASE_PATH}/changelogs-next/`)),
+						file.filename.startsWith(`${CONTENT_BASE_PATH}/changelog/`)),
 			)
 			.sort((a, b) => b.changes - a.changes)
 			.slice(0, 15) // Limit to 15 entries

@@ -38,7 +38,7 @@ export { default as PagesBuildPresetsTable } from "./PagesBuildPresetsTable.astr
 export { default as PagesLanguageSupport } from "./PagesLanguageSupport.astro";
 export { default as Plan } from "./Plan.astro";
 export { default as PlanInfo } from "./PlanInfo.astro";
-export { default as ProductChangelog } from "./ProductChangelog.astro";
+export { default as ProductReleaseNotes } from "./ProductReleaseNotes.astro";
 export { default as ProductFeatures } from "./ProductFeatures.astro";
 export { default as ProductsByTag } from "./ProductsByTag.astro";
 export { default as PublicStats } from "./PublicStats.astro";

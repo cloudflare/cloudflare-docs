@@ -59,10 +59,7 @@ Your identity provider must support SCIM version 2.0.
 
 ### 1. Enable SCIM in Zero Trust
 
-<Render
-	file="access/enable-scim-on-dashboard"
-	params={{ idp: "IdP"}}
-/>
+<Render file="access/enable-scim-on-dashboard" params={{ idp: "IdP" }} />
 
 ### 2. Configure SCIM in the IdP
 
@@ -77,7 +74,7 @@ If you would like to build policies based on IdP groups:
 
 ### 3. Verify SCIM provisioning
 
-<Render file="access/verify-scim-provisioning"/>
+<Render file="access/verify-scim-provisioning" />
 
 ## Optional configurations
 
@@ -111,3 +108,14 @@ Cloudflare Access does not support partial OIDC claim value references or OIDC s
 	"name": "Generic Google"
 }
 ```
+
+## Supported algorithms for generic OIDC tokens
+
+Cloudflare supports the following algorithms for verifying generic OIDC tokens:
+
+- RS512
+- RS256
+- PS512
+- ES256
+- ES384
+- ES512

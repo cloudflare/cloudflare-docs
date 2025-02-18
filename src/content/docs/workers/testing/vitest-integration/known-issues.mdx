@@ -61,3 +61,49 @@ export default defineWorkersConfig({
 ```
 
 You can find an example in the [Recipes](/workers/testing/vitest-integration/recipes) page.
+
+### Importing modules from global setup file
+
+Although Vitest is set up to resolve packages for the `workerd` runtime, it runs your global setup file in the Node.js environment. This can cause issues when importing packages like [Postgres.js](https://github.com/cloudflare/workers-sdk/issues/6465), which exports a non-Node version for `workerd`.
+To work around this, you can create a wrapper that uses Vite's SSR module loader to import the global setup file under the correct conditions. Then, adjust your Vitest configuration to point to this wrapper. For example:
+
+```ts
+// File: global-setup-wrapper.ts
+import { createServer } from "vite"
+
+// Import the actual global setup file with the correct setup
+const mod = await viteImport("./global-setup.ts")
+
+export default mod.default;
+
+// Helper to import the file with default node setup
+async function viteImport(file: string) {
+  const server = await createServer({
+    root: import.meta.dirname,
+    configFile: false,
+    server: { middlewareMode: true, hmr: false, watch: null, ws: false },
+    optimizeDeps: { noDiscovery: true },
+    clearScreen: false,
+  });
+  const mod = await server.ssrLoadModule(file);
+  await server.close();
+  return mod;
+}
+```
+
+```ts
+// File: vitest.config.ts
+import { defineWorkersConfig } from "@cloudflare/vitest-pool-workers/config";
+
+export default defineWorkersConfig({
+	test: {
+		// Replace the globalSetup with the wrapper file
+		globalSetup: ["./global-setup-wrapper.ts"],
+		poolOptions: {
+			workers: {
+				// ...
+			},
+		},
+	},
+});
+```
