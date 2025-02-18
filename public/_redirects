@@ -173,6 +173,8 @@
 /support/firewall/tools/cloudflare-bot-products-faqs/ /bots/troubleshooting/ 301
 /support/other-languages/deutsch/cloudflare-bot/ /bots/troubleshooting/ 301
 /bots/concepts/ja3-fingerprint/ /bots/concepts/ja3-ja4-fingerprint/ 301
+/bots/reference/verified-bot-categories/ /bots/concepts/bot/verified-bots/categories/ 301
+/bots/reference/verified-bot-policy/ /bots/concepts/bot/verified-bots/policy/ 301
 
 # byoip
 /byoip/about/dynamic-advertisement/ /byoip/concepts/dynamic-advertisement/ 301
