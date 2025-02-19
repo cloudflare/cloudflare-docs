@@ -1,7 +1,7 @@
 name: Security
 
 product:
-  title: Security
+  title: "Security (beta)"
   url: /security/
   show: false
 
