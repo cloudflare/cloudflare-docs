@@ -58,7 +58,7 @@ entries:
         - A custom DNS server address is configured on the primary network adapter.
         - The custom DNS server address on the primary network adapter is changed while WARP is connected.
 
-        To work around this issue, please reconnect the WARP client by toggling off and back on.
+        To work around this issue, reconnect the WARP client by toggling off and back on.
 
   - publish_date: "2025-02-07"
     title: WARP client for macOS (version 2025.1.634.1)

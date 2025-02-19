@@ -36,7 +36,7 @@ releaseNotes: >-
     - A custom DNS server address is configured on the primary network adapter.
     - The custom DNS server address on the primary network adapter is changed while WARP is connected.
 
-    To work around this issue, please reconnect the WARP client by toggling off and back on.
+    To work around this issue, reconnect the WARP client by toggling off and back on.
 version: 2025.1.861.0
 releaseDate: 2025-02-19T17:46:28.678Z
 packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2025.1.861.0
