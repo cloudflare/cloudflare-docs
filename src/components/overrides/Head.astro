@@ -5,7 +5,6 @@ import { differenceInCalendarDays } from "date-fns";
 import "tippy.js/dist/tippy.css";
 
 import { getEntry } from "astro:content";
-import { getCollection } from "astro:content";
 
 // grab the current top-level folder. Remove . characters for 1.1.1.1 URL
 const currentSection = Astro.url.pathname.split("/")[1].replaceAll(".", "");
