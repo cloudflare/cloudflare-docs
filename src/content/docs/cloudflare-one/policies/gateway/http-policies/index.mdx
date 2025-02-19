@@ -464,6 +464,18 @@ Use this selector to match against a domain and all subdomains -- for example, i
 | ------- | -------------------------------------------- |
 | Domain  | `any(http.conn.domains[*] == "example.com")` |
 
+### Download and Upload File Size
+
+These selectors can be used to limit the file size of upload or download transactions.
+
+| UI name                  | API example                     |
+| ------------------------ | ------------------------------- |
+| Download File Size (MiB) | `http.download.file.size >= 10` |
+
+| UI name                | API example                   |
+| ---------------------- | ----------------------------- |
+| Upload File Size (MiB) | `http.upload.file.size >= 10` |
+
 ### Download and Upload File Types
 
 :::caution[Deprecated selectors]
