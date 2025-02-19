@@ -482,7 +482,7 @@ Use these selectors to limit the file size of upload or download transactions. F
 The **Download File Types** and **Upload File Types** selectors supersede the **Download File Type** and **Upload File Type** selectors. Gateway will still evaluate policies with the previous selectors. However, Cloudflare recommends migrating any policies with deprecated selectors to the new corresponding selectors.
 :::
 
-These selectors will scan file signatures in the HTTP body. You can select from file categories or specific file types, such as executables, archives and compressed files, Microsoft 365/Office documents, and Adobe files:
+These selectors will scan file signatures in the HTTP body. You can select from file categories or specific file types, such as executables, archives and compressed files, unscannable files, Microsoft 365/Office documents, and Adobe files:
 
 <Details header="Supported file types">
 
@@ -528,6 +528,13 @@ These selectors will scan file signatures in the HTTP body. You can select from 
 **Other**
 
 - BitTorrent file (`.torrent`)
+
+**Unscannable**
+
+- Password-protected Microsoft Office document
+- Password-protected PDF
+- Password-protected ZIP archive
+- Unscannable ZIP archive
 
 </Details>
 
