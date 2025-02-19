@@ -9,8 +9,8 @@ export default {
 	// can be used in local development and previews.
 	transformItems(items) {
 		return items.map((item) => {
-			const path = new URL(item.url).pathname;
-			const url = new URL(path, window.origin);
+			const { pathname, hash } = new URL(item.url);
+			const url = new URL(pathname + hash, window.location.origin);
 
 			return {
 				...item,

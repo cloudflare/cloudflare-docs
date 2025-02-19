@@ -5,10 +5,14 @@ productLink: "/cloudflare-one/policies/gateway/"
 productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
-  - publish_date: "2025-02-12"
-    title: The default global Cloudflare root certificate expired on 2025-02-02 at 16:05 UTC
+  - publish_date: "2025-02-13"
+    title: Unscannable files for Download and Upload File Types selectors
     description: |-
-      Gateway and DLP users can now create HTTP policies with the [Upload/Download File Size (MiB)](/cloudflare-one/policies/gateway/http-policies/#download-and-upload-file-size) traffic selectors. This update allows users to block uploads or downloads based on file size.
+      Gateway and DLP users can now match [unscannable files](/cloudflare-one/policies/gateway/http-policies/#download-and-upload-file-types) with the Download and Upload File Types traffic selectors for HTTP policies. This update allows users to block files that are password-protected, compressed, or otherwise unscannable.
+  - publish_date: "2025-02-12"
+    title: Upload/Download File Size selectors for HTTP policies
+    description: |-
+      Gateway and DLP users can now create HTTP policies with the [Download and Upload File Size (MiB)](/cloudflare-one/policies/gateway/http-policies/#download-and-upload-file-size) traffic selectors. This update allows users to block uploads or downloads based on file size.
   - publish_date: "2025-02-02"
     title: The default global Cloudflare root certificate expired on 2025-02-02 at 16:05 UTC
     description: |-
