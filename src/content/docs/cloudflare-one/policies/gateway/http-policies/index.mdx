@@ -466,15 +466,15 @@ Use this selector to match against a domain and all subdomains -- for example, i
 
 ### Download and Upload File Size
 
-These selectors can be used to limit the file size of upload or download transactions.
+Use these selectors to limit the file size of upload or download transactions. File sizes are measured in mebibytes (MiB).
 
 | UI name                  | API example                     |
 | ------------------------ | ------------------------------- |
 | Download File Size (MiB) | `http.download.file.size >= 10` |
 
-| UI name                | API example                   |
-| ---------------------- | ----------------------------- |
-| Upload File Size (MiB) | `http.upload.file.size >= 10` |
+| UI name                | API example                  |
+| ---------------------- | ---------------------------- |
+| Upload File Size (MiB) | `http.upload.file.size < 10` |
 
 ### Download and Upload File Types
 
