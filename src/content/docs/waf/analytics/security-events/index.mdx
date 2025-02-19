@@ -14,7 +14,7 @@ The main elements of Security Events are the following:
 - [Events summary](#events-summary): Provides the number of security events on traffic during the selected time period, grouped according to the selected dimension (for example, Action, Host, Country).
 - [Events by service](#events-by-service): Lists the security-related activity per security feature (for example, WAF, API Shield).
 - [Top events by source](#top-events-by-source): Provides details of the traffic flagged or actioned by a Cloudflare security feature (for example, IP addresses, User Agents, Paths, Countries, Hosts, ASNs).
-- [Activity log](#activity-log): Summarizes security events by date to show the action taken and the applied Cloudflare security product.
+- [Sampled logs](#sampled-logs): Summarizes security events by date to show the action taken and the applied Cloudflare security product.
 
 Security Events displays information about requests actioned or flagged by Cloudflare security products, including features such as [Browser Integrity Check](/waf/tools/browser-integrity-check/). Each incoming HTTP request might generate one or more security events. The Security Events dashboard only shows these events, not the HTTP requests themselves.
 
@@ -32,9 +32,9 @@ Additionally, Enterprise customers have access to the account-level dashboard in
 
 ## Adjust displayed data
 
-You can apply multiple filters and exclusions to narrow the scope of Security Events and adjust the report duration. Modifying the duration, filters, or exclusions affects the analytics data displayed on the entire page including the **Activity Log** and all graphs.
+You can apply multiple filters and exclusions to narrow the scope of Security Events and adjust the report duration. Modifying the duration, filters, or exclusions affects the analytics data displayed on the entire page including **Sampled logs** and all graphs.
 
-![Example of adding a new filter in Security Events for the Allow action](~/assets/images/waf/events-add-filter.png)
+![Example of adding a new filter in Security Events for the Block action](~/assets/images/waf/events-add-filter.png)
 
 <Render file="analytics-filter-report-duration" />
 
@@ -66,7 +66,7 @@ You can adjust the scope of Security Events to one of the listed source values b
 A deleted custom/firewall rule or rate limiting rule will show as `Rule unavailable` under **Firewall rules** or **Rate limit rules**. To check the changes made within your Cloudflare account, review your [Audit logs](/fundamentals/setup/account/account-security/review-audit-logs/).
 :::
 
-## Activity log
+## Sampled logs
 
 <Render file="analytics-activity-log" />
 
