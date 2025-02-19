@@ -34,7 +34,7 @@ Final request threat score: `26`
 
 Since `26` >= `25` — that is, the threat score is greater than the configured score threshold — the WAF will apply the configured action (_Managed Challenge_). If you had configured a score threshold of _Medium - 40 and higher_, the WAF would not apply the action, since the request threat score would be lower than the score threshold (`26` < `40`).
 
-The [**Activity log** in Security Events](/waf/analytics/security-events/paid-plans/#activity-log) would display the following details for the example incoming request handled by the OWASP Core Ruleset:
+The [**Activity log** in Security Events](/waf/analytics/security-events/#activity-log) would display the following details for the example incoming request handled by the OWASP Core Ruleset:
 
 ![Event log for example incoming request mitigated by the WAF's OWASP Core Ruleset](~/assets/images/waf/owasp-example-event-log.png)
 

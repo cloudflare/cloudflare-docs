@@ -3,36 +3,91 @@ title: Security Events
 pcx_content_type: concept
 sidebar:
   order: 2
-
 ---
 
-import { FeatureTable, GlossaryTooltip } from "~/components"
+import { FeatureTable, GlossaryTooltip, Render } from "~/components";
 
 Security Events allows you to review <GlossaryTooltip term="mitigated request">mitigated requests</GlossaryTooltip> and helps you tailor your security configurations.
 
-Users on a Free plan can view summarized security events by date in the **Activity log**. Customers on paid plans have access to additional graphs and dashboards that summarize the most relevant information about the current behavior of Cloudflare's security features on your zone.
+The main elements of Security Events are the following:
 
-## Main features
-
-* **Events summary**: Provides the number of security events on traffic during the selected time period, grouped according to the selected dimension (for example, Action, Host, Country).
-* **Events by service**: Lists the security-related activity per security feature (for example, WAF, API Shield).
-* **Top events by source**: Provides details of the traffic flagged or actioned by a Cloudflare security feature (for example, IP addresses, User Agents, Paths, Countries, Hosts, ASNs).
-* **Activity log**: Summarizes security events by date to show the action taken and the applied Cloudflare security product.
+- [Events summary](#events-summary): Provides the number of security events on traffic during the selected time period, grouped according to the selected dimension (for example, Action, Host, Country).
+- [Events by service](#events-by-service): Lists the security-related activity per security feature (for example, WAF, API Shield).
+- [Top events by source](#top-events-by-source): Provides details of the traffic flagged or actioned by a Cloudflare security feature (for example, IP addresses, User Agents, Paths, Countries, Hosts, ASNs).
+- [Activity log](#activity-log): Summarizes security events by date to show the action taken and the applied Cloudflare security product.
 
 Security Events displays information about requests actioned or flagged by Cloudflare security products, including features such as [Browser Integrity Check](/waf/tools/browser-integrity-check/). Each incoming HTTP request might generate one or more security events. The Security Events dashboard only shows these events, not the HTTP requests themselves.
 
 ## Availability
 
-The available features vary according to your Cloudflare plan:
+Available features vary according to your Cloudflare plan:
 
 <FeatureTable id="security.security_events" />
+
+## Location in the dashboard
+
+Security Events is available for your zone in **Security** > **Events**.
+
+Additionally, Enterprise customers have access to the account-level dashboard in Account Home > **Security Center** > **Security Events**.
+
+## Adjust displayed data
+
+You can apply multiple filters and exclusions to narrow the scope of Security Events and adjust the report duration. Modifying the duration, filters, or exclusions affects the analytics data displayed on the entire page including the **Activity Log** and all graphs.
+
+![Example of adding a new filter in Security Events for the Allow action](~/assets/images/waf/events-add-filter.png)
+
+<Render file="analytics-filter-report-duration" />
+
+## Create custom rule from current filters
+
+<Render file="analytics-create-firewall-rule" />
+
+## Events summary
+
+The **Events summary** section provides the number of security events on traffic during the selected time period, grouped according to the selected dimension (for example, **Action**, **Host**, **Country**, or **ASN**).
+
+![Filter by action by selecting Filter when hovering the desired action in Events summary](~/assets/images/waf/events-summary.png)
+
+You can adjust the displayed data according to one of the values by selecting **Filter** or **Exclude** when hovering the legend.
+
+## Events by service
+
+The **Events by service** section lists the activity per Cloudflare security feature (for example, **Managed rules** or **API Shield**).
+
+You can adjust the scope of Security Events to one of the displayed services by selecting **Filter** or **Exclude** when hovering the legend or by selecting the corresponding graph bar.
+
+## Top events by source
+
+In **Top events by source** you can find details of the traffic flagged or actioned by a security feature — for example, **IP Addresses**, **User Agents**, **Paths**, and **Countries**.
+
+You can adjust the scope of Security Events to one of the listed source values by selecting **Filter** or **Exclude** when hovering the value.
+
+:::note
+A deleted custom/firewall rule or rate limiting rule will show as `Rule unavailable` under **Firewall rules** or **Rate limit rules**. To check the changes made within your Cloudflare account, review your [Audit logs](/fundamentals/setup/account/account-security/review-audit-logs/).
+:::
+
+## Activity log
+
+<Render file="analytics-activity-log" />
+
+<Render file="analytics-export-data" />
+
+## Share Security Events filters
+
+<Render file="analytics-share-url" />
+
+## Print or download PDF report
+
+To print or download a snapshot report from your security events dashboard, select **Print report** in **Security Events**. Your web browser's printing interface will present you with options for printing or downloading the PDF report.
+
+The generated report will reflect all applied filters.
 
 ## Known limitations
 
 Security Events currently has these limitations:
 
-* Security Events may use sampled data to improve performance. If your search uses sampled data, Security Events might not display all events and filters might not return the expected results. To display more events, select a smaller time frame.
+- Security Events may use sampled data to improve performance. If your search uses sampled data, Security Events might not display all events and filters might not return the expected results. To display more events, select a smaller time frame.
 
-* The Cloudflare dashboard may show an inaccurate number of events per page. Data queries are highly optimized, but this means that pagination may not always work because the source data may have been sampled. The GraphQL Analytics API does not have this pagination issue.
+- The Cloudflare dashboard may show an inaccurate number of events per page. Data queries are highly optimized, but this means that pagination may not always work because the source data may have been sampled. The GraphQL Analytics API does not have this pagination issue.
 
-* Triggered OWASP rules appear in the Security Events page under **Additional logs**, but they are not included in exported JSON files.
+- Triggered OWASP rules appear in the Security Events page under **Additional logs**, but they are not included in exported JSON files.
