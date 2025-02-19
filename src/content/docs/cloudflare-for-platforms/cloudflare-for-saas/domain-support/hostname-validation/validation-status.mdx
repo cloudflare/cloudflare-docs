@@ -22,6 +22,6 @@ When you [validate a custom hostname](/cloudflare-for-platforms/cloudflare-for-s
 
 ## Refresh validation
 
-To run the custom hostname validation check again, select **Refresh** on the dashboard or send a `PATCH` request to the [Edit custom hostname endpoint](/api/resources/custom_hostnames/methods/edit/). If using the API, make sure that the `--data` field is not empty.
+To run the custom hostname validation check again, select **Refresh** on the dashboard or send a `PATCH` request to the [Edit custom hostname endpoint](/api/resources/custom_hostnames/methods/edit/). If using the API, make sure that the `--data` field contains an `ssl` object with the same `method` and `type` as the original request.
 
 If the hostname is in a **Moved** or **Deleted** state, the refresh will set the custom hostname back to **Pending validation**.
