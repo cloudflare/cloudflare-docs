@@ -8,7 +8,7 @@ entries:
   - publish_date: "2025-02-13"
     title: Unscannable files for Download and Upload File Types selectors
     description: |-
-      Gateway and DLP users can now match unscannable files with the Download and Upload File Types traffic selectors for HTTP policies. This update allows users to block files that are password-protected, compressed, or otherwise unscannable.
+      Gateway and DLP users can now match [unscannable files](/cloudflare-one/policies/gateway/http-policies/#download-and-upload-file-types) with the Download and Upload File Types traffic selectors for HTTP policies. This update allows users to block files that are password-protected, compressed, or otherwise unscannable.
   - publish_date: "2025-02-12"
     title: Upload/Download File Size selectors for HTTP policies
     description: |-
