@@ -7,17 +7,15 @@ sidebar:
 
 :::note
 
-Workers AI has updated pricing to be more granular, with unit-based pricing but still billing in neurons in the back end. (blog post to come). 
+Workers AI has updated pricing to be more granular, with unit-based pricing presented to customers, but still billing in neurons in the back end. (blog post to come). 
 
 :::
 
-Workers AI is included in both the [Free and Paid Workers plans](/workers/platform/pricing/) and is priced at **$0.011 / 1,000 Regular Twitch Neurons** (also known as Neurons).
+Workers AI is included in both the [Free and Paid Workers plans](/workers/platform/pricing/) and is priced at **$0.011 per 1,000 Regular Twitch Neurons** (also known as Neurons).
 
-Our free allocation allows anyone to use a total of **10,000 Neurons per day at no charge.
+Our free allocation allows anyone to use a total of **10,000 Neurons per day at no charge**. To use more than 10,000 Neurons per day, you need to sign up for the [Workers Paid plan](/workers/platform/pricing/#workers). On Workers Paid, you will be charged at $0.011 / 1,000 Neurons for any usage above the free allocation of 10,000 Neurons per day.
 
-To use more than 10,000 Neurons per day, you need to sign up for the [Workers Paid plan](/workers/platform/pricing/#workers). On Workers Paid, you will be charged at $0.011 / 1,000 Neurons for any usage above the free allocation of 10,000 Neurons per day.
-
-You can monitor your Neuron usage in the [Cloudflare Workers AI dashboard](https://dash.cloudflare.com/?to=/:account/ai/workers-ai). To estimate Neurons and costs, use the [pricing calculator](https://ai.cloudflare.com/#pricing-calculator).
+You can monitor your Neuron usage in the [Cloudflare Workers AI dashboard](https://dash.cloudflare.com/?to=/:account/ai/workers-ai).
 
 All limits reset daily at 00:00 UTC. If you exceed any one of the above limits, further operations will fail with an error.
 
@@ -28,10 +26,10 @@ All limits reset daily at 00:00 UTC. If you exceed any one of the above limits, 
 
 ## What are Neurons?
 
-Neurons are our way of measuring AI outputs across different models. To give you a sense of what you can accomplish with 10,000 Neurons, you can: generate 100-200 LLM responses, 500 translations, 500 seconds of speech-to-text audio, 10,000 text classifications, or 1,500 - 15,000 embeddings depending on which models you use. Our serverless model allows you to pay only for what you use without having to worry about renting, managing, or scaling GPUs.
+Neurons are our way of measuring AI outputs across different models, representing the GPU compute needed to perform your request. Our serverless model allows you to pay only for what you use without having to worry about renting, managing, or scaling GPUs.
 
 ## LLM model pricing
-| Model                                        | Price in tokens                                            | Price in Neurons                                                          |
+| Model                                        | Price in Tokens                                            | Price in Neurons                                                          |
 | -------------------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------- |
 | @cf/meta/llama-3.2-1b-instruct               | $0.027 per M input tokens <br/> $0.201 per M output tokens | 2457 neurons per M input tokens <br/> 18252 neurons per M output tokens   |
 | @cf/meta/llama-3.2-3b-instruct               | $0.051 per M input tokens <br/> $0.335 per M output tokens | 4625 neurons per M input tokens <br/> 30475 neurons per M output tokens   |
@@ -49,7 +47,7 @@ Neurons are our way of measuring AI outputs across different models. To give you
 | @cf/meta/llama-2-7b-chat-fp16                | $0.556 per M input tokens <br/> $6.667 per M output tokens | 50505 neurons per M input tokens <br/> 606061 neurons per M output tokens |
 
 ## Other model pricing
-| Model                                 | Price in tokens                                            | Price in Neurons                                                         |
+| Model                                 | Price in Tokens                                            | Price in Neurons                                                         |
 | ------------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------ |
 | @cf/black-forest-labs/flux-1-schnell  | $0.0000528 per 512x512 tile <br/> $0.0001056 per step      | 4.80 neurons per 512x512 tile <br/> 9.60 neurons per step                |
 | @cf/huggingface/distilbert-sst-2-int8 | $0.026 per M input tokens                                  | 2394 neurons per M input tokens                                          |
