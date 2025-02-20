@@ -5,6 +5,11 @@ productLink: "/api-shield/"
 productArea: Application security
 productAreaLink: /fundamentals/reference/changelog/security/
 entries:
+  - publish_date: "2025-02-17"
+    title: New automatically applied risk labels
+    description: |-
+      API Shield now automatically labels endpoints with risks due to missing schemas and performance anomalies (spikes in error rates, latency, and body response sizes).
+
   - publish_date: "2025-01-16"
     title: API Authentication Posture
     description: |-
