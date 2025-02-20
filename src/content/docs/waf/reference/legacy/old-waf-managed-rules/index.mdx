@@ -52,7 +52,7 @@ When viewing a ruleset, Cloudflare shows default actions for each rule listed un
 * **Disable**: Turns off the specific rule within the group.
 * **Block**: Discards the request.
 * **Interactive Challenge**: The visitor receives a challenge page that requires interaction.
-* **Simulate**: The request is allowed through but is logged in [Sampled logs](/waf/analytics/security-events/#sampled-logs).
+* **Simulate**: The request is allowed through but is logged in [sampled logs](/waf/analytics/security-events/#sampled-logs).
 
 Cloudflare’s [WAF changelog](/waf/change-log/) allows customers to monitor ongoing changes to the Cloudflare Managed Ruleset.
 
@@ -66,7 +66,7 @@ After OWASP evaluates a request, Cloudflare compares the final score to the **Se
 
 * **Block**: The request is discarded.
 * **Challenge**: The visitor receives an interactive challenge page.
-* **Simulate**: The request is allowed through but is logged in [Sampled logs](/waf/analytics/security-events/#sampled-logs).
+* **Simulate**: The request is allowed through but is logged in [sampled logs](/waf/analytics/security-events/#sampled-logs).
 
 The sensitivity score required to trigger the WAF for a specific **Sensitivity** is as follows:
 
@@ -80,7 +80,7 @@ For AJAX requests, the following scores are applied instead:
 * **Medium**: 80 and higher
 * **High**: 65 and higher
 
-Review the entry in [Sampled logs](/waf/analytics/security-events/#sampled-logs) for the final score and for the individual triggered rules.
+Review the entry in [sampled logs](/waf/analytics/security-events/#sampled-logs) for the final score and for the individual triggered rules.
 
 ### Control the OWASP package
 
