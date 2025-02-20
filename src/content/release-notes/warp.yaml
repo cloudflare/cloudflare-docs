@@ -6,6 +6,21 @@ productArea: Cloudflare One
 productAreaLink: /cloudflare-one/changelog/
 entries:
   - publish_date: "2025-02-19"
+    title: WARP client for Linux (version 2025.1.186.0)
+    description: |-
+      A new GA release for the Linux WARP client is now available in the [package repository](https://pkg.cloudflareclient.com/). This release includes fixes and minor improvements.
+
+      **Changes and improvements**
+
+      - Improved command line interface for Access for Infrastructure with added function for filtering and ordering.
+      - Fixed client connectivity issues when switching between managed network profiles that use different WARP protocols.
+      - Added support for WARP desktop to use additional DoH endpoints to help reduce NAT congestion.
+      - Improved Wireguard connection stability on reconnections.
+      - Added additional HTTP/3 QUIC connectivity test to `warp-diag`.
+      - Added support for collection of system health metrics for enhanced device Digital Experience Monitoring.
+      - Automated the removal of active registrations for devices with multiple registrations with the same Zero Trust organization.
+
+  - publish_date: "2025-02-19"
     title: WARP client for macOS (version 2025.1.861.0)
     description: |-
      A new GA release for the macOS WARP client is now available on the [Downloads page](/cloudflare-one/connections/connect-devices/warp/download-warp/). This release contains minor fixes and improvements.
@@ -58,6 +73,22 @@ entries:
         - The custom DNS server address on the primary network adapter is changed while WARP is connected.
 
         To work around this issue, reconnect the WARP client by toggling off and back on.
+
+  - publish_date: "2025-02-13"
+    title: Cloudflare One Agent for iOS (version 1.9)
+    description: |-
+      A new GA release for the iOS Cloudflare One Agent is now available in the [iOS App Store](https://apps.apple.com/us/app/cloudflare-one-agent/id6443476492). This release contains a bug fix.
+
+      **Changes and improvements**
+        - Fixed an issue where the MDM parameters were not correctly applied to the WARP client.
+
+  - publish_date: "2025-02-07"
+    title: Cloudflare One Agent for Android (version 2.3.1)
+    description: |-
+      A new GA release for the Android Cloudflare One Agent is now available in the [Google Play Store](https://play.google.com/store/apps/details?id=com.cloudflare.cloudflareoneagent). This release contains a bug fix.
+
+      **Changes and improvements**
+        - Fixed app crash when a user toggles on Device Information Only service mode.
 
   - publish_date: "2025-02-07"
     title: WARP client for macOS (version 2025.1.634.1)
