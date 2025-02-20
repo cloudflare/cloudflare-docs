@@ -4,8 +4,10 @@ description: Granular pricing in units and neurons
 date: 2025-02-20T11:00:00Z
 ---
  
-Updating Workers AI pricing page to reflect the latest models and pricing. Pricing is presented in units (tokens, audio seconds, etc) but will continue to be charged in neurons. The price per neuron remains the same as it has always has been at $0.011 per 1000 neurons. 
+We've updated the Workers AI [pricing](/workers-ai/platform/pricing/) to include the latest models and how model usage maps to Neurons.
 
-Having per-model pricing (instead of buckets) allows us to be more flexible on what models are charged. As we optimize each model, we can then pass on savings for that model.
+* Each model'ss core input format(s) (tokens, audio seconds, images, etc) now include mappings to Neurons, making it easier to understand how your included Neuron volume is consumed and how you are charged at scale
+* Per-model pricing, instead of the previous bucket approach, allows us to be more flexible on how models are charged based on their size, performance and capabilities. As we optimize each model, we can then pass on savings for that model.
+* You will still only pay for what you consume: Workers AI inference is serverless, and not billed by the hour.
 
-Going forward, models will be launched in GA with pricing. Dashboard changes are coming to reflect usage in units and neurons. Docs redesign is incoming to show pricing directly on the respective model pages.
+Going forward, models will be launched with their associated Neuron costs, and we'll be updating the Workers AI dashboard and API to reflect consumption in both raw units and Neurons. Visit the [Workers AI pricing](/workers-ai/platform/pricing/) page to learn more about Workers AI pricing.
