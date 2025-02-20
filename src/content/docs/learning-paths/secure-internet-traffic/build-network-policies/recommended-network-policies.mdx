@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { GlossaryTooltip, Render } from "~/components";
+import { GlossaryTooltip, Render, Tabs, TabItem } from "~/components";
 
 We recommend you add the following network policies to build an Internet and SaaS app security strategy for your organization.
 
@@ -15,12 +15,59 @@ For more information on building network policies, refer to [Network policies](/
 
 <Render file="zero-trust/blocklist-restricted-users" />
 
+<Tabs syncKey="dashPlusAPI">
+
+<TabItem label="Dashboard">
+
 | Selector         | Operator    | Value                               | Logic | Action |
 | ---------------- | ----------- | ----------------------------------- | ----- | ------ |
 | Destination IP   | not in list | _Quarantined-Users-IPAllowlist_     | Or    | Block  |
 | SNI              | not in list | _Quarantined-Users-HostAllowlist_   | Or    |        |
-| Domain SNI       | not in list | _Quarantined-Users-DomainAllowlist_ | And   |        |
+| SNI Domain       | not in list | _Quarantined-Users-DomainAllowlist_ | And   |        |
 | User Group Names | in          | _Quarantined Users_                 |       |        |
+
+</TabItem>
+
+<TabItem label="API">
+
+```sh
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "Quarantined-Users-NET-Restricted-Access",
+  "description": "Restrict access for users included in an IdP user group for risky users",
+  "precedence": 0,
+  "enabled": true,
+  "action": "allow",
+  "filters": [
+    "l4"
+  ],
+  "traffic": "not(net.dst.ip in $<QUARANTINED_USERS_IP_LIST_UUID>) or not(net.sni.host in $<QUARANTINED_USERS_HOST_LIST_UUID>) or not(any(net.sni.domains[*] in $<QUARANTINED_USERS_DOMAIN_LIST_UUID>))",
+	"identity": "any(identity.groups.name[*] in {\"Quarantined Users\"})"
+}'
+```
+
+</TabItem>
+
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "quarantined_users_net_restricted_access" {
+  account_id  = var.account_id
+  name        = "Quarantined-Users-NET-Restricted-Access"
+  description = "Restrict access for users included in an IdP user group for risky users"
+  precedence  = 0
+  enabled     = true
+  action      = "allow"
+  filters     = ["l4"]
+  traffic     = "not(net.dst.ip in ${"$"}${cloudflare_zero_trust_list.quarantined_users_ip_list.id}) or not(net.sni.host in ${"$"}${cloudflare_zero_trust_list.quarantined_users_host_list.id}) or not(any(net.sni.domains[*] in ${"$"}${cloudflare_zero_trust_list.quarantined_users_domain_list.id}))"
+  identity    = "any(identity.groups.name[*] in {\"Quarantined Users\"})"
+}
+```
+
+</TabItem>
+</Tabs>
 
 ## Posture-Fail-NET-Restricted-Access
 
