@@ -10,8 +10,6 @@ releaseNotes: >-
 
   - Added support for WARP desktop to use additional DoH endpoints to help reduce NAT congestion.
 
-  - Improved Windows multi-user feature with minor bug fixes and optimizations.
-
   - Improved connectivity check reliability in certain split tunnel configurations.
 
   - Improved reading of device DNS settings at connection restart.
