@@ -1,0 +1,261 @@
+---
+updated: 2025-02-21
+difficulty: Beginner
+content_type: Tutorial
+pcx_content_type: tutorial
+title: Query D1 using Orange ORM
+products:
+  - Workers
+languages:
+  - TypeScript
+  - SQL
+---
+
+import { WranglerConfig } from "~/components";
+
+## What is Orange ORM?
+
+[Orange ORM](https://github.com/alfateam/orange-orm) is an Object Relational Mapper for Typescript, offering seamless integration with a variety of popular databases. Whether you're building applications in TypeScript or JavaScript, including both CommonJS and ECMAScript, Orange ORM has got you covered.
+
+- **Rich Querying Model**: Orange provides a powerful and intuitive querying model, making it easy to retrieve, filter, and manipulate data from your databases.
+- **Active Record**: With a concise and expressive syntax, Orange enables you to interact with your database using the [*Active Record Pattern*](https://en.wikipedia.org/wiki/Active_record_pattern).
+- **No Code Generation Required**: Enjoy full IntelliSense, even in table mappings, without the need for cumbersome code generation.
+- **TypeScript and JavaScript Support**: Orange fully supports both TypeScript and JavaScript, allowing you to leverage the benefits of static typing and modern ECMAScript features.
+- **Works in the Browser**: You can securely use Orange in the browser by utilizing the Express.js plugin, which serves to safeguard sensitive database credentials from exposure at the client level and protect against SQL injection. This method mirrors a traditional REST API, augmented with advanced TypeScript tooling for enhanced functionality.
+
+
+## Query D1 from a Cloudflare Worker using Orange ORM
+
+This example shows you how to set up and deploy a Cloudflare Worker that is accessing a D1 database from scratch.
+
+### Prerequisites
+
+- [`Node.js`](https://nodejs.org/en/) and [`npm`](https://docs.npmjs.com/getting-started) installed on your machine.
+- A [Cloudflare account](https://dash.cloudflare.com).
+
+### 1. Create a Cloudflare Worker
+
+Open your terminal, and run the following command to create a Cloudflare Worker using Cloudflare's [`hello-world`](https://github.com/cloudflare/workers-sdk/tree/4fdd8987772d914cf50725e9fa8cb91a82a6870d/packages/create-cloudflare/templates/hello-world) template:
+
+```sh
+npm create cloudflare@latest orange-d1-example -- --type hello-world
+```
+
+In your terminal, you will be asked a series of questions related your project:
+
+1. Answer `yes` to using TypeScript.
+2. Answer `yes` to deploying your Worker.
+
+Once you deploy your Worker, you should be able to preview your Worker at `https://orange-d1-example.USERNAME.workers.dev`, which displays "Hello World" in the browser.
+
+### 2. Install Orange ORM
+
+:::note
+
+D1 is supported in Orange ORM as of [v4.5.0](https://github.com/alfateam/orange-orm/releases/tag/v4.5.0).
+
+:::
+
+```sh
+cd orange-d1-example
+npm install orange-orm
+
+
+### 3. Create your D1 database
+
+In this step, you will set up your D1 database. You can create a D1 database via the [Cloudflare dashboard](https://dash.cloudflare.com), or via `wrangler`. This tutorial will use the `wrangler` CLI.
+
+Open your terminal and run the following command:
+
+```sh
+npx wrangler d1 create orange-demo-db
+```
+
+You should receive the following output on your terminal:
+
+```
+✅ Successfully created DB 'orange-demo-db' in region EEUR
+Created your database using D1's new storage backend. The new storage backend is not yet recommended for production workloads, but backs up your data via
+point-in-time restore.
+
+{
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "orange-demo-db",
+      "database_id": "__YOUR_D1_DATABASE_ID__" 
+    }
+  ]
+}
+```
+
+You now have a D1 database in your Cloudflare account with a binding to your Cloudflare Worker.
+
+Copy the last part of the command output and paste it into your Wrangler file. It should look similar to this:
+
+<WranglerConfig>
+
+```jsonc
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "orange-d1-example",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-02-14",
+  "observability": {
+    "enabled": true
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "orange-demo-db",
+      "database_id": "__YOUR_D1_DATABASE_ID__" 
+    }
+  ]
+}
+```
+
+</WranglerConfig>
+
+`__YOUR_D1_DATABASE_ID__` should be replaced with the database ID of your D1 instance. If you were not able to fetch this ID from the terminal output, you can also find it in the [Cloudflare dashboard](https://dash.cloudflare.com/), or by running `npx wrangler d1 info orange-demo-db` in your terminal.
+
+Next, you will create a database table in the database to send queries to D1 using Orange ORM.
+
+### 4. Create a table in the database
+
+
+D1 has a [migration system](/d1/reference/migrations), and in the following steps, you will use D1's migration system to create and run a migration against your database.
+
+First, create a new migration using `wrangler`:
+
+```sh
+npx wrangler d1 migrations create orange-demo-db create_user_table
+```
+
+Answer `yes` to creating a new folder called `migrations`.
+
+The command has now created a new directory called `migrations` and an empty file called `0001_create_user_table.sql` inside of it:
+
+```
+migrations/
+└── 0001_create_user_table.sql
+```
+
+Edit the file so this is what it looks like:
+
+```sql
+-- CreateTable
+CREATE TABLE "User" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "email" TEXT NOT NULL,
+    "name" TEXT
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+```
+
+
+You now need to use the `wrangler d1 migrations apply` command to send this SQL statement to D1. This command accepts two options:
+
+- `--local`: Executes the statement against a _local_ version of D1. This local version of D1 is a SQLite database file that will be located in the `.wrangler/state` directory of your project. Use this approach when you want to develop and test your Worker on your local machine. Refer to [Local development](/d1/best-practices/local-development/) to learn more.
+- `--remote`: Executes the statement against your _remote_ version of D1. This version is used by your _deployed_ Cloudflare Workers. Refer to [Remote development](/d1/best-practices/remote-development/) to learn more.
+
+In this tutorial, you will do local and remote development. You will test the Worker locally and deploy your Worker afterwards. Open your terminal, and run both commands:
+
+```sh
+# For the local database
+npx wrangler d1 migrations apply orange-demo-db --local
+```
+
+```sh
+# For the remote database
+npx wrangler d1 migrations apply orange-demo-db --remote
+```
+
+Choose `Yes` both times when you are prompted to confirm that the migration should be applied.
+
+Next, create some data that you can query once the Worker is running. This time, you will run the SQL statement without storing it in a file:
+
+```sh
+# For the local database
+npx wrangler d1 execute orange-demo-db --command "INSERT INTO  \"User\" (\"email\", \"name\") VALUES ('jane@orange-orm.io', 'Jane Doe (Local)');" --local
+```
+
+```sh
+# For the remote database
+npx wrangler d1 execute orange-demo-db --command "INSERT INTO  \"User\" (\"email\", \"name\") VALUES ('jane@orange-orm.io', 'Jane Doe (Remote)');" --remote
+```
+
+### 5. Query your database from the Worker
+
+To query your database from the Worker using Orange ORM, you need to:
+
+1. Add a `map,ts` to the `src` folder.
+2. Instantiate the orange-orm with the D1 instance .
+3. Send a query using the orange client and return the result.
+
+Create `src/map.ts` with the following content:
+```ts
+import orange from 'orange-orm';
+
+const map = orange.map(x => ({
+  user: x.table('user').map(({ column }) => ({
+    id: column('id').numeric().primary(),
+    email: column('email').string(),
+    name: column('name').string(),    
+  }))
+}));
+
+export default map;
+```
+Open `src/index.ts` and replace the entire content with the following:
+
+```ts
+import map from './map';
+
+export interface Env {
+  DB: D1Database;
+}
+export default {
+  async fetch(request, env, ctx): Promise<Response> {
+    const db = map.d1(env.DB);
+    const users = await db.user.getAll();
+    return Response.json(users);
+  },
+} satisfies ExportedHandler<Env>;
+```
+
+### 6. Run the Worker locally
+
+```sh
+npm run dev
+```
+
+Open your browser at [`http://localhost:8787`](http://localhost:8787/) to check the result of the database query:
+
+```json
+[{ "id": 1, "email": "jane@orange-orm.io", "name": "Jane Doe (Local)" }]
+```
+
+### 7. Deploy the Worker
+
+To deploy the Worker, run the following command:
+
+```sh
+npm run deploy
+```
+
+Access your Worker at `https://orange-d1-example.USERNAME.workers.dev`. Your browser should display the following data queried from your remote D1 database:
+
+```json
+[{ "id": 1, "email": "jane@orange-orm.io", "name": "Jane Doe (Remote)" }]
+```
+
+By finishing this tutorial, you have deployed a Cloudflare Worker using D1 as a database and querying it via Orange ORM.
+
+## Related resources
+
+- [Orange ORM documentation](https://github.com/alfatea/orange-orm).
+- To get help, open a new [GitHub Discussion](https://github.com/alfateam/orange-orm/discussions).
+- Check out the [youtube video](https://youtu.be/1IwwjPr2lMs).
+- Check out the [Discord](https://discord.gg/QjuEgvQXzd).
