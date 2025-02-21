@@ -312,10 +312,55 @@ resource "cloudflare_zero_trust_gateway_policy" "all_net_ssh_internet_allowlist"
 
 Block all non-web traffic towards the Internet. By using the **Detected Protocol** selector, you will ensure alternative ports for HTTP and HTTPS are allowed.
 
+<Tabs syncKey="dashPlusAPI">
+
+<TabItem label="Dashboard">
+
 | Selector          | Operator    | Value             | Logic | Action |
 | ----------------- | ----------- | ----------------- | ----- | ------ |
 | Destination IP    | not in list | _InternalNetwork_ | And   | Block  |
 | Detected Protocol | not in      | _HTTP_, _HTTP2_   |       |        |
+
+</TabItem>
+
+<TabItem label="API">
+
+```sh
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "All-NET-NO-HTTP-HTTPS-Internet-Deny",
+  "description": "Block all non-web traffic towards the Internet",
+  "precedence": 0,
+  "enabled": true,
+  "action": "block",
+  "filters": [
+    "l4"
+  ],
+  "traffic": "not(net.dst.ip in $<INTERNAL_NETWORK_IP_LIST_UUID>) and not(net.detected_protocol in {\"http\" \"http2\"})"
+}'
+```
+
+</TabItem>
+
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "all_net_no_http_https_internet_deny" {
+  account_id  = var.account_id
+  name        = "All-NET-NO-HTTP-HTTPS-Internet-Deny"
+  description = "Block all non-web traffic towards the Internet"
+  precedence  = 0
+  enabled     = true
+  action      = "block"
+  filters     = ["l4"]
+  traffic     = "not(net.dst.ip in ${"$"}${cloudflare_zero_trust_list.internal_network_ip_list.id}) and not(net.detected_protocol in {\"http\" \"http2\"})"
+}
+```
+
+</TabItem>
+</Tabs>
 
 ## All-NET-InternalNetwork-ImplicitDeny
 
