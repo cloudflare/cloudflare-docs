@@ -94,19 +94,12 @@ In the example below, the watermark is manipulated with `rotate` and `width` bef
 
 ```js
 // Fetch image and watermark
-const img = await fetch('https://example.com/image.png');
-const watermark = await fetch('https://example.com/watermark.png');
-
-const response = await env.IMAGES.input(img.body)
-  .transform({ width: 1024 })
-  .draw(env.IMAGES.input(watermark.body).transform({ rotate: 90, width: 128 }), {
-    opacity: 0.25,
-    repeat: true,
-  })
-  .output({ format: "image/avif" })
-  .response();
-
-return response;
+const response = (
+  await env.IMAGES.input(img.body)
+    .transform({ width: 1024 })
+    .draw(watermark.body, { "opacity": 0.25, "repeat": true })
+    .output({ format: "image/avif" })
+).response();
 ```
 
 ## Examples
