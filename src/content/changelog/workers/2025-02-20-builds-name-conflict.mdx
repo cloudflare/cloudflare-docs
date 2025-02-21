@@ -8,12 +8,12 @@ date: 2025-02-20T11:00:00Z
 
 ![Workers Builds Name Field Warning](~/assets/images/workers/platform/ci-cd/workers-builds-name.png)
 
-One of the top reasons for Workers Builds failures is a mismatch between the Worker name in the Cloudflare dashboard and the name in the Wrangler file in your Git repository. To eliminate this friction, we’re automating the fix to keep everything in sync.
+One of the top reasons for Workers Builds failures is a mismatch between the Worker name in the Cloudflare dashboard and the name in the Wrangler file in your Git repository. To eliminate this friction, Cloudflare is automating the fix to keep everything in sync.
 
 ![Auto-fixing Workers Name in Git Repo](~/assets/images/workers/platform/ci-cd/gh-auto-pr-name.png)
 
-Now, when you import or connect a Git repository, we’ll check for mismatches in the name.
+Now, when you import or connect a Git repository, Cloudflare will check for mismatches in the name.
 
-Starting in **Wrangler v3.109.0+**, we will automatically create a pull request in your Git repository after the build to update the name field in your Wrangler file to ensure it aligns with your dashboard settings.
+Starting in **Wrangler v3.109.0+**, Cloudflare will automatically create a pull request in your Git repository after the build to update the name field in your Wrangler file to ensure it aligns with your dashboard settings.
 
 Learn more about [Workers Builds](/workers/ci-cd/builds/).
