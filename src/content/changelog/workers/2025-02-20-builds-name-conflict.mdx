@@ -1,19 +1,21 @@
 ---
-title: Auto-Fixing Worker Name Error in Git Repository
+title: Autofix Worker name configuration errors at build time
 description: Workers Builds automatically creates a pull request to update the name field in the wrangler file if it doesn’t match your Worker's name in the Cloudflare dashboard.
 products:
   - workers
 date: 2025-02-20T11:00:00Z
 ---
 
-![Workers Builds Name Field Warning](~/assets/images/workers/platform/ci-cd/workers-builds-name.png)
-
-One of the top reasons for Workers Builds build failures is a mismatch between the Worker name in the Cloudflare dashboard and the name in the Wrangler file in your Git repository. To eliminate this friction, Cloudflare is automating the fix to keep everything in sync.
-
 ![Auto-fixing Workers Name in Git Repo](~/assets/images/workers/platform/ci-cd/gh-auto-pr-name.png)
 
-Now, when you import or connect a Git repository, Cloudflare will check for mismatches in the name. Starting in **Wrangler v3.109.0+**, Cloudflare will automatically create a pull request in your Git repository after the build completes to update the name field in your Wrangler file to ensure it aligns with your dashboard settings.
+Small misconfigurations shouldn’t break your deployments. Cloudflare is introducing automatic error detection and fixes in [Workers Builds](/workers/ci-cd/builds/), identifying common issues in your wrangler.toml or wrangler.jsonc and proactively offering fixes, so you spend less time debugging and more time shipping.
 
-And this is just the beginning, we’re working on more ways to proactively catch and fix common issues, so your deployments stay smooth.
+Here's how it works:
 
-Learn more about [Workers Builds](/workers/ci-cd/builds/).
+1. Before running your build, Cloudflare checks your Worker's Wrangler configuration file (wrangler.toml or wrangler.jsonc) for common errors.
+2. Once you submit a build, if Cloudflare finds an error it can fix, it will submit a pull request to your repository that fixes it.
+3. Once you merge this pull request, Cloudflare will run another build.
+
+We're starting with fixing name mismatches between your Wrangler file and the Cloudflare dashboard, a top cause of build failures.
+
+This is just the beginning, we want your feedback on what other errors we should catch and fix next. Let us know in the Cloudflare Developers Discord, [#workers-and-pages-feature-suggestions](https://discord.com/channels/595317990191398933/1064502845061210152).
