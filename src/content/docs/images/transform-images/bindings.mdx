@@ -1,11 +1,11 @@
 ---
 pcx_content_type: how-to
-title: Bind to Workers
+title: Bind to Workers API
 sidebar:
   order: 4
 ---
 
-A [binding](/workers/runtime-apis/bindings/) connects your [Worker](/workers/) to external resources on the Developer Platform, like [Images](/images/transform-images/transform-via-workers/), [R2 Buckets](/r2/buckets/), or [KV Namespaces](/kv/concepts/kv-namespaces/).
+A [binding](/workers/runtime-apis/bindings/) connects your [Worker](/workers/) to external resources on the Developer Platform, like [Images](/images/transform-images/transform-via-workers/), [R2 buckets](/r2/buckets/), or [KV Namespaces](/kv/concepts/kv-namespaces/).
 
 You can bind the Images API to your Worker to transform, resize, and encode images without requiring them to be accessible through a URL.
 
@@ -67,6 +67,8 @@ return response;
 ```
 
 In this example, the transformed image is outputted as a WebP.
+
+Responses from the Images binding are not automatically cached. Workers lets you interact directly with the Cache API to customize cache behavior using Workers. You can implement logic in your script to store transformations in Cloudflare’s cache.
 
 ## Interact with your Images binding locally
 
