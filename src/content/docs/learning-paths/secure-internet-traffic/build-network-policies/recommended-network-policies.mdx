@@ -254,12 +254,59 @@ Allow SSH traffic to specific endpoints on the Internet for specific users. You 
 
 Optionally, you can include a selector to filter by source IP or IdP group.
 
+<Tabs syncKey="dashPlusAPI">
+
+<TabItem label="Dashboard">
+
 | Selector          | Operator | Value               | Logic | Action |
 | ----------------- | -------- | ------------------- | ----- | ------ |
 | Destination IP    | in list  | _SSHAllowList_      | Or    | Allow  |
 | SNI               | in list  | _SSHAllowlistFQDN_  | And   |        |
 | Detected Protocol | is       | _SSH_               | And   |        |
 | User Group Names  | in       | _SSH-Allowed-Users_ |       |        |
+
+</TabItem>
+
+<TabItem label="API">
+
+```sh
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "All-NET-SSH-Internet-Allowlist",
+  "description": "Allow SSH traffic to specific endpoints on the Internet for specific users",
+  "precedence": 0,
+  "enabled": true,
+  "action": "allow",
+  "filters": [
+    "l4"
+  ],
+  "traffic": "net.dst.ip in $<SSH_IP_ALLOWLIST_UUID> and net.sni.host in $<SSH_FQDN_ALLOWLIST_UUID> and net.detected_protocol == \"ssh\"",
+  "identity": "any(identity.groups.name[*] in {\"SSH-Allowed-Users\"})"
+}'
+```
+
+</TabItem>
+
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "all_net_ssh_internet_allowlist" {
+  account_id  = var.account_id
+  name        = "All-NET-SSH-Internet-Allowlist"
+  description = "Allow SSH traffic to specific endpoints on the Internet for specific users"
+  precedence  = 0
+  enabled     = true
+  action      = "allow"
+  filters     = ["l4"]
+  traffic     = "net.dst.ip in ${"$"}${cloudflare_zero_trust_list.ssh_ip_allowlist.id} and net.sni.host in ${"$"}${cloudflare_zero_trust_list.ssh_fqdn_allowlist.id} and net.detected_protocol == \"ssh\""
+  identity    = "any(identity.groups.name[*] in {\"SSH-Allowed-Users\"})"
+}
+```
+
+</TabItem>
+</Tabs>
 
 ## All-NET-NO-HTTP-HTTPS-Internet-Deny
 
