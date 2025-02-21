@@ -122,7 +122,7 @@ resource "cloudflare_zero_trust_gateway_policy" "posture_fail_net_restricted_acc
   action      = "block"
   filters     = ["l4"]
   traffic     = "not(net.dst.ip in ${"$"}${cloudflare_zero_trust_list.ip_allowlist.id}) or not(net.sni.host in ${"$"}${cloudflare_zero_trust_list.host_allowlist.id}) or not(any(net.sni.domains[*] in ${"$"}${cloudflare_zero_trust_list.domain_allowlist.id}))"
-  device_posture = "not(any(device_posture.checks.passed[*] in {\"<DEVICE_POSTURE_CHECK_UUID>\"}))"
+  device_posture = "not(any(device_posture.checks.passed[*] in {\"${cloudflare_device_posture_rule.baseline_check.id}\"}))"
 }
 ```
 
