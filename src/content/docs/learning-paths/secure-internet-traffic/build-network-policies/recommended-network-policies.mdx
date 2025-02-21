@@ -135,10 +135,57 @@ You can add a number of WARP client device posture checks as needed, such as [Di
 
 Allow HTTPS access for user groups. For example, the following policy gives finance users access to any known financial applications:
 
+<Tabs syncKey="dashPlusAPI">
+
+<TabItem label="Dashboard">
+
 | Selector         | Operator | Value             | Logic | Action |
 | ---------------- | -------- | ----------------- | ----- | ------ |
 | Destination IP   | in list  | _Finance Servers_ | And   | Allow  |
 | User Group Names | in       | _Finance Users_   |       |        |
+
+</TabItem>
+
+<TabItem label="API">
+
+```sh
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "FinanceUsers-NET-HTTPS-FinanceServers",
+  "description": "Allow HTTPS access for user groups",
+  "precedence": 0,
+  "enabled": true,
+  "action": "allow",
+  "filters": [
+    "l4"
+  ],
+  "traffic": "net.dst.ip in $<FINANCE_SERVERS_LIST_UUID>",
+  "identity": "any(identity.groups.name[*] in {\"Finance Users\"})"
+}'
+```
+
+</TabItem>
+
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "finance_users_net_https_finance_servers" {
+  account_id  = var.account_id
+  name        = "FinanceUsers-NET-HTTPS-FinanceServers"
+  description = "Allow HTTPS access for user groups"
+  precedence  = 0
+  enabled     = true
+  action      = "allow"
+  filters     = ["l4"]
+  traffic     = "net.dst.ip in ${"$"}${cloudflare_zero_trust_list.finance_servers_list.id}"
+  identity    = "any(identity.groups.name[*] in {\"Finance Users\"})"
+}
+```
+
+</TabItem>
+</Tabs>
 
 ## All-NET-Internet-Blocklist
 
