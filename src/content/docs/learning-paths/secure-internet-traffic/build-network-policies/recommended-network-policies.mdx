@@ -419,54 +419,7 @@ resource "cloudflare_zero_trust_gateway_policy" "all_net_no_http_https_internet_
 
 Only allow network traffic from known and approved devices.
 
-<Tabs syncKey="dashPlusAPI">
-
-<TabItem label="Dashboard">
-
 <Render
 	file="gateway/policies/dash-plus-api/network/enforce-device-posture"
 	product="cloudflare-one"
 />
-
-</TabItem>
-
-<TabItem label="API">
-
-```sh
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "All-NET-ApplicationAccess-Allow",
-  "description": "Only allow network traffic from known and approved devices",
-  "precedence": 0,
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "l4"
-  ],
-  "traffic": "any(net.sni.domains[*] == \"internalapp.com\")",
-  "device_posture": "not(any(device_posture.checks.passed[*] in {\"<DEVICE_SERIAL_NUMBER_LIST_UUID>\"}))"
-}'
-```
-
-</TabItem>
-
-<TabItem label="Terraform">
-
-```tf
-resource "cloudflare_zero_trust_gateway_policy" "all_net_no_http_https_internet_deny" {
-  account_id  = var.account_id
-  name        = "All-NET-ApplicationAccess-Allow"
-  description = "Only allow network traffic from known and approved devices"
-  precedence  = 0
-  enabled     = true
-  action      = "block"
-  filters     = ["l4"]
-  traffic     = "any(net.sni.domains[*] == \"internalapp.com\")"
-  device_posture = "not(any(device_posture.checks.passed[*] in {\"${"$"}{cloudflare_zero_trust_list.device_serial_number_list.id}\"}))"
-}
-```
-
-</TabItem>
-</Tabs>
