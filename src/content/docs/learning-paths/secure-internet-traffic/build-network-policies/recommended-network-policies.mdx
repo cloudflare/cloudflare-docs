@@ -189,15 +189,60 @@ resource "cloudflare_zero_trust_gateway_policy" "finance_users_net_https_finance
 
 ## All-NET-Internet-Blocklist
 
-Block traffic to destination IPs, <GlossaryTooltip term="Server Name Indication (SNI)">SNIs</GlossaryTooltip>, and domain SNIs that are malicious or pose a threat to your organization.
+Block traffic to destination IPs, <GlossaryTooltip term="Server Name Indication (SNI)">SNIs</GlossaryTooltip>, and SNI domains that are malicious or pose a threat to your organization.
 
 <Render file="zero-trust/threat-intelligence-automation" />
+
+<Tabs syncKey="dashPlusAPI">
+
+<TabItem label="Dashboard">
 
 | Selector       | Operator | Value              | Logic | Action |
 | -------------- | -------- | ------------------ | ----- | ------ |
 | Destination IP | in list  | _IP Blocklist_     | Or    | Block  |
 | SNI            | in list  | _Host Blocklist_   | Or    |        |
 | SNI Domain     | in list  | _Domain Blocklist_ |       |        |
+
+</TabItem>
+
+<TabItem label="API">
+
+```sh
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "All-NET-Internet-Blocklist",
+  "description": "Block traffic to malicious or risky destination IPs, SNIs, and SNI domains",
+  "precedence": 0,
+  "enabled": true,
+  "action": "block",
+  "filters": [
+    "l4"
+  ],
+  "traffic": "net.dst.ip in $<IP_BLOCKLIST_UUID> and net.sni.host in $<HOST_BLOCKLIST_UUID> and any(net.sni.domains[*] in $<DOMAIN_BLOCKLIST_UUID>)"
+}'
+```
+
+</TabItem>
+
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "finance_users_net_https_finance_servers" {
+  account_id  = var.account_id
+  name        = "All-NET-Internet-Blocklist"
+  description = "Block traffic to malicious or risky destination IPs, SNIs, and SNI domains"
+  precedence  = 0
+  enabled     = true
+  action      = "block"
+  filters     = ["l4"]
+  traffic     = "net.dst.ip in ${"$"}${cloudflare_zero_trust_list.ip_blocklist.id} and net.sni.host in ${"$"}${cloudflare_zero_trust_list.host_blocklist.id} and any(net.sni.domains[*] in ${"$"}${cloudflare_zero_trust_list.domain_blocklist.id})"
+}
+```
+
+</TabItem>
+</Tabs>
 
 :::note
 The **Detected Protocol** selector is only available for Enterprise users. For more information, refer to [Protocol detection](/cloudflare-one/policies/gateway/network-policies/protocol-detection/).
