@@ -39,11 +39,11 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
   "description": "Restrict access for users included in an IdP user group for risky users",
   "precedence": 0,
   "enabled": true,
-  "action": "allow",
+  "action": "block",
   "filters": [
     "l4"
   ],
-  "traffic": "not(net.dst.ip in $<QUARANTINED_USERS_IP_LIST_UUID>) or not(net.sni.host in $<QUARANTINED_USERS_HOST_LIST_UUID>) or not(any(net.sni.domains[*] in $<QUARANTINED_USERS_DOMAIN_LIST_UUID>))",
+  "traffic": "not(net.dst.ip in $<IP_ALLOWLIST_UUID>) or not(net.sni.host in $<HOST_ALLOWLIST_UUID>) or not(any(net.sni.domains[*] in $<DOMAIN_ALLOWLIST_UUID>))",
 	"identity": "any(identity.groups.name[*] in {\"Quarantined Users\"})"
 }'
 ```
@@ -59,9 +59,9 @@ resource "cloudflare_zero_trust_gateway_policy" "quarantined_users_net_restricte
   description = "Restrict access for users included in an IdP user group for risky users"
   precedence  = 0
   enabled     = true
-  action      = "allow"
+  action      = "block"
   filters     = ["l4"]
-  traffic     = "not(net.dst.ip in ${"$"}${cloudflare_zero_trust_list.quarantined_users_ip_list.id}) or not(net.sni.host in ${"$"}${cloudflare_zero_trust_list.quarantined_users_host_list.id}) or not(any(net.sni.domains[*] in ${"$"}${cloudflare_zero_trust_list.quarantined_users_domain_list.id}))"
+  traffic     = "not(net.dst.ip in ${"$"}${cloudflare_zero_trust_list.ip_allowlist.id}) or not(net.sni.host in ${"$"}${cloudflare_zero_trust_list.host_allowlist.id}) or not(any(net.sni.domains[*] in ${"$"}${cloudflare_zero_trust_list.domain_allowlist.id}))"
   identity    = "any(identity.groups.name[*] in {\"Quarantined Users\"})"
 }
 ```
@@ -73,12 +73,61 @@ resource "cloudflare_zero_trust_gateway_policy" "quarantined_users_net_restricte
 
 Restrict access for devices where baseline posture checks have not passed. If posture checks are integrated with service providers such as Crowdstrike or Intune via the API, this policy dynamically blocks access for devices that do not meet predetermined security requirements.
 
+<Render file="zero-trust/blocklist-restricted-users" />
+
+<Tabs syncKey="dashPlusAPI">
+
+<TabItem label="Dashboard">
+
 | Selector                     | Operator    | Value                               | Logic | Action |
 | ---------------------------- | ----------- | ----------------------------------- | ----- | ------ |
 | Destination IP               | not in list | _Posture-Fail-IPAllowlist_          | Or    | Block  |
 | SNI                          | not in list | _Posture-Fail-HostAllowlist_        | Or    |        |
-| Domain SNI                   | not in list | _Posture-Fail-DomainAllowlist_      | And   |        |
+| SNI Domain                   | not in list | _Posture-Fail-DomainAllowlist_      | And   |        |
 | Passed Device Posture Checks | not in      | _Windows 10 or higher (OS version)_ |       |        |
+
+</TabItem>
+
+<TabItem label="API">
+
+```sh
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "Posture-Fail-NET-Restricted-Access",
+  "description": "Restrict access for devices where baseline posture checks have not passed",
+  "precedence": 0,
+  "enabled": true,
+  "action": "block",
+  "filters": [
+    "l4"
+  ],
+  "traffic": "not(net.dst.ip in $<IP_ALLOWLIST_UUID>) or not(net.sni.host in $<HOST_ALLOWLIST_UUID>) or not(any(net.sni.domains[*] in $<DOMAIN_ALLOWLIST_UUID>))",
+  "device_posture": "not(any(device_posture.checks.passed[*] in {\"<DEVICE_POSTURE_CHECK_UUID>\"}))"
+}'
+```
+
+</TabItem>
+
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "posture_fail_net_restricted_access" {
+  account_id  = var.account_id
+  name        = "Posture-Fail-NET-Restricted-Access"
+  description = "Restrict access for devices where baseline posture checks have not passed"
+  precedence  = 0
+  enabled     = true
+  action      = "block"
+  filters     = ["l4"]
+  traffic     = "not(net.dst.ip in ${"$"}${cloudflare_zero_trust_list.ip_allowlist.id}) or not(net.sni.host in ${"$"}${cloudflare_zero_trust_list.host_allowlist.id}) or not(any(net.sni.domains[*] in ${"$"}${cloudflare_zero_trust_list.domain_allowlist.id}))"
+  device_posture = "not(any(device_posture.checks.passed[*] in {\"<DEVICE_POSTURE_CHECK_UUID>\"}))"
+}
+```
+
+</TabItem>
+</Tabs>
 
 You can add a number of WARP client device posture checks as needed, such as [Disk encryption](/cloudflare-one/identity/devices/warp-client-checks/disk-encryption/) and [Domain joined](/cloudflare-one/identity/devices/warp-client-checks/domain-joined/). For more information on device posture checks, refer to [Enforce device posture](/cloudflare-one/identity/devices/).
 
@@ -101,7 +150,7 @@ Block traffic to destination IPs, <GlossaryTooltip term="Server Name Indication 
 | -------------- | -------- | ------------------ | ----- | ------ |
 | Destination IP | in list  | _IP Blocklist_     | Or    | Block  |
 | SNI            | in list  | _Host Blocklist_   | Or    |        |
-| Domain SNI     | in list  | _Domain Blocklist_ |       |        |
+| SNI Domain     | in list  | _Domain Blocklist_ |       |        |
 
 :::note
 The **Detected Protocol** selector is only available for Enterprise users. For more information, refer to [Protocol detection](/cloudflare-one/policies/gateway/network-policies/protocol-detection/).
