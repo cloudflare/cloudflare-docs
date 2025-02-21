@@ -366,15 +366,107 @@ resource "cloudflare_zero_trust_gateway_policy" "all_net_no_http_https_internet_
 
 Implicitly deny all of your internal IP ranges included in a list. We recommend you place this policy at the [bottom of your policy list](/learning-paths/secure-internet-traffic/understand-policies/order-of-enforcement/#order-of-precedence) to ensure you explicitly approve traffic defined in the above policies.
 
+<Tabs syncKey="dashPlusAPI">
+
+<TabItem label="Dashboard">
+
 | Selector       | Operator | Value                  | Action |
 | -------------- | -------- | ---------------------- | ------ |
 | Destination IP | in list  | _Internal Network IPs_ | Block  |
+
+</TabItem>
+
+<TabItem label="API">
+
+```sh
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "All-NET-NO-HTTP-HTTPS-Internet-Deny",
+  "description": "Block all non-web traffic towards the Internet",
+  "precedence": 0,
+  "enabled": true,
+  "action": "block",
+  "filters": [
+    "l4"
+  ],
+  "traffic": "net.dst.ip in $<INTERNAL_NETWORK_IP_LIST_UUID>"
+}'
+```
+
+</TabItem>
+
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "all_net_no_http_https_internet_deny" {
+  account_id  = var.account_id
+  name        = "All-NET-NO-HTTP-HTTPS-Internet-Deny"
+  description = "Block all non-web traffic towards the Internet"
+  precedence  = 0
+  enabled     = true
+  action      = "block"
+  filters     = ["l4"]
+  traffic     = "net.dst.ip in ${"$"}${cloudflare_zero_trust_list.internal_network_ip_list.id}"
+}
+```
+
+</TabItem>
+</Tabs>
 
 ## All-NET-ApplicationAccess-Allow
 
 Only allow network traffic from known and approved devices.
 
+<Tabs syncKey="dashPlusAPI">
+
+<TabItem label="Dashboard">
+
 <Render
 	file="gateway/policies/dash-plus-api/network/enforce-device-posture"
 	product="cloudflare-one"
 />
+
+</TabItem>
+
+<TabItem label="API">
+
+```sh
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "All-NET-ApplicationAccess-Allow",
+  "description": "Only allow network traffic from known and approved devices",
+  "precedence": 0,
+  "enabled": true,
+  "action": "block",
+  "filters": [
+    "l4"
+  ],
+  "traffic": "any(net.sni.domains[*] == \"internalapp.com\")",
+  "device_posture": "not(any(device_posture.checks.passed[*] in {\"<DEVICE_SERIAL_NUMBER_LIST_UUID>\"}))"
+}'
+```
+
+</TabItem>
+
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "all_net_no_http_https_internet_deny" {
+  account_id  = var.account_id
+  name        = "All-NET-ApplicationAccess-Allow"
+  description = "Only allow network traffic from known and approved devices"
+  precedence  = 0
+  enabled     = true
+  action      = "block"
+  filters     = ["l4"]
+  traffic     = "any(net.sni.domains[*] == \"internalapp.com\")"
+  device_posture = "not(any(device_posture.checks.passed[*] in {\"${"$"}{cloudflare_zero_trust_list.device_serial_number_list.id}\"}))"
+}
+```
+
+</TabItem>
+</Tabs>
