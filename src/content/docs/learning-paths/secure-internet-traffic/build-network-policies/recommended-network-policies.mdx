@@ -383,8 +383,8 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
 --header "Content-Type: application/json" \
 --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
-  "name": "All-NET-NO-HTTP-HTTPS-Internet-Deny",
-  "description": "Block all non-web traffic towards the Internet",
+  "name": "All-NET-InternalNetwork-ImplicitDeny",
+  "description": "Implicitly deny all of your internal IP ranges included in a list",
   "precedence": 0,
   "enabled": true,
   "action": "block",
@@ -400,10 +400,10 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
 <TabItem label="Terraform">
 
 ```tf
-resource "cloudflare_zero_trust_gateway_policy" "all_net_no_http_https_internet_deny" {
+resource "cloudflare_zero_trust_gateway_policy" "all_net_internalnetwork_implicitdeny" {
   account_id  = var.account_id
-  name        = "All-NET-NO-HTTP-HTTPS-Internet-Deny"
-  description = "Block all non-web traffic towards the Internet"
+  name        = "All-NET-InternalNetwork-ImplicitDeny"
+  description = "Implicitly deny all of your internal IP ranges included in a list"
   precedence  = 0
   enabled     = true
   action      = "block"
