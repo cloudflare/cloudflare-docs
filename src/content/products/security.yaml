@@ -1,13 +1,13 @@
 name: Security
 
 product:
-  title: "Security (beta)"
+  title: "Security dashboard (beta)"
   url: /security/
   show: false
 
 meta:
-  title: Cloudflare Security docs
-  description: Documentation for Cloudflare app security products (with new user interface currently in beta).
+  title: Security dashboard docs
+  description: Documentation for the Security dashboard with an updated user interface (currently in beta).
   author: "@cloudflare"
 
 externals:
