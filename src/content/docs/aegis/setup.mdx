@@ -7,12 +7,16 @@ sidebar:
     hideIndex: true
 ---
 
-You can control Aegis enablement on your zones via API.
+You can control Aegis enablement on your zones via API. If you are not familiar with how Cloudflare API works, refer to [Fundamentals](/fundamentals/api/).
+
+:::caution[Availability]
+Cloudflare Aegis is available in early access to Enterprise customers. Contact your account team to request access.
+:::
 
 ## Requirements
 
-- The Aegis zone setting endpoint is only available within Cloudflare accounts that own leased IPs, or accounts to which a BYOIP prefix has been delegated. If you wish to use Aegis for zones that do not meet this criteria, contact your account team.
-- Each Aegis pool can consist of either IPs from a [BYOIP prefix](/byoip/) or Cloudflare-leased IPs. A single dedicated egress pool cannot contain both BYOIPs and leased IPs.
+- The Aegis zone setting endpoint is only available within Cloudflare accounts that own leased IPs, or accounts to which a [BYOIP prefix](/byoip/) has been delegated. If you wish to use Aegis for zones that do not meet this criteria, contact your account team.
+- Each Aegis pool can consist of either IPs from a BYOIP prefix or Cloudflare-leased IPs. A single dedicated egress pool cannot contain both BYOIPs and leased IPs.
 
 ## Steps
 
