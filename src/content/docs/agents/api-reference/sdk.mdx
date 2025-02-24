@@ -112,7 +112,7 @@ Your own methods can access the Agent's environment variables and bindings on `t
 
 You can create and run an instance of an Agent directly from a Worker in one of three ways:
 
-1. Using the `routeAgentRequest` helper: this will automatically map requests to an individual Agent based on the `/agents/:agent/:name` URL pattern.
+1. Using the `routeAgentRequest` helper: this will automatically map requests to an individual Agent based on the `/agents/:agent/:name` URL pattern. The value of `:agent` will be the name of your Agent class converted to `kebab-case`, and the value of `:name` will be the name of the Agent instance you want to create or retrieve.
 2. Calling `getAgentByName`, which will create a new Agent instance if none exists by that name, or retrieve a handle to an existing instance.
 3. The [Durable Objects stub API](/durable-objects/api/id/), which provides a lower level API for creating and retrieving Agents.
 
