@@ -8,7 +8,7 @@ sidebar:
 
 import { MetaInfo, Render, Type, TypeScriptExample, WranglerConfig } from "~/components";
 
-Agents can communicate with AI models hosted on any provider, including [Workers AI](/workers-ai/), OpenAI, Anthropic, and Google's Gemini.
+Agents can communicate with AI models hosted on any provider, including [Workers AI](/workers-ai/), OpenAI, Anthropic, and Google's Gemini, and use the model routing features in [AI Gateway](/ai-gateway/) to route across providers, eval responses, and manage AI provider rate limits.
 
 Because Agents are built on top of [Durable Objects](/durable-objects/), each Agent or chat session is associated with a stateful compute instance. Tradtional serverless architectures often present challenges for persistent connections needed in real-time applications like chat.
 
@@ -18,15 +18,115 @@ A user can disconnect during a long-running response from a modern reasoning mod
 
 ### Workers AI
 
-TODO
+### Inference endpoints
 
-- Workers AI
-- AI Gateway / model routing
+You can use [any of the models available in Workers AI](/workers-ai/models/) within your Agent by [configuring a binding](/workers-ai/configuration/bindings/).
 
+Workers AI supports streaming responses out-of-the-box by setting `stream: true`, and we strongly recommend using them to avoid buffering and delaying responses, especially for larger models or reasoning models that require more time to generate a response.
+
+<TypeScriptExample file="src/index.ts">
+
+```ts
+import { Agent } from "@cloudflare/agents"
+
+interface Env {
+	AI: Ai;
+}
+
+export class MyAgent extends Agent<Env> {
+	async onRequest(request: Request) {
+		const response = await env.AI.run(
+      "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b",
+      {
+        prompt: "Build me a Cloudflare Worker that returns JSON.",
+        stream: true, // Stream a response and don't block the client!
+      }
+    );
+
+		// Return the stream
+    return new Response(answer, {
+        headers: { "content-type": "text/event-stream" }
+	}
+}
+```
+
+</TypeScriptExample>
+
+Your wrangler configuration will need an `ai` binding added:
+
+<WranglerConfig>
+
+```toml
+[ai]
+binding = "AI"
+```
+
+</WranglerConfig>
+
+
+### Model routing
+
+You can also use the model routing features in [AI Gateway](/ai-gateway/) directly from an Agent by specifying a [`gateway` configuration](/ai-gateway/providers/workersai/) when calling the AI binding.
+
+:::note
+
+Model routing allows you to route requests to different AI models based on whether they are reachable, rate-limiting your client, and/or if you've exceeded your cost budget for a specific provider.
+
+:::
+
+<TypeScriptExample file="src/index.ts">
+
+```ts
+import { Agent } from "@cloudflare/agents"
+
+interface Env {
+	AI: Ai;
+}
+
+export class MyAgent extends Agent<Env> {
+	async onRequest(request: Request) {
+		const response = await env.AI.run(
+      "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b",
+      {
+        prompt: "Build me a Cloudflare Worker that returns JSON."
+      },
+      {
+        gateway: {
+          id: "{gateway_id}", // Specify your AI Gateway ID here
+          skipCache: false,
+          cacheTtl: 3360,
+        },
+      },
+    );
+
+    return Response.json(response)
+	}
+}
+```
+
+</TypeScriptExample>
+
+Your wrangler configuration will need an `ai` binding added. This is shared across both Workers AI and AI Gateway.
+<WranglerConfig>
+
+```toml
+[ai]
+binding = "AI"
+```
+
+</WranglerConfig>
+
+Visit the [AI Gateway documentation](/ai-gateway/) to learn how to configure a gateway and retrieve a gateway ID.
 
 ### AI SDK
 
 The [AI SDK](https://sdk.vercel.ai/docs/introduction) provides a unified API for using AI models, including for text generation, tool calling, structured responses, image generation, and more.
+
+To use the AI SDK, install the `ai` package and use it within your Agent. The example below shows how it use it to generate text on request, but you can use it from any method within your Agent, including WebSocket handlers, as part of a scheduled task, or even when the Agent is initialized.
+
+```sh
+npm install ai @ai-sdk/openai
+```
 
 <TypeScriptExample file="src/index.ts">
 
@@ -36,10 +136,6 @@ import { generateText } from 'ai';
 import { openai } from '@ai-sdk/openai';
 
 export class MyAgent extends Agent<Env> {
-	constructor(state: DurableObjectState, env: Env) {
-		super(state, env);
-	}
-
 	async onRequest(request: Request): Promise<Response> {
 		const { text } = await generateText({
 			model: openai("o3-mini"),
@@ -55,7 +151,52 @@ export class MyAgent extends Agent<Env> {
 
 ### OpenAI SDK
 
+Agents can call models across any service, including those that support the OpenAI API. For example, you can use the OpenAI SDK to use one of [Google's Gemini models](https://ai.google.dev/gemini-api/docs/openai#node.js) directly from your Agent.
 
-## Long-running LLM calls
+Agents can stream responses back over HTTP using Server Sent Events (SSE) from within an `onRequest` handler, or by using the native [WebSockets](/agents/examples/websockets/) API to responses back to a a client over a long running WebSocket.
 
-TODO
+<TypeScriptExample file="src/index.ts">
+
+```ts
+import { Agent } from "@cloudflare/agents"
+import { OpenAI } from "openai"
+
+export class MyAgent extends Agent<Env> {
+	async onRequest(request: Request): Promise<Response> {
+		const openai = new OpenAI({
+    	apiKey: this.env.GEMINI_API_KEY,
+    	baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/"
+		});
+
+		// Create a TransformStream to handle streaming data
+    let { readable, writable } = new TransformStream();
+    let writer = writable.getWriter();
+    const textEncoder = new TextEncoder();
+
+		// Use ctx.waitUntil to run the async function in the background
+		// so that it doesn't block the streaming response
+    ctx.waitUntil(
+      (async () => {
+        const stream = await openai.chat.completions.create({
+          model: "4o",
+          messages: [{ role: "user", content: "Write me a Cloudflare Worker." }],
+          stream: true,
+        });
+
+        // loop over the data as it is streamed and write to the writeable
+        for await (const part of stream) {
+          writer.write(
+            textEncoder.encode(part.choices[0]?.delta?.content || ""),
+          );
+        }
+        writer.close();
+      })(),
+    );
+
+		// Return the readable stream back to the client
+    return new Response(readable)
+	}
+}
+```
+
+</TypeScriptExample>
