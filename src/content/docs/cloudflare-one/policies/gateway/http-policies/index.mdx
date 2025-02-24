@@ -25,7 +25,7 @@ An HTTP policy consists of an **Action** as well as a logical expression that de
 
 <Render
 	file="gateway/response"
-	params={{ one: "query", two: "Source IP", three: "Resolved IP" }}
+	params={{ type: "query", example: "Source IP", example2: "Resolved IP" }}
 />
 
 ## Actions
@@ -672,5 +672,5 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 <Render
 	file="gateway/response"
-	params={{ one: "request", two: "Source IP", three: "a DLP Profile" }}
+	params={{ type: "request", example: "Source IP", example2: "a DLP Profile" }}
 />

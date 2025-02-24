@@ -2,7 +2,7 @@
 {}
 ---
 
-import { Details } from "~/components";
+import { Details, GlossaryTooltip } from "~/components";
 
 The PRAGMA statement examples on this page use the following SQL.
 
@@ -411,3 +411,19 @@ PRAGMA defer_foreign_keys = off
 ```
 
 Refer to the [foreign key documentation](/d1/sql-api/foreign-keys/) to learn more about how to work with foreign keys.
+
+### `PRAGMA optimize`
+
+Attempts to optimize all schemas in a database by running the `ANALYZE` command for each table, if necessary. `ANALYZE` updates an internal table which contain statistics about tables and indices. These statistics helps the <GlossaryTooltip term="query planner">query planner</GlossaryTooltip> to execute the input query more efficiently.
+
+When `PRAGMA optimize` runs `ANALYZE`, it sets a limit to ensure the command does not take too long to execute. Alternatively, `PRAGMA optimize` may deem it unnecessary to run `ANALYZE` (for example, if the schema has not changed significantly). In this scenario, no optimizations are made.
+
+We recommend running this command after making any changes to the schema (for example, after [creating an index](/d1/best-practices/use-indexes/)).
+
+:::note
+Currently, D1 does not support `PRAGMA optimize(-1)`.
+
+`PRAGMA optimize(-1)` is a command which displays all optimizations that would have been performed without actually executing them.
+:::
+
+Refer to [SQLite PRAGMA optimize documentation](https://www.sqlite.org/pragma.html#pragma_optimize) for more information on how `PRAGMA optimize` optimizes a database.
