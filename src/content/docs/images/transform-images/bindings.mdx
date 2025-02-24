@@ -38,12 +38,12 @@ Within your Worker code, you can interact with this binding by using `env.IMAGES
 
 ### `.transform()`
 
-- Defines how an image should be optimized and manipulated through [`fetch()` options](/images/transform-images/transform-via-workers/#fetch-options) such as `width`, `height`, and `blur`.
+- Defines how an image should be optimized and manipulated through [parameters](/images/transform-images/transform-via-workers/#fetch-options) such as `width`, `height`, and `blur`.
 
 ### `.draw()`
 
 - Allows [drawing an image](/images/transform-images/draw-overlays/) over another image.
-- The overlaid image can be manipulated using `opacity`, `repeat`, `top`, `left`, `bottom`, and `right`. To apply other `fetch()` options, you can pass a child `.transform()` function inside this method.
+- The overlaid image can be manipulated using `opacity`, `repeat`, `top`, `left`, `bottom`, and `right`. To apply other parameters, you can pass a child `.transform()` function inside this method.
 
 
 ### `.output()`
@@ -65,6 +65,10 @@ await env.IMAGES.input(stream)
  
 return response;
 ```
+
+### `.info()`
+
+- Outputs information about the image, such as f`ormat`, `fileSize`, `width`, and `height`. 
 
 In this example, the transformed image is outputted as a WebP.
 

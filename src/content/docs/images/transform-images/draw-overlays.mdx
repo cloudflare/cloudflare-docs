@@ -88,7 +88,7 @@ const response = await env.IMAGES.input(img.body)
 return response;
 ```
 
-To apply [other `fetch()` options](/images/transform-images/transform-via-workers/) to the overlaid image, you can pass a child `.transform()` function inside the `.draw()` request.
+To apply [parameters](/images/transform-images/transform-via-workers/) to the overlaid image, you can pass a child `.transform()` function inside the `.draw()` request.
 
 In the example below, the watermark is manipulated with `rotate` and `width` before being drawn over the base image with the `opacity` and `rotate` options.
 
