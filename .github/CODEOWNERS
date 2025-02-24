@@ -47,6 +47,7 @@
 
 /src/content/changelog/ @cloudflare/pm-changelogs
 /src/assets/images/changelog/ @cloudflare/pm-changelogs
+/src/assets/images/ @cloudflare/pm-changelogs @cloudflare/pcx-technical-writing
 
 # Cloudflare One
 
