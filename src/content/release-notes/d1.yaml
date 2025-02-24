@@ -8,7 +8,7 @@ entries:
   - publish_date: "2025-02-19"
     title: D1 supports `PRAGMA optimize`
     description: |-
-      D1 now supports `PRAGMA optimize` command, which can increase your database performance. Refer to [`PRAGMA optimize`](/d1/sql-api/sql-statements/#pragma-optimize) for more information.
+      D1 now supports `PRAGMA optimize` command, which can improve database query performance. It is recommended to run this command after a schema change (for example, after creating an index). Refer to [`PRAGMA optimize`](/d1/sql-api/sql-statements/#pragma-optimize) for more information.
 
       Cloudflare recommends running this command after a schema change (for example, after creating an index).
 
