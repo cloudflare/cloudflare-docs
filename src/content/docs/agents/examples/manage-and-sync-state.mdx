@@ -112,16 +112,47 @@ Common use cases:
 
 Every individual Agent instance has its own SQL (SQLite) database that runs _within the same context_ as the Agent itself. This means that inserting or querying data within your Agent is effectively zero-latency: the Agent doesn't have to round-trip across a continent or the world to access its own data.
 
-TODO
+You can access the SQL API within any method on an Agent via `this.sql`. The SQL API accepts template literals, and
 
 <TypeScriptExample>
 
 ```ts
+export class MyAgent extends Agent<Env> {
+	async onRequest(request: Request) {
+		let userId = new URL(request.url).searchParams.get('userId');
 
-
+		// 'users' is just an example here: you can create arbitrary tables and define your own schemas
+		// within each Agent's database using SQL (SQLite syntax).
+		let user = await this.sql`SELECT * FROM users WHERE id = ${userId}`
+		return Response.json(user)
+	}
+}
 ```
 
 </TypeScriptExample>
+
+You can also supply a [TypeScript type argument](https://www.typescriptlang.org/docs/handbook/2/generics.html#using-type-parameters-in-generic-constraints) the query, which will be used to infer the type of the result:
+
+```ts
+type User = {
+	id: string;
+	name: string;
+	email: string;
+};
+
+export class MyAgent extends Agent<Env> {
+	async onRequest(request: Request) {
+		let userId = new URL(request.url).searchParams.get('userId');
+		// Supply the type paramter to the query when calling this.sql
+		// This assumes the results return a single User row with "id", "name", and "email" columns
+		// You can also pass an array as the type argument to the query - e.g. User[]
+		const user = await this.sql<User>`SELECT * FROM users WHERE id = ${userId}`;
+		return Response.json(user)
+	}
+}
+```
+
+Providing a type parameter does not validate that the result matches your type definition. In TypeScript, properties (fields) that do not exist or conform to the type you provided will be dropped. If you need to validate incoming events, we recommend a library such as [zod](https://zod.dev/) or your own validator logic.
 
 :::note
 
@@ -129,4 +160,4 @@ Learn more about the zero-latency SQL storage that powers both Agents and Durabl
 
 :::
 
-The SQL API exposed to an Agent is identical to the one [within by Durable Objects](/durable-objects/api/sql-storage/). This means that you can use the same SQL queries and commands to interact with the Agent's database.
+The SQL API exposed to an Agent is similar to the one [within Durable Objects](/durable-objects/api/sql-storage/). This means that you can use the same SQL queries with the Agent's database, create tables, and query data.
