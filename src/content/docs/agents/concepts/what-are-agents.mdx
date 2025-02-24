@@ -8,20 +8,24 @@ sidebar:
 
 import { Render } from "~/components";
 
-### What are agents? 
+### What are agents?
+
 An agent is an AI system that can autonomously execute tasks by making decisions about tool usage and process flow. Unlike traditional automation that follows predefined paths, agents can dynamically adapt their approach based on context and intermediate results. Agents are also distinct from co-pilots (e.g. traditional chat applications) in that they can fully automate a task, as opposed to simply augmenting and extending human input. 
 
 - **Agents** → non-linear, non-deterministic (can change from run to run)
 - **Workflows** → linear, deterministic execution paths
 - **Co-pilots** → augmentative AI assistance requiring human intervention
 
-### Example: Booking Vacations
-If this is your first time working with, or interacting with agents, this example will illustrate how an agent works within a context like booking a vacation. If you're already familiar with the topic, read on. 
+### Example: Booking vacations
+
+If this is your first time working with, or interacting with agents, this example will illustrate how an agent works within a context like booking a vacation. If you are already familiar with the topic, read on. 
 
 Imagine you're trying to book a vacation. You need to research flights, find hotels, check restaurant reviews, and keep track of your budget. 
 
-##### Traditional Workflow Automation
+#### Traditional workflow automation
+
 A traditional automation system follows a predetermined sequence:
+
 - Takes specific inputs (dates, location, budget)
 - Calls predefined API endpoints in a fixed order
 - Returns results based on hardcoded criteria
@@ -29,7 +33,8 @@ A traditional automation system follows a predetermined sequence:
 
 ![Traditional workflow automation diagram](~/assets/images/agents/workflow-automation.svg)
 
-##### AI Co-pilot
+#### AI Co-pilot
+
 A co-pilot acts as an intelligent assistant that:
 
 - Provides hotel and itinerary recommendations based on your preferences
@@ -39,7 +44,8 @@ A co-pilot acts as an intelligent assistant that:
 
 ![A co-pilot diagram](~/assets/images/agents/co-pilot.svg)
 
-##### Agent
+#### Agent
+
 An agent combines AI's ability to make judgements and call the relevant tools to execute the task. An agent's output will be nondeterministic given:
 
 - Real-time availability and pricing changes
@@ -49,7 +55,7 @@ An agent combines AI's ability to make judgements and call the relevant tools to
 
 ![An agent diagram](~/assets/images/agents/agent-workflow.svg)
 
-An agents can dynamically generate and itinerary and execute on booking reservations, similarly to what you would expect from a travel agent. 
+An agents can dynamically generate an itinerary and execute on booking reservations, similarly to what you would expect from a travel agent. 
 
 ### Three primary components of agent systems:
 
@@ -57,9 +63,10 @@ An agents can dynamically generate and itinerary and execute on booking reservat
 - **Tool Integration**: APIs, functions, and services the agent can utilize
 - **Memory System**: Maintains context and tracks task progress
 
-#### How Agents Work
+#### How agents work
 
 Agents operate in a continuous loop of:
+
 1. **Observing** the current state or task
 2. **Planning** what actions to take, using AI for reasoning
 3. **Executing** those actions using available tools (often APIs or [MCPs](https://modelcontextprotocol.io/introduction))

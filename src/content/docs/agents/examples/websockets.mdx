@@ -12,7 +12,7 @@ Users and clients can connect to an Agent directly over WebSockets, allowing lon
 
 To enable an Agent to accept WebSockets, define `onConnect` and `onMessage` methods on your Agent.
 
-* `onConnect(connection: Connection, ctx: ConnectionContext)` is called when a client establishes a new WebSocket connection. The original HTTP request, including request headers, cookies and the URL itself, are available on `ctx.request`.
+* `onConnect(connection: Connection, ctx: ConnectionContext)` is called when a client establishes a new WebSocket connection. The original HTTP request, including request headers, cookies, and the URL itself, are available on `ctx.request`.
 * `onMessage(connection: Connection, message: WSMessage)` is called for each incoming WebSocket message. Messages are one of `ArrayBuffer | ArrayBufferView | string`, and you can send messages back to a client using `connection.send()`. You can distinguish between client connections by checking `connection.id`, which is unique for each connected client.
 
 Here's an example of an Agent that echoes back any message it receives:
@@ -55,7 +55,7 @@ export class ChatAgent extends Agent {
 
 ## Connecting clients
 
-The Agent framework includes a useful helper package for connecting directly to your agent (or other agents) from a client application. Import `@cloudflare/agents/client`, create an instance of `AgentClient` and use it to connect to an instance of your Agent:
+The Agent framework includes a useful helper package for connecting directly to your Agent (or other Agents) from a client application. Import `@cloudflare/agents/client`, create an instance of `AgentClient` and use it to connect to an instance of your Agent:
 
 <TypeScriptExample>
 
@@ -120,7 +120,7 @@ function AgentInterface() {
 ```
 </TypeScriptExample>
 
-The `useAgent` hook automatically handles the lifecycle of the connection, ensuring that it is properly initialized and cleaned up when the component mounts and unmounts. You can also [combine `useAgent` with `useState`](/agents/examples/manage-and-sync-state/) to automatically synchronize state across all clients connected to your agent.
+The `useAgent` hook automatically handles the lifecycle of the connection, ensuring that it is properly initialized and cleaned up when the component mounts and unmounts. You can also [combine `useAgent` with `useState`](/agents/examples/manage-and-sync-state/) to automatically synchronize state across all clients connected to your Agent.
 
 ## Handling WebSocket events
 

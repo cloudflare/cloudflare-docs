@@ -18,7 +18,7 @@ Agent state is stored in SQL database that associate with each indidivual Agent 
 
 ### State API
 
-Every agent has built-in state management capabilities. You can set and update the agent's state directly using `this.setState`:
+Every Agent has built-in state management capabilities. You can set and update the Agent's state directly using `this.setState`:
 
 <TypeScriptExample>
 
@@ -95,7 +95,7 @@ Clients can connect to an Agent and stay synchronized with its state using the R
 
 The state synchronization system:
 
-* Automatically syncs the agent's state to all connected clients
+* Automatically syncs the Agent's state to all connected clients
 * Handles client disconnections and reconnections gracefully
 * Provides immediate local updates
 * Supports multiple simultaneous client connections
@@ -106,7 +106,7 @@ Common use cases:
 * Multi-window/tab synchronization
 * Live updates across multiple devices
 * Maintaining consistent UI state across clients
-* When new clients connect, they automatically receive the current state from the agent, ensuring all clients start with the latest data.
+* When new clients connect, they automatically receive the current state from the Agent, ensuring all clients start with the latest data.
 
 ### SQL API
 
