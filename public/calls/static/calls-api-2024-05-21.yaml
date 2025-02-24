@@ -502,7 +502,7 @@ components:
                   errorCode:
                     type: string
                   errorDescription:
-                     type: string
+                    type: string
         requiresImmediateRenegotiation:
           type: boolean
     GetSessionStateResponse:
@@ -538,6 +538,3 @@ components:
           type: string
         sessionDescription:
           $ref: "#/components/schemas/SessionDescription"
-
-
-  

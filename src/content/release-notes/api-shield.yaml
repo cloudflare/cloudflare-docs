@@ -14,7 +14,7 @@ entries:
     title: API Authentication Posture
     description: |-
       Customers will see per-endpoint authentication details inside API Shield's [Endpoint Management](/api-shield/management-and-monitoring/) for zones with configured session identifiers.
-  
+
   - publish_date: "2024-12-19"
     title: Automatically applied endpoint risk labels
     description: |-

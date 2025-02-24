@@ -23,56 +23,56 @@ entries:
   - publish_date: "2025-02-19"
     title: WARP client for macOS (version 2025.1.861.0)
     description: |-
-     A new GA release for the macOS WARP client is now available on the [Downloads page](/cloudflare-one/connections/connect-devices/warp/download-warp/). This release contains minor fixes and improvements.
+      A new GA release for the macOS WARP client is now available on the [Downloads page](/cloudflare-one/connections/connect-devices/warp/download-warp/). This release contains minor fixes and improvements.
 
-      Note: If using macOS Sequoia, Cloudflare recommends the use of macOS 15.3 or
-      later. With macOS 15.3, Apple addressed several issues that may have caused
-      the WARP client to not behave as expected when used with macOS 15.0.x.
+       Note: If using macOS Sequoia, Cloudflare recommends the use of macOS 15.3 or
+       later. With macOS 15.3, Apple addressed several issues that may have caused
+       the WARP client to not behave as expected when used with macOS 15.0.x.
 
-      **Changes and improvements**
+       **Changes and improvements**
 
-      - Improved command line interface for Access for Infrastructure with added function for filtering and ordering.
-      - Fixed client connectivity issues when switching between managed network profiles that use different WARP protocols.
-      - Improved OS version posture checks on macOS for greater reliability and availability.
-      - Added support for WARP desktop to use additional DoH endpoints to help reduce NAT congestion.
-      - Improved Wireguard connection stability on reconnections.
-      - Added additional HTTP/3 QUIC connectivity test to `warp-diag`.
-      - Added support for collection of system health metrics for enhanced device Digital Experience Monitoring.
-      - Automated the removal of active registrations for devices with multiple registrations with the same Zero Trust organization.
-      - Fixes issues with deleted registration at start up.
+       - Improved command line interface for Access for Infrastructure with added function for filtering and ordering.
+       - Fixed client connectivity issues when switching between managed network profiles that use different WARP protocols.
+       - Improved OS version posture checks on macOS for greater reliability and availability.
+       - Added support for WARP desktop to use additional DoH endpoints to help reduce NAT congestion.
+       - Improved Wireguard connection stability on reconnections.
+       - Added additional HTTP/3 QUIC connectivity test to `warp-diag`.
+       - Added support for collection of system health metrics for enhanced device Digital Experience Monitoring.
+       - Automated the removal of active registrations for devices with multiple registrations with the same Zero Trust organization.
+       - Fixes issues with deleted registration at start up.
 
-      **Known issues**
+       **Known issues**
 
-      - macOS Sequoia: Due to changes Apple introduced in macOS 15.0.x, the WARP
-      client may not behave as expected. Cloudflare recommends the use of macOS 15.3
-      or later.
+       - macOS Sequoia: Due to changes Apple introduced in macOS 15.0.x, the WARP
+       client may not behave as expected. Cloudflare recommends the use of macOS 15.3
+       or later.
   - publish_date: "2025-02-19"
     title: WARP client for Windows (version 2025.1.861.0)
     description: |-
-     A new GA release for the Windows WARP client is now available on the [Downloads page](/cloudflare-one/connections/connect-devices/warp/download-warp/). This release contains only improvements.
+      A new GA release for the Windows WARP client is now available on the [Downloads page](/cloudflare-one/connections/connect-devices/warp/download-warp/). This release contains only improvements.
 
-      **Changes and improvements**
+       **Changes and improvements**
 
-      - Improved command line interface for Access for Infrastructure with added function for filtering and ordering.
-      - Fixed client connectivity issues when switching between managed network profiles that use different WARP protocols.
-      - Added support for WARP desktop to use additional DoH endpoints to help reduce NAT congestion.
-      - Improved connectivity check reliability in certain split tunnel configurations.
-      - Improved reading of device DNS settings at connection restart.
-      - Improved WARP connectivity in environments with virtual machine interfaces.
-      - Improved Wireguard connection stability on reconnections.
-      - Improved reliability of device posture checks for OS Version, Unique Client ID, Domain Joined, Disk Encryption, and Firewall attributes.
-      - Added additional HTTP/3 QUIC connectivity test to warp-diag.
-      - Added support for collection of system health metrics for enhanced device Digital Experience Monitoring.
-      - Automated the removal of active registrations for devices with multiple registrations with the same Zero Trust organization.
+       - Improved command line interface for Access for Infrastructure with added function for filtering and ordering.
+       - Fixed client connectivity issues when switching between managed network profiles that use different WARP protocols.
+       - Added support for WARP desktop to use additional DoH endpoints to help reduce NAT congestion.
+       - Improved connectivity check reliability in certain split tunnel configurations.
+       - Improved reading of device DNS settings at connection restart.
+       - Improved WARP connectivity in environments with virtual machine interfaces.
+       - Improved Wireguard connection stability on reconnections.
+       - Improved reliability of device posture checks for OS Version, Unique Client ID, Domain Joined, Disk Encryption, and Firewall attributes.
+       - Added additional HTTP/3 QUIC connectivity test to warp-diag.
+       - Added support for collection of system health metrics for enhanced device Digital Experience Monitoring.
+       - Automated the removal of active registrations for devices with multiple registrations with the same Zero Trust organization.
 
-      **Known issues**
+       **Known issues**
 
-      - DNS resolution may be broken when the following conditions are all true:
-        - WARP is in Secure Web Gateway without DNS filtering (tunnel-only) mode.
-        - A custom DNS server address is configured on the primary network adapter.
-        - The custom DNS server address on the primary network adapter is changed while WARP is connected.
+       - DNS resolution may be broken when the following conditions are all true:
+         - WARP is in Secure Web Gateway without DNS filtering (tunnel-only) mode.
+         - A custom DNS server address is configured on the primary network adapter.
+         - The custom DNS server address on the primary network adapter is changed while WARP is connected.
 
-        To work around this issue, reconnect the WARP client by toggling off and back on.
+         To work around this issue, reconnect the WARP client by toggling off and back on.
 
   - publish_date: "2025-02-13"
     title: Cloudflare One Agent for iOS (version 1.9)
@@ -150,7 +150,7 @@ entries:
   - publish_date: "2025-01-17"
     title: WARP download repository
     description: |-
-        Microsoft is [retiring the App Center](https://learn.microsoft.com/en-gb/appcenter/retirement) which customers previously used to download Windows and macOS WARP client releases. As a result, Cloudflare has launched a new [Downloads page](/cloudflare-one/connections/connect-devices/warp/download-warp/) where you can find WARP client downloads for all operating systems, version history, and release notes.
+      Microsoft is [retiring the App Center](https://learn.microsoft.com/en-gb/appcenter/retirement) which customers previously used to download Windows and macOS WARP client releases. As a result, Cloudflare has launched a new [Downloads page](/cloudflare-one/connections/connect-devices/warp/download-warp/) where you can find WARP client downloads for all operating systems, version history, and release notes.
 
   - publish_date: "2025-01-09"
     title: WARP client for Windows (version 2024.12.760.0)
@@ -351,7 +351,7 @@ entries:
   - publish_date: "2024-12-04"
     title: Custom device posture integration
     description: |-
-     WARP now supports setting up [custom device posture integrations](/cloudflare-one/identity/devices/service-providers/custom/) using a third-party API of your choice.
+      WARP now supports setting up [custom device posture integrations](/cloudflare-one/identity/devices/service-providers/custom/) using a third-party API of your choice.
   - publish_date: "2024-11-19"
     title: MASQUE GA
     description: |-

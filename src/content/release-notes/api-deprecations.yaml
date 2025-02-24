@@ -9,11 +9,11 @@ entries:
     title: Cloudflare DWeb Resolver
     description: |-
       Deprecation date: July 1, 2025
-      
+
       The Cloudflare DWeb Resolver experiment is ending.
-      
+
       Deprecated APIs:
-      
+
       - DoH resolver on resolver.cloudflare-eth.com
 
   - publish_date: "2025-03-23"
