@@ -64,7 +64,7 @@
 		"eslint-plugin-react": "7.37.4",
 		"fast-glob": "3.3.3",
 		"github-slugger": "2.0.0",
-		"globals": "15.14.0",
+		"globals": "16.0.0",
 		"hastscript": "9.0.1",
 		"he": "1.2.0",
 		"instantsearch.css": "8.5.1",
