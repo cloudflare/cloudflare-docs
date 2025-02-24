@@ -24,6 +24,7 @@ interface Env {
 
 export class MyAgent extends Agent<Env> {
 	async browse(browserInstance: Fetcher, urls: string[]) {
+		let responses = [];
 		for (const url of urls) {
 			const browser = await puppeteer.launch(browserInstance);
 			const page = await browser.newPage();
@@ -35,8 +36,8 @@ export class MyAgent extends Agent<Env> {
 				apiKey: this.env.OPENAI_API_KEY,
 			});
 
-			await client.chat.completions.create({
-				model: this.env.MODEL || "4o",
+			let resp = await client.chat.completions.create({
+				model: this.env.MODEL,
 				messages: [
 					{
 						role: 'user',
@@ -48,8 +49,12 @@ export class MyAgent extends Agent<Env> {
 				},
 			});
 
+			responses.push(resp);
 			await browser.close();
 		}
+
+		return responses;
+	}
 }
 ```
 
