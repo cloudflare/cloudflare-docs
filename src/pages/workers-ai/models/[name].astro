@@ -6,7 +6,7 @@ import StarlightPage, {
 } from "@astrojs/starlight/components/StarlightPage.astro";
 import { LinkButton, Tabs, TabItem, Code, Aside, Badge } from "~/components";
 import ModelInfo from "~/components/models/ModelInfo.tsx";
-import ModelBadges from "~/components/models/ModelBadges.tsx";
+import ModelFeatures from "~/components/models/ModelFeatures.tsx";
 import SchemaViewer from "~/components/models/SchemaViewer.astro";
 
 import TextGenerationCode from "~/components/models/code/TextGenerationCode.astro";
@@ -94,7 +94,6 @@ if (model.name === "@cf/openai/whisper-large-v3-turbo") {
 }
 
 const description = model.description;
-const terms = model.properties.find((x) => x.property_id === "terms");
 
 const isBeta = model.properties.find(
 	({ property_id, value }) => property_id === "beta" && value === "true",
@@ -154,8 +153,6 @@ const starlightPageProps = {
 	<span class="mt-4 block font-mono text-sm text-gray-400">{model.name}</span>
 
 	<p class="!mb-2 mt-3">{description}</p>
-	{terms && <a href={terms.value}>Terms and License</a>}
-	<ModelBadges model={model} />
 
 	{
 		model.name === "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b" && (
@@ -198,7 +195,9 @@ const starlightPageProps = {
 				/>
 			</Aside>
 		)
-	}
+		}
+
+	<ModelFeatures model={model} />
 
 	{
 		hasPlayground && (

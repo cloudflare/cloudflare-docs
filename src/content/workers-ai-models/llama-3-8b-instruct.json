@@ -11,6 +11,10 @@
     "tags": [],
     "properties": [
         {
+            "property_id": "context_window",
+            "value": "7968"
+        },
+        {
             "property_id": "info",
             "value": "https://llama.meta.com"
         },
