@@ -14,9 +14,11 @@ Every Agent has built-in state management capabilities, including built-in stora
 * Immediately consistent within the Agent: read your own writes.
 * Thread-safe for concurrent updates
 
-### State management
+Agent state is stored in SQL database that associate with each indidivual Agent instance: you can interact with it using the higher-level `this.setState` API (recommended) or by directly querying the database with `this.sql`.
 
-Every agent has built-in state management capabilities. You can set and update the agent's state directly using `this.state`:
+### State API
+
+Every agent has built-in state management capabilities. You can set and update the agent's state directly using `this.setState`:
 
 <TypeScriptExample>
 
@@ -51,6 +53,32 @@ export class MyAgent extends Agent {
 
 </TypeScriptExample>
 
+If you're using TypeScript, you can also provide a type for your Agent's state by passing in a type as a [type parameter](https://www.typescriptlang.org/docs/handbook/2/generics.html#using-type-parameters-in-generic-constraints) as the _second_ type parameter to the `Agent` class definition.
+
+<TypeScriptExample>
+
+```ts
+import { Agent } from "@cloudflare/agents";
+
+interface Env {}
+
+//
+interface FlightRecord {
+	id: string;
+	departureIata: string;
+	arrival: Date;;
+	arrivalIata: string;
+	price: number;
+}
+
+// Pass in the type of your Agent's state
+export class MyAgent extends Agent<Env, FlightRecord> {
+  // This allows this.setState and
+}
+```
+
+</TypeScriptExample>
+
 ### Synchronizing state
 
 Clients can connect to an Agent and stay synchronized with its state using the React hooks provided as part of `@cloudflare/agents/react`:
@@ -79,3 +107,26 @@ Common use cases:
 * Live updates across multiple devices
 * Maintaining consistent UI state across clients
 * When new clients connect, they automatically receive the current state from the agent, ensuring all clients start with the latest data.
+
+### SQL API
+
+Every individual Agent instance has its own SQL (SQLite) database that runs _within the same context_ as the Agent itself. This means that inserting or querying data within your Agent is effectively zero-latency: the Agent doesn't have to round-trip across a continent or the world to access its own data.
+
+TODO
+
+<TypeScriptExample>
+
+```ts
+
+
+```
+
+</TypeScriptExample>
+
+:::note
+
+Learn more about the zero-latency SQL storage that powers both Agents and Durable Objects [on our blog](https://blog.cloudflare.com/sqlite-in-durable-objects/).
+
+:::
+
+The SQL API exposed to an Agent is identical to the one [within by Durable Objects](/durable-objects/api/sql-storage/). This means that you can use the same SQL queries and commands to interact with the Agent's database.
