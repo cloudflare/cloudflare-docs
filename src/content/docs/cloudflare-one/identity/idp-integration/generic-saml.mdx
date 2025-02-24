@@ -54,16 +54,16 @@ To download the SAML metadata file, copy-paste the metadata endpoint into a web 
 6. (Optional) Under **Optional configurations**, configure [additional SAML options](#optional-configurations).
 7. Select **Save**.
 
-</TabItem> <TabItem label="Terraform (v4)">
+</TabItem> <TabItem label="Terraform">
 
 :::note[Provider versions]
 The following example requires Cloudflare provider version `>=4.40.0`.
 :::
 
-1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.40.0/docs/resources/api_token):
+1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
 	- `Access: Organizations, Identity Providers, and Groups Write`
 
-2. Configure the [`cloudflare_zero_trust_access_identity_provider`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.40.0/docs/resources/zero_trust_access_identity_provider) resource:
+2. Configure the [`cloudflare_zero_trust_access_identity_provider`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_identity_provider) resource:
 
 		```tf
 		resource "cloudflare_zero_trust_access_identity_provider" "generic_saml_example" {
