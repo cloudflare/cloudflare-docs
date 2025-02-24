@@ -13,6 +13,8 @@ Agents can browse the web using the [Browser Rendering](/browser-rendering/) API
 
 The [Browser Rendering](/browser-rendering/) allows you to spin up headless browser instances, render web pages, and interact with websites through your Agent.
 
+You can define a method that uses Puppeteer to pull the content of a web page, parse the DOM, and extract relevant information by calling the OpenAI model:
+
 <TypeScriptExample>
 
 ```ts
@@ -21,9 +23,33 @@ interface Env {
 }
 
 export class MyAgent extends Agent<Env> {
-	constructor(env: Env) {
-		super(env);
-	}
+	async browse(browserInstance: Fetcher, urls: string[]) {
+		for (const url of urls) {
+			const browser = await puppeteer.launch(browserInstance);
+			const page = await browser.newPage();
+			await page.goto(url);
+
+			await page.waitForSelector('body');
+			const bodyContent = await page.$eval('body', (element) => element.innerHTML);
+			const client = new OpenAI({
+				apiKey: this.env.OPENAI_API_KEY,
+			});
+
+			await client.chat.completions.create({
+				model: this.env.MODEL || "4o",
+				messages: [
+					{
+						role: 'user',
+						content: `Return a JSON object with the product names, prices and URLs with the following format: { "name": "Product Name", "price": "Price", "url": "URL" } from the website content below. <content>${bodyContent}</content>`,
+					},
+				],
+				response_format: {
+					type: 'json_object',
+				},
+			});
+
+			await browser.close();
+		}
 }
 ```
 
