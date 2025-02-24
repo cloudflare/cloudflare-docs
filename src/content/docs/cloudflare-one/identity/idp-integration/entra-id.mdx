@@ -3,7 +3,7 @@ pcx_content_type: how-to
 title: Microsoft Entra ID
 ---
 
-import { Render } from "~/components";
+import { Render, Tabs, TabItem } from "~/components";
 
 You can integrate Microsoft Entra ID (formerly Azure Active Directory) with Cloudflare Zero Trust and build policies based on user identity and group membership. Users will authenticate to Zero Trust using their Entra ID credentials.
 
@@ -93,6 +93,8 @@ More narrow permissions may be used, however this is the set of permissions that
 
 ### 3. Add Entra ID as an identity provider
 
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
 
 2. Under **Login methods**, select **Add new**.
@@ -113,6 +115,45 @@ More narrow permissions may be used, however this is the set of permissions that
 6. Select **Save**.
 
 To [test](/cloudflare-one/identity/idp-integration/#test-idps-in-zero-trust) that your connection is working, select **Test**.
+
+</TabItem> <TabItem label="API">
+
+1. [Create an API token](/fundamentals/api/get-started/create-token/) with the following permissions:
+		| Type    | Item             | Permission |
+		| ------- | ---------------- | ---------- |
+		| Account | Access: Organizations, Identity Providers, and Groups   | Edit    |
+
+2. Make a `POST` request to the [Identity Providers](/api/resources/zero_trust/subresources/identity_providers/methods/create/) endpoint:
+
+		```sh
+		curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/identity_providers \
+		--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+		--data '{
+			"name": "Entra ID example",
+			"type": "azureAD",
+			"config": {
+			  "client_id": "<your client id>",
+		    "client_secret": "<your client secret>",
+		    "directory_id": "<your azure directory uuid>",
+		    "support_groups": true
+			}
+		}'
+		```
+
+</TabItem> <TabItem label="Terraform">
+
+:::note[Provider versions]
+The following example requires Cloudflare provider version `>=4.40.0`.
+:::
+
+1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
+	- `Access: Organizations, Identity Providers, and Groups Write`
+
+2. Configure the [`cloudflare_zero_trust_access_identity_provider`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_identity_provider) resource:
+
+		<Render file="access/entra-id-terraform" />
+
+</TabItem> </Tabs>
 
 #### UPN and email
 
@@ -264,18 +305,3 @@ You can require users to re-enter their credentials into Entra ID whenever they 
    		"scim_base_url": "https://<TEAM_NAME>.cloudflareaccess.com/populations/f174e90a-fafe-4643-bbbc-4a0ed4fc8415/scim/v2"
    }'
    ```
-
-## Example API Configuration
-
-```json
-{
-	"config": {
-		"client_id": "<your client id>",
-		"client_secret": "<your client secret>",
-		"directory_id": "<your azure directory uuid>",
-		"support_groups": true
-	},
-	"type": "azureAD",
-	"name": "my example idp"
-}
-```
