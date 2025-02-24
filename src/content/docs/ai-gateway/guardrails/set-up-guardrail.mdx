@@ -20,13 +20,11 @@ AI Gateway inspects all interactions in real time by evaluating content against 
 
 ## Supported model types
 
-Guardrails determines the type of AI model being used and applies safety checks accordingly:
+AI Gateway's Guardrails detects the type of AI model being used and applies safety checks accordingly:
 
-- Text generation models: Both prompts and responses are evaluated.
-- Embedding models: Only the prompt is evaluated, and the response is passed directly back to the user.
-- Unknown models: If the model type cannot be determined, prompts are evaluated, but responses bypass Guardrails.
-
-If Guardrails cannot access the underlying model, requests set to "block" will result in an error, while flagged requests will proceed.
+- **Text generation models**: Both prompts and responses are evaluated.
+- **Embedding models**: Only the prompt is evaluated, as the response consists of numerical embeddings, which are not meaningful for moderation.
+- **Unknown models**: If the model type cannot be determined, only the prompt is evaluated, while the response bypass Guardrails.
 
 ## Configuration
 
