@@ -75,7 +75,7 @@
 		"mdast-util-mdx-expression": "2.0.1",
 		"mermaid": "11.4.1",
 		"node-html-parser": "7.0.1",
-		"prettier": "3.5.1",
+		"prettier": "3.5.2",
 		"prettier-plugin-astro": "0.14.1",
 		"prettier-plugin-tailwindcss": "0.6.9",
 		"pretty-bytes": "6.1.1",
