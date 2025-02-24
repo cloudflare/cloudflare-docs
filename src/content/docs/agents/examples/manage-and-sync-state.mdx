@@ -62,7 +62,7 @@ import { Agent } from "@cloudflare/agents";
 
 interface Env {}
 
-//
+// Define a type for your Agent's state
 interface FlightRecord {
 	id: string;
 	departureIata: string;
@@ -73,7 +73,18 @@ interface FlightRecord {
 
 // Pass in the type of your Agent's state
 export class MyAgent extends Agent<Env, FlightRecord> {
-  // This allows this.setState and
+  // This allows this.setState and the onStateUpdate method to
+  // be typed:
+ 	async onStateUpdate(state: FlightRecord) {
+  	console.log("state updated", state);
+  }
+
+  async someOtherMethod() {
+  	this.setState({
+  		...this.state,
+  		price: this.state.price + 10,
+  	});
+  }
 }
 ```
 

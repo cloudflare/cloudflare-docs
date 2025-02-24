@@ -37,6 +37,12 @@ export class SchedulingAgent extends Agent {
 ```
 </TypeScriptExample>
 
+:::caution
+
+Tasks that set a callback for a method that does not exist wil throw an exception.
+
+:::
+
 You can schedule tasks in multiple ways:
 
 <TypeScriptExample>
@@ -59,12 +65,6 @@ this.cancelSchedule(task.id);
 ```
 
 </TypeScriptExample>
-
-:::caution
-
-Tasks that set a callback for a method that does not exist will fail silently.
-
-:::
 
 Calling `await this.schedule` returns a `Schedule`, which includes the task's randomly generated `id`. You can use this `id` to retrieve or cancel the task in the future. It also provides a `type` property that indicates the type of schedule, for example, one of `"scheduled" | "delayed" | "cron"`.
 
