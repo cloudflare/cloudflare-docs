@@ -420,6 +420,10 @@ When `PRAGMA optimize` runs `ANALYZE`, it sets a limit to ensure the command doe
 
 We recommend running this command after making any changes to the schema (for example, after [creating an index](/d1/best-practices/use-indexes/)).
 
-{/* Alternatively, to see all optimizations that would have been performed without actually executing them, run `PRAGMA optimize(-1)`. */}
+:::note
+Currently, D1 does not support `PRAGMA optimize(-1)`.
+
+`PRAGMA optimize(-1)` is a command which displays all optimizations that would have been performed without actually executing them.
+:::
 
 Refer to [SQLite PRAGMA optimize documentation](https://www.sqlite.org/pragma.html#pragma_optimize) for more information on how `PRAGMA optimize` optimizes a database.
