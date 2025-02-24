@@ -21,16 +21,35 @@ For example, if your team uses Okta but you are collaborating with someone outsi
 2. Under **Login methods**, select **Add new**.
 3. Select **One-time PIN**.
 
-</TabItem> <TabItem label="Terraform (v4)">
+</TabItem> <TabItem label="API">
+
+1. [Create an API token](/fundamentals/api/get-started/create-token/) with the following permissions:
+		| Type    | Item             | Permission |
+		| ------- | ---------------- | ---------- |
+		| Account | Access: Organizations, Identity Providers, and Groups   | Edit    |
+
+2. Make a `POST` request to the [Identity Providers](/api/resources/zero_trust/subresources/identity_providers/methods/create/) endpoint:
+
+		```sh
+		curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/identity_providers \
+		--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+		--data '{
+			"name": "One-time PIN login",
+			"type": "onetimepin",
+			"config": {}
+		}'
+		```
+
+</TabItem> <TabItem label="Terraform">
 
 :::note[Provider versions]
 The following example requires Cloudflare provider version `>=4.40.0`.
 :::
 
-1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.40.0/docs/resources/api_token):
+1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
 	- `Access: Organizations, Identity Providers, and Groups Write`
 
-2. Configure the [`cloudflare_zero_trust_access_identity_provider`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.40.0/docs/resources/zero_trust_access_identity_provider) resource:
+2. Configure the [`cloudflare_zero_trust_access_identity_provider`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_identity_provider) resource:
 
 		```tf
 		resource "cloudflare_zero_trust_access_identity_provider" "onetimepin_login" {
@@ -72,12 +91,3 @@ By design, blocked users will not receive an email. The login page will always s
 Access only logs an authentication attempt after the user enters a code. If the user enters their email but never submits a code, the event will not appear in your [audit logs](/cloudflare-one/insights/logs/audit-logs/#authentication-audit-logs).
 :::
 
-## Example API Config
-
-```json
-{
-	"config": {},
-	"type": "onetimepin",
-	"name": "my example idp"
-}
-```
