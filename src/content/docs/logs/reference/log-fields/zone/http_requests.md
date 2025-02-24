@@ -481,7 +481,7 @@ Action of the security rule that triggered a terminating action, if any.
 
 Type: `array[string]`
 
-Array of actions the Cloudflare security products performed on this request. The individual security products associated with this action can be found in SecuritySources and their respective rule Ids can be found in SecurityRuleIDs. The length of the array is the same as SecurityRuleIDs and SecuritySources. <br />Possible actions are <em>unknown</em> \| <em>allow</em> \| <em>block</em> \| <em>challenge</em> \| <em>jschallenge</em> \| <em>log</em> \| <em>connectionClose</em> \| <em>challengeSolved</em> \| <em>challengeBypassed</em> \| <em>jschallengeSolved</em> \| <em>jschallengeBypassed</em> \| <em>bypass</em> \| <em>managedChallenge</em> \| <em>managedChallengeNonInteractiveSolved</em> \| <em>managedChallengeInteractiveSolved</em> \| <em>managedChallengeBypassed</em> \| <em>rewrite</em> \| <em>forceConnectionClose</em> \| <em>skip</em>.
+Array of actions the Cloudflare security products performed on this request. The individual security products associated with this action can be found in SecuritySources and their respective rule IDs can be found in SecurityRuleIDs. The length of the array is the same as SecurityRuleIDs and SecuritySources. <br />Possible actions are <em>unknown</em> \| <em>allow</em> \| <em>block</em> \| <em>challenge</em> \| <em>jschallenge</em> \| <em>log</em> \| <em>connectionClose</em> \| <em>challengeSolved</em> \| <em>challengeBypassed</em> \| <em>jschallengeSolved</em> \| <em>jschallengeBypassed</em> \| <em>bypass</em> \| <em>managedChallenge</em> \| <em>managedChallengeNonInteractiveSolved</em> \| <em>managedChallengeInteractiveSolved</em> \| <em>managedChallengeBypassed</em> \| <em>rewrite</em> \| <em>forceConnectionClose</em> \| <em>skip</em>.
 
 ## SecurityRuleDescription
 
@@ -560,6 +560,12 @@ WAF score for an XSS attack.
 Type: `int`
 
 Amount of time in microseconds spent executing a worker, if any.
+
+## WorkerScriptName
+
+Type: `string`
+
+The worker script name that made the request.
 
 ## WorkerStatus
 
