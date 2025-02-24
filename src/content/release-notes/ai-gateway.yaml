@@ -5,6 +5,15 @@ productLink: "/ai-gateway/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-02-19"
+    title: Updated Log Storage Settings
+    description: |-
+      Introduced customizable log storage settings, enabling users to:
+        - Define the maximum number of logs stored per gateway.
+        - Choose how logs are handled when the storage limit is reached:
+          - **On** - Automatically delete the oldest logs to ensure new logs are always saved.
+          - **Off** - Stop saving new logs when the storage limit is reached.
+
   - publish_date: "2025-02-06"
     title: Added request handling
     description: |-

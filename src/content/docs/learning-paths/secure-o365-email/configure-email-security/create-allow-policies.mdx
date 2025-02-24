@@ -5,11 +5,11 @@ sidebar:
   order: 3
 ---
 
-Email Security allows you to configure allow policies. An allow policy exempts messages that match certain patterns from normal detection scanning. 
+Email Security allows you to configure allow policies. An allow policy exempts messages that match certain patterns from normal detection scanning.
 
 You can choose how Email Security will handle messages that match your criteria:
 
-- **Trusted Sender**: Messages will bypass all [detections](/cloudflare-one/email-security/reference/dispositions-and-attributes/) and link following. Typically, it only applies to phishing simulations from vendors such as KnowBe4. Many emails contain links in them. Some of these could be links to surveys, phishing simulations and other trackable links. By marking a message as a Trusted Sender, Email Security will not scan any attachments from the sender and will not attempt to open the links in the emails. 
+- **Trusted Sender**: Messages will bypass all [detections](/cloudflare-one/email-security/reference/dispositions-and-attributes/) and link following. Typically, it only applies to phishing simulations from vendors such as KnowBe4. Many emails contain links in them. Some of these could be links to surveys, phishing simulations and other trackable links. By marking a message as a Trusted Sender, Email Security will not scan any attachments from the sender and will not attempt to open the links in the emails.
 - **Exempt Recipient**: Messages will be exempt from all Email Security [detections](/cloudflare-one/email-security/reference/dispositions-and-attributes/) intended for recipients matching this pattern (email address or regular expression only). Typically, this only applies to submission mailboxes for user reporting to security.
 - **Accept Sender**: Messages will exempt messages from the `SPAM`, `SPOOF`, and `BULK` [dispositions](/cloudflare-one/email-security/reference/dispositions-and-attributes/) (but not `MALICIOUS` or `SUSPICIOUS`). Commonly used for external domains and sources that send mail on behalf of your organization, such as marketing emails or internal tools.
 

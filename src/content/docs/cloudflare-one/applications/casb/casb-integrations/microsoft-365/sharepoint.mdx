@@ -10,7 +10,7 @@ import { Render } from "~/components";
 
 <Render
   file="casb/integration-description"
-  params={{ one: "SharePoint", two: "Microsoft 365 account" }}
+  params={{ integrationName: "SharePoint", integrationAccountType: "Microsoft 365 account" }}
 />
 
 ## Integration prerequisites
@@ -21,14 +21,14 @@ import { Render } from "~/components";
 
 <Render
   file="casb/integration-perms"
-  params={{ one: "Microsoft 365", two: "microsoft-365" }}
+  params={{ parentIntegration: "Microsoft 365", parentSlug: "microsoft-365" }}
 />
 
 ## Security findings
 
 <Render
   file="casb/security-findings"
-  params={{ one: "SharePoint", two: "microsoft-365/sharepoint" }}
+  params={{ integrationName: "SharePoint", slugRelativePath: "microsoft-365/sharepoint" }}
 />
 
 ### File sharing

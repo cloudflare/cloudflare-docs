@@ -710,7 +710,11 @@ The file at `~/ca.pem` needs to remain in place in order for the `gcloud` utilit
 
 If you use Kaniko with Google Cloud SDK, you must install a Cloudflare certificate in the [Kaniko CA store](https://docs.gitlab.com/ee/ci/docker/using_kaniko.html#using-a-registry-with-a-custom-certificate). For more information, refer to the [`gcloud` documentation](https://cloud.google.com/sdk/gcloud/reference/builds/submit).
 
-#### Google Drive for desktop
+#### Google Apps Manager (GAM)
+
+Google Apps Manager (GAM) uses its own certificate store. To add a Cloudflare certificate to GAM, refer to the [GAM documentation](https://github.com/GAM-team/GAM/wiki/#using-gam-with-ssl--tls-mitm-inspection).
+
+### Google Drive
 
 To trust a Cloudflare root certificate in the Google Drive desktop application, follow the procedure for your operating system. These steps require you to [download a `.pem` certificate](#download-the-cloudflare-root-certificate).
 
@@ -773,10 +777,6 @@ Get-ItemProperty -Path "HKLM:\SOFTWARE\Google\DriveFS" | Select-Object TrustedRo
 </Tabs>
 
 For more information, refer to the [Google documentation](https://support.google.com/a/answer/7644837) for the `TrustedRootCertsFile` setting.
-
-#### Google Apps Manager (GAM)
-
-Google Apps Manager (GAM) uses its own certificate store. To add a Cloudflare certificate to GAM, refer to the [GAM documentation](https://github.com/GAM-team/GAM/wiki/#using-gam-with-ssl--tls-mitm-inspection).
 
 ### AWS CLI
 

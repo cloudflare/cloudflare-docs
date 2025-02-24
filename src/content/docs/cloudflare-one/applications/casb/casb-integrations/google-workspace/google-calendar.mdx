@@ -8,7 +8,7 @@ import { Render } from "~/components";
 
 <Render
   file="casb/integration-description"
-  params={{ one: "Google Calendar", two: "Google Workspace account" }}
+  params={{ integrationName: "Google Calendar", integrationAccountType: "Google Workspace account" }}
 />
 
 ## Integration prerequisites
@@ -19,14 +19,14 @@ import { Render } from "~/components";
 
 <Render
   file="casb/integration-perms"
-  params={{ one: "Google Workspace", two: "google-workspace" }}
+  params={{ parentIntegration: "Google Workspace", parentSlug: "google-workspace" }}
 />
 
 ## Security findings
 
 <Render
   file="casb/security-findings"
-  params={{ one: "Google Calendar", two: "google-workspace/google-calendar" }}
+  params={{ integrationName: "Google Calendar", slugRelativePath: "google-workspace/google-calendar" }}
 />
 
 ### Calendar sharing

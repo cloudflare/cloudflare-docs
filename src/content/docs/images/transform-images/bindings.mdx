@@ -1,0 +1,96 @@
+---
+pcx_content_type: how-to
+title: Bind to Workers API
+sidebar:
+  order: 4
+---
+
+A [binding](/workers/runtime-apis/bindings/) connects your [Worker](/workers/) to external resources on the Developer Platform, like [Images](/images/transform-images/transform-via-workers/), [R2 buckets](/r2/buckets/), or [KV Namespaces](/kv/concepts/kv-namespaces/).
+
+You can bind the Images API to your Worker to transform, resize, and encode images without requiring them to be accessible through a URL.
+
+For example, when you allow Workers to interact with Images, you can:
+
+- Transform an image, then upload the output image directly into R2 without serving to the browser.
+- Optimize an image stored in R2 by passing the blob of bytes representing the image, instead of fetching the public URL for the image.
+- Resize an image, overlay the output over a second image as a watermark, then resize this output into a final result.
+
+Bindings can be configured in the Cloudflare dashboard for your Worker or in the `wrangler.toml` file in your project's directory.
+
+## Setup
+
+The Images binding is enabled on a per-Worker basis.
+
+You can define variables in the `wrangler.toml` file of your Worker project's directory. These variables are bound to external resources at runtime, and you can then interact with them through this variable.
+
+To bind Images to your Worker, add the following to the end of your `wrangler.toml` file:
+
+
+```txt
+[images]
+binding = "IMAGES" # i.e. available in your Worker on env.IMAGES
+```
+
+Within your Worker code, you can interact with this binding by using `env.IMAGES`.
+
+## Methods
+
+
+### `.transform()`
+
+- Defines how an image should be optimized and manipulated through [`fetch()` options](/images/transform-images/transform-via-workers/#fetch-options) such as `width`, `height`, and `blur`.
+
+### `.draw()`
+
+- Allows [drawing an image](/images/transform-images/draw-overlays/) over another image.
+- The overlaid image can be manipulated using `opacity`, `repeat`, `top`, `left`, `bottom`, and `right`. To apply other `fetch()` options, you can pass a child `.transform()` function inside this method.
+
+
+### `.output()`
+
+* Defines the [output format](/images/transform-images/) for the transformed image such as AVIF, WebP, and JPEG.
+
+For example, to rotate, resize, and blur an image, then output the image as AVIF:
+
+```js
+​​const info = await env.IMAGES.info(stream);
+// stream contains a valid image, and width/height is available on the info object
+ 
+const response = (
+await env.IMAGES.input(stream)
+        .transform({ rotate: 90 })
+        .transform({ width: 128 })
+        .output({ format: "image/avif" })
+      ).response();
+ 
+return response;
+```
+
+In this example, the transformed image is outputted as a WebP.
+
+Responses from the Images binding are not automatically cached. Workers lets you interact directly with the Cache API to customize cache behavior using Workers. You can implement logic in your script to store transformations in Cloudflare’s cache.
+
+## Interact with your Images binding locally
+
+The Images API can be used in local development through [Wrangler](/workers/wrangler/install-and-update/), the command-line interface for Workers. Using the Images binding in local development will not incur usage charges.
+
+Wrangler supports two different versions of the Images API:
+
+- A high-fidelity version that supports all features that are available through the Images API. This is the same version that Cloudflare runs globally in production.
+- A low-fidelity version that supports only a subset of features, such as resizing and rotation.
+
+To test the high-fidelity version of Images, you can run `wrangler dev`:
+
+```txt
+npx wrangler dev
+```
+
+This creates a local-only environment that mirrors the production environment where Cloudflare runs the Images API. You can test your Worker with all available transformation features before deploying to production.
+
+To test the low-fidelity version of Images, add the `--experimental-images-local-mode` flag:
+
+```txt
+npm wrangler dev --experimental-images-local-mode
+```
+
+Currently, this version supports only `width`, `height`, `rotate`, and `format`.

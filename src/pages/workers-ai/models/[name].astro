@@ -158,21 +158,6 @@ const starlightPageProps = {
 	<ModelBadges model={model} />
 
 	{
-		model.name === "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b" && (
-			<Aside>
-				<p>
-					This model has a specialized pricing structure that's separate from
-					the standard Workers AI pricing plan. The pricing for
-					<code>@cf/deepseek-ai/deepseek-r1-distill-qwen-32b</code> is:
-					<ul>
-						<li>$0.50 per 1M input token</li>
-						<li>$4.88 per 1M output token</li>
-					</ul>
-				</p>
-			</Aside>
-		)
-	}
-	{
 		model.name === "@cf/meta/llama-3.2-11b-vision-instruct" && (
 			<Aside>
 				<p>

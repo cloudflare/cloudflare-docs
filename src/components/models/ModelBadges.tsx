@@ -33,7 +33,7 @@ const ModelBadges = ({ model }: { model: WorkersAIModelsSchema }) => {
 		<ul className="m-0 flex list-none items-center gap-2 p-0 text-xs">
 			{badges.map((badge) => (
 				<li key={badge.text}>
-					<span className="sl-badge gray">{badge.text}</span>
+					<span className="sl-badge default">{badge.text}</span>
 				</li>
 			))}
 		</ul>

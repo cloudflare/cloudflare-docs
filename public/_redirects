@@ -173,6 +173,8 @@
 /support/firewall/tools/cloudflare-bot-products-faqs/ /bots/troubleshooting/ 301
 /support/other-languages/deutsch/cloudflare-bot/ /bots/troubleshooting/ 301
 /bots/concepts/ja3-fingerprint/ /bots/concepts/ja3-ja4-fingerprint/ 301
+/bots/reference/verified-bot-categories/ /bots/concepts/bot/verified-bots/categories/ 301
+/bots/reference/verified-bot-policy/ /bots/concepts/bot/verified-bots/policy/ 301
 
 # byoip
 /byoip/about/dynamic-advertisement/ /byoip/concepts/dynamic-advertisement/ 301
@@ -461,6 +463,7 @@
 /fundamentals/get-started/http-request-headers/ /fundamentals/reference/http-headers/ 301
 /fundamentals/get-started/network-ports/ /fundamentals/reference/network-ports/ 301
 /fundamentals/get-started/basic-tasks/improve-seo/ /fundamentals/performance/improve-seo/ 301
+/fundamentals/basic-tasks/improve-seo/ /fundamentals/performance/improve-seo/ 301
 /fundamentals/get-started/basic-tasks/allow-cloudflare-ip-addresses/ /fundamentals/concepts/cloudflare-ip-addresses/ 301
 /fundamentals/get-started/basic-tasks/account-setup/ /fundamentals/setup/account/ 301
 /fundamentals/get-started/concepts/cdn-cgi-endpoint/ /fundamentals/reference/cdn-cgi-endpoint/ 301
@@ -542,13 +545,15 @@
 /fundamentals/get-started/get-started-external-link/ /learning-paths/get-started/ 301
 /fundamentals/get-started/task-guides/prevent-ddos-attacks-external/ /learning-paths/prevent-ddos-attacks/ 301
 /fundamentals/get-started/task-guides/origin-health/free/ /fundamentals/security/protect-your-origin-server/ 301
+/fundamentals/basic-tasks/protect-your-origin-server/ /fundamentals/security/protect-your-origin-server/ 301
 /fundamentals/get-started/task-guides/origin-health/business/ /fundamentals/security/protect-your-origin-server/ 301
 /fundamentals/get-started/task-guides/origin-health/pro/ /fundamentals/security/protect-your-origin-server/ 301
-/fundamentals/get-started/task-guides/origin-health/enterprise/ /fundamentals/security/protect-your-origin-server/301
+/fundamentals/get-started/task-guides/origin-health/enterprise/ /fundamentals/security/protect-your-origin-server/ 301
 /fundamentals/get-started/task-guides/origin-health/ /fundamentals/security/protect-your-origin-server/ 301
 /fundamentals/get-started/task-guides/ /fundamentals/basic-tasks/ 301
 /fundamentals/get-started/setup/ /fundamentals/setup/ 301
 /fundamentals/get-started/setup/minimize-downtime/ /fundamentals/performance/minimize-downtime/ 301
+/fundamentals/basic-tasks/maintenance-mode/ /fundamentals/performance/minimize-downtime/ 301
 /fundamentals/get-started/concepts/what-is-cloudflare/ /fundamentals/concepts/what-is-cloudflare/ 301
 /fundamentals/get-started/concepts/cloudflare-challenges/ /waf/reference/cloudflare-challenges/ 301
 /fundamentals/get-started/concepts/accounts-and-zones/ /fundamentals/setup/accounts-and-zones/ 301
@@ -565,14 +570,17 @@
 /fundamentals/get-started/basic-tasks/manage-domains/redirect-domain/ /fundamentals/setup/manage-domains/redirect-domain/ 301
 /fundamentals/get-started/basic-tasks/cloudflare-without-changing-nameservers/ /fundamentals/setup/use-cloudflare-without-changing-nameservers/ 301
 /fundamentals/get-started/basic-tasks/interact-with-cloudflare/ /fundamentals/setup/interact-with-cloudflare/ 301
+/fundamentals/basic-tasks/interact-with-cloudflare/ /fundamentals/setup/interact-with-cloudflare/ 301
 /fundamentals/get-started/basic-tasks/manage-subdomains/ /fundamentals/setup/manage-domains/manage-subdomains/ 301
 /fundamentals/get-started/basic-tasks/report-abuse/provide-specific-urls/ /fundamentals/reference/report-abuse/provide-specific-urls/ 301
 /fundamentals/get-started/basic-tasks/report-abuse/complaint-types/ /fundamentals/reference/report-abuse/complaint-types/ 301
 /fundamentals/get-started/basic-tasks/report-abuse/ /fundamentals/reference/report-abuse/ 301
 /fundamentals/get-started/basic-tasks/access-compliance-docs/ /fundamentals/reference/policies-compliances/compliance-docs/ 301
 /fundamentals/get-started/basic-tasks/under-ddos-attack/ /fundamentals/security/under-ddos-attack/ 301
+/fundamentals/basic-tasks/under-ddos-attack/ /fundamentals/security/under-ddos-attack/ 301
 /fundamentals/get-started/basic-tasks/test-speed/ /fundamentals/performance/test-speed/ 301
-/fundamentals/get-started/basic-tasks/ /fundamentals/basic-tasks/ 301
+/fundamentals/basic-tasks/test-speed/ /fundamentals/performance/test-speed/ 301
+/fundamentals/get-started/basic-tasks/ /fundamentals/performance/test-speed/ 301
 /fundamentals/get-started/basic-tasks/account-security/securing-a-compromised-account/ /fundamentals/setup/account/account-security/secure-a-compromised-account/ 301
 /fundamentals/get-started/basic-tasks/account-security/review-audit-logs/ /fundamentals/setup/account/account-security/review-audit-logs/ 301
 /fundamentals/get-started/basic-tasks/account-security/manage-active-sessions/ /fundamentals/setup/account/account-security/manage-active-sessions/ 301
@@ -618,7 +626,6 @@
 /fundamentals/reference/changelog/ /fundamentals/reference/ 302
 /fundamentals/basic-tasks/optimize-speed-external-link/ /fundamentals/performance/optimize-speed-external-link/ 301
 /fundamentals/basic-tasks/prevent-ddos-attacks-external/ /fundamentals/security/prevent-ddos-attacks-external/ 301
-/fundamentals/basic-tasks/protect-your-origin-server/ /fundamentals/security/protect-your-origin-server/ 301
 /fundamentals/basic-tasks/pci-scans/ /fundamentals/security/pci-scans/ 301
 /fundamentals/basic-tasks/trace-request/ /fundamentals/trace-request/ 301
 /fundamentals/basic-tasks/trace-request/how-to/ /fundamentals/trace-request/how-to/ 301
@@ -1202,6 +1209,7 @@
 /support/more-dashboard-apps/cloudflare-scrape-shield/why-doesnt-my-rss-feed-show-images/ /waf/tools/scrape-shield/hotlink-protection/ 301
 /support/more-dashboard-apps/cloudflare-scrape-shield/ /waf/tools/scrape-shield/ 301
 /support/about-cloudflare/attack-preparation-and-response/recovering-from-a-hacked-site/ /fundamentals/security/recovering-from-hacked-site/ 301
+/fundamentals/basic-tasks/recovering-from-hacked-site/ /fundamentals/security/recovering-from-hacked-site/ 301
 /support/firewall/learn-more/configuring-token-authentication/ /waf/custom-rules/use-cases/configure-token-authentication/ 301
 /support/firewall/learn-more/ /waf/troubleshooting/ 301
 /support/firewall/ /waf/troubleshooting/ 301
@@ -1222,8 +1230,9 @@
 /support/ssl-tls/faq-and-reference/ /ssl/reference/ 301
 /support/account-management-billing/account-privacy-and-security/understanding-samesite-cookie-interaction-with-cloudflare/ /waf/troubleshooting/samesite-cookie-interaction/ 301
 /support/account-management-billing/account-privacy-and-security/ /support/account-management-billing/ 301
-/support/troubleshooting/general-troubleshooting/troubleshooting-surges-or-spikes-in-web-traffic/ /fundamentals/performance/preparing-for-surges-or-spikes-in-web-traffic/ 301
+/support/troubleshooting/general-troubleshooting/troubleshooting-surges-or-spikes-in-web-traffic/ /fundamentals/basic-tasks/preparing-for-surges-or-spikes-in-web-traffic/ 301
 /support/troubleshooting/general-troubleshooting/preparing-for-surges-or-spikes-in-web-traffic/ /fundamentals/performance/preparing-for-surges-or-spikes-in-web-traffic/ 301
+/fundamentals/basic-tasks/preparing-for-surges-or-spikes-in-web-traffic/ /fundamentals/performance/preparing-for-surges-or-spikes-in-web-traffic/ 301
 /support/third-party-software/others/configuring-an-amazon-web-services-static-site-to-use-cloudflare/ /rules/cloud-connector/providers/ 301
 /support/third-party-software/others/enabling-cloudflare-ssl-on-azure-storage-static-web-hosting-applications/ /rules/cloud-connector/providers/ 301
 
@@ -1341,6 +1350,9 @@
 /waf/tools/scrape-shield/server-side-excludes/ /waf/tools/scrape-shield/ 301
 /waf/rate-limiting-rules/create-account-dashboard/ /waf/account/rate-limiting-rulesets/create-dashboard/ 301
 /waf/managed-rules/deploy-account-dashboard/ /waf/account/managed-rulesets/deploy-dashboard/ 301
+/waf/analytics/security-events/free-plan/ /waf/analytics/security-events/ 301
+/waf/analytics/security-events/paid-plans/ /waf/analytics/security-events/ 301
+/waf/analytics/security-events/additional-information/ /waf/tools/validation-checks/ 301
 
 # waiting-room
 /waiting-room/how-to/mobile-traffic/ /waiting-room/how-to/json-response/ 301
@@ -1882,6 +1894,7 @@
 /cloudflare-one/policies/browser-isolation/agentless/* /cloudflare-one/policies/browser-isolation/setup/:splat 301
 /cloudflare-one/policies/filtering/http-policies/data-loss-prevention/* /cloudflare-one/policies/data-loss-prevention/ 301
 /cloudflare-one/policies/data-loss-prevention/configuration-guides/* /cloudflare-one/policies/data-loss-prevention/dlp-policies/common-policies/ 301
+/cloudflare-one/insights/dex/fleet-status/ /cloudflare-one/insights/dex/monitoring/ 301
 
 # Learning paths
 /learning-paths/modules/cybersafe/cybersafe-account-creation/* /learning-paths/cybersafe/account-creation/:splat 301

@@ -83,9 +83,13 @@ import { Tabs, TabItem, Render } from "~/components"
 	```
 
 </TabItem>
-<TabItem label="Terraform">
+<TabItem label="Terraform (v4)">
 
-1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.40.0/docs/resources/api_token):
+:::note[Provider versions]
+The following example requires Cloudflare provider version `>=4.45.0`.
+:::
+
+1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.45.0/docs/resources/api_token):
 	- `Access: Apps and Policies Write`
 
 2. Use the [`cloudflare_zero_trust_access_application`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.45.0/docs/resources/zero_trust_access_application) resource to create an infrastructure application:

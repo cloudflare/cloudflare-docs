@@ -1,7 +1,7 @@
 name: KV
 
 product:
-  title: Workers KV
+  title: KV
   url: /kv/
   group: Developer platform
   additional_groups: [Storage]
