@@ -92,17 +92,39 @@ export class MyAgent extends Agent<Env, FlightRecord> {
 
 ### Synchronizing state
 
-Clients can connect to an Agent and stay synchronized with its state using the React hooks provided as part of `@cloudflare/agents/react`:
+Clients can connect to an Agent and stay synchronized with its state using the React hooks provided as part of `@cloudflare/agents/react`.
+
+A React application can call `useAgent` to connect to a named Agent over WebSockets at
 
 <TypeScriptExample>
 
 ```ts
+import { useState } from "react";
+import { useAgent } from "@cloudflare/agents/react";
 
+function StateInterface() {
+  const [state, setState] = useState({ counter: 0 });
 
+  const agent = useAgent({
+    agent: "thinking-agent",
+    name: "my-agent",
+    onStateUpdate: (newState) => setState(newState),
+  });
+
+  const increment = () => {
+    agent.setState({ counter: state.counter + 1 });
+  };
+
+  return (
+    <div>
+      <div>Count: {state.counter}</div>
+      <button onClick={increment}>Increment</button>
+    </div>
+  );
+}
 ```
 
 </TypeScriptExample>
-
 
 The state synchronization system:
 
