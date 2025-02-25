@@ -143,16 +143,16 @@ D1 has a [migration system](/d1/reference/migrations), and in the following step
 npx wrangler d1 migrations create orange-demo-db create_user_table
 ```
 
-Answer `yes` to creating a new folder called `migrations`.
+2. When asked to create a new folder called `migrations`, enter `Y`.
 
 The command has now created a new directory called `migrations` and an empty file called `0001_create_user_table.sql` inside of it:
 
-```
-migrations/
-└── 0001_create_user_table.sql
-```
+<FileTree>
+- migrations
+  - **0001_create_user_table.sql**
+</FileTree>
 
-Edit the file so it looks like this:
+3. Edit the file so it looks like this:
 
 ```sql
 -- CreateTable
