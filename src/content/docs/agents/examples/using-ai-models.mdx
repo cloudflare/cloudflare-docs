@@ -107,6 +107,7 @@ export class MyAgent extends Agent<Env> {
 		// Return the stream
     return new Response(answer, {
         headers: { "content-type": "text/event-stream" }
+    })
 	}
 }
 ```
