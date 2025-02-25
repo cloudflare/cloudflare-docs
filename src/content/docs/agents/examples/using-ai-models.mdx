@@ -26,7 +26,7 @@ Modern [reasoning models](https://platform.openai.com/docs/guides/reasoning) or 
 
 Instead of buffering the entire response, or risking the client disconecting, you can stream the response back to the client by using the [WebSocket API](/agents/examples/websockets/).
 
-<TypeScriptExample file="src/index.ts">
+<TypeScriptExample filename="src/index.ts">
 
 ```ts
 import { Agent } from "agents-sdk"
@@ -85,7 +85,7 @@ You can use [any of the models available in Workers AI](/workers-ai/models/) wit
 
 Workers AI supports streaming responses out-of-the-box by setting `stream: true`, and we strongly recommend using them to avoid buffering and delaying responses, especially for larger models or reasoning models that require more time to generate a response.
 
-<TypeScriptExample file="src/index.ts">
+<TypeScriptExample filename="src/index.ts">
 
 ```ts
 import { Agent } from "agents-sdk"
@@ -135,7 +135,7 @@ Model routing allows you to route requests to different AI models based on wheth
 
 :::
 
-<TypeScriptExample file="src/index.ts">
+<TypeScriptExample filename="src/index.ts">
 
 ```ts
 import { Agent } from "agents-sdk"
@@ -189,7 +189,7 @@ To use the AI SDK, install the `ai` package and use it within your Agent. The ex
 npm install ai @ai-sdk/openai
 ```
 
-<TypeScriptExample file="src/index.ts">
+<TypeScriptExample filename="src/index.ts">
 
 ```ts
 import { Agent } from "agents-sdk"
@@ -216,7 +216,7 @@ Agents can call models across any service, including those that support the Open
 
 Agents can stream responses back over HTTP using Server Sent Events (SSE) from within an `onRequest` handler, or by using the native [WebSockets](/agents/examples/websockets/) API in your Agent to responses back to a client, which is especially useful for larger models that can take over 30+ seconds to reply.
 
-<TypeScriptExample file="src/index.ts">
+<TypeScriptExample filename="src/index.ts">
 
 ```ts
 import { Agent } from "agents-sdk"
