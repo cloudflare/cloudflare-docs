@@ -39,7 +39,7 @@ export class SchedulingAgent extends Agent {
 
 :::caution
 
-Tasks that set a callback for a method that does not exist wil throw an exception.
+Tasks that set a callback for a method that does not exist will throw an exception: ensure that the method named in the `callback` argument of `this.schedule` exists on your `Agent` class.
 
 :::
 
