@@ -27,20 +27,9 @@ Build and deploy AI-powered [agents](/agents/) that can autonomously perform tas
 
 ### Why builds agents on Cloudflare?
 
-#### Cost-Effective
-Pay only for [CPU usage](https://blog.cloudflare.com/workers-pricing-scale-to-zero/), not wall-clock time—ideal for agents with frequent pauses while awaiting LLM responses or external tools.
-
-#### Serverless AI Inference
-Access AI models on-demand with [Workers AI](https://developers.cloudflare.com/workers-ai) without infrastructure management:
-- Scalable inference infrastrcture on demand,  without requiring pre-provisioning of GPU-powered VMs
-- Pay-per-use billing
-- Support for open-source and custom models
-
-#### Durable Execution
-Built-in reliability for complex processes:
-- State persistence across requests with Durable Objects
-- Automatic retries through Workflows
-- Context preservation during multi-step tasks
+- **Cost-Effective**: Pay only for [CPU usage](https://blog.cloudflare.com/workers-pricing-scale-to-zero/), not wall-clock time—saving costs during agent pauses while awaiting LLM responses or external tools.
+- Serverless AI Inference: Access AI models on-demand with [Workers AI](https://developers.cloudflare.com/workers-ai) with pay-per-use billing and no infrastructure management required.
+- Durable Execution: Maintain state persistence and execution reliability for complex multi-step processes with built-in retry mechanisms, using [Durable Objects](https://developers.cloudflare.com/durable-objects) and [Workflows](https://developers.cloudflare.com/workflows).
 
 ### Start building
 
