@@ -44,7 +44,6 @@ const runLinkCheck = process.env.RUN_LINK_CHECK || false;
 // https://astro.build/config
 export default defineConfig({
 	site: "https://developers.cloudflare.com",
-	trailingSlash: "always",
 	markdown: {
 		smartypants: false,
 		rehypePlugins: [
