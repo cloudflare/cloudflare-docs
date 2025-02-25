@@ -1,0 +1,71 @@
+---
+title: TypeScript example
+---
+
+## TypeScript examples
+
+The `TypeScriptExample` component uses [`ts-blank-space`](https://github.com/bloomberg/ts-blank-space) to remove TypeScript-specific syntax from your example and provide a JavaScript tab. This reduces maintenance burden by only having a single example to maintain.
+
+This component is automatically used in the [`GitHubCode`](/style-guide/components/github-code/) component when the `lang` is set to `ts`.
+
+:::note
+Some TypeScript syntax influences runtime behaviour, and cannot be stripped.
+
+Please refer to the [Unsupported Syntax](https://github.com/bloomberg/ts-blank-space?tab=readme-ov-file#unsupported-syntax) section of the project's README.
+:::
+
+## Component
+
+````mdx live
+import { TypeScriptExample } from "~/components";
+
+<TypeScriptExample>
+```ts
+interface Environment {
+  KV: KVNamespace;
+}
+
+export default {
+  async fetch(req, env, ctx): Promise<Response> {
+    if (req !== "POST") {
+        return new Response("Method Not Allowed", {
+            status: 405,
+            headers: {
+                "Allow": "POST"
+            }
+        });
+    }
+
+    await env.KV.put("foo", "bar");
+
+    return new Response();
+  }
+} satisfies ExportedHandler<Environment>
+```
+</TypeScriptExample>
+````
+
+
+## `<TypeScriptExample>` Props
+
+### `filename`
+
+**type:** `string`
+
+An optional filename, ending in `.ts`.
+
+`.ts` will be replaced by `.js` for the JavaScript tab.
+
+### `playground`
+
+**type:** `boolean`
+
+If set to `true`, a [`Run Worker in Playground`](/style-guide/components/code/#playground) button will appear on the JavaScript tab.
+
+### `code`
+
+**type**: `object`
+
+Props to pass to the [Expressive Code component](https://expressive-code.com/key-features/code-component/).
+
+These props will apply to both code blocks and so options like `collapse` may not work as expected, as lines may be removed from the TypeScript code.
