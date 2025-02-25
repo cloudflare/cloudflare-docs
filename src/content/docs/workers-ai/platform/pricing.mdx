@@ -17,7 +17,7 @@ You can monitor your Neuron usage in the [Cloudflare Workers AI dashboard](https
 
 All limits reset daily at 00:00 UTC. If you exceed any one of the above limits, further operations will fail with an error.
 
-|              | Free <br/> allocation  | Pricing           |
+|              | Free <br/> allocation  | Pricing                       |
 | ------------ | ---------------------- | ----------------------------- |
 | Workers Free | 10,000 Neurons per day | N/A - Upgrade to Workers Paid |
 | Workers Paid | 10,000 Neurons per day | $0.011 / 1,000 Neurons        |
@@ -27,6 +27,7 @@ All limits reset daily at 00:00 UTC. If you exceed any one of the above limits, 
 Neurons are our way of measuring AI outputs across different models, representing the GPU compute needed to perform your request. Our serverless model allows you to pay only for what you use without having to worry about renting, managing, or scaling GPUs.
 
 ## LLM model pricing
+
 | Model                                        | Price in Tokens                                            | Price in Neurons                                                          |
 | -------------------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------- |
 | @cf/meta/llama-3.2-1b-instruct               | $0.027 per M input tokens <br/> $0.201 per M output tokens | 2457 neurons per M input tokens <br/> 18252 neurons per M output tokens   |
@@ -43,8 +44,10 @@ Neurons are our way of measuring AI outputs across different models, representin
 | @cf/meta/llama-3-8b-instruct                 | $0.282 per M input tokens <br/> $0.827 per M output tokens | 25608 neurons per M input tokens <br/> 75147 neurons per M output tokens  |
 | @cf/meta/llama-3-8b-instruct-awq             | $0.123 per M input tokens <br/> $0.266 per M output tokens | 11161 neurons per M input tokens <br/> 24215 neurons per M output tokens  |
 | @cf/meta/llama-2-7b-chat-fp16                | $0.556 per M input tokens <br/> $6.667 per M output tokens | 50505 neurons per M input tokens <br/> 606061 neurons per M output tokens |
+| @cf/meta/llama-guard-3-8b                    | $0.484 per M input tokens <br/> $0.030 per M output tokens | 44003 neurons per M input tokens <br/> 2730 neurons per M output tokens   |
 
 ## Other model pricing
+
 | Model                                 | Price in Tokens                                            | Price in Neurons                                                         |
 | ------------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------ |
 | @cf/black-forest-labs/flux-1-schnell  | $0.0000528 per 512x512 tile <br/> $0.0001056 per step      | 4.80 neurons per 512x512 tile <br/> 9.60 neurons per step                |
@@ -53,5 +56,5 @@ Neurons are our way of measuring AI outputs across different models, representin
 | @cf/baai/bge-base-en-v1.5             | $0.067 per M input tokens                                  | 6058 neurons per M input tokens                                          |
 | @cf/baai/bge-large-en-v1.5            | $0.204 per M input tokens                                  | 18582 neurons per M input tokens                                         |
 | @cf/meta/m2m100-1.2b                  | $0.342 per M input tokens <br/> $0.342 per M output tokens | 31050 neurons per M input tokens <br/> 31050 neurons per M output tokens |
-| @cf/microsoft/resnet-50               | $2.51 per M images                                   			 | 228055 neurons per M images                                              |
+| @cf/microsoft/resnet-50               | $2.51 per M images                                         | 228055 neurons per M images                                              |
 | @cf/openai/whisper                    | $0.0005 per audio minute                                   | 41.14 neurons per audio minute                                           |
