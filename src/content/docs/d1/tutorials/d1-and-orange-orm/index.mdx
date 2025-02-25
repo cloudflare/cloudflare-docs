@@ -167,12 +167,14 @@ CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 ```
 
 
-You now need to use the `wrangler d1 migrations apply` command to send this SQL statement to D1. This command accepts two options:
+You now need to use the `wrangler d1 migrations apply` command to send this SQL statement to D1. This command accepts two flags:
 
-- `--local`: Executes the statement against a _local_ version of D1. This local version of D1 is a SQLite database file that will be located in the `.wrangler/state` directory of your project. Use this approach when you want to develop and test your Worker on your local machine. Refer to [Local development](/d1/best-practices/local-development/) to learn more.
-- `--remote`: Executes the statement against your _remote_ version of D1. This version is used by your _deployed_ Cloudflare Workers. Refer to [Remote development](/d1/best-practices/remote-development/) to learn more.
+- `--local`: Executes the statement against a local version of D1. This local version of D1 is a SQLite database file that will be located in the `.wrangler/state` directory of your project. Use this approach when you want to develop and test your Worker on your local machine. Refer to [Local development](/d1/best-practices/local-development/) to learn more.
+- `--remote`: Executes the statement against your remote version of D1. This version is used by your deployed Cloudflare Workers. Refer to [Remote development](/d1/best-practices/remote-development/) to learn more.
 
-In this tutorial, you will do local and remote development. You will test the Worker locally and deploy your Worker afterwards. Open your terminal, and run both commands:
+In this tutorial, you will first test the Worker locally, then deploy your Worker afterwards.
+
+4. Open your terminal, and run both commands:
 
 ```sh
 # For the local database
@@ -186,7 +188,7 @@ npx wrangler d1 migrations apply orange-demo-db --remote
 
 Choose `Yes` both times when you are prompted to confirm that the migration should be applied.
 
-Next, create some data that you can query once the Worker is running. This time, you will run the SQL statement without storing it in a file:
+5. Next, create some data that you can query once the Worker is running. This time, you will run the SQL statement without storing it in a file. Run the following commands:
 
 ```sh
 # For the local database
@@ -203,24 +205,7 @@ npx wrangler d1 execute orange-demo-db --command "INSERT INTO  \"User\" (\"email
 To query your database from the Worker using Orange ORM, you need to:
 
 1. Add a `map.ts` to the `src` folder.
-2. Instantiate the orange-orm with the D1 instance .
-3. Send a query using the orange client and return the result.
-
-Create `src/map.ts` with the following content:
-```ts
-import orange from 'orange-orm';
-
-const map = orange.map(x => ({
-  user: x.table('user').map(({ column }) => ({
-    id: column('id').numeric().primary(),
-    email: column('email').string(),
-    name: column('name').string(),    
-  }))
-}));
-
-export default map;
-```
-Open `src/index.ts` and replace the entire content with the following:
+2. Instantiate the orange-orm with the D1 instance. Open `src/index.ts` and replace the entire content with the following:
 
 ```ts
 import map from './map';
@@ -235,15 +220,18 @@ export default {
     return Response.json(users);
   },
 } satisfies ExportedHandler<Env>;
-```
+3. Send a query using the orange client and return the result.
+
 
 ### 6. Run the Worker locally
+
+1. Run the Worker locally by running the following command:
 
 ```sh
 npm run dev
 ```
 
-Open your browser at [`http://localhost:8787`](http://localhost:8787/) to check the result of the database query:
+2. Open your browser at [`http://localhost:8787`](http://localhost:8787/) to check the result of the database query. You should see the following `json` block:
 
 ```json
 [{ "id": 1, "email": "jane@orange-orm.io", "name": "Jane Doe (Local)" }]
