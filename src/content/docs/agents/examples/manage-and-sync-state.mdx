@@ -195,3 +195,54 @@ Learn more about the zero-latency SQL storage that powers both Agents and Durabl
 :::
 
 The SQL API exposed to an Agent is similar to the one [within Durable Objects](/durable-objects/api/sql-storage/): Durable Object SQL methods available on `this.ctx.storage.sql`. You can use the same SQL queries with the Agent's database, create tables, and query data, just as you would with Durable Objects or [D1](/d1/).
+
+### Use Agent state as model context
+
+You can combine the state and SQL APIs in your Agent with its ability to [call AI models](/agents/examples/using-ai-models/) to include historical context within your prompts to a model. Modern Large Language Models (LLMs) often have very large context windows (up to millions of tokens), which allows you to pull relevant context into your prompt directly.
+
+For example, you can use an Agent's built-in SQL database to pull history, query a model with it, and append to that history ahead of the next call to the model:
+
+<TypeScriptExample>
+
+```ts
+export class ReasoningAgent extends Agent<Env> {
+	async callReasoningModel(prompt: Prompt) {
+		let result = this.sql<History>`SELECT * FROM history WHERE user = ${prompt.userId} ORDER BY timestamp DESC LIMIT 1000`;
+		let context = [];
+		for await (const row of result) {
+			context.push(row.entry);
+		}
+
+		const client = new OpenAI({
+			apiKey: this.env.OPENAI_API_KEY,
+		});
+
+		// Combine user history with the current prompt
+		const systemPrompt = prompt.system || 'You are a helpful assistant.';
+		const userPrompt = `${prompt.user}\n\nUser history:\n${context.join('\n')}`;
+
+		try {
+			const completion = await client.chat.completions.create({
+				model: this.env.MODEL || 'o3-mini',
+				messages: [
+					{ role: 'system', content: systemPrompt },
+					{ role: 'user', content: userPrompt },
+				],
+				temperature: 0.7,
+				max_tokens: 1000,
+			});
+
+			// Store the response in history
+			this
+				.sql`INSERT INTO history (timestamp, user, entry) VALUES (${new Date()}, ${prompt.userId}, ${completion.choices[0].message.content})`;
+
+			return completion.choices[0].message.content;
+		} catch (error) {
+			console.error('Error calling reasoning model:', error);
+			throw error;
+		}
+	}
+}
+```
+
+</TypeScriptExample>
