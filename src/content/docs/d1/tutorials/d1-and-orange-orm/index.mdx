@@ -72,6 +72,8 @@ D1 is supported in Orange ORM as of [v4.5.0](https://github.com/alfateam/orange-
 ```sh
 cd orange-d1-example
 npm install orange-orm
+```
+
 You can create a D1 database via the [Cloudflare dashboard](https://dash.cloudflare.com), or via `wrangler`. This tutorial uses the `wrangler` CLI.
 
 ### 3. Create your D1 database
@@ -86,7 +88,7 @@ npx wrangler d1 create orange-demo-db
 
 You should receive the following output on your terminal:
 
-```
+```sh
 ✅ Successfully created DB 'orange-demo-db' in region EEUR
 Created your database using D1's new storage backend. The new storage backend is not yet recommended for production workloads, but backs up your data via
 point-in-time restore.
@@ -218,6 +220,8 @@ const map = orange.map(x => ({
 }));
 
 export default map;
+```
+
 2. Instantiate the orange-orm with the D1 instance. Open `src/index.ts` and replace the entire content with the following:
 
 ```ts
@@ -233,6 +237,8 @@ export default {
     return Response.json(users);
   },
 } satisfies ExportedHandler<Env>;
+```
+
 3. Send a query using the orange client and return the result.
 
 
