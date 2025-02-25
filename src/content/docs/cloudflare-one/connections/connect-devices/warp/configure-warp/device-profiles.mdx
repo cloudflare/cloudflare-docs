@@ -36,8 +36,7 @@ Send a `POST` request to the [Devices endpoint](/api/resources/zero_trust/subres
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/devices/policy \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --header "Content-Type: application/json" \
 --data '{
   "allow_mode_switch": false,

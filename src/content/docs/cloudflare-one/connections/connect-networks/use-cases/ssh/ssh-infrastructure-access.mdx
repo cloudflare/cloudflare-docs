@@ -119,8 +119,7 @@ To delete the SSH encryption public key using the [API](/api/resources/zero_trus
 
 ```sh
 curl --request PUT https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/audit_ssh_settings \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "public_key": ""
 }'

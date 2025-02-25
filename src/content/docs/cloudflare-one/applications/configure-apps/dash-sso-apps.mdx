@@ -74,8 +74,7 @@ If there is an issue with your SSO IdP provider, you can add an alternate IdP us
 
 ```bash title="cURL command"
 curl 'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/identity_providers' \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --header "Content-Type: application/json" \
 --data '{
   "type": "onetimepin",
@@ -87,8 +86,7 @@ curl 'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/identity_
 
 ```bash title="cURL command"
 curl 'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/apps' \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 | jq '.result[] | select(.type == "dash_sso")'
 ```
 
@@ -107,8 +105,7 @@ curl 'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/apps' \
 ```bash title="cURL command"
 curl --request PUT \
 'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/apps/3537a672-e4d8-4d89-aab9-26cb622918a1' \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --header "Content-Type: application/json" \
 --data '{
   "id": "3537a672-e4d8-4d89-aab9-26cb622918a1",
@@ -128,8 +125,7 @@ The following API calls will disable SSO enforcement for an account. This action
 
 ```bash title="cURL command"
 curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/sso/v2/connectors \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>"
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
 ```json title="Response"
@@ -154,8 +150,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/sso/v2/connectors
 ```bash title="cURL command"
 curl --request PATCH \
 'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/sso/v2/connectors/2828' \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --header "Content-Type: application/json" \
 --data '{
   "sso_connector_status": "DIS"

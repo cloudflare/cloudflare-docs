@@ -44,8 +44,7 @@ The [Access authentication logs](/api/resources/zero_trust/subresources/access/s
 
 ```bash title="Request"
 curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/logs/access_requests?limit=25&direction=desc&since=2020-07-01T05:20:00Z&until=2020-10-01T05:20:00Z" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>"
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
 ```json title="Response"
