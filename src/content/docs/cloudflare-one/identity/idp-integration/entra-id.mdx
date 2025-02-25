@@ -19,31 +19,31 @@ The following Entra ID values are required to set up the integration:
 
 To retrieve those values:
 
-1. Log in to the [Azure dashboard](https://portal.azure.com/).
+1.  Log in to the [Azure dashboard](https://portal.azure.com/).
 
-2. Go to **All services** > **Microsoft Entra ID**.
+2.  Go to **All services** > **Microsoft Entra ID**.
 
-3. In the sidebar, go to **Manage** > **Enterprise applications**.
+3.  In the sidebar, go to **Manage** > **Enterprise applications**.
 
-4. Select **New application**, then select **Create your own application**.
+4.  Select **New application**, then select **Create your own application**.
 
-5. Name your application.
+5.  Name your application.
 
-6. Select **Register an application to integrate with Microsoft Entra ID (App you're developing)** and then select **Create**.
+6.  Select **Register an application to integrate with Microsoft Entra ID (App you're developing)** and then select **Create**.
 
-7. Under **Redirect URI**, select the _Web_ platform and enter the following URL:
+7.  Under **Redirect URI**, select the _Web_ platform and enter the following URL:
 
-   ```txt
-   https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
-   ```
+    ```txt
+    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
+    ```
 
-   You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
+    You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
 
-   ![Registering an application in Azure](~/assets/images/cloudflare-one/identity/azure/name-app.png)
+    ![Registering an application in Azure](~/assets/images/cloudflare-one/identity/azure/name-app.png)
 
-8. Select **Register**.
+8.  Select **Register**.
 
-9. Next, return to Microsoft Entra ID and go to go to **Manage** > **App registrations**.
+9.  Next, return to Microsoft Entra ID and go to go to **Manage** > **App registrations**.
 
 10. Select the app you just created. Copy the **Application (client) ID** and **Directory (tenant) ID**.
 
@@ -53,11 +53,9 @@ To retrieve those values:
 
 12. Name the client secret and choose an expiration period.
 
-:::note
-
-When the client secret expires, users will be unable to log in through Access. Take note of your expiry date to prevent login errors and renew your client secret when necessary.
-
-:::
+    :::note
+    When the client secret expires, users will be unable to log in through Access. Take note of your expiry date to prevent login errors and renew your client secret when necessary.
+    :::
 
 13. After the client secret is created, copy its **Value** field. Store the client secret in a safe place, as it can only be viewed immediately after creation.
 
@@ -118,27 +116,28 @@ To [test](/cloudflare-one/identity/idp-integration/#test-idps-in-zero-trust) tha
 
 </TabItem> <TabItem label="API">
 
-1. [Create an API token](/fundamentals/api/get-started/create-token/) with the following permissions:
-		| Type    | Item             | Permission |
-		| ------- | ---------------- | ---------- |
-		| Account | Access: Organizations, Identity Providers, and Groups   | Edit    |
+1.  [Create an API token](/fundamentals/api/get-started/create-token/) with the following permissions:
 
-2. Make a `POST` request to the [Identity Providers](/api/resources/zero_trust/subresources/identity_providers/methods/create/) endpoint:
+        | Type    | Item                                                  | Permission |
+        | ------- | ----------------------------------------------------- | ---------- |
+        | Account | Access: Organizations, Identity Providers, and Groups | Edit       |
 
-		```sh
-		curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/identity_providers \
-		--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-		--data '{
-			"name": "Entra ID example",
-			"type": "azureAD",
-			"config": {
-			  "client_id": "<your client id>",
-		    "client_secret": "<your client secret>",
-		    "directory_id": "<your azure directory uuid>",
-		    "support_groups": true
-			}
-		}'
-		```
+2.  Make a `POST` request to the [Identity Providers](/api/resources/zero_trust/subresources/identity_providers/methods/create/) endpoint:
+
+        ```sh
+        curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/identity_providers \
+        --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+        --data '{
+        	"name": "Entra ID example",
+        	"type": "azureAD",
+        	"config": {
+        	  "client_id": "<your client id>",
+            "client_secret": "<your client secret>",
+            "directory_id": "<your azure directory uuid>",
+            "support_groups": true
+        	}
+        }'
+        ```
 
 </TabItem> <TabItem label="Terraform">
 
@@ -146,12 +145,13 @@ To [test](/cloudflare-one/identity/idp-integration/#test-idps-in-zero-trust) tha
 The following example requires Cloudflare provider version `>=4.40.0`.
 :::
 
-1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
-	- `Access: Organizations, Identity Providers, and Groups Write`
+1.  Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
 
-2. Configure the [`cloudflare_zero_trust_access_identity_provider`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_identity_provider) resource:
+    - `Access: Organizations, Identity Providers, and Groups Write`
 
-		<Render file="access/entra-id-terraform" />
+2.  Configure the [`cloudflare_zero_trust_access_identity_provider`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_identity_provider) resource:
+
+        <Render file="access/entra-id-terraform" />
 
 </TabItem> </Tabs>
 
@@ -185,7 +185,7 @@ The Microsoft Entra ID integration allows you to synchronize IdP groups and auto
 
 <Render
 	file="access/enable-scim-on-dashboard"
-	params={{ idp: "Entra ID", supportgroups: "Support groups"}}
+	params={{ idp: "Entra ID", supportgroups: "Support groups" }}
 />
 
 ### 2. Configure SCIM in Entra ID
@@ -274,11 +274,12 @@ Access and Gateway policies for an Entra group will also apply to all [nested gr
 You can require users to re-enter their credentials into Entra ID whenever they [re-authenticate their WARP session](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/). To configure this setting:
 
 1. Make a `GET` request to the [Identity Providers endpoint](/api/resources/zero_trust/subresources/identity_providers/) and copy the response for the Entra ID identity provider.
-2. [Update the Entra ID identity provider](/api/resources/zero_trust/subresources/identity_providers/methods/update/) using a `PUT` request. In the request body, include all existing configurations and set the `prompt` parameter to either `login` or `select_account`. For example,
+2. [Update the Entra ID identity provider](/api/resources/zero_trust/subresources/identity_providers/methods/update/) using a `PUT` request. In the request body, include all existing configurations and set the `prompt` parameter to either `login` or `select_account`. For example:
+
    ```sh {17}
    curl --request PUT \
-   https://api.cloudflare.com/client/v4/accounts/{account_id}/access/identity_providers/{identity_provider_id} \
-   --header "Authorization: Bearer <API_TOKEN>" \
+   https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/identity_providers/$IDENTITY_PROVIDER_ID \
+   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
    --header "Content-Type: application/json" \
    --data '{
    		"id": "f174e90a-fafe-4643-bbbc-4a0ed4fc8415",
