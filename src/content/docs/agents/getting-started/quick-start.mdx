@@ -7,7 +7,7 @@ sidebar:
 
 ---
 
-import { Render, PackageManagers, TypeScriptExample, WranglerConfig } from "~/components"
+import { Render, FileTree, PackageManagers, TypeScriptExample, WranglerConfig } from "~/components"
 
 :::note
 
@@ -17,26 +17,30 @@ If you're new to Cloudflare Workers, Agents, or Cloudflare in general, we recomm
 
 :::
 
-TODO: quick start
-
-1. Use the template to create a new project
-2. Open `src/index.ts`
-3. Get familiar with it
-4. Add some functionality (example)
-5. Deploy it.
-
 ## Prerequisites
 
 <Render file="prereqs" product="workers" />
 
-## 1. Create an Agents project
+## 1. Create a new Agent
 
+You can get started by using the `cloudflare/agents-starter` template to create a new project:
 
 <PackageManagers
 	type="create"
 	pkg="cloudflare@latest"
-	args={"--", "--template", "agents"}
+	args={"--", "my-agent", "--template", "cloudflare/agents-starter"}
 />
+
+This will create a new directory called `my-agent` with a number of files, but there are three we need to focus on:
+
+<FileTree>
+- src
+  - **index.ts** **where your Agent's code is defined**
+- **wrangler.jsonc** project configuration
+- test
+	- index.spec.ts test definitions
+- ...
+</FileTree>
 
 TODO:
 
@@ -56,17 +60,6 @@ Open up `src/index.ts` in your favorite text editor:
 import { Agent } from "@cloudflare/agents";
 
 export class MyAgent extends Agent {
-  async onRequest(request) {
-  	// Code that your Agent runs on a request
-  },
-
-
-  async schedule(when, callback, payload) {
-  	// Code that your Agent runs on a schedule
-  },
-
-
-
 
 }
 ```
@@ -90,4 +83,10 @@ TODO
 
 ## 5. Build out your Agent
 
-TODO
+OK, so you have an Agent deployed and running. What's next?
+
+- Understand more about the [Agent framework API](/agents/api-reference/sdk/)
+- [Call AI models](/agents/examples/using-ai-models/) from your Agent
+- Learn how to [persist state to and query data stored in](/agents/examples/manage-and-sync-state/) your Agent
+- Run [scheduled tasks](/agents/examples/schedule-tasks/)
+- Trigger [asynchronous workflows](/agents/examples/run-workflows/) that your Agent can co-ordinate and manage
