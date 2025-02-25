@@ -14,7 +14,7 @@ Every Agent has built-in state management capabilities, including built-in stora
 * Immediately consistent within the Agent: read your own writes.
 * Thread-safe for concurrent updates
 
-Agent state is stored in SQL database that embedded within each individual Agent instance: you can interact with it using the higher-level `this.setState` API (recommended) or by directly querying the database with `this.sql`.
+Agent state is stored in a SQL database that is embedded within each individual Agent instance: you can interact with it using the higher-level `this.setState` API (recommended) or by directly querying the database with `this.sql`.
 
 #### State API
 
@@ -247,5 +247,5 @@ export class ReasoningAgent extends Agent<Env> {
 
 </TypeScriptExample>
 
-This works because each instance of an Agent has its _own_ database, the state stored in that database is private to that Agent: whether it's acting on behalf of a single user, a room or channel, or a deep research tool. You don't have to manage contention or reach out over the network to a centralized database to retrieve and store state by default.
+This works because each instance of an Agent has its _own_ database, the state stored in that database is private to that Agent: whether it's acting on behalf of a single user, a room or channel, or a deep research tool. By default, you don't have to manage contention or reach out over the network to a centralized database to retrieve and store state.
 
