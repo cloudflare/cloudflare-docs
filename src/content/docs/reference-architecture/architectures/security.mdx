@@ -33,7 +33,7 @@ description: This document provides insight into how this network and platform
 updated: 2024-06-19
 ---
 
-import { Render } from "~/components";
+import { Render, PublicStats } from "~/components";
 
 ## Introduction
 
@@ -58,7 +58,7 @@ To build a stronger baseline understanding of Cloudflare, we recommend the follo
 
 ## Secure global network
 
-Any cloud security solution needs to be fast and always available. Our network protects over 20% of Internet web properties, operates in over 320 cities, and is 50 ms away from 95% of the Internet-connected population. Each server in each data center runs every service, so that traffic is inspected in one pass and acted upon close to the end user. These servers are connected together by over 13,000 network peering relationships with a total network capacity of 280 Tbps. Cloudflare’s network is also connected to [every Internet exchange](https://bgp.he.net/report/exchanges#_participants) (more than Microsoft, AWS, and Google) to ensure that we are able to peer traffic from any part of the Internet.
+Any cloud security solution needs to be fast and always available. Our network protects over 20% of Internet web properties, operates in <PublicStats id="data_center_cities" />, and is 50 ms away from 95% of the Internet-connected population. Each server in each data center runs every service, so that traffic is inspected in one pass and acted upon close to the end user. These servers are connected together by <PublicStats id="network_peers" /> with <PublicStats id="total_bandwidth" />. Cloudflare’s network is also connected to [every Internet exchange](https://bgp.he.net/report/exchanges#_participants) (more than Microsoft, AWS, and Google) to ensure that we are able to peer traffic from any part of the Internet.
 
 With millions of customers using Cloudflare, the network serves over [57 million HTTP requests](https://radar.cloudflare.com/traffic) per second on average, with more than 77 million HTTP requests per second at peak. As we analyze all this traffic, we detect and block an average of [209 billion cyber threats each day](https://radar.cloudflare.com/security-and-attacks). This network runs at this massive scale to ensure that customers using our security products experience low latency, access to high bandwidth, and a level of reliability that ensures the ongoing security of their business. (Note metrics are correct as of June 2024.)
 
@@ -461,7 +461,7 @@ If you build and host your own SaaS product offering, then [Cloudflare for SaaS]
 
 [Magic Transit](/magic-transit/) protects entire IP subnets from DDoS attacks, providing for sub-second threat detection while also accelerating network traffic. It uses Cloudflare’s global network to mitigate attacks, employing standards-based networking protocols like BGP, GRE, and IPsec for routing and encapsulation.
 
-All network assets, whether on-premises or in private or public-hosted cloud environments, can easily be protected by sitting behind and being advertised from the Cloudflare network providing for over 280 Tbps of network capacity.
+All network assets, whether on-premises or in private or public-hosted cloud environments, can easily be protected by sitting behind and being advertised from the Cloudflare network providing <PublicStats id="total_bandwidth" />.
 
 ![Magic Transit can secure your private network links.](~/assets/images/reference-architecture/security/security-ref-arch-16.svg)
 

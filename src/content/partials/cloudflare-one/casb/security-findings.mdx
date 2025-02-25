@@ -1,7 +1,9 @@
 ---
-inputParameters: integrationName;;slugRelativePath
+params:
+  - integrationName
+  - slugRelativePath
 ---
 
-The {props.one} integration currently scans for the following findings, or security risks. Findings are grouped by category and then ordered by [severity level](/cloudflare-one/applications/casb/manage-findings/#severity-levels).
+The {props.integrationName} integration currently scans for the following findings, or security risks. Findings are grouped by category and then ordered by [severity level](/cloudflare-one/applications/casb/manage-findings/#severity-levels).
 
-To stay up-to-date with new CASB findings as they are added, bookmark this page or subscribe to its <a href={`https://github.com/cloudflare/cloudflare-docs/commits/production/src/content/docs/cloudflare-one/applications/casb/casb-integrations/${props.two}.mdx.atom`}>RSS feed</a>.
+To stay up-to-date with new CASB findings as they are added, bookmark this page or subscribe to its <a href={`https://github.com/cloudflare/cloudflare-docs/commits/production/src/content/docs/cloudflare-one/applications/casb/casb-integrations/${props.slugRelativePath}.mdx.atom`}>RSS feed</a>.

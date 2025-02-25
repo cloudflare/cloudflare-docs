@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Render } from "~/components";
+import { Tabs, TabItem, Render } from '~/components';
 
 Cloudflare Access can send a one-time PIN (OTP) to approved email addresses as an alternative to integrating an identity provider. You can simultaneously configure OTP login and the identity provider of your choice to allow users to select their own authentication method.
 
@@ -15,7 +15,35 @@ For example, if your team uses Okta but you are collaborating with someone outsi
 
 ## Set up OTP
 
-<Render file="access/one-time-pin" />
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
+2. Under **Login methods**, select **Add new**.
+3. Select **One-time PIN**.
+
+</TabItem> <TabItem label="Terraform (v4)">
+
+:::note[Provider versions]
+The following example requires Cloudflare provider version `>=4.40.0`.
+:::
+
+1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.40.0/docs/resources/api_token):
+	- `Access: Organizations, Identity Providers, and Groups Write`
+
+2. Configure the [`cloudflare_zero_trust_access_identity_provider`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.40.0/docs/resources/zero_trust_access_identity_provider) resource:
+
+		```tf
+		resource "cloudflare_zero_trust_access_identity_provider" "onetimepin_login" {
+			account_id = var.cloudflare_account_id
+			name       = "One-time PIN login"
+			type       = "onetimepin"
+		}
+		```
+</TabItem> </Tabs>
+
+:::tip
+If your organization uses a third-party email scanning service (for example, Mimecast or Barracuda), add `noreply@notify.cloudflare.com` to the email scanning allowlist.
+:::
 
 To grant a user access to an application, simply add their email address to an [Access policy](/cloudflare-one/policies/access/policy-management/#create-a-policy).
 

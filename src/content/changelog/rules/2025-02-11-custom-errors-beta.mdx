@@ -1,0 +1,52 @@
+---
+title: "Custom Errors (beta): Stored Assets & Account-level Rules"
+description: Cloudflare introduces Custom Errors (beta), building on Custom Error Responses with new asset storage capabilities
+products:
+  - rules
+date: 2025-02-11T11:00:00Z
+---
+
+We're introducing [Custom Errors](/rules/custom-errors/) (beta), which builds on our existing Custom Error Responses feature with new asset storage capabilities.
+
+This update allows you to store externally hosted error pages on Cloudflare and reference them in custom error rules, eliminating the need to supply inline content.
+
+This brings the following new capabilities:
+
+- **Custom error assets** – Fetch and store external error pages at the edge for use in error responses.
+- **Account-Level custom errors** – Define error handling rules and assets at the account level for consistency across multiple zones. Zone-level rules take precedence over account-level ones, and assets are not shared between levels.
+
+You can use Cloudflare API to upload your existing assets for use with Custom Errors:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_pages/assets" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header 'Content-Type: application/json' \
+--data '{
+  "name": "maintenance",
+  "description": "Maintenance template page",
+  "url": "https://example.com/"
+}'
+```
+
+You can then reference the stored asset in a Custom Error rule:
+
+```bash
+curl --request PUT \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_custom_errors/entrypoint" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header 'Content-Type: application/json' \
+--data '{
+  "rules": [
+		{
+			"action": "serve_error",
+			"action_parameters": {
+				"asset_name": "maintenance",
+				"content_type": "text/html",
+				"status_code": 503
+			},
+			"enabled": true,
+			"expression": "http.request.uri.path contains \"error\""
+		}
+	]
+}'
+```

@@ -1,0 +1,159 @@
+---
+link: "/ai-gateway/changelog/"
+productName: AI Gateway
+productLink: "/ai-gateway/"
+productArea: Developer platform
+productAreaLink: /workers/platform/changelog/platform/
+entries:
+  - publish_date: "2025-02-19"
+    title: Updated Log Storage Settings
+    description: |-
+      Introduced customizable log storage settings, enabling users to:
+        - Define the maximum number of logs stored per gateway.
+        - Choose how logs are handled when the storage limit is reached:
+          - **On** - Automatically delete the oldest logs to ensure new logs are always saved.
+          - **Off** - Stop saving new logs when the storage limit is reached.
+
+  - publish_date: "2025-02-06"
+    title: Added request handling
+    description: |-
+      * Added [request handling options](/ai-gateway/configuration/request-handling/) to help manage AI provider interactions effectively, ensuring your applications remain responsive and reliable.
+
+  - publish_date: "2025-02-05"
+    title: New AI Gateway providers
+    description: |-
+      * **Configuration**: Added [ElevenLabs](https://elevenlabs.io/), [Cartesia](https://docs.cartesia.ai/), and [Cerebras](https://inference-docs.cerebras.ai/) as new providers.
+
+  - publish_date: "2025-01-02"
+    title: DeepSeek
+    description: |-
+      * **Configuration**: Added [DeepSeek](/ai-gateway/providers/deepseek/) as a new provider.
+
+  - publish_date: "2024-12-17"
+    title: AI Gateway Dashboard
+    description: |-
+      * Updated dashboard to view performance, costs, and stats across all gateways.
+
+  - publish_date: "2024-12-13"
+    title: Bug Fixes
+    description: |-
+      * **Bug Fixes**: Fixed Anthropic errors being cached.
+      * **Bug Fixes**: Fixed `env.AI.run()` requests using authenticated gateways returning authentication error.
+
+  - publish_date: "2024-11-28"
+    title: OpenRouter
+    description: |-
+      * **Configuration**: Added [OpenRouter](/ai-gateway/providers/openrouter/) as a new provider.
+
+  - publish_date: "2024-11-19"
+    title: WebSockets API
+    description: |-
+      * **Configuration**: Added [WebSockets API](/ai-gateway/configuration/websockets-api/) which provides a single persistent connection, enabling continuous communication.
+  - publish_date: "2024-11-19"
+    title: Authentication
+    description: |-
+      * **Configuration**: Added [Authentication](/ai-gateway/configuration/authentication/) which adds security by requiring a valid authorization token for each request.
+
+  - publish_date: "2024-10-28"
+    title: Grok
+    description: |-
+      * **Providers**: Added [Grok](/ai-gateway/providers/grok/) as a new provider.
+
+  - publish_date: "2024-10-17"
+    title: Vercel SDK
+    description: |-
+      Added [Vercel AI SDK](https://sdk.vercel.ai/). The SDK supports many different AI providers, tools for streaming completions, and more.
+
+  - publish_date: "2024-09-26"
+    title: Persistent logs
+    description: |-
+      * **Logs**: AI Gateway now has [logs that persist](/ai-gateway/observability/logging/index), giving you the flexibility to store them for your preferred duration.
+
+  - publish_date: "2024-09-26"
+    title: Logpush
+    description: |-
+      * **Logs**: Securely export logs to an external storage location using [Logpush](/ai-gateway/observability/logging/logpush).
+
+  - publish_date: "2024-09-26"
+    title: Pricing
+    description: |-
+      * **Pricing**: Added [pricing](/ai-gateway/reference/pricing/) for storing logs persistently.
+
+  - publish_date: "2024-09-26"
+    title: Evaluations
+    description: |-
+      * **Configurations**: Use AI Gateway’s [Evaluations](/ai-gateway/evaluations) to make informed decisions on how to optimize your AI application.
+
+  - publish_date: "2024-09-10"
+    title: Custom costs
+    description: |-
+      * **Configuration**: AI Gateway now allows you to set custom costs at the request level [custom costs](/ai-gateway/configuration/custom-costs/) to requests, accurately reflect your unique pricing, overriding the default or public model costs.
+
+  - publish_date: "2024-08-02"
+    title: Mistral AI
+    description: |-
+      * **Providers**: Added [Mistral AI](/ai-gateway/providers/mistral/) as a new provider.
+
+  - publish_date: "2024-07-23"
+    title: Google AI Studio
+    description: |-
+      * **Providers**: Added [Google AI Studio](/ai-gateway/providers/google-ai-studio/) as a new provider.
+
+  - publish_date: "2024-07-10"
+    title: Custom metadata
+    description: |-
+      AI Gateway now supports adding [custom metadata](/ai-gateway/configuration/custom-metadata/) to requests, improving tracking and analysis of incoming requests.
+
+  - publish_date: "2024-07-09"
+    title: Logs
+    description: |-
+      [Logs](/ai-gateway/observability/analytics/#logging) are now available for the last 24 hours.
+
+  - publish_date: "2024-06-24"
+    title: Custom cache key headers
+    description: |-
+      AI Gateway now supports [custom cache key headers](/ai-gateway/configuration/caching/#custom-cache-key-cf-aig-cache-key).
+
+  - publish_date: "2024-06-18"
+    title: Access an AI Gateway through a Worker
+    description: |-
+      Workers AI now natively supports [AI Gateway](/ai-gateway/providers/workersai/#worker).
+
+  - publish_date: "2024-05-22"
+    title: AI Gateway is now GA
+    description: |-
+      AI Gateway is moving from beta to GA.
+
+  - publish_date: "2024-05-16"
+
+    description: |-
+      * **Providers**: Added [Cohere](/ai-gateway/providers/cohere/) and [Groq](/ai-gateway/providers/groq/) as new providers.
+
+  - publish_date: "2024-05-09"
+
+    description: |-
+      * Added new endpoints to the [REST API](/api/resources/ai_gateway/methods/create/).
+
+  - publish_date: "2024-03-26"
+
+    description: |-
+      * [LLM Side Channel vulnerability fixed](https://blog.cloudflare.com/ai-side-channel-attack-mitigated)
+      * **Providers**: Added Anthropic, Google Vertex, Perplexity as providers.
+
+  - publish_date: "2023-10-26"
+
+    description: |-
+      * **Real-time Logs**: Logs are now real-time, showing logs for the last hour. If you have a need for persistent logs, please let the team know on Discord. We are building out a persistent logs feature for those who want to store their logs for longer.
+      * **Providers**: Azure OpenAI is now supported as a provider!
+      * **Docs**: Added Azure OpenAI example.
+      * **Bug Fixes**: Errors with costs and tokens should be fixed.
+
+  - publish_date: "2023-10-09"
+
+    description: |-
+      * **Logs**: Logs will now be limited to the last 24h. If you have a use case that requires more logging, please reach out to the team on Discord.
+      * **Dashboard**: Logs now refresh automatically.
+      * **Docs**: Fixed Workers AI example in docs and dash.
+      * **Caching**: Embedding requests are now cacheable. Rate limit will not apply for cached requests.
+      * **Bug Fixes**: Identical requests to different providers are not wrongly served from cache anymore. Streaming now works as expected, including for the Universal endpoint.
+      * **Known Issues**: There's currently a bug with costs that we are investigating.

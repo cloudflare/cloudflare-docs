@@ -7,217 +7,232 @@ title: Troubleshooting Cloudflare 10XXX errors
 
 ## Error 10028: The add list items operation contains duplicate items
 
-This error occurs when there are duplicate list items in a single operation to add items to a List (either an IP list or a Bulk Redirect List).
+This error indicates that the operation to add items to a list contains duplicate entries within the same request.
 
-This error can happen when you:
+### Common causes
 
-* Add a repeated IP address to an IP list
-* Add a repeated source URL to a Bulk Redirect List
+This error occurs when there are duplicate list items in a single operation to add items to a List (either an IP list or a Bulk Redirect List). This error can happen when you:
 
-### **Resolution**
+- Add a repeated IP address to an IP list
+- Add a repeated source URL to a Bulk Redirect List
 
-Remove the duplicate item and try again.
+### Resolution
 
-***
+You need to remove the duplicate item and try again.
 
 ## Error 10043: Source URL in redirect is too long
 
-This error occurs when the source URL value of a URL redirect is too long. The maximum length of a source URL is 32,768 characters.
+This error indicates that the source URL in a redirect exceeds the maximum allowed length.
 
-### **Resolution**
+### Common causes
 
-Use a shorter URL as the source URL.
+This error occurs when the source URL value of a URL redirect is too long. The maximum length of a source URL is 32,768 characters. Possible causes of this error are:
 
-***
+- Dynamic URLs that contain excessive query parameters or tracking codes.
+- Unnecessary path segments or redundant subdirectories in the URL.
+
+### Resolution
+
+You need to use a shorter URL as the source URL.
 
 ## Error 10044: Target URL in redirect is too long
 
-This error occurs when the target URL value of a URL redirect is too long. The maximum length of a target URL is 32,768 characters.
+This error indicates that the target URL in a redirect exceeds the maximum allowed length.
 
-### **Resolution**
+### Common causes
 
-Use a shorter URL as the target URL.
+This error occurs when the target URL value of a URL redirect is too long. The maximum length of a target URL is 32,768 characters. Possible causes of this error are:
 
-***
+- Dynamic URLs that contain excessive query parameters or tracking codes.
+- Unnecessary path segments or redundant subdirectories in the URL.
+
+### Resolution
+
+You need to use a shorter URL as the target URL.
 
 ## Error 10045: Invalid redirect source URL
 
-This error occurs when you specify a source URL of a URL redirect that is not a valid URL.
+This error indicates that the source URL for a redirect is not valid.
 
-### **Resolution**
+### Common causes 
 
-Specify a valid URL as the source URL.
+This error occurs when the source URL provided for a URL redirect is not valid, preventing the redirect from functioning properly due to missing components, such as the scheme (for instance, `http` or `https`) or improper formatting. 
 
-Refer to [Supported URL components in Bulk Redirects](/rules/url-forwarding/bulk-redirects/reference/url-components/) for details on the supported URL components for redirect source URLs.
+### Resolution
 
-***
+You need to specify a valid URL as the source URL. Refer to [Supported URL components in Bulk Redirects](/rules/url-forwarding/bulk-redirects/reference/url-components/) for details on the supported URL components for redirect source URLs.
 
 ## Error 10046: Invalid redirect target URL
 
-This error occurs when you specify a target URL of a URL redirect that is not a valid URL.
+This error indicates that the target URL provided for a URL redirect is not valid.
 
-### **Resolution**
+### Common causes
 
-Specify a valid URL as the target URL.
+This error occurs when the target URL provided for a URL redirect is not valid, preventing the redirect from functioning properly due to missing components, such as the scheme (for instance, `http` or `https`) or improper formatting.
 
-Refer to [Supported URL components in Bulk Redirects](/rules/url-forwarding/bulk-redirects/reference/url-components/) for details on the supported URL components for redirect target URLs.
+### Resolution
 
-***
+You need to specify a valid URL as the target URL. Refer to [Supported URL components in Bulk Redirects](/rules/url-forwarding/bulk-redirects/reference/url-components/) for details on the supported URL components for redirect target URLs.
 
 ## Error 10047: Invalid redirect status code
 
-This error occurs when you specify a URL redirect status code that is not supported. 
+This error indicates that an unsupported or incorrectly formatted status code was specified for the URL redirect.
 
-### **Resolution**
+### Common causes
+
+This error occurs when you specify a URL redirect status code that is not supported, typically due to entering an invalid number or using an unsupported or deprecated status code.
+
+### Resolution
 
 Use one of the supported status codes in the URL redirect: `301`, `302`, `307`, or `308`.
 
-***
-
 ## Error 10048: Preserve path suffix requires subpath matching enabled
 
-This error occurs when you enable the **Preserve path suffix** option in a redirect without enabling the **Subpath matching** option.
+This error indicates a configuration mismatch where the **Preserve path suffix** option is used without enabling **Subpath matching** in a URL redirect.
 
-The **Preserve path suffix** option of a URL redirect is only applicable when the **Subpath matching** option is also enabled. 
+### Common causes
 
-### **Resolution**
+This error occurs when you enable the **Preserve path suffix** option in a redirect without enabling the **Subpath matching** option. The **Preserve path suffix** option of a URL redirect is only applicable when the **Subpath matching** option is also enabled.
+
+### Resolution
 
 Enable **Subpath matching** for the URL redirect with **Preserve path suffix** enabled.
 
-***
-
 ## Error 10049: Invalid scheme in redirect source URL
 
-This error occurs when the source URL of a URL redirect has an invalid scheme.
+This error indicates that the source URL's scheme is invalid.
 
-**Resolution**
+### Common causes
 
-Review the source URL and ensure that it uses one of the supported schemes: `http`, `https`, or empty (no scheme information, which means that it applies to both schemes).
+This error occurs when the source URL of a URL redirect has an invalid scheme, which may be due to a misspelled or unsupported scheme or because the scheme is missing or improperly formatted.
 
-Refer to [Supported URL components in Bulk Redirects](/rules/url-forwarding/bulk-redirects/reference/url-components/) for details on the supported URL components for redirect source URLs.
+### Resolution
 
-***
+Review the source URL and ensure that it uses one of the supported schemes: `http`, `https`, or empty (no scheme information, which means that it applies to both schemes). Refer to [Supported URL components in Bulk Redirects](/rules/url-forwarding/bulk-redirects/reference/url-components/) for details on the supported URL components for redirect source URLs.
 
 ## Error 10050: Invalid redirect source URL with user info
 
+This error indicates that the source URL includes unsupported user information.
+
+### Common causes
+
 This error occurs when the source URL of a URL redirect includes a user info component (for example, `https://user:password@example.com`), which is not supported.
 
-### **Resolution**
+### Resolution
 
-Remove the user info component from the redirect source URL.
-
-Refer to [Supported URL components in Bulk Redirects](/rules/url-forwarding/bulk-redirects/reference/url-components/) for details on the supported URL components for redirect source URLs.
-
-***
+You need to remove the user information component from the redirect source URL. Refer to [Supported URL components in Bulk Redirects](/rules/url-forwarding/bulk-redirects/reference/url-components/) for details on the supported URL components for redirect source URLs.
 
 ## Error 10051: Missing authority in redirect source URL
 
+This error indicates that the source URL is missing a required authority component.
+
+### Common causes
+
 This error occurs when the source URL of a URL redirect does not include an authority component (for example, `http:///path`, without a hostname), which is mandatory.
 
-### **Resolution**
+### Resolution
 
-Add an authority component to the redirect source URL (for example, include a hostname).
-
-Refer to [Supported URL components in Bulk Redirects](/rules/url-forwarding/bulk-redirects/reference/url-components/) for details on the required URL components for redirect source URLs.
-
-***
+Add an authority component to the redirect source URL (for example, include a hostname). Refer to [Supported URL components in Bulk Redirects](/rules/url-forwarding/bulk-redirects/reference/url-components/) for details on the required URL components for redirect source URLs.
 
 ## Error 10052: Invalid redirect source URL with port
 
-This error occurs when the source URL of a URL redirect includes a port (for example, `https://example.com:8081`), which is not supported.
+This error indicates that the source URL includes an unsupported port.
 
-### **Resolution**
+### Common causes
 
-Remove the port from the redirect source URL.
+This error occurs when the source URL of a URL redirect includes a port (for example, `https://example.com:8081`), which is not supported. Possible causes include using a custom or non-standard port, copying a URL from another environment that includes a port, or mistakenly using a development or testing URL.
 
-Refer to [Supported URL components in Bulk Redirects](/rules/url-forwarding/bulk-redirects/reference/url-components/) for details on the supported URL components for redirect source URLs.
+### Resolution
 
-***
+Remove the port from the redirect source URL. Refer to [Supported URL components in Bulk Redirects](/rules/url-forwarding/bulk-redirects/reference/url-components/) for details on the supported URL components for redirect source URLs.
 
 ## Error 10053: Invalid redirect source URL with query string
 
-This error occurs when the source URL of a URL redirect includes a query string component, which is not supported.
+This error indicates that the source URL contains an unsupported query string component.
 
-### **Resolution**
+### Common causes
 
-Remove the query string from the redirect source URL.
+This error occurs when the source URL of a URL redirect includes a query string component, which is not supported. Possible causes include copying a URL with query parameters, misconfiguration during setup, or attempting to redirect based on query parameters instead of the path.
 
-Refer to [Supported URL components in Bulk Redirects](/rules/url-forwarding/bulk-redirects/reference/url-components/) for details on the supported URL components for redirect source URLs.
+### Resolution
 
-***
+Remove the query string from the redirect source URL. Refer to [Supported URL components in Bulk Redirects](/rules/url-forwarding/bulk-redirects/reference/url-components/) for details on the supported URL components for redirect source URLs.
 
 ## Error 10054: Invalid redirect source URL with fragment
 
-This error occurs when the source URL of a URL redirect includes a fragment component (for example, `https://example.com/search/#fragment`).
+This error indicates that the source URL includes an unsupported fragment component.
 
-Fragment components are not part of an HTTP request; they are an indication for the browser to scroll to a specific location once the page has loaded.
+### Common causes
 
-### **Resolution**
+This error occurs when the source URL of a URL redirect includes a fragment component (for example, `https://example.com/search/#fragment`). Fragment components are not part of an HTTP request; they are an indication for the browser to scroll to a specific location once the page has loaded. Possible causes of this error include copying a URL with a fragment from a browser or external source, or inadvertently adding a fragment during URL configuration or editing.
 
-Remove the fragment from the redirect source URL.
+### Resolution
 
-Refer to [Supported URL components in Bulk Redirects](/rules/url-forwarding/bulk-redirects/reference/url-components/) for details on the supported URL components for redirect source URLs.
-
-***
+Remove the fragment from the redirect source URL. Refer to [Supported URL components in Bulk Redirects](/rules/url-forwarding/bulk-redirects/reference/url-components/) for details on the supported URL components for redirect source URLs.
 
 ## Error 10055: Query string settings incompatible with redirect target URL
 
+This error indicates a conflict between the **Preserve query string** option and the query string in the redirect target URL.
+
+### Common causes
+
 This error occurs when you enable the **Preserve query string** option of a URL redirect, but also provide a query string in the redirect target URL. In this case, the URL redirect would have conflicting configuration on how to handle the query string of incoming requests.
 
-### **Resolution**
+### Resolution
 
-Perform one of the following:
-
-* Disable the **Preserve query string** option in the URL redirect
-* Remove the query string component from the redirect target URL
-
-***
+To resolve this issue, either disable the **Preserve query string** option in the URL redirect or remove the query string component from the redirect target URL to eliminate the conflict.
 
 ## Error 10056: The add list items operation contains different types of list items
 
-This error occurs when there are different types of list items (for example, IP addresses, hostnames, and URL redirects) in a single operation to add items to a list. The error may occur for an IP list, a hostname list, or a Bulk Redirect List.
+This error indicates that different types of list items were combined in a single add operation.
 
-### **Resolution**
+### Common causes
+
+This error occurs when different types of list items (such as IP addresses, hostnames, and URL redirects) are included in a single operation to add items to a list. It can occur with an IP list, a hostname list, or a Bulk Redirect List.
+
+### Resolution
 
 Remove the list items that do not apply to the list type. This means:
 
-* Removing IP addresses from a request to add items to a Bulk Redirect List
-* Removing URL redirects from a request to add items to an IP list
-
-***
+- Removing IP addresses from a request to add items to a Bulk Redirect List.
+- Removing URL redirects from a request to add items to an IP list.
 
 ## Error 10058: List items incompatible with list type
 
+This error indicates that incompatible items were added to the wrong list type.
+
+### Common causes
+
 This error occurs when you are adding items to a list (either IP list, hostname list, or Bulk Redirect List) and the list items are incompatible with the list type.
 
-### **Resolution**
+### Resolution
 
 Make sure you are adding the items to the correct list:
 
-* Custom lists with IP addresses (IP lists) can only contain IP addresses as list items
-* Custom lists with hostnames can only contain hostnames as list items
-* Bulk Redirect Lists can only contain URL redirects as list items
-
-***
+- Custom lists with IP addresses (IP lists) can only contain IP addresses as list items.
+- Custom lists with hostnames can only contain hostnames as list items.
+- Bulk Redirect Lists can only contain URL redirects as list items.
 
 ## Error 10059: Maximum number of repeated URL source paths exceeded
 
-This error occurs when you have more than the maximum number of URL redirects with the same source URL path across all Bulk Redirect Lists in your account, regardless of the URL redirect domain.
+This error indicates that the same URL path is repeated too many times across your Bulk Redirect Lists.
 
-### **Resolution**
+### Common causes
 
-Review the path of your source URLs so that you do not have more than the maximum number of URL redirects sharing the same URL path in your account, regardless of their domain or the list they belong to.
+This error occurs when you have more than the maximum number of URL redirects with the same source URL path across all Bulk Redirect Lists in your account, regardless of the URL redirect domain. Possible causes include multiple lists containing the same redirects, overlapping configurations, or mismanagement resulting in duplicated source URL paths.
 
-Refer to [URL redirect parameters](/rules/url-forwarding/bulk-redirects/reference/parameters/) for more information on the current limits.
+### Resolution
 
-***
+Review the path of your source URLs so that you do not have more than the maximum number of URL redirects sharing the same URL path in your account, regardless of their domain or the list they belong to. Refer to [URL redirect parameters](/rules/url-forwarding/bulk-redirects/reference/parameters/) for more information on the current limits.
 
 ## Error 10060: Missing scheme in redirect target URL
 
-This error occurs when the target URL of a URL redirect does not include a scheme, which is mandatory.
+This error indicates that the target URL is missing a scheme.
 
-### **Resolution**
+### Common causes
 
-Review the target URL of the URL redirect and ensure that it contains a scheme (for example, `https`).
+This error occurs when the target URL of a URL redirect does not include a scheme, which is mandatory. This could have happened due to a typo or the URL was copied from a source that did not include the scheme.
 
-Refer to [Supported URL components in Bulk Redirects](/rules/url-forwarding/bulk-redirects/reference/url-components/) for details on the required URL components for redirect target URLs.
+### Resolution
+
+Review the target URL of the URL redirect and ensure that it contains a scheme (for example, `https`). Refer to [Supported URL components in Bulk Redirects](/rules/url-forwarding/bulk-redirects/reference/url-components/) for details on the required URL components for redirect target URLs.

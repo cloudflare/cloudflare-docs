@@ -41,6 +41,22 @@ entries:
     general_definition: |-
       Header to [bypass caching for a specific request](/ai-gateway/configuration/caching/#skip-cache-cf-aig-skip-cache).
 
+  - term: cf-aig-request-timeout
+    general_definition: |-
+      Header to trigger a fallback provider based on a [predetermined response time](/ai-gateway/configuration/fallbacks/#request-timeouts) (measured in milliseconds).
+
+  - term: cf-aig-max-attempts
+    general_definition: |-
+      Header to customize the number of max attempts for [request retries](/ai-gateway/configuration/request-handling/#request-retries) of a request.
+
+  - term: cf-aig-retry-delay
+    general_definition: |-
+      Header to customize the retry delay for [request retries](/ai-gateway/configuration/request-handling/#request-retries) of a request.
+
+  - term: cf-aig-backoff
+    general_definition: |-
+      Header to customize the backoff type for [request retries](/ai-gateway/configuration/request-handling/#request-retries) of a request.
+
   # Deprecated headers
   - term: cf-cache-ttl
     general_definition: |-

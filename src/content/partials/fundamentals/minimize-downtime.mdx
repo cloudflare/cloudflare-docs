@@ -10,7 +10,7 @@ Before activating your domain on Cloudflare (exact steps depend on your [DNS set
 
 ### Start with unproxied records
 
-With a new domain, make sure all of your DNS records have a [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/) of **DNS-only**.
+With a new domain, make sure all of your DNS records have a [proxy status](/dns/proxy-status/) of **DNS-only**.
 
 This setting prevents Cloudflare from proxying your traffic before you have an active edge certificate or before you have allowed Cloudflare IP addresses.
 
@@ -45,4 +45,4 @@ If you experience issues, you should make sure that you have [allowed Cloudflare
 
 ## Update proxy status
 
-Once you have verified that your SSL/TLS edge certificate is active and you have allowed Cloudflare IP addresses, change the [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/) of appropriate DNS records to **Proxied**.
+Once you have verified that your SSL/TLS edge certificate is active and you have allowed Cloudflare IP addresses, change the [proxy status](/dns/proxy-status/) of appropriate DNS records to **Proxied**.

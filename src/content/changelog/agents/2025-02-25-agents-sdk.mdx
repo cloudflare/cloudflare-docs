@@ -1,0 +1,40 @@
+---
+title: Introducing the agents-sdk
+description: Build and ship AI Agents on Cloudflare using the agents-sdk
+products:
+  - agents
+  - workers
+date: 2025-02-25T14:00:00Z
+---
+
+We've released the [agents-sdk](http://blog.cloudflare.com/build-ai-agents-on-cloudflare/), a package and set of tools that help you build and ship AI Agents.
+
+You can get up and running with a [chat-based AI Agent](https://github.com/cloudflare/agents-starter) (and deploy it to Workers) that uses the `agents-sdk`, tool calling, and state syncing with a React-based front-end by running the following command:
+
+```sh
+npm create cloudflare@latest agents-starter -- --template="cloudflare/agents-starter"
+# open up README.md and follow the instructions
+```
+
+You can also add an Agent to any existing Workers application by installing the `agents-sdk` package directly
+
+```sh
+npm i agents-sdk
+```
+
+... and then define your first Agent:
+
+```ts
+import { Agent } from 'agents-sdk';
+
+export class YourAgent extends Agent<Env> {
+	// Build it out
+	// Access state on this.state or query the Agent's database via this.sql
+	// Handle WebSocket events with onConnect and onMessage
+	// Run tasks on a schedule with this.schedule
+	// Call AI models
+	// ... and/or call other Agents.
+}
+```
+
+Head over to the [Agents documentation](/agents/) to learn more about the `agents-sdk`, the SDK APIs, as well as how to test and deploying agents to production.

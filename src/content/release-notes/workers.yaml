@@ -1,0 +1,289 @@
+---
+link: "/workers/platform/changelog/"
+productName: Workers
+productLink: "/workers/"
+productArea: Developer platform
+productAreaLink: /workers/platform/changelog/platform/
+entries:
+  - publish_date: "2025-02-13"
+    description: |-
+      - [Smart Placement](/workers/configuration/smart-placement/) no longer runs Workers in the same location as D1 databases they are bound to. The same [placement logic](/workers/configuration/smart-placement/#understand-how-smart-placement-works) now applies to all Workers that use Smart Placement, regardless of whether they use D1 bindings.
+  - publish_date: "2025-02-11"
+    description: |-
+      - When Workers generate an "internal error" exception in response to certain failures, the exception message may provide a reference ID that customers can include in support communication for easier error identification.  For example, an exception with the new message might look like: `internal error; reference = 0123456789abcdefghijklmn`.
+  - publish_date: "2025-01-31"
+    description: |-
+      - Updated v8 to version 13.3.
+  - publish_date: "2025-01-15"
+    description: |-
+      - The runtime will no longer reuse isolates across worker versions even if the code happens to be identical. This "optimization" was deemed more confusing than it is worth.
+  - publish_date: "2025-01-14"
+    description: |-
+      - Updated v8 to version 13.2.
+  - publish_date: "2024-12-19"
+    description: |-
+      - **Cloudflare GitHub App Permissions Update**
+        - Cloudflare is requesting updated permissions for the [Cloudflare GitHub App](https://github.com/apps/cloudflare-workers-and-pages) to enable features like automatically creating a repository on your GitHub account and deploying the new repository for you when getting started with a template. This feature is coming out soon to support a better onboarding experience.
+        - **Requested permissions:**
+          - [Repository Administration](https://docs.github.com/en/rest/authentication/permissions-required-for-github-apps?apiVersion=2022-11-28#repository-permissions-for-administration) (read/write) to create repositories.
+          - [Contents](https://docs.github.com/en/rest/authentication/permissions-required-for-github-apps?apiVersion=2022-11-28#repository-permissions-for-contents) (read/write) to push code to the created repositories.
+        - **Who is impacted:**
+          - Existing users will be prompted to update permissions when GitHub sends an email with subject "[GitHub] Cloudflare Workers & Pages is requesting updated permission" on December 19th, 2024.
+          - New users installing the app will see the updated permissions during the connecting repository process.
+        - **Action:** Review and accept the permissions update to use upcoming features. *If you decline or take no action, you can continue connecting repositories and deploying changes via the Cloudflare GitHub App as you do today, but new features requiring these permissions will not be available.*
+        - **Questions?** Visit [#github-permissions-update](https://discord.com/channels/595317990191398933/1313895851520688163) in the Cloudflare Developers Discord.
+  - publish_date: "2024-11-18"
+    description: |-
+      - Updated v8 to version 13.1.
+  - publish_date: "2024-11-12"
+    description: |-
+      - Fixes exception seen when trying to call deleteAll() during a SQLite-backed Durable Object's alarm handler.
+  - publish_date: "2024-11-08"
+    description: |-
+      - Update SQLite to version 3.47.
+  - publish_date: "2024-10-21"
+    description: |-
+      - Fixed encoding of WebSocket pong messages when talking to remote servers. Previously, when a Worker made a WebSocket connection to an external server, the server may have prematurely closed the WebSocket for failure to respond correctly to pings. Client-side connections were not affected.
+  - publish_date: "2024-10-14"
+    description: |-
+      - Updated v8 to version 13.0.
+  - publish_date: "2024-09-26"
+    description: |-
+      -  You can now connect your GitHub or GitLab repository to an existing Worker to automatically build and deploy your changes when you make a git push with [Workers Builds](/workers/ci-cd/builds/).
+  - publish_date: "2024-09-20"
+    description: |-
+      - Workers now support the [`handle_cross_request_promise_resolution`] compatibility flag which addresses certain edge cases around awaiting and resolving promises across multiple requests.
+  - publish_date: "2024-09-19"
+    description: |-
+      -  Revamped Workers and Pages UI settings to simplify the creation and management of project configurations. For bugs and general feedback, please submit this [form](https://forms.gle/XXqhRGbZmuzninuN9).
+  - publish_date: "2024-09-16"
+    description: |-
+      - Updated v8 to version 12.9.
+  - publish_date: "2024-08-19"
+    description: |-
+      -  Workers now support the [`allow_custom_ports` compatibility flag](/workers/configuration/compatibility-flags/#allow-specifying-a-custom-port-when-making-a-subrequest-with-the-fetch-api) which enables using the `fetch()` calls to custom ports.
+  - publish_date: "2024-08-15"
+    description: |-
+      - Updated v8 to version 12.8.
+      - You can now use [`Promise.try()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/try) in Cloudflare Workers. Refer to [`tc39/proposal-promise-try`](https://github.com/tc39/proposal-promise-try) for more context on this API that has recently been added to the JavaScript language.
+  - publish_date: "2024-08-14"
+    description: |-
+      - When using the `nodejs_compat_v2` compatibility flag, the `setImmediate(fn)` API from Node.js is now available at the global scope.
+      - The `internal_writable_stream_abort_clears_queue` compatibility flag will ensure that certain `WritableStream` `abort()` operations are handled immediately rather than lazily, ensuring that the stream is appropriately aborted when the consumer of the stream is no longer active.
+  - publish_date: "2024-07-19"
+    description: |-
+      - Workers with the [mTLS](/workers/runtime-apis/bindings/mtls/) binding now support [Gradual Deployments](/workers/configuration/versions-and-deployments/gradual-deployments/).
+  - publish_date: "2024-07-18"
+    description: |-
+      - Added a new `truncated` flag to [Tail Worker](/workers/observability/logs/tail-workers/) events to indicate when the event buffer is full and events are being dropped.
+  - publish_date: "2024-07-17"
+    description: |-
+      - Updated v8 to version 12.7.
+  - publish_date: "2024-07-11"
+    description: |-
+      - Added community contributed tutorial on how to create [custom access control for files in R2 using D1 and Workers](/developer-spotlight/tutorials/custom-access-control-for-files/).
+      - Added community contributed tutorial on how to [send form submissions using Astro and Resend](/developer-spotlight/tutorials/handle-form-submission-with-astro-resend/).
+      - Added community contributed tutorial on how to [create a sitemap from Sanity CMS with Workers](/developer-spotlight/tutorials/create-sitemap-from-sanity-cms/).
+  - publish_date: "2024-07-03"
+    description: |-
+      - The [`node:crypto`](/workers/runtime-apis/nodejs/crypto/) implementation now includes the scrypt(...) and scryptSync(...) APIs.
+      - Workers now support the standard [EventSource](/workers/runtime-apis/eventsource/) API.
+      - Fixed a bug where when writing to an HTTP Response body would sometimes hang when the client disconnected (and sometimes throw an exception). It will now always throw an exception.
+  - publish_date: "2024-07-01"
+    description: |-
+      - When using [Gradual Deployments](/workers/configuration/versions-and-deployments/gradual-deployments/), you can now use [version overrides](/workers/configuration/versions-and-deployments/gradual-deployments/#version-overrides) to send a request to a specific version of your Worker.
+  - publish_date: "2024-06-28"
+    description: |-
+      - Fixed a bug which caused `Date.now()` to return skewed results if called before the first I/O of the first request after a Worker first started up. The value returned would be offset backwards by the amount of CPU time spent starting the Worker (compiling and running global scope), making it seem like the first I/O (e.g. first fetch()) was slower than it really was. This skew had nothing to do with Spectre mitigations; it was simply a longstanding bug.
+  - publish_date: "2024-06-24"
+    description: |-
+      - [Exceptions](/durable-objects/best-practices/error-handling) thrown from Durable Object internal operations and tunneled to the caller may now be populated with a `.retryable: true` property if the exception was likely due to a transient failure, or populated with an `.overloaded: true` property if the exception was due to [overload](/durable-objects/observability/troubleshooting/#durable-object-is-overloaded).
+  - publish_date: "2024-06-20"
+    description: |-
+      - We now prompt for extra confirmation if attempting to rollback to a version of a Worker using the [Deployments API](/api/resources/workers/subresources/scripts/subresources/deployments/methods/create/) where the value of a secret is different than the currently deployed version. A `?force=true` query parameter can be specified to proceed with the rollback.
+  - publish_date: "2024-06-19"
+    description: |-
+      - When using [`nodejs_compat` compatibility flag](/workers/runtime-apis/nodejs/), the `buffer` module now has an implementation of `isAscii()` and `isUtf8()` methods.
+      - Fixed a bug where exceptions propagated from [JS RPC](/workers/runtime-apis/rpc) calls to Durable Objects would lack the `.remote` property that exceptions from `fetch()` calls to Durable Objects have.
+  - publish_date: "2024-06-12"
+    description: |-
+      - Blob and Body objects now include a new `bytes()` method, reflecting [recent](https://w3c.github.io/FileAPI/#bytes-method-algo) [additions](https://fetch.spec.whatwg.org/#dom-body-bytes) to web standards.
+  - publish_date: "2024-06-03"
+    description: |-
+      - Workers with [Smart Placement](/workers/configuration/smart-placement/) enabled now support [Gradual Deployments](/workers/configuration/versions-and-deployments/gradual-deployments/).
+  - publish_date: "2024-05-17"
+    description: |-
+      - Updated v8 to version 12.6.
+  - publish_date: "2024-05-15"
+    description: |-
+      - The new [`fetch_standard_url` compatibility flag](/workers/configuration/compatibility-flags/#use-standard-url-parsing-in-fetch) will become active by default on June 3rd, 2024 and ensures that URLs passed into the `fetch(...)` API, the `new Request(...)` constructor, and redirected requests will be parsed using the standard WHATWG URL parser.
+      - DigestStream is now more efficient and exposes a new `bytesWritten` property that indicates that number of bytes written to the digest.
+  - publish_date: "2024-05-13"
+    description: |-
+      - Updated v8 to version 12.5.
+      - A bug in the fetch API implementation would cause the content type of a Blob to be incorrectly set. The fix is being released behind a new [`blob_standard_mime_type` compatibility flag](/workers/configuration/compatibility-flags/#properly-extract-blob-mime-type-from-content-type-headers).
+  - publish_date: "2024-05-03"
+    description: |-
+      - Fixed RPC to/from Durable Objects not honoring the output gate.
+      - The `internal_stream_byob_return_view` compatibility flag can be used to improve the standards compliance of the `ReadableStreamBYOBReader` implementation when working with BYOB streams provided by the runtime (like in `response.body` or `request.body`). The flag ensures that the final read result will always include a `value` field whose value is set to an empty `Uint8Array` whose underlying `ArrayBuffer` is the same memory allocation as the one passed in on the call to `read()`.
+      - The Web platform standard `reportError(err)` global API is now available in workers. The reported error will first be emitted as an 'error' event on the global scope then reported in both the console output and tail worker exceptions by default.
+  - publish_date: "2024-04-26"
+    description: |-
+      - Updated v8 to version 12.4.
+  - publish_date: "2024-04-11"
+    description: |-
+      - Improve Streams API spec compliance by exposing `desiredSize` and other properties on stream class prototypes
+      - The new `URL.parse(...)` method is implemented. This provides an alternative to the URL constructor that does not throw exceptions on invalid URLs.
+      - R2 bindings objects now have a `storageClass` option. This can be set on object upload to specify the R2 storage class - Standard or Infrequent Access. The property is also returned with object metadata.
+  - publish_date: "2024-04-05"
+    description: |-
+      - A new [JavaScript-native remote procedure call (RPC) API](/workers/runtime-apis/rpc) is now available, allowing you to communicate more easily across Workers and between Workers and Durable Objects.
+  - publish_date: "2024-04-04"
+    description: |-
+      - There is no longer an explicit limit on the total amount of data which may be uploaded with Cache API [`put()`](/workers/runtime-apis/cache/#put) per request. Other [Cache API Limits](/workers/platform/limits/#cache-api-limits) continue to apply.
+      - The Web standard `ReadableStream.from()` API is now implemented. The API enables creating a `ReadableStream` from a either a sync or async iterable.
+  - publish_date: "2024-04-03"
+    description: |-
+      - When the [`brotli_content_encoding`](/workers/configuration/compatibility-flags/#brotli-content-encoding-support) compatibility flag is enabled, the Workers runtime now supports compressing and decompressing request bodies encoded using the [Brotli](https://developer.mozilla.org/en-US/docs/Glossary/Brotli_compression) compression algorithm. Refer to [this docs section](/workers/runtime-apis/fetch/#how-the-accept-encoding-header-is-handled) for more detail.
+  - publish_date: "2024-04-02"
+    description: |-
+      - You can now [write Workers in Python](/workers/languages/python)
+  - publish_date: "2024-04-01"
+    description: |-
+      - The new [`unwrap_custom_thenables` compatibility flag](/workers/configuration/compatibility-flags/#handling-custom-thenables) enables workers to accept custom thenables in internal APIs that expect a promise (for instance, the `ctx.waitUntil(...)` method).
+      - TransformStreams created with the TransformStream constructor now have a cancel algorithm that is called when the stream is canceled or aborted. This change is part of the implementation of the WHATWG Streams standard.
+      - The [`nodejs_compat` compatibility flag](/workers/runtime-apis/nodejs/) now includes an implementation of the [`MockTracker` API from `node:test`](https://nodejs.org/api/test.html#class-mocktracker). This is not an implementation of the full `node:test` module, and mock timers are currently not included.
+      - Exceptions reported to [Tail Workers](/workers/observability/logs/tail-workers/) now include a "stack" property containing the exception's stack trace, if available.
+  - publish_date: "2024-03-11"
+    description: |-
+      - Built-in APIs that return Promises will now produce stack traces when the Promise rejects. Previously, the rejection error lacked a stack trace.
+      - A new compat flag `fetcher_no_get_put_delete` removes the `get()`, `put()`, and `delete()` methods on service bindings and Durable Object stubs. This will become the default as of compatibility date 2024-03-26. These methods were designed as simple convenience wrappers around `fetch()`, but were never documented.
+      - Updated v8 to version 12.3.
+  - publish_date: "2024-02-24"
+    description: |-
+      - v8 updated to version 12.2.
+      - You can now use [Iterator helpers](https://v8.dev/features/iterator-helpers) in Workers.
+      - You can now use [new methods on `Set`](https://github.com/tc39/proposal-set-methods), such as `Set.intersection` and `Set.union`, in Workers.
+  - publish_date: "2024-02-23"
+    description: |-
+      - Sockets now support an [`opened`](/workers/runtime-apis/tcp-sockets/#socket) attribute.
+      - [Durable Object alarm handlers](/durable-objects/api/alarms/#alarm) now impose a maximum wall time of 15 minutes.
+  - publish_date: "2023-12-04"
+    description: |-
+      - The Web Platform standard [`navigator.sendBeacon(...)` API](/workers/runtime-apis/web-standards#navigatorsendbeaconurl-data) is now provided by the Workers runtime.
+      - V8 updated to 12.0.
+  - publish_date: "2023-10-30"
+    description: |-
+      - A new usage model called [Workers Standard](/workers/platform/pricing/#workers) is available for Workers and Pages Functions pricing. This is now the default usage model for accounts that are first upgraded to the Workers Paid plan. Read the [blog post](https://blog.cloudflare.com/workers-pricing-scale-to-zero/) for more information.
+      - The usage model set in a script's wrangler.toml will be ignored after an account has opted-in to [Workers Standard](/workers/platform/pricing/#workers) pricing. It must be configured through the dashboard (Workers & Pages > Select your Worker > Settings > Usage Model).
+      - Workers and Pages Functions on the Standard usage model can set custom [CPU limits](/workers/wrangler/configuration/#limits) for their Workers
+  - publish_date: "2023-10-20"
+    description: |-
+      - Added the [`crypto_preserve_public_exponent`](/workers/configuration/compatibility-flags/#webcrypto-preserve-publicexponent-field)
+        compatibility flag to correct a wrong type being used in the algorithm field of RSA keys in
+        the WebCrypto API.
+  - publish_date: "2023-10-18"
+    description: |-
+      - The limit of 3 Cron Triggers per Worker has been removed. Account-level limits on the total number of
+        Cron Triggers across all Workers still apply.
+  - publish_date: "2023-10-12"
+    description: |-
+      - A [TCP Socket](/workers/runtime-apis/tcp-sockets/)'s WritableStream now ensures the connection has opened before resolving the promise returned by `close`.
+  - publish_date: "2023-10-09"
+    description: |-
+      - The Web Platform standard [`CustomEvent` class](https://dom.spec.whatwg.org/#interface-customevent) is now available in Workers.
+      - Fixed a bug in the WebCrypto API where the `publicExponent` field of the algorithm of RSA keys would have the wrong type. Use the [`crypto_preserve_public_exponent` compatibility flag](/workers/configuration/compatibility-flags/#webcrypto-preserve-publicexponent-field) to enable the new behavior.
+  - publish_date: "2023-09-14"
+    description: |-
+      - An implementation of the [`node:crypto`](/workers/runtime-apis/nodejs/crypto/)
+        API from Node.js is now available when the [`nodejs_compat` compatibility flag](/workers/runtime-apis/nodejs/)
+        is enabled.
+  - publish_date: "2023-07-14"
+    description: |-
+      - An implementation of the [`util.MIMEType`](https://nodejs.org/api/util.html#class-utilmimetype)
+        API from Node.js is now available when the [`nodejs_compat` compatibility flag](https://developers.cloudflare.com/workers/runtime-apis/nodejs/)
+        is enabled.
+  - publish_date: "2023-07-07"
+    description: |-
+      - An implementation of the [`process.env`](/workers/runtime-apis/nodejs/process) API from Node.js is now available when using the `nodejs_compat` compatibility flag.
+      - An implementation of the [`diagnostics_channel`](/workers/runtime-apis/nodejs/diagnostics-channel) API from Node.js is now available when using the `nodejs_compat` compatibility flag.
+  - publish_date: "2023-06-22"
+    description: |-
+      - Added the [`strict_crypto_checks`](/workers/configuration/compatibility-flags/#strict-crypto-error-checking) compatibility flag to enable additional [Web Crypto API](/workers/runtime-apis/web-crypto/) error and security checking.
+      - Fixes regression in the [TCP Sockets API](/workers/runtime-apis/tcp-sockets/) where `connect("google.com:443")` would fail with a `TypeError`.
+  - publish_date: "2023-06-19"
+    description: |-
+      - The [TCP Sockets API](/workers/runtime-apis/tcp-sockets/) now reports clearer errors when a connection cannot be established.
+      - Updated V8 to 11.5.
+  - publish_date: "2023-06-09"
+    description: |-
+      - `AbortSignal.any()` is now available.
+      - Updated V8 to 11.4.
+      - Following an update to the [WHATWG URL spec](https://url.spec.whatwg.org/#interface-urlsearchparams), the `delete()` and `has()` methods of the `URLSearchParams` class now accept an optional second argument to specify the search parameter’s value. This is potentially a breaking change, so it is gated behind the new `urlsearchparams_delete_has_value_arg` and [`url_standard`](/workers/configuration/compatibility-flags/#new-url-parser-implementation) compatibility flags.
+      - Added the [`strict_compression_checks`](/workers/configuration/compatibility-flags/#strict-compression-error-checking) compatibility flag for additional [`DecompressionStream`](/workers/runtime-apis/web-standards/#compression-streams) error checking.
+  - publish_date: "2023-05-26"
+    description: |-
+      - A new [Hibernatable WebSockets API](/durable-objects/best-practices/websockets/)
+      (beta) has been added to [Durable Objects](/durable-objects/). The Hibernatable
+      WebSockets API allows a Durable Object that is not currently running an event
+      handler (for example, processing a WebSocket message or alarm) to be removed from
+      memory while keeping its WebSockets connected (“hibernation”). A Durable Object
+      that hibernates will not incur billable Duration (GB-sec) charges.
+  - publish_date: "2023-05-16"
+    description: |-
+      - The [new `connect()` method](/workers/runtime-apis/tcp-sockets/) allows you to connect to any TCP-speaking services directly from your Workers. To learn more about other protocols supported on the Workers platform, visit the [new Protocols documentation](/workers/reference/protocols/).
+      - We have added new [native database integrations](/workers/databases/native-integrations/) for popular serverless database providers, including Neon, PlanetScale, and Supabase. Native integrations automatically handle the process of creating a connection string and adding it as a Secret to your Worker.
+      - You can now also connect directly to databases over TCP from a Worker, starting with [PostgreSQL](/hyperdrive/configuration/connect-to-postgres/). Support for PostgreSQL is based on the popular `pg` driver, and allows you to connect to any PostgreSQL instance over TLS from a Worker directly.
+      - The [R2 Migrator](/r2/data-migration/) (Super Slurper), which automates the process of migrating from existing object storage providers to R2, is now Generally Available.
+  - publish_date: "2023-05-15"
+    description: |-
+      - [Cursor](/workers/ai/), an experimental AI assistant, trained to answer
+      questions about Cloudflare's Developer Platform, is now available to preview!
+      Cursor can answer questions about Workers and the Cloudflare Developer Platform,
+      and is itself built on Workers. You can read more about Cursor in the [announcement
+      blog](https://blog.cloudflare.com/introducing-cursor-the-ai-assistant-for-docs/).
+  - publish_date: "2023-05-12"
+    description: |-
+      - The [`performance.now()`](https://developer.mozilla.org/en-US/docs/Web/API/Performance/now)
+      and [`performance.timeOrigin`](https://developer.mozilla.org/en-US/docs/Web/API/Performance/timeOrigin)
+      APIs can now be used in Cloudflare Workers. Just like `Date.now()`, for [security
+      reasons](/workers/reference/security-model/) time only advances after I/O.
+  - publish_date: "2023-05-05"
+    description: |-
+      - The new `nodeJsCompatModule` type can be used with a Worker bundle to emulate a Node.js environment. Common Node.js globals such as `process` and `Buffer` will be present, and `require('...')` can be used to load Node.js built-ins without the `node:` specifier prefix.
+      - Fixed an issue where websocket connections would be disconnected when updating workers. Now, only WebSockets connected to Durable Objects are disconnected by updates to that Durable Object’s code.
+  - publish_date: "2023-04-28"
+    description: |-
+      - The Web Crypto API now supports curves Ed25519 and X25519 defined in the Secure Curves specification.
+      - The global `connect` method has been moved to a `cloudflare:sockets` module.
+  - publish_date: "2023-04-14"
+    description: |-
+      - No externally-visible changes this week.
+  - publish_date: "2023-04-10"
+    description: |-
+      - `URL.canParse(...)` is a new standard API for testing that an input string can be parsed successfully as a URL without the additional cost of creating and throwing an error.
+      - The Workers-specific `IdentityTransformStream` and `FixedLengthStream` classes now support specifying a `highWaterMark` for the writable-side that is used for backpressure signaling using the standard `writer.desiredSize`/`writer.ready` mechanisms.
+  - publish_date: "2023-03-24"
+    description: |-
+      - Fixed a bug in Wrangler tail and live logs on the dashboard that
+      prevented the Administrator Read-Only and Workers Tail Read roles from successfully
+      tailing Workers.
+  - publish_date: "2023-03-09"
+    description: |-
+      - No externally-visible changes.
+  - publish_date: "2023-03-06"
+    description: |-
+      - [Workers Logpush](/workers/observability/logs/logpush/#limits) now supports
+      300 characters per log line. This is an increase from the previous limit of 150
+      characters per line.
+  - publish_date: "2023-02-06"
+    description: |-
+      - Fixed a bug where transferring large request bodies to a Durable Object was unexpectedly slow.
+      - Previously, an error would be thrown when trying to access unimplemented standard `Request` and `Response` properties. Now those will be left as `undefined`.
+  - publish_date: "2023-01-31"
+    description: |-
+      - The [`request.cf`](/workers/runtime-apis/request/#incomingrequestcfproperties) object now includes two additional properties, `tlsClientHelloLength` and `tlsClientRandom`.
+  - publish_date: "2023-01-13"
+    description: |-
+      - Durable Objects can now use jurisdictions with `idFromName` via a new subnamespace API.
+      - V8 updated to 10.9.

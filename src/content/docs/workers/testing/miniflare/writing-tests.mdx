@@ -1,0 +1,205 @@
+---
+title: Writing tests
+pcx_content_type: concept
+sidebar:
+  order: 1
+head: []
+description: Write integration tests against Workers using Miniflare.
+---
+
+:::note
+For most users, Cloudflare recommends using the Workers Vitest integration for testing Workers and [Pages Functions](/pages/functions/) projects. [Vitest](https://vitest.dev/) is a popular JavaScript testing framework featuring a very fast watch mode, Jest compatibility, and out-of-the-box support for TypeScript.
+:::
+
+import { TabItem, Tabs, Details } from "~/components";
+
+import { FileTree } from "@astrojs/starlight/components";
+
+This guide will show you how to set up [Miniflare](/workers/testing/miniflare) to test your Workers. Miniflare is a low-level API that allows you to fully control how your Workers are run and tested.
+
+To use Miniflare, make sure you've installed the latest version of Miniflare v3:
+
+<Tabs> <TabItem label="npm">
+
+```sh
+npm install -D miniflare
+```
+
+</TabItem> <TabItem label="yarn">
+
+```sh
+yarn add -D miniflare
+```
+
+</TabItem> <TabItem label="pnpm">
+
+```sh
+pnpm add -D miniflare
+```
+
+</TabItem> </Tabs>
+
+The rest of this guide demonstrates concepts with the [`node:test`](https://nodejs.org/api/test.html) testing framework, but any testing framework can be used.
+
+Miniflare is a low-level API that exposes a large variety of configuration options for running your Worker. In most cases, your tests will only need a subset of the available options, but you can refer to the [full API reference](/workers/testing/miniflare/get-started/#reference) to explore what is possible with Miniflare.
+
+Before writing a test, you will need to create a Worker. Since Miniflare is a low-level API that emulates the Cloudflare platform primitives, your Worker will need to be written in JavaScript or you'll need to [integrate your own build pipeline](#custom-builds) into your testing setup. Here's an example JavaScript-only Worker:
+
+```js title="src/index.js"
+export default {
+	async fetch(request) {
+		return new Response(`Hello World`);
+	},
+};
+```
+
+Next, you will need to create an initial test file:
+
+```js {12,13,14,15,16,17,18,19} title="src/index.test.js"
+import assert from "node:assert";
+import test, { after, before, describe } from "node:test";
+import { Miniflare } from "miniflare";
+
+describe("worker", () => {
+	/**
+	 * @type {Miniflare}
+	 */
+	let worker;
+
+	before(async () => {
+		worker = new Miniflare({
+			modules: [
+				{
+					type: "ESModule",
+					path: "src/index.js",
+				},
+			],
+		});
+		await worker.ready;
+	});
+
+	test("hello world", async () => {
+		assert.strictEqual(
+			await (await worker.dispatchFetch("http://example.com")).text(),
+			"Hello World",
+		);
+	});
+
+	after(async () => {
+		await worker.dispose();
+	});
+});
+```
+
+You should be able to run the above test via `node --test`
+
+The highlighted lines of the test file above demonstrate how to set up Miniflare to run a JavaScript Worker. Once Miniflare has been set up, your individual tests can send requests to the running Worker and assert against the responses. This is the main limitation of using Miniflare for testing your Worker as compared to the [Vitest integration](/workers/testing/vitest-integration/) — all access to your Worker must be through the `dispatchFetch()` Miniflare API, and you cannot unit test individual functions from your Worker.
+
+<Details header="What runtime are tests running in?">
+	When using the [Vitest integration](/workers/testing/vitest-integration/),
+	your entire test suite runs in
+	[`workerd`](https://github.com/cloudflare/workerd), which is why it is possible
+	to unit test individual functions. By contrast, when using a different testing
+	framework to run tests via Miniflare, only your Worker itself is running in
+	[`workerd`](https://github.com/cloudflare/workerd) — your test files run in
+	Node.js. This means that importing functions from your Worker into your test
+	files might exhibit different behaviour than you'd see at runtime if the
+	functions rely on `workerd`-specific behaviour.
+</Details>
+
+## Interacting with Bindings
+
+:::caution
+
+Miniflare does not read [Wrangler's config file](/workers/wrangler/configuration). All bindings that your Worker uses need to be specified in the Miniflare API options.
+
+:::
+
+The `dispatchFetch()` API from Miniflare allows you to send requests to your Worker and assert that the correct response is returned, but sometimes you need to interact directly with bindings in tests. For use cases like that, Miniflare provides the [`getBindings()`](/workers/testing/miniflare/get-started/#reference) API. For instance, to access an environment variable in your tests, adapt the test file `src/index.test.js` as follows:
+
+```diff lang="js" title="src/index.test.js"
+...
+describe("worker", () => {
+	...
+	before(async () => {
+		worker = new Miniflare({
+			...
++			bindings: {
++				FOO: "Hello Bindings",
++			},
+		});
+		...
+	});
+
+	test("text binding", async () => {
+		const bindings = await worker.getBindings();
+		assert.strictEqual(bindings.FOO, "Hello Bindings");
+	});
+	...
+});
+```
+
+You can also interact with local resources such as KV and R2 using the same API as you would from a Worker. For example, here's how you would interact with a KV namespace:
+
+```diff lang="js" title="src/index.test.js"
+...
+describe("worker", () => {
+	...
+	before(async () => {
+		worker = new Miniflare({
+			...
++			kvNamespaces: ["KV"],
+		});
+		...
+	});
+
+	test("kv binding", async () => {
+		const bindings = await worker.getBindings();
+		await bindings.KV.put("key", "value");
+		assert.strictEqual(await bindings.KV.get("key"), "value");
+	});
+	...
+});
+```
+
+## More complex Workers
+
+The example given above shows how to test a simple Worker consisting of a single JavaScript file. However, most real-world Workers are more complex than that. Miniflare supports providing all constituent files of your Worker directly using the API:
+
+```js
+new Miniflare({
+	modules: [
+		{
+			type: "ESModule",
+			path: "src/index.js",
+		},
+		{
+			type: "ESModule",
+			path: "src/imported.js",
+		},
+	],
+});
+```
+
+This can be a bit cumbersome as your Worker grows. To help with this, Miniflare can also crawl your module graph to automatically figure out which modules to include:
+
+```js
+new Miniflare({
+	scriptPath: "src/index-with-imports.js",
+	modules: true,
+	modulesRules: [{ type: "ESModule", include: ["**/*.js"] }],
+});
+```
+
+## Custom builds
+
+In many real-world cases, Workers are not written in plain JavaScript but instead consist of multiple TypeScript files that import from npm packages and other dependencies, which are then bundled by a build tool. When testing your Worker via Miniflare directly you need to run this build tool before your tests. Exactly how this build is run will depend on the specific test framework you use, but for `node:test` it would likely be in a `setup()` hook. For example, if you use [Wrangler](/workers/wrangler/) to build and deploy your Worker, you could spawn a `wrangler build` command like this:
+
+```js
+before(() => {
+	spawnSync("npx wrangler build -c wrangler-build.json", {
+		shell: true,
+		stdio: "pipe",
+	});
+});
+```

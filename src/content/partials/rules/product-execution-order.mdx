@@ -1,21 +1,24 @@
 ---
 {}
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 The execution order of Rules features is the following:
 
-* [Origin Rules](/rules/origin-rules/)
-* [Cache Rules](/cache/how-to/cache-rules/)
-* [Configuration Rules](/rules/configuration-rules/)
-* [Single Redirects](/rules/url-forwarding/single-redirects/)
-* [Bulk Redirects](/rules/url-forwarding/bulk-redirects/)
-* [Snippets](/rules/snippets/)
+- [Origin Rules](/rules/origin-rules/)
+- [Cache Rules](/cache/how-to/cache-rules/)
+- [Configuration Rules](/rules/configuration-rules/)
+- [Single Redirects](/rules/url-forwarding/single-redirects/)
+- [Bulk Redirects](/rules/url-forwarding/bulk-redirects/)
+- [Snippets](/rules/snippets/)
 
 The different types of rules listed above will take precedence over [Page Rules](/rules/page-rules/). This means that Page Rules will be overridden if there is a match for both Page Rules and the Rules products listed above.
 
 <Render file="rule-terminating-actions" product="ruleset-engine" />
 
-<Render file="challenge-issues" product="rules" params={{ one: "Rules features" }} />
+<Render
+	file="challenge-issues"
+	product="rules"
+	params={{ featureName: "Rules features" }}
+/>

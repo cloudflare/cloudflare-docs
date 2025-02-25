@@ -3,57 +3,65 @@
 ---
 import { Tabs, TabItem } from "~/components"
 
-Controls amount of invisible metadata (EXIF data) that should be preserved. Color profiles and EXIF rotation are applied to the image even if the metadata is discarded. Note that if the Polish feature is enabled, all metadata may have been removed already and this option will have no effect.
+Controls amount of invisible metadata (EXIF data) that should be preserved.
+
+Color profiles and EXIF rotation are applied to the image even if the metadata is discarded. Content Credentials (C2PA metadata) may be preserved if the [setting is enabled](/images/transform-images/preserve-content-credentials).
+
+Available options are `copyright`, `keep`, and `none`. The default for all JPEG images is `copyright`. WebP and PNG output formats will always discard EXIF metadata.
 
 :::note
-Even when choosing to keep EXIF metadata, Cloudflare will modify JFIF data (potentially invalidating it) to avoid the known incompatibility between the two standards. For more details, refer to [JFIF Compatibility](https://en.wikipedia.org/wiki/JPEG_File_Interchange_Format#Compatibility).
+- If Polish is enabled, then all metadata may already be removed and this option will have no effect.
+- Even when choosing to keep EXIF metadata, Cloudflare will modify JFIF data (potentially invalidating it) to avoid the known incompatibility between the two standards. For more details, refer to [JFIF Compatibility](https://en.wikipedia.org/wiki/JPEG_File_Interchange_Format#Compatibility).
 :::
 
 Options include:
 
-* `keep`\
-  Preserves most of EXIF metadata, including GPS location if present. 
-
-<Tabs>
-  <TabItem label="URL format">
-    ```js 
-    metadata=keep
-    ```
-  </TabItem>
-  <TabItem label="Workers">
-  ```js 
-  cf: {image: {metadata: "keep"}}
-  ```
-  </TabItem>
-</Tabs>
-
 * `copyright`\
-  Discard all metadata except EXIF copyright tag. This is the default behavior for JPEG images.
+  Discards all EXIF metadata except copyright tag.
+  If C2PA metadata preservation is enabled, then this option will preserve all Content Credentials.
+
 
 <Tabs>
   <TabItem label="URL format">
-    ```js 
+    ```js
     metadata=copyright
     ```
   </TabItem>
   <TabItem label="Workers">
-  ```js 
+  ```js
   cf: {image: {metadata: "copyright"}}
   ```
   </TabItem>
 </Tabs>
 
-* `none`\
-  Discard all invisible EXIF metadata. Currently, WebP and PNG output formats always discard metadata.
+* `keep`\
+  Preserves most of EXIF metadata, including GPS location if present.
+  If C2PA metadata preservation is enabled, then this option will preserve all Content Credentials.
 
 <Tabs>
   <TabItem label="URL format">
-    ```js 
+    ```js
+    metadata=keep
+    ```
+  </TabItem>
+  <TabItem label="Workers">
+  ```js
+  cf: {image: {metadata: "keep"}}
+  ```
+  </TabItem>
+</Tabs>
+
+* `none`\
+  Discards all invisible EXIF and C2PA metadata. If the output format is WebP or PNG, then all metadata will be discarded.
+
+<Tabs>
+  <TabItem label="URL format">
+    ```js
     metadata=none
     ```
   </TabItem>
   <TabItem label="Workers">
-  ```js 
+  ```js
   cf: {image: {metadata: "none"}}
   ```
   </TabItem>

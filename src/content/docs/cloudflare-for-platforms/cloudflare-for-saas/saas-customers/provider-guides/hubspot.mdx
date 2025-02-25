@@ -40,6 +40,14 @@ For questions about your HubSpot setup, refer to [HubSpot's reverse proxy suppor
 
 <Render file="provider-guide-compatibility" />
 
+## Zone hold
+
+Because you have your own Cloudflare zone, you have access to the zone hold feature, which is a toggle that prevents your domain name from being created as a zone in a different Cloudflare account. Additionally, if the zone hold feature is enabled, it prevents the activation of custom hostnames onboarded to HubSpot. HubSpot would receive the following error message for your custom hostname: `The hostname is associated with a held zone. Please contact the owner of this domain to have the hold removed.`
+
+To successfully activate the custom hostname on HubSpot, the owner of the zone needs to [temporarily release the hold](/fundamentals/setup/account/account-security/zone-holds/#release-zone-holds). If you are only onboarding a subdomain as a custom hostname to HubSpot, only the subfeature titled `Also prevent Subdomains` needs to be temporarily disabled.
+
+Once the zone hold is temporarily disabled, follow HubSpot's instructions to refresh the custom hostname and it should activate.
+
 ## Additional support
 
 <Render file="provider-guide-help" params={{ one: "HubSpot" }} />

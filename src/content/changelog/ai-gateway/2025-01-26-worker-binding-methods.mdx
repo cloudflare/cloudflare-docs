@@ -1,0 +1,23 @@
+---
+title: AI Gateway Introduces New Worker Binding Methods
+description: New Worker binding methods, enhancing integration capabilities for developers.
+products:
+  - ai-gateway
+date: 2025-01-30T14:00:00Z
+---
+
+We have released new [Workers bindings API methods](/ai-gateway/integrations/worker-binding-methods/), allowing you to connect Workers applications to AI Gateway directly. These methods simplify how Workers calls AI services behind your AI Gateway configurations, removing the need to use the REST API and manually authenticate.
+
+To add an AI binding to your Worker, include the following in your [Wrangler configuration file](/workers/wrangler/configuration/):
+
+![Add an AI binding to your Worker.](~/assets/images/ai-gateway/add-binding.png)
+
+With the new AI Gateway binding methods, you can now:
+
+- Send feedback and update metadata with `patchLog`.
+- Retrieve detailed log information using `getLog`.
+- Execute [universal requests](/ai-gateway/providers/universal/) to any AI Gateway provider with `run`.
+
+For example, to send feedback and update metadata using `patchLog`:
+
+![Send feedback and update metadata using patchLog:](~/assets/images/ai-gateway/send-feedback.png)

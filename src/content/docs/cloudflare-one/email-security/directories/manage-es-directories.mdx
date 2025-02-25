@@ -5,18 +5,35 @@ sidebar:
   order: 5
 ---
 
-You can manage your Email Security directory by editing and deleting added users.
+You can manage your Email Security directory by adding, editing and deleting added users.
 
 :::note[Registered users]
 The Email Security directory contains registered users only. A registered user is a user added to the [impersonation registry](/cloudflare-one/email-security/detection-settings/impersonation-registry/).
 :::
 
-To manually modify or delete added users:
+To manually add, modify or delete users:
 
 1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
 2. Select **Email security**.
 3. Select **Directories**.
-4. Select **ES directory (manual)**.
+4. Select **Email Security Directory**.
+
+## Add a user
+
+To manually add a user to the Email Security directory:
+
+1. Go to **Settings** > **Impersonation registry**.
+2. Select **Add a user**: 
+  - Choose **Manual input** as the **Input method**.
+  - Under **User info**, enter the **Display name**.
+  - Under **User email**, enter the **Email addresses**.
+3. Select **Save**.
+
+To view users you manually added:
+
+1. Go to **Directories**.
+2. Select **Email Security Directory**.
+3. Any manually added user will be displayed under the table as **REGISTERED**.
 
 ## Edit a user
 

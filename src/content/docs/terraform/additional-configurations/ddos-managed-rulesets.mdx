@@ -1,16 +1,17 @@
 ---
-title: DDoS managed rulesets
+title: DDoS managed rulesets configuration using Terraform
 pcx_content_type: how-to
 sidebar:
   order: 3
+  label: DDoS managed rulesets
 head:
   - tag: title
-    content: Configure DDoS managed rulesets with Terraform
+    content: DDoS managed rulesets configuration using Terraform
 ---
 
-import { Render } from "~/components";
+import { Render, RuleID } from "~/components";
 
-This page provides examples of configuring DDoS managed rulesets in your zone or account using Terraform. It covers the following configurations:
+This page provides examples of configuring [DDoS managed rulesets](/ddos-protection/managed-rulesets/) in your zone or account using Terraform. It covers the following configurations:
 
 - [Example: Configure HTTP DDoS Attack Protection](#example-configure-http-ddos-attack-protection)
 - [Example: Configure Network-layer DDoS Attack Protection](#example-configure-network-layer-ddos-attack-protection)
@@ -18,7 +19,7 @@ This page provides examples of configuring DDoS managed rulesets in your zone or
 
 DDoS managed rulesets are always enabled. Depending on your Cloudflare services, you may be able to adjust their behavior.
 
-For more information on DDoS managed rulesets, refer to [Managed rulesets](/ddos-protection/managed-rulesets/) in the Cloudflare DDoS Protection documentation. For more information on deploying and configuring rulesets using the Rulesets API, refer to [Work with managed rulesets](/ruleset-engine/managed-rulesets/) in the Ruleset Engine documentation.
+For more information on deploying and configuring rulesets using the Rulesets API, refer to [Work with managed rulesets](/ruleset-engine/managed-rulesets/) in the Ruleset Engine documentation.
 
 ## Before you start
 
@@ -34,7 +35,7 @@ For more information on DDoS managed rulesets, refer to [Managed rulesets](/ddos
 
 ## Example: Configure HTTP DDoS Attack Protection
 
-This example configures the [HTTP DDoS Attack Protection](/ddos-protection/managed-rulesets/http/) managed ruleset for a zone using Terraform, changing the sensitivity level of rule with ID fdfdac75430c4c47a959592f0aa5e68a to `low`.
+This example configures the [HTTP DDoS Attack Protection](/ddos-protection/managed-rulesets/http/) managed ruleset for a zone using Terraform, changing the sensitivity level of rule with ID <RuleID id="fdfdac75430c4c47a959592f0aa5e68a" /> to `low`.
 
 <Render file="v4-code-snippets" />
 
@@ -70,7 +71,7 @@ For more information about HTTP DDoS Attack Protection, refer to [HTTP DDoS Atta
 
 ## Example: Configure Network-layer DDoS Attack Protection
 
-This example configures the [Network-layer DDoS Attack Protection](/ddos-protection/managed-rulesets/network/) managed ruleset for an account using Terraform, changing the sensitivity level of rule with ID 599dab0942ff4898ac1b7797e954e98b to `low` using an override.
+This example configures the [Network-layer DDoS Attack Protection](/ddos-protection/managed-rulesets/network/) managed ruleset for an account using Terraform, changing the sensitivity level of rule with ID <RuleID id="599dab0942ff4898ac1b7797e954e98b" /> to `low` using an override.
 
 :::caution[Important]
 

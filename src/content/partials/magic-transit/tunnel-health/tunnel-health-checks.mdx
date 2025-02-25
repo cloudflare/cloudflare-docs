@@ -10,7 +10,7 @@ params:
 
 import { Render } from "~/components";
 
-A tunnel health check probe consists of an [ICMP (Internet Control Message Protocol)](https://www.cloudflare.com/learning/ddos/glossary/internet-control-message-protocol-icmp/) payload encapsulated in the protocol of the tunnel the probe is being conducted for. For example, if the tunnel is an IPsec tunnel, the ICMP packet is encrypted within the Encapsulating Security Payload (ESP) packet of the tunnel.
+A tunnel health check probe consists of an [ICMP (Internet Control Message Protocol)](https://www.cloudflare.com/learning/ddos/glossary/internet-control-message-protocol-icmp/) payload encapsulated in the protocol of the tunnel the probe is being conducted for. For example, if the tunnel is an IPsec tunnel, the ICMP [packet](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) is encrypted within the Encapsulating Security Payload (ESP) packet of the tunnel.
 
 A tunnel health check probe comes from Cloudflare to the tunnel origin, then returns a response to Cloudflare. This response is used to determine the outcome of the probe, which is used to calculate the state of the tunnel (this is explained in greater detail below).
 
@@ -28,7 +28,7 @@ A tunnel health check probe can have two possible directions — unidirectional 
 
 #### Unidirectional
 
-A unidirectional health check probe stays encapsulated in one direction and comes into the origin via the tunnel (from Cloudflare to the origin). The response comes back to Cloudflare unencapsulated and is routed outside of the tunnel following standard Internet routing.
+A unidirectional health check probe stays encapsulated in one direction and comes into the origin via the tunnel (from Cloudflare to the origin). The response comes back to Cloudflare unencapsulated and is routed outside of the tunnel following standard Internet [routing](https://www.cloudflare.com/learning/network-layer/what-is-routing/).
 
 The target defaults to the publicly routable origin specified as the `customer_endpoint` on the tunnel, if present. Otherwise, you can use a custom target.
 

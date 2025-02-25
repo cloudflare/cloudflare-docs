@@ -1,0 +1,42 @@
+---
+pcx_content_type: concept
+title: Custom Errors
+sidebar:
+  order: 10
+  group:
+    badge:
+      text: Beta
+head:
+  - tag: title
+    content: Custom Errors (beta)
+---
+
+import { FeatureTable, Render } from "~/components";
+
+Custom Errors (beta), powered by the [Ruleset Engine](/ruleset-engine/), allow you to define custom content for errors returned by an origin server or by a Cloudflare product (including Workers). Custom Errors will apply to responses whose HTTP status code is greater than or equal to `400` that match the expression of the custom error rule.
+
+To configure a custom error, create a custom error rule at the account or zone level. Zone-level rules take precedence over account-level rules. Custom error rules will override [Custom Pages](/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/) at the zone or account level.
+
+Custom Errors require that you [proxy the DNS records](/dns/proxy-status/) of your domain (or subdomain) through Cloudflare.
+
+:::note[Notes about the beta]
+During the beta you can only create custom error rules [using the API](/rules/custom-errors/create-api/).
+:::
+
+## How it works
+
+When defining the custom error to serve, you provide either the URL of an existing web page or an inline response. The URL can point to a webpage or to a different resource (such as JSON content). When you provide a URL, Cloudflare will gather any required images, CSS, and JavaScript code and save a minified version of the full page. This resource is called a [custom error asset](/rules/custom-errors/parameters/#custom-error-assets), which you can use in one or more custom error rules in same scope of the asset (zone or account).
+
+When a custom error rule is triggered, Cloudflare will replace the body with the response you previously defined and (optionally) the response HTTP status code sent to the visitor.
+
+Cloudflare will keep any existing HTTP response headers except for `Content-Type` and `Content-Length`.
+
+Additionally, you can configure [HTTP response header modification rules](/rules/transform/response-header-modification/) for error responses to add, change, or remove HTTP headers from the response.
+
+## Availability
+
+Custom Errors are available in beta to all paid plans. The exact features depend on your Cloudflare plan:
+
+<Render file="rules-new-limits" />
+
+<FeatureTable id="rules.custom_errors" />

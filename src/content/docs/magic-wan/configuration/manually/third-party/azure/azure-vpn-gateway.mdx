@@ -5,15 +5,11 @@ title: Microsoft Azure VPN Gateway
 
 This tutorial provides information on how to connect Cloudflare Magic WAN to your Azure Virtual Network, using the Azure Virtual Network Gateway.
 
-:::note
-This configuration guide applies to Azure Virtual Network Gateway in an Active/Standby configuration. Active/Active configuration is not currently supported.
-:::
-
 ## Prerequisites
 
 You will need to have an existing Resource group, Virtual Network, and Virtual Machine created in your Azure account. Refer to [Microsoft's documentation](https://learn.microsoft.com/en-us/azure/virtual-network/) to learn more on how to create these.
 
-## Configure Azure
+## Configure Azure Virtual Network Gateway
 
 ### 1. Create a Gateway subnet
 
@@ -30,7 +26,20 @@ The Virtual Network Gateway is used to form the tunnel to the devices on your pr
 
 :::note
 This configuration guide applies to Azure Virtual Network Gateway which includes the functionality found in the Azure VPN Gateway.
+
+
+Active/Active and Active/Standby configurations are both supported. Two Azure public IP addresses and two Magic WAN IPsec tunnels are required for the Active/Active configuration.
 :::
+
+#### Active/Active configuration
+
+1. Create a Virtual Network Gateway.
+2. Create two new public IP addresses or use existing IPs. Take note of the public IP addresses assigned to the Virtual Network Gateway as these will be the **Customer endpoint** for Magic WAN's IPsec tunnels configuration.
+3. Navigate to the Virtual Network Gateway created earlier.
+4. In **Configuration**, enable **Active-active mode** and disable **Gateway Private IPs**.
+5. Select **Create**.
+
+#### Active/Standby configuration
 
 1. Create a Virtual Network Gateway.
 2. Create a new public IP address or use an existing IP. Take note of the public IP address assigned to the Virtual Network Gateway as this will be the **Customer endpoint** for Magic WAN's IPsec tunnels configuration.
@@ -42,7 +51,32 @@ This configuration guide applies to Azure Virtual Network Gateway which includes
 The time it takes for Azure to fully provision the Virtual Network Gateway depends on the deployment region.
 :::
 
-### 3. Create a Local Network Gateway
+## Configure Magic WAN
+
+1. Create an [IPsec tunnel](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) in the Cloudflare dashboard.
+2. Make sure you have the following settings:
+   1. **Interface address**: As the Azure Local Network Gateway will only permit specifying the lower IP address in a `/31` subnet, add the upper IP address within the `/31` subnet selected in [step 2 of the Configure Azure section](#2-configure-local-network-gateway-for-magic-ipsec-tunnel-health-checks). Refer to [Tunnel endpoints](/magic-wan/configuration/manually/how-to/configure-tunnels/) for more details.
+   2. **Customer endpoint**: The Public IP associated with your Azure Virtual Network Gateway. For example, `40.xxx.xxx.xxx`.
+   3. **Cloudflare endpoint**: Use the Cloudflare anycast address you have received from your account team. This will also be the IP address corresponding to the Local Network Gateway in Azure. For example, `162.xxx.xxx.xxx`.
+   4. **Health check rate**: Leave the default option (Medium) selected.
+   5. **Health check type**: Leave the default option (Reply) selected.
+   6. **Health check direction**: Leave default option (Bidirectional) selected.
+   7. **Health check target**: Select **Custom**.
+   8. **Target address**: Enter the same address that is used in the **Customer endpoint** field.
+   9. **Add pre-shared key later**: Select this option to create a PSK that will be used later in Azure.
+   10. **Replay protection**: **Enable**.
+3. If you are using the Active/Active configuration, select **Add IPsec tunnel** and repeat step 2 to create the second Magic WAN IPsec tunnel. Use the same **Cloudflare endpoint** as for the first tunnel.
+4. Select **Add Tunnels** when you are finished.
+5.The Cloudflare dashboard will show you a list of your tunnels. Edit the tunnel(s) you have created > select **Generate a new pre-shared key** > copy the generated key. If using the Active/Active configuration, select **Change to a new custom pre-shared key** on the second tunnel and use the PSK generated for the first tunnel.
+6. Create [static routes](/magic-wan/configuration/manually/how-to/configure-static-routes/) for your Azure Virtual Network subnets, specifying the newly created tunnel as the next hop.
+
+:::note
+Both tunnels in an Active/Active configuration must use the same **Cloudflare endpoint**, because an Active/Active Azure VPN connection creates two tunnels to the same remote address.
+:::
+
+## Complete the Azure Configuration
+
+### 1. Create a Local Network Gateway
 
 The Local Network Gateway typically refers to your on-premises location. In this case, the Local Network Gateway represents the Cloudflare side of the connection.
 
@@ -53,25 +87,25 @@ We recommend creating a Local Network Gateway for your Cloudflare IPsec tunnel.
 3. In **Address space(s)**, specify the address range of any subnets you wish to access remotely through the Magic WAN connection. For example, if you want to reach a network with an IP range of `192.168.1.0/24`, and this network is connected to your Magic WAN tenant, you would add `192.168.1.0/24` to the local network gateway address space.
 4. Go to the **Advanced** tab > **BGP settings**, and make sure you select **No**.
 
-### 4. Configure Local Network Gateway for Magic IPsec tunnel health checks
+:::note
+A single Cloudflare anycast address must be used in both Active/Active and Active/Standby configurations.
+:::
 
-Magic WAN uses [Tunnel Health Checks](/magic-wan/reference/tunnel-health-checks/) to ensure the tunnel is available.
+### 2. Configure Local Network Gateway for Magic IPsec tunnel health checks
 
-Tunnel health checks make use of ICMP probes sent from the Cloudflare side of the Magic IPsec tunnel to the remote endpoint (Azure).
+Magic WAN uses [Tunnel Health Checks](/magic-wan/reference/tunnel-health-checks/) to monitor whether a tunnel is available.
 
-There is an important distinction between how to configure Cloudflare and Azure to support the health checks:
+Tunnel health checks make use of ICMP probes sent from the Cloudflare side of the Magic IPsec tunnel to the remote endpoint (Azure). Probes are sent from the tunnel's interface address, which you specify in two places:
 
-- Magic IPsec Tunnel configuration settings requires specifying a discrete IP address (`/31` netmask recommended)
-- Azure Local Network Gateway settings require specifying a subnet (in CIDR notation)
+1. **Cloudflare Dashboard:** In your Magic IPsec tunnel configuration as the address of the virtual tunnel interface (VTI) (so that Cloudflare knows what address to send probes from). Cloudflare requires this address in CIDR notation with a `/31` netmask.
+2. **Azure Portal:** In your VPN site's address space (so that Azure routes probe responses back over the tunnel). Azure requires this address in CIDR notation with a `/32` netmask.
 
 Cloudflare recommends customers select a unique `/31` subnet ([RFC 1918 - Address Allocation for Private Internets](https://datatracker.ietf.org/doc/html/rfc1918)) for each IPsec tunnel which is treated as a Point-to-Point Link and provides the ideal addressing scheme to satisfy both requirements.
 
 Example:
-
-```txt
-10.252.3.54/31 - Define as the subnet (in CIDR notation) in Azure Local Network Gateway in the Azure Portal.
-10.252.3.55/31 - Define as the discrete IP Address assigned to the Interface Address (VTI - Virtual Tunnel Interface) of the Magic IPsec Tunnel in the Cloudflare Dashboard (see Configure Magic WAN below).
-```
+- Select 10.252.3.55/31 as your unique point-to-point link subnet.
+- In the Cloudflare dashboard, set `10.252.3.55/31` as your tunnel's **IPv4 Interface address** (refer to [Configure Magic WAN](#configure-magic-wan)).
+- In the Azure portal, add `10.252.3.55/32` to your Local Network Gateway's **Address space**.
 
 :::note
 It is important to ensure the subnet selected for the Interface Address does not overlap with any other subnet.
@@ -85,10 +119,15 @@ To configure the Address Space for the Local Network Gateway to support Tunnel H
 
 1. Edit the Local Network Gateway configured in the previous section.
 2. Select **Connections**.
-3. Add the`/31` subnet in CIDR notation (for example, `10.252.3.54/31`) under **Address Space(s)**.
+3. Under **Address Space(s)** add the Interface Address of the Magic IPsec Tunnel from the Cloudflare dashboard in CIDR notation (for example, `10.252.3.55/32`).
+4. If using an Active/Active configuration, add the Interface Address of the second Magic IPsec Tunnel from the Cloudflare Dashboard in CIDR notation (for example, `10.252.3.55/32`) under **Address Space(s)**.
 4. Select **Save**.
 
-### 5. Create an IPsec VPN Connection
+:::note
+The Magic IPsec Tunnel Interface Address should be entered as a `/31` in the Cloudflare Dashboard, but as a `/32` when configuring the Local Network Gateway Address Space(s) in the Azure portal.
+:::
+
+### 3. Create an IPsec VPN Connection
 
 Choose the following settings when creating your VPN Connection:
 
@@ -98,13 +137,13 @@ Choose the following settings when creating your VPN Connection:
 4. **BGP**: **Disabled**
 5. **IPsec / IKE policy**: **Custom**
    1. **IKE Phase 1**
-      1. **Encryption**: _GCMAES256_ or _AES256_
-      2. **Integrity/PRF**: _SHA256_
-      3. **DH Group**: _DHGroup20_
+      1. **Encryption**: _GCMAES256_
+      2. **Integrity/PRF**: _SHA384_
+      3. **DH Group**: _ECP384_
    2. **IKE Phase 2(IPsec)**
-      1. **IPsec Encryption**: _GCMAES256_ or _AES256_
-      2. **IPsec Integrity**: _SHA256_
-      3. **PFS Group**: _PFS2048_
+      1. **IPsec Encryption**: _GCMAES256_
+      2. **IPsec Integrity**: _GCMAES256_
+      3. **PFS Group**: _ECP384_
    3. **IPsec SA lifetime in KiloBytes**: `0`
    4. **IPsec SA lifetime in seconds**: `28800`
    5. **Use policy based traffic selector**: **Disable**
@@ -115,7 +154,7 @@ Choose the following settings when creating your VPN Connection:
 
 Repeat this process to define the settings for the Connection to the Local Network Gateway that corresponds to the redundant Cloudflare anycast IP address.
 
-### 6. Route all Internet traffic through Magic WAN and Cloudflare Gateway
+### 4. Route all Internet traffic through Magic WAN and Cloudflare Gateway
 
 Cloudflare Zero Trust customers can route Internet-bound traffic through Magic WAN to the Internet through Cloudflare Gateway.
 
@@ -155,20 +194,6 @@ curl https://ipinfo.io
 :::note
 ICMP (ping/traceroute) will work to remote Magic WAN sites, but is not forwarded to the Internet. Please ensure you validate connectivity via HTTP.
 :::
-
-## Configure Magic WAN
-
-1. Create an [IPsec tunnel](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) in the Cloudflare dashboard.
-2. Make sure you have the following settings:
-   1. **Interface address**: As the Azure Local Network Gateway will only permit specifying the lower IP address in a `/31` subnet, add the upper IP address within the `/31` subnet selected in [step 4 of the Configure Azure section](#4-configure-local-network-gateway-for-magic-ipsec-tunnel-health-checks). Refer to [Tunnel endpoints](/magic-wan/configuration/manually/how-to/configure-tunnels/) for more details.
-   2. **Customer endpoint**: The Public IP associated with your Azure Virtual Network Gateway. For example, `40.xxx.xxx.xxx`.
-   3. **Cloudflare endpoint**: Use the Cloudflare anycast address you have received from your account team. This will also be the IP address corresponding to the Local Network Gateway in Azure. For example, `162.xxx.xxx.xxx`.
-   4. **Health check rate**: Leave the default option (Medium) selected.
-   5. **Health check type**: Leave the default option (Reply) selected.
-   6. **Health check direction**: Leave default option.
-   7. **Add pre-shared key later**: Select this option to create a PSK that will be used later in Azure.
-   8. **Replay protection**: **Enable**.
-3. Create static routes for your Azure Virtual Network subnets, specifying the newly created tunnel as the next hop.
 
 ## Validate connectivity and disable Azure Virtual Network Gateway anti-replay protection
 
@@ -354,21 +379,3 @@ curl --location --request PUT \
 ```
 
 6. Leave the replay protection setting checked in the Cloudflare dashboard, and wait several minutes before validating connectivity again.
-
-## Tunnel health checks and Azure
-
-We have identified cases where the IPsec Tunnels configured on the Azure Virtual Network Gateway need to be restarted one time before the tunnel health checks start passing.
-
-### Restart Azure tunnels
-
-1. Open the Virtual Network Gateway.
-2. Go to **Settings** > **Connections**.
-3. Open the properties of the tunnel.
-4. Go to **Help** > **Reset**.
-5. Select **Reset**.
-
-It may take several minutes for the tunnels to reset from the Azure side. Monitor the [tunnel health checks section](/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/) in the Cloudflare dashboard to determine the status.
-
-:::note
-Tunnel Health Check percentages are calculated over a one hour period.
-:::

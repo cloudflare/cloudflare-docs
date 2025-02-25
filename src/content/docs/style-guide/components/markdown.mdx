@@ -2,7 +2,17 @@
 title: Markdown
 ---
 
-This component uses `marked` to turn the `text` prop into HTML. This is useful with, for example partial files that have variables you need to format.
+This component uses [`marked`](https://marked.js.org/) to render [CommonMark and various other Markdown flavours](https://marked.js.org/#specifications).
+
+:::caution
+
+This component can not use [MDX](https://mdxjs.com/) or [Astro](https://docs.astro.build/en/guides/markdown-content/) features, such as [optimised images in the assets directory](https://docs.astro.build/en/guides/images/#images-in-mdx-files).
+
+Headings should not be used with this component, as they will not receive an `id`, copyable link or appear in the table of contents.
+
+Code blocks should not be used with this component, as they will not receive syntax highlighting or a copy to clipboard button.
+
+:::
 
 ```mdx live
 import { Markdown } from "~/components";
@@ -18,4 +28,27 @@ If you have a variable that needs to be formatted in any special way (for exampl
 <Markdown text={props.foo} />
 ```
 
-Note that you need to wrap your variabble in curly braces, as well as use `text=` or this will not work.
+Note that you need to wrap your variable in curly braces, as well as use `text=` or this will not work.
+
+## Multi-line strings
+
+The Markdown component uses the [`dedent`](https://www.npmjs.com/package/dedent) library to remove indentation from multi-line strings.
+
+This is because the [CommonMark spec](https://spec.commonmark.org/0.22/#indented-code-blocks) treats indented text as code blocks, unlike [MDX](https://mdxjs.com/docs/what-is-mdx/#:~:text=Indented%20code%20does%20not%20work%20in%20MDX%3A).
+
+```mdx live
+import { Markdown } from "~/components";
+
+<>
+  <Markdown
+  	text={`
+    You need to purchase [Magic WAN](https://www.cloudflare.com/magic-wan/) before you can purchase and use the Magic WAN Connector. The Magic WAN Connector can function as your primary edge device for your network, or be deployed in-line with existing network gear.
+
+  	You also need to purchase a Magic WAN Connector before you can start configuring your settings in the Cloudflare dashboard. After buying a Magic WAN Connector, the device will be registered with your Cloudflare account and show up in your Cloudflare dashboard.
+
+    Contact your account representative to learn more about purchasing options for the Magic WAN Connector device.
+    `}
+    inline={false}
+  />
+</>
+```

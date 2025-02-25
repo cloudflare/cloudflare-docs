@@ -6,8 +6,6 @@ sidebar:
 
 ---
 
-import { GlossaryTooltip } from "~/components"
-
 To better understand Internet usage around the world, use Cloudflare's URL Scanner. With Cloudflare's URL Scanner, you have the ability to investigate the details of a domain, IP, URL, or ASN. Cloudflare's URL Scanner is available in the Security Center of the Cloudflare dashboard, [Cloudflare Radar](https://radar.cloudflare.com/scan) and the Cloudflare [API](/api/resources/url_scanner/subresources/scans/).
 
 ## Use the API
@@ -56,9 +54,9 @@ Here's an example request body with some custom configuration options:
 		"desktop", "mobile", "tablet"
 	],
   "customagent": "XXX-my-user-agent",
-  "referer": "example"
+  "referer": "example",
 	"customHeaders": {
-		"Authorization": "xxx-token",
+		"Authorization": "xxx-token"
 	},
 	"visibility": "Unlisted"
 }
@@ -67,6 +65,10 @@ Here's an example request body with some custom configuration options:
 Above, the visibility level is set as `Unlisted`, which means that the scan report won't be included in the [recent scans](https://radar.cloudflare.com/scan#recent-scans) list nor in search results. In  effect, only users with knowledge of the scan ID will be able to access it.
 
 There will also be three screenshots taken of the webpage, one per target device type. The [`User-Agent`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) will be set as "XXX-my-user-agent". Note that you can set any custom HTTP header, including [Authorization](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization).
+
+:::note[Header]
+Successful scans are subject to a retention policy of 12 months. Failed scans older than 30 days will be deleted.
+:::
 
 ### Get scan report
 

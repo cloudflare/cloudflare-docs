@@ -28,7 +28,7 @@ Also, if `CNAME` records are not returned by the queried nameserver (sometimes n
 
 ## Is Cloudflare Spectrum enabled on your account?
 
-Cloudflare does not proxy traffic on port 25 (SMTP) unless [Cloudflare Spectrum](/spectrum/reference/configuration-options#smtp) is enabled and configured to proxy email traffic across Cloudflare. If you do not have Spectrum enabled, then no email traffic (SMTP) will actually pass through Cloudflare, and we will simply resolve the DNS. This also means that any DNS record used to send email traffic must be DNS-only to bypass the Cloudflare network. Check [Identifying subdomains compatible with Cloudflare's proxy](/dns/manage-dns-records/reference/proxied-dns-records) for more details.
+Cloudflare does not proxy traffic on port 25 (SMTP) unless [Cloudflare Spectrum](/spectrum/reference/configuration-options#smtp) is enabled and configured to proxy email traffic across Cloudflare. If you do not have Spectrum enabled, then no email traffic (SMTP) will actually pass through Cloudflare, and we will simply resolve the DNS. This also means that any DNS record used to send email traffic must be DNS-only to bypass the Cloudflare network. Check [Identifying subdomains compatible with Cloudflare's proxy](/dns/proxy-status/) for more details.
 
 ## Contact your mail provider for assistance
 
@@ -36,7 +36,7 @@ If your email does not work shortly after editing DNS records, contact your mail
 
 ## dc-######### subdomain
 
-The dc-##### subdomain is added to overcome a conflict created when your `SRV` or `MX` record resolves to a domain configured to [proxy](/dns/manage-dns-records/reference/proxied-dns-records) to Cloudflare.
+The dc-##### subdomain is added to overcome a conflict created when your `SRV` or `MX` record resolves to a domain configured to [proxy](/dns/proxy-status/) to Cloudflare.
 
 Therefore, Cloudflare will create a `dc-#####` DNS record that resolves to the origin IP address. The `dc-#####` record ensures that traffic for your `MX` or `SRV` record is not proxied (it directly resolves to your origin IP) while the Cloudflare proxy works for all other traffic.
 
@@ -62,7 +62,7 @@ Removing the `dc-######` record is only possible via one of these methods:
 :::caution
 
 If your mail server resides on the same IP as your web server, your MX
-record will expose your origin IP address. 
+record will expose your origin IP address.
 :::
 
 ***

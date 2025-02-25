@@ -144,7 +144,7 @@ Error 520 occurs when the origin server returns an empty, unknown, or unexpected
 :::note
 
 A quick workaround while further investigating 520 errors is to either
-make the record [DNS-only](/dns/manage-dns-records/reference/proxied-dns-records)
+make the record [DNS-only](/dns/proxy-status/)
 in the Cloudflare **DNS** app or [temporarily pause Cloudflare](/fundamentals/setup/manage-domains/pause-cloudflare/).
 :::
 
@@ -218,7 +218,7 @@ Error 522 occurs when Cloudflare times out contacting the origin web server. Two
 - Packets were dropped at your origin web server.
 
 If you are using [Cloudflare Pages](/pages/), verify that you have a custom domain set up and that your CNAME record is pointed to your [custom Pages domain](/pages/configuration/custom-domains/#add-a-custom-domain).
-If you are using [Workers with a Custom Domain](/workers/configuration/routing/custom-domains/), performing a `fetch` to its own hostname will cause a 522 error. Consider using a [Route](/workers/configuration/routing/) or target another hostname instead. 
+If you are using [Workers with a Custom Domain](/workers/configuration/routing/custom-domains/), performing a `fetch` to its own hostname will cause a 522 error. Consider using a [Route](/workers/configuration/routing/) or target another hostname instead.
 
 If none of the above leads to a resolution, request the following information from your hosting provider or site administrator before [contacting Cloudflare support](/support/contacting-cloudflare-support/):
 
@@ -389,8 +389,8 @@ As a result, a valid SSL certificate is required at the origin.
 
 ## Error 530
 
-An HTTP error 530 is returned when Cloudflare is encountering an issue resolving the origin hostname. 
-In this case the body of the response contains an [1XXX error](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors) code. 
+An HTTP error 530 is returned when Cloudflare is encountering an issue resolving the origin hostname.
+In this case the body of the response contains an [1XXX error](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors) code.
 Please refer to the specific [1XXX error](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors) for troubleshooting information.
 
 ---

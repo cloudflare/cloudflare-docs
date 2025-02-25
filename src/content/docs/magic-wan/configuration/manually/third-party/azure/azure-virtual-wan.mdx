@@ -91,7 +91,7 @@ To connect your existing VNet to your newly created vHub:
 
 ## Configure Magic WAN
 
-When connecting your Azure vHub VPN Gateway to Magic WAN, two Cloudflare tunnels are required to map to the single Azure VPN Gateway Connection created above. This is because Azure VPN Gateways are deployed with two public IP addresses.
+When connecting your Azure vHub VPN Gateway to Magic WAN, you need to create two Magic WAN IPsec tunnels to map to the single Azure VPN Gateway Connection created above. This is because Azure VPN Gateways are deployed with two public IP addresses.
 
 1. Create an [IPsec tunnel](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) in the Cloudflare dashboard.
 2. Make sure you have the following settings:

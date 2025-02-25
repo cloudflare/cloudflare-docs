@@ -27,8 +27,52 @@ Magic WAN Connector software is certified for use on the [Dell Networking Virtua
 
 ## VLAN ID
 
-This feature allows you to have multiple [virtual LANs](https://www.cloudflare.com/learning/network-layer/what-is-a-lan/) (VLANs) configured over the same physical port on your Magic WAN Connector. VLAN tagging adds an extra header to packets in order to identify which VLAN the packet belongs to and to route it appropriately. This effectively allows you to run multiple networks over the same physical port.
+This feature allows you to have multiple [virtual LANs](https://www.cloudflare.com/learning/network-layer/what-is-a-lan/) (VLANs) configured over the same physical port on your Magic WAN Connector. VLAN tagging adds an extra header to [packets](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) in order to identify which VLAN the packet belongs to and to route it appropriately. This effectively allows you to run multiple networks over the same physical port.
 
 A non-zero value set up for the VLAN ID field in your WAN/LAN is used to handle VLAN-tagged traffic. Cloudflare uses the VLAN ID to handle traffic coming into your Magic WAN Connector device, and applies a VLAN tag with the configured VLAN ID for traffic going out of your Connector through WAN/LAN.
 
 You can setup VLAN IDs both for WAN and LAN. Refer to [Configure hardware connector](/magic-wan/configuration/connector/configure-hardware-connector/) or [Configure software connector](/magic-wan/configuration/connector/configure-virtual-connector/) to learn where you can set up VLAN IDs.
+
+## High availability configurations
+
+### Terminology
+
+- **Primary/Secondary**: Used to identify the two nodes which are part of a high availability (HA) configuration pair of Magic WAN Connectors. This identity allows the node to identify which configuration is attributed to it — for example, specifying a primary and secondary IP in a LAN configuration. This identity is configured by the user on the Cloudflare dashboard.
+- **Active/Standby**: These are states that the two nodes in a HA pair will dynamically assume based on an election process. Only one node at any time is expected to be active.
+
+### High availability
+
+A site set up in high availability (HA) mode has two Magic WAN Connectors with the same configuration but replicated in two nodes. In case of failure of a Connector, the other Connector becomes the active node, taking over configuration of the LAN gateway IP and allowing traffic to continue without disruption.
+
+### Active/Standby Election
+
+During the LAN configuration, one of the LAN links is configured as a HA link, which is used to exchange heartbeats, resulting in the active / standby election of nodes.
+
+The state election uses a `PRIORITY` parameter where the node with the higher priority becomes active and the other assumes the standby state. If the priority is the same, the state machine automatically picks one of the nodes as active.
+
+The HA pair is configured in non-preemptive mode, meaning that once a node becomes active, it will remain active unless its priority drops below that of the other node.
+
+### Configuration
+
+The two Connectors of a high availability (HA) pair are part of a single site. You designate the connectors [as primary and secondary](/magic-wan/configuration/connector/configure-hardware-connector/#create-a-high-availability-configuration) in the Cloudflare dashboard.
+
+:::note
+The HA link cannot be connected back-to-back. It has to be connected over a switch. This is because, in a direct connection, if the link is unplugged on one end, the other end also detects a link failure. Since we have configured the system to enter a `FAULT` state when the HA link goes down, the affected node will be unable to function as the active node.
+:::
+
+### Failure Detection and Failover
+
+The Magic WAN Connector's health can be in one of three states:
+
+- **Good** : All health parameters are good
+- **Degraded** : One of the following is true:
+  - Health of at least one configured tunnel is `DOWN`
+  - At least one of the LAN links is disconnected (physically unplugged)
+- **Down** : If one of the following is true:
+  - Health of all tunnels is `DOWN`
+  - All LAN interfaces are disconnected
+  - Connector software is not healthy
+
+A failover happens when the active node's health declines to a level lower than that of the standby node. For example, from `GOOD` to `DEGRADED`, or from `DEGRADED` to `DOWN`. In the case of a failover where a Connector is acting as a DHCP server, DHCP leases will be synchronized.
+
+When a failover occurs, traffic is moved to the new active node. It could take up to 30 seconds for traffic to be fully restored over the new active node.

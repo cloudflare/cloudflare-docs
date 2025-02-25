@@ -1,0 +1,40 @@
+---
+pcx_content_type: reference
+title: Verified bot categories
+sidebar:
+    order: 3
+    label: Categories
+
+---
+
+You can segment your verified bot traffic by its type and purpose by adding the Verified Bot Categories field `cf.verified_bot_category` as a filter criteria in [WAF Custom rules](/waf/custom-rules/), [Advanced Rate Limiting](/waf/rate-limiting-rules/), and Late Transform rules.
+
+:::note
+
+The Verified Bot Categories field is not compatible with legacy Firewall rules. 
+:::
+
+## Categories
+
+| Name                       | String value                 | Example                                                                 |
+| -------------------------- | ---------------------------- | ----------------------------------------------------------------------- |
+| Academic research          | `Academic Research`          | Internet Archive, Library of Congress, TurnItInBot                      |
+| Accessibility              | `Accessibility`              |                                                                         |
+| Advertising or marketing   | `Advertising & Marketing`    | Google Adsbot                                                           |
+| Aggregators                | `Aggregator`                 | Pinterest, Indeed Jobsbot                                               |
+| AI Assistant               | `AI Assistant`               |                                                                         |
+| AI Crawler                 | `AI Crawler`                 | Google Bard, ChatGPT bot                                                |
+| AI Search                  | `AI Search`                  |                                                                         |
+| Feed fetcher               | `Feed Fetcher`               | RSS or Podcast feed updaters                                            |
+| Monitoring or analytics    | `Monitoring & Analytics`     | Uptime Monitors                                                         |
+| Page preview               | `Page Preview`               | Facebook, Slack, Twitter, or Discord Link Preview tools                 |
+| Search engine crawler      | `Search Engine Crawler`      | Googlebot, Bingbot, Yandexbot, Baidubot                                 |
+| Search engine optimization | `Search Engine Optimization` | Google Lighthouse, GT Metrix, Pingdom, AddThis                          |
+| Security                   | `Security`                   | Vulnerability Scanners, SSL Domain Control Validation (DCV) Check Tools |
+| Social media marketing     | `Social Media Marketing`     |                                                                         |
+| Webhooks                   | `Webhooks`                   | Payment processors, WordPress Integration tools                         |
+| Other                      | `Other`                      |                                                                         |
+
+## Availability
+
+Verified Bot Categories is available to all Bots customers.

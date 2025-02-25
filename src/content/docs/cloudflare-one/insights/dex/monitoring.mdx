@@ -1,0 +1,81 @@
+---
+pcx_content_type: reference
+title: Monitoring
+sidebar:
+  order: 1
+---
+
+Monitor performance and network status for your organization's [fleet](/cloudflare-one/insights/dex/monitoring/#fleet-status) or individual [user devices](/cloudflare-one/insights/dex/monitoring/#device-monitoring).
+
+Network and device performance data helps IT administrators troubleshoot performance issues, investigate network connectivity problems, and monitor device health.
+
+## Fleet status
+
+A fleet is a collection of user devices. All devices in a fleet have WARP installed and are connected to a [Cloudflare Zero Trust organization](/cloudflare-one/setup/#create-a-zero-trust-organization).
+
+To view fleet status:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **DEX** > **Monitoring**.
+2. In **DEX Monitoring**, review the information under the **Fleet Status** tab.
+
+### View metrics
+
+The **Fleet Status** tab will show real-time and historical connectivity metrics for all devices in your organization.
+
+To view analytics on a per-device level, go to [Device monitoring](/cloudflare-one/insights/dex/monitoring/#device-monitoring).
+
+### Available metrics
+
+- **Devices connected by colo**: Number of devices that are connected to a given [Cloudflare data center](https://www.cloudflarestatus.com/).
+
+- **Connectivity status**: Percentage of devices in a given WARP client state.
+
+  | Status       | Description                                                                                                                                                                                                                                                                                                                                                                                 |
+  | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+  | Connected    | WARP has successfully established a connection to the Cloudflare global network.                                                                                                                                                                                                                                                                                                            |
+  | Disconnected | WARP has been intentionally or unintentionally disconnected from the Cloudflare global network.                                                                                                                                                                                                                                                                                             |
+  | Paused       | A user or administrator has taken an explicit action to temporarily turn off WARP, for example by entering an [Admin Override](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#admin-override) code. Paused clients will [auto-connect](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#auto-connect) after a timeout period. |
+  | Connecting   | WARP is pending connection, but is actively trying to establish a connection to the Cloudflare global network.                                                                                                                                                                                                                                                                              |
+
+- **Mode**: [WARP mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) deployed on the device.
+
+- **Colo**: Percentage of devices connected to a given Cloudflare data center.
+
+- **Platform**: Operating system of the device.
+
+- **Major Version**: WARP client version installed on the device.
+
+- **Device Status Over Time**: WARP client connection status over the selected time period.
+
+- **Connection Methods Over Time**: WARP mode used by the device over the selected time period.
+
+## Device monitoring
+
+Review network and device performance for a device enrolled in your fleet.
+
+### View a device's performance
+
+To view a device's network and device performance metrics:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **My team** > **Devices**.
+2. Select a device > **View details**.
+3. Select the **DEX** tab.
+4. In **Device Monitoring**, scroll down to **Network performance** and **Device Performance**.
+
+### Network and device performance metrics
+
+#### Network performance metrics
+
+- **Unique networks over time**: How many unique SSIDs the device was connected to.
+
+- **Network I/O**: How much data has been transferred (uploads and downloads) over the primary network interface.
+
+#### Device performance metrics
+
+- **Battery percentage and cycles**: Displays battery percentage and [battery cycles](https://support.apple.com/en-us/102888) over time. Used to debug potential performance issues possibly related to battery health or power-saving measures that are triggered at low-battery levels.
+
+- **CPU usage**: CPU utilization over time. Used to debug slow system performance due to high CPU usage.
+
+- **Memory utilization**: Memory utilization over time. Used to debug performance issues related to an overtaxed memory.
+
+- **Disk I/O**: Displays number of disk read/write operations over time. Used to debug performance errors due to heavy disk operations.

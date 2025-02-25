@@ -1,0 +1,28 @@
+---
+title: Revamped Workers Metrics 
+description: Monitor your Worker's performance with a default set of automatically enabled metrics.
+products:
+  - workers
+date: 2025-02-03T18:00:00Z
+---
+
+We've revamped the [Workers Metrics dashboard](https://dash.cloudflare.com/?to=/:account/workers/services/view/:worker/production/metrics/). 
+
+![Workers Metrics dashboard](~/assets/images/workers/observability/workers-metrics.png)
+
+Now you can easily compare metrics across Worker versions, understand the current state of a [gradual deployment](/workers/configuration/versions-and-deployments/gradual-deployments/), and review key Workers metrics in a single view. This new interface enables you to:
+
+- Drag-and-select using a graphical timepicker for precise metric selection. 
+
+![Workers Metrics graphical timepicker](~/assets/images/workers/observability/metrics-graphical-timepicker.png)
+
+- Use histograms to visualize cumulative metrics, allowing you to bucket and compare rates over time.
+- Focus on Worker versions by directly interacting with the version numbers in the legend.
+
+![Workers Metrics legend selector](~/assets/images/workers/observability/metrics-legend-selector.png)
+
+- Monitor and compare active gradual deployments.
+- Track error rates across versions with grouping both by version and by invocation status.
+- Measure how [Smart Placement](/workers/configuration/smart-placement/) improves request duration.
+
+Learn more about [metrics](/workers/observability/metrics-and-analytics).

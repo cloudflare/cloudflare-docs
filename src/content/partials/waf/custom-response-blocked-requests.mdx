@@ -1,14 +1,15 @@
 ---
-inputParameters: responseType;;defaultStatusCode;maxBodySize
+params:
+  - responseType
+  - defaultStatusCode
+  - maxBodySize
 ---
-
-import { Markdown } from "~/components";
 
 When you select the _Block_ action in a rule you can optionally define a custom response.
 
 The custom response has three settings:
 
-- **With response type**: Choose a content type or the default {props.one} response from the list. The available custom response types are the following:
+- **With response type**: Choose a content type or the default {props.responseType} response from the list. The available custom response types are the following:
 
   | Dashboard value | API value            |
   | --------------- | -------------------- |
@@ -17,6 +18,6 @@ The custom response has three settings:
   | Custom JSON     | `"application/json"` |
   | Custom XML      | `"text/xml"`         |
 
-- **With response code**: Choose an HTTP status code for the response, in the range 400-499. The default response code is {props.two}.
+- **With response code**: Choose an HTTP status code for the response, in the range 400-499. The default response code is {props.defaultStatusCode}.
 
-- **Response body**: The body of the response. Configure a valid body according to the response type you selected. The maximum field size is {props.three}.
+- **Response body**: The body of the response. Configure a valid body according to the response type you selected. The maximum field size is {props.maxBodySize}.

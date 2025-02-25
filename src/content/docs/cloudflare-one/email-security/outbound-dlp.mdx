@@ -63,3 +63,48 @@ After creating your policy, you can modify or reorder your policies in **Email S
 | Recipient email     | The intended recipient of an outbound email.                                                                               |
 | Email sender        | The user in your organization sending an email.                                                                            |
 | Matched DLP profile | The [DLP profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/) that content of an email matches upon scan. |
+
+## DLP Assist add-in
+
+The Data Loss Prevention (DLP) Assist add-in allows Microsoft O365 users to deploy a DLP solution for free using Cloudflare's Email Security.
+
+To set up DLP Assist add-in:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Email Security** > **Outbound DLP**.
+2. Select **View Microsoft add-in instructions** > Select **Download add-in**. This downloads a `.xml` file necessary to install the add-in on the client side.
+3. Set up the add-in in Microsoft 365:
+    - Log in to the [Microsoft admin panel](https://security.microsoft.com/homepage) and go to **Microsoft 365 Admin Center** > **Settings** > **Integrated Apps**.
+    - Choose **Upload custom apps** and select **Office Add-in** for the application type.
+    - Select **Upload manifest file (.xml) from device**.
+    - Upload the Cloudflare add-in file you downloaded in step three. Then, verify and complete the wizard. It can take up to 24 hours for an add-in to propagate.
+
+The add-in works by inserting headers into the [EML](https://en.wikipedia.org/wiki/EML) on the client side before the message is sent out. 
+
+To block, encrypt, or send approval, you can configure rules within Microsoft Purview DLP:
+
+1. Go to [Microsoft Purview](https://purview.microsoft.com/datalossprevention/overview?tid=11648e1c-3d60-40e2-bf07-f8d481e48e2d).
+2. Select **Policies** > **Create policy**.
+3. Do not choose any templates or custom policy. Select **Next**.
+4. Choose a name and description for the policy: You can choose any name. However, this guide will use `Cloudflare Assist Block`.
+5. Select **Next** on **Admin Units**:
+    - Choose to only apply to **Exchange Email**.
+    - Choose **Create or customize advanced DLP Rules**.
+6. Select **Create rule**:
+    - Create a policy name.
+    - Add the following conditions:
+        - **Header contains words or phrases**: `Key: cf_outbound_dlp with Value: BLOCK`
+        - Select **AND**.
+        - **Content is shared from Microsoft 365**: Select **with people from outside my organization**.
+7. Under **Actions**, the admin can choose what to do with the message. You can use the **Restrict access or encrypt the content in Microsoft 365 locations** to block the message or encrypt it.
+8. Under **User notifications**, turn on notifications. Admins can also edit the message if they want to. You can also configure if the admin wants to receive a notification under **Incident reports** >  **Use this severity level in admin alerts and reports**.
+9. Select **Save**.
+10. Select **Turn the Policy On Immediately**.
+
+## Set up DLP profiles
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Email Security** > **Outbound DLP**. 
+2. Select **Add a policy**:
+    - **Name your policy**.
+    - **Build an expression**.
+    - **(Optional) Configure message type**: Create a custom message to be be displayed when a violation occurs.
+3. Select **Save**.

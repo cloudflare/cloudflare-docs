@@ -9,7 +9,7 @@ Time Travel is D1's approach to backups and point-in-time-recovery, and allows y
 
 - You do not need to enable Time Travel. It is always on.
 - Database history and restoring a database incur no additional costs.
-- Time Travel automatically creates [bookmarks](#terminology) on your behalf. You do not need to manually trigger or remember to initiate a backup.
+- Time Travel automatically creates [bookmarks](#bookmarks) on your behalf. You do not need to manually trigger or remember to initiate a backup.
 
 By not having to rely on scheduled backups and/or manually initiated backups, you can go back in time and restore a database prior to a failed migration or schema change, a `DELETE` or `UPDATE` statement without a specific `WHERE` clause, and in the future, fork/copy a production database directly.
 
@@ -21,7 +21,7 @@ To understand which storage subsystem your database uses, run `wrangler d1 info 
 
 :::
 
-## Terminology
+## Bookmarks
 
 Time Travel introduces the concept of a "bookmark" to D1. A bookmark represents the state of a database at a specific point in time, and is effectively an append-only log.
 
@@ -95,7 +95,7 @@ Note that:
 
 - Timestamps are converted to a deterministic, stable bookmark. The same timestamp will always represent the same bookmark.
 - Queries in flight will be cancelled, and an error returned to the client.
-- The restore operation will return a [bookmark](#terminology) that allows you to [undo](#undo-a-restore) and revert the database.
+- The restore operation will return a [bookmark](#bookmarks) that allows you to [undo](#undo-a-restore) and revert the database.
 
 ## Undo a restore
 
@@ -116,6 +116,12 @@ wrangler d1 time-travel info YOUR_DATABASE
 ⚡️ To restore to this specific bookmark, run:
  `wrangler d1 time-travel restore YOUR_DATABASE --bookmark=00000085-0000024c-00004c6d-8e61117bf38d7adb71b934ebbf891683`
 ```
+
+## Export D1 into R2 using Workflows
+
+You can automatically export your D1 database into R2 storage via REST API and Cloudflare Workflows. This may be useful if you wish to store a state of your D1 database for longer than 30 days.
+
+Refer to the guide [Export and save D1 database](/workflows/examples/backup-d1/).
 
 ## Notes
 

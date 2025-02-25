@@ -18,3 +18,27 @@ jobs:
       - uses: ./.github/actions/assign-pr
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  review_comment:
+    name: Add review comment
+    runs-on: ubuntu-latest
+    steps:
+      - id: check_if_contributor_is_external
+        name: Check if contributor is external
+        run: 'curl --write-out ''%{http_code}'' --silent --output /dev/null -L -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${{ env.GH_TOKEN }}" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/orgs/cloudflare/members/${{ github.event.pull_request.user.login }} | grep -q ''204'' && echo "is_external=false" >> $GITHUB_OUTPUT || echo "is_external=true" >> $GITHUB_OUTPUT'
+        env:
+          GH_TOKEN: ${{ secrets.HOLOPIN_LABELER }}
+      - name: External comment
+        run: gh pr comment "$NUMBER" --body "Howdy and thanks for contributing to our repo. We review new, external PRs within **2 weeks**. If it's been longer than then without any movement, tag the PR **Assignees** in a comment."
+        if: steps.check_if_contributor_is_external.outputs.is_external == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          NUMBER: ${{ github.event.pull_request.number }}
+      - name: Internal comment
+        run: gh pr comment "$NUMBER" --body "Howdy and thanks for contributing to our repo. We review internal PRs within **1 week**. If it's something urgent or has been sitting without a comment, start a thread in the *Developer Docs* space internally."
+        if: steps.check_if_contributor_is_external.outputs.is_external == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          NUMBER: ${{ github.event.pull_request.number }}

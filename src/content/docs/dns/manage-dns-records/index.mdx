@@ -2,7 +2,7 @@
 pcx_content_type: navigation
 title: DNS records
 sidebar:
-  order: 5
+  order: 6
 
 ---
 
@@ -16,7 +16,7 @@ Depending on the providers you used to [get your domain name](/fundamentals/setu
 
 ## DNS records table
 
-When managing your records at Cloudflare, besides the common record fields described below, you may also find an option for [Proxy status](/dns/manage-dns-records/reference/proxied-dns-records/) and [CNAME flattening](/dns/cname-flattening/). These are specific features offered by Cloudflare.
+When managing your records at Cloudflare, besides the common record fields described below, you may also find an option for [Proxy status](/dns/proxy-status/) and [CNAME flattening](/dns/cname-flattening/). These are specific features offered by Cloudflare.
 
 <Details header="Record fields">
 - **Type**: Defines the purpose of a record. Different types of record require different information in their corresponding `Content` field.
@@ -36,7 +36,7 @@ DNS management for **example.com**:
 
 In this example, an IP address resolution record of type `A` is indicating that the resources that correspond to the subdomain `blog.example.com` can be reached on the IPv4 address `192.0.2.1`.
 
-Also, as this record is <GlossaryTooltip term="proxy status" link="/dns/manage-dns-records/reference/proxied-dns-records/">proxied</GlossaryTooltip>, Cloudflare automatically defines for how long this information should be cached by DNS resolvers.
+Also, as this record is <GlossaryTooltip term="proxy status" link="/dns/proxy-status/">proxied</GlossaryTooltip>, Cloudflare automatically defines for how long this information should be cached by DNS resolvers.
 </Example>
 
 </Details>

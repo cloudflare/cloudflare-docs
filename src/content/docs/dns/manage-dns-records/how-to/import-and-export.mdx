@@ -31,7 +31,7 @@ To import a zone file using the dashboard:
 2. Go to **DNS** > **Records**.
 3. Select **Import and Export**.
 4. For **Import DNS records**, select your [formatted file](#format-your-zone-file).
-5. If you do not want [applicable records](/dns/manage-dns-records/reference/proxied-dns-records/) proxied, unselect **Proxy imported DNS records**.
+5. If you do not want [applicable records](/dns/proxy-status/) proxied, unselect **Proxy imported DNS records**.
 
 </TabItem> <TabItem label="API">
 
@@ -103,7 +103,7 @@ c.cloudflaredocs.com.	1	IN	CNAME	example.com. ; cf_tags=tag-without-value,cf-pro
 
 #### cf-proxied
 
-On export, [proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/#proxied-records) will present a tag `cf-proxied:true` while DNS-only records will have this tag set to `cf-proxied:false`.
+On export, [proxied DNS records](/dns/proxy-status/) will present a tag `cf-proxied:true` while DNS-only records will have this tag set to `cf-proxied:false`.
 
 When importing zone files, the value in the `cf-proxied` tag will take precedence in determining whether a record should be proxied. This means that:
 

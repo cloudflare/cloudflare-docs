@@ -1,0 +1,27 @@
+---
+link: "/load-balancing/changelog/"
+productName: Load Balancing
+productLink: "/load-balancing/"
+productArea: Application performance
+productAreaLink: /fundamentals/reference/changelog/performance/
+entries:
+  - publish_date: "2025-02-20"
+    title: Zone name added to Load Balancing API responses
+    description: |-
+      Load Balancing API responses for Load Balancers now include a `zone_name` property, which provides the name of the zone in the response data.
+  - publish_date: "2025-02-10"
+    title: Fix for Cloudflare Tunnel Consistency
+    description: |-
+      Fixes to improve the consistency of Cloudflare Tunnel handling within Cloudflare Load Balancers. These changes ensure more reliable and predictable routing, particularly when tunnels are involved.
+  - publish_date: "2025-01-24"
+    title: Update to Cloudflare Tunnel Steering
+    description: |-
+      Introduced changes to the resolution of proxied domains that are backed by Cloudflare Tunnels on the same zone. These changes correct how orange-clouded records are steered to Cloudflare Tunnels via Cloudflare Load Balancers.
+  - publish_date: "2025-01-16"
+    title: Update to Pool Health Monitoring
+    description: |-
+      We made changes to how we resolve and monitor proxied origins to assess pool health. Our analysis indicates no impact to customer configurations or operations. Contact customer support if you notice any unexpected behavior.
+  - publish_date: "2024-12-20"
+    title: Load Balancing with the China Network
+    description: |-
+      You can now enable load balancers to be deployed to the [China Network](/china-network/). Refer to the [documentation](/load-balancing/additional-options/load-balancing-china/) for more details.

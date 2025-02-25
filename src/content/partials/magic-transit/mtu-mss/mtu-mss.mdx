@@ -1,9 +1,16 @@
 ---
 params:
+  - magicProduct?
   - productName
 ---
 
-{props.productName} has operation requirements that customers should know about to make sure their network works as intended. Customers should pay particular attention to the maximum transmission unit (MTU) and maximum segment size (MSS) values. The incorrect configuration of these values might lead to loss of performance or inability to deliver data packets.
+import { AnchorHeading, Render } from "~/components";
+import { Image } from 'astro:assets';
+import dsr from "~/assets/images/magic-transit/mtu-mss/dsr.png"
+import tunnel from "~/assets/images/magic-transit/mtu-mss/tcp-mss.png"
+import mss_ipsec from "~/assets/images/magic-transit/mtu-mss/ipsec-mss.png"
+
+{props.productName} has operation requirements that customers should know about to make sure their network works as intended. Customers should pay particular attention to the maximum transmission unit (MTU) and maximum segment size (MSS) values. The incorrect configuration of these values might lead to loss of performance or inability to deliver data [packets](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/).
 
 ## MTU and MSS
 
@@ -17,7 +24,7 @@ One common misconception about MSS/MTU is that setting these values negatively i
 
 Since {props.productName} uses encapsulation to deliver its services, it is also important to understand why MTU and MSS matter in this case.
 
-Encapsulation adds bytes to the packet, since we add a new IP header and (often) some sort of encapsulating header to every packet. For example, in the case of GRE for IPv4, we add 24 bytes - 20 bytes for the IPv4 header, and 4 bytes for the GRE tunnel header.
+Encapsulation adds bytes to the packet, since we add a new IP header and (often) some sort of encapsulating header to every packet. For example, in the case of GRE for IPv4, we add 24 bytes — 20 bytes for the IPv4 header, and 4 bytes for the GRE tunnel header.
 
 A network interface which performs GRE encapsulation needs to account for the added overhead by reducing its MTU. Since the MTU maximum size is 1,500 bytes, for IPv4 this means that the MTU can be 1,476 bytes (the original 1,500 bytes minus the 24 bytes from the GRE encapsulation). This reduced MTU defines the maximum size of the IP packet that can be encapsulated by GRE.
 
@@ -29,7 +36,7 @@ Setting the `do not fragment` (DF) bit in the TCP header to `1` denotes that the
 
 If you are experiencing issues with fragmentation and are unable to set an MSS clamp, Cloudflare can clear the `do not fragment` (DF) bit for you. When this option is enabled, Cloudflare fragments packets greater than 1,500 bytes, and the packets are reassembled on your infrastructure after decapsulation. This should be a last resort option. Contact your account team for more information.
 
-### Fragmentation in {props.productName}
+<AnchorHeading depth={3} title={`Fragmentation in ${props.productName}`} />
 
 Consider a UDP datagram of size 3,000 bytes (8 bytes for the UDP header + 2,992 bytes for the UDP data). To fit within a standard 1,500 bytes MTU, this UDP datagram would be fragmented across three IP packets as follows:
 
@@ -64,3 +71,53 @@ Refer to [MSS clamping recommendations](#mss-clamping-recommendations) for infor
 :::caution
 Cloudflare only recommends applying a MSS clamp to adjust the size of TCP packets. Changing the MTU of a network interface is not recommended as this might have unforeseen impacts on traffic.
 :::
+
+{ props.magicProduct === "Magic Transit" && (
+  <>
+    <AnchorHeading title="MSS with Magic Transit and Direct Server Return" depth={2} />
+		<p>Asymmetric <a href="https://www.cloudflare.com/learning/network-layer/what-is-routing/" target="_blank" rel="noopener noreferrer">routing</a> is a common scenario especially with Magic Transit. Ingress traffic from the Internet enters the Cloudflare network, then traverses a GRE tunnel (MTU of 1,476 bytes), and egress traffic from the datacenter is sent via Direct Server Return (DSR) over the Internet (MTU of 1,500 bytes).</p>
+		<p>In an asymmetric scenario, we want to reduce the MSS value of packets sent by Magic Transit users to the Internet in order to reduce the size of packets sent from the Internet towards their network. To accomplish this, the configuration must be done either on the customer's end-hosts or through an MSS clamp on an intermediary device on the egress path of traffic leaving their network. How MSS values affect payload sizes on both routing paths is detailed below.</p>
+		<Image src={dsr} alt="A diagram showing how MSS works with Magic Transit and Direct Server Return." />
+		<p><em>Key takeaway from the chart above: MSS clamping affects TCP packet payload sizes flowing in the opposite direction vs. where the clamp is applied.</em></p>
+		<AnchorHeading title="Tunnel-in-tunnel scenario with Magic Transit" depth={2} />
+		<p>MSS clamping only affects TCP traffic. If, for example, you have a web server on your Magic Transit prefix, then the MSS clamp will take effect on the TCP data from direct server return traffic. However, be aware that you will have to take a different approach for any tunnels inside of your Magic Transit tunnel (tunnel-in-tunnel scenario).</p>
+		<Image src={tunnel} alt="A diagram showing where the MSS clamp goes with TCP traffic." />
+		<p>For example, if you have a Magic Transit GRE tunnel set up, and then another IPsec or GRE tunnel running from third-party devices on your premises, MSS clamp will have no impact on the outer packets of the encapsulated traffic. This is because MSS clamping affects only TCP traffic, and IPsec/GRE encapsulated traffic is IP. For this scenario, you will have to lower the MTU of the internal tunnel interface further, both for your ingress and egress traffic.</p>
+		<Image src={mss_ipsec} alt="A diagram showing where the MSS clamp goes with an IPsec tunnel inside a GRE tunnel." />
+  </>
+  )
+}
+
+## MSS clamping recommendations
+
+### GRE tunnels as off-ramp
+
+{ props.magicProduct === "Magic WAN" && (
+  <>
+    <Render file="mtu-mss/mss-clamping-gre" product="magic-wan"/>
+  </>
+  )
+}
+
+{ props.magicProduct === "Magic Transit" && (
+  <>
+    <Render file="mtu-mss/mss-clamping-gre" />
+  </>
+  )
+}
+
+### IPsec tunnels
+
+{ props.magicProduct === "Magic WAN" && (
+  <>
+    <Render file="mtu-mss/mss-clamping-ipsec" product="magic-wan" />
+  </>
+  )
+}
+
+{ props.magicProduct === "Magic Transit" && (
+  <>
+    <Render file="mtu-mss/mss-clamping-ipsec" />
+  </>
+  )
+}

@@ -25,7 +25,7 @@ An HTTP policy consists of an **Action** as well as a logical expression that de
 
 <Render
 	file="gateway/response"
-	params={{ one: "query", two: "Source IP", three: "Resolved IP" }}
+	params={{ type: "query", example: "Source IP", example2: "Resolved IP" }}
 />
 
 ## Actions
@@ -85,7 +85,7 @@ The Allow action allows outbound traffic to reach destinations you specify withi
 
 | Selector           | Operator | Value       | Action |
 | ------------------ | -------- | ----------- | ------ |
-| Content Categories | in       | `Education` | Allow  |
+| Content Categories | in       | _Education_ | Allow  |
 
 #### Untrusted certificates
 
@@ -397,14 +397,20 @@ Policies created using the URL selector are case-sensitive.
 
 Gateway matches HTTP traffic against the following selectors, or criteria:
 
+### All Access Private App Destinations
+
+<Render file="gateway/selectors/all-access-private-app-destinations" />
+
+### All Access App Targets
+
+<Render file="gateway/selectors/all-access-app-targets" />
+
 ### Application
 
 <Render file="gateway/selectors/application" params={{ one: "HTTP" }} />
 
 :::caution[Multiple API selectors required for Terraform]
-
 When using Terraform to create a policy with the [Do Not Inspect](#do-not-inspect) action, you must use the `app.hosts_ids` and `app.supports_ids` selectors. For example, to create a Do Not Inspect policy for Google Cloud Platform traffic, create a policy with both `any(app.hosts_ids[*] in {1245})` and `any(app.supports_ids[*] in {1245})`.
-
 :::
 
 ### Content Categories
@@ -458,13 +464,25 @@ Use this selector to match against a domain and all subdomains -- for example, i
 | ------- | -------------------------------------------- |
 | Domain  | `any(http.conn.domains[*] == "example.com")` |
 
+### Download and Upload File Size
+
+Use these selectors to limit the file size of upload or download transactions. File sizes are measured in mebibytes (MiB).
+
+| UI name                  | API example                     |
+| ------------------------ | ------------------------------- |
+| Download File Size (MiB) | `http.download.file.size >= 10` |
+
+| UI name                | API example                  |
+| ---------------------- | ---------------------------- |
+| Upload File Size (MiB) | `http.upload.file.size < 10` |
+
 ### Download and Upload File Types
 
 :::caution[Deprecated selectors]
 The **Download File Types** and **Upload File Types** selectors supersede the **Download File Type** and **Upload File Type** selectors. Gateway will still evaluate policies with the previous selectors. However, Cloudflare recommends migrating any policies with deprecated selectors to the new corresponding selectors.
 :::
 
-These selectors will scan file signatures in the HTTP body. You can select from file categories or specific file types, such as executables, archives and compressed files, Microsoft 365/Office documents, and Adobe files:
+These selectors will scan file signatures in the HTTP body. You can select from file categories or specific file types, such as executables, archives and compressed files, unscannable files, Microsoft 365/Office documents, and Adobe files:
 
 <Details header="Supported file types">
 
@@ -510,6 +528,13 @@ These selectors will scan file signatures in the HTTP body. You can select from 
 **Other**
 
 - BitTorrent file (`.torrent`)
+
+**Unscannable**
+
+- Password-protected Microsoft Office document
+- Password-protected PDF
+- Password-protected ZIP archive
+- Unscannable ZIP archive
 
 </Details>
 
@@ -647,5 +672,5 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 <Render
 	file="gateway/response"
-	params={{ one: "request", two: "Source IP", three: "a DLP Profile" }}
+	params={{ type: "request", example: "Source IP", example2: "a DLP Profile" }}
 />
