@@ -5,6 +5,10 @@ productLink: "/ai-gateway/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-02-26"
+    title: Guardrails
+    description: |-
+      Added [Guardrails](/ai-gateway/guardrails/) help deploy AI applications safely by intercepting and evaluating both user prompts and model responses for harmful content.
   - publish_date: "2025-02-19"
     title: Updated Log Storage Settings
     description: |-
