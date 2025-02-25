@@ -76,7 +76,7 @@ You can create a D1 database via the [Cloudflare dashboard](https://dash.cloudfl
 
 ### 3. Create your D1 database
 
-In this step, you will set up your D1 database. You can create a D1 database via the [Cloudflare dashboard](https://dash.cloudflare.com), or via `wrangler`. This tutorial will use the `wrangler` CLI.
+You can create a D1 database via the [Cloudflare dashboard](https://dash.cloudflare.com), or via `wrangler`. This tutorial uses the `wrangler` CLI.
 
 Open your terminal and run the following command:
 
@@ -96,7 +96,7 @@ point-in-time restore.
     {
       "binding": "DB",
       "database_name": "orange-demo-db",
-      "database_id": "__YOUR_D1_DATABASE_ID__" 
+      "database_id": "<YOUR_D1_DATABASE_ID>" 
     }
   ]
 }
@@ -104,7 +104,7 @@ point-in-time restore.
 
 You now have a D1 database in your Cloudflare account with a binding to your Cloudflare Worker.
 
-Copy the last part of the command output and paste it into your `wrangler.jsonc` file. It should look similar to this:
+Copy the `json` snippet from the command output and paste it into your `wrangler.jsonc` file. Your `wrangler.jsonc` file should look similar to the following:
 
 <WranglerConfig>
 
@@ -121,7 +121,7 @@ Copy the last part of the command output and paste it into your `wrangler.jsonc`
     {
       "binding": "DB",
       "database_name": "orange-demo-db",
-      "database_id": "__YOUR_D1_DATABASE_ID__" 
+      "database_id": "<YOUR_D1_DATABASE_ID>" 
     }
   ]
 }
@@ -129,7 +129,7 @@ Copy the last part of the command output and paste it into your `wrangler.jsonc`
 
 </WranglerConfig>
 
-`__YOUR_D1_DATABASE_ID__` should be replaced with the database ID of your D1 instance. If you were not able to fetch this ID from the terminal output, you can also find it in the [Cloudflare dashboard](https://dash.cloudflare.com/), or by running `npx wrangler d1 info orange-demo-db` in your terminal.
+`<YOUR_D1_DATABASE_ID>` should be replaced with the database ID of your D1 instance. If you were not able to fetch this ID from the terminal output, you can also find it in the [Cloudflare dashboard](https://dash.cloudflare.com/), or by running `npx wrangler d1 info orange-demo-db` in your terminal.
 
 Next, you will create a database table in the database to send queries to D1 using Orange ORM.
 
