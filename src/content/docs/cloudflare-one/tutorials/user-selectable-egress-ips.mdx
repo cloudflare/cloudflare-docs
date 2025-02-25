@@ -90,7 +90,7 @@ After creating your virtual networks, route your private network CIDRs over each
 
    ```bash
    curl --request PATCH \
-   https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/teamnet/routes/{route_id} \
+   https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/teamnet/routes/$ROUTE_ID \
    --header "Authorization: Bearer <API_TOKEN>" \
    --header "Content-Type: application/json" \
    --data '{
@@ -106,7 +106,7 @@ After creating your virtual networks, route your private network CIDRs over each
 
    ```bash
    curl --request PATCH \
-   https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/teamnet/routes/{route_id} \
+   https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/teamnet/routes/$ROUTE_ID \
    --header "Authorization: Bearer <API_TOKEN>" \
    --header "Content-Type: application/json" \
    --data '{

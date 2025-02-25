@@ -278,7 +278,7 @@ You can require users to re-enter their credentials into Entra ID whenever they 
 2. [Update the Entra ID identity provider](/api/resources/zero_trust/subresources/identity_providers/methods/update/) using a `PUT` request. In the request body, include all existing configurations and set the `prompt` parameter to either `login` or `select_account`. For example,
    ```sh {17}
    curl --request PUT \
-   https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/identity_providers/{identity_provider_id} \
+   https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/identity_providers/$IDENTITY_PROVIDER_ID \
    --header "Authorization: Bearer <API_TOKEN>" \
    --header "Content-Type: application/json" \
    --data '{

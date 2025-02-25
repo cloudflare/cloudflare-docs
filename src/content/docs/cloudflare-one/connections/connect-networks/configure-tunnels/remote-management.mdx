@@ -187,14 +187,15 @@ To rotate a tunnel token:
 
 1. Refresh the token on Cloudflare:
 
-   <Tabs syncKey="dashPlusAPI">
+      <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Networks** > **Tunnels**.
-2. Select a `cloudflared` tunnel and select **Edit**.
-3. Select **Refresh token**.
-4. Copy the `cloudflared` installation command for your operating system. This command contains the new token.
 
-   </TabItem>
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Networks** > **Tunnels**.
+1. Select a `cloudflared` tunnel and select **Edit**.
+1. Select **Refresh token**.
+1. Copy the `cloudflared` installation command for your operating system. This command contains the new token.
+
+      </TabItem>
 <TabItem label="API">
 
    1. Generate a random base64 string (minimum size 32 bytes) to use as a tunnel secret:
@@ -211,7 +212,7 @@ To rotate a tunnel token:
 
       ```sh
       curl --request PATCH \
-      https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/cfd_tunnel/{tunnel_id} \
+      https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/cfd_tunnel/$TUNNEL_ID \
       --header 'Content-Type: application/json' \
       --header "Authorization: Bearer <API_TOKEN>" \
       --data '{
@@ -245,24 +246,24 @@ To rotate a tunnel token:
 
    3. Copy the `token` value shown in the output.
 
-   </TabItem>
+      </TabItem>
 </Tabs>
 
    After refreshing the token, `cloudflared` can no longer establish new connections to Cloudflare using the old token. However, existing connectors will remain active and the tunnel will continue serving traffic.
 
-2. On half of your `cloudflared` replicas, update `cloudflared` to use the new token. For example, on a Linux host:
+1. On half of your `cloudflared` replicas, update `cloudflared` to use the new token. For example, on a Linux host:
 
    ```sh
    sudo cloudflared service install <TOKEN>
    ```
 
-3. Restart `cloudflared`:
+1. Restart `cloudflared`:
 
    ```sh
    sudo systemctl restart cloudflared.service
    ```
 
-4. Confirm that the service started correctly:
+1. Confirm that the service started correctly:
 
    ```sh
    sudo systemctl status cloudflared
@@ -270,9 +271,9 @@ To rotate a tunnel token:
 
    While these replicas are connecting to Cloudflare with the new token, traffic will automatically route through the other replicas.
 
-5. Wait 10 minutes for traffic to route through the new connectors.
+1. Wait 10 minutes for traffic to route through the new connectors.
 
-6. Repeat steps 2, 3, and 4 for the second half of the replicas.
+1. Repeat steps 2, 3, and 4 for the second half of the replicas.
 
 The tunnel token is now fully rotated. The old token is no longer in use.
 
@@ -285,7 +286,7 @@ If your tunnel token is compromised, we recommend taking the following steps:
 
    ```sh
    curl --request DELETE \
-   https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/cfd_tunnel/{tunnel_id}/connections \
+   https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/cfd_tunnel/$TUNNEL_ID/connections \
    --header "Authorization: Bearer <API_TOKEN>"
    ```
 
