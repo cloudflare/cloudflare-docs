@@ -8,6 +8,8 @@ head:
     content: Create an origin rule in the dashboard
 ---
 
+import { Render } from "~/components";
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
 2. Go to **Rules** > **Overview**.
 3. Select **Create rule** > **Origin Rule**.
@@ -16,3 +18,5 @@ head:
 6. Under **When incoming requests match**, define the [rule expression](/ruleset-engine/rules-language/expressions/edit-expressions/).
 7. Under **Set origin parameters**, define the [origin rule settings](/rules/origin-rules/features/) you wish to change for requests matching the rule expression.
 8. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
+
+   <Render file="rules-creation-dash-dns-popup" />
