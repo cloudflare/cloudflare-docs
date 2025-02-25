@@ -204,7 +204,20 @@ npx wrangler d1 execute orange-demo-db --command "INSERT INTO  \"User\" (\"email
 
 To query your database from the Worker using Orange ORM, you need to:
 
-1. Add a `map.ts` to the `src` folder.
+1. Create a `src/map.ts` with the following code:
+
+```ts
+import orange from 'orange-orm';
+
+const map = orange.map(x => ({
+  user: x.table('user').map(({ column }) => ({
+    id: column('id').numeric().primary(),
+    email: column('email').string(),
+    name: column('name').string(),    
+  }))
+}));
+
+export default map;
 2. Instantiate the orange-orm with the D1 instance. Open `src/index.ts` and replace the entire content with the following:
 
 ```ts
@@ -250,6 +263,8 @@ Access your Worker at `https://orange-d1-example.USERNAME.workers.dev`. Your bro
 ```json
 [{ "id": 1, "email": "jane@orange-orm.io", "name": "Jane Doe (Remote)" }]
 ```
+
+### Summary
 
 By finishing this tutorial, you have deployed a Cloudflare Worker using D1 as a database and querying it via Orange ORM.
 
