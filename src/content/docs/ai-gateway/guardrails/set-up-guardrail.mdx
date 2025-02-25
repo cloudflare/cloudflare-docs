@@ -5,19 +5,6 @@ sidebar:
   order: 3
 ---
 
-AI Gateway inspects all interactions in real time by evaluating content against predefined safety parameters. Below a breakdown of the process:
-
-1. Intercepting interactions:
-   AI Gateway proxies requests and responses, sitting between the user and the AI model.
-
-2. Inspecting content:
-
-   - User prompts: AI Gateway checks prompts against safety parameters (for example, violence, hate, or sexual content). Based on your settings, prompts can be flagged or blocked before reaching the model.
-   - Model responses: Once processed, the AI model response is inspected. If hazardous content is detected, it can be flagged or blocked before being delivered to the user.
-
-3. Applying actions:
-   Depending on your configuration, flagged content is logged for review, while blocked content is prevented from proceeding.
-
 ## Supported model types
 
 AI Gateway's Guardrails detects the type of AI model being used and applies safety checks accordingly:
@@ -25,60 +12,6 @@ AI Gateway's Guardrails detects the type of AI model being used and applies safe
 - **Text generation models**: Both prompts and responses are evaluated.
 - **Embedding models**: Only the prompt is evaluated, as the response consists of numerical embeddings, which are not meaningful for moderation.
 - **Unknown models**: If the model type cannot be determined, only the prompt is evaluated, while the response bypass Guardrails.
-
-## Configuration
-
-Within AI Gateway settings, you can customize Guardrails:
-
-- Enable or disable content moderation.
-- Choose evaluation scope: Analyze user prompts, model responses, or both.
-- Define hazard categories: Select categories like violence, hate, or sexual content and assign actions (ignore, flag, or block).
-
-## Workers AI and Guardrails
-
-Guardrails currently uses [Llama Guard 3 8B](https://ai.meta.com/research/publications/llama-guard-llm-based-input-output-safeguard-for-human-ai-conversations/) on [Workers AI](/workers-ai/) to perform content evaluations. The underlying model may be updated in the future, and we will reflect those changes within Guardrails.
-
-Since Guardrails runs on Workers AI, enabling it incurs usage on Workers AI. You can monitor usage through the Workers AI Dashboard.
-
-## Additional considerations
-
-- Latency impact: Enabling Guardrails adds some latency. Consider this when balancing safety and speed.
-
-:::note
-
-Llama Guard is provided as-is without any representations, warranties, or guarantees. Any rules or examples contained in blogs, developer docs, or other reference materials are provided for informational purposes only. You acknowledge and understand that you are responsible for the results and outcomes of your use of AI Gateway.
-
-## :::
-
-pcx_content_type: how-to
-title: How Guardrails works
-sidebar:
-order: 3
-
----
-
-AI Gateway inspects all interactions in real time by evaluating content against predefined safety parameters. Below a breakdown of the process:
-
-1. Intercepting interactions:
-   AI Gateway proxies requests and responses, sitting between the user and the AI model.
-
-2. Inspecting content:
-
-   - User prompts: AI Gateway checks prompts against safety parameters (for example, violence, hate, or sexual content). Based on your settings, prompts can be flagged or blocked before reaching the model.
-   - Model responses: Once processed, the AI model response is inspected. If hazardous content is detected, it can be flagged or blocked before being delivered to the user.
-
-3. Applying actions:
-   Depending on your configuration, flagged content is logged for review, while blocked content is prevented from proceeding.
-
-## Supported model types
-
-Guardrails determines the type of AI model being used and applies safety checks accordingly:
-
-- Text generation models: Both prompts and responses are evaluated.
-- Embedding models: Only the prompt is evaluated, and the response is passed directly back to the user.
-- Unknown models: If the model type cannot be determined, prompts are evaluated, but responses bypass Guardrails.
-
-If Guardrails cannot access the underlying model, requests set to "block" will result in an error, while flagged requests will proceed.
 
 ## Configuration
 
