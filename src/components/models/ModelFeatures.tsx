@@ -9,7 +9,7 @@ const ModelFeatures = ({ model }: { model: WorkersAIModelsSchema }) => {
 
 	return (
 		<>
-			{Object.keys(properties).length && (
+			{Object.keys(properties).length ? (
 				<>
 					<table>
 						<thead>
@@ -108,6 +108,8 @@ const ModelFeatures = ({ model }: { model: WorkersAIModelsSchema }) => {
 						</tbody>
 					</table>
 				</>
+			) : (
+				false
 			)}
 		</>
 	);
