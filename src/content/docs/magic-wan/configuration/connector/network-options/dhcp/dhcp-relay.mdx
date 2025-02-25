@@ -10,11 +10,11 @@ DHCP Relay provides a way for DHCP clients to communicate with DHCP servers that
 ```mermaid
 flowchart LR
 accTitle: An example of Connector in DHCP Relay mode
-    a(Magic WAN Connector) --> b(Cloudflare/MWAN) --> c(DHCP server)
+    a(Magic WAN Connector) <--> b(Cloudflare/Magic WAN) <--> c(DHCP server)
 
     subgraph Site A
-    d[LAN 1] --> a
-    e[LAN 2] --> a
+    d[LAN 1] <--> a
+    e[LAN 2] <--> a
     end
 
     subgraph Site B
