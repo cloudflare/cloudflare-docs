@@ -23,6 +23,7 @@ import StableDiffusionV15Img2ImgCode from "~/components/models/code/StableDiffus
 import StableDiffusionV15InpaintingCode from "~/components/models/code/StableDiffusion-v1-5-inpaintingCode.astro";
 import Flux1Schnell from "~/components/models/code/Flux-1-Schnell.astro";
 import WhisperBase64Code from "~/components/models/code/WhisperBase64Code.astro";
+import LlamaGuard from "~/components/models/code/LlamaGuard.astro";
 
 import { authorData } from "~/components/models/data";
 
@@ -91,6 +92,10 @@ if (model.name === "@cf/black-forest-labs/flux-1-schnell") {
 
 if (model.name === "@cf/openai/whisper-large-v3-turbo") {
 	CodeExamples = WhisperBase64Code;
+}
+
+if (model.name === "@cf/meta/llama-guard-3-8b") {
+	CodeExamples = LlamaGuard;
 }
 
 const description = model.description;
@@ -180,7 +185,7 @@ const starlightPageProps = {
 				/>
 			</Aside>
 		)
-		}
+	}
 
 	<ModelFeatures model={model} />
 
