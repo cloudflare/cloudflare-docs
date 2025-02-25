@@ -13,18 +13,27 @@ Within AI Gateway settings, you can customize Guardrails:
 - Choose evaluation scope: Analyze user prompts, model responses, or both.
 - Define hazard categories: Select categories like violence, hate, or sexual content and assign actions (ignore, flag, or block).
 
+## Supported model types
+
+AI Gateway's Guardrails detects the type of AI model being used and applies safety checks accordingly:
+
+- **Text generation models**: Both prompts and responses are evaluated.
+- **Embedding models**: Only the prompt is evaluated, as the response consists of numerical embeddings, which are not meaningful for moderation.
+- **Unknown models**: If the model type cannot be determined, only the prompt is evaluated, while the response bypass Guardrails.
+
 ## Workers AI and Guardrails
 
 Guardrails currently uses [Llama Guard 3 8B](https://ai.meta.com/research/publications/llama-guard-llm-based-input-output-safeguard-for-human-ai-conversations/) on [Workers AI](/workers-ai/) to perform content evaluations. The underlying model may be updated in the future, and we will reflect those changes within Guardrails.
 
-Since Guardrails runs on Workers AI, enabling it incurs usage on Workers AI. You can monitor usage through the Workers AI Dashboard.
-
-## Additional considerations
-
-- Latency impact: Enabling Guardrails adds some latency. Consider this when balancing safety and speed.
+Since Guardrails runs on Workers AI, enabling it incurs usage on Workers AI. You can monitor usage through the [Workers AI Dashboard](https://dash.cloudflare.com/?to=/:account/ai/workers-ai).
 
 :::note
+
 
 Llama Guard is provided as-is without any representations, warranties, or guarantees. Any rules or examples contained in blogs, developer docs, or other reference materials are provided for informational purposes only. You acknowledge and understand that you are responsible for the results and outcomes of your use of AI Gateway.
 
 :::
+
+## Additional considerations
+
+- Latency impact: Enabling Guardrails adds some latency. Consider this when balancing safety and speed.
