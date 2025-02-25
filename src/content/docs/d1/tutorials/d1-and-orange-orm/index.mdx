@@ -131,14 +131,13 @@ Copy the `json` snippet from the command output and paste it into your `wrangler
 
 `<YOUR_D1_DATABASE_ID>` should be replaced with the database ID of your D1 instance. If you were not able to fetch this ID from the terminal output, you can also find it in the [Cloudflare dashboard](https://dash.cloudflare.com/), or by running `npx wrangler d1 info orange-demo-db` in your terminal.
 
-Next, you will create a database table in the database to send queries to D1 using Orange ORM.
+Next, create a database table in the database to send queries to D1 using Orange ORM.
 
 ### 4. Create a table in the database
 
-
 D1 has a [migration system](/d1/reference/migrations), and in the following steps, you will use D1's migration system to create and run a migration against your database.
 
-First, create a new migration using `wrangler`:
+1. First, create a new migration using `wrangler`:
 
 ```sh
 npx wrangler d1 migrations create orange-demo-db create_user_table
