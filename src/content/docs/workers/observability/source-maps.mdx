@@ -3,9 +3,6 @@ pcx_content_type: configuration
 title: Source maps and stack traces
 head: []
 description: Adding source maps and generating stack traces for Workers.
-sidebar:
-  badge:
-    text: Beta
 
 ---
 
@@ -60,6 +57,13 @@ The source map is retrieved after your Worker invocation completes — it's an a
 :::
 
 When Cloudflare attempts to remap a stack trace to the Worker's source map, it does so line-by-line, remapping as much as possible. If a line of the stack trace cannot be remapped for any reason, Cloudflare will leave that line of the stack trace unchanged, and continue to the next line of the stack trace.
+
+## Limits
+
+| Description                    | Limit         |
+| ------------------------------ | ------------- |
+| Maximum Source Map Size        | 15 MB gzipped |
+
 
 ## Related resources
 
