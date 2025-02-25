@@ -41,6 +41,7 @@ npx wrangler dev
 | Durable Objects                     | ✅                  | ✅                   |
 | Email Bindings                      | ❌                  | ✅                   |
 | Hyperdrive                          | ✅                  | ✅                   |
+| Images                              | ✅                  | ✅                   |
 | KV                                  | ✅                  | ✅                   |
 | mTLS                                | ❌                  | ✅                   |
 | Queues                              | ✅                  | ❌                   |
@@ -87,14 +88,14 @@ The following [Wrangler commands](/workers/wrangler/commands/) have a `--local` 
 | Command                                              |
 | ---------------------------------------------------- |
 | [`d1 execute`](/workers/wrangler/commands/#execute)  |
-| [`kv:key`](/workers/wrangler/commands/#kv-key)       |
-| [`kv:bulk`](/workers/wrangler/commands/#kv-bulk)     |
+| [`kv key`](/workers/wrangler/commands/#kv-key)       |
+| [`kv bulk`](/workers/wrangler/commands/#kv-bulk)     |
 | [`r2 object`](/workers/wrangler/commands/#r2-object) |
 
 If using `--persist-to` to specify a custom folder with `wrangler dev` you should also add `--persist-to` with the same directory name along with the `--local` flag when running the commands above. For example, to put a custom KV key into a local namespace via the CLI you would run:
 
 ```sh
-npx wrangler kv:key put test 12345 --binding MY_KV_NAMESPACE --local --persist-to worker-local
+npx wrangler kv key put test 12345 --binding MY_KV_NAMESPACE --local --persist-to worker-local
 ```
 
 Running `wrangler kv key put` will create a new key `test` with a value of `12345` on the local namespace specified via the binding `MY_KV_NAMESPACE` in the [Wrangler configuration file](/workers/wrangler/configuration/). This example command sets the local persistence directory to `worker-local` using `--persist-to`, to ensure that the data is created in the correct location. If `--persist-to` was not set, it would create the data in the `.wrangler` folder.

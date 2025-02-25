@@ -55,9 +55,13 @@ If the target IP does not appear in the dropdown, go to **Networks** > **Routes*
 		```
 
 </TabItem>
-<TabItem label="Terraform">
+<TabItem label="Terraform (v4)">
 
-1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.40.0/docs/resources/api_token):
+:::note[Provider versions]
+The following example requires Cloudflare provider version `>=4.45.0`.
+:::
+
+1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.45.0/docs/resources/api_token):
 	- `Teams Write`
 
 2. Configure the [`cloudflare_zero_trust_infrastructure_access_target`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.45.0/docs/resources/zero_trust_infrastructure_access_target) resource:

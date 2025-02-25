@@ -65,7 +65,7 @@ To create a new DNS policy using **Terraform**:
 
 ```tf
 resource "cloudflare_zero_trust_gateway_policy" "security_risks_dns_policy" {
-  account_id  = var.account_id
+  account_id  = var.cloudflare_account_id
   name        = "All-DNS-SecurityCategories-Blocklist"
   description = "Block known security risks based on Cloudflare's threat intelligence"
   precedence  = 0

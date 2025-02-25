@@ -117,6 +117,12 @@ wrangler d1 time-travel info YOUR_DATABASE
  `wrangler d1 time-travel restore YOUR_DATABASE --bookmark=00000085-0000024c-00004c6d-8e61117bf38d7adb71b934ebbf891683`
 ```
 
+## Export D1 into R2 using Workflows
+
+You can automatically export your D1 database into R2 storage via REST API and Cloudflare Workflows. This may be useful if you wish to store a state of your D1 database for longer than 30 days.
+
+Refer to the guide [Export and save D1 database](/workflows/examples/backup-d1/).
+
 ## Notes
 
 - You can quickly get the Unix timestamp from the command-line in macOS and Windows via `date %+s`.

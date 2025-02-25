@@ -39,7 +39,7 @@ entries:
     associatedProducts: Security Center
     nextSteps: Review the domains and URLs that are potentially impersonating your brand.
     otherFilters: You can select the query that you want to be alerted on.
-  
+
   - name: Security Insights
     audience: Customers who want to receive notifications based on security insights findings.
     availability: All Cloudflare plans.
@@ -548,10 +548,10 @@ entries:
         - **Test name**: Choose which DEX test the alert should monitor. You will receive individual notifications for each test.
 
   - name: Advanced Security Events Alert
-    audience: Enterprise customers who want to receive alerts about spikes in specific services that generate log entries in [Security Events](/waf/analytics/security-events/paid-plans/). For more information, refer to [WAF alerts](/waf/reference/alerts/).
+    audience: Enterprise customers who want to receive alerts about spikes in specific services that generate log entries in [Security Events](/waf/analytics/security-events/). For more information, refer to [WAF alerts](/waf/reference/alerts/).
     availability: Enterprise plans.
     associatedProducts: Web Application Firewall (WAF)
-    nextSteps: Review the information in [Security Events](/waf/analytics/security-events/paid-plans/) to identify any possible attack or misconfiguration.
+    nextSteps: Review the information in [Security Events](/waf/analytics/security-events/) to identify any possible attack or misconfiguration.
     otherFilters: |-
       A mandatory [`filters`](/api/resources/alerting/subresources/policies/methods/create/) selection is needed when you create a notification policy which includes the list of services and zones that you want to be alerted on.
 
@@ -568,10 +568,10 @@ entries:
       These thresholds cannot be configured. Z-score is used to determine the threshold.
 
   - name: Security Events Alert
-    audience: Business and Enterprise customers who want to receive alerts about spikes across all services that generate log entries in [Security Events](/waf/analytics/security-events/paid-plans/). For more information, refer to [WAF alerts](/waf/reference/alerts/).
+    audience: Business and Enterprise customers who want to receive alerts about spikes across all services that generate log entries in [Security Events](/waf/analytics/security-events/). For more information, refer to [WAF alerts](/waf/reference/alerts/).
     availability: Business and Enterprise plans.
     associatedProducts: Web Application Firewall (WAF)
-    nextSteps: Review the information in [Security Events](/waf/analytics/security-events/paid-plans/) to identify any possible attack or misconfiguration.
+    nextSteps: Review the information in [Security Events](/waf/analytics/security-events/) to identify any possible attack or misconfiguration.
     otherFilters: |-
       A mandatory [`filters`](/api/resources/alerting/subresources/policies/methods/create/) selection is needed when you create a notification policy which includes the list of zones that you want to be alerted on.
 

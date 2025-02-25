@@ -41,7 +41,7 @@ function isTestEnvironment(request) {
   const testIPs = ['127.0.0.1', '::1'];
   const isTestIP = testIPs.includes(request.ip);
   const hasTestHeader = request.headers['x-test-environment'] === 'secret-token';
-  
+
   return isTestIP || hasTestHeader;
 }
 
@@ -53,7 +53,7 @@ function getTurnstileCredentials(request) {
       secretKey: '1x0000000000000000000000000000000AA'
     };
   }
-  
+
   return {
     sitekey: process.env.TURNSTILE_SITE_KEY,
     secretKey: process.env.TURNSTILE_SECRET_KEY

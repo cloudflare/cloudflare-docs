@@ -176,7 +176,7 @@ Open `/src/index.js` and delete the existing code and paste in the following exa
 const originalAPIHostname = "api.mysite.com";
 
 export default {
-	async fetch(request) {
+	async fetch(request, env) {
 		// Change just the host. If the request comes in on example.com/api/name, the new URL is api.mysite.com/api/name
 		const url = new URL(request.url);
 		url.hostname = originalAPIHostname;
@@ -191,8 +191,8 @@ export default {
 		// since once a Request has been constructed, its URL is immutable.
 		const newRequest = new Request(url.toString(), request);
 
-		newRequest.headers.set("cf-access-client-id", CF_ACCESS_CLIENT_ID);
-		newRequest.headers.set("cf-access-client-secret", CF_ACCESS_CLIENT_SECRET);
+		newRequest.headers.set("cf-access-client-id", env.CF_ACCESS_CLIENT_ID);
+		newRequest.headers.set("cf-access-client-secret", env.CF_ACCESS_CLIENT_SECRET);
 		try {
 			const response = await fetch(newRequest);
 

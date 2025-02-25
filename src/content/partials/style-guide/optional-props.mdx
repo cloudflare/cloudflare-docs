@@ -1,0 +1,23 @@
+---
+params:
+  - product
+  - deprecated?
+---
+
+{
+  props.deprecated && (
+    <p>
+      <strong>
+        {props.product} is deprecated, please use alternative products.
+      </strong>
+    </p>
+  )
+}
+
+{
+  props.product === "Thing Three" ? (
+    <p>Welcome to our Thing Three launch countdown!</p>
+  ) : (
+    <p>Welcome to the {props.product} landing page.</p>
+  )
+}

@@ -3,7 +3,6 @@ pcx_content_type: concept
 title: Non-HTTP applications
 sidebar:
   order: 1
-
 ---
 
 Cloudflare offers both client-based and clientless ways to grant secure access to non-HTTP applications.
@@ -17,6 +16,7 @@ Non-HTTP applications require [connecting your private network](/cloudflare-one/
 Users can connect by installing the Cloudflare WARP client on their device and enrolling in your Zero Trust organization. Remote devices connect to your applications as if they were on your private network. By default, all devices enrolled in your organization can access any private route unless they are protected by an Access policy or Gateway firewall rule. To secure the application, you can [create a self-hosted application](/cloudflare-one/applications/non-http/self-hosted-private-app/) for a private IP range, port range, and/or hostname and build [Access policies](/cloudflare-one/policies/access/) that allow or block specific users.
 
 If you would like to define how users access specific infrastructure servers within your network, [create an infrastructure application](/cloudflare-one/applications/non-http/infrastructure-apps/) in Access for Infrastructure. Access for Infrastructure provides an additional layer of control and visibility over how users access non-HTTP applications, including:
+
 - Define fine-grained policies to govern who has access to specific servers and exactly how a user may access that server.
 - Eliminate SSH keys by using short-lived certificates to authenticate users.
 - Export SSH command logs to a storage service or SIEM solution using [Logpush](/cloudflare-one/insights/logs/logpush/).
@@ -41,6 +41,6 @@ Users can log in to the application by installing `cloudflared` on their device 
 
 To connect to an application over a specific protocol, refer to these tutorials:
 
-* [SSH](/cloudflare-one/connections/connect-networks/use-cases/ssh/)
-* [SMB](/cloudflare-one/connections/connect-networks/use-cases/smb/)
-* [RDP](/cloudflare-one/connections/connect-networks/use-cases/rdp/)
+- [SSH](/cloudflare-one/connections/connect-networks/use-cases/ssh/)
+- [SMB](/cloudflare-one/connections/connect-networks/use-cases/smb/)
+- [RDP](/cloudflare-one/connections/connect-networks/use-cases/rdp/)

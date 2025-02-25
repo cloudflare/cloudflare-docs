@@ -78,7 +78,7 @@ You cannot enable high availability for an existing Connector on-ramp. To add hi
 
 { props.magicWord === "hardware" && (
   <>
-    <p>At first boot, Magic WAN Connector needs to reach out to Cloudflare to download your settings and go through the activation process. If any of the networks plugged into your Connector are DHCP enabled, does not use a VLAN, and have an Internet connection, that process is handled automatically. However, if all of the networks require more information to utilize, (such as a network with static IPs, or tagged VLAN networks) your Magic WAN Connector might need some more information to proceed. There are couple of ways to provide that information. Choose the one that fits your workflow: </p>
+    <p>You can use Magic WAN Connector in both DHCP networks and networks that require a static IP configuration. At first boot, however, Magic WAN Connector needs to reach out to Cloudflare to download your settings and go through the activation process. If any of the networks plugged into your Connector are DHCP enabled, does not use a VLAN, and have an Internet connection, that process is handled automatically. However, if all of the networks require more information to utilize, (such as a network with static IPs, or tagged VLAN networks) your Magic WAN Connector might need some more information to proceed. There are couple of ways to provide that information. Choose the one that fits your workflow: </p>
 
 		<AnchorHeading title="Option one - Activate on a DHCP Network" depth={3} />
 		<ol>

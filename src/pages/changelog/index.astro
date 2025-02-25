@@ -27,7 +27,7 @@ const props = {
 <StarlightPage {...props}>
 	<Header notes={notes} />
 	{
-		notes.map(async (entry) => {
+		notes.map(async (entry, idx) => {
 			const date = format(entry.data.date, "MMM dd, yyyy");
 
 			const productIds = JSON.stringify(
@@ -37,7 +37,11 @@ const props = {
 			const { Content } = await render(entry);
 
 			return (
-				<div class="!mt-0 sm:flex" data-products={productIds}>
+				<div
+					class="!mt-0 sm:flex"
+					data-products={productIds}
+					style={`display: ${idx >= 10 ? "none" : ""}`}
+				>
 					<time
 						datetime={entry.data.date.toISOString()}
 						class="whitespace-nowrap leading-6 sm:pr-4 sm:text-right"
@@ -68,6 +72,14 @@ const props = {
 			);
 		})
 	}
+	<div class="flex items-center justify-center">
+		<button
+			id="changelogs-next-button"
+			class="h-12 cursor-pointer rounded bg-cl1-brand-orange px-6 font-medium text-cl1-black"
+		>
+			Load more items
+		</button>
+	</div>
 </StarlightPage>
 
 <script>
@@ -76,24 +88,36 @@ const props = {
 	);
 
 	filter?.addEventListener("change", () => {
-		const entries = document.querySelectorAll<HTMLElement>("[data-products]");
+		const entries = [
+			...document.querySelectorAll<HTMLElement>("[data-products]"),
+		];
 
 		if (!entries) return;
 
 		const value = filter.value;
 
-		if (value === "all") {
-			entries.forEach((entry) => (entry.style.display = ""));
+		const filtered = entries
+			.filter((e) => {
+				if (value === "all") {
+					return true;
+				}
 
-			return;
-		}
+				if (!e.dataset.products) {
+					return false;
+				}
+
+				const products: string[] = JSON.parse(e.dataset.products);
+
+				if (products.includes(value)) {
+					return true;
+				}
+
+				return false;
+			})
+			.slice(0, 5);
 
 		for (const entry of entries) {
-			if (!entry.dataset.products) continue;
-
-			const products = JSON.parse(entry.dataset.products);
-
-			const show = products.includes(value);
+			const show = filtered.includes(entry);
 
 			if (show) {
 				entry.style.display = "";
@@ -101,7 +125,88 @@ const props = {
 				entry.style.display = "none";
 			}
 		}
+
+		hideButton();
 	});
+
+	const button = document.querySelector<HTMLButtonElement>(
+		"#changelogs-next-button",
+	);
+
+	button?.addEventListener("click", () => {
+		const entries = [
+			...document.querySelectorAll<HTMLElement>("[data-products]"),
+		];
+
+		if (!entries) return;
+
+		const value = filter!.value;
+
+		const hidden = entries
+			.filter((e) => {
+				if (e.style.display !== "none") {
+					return false;
+				}
+
+				if (value === "all") {
+					return true;
+				}
+
+				if (!e.dataset.products) {
+					return false;
+				}
+
+				const products: string[] = JSON.parse(e.dataset.products);
+
+				if (products.includes(value)) {
+					return true;
+				}
+
+				return false;
+			})
+			.slice(0, 10);
+
+		hidden.forEach((e) => (e.style.display = ""));
+
+		hideButton();
+	});
+
+	function hideButton() {
+		const entries = [
+			...document.querySelectorAll<HTMLDivElement>("[data-products]"),
+		];
+
+		if (entries.length === 0) return;
+
+		const filtered = entries.filter((p) => {
+			const value = filter!.value;
+
+			if (value === "all") {
+				return true;
+			}
+
+			if (!p.dataset.products) {
+				return false;
+			}
+
+			const products: string[] = JSON.parse(p.dataset.products);
+
+			if (!products.includes(value)) {
+				return false;
+			}
+
+			return true;
+		});
+
+		const visible = filtered.filter((p) => p.style.display !== "none");
+		const hidden = filtered.length - visible.length;
+
+		if (hidden >= 10) {
+			button!.style.display = "";
+		} else {
+			button!.style.display = "none";
+		}
+	}
 </script>
 
 <style>

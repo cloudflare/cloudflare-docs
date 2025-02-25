@@ -5,6 +5,9 @@ productLink: "/workers/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-02-13"
+    description: |-
+      - [Smart Placement](/workers/configuration/smart-placement/) no longer runs Workers in the same location as D1 databases they are bound to. The same [placement logic](/workers/configuration/smart-placement/#understand-how-smart-placement-works) now applies to all Workers that use Smart Placement, regardless of whether they use D1 bindings.
   - publish_date: "2025-02-11"
     description: |-
       - When Workers generate an "internal error" exception in response to certain failures, the exception message may provide a reference ID that customers can include in support communication for easier error identification.  For example, an exception with the new message might look like: `internal error; reference = 0123456789abcdefghijklmn`.

@@ -1,0 +1,31 @@
+---
+pcx_content_type: concept
+title: Limits
+sidebar:
+  order: 1
+
+---
+
+import { Render } from "~/components"
+
+Limits that apply to authoring, deploying, and running Agents are detailed below.
+
+Many limits are inherited from those applied to Workers scripts and/or Durable Objects, and are detailed in the [Workers limits](/workers/platform/limits/) documentation.
+
+::: note
+
+| Feature                                   | Limit         			    |
+| ----------------------------------------- | ----------------------- |
+| Max concurrent (running) Agents per account	| Tens of millions+ [^1]
+| Max definitions per account         | ~250,000+ [^2]
+| Max state stored per unique Agent | 1 GB |
+| Max compute time per Agent | 30 seconds (refreshed per HTTP request / incoming WebSocket message) [^3] |
+| Duration (wall clock) per step [^3]       | Unlimited (e.g. waiting on a database call or an LLM response) |
+
+---
+
+[^1]: Yes, really. You can have tens of millions of Agents running concurrently, as each Agent is mapped to a [unique Durable Object](/durable-objects/what-are-durable-objects/) (actor).
+[^2]: You can deploy up to [500 scripts per account](/workers/platform/limits/), but each script (project) can define multiple Agents. Each deployed script can be up to 10 MB on the [Workers Paid Plan](/workers/platform/pricing/#workers)
+[^3]: Compute (CPU) time per Agent is limited to 30 seconds, but this is refreshed when an Agent receives a new HTTP request, runs a [scheduled task](/agents/examples/schedule-tasks/), or an incoming WebSocket message.
+
+<Render file="limits_increase" product="workers" />

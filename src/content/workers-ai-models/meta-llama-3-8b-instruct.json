@@ -9,7 +9,12 @@
         "description": "Family of generative text models, such as large language models (LLM), that can be adapted for a variety of natural language tasks."
     },
     "tags": [],
-    "properties": [],
+    "properties": [
+        {
+            "property_id": "context_window",
+            "value": "8192"
+        }
+    ],
     "schema": {
         "input": {
             "type": "object",

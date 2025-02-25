@@ -13,6 +13,10 @@
         {
             "property_id": "beta",
             "value": "true"
+        },
+        {
+            "property_id": "context_window",
+            "value": "4096"
         }
     ],
     "schema": {

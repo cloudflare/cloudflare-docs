@@ -8,7 +8,7 @@ import { Render } from "~/components";
 
 <Render
   file="casb/integration-description"
-  params={{ one: "Google Admin", two: "Google Workspace account" }}
+  params={{ integrationName: "Google Admin", integrationAccountType: "Google Workspace account" }}
 />
 
 ## Integration prerequisites
@@ -19,14 +19,14 @@ import { Render } from "~/components";
 
 <Render
   file="casb/integration-perms"
-  params={{ one: "Google Workspace", two: "google-workspace" }}
+  params={{ parentIntegration: "Google Workspace", parentSlug: "google-workspace" }}
 />
 
 ## Security findings
 
 <Render
   file="casb/security-findings"
-  params={{ one: "Google Admin", two: "google-workspace/google-admin" }}
+  params={{ integrationName: "Google Admin", slugRelativePath: "google-workspace/google-admin" }}
 />
 
 ### User account settings

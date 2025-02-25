@@ -6,7 +6,8 @@ import "tippy.js/dist/tippy.css";
 
 import { getEntry } from "astro:content";
 
-const currentSection = Astro.url.pathname.split("/")[1];
+// grab the current top-level folder. Remove . characters for 1.1.1.1 URL
+const currentSection = Astro.url.pathname.split("/")[1].replaceAll(".", "");
 
 if (currentSection) {
 	const product = await getEntry("products", currentSection);

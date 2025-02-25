@@ -17,7 +17,7 @@
 
 # AI
 
-/src/content/docs/agents/ @irvinebroque @rita3ko @elithrar @thomasgauvin @threepointone @kodster28 @KianNH
+/src/content/docs/agents/ @irvinebroque @rita3ko @elithrar @thomasgauvin @threepointone @harshil1712 @megaconfidence @cloudflare/pcx-technical-writing
 /src/content/docs/ai-gateway/ @kathayl @G4brym @mchenco @daisyfaithauma @cloudflare/pcx-technical-writing
 /src/content/docs/workers-ai/ @rita3ko @craigsdennis @markdembo @mchenco @daisyfaithauma @cloudflare/pcx-technical-writing
 /src/content/docs/vectorize/ @elithrar @vy-ton @sejoker @mchenco @cloudflare/pcx-technical-writing
@@ -47,6 +47,7 @@
 
 /src/content/changelog/ @cloudflare/pm-changelogs
 /src/assets/images/changelog/ @cloudflare/pm-changelogs
+/src/assets/images/ @cloudflare/pm-changelogs @cloudflare/pcx-technical-writing
 
 # Cloudflare One
 

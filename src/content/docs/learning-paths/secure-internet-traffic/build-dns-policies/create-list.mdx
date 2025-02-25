@@ -52,7 +52,7 @@ To create a new DNS policy using **Terraform** to allow access to all approved c
 
 ```tf
 resource "cloudflare_zero_trust_gateway_policy" "allow_corporate_domain_access" {
-  account_id  = var.account_id
+  account_id  = var.cloudflare_account_id
   name        = "All-DNS-CorporateDomain-AllowList"
   description = "Allow access to the corporate domains defined under the Corporate Domains list"
   precedence  = 1

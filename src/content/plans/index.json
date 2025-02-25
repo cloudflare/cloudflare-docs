@@ -1530,7 +1530,7 @@
 				},
 				"dashboard_features": {
 					"title": "Dashboard features",
-					"free": "Activity log only",
+					"free": "Sampled logs only",
 					"pro": "All",
 					"biz": "All",
 					"ent": "All"

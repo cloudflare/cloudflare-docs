@@ -27,9 +27,15 @@ If you wish to disable HTTP/2 to Origin, you can follow these steps:
 
 ## Connection multiplexing
 
-Connection multiplexing is enabled by default on Free, Pro and Business zones. Enterprise zones can enable multiplexing manually and configure concurrent requests per connection.
+Cloudflare’s HTTP/2 multiplexing to origin reduces active connections by pooling many requests into fewer TCP connections. If a request arrives and the current connection has not reached the stream limit, Cloudflare reuses the existing connection. If the limit has not been reached, Cloudflare may open additional connections to handle more requests. Because multiplexing reuses fewer TCP connections, the overall number of active connections to your origin will typically be lower, which is often helpful for systems sensitive to connection overhead. During surges (like failovers), Cloudflare scales connections by first using available streams, then opening new ones as needed.
 
-HTTP/2 uses multiplexing to allow multiple concurrent requests and responses over a single TCP connection. If your origin does not support multiplexing, enabling HTTP/2 to origin may result in 5xx errors, particularly 520s.
+Connection multiplexing is enabled by default on Free, Pro and Business zones and uses up to 100 concurrent streams by default. For Enterprise plans, you can explicitly configure the maximum number of concurrent streams (often called the “multiplexing ratio”) for a zone.
+
+:::note
+If your origin does not support multiplexing, enabling HTTP/2 to origin may result in 5xx errors, particularly 520s.
+
+During the HTTP/2 handshake, our edge reads the SETTINGS_MAX_CONCURRENT_STREAMS that your origin advertises, and it will respect that lower limit if your origin is configured with a stricter concurrency cap than Cloudflare’s setting. This allows you to control concurrency on a per-origin basis, while still benefiting from Cloudflare’s multiplexing framework.
+:::
 
 ## Protocol compatibility
 

@@ -267,3 +267,33 @@ Turning off TLS decryption should be a temporary measure. TLS decryption should 
 ## I am getting an `Error 401: deleted_client - The OAuth Client was deleted` authorization error.
 
 <Render file="access/error-401" product="cloudflare-one" />
+
+## I entered an override code for WARP that was supposed to be valid for 3 hours but the override code expired faster than I expected.
+
+[Admin override](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#admin-override) codes are time-sensitive and adhere to fixed-hour time blocks. Override codes can be reused until the end of their timeout. An override code's timeout begins in the hour the override code was generated in. Refer to the following scenarios.
+
+### Scenario one: Admin generates an override code at 9:00 AM with a timeout of one hour.
+
+If admin generates an override code with a timeout of one hour at **9:00 AM** and the user inputs the override code in their device at **9:59 AM**, the user will be able to toggle WARP on and off until **10:59 AM** (a one hour duration.)
+
+However, if the user attempts to enter the override code at **10:00 AM**, the override code will not work. The override code will not work because the override code was generated at **9:00 AM** and its one hour validity was counted as used in the 9:00 AM to 10:00 AM hour.
+
+### Scenario two: Admin generates an override code at 9:30 AM with timeout of three hours.
+
+If admin generates an override code with a timeout of three hours at **9:30 AM** and the user inputs the override code in their device at **9:59 AM**, the user will be able to toggle WARP on and off until **12:59 PM** (a three hour duration.)
+
+However, if the user attempts to enter the override code at **10:00 AM**, the override code will only be valid until **12:00 PM** (a two hour duration). The override code was generated at **9:30 AM** and one hour of its total three hour validity was counted as used in the 9:00 AM to 10:00 AM hour.
+
+### Scenariot three: Admin generates an override code at 12:30 PM with a timeout of 24 hours.
+
+If admin generates an override code with a timeout of 24 hours at **12:30 PM** and the user inputs the override code in their device at **12:59 PM** the same day, the user will be able to toggle WARP on and off until **12:59 PM** the next day (a 24 hour duration.)
+
+However, if the user attempts to enter the override code at **1:00 PM** the same day, the override code will only be valid until **11:00 AM** the next day (a 23 hour duration). The override code was generated at **12:30 PM** and one hour of its total 24 hour validity was counted as used in the 12:00 PM to 1:00 PM hour.
+
+If the user attempts to enter the override code at **11:59 AM** the next day, the override code will only be valid until **12:59 PM** (a one hour duration). The override code was generated at **12:00 PM** and 23 hours of its total 24 hour validity were counted as used from 12:00 PM to 11:00 AM the next day (a 23 hour duration).
+
+## I disabled WARP using an override code but WARP turned on by itself before my override code expired.
+
+If you are using an [Admin override](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#admin-override) code with [Auto connect](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#auto-connect) also enabled, WARP will turn on automatically according to the Timeout set for **Auto connect**. Using an override code to override the WARP lock switch will not disable Auto connect. As best practice, review your Auto connect settings before sending the override code to the user.
+
+To prevent WARP from auto connecting while using an admin override code, disable Auto connect or set a longer **Timeout** for **Auto connect**. Note the changes you make to Auto connect while the end user is using the admin override code if you need to revert these changes later.

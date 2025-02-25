@@ -16,9 +16,8 @@ entries:
   - publish_date: "2024-12-19"
     title: Email Security reclassification tab
     description: |-
-      Customers can now have more transparency about their team and user submissions. The new Reclassification tab in the Zero Trust dashboard will allow customers to have a full understanding of what submissions they have made and what the outcomes of those submissions are. 
+      Customers can now have more transparency about their team and user submissions. The new Reclassification tab in the Zero Trust dashboard will allow customers to have a full understanding of what submissions they have made and what the outcomes of those submissions are.
   - publish_date: "2024-12-19"
     title: Email Security expanded folder scanning
     description: |-
       Microsoft 365 customers can now choose to scan all folders or just the inbox when deploying via the Graph API.
-
