@@ -31,7 +31,7 @@ Refer to the [network policies page](/cloudflare-one/policies/gateway/network-po
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "name": "Block unauthorized applications",
   "description": "Block access to unauthorized AI applications",
@@ -66,7 +66,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "name": "Check user identity",
   "description": "Block access to Salesforce by temporary employees and contractors",
@@ -116,7 +116,7 @@ Restrict user access to only the specific sites or applications configured in yo
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "name": "Allow HTTP and HTTPS traffic",
   "description": "Restrict traffic to HTTP and HTTPS traffic",
@@ -148,7 +148,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "name": "Block all other traffic",
   "description": "Block all other traffic that is not HTTP or HTTPS",
@@ -187,7 +187,7 @@ The following example consists of two policies: the first allows specific users 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "name": "Allow company employees",
   "description": "Allow any users with an organization email to reach the application",
@@ -219,7 +219,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "name": "Block everyone else",
   "description": "Block any other users from accessing the application",
@@ -258,7 +258,7 @@ Override traffic directed toward a specific IP address with a different IP addre
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "name": "Override example.com with 1.1.1.1",
   "description": "Override a site'\''s IP address with another IP",

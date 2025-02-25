@@ -37,7 +37,7 @@ To create a new network policy:
    ```sh title="curl API network policy example"
    curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
    --header "Content-Type: application/json" \
-   --header "Authorization: Bearer <API_TOKEN>" \
+   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
    --data '{
      "name": "Enforce device posture",
      "description": "Ensure only devices in Zero Trust organization can connect to application",

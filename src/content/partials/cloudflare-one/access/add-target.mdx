@@ -37,7 +37,7 @@ If the target IP does not appear in the dropdown, go to **Networks** > **Routes*
 
         ```sh
         curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/infrastructure/targets \
-        --header "Authorization: Bearer <API_TOKEN>" \
+        --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
         --data '{
         	"hostname": "infra-access-target",
         	"ip": {

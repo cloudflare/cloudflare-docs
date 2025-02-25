@@ -64,7 +64,7 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
 
    ```bash
    curl https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/gateway/proxy_endpoints \
-   --header "Authorization: Bearer <API_TOKEN>" \
+   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
    --header "Content-Type: application/json" \
    --data '{"name": "any_name", "ips": ["<PUBLIC_IP>", "<PUBLIC_IP2>", "<PUBLIC_IP3>"]}'
    ```
@@ -212,7 +212,7 @@ To get the domain of a proxy endpoint:
 
    ```bash
    curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/proxy_endpoints \
-   --header "Authorization: Bearer <API_TOKEN>"
+   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
    ```
 
    ```json {8} output

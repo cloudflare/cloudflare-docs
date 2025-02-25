@@ -279,7 +279,7 @@ You can require users to re-enter their credentials into Entra ID whenever they 
    ```sh {17}
    curl --request PUT \
    https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/identity_providers/$IDENTITY_PROVIDER_ID \
-   --header "Authorization: Bearer <API_TOKEN>" \
+   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
    --header "Content-Type: application/json" \
    --data '{
    		"id": "f174e90a-fafe-4643-bbbc-4a0ed4fc8415",

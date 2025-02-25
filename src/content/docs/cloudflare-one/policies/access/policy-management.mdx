@@ -83,7 +83,7 @@ You can use the API to convert a legacy policy into a reusable policy. To conver
 ```bash
 curl --request PUT \
 https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/apps/$APP_ID/policies/$POLICY_ID/make_reusable \
---header "Authorization: Bearer <API_TOKEN>"
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
 The policy is now removed from the applications endpoint (`/access/apps/$APP_ID/policies`) and managed using the [reusable policies endpoints](/api/resources/zero_trust/subresources/access/subresources/policies/)(`/access/policies/$POLICY_ID`).
