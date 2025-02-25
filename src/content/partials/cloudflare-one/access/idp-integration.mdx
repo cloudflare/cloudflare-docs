@@ -27,7 +27,6 @@ import {Render, Tabs, TabItem} from "~/components"
 
 2. Add an identity provider to Zero Trust using the [`cloudflare_zero_trust_access_identity_provider`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_identity_provider) resource.  For example, to add a Microsoft Entra ID integration:
 
-
 		<Render file="access/entra-id-terraform" product="cloudflare-one" />
 
 		Each identity provider integration has different required attributes. You will need to obtain these attribute values from your identity provider. For more information, refer to the [IdP-specific documentation](/cloudflare-one/identity/idp-integration/).
