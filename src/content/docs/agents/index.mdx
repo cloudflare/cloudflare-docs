@@ -36,7 +36,7 @@ npm create cloudflare@latest agents-starter -- --template=cloudflare/agents-star
 npx wrangler@latest deploy
 ```
 
-Head to the [getting started tutorial](/agents/getting-started/writing-your-first-agent/) to dive into shipping your first Agent on Cloudflare.
+Head to the guide on [building a chat agent](/agents/getting-started/build-a-chat-agent) to learn how to build and deploy an Agent to prod.
 
 If you're already building on [Workers](/workers/), you can install the `agents-sdk` package directly into an existing project:
 
@@ -51,7 +51,7 @@ Dive into the [Agent SDK reference](/agents/api-reference/sdk/) to learn more ab
 We built the `agents-sdk` with a few things in mind:
 
 - **Batteries (state) included**: Agents come with [built-in state management](/agents/examples/manage-and-sync-state/), with the ability to automatically sync state between an Agent and clients, trigger events on state changes, and read+write to each Agent's SQL database.
-- **Communicative**: You can connect to an Agent via [WebSockets](/agents/examples/websockets/) and stream updates back to client in real-time. Handle a long-running response from a reasoning model, the results of an [asynchronous workflow](/agents/examples/asynchronous-workflows/), or build a chat app that builds on the `useAgent` hook included in the `agents-sdk`.
+- **Communicative**: You can connect to an Agent via [WebSockets](/agents/examples/websockets/) and stream updates back to client in real-time. Handle a long-running response from a reasoning model, the results of an [asynchronous workflow](/agents/examples/run-workflows/), or build a chat app that builds on the `useAgent` hook included in the `agents-sdk`.
 - **Extensible**: Agents are code. Use the [AI models](/agents/examples/using-ai-models/) you want, bring-your-own headless browser service, pull data from your database hosted in another cloud, add your own methods to your Agent and call them.
 
 Agents built with `agents-sdk` can be deployed directly to Cloudflare and run on top of [Durable Objects](/durable-objects/) — which you can think of as stateful micro-servers that can scale to tens of millions — and are able to run wherever they need to. Run your Agents close to a user for low-latency interactivity, close to your data for throughput, and/or anywhere in between.
