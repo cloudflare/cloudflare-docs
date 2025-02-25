@@ -13,7 +13,7 @@ import { Render } from "~/components"
 
 To enable pre-clearance, you must ensure that the hostname of the Turnstile widget matches the zone with the WAF rules. During the Turnstile configuration setup in the Cloudflare dashboard, you can see the registered zones. Select the appropriate hostname from this list.
 
-The prerequisite is crucial for pre-clearance to function properly. If set up correctly, visitors who successfully solve Turnstile will receive a cookie with the security clearance level set by the customer. When encountering a WAF challenge on the same zone, they will bypass additional challenges for the configured clearance level and below. 
+The prerequisite is crucial for pre-clearance to function properly. If set up correctly, visitors who successfully solve Turnstile will receive a cookie with the security clearance level set by the customer. When encountering a WAF challenge on the same zone, they will bypass additional challenges for the configured clearance level and below.
 
 For more details on managing hostnames, refer to the [Hostname Management documentation](/turnstile/concepts/hostname-management/).
 

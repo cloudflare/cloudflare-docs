@@ -6,14 +6,14 @@ sidebar:
 
 ---
 
-Pre-clearance in Turnstile allows websites to streamline user experiences by using clearance cookies. These cookies enable visitors to bypass WAF challenges downstream, based on the security clearance level set by the customer. This can be particularly useful for trusted visitors, enhancing usability while maintaining security. 
+Pre-clearance in Turnstile allows websites to streamline user experiences by using clearance cookies. These cookies enable visitors to bypass WAF challenges downstream, based on the security clearance level set by the customer. This can be particularly useful for trusted visitors, enhancing usability while maintaining security.
 
 You can integrate Cloudflare challenges by allowing Turnstile to issue a pre-clearance cookie. The pre-clearance level is set upon widget creation or widget modification using the Turnstile API's `clearance_level`. Possible values for the configuration are:
 
 - `no_clearance`
 - `jschallenge`
 - `managed`
-- `interactive` 
+- `interactive`
 
 All widgets are set to `no_clearance` by default.
 
@@ -21,7 +21,7 @@ For Enterprise customers eligible to toggle off domain checks, Cloudflare recomm
 
 :::note
 
-Clearance cookies only support zones that are orange-clouded. 
+Clearance cookies only support zones that are orange-clouded.
 :::
 
 Refer to the [blog post](https://blog.cloudflare.com/integrating-turnstile-with-the-cloudflare-waf-to-challenge-fetch-requests) for more details on how pre-clearance works with WAF.
