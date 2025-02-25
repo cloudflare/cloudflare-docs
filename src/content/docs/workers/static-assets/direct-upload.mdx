@@ -146,6 +146,8 @@ If all assets have been previously uploaded, `buckets` will be empty, and `jwt` 
 
 The [file upload API](/api/resources/workers/subresources/assets/subresources/upload/methods/create/) requires files be uploaded using `multipart/form-data`. The contents of each file must be base64 encoded, and the `base64` query parameter in the URL must be set to `true`.
 
+The provided `Content-Type` header of each file part will be attached when eventually serving the file. If you wish to avoid sending a `Content-Type` header in your deployment, `application/null` may be sent at upload time.
+
 The `Authorization` header must be provided as a bearer token, using the JWT (upload token) from the aforementioned manifest upload call.
 
 Once every file in the manifest has been uploaded, a status code of 201 will be returned, with the `jwt` field present. This JWT is a final "completion" token which can be used to create a deployment of a Worker with this set of assets. This completion token is valid for 1 hour.
