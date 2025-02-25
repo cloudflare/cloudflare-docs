@@ -41,7 +41,7 @@ The data collected from the browser is summarized in the table below:
 
 ## Data processing
 
-RUM data is generally processed at the nearest Cloudflare data center based on how the incoming request is routed. This is determined by a number of factors including [anycast](https://www.cloudflare.com/en-gb/learning/cdn/glossary/anycast-network/) and [Unimog](https://blog.cloudflare.com/unimog-cloudflares-edge-load-balancer/). Since RUM data does not use location services, it may be processed in a different country or region from where it originated. Although the RUM service receives the client/source IP address from the beacon as part of normal HTTP request handling process, it discards the IP address at the nearest Cloudflare data center and does not store it in core databases or logs.
+RUM data is generally processed at the nearest Cloudflare data center based on how the incoming request is routed. This is determined by a number of factors including [Anycast](https://www.cloudflare.com/en-gb/learning/cdn/glossary/anycast-network/) and [Unimog](https://blog.cloudflare.com/unimog-cloudflares-edge-load-balancer/). Since RUM data does not use location services, it may be processed in a different country or region from where it originated. Although the RUM service receives the client/source IP address from the beacon as part of normal HTTP request handling process, it discards the IP address at the nearest Cloudflare data center and does not store it in core databases or logs.
 
 ## Privacy information 
 
