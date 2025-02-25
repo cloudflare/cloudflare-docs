@@ -29,7 +29,7 @@ Refer to the [network policies page](/cloudflare-one/policies/gateway/network-po
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
 --header "Authorization: Bearer <API_TOKEN>" \
 --data '{
@@ -64,7 +64,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
 --header "Authorization: Bearer <API_TOKEN>" \
 --data '{
@@ -114,7 +114,7 @@ Restrict user access to only the specific sites or applications configured in yo
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
 --header "Authorization: Bearer <API_TOKEN>" \
 --data '{
@@ -146,7 +146,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
 --header "Authorization: Bearer <API_TOKEN>" \
 --data '{
@@ -185,7 +185,7 @@ The following example consists of two policies: the first allows specific users 
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
 --header "Authorization: Bearer <API_TOKEN>" \
 --data '{
@@ -217,7 +217,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
 --header "Authorization: Bearer <API_TOKEN>" \
 --data '{
@@ -256,7 +256,7 @@ Override traffic directed toward a specific IP address with a different IP addre
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
 --header "Authorization: Bearer <API_TOKEN>" \
 --data '{

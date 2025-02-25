@@ -35,7 +35,7 @@ Block all subdomains that use a host.
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
 --header "Authorization: Bearer <API_TOKEN>" \
 --data '{
@@ -69,7 +69,7 @@ Block a section of a site without blocking the entire site. For example, you can
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
 --header "Authorization: Bearer <API_TOKEN>" \
 --data '{
@@ -122,7 +122,7 @@ Block content categories which go against your organization's acceptable use pol
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
 --header "Authorization: Bearer <API_TOKEN>" \
 --data '{
@@ -158,7 +158,7 @@ Gateway [evaluates Do Not Inspect policies first](/cloudflare-one/policies/gatew
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
 --header "Authorization: Bearer <API_TOKEN>" \
 --data '{
@@ -200,7 +200,7 @@ Perform an [OS version check](/cloudflare-one/identity/devices/warp-client-check
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
 --header "Authorization: Bearer <API_TOKEN>" \
 --data '{
@@ -239,7 +239,7 @@ Since the file path will be different for each operating system, you can configu
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
 --header "Authorization: Bearer <API_TOKEN>" \
 --data '{
@@ -283,7 +283,7 @@ When accessing origin servers with certificates not signed by a public certifica
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
 --header "Authorization: Bearer <API_TOKEN>" \
 --data '{
@@ -328,7 +328,7 @@ Block file downloads from Google Drive.
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
 --header "Authorization: Bearer <API_TOKEN>" \
 --data '{
@@ -399,7 +399,7 @@ Block file downloads from Gmail.
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
 --header "Authorization: Bearer <API_TOKEN>" \
 --data '{

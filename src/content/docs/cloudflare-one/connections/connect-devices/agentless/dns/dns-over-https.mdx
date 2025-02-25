@@ -114,7 +114,7 @@ Currently, authentication tokens can only be generated through the API. You can 
 ### 1. Create a service token for the account
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/access/service_tokens" \
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/service_tokens" \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
@@ -148,12 +148,12 @@ Save the service token's `client_id`, `client_secret`, and `id`.
 
 ```bash
 curl --request PUT \
-"https://api.cloudflare.com/client/v4/accounts/{account_id}/access/organizations/doh/{service_token_id}" \
+"https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/organizations/doh/$SERVICE_TOKEN_ID" \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>"
 ```
 
-If you get an `access.api.error.service_token_not_found` error, check that `{service_token_id}` is the value of `id` and not `client_id`.
+If you get an `access.api.error.service_token_not_found` error, check that `$SERVICE_TOKEN_ID` is the value of `id` and not `client_id`.
 
 <Details header="Example response">
 
@@ -181,7 +181,7 @@ If you get an `access.api.error.service_token_not_found` error, check that `{ser
 Create a new user and optionally add them to a group.
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/access/users" \
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/users" \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \

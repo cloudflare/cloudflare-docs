@@ -15,14 +15,14 @@ import { Render, Details } from "~/components"
 
 		```bash
 		curl --request POST \
-		"https://api.cloudflare.com/client/v4/accounts/{account_id}/access/gateway_ca" \
+		"https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/gateway_ca" \
 		--header "Authorization: Bearer <API_TOKEN>"
 		```
 
 3. If you have already created a Cloudflare SSH CA or receive the error message `access.api.error.gateway_ca_already_exists`, make a `GET` request instead:
 
 		```bash
-		curl https://api.cloudflare.com/client/v4/accounts/{account_id}/access/gateway_ca \
+		curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/gateway_ca \
 		--header "Authorization: Bearer <API_TOKEN>"
 		```
 

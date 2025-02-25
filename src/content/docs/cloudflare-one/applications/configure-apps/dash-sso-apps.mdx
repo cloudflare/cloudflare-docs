@@ -73,7 +73,7 @@ If there is an issue with your SSO IdP provider, you can add an alternate IdP us
 1. [Add](/api/resources/zero_trust/subresources/identity_providers/methods/create/) one-time PIN login:
 
 ```bash title="cURL command"
-curl 'https://api.cloudflare.com/client/v4/accounts/{account_id}/access/identity_providers' \
+curl 'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/identity_providers' \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
@@ -86,7 +86,7 @@ curl 'https://api.cloudflare.com/client/v4/accounts/{account_id}/access/identity
 2. [Get](/api/resources/zero_trust/subresources/access/subresources/applications/methods/list/) the `id` of the `dash_sso` Access application. You can use [`jq`](https://jqlang.github.io/jq/download/) to quickly find the correct application:
 
 ```bash title="cURL command"
-curl 'https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps' \
+curl 'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/apps' \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 | jq '.result[] | select(.type == "dash_sso")'
@@ -106,7 +106,7 @@ curl 'https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps' \
 
 ```bash title="cURL command"
 curl --request PUT \
-'https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps/3537a672-e4d8-4d89-aab9-26cb622918a1' \
+'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/apps/3537a672-e4d8-4d89-aab9-26cb622918a1' \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \
@@ -127,7 +127,7 @@ The following API calls will disable SSO enforcement for an account. This action
 1. Get your SSO `connector_id`:
 
 ```bash title="cURL command"
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/sso/v2/connectors \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/sso/v2/connectors \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>"
 ```
@@ -153,7 +153,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/sso/v2/connector
 
 ```bash title="cURL command"
 curl --request PATCH \
-'https://api.cloudflare.com/client/v4/accounts/{account_id}/sso/v2/connectors/2828' \
+'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/sso/v2/connectors/2828' \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>" \
 --header "Content-Type: application/json" \

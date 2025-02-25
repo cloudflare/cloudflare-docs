@@ -1,9 +1,8 @@
 ---
 {}
-
 ---
 
-import { Tabs, TabItem, Render, Details } from "~/components"
+import { Tabs, TabItem, Render, Details } from "~/components";
 
 A target represents a single resource in your infrastructure (such as a server, Kubernetes cluster, database, or container) that users will connect to through Cloudflare. Targets are protocol-agnostic, meaning that you do not need to define a new target for each protocol that runs on the server.
 
@@ -29,30 +28,30 @@ If the target IP does not appear in the dropdown, go to **Networks** > **Routes*
 </TabItem>
 <TabItem label="API">
 
-1. [Create an API token](/fundamentals/api/get-started/create-token/) with the following permissions:
-		| Type    | Item             | Permission |
-		| ------- | ---------------- | ---------- |
-		| Account | Zero Trust       | Edit       |
+1.  [Create an API token](/fundamentals/api/get-started/create-token/) with the following permissions:
+    | Type | Item | Permission |
+    | ------- | ---------------- | ---------- |
+    | Account | Zero Trust | Edit |
 
-2. Make a `POST` request to the [Infrastructure Access Targets](/api/resources/zero_trust/subresources/access/subresources/infrastructure/subresources/targets/methods/create/) endpoint:
+2.  Make a `POST` request to the [Infrastructure Access Targets](/api/resources/zero_trust/subresources/access/subresources/infrastructure/subresources/targets/methods/create/) endpoint:
 
-		```sh
-		curl https://api.cloudflare.com/client/v4/accounts/{account_id}/infrastructure/targets \
-		--header "Authorization: Bearer <API_TOKEN>" \
-		--data '{
-			"hostname": "infra-access-target",
-			"ip": {
-				"ipv4": {
-					"ip_addr": "187.26.29.249",
-					"virtual_network_id": "c77b744e-acc8-428f-9257-6878c046ed55"
-				},
-				"ipv6": {
-					"ip_addr": "64c0:64e8:f0b4:8dbf:7104:72b0:ec8f:f5e0",
-					"virtual_network_id": "c77b744e-acc8-428f-9257-6878c046ed55"
-				}
-			}
-		}'
-		```
+        ```sh
+        curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/infrastructure/targets \
+        --header "Authorization: Bearer <API_TOKEN>" \
+        --data '{
+        	"hostname": "infra-access-target",
+        	"ip": {
+        		"ipv4": {
+        			"ip_addr": "187.26.29.249",
+        			"virtual_network_id": "c77b744e-acc8-428f-9257-6878c046ed55"
+        		},
+        		"ipv6": {
+        			"ip_addr": "64c0:64e8:f0b4:8dbf:7104:72b0:ec8f:f5e0",
+        			"virtual_network_id": "c77b744e-acc8-428f-9257-6878c046ed55"
+        		}
+        	}
+        }'
+        ```
 
 </TabItem>
 <TabItem label="Terraform (v4)">
@@ -62,26 +61,27 @@ The following example requires Cloudflare provider version `>=4.45.0`.
 :::
 
 1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.45.0/docs/resources/api_token):
-	- `Teams Write`
+
+   - `Teams Write`
 
 2. Configure the [`cloudflare_zero_trust_infrastructure_access_target`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.45.0/docs/resources/zero_trust_infrastructure_access_target) resource:
 
-	```tf
-	resource "cloudflare_zero_trust_infrastructure_access_target" "infra-ssh-target" {
-		account_id = var.cloudflare_account_id
-			hostname   = "infra-access-target"
-			ip = {
-				ipv4 = {
-					ip_addr = "187.26.29.249"
-					virtual_network_id = "c77b744e-acc8-428f-9257-6878c046ed55"
-				}
-				ipv6 = {
-					ip_addr = "64c0:64e8:f0b4:8dbf:7104:72b0:ec8f:f5e0"
-					virtual_network_id = "c77b744e-acc8-428f-9257-6878c046ed55"
-				}
-			}
-	}
-	```
+   ```tf
+   resource "cloudflare_zero_trust_infrastructure_access_target" "infra-ssh-target" {
+   	account_id = var.cloudflare_account_id
+   		hostname   = "infra-access-target"
+   		ip = {
+   			ipv4 = {
+   				ip_addr = "187.26.29.249"
+   				virtual_network_id = "c77b744e-acc8-428f-9257-6878c046ed55"
+   			}
+   			ipv6 = {
+   				ip_addr = "64c0:64e8:f0b4:8dbf:7104:72b0:ec8f:f5e0"
+   				virtual_network_id = "c77b744e-acc8-428f-9257-6878c046ed55"
+   			}
+   		}
+   }
+   ```
 
 </TabItem>
 </Tabs>

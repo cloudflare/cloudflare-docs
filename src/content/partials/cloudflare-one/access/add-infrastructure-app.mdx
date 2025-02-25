@@ -1,10 +1,8 @@
 ---
 {}
-
 ---
 
-import { Tabs, TabItem, Render } from "~/components"
-
+import { Tabs, TabItem, Render } from "~/components";
 
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
@@ -26,61 +24,63 @@ import { Tabs, TabItem, Render } from "~/components"
 		- **SSH user**: Enter the UNIX usernames that users can log in as (for example, `root` or `ec2-user`).
 		- **Allow users to log in as their email alias**: (Optional) When selected, users who match your policy definition will be able to access the target using their lowercased email address prefix. For example, `Jdoe@company.com` could log in as `jdoe`.
 
-		:::note
-		Cloudflare will not create new users on the target. UNIX users must already be present on the server.
-		:::
+    	:::note
+    	Cloudflare will not create new users on the target. UNIX users must already be present on the server.
+    	:::
+
 4. Select **Add application**.
-</TabItem>
+
+   </TabItem>
 <TabItem label="API">
 
 1. [Create an API token](/fundamentals/api/get-started/create-token/) with the following permissions:
-		| Type    | Item             | Permission |
-		| ------- | ---------------- | ---------- |
-		| Account | Access: Apps & Policies  | Edit       |
+   | Type | Item | Permission |
+   | ------- | ---------------- | ---------- |
+   | Account | Access: Apps & Policies | Edit |
 
-2. Make a `POST` request to the [Access applications](/api/resources/zero_trust/subresources/access/subresources/applications/methods/create/) endpoint:
+1. Make a `POST` request to the [Access applications](/api/resources/zero_trust/subresources/access/subresources/applications/methods/create/) endpoint:
 
-	```sh
-	curl https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps \
-	--header "Authorization: Bearer <API_TOKEN>" \
-	--header "Content-Type: application/json" \
-	--data '{
-		"name": "Example infrastructure app",
-		"type": "infrastructure",
-		"target_criteria": [
-			{
-				"target_attributes": {
-					"hostname": [
-						"infra-access-target"
-					]
-				},
-				"port": 22,
-				"protocol": "SSH"
-			}
-		],
-		"policies": [
-			{
-				"name": "Allow a specific email",
-				"decision": "allow",
-				"include": [
-					{
-						"email": {
-							"email": "jdoe@company.com"
-						}
-					}
-				],
-				"connection_rules": {
-					"ssh": {
-						"usernames": [
-							"root",
-							"ec2-user"
-						]
-					}
-				}
-			}
-		]
-	}'
-	```
+   ```sh
+   curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/apps \
+   --header "Authorization: Bearer <API_TOKEN>" \
+   --header "Content-Type: application/json" \
+   --data '{
+   	"name": "Example infrastructure app",
+   	"type": "infrastructure",
+   	"target_criteria": [
+   		{
+   			"target_attributes": {
+   				"hostname": [
+   					"infra-access-target"
+   				]
+   			},
+   			"port": 22,
+   			"protocol": "SSH"
+   		}
+   	],
+   	"policies": [
+   		{
+   			"name": "Allow a specific email",
+   			"decision": "allow",
+   			"include": [
+   				{
+   					"email": {
+   						"email": "jdoe@company.com"
+   					}
+   				}
+   			],
+   			"connection_rules": {
+   				"ssh": {
+   					"usernames": [
+   						"root",
+   						"ec2-user"
+   					]
+   				}
+   			}
+   		}
+   	]
+   }'
+   ```
 
 </TabItem>
 <TabItem label="Terraform (v4)">
@@ -89,50 +89,52 @@ import { Tabs, TabItem, Render } from "~/components"
 The following example requires Cloudflare provider version `>=4.45.0`.
 :::
 
-1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.45.0/docs/resources/api_token):
-	- `Access: Apps and Policies Write`
+1.  Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.45.0/docs/resources/api_token):
 
-2. Use the [`cloudflare_zero_trust_access_application`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.45.0/docs/resources/zero_trust_access_application) resource to create an infrastructure application:
+    - `Access: Apps and Policies Write`
 
-	```tf
-	resource "cloudflare_zero_trust_access_application" "infra-app" {
-		account_id = var.cloudflare_account_id
-		name       = "Example infrastructure app"
-		type       = "infrastructure"
+2.  Use the [`cloudflare_zero_trust_access_application`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.45.0/docs/resources/zero_trust_access_application) resource to create an infrastructure application:
 
-		target_criteria {
-			port     = 22
-			protocol = "SSH"
-			target_attributes {
-				name = "hostname"
-				values = ["infra-access-target"]
-			}
-		}
-	}
-	```
+    ```tf
+    resource "cloudflare_zero_trust_access_application" "infra-app" {
+    	account_id = var.cloudflare_account_id
+    	name       = "Example infrastructure app"
+    	type       = "infrastructure"
 
-3. Use the [`cloudflare_zero_trust_access_policy`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.45.0/docs/resources/zero_trust_access_policy) resource to add an infrastructure policy to the application:
+    	target_criteria {
+    		port     = 22
+    		protocol = "SSH"
+    		target_attributes {
+    			name = "hostname"
+    			values = ["infra-access-target"]
+    		}
+    	}
+    }
+    ```
 
-	```tf
-	resource "cloudflare_zero_trust_access_policy" "infra-app-policy" {
-		application_id = cloudflare_zero_trust_access_application.infra-app.id
-		account_id = var.cloudflare_account_id
-		name       = "Allow a specific email"
-		decision   = "allow"
-		precedence = 1
+3.  Use the [`cloudflare_zero_trust_access_policy`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.45.0/docs/resources/zero_trust_access_policy) resource to add an infrastructure policy to the application:
 
-		include {
-			email = ["jdoe@company.com"]
-		}
+        ```tf
+        resource "cloudflare_zero_trust_access_policy" "infra-app-policy" {
+        	application_id = cloudflare_zero_trust_access_application.infra-app.id
+        	account_id = var.cloudflare_account_id
+        	name       = "Allow a specific email"
+        	decision   = "allow"
+        	precedence = 1
 
-		connection_rules {
-			ssh {
-				usernames = ["root", "ec2-user"]
-			}
-		}
-	}
-	```
-</TabItem>
+        	include {
+        		email = ["jdoe@company.com"]
+        	}
+
+        	connection_rules {
+        		ssh {
+        			usernames = ["root", "ec2-user"]
+        		}
+        	}
+        }
+        ```
+
+    </TabItem>
 </Tabs>
 
 The targets in this application are now secured by your infrastructure policies.
