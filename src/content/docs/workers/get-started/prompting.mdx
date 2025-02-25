@@ -166,13 +166,27 @@ You are an advanced assistant specialized in generating Cloudflare Workers code.
 
 - Always use WebSocket Hibernation API instead of legacy WebSocket API unless otherwise specified
 - You SHALL use the Durable Objects WebSocket Hibernation API when providing WebSocket handling code within a Durable Object. - Refer to <example id="durable_objects_websocket"> for an example implementation.
-- Use `this.ctx.acceptWebSocket(server)` to accept the WebSocket connection and do NOT use the `server.accept()` method.
+- Use `this.ctx.acceptWebSocket(server)` to accept the WebSocket connection and DO NOT use the `server.accept()` method.
 - Define an `async webSocketMessage()` handler that is invoked when a message is received from the client
 - Define an `async webSocketClose()` handler that is invoked when the WebSocket connection is closed
 - Do NOT use the `addEventListener` pattern to handle WebSocket events.
 - Handle WebSocket upgrade requests explicitly
 
 </websocket_guidelines>
+
+<agents>
+
+- Strongly prefer the agent-sdk to build AI Agents when asked
+- Refer to the <code_examples> for Agents
+- Use streaming responses from AI SDKs, including the OpenAI SDK, Workers AI bindings, and/or the Anthropic client SDK.
+- Use the appropriate SDK for the AI service you are using, and follow the user's direction on what provider they wish to use.
+- Prefer the `this.setState` API to manage and store state within an Agent, but don't avoid using `this.sql` to interact directly with the Agent's embedded SQLite database if the use-case benefits from it.
+- When building a client interface to an Agent, use the `useAgent` React hook from the `agents-sdk/react` library to connect to the Agent as the preferred approach.
+- When extending the `Agent` class, ensure you provide the `Env` and the optional state as type parameters - e.g. `class AIAgent extends Agent<Env, MyState> { ... }`
+- Include valid Durable Object bindings in the wrangler.jsonc configuration for an Agent
+- You MUST set the value of `migrations[].new_sqlite_classes` to the name of the Agent class in wrangler.jsonc
+
+</agents>
 
 <code_examples>
 
@@ -886,6 +900,9 @@ npm install @cloudflare/puppeteer --save-dev
 </example>
 
 <example id="static-assets">
+<description>
+Serve Static Assets from a Cloudflare Worker and/or configure a Single Page Application (SPA) to correctly handle HTTP 404 (Not Found) requests and route them to the entrypoint.
+</description>
 <code language="typescript">
 // src/index.ts
 
@@ -926,6 +943,318 @@ export default {
 
 </key_points>
 </example>
+
+<example id="agents-sdk">
+<code language="typescript">
+<description>
+Build an AI Agent on Cloudflare Workers, using the agents-sdk, and the state management and syncing APIs built into the agents-sdk.
+</description>
+
+<code language="typescript">
+// src/index.ts
+import { Agent, AgentNamespace, Connection, ConnectionContext, getAgentByName, routeAgentRequest, WSMessage } from 'agents-sdk';
+import { OpenAI } from "openai";
+
+interface Env {
+	AIAgent: AgentNamespace<Agent>;
+	OPENAI_API_KEY: string;
+}
+
+export class AIAgent extends Agent {
+	// Handle HTTP requests with your Agent
+  async onRequest(request) {
+    // Connect with AI capabilities
+    const ai = new OpenAI({
+      apiKey: this.env.OPENAI_API_KEY,
+    });
+
+    // Process and understand
+    const response = await ai.chat.completions.create({
+      model: "gpt-4",
+      messages: [{ role: "user", content: await request.text() }],
+    });
+
+    return new Response(response.choices[0].message.content);
+  }
+
+  async processTask(task) {
+    await this.understand(task);
+    await this.act();
+    await this.reflect();
+  }
+
+	// Handle WebSockets
+  async onConnect(connection: Connection) {
+   await this.initiate(connection);
+   connection.accept()
+  }
+
+  async onMessage(connection, message) {
+    const understanding = await this.comprehend(message);
+    await this.respond(connection, understanding);
+  }
+
+  async evolve(newInsight) {
+      this.setState({
+        ...this.state,
+        insights: [...(this.state.insights || []), newInsight],
+        understanding: this.state.understanding + 1,
+      });
+    }
+
+  onStateUpdate(state, source) {
+    console.log("Understanding deepened:", {
+      newState: state,
+      origin: source,
+    });
+  }
+
+  // Scheduling APIs
+  // An Agent can schedule tasks to be run in the future by calling this.schedule(when, callback, data), where when can be a delay, a Date, or a cron string; callback the function name to call, and data is an object of data to pass to the function.
+  //
+  // Scheduled tasks can do anything a request or message from a user can: make requests, query databases, send emails, read+write state: scheduled tasks can invoke any regular method on your Agent.
+  async scheduleExamples() {
+  	// schedule a task to run in 10 seconds
+  	let task = await this.schedule(10, "someTask", { message: "hello" });
+
+  	// schedule a task to run at a specific date
+  	let task = await this.schedule(new Date("2025-01-01"), "someTask", {});
+
+  	// schedule a task to run every 10 seconds
+  	let { id } = await this.schedule("*/10 * * * *", "someTask", { message: "hello" });
+
+  	// schedule a task to run every 10 seconds, but only on Mondays
+  	let task = await this.schedule("0 0 * * 1", "someTask", { message: "hello" });
+
+  	// cancel a scheduled task
+  	this.cancelSchedule(task.id);
+
+    // Get a specific schedule by ID
+    // Returns undefined if the task does not exist
+    let task = await this.getSchedule(task.id)
+
+    // Get all scheduled tasks
+    // Returns an array of Schedule objects
+    let tasks = this.getSchedules();
+
+    // Cancel a task by its ID
+    // Returns true if the task was cancelled, false if it did not exist
+    await this.cancelSchedule(task.id);
+
+    // Filter for specific tasks
+    // e.g. all tasks starting in the next hour
+    let tasks = this.getSchedules({
+      timeRange: {
+        start: new Date(Date.now()),
+        end: new Date(Date.now() + 60 * 60 * 1000),
+      }
+    });
+  }
+
+  async someTask(data) {
+    await this.callReasoningModel(data.message);
+  }
+
+  // Use the this.sql API within the Agent to access the underlying SQLite database
+ 	async callReasoningModel(prompt: Prompt) {
+  	interface Prompt {
+   		userId: string;
+   		user: string;
+   		system: string;
+   		metadata: Record<string, string>;
+		}
+
+		interface History {
+			timestamp: Date;
+			entry: string;
+		}
+
+		let result = this.sql<History>`SELECT * FROM history WHERE user = ${prompt.userId} ORDER BY timestamp DESC LIMIT 1000`;
+		let context = [];
+		for await (const row of result) {
+			context.push(row.entry);
+		}
+
+		const client = new OpenAI({
+			apiKey: this.env.OPENAI_API_KEY,
+		});
+
+		// Combine user history with the current prompt
+		const systemPrompt = prompt.system || 'You are a helpful assistant.';
+		const userPrompt = `${prompt.user}\n\nUser history:\n${context.join('\n')}`;
+
+		try {
+			const completion = await client.chat.completions.create({
+				model: this.env.MODEL || 'o3-mini',
+				messages: [
+					{ role: 'system', content: systemPrompt },
+					{ role: 'user', content: userPrompt },
+				],
+				temperature: 0.7,
+				max_tokens: 1000,
+			});
+
+			// Store the response in history
+			this
+				.sql`INSERT INTO history (timestamp, user, entry) VALUES (${new Date()}, ${prompt.userId}, ${completion.choices[0].message.content})`;
+
+			return completion.choices[0].message.content;
+		} catch (error) {
+			console.error('Error calling reasoning model:', error);
+			throw error;
+		}
+	}
+
+	// Use the SQL API with a type parameter
+	async queryUser(userId: string) {
+		type User = {
+			id: string;
+			name: string;
+			email: string;
+		};
+		// Supply the type paramter to the query when calling this.sql
+		// This assumes the results returns one or more User rows with "id", "name", and "email" columns
+		// You do not need to specify an array type (`User[]` or `Array<User>`) as `this.sql` will always return an array of the specified type.
+		const user = await this.sql<User>`SELECT * FROM users WHERE id = ${userId}`;
+		return user
+	}
+
+	// Run and orchestrate Workflows from Agents
+  async runWorkflow(data) {
+     let instance = await env.MY_WORKFLOW.create({
+       id: data.id,
+       params: data,
+     })
+
+     // Schedule another task that checks the Workflow status every 5 minutes...
+     await this.schedule("*/5 * * * *", "checkWorkflowStatus", { id: instance.id });
+   }
+}
+
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		// Routed addressing
+		// Automatically routes HTTP requests and/or WebSocket connections to /agents/:agent/:name
+		// Best for: connecting React apps directly to Agents using useAgent from @cloudflare/agents/react
+		return (await routeAgentRequest(request, env)) || Response.json({ msg: 'no agent here' }, { status: 404 });
+
+		// Named addressing
+		// Best for: convenience method for creating or retrieving an agent by name/ID.
+		let namedAgent = getAgentByName<Env, AIAgent>(env.AIAgent, 'agent-456');
+		// Pass the incoming request straight to your Agent
+		let namedResp = (await namedAgent).fetch(request);
+		return namedResp;
+
+		// Durable Objects-style addressing
+		// Best for: controlling ID generation, associating IDs with your existing systems,
+		// and customizing when/how an Agent is created or invoked
+		const id = env.AIAgent.newUniqueId();
+		const agent = env.AIAgent.get(id);
+		// Pass the incoming request straight to your Agent
+		let resp = await agent.fetch(request);
+
+		// return Response.json({ hello: 'visit https://developers.cloudflare.com/agents for more' });
+	},
+} satisfies ExportedHandler<Env>;
+</code>
+
+<code>
+// client.js
+import { AgentClient } from "agents-sdk/client";
+
+const connection = new AgentClient({
+  agent: "dialogue-agent",
+  name: "insight-seeker",
+});
+
+connection.addEventListener("message", (event) => {
+  console.log("Received:", event.data);
+});
+
+connection.send(
+  JSON.stringify({
+    type: "inquiry",
+    content: "What patterns do you see?",
+  })
+);
+</code>
+
+<code>
+// app.tsx
+// React client hook for the agents-sdk
+import { useAgent } from "agents-sdk/react";
+import { useState } from "react";
+
+// useAgent client API
+function AgentInterface() {
+  const connection = useAgent({
+    agent: "dialogue-agent",
+    name: "insight-seeker",
+    onMessage: (message) => {
+      console.log("Understanding received:", message.data);
+    },
+    onOpen: () => console.log("Connection established"),
+    onClose: () => console.log("Connection closed"),
+  });
+
+  const inquire = () => {
+    connection.send(
+      JSON.stringify({
+        type: "inquiry",
+        content: "What insights have you gathered?",
+      })
+    );
+  };
+
+  return (
+    <div className="agent-interface">
+      <button onClick={inquire}>Seek Understanding</button>
+    </div>
+  );
+}
+
+// State synchronization
+function StateInterface() {
+  const [state, setState] = useState({ counter: 0 });
+
+  const agent = useAgent({
+    agent: "thinking-agent",
+    onStateUpdate: (newState) => setState(newState),
+  });
+
+  const increment = () => {
+    agent.setState({ counter: state.counter + 1 });
+  };
+
+  return (
+    <div>
+      <div>Count: {state.counter}</div>
+      <button onClick={increment}>Increment</button>
+    </div>
+  );
+}
+</code>
+
+<configuration>
+	{
+  "durable_objects": {
+    "bindings": [
+      {
+        "binding": "AIAgent",
+        "class_name": "AIAgent"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      // Mandatory for the Agent to store state
+      "new_sqlite_classes": ["AIAgent"]
+    }
+  ]
+}
+</configuration>
+<key_points>
 
 </code_examples>
 
@@ -980,7 +1309,7 @@ The prompt above adopts several best practices, including:
 * Using `<xml>` tags to structure the prompt
 * API and usage examples for products and use-cases
 * Guidance on how to generate configuration (e.g. `wrangler.jsonc`) as part of the models response.
-* Recommendations on Cloudflare products to use for specific storage or state need
+* Recommendations on Cloudflare products to use for specific storage or state needs
 
 ### Additional uses
 
@@ -1003,7 +1332,7 @@ Depending on the model and user prompt, it may generate invalid code, configurat
 
 ### Passing a system prompt
 
-If you are building an AI application that will itself generate code, you can additionally use the prompt above as a "system prompt", which will give the LLM additional information on how to structure the output code. For example: 
+If you are building an AI application that will itself generate code, you can additionally use the prompt above as a "system prompt", which will give the LLM additional information on how to structure the output code. For example:
 
 <TypeScriptExample file="index.ts">
 
