@@ -23,35 +23,48 @@ import {
 	Tabs,
 } from "~/components";
 
-Build and deploy AI-powered [agents](/agents/) that can autonomously perform tasks, persist state, browse the web, query data and communicate back to users in real-time over any channel.
+Build and deploy AI-powered Agents on Cloudflare that can autonomously perform tasks, communicate with clients in real time, persist state, execute long-running and repeat tasks on a schedule, send emails, run asynchronous workflows, browse the web, query data from your Postgres database, call AI models, support human-in-the-loop use-cases, and more.
 
-### Why builds agents on Cloudflare?
+#### Ship your first Agent
 
-- **Cost-Effective**: Pay only for [CPU usage](https://blog.cloudflare.com/workers-pricing-scale-to-zero/), not wall-clock time—saving costs during agent pauses while awaiting LLM responses or external tools.
-- Serverless AI Inference: Access AI models on-demand with [Workers AI](https://developers.cloudflare.com/workers-ai) with pay-per-use billing and no infrastructure management required.
-- Durable Execution: Maintain state persistence and execution reliability for complex multi-step processes with built-in retry mechanisms, using [Durable Objects](https://developers.cloudflare.com/durable-objects) and [Workflows](https://developers.cloudflare.com/workflows).
+Use the agent started template to create your first Agent:
 
-### Start building
-
-Use the agent started template to bootstrap your first agent:
-
-<PackageManagers
-	type="create"
-	pkg="cloudflare@latest"
-	args={"--", "--template", "cloudflare/agents/starter"}
-/>
+```sh
+# install it
+npm create cloudflare@latest -- --template=cloudflare/agents-starter
+# and deploy it
+npx wrangler@latest deploy
+```
 
 Head to the [getting started tutorial](/agents/getting-started/writing-your-first-agent/) to dive into shipping your first Agent on Cloudflare.
 
+If you're already building on [Workers](/workers/), you can install the `agents-sdk` package directly into an existing project:
 
-### What's next?
-- [Real-time & websockets](/agents/examples/websockets)
-- [Manage & sync state](/agents/examples/manage-and-sync-state)
-- [Using AI Models](/agents/examples/using-ai-models)
+```sh
+npm i agents-sdk
+```
+
+Dive into the [Agent SDK reference](/agents/api-reference/sdk/) to learn more about how to use the `agents-sdk` package and defining an `Agent`.
+
+#### Why build agents on Cloudflare?
+
+We built the `agents-sdk` with a few things in mind:
+
+- **Batteries (state) included**: Agents come with [built-in state management](/agents/examples/manage-and-sync-state/), with the ability to automatically sync state between an Agent and clients, trigger events on state changes, and read+write to each Agent's SQL database.
+- **Communicative**: You can connect to an Agent via [WebSockets](/agents/examples/websockets/) and stream updates back to client in real-time. Handle a long-running response from a reasoning model, the results of an [asynchronous workflow](/agents/examples/asynchronous-workflows/), or build a chat app that builds on the `useAgent` hook included in the `agents-sdk`.
+- **Extensible**: Agents are code. Use the [AI models](/agents/examples/using-ai-models/) you want, bring-your-own headless browser service, pull data from your database hosted in another cloud, add your own methods to your Agent and call them.
+
+Agents built with `agents-sdk` can be deployed directly to Cloudflare and run on top of [Durable Objects](/durable-objects/) — which you can think of as stateful micro-servers that can scale to tens of millions — and are able to run wherever they need to. Run your Agents close to a user for low-latency interactivity, close to your data for throughput, and/or anywhere in between.
 
 ***
 
 ### Build on the Cloudflare Platform
+
+<RelatedProduct header="Workers" href="/workers/" product="workers">
+
+Build serverless applications and deploy instantly across the globe for exceptional performance, reliability, and scale.
+
+</RelatedProduct>
 
 <RelatedProduct header="AI Gateway" href="/ai-gateway/" product="ai-gateway">
 
@@ -68,12 +81,6 @@ Build full-stack AI applications with Vectorize, Cloudflare’s vector database.
 <RelatedProduct header="Workers AI" href="/workers-ai/" product="workers-ai">
 
 Run machine learning models, powered by serverless GPUs, on Cloudflare's global network.
-
-</RelatedProduct>
-
-<RelatedProduct header="Calls" href="/calls/" product="calls">
-
-Build real-time serverless video, audio and data applications with WebRTC running on Cloudflare's network.
 
 </RelatedProduct>
 

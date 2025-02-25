@@ -27,27 +27,19 @@ You can get started by using the `cloudflare/agents-starter` template to create 
 <PackageManagers
 	type="create"
 	pkg="cloudflare@latest"
-	args={"--", "my-agent", "--template", "cloudflare/agents-starter"}
+	args={"my-agent", "--template=cloudflare/agents-starter"}
 />
 
-This will create a new directory called `my-agent` with a number of files, but there are three we need to focus on:
+This will create a new directory called `my-agent` with several files, including:
 
 <FileTree>
+- **wrangler.jsonc** project configuration
 - src
   - **index.ts** **where your Agent's code is defined**
-- **wrangler.jsonc** project configuration
 - test
-	- index.spec.ts test definitions
+	- index.spec.ts **where your tests are defined**
 - ...
 </FileTree>
-
-TODO:
-
-- what this template does
-- how to deploy it and get quick win
-- how to iterate on it and extend it
-- re-deploy
-- go explore :-)
 
 ## 2. Review the code
 
