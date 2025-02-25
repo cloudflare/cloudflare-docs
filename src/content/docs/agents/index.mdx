@@ -27,9 +27,20 @@ Build and deploy AI-powered [agents](/agents/) that can autonomously perform tas
 
 ### Why builds agents on Cloudflare?
 
-- **Batteries included**: Want your agent to search the web? Connect it to [Browser Rendering](/browser-rendering/). Store data? Write to the Agent's underlying [Durable Object](/durable-objects/). Query your database? Connect it to your Postgres database [with Hyperdrive](/hyperdrive/). Stream data back in real-time to one, ten or one thousand users at once? Establish a [WebSocket](/websockets/). Feed data to an AI model? Connect it to [Workers AI](/workers-ai/), OpenAI, Gemini, or Anthropic.
-- **Scale to production**: Deploy agents to Cloudflare's global network and let them scale out automatically.
-- **Don't break the bank**: Agents are built on Cloudflare Workers. Only pay when your agents are running.
+#### Cost-Effective
+Pay only for [CPU usage](https://blog.cloudflare.com/workers-pricing-scale-to-zero/), not wall-clock time—ideal for agents with frequent pauses while awaiting LLM responses or external tools.
+
+#### Serverless AI Inference
+Access AI models on-demand with [Workers AI](https://developers.cloudflare.com/workers-ai) without infrastructure management:
+- Scalable inference infrastrcture on demand,  without requiring pre-provisioning of GPU-powered VMs
+- Pay-per-use billing
+- Support for open-source and custom models
+
+#### Durable Execution
+Built-in reliability for complex processes:
+- State persistence across requests with Durable Objects
+- Automatic retries through Workflows
+- Context preservation during multi-step tasks
 
 ### Start building
 
