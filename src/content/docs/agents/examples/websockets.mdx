@@ -20,7 +20,7 @@ Here's an example of an Agent that echoes back any message it receives:
 <TypeScriptExample>
 
 ```ts
-import { Agent, Connection } from "@cloudflare/agents";
+import { Agent, Connection } from "agents-sdk";
 
 export class ChatAgent extends Agent {
   async onConnect(connection: Connection, ctx: ConnectionContext) {
@@ -55,12 +55,12 @@ export class ChatAgent extends Agent {
 
 ## Connecting clients
 
-The Agent framework includes a useful helper package for connecting directly to your Agent (or other Agents) from a client application. Import `@cloudflare/agents/client`, create an instance of `AgentClient` and use it to connect to an instance of your Agent:
+The Agent framework includes a useful helper package for connecting directly to your Agent (or other Agents) from a client application. Import `agents-sdk/client`, create an instance of `AgentClient` and use it to connect to an instance of your Agent:
 
 <TypeScriptExample>
 
 ```ts
-import { AgentClient } from "@cloudflare/agents/client";
+import { AgentClient } from "agents-sdk/client";
 
 const connection = new AgentClient({
   agent: "dialogue-agent",
@@ -83,12 +83,12 @@ connection.send(
 
 ## React clients
 
-React-based applications can import `@cloudflare/agents/react` and use the `useAgent` hook to connect to an instance of an Agent directly:
+React-based applications can import `agents-sdk/react` and use the `useAgent` hook to connect to an instance of an Agent directly:
 
 <TypeScriptExample>
 
 ```ts
-import { useAgent } from "@cloudflare/agents/react";
+import { useAgent } from "agents-sdk/react";
 
 function AgentInterface() {
   const connection = useAgent({
@@ -129,7 +129,7 @@ Define `onError` and `onClose` methods on your Agent to explicitly handle WebSoc
 <TypeScriptExample>
 
 ```ts
-import { Agent, Connection } from "@cloudflare/agents";
+import { Agent, Connection } from "agents-sdk";
 
 export class ChatAgent extends Agent {
  	// onConnect and onMessage methods

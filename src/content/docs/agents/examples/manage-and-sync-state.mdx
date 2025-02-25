@@ -23,7 +23,7 @@ Every Agent has built-in state management capabilities. You can set and update t
 <TypeScriptExample>
 
 ```ts
-import { Agent } from "@cloudflare/agents";
+import { Agent } from "agents-sdk";
 
 export class MyAgent extends Agent {
   // Update state in response to events
@@ -58,7 +58,7 @@ If you're using TypeScript, you can also provide a type for your Agent's state b
 <TypeScriptExample>
 
 ```ts
-import { Agent } from "@cloudflare/agents";
+import { Agent } from "agents-sdk";
 
 interface Env {}
 
@@ -92,7 +92,7 @@ export class MyAgent extends Agent<Env, FlightRecord> {
 
 ### Synchronizing state
 
-Clients can connect to an Agent and stay synchronized with its state using the React hooks provided as part of `@cloudflare/agents/react`.
+Clients can connect to an Agent and stay synchronized with its state using the React hooks provided as part of `agents-sdk/react`.
 
 A React application can call `useAgent` to connect to a named Agent over WebSockets at
 
@@ -100,7 +100,7 @@ A React application can call `useAgent` to connect to a named Agent over WebSock
 
 ```ts
 import { useState } from "react";
-import { useAgent } from "@cloudflare/agents/react";
+import { useAgent } from "agents-sdk/react";
 
 function StateInterface() {
   const [state, setState] = useState({ counter: 0 });

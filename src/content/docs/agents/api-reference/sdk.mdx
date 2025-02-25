@@ -8,12 +8,12 @@ sidebar:
 
 import { MetaInfo, Render, Type, TypeScriptExample, WranglerConfig } from "~/components";
 
-At its most basic, an Agent is a JavaScript class that extends the `Agent` class from the `@cloudflare/agents` package. An Agent encapsulates all of the logic for an Agent, including how clients can connect to it, how it stores state, the methods it exposes, and any error handling.
+At its most basic, an Agent is a JavaScript class that extends the `Agent` class from the `agents-sdk` package. An Agent encapsulates all of the logic for an Agent, including how clients can connect to it, how it stores state, the methods it exposes, and any error handling.
 
 <TypeScriptExample>
 
 ```ts
-import { Agent } from "@cloudflare/agents";
+import { Agent } from "agents-sdk";
 
 class MyAgent extends Agent {
 	// Define methods on the Agent
@@ -30,14 +30,14 @@ Instances of an Agent are addressed by a unique identifier: that identifier (ID)
 
 ## The Agent class
 
-Writing an Agent requires you to define a class that extends the `Agent` class from the `@cloudflare/agents` package. An Agent encapsulates all of the logic for an Agent, including how clients can connect to it, how it stores state, the methods it exposes, and any error handling.
+Writing an Agent requires you to define a class that extends the `Agent` class from the `agents-sdk` package. An Agent encapsulates all of the logic for an Agent, including how clients can connect to it, how it stores state, the methods it exposes, and any error handling.
 
 An Agent has the following class methods:
 
 <TypeScriptExample>
 
 ```ts
-import { Agent } from "@cloudflare/agents";
+import { Agent } from "agents-sdk";
 
 interface Env {
 	// Define environment variables & bindings here
@@ -87,7 +87,7 @@ class MyAgent extends Agent<Env> {
 	}
 
 	// Called when the Agent's state is updated
-	// via this.setState or the useAgent hook from the @cloudflare/agents/react package.
+	// via this.setState or the useAgent hook from the agents-sdk/react package.
 	async onStateUpdate(state: any) {
 		// 'state' will be typed if you supply a type parameter to the Agent class.
 	}
@@ -121,7 +121,7 @@ These three patterns are shown below: we recommend using either `routeAgentReque
 <TypeScriptExample>
 
 ```ts
-import { Agent, AgentNamespace, getAgentByName, routeAgentRequest } from '@cloudflare/agents';
+import { Agent, AgentNamespace, getAgentByName, routeAgentRequest } from 'agents-sdk';
 
 interface Env {
 	// Define your Agent on the environment here
@@ -134,7 +134,7 @@ export default {
 	async fetch(request, env, ctx): Promise<Response> {
 		// Routed addressing
 		// Automatically routes HTTP requests and/or WebSocket connections to /agents/:agent/:name
-		// Best for: connecting React apps directly to Agents using useAgent from @cloudflare/agents/react
+		// Best for: connecting React apps directly to Agents using useAgent from agents-sdk/react
 		(await routeAgentRequest(request, env)) || Response.json({ msg: 'no agent here' }, { status: 404 });
 
 		// Named addressing
