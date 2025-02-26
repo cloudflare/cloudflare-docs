@@ -8,6 +8,8 @@ sidebar:
     badge: Beta
 ---
 
+import { CardGrid, LinkTitleCard } from "~/components";
+
 Guardrails help you deploy AI applications safely by intercepting and evaluating both user prompts and model responses for harmful content. Acting as a proxy between your application and [model providers](/ai-gateway/providers/) (such as OpenAI, Anthropic, DeepSeek, and others), AI Gateway's Guardrails ensure a consistent and secure experience across your entire AI ecosystem.
 
 Guardrails proactively monitor interactions between users and AI models, giving you:
@@ -32,6 +34,14 @@ AI Gateway inspects all interactions in real time by evaluating content against 
 3. Applying actions:
    Depending on your configuration, flagged content is logged for review, while blocked content is prevented from proceeding.
 
-## Related resources
+## Related resource
 
-- [Cloudflare Blog: Keep AI interactions secure and risk-free with Guardrails in AI Gateway](https://blog.cloudflare.com/guardrails-in-ai-gateway/)
+<CardGrid>
+
+<LinkTitleCard title="Guardrails in AI Gateway" href="https://blog.cloudflare.com/guardrails-in-ai-gateway/" icon="open-book">
+
+Keep AI interactions secure and risk-free with Guardrails in AI Gateway
+
+</LinkTitleCard>
+
+</CardGrid>
