@@ -1,10 +1,8 @@
 ---
 {}
-
 ---
 
-import { Tabs, TabItem, Render } from "~/components"
-
+import { Tabs, TabItem, Render } from "~/components";
 
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
@@ -34,15 +32,16 @@ import { Tabs, TabItem, Render } from "~/components"
 <TabItem label="API">
 
 1. [Create an API token](/fundamentals/api/get-started/create-token/) with the following permissions:
-		| Type    | Item             | Permission |
-		| ------- | ---------------- | ---------- |
-		| Account | Access: Apps & Policies  | Edit       |
+
+		| Type    | Item                    | Permission |
+		| ------- | ----------------------- | ---------- |
+		| Account | Access: Apps & Policies | Edit       |
 
 2. Make a `POST` request to the [Access applications](/api/resources/zero_trust/subresources/access/subresources/applications/methods/create/) endpoint:
 
 	```sh
-	curl https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps \
-	--header "Authorization: Bearer <API_TOKEN>" \
+	curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/apps \
+	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 	--header "Content-Type: application/json" \
 	--data '{
 		"name": "Example infrastructure app",

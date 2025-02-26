@@ -52,6 +52,10 @@ import { AnchorHeading, Aside, Card, Code, GlossaryTooltip, Markdown, Render, Ta
 
 ## Before you begin
 
+There are a couple of decisions you need to make when installing your {props.productName}. Refer to the topics below for more information.
+
+### Determine the need for a high availability configuration
+
 You can install up to two {props.productName}s for redundancy at each of your sites. If one of your Connectors fail, traffic will fail over to the other Connector ensuring that you never lose connectivity to that site.
 
 In this type of high availability (HA) configuration, you will choose a reliable LAN interface as the HA link which will be used to monitor the health of the peer connector. HA links can be dedicated links or can be shared with other LAN traffic.
@@ -64,7 +68,7 @@ You must decide the type of configuration you want for your site from the beginn
   [About high availability configurations](#about-high-availability-configurations) for more information
   and learn how to configure your Connector in this mode.
 
-- If you do not need a high availability configuration for you premises, proceed to [Set up Cloudflare dashboard](#set-up-cloudflare-dashboard).
+- If you do not need a high availability configuration for you premises, check if you need a [DHCP or a static IP setup](#decide-on-dhcp-vs-static-ip-connections) before proceeding to [Set up Cloudflare dashboard](#set-up-cloudflare-dashboard).
 
 </Card>
 
@@ -72,22 +76,23 @@ You must decide the type of configuration you want for your site from the beginn
 You cannot enable high availability for an existing Connector on-ramp. To add high availability to an existing Connector on-ramp in the Cloudflare dashboard, you need to delete the on-ramp and start again. Plan accordingly to create a high availability configuration from the start if needed.
 :::
 
----
 
-## DHCP vs static IP connections
+### Decide on DHCP vs static IP connections
 
 { props.magicWord === "hardware" && (
   <>
-    <p>You can use Magic WAN Connector in both DHCP networks and networks that require a static IP configuration. At first boot, however, Magic WAN Connector needs to reach out to Cloudflare to download your settings and go through the activation process. If any of the networks plugged into your Connector are DHCP enabled, does not use a VLAN, and have an Internet connection, that process is handled automatically. However, if all of the networks require more information to utilize, (such as a network with static IPs, or tagged VLAN networks) your Magic WAN Connector might need some more information to proceed. There are couple of ways to provide that information. Choose the one that fits your workflow: </p>
+    <p>You can use Magic WAN Connector in both DHCP networks and networks that require a static IP configuration. At first boot, however, Magic WAN Connector needs to reach out to Cloudflare to download your settings and go through the activation process. If any of the networks plugged into your Connector are DHCP enabled, does not use a VLAN, and have an Internet connection, that process is handled automatically. However, if all of the networks require more information to utilize, (such as a network with static IPs, or tagged VLAN networks) your Magic WAN Connector might need some more information to proceed.</p>
 
-		<AnchorHeading title="Option one - Activate on a DHCP Network" depth={3} />
+		<p>There are couple of ways to provide this information. Choose the one that fits your workflow: </p>
+
+		<AnchorHeading title="Option one - Activate on a DHCP Network" depth={4} />
 		<ol>
 				<li>Connect Magic WAN Connector to a DHCP port with access to the Internet.</li>
 				<li>Go through the <a href="#set-up-cloudflare-dashboard">setup flow</a> below and activate your Connector.</li>
 				<li>Refer to <a href="#wan-with-a-static-ip-address">WAN with a static IP address</a>.</li>
 		</ol>
 
-		<AnchorHeading title="Option two - Bootstrap via Serial Console" depth={3} />
+		<AnchorHeading title="Option two - Bootstrap via Serial Console" depth={4} />
 		<p>Refer to the <a href="#bootstrap-via-serial-console"> Bootstrap workflow</a>.</p>
 
   </>

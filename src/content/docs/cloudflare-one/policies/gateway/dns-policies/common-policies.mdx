@@ -29,9 +29,9 @@ This policy allows users to access official corporate domains. By deploying the 
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "name": "Allow corporate domains",
   "description": "Allow any internal corporate domains added to a list",
@@ -92,9 +92,9 @@ You can implement policies to block websites hosted in countries categorized as 
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "name": "Block banned countries",
   "description": "Block access to banned countries",
@@ -127,9 +127,9 @@ Blocking [frequently misused](https://www.spamhaus.org/statistics/tlds/) top-lev
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "name": "Block top-level domains",
   "description": "Block top-level domains that are frequently used for malicious practices",
@@ -161,9 +161,9 @@ To protect against [sophisticated phishing attacks](https://blog.cloudflare.com/
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "name": "Block phishing attacks",
   "description": "Block attempts to phish specific domains targeting your organization",
@@ -196,9 +196,9 @@ To safeguard user privacy, some organizations will block tracking domains such a
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "name": "Block online tracking",
   "description": "Block domains used for tracking at an OS level",
@@ -231,9 +231,9 @@ Block specific IP addresses that are known to be malicious or pose a threat to y
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "name": "Block malicious IPs",
   "description": "Block specific IP addresses that are known to be malicious or pose a threat to your organization",
@@ -266,9 +266,9 @@ The CIPA (Children's Internet Protection Act) Filter is a collection of subcateg
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "name": "Turn on CIPA filter",
   "description": "Block access to unwanted or harmful online content for children",
@@ -299,9 +299,9 @@ SafeSearch is a feature of search engines that helps you filter explicit or offe
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "name": "Hide explicit search results",
   "description": "Force SafeSearch on search engines to filter explicit or offensive content",
@@ -333,9 +333,9 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "name": "Check user identity",
   "description": "Filter traffic based on a user identity group name",
@@ -371,9 +371,9 @@ The following example includes two policies. The first policy allows the specifi
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "name": "Allow social media for Marketing",
   "description": "Allow access to social media sites for users in the Marketing group",
@@ -403,9 +403,9 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "name": "Block social media",
   "description": "Block social media for all other users",
@@ -446,9 +446,9 @@ Force users to connect with IPv4 by blocking IPv6 resolution.
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "name": "Force IPv4",
   "description": "Force users to connect with IPv4 by blocking IPv6 resolution",
@@ -480,9 +480,9 @@ Force users to connect with IPv6 by blocking IPv4 resolution.
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "name": "Force IPv6",
   "description": "Force users to connect with IPv6 by blocking IPv4 resolution",

@@ -28,7 +28,7 @@ The following DNS policy will allow access to all approved corporate domains inc
 <TabItem label="API">
 
 ```sh
-curl  https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
+curl  https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
   --header 'Content-Type: application/json' \
   --header "Authorization: Bearer <API_TOKEN>" \
 	--data '{

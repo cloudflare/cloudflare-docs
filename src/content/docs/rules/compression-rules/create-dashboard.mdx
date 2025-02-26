@@ -8,6 +8,8 @@ head:
     content: Create a compression rule in the dashboard
 ---
 
+import { Render } from "~/components";
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
 2. Go to **Rules** > **Overview**.
 3. Select **Create rule** > **Compression Rule**.
@@ -17,3 +19,5 @@ head:
 7. (Optional) To define a custom expression, use the Expression Builder (specifying one or more values for **Field**, **Operator**, and **Value**) or manually enter an expression using the Expression Editor. For more information, refer to [Edit rule expressions](/ruleset-engine/rules-language/expressions/edit-expressions/).
 8. Under **Compression options**, set the [compression options](/rules/compression-rules/settings/#dashboard-configuration-settings).
 9. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
+
+   <Render file="rules-creation-dash-dns-popup" />

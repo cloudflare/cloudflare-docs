@@ -68,9 +68,9 @@ To rotate a tunnel token:
 	2. Make a `PATCH` request to the [Cloudflare Tunnel](/api/resources/zero_trust/subresources/tunnels/methods/edit/) endpoint:
 		```sh
 		curl --request PATCH \
-		https://api.cloudflare.com/client/v4/accounts/{account_id}/cfd_tunnel/{tunnel_id} \
+		https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/cfd_tunnel/$TUNNEL_ID \
 		--header 'Content-Type: application/json' \
-		--header "Authorization: Bearer <API_TOKEN>" \
+		--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 		--data '{
 			"name": "Example tunnel",
 			"tunnel_secret": "AQIDBAUGBwgBAgMEBQYHCAECAwQFBgcIAQIDBAUGBwg="
@@ -139,8 +139,8 @@ If your tunnel token is compromised, we recommend taking the following steps:
 2. [Delete all connections](/api/resources/zero_trust/subresources/tunnels/subresources/connections/methods/delete/) between `cloudflared` and Cloudflare:
 	```sh
 	curl --request DELETE \
-	https://api.cloudflare.com/client/v4/accounts/{account_id}/cfd_tunnel/{tunnel_id}/connections \
-	--header "Authorization: Bearer <API_TOKEN>"
+	https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/cfd_tunnel/$TUNNEL_ID/connections \
+	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 	```
 
 	This will clean up any unauthorized connections and prevent users from connecting to your network.

@@ -71,9 +71,37 @@ if (thumbnailTimeOrURL !== undefined) {
 			const title = this.dataset.title as string;
 
 			const player = this.querySelector(`#${id}`) as HTMLIFrameElement;
+			const stream = Stream(player);
 
-			Stream(player).addEventListener("play", () => {
-				track("play docs video", { title: title });
+			stream.addEventListener("play", () => {
+				track("play docs video", { title });
+			});
+
+			stream.addEventListener("pause", () => {
+				track("paused docs video", {
+					title,
+					time: stream.currentTime.toFixed(1),
+				});
+			});
+
+			stream.addEventListener("seeked", () => {
+				track("seeked docs video", {
+					title,
+					time: stream.currentTime.toFixed(1),
+				});
+			});
+
+			stream.addEventListener("ended", () => {
+				track("ended docs video", { title });
+			});
+
+			stream.addEventListener("ratechange", () => {
+				if (stream.playbackRate === 0 || stream.playbackRate === 1) return;
+
+				track("changed playback rate docs video", {
+					title,
+					rate: stream.playbackRate,
+				});
 			});
 		}
 	}

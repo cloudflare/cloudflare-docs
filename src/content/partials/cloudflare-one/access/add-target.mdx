@@ -1,9 +1,8 @@
 ---
 {}
-
 ---
 
-import { Tabs, TabItem, Render, Details } from "~/components"
+import { Tabs, TabItem, Render, Details } from "~/components";
 
 A target represents a single resource in your infrastructure (such as a server, Kubernetes cluster, database, or container) that users will connect to through Cloudflare. Targets are protocol-agnostic, meaning that you do not need to define a new target for each protocol that runs on the server.
 
@@ -30,6 +29,7 @@ If the target IP does not appear in the dropdown, go to **Networks** > **Routes*
 <TabItem label="API">
 
 1. [Create an API token](/fundamentals/api/get-started/create-token/) with the following permissions:
+
 		| Type    | Item             | Permission |
 		| ------- | ---------------- | ---------- |
 		| Account | Zero Trust       | Edit       |
@@ -37,8 +37,8 @@ If the target IP does not appear in the dropdown, go to **Networks** > **Routes*
 2. Make a `POST` request to the [Infrastructure Access Targets](/api/resources/zero_trust/subresources/access/subresources/infrastructure/subresources/targets/methods/create/) endpoint:
 
 		```sh
-		curl https://api.cloudflare.com/client/v4/accounts/{account_id}/infrastructure/targets \
-		--header "Authorization: Bearer <API_TOKEN>" \
+		curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/infrastructure/targets \
+		--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 		--data '{
 			"hostname": "infra-access-target",
 			"ip": {
