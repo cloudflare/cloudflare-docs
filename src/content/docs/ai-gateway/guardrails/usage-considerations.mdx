@@ -11,7 +11,7 @@ Since Guardrails runs on Workers AI, enabling it incurs usage on Workers AI. You
 
 ## Additional considerations
 
-- Model availability: If at least one hazard category is set to `block`, but AI Gateway is unable to receive a response from Workers AI, the request will be blocked.
+- Model availability: If at least one hazard category is set to `block`, but AI Gateway is unable to receive a response from Workers AI, the request will be blocked. Conversely, if a hazard category is set to `flag` and AI Gateway cannot obtain a response from Workers AI, the request will proceed without evaluation. This approach prioritizes availability, allowing requests to continue even when content evaluation is not possible.
 - Latency impact: Enabling Guardrails adds some latency. Consider this when balancing safety and speed.
 
 :::note
