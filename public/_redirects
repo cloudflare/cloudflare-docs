@@ -98,6 +98,13 @@
 
 # agents
 /agents/build/prompts/ /workers/get-started/prompting/ 301
+/agents/examples/browse-the-web/ /agents/api-reference/browse-the-web/ 301
+/agents/examples/manage-and-sync-state/ /agents/api-reference/manage-and-sync-state/ 301
+/agents/examples/rag/ /agents/api-reference/rag/ 301
+/agents/examples/run-workflows/ /agents/api-reference/run-workflows/ 301
+/agents/examples/schedule-tasks/ /agents/api-reference/schedule-tasks/ 301
+/agents/examples/using-ai-models/ /agents/api-reference/using-ai-models/ 301
+/agents/examples/websockets/ /agents/api-reference/websockets/ 301
 
 # ai
 /ai/ /use-cases/ai/ 301
