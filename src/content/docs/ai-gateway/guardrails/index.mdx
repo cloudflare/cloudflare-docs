@@ -14,18 +14,17 @@ Guardrails proactively monitor interactions between users and AI models, giving 
 
 - **Consistent moderation**: Uniform moderation layer that works across models and providers.
 - **Enhanced safety and user trust**: Proactively protect users from harmful or inappropriate interactions.
-- **Flexibility and control over allowed content**: Specify which categories to monitor and choose between flagging or outright blocking
-- **Auditing and compliance capabilities**: Stay ahead of evolving regulatory requirements with logs of user prompts, model responses, and enforced guardrails.
+- **Flexibility and control over allowed content**: Specify which categories to monitor and choose between flagging or outright blocking.
+- **Auditing and compliance capabilities**: Receive updates on evolving regulatory requirements with logs of user prompts, model responses, and enforced guardrails.
 
 ## How Guardrails work
 
-AI Gateway inspects all interactions in real time by evaluating content against predefined safety parameters. Below a breakdown of the process:
+AI Gateway inspects all interactions in real time by evaluating content against predefined safety parameters. Guardrails work by:
 
 1. Intercepting interactions:
    AI Gateway proxies requests and responses, sitting between the user and the AI model.
 
 2. Inspecting content:
-
    - User prompts: AI Gateway checks prompts against safety parameters (for example, violence, hate, or sexual content). Based on your settings, prompts can be flagged or blocked before reaching the model.
    - Model responses: Once processed, the AI model response is inspected. If hazardous content is detected, it can be flagged or blocked before being delivered to the user.
 
