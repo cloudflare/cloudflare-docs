@@ -25,8 +25,13 @@ AI Gateway inspects all interactions in real time by evaluating content against 
    AI Gateway proxies requests and responses, sitting between the user and the AI model.
 
 2. Inspecting content:
+
    - User prompts: AI Gateway checks prompts against safety parameters (for example, violence, hate, or sexual content). Based on your settings, prompts can be flagged or blocked before reaching the model.
    - Model responses: Once processed, the AI model response is inspected. If hazardous content is detected, it can be flagged or blocked before being delivered to the user.
 
 3. Applying actions:
    Depending on your configuration, flagged content is logged for review, while blocked content is prevented from proceeding.
+
+## Related resources
+
+- [Cloudflare Blog: Keep AI interactions secure and risk-free with Guardrails in AI Gateway](https://blog.cloudflare.com/guardrails-in-ai-gateway/)
