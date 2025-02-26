@@ -33,7 +33,7 @@ Cloudflare may remove the `Content-Length` header from responses delivered to we
 
 ## This rule may not apply to your traffic
 
-If your rule expression is matching a hostname for which you have not created a DNS record or are not proxying its traffic through Cloudflare, you will get a pop-up window with a couple of options:
+If your rule expression is matching a hostname for which you have neither created a DNS record nor enabled proxying traffic through Cloudflare, you will get a pop-up window with a couple of options:
 
 - **If no DNS record exists for the hostname**: Whether to proceed with the rule creation or to create a new proxied DNS record for that hostname.
 - **If there is a DNS record for the hostname, but traffic is not being proxied**: Whether to proceed with the rule creation or to enable proxying for the existing DNS record.
