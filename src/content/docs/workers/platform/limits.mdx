@@ -272,7 +272,7 @@ You can measure your Worker's startup time by deploying it to Cloudflare using [
 
 If you are having trouble staying under this limit, consider [profiling using DevTools](/workers/observability/dev-tools/) locally to learn how to optimize your code.
 
-When a Worker deployment fails with a startup time error Wrangler will automatically generate a CPU profile for easy investigation, This can be imported into Chrome DevTools or opened directly in VSCode. Refer to [`wrangler check startup`](/workers/wrangler/commands/#startup) for more details.
+When you attempt to deploy a Worker using the [Wrangler CLI](/workers/wrangler/), but your deployment is rejected because your Worker exceeds the [maximum startup time](workers/platform/limits/#worker-startup-time), Wrangler will automatically generate a CPU profile that you can import into Chrome DevTools or open directly in VSCode. You can use this to learn what code in your Worker uses large amounts of CPU time at startup. Refer to [`wrangler check startup`](/workers/wrangler/commands/#startup) for more details.
 
 <Render file="limits_increase" />
 
