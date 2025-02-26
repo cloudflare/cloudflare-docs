@@ -1984,9 +1984,11 @@ After you run `wrangler check startup`, you can import the profile into Chrome D
 wrangler check startup
 ```
 
-- `--deploy-args` <Type text="string" /> <MetaInfo text="optional" />
-  - To customise the way `wrangler check startup` builds your Worker for analysis, provide the exact arguments you use when deploying your Worker with `wrangler deploy`. For instance, if you deploy your Worker with `wrangler deploy --no-bundle`, you should use `wrangler check startup --deploy-args="--no-bundle"` to profile the startup phase.
-- `--worker-bundle` <Type text="string" /> <MetaInfo text="optional" />
-  - If you don't use Wrangler to deploy your Worker, you can use this argument to provide a Worker bundle to analyse. This should be a file path to a serialized multipart upload, with the exact same format as [the API expects](/api/resources/workers/subresources/scripts/methods/update/)
+- `--args` <Type text="string" /> <MetaInfo text="optional" />
+  - To customise the way `wrangler check startup` builds your Worker for analysis, provide the exact arguments you use when deploying your Worker with `wrangler deploy`, or your Pages project with `wrangler pages functions build`. For instance, if you deploy your Worker with `wrangler deploy --no-bundle`, you should use `wrangler check startup --args="--no-bundle"` to profile the startup phase.
+- `--worker` <Type text="string" /> <MetaInfo text="optional" />
+  - If you don't use Wrangler to deploy your Worker, you can use this argument to provide a Worker bundle to analyse. This should be a file path to a serialized multipart upload, with the exact same format as [the API expects](/api/resources/workers/subresources/scripts/methods/update/).
+- `--pages` <Type text="boolean" /> <MetaInfo text="optional" />
+  - If you don't use a Wrangler config file with your Pages project (i.e. a Wrangler config file containing `pages_build_output_dir`), use this flag to force `wrangler check startup` to treat your project as a Pages project.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
