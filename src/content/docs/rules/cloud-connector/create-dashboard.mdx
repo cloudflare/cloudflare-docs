@@ -8,6 +8,8 @@ head:
     content: Configure a Cloud Connector rule in the dashboard
 ---
 
+import { Render } from "~/components";
+
 To configure a Cloud Connector rule in the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
@@ -34,4 +36,6 @@ To configure a Cloud Connector rule in the dashboard:
 
    Alternatively, select **All incoming requests** to redirect all incoming traffic for your zone to the storage bucket you selected.
 
-To save and deploy your rule, select **Deploy**. If you are not ready to deploy the rule, select **Save as Draft**.
+7. To save and deploy your rule, select **Deploy**. If you are not ready to deploy the rule, select **Save as Draft**.
+
+   <Render file="rules-creation-dash-dns-popup" />

@@ -25,7 +25,7 @@ The [WebCrypto API](/workers/runtime-apis/web-crypto/) is also available within 
 | [ECDH](https://nodejs.org/api/crypto.html#class-ecdh)                             |            |       |
 | [Hash](https://nodejs.org/api/crypto.html#class-hash)                             | ✅         |       |
 | [Hmac](https://nodejs.org/api/crypto.html#class-hmac)                             | ✅         |       |
-| [KeyObject](https://nodejs.org/api/crypto.html#class-keyobject)                   |            |       |
+| [KeyObject](https://nodejs.org/api/crypto.html#class-keyobject)                   | ✅         |       |
 | [Sign](https://nodejs.org/api/crypto.html#class-sign)                             |            |       |
 | [Verify](https://nodejs.org/api/crypto.html#class-verify)                         |            |       |
 | [X509Certificate](https://nodejs.org/api/crypto.html#class-x509certificate)       | ✅         |       |
@@ -76,13 +76,13 @@ The [WebCrypto API](/workers/runtime-apis/web-crypto/) is also available within 
 
 | API                                                                                              | Supported? | Notes |
 | ------------------------------------------------------------------------------------------------ | ---------- | ----- |
-| [createPrivateKey](https://nodejs.org/api/crypto.html#cryptocreateprivatekeykey)                 |            |       |
-| [createPublicKey](https://nodejs.org/api/crypto.html#cryptocreatepublickeykey)                   |            |       |
-| [createSecretKey](https://nodejs.org/api/crypto.html#cryptocreatesecretkeykey-encoding)          |            |       |
-| [generateKey](https://nodejs.org/api/crypto.html#cryptogeneratekeytype-options-callback)         |            |       |
-| [generateKeyPair](https://nodejs.org/api/crypto.html#cryptogeneratekeypairtype-options-callback) |            |       |
-| [generateKeyPairSync](https://nodejs.org/api/crypto.html#cryptogeneratekeypairsynctype-options)  |            |       |
-| [generateKeySync](https://nodejs.org/api/crypto.html#cryptogeneratekeysynctype-options)          |            |       |
+| [createPrivateKey](https://nodejs.org/api/crypto.html#cryptocreateprivatekeykey)                 |   ✅        |       |
+| [createPublicKey](https://nodejs.org/api/crypto.html#cryptocreatepublickeykey)                   |   ✅        |       |
+| [createSecretKey](https://nodejs.org/api/crypto.html#cryptocreatesecretkeykey-encoding)          |   ✅        |       |
+| [generateKey](https://nodejs.org/api/crypto.html#cryptogeneratekeytype-options-callback)         |   ✅        |       |
+| [generateKeyPair](https://nodejs.org/api/crypto.html#cryptogeneratekeypairtype-options-callback) |   ✅        | Does not support DSA or DH key pairs |
+| [generateKeyPairSync](https://nodejs.org/api/crypto.html#cryptogeneratekeypairsynctype-options)  |   ✅        | Does not support DSA or DH key pairs |
+| [generateKeySync](https://nodejs.org/api/crypto.html#cryptogeneratekeysynctype-options)          |   ✅        |       |
 
 ## Sign/Verify
 

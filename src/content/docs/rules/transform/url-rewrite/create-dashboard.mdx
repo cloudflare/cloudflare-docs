@@ -8,6 +8,8 @@ head:
     content: Create a rewrite URL rule in the dashboard
 ---
 
+import { Render } from "~/components";
+
 Refer to the [Rules examples gallery](/rules/transform/examples/?operation=Rewrite+URL) for examples of rule definitions.
 
 To create a rule:
@@ -50,7 +52,7 @@ To create a rule:
 
 9. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
 
-If you choose to deploy your rewrite URL rule, the new rule will be enabled. If you save the rule as a draft, the new rule will be disabled.
+   <Render file="rules-creation-dash-dns-popup" />
 
 ## Wildcard pattern parameters
 

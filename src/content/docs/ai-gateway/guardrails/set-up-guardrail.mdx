@@ -1,0 +1,23 @@
+---
+pcx_content_type: how-to
+title: Set up Guardrails
+sidebar:
+  order: 3
+---
+
+Add Guardrails to any gateway to start evaluating and potentially modifying responses.
+
+1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **AI** > **AI Gateway**.
+3. Select a gateway.
+4. Go to **Guardrails**.
+5. Switch the toggle to **On**.
+6. To customize categories, select **Change** > **Configure specific categories**.
+7. Update your choices for how Guardrails works on specific prompts or responses (**Flag**, **Ignore**, **Block**).
+   - For **Prompts**: Guardrails will evaluate and transform incoming prompts based on your security policies.
+   - For **Responses**: Guardrails will inspect the model's responses to ensure they meet your content and formatting guidelines.
+8. Select **Save**.
+
+:::note[Header]
+For additional details about how to implement Guardrails, refer to [Usage considerations](/ai-gateway/guardrails/usage-considerations/).
+:::
