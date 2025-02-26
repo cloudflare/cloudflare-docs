@@ -5,28 +5,15 @@ sidebar:
   order: 3
 ---
 
-Within AI Gateway settings, you can customize Guardrails to:
-
-- Enable or disable content moderation.
-- Choose evaluation scope: Analyze user prompts, model responses, or both.
-- Define hazard categories: Select categories like violence, hate, or sexual content and assign actions (ignore, flag, or block).
-
-This tutorial will guide you through the process of setting up and customizing Guardrails in your AI Gateway using the Cloudflare dashboard.
-
-## 1. Log in to the dashboard
+Add Guardrails to any gateway to start evaluating and potentially modifying responses.
 
 1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **AI** > **AI Gateway**.
-
-## 2. Access the Guardrails tab
-
-Confirm that Guardrails is enabled from the toggle.
-
-## 3. Set security hazard on prompt or response
-
-Within the Guardrails settings, you can choose where to apply security hazards:
-
-- **On prompt**: Guardrails will evaluate and transform incoming prompts based on your security policies.
-- **On response**: Guardrails will inspect the model's responses to ensure they meet your content and formatting guidelines.
-
-Select the option that best fits your use case. You can modify this setting at any time according to your needs.
+3. Select a gateway.
+4. Go to **Guardrails**.
+5. Switch the toggle to **On**.
+6. To customize categories, select **Change** > **Configure specific categories**.
+7. Update your choices for how Guardrails works on specific prompts or responses (**Flag**, **Ignore**, **Block**).
+   - For **Prompts**: Guardrails will evaluate and transform incoming prompts based on your security policies.
+   - For **Responses**: Guardrails will inspect the model's responses to ensure they meet your content and formatting guidelines.
+8. Select **Save**.
