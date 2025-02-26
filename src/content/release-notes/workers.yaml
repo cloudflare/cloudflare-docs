@@ -5,7 +5,7 @@ productLink: "/workers/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
-  - publish_date: "2025-02-24"
+  - publish_date: "2025-02-26"
     description: |-
       - [Workers Builds](/workers/ci-cd/builds/) now supports building projects that use **pnpm 10** as the package manager. If your build previously failed due to this unsupported version, retry your build. No config changes needed.
   - publish_date: "2025-02-13"
