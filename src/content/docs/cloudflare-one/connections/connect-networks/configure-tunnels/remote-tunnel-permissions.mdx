@@ -39,7 +39,7 @@ Make a `GET` request to the [Cloudflare Tunnel token](/api/resources/zero_trust/
 
 ## Rotate a token without service disruption
 
-Cloudflare recommends rotating the tunnel token at a regular cadence to reduce the risk of token compromise. You can rotate a token with minimal disruption to users as long as the tunnel is served by at least two [`cloudflared` replicas](/cloudflare-one/connections/connect-networks/deploy-tunnels/deploy-cloudflared-replicas/). To ensure service availability, we recommend performing token rotations outside of working hours or in a maintenance window.
+Cloudflare recommends rotating the tunnel token at a regular cadence to reduce the risk of token compromise. You can rotate a token with minimal disruption to users as long as the tunnel is served by at least two [`cloudflared` replicas](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/). To ensure service availability, we recommend performing token rotations outside of working hours or in a maintenance window.
 
 To rotate a tunnel token:
 

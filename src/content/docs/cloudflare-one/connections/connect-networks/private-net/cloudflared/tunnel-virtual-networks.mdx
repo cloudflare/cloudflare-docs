@@ -38,7 +38,7 @@ Here are a few scenarios where virtual networks may prove useful:
 
 ## Prerequisites
 
-- [Install `cloudflared`](/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/#1-download-and-install-cloudflared) on each private network.
+- [Install `cloudflared`](/cloudflare-one/connections/connect-networks/downloads/) on each private network.
 - [Deploy the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on user devices.
 
 ## Create a virtual network
@@ -137,7 +137,7 @@ The following example demonstrates how to add two overlapping IP routes to Cloud
 
           We now have two overlapping IP addresses routed over `staging-vnet` and `production-vnet` respectively.
 
-          6. Within your staging environment, create a [configuration file](/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/configuration-file/) for `staging-tunnel`. The configuration file will be structured as follows:
+          6. Within your staging environment, create a [configuration file](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/configuration-file/) for `staging-tunnel`. The configuration file will be structured as follows:
 
              ```txt
              tunnel: <Tunnel-UUID>

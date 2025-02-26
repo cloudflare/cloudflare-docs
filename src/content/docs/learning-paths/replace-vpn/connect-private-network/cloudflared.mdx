@@ -35,7 +35,7 @@ If the tunnel is disconnected:
 ## Best practices
 
 * Segregate production and staging traffic among different Cloudflare tunnels.
-* Add a [`cloudflared` replica](/cloudflare-one/connections/connect-networks/deploy-tunnels/deploy-cloudflared-replicas/) to another host machine for an additional point of availability.
+* Add a [`cloudflared` replica](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/) to another host machine for an additional point of availability.
 * Distribute access to critical services (for example, private DNS, Active Directory, and other critical systems) across different tunnels for blast-radius reduction in the event of a server-side outage.
 * [Enable notifications](/cloudflare-one/connections/connect-networks/monitor-tunnels/notifications/) in the Cloudflare dashboard to monitor tunnel health.
 * [Monitor performance metrics](/cloudflare-one/connections/connect-networks/monitor-tunnels/metrics/) to identify potential bottlenecks.
