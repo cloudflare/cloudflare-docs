@@ -31,7 +31,7 @@ This example shows you how to set up and deploy a Cloudflare Worker that is acce
 
 ### 1. Create a Cloudflare Worker
 
-Open your terminal, and run the following command to create a Cloudflare Worker using Cloudflare's [`hello-world`](https://github.com/cloudflare/workers-sdk/tree/4fdd8987772d914cf50725e9fa8cb91a82a6870d/packages/create-cloudflare/templates/hello-world) template:
+Open your terminal and create a Cloudflare Worker:
 
 1. Create a Worker named `orange-d1-example` by running:
 
@@ -49,7 +49,7 @@ Open your terminal, and run the following command to create a Cloudflare Worker 
 
 2.  Change into your new project directory to start developing:
 
-    ```sh frame="none"
+    ```sh
     cd orange-d1-example
     ```
 
@@ -211,7 +211,7 @@ const map = orange.map(x => ({
 export default map;
 ```
 
-2. Instantiate the orange-orm with the D1 instance. Open `src/index.ts` and replace the entire content with the following:
+2. Instantiate the `orange-orm` with the D1 instance, then send a query using the Orange client and return the result. To do this in the code, open `src/index.ts` and replace the entire content with the following:
 
 ```ts
 import map from './map';
@@ -228,7 +228,6 @@ export default {
 } satisfies ExportedHandler<Env>;
 ```
 
-3. Send a query using the orange client and return the result.
 
 
 ### 6. Run the Worker locally
