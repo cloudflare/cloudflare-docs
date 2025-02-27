@@ -1,5 +1,5 @@
 ---
-title: Introducing Wrangler v4's release candidate
+title: Introducing Wrangler's v4 release candidate
 description: You can now try out the v4 RC for Wrangler by installing `wrangler@4.0.0-rc.0`
 products:
   - workers
@@ -12,23 +12,23 @@ TLDR: Try out the Wrangler v4 RC by installing via your favourite package manage
 
 <PackageManagers pkg="wrangler@v4-rc" />
 
-Wrangler v3 was released in May 2023, and since then has seen amazing growth and usage—from just \~250,000 downloads a week back then to 1M+ now. It's time for the next chapter in Wrangler's journey: v4. This release will bring new features and unlock new possibilities for the developer platform, but for the vast majority of users you _won't need to make any changes to upgrade_. It'll be as simple as upgrading Wrangler.
+Wrangler v3 was released in May 2023, and since then has seen amazing growth and usage—from just \~250,000 downloads a week back then to 1M+ now. It's time for the next chapter in Wrangler's journey: v4. This release will bring new features and unlock new possibilities for the developer platform. And for the vast majority of users, _no changes will be necessary to upgrade_—it'll be as simple as upgrading Wrangler.
 
-We're working on a more detailed migration guide, but here's a brief list of the changes to expect:
+We're working on a detailed migration guide that will accompany the v4 release. In the meantime, here's a brief list of the changes to expect:
 
 #### Changes
 
 - **Upgraded `esbuild` version**
-  This has been a highly-requested feature for a long time, and will allow you to use more modern JavaScript features in your Workers, including import attributes and `using` statements
+  A long-time highly-requested feature, this will now allow the use of more modern JavaScript features in Workers, including import attributes and `using` statements
 
 - **`--local` by default for all commands**
-  All commands that access resources (e.g. `wrangler kv`, `wrangler r2`, `wrangler d1`) will now access local datastores by default
+  All commands that access resources (for example, `wrangler kv`, `wrangler r2`, `wrangler d1`) will now access local datastores by default
 
 - **Updated Node.js support policy**
   Wrangler will now support the active, maintenance, and current versions of Node.js (currently v18+)
 
 - **Deprecated features removed**
-  All deprecated features have been removed from Wrangler, including
+  All deprecated features will be removed from Wrangler, including
   - Arguments:
     - `wrangler dev/deploy --legacy-assets`
     - `wrangler dev/deploy --format`
