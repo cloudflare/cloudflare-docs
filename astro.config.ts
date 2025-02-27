@@ -37,7 +37,21 @@ async function autogenSections() {
 	});
 }
 
+async function autogenStyles() {
+	const styles = (
+		await readdir("./src/styles/", {
+			withFileTypes: true,
+			recursive: true,
+		})
+	)
+		.filter((x) => x.isFile())
+		.map((x) => x.parentPath + x.name);
+
+	return styles;
+}
+
 const sidebar = await autogenSections();
+const customCss = await autogenStyles();
 
 const runLinkCheck = process.env.RUN_LINK_CHECK || false;
 
@@ -97,18 +111,7 @@ export default defineConfig({
 				TableOfContents: "./src/components/overrides/TableOfContents.astro",
 			},
 			sidebar,
-			customCss: [
-				"./src/asides.css",
-				"./src/badges.css",
-				"./src/code.css",
-				"./src/footnotes.css",
-				"./src/headings.css",
-				"./src/input.css",
-				"./src/mermaid.css",
-				"./src/table.css",
-				"./src/tailwind.css",
-				"./src/title.css",
-			],
+			customCss,
 			pagination: false,
 			plugins: [
 				...(runLinkCheck

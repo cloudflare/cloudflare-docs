@@ -8,15 +8,9 @@ import { lookupProductTitle } from "~/util/sidebar";
 const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 ---
 
-<a
-	href={"/" + product + "/"}
-	class="flex items-center decoration-[color:var(--orange-accent-200)] hover:opacity-80"
->
-	<AstroIcon
-		name={product}
-		class="mr-2 text-4xl text-[color:var(--orange-accent-200)]"
-	/>
-	<span class="text-black">
+<a href={"/" + product + "/"} class="flex items-center gap-2 px-1 no-underline">
+	<AstroIcon name={product} size="32px" class="text-cl1-brand-orange" />
+	<span class="text-xl text-black">
 		<strong>
 			{lookupProductTitle(product, module)}
 		</strong>
