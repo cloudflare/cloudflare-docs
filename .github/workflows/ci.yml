@@ -27,6 +27,7 @@ jobs:
             node_modules/.astro
           key: static
 
+      - run: exit 1
       - run: npm ci
       - run: npm run check
 
@@ -45,6 +46,11 @@ jobs:
           RUN_LINK_CHECK: true
 
       - run: npm run check:worker
+
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
 
       - uses: actions/cache/save@v4
         with:
