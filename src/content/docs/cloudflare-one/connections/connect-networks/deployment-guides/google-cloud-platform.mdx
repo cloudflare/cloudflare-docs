@@ -97,7 +97,7 @@ You can optionally [create Gateway network policies](/cloudflare-one/connections
 
 ## Firewall configuration
 
-To secure your VM instance, you can [configure your VPC firewall rules](https://cloud.google.com/firewall/docs/using-firewalls) to deny all ingress traffic and allow only egress traffic to the [Cloudflare Tunnel IP addresses](/cloudflare-one/connections/connect-networks/deploy-tunnels/tunnel-with-firewall/#required-for-tunnel-operation). Since GCP denies ingress traffic by [default](https://cloud.google.com/firewall/docs/firewalls#default_firewall_rules), you can delete all ingress rules and leave only the relevant egress rules.
+To secure your VM instance, you can [configure your VPC firewall rules](https://cloud.google.com/firewall/docs/using-firewalls) to deny all ingress traffic and allow only egress traffic to the [Cloudflare Tunnel IP addresses](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-with-firewall/#required-for-tunnel-operation). Since GCP denies ingress traffic by [default](https://cloud.google.com/firewall/docs/firewalls#default_firewall_rules), you can delete all ingress rules and leave only the relevant egress rules.
 
 :::note
 

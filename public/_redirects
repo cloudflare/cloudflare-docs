@@ -1719,8 +1719,8 @@
 /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-commands/ /cloudflare-one/connections/connect-networks/configure-tunnels/local-management/tunnel-useful-commands/ 301
 /cloudflare-one/connections/connect-apps/configuration/private-networks/ /cloudflare-one/connections/connect-networks/private-net/ 301
 /cloudflare-one/connections/connect-apps/routing-to-tunnel/kubernetes/ /cloudflare-one/connections/connect-networks/deploy-tunnels/deployment-guides/kubernetes/ 301
-/cloudflare-one/connections/connect-apps/configuration/ports-and-ips/ /cloudflare-one/connections/connect-networks/deploy-tunnels/tunnel-with-firewall/ 301
-/cloudflare-one/connections/connect-apps/do-more-with-tunnels/ports-and-ips/ /cloudflare-one/connections/connect-networks/deploy-tunnels/tunnel-with-firewall/ 301
+/cloudflare-one/connections/connect-apps/configuration/ports-and-ips/ /cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-with-firewall/ 301
+/cloudflare-one/connections/connect-apps/do-more-with-tunnels/ports-and-ips/ /cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-with-firewall/ 301
 /cloudflare-one/connections/connect-apps/run-tunnel/trycloudflare/ /cloudflare-one/connections/connect-networks/do-more-with-tunnels/trycloudflare/ 301
 /cloudflare-one/connections/connect-apps/trycloudflare/ /cloudflare-one/connections/connect-networks/do-more-with-tunnels/trycloudflare/ 301
 /cloudflare-one/connections/connect-apps/tunnel-monitoring/ /cloudflare-one/connections/connect-networks/monitor-tunnels/ 301
@@ -1740,9 +1740,9 @@
 /cloudflare-one/connections/connect-networks/install-and-setup/tunnel-permissions/ /cloudflare-one/connections/connect-networks/configure-tunnels/local-management/tunnel-permissions/ 301
 /cloudflare-one/connections/connect-networks/install-and-setup/installation /cloudflare-one/connections/connect-networks/downloads/update-cloudflared/ 307
 /cloudflare-one/connections/connect-networks/deploy-tunnels/tunnel-permissions/ /cloudflare-one/connections/connect-networks/configure-tunnels/ 301
-/cloudflare-one/connections/connect-networks/install-and-setup/ports-and-ips/ /cloudflare-one/connections/connect-networks/deploy-tunnels/tunnel-with-firewall/ 301
+/cloudflare-one/connections/connect-networks/install-and-setup/ports-and-ips/ /cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-with-firewall/ 301
 /cloudflare-one/connections/connect-networks/install-and-setup/tunnel-useful-terms/ /cloudflare-one/connections/connect-networks/get-started/tunnel-useful-terms/ 301
-/cloudflare-one/connections/connect-networks/do-more-with-tunnels/secure-server/ /cloudflare-one/connections/connect-networks/deploy-tunnels/tunnel-with-firewall/ 301
+/cloudflare-one/connections/connect-networks/do-more-with-tunnels/secure-server/ /cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-with-firewall/ 301
 /cloudflare-one/connections/connect-networks/do-more-with-tunnels/grafana/ /cloudflare-one/connections/connect-networks/monitor-tunnels/grafana/ 301
 /cloudflare-one/connections/connect-networks/downloads/system-requirements/ /cloudflare-one/connections/connect-networks/deploy-tunnels/system-requirements/ 301
 /cloudflare-one/connections/connect-networks/private-net/connect-private-networks/ /cloudflare-one/connections/connect-networks/private-net/cloudflared/ 301
@@ -1767,7 +1767,7 @@
 /cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/ /cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/run-parameters/ 301
 /cloudflare-one/connections/connect-networks/deploy-tunnels/system-requirements/ /cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/system-requirements/ 301
 /cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/ /cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/ 301
-/cloudflare-one/connections/connect-networks/deploy-tunnels/tunnel-with-firewall/ /cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-with-firewall/ 301
+/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-with-firewall/ /cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-with-firewall/ 301
 /cloudflare-one/connections/connect-networks/deploy-tunnels/ /cloudflare-one/connections/connect-networks/get-started/ 301
 /cloudflare-one/connections/connect-networks/monitor-tunnels/grafana/ /cloudflare-one/tutorials/grafana/ 301
 /cloudflare-one/connections/connect-networks/use-cases/kubectl/ /cloudflare-one/tutorials/many-cfd-one-tunnel/ 301

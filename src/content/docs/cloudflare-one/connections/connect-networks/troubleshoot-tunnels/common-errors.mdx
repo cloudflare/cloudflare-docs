@@ -61,7 +61,7 @@ For more information, here is a [comprehensive list](/support/troubleshooting/cl
 
 ## I see `ERR_TOO_MANY_REDIRECTS` when attempting to connect to an Access self-hosted app.
 
-This error occurs when `cloudflared` does not recognize the SSL/TLS certificate presented by your origin. To resolve the issue, set the [origin server name](/cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/origin-parameters//#originservername) parameter to the hostname on your origin certificate. Here is an example of a locally-managed tunnel configuration:
+This error occurs when `cloudflared` does not recognize the SSL/TLS certificate presented by your origin. To resolve the issue, set the [origin server name](/cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/origin-parameters/#originservername) parameter to the hostname on your origin certificate. Here is an example of a locally-managed tunnel configuration:
 
 ```txt
 ingress:
