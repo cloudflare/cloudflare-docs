@@ -9,6 +9,8 @@ The `/pdf` endpoint instructs the browser to render the webpage as a PDF documen
 
 ## Basic usage
 
+Navigate to `https://example.com/` and inject custom CSS and an external stylesheet. Then return the rendered page as a PDF.
+
 ```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/pdf' \
   -H 'Authorization: Bearer <apiToken>' \
