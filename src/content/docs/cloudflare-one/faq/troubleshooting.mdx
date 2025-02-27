@@ -111,7 +111,7 @@ Cloudflare dashboard SSO does not currently support team domain changes. Contact
 
 ## WARP on Linux shows `DNS connectivity check failed`.
 
-This error means that the `systemd-resolved` service on Linux is not allowing WARP to resolve DNS requests.
+This error means that the `systemd-resolved` service on Linux is not allowing WARP to resolve DNS requests. You can identify this issue in the [`daemon.log`](/cloudflare-one/connections/connect-devices/warp/troubleshooting/warp-logs/#warp-diag-logs:~:text=the%20WARP%20client.-,daemon.log,-Detailed%20log%20of) file of the `warp diag` logs, where the error message appears as `ERROR main_loop: warp::warp::connectivity_check: DNS connectivity check failed to resolve host="warp-svc."`.
 
 To solve the issue:
 
