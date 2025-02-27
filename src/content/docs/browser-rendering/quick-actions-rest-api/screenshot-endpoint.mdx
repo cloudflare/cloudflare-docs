@@ -9,6 +9,8 @@ The `/screenshot` endpoint renders the webpage by processing its HTML and JavaSc
 
 ## Basic usage
 
+Sets the HTML content of the page to `Hello World!` and then takes a screenshot. The option `omitBackground` hides the default white background and allows capturing screenshots with transparency.
+
 ```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/screenshot' \
   -H 'Authorization: Bearer <apiToken>' \
