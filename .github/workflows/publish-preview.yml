@@ -9,6 +9,7 @@ concurrency:
 
 jobs:
   publish:
+    if: github.repository == 'cloudflare/cloudflare-docs'
     runs-on: ubuntu-22.04
     permissions:
       contents: read
