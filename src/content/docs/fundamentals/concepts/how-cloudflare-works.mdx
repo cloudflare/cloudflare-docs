@@ -27,7 +27,7 @@ When you onboard your website or application to Cloudflare, Cloudflare becomes t
 Cloudflare only becomes the primary authoritative DNS provider when you use the default, full DNS setup. For alternative options, refer to [DNS setups](/dns/zone-setups/).
 :::
 
-If your [domain's status](/dns/zone-setups/reference/domain-status/) is active and the queried DNS record is set to `proxied`, Cloudflare responds with an [anycast IP address](/fundamentals/concepts/cloudflare-ip-addresses/), instead of the origin IP address defined in your DNS table. 
+If your [domain's status](/dns/zone-setups/reference/domain-status/) is active and the queried DNS record is set to `proxied`, Cloudflare responds with an [anycast IP address](/fundamentals/concepts/cloudflare-ip-addresses/), instead of the origin IP address defined in your DNS table.
 
 Your domain status is active when your [nameservers are updated](/dns/nameservers/update-nameservers/) to point to Cloudflare and have been authenticated. The [proxy status](/dns/proxy-status/) defines how Cloudflare treats queries for specific DNS records. The [anycast IP address](/fundamentals/concepts/cloudflare-ip-addresses/) is used to distribute traffic amongst Cloudflare's network, which protects your website or app from [DDoS](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/) and other attacks, while optimizing site speed.
 
