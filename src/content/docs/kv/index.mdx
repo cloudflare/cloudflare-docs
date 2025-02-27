@@ -39,53 +39,52 @@ Access your Workers KV namespace from Cloudflare Workers using [Workers Bindings
 <TabItem label="Workers Binding API">
 	<Tabs>
 	<TabItem label="index.ts">
-	```ts
-	export default {
-		async fetch(request, env, ctx): Promise<Response> {
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		// write a key-value pair
+		await env.KV_BINDING.put('KEY', 'VALUE');
 
-    		// write a key-value pair
-    		await env.KV_BINDING.put('KEY', 'VALUE');
+		// read a key-value pair
+		const value = await env.KV_BINDING.get('KEY');
 
-    		// read a key-value pair
-    		const value = await env.KV_BINDING.get('KEY');
+		// list all key-value pairs
+		const allKeys = await env.KV_BINDING.list();
 
-    		// list all key-value pairs
-    		const allKeys = await env.KV_BINDING.list();
+		// delete a key-value pair
+		await env.KV_BINDING.delete('KEY');
 
-    		// delete a key-value pair
-    		await env.KV_BINDING.delete('KEY');
+		// return a Workers response
+		return new Response(
+			JSON.stringify({
+				value: value,
+				allKeys: allKeys,
+			}),
+		);
+	},
+} satisfies ExportedHandler<{ KV_BINDING: KVNamespace }>;
 
-    		// return a Workers response
-    		return new Response(
-    			JSON.stringify({
-    				value: value,
-    				allKeys: allKeys,
-    			}),
-    		);
-    	},
-    };
-
-    ```
+	```
     </TabItem>
     <TabItem label="wrangler.jsonc">
-    	```json
-    	{
-    		"$schema": "node_modules/wrangler/config-schema.json",
-    		"name": "WORKER-NAME",
-    		"main": "src/index.ts",
-    		"compatibility_date": "2025-02-04",
-    		"observability": {
-    			"enabled": true
-    		},
+```json
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "WORKER-NAME",
+	"main": "src/index.ts",
+	"compatibility_date": "2025-02-04",
+	"observability": {
+		"enabled": true
+	},
 
-    		"kv_namespaces": [
-    			{
-    				"binding": "YOUR_BINDING",
-    				"id": "<YOUR_BINDING_ID>"
-    			}
-    		]
-    		}
-    	```
+	"kv_namespaces": [
+		{
+			"binding": "KV_BINDING",
+			"id": "<YOUR_BINDING_ID>"
+		}
+	]
+}
+```
     </TabItem>
     </Tabs>
 
