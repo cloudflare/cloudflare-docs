@@ -26,6 +26,8 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 
 ## Advanced usage
 
+Navigate to `https://cloudflare.com/`, changing the page size and waiting until there are no active network connections or up to a maximum of `4500ms`. Then take a `fullPage` screenshot.
+
 ```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/screenshot' \
   -H 'Authorization: Bearer <apiToken>' \
