@@ -9,7 +9,12 @@ The `/snapshot` endpoint captures both the HTML content and a screenshot of the 
 
 ## Basic usage
 
-Navigate to `https://example.com/`, injecting custom JavaScript and then capturing the rendered HTML and taking a screenshot.
+
+1. Go to `https://example.com/`.
+2. Inject custom JavaScript.
+3. Capture the rendered HTML.
+4. Take a screenshot.
+
 
 ```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/snapshot' \
