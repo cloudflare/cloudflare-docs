@@ -5,7 +5,7 @@ import Default from "@astrojs/starlight/components/Sidebar.astro";
 import { Icon as AstroIcon } from "astro-icon/components";
 import { lookupProductTitle } from "~/util/sidebar";
 
-const [product, module] = Astro.url.pathname.split("/").slice(1, -1);
+const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 ---
 
 <a

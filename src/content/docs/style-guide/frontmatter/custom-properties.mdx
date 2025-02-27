@@ -1,0 +1,17 @@
+---
+title: Custom properties
+sidebar:
+  order: 4
+---
+
+import { Type, MetaInfo } from "~/components";
+
+We have added specific custom [frontmatter](/style-guide/frontmatter/) to meet specific needs.
+
+- `difficulty` <Type text="string" /> <MetaInfo text="optional" />: Difficulty is displayed as a column in the [ListTutorials component](/style-guide/components/list-tutorials/).
+- `external_link` <Type text="string" /> <MetaInfo text="optional" />: Path to another page in our docs or elsewhere. Used to add a crosslink entry to the lefthand navigation sidebar.
+- `pcx_content_type` <Type text="string" /> <MetaInfo text="optional" />: The purpose of the page, and defined through specific pages in [Content strategy](/style-guide/documentation-content-strategy/content-types/).
+- `preview_image` <Type text="string" /> <MetaInfo text="optional" />: An `src` path to the image that you want to use as a custom preview image for social sharing.
+- `products` <Type text="Array<String>" /> <MetaInfo text="optional" />: The names of related products, which show on some grids for Examples, [Tutorials](/style-guide/documentation-content-strategy/content-types/tutorial/), and [Reference Architectures](/style-guide/documentation-content-strategy/content-types/reference-architecture/)
+- `tags` <Type text="Array<String>" /> <MetaInfo text="optional" />: A group of related keywords relating to the purpose of the page.
+- `updated` <Type text="Date" /> <MetaInfo text="optional" />: This is used to automatically add the [LastReviewed component](/style-guide/components/last-reviewed/).

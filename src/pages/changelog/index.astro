@@ -87,51 +87,18 @@ const props = {
 		"#changelogs-next-filter",
 	);
 
-	filter?.addEventListener("change", () => {
-		const entries = [
-			...document.querySelectorAll<HTMLElement>("[data-products]"),
-		];
-
-		if (!entries) return;
-
-		const value = filter.value;
-
-		const filtered = entries
-			.filter((e) => {
-				if (value === "all") {
-					return true;
-				}
-
-				if (!e.dataset.products) {
-					return false;
-				}
-
-				const products: string[] = JSON.parse(e.dataset.products);
-
-				if (products.includes(value)) {
-					return true;
-				}
-
-				return false;
-			})
-			.slice(0, 5);
-
-		for (const entry of entries) {
-			const show = filtered.includes(entry);
-
-			if (show) {
-				entry.style.display = "";
-			} else {
-				entry.style.display = "none";
-			}
-		}
-
-		hideButton();
-	});
-
 	const button = document.querySelector<HTMLButtonElement>(
 		"#changelogs-next-button",
 	);
+
+	const url = new URL(window.location.href);
+
+	if (filter && url.searchParams.has("product")) {
+		filter.value = url.searchParams.get("product")!;
+		updateFilter();
+	}
+
+	filter?.addEventListener("change", updateFilter);
 
 	button?.addEventListener("click", () => {
 		const entries = [
@@ -170,6 +137,58 @@ const props = {
 
 		hideButton();
 	});
+
+	function updateFilter() {
+		const entries = [
+			...document.querySelectorAll<HTMLElement>("[data-products]"),
+		];
+
+		if (!entries) return;
+
+		const value = filter!.value;
+
+		const filtered = entries
+			.filter((e) => {
+				if (value === "all") {
+					return true;
+				}
+
+				if (!e.dataset.products) {
+					return false;
+				}
+
+				const products: string[] = JSON.parse(e.dataset.products);
+
+				if (products.includes(value)) {
+					return true;
+				}
+
+				return false;
+			})
+			.slice(0, 5);
+
+		for (const entry of entries) {
+			const show = filtered.includes(entry);
+
+			if (show) {
+				entry.style.display = "";
+			} else {
+				entry.style.display = "none";
+			}
+		}
+
+		const url = new URL(window.location.href);
+
+		if (value === "all") {
+			url.searchParams.delete("product");
+		} else {
+			url.searchParams.set("product", value);
+		}
+
+		history.replaceState(null, "", url.href);
+
+		hideButton();
+	}
 
 	function hideButton() {
 		const entries = [

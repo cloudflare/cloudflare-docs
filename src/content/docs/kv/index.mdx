@@ -5,14 +5,7 @@ sidebar:
   order: 1
 ---
 
-import {
-	CardGrid,
-	Description,
-	Feature,
-	LinkTitleCard,
-	Plan,
-	RelatedProduct,
-} from "~/components";
+import { CardGrid, Description, Feature, LinkTitleCard, Plan, RelatedProduct, Tabs, TabItem, LinkButton } from "~/components";
 
 <Description>
 
@@ -23,6 +16,92 @@ Create a global, low-latency, key-value data storage.
 <Plan type="workers-all" />
 
 Workers KV is a data storage that allows you to store and retrieve data globally. With Workers KV, you can build dynamic and performant APIs and websites that support high read volumes with low latency.
+
+For example, you can use Workers KV for:
+
+- Caching API responses.
+- Storing user configurations / preferences.
+- Storing user authentication details.
+
+Workers KV is ideal for projects that require:
+
+- High volumes of reads and/or repeated reads to the same keys.
+- Globally distributed data.
+
+Access your Workers KV namespace from Cloudflare Workers using the Workers Binding API or from your external application using the REST API:
+
+<Tabs>
+<TabItem label="Workers Binding API">
+	<Tabs>
+	<TabItem label="index.ts">
+	```ts
+	export default {
+		async fetch(request, env, ctx): Promise<Response> {
+
+			//write a key-value pair
+			await env.KV_BINDING.put('KEY', 'VALUE');
+
+			// read a key-value pair
+			const value = await env.KV_BINDING.get('KEY');
+
+			//list all key-value pairs
+			const allKeys = await env.KV_BINDING.list();
+
+			//delete a key-value pair
+			await env.KV_BINDING.delete('KEY');
+
+			//return a Workers response
+			return new Response(
+				JSON.stringify({
+					value: value,
+					allKeys: allKeys,
+				}),
+			);
+		},
+	};
+
+	```
+	</TabItem>
+	<TabItem label="wrangler.jsonc">
+		```json
+		{
+			"$schema": "node_modules/wrangler/config-schema.json",
+			"name": "WORKER-NAME",
+			"main": "src/index.ts",
+			"compatibility_date": "2025-02-04",
+			"observability": {
+				"enabled": true
+			},
+
+			"kv_namespaces": [
+				{
+					"binding": "YOUR_BINDING",
+					"id": "<YOUR_BINDING_ID>"
+				}
+			]
+		```
+	</TabItem>
+	</Tabs>
+</TabItem>
+<TabItem label="REST API">
+```
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/storage/kv/namespaces/$NAMESPACE_ID/values/$KEY_NAME \
+    -X PUT \
+    -H 'Content-Type: multipart/form-data' \
+    -H "X-Auth-Email: $CLOUDFLARE_EMAIL" \
+    -H "X-Auth-Key: $CLOUDFLARE_API_KEY" \
+    -d '{
+      "value": "Some Value"
+    }'
+
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/storage/kv/namespaces/$NAMESPACE_ID/values/$KEY_NAME \
+    -H "X-Auth-Email: $CLOUDFLARE_EMAIL" \
+    -H "X-Auth-Key: $CLOUDFLARE_API_KEY"
+```
+</TabItem>
+</Tabs>
+
+Learn more about Workers KV [key concepts](/kv/concepts/how-kv-works/), or [get started](/kv/get-started/) with a Workers project.
 
 ---
 

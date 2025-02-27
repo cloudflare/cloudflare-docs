@@ -1,7 +1,70 @@
 ---
-title: Workers AI JSON Mode
+title: Workers AI now supports structured JSON outputs.
 description: Workers AI JSON Mode adds structured outputs support
 date: 2025-02-25T15:00:00Z
 ---
 
-We've updated the Workers AI to support [JSON mode](/workers-ai/json-mode/), enabling applications to request a structured output response when interacting with AI models.
+import { TypeScriptExample } from "~/components";
+
+Workers AI now supports structured JSON outputs with [JSON mode](/workers-ai/json-mode/), which allows you to request a structured output response when interacting with AI models.
+
+This makes it much easier to retrieve structured data from your AI models, and avoids the (error prone!) need to parse large unstructured text responses to extract your data.
+
+JSON mode in Workers AI is compatible with the OpenAI SDK's [structured outputs](https://platform.openai.com/docs/guides/structured-outputs) `response_format` API, which can be used directly in a Worker:
+
+<TypeScriptExample>
+
+```ts
+import { OpenAI } from "openai";
+
+interface Env {
+	OPENAI_API_KEY: string;
+}
+
+// Define your JSON schema for a calendar event
+const CalendarEventSchema = {
+  type: 'object',
+  properties: {
+    name: { type: 'string' },
+    date: { type: 'string' },
+    participants: { type: 'array', items: { type: 'string' } },
+  },
+  required: ['name', 'date', 'participants']
+};
+
+export default {
+	async fetch(request: Request, env: Env) {
+		const client = new OpenAI({
+			apiKey: env.OPENAI_API_KEY,
+			// Optional: use AI Gateway to bring logs, evals & caching to your AI requests
+			// https://developers.cloudflare.com/ai-gateway/providers/openai/
+			// baseUrl: "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai"
+		});
+
+		const response = await client.chat.completions.create({
+	    model: 'gpt-4o-2024-08-06',
+	    messages: [
+	      { role: 'system', content: 'Extract the event information.' },
+	      { role: 'user', content: 'Alice and Bob are going to a science fair on Friday.' },
+	    ],
+			// Use the `response_format` option to request a structured JSON output
+	    response_format: {
+				// Set json_schema and provide ra schema, or json_object and parse it yourself
+	      type: 'json_schema',
+	      schema: CalendarEventSchema, // provide a schema
+	    },
+	  });
+
+		// This will be of type CalendarEventSchema
+		const event = response.choices[0].message.parsed;
+
+		return Response.json({
+			"calendar_event": event,
+		})
+	}
+}
+```
+
+</TypeScriptExample>
+
+To learn more about JSON mode and structured outputs, visit the [Workers AI documentation](/workers-ai/json-mode/).

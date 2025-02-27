@@ -16,7 +16,7 @@ This guide covers how to use the [Cloudflare Terraform provider](https://registr
 * [Configure an IdP integration](/learning-paths/zero-trust-web-access/initial-setup/configure-idp/)
 * [Create a Cloudflare Tunnel](/learning-paths/zero-trust-web-access/connect-private-applications/create-tunnel/#create-a-tunnel) via the Zero Trust dashboard
 * Install the [Terraform client](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
-* [Create an API token](https://developers.cloudflare.com/fundamentals/api/get-started/create-token/) (refer to the [minimum required permissions](/cloudflare-one/connections/connect-networks/deploy-tunnels/deployment-guides/terraform/#3-create-a-cloudflare-api-token))
+* [Create an API token](https://developers.cloudflare.com/fundamentals/api/get-started/create-token/) (refer to the [minimum required permissions](/cloudflare-one/connections/connect-networks/deployment-guides/terraform/#3-create-a-cloudflare-api-token))
 
 ## 1. Create a Terraform configuration directory
 
@@ -76,7 +76,7 @@ Add the following resources to your Terraform configuration.
 
 ### Add public hostname route to Cloudflare Tunnel
 
-Using the [`cloudflare_tunnel_config`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/tunnel_config) resource, create an ingress rule that maps your application to a public DNS record. This example makes `localhost:8080` available on `app.mycompany.com`, sets the [Connect Timeout](/cloudflare-one/connections/connect-networks/configure-tunnels/origin-configuration/#connecttimeout), and enables [Access JWT validation](/cloudflare-one/connections/connect-networks/configure-tunnels/origin-configuration/#access).
+Using the [`cloudflare_tunnel_config`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/tunnel_config) resource, create an ingress rule that maps your application to a public DNS record. This example makes `localhost:8080` available on `app.mycompany.com`, sets the [Connect Timeout](/cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/origin-parameters/#connecttimeout), and enables [Access JWT validation](/cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/origin-parameters/#access).
 
 ```txt
 resource "cloudflare_tunnel_config" "example_config" {
