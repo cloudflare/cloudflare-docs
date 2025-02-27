@@ -19,7 +19,19 @@ Traffic between Cloudflare Calls TURN and Cloudflare Calls SFU or Cloudflare Str
 
 <div class="full-img">
 
-![TURN charging illustration](~/assets/images/calls/turn-charging.png)
+```mermaid
+---
+title: Cloudflare Calls TURN pricing
+---
+flowchart LR
+    Client[TURN Client]
+    Server[TURN Server]
+
+    Client -->|"Ingress (free)"| Server
+    Server -->|"Egress (charged)"| Client
+
+    Server <-->|Not part of billing| PeerA[Peer A]
+```
 
 </div>
 
