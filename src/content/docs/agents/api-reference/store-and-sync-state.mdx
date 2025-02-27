@@ -1,5 +1,5 @@
 ---
-title: Manage and sync state
+title: Store and sync state
 pcx_content_type: concept
 sidebar:
   order: 6
@@ -7,14 +7,17 @@ sidebar:
 
 import { MetaInfo, Render, Type, TypeScriptExample, WranglerConfig } from "~/components";
 
-Every Agent has built-in state management capabilities, including built-in storage and synchronization between the Agent and frontend applications. State within an Agent is:
+Every Agent has built-in state management capabilities, including built-in storage and synchronization between the Agent and frontend applications.
 
-* Persisted across Agent restarts: data is permanently persisted within the Agent.
+State within an Agent is:
+
+* Persisted across Agent restarts: data is permanently stored within an Agent.
 * Automatically serialized/deserialized: you can store any JSON-serializable data.
 * Immediately consistent within the Agent: read your own writes.
 * Thread-safe for concurrent updates
+* Fast: state is colocated wherever the Agent is running. Reads and writes do not need to traverse the network.
 
-Agent state is stored in a SQL database that is embedded within each individual Agent instance: you can interact with it using the higher-level `this.setState` API (recommended) or by directly querying the database with `this.sql`.
+Agent state is stored in a SQL database that is embedded within each individual Agent instance: you can interact with it using the higher-level `this.setState` API (recommended), which allows you to sync state and trigger events on state changes, or by directly querying the database with `this.sql`.
 
 #### State API
 

@@ -75,7 +75,7 @@ export class MyAgent extends Agent<Env> {
 
 </TypeScriptExample>
 
-You can also persist AI model responses back to [Agent's internal state](/agents/api-reference/manage-and-sync-state/) by using the `this.setState` method. For example, if you run a [scheduled task](/agents/api-reference/schedule-tasks/), you can store the output of the task and read it later. Or, if a user disconnects, read the message history back and send it to the user when they reconnect.
+You can also persist AI model responses back to [Agent's internal state](/agents/api-reference/store-and-sync-state/) by using the `this.setState` method. For example, if you run a [scheduled task](/agents/api-reference/schedule-tasks/), you can store the output of the task and read it later. Or, if a user disconnects, read the message history back and send it to the user when they reconnect.
 
 ### Workers AI
 
