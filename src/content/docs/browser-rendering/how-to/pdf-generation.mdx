@@ -26,8 +26,10 @@ npm install @cloudflare/puppeteer --save-dev
 3. Add your Browser Rendering binding to your new Wrangler configuration:
 
 <WranglerConfig>
-	```toml browser = {(binding = "BROWSER")}
-	```
+
+```toml title="wrangler.toml"
+browser = { binding = "BROWSER" }
+```
 </WranglerConfig>
 
 4. Replace the contents of `src/index.ts` (or `src/index.js` for JavaScript projects) with the following skeleton script:
