@@ -12,5 +12,5 @@ export const changelogSchema = ({ image }: SchemaContext) =>
 			.describe(
 				"An array of products to associate this changelog entry with. You may omit the product named after the folder this entry is in.",
 			),
-		cover: image().optional(),
+		preview_image: image().optional(),
 	});

@@ -15,7 +15,7 @@ const spotlightAuthorDetails = z
 
 export const baseSchema = ({ image }: SchemaContext) =>
 	z.object({
-		cover: image().optional(),
+		preview_image: image().optional(),
 		pcx_content_type: z
 			.union([
 				z.literal("overview"),

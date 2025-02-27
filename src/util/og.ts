@@ -15,15 +15,15 @@ const PRODUCT_AREA_OG_IMAGES: Record<string, string> = {
 };
 
 export async function getOgImage(entry: CollectionEntry<"docs" | "changelog">) {
-	if (entry.data.cover) {
-		if (!entry.data.cover.src) {
+	if (entry.data.preview_image) {
+		if (!entry.data.preview_image.src) {
 			throw new Error(
-				`${entry.id} has a cover property in frontmatter that is not a valid image path`,
+				`${entry.id} has a preview_image property in frontmatter that is not a valid image path`,
 			);
 		}
 
 		const image = await getImage({
-			src: entry.data.cover,
+			src: entry.data.preview_image,
 			format: "png",
 		});
 
