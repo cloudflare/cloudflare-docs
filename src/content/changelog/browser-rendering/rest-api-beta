@@ -12,7 +12,7 @@ With the **Quick Actions REST API** you can:
 - **Capture screenshots** – Use `/screenshot` to take a screenshot of a webpage from provided URL or HTML. 
 - **Generate PDFs** – Use `/pdf` to convert web pages into PDFs.
 - **Extract HTML content** – Use `/content` to retrieve the full HTML from a page.
- **Snapshot (HTML + Screenshot)** – Use `/screenshot` to capture both the page's HTML and a screenshot in one request 
+ **Snapshot (HTML + Screenshot)** – Use `/snapshot` to capture both the page's HTML and a screenshot in one request 
 - **Scrape Web Elements** – Use `/scrape` to extract specific elements from a page.
 
 For example, to capture a screenshot:
