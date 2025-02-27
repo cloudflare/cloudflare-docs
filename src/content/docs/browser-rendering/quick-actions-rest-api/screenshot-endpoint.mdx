@@ -80,7 +80,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
   - `height` _(number)_ - Viewport height in pixels.
 - `gotoOptions` _(object)_ - Configures how and when the page is considered fully loaded.
   - `waitUntil` _(string)_ - Defines when the browser considers navigation complete (`networkidle0`, `domcontentloaded`).
-    - `networkidle0` - Waits until there are no more than 0 network connections for at least 500ms before taking a screenshot.
+    - `networkidle0` - Waits until there are no more than 0 network connections for at least 500 ms before taking a screenshot.
   - `timeout` _(number)_ - Maximum wait time (in milliseconds) before navigation times out.
 - `addScriptTag` _(array of objects)_ - Injects JavaScript code before taking a screenshot.
   - `url` _(string)_ - Loads an external script file before rendering.
