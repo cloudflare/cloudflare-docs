@@ -64,7 +64,10 @@ To setup VS Code for breakpoint debugging in your Worker tests, you can create a
             "type": "node",
             "request": "attach",
             "port": 9229,
-            "cwd": "/"
+            "cwd": "/",
+            "resolveSourceMapLocations": null,
+            "attachExistingChildren": false,
+            "autoAttachChildProcesses": false,
         }
     ],
     "compounds": [
