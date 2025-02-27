@@ -74,7 +74,10 @@ class MyAgent extends Agent<Env, State> {
   // Called when a WebSocket connection is established
   // Access the original request via ctx.request for auth etc.
   async onConnect(connection: Connection, ctx: ConnectionContext) {
-    // Authenticate and accept the connection
+    // Authenticate the connection
+    // Access the Request on ctx.request to inspect headers, cookies and the URL
+
+    // Accept the connection
     connection.accept();
   }
 
@@ -110,7 +113,7 @@ class MyAgent extends Agent<Env, State> {
 }
 ```
 
-### Connection Handling
+### WebSocket connection Handling
 
 #### Connection
 
@@ -186,6 +189,14 @@ class Agent<Env, State = unknown> {
 }
 ```
 
+```ts
+// Example usage:
+this.setState({
+  ...this.state,
+  counter: this.state.counter + 1,
+});
+```
+
 ### Scheduling
 
 #### Scheduling Tasks
@@ -225,7 +236,7 @@ class Agent<Env, State = unknown> {
 }
 ```
 
-#### Schedule Object
+#### Schedule object
 
 Represents a scheduled task.
 
@@ -264,11 +275,16 @@ type Schedule<T = any> = {
 );
 ```
 
+```ts
+// Schedule a task that calls a method after a delay
+let task = await this.schedule(300, "methodToCall", { message: "data-to-send-to-method" });
+```
+
 ### SQL Database Access
 
 #### SQL Query API
 
-Execute SQL queries against the Agent's built-in SQLite database.
+Execute SQL queries against the Agent's built-in SQLite database using the `this.sql` method within any method on your `Agent` class.
 
 ```ts
 // SQL query API for the Agent's embedded database
@@ -281,6 +297,14 @@ class Agent<Env, State = unknown> {
   ): T[];
 }
 ```
+
+```ts
+// Example usage
+let user = this.sql<YourUserType>`
+  SELECT * FROM users WHERE id = ${userId}`;
+```
+
+Visit the documentation on [storing and syncing state](/agents/api-reference/store-and-sync-state/) to learn more about the `this.setState` and `this.sql` APIs.
 
 ### Client API
 
@@ -337,6 +361,8 @@ function agentFetch(
 
 ### React Integration
 
+The `agents-sdk` provides a React API for simplifying connection and routing to Agents from front-end frameworks, including React Router (Remix), Next.js, and Astro.
+
 #### useAgent
 
 React hook for connecting to an Agent.
@@ -371,9 +397,13 @@ function useAgent<State = unknown>(
 
 ### Chat Agent
 
+The `agents-sdk` exposes an `AIChatAgent` class that extends the `Agent` class and exposes an `onChatMessage` method that simplifies building interactive chat agents.
+
+You can combine this with the `useAgentChat` React hook from the `agents-sdk/ai-react` package to manage chat state and messages between a user and your Agent(s).
+
 #### AIChatAgent
 
-Extension of Agent with built-in chat capabilities.
+Extension of the `Agent` class with built-in chat capabilities.
 
 ```ts
 import { AIChatAgent } from "agents-sdk/ai-chat-agent";
@@ -390,7 +420,7 @@ class AIChatAgent<Env = unknown> extends Agent<Env> {
     onFinish: StreamTextOnFinishCallback<any>
   ): Promise<Response | undefined>;
 
-  // Save messages on the server side and trigger AI response
+  // Persist messages within the Agent's local storage.
   async saveMessages(messages: Message[]): Promise<void>;
 }
 ```
@@ -433,60 +463,6 @@ function useAgentChat(options: UseAgentChatOptions): {
   setMessages: (messages: Message[]) => void;
   // Other properties like isLoading, error, etc.
 };
-```
-
-```ts
-import { Agent } from "agents-sdk";
-
-
-class MyAgent extends Agent<Env> {
-	// Called when an Agent is started (or woken up)
-	async onStart() {
-		// Can access this.env and this.state
-		console.log('Agent started');
-	}
-
-	// Called when a HTTP request is received
-	// Can be connected to routeAgentRequest to automatically route
-	// requests to an individual Agent.
-	async onRequest(request: Request) {
-			console.log("Received request!");
-	}
-
-	// Called when a WebSocket connection is established
-	async onConnect(connection: Connection, ctx: ConnectionContext) {
-		console.log("Connected!");
-		// Check the request at ctx.request
-		// Authenticate the client
-		// Give them the OK.
-		connection.accept();
-	}
-
-	// Called for each message received on the WebSocket connection
-	async onMessage(connection: Connection, message: WSMessage) {
-		console.log(`message from client ID: ${connection.id}`)
-		// Send messages back to the client
-		connection.send("Hello!");
-	}
-
-	// WebSocket error and disconnection (close) handling.
-	async onError(connection: Connection, error: unknown): Promise<void> {
-		console.error(`WS error: ${error}`);
-	}
-
-	async onClose(connection: Connection, code: number, reason: string, wasClean: boolean): Promise<void> {
-		console.log(`WS closed: ${code} - ${reason} - wasClean: ${wasClean}`);
-		connection.close();
-	}
-
-	// Called when the Agent's state is updated
-	// via this.setState or the useAgent hook from the agents-sdk/react package.
-	async onStateUpdate(state: any) {
-		// 'state' will be typed if you supply a type parameter to the Agent class.
-	}
-}
-
-export default MyAgent;
 ```
 
 :::note
