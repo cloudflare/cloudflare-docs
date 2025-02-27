@@ -93,6 +93,36 @@ export class MyAgent extends Agent<Env, FlightRecord> {
 
 </TypeScriptExample>
 
+### Set the initial state for an Agent
+
+You can also set the initial state for an Agent via the `initialState` property on the `Agent` class:
+
+<TypeScriptExample>
+
+```ts
+type State = {
+  counter: number;
+  text: string;
+  color: string;
+};
+
+class MyAgent extends Agent<Env, State> {
+	// Set a default, initial state
+  initialState = {
+    counter: 0,
+    text: "",
+    color: "#3B82F6",
+  };
+
+  doSomething() {
+    console.log(this.state); // {counter: 0, text: "", color: "#3B82F6"}, if you haven't set the state yet
+  }
+}
+```
+</TypeScriptExample>
+
+Any initial state is synced to clients connecting via [the `useAgent` hook](#synchronizing-state).
+
 ### Synchronizing state
 
 Clients can connect to an Agent and stay synchronized with its state using the React hooks provided as part of `agents-sdk/react`.
