@@ -176,11 +176,11 @@ This type can then be passed as the type parameter to a `sql.exec` call:
 
 ```ts
 // The type parameter is passed between the "pointy brackets" before the function argument:
-const result = this.ctx.storage.sql.exec<User>("SELECT id, name, email_address, version FROM users WHERE id = ?", [user_id]).one()
+const result = this.ctx.storage.sql.exec<User>("SELECT id, name, email_address, version FROM users WHERE id = ?", user_id).one()
 // result will now have a type of "User"
 
 // Alternatively, if you are iterating over results using a cursor
-let cursor = this.sql.exec<User>("SELECT id, name, email_address, version FROM users WHERE id = ?", [user_id])
+let cursor = this.sql.exec<User>("SELECT id, name, email_address, version FROM users WHERE id = ?", user_id)
 for (let row of cursor) {
 	// Each row object will be of type User
 }
@@ -194,7 +194,7 @@ type UserRow = [
 ];
 
 // ... and then pass it as the type argument to the raw() method:
-let cursor = sql.exec("SELECT id, name, email_address, version FROM users WHERE id = ?", [user_id]).raw<UserRow>();
+let cursor = sql.exec("SELECT id, name, email_address, version FROM users WHERE id = ?", user_id).raw<UserRow>();
 
 for (let row of cursor) {
 	// row is of type User

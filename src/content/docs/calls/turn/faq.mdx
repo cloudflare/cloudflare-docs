@@ -13,6 +13,8 @@ Cloudflare TURN pricing is based on the data sent from the Cloudflare edge to th
 
 Pricing for Cloudflare Calls TURN service is $0.05 per GB of data used.
 
+Cloudflare's STUN service at `stun.cloudflare.com` is free and unlimited.
+
 There is a free tier of 1,000 GB before any charges start. Cloudflare Calls billing appears as a single line item on your Cloudflare bill, covering both SFU and TURN.
 
 Traffic between Cloudflare Calls TURN and Cloudflare Calls SFU or Cloudflare Stream (WHIP/WHEP) does not incur any charges.
@@ -127,12 +129,6 @@ No. Calls TURN will not respect `REQUESTED-ADDRESS-FAMILY` STUN attribute if spe
 No. Calls does not implement [RFC6062](https://datatracker.ietf.org/doc/html/rfc6062) and will not respect `REQUESTED-TRANSPORT` STUN attribute.
 
 ### I am unable to make CreatePermission or ChannelBind requests with certain IP addresses. Why is that?
-
-Cloudflare Calls denies CreatePermission or ChannelBind requests if private IP ranges (e.g loopback addresses, linklocal unicast or multicast blocks) or IP addresses that are part of [BYOIP](/byoip/) are used.
-
-If you are a Cloudflare BYOIP customer and wish to connect to your BYOIP ranges with Calls TURN, please reach out to your account manager for further details.
-
-### When I send packets to relayed address without using TURN, the packets don't arrive
 
 Cloudflare Calls denies CreatePermission or ChannelBind requests if private IP ranges (e.g loopback addresses, linklocal unicast or multicast blocks) or IP addresses that are part of [BYOIP](/byoip/) are used.
 

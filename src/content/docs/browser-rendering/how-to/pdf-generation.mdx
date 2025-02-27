@@ -7,7 +7,7 @@ sidebar:
 
 import { Aside, WranglerConfig } from "~/components";
 
-As seen in the [Getting Started guide](/browser-rendering/get-started/screenshots/), Browser Rendering can be used to generate screenshots for any given URL. Alongside screenshots, you can also generate full PDF documents for a given webpage, and can also provide the webpage markup and style ourselves.
+As seen in the [Getting Started guide](/browser-rendering/workers-binding-api/screenshots/), Browser Rendering can be used to generate screenshots for any given URL. Alongside screenshots, you can also generate full PDF documents for a given webpage, and can also provide the webpage markup and style ourselves.
 
 ## Prerequisites
 
@@ -26,7 +26,8 @@ npm install @cloudflare/puppeteer --save-dev
 3. Add your Browser Rendering binding to your new Wrangler configuration:
 
 <WranglerConfig>
-```toml
+
+```toml title="wrangler.toml"
 browser = { binding = "BROWSER" }
 ```
 </WranglerConfig>

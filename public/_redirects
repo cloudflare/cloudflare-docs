@@ -179,6 +179,11 @@
 /bots/reference/verified-bot-categories/ /bots/concepts/bot/verified-bots/categories/ 301
 /bots/reference/verified-bot-policy/ /bots/concepts/bot/verified-bots/policy/ 301
 
+#browser-rendering
+/browser-rendering/get-started/browser-rendering-with-do/ /browser-rendering/workers-binding-api/browser-rendering-with-do/ 301   
+/browser-rendering/get-started/reuse-sessions/ /browser-rendering/workers-binding-api/reuse-sessions/ 301 
+/browser-rendering/get-started/screenshots/ /browser-rendering/workers-binding-api/screenshots/ 301  
+
 # byoip
 /byoip/about/dynamic-advertisement/ /byoip/concepts/dynamic-advertisement/ 301
 /byoip/best-practices/dynamic-advertisement/ /byoip/concepts/dynamic-advertisement/best-practices/ 301

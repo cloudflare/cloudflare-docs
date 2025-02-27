@@ -1,0 +1,98 @@
+---
+pcx_content_type: how-to
+title: Take a webpage snapshot
+sidebar:
+  order: 6
+---
+
+The `/snapshot` endpoint captures both the HTML content and a screenshot of the webpage in one request. It returns the HTML as a text string and the screenshot as a Base64-encoded image.
+
+## Basic usage
+
+1. Go to `https://example.com/`.
+2. Inject custom JavaScript.
+3. Capture the rendered HTML.
+4. Take a screenshot.
+
+```bash
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/snapshot' \
+  -H 'Authorization: Bearer <apiToken>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "url": "https://example.com/",
+    "addScriptTag": [
+      { "content": "document.body.innerHTML = \"Snapshot Page\";" }
+    ]
+  }'
+```
+
+### JSON response
+
+```json title="json response"
+{
+	"status": true,
+	"result": {
+		"screenshot": "Base64EncodedScreenshotString",
+		"content": "<html>...</html>"
+	}
+}
+```
+
+## Advanced usage
+
+The `html` property in the JSON payload, it sets the html to `<html><body>Advanced Snapshot</body></html>` then does the following steps:
+
+1. Disable JavaScript.
+2. Changes the page size `(viewport)`.
+3. Waits up to `30000ms` or until the `DOMContentLoaded` event starts.
+4. Returns the rendered HTML content and a base-64 encoded screenshot of the page.
+
+```bash
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/snapshot' \
+  -H 'Authorization: Bearer <apiToken>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "html": "<html><body>Advanced Snapshot</body></html>",
+    "setJavaScriptEnabled": false,
+    "viewport": {
+      "width": 1200,
+      "height": 800
+    },
+    "gotoOptions": {
+      "waitUntil": "domcontentloaded",
+      "timeout": 30000
+    }
+  }'
+```
+
+### JSON response
+
+```json title="json response"
+{
+	"status": true,
+	"errors": [],
+	"result": {
+		"screenshot": "AdvancedBase64Screenshot",
+		"content": "<html><body>Advanced Snapshot</body></html>"
+	}
+}
+```
+
+## Parameters
+
+- `url` _(string)_ - The URL of the page to snapshot.
+- `html` _(string)_ - Allows passing custom HTML instead of a URL.
+- `setJavaScriptEnabled` _(boolean)_ - Enables or disables JavaScript execution on the page.
+- `viewport` \*(object)- Sets the rendering viewport dimensions.
+  - `width` _(number)_ - Width in pixels.
+  - `height` _(number)_ - Height in pixels.
+- `gotoOptions` _(object)_ - Determines when the page is fully loaded.
+  - `waitUntil` _(string)_ - Defines the loading strategy (`domcontentloaded`, `networkidle2`).
+  - `timeout` _(number)_ - Timeout duration in milliseconds.
+- `allowResourceTypes` _(array of strings)_ - Restricts the types of resources allowed to load.
+  - Example: [`document`, `script`] - Only allows HTML documents and scripts to load, preventing images, stylesheets, and other resources.
+
+### Response fields
+
+- `screenshot` _(string)_ - Base64-encoded image of the rendered page.
+- `content` _(string)_ - Fully rendered HTML of the page.

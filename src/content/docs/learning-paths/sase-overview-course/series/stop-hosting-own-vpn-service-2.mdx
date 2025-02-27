@@ -1,0 +1,41 @@
+---
+pcx_content_type: navigation
+title: Stop hosting your own VPN service
+sidebar:
+  order: 3
+prev: true
+next: true
+tableOfContents: false
+---
+
+import { Render, Tabs, TabItem, Stream, Card } from "~/components";
+
+<Tabs>
+  <TabItem label="Watch this episode">
+
+    Cloudflare's SASE platform can replace your traditional, expensive VPN appliances which deliver poor performance for users and create more security risks than solve them. Cloudflare's Zero Trust Network Access (ZTNA) service is a more secure, highly scalable cloud solution. In this video we look at how easily you can deploy Cloudflare to secure access to internal resources. 
+
+    <Card>
+        <Stream
+        videoId="cea116a09721c100f1c2e16e92dea904"
+        videoTitle="Stop hosting your own VPN service"
+        thumbnailTimeOrURL="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/Stop-hosting-your-own-VPN-service.jpg"
+        moreVideosLink="false"
+      />
+
+      **Related content**
+
+      If you want to dive into detail about using Cloudflare to replace your existing VPN solution, refer to the following pages:
+
+        - [Evolving to a SASE architecture with Cloudflare](/reference-architecture/architectures/sase/)
+        - [Network-focused migration from VPN concentrators to Zero Trust Network Access](/reference-architecture/design-guides/network-vpn-migration/)
+        - [Access to private apps without having to deploy client agents](/reference-architecture/diagrams/sase/sase-clientless-access-private-dns/)
+        - [Zero Trust and Virtual Desktop Infrastructure](/reference-architecture/diagrams/sase/zero-trust-and-virtual-desktop-infrastructure/)
+
+    </Card>    
+  </TabItem>
+
+  <TabItem label="Series overview">
+      <Render file="sase-series-navigation" />
+  </TabItem> 
+</Tabs>
