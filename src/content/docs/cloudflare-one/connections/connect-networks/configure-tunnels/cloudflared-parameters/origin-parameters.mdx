@@ -1,12 +1,12 @@
 ---
 pcx_content_type: reference
-title: Origin configuration
+title: Origin configuration parameters
 sidebar:
-  order: 3
+  order: 9
 
 ---
 
-Origin configuration parameters determine how `cloudflared` proxies traffic to your origin server. You can configure these settings [in the dashboard](/cloudflare-one/connections/connect-networks/configure-tunnels/remote-management/#update-origin-configuration) for remotely-managed tunnels, or add them to your [configuration file](/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/configuration-file/#origin-configuration) for locally-managed tunnels.
+Origin configuration parameters determine how `cloudflared` proxies traffic to your origin server. If you are using remotely-managed tunnels (default), configure these settings [using the dashboard or API](/cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/#update-origin-configuration). If you are using [locally-managed tunnels](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/), add these parameters to your [configuration file](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/configuration-file/).
 
 ## TLS settings
 
@@ -111,7 +111,7 @@ This configures what type of proxy will be started. Valid options are:
 
 :::note
 
-For locally-managed tunnels only. 
+For locally-managed tunnels only.
 :::
 
 | Default     | UI name |
@@ -125,7 +125,7 @@ This configures the listen address for that proxy.
 
 :::note
 
-For locally-managed tunnels only. 
+For locally-managed tunnels only.
 :::
 
 | Default | UI name |
@@ -173,7 +173,7 @@ The timeout after which a TCP keepalive packet is sent on a connection between C
 
 Requires `cloudflared` to validate the [Cloudflare Access JWT](/cloudflare-one/identity/authorization-cookie/validating-json/) prior to proxying traffic to your origin. You can enforce this check on public hostname routes that are protected by an Access application. For all L7 requests to these hostnames, Access will send the JWT to `cloudflared` as a `Cf-Access-Jwt-Assertion` request header.
 
-To enable this security control in a [configuration file](/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/configuration-file/#origin-configuration), [get the AUD tag](/cloudflare-one/identity/authorization-cookie/validating-json/#get-your-aud-tag) for your Access application and add the following rule to `originRequest`:
+To enable this security control in a [configuration file](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/configuration-file/#origin-configuration), [get the AUD tag](/cloudflare-one/identity/authorization-cookie/validating-json/#get-your-aud-tag) for your Access application and add the following rule to `originRequest`:
 
 ```yml
 access:

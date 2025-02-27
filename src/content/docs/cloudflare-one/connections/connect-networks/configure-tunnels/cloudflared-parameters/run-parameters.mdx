@@ -6,7 +6,9 @@ sidebar:
 
 ---
 
-This page lists general-purpose configuration options for a Cloudflare Tunnel. You can add these flags to the `cloudflared tunnel run` command for [remotely-managed](/cloudflare-one/connections/connect-networks/configure-tunnels/remote-management/) and [locally-managed](/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/) tunnels. These flags can also be added as key/value pairs to your [configuration file](/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/).
+This page lists general-purpose configuration options that you can [add](/cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/#update-tunnel-run-parameters) to the `cloudflared tunnel run` command.
+
+Alternatively, if you are running a [locally-managed tunnel](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/) you can add these flags to your [configuration file](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/configuration-file/) as key/value pairs.
 
 ## `autoupdate-freq`
 
@@ -29,7 +31,7 @@ For locally-managed tunnels only.
 | ------------------------------------------------------- | --------------------------- |
 | `cloudflared tunnel --config <PATH> run <UUID or NAME>` | `~/.cloudflared/config.yml` |
 
-Specifies the path to a [configuration file](/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/configuration-file/) in YAML format.
+Specifies the path to a [configuration file](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/configuration-file/) in YAML format.
 
 ## `edge-bind-address`
 
@@ -104,7 +106,7 @@ For locally-managed tunnels only.
 | ----------------------------------------------------------- | ------------------------- | -------------------- |
 | `cloudflared tunnel --origincert <PATH> run <UUID or NAME>` | `~/.cloudflared/cert.pem` | `TUNNEL_ORIGIN_CERT` |
 
-Specifies the [account certificate](/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/tunnel-permissions/) for one of your zones, authorizing the client to serve as an origin for that zone. You can obtain a certificate by using the `cloudflared tunnel login` command or by visiting `https://dash.cloudflare.com/argotunnel`.
+Specifies the [account certificate](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/tunnel-permissions/) for one of your zones, authorizing the client to serve as an origin for that zone. You can obtain a certificate by using the `cloudflared tunnel login` command or by visiting `https://dash.cloudflare.com/argotunnel`.
 
 ## `pidfile`
 

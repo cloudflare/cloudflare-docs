@@ -2,7 +2,7 @@
 pcx_content_type: concept
 title: System requirements
 sidebar:
-  order: 3
+  order: 6
 ---
 
 import { Render, TabItem, Tabs, TunnelCalculator } from "~/components";
@@ -13,7 +13,7 @@ Our connector, `cloudflared`, was designed to be lightweight and flexible enough
 
 For most use cases, we recommend the following baseline configuration:
 
-- Run a [`cloudflared` replica](/cloudflare-one/connections/connect-networks/deploy-tunnels/deploy-cloudflared-replicas/#cloudflared-replicas) on two dedicated host machines per network location. Using two hosts enables server-side redundancy and traffic balancing.
+- Run a [`cloudflared` replica](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/#cloudflared-replicas) on two dedicated host machines per network location. Using two hosts enables server-side redundancy and traffic balancing.
 - Size each host with minimum 4GB of RAM and 4 CPU cores.
 - Allocate 50,000 [ports](#number-of-ports) to the `cloudflared` process on each host.
 
@@ -104,4 +104,4 @@ To calculate your tunnel capacity:
 
 <TunnelCalculator />
 
-You can use these results to determine if your tunnel is appropriately sized. To increase your tunnel capacity, add identical host machines running [`cloudflared` replicas](/cloudflare-one/connections/connect-networks/deploy-tunnels/deploy-cloudflared-replicas/#cloudflared-replicas).
+You can use these results to determine if your tunnel is appropriately sized. To increase your tunnel capacity, add identical host machines running [`cloudflared` replicas](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/#cloudflared-replicas).

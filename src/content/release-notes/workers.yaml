@@ -5,6 +5,9 @@ productLink: "/workers/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-02-26"
+    description: |-
+      - [Workers Builds](/workers/ci-cd/builds/) now supports building projects that use **pnpm 10** as the package manager. If your build previously failed due to this unsupported version, retry your build. No config changes needed.
   - publish_date: "2025-02-13"
     description: |-
       - [Smart Placement](/workers/configuration/smart-placement/) no longer runs Workers in the same location as D1 databases they are bound to. The same [placement logic](/workers/configuration/smart-placement/#understand-how-smart-placement-works) now applies to all Workers that use Smart Placement, regardless of whether they use D1 bindings.

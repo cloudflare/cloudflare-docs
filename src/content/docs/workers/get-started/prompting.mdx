@@ -1256,6 +1256,90 @@ function StateInterface() {
 </configuration>
 <key_points>
 
+- Imports the `Agent` class from the `agents-sdk` package
+- Extends the `Agent` class and implements the methods exposed by the `Agent`, including `onRequest` for HTTP requests, or `onConnect` and `onMessage` for WebSockets.
+- Uses the `this.schedule` scheduling API to schedule future tasks.
+- Uses the `this.setState` API within the Agent for syncing state, and uses type parameters to ensure the state is typed.
+- Uses the `this.sql` as a lower-level query API.
+- For frontend applications, uses the optional `useAgent` hook to connect to the Agent via WebSockets
+
+</key_points>
+</example>
+
+<example id="workers-ai-structured-outputs-json">
+<description>
+Workers AI supports structured JSON outputs with JSON mode, which supports the `response_format` API provided by the OpenAI SDK.
+</description>
+<code language="typescript">
+import { OpenAI } from "openai";
+
+interface Env {
+	OPENAI_API_KEY: string;
+}
+
+// Define your JSON schema for a calendar event
+const CalendarEventSchema = {
+  type: 'object',
+  properties: {
+    name: { type: 'string' },
+    date: { type: 'string' },
+    participants: { type: 'array', items: { type: 'string' } },
+  },
+  required: ['name', 'date', 'participants']
+};
+
+export default {
+	async fetch(request: Request, env: Env) {
+		const client = new OpenAI({
+			apiKey: env.OPENAI_API_KEY,
+			// Optional: use AI Gateway to bring logs, evals & caching to your AI requests
+			// https://developers.cloudflare.com/ai-gateway/providers/openai/
+			// baseUrl: "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai"
+		});
+
+		const response = await client.chat.completions.create({
+	    model: 'gpt-4o-2024-08-06',
+	    messages: [
+	      { role: 'system', content: 'Extract the event information.' },
+	      { role: 'user', content: 'Alice and Bob are going to a science fair on Friday.' },
+	    ],
+			// Use the `response_format` option to request a structured JSON output
+	    response_format: {
+				// Set json_schema and provide ra schema, or json_object and parse it yourself
+	      type: 'json_schema',
+	      schema: CalendarEventSchema, // provide a schema
+	    },
+	  });
+
+		// This will be of type CalendarEventSchema
+		const event = response.choices[0].message.parsed;
+
+		return Response.json({
+			"calendar_event": event,
+		})
+	}
+}
+</code>
+<configuration>
+{
+  "name": "my-app",
+	"main": "src/index.ts",
+  "compatibility_date": "$CURRENT_DATE",
+  "observability": {
+    "enabled": true
+  }
+}
+</configuration>
+<key_points>
+
+- Defines a JSON Schema compatible object that represents the structured format requested from the model
+- Sets `response_format` to `json_schema` and provides a schema to parse the response
+- This could also be `json_object`, which can be parsed after the fact.
+- Optionally uses AI Gateway to cache, log and instrument requests and responses between a client and the AI provider/API.
+
+</key_points>
+</example>
+
 </code_examples>
 
 <api_patterns>

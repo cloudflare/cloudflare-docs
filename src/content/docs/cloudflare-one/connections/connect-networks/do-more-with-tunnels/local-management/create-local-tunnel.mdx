@@ -1,8 +1,8 @@
 ---
-title: Create a locally-managed tunnel (CLI)
+title: Create a locally-managed tunnel
 pcx_content_type: how-to
 sidebar:
-  order: 2
+  order: 1
 ---
 
 import { Render, TabItem, Tabs } from "~/components";
@@ -129,7 +129,7 @@ cloudflared tunnel list
 
 ## 4. Create a configuration file
 
-1. In your `.cloudflared` directory, create a [`config.yml` file](/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/configuration-file/) using any text editor. This file will configure the tunnel to route traffic from a given origin to the hostname of your choice.
+1. In your `.cloudflared` directory, create a [`config.yml` file](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/configuration-file/) using any text editor. This file will configure the tunnel to route traffic from a given origin to the hostname of your choice.
 
 2. Add the following fields to the file:
 
@@ -194,7 +194,7 @@ cloudflared tunnel --config /path/your-config-file.yml run <UUID or NAME>
 
 :::note
 
-Cloudflare Tunnel can install itself as a system service on Linux and Windows and as a launch agent on macOS. For more information, refer to [run as a service](/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/as-a-service/).
+Cloudflare Tunnel can install itself as a system service on Linux and Windows and as a launch agent on macOS. For more information, refer to [run as a service](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/as-a-service/).
 
 :::
 

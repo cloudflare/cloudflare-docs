@@ -13,7 +13,10 @@ import { Tabs, TabItem, Badge, Render } from "~/components";
 
 [Access for Infrastructure](/cloudflare-one/applications/non-http/infrastructure-apps/) provides granular control over how users can connect to your SSH servers. This feature uses the same deployment model as [WARP-to-Tunnel](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-warp-to-tunnel/) but unlocks more policy options and command logging functionality.
 
-<Render file="access/short-lived-certs-intro" params={{ intro: "Furthermore, Access for Infrastructure replaces" }} />
+<Render
+	file="access/short-lived-certs-intro"
+	params={{ intro: "Furthermore, Access for Infrastructure replaces" }}
+/>
 
 ## 1. Connect the server to Cloudflare
 
@@ -31,8 +34,7 @@ To connect your devices to Cloudflare:
 
 ## 3. Route server IPs through WARP
 
-<Render file="tunnel/warp-to-tunnel-route-ips" params={{ one: "SSH server"}} />
-
+<Render file="tunnel/warp-to-tunnel-route-ips" params={{ one: "SSH server" }} />
 
 ## 4. Add a target
 
@@ -55,9 +57,11 @@ To generate a Cloudflare SSH CA and get its public key:
 <Render file="ssh/ssh-proxy-ca" />
 
 ### Save the public key
+
 <Render file="ssh/public-key" />
 
 ### Modify your SSHD config
+
 <Render file="ssh/modify-sshd" />
 
 :::note
@@ -66,9 +70,11 @@ For certain distributions, such as Amazon Linux 1 (based on RHEL), the certifica
 ```sh
 chmod 600 /etc/ssh/ca.pub
 ```
+
 :::
 
 ### Restart your SSH server
+
 <Render file="ssh/restart-server" />
 
 ## 7. Connect as a user
@@ -112,13 +118,13 @@ Cloudflare will stop logging SSH commands to your targets, as well as any comman
 To delete the SSH encryption public key using the [API](/api/resources/zero_trust/subresources/gateway/subresources/audit_ssh_settings/methods/update/):
 
 ```sh
-curl --request PUT https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/audit_ssh_settings \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+curl --request PUT https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/audit_ssh_settings \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "public_key": ""
 }'
 ```
+
 </TabItem>
 </Tabs>
 

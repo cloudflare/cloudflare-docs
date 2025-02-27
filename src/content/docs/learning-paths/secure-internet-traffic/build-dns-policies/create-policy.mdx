@@ -37,7 +37,7 @@ For more information, refer to [DNS policies](/cloudflare-one/policies/gateway/d
 To create a new DNS policy using cURL:
 
 ```sh
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
   --header 'Content-Type: application/json' \
   --header "Authorization: Bearer <API_TOKEN>" \
 	--data '{

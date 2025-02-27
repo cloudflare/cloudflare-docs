@@ -2,7 +2,7 @@
 pcx_content_type: concept
 title: Tunnel availability and failover
 sidebar:
-  order: 2
+  order: 4
 ---
 
 import { Details, GlossaryTooltip } from "~/components";
@@ -25,7 +25,7 @@ By design, replicas do not offer any level of traffic steering (random, hash, or
 
 To deploy multiple instances of `cloudflared`, you can create and configure one tunnel and run it on multiple hosts. If your tunnel runs as a service, only one `cloudflared` instance is allowed per host.
 
-<Details header="Via the dashboard">
+<Details header="Remotely-managed tunnels" open = {true} >
 
 1. To create a remotely-managed tunnel, follow the [dashboard setup guide](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/).
 2. On the **Tunnels** page, select your newly created tunnel. The **Connectors** section shows all of the `cloudflared` instances for that tunnel.
@@ -37,11 +37,11 @@ The new replica will appear on the **Connectors** list for the tunnel.
 
 </Details>
 
-<Details header="Via the command line">
+<Details header="Locally-managed tunnels">
 
-1. To create a locally-managed tunnel, complete Steps 1 through 5 in the [CLI setup guide](/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/).
+1. To create a locally-managed tunnel, complete Steps 1 through 5 in the [CLI setup guide](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/create-local-tunnel/).
 
-2. Next, run your newly created tunnel.
+2. Run your newly created tunnel.
 
    ```sh
    cloudflared tunnel run <NAME>
@@ -57,7 +57,7 @@ The new replica will appear on the **Connectors** list for the tunnel.
 
    This will initialize another `cloudflared` instance and generate another `connector_id`.
 
-4. Next, run `tunnel info` to show each `cloudflared` instance running your tunnel:
+4. Run `tunnel info` to show each `cloudflared` instance running your tunnel:
 
    ```sh
    cloudflared tunnel info <NAME>
@@ -71,7 +71,7 @@ You can run the same tunnel across various `cloudflared` processes for up to 100
 
 :::note[Deploy replicas with Kubernetes]
 
-For information about running `cloudflared` instances in a Kubernetes deployment, refer to our guides for tunnels managed [remotely via the dashboard](/cloudflare-one/connections/connect-networks/deploy-tunnels/deployment-guides/kubernetes/) or [locally via the CLI](/cloudflare-one/tutorials/many-cfd-one-tunnel/).
+For information about running `cloudflared` instances in a Kubernetes deployment, refer to our guides for tunnels managed [remotely via the dashboard](/cloudflare-one/connections/connect-networks/deployment-guides/kubernetes/) or [locally via the CLI](/cloudflare-one/tutorials/many-cfd-one-tunnel/).
 
 :::
 

@@ -11,7 +11,9 @@ sidebar:
 
 :::
 
-The tunnel [configuration file](/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/#4-create-a-configuration-file) allows you to have fine-grained control over how an instance of `cloudflared` will operate. In your configuration file, you can specify top-level properties for your `cloudflared` instance as well as configure [origin-specific properties](/cloudflare-one/connections/connect-networks/configure-tunnels/origin-configuration/). For a full list of configuration options, type `cloudflared tunnel help` in your terminal.
+Locally-managed tunnels run as an instance of `cloudflared` on your machine.  You can configure `cloudflared` properties by modifying [command line parameters](/cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/run-parameters/) or by editing the tunnel [configuration file](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/create-local-tunnel/#4-create-a-configuration-file).
+
+The CLI provides a quick way to handle configurations if you are connecting a single service through `cloudflared`. The tunnel configuration file is useful if you are connecting multiple services and need to configure properties or exceptions for specific origins. In the configuration file, you can define top-level properties for your `cloudflared` instance as well as [origin-specific properties](/cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/origin-parameters/). For a full list of configuration options, type `cloudflared tunnel help` in your terminal.
 
 In the absence of a configuration file, `cloudflared` will proxy outbound traffic through port `8080`.
 
@@ -115,7 +117,7 @@ ingress:
 
 ### Origin configuration
 
-If you need to proxy traffic to multiple origins within one instance of `cloudflared`, you can define the way `cloudflared` sends requests to each service by specifying [configuration options](/cloudflare-one/connections/connect-networks/configure-tunnels/origin-configuration/) as part of your ingress rules.
+If you need to proxy traffic to multiple origins within one instance of `cloudflared`, you can define the way `cloudflared` sends requests to each service by specifying [configuration options](/cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/origin-parameters/) as part of your ingress rules.
 
 In the following example, the top-level configuration `connectTimeout: 30s` sets a 30-second connection timeout for all services within that instance of `cloudflared`. The ingress rule for `service: localhost:8002` then configures an exception to the top-level configuration by setting `connectTimeout` for that service at `10s`. The 30-second connection timeout still applies to all other services.
 
@@ -169,7 +171,7 @@ Matched rule #3
 
 ## Update a configuration file
 
-When making changes to the configuration file for a given tunnel, we suggest relying on [`cloudflared` replicas](/cloudflare-one/connections/connect-networks/deploy-tunnels/deploy-cloudflared-replicas/) to propagate the new configuration with minimal downtime.
+When making changes to the configuration file for a given tunnel, we suggest relying on [`cloudflared` replicas](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/) to propagate the new configuration with minimal downtime.
 
 1. Have a `cloudflared` instance running with the original version of the configuration file.
 2. Start a `cloudflared` replica running with the updated version of the configuration file.
