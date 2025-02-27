@@ -27,6 +27,10 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 
 ## Advanced usage
 
+Navigate to `https://example.com`, first setting an additional HTTP request header and configuring the page size (`viewport`). Then, wait until there are no more than 2 network connections for at least 500 ms, or until the maximum timeout of 4500 ms is reached, before considering the page loaded and returning the rendered PDF document.
+
+The `goToOptions` parameter exposes most of [Puppeteer'd API](https://pptr.dev/api/puppeteer.gotooptions).
+
 ```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/pdf' \
   -H 'Authorization: Bearer <apiToken>' \
