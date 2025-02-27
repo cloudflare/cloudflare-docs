@@ -38,19 +38,19 @@ Access your Workers KV namespace from Cloudflare Workers using the Workers Bindi
 	export default {
 		async fetch(request, env, ctx): Promise<Response> {
 
-			//write a key-value pair
+			// write a key-value pair
 			await env.KV_BINDING.put('KEY', 'VALUE');
 
 			// read a key-value pair
 			const value = await env.KV_BINDING.get('KEY');
 
-			//list all key-value pairs
+			// list all key-value pairs
 			const allKeys = await env.KV_BINDING.list();
 
-			//delete a key-value pair
+			// delete a key-value pair
 			await env.KV_BINDING.delete('KEY');
 
-			//return a Workers response
+			// return a Workers response
 			return new Response(
 				JSON.stringify({
 					value: value,
@@ -82,6 +82,8 @@ Access your Workers KV namespace from Cloudflare Workers using the Workers Bindi
 		```
 	</TabItem>
 	</Tabs>
+
+Learn more about using [Workers KV's binding](/kv/concepts/kv-bindings/ from [Cloudflare Workers](/workers) with the full [binding API reference](/kv/api/read-key-value-pairs/). 
 </TabItem>
 <TabItem label="REST API">
 ```
@@ -98,10 +100,12 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/storage/kv/namesp
     -H "X-Auth-Email: $CLOUDFLARE_EMAIL" \
     -H "X-Auth-Key: $CLOUDFLARE_API_KEY"
 ```
+
+Learn more about using Workers KV's REST API from external services with the full [REST API reference](/api/resources/kv/subresources/namespaces/methods/list/). 
 </TabItem>
 </Tabs>
 
-Learn more about Workers KV [key concepts](/kv/concepts/how-kv-works/), or [get started](/kv/get-started/) with a Workers project.
+Learn more about Workers KV [key concepts](/kv/concepts/how-kv-works/), or [get started](/kv/get-started/) with a [Cloudflare Workers](/workers) project.
 
 ---
 
