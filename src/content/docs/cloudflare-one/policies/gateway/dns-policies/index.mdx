@@ -79,9 +79,9 @@ API value: `allow`
 
 Policies with Allow actions allow DNS queries to reach destinations you specify within the Selector and Value fields. For example, the following configuration allows DNS queries to reach domains we categorize as belonging to the Education content category:
 
-| Selector           | Operator | Value     | Action |
-| ------------------ | -------- | --------- | ------ |
-| Content Categories | in       | Education | Allow  |
+| Selector           | Operator | Value       | Action |
+| ------------------ | -------- | ----------- | ------ |
+| Content Categories | in       | _Education_ | Allow  |
 
 #### Disable DNSSEC validation
 
@@ -130,9 +130,9 @@ API value: `block`
 
 Policies with Block actions block DNS queries to reach destinations you specify within the Selector and Value fields. For example, the following configuration blocks DNS queries from reaching domains we categorize as belonging to the Adult Themes content category:
 
-| Selector           | Operator | Value        | Action |
-| ------------------ | -------- | ------------ | ------ |
-| Content Categories | in       | Adult Themes | Block  |
+| Selector           | Operator | Value          | Action |
+| ------------------ | -------- | -------------- | ------ |
+| Content Categories | in       | _Adult Themes_ | Block  |
 
 #### Custom block page
 
