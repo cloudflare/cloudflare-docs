@@ -991,6 +991,7 @@
 # radar
 /fundamentals/radar/ /radar/ 301
 /fundamentals/radar/glossary/ /radar/glossary/ 301
+/radar/changelog/ /radar/release-notes/ 301
 
 # railgun
 /railgun/user-guide/increase-logging/ /railgun/user-guide/troubleshooting/increase-logging/ 301
