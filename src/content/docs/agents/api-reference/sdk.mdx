@@ -1,5 +1,5 @@
 ---
-title: The Agent class
+title: Agents SDK API Reference
 pcx_content_type: concept
 sidebar:
   order: 1
@@ -8,7 +8,9 @@ sidebar:
 
 import { MetaInfo, Render, Type, TypeScriptExample, WranglerConfig } from "~/components";
 
-At its most basic, an Agent is a JavaScript class that extends the `Agent` class from the `agents-sdk` package. An Agent encapsulates all of the logic for an Agent, including how clients can connect to it, how it stores state, the methods it exposes, and any error handling.
+This page provides an overview of the Agent SDK API, including the `Agent` class, methods and properties built-in to the `agents-sdk`.
+
+An Agent is a JavaScript class that extends the `Agent` class from the `agents-sdk` package. An Agent encapsulates all of the logic for an Agent, including how clients can connect to it, how it stores state, the methods it exposes, and any error handling.
 
 <TypeScriptExample>
 
@@ -494,8 +496,6 @@ export default MyAgent;
 To learn more about how to manage state within an Agent, refer to the documentation on [managing and syncing state](/agents/api-reference/manage-and-sync-state/).
 
 :::
-
-
 
 ## Routing to Agents
 
