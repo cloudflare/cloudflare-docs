@@ -3,7 +3,6 @@ title: Challenge outcome
 pcx_content_type: Concept
 sidebar:
   order: 2
-head: []
 ---
 
 import { Render } from "~/components"
@@ -12,7 +11,7 @@ When a visitor encounters Turnstile, it assesses whether they are human or bot-l
 
 ## Metrics
 
-A "solved" Turnstile challenge does not automatically confirm the visitor is human. You must call the siteverify API to validate the token and proceed only if the response returns `success:true`.
+A "solved" Turnstile challenge does not automatically confirm the visitor is human. You must [call the siteverify API](#call-siteverify) to validate the token and proceed only if the response returns `success:true`.
 
 ![Challenge outcomes](~/assets/images/turnstile/challenge-outcomes.png)
 
