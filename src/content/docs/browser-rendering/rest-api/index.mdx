@@ -1,0 +1,23 @@
+---
+pcx_content_type: navigation
+title: REST API
+sidebar:
+  order: 2
+  group:
+    badge: Beta
+---
+
+The REST API is a RESTful interface that provides endpoints for common browser actions such as capturing screenshots, extracting HTML content, generating PDFs, and more.
+The following are the available options:
+
+import { DirectoryListing } from "~/components";
+
+<DirectoryListing />
+
+Use the REST API when you need a fast, simple way to perform common browser tasks such as capturing screenshots, extracting HTML, or generating PDFs without writing complex scripts. If you require more advanced automation, custom workflows, or persistent browser sessions, the [Workers Binding API](/browser-rendering/workers-binding-api/) is the better choice.
+
+## Before you begin
+
+Before you begin, make sure you [create a custom API Token](/fundamentals/api/get-started/create-token/) with the following permissions:
+
+- `Browser Rendering - Edit`

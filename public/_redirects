@@ -180,9 +180,9 @@
 /bots/reference/verified-bot-policy/ /bots/concepts/bot/verified-bots/policy/ 301
 
 #browser-rendering
-/browser-rendering/get-started/browser-rendering-with-do/ /browser-rendering/workers-binding-api/browser-rendering-with-do/ 301   
-/browser-rendering/get-started/reuse-sessions/ /browser-rendering/workers-binding-api/reuse-sessions/ 301 
-/browser-rendering/get-started/screenshots/ /browser-rendering/workers-binding-api/screenshots/ 301  
+/browser-rendering/get-started/browser-rendering-with-do/ /browser-rendering/workers-binding-api/browser-rendering-with-do/ 301
+/browser-rendering/get-started/reuse-sessions/ /browser-rendering/workers-binding-api/reuse-sessions/ 301
+/browser-rendering/get-started/screenshots/ /browser-rendering/workers-binding-api/screenshots/ 301
 
 # byoip
 /byoip/about/dynamic-advertisement/ /byoip/concepts/dynamic-advertisement/ 301
@@ -436,7 +436,7 @@
 /cloudflare-one/insights/email-monitoring/ /cloudflare-one/email-security/email-monitoring/ 301
 /cloudflare-one/insights/email-monitoring/search-email/ /cloudflare-one/email-security/email-monitoring/search-email/ 301
 /cloudflare-one/insights/email-monitoring/phish-submissions/ /cloudflare-one/email-security/phish-submissions/ 301
-/cloudflare-one/insights/email-monitoring/enable-logs/ /cloudflare-one/insights/logs/enable-logs/ 301 
+/cloudflare-one/insights/email-monitoring/enable-logs/ /cloudflare-one/insights/logs/enable-logs/ 301
 
 
 # firewall
@@ -1874,6 +1874,7 @@
 
 ### DYNAMIC REDIRECTS ###
 /changelog-next/* /changelog/:splat 301
+/browser-rendering/quick-actions-rest-api/* /browser-rendering/rest-api/:splat 301
 /*/sitemap.xml /sitemap-index.xml 301
 /access/configuring-identity-providers/* /cloudflare-one/identity/idp-integration/:splat 301
 /api-security/* /api-shield/:splat 301
