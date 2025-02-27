@@ -19,6 +19,7 @@ import {
 	RelatedProduct,
 	Tabs,
 	TabItem,
+	LinkButton
 } from "~/components";
 
 <Description>
@@ -48,23 +49,24 @@ export default {
 		// your database via Hyperdrive that can be used with your existing tools
 		const sql = postgres(env.HYPERDRIVE.connectionString);
 
-		try {
-			// Sample SQL query
-			const results = await sql`SELECT * FROM pg_tables`;
+    	try {
+    		// Sample SQL query
+    		const results = await sql`SELECT * FROM pg_tables`;
 
-			// Close the client after the response is returned
-			ctx.waitUntil(sql.end());
+    		// Close the client after the response is returned
+    		ctx.waitUntil(sql.end());
 
-			return Response.json(results);
-		} catch (e) {
-			return Response.json({ error: e instanceof Error ? e.message : e }, { status: 500 });
-		}
-	},
+    		return Response.json(results);
+    	} catch (e) {
+    		return Response.json({ error: e instanceof Error ? e.message : e }, { status: 500 });
+    	}
+    },
 } satisfies ExportedHandler<{ HYPERDRIVE: Hyperdrive }>;
 ```
+
     </TabItem>
     <TabItem label="wrangler.jsonc">
-```jsonc
+```json
 	{
 		"$schema": "node_modules/wrangler/config-schema.json",
 		"name": "WORKER-NAME",
@@ -89,7 +91,7 @@ export default {
 </TabItem>
 </Tabs>
 
-Get started [using Hyperdrive from a Workers application](/hyperdrive/get-started/).
+<LinkButton href="/hyperdrive/get-started/">Get started</LinkButton>
 
 </TabItem>
 </Tabs>
