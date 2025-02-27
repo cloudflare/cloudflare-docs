@@ -45,28 +45,30 @@ export default {
 		// write a key-value pair
 		await env.KV_BINDING.put('KEY', 'VALUE');
 
-		// read a key-value pair
-		const value = await env.KV_BINDING.get('KEY');
+    	// read a key-value pair
+    	const value = await env.KV_BINDING.get('KEY');
 
-		// list all key-value pairs
-		const allKeys = await env.KV_BINDING.list();
+    	// list all key-value pairs
+    	const allKeys = await env.KV_BINDING.list();
 
-		// delete a key-value pair
-		await env.KV_BINDING.delete('KEY');
+    	// delete a key-value pair
+    	await env.KV_BINDING.delete('KEY');
 
-		// return a Workers response
-		return new Response(
-			JSON.stringify({
-				value: value,
-				allKeys: allKeys,
-			}),
-		);
-	},
+    	// return a Workers response
+    	return new Response(
+    		JSON.stringify({
+    			value: value,
+    			allKeys: allKeys,
+    		}),
+    	);
+    },
+
 } satisfies ExportedHandler<{ KV_BINDING: KVNamespace }>;
 
-	```
+    ```
     </TabItem>
     <TabItem label="wrangler.jsonc">
+
 ```json
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
@@ -85,6 +87,7 @@ export default {
 	]
 }
 ```
+
     </TabItem>
     </Tabs>
 
@@ -144,7 +147,7 @@ See the full Workers KV [REST API and SDK reference](/api/resources/kv/subresour
 </TabItem>
 </Tabs>
 
-Learn more about Workers KV [key concepts](/kv/concepts/how-kv-works/), or [get started](/kv/get-started/) with a [Cloudflare Workers](/workers/) project.
+<LinkButton href="/kv/get-started/">Get started</LinkButton>
 
 ---
 
