@@ -1766,8 +1766,8 @@
 /cloudflare-one/connections/connect-networks/configure-tunnels/origin-configuration/ /cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/origin-parameters/ 301
 /cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/ /cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/run-parameters/ 301
 /cloudflare-one/connections/connect-networks/deploy-tunnels/system-requirements/ /cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/system-requirements/ 301
-/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/ /cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/ 301
-/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-with-firewall/ /cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-with-firewall/ 301
+/cloudflare-one/connections/connect-networks/deploy-tunnels/deploy-cloudflared-replicas/ /cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/ 301
+/cloudflare-one/connections/connect-networks/deploy-tunnels/tunnel-with-firewall/ /cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-with-firewall/ 301
 /cloudflare-one/connections/connect-networks/deploy-tunnels/ /cloudflare-one/connections/connect-networks/get-started/ 301
 /cloudflare-one/connections/connect-networks/monitor-tunnels/grafana/ /cloudflare-one/tutorials/grafana/ 301
 /cloudflare-one/connections/connect-networks/use-cases/kubectl/ /cloudflare-one/tutorials/many-cfd-one-tunnel/ 301
