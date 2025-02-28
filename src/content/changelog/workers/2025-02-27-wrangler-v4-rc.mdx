@@ -1,5 +1,5 @@
 ---
-title: Introducing Wrangler's v4 release candidate
+title: Use the latest JavaScript features with Wrangler CLI v4 — release candidate
 description: You can now try out the v4 RC for Wrangler by installing `wrangler@4.0.0-rc.0`
 products:
   - workers
@@ -8,26 +8,26 @@ date: 2025-02-27T11:00:00Z
 
 import { PackageManagers } from "~/components";
 
-TLDR: Try out the Wrangler v4 RC by installing via your favourite package manager:
+We've released a release candidate of the next major version of [Wrangler](/workers/wrangler/), the CLI for Cloudflare Workers — `wrangler@4.0.0-rc.0`. You can run the following command to install it and be one of the first to try it out:
 
 <PackageManagers pkg="wrangler@v4-rc" />
 
-Wrangler v3 was released in May 2023, and since then has seen amazing growth and usage—from just \~250,000 downloads a week back then to 1M+ now. It's time for the next chapter in Wrangler's journey: v4. This release will bring new features and unlock new possibilities for the developer platform. And for the vast majority of users, _no changes will be necessary to upgrade_—it'll be as simple as upgrading Wrangler.
+Unlike previous major versions of Wrangler, which were foundational rewrites and rearchitectures — Version 4 of Wrangler includes a much smaller set of changes. If you use Wrangler today, your workflow is very unlikely to change. Before we release Wrangler v4 and advance past the release candidate stage, we'll share a detailed migration guide in the Workers developer docs. But for the vast majority of cases, you won't need to do anything to migrate — things will just work as they do today.
 
-We're working on a detailed migration guide that will accompany the v4 release. In the meantime, here's a brief list of the changes to expect:
+Most notably, version 4 of Wrangler updates the version of [esbuild](https://esbuild.github.io/) that Wrangler uses internally, allowing you to use modern JavaScript language features, including:
 
-#### Changes
+- the [`using` keyword from the Explicit Resourece Management standard](https://github.com/tc39/proposal-explicit-resource-management), making it easier to work with the [JavaScript-native RPC system built into Workers](/workers/runtime-apis/rpc/).
+- import attributes
 
-- **Upgraded `esbuild` version**
-  A long-time highly-requested feature, this will now allow the use of more modern JavaScript features in Workers, including import attributes and `using` statements
+Version 4 also introduces the following changes:
 
-- **`--local` by default for all commands**
-  All commands that access resources (for example, `wrangler kv`, `wrangler r2`, `wrangler d1`) will now access local datastores by default
+- **`--local` is now the default for all CLI commands**
+  All commands that access resources (for example, `wrangler kv`, `wrangler r2`, `wrangler d1`) now access local datastores by default, ensuring consistent behavior, intended to reduce confusion
 
-- **Updated Node.js support policy**
-  Wrangler will now support the active, maintenance, and current versions of Node.js (currently v18+)
+- **Clearer policy for the minimum required version of Node.js required to run Wrangler**
+  Moving forward, the [active, maintenance, and current versions of Node.js](https://nodejs.org/en/about/previous-releases) will be officially supported. This means the minimum officially supported version of Node.js for Wrangler v4 will e Node.js v18 or later. This policy mirrors how many other packages and CLIs support older versions of Node.js, and ensures that as long as you are using a version of Node.js that the Node.js project itself supports, this will be supported by Wrangler as well.
 
-- **Deprecated features removed**
+- **Features previously deprecated in Wrangler v3 are now removed in Wrangler v4**
   All deprecated features will be removed from Wrangler, including
   - Arguments:
     - `wrangler dev/deploy --legacy-assets`
@@ -52,3 +52,5 @@ We're working on a detailed migration guide that will accompany the v4 release. 
     - `experimental_services`
     - `kv-namespaces`
     - `legacy_assets`
+
+We'd love your feedback, etc.
