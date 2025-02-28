@@ -7,7 +7,7 @@ product:
 
 meta:
   title: Cloudflare Email Security (formerly Area 1) docs
-  description: Cloudflare Email Security (formerly Area 1) is a cloud based service that stops phishing attacks, the biggest cybersecurity threat, across all traffic vectors - email, web and network.
+  description: Cloudflare Email Security is a cloud based service that stops phishing attacks, the biggest cybersecurity threat, across all traffic vectors - email, web and network.
   author: "@cloudflare"
 
 resources:
