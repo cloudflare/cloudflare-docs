@@ -37,7 +37,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 
 ```tf
 resource "cloudflare_zero_trust_gateway_policy" "all_http_application_blocklist" {
-  account_id     = var.account_id
+  account_id     = var.cloudflare_account_id
   name           = "All-HTTP-Application-Blocklist"
   description    = "Limit access to shadow IT by blocking web-based tools and applications"
   precedence     = 60

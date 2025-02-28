@@ -45,7 +45,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 
 ```tf
 resource "cloudflare_zero_trust_gateway_policy" "all_http_application_inspect_bypass" {
-  account_id  = var.account_id
+  account_id  = var.cloudflare_account_id
   name        = "All-HTTP-Application-InspectBypass"
   description = "Bypass HTTP inspection for applications that use embedded certificates"
   precedence  = 0
@@ -96,7 +96,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 
 ```tf
 resource "cloudflare_zero_trust_gateway_policy" "android_http_application_inspection_bypass" {
-  account_id  = var.account_id
+  account_id  = var.cloudflare_account_id
   name        = "Android-HTTP-Application-InspectionBypass"
   description = "Bypass HTTPS inspection for Android applications with certificate pinning"
   precedence  = 10
@@ -147,7 +147,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 
 ```tf
 resource "cloudflare_zero_trust_gateway_policy" "android_http_application_inspection_bypass" {
-  account_id  = var.account_id
+  account_id  = var.cloudflare_account_id
   name        = "All-HTTP-Domain-Inspection-Bypass"
   description = "Bypass HTTP inspection for a custom list of domains identified as incompatible with TLS inspection"
   precedence  = 20
@@ -196,7 +196,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 
 ```tf
 resource "cloudflare_zero_trust_gateway_policy" "all_http_security_risks_blocklist" {
-  account_id  = var.account_id
+  account_id  = var.cloudflare_account_id
   name        = "All-HTTP-SecurityRisks-Blocklist"
   description = "Block security categories based on Cloudflare's threat intelligence"
   precedence  = 30
@@ -262,7 +262,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 
 ```tf
 resource "cloudflare_zero_trust_gateway_policy" "all_http_domainhost_blocklist" {
-  account_id  = var.account_id
+  account_id  = var.cloudflare_account_id
   name        = "All-HTTP-DomainHost-Blocklist"
   description = "Block specific domains or hosts that are malicious or pose a threat to your organization"
   precedence  = 50
@@ -322,7 +322,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 
 ```tf
 resource "cloudflare_zero_trust_gateway_policy" "privileged_users_http_any_isolate" {
-  account_id  = var.account_id
+  account_id  = var.cloudflare_account_id
   name        = "PrivilegedUsers-HTTP-Any-Isolate"
   description = "Isolate traffic for privileged users who regularly access critical or testing systems"
   precedence  = 70
@@ -373,7 +373,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 
 ```tf
 resource "cloudflare_zero_trust_gateway_policy" "quarantined_users_http_restricted_access" {
-  account_id  = var.account_id
+  account_id  = var.cloudflare_account_id
   name        = "Quarantined-Users-HTTP-Restricted-Access"
   description = "Restrict access for users included in an identity provider (IdP) user group for risky users"
   precedence  = 80
@@ -424,7 +424,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 
 ```tf
 resource "cloudflare_zero_trust_gateway_policy" "all_http_domain_isolate" {
-  account_id  = var.account_id
+  account_id  = var.cloudflare_account_id
   name        = "All-HTTP-Domain-Isolate"
   description = "Isolate high risk domains or create a custom list of known risky domains to avoid data exfiltration or malware infection"
   precedence  = 90

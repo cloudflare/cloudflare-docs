@@ -3,20 +3,19 @@ title: Publish applications with Terraform
 pcx_content_type: overview
 sidebar:
   order: 1
-
 ---
 
-import { Details, Render } from "~/components"
+import { Details, Render } from "~/components";
 
 This guide covers how to use the [Cloudflare Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs) to quickly publish and secure a private application. In the following example, we will add a new public hostname route to an existing Cloudflare Tunnel, configure how `cloudflared` proxies traffic to the application, and secure the application with Cloudflare Access.
 
 ## Prerequisites
 
-* [Add your domain to Cloudflare](/learning-paths/zero-trust-web-access/initial-setup/add-site/)
-* [Configure an IdP integration](/learning-paths/zero-trust-web-access/initial-setup/configure-idp/)
-* [Create a Cloudflare Tunnel](/learning-paths/zero-trust-web-access/connect-private-applications/create-tunnel/#create-a-tunnel) via the Zero Trust dashboard
-* Install the [Terraform client](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
-* [Create an API token](https://developers.cloudflare.com/fundamentals/api/get-started/create-token/) (refer to the [minimum required permissions](/cloudflare-one/connections/connect-networks/deployment-guides/terraform/#3-create-a-cloudflare-api-token))
+- [Add your domain to Cloudflare](/learning-paths/zero-trust-web-access/initial-setup/add-site/)
+- [Configure an IdP integration](/learning-paths/zero-trust-web-access/initial-setup/configure-idp/)
+- [Create a Cloudflare Tunnel](/learning-paths/zero-trust-web-access/connect-private-applications/create-tunnel/#create-a-tunnel) via the Zero Trust dashboard
+- Install the [Terraform client](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
+- [Create an API token](https://developers.cloudflare.com/fundamentals/api/get-started/create-token/) (refer to the [minimum required permissions](/cloudflare-one/connections/connect-networks/deployment-guides/terraform/#3-create-a-cloudflare-api-token))
 
 ## 1. Create a Terraform configuration directory
 
@@ -80,7 +79,7 @@ Using the [`cloudflare_tunnel_config`](https://registry.terraform.io/providers/c
 
 ```txt
 resource "cloudflare_tunnel_config" "example_config" {
-  account_id = var.account_id
+  account_id = var.cloudflare_account_id
   tunnel_id  = var.tunnel_id
 
   config {
