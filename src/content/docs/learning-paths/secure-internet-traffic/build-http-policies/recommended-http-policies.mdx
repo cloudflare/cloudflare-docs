@@ -340,10 +340,53 @@ resource "cloudflare_zero_trust_gateway_policy" "privileged_users_http_any_isola
 
 <Render file="zero-trust/blocklist-restricted-users" />
 
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
 | Selector         | Operator    | Value                           | Logic | Action |
 | ---------------- | ----------- | ------------------------------- | ----- | ------ |
 | Destination IP   | not in list | _Quarantined-Users-IPAllowlist_ | And   | Block  |
 | User Group Names | in          | _Quarantined Users_             |       |        |
+
+</TabItem>
+<TabItem label="API">
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "Quarantined-Users-HTTP-Restricted-Access",
+  "description": "Restrict access for users included in an identity provider (IdP) user group for risky users",
+  "precedence": 80,
+  "enabled": true,
+  "action": "block",
+  "filters": [
+    "http"
+  ],
+  "traffic": "not(any(http.conn.dst_ip[*] in $<QUARANTINED_USERS_IP_ALLOWLIST_UUID>))",
+  "identity": "any(identity.groups.name[*] in {\"Quarantined Users\"})"
+}'
+```
+
+</TabItem>
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "quarantined_users_http_restricted_access" {
+  account_id  = var.account_id
+  name        = "Quarantined-Users-HTTP-Restricted-Access"
+  description = "Restrict access for users included in an identity provider (IdP) user group for risky users"
+  precedence  = 80
+  enabled     = true
+  action      = "block"
+  filters     = ["http"]
+  traffic     = "not(any(http.conn.dst_ip[*] in $<QUARANTINED_USERS_IP_ALLOWLIST_UUID>))"
+  identity    = "any(identity.groups.name[*] in {\"Quarantined Users\"})"
+}
+```
+
+</TabItem>
+</Tabs>
 
 ## All-HTTP-Domain-Isolate
 
