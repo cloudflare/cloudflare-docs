@@ -229,11 +229,52 @@ resource "cloudflare_zero_trust_gateway_policy" "all_http_security_risks_blockli
 	params={{ blocklistPolicyType: "HTTP" }}
 />
 
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
 | Selector | Operator      | Value              | Logic | Action |
 | -------- | ------------- | ------------------ | ----- | ------ |
 | Domain   | in list       | _Domain Blocklist_ | Or    | Block  |
 | Host     | in list       | _Host Blocklist_   | Or    |        |
 | Host     | matches regex | `.*example\.com`   |       |        |
+
+</TabItem>
+<TabItem label="API">
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "All-HTTP-DomainHost-Blocklist",
+  "description": "Block specific domains or hosts that are malicious or pose a threat to your organization",
+  "precedence": 50,
+  "enabled": true,
+  "action": "block",
+  "filters": [
+    "http"
+  ],
+  "traffic": "any(http.request.domains[*] in $<DOMAIN_BLOCKLIST_UUID>) or http.request.host in $<HOST_BLOCKLIST_UUID> or http.request.host matches \".*example\\.com\""
+}'
+```
+
+</TabItem>
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "all_http_domainhost_blocklist" {
+  account_id  = var.account_id
+  name        = "All-HTTP-DomainHost-Blocklist"
+  description = "Block specific domains or hosts that are malicious or pose a threat to your organization"
+  precedence  = 50
+  enabled     = true
+  action      = "block"
+  filters     = ["http"]
+  traffic     = "any(http.request.domains[*] in ${"$"}{cloudflare_zero_trust_list.domain_blocklist.id}) or http.request.host in ${"$"}{cloudflare_zero_trust_list.host_blocklist.id} or http.request.host matches \".*example\\.com\""
+}
+```
+
+</TabItem>
+</Tabs>
 
 ## All-HTTP-Application-Blocklist
 
