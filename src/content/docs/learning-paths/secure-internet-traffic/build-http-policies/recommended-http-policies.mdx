@@ -165,9 +165,50 @@ resource "cloudflare_zero_trust_gateway_policy" "android_http_application_inspec
 
 <Render file="zero-trust/blocklist-security-categories" />
 
-| Selector       | Operator | Value                | Action |
-| -------------- | -------- | -------------------- | ------ |
-| Security Risks | in       | _All security risks_ | Block  |
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector            | Operator | Value                | Action |
+| ------------------- | -------- | -------------------- | ------ |
+| Security Categories | in       | _All security risks_ | Block  |
+
+</TabItem>
+<TabItem label="API">
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "All-HTTP-SecurityRisks-Blocklist",
+  "description": "Block security categories based on Cloudflare's threat intelligence",
+  "precedence": 30,
+  "enabled": true,
+  "action": "block",
+  "filters": [
+    "http"
+  ],
+  "traffic": "any(http.request.uri.security_category[*] in {68 178 80 83 176 175 117 131 134 151 153})"
+}'
+```
+
+</TabItem>
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "all_http_security_risks_blocklist" {
+  account_id  = var.account_id
+  name        = "All-HTTP-SecurityRisks-Blocklist"
+  description = "Block security categories based on Cloudflare's threat intelligence"
+  precedence  = 30
+  enabled     = true
+  action      = "block"
+  filters     = ["http"]
+  traffic     = "any(http.request.uri.security_category[*] in {68 178 80 83 176 175 117 131 134 151 153})"
+}
+```
+
+</TabItem>
+</Tabs>
 
 ## All-HTTP-ContentCategories-Blocklist
 
