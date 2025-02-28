@@ -22,7 +22,7 @@ Version 4 of Wrangler updates the version of [esbuild](https://esbuild.github.io
 
 ##### The `using` keyword from Explicit Resource Management
 
-The [`using` keyword from the Explicit Resource Management standard](/workers/runtime-apis/rpc/lifecycle/#explicit-resource-management), making it easier to work with the [JavaScript-native RPC system built into Workers](/workers/runtime-apis/rpc/). This means that when you obtain a stub, you can ensure that it is automatically disposed when you exit scope it was created in:
+The [`using` keyword from the Explicit Resource Management standard](/workers/runtime-apis/rpc/lifecycle/#explicit-resource-management) makes it easier to work with the [JavaScript-native RPC system built into Workers](/workers/runtime-apis/rpc/). This means that when you obtain a stub, you can ensure that it is automatically disposed when you exit scope it was created in:
 
 ```js
 function sendEmail(id, message) {
