@@ -291,9 +291,50 @@ Isolate traffic for privileged users who regularly access critical systems or ex
 
 Security teams often need to perform threat analysis or malware testing that could trigger malware detection. Likewise, privileged users could be the target of attackers trying to gain access to critical systems.
 
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
 | Selector         | Operator | Value              | Action  |
 | ---------------- | -------- | ------------------ | ------- |
 | User Group Names | in       | _Privileged Users_ | Isolate |
+
+</TabItem>
+<TabItem label="API">
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "PrivilegedUsers-HTTP-Any-Isolate",
+  "description": "Isolate traffic for privileged users who regularly access critical or testing systems",
+  "precedence": 70,
+  "enabled": true,
+  "action": "isolate",
+  "filters": [
+    "http"
+  ],
+  "identity": "any(identity.groups.name[*] in {\"Privileged Users\"})"
+}'
+```
+
+</TabItem>
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "privileged_users_http_any_isolate" {
+  account_id  = var.account_id
+  name        = "PrivilegedUsers-HTTP-Any-Isolate"
+  description = "Isolate traffic for privileged users who regularly access critical or testing systems"
+  precedence  = 70
+  enabled     = true
+  action      = "isolate"
+  filters     = ["http"]
+  identity    = "any(identity.groups.name[*] in {\"Privileged Users\"})"
+}
+```
+
+</TabItem>
+</Tabs>
 
 ## Quarantined-Users-HTTP-Restricted-Access
 
