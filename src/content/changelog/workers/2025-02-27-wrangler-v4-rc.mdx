@@ -45,11 +45,11 @@ import data from "./data.json" with { type: "json" };
 
 ##### `--local` is now the default for all CLI commands
 
-All commands that access resources (for example, `wrangler kv`, `wrangler r2`, `wrangler d1`) now access local datastores by default, ensuring consistent behavior, intended to reduce confusion
+All commands that access resources (for example, `wrangler kv`, `wrangler r2`, `wrangler d1`) now access local datastores by default, ensuring consistent behavior.
 
 ##### Clearer policy for the minimum required version of Node.js required to run Wrangler
 
-Moving forward, the [active, maintenance, and current versions of Node.js](https://nodejs.org/en/about/previous-releases) will be officially supported. This means the minimum officially supported version of Node.js for Wrangler v4 will e Node.js v18 or later. This policy mirrors how many other packages and CLIs support older versions of Node.js, and ensures that as long as you are using a version of Node.js that the Node.js project itself supports, this will be supported by Wrangler as well.
+Moving forward, the [active, maintenance, and current versions of Node.js](https://nodejs.org/en/about/previous-releases) will be officially supported by Wrangler. This means the minimum officially supported version of Node.js you must have installed for Wrangler v4 will be Node.js v18 or later. This policy mirrors how many other packages and CLIs support older versions of Node.js, and ensures that as long as you are using a version of Node.js that the Node.js project itself supports, this will be supported by Wrangler as well.
 
 ##### Features previously deprecated in Wrangler v3 are now removed in Wrangler v4
 
