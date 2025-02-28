@@ -380,7 +380,7 @@ resource "cloudflare_zero_trust_gateway_policy" "quarantined_users_http_restrict
   enabled     = true
   action      = "block"
   filters     = ["http"]
-  traffic     = "not(any(http.conn.dst_ip[*] in $<QUARANTINED_USERS_IP_ALLOWLIST_UUID>))"
+  traffic     = "not(any(http.conn.dst_ip[*] in ${"$"}{cloudflare_zero_trust_list.quarantined_users_ip_allowlist.id}))"
   identity    = "any(identity.groups.name[*] in {\"Quarantined Users\"})"
 }
 ```
@@ -431,7 +431,7 @@ resource "cloudflare_zero_trust_gateway_policy" "all_http_domain_isolate" {
   enabled     = true
   action      = "isolate"
   filters     = ["http"]
-  traffic     = "any(http.request.uri.content_category[*] in {169 177}) or any(http.request.domains[*] in $<DOMAIN_ISOLATE_LIST_UUID>)"
+  traffic     = "any(http.request.uri.content_category[*] in {169 177}) or any(http.request.domains[*] in ${"$"}{cloudflare_zero_trust_list.domain_isolate_list.id})"
 }
 ```
 
