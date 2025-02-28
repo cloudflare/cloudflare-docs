@@ -53,32 +53,12 @@ Moving forward, the [active, maintenance, and current versions of Node.js](https
 
 ##### Features previously deprecated in Wrangler v3 are now removed in Wrangler v4
 
-The following features, previously deprecated over one year ago in Wrangler v3, now can no longer be used in Wrangler v4:
+All previously deprecated features in [Wrangler v2](https://developers.cloudflare.com/workers/wrangler/deprecations/#wrangler-v2) and in [Wrangler v3](https://developers.cloudflare.com/workers/wrangler/deprecations/#wrangler-v3) have now been removed. Additionally, the following features that were deprecated during the Wrangler v3 release lifecycle have been removed:
 
-(think these need a — instead do x...)
-
-  - Arguments:
-    - `wrangler dev/deploy --legacy-assets`
-    - `wrangler dev/deploy --format`
-  - Commands:
-    - `wrangler version`
-    - `wrangler publish`
-    - `wrangler generate`
-    - `wrangler config`
-    - `wrangler preview`
-    - `wrangler route`
-    - `wrangler subdomain`
-  - APIs
-    - `getBindingsProxy()`
-  - Config file properties
-    - `type`
-    - `webpack_config`
-    - `miniflare`
-    - `build.upload`
-    - `zone_id`
-    - `usage_model`
-    - `experimental_services`
-    - `kv-namespaces`
-    - `legacy_assets`
+- Legacy Assets (using `wrangler dev/deploy --legacy-assets` or the `legacy_assets` config file property). Instead, we recommend you [migrate to Workers assets](https://developers.cloudflare.com/workers/static-assets/).
+- Legacy Node.js compatibility (using `wrangler dev/deploy --node-compat` or the `node_compat` config file property). Instead, use the [`nodejs_compat` compatibility flag](https://developers.cloudflare.com/workers/runtime-apis/nodejs). This includes the functionality from legacy `node_compat` polyfills and natively implemented Node.js APIs.
+- `wrangler version`. Instead, use `wrangler --version` to check the current version of Wrangler.
+- `getBindingsProxy()` (via `import { getBindingsProxy } from "wrangler"`). Instead, use the [`getPlatformProxy()` API](https://developers.cloudflare.com/workers/wrangler/api/#getplatformproxy), which takes exactly the same arguments.
+- `usage_model`. This no longer has any effect, after the [rollout of Workers Standard Pricing](https://blog.cloudflare.com/workers-pricing-scale-to-zero/).
 
 We'd love your feedback! If you find a bug or hit a roadblock when upgrading to Wrangler v4, [open an issue on the `cloudflare/workers-sdk` repository on GitHub](https://github.com/cloudflare/workers-sdk/issues/new?template=bug-template.yaml).
