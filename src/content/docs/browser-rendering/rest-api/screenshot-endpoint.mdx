@@ -24,9 +24,11 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
   --output "screenshot.webp"
 ```
 
+For more options to control the final screenshot, like `clip`, `captureBeyondViewport`, `fullPage` and others, check the endpoint [reference](/api/resources/browser_rendering/subresources/screenshot/methods/create/).
+
 ## Advanced usage
 
-Navigate to `https://cloudflare.com/`, changing the page size and waiting until there are no active network connections or up to a maximum of `4500ms`. Then take a `fullPage` screenshot.
+Navigate to `https://cloudflare.com/`, changing the page size (`viewport`) and waiting until there are no active network connections (`waitUntil`) or up to a maximum of `4500ms` (`timeout`). Then take a `fullPage` screenshot.
 
 ```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/screenshot' \
@@ -36,7 +38,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
     "url": "https://cloudflare.com/",
     "screenshotOptions": {
        "fullPage": true,
-      "omitBackground": true,
+       "omitBackground": true,
     },
     "viewport": {
       "width": 1280,
@@ -52,6 +54,8 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 
 ## Customize CSS and embed custom JavaScript
 
+Instruct the browser to go to `https://example.com`, embed custom JavaScript (`addScriptTag`) and add extra styles (`addStyleTag`), both inline (`addStyleTag.content`) and by loading an external stylesheet (`addStyleTag.url`).
+
 ```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/screenshot' \
   -H 'Authorization: Bearer <apiToken>' \
@@ -59,7 +63,6 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
   -d '{
     "url": "https://example.com/",
     "addScriptTag": [
-     
       { "content": "document.querySelector(`h1`).innerText = `Hello World!!!`" }
     ],
     "addStyleTag": [
@@ -74,22 +77,4 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
   --output "screenshot.webp"
 ```
 
-## Parameters
-
-- `url` _(string)_ - The webpage URL to take a screenshot of.
-- `html` _(string)_ - Instead of a URL, allows rendering custom HTML for the screenshot.
-- `screenshotOptions` _(object)_ - Configures the screenshot format and quality.
-  - `omitBackground` _(boolean)_ - Removes the default white background when taking a screenshot.
-- `viewport` _(object)_ - Sets the browser viewport dimensions for rendering.
-  - `width` _(number)_ - Viewport width in pixels.
-  - `height` _(number)_ - Viewport height in pixels.
-- `gotoOptions` _(object)_ - Configures how and when the page is considered fully loaded.
-  - `waitUntil` _(string)_ - Defines when the browser considers navigation complete (`networkidle0`, `domcontentloaded`).
-    - `networkidle0` - Waits until there are no more than 0 network connections for at least 500 ms before taking a screenshot.
-  - `timeout` _(number)_ - Maximum wait time (in milliseconds) before navigation times out.
-- `addScriptTag` _(array of objects)_ - Injects JavaScript code before taking a screenshot.
-  - `url` _(string)_ - Loads an external script file before rendering.
-  - `content` _(string)_ - Runs inline JavaScript before rendering.
-- `addStyleTag` _(array of objects)_ - Injects CSS styles before rendering.
-  - `content` _(string)_ - Defines inline CSS rules.
-  - `url` _(string)_ - Loads external stylesheets before rendering.
+Many more options exist, like setting HTTP credentials using `authenticate`, setting `cookies`, and using `gotoOptions` to control page load behaviour - check the endpoint [reference](/api/resources/browser_rendering/subresources/screenshot/methods/create/) for all available parameters.

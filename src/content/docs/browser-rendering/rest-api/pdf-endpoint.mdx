@@ -19,7 +19,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
     "url": "https://example.com/",
     "addStyleTag": [
       { "content": "body { font-family: Arial; }" },
-       { "url": "https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" }
+      { "url": "https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" }
     ]
   }' \
   --output "output.pdf"
@@ -52,9 +52,9 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
   --output "advanced-output.pdf"
 ```
 
-## PDF with no images or CSS
+## Blocking images and styles when generating a PDF
 
-Use PDF with no images or CSS if you want to accelerate the scanning process and you do not need the images.
+The options `rejectResourceTypes` and `rejectRequestPattern` can be used to block requests. The opposite can also be done, _only_ allow certain requests using `allowResourceTypes` and `allowRequestPattern`.
 
 ```bash
 curl -X POST https://api.cloudflare.com/client/v4/accounts/<acccountID>/browser-rendering/pdf \
@@ -68,19 +68,22 @@ curl -X POST https://api.cloudflare.com/client/v4/accounts/<acccountID>/browser-
   --output "cloudflare.pdf"
 ```
 
-## Parameters
+## Generate PDF from custom HTML
 
-- `url` _(string)_ - The webpage URL to render as a PDF.
-- `addStyleTag` _(array of objects)_ - Injects custom CSS before generating the PDF.
-  - `content` _(string)_ - Inline CSS styles.
-  - `url` _(string)_ - URL of an external stylesheet.
-- `setExtraHTTPHeaders` _(object)_ - Adds custom HTTP headers when making the request.
-  - `X-Custom-Header` _(string)_ - Example of a custom header.
-- `viewport` _(object)_ - Defines the browser viewport size.
-  - `width` _(number)_ - Viewport width in pixels.
-  - `height` _(number)_ - Viewport height in pixels.
-- `gotoOptions` _(object)_ - Configures page navigation settings.
-  - `waitUntil` _(string)_ - Defines when the browser considers the page fully loaded.
-  - `timeout` _(number)_ - Maximum wait time before failing the request.
-- `rejectResourceTypes` _(array)_ - Blocks specific resource types to improve rendering performance.
-- `rejectRequestPattern` _(array of regex patterns)_ - Prevents loading of resources matching certain patterns.
+If you have HTML you'd like to generate a PDF from, the `html` option can be used. The option `addStyleTag` can be used to add custom styles.
+
+```bash
+curl -X POST https://api.cloudflare.com/client/v4/accounts/<acccountID>/browser-rendering/pdf \
+  -H 'Authorization: Bearer <apiToken>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "html": "<html><body>Advanced Snapshot</body></html>",
+	"addStyleTag": [
+      { "content": "body { font-family: Arial; }" },
+      { "url": "https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" }
+    ]
+}' \
+  --output "invoice.pdf"
+```
+
+Many more options exist, like setting HTTP credentials using `authenticate`, setting `cookies`, and using `gotoOptions` to control page load behaviour - check the endpoint [reference](/api/resources/browser_rendering/subresources/pdf/methods/create/) for all available parameters.
