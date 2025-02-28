@@ -392,7 +392,48 @@ resource "cloudflare_zero_trust_gateway_policy" "quarantined_users_http_restrict
 
 Isolate high risk domains or create a custom list of known risky domains to avoid data exfiltration or malware infection. Ideally, your incident response teams can update the blocklist with an [API automation](/security-center/intel-apis/) to provide real-time threat protection.
 
-| Selector           | Operator | Value                              | Logic | Action  |
-| ------------------ | -------- | ---------------------------------- | ----- | ------- |
-| Content Categories | in       | _New Domain_, _Newly Seen Domains_ | Or    | Isolate |
-| Domain             | in list  | _Domain Isolation_                 |       |         |
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector           | Operator | Value                               | Logic | Action  |
+| ------------------ | -------- | ----------------------------------- | ----- | ------- |
+| Content Categories | in       | _New Domains_, _Newly Seen Domains_ | Or    | Isolate |
+| Domain             | in list  | _Domain Isolation_                  |       |         |
+
+</TabItem>
+<TabItem label="API">
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "All-HTTP-Domain-Isolate",
+  "description": "Isolate high risk domains or create a custom list of known risky domains to avoid data exfiltration or malware infection",
+  "precedence": 90,
+  "enabled": true,
+  "action": "isolate",
+  "filters": [
+    "http"
+  ],
+  "traffic": "any(http.request.uri.content_category[*] in {169 177}) or any(http.request.domains[*] in $<DOMAIN_ISOLATE_LIST_UUID>)"
+}'
+```
+
+</TabItem>
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "all_http_domain_isolate" {
+  account_id  = var.account_id
+  name        = "All-HTTP-Domain-Isolate"
+  description = "Isolate high risk domains or create a custom list of known risky domains to avoid data exfiltration or malware infection"
+  precedence  = 90
+  enabled     = true
+  action      = "isolate"
+  filters     = ["http"]
+  traffic     = "any(http.request.uri.content_category[*] in {169 177}) or any(http.request.domains[*] in $<DOMAIN_ISOLATE_LIST_UUID>)"
+}
+```
+
+</TabItem>
+</Tabs>
