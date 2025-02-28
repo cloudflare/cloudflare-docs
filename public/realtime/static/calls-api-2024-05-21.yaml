@@ -373,14 +373,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ChangeTracksRequest"
+              $ref: "#/components/schemas/UpdateTracksRequest"
             examples:
               reuse_transceiver:
                 description: Reuse an existing transceiver for a new track
                 value:
                   tracks:
-                    some-track-name:
-                      location: "remote"
+                    - location: "remote"
                       sessionId: "2a45361d5fd7cc14eface0587c276c94"
                       trackName: "other-track-name"
                       mid: "7"
@@ -388,8 +387,7 @@ paths:
                 description: Reuse an existing transceiver with simulcast preferences
                 value:
                   tracks:
-                    trackID2:
-                      location: "remote"
+                    - location: "remote"
                       sessionId: "2a45361d5fd7cc14eface0587c276c94"
                       trackName: "simulcast-track"
                       mid: "8"
@@ -428,8 +426,7 @@ paths:
                   value:
                     requiresImmediateRenegotiation: false
                     tracks:
-                      trackID1:
-                        mid: "7"
+                      - mid: "7"
                         sessionId: "2a45361d5fd7cc14eface0587c276c94"
                         trackName: "new-track-name"
 
@@ -673,6 +670,16 @@ components:
           description: Map of track IDs to track objects for changing tracks
         sessionDescription:
           $ref: "#/components/schemas/SessionDescription"
+    UpdateTracksRequest:
+      type: object
+      properties:
+        tracks:
+          type: array
+          items:
+            $ref: "#/components/schemas/TrackObject"
+          description: Array of track objects for updating tracks
+        sessionDescription:
+          $ref: "#/components/schemas/SessionDescription"
     UpdateTracksResponse:
       type: object
       properties:
@@ -683,8 +690,8 @@ components:
         requiresImmediateRenegotiation:
           type: boolean
         tracks:
-          type: object
-          additionalProperties:
+          type: array
+          items:
             allOf:
               - $ref: "#/components/schemas/TrackObject"
               - properties:
@@ -692,4 +699,4 @@ components:
                     type: string
                   errorDescription:
                     type: string
-          description: Map of track IDs to track objects with results
+          description: Array of track objects with results
