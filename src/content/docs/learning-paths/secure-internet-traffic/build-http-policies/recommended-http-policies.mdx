@@ -115,10 +115,51 @@ resource "cloudflare_zero_trust_gateway_policy" "android_http_application_inspec
 
 Bypass HTTP inspection for a custom list of domains identified as incompatible with TLS inspection.
 
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
 | Selector | Operator | Value                    | Logic | Action         |
 | -------- | -------- | ------------------------ | ----- | -------------- |
 | Domain   | in list  | _DomainInspectionBypass_ | Or    | Do Not Inspect |
 | Domain   | in list  | _Known Domains_          |       |                |
+
+</TabItem>
+<TabItem label="API">
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "All-HTTP-Domain-Inspection-Bypass",
+  "description": "Bypass HTTP inspection for a custom list of domains identified as incompatible with TLS inspection",
+  "precedence": 20,
+  "enabled": true,
+  "action": "off",
+  "filters": [
+    "http"
+  ],
+  "traffic": "any(http.conn.domains[*] in $<DOMAIN_INSPECTION_BYPASS_LIST_UUID>) or any(http.conn.domains[*] in $<KNOWN_DOMAINS_LIST_UUID>)"
+}'
+```
+
+</TabItem>
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "android_http_application_inspection_bypass" {
+  account_id  = var.account_id
+  name        = "All-HTTP-Domain-Inspection-Bypass"
+  description = "Bypass HTTP inspection for a custom list of domains identified as incompatible with TLS inspection"
+  precedence  = 20
+  enabled     = true
+  action      = "off"
+  filters     = ["http"]
+  traffic     = "any(http.conn.domains[*] in ${"$"}{cloudflare_zero_trust_list.domain_inspection_bypass_list.id}) or any(http.conn.domains[*] in ${"$"}{cloudflare_zero_trust_list.known_domains_list.id})"
+}
+```
+
+</TabItem>
+</Tabs>
 
 ## All-HTTP-SecurityRisks-Blocklist
 
