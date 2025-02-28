@@ -15,7 +15,7 @@ import {
 	Render,
 	TabItem,
 	Tabs,
-	WranglerConfig
+	WranglerConfig,
 } from "~/components";
 
 Configuring a Worker with assets requires specifying a [directory](/workers/static-assets/binding/#directory) and, optionally, an [assets binding](/workers/static-assets/binding/), in your Worker's Wrangler file. The [assets binding](/workers/static-assets/binding/) allows you to dynamically fetch assets from within your Worker script (e.g. `env.ASSETS.fetch()`), similarly to how you might with a make a `fetch()` call with a [Service binding](/workers/runtime-apis/bindings/service-bindings/http/).
@@ -105,7 +105,7 @@ In the example above, assets would be available through `env.ASSETS`.
 
 **Parameters**
 
-- `request: Request` Pass a [Request object](/workers/runtime-apis/request/), URL string, or URL object. Requests made through this method have `html_handling` and `not_found_handling` configuration applied to them.
+- `request: Request | URL | string` Pass a [Request object](/workers/runtime-apis/request/), URL object, or URL string. Requests made through this method have `html_handling` and `not_found_handling` configuration applied to them.
 
 **Response**
 
@@ -113,7 +113,7 @@ In the example above, assets would be available through `env.ASSETS`.
 
 **Example**
 
-Your dynamic code can make new, or forward incoming, requests to your project's static assets using the assets binding.
+Your dynamic code can make new, or forward incoming requests to your project's static assets using the assets binding. For example, `env.ASSETS.fetch(request)`, `env.ASSETS.fetch(new URL('https://assets.local/my-file'))` or `env.ASSETS.fetch('https://assets.local/my-file')`.
 
 Take the following example that configures a Worker script to return a response under all requests headed for `/api/`. Otherwise, the Worker script will pass the incoming request through to the asset binding. In this case, because a Worker script is only invoked when the requested route has not matched any static assets, this will always evaluate [`not_found_handling`](/workers/static-assets/routing/#routing-configuration) behavior.
 

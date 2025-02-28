@@ -87,6 +87,22 @@ For more information, refer to the [Slack documentation](https://slack.com/help/
 
 For more information, refer to the [Dropbox documentation](https://help.dropbox.com/security/network-control).
 
+## Exempt users in Cloudflare WAF
+
+You can include custom headers in an HTTP policy to allow your users through [Cloudflare WAF](/waf/). This is useful for allowing only WARP users through your WAF.
+
+1. Create an Allow policy for an internal domain behind your WAF with a custom header.
+
+   | Selector | Operator | Value             | Action |
+   | -------- | -------- | ----------------- | ------ |
+   | Domain   | in       | `internalapp.com` | Allow  |
+
+   | Custom header name | Custom header value |
+   | ------------------ | ------------------- |
+   | `X-Example-Header` | `example-value`     |
+
+2. In Cloudflare WAF, [create a custom rule](/waf/custom-rules/) to [require the same HTTP header](/waf/custom-rules/use-cases/require-specific-headers/#example-2-require-http-header-with-a-specific-value).
+
 ## Use tenant control with Browser Isolation
 
 You can configure [Browser Isolation](/cloudflare-one/policies/browser-isolation/) to send custom headers. This is useful for implementing tenant control for isolated SaaS applications or sending arbitrary custom request headers to isolated websites.

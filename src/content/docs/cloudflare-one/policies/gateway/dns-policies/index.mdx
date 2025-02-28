@@ -21,7 +21,7 @@ When creating a DNS policy, you can select as many security risk categories and 
 
 <Render
 	file="gateway/response"
-	params={{ one: "query", two: "Source IP", three: "Resolved IP" }}
+	params={{ type: "query", example: "Source IP", example2: "Resolved IP" }}
 />
 
 ## Actions
@@ -79,9 +79,9 @@ API value: `allow`
 
 Policies with Allow actions allow DNS queries to reach destinations you specify within the Selector and Value fields. For example, the following configuration allows DNS queries to reach domains we categorize as belonging to the Education content category:
 
-| Selector           | Operator | Value     | Action |
-| ------------------ | -------- | --------- | ------ |
-| Content Categories | in       | Education | Allow  |
+| Selector           | Operator | Value       | Action |
+| ------------------ | -------- | ----------- | ------ |
+| Content Categories | in       | _Education_ | Allow  |
 
 #### Disable DNSSEC validation
 
@@ -130,9 +130,9 @@ API value: `block`
 
 Policies with Block actions block DNS queries to reach destinations you specify within the Selector and Value fields. For example, the following configuration blocks DNS queries from reaching domains we categorize as belonging to the Adult Themes content category:
 
-| Selector           | Operator | Value        | Action |
-| ------------------ | -------- | ------------ | ------ |
-| Content Categories | in       | Adult Themes | Block  |
+| Selector           | Operator | Value          | Action |
+| ------------------ | -------- | -------------- | ------ |
+| Content Categories | in       | _Adult Themes_ | Block  |
 
 #### Custom block page
 
@@ -346,6 +346,8 @@ Use this selector to filter DNS responses by their `TXT` records.
 ### Indicator Feeds
 
 <Render file="gateway/selectors/indicator-feeds" params={{ one: "dns" }} />
+
+<Render file="gateway/selectors/category-options" />
 
 ### Location
 

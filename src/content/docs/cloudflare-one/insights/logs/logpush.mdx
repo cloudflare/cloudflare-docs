@@ -35,19 +35,20 @@ You can configure multiple destinations and add additional fields to your logs b
 
 ## Zero Trust datasets
 
-Refer to the Logpush documentation for a list of available fields.
+Refer to [Logpush log fields](/logs/reference/log-fields/) for a list of all available fields.
 
-| Dataset                                                                         | Description                                                    |
-| ------------------------------------------------------------------------------- | -------------------------------------------------------------- |
-| [Gateway DNS](/logs/reference/log-fields/account/gateway_dns/)                  | DNS queries inspected by Cloudflare Gateway                    |
-| [Gateway HTTP](/logs/reference/log-fields/account/gateway_http/)                | HTTP requests inspected by Cloudflare Gateway                  |
-| [Gateway Network](/logs/reference/log-fields/account/gateway_network/)          | Network packets inspected by Cloudflare Gateway                |
-| [Audit Logs](/logs/reference/log-fields/account/audit_logs/)                    | Authentication events through Cloudflare Access                |
-| [Access Requests](/logs/reference/log-fields/account/access_requests/)          | HTTP requests to sites protected by Cloudflare Access          |
-| [CASB Findings](/logs/reference/log-fields/account/casb_findings/)              | Security issues detected by Cloudflare CASB                    |
-| [Device Posture](/logs/reference/log-fields/account/device_posture_results/)    | Device posture status from the WARP client                     |
-| [Session Logs](/logs/reference/log-fields/account/zero_trust_network_sessions/) | Network session logs for traffic proxied by Cloudflare Gateway |
-| [SSH Logs](/logs/reference/log-fields/account/ssh_logs/)                        | SSH command logs for [Access for Infrastructure targets](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) | 
+| Dataset                                                                                            | Description                                                                                                                                                 |
+| -------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Access Requests](/logs/reference/log-fields/account/access_requests/)                             | HTTP requests to sites protected by Cloudflare Access                                                                                                       |
+| [Audit Logs](/logs/reference/log-fields/account/audit_logs/)                                       | Authentication events through Cloudflare Access                                                                                                             |
+| [CASB Findings](/logs/reference/log-fields/account/casb_findings/)                                 | Security issues detected by Cloudflare CASB                                                                                                                 |
+| [Device Posture Results](/logs/reference/log-fields/account/device_posture_results/)               | Device posture status from the WARP client                                                                                                                  |
+| [DLP Forensic Copies](/logs/reference/log-fields/account/dlp_forensic_copies/)                     | Entire HTTP requests or payloads of HTTP requests captured by [Cloudflare DLP](/cloudflare-one/policies/data-loss-prevention/dlp-policies/logging-options/) |
+| [Gateway DNS](/logs/reference/log-fields/account/gateway_dns/)                                     | DNS queries inspected by Cloudflare Gateway                                                                                                                 |
+| [Gateway HTTP](/logs/reference/log-fields/account/gateway_http/)                                   | HTTP requests inspected by Cloudflare Gateway                                                                                                               |
+| [Gateway Network](/logs/reference/log-fields/account/gateway_network/)                             | Network packets inspected by Cloudflare Gateway                                                                                                             |
+| [SSH Logs](/logs/reference/log-fields/account/ssh_logs/)                                           | SSH command logs for [Access for Infrastructure targets](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/)             |
+| [Zero Trust Network Session Logs](/logs/reference/log-fields/account/zero_trust_network_sessions/) | Network session logs for traffic proxied by Cloudflare Gateway                                                                                              |
 
 ## Parse DNS logs
 

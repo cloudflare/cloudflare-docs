@@ -1,0 +1,12 @@
+---
+pcx_content_type: reference
+title: Supported model types
+sidebar:
+  order: 3
+---
+
+AI Gateway's Guardrails detects the type of AI model being used and applies safety checks accordingly:
+
+- **Text generation models**: Both prompts and responses are evaluated.
+- **Embedding models**: Only the prompt is evaluated, as the response consists of numerical embeddings, which are not meaningful for moderation.
+- **Unknown models**: If the model type cannot be determined, only the prompt is evaluated, while the response bypass Guardrails.

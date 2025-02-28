@@ -3,10 +3,9 @@ pcx_content_type: how-to
 title: Validate JWTs
 sidebar:
   order: 1
-
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip } from "~/components";
 
 When Cloudflare sends a request to your origin, the request will include an [application token](/cloudflare-one/identity/authorization-cookie/application-token/) as a `Cf-Access-Jwt-Assertion` request header and as a `CF_Authorization` cookie.
 
@@ -22,9 +21,9 @@ You can also manually rotate the key using the [API](/api/resources/zero_trust/s
 
 As shown in the example below, `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/certs` contains two public keys: the current key used to sign all new tokens, and the previous key that has been rotated out.
 
-* `keys`: both keys in JWK format
-* `public_cert`: current key in PEM format
-* `public_certs`: both keys in PEM format
+- `keys`: both keys in JWK format
+- `public_cert`: current key in PEM format
+- `public_certs`: both keys in PEM format
 
 ```txt
 {
@@ -65,9 +64,8 @@ As shown in the example below, `https://<your-team-name>.cloudflareaccess.com/cd
 
 :::note[Avoid key rotation issues]
 
-
-* Validate tokens using the external endpoint rather than saving the public key as a hard-coded value.
-* Do not fetch the current key from `public_cert`, since your origin may inadvertently read an expired value from an outdated cache. Instead, match the `kid` value in the JWT to the corresponding certificate in `public_certs`.
+- Validate tokens using the external endpoint rather than saving the public key as a hard-coded value.
+- Do not fetch the current key from `public_cert`, since your origin may inadvertently read an expired value from an outdated cache. Instead, match the `kid` value in the JWT to the corresponding certificate in `public_certs`.
   :::
 
 ## Verify the JWT manually
@@ -175,10 +173,10 @@ func main() {
 
 `pip` install the following:
 
-* flask
-* requests
-* PyJWT
-* cryptography
+- flask
+- requests
+- PyJWT
+- cryptography
 
 ```python
 from flask import Flask, request
@@ -251,8 +249,8 @@ if __name__ == '__main__':
 ### JavaScript example
 
 ```javascript
-const express = require('express');
-const jose = require('jose');
+const express = require("express");
+const jose = require("jose");
 
 // The Application Audience (AUD) tag for your application
 const AUD = process.env.POLICY_AUD;
@@ -265,33 +263,36 @@ const JWKS = jose.createRemoteJWKSet(new URL(CERTS_URL));
 
 // verifyToken is a middleware to verify a CF authorization token
 const verifyToken = async (req, res, next) => {
-  const token = req.headers['cf-access-jwt-assertion'];
+	const token = req.headers["cf-access-jwt-assertion"];
 
-  // Make sure that the incoming request has our token header
-  if (!token) {
-    return res.status(403).send({
-      status: false,
-      message: 'missing required cf authorization token',
-    });
-  }
+	// Make sure that the incoming request has our token header
+	if (!token) {
+		return res.status(403).send({
+			status: false,
+			message: "missing required cf authorization token",
+		});
+	}
 
-  const result = await jose.jwtVerify(token, JWKS, {
-    issuer: TEAM_DOMAIN,
-    audience: AUD,
-  });
+	const result = await jose.jwtVerify(token, JWKS, {
+		issuer: TEAM_DOMAIN,
+		audience: AUD,
+	});
 
-  req.user = result.payload;
-  next();
+	req.user = result.payload;
+	next();
 };
 
 const app = express();
 
 app.use(verifyToken);
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
+app.get("/", (req, res) => {
+	res.send("Hello World!");
 });
 
 app.listen(3333);
-
 ```
+
+## Related resources
+
+- [Verifying JWTs in Cloudflare Workers](https://kinde.com/blog/engineering/verifying-jwts-in-cloudflare-workers/) - Implement JWT verification in Cloudflare Workers.

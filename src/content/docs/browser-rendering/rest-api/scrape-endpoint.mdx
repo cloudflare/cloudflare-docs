@@ -1,0 +1,81 @@
+---
+pcx_content_type: how-to
+title: Scrape HTML elements
+sidebar:
+  order: 7
+---
+
+The `/scrape` endpoint extracts structured data from specific elements on a webpage, returning details such as element dimensions and inner HTML.
+
+## Basic usage
+
+```bash
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/scrape' \
+  -H 'Authorization: Bearer <apiToken>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "url": "https://example.com/",
+  "elements": [{
+    "selector": "h1"
+  },
+  {
+    "selector": "a"
+  }]
+}
+```
+
+### JSON response
+
+```json title="json response"
+{
+	"success": true,
+	"result": [
+		{
+			"results": [
+				{
+					"attributes": [],
+					"height": 39,
+					"html": "Example Domain",
+					"left": 100,
+					"text": "Example Domain",
+					"top": 133.4375,
+					"width": 600
+				}
+			],
+			"selector": "h1"
+		},
+		{
+			"results": [
+				{
+					"attributes": [
+						{ "name": "href", "value": "https://www.iana.org/domains/example" }
+					],
+					"height": 20,
+					"html": "More information...",
+					"left": 100,
+					"text": "More information...",
+					"top": 249.875,
+					"width": 142
+				}
+			],
+			"selector": "a"
+		}
+	]
+}
+```
+
+## Parameters
+
+- `url` _(string)_ - The webpage to extract data from.
+- `elements` _(object)_ - Defines the elements to extract from the page.
+  - `selectors` _(array of strings)_ - List of CSS selectors identifying elements to scrape (e.g., `"h1"`, `".article"`).
+
+### Response fields
+
+- `results` _(array of objects)_ - Contains extracted data for each selector.
+  - `selector` _(string)_ - The CSS selector used.
+  - `results` _(array of objects)_ - List of extracted elements matching the selector.
+    - `text` _(string)_ - Inner text of the element.
+    - `html` _(string)_ - Inner HTML of the element.
+    - `attributes` _(array of objects)_ - List of extracted attributes such as `href` for links.
+    - `height`, `width`, `top`, `left` _(number)_ - Position and dimensions of the element.

@@ -1,0 +1,86 @@
+---
+pcx_content_type: how-to
+title: Render PDF
+sidebar:
+  order: 5
+---
+
+The `/pdf` endpoint instructs the browser to render the webpage as a PDF document.
+
+## Basic usage
+
+Navigate to `https://example.com/` and inject custom CSS and an external stylesheet. Then return the rendered page as a PDF.
+
+```bash
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/pdf' \
+  -H 'Authorization: Bearer <apiToken>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "url": "https://example.com/",
+    "addStyleTag": [
+      { "content": "body { font-family: Arial; }" },
+       { "url": "https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" }
+    ]
+  }' \
+  --output "output.pdf"
+```
+
+## Advanced usage
+
+Navigate to `https://example.com`, first setting an additional HTTP request header and configuring the page size (`viewport`). Then, wait until there are no more than 2 network connections for at least 500 ms, or until the maximum timeout of 4500 ms is reached, before considering the page loaded and returning the rendered PDF document.
+
+The `goToOptions` parameter exposes most of [Puppeteer'd API](https://pptr.dev/api/puppeteer.gotooptions).
+
+```bash
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/pdf' \
+  -H 'Authorization: Bearer <apiToken>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "url": "https://example.com/",
+    "setExtraHTTPHeaders": {
+      "X-Custom-Header": "value"
+    },
+    "viewport": {
+      "width": 1200,
+      "height": 800
+    },
+    "gotoOptions": {
+      "waitUntil": "networkidle2",
+      "timeout": 45000
+    }
+  }' \
+  --output "advanced-output.pdf"
+```
+
+## PDF with no images or CSS
+
+Use PDF with no images or CSS if you want to accelerate the scanning process and you do not need the images.
+
+```bash
+curl -X POST https://api.cloudflare.com/client/v4/accounts/<acccountID>/browser-rendering/pdf \
+  -H 'Authorization: Bearer <apiToken>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "url": "https://cloudflare.com/",
+  "rejectResourceTypes": ["image"],
+  "rejectRequestPattern": ["/^.*\\.(css)"]
+}' \
+  --output "cloudflare.pdf"
+```
+
+## Parameters
+
+- `url` _(string)_ - The webpage URL to render as a PDF.
+- `addStyleTag` _(array of objects)_ - Injects custom CSS before generating the PDF.
+  - `content` _(string)_ - Inline CSS styles.
+  - `url` _(string)_ - URL of an external stylesheet.
+- `setExtraHTTPHeaders` _(object)_ - Adds custom HTTP headers when making the request.
+  - `X-Custom-Header` _(string)_ - Example of a custom header.
+- `viewport` _(object)_ - Defines the browser viewport size.
+  - `width` _(number)_ - Viewport width in pixels.
+  - `height` _(number)_ - Viewport height in pixels.
+- `gotoOptions` _(object)_ - Configures page navigation settings.
+  - `waitUntil` _(string)_ - Defines when the browser considers the page fully loaded.
+  - `timeout` _(number)_ - Maximum wait time before failing the request.
+- `rejectResourceTypes` _(array)_ - Blocks specific resource types to improve rendering performance.
+- `rejectRequestPattern` _(array of regex patterns)_ - Prevents loading of resources matching certain patterns.

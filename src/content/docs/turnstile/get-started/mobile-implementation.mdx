@@ -13,13 +13,13 @@ Any modifications to the environment, such as the User Agent, [Content Security 
 
 ## WebView configurations
 
-Turnstile requires specific WebView settings to function properly. For Android implementations, refer to [`setJavaScriptEnabled`](https://developer.android.com/reference/android/webkit/WebSettings#setJavaScriptEnabled(boolean)) to tell the WebView to enable JavaScript execution and [`setDomStorageEnabled`](https://developer.android.com/reference/android/webkit/WebSettings#setDomStorageEnabled(boolean)) to enable the DOM storage API. 
+Turnstile requires specific WebView settings to function properly. For Android implementations, refer to [`setJavaScriptEnabled`](https://developer.android.com/reference/android/webkit/WebSettings#setJavaScriptEnabled(boolean)) to tell the WebView to enable JavaScript execution and [`setDomStorageEnabled`](https://developer.android.com/reference/android/webkit/WebSettings#setDomStorageEnabled(boolean)) to enable the DOM storage API.
 
 These settings ensure that the mobile WebView can properly load and execute the Turnstile challenge. If these configurations are missing, Turnstile may malfunction.
 
 ## Update allowed origins
 
-In addition to ensuring proper WebView settings, if you have allowed origins configured, it is essential to update the list to include: 
+In addition to ensuring proper WebView settings, if you have allowed origins configured, it is essential to update the list to include:
 
 ```txt
 
@@ -32,11 +32,11 @@ challenges.cloudflare.com, about:blank, about:srcdoc
 Only [React Native](https://github.com/react-native-webview/react-native-webview/blob/master/docs/Reference.md#originwhitelist) contains the allowed origins above by default.
 :::
 
-Without this, Turnstile challenges might fail to load. WebView should also be configured to allow insecure connections (`http` and `https`). 
+Without this, Turnstile challenges might fail to load. WebView should also be configured to allow insecure connections (`http` and `https`).
 
 ## Maintain a consistent user agent
 
-When implementing Turnstile with WebViews, the user agent must stay consistent as changing the user agent will cause the challenges to fail. 
+When implementing Turnstile with WebViews, the user agent must stay consistent as changing the user agent will cause the challenges to fail.
 
 ## Use clearance cookies
 

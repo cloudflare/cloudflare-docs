@@ -15,6 +15,10 @@
             "value": "true"
         },
         {
+            "property_id": "context_window",
+            "value": "32000"
+        },
+        {
             "property_id": "info",
             "value": "https://huggingface.co/qwen/qwen1.5-1.8b-chat"
         }

@@ -2,9 +2,35 @@
 import type { Props } from "@astrojs/starlight/props";
 import Default from "@astrojs/starlight/components/TableOfContents.astro";
 
+import { Icon } from "@astrojs/starlight/components";
 import FeedbackPrompt from "../FeedbackPrompt.tsx";
 ---
 
 <Default {...Astro.props} />
+{
+	!Astro.url.pathname.startsWith("/support/") && (
+		<>
+			<br />
+			<div class="flex gap-2">
+				{Astro.props.editUrl && (
+					<a
+						href={Astro.props.editUrl}
+						class="h-8 cursor-pointer content-center rounded bg-cl1-brand-orange px-4 text-sm font-medium text-cl1-black"
+					>
+						<Icon name="pencil" />
+						Edit
+					</a>
+				)}
+				<a
+					href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose"
+					class="h-8 cursor-pointer content-center rounded bg-cl1-brand-orange px-4 text-sm font-medium text-cl1-black"
+				>
+					<Icon name="github" />
+					Issue
+				</a>
+			</div>
+		</>
+	)
+}
 <br />
 <FeedbackPrompt client:idle />

@@ -2,7 +2,7 @@
 {}
 ---
 
-For IPsec tunnels, the value you need to specify depends on how your network is set up. The MSS clamping value will be lower than for GRE tunnels, however, since the physical interface will see IPsec-encrypted packets, not TCP packets, and MSS clamping will not apply to those.
+For IPsec tunnels, the value you need to specify depends on how your network is set up. The MSS clamping value will be lower than for GRE tunnels, however, since the physical interface will see IPsec-encrypted [packets](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/), not TCP packets, and MSS clamping will not apply to those.
 
 - **Magic Transit ingress-only traffic (DSR):**
 

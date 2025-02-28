@@ -26,13 +26,48 @@ Dynamic `import()` statements do not work inside `export default { ... }` handle
 
 Durable Object alarms are not reset between test runs and do not respect isolated storage. Ensure you delete or run all alarms with [`runDurableObjectAlarm()`](/workers/testing/vitest-integration/test-apis/#durable-objects) scheduled in each test before finishing the test.
 
-### Durable Objects and `isolatedStorage`
+### WebSockets
 
 Using WebSockets with Durable Objects with the [`isolatedStorage`](/workers/testing/vitest-integration/isolation-and-concurrency) flag turned on is not supported. You must set `isolatedStorage: false` in your `vitest.config.ts` file.
 
-### Returning non-primitive values from RPC methods
+### Isolated storage
 
-In order to return non-primitive values (objects or classes extending `RpcTarget`, for instance) from RPC methods, you must use the `using` keyword. Refer to [https://developers.cloudflare.com/workers/runtime-apis/rpc/lifecycle#explicit-resource-management](https://developers.cloudflare.com/workers/runtime-apis/rpc/lifecycle#explicit-resource-management) for more details. An [example test](https://github.com/cloudflare/workers-sdk/tree/main/fixtures/vitest-pool-workers-examples/rpc/test/unit.test.ts#L155) is included in the `workers-sdk` repository.
+When the `isolatedStorage` flag is enabled (the default), the test runner will undo any writes to the storage at the end of the test as detailed in the [isolation and concurrency documentation](/workers/testing/vitest-integration/isolation-and-concurrency/). However, Cloudflare recommends that you consider the following actions to avoid any common issues:
+
+## Await all storage operations
+
+Always `await` all `Promise`s that read or write to storage services.
+
+```ts
+// Example: Seed data
+beforeAll(async () => {
+	await env.KV.put('message', 'test message');
+	await env.R2.put('file', 'hello-world');
+});
+```
+
+## Explicitly signal resource disposal
+
+When calling RPC methods of a Service Worker or Durable Object that return non-primitive values (such as objects or classes extending `RpcTarget`), use the `using` keyword to explicitly signal when resources can be disposed of. See [this example test](https://github.com/cloudflare/workers-sdk/tree/main/fixtures/vitest-pool-workers-examples/rpc/test/unit.test.ts#L155) and refer to [explicit-resource-management](/workers/runtime-apis/rpc/lifecycle#explicit-resource-management) for more details.
+
+```ts
+using result = await stub.getCounter();
+```
+
+## Consume response bodies
+
+When making requests via `fetch` or `R2.get()`, consume the entire response body, even if you are not asserting its content. For example:
+
+```ts 
+test('check if file exists', async () => {
+	await env.R2.put('file', 'hello-world');
+	const response = await env.R2.get('file');
+
+	expect(response).not.toBe(null);
+	// Consume the response body even if you are not asserting it
+	await response.text()
+});
+```
 
 ### Module resolution
 

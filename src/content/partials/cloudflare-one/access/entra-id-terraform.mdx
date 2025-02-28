@@ -1,0 +1,18 @@
+---
+{}
+---
+
+
+```tf
+resource "cloudflare_zero_trust_access_identity_provider" "microsoft_entra_id" {
+	account_id = var.cloudflare_account_id
+	name       = "Entra ID example"
+	type       = "azureAD"
+	config {
+		client_id                  = var.entra_id_client_id
+		client_secret              = var.entra_id_client_secret
+		directory_id               = var.entra_id_directory_id
+		support_groups             = true
+	}
+}
+```

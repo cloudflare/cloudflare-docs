@@ -16,7 +16,7 @@ const sidebars = new Map<string, Group>();
 
 export async function getSidebar(context: AstroGlobal<Props>) {
 	const pathname = context.url.pathname;
-	const segments = pathname.split("/").slice(1, -1);
+	const segments = pathname.split("/").filter(Boolean);
 
 	const product = segments.at(0);
 
@@ -96,9 +96,14 @@ function setSidebarCurrentEntry(
 	pathname: string,
 ): boolean {
 	for (const entry of sidebar) {
-		if (entry.type === "link" && entry.href === pathname) {
-			entry.isCurrent = true;
-			return true;
+		if (entry.type === "link") {
+			const href = entry.href;
+
+			// Compare with and without trailing slash
+			if (href === pathname || href.slice(0, -1) === href) {
+				entry.isCurrent = true;
+				return true;
+			}
 		}
 
 		if (

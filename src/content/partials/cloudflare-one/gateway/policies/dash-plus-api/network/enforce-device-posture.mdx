@@ -41,8 +41,8 @@ To get the UUIDs of your device posture checks, use the [List device posture rul
 <TabItem label="Terraform">
 
 ```tf
-resource "cloudflare_zero_trust_gateway_policy" "dns_resolvedip_blocklist_rule" {
-  account_id  = var.account_id
+resource "cloudflare_zero_trust_gateway_policy" "all_net_applicationaccess_allow" {
+  account_id  = var.cloudflare_account_id
   name        = "All-NET-ApplicationAccess-Allow"
   description = "Ensure access to the application comes from authorized WARP clients"
   precedence  = 5000

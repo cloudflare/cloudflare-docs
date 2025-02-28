@@ -1,5 +1,5 @@
 ---
-title: Build agents on Cloudflare
+title: Build Agents on Cloudflare
 type: overview
 pcx_content_type: overview
 sidebar:
@@ -15,6 +15,7 @@ import {
 	Feature,
 	LinkButton,
 	LinkTitleCard,
+	PackageManagers,
 	Plan,
 	RelatedProduct,
 	Render,
@@ -22,482 +23,48 @@ import {
 	Tabs,
 } from "~/components";
 
-Build AI-powered agents that can autonomously perform tasks, persist state, browse the web, and communicate back to users in real-time over any channel.
+Build and deploy AI-powered Agents on Cloudflare that can autonomously perform tasks, communicate with clients in real time, persist state, execute long-running and repeat tasks on a schedule, send emails, run asynchronous workflows, browse the web, query data from your Postgres database, call AI models, support human-in-the-loop use-cases, and more.
 
-- **Serverless inference that scales up _and_ down**: run AI directly on Cloudflare, without worrying about pre-provisioning VMs at peak, and worrying about utilization. Call the latest open-source models on [Workers AI](/workers-ai/), and pay just for what you use.
-- **Non I/O bound pricing:** don't pay for long-running processes when your code is not executing. Cloudflare Workers is designed to scale down and [only charge you for CPU time](https://blog.cloudflare.com/workers-pricing-scale-to-zero/), as opposed to wall-clock time.
-- **Designed for durable execution:** [Durable Objects](/durable-objects/) and [Workflows](/workflows) are built for a programming model that enables guaranteed execution for async tasks like long-running deep thinking LLM calls, human-in-the-loop, or unreliable API calls.
-- **Scalable, and reliable, without compromising on performance:** by running on Cloudflare's network, agents can execute tasks close to the user without introducing latency for real-time experiences.
+#### Ship your first Agent
 
-## Start building
-
-<Tabs syncKey="agents-products">
-<TabItem label="Workflows">
-
-Build agents that can execute complex tasks, progressively save state, and call out to _any_ third party API they need to using [Workflows](/workflows/). Send emails or [text messages](/workflows/examples/twilio/), [browse the web](/browser-rendering/), process and summarize documents, and/or query your database.
+Use the agent started template to create your first Agent with the `agents-sdk`:
 
 ```sh
-npm create cloudflare@latest workflows-starter -- --template "cloudflare/workflows-starter"
-cd workflows-starter
-npm i resend
+# install it
+npm create cloudflare@latest agents-starter -- --template=cloudflare/agents-starter
+# and deploy it
+npx wrangler@latest deploy
 ```
 
-```ts collapse={30-1000}
-import { WorkflowEntrypoint, WorkflowStep, WorkflowEvent } from 'cloudflare:workers';
-import { Resend } from 'resend';
+Head to the guide on [building a chat agent](/agents/getting-started/build-a-chat-agent) to learn how to build and deploy an Agent to prod.
 
-type Env = {
-  MY_WORKFLOW: Workflow;
-  RESEND_API_KEY: string;
-};
-
-type Params = {
-  email: string;
-  metadata: Record<string, string>;
-};
-
-export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
-  async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
-
-    const files = await step.do('my first step', async () => {
-      // Fetch a list of files from $SOME_SERVICE
-      return {
-        files: [
-          'doc_7392_rev3.pdf',
-          'report_x29_final.pdf',
-          'memo_2024_05_12.pdf',
-          'file_089_update.pdf',
-          'proj_alpha_v2.pdf',
-          'data_analysis_q2.pdf',
-          'notes_meeting_52.pdf',
-          'summary_fy24_draft.pdf',
-        ],
-      };
-    });
-
-    const summaries = await step.do('summarize text', async () => {
-      const results = {};
-      for (const filename of files.files) {
-        const fileContent = await this.env.MY_BUCKET.get(filename);
-        if (!fileContent) continue;
-
-        const text = await fileContent.text();
-        const summary = await this.env.WORKERS_AI.run('@cf/meta/llama-3.2-3b-instruct', {
-          messages: [{
-            role: 'user',
-            content: `Please summarize the following text concisely: ${text}`
-          }]
-        });
-        results[filename] = summary.response;
-      }
-      return results;
-    });
-
-    await step.sleep('wait on something', '1 minute');
-
-    let summaryKey = await step.do(
-      'store summaries in R2',
-      async () => {
-        const summaryKey = `summaries-${Date.now()}.json`;
-        await this.env.MY_BUCKET.put(summaryKey, JSON.stringify(summaries));
-        return summaryKey;
-      },
-    );
-
-    await step.do(
-      'email summaries',
-      {
-        retries: {
-          limit: 3,
-          delay: '5 second',
-          backoff: 'exponential',
-        }
-      },
-      async () => {
-        const summaryText = Object.entries(summaries)
-          .map(([filename, summary]) => `${filename}:\n${summary}\n\n`)
-          .join('');
-
-        const resend = new Resend(this.env.RESEND_API_KEY);
-
-        await resend.emails.send({
-          from: 'notifications@yourdomain.com',
-          to: event.payload.email,
-          subject: 'Your Document Summaries',
-          text: summaryText,
-        });
-      }
-    );
-
-    return summaryKey;
-  }
-}
-
-export default {
-  async fetch(req: Request, env: Env): Promise<Response> {
-    let id = new URL(req.url).searchParams.get('instanceId');
-
-    if (id) {
-      let instance = await env.MY_WORKFLOW.get(id);
-      return Response.json({
-        status: await instance.status(),
-      });
-    }
-
-    let instance = await env.MY_WORKFLOW.create();
-    return Response.json({
-      id: instance.id,
-      details: await instance.status(),
-    });
-  },
-};
-```
-
-</TabItem>
-<TabItem label="Durable Objects">
-
-Use [Durable Objects](/durable-objects/) — stateful, serverless, long-running micro-servers — to ship interactive, real-time agents that can connect to the latest AI models.
-
-Stream responses over [WebSockets](/durable-objects/best-practices/websockets/), and don't time out while waiting for the latest chain-of-thought models — including `o1` or `deepseek-r1` — to respond.
-
-```ts
-npm i openai
-```
-
-```ts collapse={30-1000}
-import { DurableObject } from "cloudflare:workers";
-
-export interface Env {
-  DURABLE_AGENT: DurableObjectNamespace<DurableAgent>;
-  OPENAI_API_KEY: string;
-}
-
-export default {
-  async fetch(request: Request, env: Env, ctx: ExecutionContext) {
-    if (request.url.endsWith("/agent/chat")) {
-      const upgradeHeader = request.headers.get("Upgrade");
-      if (!upgradeHeader || upgradeHeader !== "websocket") {
-        return Response.json(
-          { error: "Durable Object expected Upgrade: websocket" },
-          { status: 426 }
-        );
-      }
-
-      const url = new URL(request.url);
-      const agentId = url.searchParams.get("id") || (await crypto.randomUUID());
-
-      let id = env.DURABLE_AGENT.idFromName(agentId);
-      let agent = env.DURABLE_AGENT.get(id);
-
-      return agent.fetch(request);
-    }
-
-    return Response.json({ message: "Bad Request" }, { status: 400 });
-  },
-};
-
-export class DurableAgent extends DurableObject {
-  constructor(private state: DurableObjectState, private env: Env) {
-    super();
-  }
-
-  async fetch(request: Request): Promise<Response> {
-    const webSocketPair = new WebSocketPair();
-    const [client, server] = Object.values(webSocketPair);
-
-    this.ctx.acceptWebSocket(server);
-
-    return new Response(null, {
-      status: 101,
-      webSocket: client,
-    });
-  }
-
-  async webSocketMessage(ws: WebSocket, message: ArrayBuffer | string) {
-    try {
-      const openai = new OpenAI({
-        apiKey: this.env.OPENAI_API_KEY,
-        timeout: 10 * 60 * 1000, // Don't let it think TOO long.
-      });
-
-      // Stream the response to immediately start sending chunks to the client,
-      // rather than buffering the entire response and making the user wait
-      const stream = await openai.chat.completions.create({
-        model: "o1",
-        messages: [{ role: "user", content: message.toString() }],
-        stream: true,
-      });
-
-      for await (const chunk of stream) {
-        const content = chunk.choices[0]?.delta?.content;
-        if (content) {
-          ws.send(content);
-        }
-      }
-    } catch (error) {
-      ws.send(
-        JSON.stringify({
-          error: "OpenAI request failed",
-          message: error.message,
-        })
-      );
-    }
-  }
-
-  async webSocketClose(ws: WebSocket, code: number, reason: string, wasClean: boolean) {
-    ws.close(code, "Durable Object is closing WebSocket");
-  }
-}
-```
-
-</TabItem>
-<TabItem label="Browser Rendering">
-
-Use the [Browser Rendering API](/browser-rendering/) to allow your agents to search the web, take screenshots, and directly interact with websites.
+If you're already building on [Workers](/workers/), you can install the `agents-sdk` package directly into an existing project:
 
 ```sh
-npm install @cloudflare/puppeteer --save-dev
+npm i agents-sdk
 ```
 
-```ts collapse={30-1000}
-import puppeteer from "@cloudflare/puppeteer";
+Dive into the [Agent SDK reference](/agents/api-reference/sdk/) to learn more about how to use the `agents-sdk` package and defining an `Agent`.
 
-interface Env {
-  MYBROWSER: Fetcher;
-  BROWSER_KV_DEMO: KVNamespace;
-}
+#### Why build agents on Cloudflare?
 
-export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
-    const { searchParams } = new URL(request.url);
-    const url = searchParams.get("url");
+We built the `agents-sdk` with a few things in mind:
 
-    if (!url) {
-      return new Response("Please add an ?url=https://example.com/ parameter");
-    }
+- **Batteries (state) included**: Agents come with [built-in state management](/agents/examples/manage-and-sync-state/), with the ability to automatically sync state between an Agent and clients, trigger events on state changes, and read+write to each Agent's SQL database.
+- **Communicative**: You can connect to an Agent via [WebSockets](/agents/examples/websockets/) and stream updates back to client in real-time. Handle a long-running response from a reasoning model, the results of an [asynchronous workflow](/agents/examples/run-workflows/), or build a chat app that builds on the `useAgent` hook included in the `agents-sdk`.
+- **Extensible**: Agents are code. Use the [AI models](/agents/examples/using-ai-models/) you want, bring-your-own headless browser service, pull data from your database hosted in another cloud, add your own methods to your Agent and call them.
 
-    const normalizedUrl = new URL(url).toString();
-    let img = await env.BROWSER_KV_DEMO.get(normalizedUrl, { type: "arrayBuffer" });
-
-    if (img === null) {
-      const browser = await puppeteer.launch(env.MYBROWSER);
-      const page = await browser.newPage();
-      await page.goto(normalizedUrl);
-      img = await page.screenshot() as Buffer;
-
-      await env.BROWSER_KV_DEMO.put(normalizedUrl, img, {
-        expirationTtl: 60 * 60 * 24, // 24 hours
-      });
-
-      await browser.close();
-    }
-
-    return new Response(img, {
-      headers: {
-        "content-type": "image/jpeg",
-      },
-    });
-  },
-};
-```
-
-</TabItem>
-<TabItem label="AI Gateway">
-
-Use [AI Gateway](/ai-gateway/) to cache, log, retry and run [evals](/ai-gateway/evaluations/) (evaluations) for your agents, no matter where they're deployed.
-
-```py collapse={30-1000}
-from anthropic import Anthropic
-
-anthropic = Anthropic(
-    api_key="<your_anthropic_api_key>",
-    # Route, cache, fallback and log prompt-response pairs between your app
-    # and your AI model provider.
-    base_url="https://gateway.ai.cloudflare.com/v1/${accountId}/${gatewayId}/anthropic"
-)
-
-message = anthropic.messages.create(
-    model="claude-3-opus-20240229",
-    max_tokens=1000,
-    messages=[{
-        "role": "user",
-        "content": "Generate a Cloudflare Worker that returns a simple JSON payload based on a query param",
-    }]
-)
-
-print(message.content)
-```
-
-</TabItem>
-</Tabs>
-
-## Use your favorite AI framework
-
-Build agents using your favorite AI frameworks, and deploy it directly to [Cloudflare Workers](/workers/).
-
-<Tabs syncKey="agents-frameworks">
-<TabItem label="LangChain">
-
-Use [LangChain](https://js.langchain.com/docs/integrations/text_embedding/cloudflare_ai/) to build Retrieval-Augmented Generation (RAG) applications using [Workers AI](/workers-ai/) and [Vectorize](/vectorize/).
-
-Give your agents more context and the ability to search across content, reply to user queries, and expand their domain knowledge.
-
-```sh
-npm i @langchain/cloudflare hono
-```
-
-```ts collapse={30-1000}
-import {
-  CloudflareVectorizeStore,
-  CloudflareWorkersAIEmbeddings
-} from "@langchain/cloudflare";
-import { VectorizeIndex } from "@cloudflare/workers-types";
-import { Ai } from "@cloudflare/ai";
-import { Hono } from "hono";
-
-export interface Env {
-  VECTORIZE_INDEX: VectorizeIndex;
-  AI: Ai;
-}
-
-const app = new Hono<{ Bindings: Env }>();
-
-app.get("/", async (c) => {
-  const embeddings = new CloudflareWorkersAIEmbeddings({
-    binding: c.env.AI,
-    model: "@cf/baai/bge-small-en-v1.5",
-  });
-
-  const store = new CloudflareVectorizeStore(embeddings, {
-    index: c.env.VECTORIZE_INDEX,
-  });
-
-  const results = await store.similaritySearch("hello", 5);
-  return c.json(results);
-});
-
-app.post("/load", async (c) => {
-  const embeddings = new CloudflareWorkersAIEmbeddings({
-    binding: c.env.AI,
-    model: "@cf/baai/bge-small-en-v1.5",
-  });
-
-  const store = new CloudflareVectorizeStore(embeddings, {
-    index: c.env.VECTORIZE_INDEX,
-  });
-
-  const documents = [
-    { pageContent: "hello", metadata: {} },
-    { pageContent: "world", metadata: {} },
-    { pageContent: "hi", metadata: {} }
-  ];
-
-  await store.addDocuments(documents, {
-    ids: ["id1", "id2", "id3"]
-  });
-
-  return c.json({ success: true });
-});
-
-app.delete("/clear", async (c) => {
-  const embeddings = new CloudflareWorkersAIEmbeddings({
-    binding: c.env.AI,
-    model: "@cf/baai/bge-small-en-v1.5",
-  });
-
-  const store = new CloudflareVectorizeStore(embeddings, {
-    index: c.env.VECTORIZE_INDEX,
-  });
-
-  await store.delete({ ids: ["id1", "id2", "id3"] });
-  return c.json({ success: true });
-});
-
-export default app;
-```
-
-</TabItem>
-<TabItem label="AI SDK">
-
-Ship faster with the [AI SDK](https://sdk.vercel.ai/docs/introduction): make it easier to generate text, tool call and/or get structured output from your AI models (and then deploy it to [Workers](/workers/)).
-
-```sh
-npm i ai workers-ai-provider
-```
-
-```ts collapse={30-1000}
-import { createWorkersAI } from 'workers-ai-provider';
-import { streamText } from 'ai';
-
-type Env = {
-  AI: Ai;
-};
-
-export default {
-  async fetch(_: Request, env: Env) {
-    const workersai = createWorkersAI({ binding: env.AI });
-    const result = streamText({
-      model: workersai('@cf/meta/llama-3.2-3b-instruct'),
-      prompt: 'Write short essay on why you like Cloudflare Durable Objects.',
-    });
-
-    return result.toTextStreamResponse({
-      headers: {
-        'Content-Type': 'text/x-unknown',
-        'content-encoding': 'identity',
-        'transfer-encoding': 'chunked',
-      },
-    });
-  },
-};
-```
-
-</TabItem>
-<TabItem label="OpenAI SDK">
-
-Use any model provider with OpenAI compatible endpoints, including [ChatGPT](https://platform.openai.com/docs/quickstart), [DeepSeek](https://api-docs.deepseek.com/) and [Workers AI](/workers-ai/configuration/open-ai-compatibility/), directly from Cloudflare Workers.
-
-```sh
-npm i openai
-```
-
-```ts collapse={30-1000}
-import OpenAI from "openai";
-
-export interface Env {
-  OPENAI_API_KEY: string;
-}
-
-export default {
-  async fetch(request: Request, env: Env) {
-    const url = new URL(request.url);
-    const prompt = url.searchParams.get('prompt') || "Make some robot noises";
-
-    const openai = new OpenAI({
-      apiKey: env.OPENAI_API_KEY
-    });
-
-    const chatCompletion = await openai.chat.completions.create({
-      messages: [{ role: "user", content: prompt }],
-      model: "gpt-3.5-turbo",
-    });
-
-    const embeddings = await openai.embeddings.create({
-      model: "text-embedding-ada-002",
-      input: "Cloudflare Agents documentation",
-    });
-
-    return new Response(JSON.stringify({ chatCompletion, embeddings }));
-  }
-}
-```
-
-</TabItem>
-</Tabs>
+Agents built with `agents-sdk` can be deployed directly to Cloudflare and run on top of [Durable Objects](/durable-objects/) — which you can think of as stateful micro-servers that can scale to tens of millions — and are able to run wherever they need to. Run your Agents close to a user for low-latency interactivity, close to your data for throughput, and/or anywhere in between.
 
 ***
 
-## All the products you need in one platform
+#### Build on the Cloudflare Platform
+
+<RelatedProduct header="Workers" href="/workers/" product="workers">
+
+Build serverless applications and deploy instantly across the globe for exceptional performance, reliability, and scale.
+
+</RelatedProduct>
 
 <RelatedProduct header="AI Gateway" href="/ai-gateway/" product="ai-gateway">
 
@@ -514,12 +81,6 @@ Build full-stack AI applications with Vectorize, Cloudflare’s vector database.
 <RelatedProduct header="Workers AI" href="/workers-ai/" product="workers-ai">
 
 Run machine learning models, powered by serverless GPUs, on Cloudflare's global network.
-
-</RelatedProduct>
-
-<RelatedProduct header="Calls" href="/calls/" product="calls">
-
-Build real-time serverless video, audio and data applications with WebRTC running on Cloudflare's network.
 
 </RelatedProduct>
 

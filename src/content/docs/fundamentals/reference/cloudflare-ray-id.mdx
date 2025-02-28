@@ -8,7 +8,6 @@ A **Cloudflare Ray ID** is an identifier given to every request that goes throug
 Ray IDs are particularly useful when evaluating Security Events for patterns or false positives or more generally understanding your application traffic.
 
 :::caution
-
 Ray IDs are not guaranteed to be unique for every request. In some situations, different requests may have the same Ray ID.
 :::
 
@@ -16,13 +15,13 @@ Ray IDs are not guaranteed to be unique for every request. In some situations, d
 
 ### Security events
 
-All customers can view Ray IDs and associated information — IP address, user agent, ASN, etc. — by looking through the [Activity Log](/waf/analytics/security-events/) in Security Events.
+All customers can view Ray IDs and associated information — IP address, user agent, ASN, etc. — by looking through [sampled logs](/waf/analytics/security-events/#sampled-logs) in Security Events.
 
-![Example list of events in the Activity log, with one of the events expanded to show its details](~/assets/images/waf/events-activity-log.png)
+![Example list of events in sampled logs, with one of the events expanded to show its details](~/assets/images/waf/events-sampled-logs.png)
 
-Additionally, you can [add filters](/waf/analytics/security-events/paid-plans/#adjusting-displayed-data) to look for specific Ray IDs.
+Additionally, you can [add filters](/waf/analytics/security-events/#adjust-displayed-data) to look for specific Ray IDs.
 
-![Example of adding a new filter in Security Events for the Allow action](~/assets/images/waf/events-add-filter-free.png)
+![Example of adding a new filter in Security Events for the Block action](~/assets/images/waf/events-add-filter.png)
 
 Please note that Security Events may use sampled data to improve performance. If sampled data is applied to your search, you might not see all events, and filters might not return the expected results. To display more events, select a smaller timeframe.
 
