@@ -216,10 +216,12 @@ class_name = "RAGWorkflow"
 
 </WranglerConfig>
 
-In `src/index.js`, add a new class called `RAGWorkflow` that extends `Workflow`:
+In `src/index.js`, add a new class called `RAGWorkflow` that extends `WorkflowEntrypoint`:
 
 ```js
-export class RAGWorkflow {
+import { WorkflowEntrypoint } from "cloudflare:workers";
+
+export class RAGWorkflow extends WorkflowEntrypoint {
 	async run(event, step) {
 		await step.do('example step', async () => {
 			console.log("Hello World!")
@@ -268,14 +270,17 @@ Now, we can update our workflow to begin adding notes to our database, and gener
 This example features the [`@cf/baai/bge-base-en-v1.5` model](/workers-ai/models/bge-base-en-v1.5/), which can be used to create an embedding. Embeddings are stored and retrieved inside [Vectorize](/vectorize/), Cloudflare's vector database. The user query is also turned into an embedding so that it can be used for searching within Vectorize.
 
 ```js
-export class RAGWorkflow {
+import { WorkflowEntrypoint } from "cloudflare:workers";
+
+export class RAGWorkflow extends WorkflowEntrypoint {
 	async run(event, step) {
-		const { text } = event.params
+		const env = this.env
+		const { text } = event.payload
 
 		const record = await step.do(`create database record`, async () => {
 			const query = "INSERT INTO notes (text) VALUES (?) RETURNING *"
 
-			const { results } = await env.DATABASE.prepare(query)
+			const { results } = await env.DB.prepare(query)
 				.bind(text)
 				.run()
 
@@ -510,7 +515,7 @@ console.log(output) // [{ pageContent: 'Some long piece of text...' }]
 To use this splitter, we'll update the workflow to split the text into smaller chunks. We'll then iterate over the chunks and run the rest of the workflow for each chunk of text:
 
 ```js
-export class RAGWorkflow {
+export class RAGWorkflow extends WorkflowEntrypoint {
 	async run(event, step) {
 		const env = this.env
 		const { text } = event.payload;
@@ -527,7 +532,7 @@ export class RAGWorkflow {
 			const record = await step.do(`create database record: ${index}/${texts.length}`, async () => {
 				const query = "INSERT INTO notes (text) VALUES (?) RETURNING *"
 
-				const { results } = await env.DATABASE.prepare(query)
+				const { results } = await env.DB.prepare(query)
 					.bind(text)
 					.run()
 
