@@ -1,0 +1,69 @@
+---
+pcx_content_type: how-to
+title: Waku
+head: []
+description: Create a Waku application and deploy it to Cloudflare Workers with Workers Assets.
+---
+
+import {
+	Badge,
+	Description,
+	InlineBadge,
+	Render,
+	PackageManagers,
+} from "~/components";
+
+In this guide, you will create a new [Waku](https://waku.gg/) application and deploy to Cloudflare Workers (with the new [<InlineBadge preset="beta" /> Workers Assets](/workers/static-assets/)). Waku is a minimal React framework built for [React 19](https://react.dev/blog/2024/12/05/react-19) and [React Server Components](https://react.dev/reference/rsc/server-components). The use of server components is completely optional. It can be configured to run server components during build and output static html or it can be configured to run with dynamic React server rendering. It is built on top of [Hono](https://hono.dev/) and [Vite](https://vite.dev/).
+
+## 1. Set up a new project
+
+Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up a new project. C3 will create a new project directory, initiate Waku's official setup tool, and provide the option to deploy instantly.
+
+To use `create-cloudflare` to create a new Waku project with <InlineBadge preset="beta" /> Workers Assets, run the following command:
+
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest my-waku-app"
+	args={"--framework=waku --experimental"}
+/>
+
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		category: "web-framework",
+		framework: "Waku",
+	}}
+/>
+
+After setting up your project, change your directory by running the following command:
+
+```sh
+cd my-waku-app
+```
+
+## 2. Develop locally
+
+After you have created your project, run the following command in the project directory to start a local server. This will allow you to preview your project locally during development.
+
+<PackageManagers type="run" args={"dev"} />
+
+## 3. Deploy your Project
+
+Your project can be deployed to a `*.workers.dev` subdomain or a [Custom Domain](/workers/configuration/routing/custom-domains/), from your own machine or from any CI/CD system, including [Cloudflare's own](/workers/ci-cd/builds/).
+
+The following command will build and deploy your project. If you're using CI, ensure you update your ["deploy command"](/workers/ci-cd/builds/configuration/#build-settings) configuration appropriately.
+
+<PackageManagers type="run" args={"deploy"} />
+
+---
+
+## Bindings
+
+Your Waku application can be fully integrated with the Cloudflare Developer Platform, in both local development and in production, by using product bindings. The [Waku Cloudflare documentation](https://github.com/dai-shi/waku/blob/main/docs/guides/cloudflare.mdx#accessing-cloudflare-bindings-execution-context-and-requestresponse-objects) provides information about configuring bindings and how you can access them in your React server components.
+
+## Static assets
+
+You can serve static assets your Waku application by placing them in the `./public/` directory. This can be useful for resource files such as images, stylesheets, fonts, and manifests. Waku adds js, css, html and txt files to the final assets directory during build. `.txt` files are used to store data for server components that are rendered during the build process.
+
+<Render file="workers-assets-routing-summary" />
