@@ -21,7 +21,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
       "omitBackground": true
     }
   }' \
-  --output "screenshot.webp"
+  --output "screenshot.png"
 ```
 
 For more options to control the final screenshot, like `clip`, `captureBeyondViewport`, `fullPage` and others, check the endpoint [reference](/api/resources/browser_rendering/subresources/screenshot/methods/create/).
@@ -35,10 +35,9 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{
-    "url": "https://cloudflare.com/",
+    "url": "https://cnn.com/",
     "screenshotOptions": {
-       "fullPage": true,
-       "omitBackground": true,
+       "fullPage": true
     },
     "viewport": {
       "width": 1280,
@@ -49,7 +48,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
       "timeout": 45000
     }
   }' \
-  --output "advanced-screenshot.webp"
+  --output "advanced-screenshot.png"
 ```
 
 ## Customize CSS and embed custom JavaScript
@@ -74,7 +73,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
       }
     ]
   }' \
-  --output "screenshot.webp"
+  --output "screenshot.png"
 ```
 
 Many more options exist, like setting HTTP credentials using `authenticate`, setting `cookies`, and using `gotoOptions` to control page load behaviour - check the endpoint [reference](/api/resources/browser_rendering/subresources/screenshot/methods/create/) for all available parameters.
