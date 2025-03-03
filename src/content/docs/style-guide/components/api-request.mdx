@@ -20,6 +20,14 @@ import { APIRequest } from "~/components";
 		validation_default_mitigation_action: "block"
 	}}
 />
+
+<APIRequest
+	path="/zones/{zone_id}/hostnames/settings/{setting_id}/{hostname}"
+	method="DELETE"
+	parameters={{
+		setting_id: "ciphers",
+	}}
+/>
 ```
 
 ## `<APIRequest>` Props
@@ -41,6 +49,14 @@ This can be found in our [API documentation](https://api.cloudflare.com), under 
 **type:** `"GET" | "POST" | "PUT" | "PATCH" | "DELETE" | "HEAD"`
 
 The HTTP method to use.
+
+### `parameters`
+
+**type:** `Record<string, any>`
+
+The path parameters to substitute.
+
+If not provided, the component will default to an environment variable. For example, `{setting_id}` will be replaced with `$SETTING_ID`.
 
 ### `json`
 

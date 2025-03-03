@@ -8,13 +8,16 @@ import Details from "./Details.astro";
 
 type Props = z.input<typeof props>;
 
-const props = z.object({
-	path: z.string(),
-	method: z.enum(["GET", "HEAD", "POST", "PUT", "DELETE", "PATCH"]),
-	json: z.record(z.string(), z.any()).default({}),
-});
+const props = z
+	.object({
+		path: z.string(),
+		method: z.enum(["GET", "HEAD", "POST", "PUT", "DELETE", "PATCH"]),
+		parameters: z.record(z.string(), z.any()).optional(),
+		json: z.record(z.string(), z.any()).optional(),
+	})
+	.strict();
 
-const { path, method, json } = props.parse(Astro.props);
+let { path, method, parameters, json } = props.parse(Astro.props);
 
 const schema = await getSchema();
 
@@ -36,13 +39,40 @@ if (!operation) {
 const url = new URL(path, "https://api.cloudflare.com/client/v4");
 const headers: Record<string, string> = {};
 
+const providedParameters = Object.keys(parameters ?? {});
+const endpointParameters = (operation.parameters ??
+	[]) as OpenAPIV3.ParameterObject[];
+
+const extraneousParameters = providedParameters.filter(
+	(parameter) =>
+		!endpointParameters.some(
+			(endpointParam) => endpointParam.name === parameter,
+		),
+);
+
+if (extraneousParameters.length > 0) {
+	throw new Error(
+		`[APIRequest] Provided parameters ${extraneousParameters.join(", ")} not found in schema.`,
+	);
+}
+
+for (const parameter of endpointParameters) {
+	if (parameter.in === "path") {
+		const encoded = encodeURIComponent(`{${parameter.name}}`);
+
+		if (parameters?.[parameter.name]) {
+			url.pathname = url.pathname.replace(encoded, parameters[parameter.name]);
+		}
+	}
+}
+
 const segments = url.pathname.split("/").filter(Boolean);
+
 for (const segment of segments) {
 	const decoded = decodeURIComponent(segment);
 
 	if (decoded.startsWith("{") && decoded.endsWith("}")) {
 		const placeholder = "$" + decoded.slice(1, -1).toUpperCase();
-
 		url.pathname = url.pathname.replace(segment, placeholder);
 	}
 }
@@ -70,13 +100,9 @@ const jsonSchema = requestBody?.content?.["application/json"]?.schema as
 	| OpenAPIV3.SchemaObject
 	| undefined;
 
-if (!jsonSchema) {
-	throw new Error(
-		`[APIRequest] This component currently does not support operations that do not accept JSON bodies.`,
-	);
-}
+if (jsonSchema?.required) {
+	json ??= {};
 
-if (jsonSchema.required) {
 	const providedProperties = Object.keys(json);
 	const requiredProperties = jsonSchema.required;
 
