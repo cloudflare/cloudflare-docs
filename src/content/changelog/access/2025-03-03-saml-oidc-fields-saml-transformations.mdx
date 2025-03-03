@@ -1,0 +1,28 @@
+---
+title: More configuration options for Access for SaaS
+description: Access for SaaS new SAML and OIDC Fields and SAML transforms
+date: 2025-03-03T6:00:00Z
+---
+
+Access for SaaS applications now include more configuration options to support a wider array of SaaS applications.
+
+### SAML and OIDC Field Additions
+
+OIDC apps now include:
+
+- Group Filtering via RegEx
+- OIDC Claim mapping from an IdP
+- OIDC token lifetime control
+- Advanced OIDC auth flows
+
+![OIDC field additions](~/assets/images/access/oidc-claims.png)
+
+SAML apps now include improved SAML attribute mapping from an IdP.
+
+![SAML field additions](~/assets/images/access/saml-attribute-statements.png)
+
+### SAML transformations
+
+SAML Access applications can be fully customized using JSONata expressions. This allows admins to configure the precise SAML statement sent to a SaaS application.
+
+![Configured SAML statement sent to application](~/assets/images/access/transformation-box.png)
