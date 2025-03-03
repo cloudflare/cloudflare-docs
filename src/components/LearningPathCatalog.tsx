@@ -42,6 +42,7 @@ const LearningPathCatalog = ({
 			description: lp.description,
 			products: lp.products,
 			groups,
+			video: lp.video,
 		};
 	});
 
@@ -152,19 +153,22 @@ const LearningPathCatalog = ({
 							href={path.link}
 							className="rounded-md border border-solid border-gray-200 p-6 !text-inherit no-underline hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
 						>
-							{path.icon && (
-								<div className="w-fit rounded-full bg-orange-50 p-1 text-orange-500 dark:bg-orange-950">
-									<svg
-										{...path.icon.attributes}
-										width={24}
-										height={24}
-										dangerouslySetInnerHTML={{ __html: path.icon.body }}
-									/>
-								</div>
-							)}
+							<div className="flex gap-2">
+								{path.icon && (
+									<div className="w-fit rounded-full bg-orange-50 p-1 text-orange-500 dark:bg-orange-950">
+										<svg
+											{...path.icon.attributes}
+											width={24}
+											height={24}
+											dangerouslySetInnerHTML={{ __html: path.icon.body }}
+										/>
+									</div>
+								)}
+								{path.video && <span className="sl-badge tip">Video</span>}
+							</div>
 							<p className="!mt-3 font-semibold">{path.title}</p>
 							<Markdown
-								className="!mt-1 text-sm leading-6"
+								className="leading-2 !mt-1 text-sm"
 								disallowedElements={["a"]}
 								unwrapDisallowed={true}
 							>
