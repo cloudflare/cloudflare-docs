@@ -4,6 +4,7 @@ import { getProperty } from "dot-prop";
 import { getSchema } from "~/util/api.ts";
 import type { OpenAPIV3 } from "openapi-types";
 import CURL from "./CURL.astro";
+import Details from "./Details.astro";
 
 type Props = z.input<typeof props>;
 
@@ -91,6 +92,25 @@ if (jsonSchema.required) {
 		json[property] = defaultValue;
 	}
 }
+
+const tokenGroups = operation["x-api-token-group"];
 ---
+
+{
+	tokenGroups && (
+		<Details header="Required API token permissions">
+			<span>
+				At least one of the following{" "}
+				<a href="/fundamentals/api/reference/permissions/">token permissions</a>{" "}
+				is required:
+			</span>
+			<ul>
+				{tokenGroups.map((group) => (
+					<li>{group}</li>
+				))}
+			</ul>
+		</Details>
+	)
+}
 
 <CURL url={url.toString()} method={method} headers={headers} json={json} />
