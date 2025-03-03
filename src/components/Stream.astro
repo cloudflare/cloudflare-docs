@@ -59,6 +59,7 @@ if (thumbnail) {
 						const totalSeconds = parse(time, "s");
 
 						const thumbnail = new URL(thumbnailUrl);
+						thumbnail.searchParams.set("fit", "crop");
 						thumbnail.searchParams.set("time", `${totalSeconds}s`);
 
 						return (
