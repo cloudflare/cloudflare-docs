@@ -1,12 +1,11 @@
 ---
-import type { Props } from "@astrojs/starlight/props";
 import Default from "@astrojs/starlight/components/TableOfContents.astro";
 
 import { Icon } from "@astrojs/starlight/components";
 import FeedbackPrompt from "../FeedbackPrompt.tsx";
 ---
 
-<Default {...Astro.props} />
+<Default />
 <br />
 <FeedbackPrompt client:idle />
 {
@@ -14,9 +13,9 @@ import FeedbackPrompt from "../FeedbackPrompt.tsx";
 		<>
 			<br />
 			<div class="flex gap-2">
-				{Astro.props.editUrl && (
+				{Astro.locals.starlightRoute.editUrl && (
 					<a
-						href={Astro.props.editUrl}
+						href={Astro.locals.starlightRoute.editUrl}
 						class="inline-flex h-8 items-center justify-center gap-2 rounded border border-[--sl-color-hairline] px-3 text-black"
 					>
 						<Icon name="pencil" />

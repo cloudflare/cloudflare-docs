@@ -59,7 +59,7 @@ const blocks = [
 ---
 
 <div
-	class="flex bg-gray-100 dark:bg-gray-800 bleed *:!mt-0 items-start justify-between py-10"
+	class="bleed flex items-start justify-between bg-gray-100 py-10 *:!mt-0 dark:bg-gray-800"
 >
 	{
 		blocks.map(({ title, text, links }) => (
@@ -68,13 +68,13 @@ const blocks = [
 				<p class="w-80">{text}</p>
 				<ul class="list-none pl-0">
 					{links.map((link) => (
-						<li class="flex !mt-4">
+						<li class="!mt-4 flex">
 							<Icon
 								name={link.icon}
 								size="1.5rem"
 								color="var(--sl-color-white)"
 							/>
-							<a href={link.href} class="pl-2 no-underline !text-black">
+							<a href={link.href} class="pl-2 !text-black no-underline">
 								{link.text}
 							</a>
 						</li>

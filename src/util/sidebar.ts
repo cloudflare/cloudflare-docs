@@ -1,11 +1,13 @@
 import type { AstroGlobal } from "astro";
-import type { Props } from "@astrojs/starlight/props";
+import type { StarlightRouteData } from "@astrojs/starlight/route-data";
 
 import { getEntry, getCollection } from "astro:content";
 import { rehypeExternalLinksOptions } from "~/plugins/rehype/external-links";
 
-type Link = Extract<Props["sidebar"][0], { type: "link" }> & { order?: number };
-type Group = Extract<Props["sidebar"][0], { type: "group" }> & {
+type Link = Extract<StarlightRouteData["sidebar"][0], { type: "link" }> & {
+	order?: number;
+};
+type Group = Extract<StarlightRouteData["sidebar"][0], { type: "group" }> & {
 	order?: number;
 };
 
@@ -15,7 +17,7 @@ type Badge = Link["badge"];
 const products = await getCollection("products");
 const sidebars = new Map<string, Group>();
 
-export async function getSidebar(context: AstroGlobal<Props>) {
+export async function getSidebar(context: AstroGlobal) {
 	const pathname = context.url.pathname;
 	const segments = pathname.split("/").filter(Boolean);
 
@@ -44,7 +46,7 @@ export async function getSidebar(context: AstroGlobal<Props>) {
 	let memoized = sidebars.get(key);
 
 	if (!memoized) {
-		let group = context.props.sidebar
+		let group = context.locals.starlightRoute.sidebar
 			.filter((entry) => entry.type === "group" && entry.label === product)
 			.at(0) as Group;
 

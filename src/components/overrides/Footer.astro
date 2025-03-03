@@ -1,5 +1,4 @@
 ---
-import type { Props } from "@astrojs/starlight/props";
 import Default from "@astrojs/starlight/components/Footer.astro";
 import OneTrust from "../OneTrust.astro";
 import FeedbackPrompt from "../FeedbackPrompt.tsx";
@@ -69,7 +68,7 @@ const homepageLegalLinks = Object.entries({
 	Trademark: "https://www.cloudflare.com/trademark/",
 });
 
-const isHomepage = Astro.props.id === "";
+const isHomepage = Astro.locals.starlightRoute.id === "";
 
 let isProduction = false;
 
@@ -128,7 +127,7 @@ if (
 			<div class="feedback-prompt">
 				<FeedbackPrompt client:idle />
 			</div>
-			<Default {...Astro.props} />
+			<Default />
 			<div id="footer-links" class="mt-6 flex flex-wrap items-center space-x-4">
 				{Object.entries(links).map(([text, href]) => (
 					<a href={href} class="text-xs text-black decoration-accent">

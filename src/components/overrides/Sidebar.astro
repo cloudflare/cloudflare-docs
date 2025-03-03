@@ -1,5 +1,4 @@
 ---
-import type { Props } from "@astrojs/starlight/props";
 import Default from "@astrojs/starlight/components/Sidebar.astro";
 
 import { Icon as AstroIcon } from "astro-icon/components";
@@ -16,10 +15,8 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 		</strong>
 	</span>
 </a>
-<!-- @ts-expect-error sidebar props don't match as we add additional things -->
-<Default {...Astro.props} sidebar={Astro.props.sidebar.entries}
-	><slot /></Default
->
+
+<Default><slot /></Default>
 
 <style is:global>
 	:root {
