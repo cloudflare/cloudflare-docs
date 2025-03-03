@@ -32,7 +32,17 @@
 
 		& > svg {
 			align-self: self-end;
-			color: theme("colors.cl1.brand.orange");
+			color: var(--pagination-arrow-color);
+			font-size: 1.25rem;
+			margin-bottom: 1px;
 		}
 	}
+}
+
+:root[data-theme="light"] {
+	--pagination-arrow-color: theme("colors.cl1.gray.0");
+}
+
+:root[data-theme="dark"] {
+	--pagination-arrow-color: theme("colors.cl1.gray.9");
 }
