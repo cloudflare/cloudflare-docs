@@ -19,11 +19,11 @@ const props = z.object({
 
 const { method, url, headers, json, code } = props.parse(Astro.props);
 
-const lines = [`curl ${url}`, `\t-X ${method}`];
+const lines = [`curl ${url}`, `\t--request ${method}`];
 
 if (headers) {
 	for (const [key, value] of Object.entries(headers)) {
-		lines.push(`\t-H "${key}: ${value}"`);
+		lines.push(`\t--header "${key}: ${value}"`);
 	}
 }
 
