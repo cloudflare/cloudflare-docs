@@ -12,7 +12,9 @@ const props = z.object({
 	url: z.string().url(),
 	headers: z.record(z.string(), z.string()).default({}),
 	json: z.record(z.string(), z.any()).optional(),
-	code: z.custom<ComponentProps<typeof Code>>().optional(),
+	code: z
+		.custom<Omit<ComponentProps<typeof Code>, "code" | "lang">>()
+		.optional(),
 });
 
 const { method, url, headers, json, code } = props.parse(Astro.props);

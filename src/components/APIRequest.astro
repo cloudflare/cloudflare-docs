@@ -113,4 +113,12 @@ const tokenGroups = operation["x-api-token-group"];
 	)
 }
 
-<CURL url={url.toString()} method={method} headers={headers} json={json} />
+<CURL
+	url={url.toString()}
+	method={method}
+	headers={headers}
+	json={json}
+	code={{
+		title: operation.summary,
+	}}
+/>
