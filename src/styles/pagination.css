@@ -14,10 +14,12 @@
 
 		&[rel="prev"] {
 			text-align: right;
+			margin-right: auto;
 		}
 
 		&[rel="next"] {
 			text-align: left;
+			margin-left: auto;
 		}
 
 		& > span {
