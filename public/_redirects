@@ -436,7 +436,9 @@
 /cloudflare-one/insights/email-monitoring/search-email/ /cloudflare-one/email-security/email-monitoring/search-email/ 301
 /cloudflare-one/insights/email-monitoring/phish-submissions/ /cloudflare-one/email-security/phish-submissions/ 301
 /cloudflare-one/insights/email-monitoring/enable-logs/ /cloudflare-one/insights/logs/enable-logs/ 301
-/cloudflare-one/email-security/directories/manage-ms-directories/ /cloudflare-one/email-security/directories/manage-integrated-directories/ 301 
+/cloudflare-one/email-security/directories/manage-ms-directories/ /cloudflare-one/email-security/directories/manage-integrated-directories/ 301
+/cloudflare-one/email-security/directories/manage-ms-directories/manage-groups-directory/ /cloudflare-one/email-security/directories/manage-integrated-directories/manage-groups-directory/ 301
+/cloudflare-one/email-security/directories/manage-ms-directories/manage-users-directory/ /cloudflare-one/email-security/directories/manage-integrated-directories/manage-users-directory/ 301
 
 
 # firewall
