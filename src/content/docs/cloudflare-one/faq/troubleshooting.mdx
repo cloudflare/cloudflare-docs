@@ -298,10 +298,10 @@ If you are using an [Admin override](/cloudflare-one/connections/connect-devices
 
 To prevent WARP from auto connecting while using an admin override code, disable Auto connect or set a longer **Timeout** for **Auto connect**. Note the changes you make to Auto connect while the end user is using the admin override code if you need to revert these changes later.
 
-## I am getting the error `Failed to fetch user/group information from the identity`.
+## I am getting the error `Failed to fetch user/group information from the identity provider`.
 
-This error is returned when proper API permissions are not set up in the identity provider. When Cloudflare attempts to fetch user/group information from the identity provider and proper API permissions have not been configured, the `Failed to fetch user/group information from the identify provider` error will appear. Review the [SSO integration](/cloudflare-one/identity/idp-integration/) guide for your identity provider to ensure your application has the appropriate API permissions.
+This error is returned when proper API permissions are not set up in the identity provider. When Cloudflare attempts to fetch user/group information from the identity provider and proper API permissions have not been configured, the `Failed to fetch user/group information from the identity provider` error will appear. Review the [SSO integration](/cloudflare-one/identity/idp-integration/) guide for your identity provider to ensure your application has the appropriate API permissions.
 
-For example, [Microsoft Entra](/cloudflare-one/identity/idp-integration/entra-id/#2-configure-api-permissions-in-entra-id) and [Okta](/cloudflare-one/identity/idp-integration/okta/#:~:text=(Optional)%20Create%20an%20Okta%20API%20token%20and%20enter%20it%20in%20Zero%20Trust%20(the%20token%20can%20be%20read%2Donly).%20This%20will%20prevent%20your%20Okta%20groups%20from%20failing%20if%20you%20have%20more%20than%20100%20groups) have required permissions stated in their integration guides.
+For example, [Microsoft Entra](/cloudflare-one/identity/idp-integration/entra-id/#2-configure-api-permissions-in-entra-id) and [Okta](</cloudflare-one/identity/idp-integration/okta/#:~:text=(Optional)%20Create%20an%20Okta%20API%20token%20and%20enter%20it%20in%20Zero%20Trust%20(the%20token%20can%20be%20read%2Donly).%20This%20will%20prevent%20your%20Okta%20groups%20from%20failing%20if%20you%20have%20more%20than%20100%20groups>) have required permissions stated in their integration guides.
 
 You can also examine logs in your identity provider to identify any denied requests related to API access.
