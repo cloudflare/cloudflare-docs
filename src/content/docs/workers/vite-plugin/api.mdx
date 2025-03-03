@@ -1,0 +1,69 @@
+---
+pcx_content_type: reference
+title: API
+head: []
+sidebar:
+  order: 3
+description: Vite plugin API
+---
+
+### `cloudflare`
+
+The `cloudflare` plugin should be included in the Vite `plugins` array:
+
+```ts {4, 7}
+// vite.config.ts
+
+import { defineConfig } from "vite";
+import { cloudflare } from "@cloudflare/vite-plugin";
+
+export default defineConfig({
+	plugins: [cloudflare()],
+});
+```
+
+It accepts an optional `PluginConfig` parameter.
+
+### `interface PluginConfig`
+
+- `configPath?: string`
+
+  An optional path to your Worker config file.
+  By default, a `wrangler.toml`, `wrangler.json`, or `wrangler.jsonc` file in the root of your application will be used as the Worker config.
+
+- `viteEnvironment?: { name?: string }`
+
+  Optional Vite environment options.
+  By default, the environment name is the Worker name with `-` characters replaced with `_`.
+  Setting the name here will override this.
+
+- `persistState?: boolean | { path: string }`
+
+  An optional override for state persistence.
+  By default, state is persisted to `.wrangler/state` in a `v3` subdirectory.
+  A custom `path` can be provided or, alternatively, persistence can be disabled by setting the value to `false`.
+
+- `auxiliaryWorkers?: Array<AuxiliaryWorkerConfig>`
+
+  An optional array of auxiliary workers.
+  You can use [service bindings](/workers/runtime-apis/bindings/service-bindings/) to call auxiliary workers from your main (entry) Worker.
+  All requests are routed through your entry Worker.
+  During the build, each Worker is output to a separate subdirectory of `dist`.
+
+:::note
+When running `wrangler deploy`, only your main (entry) Worker will be deployed.
+If using multiple Workers, each must be deployed individually.
+You can inspect the `dist` directory and then run `wrangler deploy -c path-to-worker-output-config` for each.
+:::
+
+### `interface AuxiliaryWorkerConfig`
+
+- `configPath: string`
+
+  A required path to your Worker config file.
+
+- `viteEnvironment?: { name?: string }`
+
+  Optional Vite environment options.
+  By default, the environment name is the Worker name with `-` characters replaced with `_`.
+  Setting the name here will override this.

@@ -1,0 +1,23 @@
+---
+pcx_content_type: concept
+title: Migrating from wrangler dev
+head: []
+sidebar:
+  order: 6
+description: Migrating from wrangler dev to the Vite plugin
+---
+
+Migrating from `wrangler dev` is a simple process and you can follow the instructions in [Get started](../get-started/).
+There are a few key differences to highlight:
+
+### Input and output Worker config files
+
+In the Vite integration, your Worker config file (for example, `wrangler.toml`) is the input configuration and a separate output configuration is created as part of the build.
+This output file is a snapshot of your configuration at the time of the build and is modified to reference your build artifacts.
+It is the configuration that is used for preview and deployment.
+
+### Redundant fields in the Wrangler config file
+
+There are various options in the Worker config file that are ignored when using Vite, as they are either no longer applicable or are replaced by Vite equivalents.
+If these options are provided, then warnings will be printed to the console with suggestions for how to proceed.
+Examples where the Vite configuration should be used instead include `alias` and `define`.

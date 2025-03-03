@@ -1,0 +1,73 @@
+---
+pcx_content_type: get-started
+title: Get started
+head: []
+sidebar:
+  order: 1
+description: Get started with the Vite plugin
+---
+
+import { PackageManagers, WranglerConfig } from "~/components";
+
+### Start with a basic `package.json`
+
+```json
+{
+	"name": "cloudflare-vite-quick-start",
+	"private": true,
+	"version": "0.0.0",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "vite build",
+		"preview": "vite preview"
+	}
+}
+```
+
+:::note
+Ensure that you include `"type": "module"` in order to use ES modules by default.
+:::
+
+### Install the dependencies
+
+<PackageManagers type="add" pkg="vite @cloudflare/vite-plugin wrangler" dev />
+
+### Create your Vite config file and include the Cloudflare plugin
+
+```ts
+// vite.config.ts
+
+import { defineConfig } from "vite";
+import { cloudflare } from "@cloudflare/vite-plugin";
+
+export default defineConfig({
+	plugins: [cloudflare()],
+});
+```
+
+### Create your Worker config file
+
+<WranglerConfig>
+
+```toml
+name = "cloudflare-vite-quick-start"
+compatibility_date = "2024-12-30"
+main = "./src/index.ts"
+```
+
+</WranglerConfig>
+
+### Create your Worker entry file
+
+```ts
+// src/index.ts
+
+export default {
+	fetch() {
+		return new Response(`Running in ${navigator.userAgent}!`);
+	},
+};
+```
+
+You can now develop (`npm run dev`), build (`npm run build`), preview (`npm run preview`), and deploy (`npm exec wrangler deploy`) your application.
