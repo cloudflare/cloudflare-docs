@@ -10,15 +10,15 @@ import { Render, Tabs, TabItem, Stream, Card } from "~/components";
 
 <Tabs>
   <TabItem label="Watch this episode">
-  
+
   In this video, we discuss Cloudflare One, our Secure Access Service Edge (SASE) platform and how it has been designed to revolutionize the corporate network and enable companies with their Zero Trust strategy. Legacy network design is struggling to address today's challenges of security, performance and monitoring needs. Many IT teams are trying to evolve their corporate network with point solutions and finding the lack of integration and performance an issue.
 
     <Card>
         <Stream
-        videoId="4d035db77fdeed4ca089518eb57a4c31"
-        videoTitle="The evolution of corporate networks"
-        thumbnailTimeOrURL="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/The-evolution-of-corporate-networks.jpg"
-        moreVideosLink="false"
+        id="4d035db77fdeed4ca089518eb57a4c31"
+        title="The evolution of corporate networks"
+        thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/The-evolution-of-corporate-networks.jpg"
+        showMoreVideos={false}
       />
 
       **Related content**
@@ -30,10 +30,10 @@ import { Render, Tabs, TabItem, Stream, Card } from "~/components";
         - [Using a Zero Trust framework to secure SaaS applications](/reference-architecture/design-guides/zero-trust-for-saas/)
         - [Building Zero Trust architecture into your startup](/reference-architecture/design-guides/zero-trust-for-startups/)
 
-    </Card>    
+    </Card>
   </TabItem>
 
   <TabItem label="Series overview">
     <Render file="sase-series-navigation" />
-  </TabItem> 
+  </TabItem>
 </Tabs>
