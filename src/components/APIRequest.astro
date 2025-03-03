@@ -1,0 +1,96 @@
+---
+import { z } from "astro:schema";
+import { getProperty } from "dot-prop";
+import { getSchema } from "~/util/api.ts";
+import type { OpenAPIV3 } from "openapi-types";
+import CURL from "./CURL.astro";
+
+type Props = z.input<typeof props>;
+
+const props = z.object({
+	path: z.string(),
+	method: z.enum(["GET", "HEAD", "POST", "PUT", "DELETE", "PATCH"]),
+	json: z.record(z.string(), z.any()).default({}),
+});
+
+const { path, method, json } = props.parse(Astro.props);
+
+const schema = await getSchema();
+
+const operation = getProperty(
+	schema,
+	`paths.${path}.${method.toLowerCase()}`,
+) as unknown as
+	| OpenAPIV3.OperationObject<{
+			"x-api-token-group"?: string[];
+	  }>
+	| undefined;
+
+if (!operation) {
+	throw new Error(
+		`[APIRequest] Operation ${method} ${path} not found in schema.`,
+	);
+}
+
+const url = new URL(path, "https://api.cloudflare.com/client/v4");
+const headers: Record<string, string> = {};
+
+const segments = url.pathname.split("/").filter(Boolean);
+for (const segment of segments) {
+	const decoded = decodeURIComponent(segment);
+
+	if (decoded.startsWith("{") && decoded.endsWith("}")) {
+		const placeholder = "$" + decoded.slice(1, -1).toUpperCase();
+
+		url.pathname = url.pathname.replace(segment, placeholder);
+	}
+}
+
+const security = operation.security as
+	| OpenAPIV3.SecurityRequirementObject[]
+	| undefined;
+
+if (security) {
+	const keys = security.flatMap((requirement) => Object.keys(requirement));
+
+	if (keys.includes("api_token")) {
+		headers["Authorization"] = `Bearer $CLOUDFLARE_API_TOKEN`;
+	} else if (keys.includes("api_key")) {
+		headers["X-Auth-Email"] = "$CLOUDFLARE_EMAIL";
+		headers["X-Auth-Key"] = "$CLOUDFLARE_API_KEY";
+	}
+}
+
+const requestBody = operation?.requestBody as
+	| OpenAPIV3.RequestBodyObject
+	| undefined;
+
+const jsonSchema = requestBody?.content?.["application/json"]?.schema as
+	| OpenAPIV3.SchemaObject
+	| undefined;
+
+if (!jsonSchema) {
+	throw new Error(
+		`[APIRequest] This component currently does not support operations that do not accept JSON bodies.`,
+	);
+}
+
+if (jsonSchema.required) {
+	const providedProperties = Object.keys(json);
+	const requiredProperties = jsonSchema.required;
+
+	const missingProperties = requiredProperties.filter(
+		(property) => !providedProperties.includes(property),
+	);
+
+	for (const property of missingProperties) {
+		const defaultValue =
+			(jsonSchema.properties?.[property] as OpenAPIV3.SchemaObject).default ??
+			property;
+
+		json[property] = defaultValue;
+	}
+}
+---
+
+<CURL url={url.toString()} method={method} headers={headers} json={json} />

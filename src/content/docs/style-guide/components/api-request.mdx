@@ -1,0 +1,51 @@
+---
+title: API request
+---
+
+## Import
+
+```mdx
+import { APIRequest } from "~/components";
+```
+
+## Usage
+
+```mdx live
+import { APIRequest } from "~/components";
+
+<APIRequest
+	path="/zones/{zone_id}/api_gateway/settings/schema_validation"
+	method="PUT"
+	json={{
+		validation_default_mitigation_action: "block"
+	}}
+/>
+```
+
+## `<APIRequest>` Props
+
+### `path`
+
+**required**
+
+**type:** `string`
+
+The path for the API endpoint.
+
+This can be found in our [API documentation](https://api.cloudflare.com), under the name of the endpoint.
+
+### `method`
+
+**required**
+
+**type:** `"GET" | "POST" | "PUT" | "PATCH" | "DELETE" | "HEAD"`
+
+The HTTP method to use.
+
+### `json`
+
+**type:** `Record<string, any>`
+
+The JSON payload to send.
+
+Default values can be omitted, and the component will use default values for any missing fields.
