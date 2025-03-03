@@ -7,7 +7,7 @@ head: []
 description: Debug your Workers tests with Vitest.
 ---
 
-Starting with `@cloudflare/vitest-pool-workers` v0.7.5, you can now debug your Workers tests with Vitest.
+This guide shows you how to debug your Workers tests with Vitest. This is available with `@cloudflare/vitest-pool-workers` v0.7.5 or later.
 
 ## Open inspector with Vitest
 
@@ -17,7 +17,7 @@ To start debugging, run Vitest with the following command and attach a debugger 
 vitest --inspect --no-file-parallelism
 ```
 
-## Customizing the inspector port
+## Customize the inspector port
 
 By default, the inspector will be opened on port `9229`. If you need to use a different port (for example, `3456`), you can run the following command:
 
@@ -25,7 +25,7 @@ By default, the inspector will be opened on port `9229`. If you need to use a di
 vitest --inspect=3456 --no-file-parallelism
 ```
 
-or define it in your Vitest configuration file:
+Alternatively, you can define it in your Vitest configuration file:
 
 ```ts
 import { defineWorkersConfig } from "@cloudflare/vitest-pool-workers/config";
@@ -46,7 +46,7 @@ export default defineWorkersConfig({
 
 ## Setup VS Code to use breakpoints
 
-To setup VS Code for breakpoint debugging in your Worker tests, you can create a `.vscode/launch.json` file that contains the following configuration:
+To setup VS Code for breakpoint debugging in your Worker tests, create a `.vscode/launch.json` file that contains the following configuration:
 
 ```json
 {
@@ -80,4 +80,4 @@ To setup VS Code for breakpoint debugging in your Worker tests, you can create a
 }
 ```
 
-You will find the **Debug Workers tests** option at the top of the **Run & Debug** panel. This will open inspector with Vitest and attach a debugger to the Workers runtime. You can then add breakpoints to your test files and start debugging.
+Select **Debug Workers tests** at the top of the **Run & Debug** panel to open inspector with Vitest and attach a debugger to the Workers runtime. Then you can add breakpoints to your test files and start debugging.
