@@ -386,7 +386,7 @@ paths:
                       trackName: "other-track-name"
                       mid: "7"
               reuse_with_simulcast:
-                description: Reuse an existing transceiver with simulcast preferences
+                description: Reuse an existing transceiver with new simulcast preferences
                 value:
                   tracks:
                     - location: "remote"
@@ -522,7 +522,7 @@ components:
           properties:
             preferredRid:
               type: string
-              description: Preferred RID (Resolution ID) for simulcast streams
+              description: Preferred RID for simulcast streams
             priorityOrdering:
               type: string
               enum:
