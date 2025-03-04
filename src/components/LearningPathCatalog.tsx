@@ -167,13 +167,11 @@ const LearningPathCatalog = ({
 								{path.video && <span className="sl-badge tip">Video</span>}
 							</div>
 							<p className="!mt-3 font-semibold">{path.title}</p>
-							<Markdown
-								className="leading-2 !mt-1 text-sm"
-								disallowedElements={["a"]}
-								unwrapDisallowed={true}
-							>
-								{path.description}
-							</Markdown>
+							<div className="leading-2 !mt-1 text-sm">
+								<Markdown disallowedElements={["a"]} unwrapDisallowed={true}>
+									{path.description}
+								</Markdown>
+							</div>
 						</a>
 					);
 				})}
