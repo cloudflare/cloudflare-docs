@@ -149,7 +149,8 @@ paths:
                       trackName: simulcast-video-track
                       simulcast:
                         preferredRid: "h"
-                        fallbackStrategy: "leastBandwidth"
+                        priorityOrdering: "asciibetical"
+                        ridUnavailableStrategy: "nextPriority"
       security:
         - secret: []
       parameters:
@@ -226,7 +227,8 @@ paths:
                         mid: "5"
                         simulcast:
                           preferredRid: "h"
-                          fallbackStrategy: "leastBandwidth"
+                          priorityOrdering: "asciibetical"
+                          ridUnavailableStrategy: "nextPriority"
                     sessionDescription:
                       sdp: |
                         v=0
@@ -393,7 +395,8 @@ paths:
                       mid: "8"
                       simulcast:
                         preferredRid: "h"
-                        fallbackStrategy: "leastBandwidth"
+                        priorityOrdering: "asciibetical"
+                        ridUnavailableStrategy: "nextPriority"
       security:
         - secret: []
       parameters:
@@ -520,14 +523,20 @@ components:
             preferredRid:
               type: string
               description: Preferred RID (Resolution ID) for simulcast streams
-            fallbackStrategy:
+            priorityOrdering:
               type: string
               enum:
-                - auto
-                - leastBandwidth
                 - none
-              default: auto
-              description: General fallback strategy when any constraint (like preferredRid, minWidth, maxBandwidth, etc.) cannot be met. 'auto' will select the best quality possible within constraints.
+                - asciibetical
+              default: none
+              description: Controls what happens if there is not enough network resources available to send the preferredRid. 'none' means keep sending even if not enough bandwidth, 'asciibetical' uses a-z order to determine priority where a is most desirable and z is least desirable.
+            ridUnavailableStrategy:
+              type: string
+              enum:
+                - none
+                - nextPriority
+              default: none
+              description: Controls what happens when the rid currently being used or preferredRid is no longer being sent by the publisher. 'none' means do nothing, 'nextPriority' uses the next on the priorityOrdering.
     CloseTrackObject:
       type: object
       properties:
