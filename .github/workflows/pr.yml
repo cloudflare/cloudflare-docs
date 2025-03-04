@@ -29,7 +29,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.HOLOPIN_LABELER }}
       - name: External comment
-        run: gh pr comment "$NUMBER" --body "Howdy and thanks for contributing to our repo. We review new, external PRs within **2 weeks**. If it's been longer than that without any movement, please tag the PR **Assignees** in a comment."
+        run: gh pr comment "$NUMBER" --body "Howdy and thanks for contributing to our repo. We review new, external PRs within **two (2) weeks**. If it's been two weeks or longer without any movement, please tag the PR **Assignees** in a comment."
         if: steps.check_if_contributor_is_external.outputs.is_external == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
