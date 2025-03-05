@@ -136,7 +136,6 @@ Once your logs are stored in R2, you can download them using various methods:
 
 ![Log files list](~/assets/images/logs/logs-r2.png)
 
-
 ### AWS CLI
 
 Cloudflare R2 is S3-compatible, so you can use the AWS CLI to interact with it.
@@ -145,5 +144,8 @@ Cloudflare R2 is S3-compatible, so you can use the AWS CLI to interact with it.
 
 ```bash
 aws s3 cp s3://<BUCKET-NAME>/<PATH-TO-LOG-FILE><LOCAL-DESTINATION>`
+```
+
+Replace `<bucket-name>`, `<path-to-log-file>`, and `<local-destination>` with your specific details.
 
 Downloaded files are gzipped so they must be decompressed before you can open them in a text editor.
