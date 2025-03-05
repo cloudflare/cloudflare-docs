@@ -29,6 +29,18 @@ optimize videos with Media Transformations, too.
 https://example.com/media/<OPTIONS>/<SOURCE-VIDEO>
 ```
 
-(( PLACEHOLDER DEMO ))
+For example, we have a short video of the mobile in Austin's office. The
+original is nearly 30 megabytes and wider than necessary for this layout.
+Consider a simple width adjustment:
+
+<video controls>
+  <source src="https://customer-igynxd2rwhmuoxw8.cloudflarestream.com/media/width=640/https://pub-d9fcbc1abcd244c1821f38b99017347f.r2.dev/aus-mobile.mp4" />
+</video>
+
+(( REPEAT URL ))
+
+The result is less than 3 megabytes, properly sized, and delivered dynamically
+so that customers do not have to manage the creation and storage of these
+transformed assets.
 
 For more information, learn about [Transforming Videos](/stream/transform-videos/).
