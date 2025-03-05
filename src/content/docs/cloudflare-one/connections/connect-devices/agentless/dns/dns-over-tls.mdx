@@ -30,7 +30,7 @@ Hostname: 9y65g5srsm.cloudflare-gateway.com
 IP address: 162.159.36.5
 ```
 
-Alternatively, you can use the generic DoT endpoint (`dns.cloudflare-gateway.com`) and include an OPT record (code 65011) and your location name (`9y65g5srsm`). For example:
+Alternatively, you can use the generic DoT endpoint (`dns.cloudflare-gateway.com`) and include an `OPT` record with code `65011` and value of your location name. For example:
 
 ```txt
 Hostname: dns.cloudflare-gateway.com
@@ -49,6 +49,6 @@ tls-cert-bundle: "/etc/ssl/cert.pem"
 forward-zone:
  name: "."
  forward-tls-upstream: yes
- forward-addr: 172.64.36.1@853#9y65g5srsm.cloudflare-gateway.com
- forward-addr: 2001:db8:abcd::1234#9y65g5srsm
+ forward-addr: 162.159.36.5@853#9y65g5srsm.cloudflare-gateway.com
+ forward-addr: 2001:db8:abcd::1234#9y65g5srsm.cloudflare-gateway.com
 ```
