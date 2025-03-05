@@ -60,6 +60,7 @@ const response = (
 await env.IMAGES.input(stream)
         .transform({ rotate: 90 })
         .transform({ width: 128 })
+        .transform({ blur: 20 })
         .output({ format: "image/avif" })
       ).response();
  
