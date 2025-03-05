@@ -107,7 +107,7 @@ For more information, refer to [Microsoft's DoH guide](https://learn.microsoft.c
 
 ### Use generic DoH endpoint
 
-You can send DoH requests to the generic Cloudflare DoH endpoint. To specify a location in your DoH query, include a header named `cf-dns-location` with a value of your location's DoH subdomain. For example:
+You can send DoH requests to the generic Cloudflare DoH endpoint, `dns.cloudflare-gateway.com`. To specify a location in your DoH query, include a header named `cf-dns-location` with a value of your location's DoH subdomain. For example:
 
 ```http
 GET /dns-query?name=example.com&type=A HTTP/2
