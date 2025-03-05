@@ -144,9 +144,6 @@ Cloudflare R2 is S3-compatible, so you can use the AWS CLI to interact with it.
   - Use the `aws s3 cp` command to download the log file:
 
 ```bash
-aws s3 cp s3://<bucket-name>/<path-to-log-file><local-destination>`
-````
+aws s3 cp s3://<BUCKET-NAME>/<PATH-TO-LOG-FILE><LOCAL-DESTINATION>`
 
-Replace `<bucket-name>`, `<path-to-log-file>`, and `<local-destination>` with your specific details.
-
-Downloaded files are gzipped so they must be decompressed before viewing in a text editor.
+Downloaded files are gzipped so they must be decompressed before you can open them in a text editor.
