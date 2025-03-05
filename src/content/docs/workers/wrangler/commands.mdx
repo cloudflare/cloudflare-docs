@@ -7,7 +7,14 @@ head:
 description: Create, develop, and deploy your Cloudflare Workers with Wrangler commands.
 ---
 
-import { TabItem, Tabs, Render, Type, MetaInfo, WranglerConfig } from "~/components";
+import {
+	TabItem,
+	Tabs,
+	Render,
+	Type,
+	MetaInfo,
+	WranglerConfig,
+} from "~/components";
 
 Wrangler offers a number of commands to manage your Cloudflare Workers.
 
@@ -1841,6 +1848,7 @@ wrangler cert upload certificate-authority --ca-cert <PATH> [OPTIONS]
 ```
 
 - `--ca-cert` <Type text="string" /> <MetaInfo text="required" />
+
   - A path to the Certificate Authority (CA) chain certificate to upload.
 
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
@@ -1924,7 +1932,7 @@ Deleted certificate 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d successfully
 
 ## `types`
 
-Generate types from bindings and module rules in configuration.
+Generate types based on your Worker configuration, including `Env` types based on your bindings, module rules, and [runtime types](/workers/language/typescript/) based on the`compatibility_date` and `compatibility_flags` in your [config file](/workers/wrangler/configuration/).
 
 ```txt
 wrangler types [<PATH>] [OPTIONS]
@@ -1932,33 +1940,24 @@ wrangler types [<PATH>] [OPTIONS]
 
 :::note
 
-The `--experimental-include-runtime` flag dynamically generates runtime types according to the `compatibility_date` and `compatibility_flags` defined in your [config file](/workers/wrangler/configuration/).
-
-It is a replacement for the [`@cloudflare/workers-types` package](https://www.npmjs.com/package/@cloudflare/workers-types), so that package, if installed, should be uninstalled to avoid any potential conflict.
-
-After running the command, you must add the path of the generated runtime types file to the [`compilerOptions.types` field](https://www.typescriptlang.org/tsconfig/#types) in your project's [tsconfig.json](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html) file.
-
-You may use the shorthand `--x-include-runtime` flag in place of `--experimental-include-runtime` anywhere it is mentioned.
-
-The minimum required Wrangler version to use this command is 3.66.0.
+<Render file="wrangler-commands/runtime-types" product="workers" />
 
 :::
 
 - `PATH` <Type text="string" /> <MetaInfo text="(default: `./worker-configuration.d.ts`)" />
-  - The path to where **the `Env` types** for your Worker will be written.
+  - The path to where types for your Worker will be written.
   - The path must have a `d.ts` extension.
 - `--env-interface` <Type text="string" /> <MetaInfo text="(default: `Env`)" />
   - The name of the interface to generate for the environment object.
   - Not valid if the Worker uses the Service Worker syntax.
-- `--experimental-include-runtime` <Type text="string" /> <MetaInfo text="optional (default: `./.wrangler/types/runtime.d.ts`)" />
-  - The path to where the **runtime types** file will be written.
-  - Leave the path blank to use the default option, e.g. `npx wrangler types --x-include-runtime`
-  - A custom path must be relative to the project root, e.g. `./my-runtime-types.d.ts`
-  - A custom path must have a `d.ts` extension.
+- `--include-runtime` <Type text="boolean" /> <MetaInfo text="(default: true)" />
+  - Whether to generate runtime types based on the`compatibility_date` and `compatibility_flags` in your [config file](/workers/wrangler/configuration/).
+- `--include-env` <Type text="boolean" /> <MetaInfo text="(default: true)" />
+  - Whether to generate `Env` types based on your Worker bindings.
 - `--strict-vars` <Type text="boolean" /> <MetaInfo text="optional (default: true)" />
   - Control the types that Wrangler generates for `vars` bindings.
-  - If `true`, (the default) Wrangler generates literal and union types for bindings (e.g. `myEnv: 'my dev variable' | 'my prod variable'`).
-  - If `false`, Wrangler generates generic types (e.g. `myEnv: string`). This is useful when variables change frequently, especially when working across multiple environments.
+  - If `true`, (the default) Wrangler generates literal and union types for bindings (e.g. `myVar: 'my dev variable' | 'my prod variable'`).
+  - If `false`, Wrangler generates generic types (e.g. `myVar: string`). This is useful when variables change frequently, especially when working across multiple environments.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
