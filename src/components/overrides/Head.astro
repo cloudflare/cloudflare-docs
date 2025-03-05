@@ -1,5 +1,4 @@
 ---
-import type { Props } from "@astrojs/starlight/props";
 import Default from "@astrojs/starlight/components/Head.astro";
 import { differenceInCalendarDays } from "date-fns";
 import "tippy.js/dist/tippy.css";
@@ -10,7 +9,7 @@ import type { CollectionEntry } from "astro:content";
 
 // grab the current top-level folder. Remove . characters for 1.1.1.1 URL
 const currentSection = Astro.url.pathname.split("/")[1].replaceAll(".", "");
-const head = Astro.props.entry.data.head;
+const head = Astro.locals.starlightRoute.entry.data.head;
 
 if (currentSection) {
 	const product = await getEntry("products", currentSection);
@@ -31,7 +30,7 @@ if (currentSection) {
 					content: title,
 				};
 			} else {
-				title = `${Astro.props.entry.data.title} · ${product.data.meta.title}`;
+				title = `${Astro.locals.starlightRoute.entry.data.title} · ${product.data.meta.title}`;
 				head.push({
 					tag: "title",
 					attrs: {},
@@ -92,7 +91,7 @@ if (currentSection) {
 
 // Add noindex tag if present in frontmatter
 
-if (Astro.props.entry.data.noindex) {
+if (Astro.locals.starlightRoute.entry.data.noindex) {
 	head.push({
 		tag: "meta",
 		attrs: {
@@ -105,8 +104,8 @@ if (Astro.props.entry.data.noindex) {
 
 // Adding metadata used for reporting and search indexing
 // content type
-if (Astro.props.entry.data.pcx_content_type) {
-	const contentType = Astro.props.entry.data.pcx_content_type;
+if (Astro.locals.starlightRoute.entry.data.pcx_content_type) {
+	const contentType = Astro.locals.starlightRoute.entry.data.pcx_content_type;
 	head.push({
 		tag: "meta",
 		attrs: {
@@ -126,8 +125,8 @@ if (Astro.props.entry.data.pcx_content_type) {
 }
 
 // other products
-if (Astro.props.entry.data.products) {
-	const additionalProducts = Astro.props.entry.data.products;
+if (Astro.locals.starlightRoute.entry.data.products) {
+	const additionalProducts = Astro.locals.starlightRoute.entry.data.products;
 	head.push({
 		tag: "meta",
 		attrs: {
@@ -139,8 +138,8 @@ if (Astro.props.entry.data.products) {
 }
 
 // other products
-if (Astro.props.entry.data.tags) {
-	const pageTags = Astro.props.entry.data.tags;
+if (Astro.locals.starlightRoute.entry.data.tags) {
+	const pageTags = Astro.locals.starlightRoute.entry.data.tags;
 	head.push({
 		tag: "meta",
 		attrs: {
@@ -151,10 +150,10 @@ if (Astro.props.entry.data.tags) {
 	});
 }
 
-if (Astro.props.entry.data.updated) {
+if (Astro.locals.starlightRoute.entry.data.updated) {
 	const daysBetween = differenceInCalendarDays(
 		new Date(),
-		Astro.props.entry.data.updated,
+		Astro.locals.starlightRoute.entry.data.updated,
 	);
 	head.push({
 		tag: "meta",
@@ -168,9 +167,9 @@ if (Astro.props.entry.data.updated) {
 
 // end metadata
 
-if (Astro.props.entry.data.pcx_content_type === "changelog") {
+if (Astro.locals.starlightRoute.entry.data.pcx_content_type === "changelog") {
 	const href = new URL(Astro.site ?? "");
-	href.pathname = Astro.props.entry.slug.concat("/index.xml");
+	href.pathname = Astro.locals.starlightRoute.entry.slug.concat("/index.xml");
 
 	head.push({
 		tag: "link",
@@ -183,7 +182,7 @@ if (Astro.props.entry.data.pcx_content_type === "changelog") {
 	});
 }
 
-if (Astro.props.entry.data.external_link) {
+if (Astro.locals.starlightRoute.entry.data.external_link) {
 	head.push({
 		tag: "meta",
 		attrs: {
@@ -195,7 +194,7 @@ if (Astro.props.entry.data.external_link) {
 	head.push({
 		tag: "meta",
 		attrs: {
-			content: `0; url=${Astro.props.entry.data.external_link}`,
+			content: `0; url=${Astro.locals.starlightRoute.entry.data.external_link}`,
 			"http-equiv": "refresh",
 		},
 		content: "",
@@ -203,8 +202,8 @@ if (Astro.props.entry.data.external_link) {
 }
 
 const ogImagePath = await getOgImage(
-	(Astro.props.originalEntry as CollectionEntry<"changelog">) ??
-		Astro.props.entry,
+	(Astro.locals.starlightRoute.originalEntry as CollectionEntry<"changelog">) ??
+		Astro.locals.starlightRoute.entry,
 );
 const ogImageUrl = new URL(ogImagePath, Astro.url.origin).toString();
 
@@ -241,4 +240,4 @@ head.push(...ogImageTags);
 <script src="src/scripts/footnotes.ts"></script>
 <script src="src/scripts/mermaid.ts"></script>
 <script src="src/scripts/analytics.ts"></script>
-<Default {...Astro.props}><slot /></Default>
+<Default><slot /></Default>

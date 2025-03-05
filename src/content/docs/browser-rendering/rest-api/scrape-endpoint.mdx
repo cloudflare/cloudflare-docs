@@ -9,6 +9,8 @@ The `/scrape` endpoint extracts structured data from specific elements on a webp
 
 ## Basic usage
 
+Go to `https://example.com` and and extract metadata from all `h1` and `a` elements in the DOM.
+
 ```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/scrape' \
   -H 'Authorization: Bearer <apiToken>' \
@@ -21,7 +23,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
   {
     "selector": "a"
   }]
-}
+}'
 ```
 
 ### JSON response
@@ -64,11 +66,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 }
 ```
 
-## Parameters
-
-- `url` _(string)_ - The webpage to extract data from.
-- `elements` _(object)_ - Defines the elements to extract from the page.
-  - `selectors` _(array of strings)_ - List of CSS selectors identifying elements to scrape (e.g., `"h1"`, `".article"`).
+Many more options exist, like setting HTTP credentials using `authenticate`, setting `cookies`, and using `gotoOptions` to control page load behaviour - check the endpoint [reference](/api/resources/browser_rendering/subresources/scrape/methods/create/) for all available parameters.
 
 ### Response fields
 

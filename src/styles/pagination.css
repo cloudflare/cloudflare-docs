@@ -1,0 +1,48 @@
+.pagination-links {
+	display: flex !important;
+	justify-content: space-between;
+	margin-top: 3rem;
+
+	& > a {
+		flex-basis: unset;
+		flex-grow: unset;
+		width: fit-content;
+
+		padding: unset;
+		border: unset;
+		box-shadow: unset;
+
+		&[rel="prev"] {
+			text-align: right;
+			margin-right: auto;
+		}
+
+		&[rel="next"] {
+			text-align: left;
+			margin-left: auto;
+		}
+
+		& > span {
+			font-size: 0.75rem;
+
+			.link-title {
+				font-size: 1rem;
+			}
+		}
+
+		& > svg {
+			align-self: self-end;
+			color: var(--pagination-arrow-color);
+			font-size: 1.25rem;
+			margin-bottom: 1px;
+		}
+	}
+}
+
+:root[data-theme="light"] {
+	--pagination-arrow-color: theme("colors.cl1.gray.0");
+}
+
+:root[data-theme="dark"] {
+	--pagination-arrow-color: theme("colors.cl1.gray.9");
+}

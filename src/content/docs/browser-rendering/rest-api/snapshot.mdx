@@ -30,7 +30,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 
 ```json title="json response"
 {
-	"status": true,
+	"success": true,
 	"result": {
 		"screenshot": "Base64EncodedScreenshotString",
 		"content": "<html>...</html>"
@@ -43,9 +43,10 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 The `html` property in the JSON payload, it sets the html to `<html><body>Advanced Snapshot</body></html>` then does the following steps:
 
 1. Disable JavaScript.
-2. Changes the page size `(viewport)`.
-3. Waits up to `30000ms` or until the `DOMContentLoaded` event starts.
-4. Returns the rendered HTML content and a base-64 encoded screenshot of the page.
+2. Sets the screenshot to `fullPage`.
+3. Changes the page size `(viewport)`.
+4. Waits up to `30000ms` or until the `DOMContentLoaded` event fires.
+5. Returns the rendered HTML content and a base-64 encoded screenshot of the page.
 
 ```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/snapshot' \
@@ -54,6 +55,9 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
   -d '{
     "html": "<html><body>Advanced Snapshot</body></html>",
     "setJavaScriptEnabled": false,
+    "screenshotOptions": {
+       "fullPage": true
+    },
     "viewport": {
       "width": 1200,
       "height": 800
@@ -69,8 +73,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 
 ```json title="json response"
 {
-	"status": true,
-	"errors": [],
+	"success": true,
 	"result": {
 		"screenshot": "AdvancedBase64Screenshot",
 		"content": "<html><body>Advanced Snapshot</body></html>"
@@ -78,21 +81,4 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 }
 ```
 
-## Parameters
-
-- `url` _(string)_ - The URL of the page to snapshot.
-- `html` _(string)_ - Allows passing custom HTML instead of a URL.
-- `setJavaScriptEnabled` _(boolean)_ - Enables or disables JavaScript execution on the page.
-- `viewport` \*(object)- Sets the rendering viewport dimensions.
-  - `width` _(number)_ - Width in pixels.
-  - `height` _(number)_ - Height in pixels.
-- `gotoOptions` _(object)_ - Determines when the page is fully loaded.
-  - `waitUntil` _(string)_ - Defines the loading strategy (`domcontentloaded`, `networkidle2`).
-  - `timeout` _(number)_ - Timeout duration in milliseconds.
-- `allowResourceTypes` _(array of strings)_ - Restricts the types of resources allowed to load.
-  - Example: [`document`, `script`] - Only allows HTML documents and scripts to load, preventing images, stylesheets, and other resources.
-
-### Response fields
-
-- `screenshot` _(string)_ - Base64-encoded image of the rendered page.
-- `content` _(string)_ - Fully rendered HTML of the page.
+Many more options exist, like setting HTTP credentials using `authenticate`, setting `cookies`, and using `gotoOptions` to control page load behaviour - check the endpoint [reference](/api/resources/browser_rendering/subresources/screenshot/methods/create/) for all available parameters.

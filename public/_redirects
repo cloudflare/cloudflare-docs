@@ -431,12 +431,14 @@
 /email-security/email-configuration/retract-settings/gmail-retraction/ /email-security/deployment/api/setup/gsuite-bcc-setup/add-retraction/ 301
 /cloudflare-one/insights/email-monitoring/email-security-logs/ /cloudflare-one/insights/email-monitoring/enable-logs/ 301
 /cloudflare-one/insights/email-monitoring/phishing-report/ /cloudflare-one/insights/email-monitoring/download-disposition-report/ 301
-
 /cloudflare-one/insights/email-monitoring/download-disposition-report/ /cloudflare-one/email-security/email-monitoring/download-disposition-report/ 301
 /cloudflare-one/insights/email-monitoring/ /cloudflare-one/email-security/email-monitoring/ 301
 /cloudflare-one/insights/email-monitoring/search-email/ /cloudflare-one/email-security/email-monitoring/search-email/ 301
 /cloudflare-one/insights/email-monitoring/phish-submissions/ /cloudflare-one/email-security/phish-submissions/ 301
 /cloudflare-one/insights/email-monitoring/enable-logs/ /cloudflare-one/insights/logs/enable-logs/ 301
+/cloudflare-one/email-security/directories/manage-ms-directories/ /cloudflare-one/email-security/directories/manage-integrated-directories/ 301
+/cloudflare-one/email-security/directories/manage-ms-directories/manage-groups-directory/ /cloudflare-one/email-security/directories/manage-integrated-directories/manage-groups-directory/ 301
+/cloudflare-one/email-security/directories/manage-ms-directories/manage-users-directory/ /cloudflare-one/email-security/directories/manage-integrated-directories/manage-users-directory/ 301
 
 
 # firewall
@@ -1036,6 +1038,8 @@
 /rules/url-forwarding/single-redirects/examples/ /rules/url-forwarding/examples/ 301
 /rules/url-forwarding/dynamic-redirects/parameters/ /rules/url-forwarding/single-redirects/settings/ 301
 /rules/transform/manage/ /rules/transform/ 301
+/rules/page-rules/how-to/rewrite-host-headers/ /rules/origin-rules/examples/change-uri-path-and-host-header/ 301
+/rules/page-rules/how-to/override-url-or-ip-address/ /rules/origin-rules/features/ 301
 
 # ruleset engine
 /ruleset-engine/rules-language/fields/standard-fields/ /ruleset-engine/rules-language/fields/reference/ 301

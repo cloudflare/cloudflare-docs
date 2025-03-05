@@ -20,7 +20,7 @@ curl -X 'POST' 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browse
 
 ## Advanced usage
 
-Navigate to `https://cloudflare.com/` but block images and stylesheets from loading. Undesired requests can be blocked by resource type (`rejectResourceTypes`) or by using a regex pattern (`rejectRequestPattern`).
+Navigate to `https://cloudflare.com/` but block images and stylesheets from loading. Undesired requests can be blocked by resource type (`rejectResourceTypes`) or by using a regex pattern (`rejectRequestPattern`). The opposite can also be done, only allow requests that match `allowRequestPattern` or `allowResourceTypes`.
 
 ```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/content' \
@@ -28,14 +28,10 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
   -H 'Content-Type: application/json' \
   -d '{
       "url": "https://cloudflare.com/",
-  "rejectResourceTypes": ["image"],
-  "rejectRequestPattern": ["/^.*\\.(css)"]
-}
+      "rejectResourceTypes": ["image"],
+      "rejectRequestPattern": ["/^.*\\.(css)"]
+		}'
 
 ```
 
-### Parameters
-
-- `url` _(string)_ - The URL of the webpage to extract content from.
-- `rejectResourceTypes` _(array)_ - Blocks specific resource types such as images, fonts from loading to improve performance.
-- `rejectRequestPattern` _(array of regex patterns)_ - Prevents loading of resources matching specified patterns such as CSS files.
+Many more options exist, like setting HTTP headers using `setExtraHTTPHeaders`, setting `cookies`, and using `gotoOptions` to control page load behaviour - check the endpoint [reference](/api/resources/browser_rendering/subresources/screenshot/methods/create/) for all available parameters.

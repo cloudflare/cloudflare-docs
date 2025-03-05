@@ -1,0 +1,68 @@
+---
+title: CURL
+---
+
+The `CURL` component is used to display a cURL command for making HTTP requests.
+
+## Import
+
+```mdx
+import { CURL } from "~/components";
+```
+
+## Usage
+
+```mdx live
+import { CURL } from "~/components";
+
+<CURL
+	url="https://example.com"
+	method="POST"
+	json={{
+		key: "value",
+	}}
+	code={{
+		mark: "value"
+	}}
+/>
+```
+
+## `<CURL>` Props
+
+### `url`
+
+**required**
+
+**type:** `string`
+
+The URL to make the request to.
+
+### `method`
+
+**type:** `"GET" | "HEAD" | "POST" | "PUT" | "DELETE" | "OPTIONS" | "PATCH"`
+
+**default:** `"GET"`
+
+The HTTP method to use for the request.
+
+### `headers`
+
+**type:** `Record<string, string>`
+
+The headers to include in the request.
+
+### `json`
+
+**type:** `Record<string, any>`
+
+JSON data to include in the request.
+
+### `code`
+
+**type:** `object`
+
+An object of Expressive Code props, the following props are available:
+
+- [Base Props](https://expressive-code.com/key-features/code-component/#available-props)
+- [Line Marker Props](https://expressive-code.com/key-features/text-markers/#props)
+- [Collapsible Sections Props](https://expressive-code.com/plugins/collapsible-sections/#props)

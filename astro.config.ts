@@ -149,9 +149,7 @@ export default defineConfig({
 		tailwind({
 			applyBaseStyles: false,
 		}),
-		liveCode({
-			layout: "~/components/live-code/Layout.astro",
-		}),
+		liveCode({}),
 		icon(),
 		sitemap({
 			filter(page) {

@@ -53,11 +53,9 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/
 
 ## How to delete logs
 
-### Auto Log Cleanup
+### Automatic Log Deletion
 
-Enable Auto Log Cleanup to automatically delete the oldest logs once the default storage limit of 10 million logs is reached, ensuring that new logs are always saved without needing manual deletion. Logs are deleted in chunks of 0.1% of the storage limit, which equates to 10,000 logs at a time.
-
-This setting is useful for maintaining continuous logging while staying within the default storage constraints.
+​To maintain continuous logging within your gateway's storage constraints, enable Automatic Log Deletion in your Gateway settings. This feature automatically deletes the oldest logs once the log limit you've set or the default storage limit of 10 million logs is reached, ensuring new logs are saved without manual intervention. Logs are deleted in increments of 0.1% of the storage limit, equating to 10,000 logs per deletion when using the default limit.​
 
 ### Manual deletion
 
