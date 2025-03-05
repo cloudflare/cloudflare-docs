@@ -27,8 +27,6 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/urlscanner/v2/s
 }'
 ``
 
-You can submit up to 100 URLs via the API at the same time.
-
 By default, the report will have a `Public` visibility level, which means it will appear in the [recent scans](https://radar.cloudflare.com/scan#recent-scans) list and in search results. It will also include a single screenshot with desktop resolution.
 
 A successful response will have a status code of `200` and be similar to the following:
@@ -42,6 +40,8 @@ A successful response will have a status code of `200` and be similar to the fol
   "message": "Submission successful"
 }
 ```
+
+You can submit up to 100 URLs at the same time via the [API](https://developers.cloudflare.com/api/resources/url_scanner/subresources/scans/methods/bulk_create/).
 
 The `uuid` property in the response above identifies the scan and will be required when fetching the scan report.
 
