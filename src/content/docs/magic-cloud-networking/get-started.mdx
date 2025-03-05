@@ -60,10 +60,10 @@ Once Cloudflare has the credentials required to access your cloud environments, 
 2. Create an [AWS role](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-custom.html) with the following settings:
    1. **Trusted entity type**: Select **Custom trust policy**, and paste the custom trust policy returned by the Cloudflare dashboard.
    2. **Permissions**: Add the IAM policy created in step 1, along with these AWS-managed policies:
-      1. `NetworkAdministrator`
-      2. `AmazonEC2ReadOnlyAccess`
-      3. `AmazonVPCReadOnlyAccess`
-      4. `IAMReadOnlyAccess`
+      - `NetworkAdministrator`
+      - `AmazonEC2ReadOnlyAccess`
+      - `AmazonVPCReadOnlyAccess`
+      - `IAMReadOnlyAccess`
    3. **ARN**: Copy the ARN for your newly created user.
 
    :::note
