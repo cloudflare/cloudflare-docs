@@ -548,7 +548,7 @@ When you are ready to connect your Magic WAN Connector to the Cloudflare network
 			<li>Open the macOS Terminal.</li>
 			<li>Run <code>ls /dev/cu.*</code> to list the connected serial devices.</li>
 			<li>The command should return an output similar to <code>/dev/cu.usbserial-0001</code>. Copy this output to the clipboard or note this down somewhere else.</li>
-			<li>Run <code>sudo screen -adRUS {`<`}PATH_FROM_STEP_3{`>`} 115200</code>.</li>
+			<li>Run <code>sudo screen -adRUS mconn {`<`}PATH_FROM_STEP_3{`>`} 115200</code>.</li>
 			<li>The screen may need to be manually refreshed when a new device is connected. You can do that by pressing <code>CMD + C</code>.</li>
 		</ol>
 
@@ -559,7 +559,7 @@ When you are ready to connect your Magic WAN Connector to the Cloudflare network
 			<li>Open Terminal.</li>
 			<li>List the connected serial devices by running <code>ls /dev/serial/by-id/*</code>.</li>
 			<li>The command should return an output similar to <code>/dev/serial/by-id/usb-Silicon_Labs_CP2102_USB_to_UART_Bridge_Controller_0001-if00-port0</code>. Copy this to the clipboard or note this down.</li>
-			<li>Run <code>sudo screen -adRUS {`<`}THE PATH FROM STEP 3{`>`}; 115200</code>.</li>
+			<li>Run <code>sudo screen -adRUS mconn {`<`}PATH_FROM_STEP_3{`>`}; 115200</code>.</li>
 			<li>The screen may need to be manually refreshed when a new device is connected. You can do that by pressing <code>CTRL + C</code>.</li>
 		</ol>
 
