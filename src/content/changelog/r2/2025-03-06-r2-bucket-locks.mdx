@@ -1,0 +1,23 @@
+---
+title: Set retention polices for your R2 bucket with bucket locks
+description: Set retention polices for your R2 bucket with bucket locks
+products:
+  - r2
+date: 2025-03-06T10:00:00Z
+---
+
+You can now use [bucket locks](/r2/buckets/bucket-locks/) to set retention policies on your [R2 buckets](/r2/buckets/) (or specific prefixes within your buckets) for a specified period — or indefinitely. This can help ensure compliance by protecting important data from accidental or malicious deletion.
+
+Buckets can have up to 1,000 [bucket lock rules](/r2/buckets/). Each rule specifies which objects it covers (via prefix) and how long those objects must remain retained. You can:
+
+- Lock objects for a specific duration. For example, 90 days.
+- Retain objects until a certain date. For example, until January 1, 2030.
+- Keep objects locked indefinitely.
+
+Here's how you can add a bucket lock rule with [Wrangler](/workers/wrangler/):
+
+```sh
+npx wrangler r2 bucket lock add my-bucket
+```
+
+For more information on bucket locks and how to set retention policies for objects in your R2 buckets, refer to our [documentation](/r2/buckets/bucket-locks/).
