@@ -264,7 +264,7 @@ wrangler r2 bucket lifecycle add <NAME> [OPTIONS]
 - `NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the R2 bucket to add a lifecycle rule to.
 - `--id` <Type text="string" /> <MetaInfo text="optional" />
-  - A unique identifier for the lifecycle rule.
+  - A unique name for the lifecycle rule, used to identify and manage it.
 - `--prefix` <Type text="string" /> <MetaInfo text="optional" />
   - Prefix condition for the lifecycle rule (leave empty for all prefixes).
 - `--expire-days` <Type text="number" /> <MetaInfo text="optional" />
@@ -350,7 +350,7 @@ wrangler r2 bucket lock add <NAME> [OPTIONS]
 - `NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the R2 bucket to add a bucket lock rule to.
 - `--id` <Type text="string" /> <MetaInfo text="optional" />
-  - A unique identifier for the bucket lock rule.
+  - A unique name for the bucket lock rule, used to identify and manage it.
 - `--prefix` <Type text="string" /> <MetaInfo text="optional" />
   - Prefix condition for the bucket lock rule (leave empty for all prefixes).
 - `--retention-days` <Type text="number" /> <MetaInfo text="optional" />

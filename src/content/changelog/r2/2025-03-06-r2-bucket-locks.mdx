@@ -13,13 +13,21 @@ Locks allow you to:
 - Lock objects for a specific duration. For example, 90 days.
 - Retain objects until a certain date. For example, until January 1, 2030.
 - Keep objects locked indefinitely.
+
 Buckets can have up to 1,000 [bucket lock rules](/r2/buckets/). Each rule specifies which objects it covers (via prefix) and how long those objects must remain retained.
 
+Here are a couple of examples showing how you can configure bucket lock rules using [Wrangler](/workers/wrangler/):
 
-Here's how you can add a bucket lock rule with [Wrangler](/workers/wrangler/):
+#### Ensure all objects in a bucket are retained for at least 180 days
 
 ```sh
-npx wrangler r2 bucket lock add my-bucket
+npx wrangler r2 bucket lock add <bucket> --id 180-days-all --retention-days 180
+```
+
+#### Prevent deletion or overwriting of all logs indefinitely (via prefix)
+
+```sh
+npx wrangler r2 bucket lock add <bucket> --id indefinite-logs --prefix logs/ --retention-indefinite
 ```
 
 For more information on bucket locks and how to set retention policies for objects in your R2 buckets, refer to our [documentation](/r2/buckets/bucket-locks/).
