@@ -23,16 +23,24 @@ The DoT hostname contains your unique location name. For example, if the DoT hos
 
 ### 2. Configure your DoT client
 
-Depending on your operating system, you can choose from a variety of standalone DoT clients.
-
-To configure your DoT client, enter the following IP address and the DoT hostname for your location (for example, `9y65g5srsm.cloudflare-gateway.com`):
+To configure a DoT client such as `dig`, specify the IP address and the DoT hostname for your location in your query. For example:
 
 ```txt
-Hostname: <DoT hostname>
+Hostname: 9y65g5srsm.cloudflare-gateway.com
 IP address: 162.159.36.5
 ```
 
-Alternatively, stub resolvers (e.g., Unbound) support DoT natively. An example configuration is shown below.
+Alternatively, you can use the generic DoT endpoint (`dns.cloudflare-gateway.com`) and include an OPT record (code 65011) and your location name (`9y65g5srsm`). For example:
+
+```txt
+Hostname: dns.cloudflare-gateway.com
+IP address: 162.159.36.5
+OPT Record:
+  - Code: 65011
+  - Value: 9y65g5srsm
+```
+
+Some stub resolvers support DoT natively. For example, you can configure Unbound to send a DoT query:
 
 ```txt
 # Unbound TLS Config
@@ -42,10 +50,5 @@ forward-zone:
  name: "."
  forward-tls-upstream: yes
  forward-addr: 172.64.36.1@853#9y65g5srsm.cloudflare-gateway.com
- forward-addr: <IPv6 address>#<DoT hostname>
+ forward-addr: 2001:db8:abcd::1234#9y65g5srsm
 ```
-
-:::note
-
-Each DNS location has a unique DoT hostname and IPv6 address. Remember to substitute your location's values into the `<IPv6 address>` and `<DoT hostname>` fields.
-:::
