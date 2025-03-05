@@ -13,7 +13,7 @@ Location-based policies require that you send DNS requests to a [location-specif
 
 ## Filter DoH requests by location
 
-Location-based policies require that you send DNS requests to a unique <GlossaryTooltip term="DoH subdomain">DoH endpoint</GlossaryTooltip> assigned to the location:
+Location-based policies require that you send DNS queries to a unique <GlossaryTooltip term="DoH subdomain">DoH endpoint</GlossaryTooltip> assigned to the location:
 
 ```txt
 https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query
@@ -104,6 +104,17 @@ nslookup -type=AAAA <your-subdomain>.cloudflare-gateway.com
 For more information, refer to [Microsoft's DoH guide](https://learn.microsoft.com/en-us/windows-server/networking/dns/doh-client-support) for Windows Server 2022 and newer.
 
 </Details>
+
+### Use generic DoH endpoint
+
+You can send DoH requests to the generic Cloudflare DoH endpoint. To specify a location in your DoH query, include a header named `cf-dns-location` with a value of your location's DoH subdomain. For example:
+
+```http
+GET /dns-query?name=example.com&type=A HTTP/2
+Host: dns.cloudflare-gateway.com
+cf-dns-location: 9y65g5srsm
+Accept: application/dns-message
+```
 
 ## Filter DoH requests by user
 
