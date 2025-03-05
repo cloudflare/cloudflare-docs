@@ -12,12 +12,12 @@ Bucket locks prevent the deletion and overwriting of objects in an R2 bucket for
 Before getting started, you will need:
 
 - An existing R2 bucket. If you do not already have an existing R2 bucket, refer to [Create buckets](/r2/buckets/create-buckets/).
-- An API token with [permissions](/r2/api/s3/tokens/#permissions) to edit R2 bucket configuration.
+- If using the API, an API token with [permissions](/r2/api/s3/tokens/#permissions) to edit R2 bucket configuration.
 
-:::note
+### Enable bucket lock in the Dashboard
 
-Currently, Bucket locks are only configurable via API.
-:::
+After creating your bucket, open the bucket `Settings` and navigate to `Bucket Lock Rules` where you can create a policy by clicking the `Add rule` button.
+
 
 ### Enable bucket lock via API
 
