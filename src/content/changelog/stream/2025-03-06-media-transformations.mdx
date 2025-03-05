@@ -26,7 +26,7 @@ If your zone already has Image Transformations enabled, then it is ready to
 optimize videos with Media Transformations, too.
 
 ``` text title="URL format"
-https://example.com/media/<OPTIONS>/<SOURCE-VIDEO>
+https://example.com/cdn-cgi/media/<OPTIONS>/<SOURCE-VIDEO>
 ```
 
 For example, we have a short video of the mobile in Austin's office. The
@@ -34,10 +34,13 @@ original is nearly 30 megabytes and wider than necessary for this layout.
 Consider a simple width adjustment:
 
 <video controls>
-  <source src="https://customer-igynxd2rwhmuoxw8.cloudflarestream.com/media/width=640/https://pub-d9fcbc1abcd244c1821f38b99017347f.r2.dev/aus-mobile.mp4" />
+  <source src="https://developers.cloudflare.com/cdn-cgi/media/width=640/https://pub-d9fcbc1abcd244c1821f38b99017347f.r2.dev/aus-mobile.mp4" />
 </video>
 
-(( REPEAT URL ))
+``` text title="Example URL"
+https://example.com/cdn-cgi/media/width=640/<SOURCE-VIDEO>
+https://developers.cloudflare.com/cdn-cgi/media/width=640/https://pub-d9fcbc1abcd244c1821f38b99017347f.r2.dev/aus-mobile.mp4
+```
 
 The result is less than 3 megabytes, properly sized, and delivered dynamically
 so that customers do not have to manage the creation and storage of these
