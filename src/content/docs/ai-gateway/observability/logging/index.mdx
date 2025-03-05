@@ -53,13 +53,15 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/
 
 ## How to delete logs
 
+To manage your log storage effectively and ensure continuous logging, you can delete logs using the following methods:
+
 ### Automatic Log Deletion
 
-​To maintain continuous logging within your gateway's storage constraints, enable Automatic Log Deletion in your Gateway settings. This feature automatically deletes the oldest logs once the log limit you've set or the default storage limit of 10 million logs is reached, ensuring new logs are saved without manual intervention. Logs are deleted in increments of 0.1% of the storage limit, equating to 10,000 logs per deletion when using the default limit.​
+​To maintain continuous logging within your gateway's storage constraints, enable Automatic Log Deletion in your Gateway settings. This feature automatically deletes the oldest logs once the log limit you've set or the default storage limit of 10 million logs is reached, ensuring new logs are saved without manual intervention. 
 
 ### Manual deletion
 
-To manually delete logs, navigate to the Logs tab in the dashboard. Use the available filters such as status, cache, provider, cost, or any other options in the dropdown to refine the logs you wish to delete. Once filtered, select Delete logs to complete the action.
+To manually delete logs through the dashboard, navigate to the Logs tab in the dashboard. Use the available filters such as status, cache, provider, cost, or any other options in the dropdown to refine the logs you wish to delete. Once filtered, select Delete logs to complete the action.
 
 See full list of available filters and their descriptions below:
 
@@ -78,3 +80,7 @@ See full list of available filters and their descriptions below:
 | Metadata Value  | equals, does not equal                                       | specific metadata values.                 |
 | Log ID          | equals, does not equal                                       | a specific Log ID.                        |
 | Event ID        | equals, does not equal                                       | a specific Event ID.                      |
+
+### API deletion
+
+You can programmatically delete logs using the AI Gateway API. For more comprehensive information on the `DELETE` logs endpoint, check out the [Cloudflare API documentation](https://developers.cloudflare.com/api/resources/ai_gateway/subresources/logs/methods/delete/). 
