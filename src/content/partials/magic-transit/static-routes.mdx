@@ -11,7 +11,7 @@ params:
   - ipRanges?
 ---
 
-import { GlossaryTooltip, Markdown, AnchorHeading, Render, TabItem, Tabs } from "~/components";
+import { Aside, GlossaryTooltip, Markdown, AnchorHeading, Render, TabItem, Tabs } from "~/components";
 
 :::note
 If you are connecting to Cloudflare via a [Direct CNI connection](/network-interconnect/express-cni/), refer to <a href={props.BGPpath}>BGP peering</a> to learn how to take advantage of this [routing](https://www.cloudflare.com/learning/network-layer/what-is-routing/) protocol. If not, continue reading.
@@ -64,6 +64,29 @@ In the example below, `TUNNEL_2_IAD` is likely to receive twice as much traffic 
     inline={false}
   />
 		<p>The minimum advertising prefix is <code>/24</code>, but because Cloudflare uses anycast tunnels as an outer wrapper for your traffic, we can route prefixes within that <code>/24</code> to different tunnel endpoints. For example, you can send <code>x.x.x.0/29</code> to Data Center 1 and <code>x.x.x.8/29</code> to Data Center 2. This is helpful when you operate in an environment with constrained IP resources.</p>
+  </>
+  )
+}
+
+{ props.magicProduct === "Magic Transit" && (
+  <>
+    <AnchorHeading title="Map routes prefixes bigger than onboarded prefixes" depth={2} />
+		<Markdown
+    text={`
+		If you have multiple onboarded \`/24\` subnets that belong to a larger contiguous block, you can configure a summary static route for the corresponding supernet (like a \`/23\` or a \`/22\`) instead of adding each \`/24\` individually. This eliminates the need to configure each \`/24\` route individually, as all traffic will be routed through the same GRE tunnels.
+
+		For example, if you have two tunnels:
+
+		- \`192.0.2.0/24\`
+		- \`192.0.3.0/24\`
+
+		You can summarize these into a single \`192.0.2.0/23\`.
+
+		Refer to [Add tunnels](/magic-transit/how-to/configure-tunnels/#add-tunnels) to learn more about configuring GRE tunnels.
+			`}
+				inline={false}
+  />
+	<Aside type="note">These address blocks are a part of <a href="https://datatracker.ietf.org/doc/rfc5737/" target="_blank" rel="noopener noreferrer">RFC 5737</a> and are reserved for use as examples in documentation.</Aside>
   </>
   )
 }
