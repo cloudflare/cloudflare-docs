@@ -51,6 +51,7 @@ export { default as ResourcesBySelector } from "./ResourcesBySelector.astro";
 export { default as RuleID } from "./RuleID.astro";
 export { default as SpotlightAuthorDetails } from "./SpotlightAuthorDetails.astro";
 export { default as Stream } from "./Stream.astro";
+export { default as TagsUsage } from "./TagsUsage.astro";
 export { default as TroubleshootingList } from "./TroubleshootingList.astro";
 export { default as TunnelCalculator } from "./TunnelCalculator.astro";
 export { default as Type } from "./Type.astro";
