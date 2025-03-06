@@ -1,0 +1,19 @@
+---
+title: Hyperdrive reduces query latency by up to 90%, uses Cloudflare's IP addresses for egress
+description: Hyperdrive now pools database connections closer to your database to reduce latency and connects using Cloudflare's IP address ranges.
+products:
+  - hyperdrive
+date: 2025-03-06T18:00:00Z
+---
+
+Hyperdrive now pools database connections in one or more regions close to your database. This means that your uncached queries and new database connections have up to 90% less latency as measured from connection pools.
+
+![Hyperdrive query latency decreases by 90% during Hyperdrive's gradual rollout of regional pooling.](~/assets/images/hyperdrive/configuration/hyperdrive-regional-pooling-query-latency-improvement.png)
+
+By improving placement of Hyperdrive database connection pools, Workers smart placement is now more effective when used with Hyperdrive, ensuring that your Worker can be placed as close to your database as possible.
+
+With this update, Hyperdrive also uses [Cloudflare's standard IP address ranges](https://www.cloudflare.com/ips/) to connect to your database. This enables you to configure the firewall policies of your database to allow access to this limited IP address range.
+
+Refer to [documentation on how Hyperdrive makes connecting to regional databases from Cloudflare Workers fast](/hyperdrive/configuration/how-hyperdrive-works/).
+
+This improvement is enabled on all Hyperdrive configurations.

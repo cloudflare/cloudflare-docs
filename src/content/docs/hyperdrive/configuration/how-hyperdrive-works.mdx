@@ -17,9 +17,9 @@ Hyperdrive solves these challenges by managing the number of global connections 
 
 ## Edge connection setup
 
-When a database driver connects to a database from a Cloudflare Worker, illustrated above on the right half of the diagram in **Direct (without Hyperdrive)**, it will first go through the connection setup. This may require multiple round trips to the database in order to verify and establish a secure connection.
+When a database driver connects to a database from a Cloudflare Worker (illustrated above on the right half of the diagram in **Direct (without Hyperdrive)**) it will first go through the connection setup. This may require multiple round trips to the database in order to verify and establish a secure connection. This can incur additional network latency due to the distance between your Cloudflare Worker and your database.
 
-**With Hyperdrive** (on the left half of the above diagram), this connection setup occurs between your Cloudflare Worker and Hyperdrive on the edge, as close to your Worker as possible. This incurs significantly less latency since the roundtrips are done within the same region.
+**With Hyperdrive** (on the left half of the above diagram), this connection setup occurs between your Cloudflare Worker and Hyperdrive on the edge, as close to your Worker as possible. This incurs significantly less latency since the connection setup is completed within the same location.
 
 ## Connection Pooling
 

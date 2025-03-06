@@ -5,22 +5,22 @@ productLink: "/hyperdrive/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
-  - publish_date: "2025-02-26"
-    title: Hyperdrive egresses using Cloudflare's IP address ranges
+  - publish_date: "2025-03-06"
+    title: Hyperdrive connects to your database using Cloudflare's IP address ranges
     description: |-
-      Hyperdrive now connects to your databases using [Cloudflare's IP address ranges]((https://www.cloudflare.com/ips/). 
+      Hyperdrive now uses [Cloudflare's IP address ranges]((https://www.cloudflare.com/ips/) for egress. 
 
       This enables you to configure the firewall policies on your database to allow access to this limited IP address range. 
 
-      Refer to the [full list of Cloudflare IP ranges](https://www.cloudflare.com/ips/) that Hyperdrive uses.
-  - publish_date: "2025-02-25"
-    title: Hyperdrive improves connection pool placement decreasing query latency by up to 50%
+      Learn more about [configuring your database networking for Hyperdrive](/hyperdrive/configuration/firewall-and-networking-configuration/).
+  - publish_date: "2025-03-06"
+    title: Hyperdrive improves connection pool placement decreasing query latency by up to 90%
     description: |-
-      Hyperdrive now pools all database connections in one or more regions as close to your database as possible. This means that you uncached queries resolve faster by up to 50%.
+      Hyperdrive now pools all database connections in one or more regions as close to your database as possible. This means that your uncached queries and new database connections have up to 90% less latency as measured from Hyperdrive connection pools.
 
-      In aggregate, we observed a decrease on average of \<ENTER NUMBER\>.
+      With improved placement for Hyperdrive connection pools, Workers smart placement is more effective by ensuring that your Worker and Hyperdrive database connection pool are placed as close to your database as possible.
 
-      Refer to [documentation on how Hyperdrive caches query results](/hyperdrive/configuration/how-hyperdrive-works/#query-caching).
+      See [the announcement](/changelog/2025-03-04-hyperdrive-pooling-near-database-and-ip-range-egress/) for more details.
   - publish_date: "2025-01-28"
     title: Hyperdrive automatically configures your Cloudflare Tunnel to connect to your private database.
     description: |-
