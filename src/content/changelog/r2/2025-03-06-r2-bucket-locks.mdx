@@ -21,13 +21,13 @@ Here are a couple of examples showing how you can configure bucket lock rules us
 #### Ensure all objects in a bucket are retained for at least 180 days
 
 ```sh
-npx wrangler r2 bucket lock add <bucket> --id 180-days-all --retention-days 180
+npx wrangler r2 bucket lock add <bucket> --name 180-days-all --retention-days 180
 ```
 
 #### Prevent deletion or overwriting of all logs indefinitely (via prefix)
 
 ```sh
-npx wrangler r2 bucket lock add <bucket> --id indefinite-logs --prefix logs/ --retention-indefinite
+npx wrangler r2 bucket lock add <bucket> --name indefinite-logs --prefix logs/ --retention-indefinite
 ```
 
 For more information on bucket locks and how to set retention policies for objects in your R2 buckets, refer to our [documentation](/r2/buckets/bucket-locks/).
