@@ -243,7 +243,7 @@ export class MyWorkflow extends WorkflowEntrypoint {
 
 ### Name steps deterministically
 
-Steps should be named deterministically (ie, not using the current date/time, randomness, etc). This  ensures that their state is cached, and prevents the step from being rerun unnecessarily. Step names act as the "cache key" in your Workflow.
+Steps should be named deterministically (that is, not using the current date/time, randomness, etc). This ensures that their state is cached, and prevents the step from being rerun unnecessarily. Step names act as the "cache key" in your Workflow.
 
 <TypeScriptExample filename="index.ts">
 ```ts
@@ -278,6 +278,101 @@ export class MyWorkflow extends WorkflowEntrypoint {
 				return await env.KV.get(cat)
 			})
 		}
+	}
+}
+```
+</TypeScriptExample>
+
+### Take care with `Promise.race()` and `Promise.any()`
+
+Workflows allows the usage steps within the `Promise.race()` or `Promise.any()` methods as a way to achieve concurrent steps execution. However, some considerations must be taken.
+
+Due to the nature of Workflows' instance lifecycle, and given that a step inside a Promise will run until it finishes, the step that is returned during the first passage may not be the actual cached step, as [steps are cached by their names](#name-steps-deterministically).
+
+<TypeScriptExample filename="index.ts">
+```ts
+
+// helper sleep method
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+export class MyWorkflow extends WorkflowEntrypoint {
+	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
+		// 🔴 Bad: The `Promise.race` is not surrounded by a `step.do`, which may cause undeterministic caching behavior.
+		const race_return = await Promise.race(
+			[
+				step.do(
+					'Promise first race',
+					async () => {
+						await sleep(1000);
+						return "first";
+					}
+				),
+				step.do(
+					'Promise second race',
+					async () => {
+						return "second";
+					}
+				),
+			]
+		);
+
+		await step.sleep("Sleep step", "2 hours");
+
+		return await step.do(
+			'Another step',
+			async () => {
+				// This step will return `first`, even though the `Promise.race` first returned `second`.
+				return race_return;
+			},
+		);
+	}
+}
+```
+</TypeScriptExample>
+
+To ensure consistency, we suggest to surround the `Promise.race()` or `Promise.any()` within a `step.do()`, as this will ensure caching consistency across multiple passages.
+
+<TypeScriptExample filename="index.ts">
+```ts
+
+// helper sleep method
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+export class MyWorkflow extends WorkflowEntrypoint {
+	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
+		// ✅ Good: The `Promise.race` is surrounded by a `step.do`, ensuring deterministic caching behavior.
+		const race_return = await step.do(
+			'Promise step',
+			async () => {
+				return await Promise.race(
+					[
+						step.do(
+							'Promise first race',
+							async () => {
+								await sleep(1000);
+								return "first";
+							}
+						),
+						step.do(
+							'Promise second race',
+							async () => {
+								return "second";
+							}
+						),
+					]
+				);
+			}
+		);
+
+		await step.sleep("Sleep step", "2 hours");
+
+		return await step.do(
+			'Another step',
+			async () => {
+				// This step will return `second` because the `Promise.race` was surround by the `step.do` method.
+				return race_return;
+			},
+		);
 	}
 }
 ```

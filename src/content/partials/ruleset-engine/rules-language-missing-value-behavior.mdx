@@ -1,11 +1,9 @@
 ---
-inputParameters: errorDescription
-
+params:
+  - errorDescription
 ---
 
-import { Markdown } from "~/components"
+Accessing {props.errorDescription} produces a "missing value". A missing value has the following behavior:
 
-Accessing {props.one} produces a "missing value". A missing value has the following behavior:
-
-* Any comparison `<expr> <op> <literal>` where `<expr>` evaluates to a missing value will evaluate to false.
-* Function calls like `function(<expr>)`, where `<expr>` evaluates to a missing value, will return a missing value in most cases, but the exact behavior can vary per function.
+- Any comparison `<expr> <op> <literal>` where `<expr>` evaluates to a missing value will evaluate to false.
+- Function calls like `function(<expr>)`, where `<expr>` evaluates to a missing value, will return a missing value in most cases, but the exact behavior can vary per function.

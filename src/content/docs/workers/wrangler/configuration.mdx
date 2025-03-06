@@ -658,6 +658,23 @@ id = "<ID>"
 
 </WranglerConfig>
 
+### Images 
+
+[Cloudflare Images](/images/transform-images/transform-via-workers/) lets you make transformation requests to optimize, resize, and manipulate images stored in remote sources.
+
+To bind Images to your Worker, assign an array of the below object to the `images` key.
+
+`binding` (required). The name of the binding used to refer to the Images API.
+
+<WranglerConfig>
+
+```toml title="wrangler.toml"
+[[images]]
+binding = "IMAGES" # i.e. available in your Worker on env.IMAGES
+```
+
+</WranglerConfig>
+
 ### KV namespaces
 
 [Workers KV](/kv/api/) is a global, low-latency, key-value data store. It stores data in a small number of centralized data centers, then caches that data in Cloudflare’s data centers after access.
@@ -1306,7 +1323,7 @@ A common example of using a redirected configuration is where a custom build too
   binding = "<BINDING_NAME1>"
   id = "<NAMESPACE_ID1>"
   ```
-  
+
 </WranglerConfig>
 
   Note that this configuration points `main` at the user's code entry-point.

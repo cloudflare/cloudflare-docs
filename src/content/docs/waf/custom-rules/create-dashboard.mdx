@@ -34,5 +34,9 @@ import { Render } from "~/components";
 
 <Render
 	file="custom-response-blocked-requests"
-	params={{ one: "WAF block", two: "403", three: "2 KB" }}
+	params={{
+		responseType: "WAF block",
+		defaultStatusCode: "403",
+		maxBodySize: "2 KB",
+	}}
 />

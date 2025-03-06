@@ -1,0 +1,96 @@
+---
+title: Retrieval Augmented Generation
+pcx_content_type: concept
+sidebar:
+  order: 7
+
+---
+
+import { MetaInfo, Render, Type, TypeScriptExample, WranglerConfig } from "~/components";
+
+Agents can use Retrieval Augmented Generation (RAG) to retrieve relevant information and use it augment [calls to AI models](/agents/examples/using-ai-models/). Store a user's chat history to use as context for future conversations, summarize documents to bootstrap an Agent's knowledge base, and/or use data from your Agent's [web browsing](/agents/examples/browse-the-web/) tasks to enhance your Agent's capabilities.
+
+You can use the Agent's own [SQL database](/agents/examples/manage-and-sync-state) as the source of truth for your data and store embeddings in [Vectorize](/vectorize/) (or any other vector-enabled database) to allow your Agent to retrieve relevant information.
+
+### Vector search
+
+:::note
+
+If you're brand-new to vector databases and Vectorize, visit the [Vectorize tutorial](/vectorize/get-started/intro/) to learn the basics, including how to create an index, insert data, and generate embeddings.
+
+:::
+
+You can query a vector index (or indexes) from any method on your Agent: any Vectorize index you attach is available on `this.env` within your Agent. If you've [associated metadata](/vectorize/best-practices/insert-vectors/#metadata) with your vectors that maps back to data stored in your Agent, you can then look up the data directly within your Agent using `this.sql`.
+
+Here's an example of how to give an Agent retrieval capabilties:
+
+<TypeScriptExample>
+
+```ts
+import { Agent } from "agents-sdk";
+
+interface Env {
+	AI: Ai;
+	VECTOR_DB: Vectorize;
+}
+
+export class RAGAgent extends Agent<Env> {
+	// Other methods on our Agent
+	// ...
+	//
+	async queryKnowledge(userQuery: string) {
+		// Turn a query into an embedding
+		const queryVector = await this.env.AI.run('@cf/baai/bge-base-en-v1.5', {
+			text: [userQuery],
+		});
+
+		// Retrieve results from our vector index
+		let searchResults = await this.env.VECTOR_DB.query(queryVector.data[0], {
+			topK: 10,
+			returnMetadata: 'all',
+		});
+
+		let knowledge = [];
+		for (const match of searchResults.matches) {
+			console.log(match.metadata);
+			knowledge.push(match.metadata);
+		}
+
+		// Use the metadata to re-associate the vector search results
+		// with data in our Agent's SQL database
+		let results = this.sql`SELECT * FROM knowledge WHERE id IN (${knowledge.map((k) => k.id)})`;
+
+		// Return them
+		return results;
+	}
+}
+```
+
+</TypeScriptExample>
+
+You'll also need to connect your Agent to your vector indexes:
+
+<WranglerConfig>
+
+```jsonc
+{
+	// ...
+  "vectorize": [
+    {
+      "binding": "VECTOR_DB",
+      "index_name": "your-vectorize-index-name"
+    }
+  ]
+  // ...
+}
+```
+
+</WranglerConfig>
+
+If you have multiple indexes you want to make available, you can provide an array of `vectorize` bindings.
+
+#### Next steps
+
+* Learn more on how to [combine Vectorize and Workers AI](/vectorize/get-started/embeddings/)
+* Review the [Vectorize query API](/vectorize/reference/client-api/)
+* Use [metadata filtering](/vectorize/reference/metadata-filtering/) to add context to your results

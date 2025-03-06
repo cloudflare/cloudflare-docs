@@ -10,7 +10,7 @@ import dsr from "~/assets/images/magic-transit/mtu-mss/dsr.png"
 import tunnel from "~/assets/images/magic-transit/mtu-mss/tcp-mss.png"
 import mss_ipsec from "~/assets/images/magic-transit/mtu-mss/ipsec-mss.png"
 
-{props.productName} has operation requirements that customers should know about to make sure their network works as intended. Customers should pay particular attention to the maximum transmission unit (MTU) and maximum segment size (MSS) values. The incorrect configuration of these values might lead to loss of performance or inability to deliver data packets.
+{props.productName} has operation requirements that customers should know about to make sure their network works as intended. Customers should pay particular attention to the maximum transmission unit (MTU) and maximum segment size (MSS) values. The incorrect configuration of these values might lead to loss of performance or inability to deliver data [packets](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/).
 
 ## MTU and MSS
 
@@ -75,7 +75,7 @@ Cloudflare only recommends applying a MSS clamp to adjust the size of TCP packet
 { props.magicProduct === "Magic Transit" && (
   <>
     <AnchorHeading title="MSS with Magic Transit and Direct Server Return" depth={2} />
-		<p>Asymmetric routing is a common scenario especially with Magic Transit. Ingress traffic from the Internet enters the Cloudflare network, then traverses a GRE tunnel (MTU of 1,476 bytes), and egress traffic from the datacenter is sent via Direct Server Return (DSR) over the Internet (MTU of 1,500 bytes).</p>
+		<p>Asymmetric <a href="https://www.cloudflare.com/learning/network-layer/what-is-routing/" target="_blank" rel="noopener noreferrer">routing</a> is a common scenario especially with Magic Transit. Ingress traffic from the Internet enters the Cloudflare network, then traverses a GRE tunnel (MTU of 1,476 bytes), and egress traffic from the datacenter is sent via Direct Server Return (DSR) over the Internet (MTU of 1,500 bytes).</p>
 		<p>In an asymmetric scenario, we want to reduce the MSS value of packets sent by Magic Transit users to the Internet in order to reduce the size of packets sent from the Internet towards their network. To accomplish this, the configuration must be done either on the customer's end-hosts or through an MSS clamp on an intermediary device on the egress path of traffic leaving their network. How MSS values affect payload sizes on both routing paths is detailed below.</p>
 		<Image src={dsr} alt="A diagram showing how MSS works with Magic Transit and Direct Server Return." />
 		<p><em>Key takeaway from the chart above: MSS clamping affects TCP packet payload sizes flowing in the opposite direction vs. where the clamp is applied.</em></p>

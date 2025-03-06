@@ -6,7 +6,7 @@ sidebar:
   order: 1
 ---
 
-import { Render } from "~/components";
+import { Render, GlossaryTooltip } from "~/components";
 
 ## Is Cloudflare a free DNS (domain nameserver) provider?
 
@@ -63,6 +63,12 @@ If you are an Enterprise customer and require more DNS records, contact your acc
 ## Which record types can Cloudflare proxy?
 
 Only `A`, `AAAA`, and `CNAME` records can be proxied. Cloudflare will not proxy any other [DNS record types](/dns/manage-dns-records/reference/dns-record-types/).
+
+---
+
+## How do I add ANAME records on Cloudflare?
+
+<Render file="aname-alias-callout" />
 
 ---
 

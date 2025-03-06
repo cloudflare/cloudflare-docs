@@ -6,8 +6,6 @@ sidebar:
   badge:
     variant: tip
     text: New
-banner:
-  content: The default global Cloudflare root certificate expired on 2025-02-02. If you installed the default Cloudflare certificate before 2024-10-17, you must <a href="/cloudflare-one/connections/connect-devices/user-side-certificates/#generate-a-cloudflare-root-certificate">generate a new certificate</a> and activate it for your Zero Trust organization to avoid inspection errors.
 ---
 
 import { Badge, Details, Tabs, TabItem, Render } from "~/components";
@@ -52,7 +50,7 @@ Access for Infrastructure currently only supports [SSH](/cloudflare-one/connecti
 
 Certain protocols require configuring the server to trust connections through Access for Infrastructure. For more information, refer to the protocol-specific tutorial:
 
-- [SSH](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/#7-configure-ssh-server)
+- [SSH](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/#6-configure-ssh-server)
 
 ## 4. Connect as a user
 
@@ -122,3 +120,17 @@ The following [Access policy selectors](/cloudflare-one/policies/access/#selecto
 - Authentication method
 - Device posture
 - Entra group, GitHub organization, Google Workspace group, Okta group
+
+## Modify order of precedence in Gateway
+
+By default, Cloudflare will evaluate Access infrastructure application policies after evaluating all Gateway network policies. To evaluate Access infrastructure applications before or after specific Gateway policies, create the following [Gateway network policy](/cloudflare-one/policies/gateway/network-policies/):
+
+| Selector               | Operator | Value | Action |
+| ---------------------- | -------- | ----- | ------ |
+| All Access App Targets | is       | on    | Allow  |
+
+You can move this policy in the Gateway policy builder to change its [order of precedence](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence).
+
+:::note
+Users must pass the policies in your Access application before they are granted access. The Gateway Allow policy is strictly for routing and connectivity purposes.
+:::

@@ -27,9 +27,8 @@ To create an Access rule group:
 Send a `POST` request to the [`/access/groups`](/api/resources/zero_trust/subresources/access/subresources/groups/methods/create/) endpoint:
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/access/groups \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/groups \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --header "Content-Type: application/json" \
 --data '{
   "name": "Lisbon-team",

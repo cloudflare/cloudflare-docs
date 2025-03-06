@@ -10,6 +10,18 @@ import { Render } from "~/components";
 
 This example uses version 2 of the [aws-sdk-java](https://github.com/aws/aws-sdk-java-v2/#using-the-sdk) package. You must pass in the R2 configuration credentials when instantiating your `S3` service client:
 
+:::note[Compatibility]
+Client version `2.30.0` introduced a modification to the default checksum behavior from the client that is currently incompatible with R2 APIs.
+
+To mitigate, users can use `2.29.52` or add the following to their S3Config:
+
+```java
+this.requestChecksumCalculation = "when_required",
+this.responseChecksumValidation = "when_required"
+```
+
+:::
+
 ```java
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;

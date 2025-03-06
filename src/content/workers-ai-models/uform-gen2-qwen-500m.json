@@ -30,10 +30,6 @@
                 {
                     "type": "object",
                     "properties": {
-                        "temperature": {
-                            "type": "number",
-                            "description": "Controls the randomness of the output; higher values produce more random results."
-                        },
                         "prompt": {
                             "type": "string",
                             "description": "The input text prompt for the model to generate a response."

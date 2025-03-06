@@ -2,7 +2,7 @@ import rss from "@astrojs/rss";
 import { getCollection, getEntry } from "astro:content";
 import type { APIRoute } from "astro";
 import { marked, type Token } from "marked";
-import { getWranglerChangelog } from "~/util/changelogs";
+import { getWranglerReleases } from "~/util/release-notes";
 import { slug } from "github-slugger";
 import { entryToString } from "~/util/container";
 
@@ -17,14 +17,14 @@ export const GET: APIRoute = async (context) => {
 
 	marked.use({ walkTokens });
 
-	const changelogs = await getCollection("changelogs", (e) => {
+	const releaseNotes = await getCollection("release-notes", (e) => {
 		return e.id !== "api-deprecations";
 	});
 
-	changelogs.push(await getWranglerChangelog());
+	releaseNotes.push(await getWranglerReleases());
 
 	const mapped = await Promise.all(
-		changelogs.flatMap((product) => {
+		releaseNotes.flatMap((product) => {
 			return product.data.entries.map(async (entry) => {
 				let description;
 				if (entry.individual_page) {

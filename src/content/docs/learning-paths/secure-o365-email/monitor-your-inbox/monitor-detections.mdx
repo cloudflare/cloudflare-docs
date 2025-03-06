@@ -5,16 +5,16 @@ sidebar:
   order: 2
 ---
 
-Spam and Malicious emails are blocked outright by Email Security, but Suspicious and Spoof dispositions should be monitored. Suspicious messages should be investigated by a security analyst to determine the legitimacy of the message. 
+Spam and Malicious emails are blocked outright by Email Security, but Suspicious and Spoof dispositions should be monitored. Suspicious messages should be investigated by a security analyst to determine the legitimacy of the message.
 
-[PhishGuard](/cloudflare-one/email-security/phish-guard/) (Cloudflare's managed email security service) can review these messages for you and move them from the end user inbox if they are deemed malicious. 
+[PhishGuard](/cloudflare-one/email-security/phish-guard/) (Cloudflare's managed email security service) can review these messages for you and move them from the end user inbox if they are deemed malicious.
 
-Messages that receive a Spoof disposition should be investigated because it signals that the traffic is either non-compliant with your email authentication process [SPF](https://www.cloudflare.com/en-gb/learning/dns/dns-records/dns-spf-record/), [DKIM](https://www.cloudflare.com/en-gb/learning/dns/dns-records/dns-dkim-record/), [DMARC](https://www.cloudflare.com/en-gb/learning/dns/dns-records/dns-dmarc-record/), or has a mismatching Envelope From and Header From value.  
+Messages that receive a Spoof disposition should be investigated because it signals that the traffic is either non-compliant with your email authentication process [SPF](https://www.cloudflare.com/en-gb/learning/dns/dns-records/dns-spf-record/), [DKIM](https://www.cloudflare.com/en-gb/learning/dns/dns-records/dns-dkim-record/), [DMARC](https://www.cloudflare.com/en-gb/learning/dns/dns-records/dns-dmarc-record/), or has a mismatching Envelope From and Header From value.
 
 In most cases, a Spoof disposition is triggered by a legitimate third-party mail service. If you determine that the Spoofed email is a legitimate business use case, you can either:
 
 - Update your email authentication records.
-- Add an acceptable sender [allow policy](/cloudflare-one/email-security/detection-settings/allow-policies/) to exempt messages from the Spam, Spoof, or Bulk disposition, but not Malicious or Suspicious, so the content of the message can still be monitored. 
+- Add an acceptable sender [allow policy](/cloudflare-one/email-security/detection-settings/allow-policies/) to exempt messages from the Spam, Spoof, or Bulk disposition, but not Malicious or Suspicious, so the content of the message can still be monitored.
 
 ## Search email messages
 
@@ -28,7 +28,7 @@ There are three ways for searching emails:
 - Regular screen: A regular screen allows you to investigate your inbox by inserting a term to screen across all criteria.
 - Advanced screen: The advanced screen criteria gives you the option to narrow message results based on specific criteria. The advanced screen has several options (such as keywords, subject keywords, sender domain, and more) to scan your inbox.
 
-Additional information on search can be found on the [Screen criteria](/email-security/reporting/search/) documentation.
+Additional information on search can be found on the [Screen criteria](/cloudflare-one/email-security/email-monitoring/search-email/#screen-criteria) documentation.
 
 ### Export messages
 

@@ -62,7 +62,7 @@ At this point, continuing the [example](#before-you-begin), you should have a ma
 
 </Example>
 
-4. To confirm you currently only have a Magic Transit service binding and that it spans across your entire prefix, make a `GET` request to the [List Service Bindings](/api/resources/addressing/subresources/prefixes/subresources/bgp/subresources/bindings/methods/list/) endpoint. Replace the `{prefix_id}` in the URI path by the actual prefix ID you got from the previous step.
+4. To confirm you currently only have a Magic Transit service binding and that it spans across your entire prefix, make a `GET` request to the [List Service Bindings](/api/resources/addressing/subresources/prefixes/subresources/service_bindings/methods/list/) endpoint. Replace the `{prefix_id}` in the URI path by the actual prefix ID you got from the previous step.
 
 <Example>
 
@@ -79,7 +79,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/addressing/prefi
 Once a service binding is created (or deleted), it will take four to six hours to propagate across Cloudflare's global network. Services for the IP addresses in scope will likely be disrupted during this window.
 :::
 
-1. Make a `POST` request to the [Create service binding](/api/resources/addressing/subresources/prefixes/subresources/bgp/subresources/bindings/methods/create/) endpoint, indicating the IP address you want to bind to the CDN. Specify the **corresponding network mask** as needed.
+1. Make a `POST` request to the [Create service binding](/api/resources/addressing/subresources/prefixes/subresources/service_bindings/methods/create/) endpoint, indicating the IP address you want to bind to the CDN. Specify the **corresponding network mask** as needed.
 
 <Example>
 
@@ -119,7 +119,7 @@ In the response body, the initial provisioning state should be `provisioning`.
 
 </Example>
 
-You can periodically check the service binding status using the [List Service Bindings](/api/resources/addressing/subresources/prefixes/subresources/bgp/subresources/bindings/methods/list/) endpoint.
+You can periodically check the service binding status using the [List Service Bindings](/api/resources/addressing/subresources/prefixes/subresources/service_bindings/methods/list/) endpoint.
 
 ## 3. Create address maps
 

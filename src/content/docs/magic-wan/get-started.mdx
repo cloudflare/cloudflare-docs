@@ -38,7 +38,7 @@ The list of prerequisites below is only for customers planning to connect manual
 
 ### Use compatible tunnel endpoint routers
 
-Magic WAN relies on <GlossaryTooltip term="GRE tunnel" link="/magic-wan/reference/tunnels/">GRE</GlossaryTooltip> and <GlossaryTooltip term="IPsec tunnel" link="/magic-wan/reference/tunnels/#ipsec-tunnels">IPsec tunnels</GlossaryTooltip> to transmit packets from Cloudflare's global network to your origin network. To ensure compatibility with Magic WAN, the routers at your tunnel endpoints must:
+Magic WAN relies on <GlossaryTooltip term="GRE tunnel" link="/magic-wan/reference/tunnels/">GRE</GlossaryTooltip> and <GlossaryTooltip term="IPsec tunnel" link="/magic-wan/reference/tunnels/#ipsec-tunnels">IPsec tunnels</GlossaryTooltip> to transmit [packets](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) from Cloudflare's global network to your origin network. To ensure compatibility with Magic WAN, the routers at your tunnel endpoints must:
 
 - Allow configuration of at least one tunnel per Internet service provider (ISP).
 - Support <GlossaryTooltip term="maximum segment size (MSS)">maximum segment size (MSS)</GlossaryTooltip> clamping.

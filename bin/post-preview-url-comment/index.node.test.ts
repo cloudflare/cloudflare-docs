@@ -63,13 +63,13 @@ describe("filenameToPath", () => {
 
 	test("changelog", () => {
 		expect(
-			filenameToPath("src/content/changelogs-next/2025-02-05-title.mdx"),
+			filenameToPath("src/content/changelog/workers/2025-02-05-title.mdx"),
 		).toEqual("changelog/2025-02-05-title/");
 	});
 
 	test("changelog base", () => {
 		expect(
-			`${DOCS_BASE_URL}/${filenameToPath("src/content/changelogs-next/2025-02-05-title.mdx")}`,
+			`${DOCS_BASE_URL}/${filenameToPath("src/content/changelog/workers/2025-02-05-title.mdx")}`,
 		).toEqual("https://developers.cloudflare.com/changelog/2025-02-05-title/");
 	});
 });

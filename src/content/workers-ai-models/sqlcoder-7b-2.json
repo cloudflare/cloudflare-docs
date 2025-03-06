@@ -15,6 +15,10 @@
             "value": "true"
         },
         {
+            "property_id": "context_window",
+            "value": "10000"
+        },
+        {
             "property_id": "info",
             "value": "https://huggingface.co/defog/sqlcoder-7b-2"
         },

@@ -33,6 +33,10 @@ The `wrangler pages publish` command is deprecated, but still active in v3. `wra
 
 Use [`wrangler pages deploy`](/workers/wrangler/commands/#deploy-1) to deploy Pages.
 
+#### `version`
+
+Instead, use `wrangler --version` to check the current version of Wrangler.
+
 ### Deprecated options
 
 #### `--experimental-local`
@@ -50,6 +54,18 @@ Use [`wrangler pages deploy`](/workers/wrangler/commands/#deploy-1) to deploy Pa
 #### `-- <command>`, `--proxy`, and `--script-path` in `wrangler pages dev`
 
 These options prevent `wrangler pages dev` from being able to accurately emulate production's behavior for serving static assets and have therefore been deprecated. Instead of relying on Wrangler to proxy through to some other upstream dev server, you can emulate a more accurate behavior by building your static assets to a directory and pointing Wrangler to that directory with `wrangler pages dev <directory>`.
+
+#### `--legacy-assets` and the `legacy_assets` config file property
+
+We recommend you [migrate to Workers assets](https://developers.cloudflare.com/workers/static-assets/)
+
+#### `--node-compat` and the `node_compat` config file property
+
+Instead, use the [`nodejs_compat` compatibility flag](https://developers.cloudflare.com/workers/runtime-apis/nodejs). This includes the functionality from legacy `node_compat` polyfills and natively implemented Node.js APIs.
+
+#### The `usage_model` config file property
+
+This no longer has any effect, after the [rollout of Workers Standard Pricing](https://blog.cloudflare.com/workers-pricing-scale-to-zero/).
 
 ## Wrangler v2
 

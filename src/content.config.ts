@@ -1,13 +1,13 @@
-import { z, defineCollection } from "astro:content";
+import { defineCollection } from "astro:content";
 
 import { docsLoader, i18nLoader } from "@astrojs/starlight/loaders";
 import { docsSchema, i18nSchema } from "@astrojs/starlight/schema";
 
-import { glob } from "astro/loaders";
+import { glob, file } from "astro/loaders";
 
 import {
 	appsSchema,
-	changelogsSchema,
+	changelogSchema,
 	baseSchema,
 	notificationsSchema,
 	pagesBuildEnvironmentSchema,
@@ -18,8 +18,9 @@ import {
 	videosSchema,
 	workersAiModelsSchema,
 	warpReleasesSchema,
-	changelogsNextSchema,
+	releaseNotesSchema,
 	fieldsSchema,
+	partialsSchema,
 } from "~/schemas";
 
 function contentLoader(name: string) {
@@ -36,10 +37,6 @@ function dataLoader(name: string) {
 	});
 }
 
-const partialSchema = z.object({
-	params: z.string().array().optional(),
-});
-
 export const collections = {
 	docs: defineCollection({
 		loader: docsLoader(),
@@ -51,9 +48,9 @@ export const collections = {
 		loader: i18nLoader(),
 		schema: i18nSchema(),
 	}),
-	changelogs: defineCollection({
-		loader: dataLoader("changelogs"),
-		schema: changelogsSchema,
+	changelog: defineCollection({
+		loader: contentLoader("changelog"),
+		schema: changelogSchema,
 	}),
 	"compatibility-flags": defineCollection({
 		loader: contentLoader("compatibility-flags"),
@@ -61,7 +58,7 @@ export const collections = {
 	}),
 	partials: defineCollection({
 		loader: contentLoader("partials"),
-		schema: partialSchema,
+		schema: partialsSchema,
 	}),
 	glossary: defineCollection({
 		loader: dataLoader("glossary"),
@@ -95,20 +92,20 @@ export const collections = {
 		schema: workersAiModelsSchema,
 	}),
 	videos: defineCollection({
-		loader: dataLoader("videos"),
+		loader: file("src/content/videos/index.yaml"),
 		schema: videosSchema,
 	}),
 	apps: defineCollection({
-		loader: dataLoader("apps"),
+		loader: file("src/content/apps/index.yaml"),
 		schema: appsSchema,
 	}),
 	"warp-releases": defineCollection({
 		loader: dataLoader("warp-releases"),
 		schema: warpReleasesSchema,
 	}),
-	"changelogs-next": defineCollection({
-		loader: contentLoader("changelogs-next"),
-		schema: changelogsNextSchema,
+	"release-notes": defineCollection({
+		loader: dataLoader("release-notes"),
+		schema: releaseNotesSchema,
 	}),
 	fields: defineCollection({
 		loader: dataLoader("fields"),

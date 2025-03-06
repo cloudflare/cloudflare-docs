@@ -15,6 +15,10 @@
             "value": "true"
         },
         {
+            "property_id": "context_window",
+            "value": "15000"
+        },
+        {
             "property_id": "lora",
             "value": "true"
         }

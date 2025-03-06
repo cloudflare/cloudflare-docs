@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ModelInfo from "./models/ModelInfo";
 import ModelBadges from "./models/ModelBadges";
 import { authorData } from "./models/data";
@@ -18,6 +18,22 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 		tasks: [],
 		capabilities: [],
 	});
+
+	useEffect(() => {
+		const params = new URLSearchParams(window.location.search);
+
+		const search = params.get("search") ?? "";
+		const authors = params.getAll("authors");
+		const tasks = params.getAll("tasks");
+		const capabilities = params.getAll("capabilities");
+
+		setFilters({
+			search,
+			authors,
+			tasks,
+			capabilities,
+		});
+	}, []);
 
 	const mapped = models.map((model) => ({
 		model: {
@@ -43,21 +59,21 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 	const authors = [...new Set(models.map((model) => model.name.split("/")[1]))];
 	const capabilities = [
 		...new Set(
-			models
-				.map((model) =>
-					model.properties
-						.flatMap(({ property_id, value }) => {
-							if (property_id === "lora" && value === "true") {
-								return "LoRA";
-							}
+			models.flatMap((model) =>
+				model.properties
+					.flatMap(({ property_id, value }) => {
+						if (property_id === "lora" && value === "true") {
+							return "LoRA";
+						}
 
-							if (property_id === "function_calling" && value === "true") {
-								return "Function calling";
-							}
-						})
-						.filter((p) => Boolean(p)),
-				)
-				.flat(),
+						if (property_id === "function_calling" && value === "true") {
+							return "Function calling";
+						}
+
+						return [];
+					})
+					.filter((p) => Boolean(p)),
+			),
 		),
 	];
 
@@ -102,7 +118,7 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 
 				<div className="!mb-8 hidden md:block">
 					<span className="text-sm font-bold uppercase text-gray-600 dark:text-gray-200">
-						▼ Model Types
+						▼ Tasks
 					</span>
 
 					{tasks.map((task) => (
@@ -111,7 +127,8 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 								type="checkbox"
 								className="mr-2"
 								value={task}
-								onClick={(e) => {
+								checked={filters.tasks.includes(task)}
+								onChange={(e) => {
 									const target = e.target as HTMLInputElement;
 
 									if (target.checked) {
@@ -142,8 +159,9 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 							<input
 								type="checkbox"
 								value={capability}
+								checked={filters.capabilities.includes(capability)}
 								className="mr-2"
-								onClick={(e) => {
+								onChange={(e) => {
 									const target = e.target as HTMLInputElement;
 
 									if (target.checked) {
@@ -177,7 +195,8 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 								type="checkbox"
 								className="mr-2"
 								value={author}
-								onClick={(e) => {
+								checked={filters.authors.includes(author)}
+								onChange={(e) => {
 									const target = e.target as HTMLInputElement;
 
 									if (target.checked) {

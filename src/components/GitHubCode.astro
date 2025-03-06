@@ -1,6 +1,8 @@
 ---
 import { z } from "astro:schema";
 import { Code } from "@astrojs/starlight/components";
+import TypeScriptExample from "./TypeScriptExample.astro";
+import type { ComponentProps } from "astro/types";
 
 type Props = z.infer<typeof props>;
 
@@ -15,7 +17,9 @@ const props = z
 			.transform((val) => val.split("-").map(Number))
 			.optional(),
 		tag: z.string().optional(),
+		code: z.custom<ComponentProps<typeof Code>>().optional(),
 	})
+	.strict()
 	.refine(
 		(val) => {
 			return !(val.lines && val.tag);
@@ -23,7 +27,7 @@ const props = z
 		{ message: "Lines and tag are mutually exclusive filters." },
 	);
 
-const { repo, commit, file, lang, lines, tag } = props.parse(Astro.props);
+const { repo, commit, file, lang, lines, tag, code } = props.parse(Astro.props);
 
 const res = await fetch(
 	`https://gh-code.developers.cloudflare.com/${repo}/${commit}/${file}`,
@@ -64,6 +68,10 @@ if (lines) {
 contentLines = contentLines.filter(
 	(line) => !/<[/]?docs-tag name=".*">/.test(line),
 );
+
+const Wrapper = lang === "ts" ? TypeScriptExample : Fragment;
 ---
 
-<Code code={contentLines.join("\n")} lang={lang} />
+<Wrapper>
+	<Code {...code} code={contentLines.join("\n")} lang={lang} />
+</Wrapper>

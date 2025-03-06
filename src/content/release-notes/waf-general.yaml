@@ -1,0 +1,33 @@
+---
+link: "/waf/change-log/general-updates/"
+productName: WAF
+productLink: "/waf/"
+subCategoryName: General updates
+topLevelLink: "/waf/change-log/"
+productArea: Application security
+productAreaLink: /fundamentals/reference/changelog/security/
+entries:
+  - publish_date: "2024-12-18"
+    title: Improved VPN Managed List
+    description: |-
+      Customers can now effectively manage incoming traffic identified as originating from VPN IPs. Customers with compliance restrictions can now ensure compliance with local laws and regulations. Customers with CDN restrictions can use the improved VPN Managed List to prevent unauthorized access from users attempting to bypass geographical restrictions. With the new VPN Managed List enhancements, customers can improve their overall security posture to reduce exposure to unwanted or malicious traffic.
+  - publish_date: "2024-12-10"
+    title: Change the order of list items in IP Lists (for API and Terraform users)
+    description: |-
+      Due to changes in the API implementation, the order of list items in an IP list obtained via API or Terraform may change, which may cause Terraform to detect a change in Terraform state. To fix this issue, resync the Terraform state or upgrade the version of your Terraform Cloudflare provider to [version 4.44.0](https://github.com/cloudflare/terraform-provider-cloudflare/releases/tag/v4.44.0) or later.
+  - publish_date: "2024-11-14"
+    title: Security Events pagination
+    description: |-
+      Fixed an issue with pagination in Security Events' sampled logs where some pages were missing data. Also removed the total count from the events log as these are only sampled logs.
+  - publish_date: "2024-11-04"
+    title: New table in Security Analytics and Security Events
+    description: |-
+      Switched to a new, more responsive table in Security Analytics and Security Events.
+  - publish_date: "2024-08-29"
+    title: Fixed occasional attack score mismatches
+    description: |-
+      Fixed an issue causing score mismatches between the global [WAF attack score](/waf/detections/attack-score/) and subscores. In certain cases, subscores were higher (not an attack) than expected while the global attack score was lower than expected (attack), leading to false positives.
+  - publish_date: "2024-05-23"
+    title: Improved detection capabilities
+    description: |-
+      [WAF attack score](/waf/detections/attack-score/) now automatically detects and decodes Base64 and JavaScript (Unicode escape sequences) in HTTP requests. This update is available for all customers with access to WAF attack score (Business customers with access to a single field and Enterprise customers).

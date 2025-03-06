@@ -13,14 +13,15 @@ To check the list of members in your account, or to manage roles and permissions
 
 Only Super Administrators will be able to assign or remove the following roles from users in their account. Scroll to the right to see a full list of permissions for each role.
 
-|                                 | Access Read | Access Edit | Gateway Read | Gateway Edit | Gateway Report | Billing Read | Billing Edit |
-| ------------------------------- | ----------- | ----------- | ------------ | ------------ | -------------- | ------------ | ------------ |
-| Super Administrator             | ✅          | ✅          | ✅           | ✅           | ✅             | ✅           | ✅           |
-| Cloudflare Zero Trust           | ✅          | ✅          | ✅           | ✅           | ✅             | ✅           | ❌           |
-| Cloudflare Access               | ✅          | ✅          | ✅           | ❌           | ✅             | ✅           | ❌           |
-| Cloudflare Gateway              | ✅          | ❌          | ✅           | ✅           | ✅             | ✅           | ❌           |
-| Cloudflare Zero Trust Read Only | ✅          | ❌          | ✅           | ❌           | ✅             | ✅           | ❌           |
-| Cloudflare Zero Trust Reporting | ❌          | ❌          | ❌           | ❌           | ✅             | ✅           | ❌           |
+|                                 | Access Read | Access Edit | Gateway Read | Gateway Edit | Gateway Report | Billing Read | Billing Edit | DEX Read | DEX Edit |
+| ------------------------------- | ----------- | ----------- | ------------ | ------------ | -------------- | ------------ | ------------ | -------- | -------- |
+| Super Administrator             | ✅          | ✅          | ✅           | ✅           | ✅             | ✅           | ✅           | ✅       | ✅       |
+| Cloudflare Zero Trust           | ✅          | ✅          | ✅           | ✅           | ✅             | ✅           | ❌           | ✅       | ✅       |
+| Cloudflare Access               | ✅          | ✅          | ✅           | ❌           | ✅             | ✅           | ❌           | ❌       | ❌       |
+| Cloudflare Gateway              | ✅          | ❌          | ✅           | ✅           | ✅             | ✅           | ❌           | ❌       | ❌       |
+| Cloudflare Zero Trust Read Only | ✅          | ❌          | ✅           | ❌           | ✅             | ✅           | ❌           | ❌       | ❌       |
+| Cloudflare Zero Trust Reporting | ❌          | ❌          | ❌           | ❌           | ✅             | ✅           | ❌           | ✅       | ❌       |
+| Cloudflare DEX                  | ❌          | ❌          | ❌           | ❌           | ❌             | ❌           | ❌           | ✅       | ✅       |
 
 :::note
 The Cloudflare Zero Trust role grants administrator access to all Zero Trust products including Access, Gateway, WARP, Tunnel, Browser Isolation, CASB, DLP, DEX, and Email Security.
@@ -40,10 +41,10 @@ The Cloudflare Zero Trust PII role does not apply to Access audit logs. PII is a
 
 For more information on Email Security roles, refer to [Account-scoped roles](/fundamentals/setup/manage-members/roles/#account-scoped-roles).
 
-|                           | Write  access | Read  access |
-|---------------------------|---------------|--------------|
-| Email Configuration Admin |       ✅       |       ❌      |
-| Email Integration Admin   |       ✅       |       ❌      |
-| Email Security Analyst    |       ✅       |       ❌      |
-| Email Security Read Only  |       ❌       |       ✅      |
-| Email Security Reporting  |       ❌       |       ✅      |
+|                           | Write access | Read access |
+| ------------------------- | ------------ | ----------- |
+| Email Configuration Admin | ✅           | ❌          |
+| Email Integration Admin   | ✅           | ❌          |
+| Email Security Analyst    | ✅           | ❌          |
+| Email Security Read Only  | ❌           | ✅          |
+| Email Security Reporting  | ❌           | ✅          |

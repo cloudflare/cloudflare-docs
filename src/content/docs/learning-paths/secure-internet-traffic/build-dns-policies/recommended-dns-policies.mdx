@@ -49,7 +49,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
 
 ```tf
 resource "cloudflare_zero_trust_gateway_policy" "dns_whitelist_policy" {
-  account_id  = var.account_id
+  account_id  = var.cloudflare_account_id
   name        = "All-DNS-Domain-Allowlist"
   description = "Allowlist any known domains and hostnames"
   precedence  = 0
@@ -105,7 +105,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
 
 ```tf
 resource "cloudflare_zero_trust_gateway_policy" "dns_restrict_quarantined_users" {
-  account_id  = var.account_id
+  account_id  = var.cloudflare_account_id
   name        = "Quarantined-Users-DNS-Restricted-Access"
   description = "Restrict access for users included in an identity provider (IdP) user group for risky users"
   precedence  = 10
@@ -189,7 +189,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
 
 ```tf
 resource "cloudflare_zero_trust_gateway_policy" "dns_geolocation_block_policy" {
-  account_id  = var.account_id
+  account_id  = var.cloudflare_account_id
   name        = "All-DNS-GeoCountryIP-Blocklist"
   description = "Block traffic hosted in countries categorized as high security risks"
   precedence  = 50
@@ -242,7 +242,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
 
 ```tf
 resource "cloudflare_zero_trust_gateway_policy" "dns_blacklist_policy" {
-  account_id  = var.account_id
+  account_id  = var.cloudflare_account_id
   name        = "All-DNS-DomainTopLevel-Blocklist"
   description = "Block DNS queries of known risky TLDs"
   precedence  = 60
@@ -296,7 +296,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
 
 ```tf
 resource "cloudflare_zero_trust_gateway_policy" "dns_phishing_domains_block" {
-  account_id  = var.account_id
+  account_id  = var.cloudflare_account_id
   name        = "All-DNS-DomainPhishing-Blocklist"
   description = "Block misused domains used in phishing campaigns"
   precedence  = 70
@@ -351,7 +351,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
 
 ```tf
 resource "cloudflare_zero_trust_gateway_policy" "dns_resolvedip_blocklist_rule" {
-  account_id  = var.account_id
+  account_id  = var.cloudflare_account_id
   name        = "All-DNS-ResolvedIP-Blocklist"
   description = "Block specific IP addresses deemed to be a risk to the Organization"
   precedence  = 80
@@ -409,7 +409,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
 
 ```tf
 resource "cloudflare_zero_trust_gateway_policy" "block_dns_domain_host" {
-  account_id  = var.account_id
+  account_id  = var.cloudflare_account_id
   name        = "All-DNS-DomainHost-Blocklist"
   description = "Block specific domains or hosts that are malicious or pose a threat to your organization."
   precedence  = 90

@@ -1,0 +1,38 @@
+---
+import { z } from "astro:schema";
+import type { ComponentProps } from "astro/types";
+import { Code } from "@astrojs/starlight/components";
+
+type Props = z.input<typeof props>;
+
+const props = z.object({
+	method: z
+		.enum(["GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"])
+		.default("GET"),
+	url: z.string().url(),
+	headers: z.record(z.string(), z.string()).default({}),
+	json: z.record(z.string(), z.any()).optional(),
+	code: z
+		.custom<Omit<ComponentProps<typeof Code>, "code" | "lang">>()
+		.optional(),
+});
+
+const { method, url, headers, json, code } = props.parse(Astro.props);
+
+const lines = [`curl ${url}`, `\t--request ${method}`];
+
+if (headers) {
+	for (const [key, value] of Object.entries(headers)) {
+		lines.push(`\t--header "${key}: ${value}"`);
+	}
+}
+
+if (json) {
+	const jsonLines = JSON.stringify(json, null, "\t\t").split("\n");
+	jsonLines[jsonLines.length - 1] = "\t" + jsonLines[jsonLines.length - 1];
+
+	lines.push(`\t--json '${jsonLines.join("\n")}'`);
+}
+---
+
+<Code {...code} lang="bash" code={lines.join(" \\\n")} />

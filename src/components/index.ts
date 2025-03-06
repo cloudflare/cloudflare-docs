@@ -6,9 +6,11 @@ export { PackageManagers } from "starlight-package-managers";
 export { Icon as AstroIcon } from "astro-icon/components";
 // Custom components
 export { default as AnchorHeading } from "./AnchorHeading.astro";
+export { default as APIRequest } from "./APIRequest.astro";
 export { default as AvailableNotifications } from "./AvailableNotifications.astro";
 export { default as CompatibilityFlag } from "./CompatibilityFlag.astro";
 export { default as CompatibilityFlags } from "./CompatibilityFlags.astro";
+export { default as CURL } from "./CURL.astro";
 export { default as Description } from "./Description.astro";
 export { default as Details } from "./Details.astro";
 export { default as DirectoryListing } from "./DirectoryListing.astro";
@@ -38,7 +40,7 @@ export { default as PagesBuildPresetsTable } from "./PagesBuildPresetsTable.astr
 export { default as PagesLanguageSupport } from "./PagesLanguageSupport.astro";
 export { default as Plan } from "./Plan.astro";
 export { default as PlanInfo } from "./PlanInfo.astro";
-export { default as ProductChangelog } from "./ProductChangelog.astro";
+export { default as ProductReleaseNotes } from "./ProductReleaseNotes.astro";
 export { default as ProductFeatures } from "./ProductFeatures.astro";
 export { default as ProductsByTag } from "./ProductsByTag.astro";
 export { default as PublicStats } from "./PublicStats.astro";

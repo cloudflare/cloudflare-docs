@@ -7,19 +7,33 @@ Bucket locks prevent the deletion and overwriting of objects in an R2 bucket for
 
 ## Get started with bucket locks
 
-### Prerequisites
-
 Before getting started, you will need:
 
 - An existing R2 bucket. If you do not already have an existing R2 bucket, refer to [Create buckets](/r2/buckets/create-buckets/).
-- An API token with [permissions](/r2/api/s3/tokens/#permissions) to edit R2 bucket configuration.
+- (API only) An API token with [permissions](/r2/api/s3/tokens/#permissions) to edit R2 bucket configuration.
 
-:::note
+### Enable bucket lock via Wrangler
 
-Currently, Bucket locks are only configurable via API.
-:::
+1. Install [`npm`](https://docs.npmjs.com/getting-started).
+2. Install [Wrangler, the Developer Platform CLI](/workers/wrangler/install-and-update/).
+3. Log in to Wrangler with the [`wrangler login` command](/workers/wrangler/commands/#login).
+4. Add a bucket lock rule to your bucket by running the [`r2 bucket lock add` command](/workers/wrangler/commands/#r2-bucket-lock-add).
+
+```sh
+npx wrangler r2 bucket lock add <BUCKET_NAME> [OPTIONS]
+```
+
+Alternatively, you can set the entire bucket lock configuration for a bucket from a JSON file using the [`r2 bucket lock set` command](/workers/wrangler/commands/#r2-bucket-lock-set).
+
+```sh
+npx wrangler r2 bucket lock set <BUCKET_NAME> --file <FILE_PATH>
+```
+
+The JSON file should be in the format of the request body of the [put bucket lock configuration API](/api/resources/r2/subresources/buckets/subresources/locks/methods/update/).
 
 ### Enable bucket lock via API
+
+For information about getting started with the Cloudflare API, refer to [Make API calls](/fundamentals/api/how-to/make-api-calls/). For information on required parameters and more examples of how to set bucket lock configuration, refer to the [API documentation](/api/resources/r2/subresources/buckets/subresources/locks/methods/update/).
 
 Below is an example of setting a bucket lock configuration (a collection of rules):
 
@@ -55,15 +69,43 @@ This request creates two rules:
 - `lock-logs-7d`: Objects under the `logs/` prefix are retained for 7 days (604800 seconds).
 - `lock-images-indefinite`: Objects under the `images/` prefix are locked indefinitely.
 
-For more information on required parameters and examples of how to enable bucket lock, refer to the [API documentation](/api/resources/r2/subresources/buckets/subresources/locks/methods/update/). For information about getting started with the Cloudflare API, refer to [Make API calls](/fundamentals/api/how-to/make-api-calls/).
+:::note
 
-### Get bucket lock rules via API
+If your bucket is setup with [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions), you will need to pass a `cf-r2-jurisdiction` request header with that jurisdiction. For example, `cf-r2-jurisdiction: eu`.
+
+:::
+
+## Get bucket lock rules for your R2 bucket
+
+### Wrangler
+
+To list bucket lock rules, run the [`r2 bucket lock list` command](/workers/wrangler/commands/#r2-bucket-lock-list):
+
+```sh
+npx wrangler r2 bucket lock list <BUCKET_NAME>
+```
+
+### API
 
 For more information on required parameters and examples of how to get bucket lock rules, refer to the [API documentation](/api/resources/r2/subresources/buckets/subresources/locks/methods/get/).
 
+## Remove bucket lock rules from your R2 bucket
+
+### Wrangler
+
+To remove a bucket lock rule, run the [`r2 bucket lock remove` command](/workers/wrangler/commands/#r2-bucket-lock-remove):
+
+```sh
+npx wrangler r2 bucket lock remove <BUCKET_NAME> --id <RULE_ID>
+```
+
+### API
+
+To remove bucket lock rules via API, exclude them from your updated configuration and use the [put bucket lock configuration API](/api/resources/r2/subresources/buckets/subresources/locks/methods/update/).
+
 ## Bucket lock rules
 
-A bucket lock configuration can include up to 1,000 rules. Each rule specifies which object it covers (via prefix) and how long those objects must remain locked. You can:
+A bucket lock configuration can include up to 1,000 rules. Each rule specifies which objects it covers (via prefix) and how long those objects must remain locked. You can:
 
 - Lock objects for a specific duration. For example, 90 days.
 - Retain objects until a certain date. For example, until January 1, 2026.

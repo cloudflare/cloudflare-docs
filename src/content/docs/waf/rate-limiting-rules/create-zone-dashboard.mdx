@@ -46,5 +46,9 @@ import { Render } from "~/components";
 
 <Render
 	file="custom-response-blocked-requests"
-	params={{ one: "rate limiting", two: "429", three: "30 KB" }}
+	params={{
+		responseType: "rate limiting",
+		defaultStatusCode: "429",
+		maxBodySize: "30 KB",
+	}}
 />

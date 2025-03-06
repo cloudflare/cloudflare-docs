@@ -37,7 +37,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 
 ```tf
 resource "cloudflare_zero_trust_gateway_policy" "block_security_threats" {
-  account_id  = var.account_id
+  account_id  = var.cloudflare_account_id
   name        = "All-DNS-SecurityCategories-Blocklist"
   description = "Block security categories based on Cloudflare's threat intelligence"
   precedence  = 20

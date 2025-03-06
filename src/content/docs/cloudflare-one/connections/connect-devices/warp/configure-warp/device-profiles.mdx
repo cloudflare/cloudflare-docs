@@ -35,9 +35,8 @@ Your profile will appear in the **Profile settings** list. You can rearrange the
 Send a `POST` request to the [Devices endpoint](/api/resources/zero_trust/subresources/devices/subresources/policies/subresources/custom/methods/create/):
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/devices/policy \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/devices/policy \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --header "Content-Type: application/json" \
 --data '{
   "allow_mode_switch": false,

@@ -107,7 +107,11 @@ wrangler r2 bucket cors list <NAME> [OPTIONS]
 - `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
   - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
 
-<AnchorHeading title="`dev-url enable`" slug="r2-bucket-dev-url-enable" depth={3} />
+<AnchorHeading
+	title="`dev-url enable`"
+	slug="r2-bucket-dev-url-enable"
+	depth={3}
+/>
 
 Enable public access via the [r2.dev URL](/r2/buckets/public-buckets/#enable-managed-public-access) for an R2 bucket.
 
@@ -122,7 +126,11 @@ wrangler r2 bucket dev-url enable <NAME> [OPTIONS]
 - `--force` <Type text="boolean" /> <MetaInfo text="optional" />
   - Skip confirmation when enabling public access via r2.dev URL.
 
-<AnchorHeading title="`dev-url disable`" slug="r2-bucket-dev-url-disable" depth={3} />
+<AnchorHeading
+	title="`dev-url disable`"
+	slug="r2-bucket-dev-url-disable"
+	depth={3}
+/>
 
 Disable public access via the [r2.dev URL](/r2/buckets/public-buckets/#enable-managed-public-access) for an R2 bucket.
 
@@ -171,7 +179,11 @@ wrangler r2 bucket domain add <NAME> [OPTIONS]
 - `--force` <Type text="boolean" /> <MetaInfo text="optional" />
   - Skip confirmation when adding the custom domain.
 
-<AnchorHeading title="`domain remove`" slug="r2-bucket-domain-remove" depth={3} />
+<AnchorHeading
+	title="`domain remove`"
+	slug="r2-bucket-domain-remove"
+	depth={3}
+/>
 
 Remove a [custom domain](/r2/buckets/public-buckets/#custom-domains) from an R2 bucket.
 
@@ -188,7 +200,11 @@ wrangler r2 bucket domain remove <NAME> [OPTIONS]
 - `--force` <Type text="boolean" /> <MetaInfo text="optional" />
   - Skip confirmation when removing the custom domain.
 
-<AnchorHeading title="`domain update`" slug="r2-bucket-domain-update" depth={3} />
+<AnchorHeading
+	title="`domain update`"
+	slug="r2-bucket-domain-update"
+	depth={3}
+/>
 
 Update settings for a [custom domain](/r2/buckets/public-buckets/#custom-domains) connected to an R2 bucket.
 
@@ -233,7 +249,11 @@ wrangler r2 bucket domain list <NAME> [OPTIONS]
 - `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
   - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
 
-<AnchorHeading title="`lifecycle add`" slug="r2-bucket-lifecycle-add" depth={3} />
+<AnchorHeading
+	title="`lifecycle add`"
+	slug="r2-bucket-lifecycle-add"
+	depth={3}
+/>
 
 Add an [object lifecycle](/r2/buckets/object-lifecycles/) rule to an R2 bucket.
 
@@ -262,7 +282,11 @@ wrangler r2 bucket lifecycle add <NAME> [OPTIONS]
 - `--force` <Type text="boolean" /> <MetaInfo text="optional" />
   - Skip confirmation when adding the lifecycle rule.
 
-<AnchorHeading title="`lifecycle remove`" slug="r2-bucket-lifecycle-remove" depth={3} />
+<AnchorHeading
+	title="`lifecycle remove`"
+	slug="r2-bucket-lifecycle-remove"
+	depth={3}
+/>
 
 Remove an [object lifecycle](/r2/buckets/object-lifecycles/) rule from an R2 bucket.
 
@@ -277,7 +301,11 @@ wrangler r2 bucket lifecycle remove <NAME> [OPTIONS]
 - `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
   - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
 
-<AnchorHeading title="`lifecycle list`" slug="r2-bucket-lifecycle-list" depth={3} />
+<AnchorHeading
+	title="`lifecycle list`"
+	slug="r2-bucket-lifecycle-list"
+	depth={3}
+/>
 
 List [object lifecycle](/r2/buckets/object-lifecycles/) rules for an R2 bucket.
 
@@ -290,7 +318,11 @@ wrangler r2 bucket lifecycle list <NAME> [OPTIONS]
 - `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
   - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
 
-<AnchorHeading title="`lifecycle set`" slug="r2-bucket-lifecycle-set" depth={3} />
+<AnchorHeading
+	title="`lifecycle set`"
+	slug="r2-bucket-lifecycle-set"
+	depth={3}
+/>
 
 Set the [object lifecycle](/r2/buckets/object-lifecycles/) configuration for an R2 bucket from a JSON file.
 
@@ -307,7 +339,81 @@ wrangler r2 bucket lifecycle set <NAME> [OPTIONS]
 - `--force` <Type text="boolean" /> <MetaInfo text="optional" />
   - Skip confirmation when setting object lifecycle configuration.
 
-<AnchorHeading title="`notification create`" slug="r2-bucket-notification-create" depth={3} />
+<AnchorHeading title="`lock add`" slug="r2-bucket-lock-add" depth={3} />
+
+Add a [bucket lock](/r2/buckets/bucket-locks/) rule to an R2 bucket.
+
+```txt
+wrangler r2 bucket lock add <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket to add a bucket lock rule to.
+- `--id` <Type text="string" /> <MetaInfo text="optional" />
+  - A unique identifier for the bucket lock rule.
+- `--prefix` <Type text="string" /> <MetaInfo text="optional" />
+  - Prefix condition for the bucket lock rule (leave empty for all prefixes).
+- `--retention-days` <Type text="number" /> <MetaInfo text="optional" />
+  - Sets the number of days to retain objects for. Note you can provide only one of `--retention-days`, `--retention-date`, or `--retention-indefinite`.
+- `--retention-date` <Type text="string" /> <MetaInfo text="optional" />
+  - Sets the number of days to retain objects for. Note you can provide only one of `--retention-days`, `--retention-date`, or `--retention-indefinite`.
+- `--retention-indefinite` <Type text="string" /> <MetaInfo text="optional" />
+  - Sets the retention period to indefinite — meaning the lock will remain in place until explicitly removed. Note you can provide only one of `--retention-days`, `--retention-date`, or `--retention-indefinite`.
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+- `--force` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Skip confirmation when adding the bucket lock rule.
+
+<AnchorHeading title="`lock remove`" slug="r2-bucket-lock-remove" depth={3} />
+
+Remove a [bucket lock](/r2/buckets/bucket-locks/) rule from an R2 bucket.
+
+```txt
+wrangler r2 bucket lock remove <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket to remove a bucket lock rule from.
+- `--id` <Type text="string" /> <MetaInfo text="required" />
+  - The unique identifier of the bucket lock rule to remove.
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+
+<AnchorHeading title="`lock list`" slug="r2-bucket-lock-list" depth={3} />
+
+List [bucket lock](/r2/buckets/bucket-locks/) rules for an R2 bucket.
+
+```txt
+wrangler r2 bucket lock list <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket to list bucket locks rules for.
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+
+<AnchorHeading title="`lock set`" slug="r2-bucket-lock-set" depth={3} />
+
+Set the [bucket lock](/r2/buckets/bucket-locks/) configuration for an R2 bucket from a JSON file.
+
+```txt
+wrangler r2 bucket lock set <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket to set bucket lock configuration for.
+- `--file` <Type text="string" /> <MetaInfo text="required" />
+  - Path to the JSON file containing bucket lock configuration (file must be in format of request body of [put bucket lock configuration API](/api/resources/r2/subresources/buckets/subresources/locks/methods/update/)).
+- `--jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction where the bucket exists, if a jurisdiction has been specified. Refer to [jurisdictional restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+- `--force` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Skip confirmation when setting bucket lock configuration.
+
+<AnchorHeading
+	title="`notification create`"
+	slug="r2-bucket-notification-create"
+	depth={3}
+/>
 
 Create an [event notification](/r2/buckets/event-notifications/) rule for an R2 bucket.
 
@@ -328,7 +434,11 @@ wrangler r2 bucket notification create <NAME> [OPTIONS]
 - `--description` <Type text="string" /> <MetaInfo text="optional" />
   - A description that can be used to identify the event notification rule after creation.
 
-<AnchorHeading title="`notification delete`" slug="r2-bucket-notification-delete" depth={3} />
+<AnchorHeading
+	title="`notification delete`"
+	slug="r2-bucket-notification-delete"
+	depth={3}
+/>
 
 Remove an event notification rule from a bucket's [event notification](/r2/buckets/event-notifications/) configuration.
 
@@ -343,7 +453,11 @@ wrangler r2 bucket notification delete <NAME> [OPTIONS]
 - `--rule` <Type text="string" /> <MetaInfo text="optional" />
   - The ID of the event notification rule to delete.
 
-<AnchorHeading title="`notification list`" slug="r2-bucket-notification-list" depth={3} />
+<AnchorHeading
+	title="`notification list`"
+	slug="r2-bucket-notification-list"
+	depth={3}
+/>
 
 List the [event notification](/r2/buckets/event-notifications/) rules for a bucket.
 
@@ -390,7 +504,11 @@ wrangler r2 bucket sippy enable <NAME> [OPTIONS]
   - The private key for your Google Cloud service account key. Requires [read and list access](/r2/data-migration/sippy/#google-cloud-storage).
 - Note that you must provide either `service-account-key-file` or `client_email` and `private_key` for this command to run successfully.
 
-<AnchorHeading title="`sippy disable`" slug="r2-bucket-sippy-disable" depth={3} />
+<AnchorHeading
+	title="`sippy disable`"
+	slug="r2-bucket-sippy-disable"
+	depth={3}
+/>
 
 Disable [Sippy](/r2/data-migration/sippy/) incremental migration for a bucket.
 
@@ -483,5 +601,6 @@ wrangler r2 object delete <OBJECT_PATH> [OPTIONS]
   - Specify directory for locally persisted data.
 
 :::note
+
 <Render file="wrangler-commands/global-flags" product="workers" />
 :::

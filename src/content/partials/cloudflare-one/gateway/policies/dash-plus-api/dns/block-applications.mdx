@@ -37,7 +37,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 
 ```tf
 resource "cloudflare_zero_trust_gateway_policy" "block_unauthorized_apps" {
-  account_id  = var.account_id
+  account_id  = var.cloudflare_account_id
   name        = "All-DNS-Application-Blocklist"
   description = "Block access to unauthorized AI applications"
   enabled     = true

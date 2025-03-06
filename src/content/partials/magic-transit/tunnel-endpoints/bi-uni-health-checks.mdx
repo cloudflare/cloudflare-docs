@@ -5,6 +5,6 @@ params:
 
 import { Markdown } from "~/components";
 
-To check for tunnel health, Cloudflare sends a <a href={props.productPathProbe}>health check probe</a> consisting of ICMP (Internet Control Message Protocol) reply packets to your network. Cloudflare needs to receive these probes to know if your tunnel is healthy.
+To check for tunnel health, Cloudflare sends a <a href={props.productPathProbe}>health check probe</a> consisting of ICMP (Internet Control Message Protocol) reply [packets](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) to your network. Cloudflare needs to receive these probes to know if your tunnel is healthy.
 
 Cloudflare defaults to bidirectional health checks for Magic WAN, and unidirectional health checks for Magic Transit (direct server return). However, routing unidirectional ICMP reply packets over the Internet to Cloudflare is sometimes subject to drops by intermediate network devices, such as stateful firewalls. Magic Transit customers with egress traffic can modify this setting to bidirectional.

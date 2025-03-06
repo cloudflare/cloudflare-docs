@@ -3,10 +3,9 @@ pcx_content_type: how-to
 title: Manage Access policies
 sidebar:
   order: 2
-
 ---
 
-import {Tabs, TabItem } from "~/components";
+import { Tabs, TabItem } from "~/components";
 
 Access policies define the users who can log in to your Access applications. You can create, edit, or delete policies at any time and reuse policies across multiple applications.
 
@@ -21,9 +20,9 @@ To create a reusable Access policy:
 5. Choose a [**Session duration**](/cloudflare-one/identity/users/session-management/) for the policy.
 6. Configure as many [**Rules**](/cloudflare-one/policies/access/#rule-types) as needed.
 7. (Optional) Configure additional settings for users who match this policy:
-	- [Isolate application](/cloudflare-one/policies/access/isolate-application/).
-	- [Purpose justificaton](/cloudflare-one/policies/access/require-purpose-justification/)
-	- [Temporary authentication](/cloudflare-one/policies/access/temporary-auth/)
+   - [Isolate application](/cloudflare-one/policies/access/isolate-application/).
+   - [Purpose justificaton](/cloudflare-one/policies/access/require-purpose-justification/)
+   - [Temporary authentication](/cloudflare-one/policies/access/temporary-auth/)
 8. Select **Save**.
 
 You can now add this policy to an [Access application](/cloudflare-one/applications/).
@@ -60,9 +59,9 @@ To check if a user has access to an application:
 
 The policy tester reports the following information:
 
-* Whether the user is allowed or denied access to the application based on all configured policies.
-* The user's identity from their most recent Access login attempt.
-* Whether the user matches individual Allow, Block, or Bypass policies.
+- Whether the user is allowed or denied access to the application based on all configured policies.
+- The user's identity from their most recent Access login attempt.
+- Whether the user matches individual Allow, Block, or Bypass policies.
 
 ## Legacy policies
 
@@ -83,8 +82,8 @@ You can use the API to convert a legacy policy into a reusable policy. To conver
 
 ```bash
 curl --request PUT \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps/{app_id}/policies/{policy_id}/make_reusable \
---header "Authorization: Bearer <API_TOKEN>"
+https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/apps/$APP_ID/policies/$POLICY_ID/make_reusable \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
-The policy is now removed from the applications endpoint (`/access/apps/{app_id}/policies`) and managed using the [reusable policies endpoints](/api/resources/zero_trust/subresources/access/subresources/policies/)(`/access/policies/{policy_id}`).
+The policy is now removed from the applications endpoint (`/access/apps/$APP_ID/policies`) and managed using the [reusable policies endpoints](/api/resources/zero_trust/subresources/access/subresources/policies/)(`/access/policies/$POLICY_ID`).

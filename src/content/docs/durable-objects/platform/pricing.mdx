@@ -118,3 +118,15 @@ In this scenario, the estimated monthly cost would be calculated as:
 ## Storage API billing
 
 <Render file="storage_api_pricing" product="workers" />
+
+## Frequently Asked Questions
+
+### Does an empty table / SQLite database contribute to my storage?
+
+Yes, although minimal. Empty tables can consume at least a few kilobytes, based on the number of columns (table width) in the table. An empty SQLite database consumes approximately 12 KB of storage.
+
+### Does metadata stored in Durable Objects count towards my storage?
+
+All writes to a SQLite-backed Durable Object stores nominal amounts of metadata in internal tables in the Durable Object, which counts towards your billable storage.
+
+The metadata remains in the Durable Object until you call [`deleteAll()`](/durable-objects/api/storage-api/#deleteall).

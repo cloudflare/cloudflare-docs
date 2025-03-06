@@ -48,8 +48,8 @@ Refer to the example below for a Cron Triggers configuration:
 [triggers]
 # Schedule cron triggers:
 # - At every 3rd minute
-# - At 3PM on first day of the month
-# - At 11:59PM on the last weekday of the month
+# - At 15:00 (UTC) on first day of the month
+# - At 23:59 (UTC) on the last weekday of the month
 crons = [ "*/3 * * * *", "0 15 1 * *", "59 23 LW * *" ]
 ```
 
@@ -106,22 +106,22 @@ Some common time intervals that may be useful for setting up your Cron Trigger:
 
 - `0 17 * * sun` or `0 17 * * 1`
 
-  - 5PM on Sunday
+  - 17:00 (UTC) on Sunday
 
 - `10 7 * * mon-fri` or `10 7 * * 2-6`
 
-  - 7:10AM on weekdays
+  - 07:10 (UTC) on weekdays
 
 - `0 15 1 * *`
 
-  - 3PM on first day of the month
+  - 15:00 (UTC) on first day of the month
 
 - `0 18 * * 6L` or `0 18 * * friL`
 
-  - 6PM on the last Friday of the month
+  - 18:00 (UTC) on the last Friday of the month
 
 - `59 23 LW * *`
-  - 11:59PM on the last weekday of the month
+  - 23:59 (UTC) on the last weekday of the month
 
 ## Test Cron Triggers
 

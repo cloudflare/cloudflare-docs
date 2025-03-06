@@ -209,7 +209,7 @@ Now that you have set up your load balancer and verified everything is working c
 
 1. Confirm that your production hostname has the correct [priority order](/load-balancing/load-balancers/dns-records/#priority-order) of DNS records and is covered by an [SSL/TLS certificate](/load-balancing/load-balancers/dns-records/#ssltls-coverage).
 
-   If you have an Enterprise account, also evaluate your application for any excluded paths. For example, you might not want the load balancer to distribute requests directed at your `/admin` path. For any exceptions, set up an [Origin rule](/rules/origin-rules/features/#dns-record) or [Page rule](/rules/page-rules/how-to/override-url-or-ip-address/).
+   If you have an Enterprise account, also evaluate your application for any excluded paths. For example, you might not want the load balancer to distribute requests directed at your `/admin` path. For any exceptions, set up an [Origin rule](/rules/origin-rules/features/#dns-record).
 
 2. Configure your load balancer to receive production traffic by editing the **Hostname** of your existing load balancer.
 

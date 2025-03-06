@@ -657,7 +657,7 @@
 				},
 				"maximum_duration": {
 					"title": "Maximum time interval",
-					"free": "2 days",
+					"free": "7 days",
 					"pro": "31 days",
 					"biz": "31 days",
 					"ent": "31 days"
@@ -1530,7 +1530,7 @@
 				},
 				"dashboard_features": {
 					"title": "Dashboard features",
-					"free": "Activity log only",
+					"free": "Sampled logs only",
 					"pro": "All",
 					"biz": "All",
 					"ent": "All"

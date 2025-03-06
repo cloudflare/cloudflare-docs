@@ -10,16 +10,18 @@ DHCP Relay provides a way for DHCP clients to communicate with DHCP servers that
 ```mermaid
 flowchart LR
 accTitle: An example of Connector in DHCP Relay mode
-    a(Magic WAN Connector) --> b(Internet) --> c(DHCP server)
+    a(Magic WAN Connector) <--> b(Cloudflare/Magic WAN) <--> c(DHCP server)
 
-    subgraph Customer site
+    subgraph Site A
     d[LAN 1] <--> a
     e[LAN 2] <--> a
     end
 
-    c --> a
+    subgraph Site B
+    c
+    end
     classDef orange fill:#f48120,color: black
-    class a orange
+    class a,b,c orange
 ```
 
 _The above graph shows Connector sending DHCP discover messages to a DHCP server offsite._

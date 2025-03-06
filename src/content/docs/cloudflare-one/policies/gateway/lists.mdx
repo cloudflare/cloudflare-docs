@@ -16,7 +16,7 @@ Before creating a list, make note of the [limitations](#limitations).
 Lists can contain a single type of data each. Supported data types include:
 
 - URLs
-- Hostnames
+- Hostnames or domains
 - Serial numbers
 - User email addresses
 - IP addresses
@@ -42,6 +42,10 @@ Lists can contain a single type of data each. Supported data types include:
 ### List size
 
 Your lists can include up to 1,000 entries for Standard plans and 5,000 for Enterprise plans. An uploaded CSV file must be smaller than 2 MB.
+
+### Wildcard entries
+
+Hostname lists do not support wildcard entries. You will need to add domains as exact matches. Adding a wildcard to lists comprised of hostnames will return an error when you save.
 
 ### Duplicate entries
 

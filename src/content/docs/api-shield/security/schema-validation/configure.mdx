@@ -13,7 +13,7 @@ Schema Validation 2.0 allows all corresponding configuration calls to be made vi
 
 :::note
 
-[Classic Schema Validation documentation](/api-shield/reference/classic-schema-validation/) is available for reference only. 
+[Classic Schema Validation documentation](/api-shield/reference/classic-schema-validation/) is available for reference only.
 :::
 
 ## Upload schemas via the API to Schema Validation
@@ -36,7 +36,7 @@ Settings changes may take a few minutes to implement.
 
 :::note
 
-Endpoints must be listed in Endpoint Management for Schema Validation to match requests. 
+Endpoints must be listed in Endpoint Management for Schema Validation to match requests.
 :::
 
 ## Configuration
@@ -184,7 +184,7 @@ curl --silent "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/
 
 :::note
 
-If you run this command again immediately, it will result in an error as all `new_operations` are now `existing_operations`. 
+If you run this command again immediately, it will result in an error as all `new_operations` are now `existing_operations`.
 :::
 
 ### Change the default and operation-specific mitigation action
@@ -318,7 +318,7 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/user_sche
 
 :::note
 
-We recommend using the query parameter `omit_source=true` to only display active schemas and not retrieve the source for every schema to get less output. 
+We recommend using the query parameter `omit_source=true` to only display active schemas and not retrieve the source for every schema to get less output.
 :::
 
 ### Delete a schema
@@ -414,7 +414,7 @@ curl --request PUT "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gat
 
 :::note
 
-Parameter schemas are updated between every 24 hours up to one week. To ensure that a parameter schema has not been updated during the inspection, Cloudflare recommends that you pass the `last_updated` timestamp of the parameter-schema feature (not the `last_updated` of the whole operation) as an identifier in the timestamp query parameter. 
+Parameter schemas are updated between every 24 hours up to one week. To ensure that a parameter schema has not been updated during the inspection, Cloudflare recommends that you pass the `last_updated` timestamp of the parameter-schema feature (not the `last_updated` of the whole operation) as an identifier in the timestamp query parameter.
 :::
 
 ### Disable Schema Validation
