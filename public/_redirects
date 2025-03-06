@@ -1213,6 +1213,7 @@
 /support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/ /support/contacting-cloudflare-support/ 301
 /support/troubleshooting/performance/http2-and-enhanced-http2-prioritization-options-may-affect-content-loading-on-iossafari-devices/ /speed/optimization/protocol/troubleshooting/enhanced-http2-prioritization-ios-safari/ 301
 /support/troubleshooting/performance/ /speed/optimization/ 301
+/support/troubleshooting/planned-maintenance/disruptive-maintenance-windows/ /support/troubleshooting/disruptive-maintenance/ 301
 /support/page-rules/ /rules/page-rules/ 301
 /support/page-rules/configuring-url-forwarding-or-redirects-with-page-rules/ /rules/page-rules/how-to/url-forwarding/ 301
 /support/page-rules/how-do-i-include-or-exclude-a-specific-url-from-cloudflares-page-rules/ /rules/page-rules/reference/wildcard-matching/ 301
