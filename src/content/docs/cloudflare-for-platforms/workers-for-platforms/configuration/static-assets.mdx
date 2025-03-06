@@ -57,12 +57,15 @@ Before sending any file data, you need to tell Cloudflare which files you intend
 - A hash (32-hex characters) representing the file contents
 - The file size in bytes
 
-<Aside type="caution" title="About asset isolation">
-	Cloudflare automatically de-duplicates identical asset hashes within the same
-	account. If an asset with the same hash has already been uploaded, it may be
-	shared across different User Workers **unless explicitly made unique**. If you
-	require full asset isolation, prepend asset hashes with a unique identifier
-	(for example, an account ID or Worker name).
+<Aside type="note" title="Asset Isolation Considerations">
+By default, static assets uploaded to Workers for Platforms are associated with the User Worker they are attached to. However, if multiple User Workers exist under the same account, assets with identical hashes may be shared across them.
+
+If strict isolation between User Workers is required, we recommend:
+
+- **Prefixing asset hashes** with an account-specific or worker-specific identifier to ensure uniqueness.
+- **Ensuring JWT tokens for asset uploads are only issued to trusted platform services**, and not directly exposed to end-users.
+- **Explicitly documenting asset-sharing expectations** for your customers if cross-project asset reuse is intended.
+
 </Aside>
 
 #### Example manifest (JSON)
@@ -134,6 +137,14 @@ This step alone does not store files on Cloudflare. You must upload the actual f
 If the response to the Upload Session API returns `buckets`, that means you have new or changed files that need to be uploaded to Cloudflare.
 
 Use the [Workers Assets Upload API](https://developers.cloudflare.com/api/resources/workers/subresources/assets/subresources/upload/) to transmit the raw file bytes in base64-encoded format for any missing or changed files. Once uploaded, Cloudflare will store these files so they can then be attached to a User Worker.
+
+<Aside type="caution">
+	Cloudflare automatically de-duplicates identical asset hashes within the same
+	account. If an asset with the same hash has already been uploaded, it may be
+	shared across different User Workers unless **explicitly made unique**. If you
+	require full asset isolation, prepend asset hashes with a unique identifier
+	(for example, an account ID or Worker name).
+</Aside>
 
 #### API Request Authentication
 
