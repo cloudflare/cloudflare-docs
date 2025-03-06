@@ -424,7 +424,9 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 
 ## Control IP version
 
-Enterprise users can pair these policies with an [egress policy](/cloudflare-one/policies/gateway/egress-policies/) to control which IP address is used to egress to the origin server.
+Enterprise users can pair these policies with an [egress policy](/cloudflare-one/policies/gateway/egress-policies/) to control which IP version is used to egress to the origin server.
+
+Optionally, you can use the Domain selector to control the IP version for specific sites.
 
 :::note
 To ensure traffic routes through your preferred IP version, disable **Display block page**.
@@ -436,10 +438,9 @@ Force users to connect with IPv4 by blocking IPv6 resolution.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-| Selector          | Operator | Value         | Logic | Action |
-| ----------------- | -------- | ------------- | ----- | ------ |
-| Query Record Type | is       | _AAAA_        | And   | Block  |
-| Domain            | is       | `example.com` |       |        |
+| Selector          | Operator | Value  | Action |
+| ----------------- | -------- | ------ | ------ |
+| Query Record Type | is       | _AAAA_ | Block  |
 
 </TabItem>
 
@@ -470,10 +471,9 @@ Force users to connect with IPv6 by blocking IPv4 resolution.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-| Selector          | Operator | Value         | Logic | Action |
-| ----------------- | -------- | ------------- | ----- | ------ |
-| Query Record Type | is       | _A_           | And   | Block  |
-| Domain            | is       | `example.com` |       |        |
+| Selector          | Operator | Value | Action |
+| ----------------- | -------- | ----- | ------ |
+| Query Record Type | is       | _A_   | Block  |
 
 </TabItem>
 
