@@ -8,7 +8,6 @@ params:
   - magicWANecmp?
   - createPath
   - tunnelEndpoints
-  - ipRanges?
 ---
 
 import { Aside, GlossaryTooltip, Markdown, AnchorHeading, Render, TabItem, Tabs } from "~/components";
@@ -130,17 +129,42 @@ Cloudflare has nine geographic regions across the world which are listed below.
 
 Configure scoping for your traffic in the **Region code** section when adding or editing a static route. Refer to [Create a static route](#create-a-static-route) and [Edit a static route](#edit-a-static-route) more information.
 
-## Allowed IP ranges
+{ props.magicProduct === "Magic Transit" && (
+  <>
+    <AnchorHeading title="Allowed IP ranges" depth={2} />
+		<Markdown
+    text={`
+Allowed IP ranges for static routes are:
 
-By default, you can only add static routes with [RFC 1918](https://datatracker.ietf.org/doc/html/rfc1918) IP prefixes like:
+- Cloudflare leased IPs assigned to your account
+- BYOIP prefixes. For BYOIP, you have the option to use them as-is, or to create a summary route to cover all your onboarded prefixes.
+			`}
+				inline={false}
+  />
+  </>
+  )
+}
 
-- `10.0.0.0/8`
-- `172.16.0.0/12`
-- `192.168.0.0/16`
+{ props.magicProduct === "Magic WAN" && (
+  <>
+    <AnchorHeading title="Allowed IP ranges" depth={2} />
+		<Markdown
+    text={`
+By default, you can only add static routes with RFC 1918 IP prefixes like:
+- \`10.0.0.0/8\`
+- \`172.16.0.0/12\`
+- \`192.168.0.0/16\`
 
-<Markdown text={props.ipRanges} />
-If your use case requires IP prefixes outside RFC 1918, contact your Cloudflare
-customer service manager.
+When using Magic WAN and Cloudflare Tunnel together, remember to consider the IP ranges utilized in the static routes of Cloudflare Tunnel when selecting static routes for Magic WAN. For more information, refer to [Cloudflare Tunnel](/magic-wan/zero-trust/cloudflare-tunnel/).
+
+For prefixes outside RFC 1918 contact your Cloudflare customer service manager.
+			`}
+				inline={false}
+  />
+  </>
+  )
+}
+
 
 ## Create a static route
 
