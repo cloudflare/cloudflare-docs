@@ -62,7 +62,7 @@ By default, static assets uploaded to Workers for Platforms are associated with 
 
 If strict isolation between User Workers is required, we recommend:
 
-- **Prefixing asset hashes** with an account-specific or worker-specific identifier to ensure uniqueness.
+- **Prefixing asset hashes** with an account-specific or Worker-specific identifier to ensure uniqueness.
 - **Ensuring JWT tokens for asset uploads are only issued to trusted platform services**, and not directly exposed to end-users.
 - **Explicitly documenting asset-sharing expectations** for your customers if cross-project asset reuse is intended.
 
