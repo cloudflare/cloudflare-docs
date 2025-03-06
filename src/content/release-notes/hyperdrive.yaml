@@ -14,7 +14,7 @@ entries:
 
       Learn more about [configuring your database networking for Hyperdrive](/hyperdrive/configuration/firewall-and-networking-configuration/).
   - publish_date: "2025-03-06"
-    title: Hyperdrive improves connection pool placement decreasing query latency by up to 90%
+    title: Hyperdrive improves connection pool placement, decreasing query latency by up to 90%
     description: |-
       Hyperdrive now pools all database connections in one or more regions as close to your database as possible. This means that your uncached queries and new database connections have up to 90% less latency as measured from Hyperdrive connection pools.
 
