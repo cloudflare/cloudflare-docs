@@ -5,7 +5,7 @@ productLink: "/hyperdrive/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
-  - publish_date: "2025-03-06"
+  - publish_date: "2025-03-07"
     title: Hyperdrive connects to your database using Cloudflare's IP address ranges
     description: |-
       Hyperdrive now uses [Cloudflare's IP address ranges]((https://www.cloudflare.com/ips/) for egress. 
