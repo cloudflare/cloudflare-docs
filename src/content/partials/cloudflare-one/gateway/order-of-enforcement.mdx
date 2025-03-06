@@ -142,9 +142,7 @@ When [resolver policies](/cloudflare-one/policies/gateway/resolver-policies/) ar
 	params={{ one: "DNS, network, or HTTP" }}
 />
 
-:::caution[Terraform precedence limitation]
-To avoid conflicts, Terraform applies a hash calculation to policy precedence. For example, a precedence of `1000` may become `1000901`. This can cause errors when reordering policies. To avoid this issue, manually set the precedence of your policies with the [Update a Zero Trust Gateway rule](/api/resources/zero_trust/subresources/gateway/subresources/rules/methods/update/) endpoint.
-:::
+<Render file="gateway/terraform-precedence-warning" product="cloudflare-one" />
 
 ## Example
 
