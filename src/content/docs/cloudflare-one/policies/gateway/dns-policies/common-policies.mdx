@@ -458,7 +458,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
   "filters": [
     "dns"
   ],
-  "traffic": "dns.query_rtype == \"AAAA\" and any(dns.domains[*] == \"example.com\")",
+  "traffic": "dns.query_rtype == \"AAAA\"",
   "identity": ""
 }'
 ```
@@ -491,7 +491,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
   "filters": [
     "dns"
   ],
-  "traffic": "dns.query_rtype == \"A\" and any(dns.domains[*] == \"example.com\")",
+  "traffic": "dns.query_rtype == \"A\"",
   "identity": ""
 }'
 ```
