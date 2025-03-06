@@ -12,6 +12,14 @@ Before getting started, you will need:
 - An existing R2 bucket. If you do not already have an existing R2 bucket, refer to [Create buckets](/r2/buckets/create-buckets/).
 - (API only) An API token with [permissions](/r2/api/s3/tokens/#permissions) to edit R2 bucket configuration.
 
+### Enable bucket lock via dashboard
+
+1. From the Cloudflare dashboard, select **R2** from the sidebar.
+2. Select the bucket you would like to add bucket lock rule to.
+3. Switch to the **Settings** tab, then scroll down to the **Bucket lock rules** card.
+4. Select **Add rule** and enter the rule name, prefix, and retention period.
+5. Select **Save changes**.
+
 ### Enable bucket lock via Wrangler
 
 1. Install [`npm`](https://docs.npmjs.com/getting-started).
@@ -77,6 +85,12 @@ If your bucket is setup with [jurisdictional restrictions](/r2/reference/data-lo
 
 ## Get bucket lock rules for your R2 bucket
 
+### Dashboard
+
+1. From the Cloudflare dashboard, select **R2** from the sidebar.
+2. Select the bucket you would like to add bucket lock rule to.
+3. Switch to the **Settings** tab, then scroll down to the **Bucket lock rules** card.
+
 ### Wrangler
 
 To list bucket lock rules, run the [`r2 bucket lock list` command](/workers/wrangler/commands/#r2-bucket-lock-list):
@@ -90,6 +104,13 @@ npx wrangler r2 bucket lock list <BUCKET_NAME>
 For more information on required parameters and examples of how to get bucket lock rules, refer to the [API documentation](/api/resources/r2/subresources/buckets/subresources/locks/methods/get/).
 
 ## Remove bucket lock rules from your R2 bucket
+
+### Dashboard
+
+1. From the Cloudflare dashboard, select **R2** from the sidebar.
+2. Select the bucket you would like to add bucket lock rule to.
+3. Switch to the **Settings** tab, then scroll down to the **Bucket lock rules** card.
+4. Locate the rule you want to remove, select the `...` icon next to it, and then select **Delete**.
 
 ### Wrangler
 

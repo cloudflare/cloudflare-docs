@@ -18,4 +18,18 @@ export default {
 			};
 		});
 	},
+	resultsFooterComponent({ state }) {
+		return {
+			type: "a",
+			ref: undefined,
+			constructor: undefined,
+			__v: null,
+			key: state.query,
+			props: {
+				href: `/search/?query=${state.query}`,
+				target: "_blank",
+				children: "View all results",
+			},
+		};
+	},
 } satisfies DocSearchClientOptions;
