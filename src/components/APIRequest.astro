@@ -14,10 +14,15 @@ const props = z
 		method: z.enum(["GET", "HEAD", "POST", "PUT", "DELETE", "PATCH"]),
 		parameters: z.record(z.string(), z.any()).optional(),
 		json: z.record(z.string(), z.any()).optional(),
+		form: z.record(z.string(), z.any()).optional(),
 	})
 	.strict();
 
-let { path, method, parameters, json } = props.parse(Astro.props);
+let { path, method, parameters, json, form } = props.parse(Astro.props);
+
+if (json && form) {
+	throw new Error(`[APIRequest] Cannot use both "json" and "form" properties.`);
+}
 
 const schema = await getSchema();
 
@@ -52,7 +57,7 @@ const extraneousParameters = providedParameters.filter(
 
 if (extraneousParameters.length > 0) {
 	throw new Error(
-		`[APIRequest] Provided parameters ${extraneousParameters.join(", ")} not found in schema.`,
+		`[APIRequest] Provided parameters ${extraneousParameters.join(", ")} not found in ${method} ${path} schema.`,
 	);
 }
 
@@ -101,21 +106,17 @@ const jsonSchema = requestBody?.content?.["application/json"]?.schema as
 	| undefined;
 
 if (jsonSchema?.required) {
-	json ??= {};
-
-	const providedProperties = Object.keys(json);
+	const providedProperties = Object.keys(json ?? {});
 	const requiredProperties = jsonSchema.required;
 
 	const missingProperties = requiredProperties.filter(
 		(property) => !providedProperties.includes(property),
 	);
 
-	for (const property of missingProperties) {
-		const defaultValue =
-			(jsonSchema.properties?.[property] as OpenAPIV3.SchemaObject).default ??
-			property;
-
-		json[property] = defaultValue;
+	if (missingProperties.length > 0) {
+		throw new Error(
+			`[APIRequest] Missing the following required properties for ${method} ${path}: ${missingProperties.join(", ")}`,
+		);
 	}
 }
 
@@ -144,6 +145,7 @@ const tokenGroups = operation["x-api-token-group"];
 	method={method}
 	headers={headers}
 	json={json}
+	form={form}
 	code={{
 		title: operation.summary,
 	}}

@@ -16,9 +16,20 @@ import { CURL } from "~/components";
 import { CURL } from "~/components";
 
 <CURL
-	url="https://example.com"
+	url="https://httpbin.org/anything"
 	method="POST"
 	json={{
+		key: "value",
+	}}
+	code={{
+		mark: "value"
+	}}
+/>
+
+<CURL
+	url="https://httpbin.org/anything"
+	method="POST"
+	form={{
 		key: "value",
 	}}
 	code={{
@@ -56,6 +67,12 @@ The headers to include in the request.
 **type:** `Record<string, any>`
 
 JSON data to include in the request.
+
+### `form`
+
+**type:** `Record<string, any>`
+
+The FormData payload to send.
 
 ### `code`
 

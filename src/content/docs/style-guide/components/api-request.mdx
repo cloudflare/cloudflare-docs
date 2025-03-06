@@ -28,6 +28,15 @@ import { APIRequest } from "~/components";
 		setting_id: "ciphers",
 	}}
 />
+
+<APIRequest
+	path="/accounts/{account_id}/images/v2/direct_upload"
+	method="POST"
+	form={{
+		requireSignedURLs: true,
+		metadata: '{"key":"value"}'
+	}}
+/>
 ```
 
 ## `<APIRequest>` Props
@@ -64,4 +73,12 @@ If not provided, the component will default to an environment variable. For exam
 
 The JSON payload to send.
 
-Default values can be omitted, and the component will use default values for any missing fields.
+If required properties are missing, the component will throw an error.
+
+### `form`
+
+**type:** `Record<string, any>`
+
+The FormData payload to send.
+
+This field is not currently validated against the schema.
