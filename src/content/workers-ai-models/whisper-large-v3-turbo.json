@@ -44,7 +44,7 @@
                 },
                 "prefix": {
                     "type": "string",
-                    "description": "The prefix it appended the the beginning of the output of the transcription and can guide the transcription result."
+                    "description": "The prefix it appended the beginning of the output of the transcription and can guide the transcription result."
                 }
             },
             "required": [
