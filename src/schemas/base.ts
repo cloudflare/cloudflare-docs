@@ -106,4 +106,10 @@ export const baseSchema = ({ image }: SchemaContext) =>
 			.describe(
 				"Renders this group as a single link on the sidebar, to the index page. Refer to https://developers.cloudflare.com/style-guide/frontmatter/sidebar/.",
 			),
+		styleGuide: z
+			.object({
+				component: z.string(),
+			})
+			.optional()
+			.describe("Used by overrides for style guide component documentation"),
 	});

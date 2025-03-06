@@ -5,15 +5,19 @@ import { marked } from "marked";
 import { Breadcrumbs } from "astro-breadcrumbs";
 import "astro-breadcrumbs/breadcrumbs.css";
 
+import { Aside } from "@astrojs/starlight/components";
 import Description from "~/components/Description.astro";
 import SpotlightAuthorDetails from "~/components/SpotlightAuthorDetails.astro";
 import LastReviewed from "~/components/LastReviewed.astro";
 
 import { getEntry } from "astro:content";
 
-const spotlightDetails = Astro.locals.starlightRoute.entry.data.spotlight;
-const updated = Astro.locals.starlightRoute.entry.data.updated;
-const summary = Astro.locals.starlightRoute.entry.data.summary;
+const frontmatter = Astro.locals.starlightRoute.entry.data;
+
+const spotlightDetails = frontmatter.spotlight;
+const updated = frontmatter.updated;
+const summary = frontmatter.summary;
+const component = frontmatter.styleGuide?.component;
 
 const slug = Astro.locals.starlightRoute.entry.slug;
 
@@ -106,6 +110,8 @@ const hideBreadcrumbs = Astro.locals.starlightRoute.hideBreadcrumbs;
 }
 
 {summary && <Description set:html={marked.parse(summary)} />}
+
+{component && <Aside>To see a list of pages this component is used on, please visit the <a href={`/style-guide/components/usage/#${component.toLowerCase()}`}>usage page</a>.</Aside>}
 
 <style>
 	:root {
