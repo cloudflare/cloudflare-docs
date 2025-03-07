@@ -11,11 +11,11 @@ languages:
   - PostgreSQL
 ---
 
-[Prisma Postgres](https://www.prisma.io/postgres) is a managed, serverless PostgreSQL database. It supports features like connection pooling, caching, real-time subscriptions, and query optimization recommendations.
+[Prisma Postgres](https://www.prisma.io/postgres?utm_source=cloudflare&utm_medium=guides&utm_campaign=workers) is a managed, serverless PostgreSQL database. It supports features like connection pooling, caching, real-time subscriptions, and query optimization recommendations.
 
 In this tutorial, you will learn how to:
 
-- Set up a Cloudflare Workers project with [Prisma ORM](https://www.prisma.io/docs).
+- Set up a Cloudflare Workers project with [Prisma ORM](https://www.prisma.io/docs?utm_source=cloudflare&utm_medium=guides&utm_campaign=workers).
 - Create a Prisma Postgres instance from the Prisma CLI.
 - Model data and run migrations with Prisma Postgres.
 - Query the database from Workers.
@@ -85,13 +85,13 @@ Initialize Prisma in your application:
 npx prisma@latest init --db
 ```
 
-If you do not have a [Prisma Data Platform](https://console.prisma.io/) account yet, or if you are not logged in, the command will prompt you to log in using one of the available authentication providers. A browser window will open so you can log in or create an account. Return to the CLI after you have completed this step.
+If you do not have a [Prisma Data Platform](https://console.prisma.io?utm_source=cloudflare&utm_medium=guides&utm_campaign=workers) account yet, or if you are not logged in, the command will prompt you to log in using one of the available authentication providers. A browser window will open so you can log in or create an account. Return to the CLI after you have completed this step.
 
 Once logged in (or if you were already logged in), the CLI will prompt you to select a project name and a database region.
 
 Once the command has terminated, it will have created:
 
-- A project in your [Platform Console](https://console.prisma.io/) containing a Prisma Postgres database instance.
+- A project in your [Platform Console](https://console.prisma.io?utm_source=cloudflare&utm_medium=guides&utm_campaign=workers) containing a Prisma Postgres database instance.
 - A `prisma` folder containing `schema.prisma`, where you will define your database schema.
 - An `.env` file in the project root, which will contain the Prisma Postgres database url `DATABASE_URL=<your-prisma-postgres-database-url>`.
 
@@ -241,7 +241,5 @@ Congratulations on building and deploying a simple application with Prisma Postg
 
 To enhance your application further:
 
-- Add [caching](https://www.prisma.io/docs/postgres/caching) to your queries.
-- Explore the [Prisma Postgres documentation](https://www.prisma.io/docs/postgres/getting-started).
-
-To see how to build a real-time application with Cloudflare Workers and Prisma Postgres, read [this](https://www.prisma.io/docs/guides/prisma-postgres-realtime-on-cloudflare) guide.
+- Add [caching](https://www.prisma.io/docs/postgres/caching?utm_source=cloudflare&utm_medium=guides&utm_campaign=workers) to your queries.
+- Explore the [Prisma Postgres documentation](https://www.prisma.io/docs/postgres/getting-started?utm_source=cloudflare&utm_medium=guides&utm_campaign=workers).
