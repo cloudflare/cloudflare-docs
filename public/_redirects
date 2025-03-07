@@ -1646,7 +1646,7 @@
 
 # workflows
 
-/workflows/reference/storage-options/ /workflows/reference/pricing/ 301
+/workflows/reference/storage-options/ /workers/platform/storage-options/ 301
 
 # workers KV
 /kv/platform/environments/ /kv/reference/environments/ 301
