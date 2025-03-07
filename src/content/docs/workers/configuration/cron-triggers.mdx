@@ -27,7 +27,36 @@ Cron Triggers execute on UTC time.
 
 To respond to a Cron Trigger, you must add a [`"scheduled"` handler](/workers/runtime-apis/handlers/scheduled/) to your Worker.
 
-Refer to the following examples to write your code:
+import { TabItem, Tabs } from "~/components";
+
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
+
+```js
+export default {
+	async scheduled(event, env, ctx) {
+		console.log("cron processed");
+	},
+};
+```
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+
+```ts
+interface Env {}
+export default {
+	async scheduled(
+		controller: ScheduledController,
+		env: Env,
+		ctx: ExecutionContext,
+	) {
+		console.log("cron processed");
+	},
+};
+```
+
+</TabItem> </Tabs>
+
+Refer to the following additional examples to write your code:
 
 - [Setting Cron Triggers](/workers/examples/cron-trigger/)
 - [Multiple Cron Triggers](/workers/examples/multiple-cron-triggers/)
