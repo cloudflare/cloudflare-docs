@@ -69,7 +69,7 @@ npx wrangler r2 object put <bucket_name>/<file_name> -f <path_to_file>
 
 To bind the R2 bucket we have created to the cat blog, we need to update the Wrangler configuration.
 
-Open the `wrangler.toml / wrangler.json` file, and add the following binding to the file. `bucket_name` should be the exact name of the bucket created earlier, while `binding` can be any custom name referring to the R2 resource:
+Open the [Wrangler configuration file](/pages/functions/wrangler-configuration/), and add the following binding to the file. `bucket_name` should be the exact name of the bucket created earlier, while `binding` can be any custom name referring to the R2 resource:
 
 <WranglerConfig>
 
@@ -86,7 +86,7 @@ bucket_name = "cat-media"
 Note: The keyword `ASSETS` is reserved and cannot be used as a resource binding.
 :::
 
-Save the `wrangler.toml / wrangler.json` file, and we are ready to move on to the last step.
+Save the [Wrangler configuration file](/pages/functions/wrangler-configuration/), and we are ready to move on to the last step.
 
 Alternatively, you can add a binding to your Pages project on the dashboard by navigating to the project’s _Settings_ tab > _Functions_ > _R2 bucket bindings_.
 

@@ -1,0 +1,54 @@
+---
+title: Human in the Loop
+pcx_content_type: concept
+sidebar:
+  order: 5
+
+---
+
+import { Render, Note, Aside } from "~/components";
+
+### What is Human-in-the-Loop?
+
+Human-in-the-Loop (HITL) workflows integrate human judgment and oversight into automated processes. These workflows pause at critical points for human review, validation, or decision-making before proceeding. This approach combines the efficiency of automation with human expertise and oversight where it matters most.
+
+![A human-in-the-loop diagram](~/assets/images/agents/human-in-the-loop.svg)
+
+#### Understanding Human-in-the-Loop workflows
+
+In a Human-in-the-Loop workflow, processes are not fully automated. Instead, they include designated checkpoints where human intervention is required. For example, in a travel booking system, a human may want to confirm the travel before an agent follows through with a transaction. The workflow manages this interaction, ensuring that:
+
+1. The process pauses at appropriate review points
+2. Human reviewers receive necessary context
+3. The system maintains state during the review period
+4. Review decisions are properly incorporated
+5. The process continues once approval is received
+
+### Best practices for Human-in-the-Loop workflows
+
+#### Long-Term State Persistence
+
+Human review processes do not operate on predictable timelines. A reviewer might need days or weeks to make a decision, especially for complex cases requiring additional investigation or multiple approvals. Your system needs to maintain perfect state consistency throughout this period, including:
+
+- The original request and context
+- All intermediate decisions and actions
+- Any partial progress or temporary states
+- Review history and feedback
+
+:::note[Tip]
+[Durable Objects](/durable-objects/) provide an ideal solution for managing state in Human-in-the-Loop workflows, offering persistent compute instances that maintain state for hours, weeks, or months.
+:::
+
+#### Continuous Improvement Through Evals
+
+Human reviewers play a crucial role in evaluating and improving LLM performance. Implement a systematic evaluation process where human feedback is collected not just on the final output, but on the LLM's decision-making process. This can include:
+
+- Decision Quality Assessment: Have reviewers evaluate the LLM's reasoning process and decision points, not just the final output.
+- Edge Case Identification: Use human expertise to identify scenarios where the LLM's performance could be improved.
+- Feedback Collection: Gather structured feedback that can be used to fine-tune the LLM or adjust the workflow. [AI Gateway](/ai-gateway/evaluations/add-human-feedback/) can be a useful tool for setting up an LLM feedback loop.
+
+#### Error handling and recovery
+
+Robust error handling is essential for maintaining workflow integrity. Your system should gracefully handle various failure scenarios, including reviewer unavailability, system outages, or conflicting reviews. Implement clear escalation paths for handling exceptional cases that fall outside normal parameters.
+
+The system should maintain stability during paused states, ensuring that no work is lost even during extended review periods. Consider implementing automatic checkpointing that allows workflows to be resumed from the last stable state after any interruption.

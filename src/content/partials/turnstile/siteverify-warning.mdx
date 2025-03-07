@@ -4,6 +4,7 @@
 ---
 
 :::caution[Warning]
+It is critical to enforce Turnstile tokens with the siteverify API. The Turnstile token could be invalid, expired, or already redeemed. Not verifying the token will leave major vulnerabilities in your implementation.
 
-It is critical to enforce Turnstile tokens with the siteverify API. The Turnstile token could be invalid, expired, or already redeemed. Not verifying the token will leave major vulnerabilities in your implementation. 
+You **must** call siteverify to complete your Turnstile configuration. Otherwise, it is incomplete and will result in zeroes for token validation when viewing your metrics in [Turnstile Analytics](/turnstile/turnstile-analytics/).
 :::

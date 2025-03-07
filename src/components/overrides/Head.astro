@@ -1,43 +1,44 @@
 ---
-import type { Props } from "@astrojs/starlight/props";
 import Default from "@astrojs/starlight/components/Head.astro";
 import { differenceInCalendarDays } from "date-fns";
 import "tippy.js/dist/tippy.css";
 
 import { getEntry } from "astro:content";
+import { getOgImage } from "~/util/og";
+import type { CollectionEntry } from "astro:content";
 
-const currentSection = Astro.url.pathname.split("/")[1];
+// grab the current top-level folder. Remove . characters for 1.1.1.1 URL
+const currentSection = Astro.url.pathname.split("/")[1].replaceAll(".", "");
+const head = Astro.locals.starlightRoute.entry.data.head;
 
 if (currentSection) {
 	const product = await getEntry("products", currentSection);
 
 	if (product) {
 		if (product.data.meta.title) {
-			const titleIdx = Astro.props.entry.data.head.findIndex(
-				(x) => x.tag === "title",
-			);
+			const titleIdx = head.findIndex((x) => x.tag === "title");
 
 			let title: string;
 
 			if (titleIdx !== -1) {
-				const existingTitle = Astro.props.entry.data.head[titleIdx].content;
+				const existingTitle = head[titleIdx].content;
 				title = `${existingTitle} · ${product.data.meta.title}`;
 
-				Astro.props.entry.data.head[titleIdx] = {
+				head[titleIdx] = {
 					tag: "title",
 					attrs: {},
 					content: title,
 				};
 			} else {
-				title = `${Astro.props.entry.data.title} · ${product.data.meta.title}`;
-				Astro.props.entry.data.head.push({
+				title = `${Astro.locals.starlightRoute.entry.data.title} · ${product.data.meta.title}`;
+				head.push({
 					tag: "title",
 					attrs: {},
 					content: title,
 				});
 			}
 
-			Astro.props.entry.data.head.push({
+			head.push({
 				tag: "meta",
 				attrs: { property: "og:title", content: title },
 				content: "",
@@ -46,7 +47,7 @@ if (currentSection) {
 
 		if (product.data.product.title) {
 			const productName = product.data.product.title;
-			Astro.props.entry.data.head.push({
+			head.push({
 				tag: "meta",
 				attrs: {
 					name: "pcx_product",
@@ -54,7 +55,7 @@ if (currentSection) {
 				},
 				content: "",
 			});
-			Astro.props.entry.data.head.push({
+			head.push({
 				tag: "meta",
 				attrs: {
 					name: "algolia_product_filter",
@@ -65,58 +66,7 @@ if (currentSection) {
 		}
 
 		if (product.data.product.group) {
-			const group = product.data.product.group.toLowerCase();
-
-			let ogImage = "https://developers.cloudflare.com/cf-twitter-card.png";
-
-			const images: Record<string, string> = {
-				"cloudflare essentials":
-					"https://developers.cloudflare.com/core-services-preview.png",
-				"cloudflare one": "https://developers.cloudflare.com/zt-preview.png",
-				"developer platform":
-					"https://developers.cloudflare.com/dev-products-preview.png",
-				"network security":
-					"https://developers.cloudflare.com/core-services-preview.png",
-				"application performance":
-					"https://developers.cloudflare.com/core-services-preview.png",
-				"application security":
-					"https://developers.cloudflare.com/core-services-preview.png",
-			};
-
-			if (images[group]) {
-				ogImage = images[group];
-			}
-
-			const tags = [
-				{
-					tag: "meta",
-					attrs: {
-						name: "image",
-						content: ogImage,
-					},
-					content: "",
-				},
-				{
-					tag: "meta",
-					attrs: {
-						name: "og:image",
-						content: ogImage,
-					},
-					content: "",
-				},
-				{
-					tag: "meta",
-					attrs: {
-						name: "twitter:image",
-						content: ogImage,
-					},
-					content: "",
-				},
-			] as const;
-
-			Astro.props.entry.data.head.push(...tags);
-
-			Astro.props.entry.data.head.push({
+			head.push({
 				tag: "meta",
 				attrs: {
 					name: "pcx_content_group",
@@ -128,7 +78,7 @@ if (currentSection) {
 	}
 
 	if (currentSection === "style-guide") {
-		Astro.props.entry.data.head.push({
+		head.push({
 			tag: "meta",
 			attrs: {
 				name: "robots",
@@ -137,46 +87,12 @@ if (currentSection) {
 			content: "",
 		});
 	}
-
-	if (currentSection === "changelog") {
-		let changelogImage =
-			"https://developers.cloudflare.com/changelog-preview.png";
-
-		const tags = [
-			{
-				tag: "meta",
-				attrs: {
-					name: "image",
-					content: changelogImage,
-				},
-				content: "",
-			},
-			{
-				tag: "meta",
-				attrs: {
-					name: "og:image",
-					content: changelogImage,
-				},
-				content: "",
-			},
-			{
-				tag: "meta",
-				attrs: {
-					name: "twitter:image",
-					content: changelogImage,
-				},
-				content: "",
-			},
-		] as const;
-
-		Astro.props.entry.data.head.push(...tags);
-	}
 }
 
 // Add noindex tag if present in frontmatter
 
-if (Astro.props.entry.data.noindex) {
-	Astro.props.entry.data.head.push({
+if (Astro.locals.starlightRoute.entry.data.noindex) {
+	head.push({
 		tag: "meta",
 		attrs: {
 			name: "robots",
@@ -188,9 +104,9 @@ if (Astro.props.entry.data.noindex) {
 
 // Adding metadata used for reporting and search indexing
 // content type
-if (Astro.props.entry.data.pcx_content_type) {
-	const contentType = Astro.props.entry.data.pcx_content_type;
-	Astro.props.entry.data.head.push({
+if (Astro.locals.starlightRoute.entry.data.pcx_content_type) {
+	const contentType = Astro.locals.starlightRoute.entry.data.pcx_content_type;
+	head.push({
 		tag: "meta",
 		attrs: {
 			name: "pcx_content_type",
@@ -198,7 +114,7 @@ if (Astro.props.entry.data.pcx_content_type) {
 		},
 		content: "",
 	});
-	Astro.props.entry.data.head.push({
+	head.push({
 		tag: "meta",
 		attrs: {
 			name: "algolia_content_type",
@@ -209,9 +125,9 @@ if (Astro.props.entry.data.pcx_content_type) {
 }
 
 // other products
-if (Astro.props.entry.data.products) {
-	const additionalProducts = Astro.props.entry.data.products;
-	Astro.props.entry.data.head.push({
+if (Astro.locals.starlightRoute.entry.data.products) {
+	const additionalProducts = Astro.locals.starlightRoute.entry.data.products;
+	head.push({
 		tag: "meta",
 		attrs: {
 			name: "pcx_additional_products",
@@ -222,9 +138,9 @@ if (Astro.props.entry.data.products) {
 }
 
 // other products
-if (Astro.props.entry.data.tags) {
-	const pageTags = Astro.props.entry.data.tags;
-	Astro.props.entry.data.head.push({
+if (Astro.locals.starlightRoute.entry.data.tags) {
+	const pageTags = Astro.locals.starlightRoute.entry.data.tags;
+	head.push({
 		tag: "meta",
 		attrs: {
 			name: "pcx_tags",
@@ -234,12 +150,12 @@ if (Astro.props.entry.data.tags) {
 	});
 }
 
-if (Astro.props.entry.data.updated) {
+if (Astro.locals.starlightRoute.entry.data.updated) {
 	const daysBetween = differenceInCalendarDays(
 		new Date(),
-		Astro.props.entry.data.updated,
+		Astro.locals.starlightRoute.entry.data.updated,
 	);
-	Astro.props.entry.data.head.push({
+	head.push({
 		tag: "meta",
 		attrs: {
 			name: "pcx_last_reviewed",
@@ -251,11 +167,11 @@ if (Astro.props.entry.data.updated) {
 
 // end metadata
 
-if (Astro.props.entry.data.pcx_content_type === "changelog") {
+if (Astro.locals.starlightRoute.entry.data.pcx_content_type === "changelog") {
 	const href = new URL(Astro.site ?? "");
-	href.pathname = Astro.props.entry.slug.concat("/index.xml");
+	href.pathname = Astro.locals.starlightRoute.entry.slug.concat("/index.xml");
 
-	Astro.props.entry.data.head.push({
+	head.push({
 		tag: "link",
 		attrs: {
 			rel: "alternate",
@@ -266,8 +182,8 @@ if (Astro.props.entry.data.pcx_content_type === "changelog") {
 	});
 }
 
-if (Astro.props.entry.data.external_link) {
-	Astro.props.entry.data.head.push({
+if (Astro.locals.starlightRoute.entry.data.external_link) {
+	head.push({
 		tag: "meta",
 		attrs: {
 			content: "noindex",
@@ -275,18 +191,53 @@ if (Astro.props.entry.data.external_link) {
 		},
 		content: "",
 	});
-	Astro.props.entry.data.head.push({
+	head.push({
 		tag: "meta",
 		attrs: {
-			content: `0; url=${Astro.props.entry.data.external_link}`,
+			content: `0; url=${Astro.locals.starlightRoute.entry.data.external_link}`,
 			"http-equiv": "refresh",
 		},
 		content: "",
 	});
 }
+
+const ogImagePath = await getOgImage(
+	(Astro.locals.starlightRoute.originalEntry as CollectionEntry<"changelog">) ??
+		Astro.locals.starlightRoute.entry,
+);
+const ogImageUrl = new URL(ogImagePath, Astro.url.origin).toString();
+
+const ogImageTags = [
+	{
+		tag: "meta",
+		attrs: {
+			name: "image",
+			content: ogImageUrl,
+		},
+		content: "",
+	},
+	{
+		tag: "meta",
+		attrs: {
+			name: "og:image",
+			content: ogImageUrl,
+		},
+		content: "",
+	},
+	{
+		tag: "meta",
+		attrs: {
+			name: "twitter:image",
+			content: ogImageUrl,
+		},
+		content: "",
+	},
+] as const;
+
+head.push(...ogImageTags);
 ---
 
 <script src="src/scripts/footnotes.ts"></script>
 <script src="src/scripts/mermaid.ts"></script>
 <script src="src/scripts/analytics.ts"></script>
-<Default {...Astro.props}><slot /></Default>
+<Default><slot /></Default>

@@ -8,14 +8,15 @@ import starlightLinksValidator from "starlight-links-validator";
 import icon from "astro-icon";
 import sitemap from "@astrojs/sitemap";
 import react from "@astrojs/react";
+
 import { readdir } from "fs/promises";
+import { fileURLToPath } from "url";
 
 import rehypeTitleFigure from "rehype-title-figure";
 import rehypeMermaid from "./src/plugins/rehype/mermaid.ts";
 import rehypeAutolinkHeadings from "./src/plugins/rehype/autolink-headings.ts";
 import rehypeExternalLinks from "./src/plugins/rehype/external-links.ts";
 import rehypeHeadingSlugs from "./src/plugins/rehype/heading-slugs.ts";
-import { fileURLToPath } from "url";
 
 async function autogenSections() {
 	const sections = (
@@ -36,7 +37,21 @@ async function autogenSections() {
 	});
 }
 
+async function autogenStyles() {
+	const styles = (
+		await readdir("./src/styles/", {
+			withFileTypes: true,
+			recursive: true,
+		})
+	)
+		.filter((x) => x.isFile())
+		.map((x) => x.parentPath + x.name);
+
+	return styles;
+}
+
 const sidebar = await autogenSections();
+const customCss = await autogenStyles();
 
 const runLinkCheck = process.env.RUN_LINK_CHECK || false;
 
@@ -96,18 +111,7 @@ export default defineConfig({
 				TableOfContents: "./src/components/overrides/TableOfContents.astro",
 			},
 			sidebar,
-			customCss: [
-				"./src/asides.css",
-				"./src/badges.css",
-				"./src/code.css",
-				"./src/footnotes.css",
-				"./src/headings.css",
-				"./src/input.css",
-				"./src/mermaid.css",
-				"./src/table.css",
-				"./src/tailwind.css",
-				"./src/title.css",
-			],
+			customCss,
 			pagination: false,
 			plugins: [
 				...(runLinkCheck
@@ -145,9 +149,7 @@ export default defineConfig({
 		tailwind({
 			applyBaseStyles: false,
 		}),
-		liveCode({
-			layout: "~/components/live-code/Layout.astro",
-		}),
+		liveCode({}),
 		icon(),
 		sitemap({
 			filter(page) {

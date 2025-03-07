@@ -15,6 +15,10 @@
             "value": "true"
         },
         {
+            "property_id": "context_window",
+            "value": "24000"
+        },
+        {
             "property_id": "function_calling",
             "value": "true"
         },

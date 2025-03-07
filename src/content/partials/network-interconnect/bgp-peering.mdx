@@ -6,6 +6,8 @@ params:
   - asnProduct
   - mtLimitations
   - productGatewayOrEgress
+  - configStaticRoutes
+  - ecmp
 ---
 
 import { Markdown } from "~/components";
@@ -46,6 +48,14 @@ Routes received from the customer device will be redistributed into the Magic ro
 All routes in the Magic routing table are advertised to BGP peers. Each BGP peer will receive each prefix route along with the full `AS_PATH`, with the selected Cloudflare side [ASN](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/) prepended. This is so that the peer can accurately perform [loop prevention](https://datatracker.ietf.org/doc/html/rfc4271#section-9.1.2).
 
 BGP peering sessions can advertise reachable prefixes to a peer and withdraw previously advertised prefixes. This should not take more than a few minutes to propagate.
+
+## Route prioritization
+
+When BGP and static routes have the same prefix and priority, Cloudflare enforces priority by preferring static routes over BGP routes. This ensures that manually configured static routes take precedence unless explicitly deprioritized.
+
+When BGP advertises a route, it is automatically added to the Magic routing table with a default priority of `100` which <a href={props.configStaticRoutes}>applies to all regions</a>. However, if a static route exists with the same prefix and priority, the static route will always take precedence over the BGP route. You will have to set a different priority for static routes, to be more or less than `100`, depending on which you want to prioritize. Lower values have greater priority.
+
+Additionally, when multiple BGP routes exist with the same prefix length and priority, traffic is distributed across them using <a href={props.ecmp}>equal-cost multi-path (ECMP) routing</a>.
 
 ## BGP timers and settings
 

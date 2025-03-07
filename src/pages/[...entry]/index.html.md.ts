@@ -10,7 +10,7 @@ export const getStaticPaths = (async () => {
 		return {
 			params: {
 				// https://llmstxt.org/: (URLs without file names should append index.html.md instead.)
-				entry: entry.id + "/index",
+				entry: entry.id,
 			},
 			props: {
 				entry,

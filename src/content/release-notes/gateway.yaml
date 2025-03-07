@@ -1,0 +1,59 @@
+---
+link: "/cloudflare-one/changelog/gateway/"
+productName: Gateway
+productLink: "/cloudflare-one/policies/gateway/"
+productArea: Cloudflare One
+productAreaLink: /cloudflare-one/changelog/
+entries:
+  - publish_date: "2025-02-13"
+    title: Unscannable files for Download and Upload File Types selectors
+    description: |-
+      Gateway and DLP users can now match [unscannable files](/cloudflare-one/policies/gateway/http-policies/#download-and-upload-file-types) with the Download and Upload File Types traffic selectors for HTTP policies. This update allows users to block files that are password-protected, compressed, or otherwise unscannable.
+  - publish_date: "2025-02-12"
+    title: Upload/Download File Size selectors for HTTP policies
+    description: |-
+      Gateway and DLP users can now create HTTP policies with the [Download and Upload File Size (MiB)](/cloudflare-one/policies/gateway/http-policies/#download-and-upload-file-size) traffic selectors. This update allows users to block uploads or downloads based on file size.
+  - publish_date: "2025-02-02"
+    title: The default global Cloudflare root certificate expired on 2025-02-02 at 16:05 UTC
+    description: |-
+      If you installed the default Cloudflare certificate before 2024-10-17, you must generate a new certificate and activate it for your Zero Trust organization to avoid inspection errors. Refer to [Troubleshooting](/cloudflare-one/faq/troubleshooting/#as-of-february-2-2025-my-end-user-devices-browser-is-returning-a-your-connection-is-not-private-warning) for instructions and troubleshooting steps.
+  - publish_date: "2025-01-08"
+    title: Bring your own resolver IP (BYOIP) for DNS locations
+    description: |-
+      Enterprise users can now [provide an IP address](/cloudflare-one/connections/connect-devices/agentless/dns/locations/dns-resolver-ips/#bring-your-own-dns-resolver-ip) for a private DNS resolver to use with [DNS locations](/cloudflare-one/connections/connect-devices/agentless/dns/locations/). Gateway supports bringing your own IPv4 and IPv6 addresses.
+  - publish_date: "2024-11-20"
+    title: Category filtering in the network policy builder
+    description: |-
+      Gateway users can now create network policies with the [Content Categories](/cloudflare-one/policies/gateway/network-policies/#content-categories) and [Security Risks](/cloudflare-one/policies/gateway/network-policies/#security-risks) traffic selectors. This update simplifies malicious traffic blocking and streamlines network monitoring for improved security management.
+  - publish_date: "2024-10-17"
+    title: Per-account Cloudflare root certificate
+    description: |-
+      Gateway users can now generate [unique root CAs](/cloudflare-one/connections/connect-devices/user-side-certificates/) for their Zero Trust account. Both generated certificate and custom certificate users must [activate a root certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/#activate-a-root-certificate) to use it for inspection. Per-account certificates replace the default Cloudflare certificate, which is set to expire on 2025-02-02.
+  - publish_date: "2024-10-10"
+    title: Time-based policy duration
+    description: |-
+      Gateway now offers [time-based DNS policy duration](/cloudflare-one/policies/gateway/dns-policies/timed-policies/#time-based-policy-duration). With policy duration, you can configure a duration of time for a policy to turn on or set an exact date and time to turn a policy off.
+  - publish_date: "2024-10-04"
+    title: Expanded Gateway log fields
+    description: |-
+      Gateway now offers new fields in [activity logs](/cloudflare-one/insights/logs/gateway-logs/) for DNS, network, and HTTP policies to provide greater insight into your users' traffic routed through Gateway.
+  - publish_date: "2024-09-30"
+    title: File sandboxing
+    description: |-
+      Gateway users on Enterprise plans can create HTTP policies with [file sandboxing](/cloudflare-one/policies/gateway/http-policies/file-sandboxing/) to quarantine previously unseen files downloaded by your users and scan them for malware.
+  - publish_date: "2024-07-30"
+    title: UK NCSC indicator feed publicly available in Gateway
+    description: |-
+      Gateway users on any plan can now use the [PDNS threat intelligence feed](/security-center/indicator-feeds/#publicly-available-feeds) provided by the UK National Cyber Security Centre (NCSC) in DNS policies.
+  - publish_date: "2024-07-14"
+    title: Gateway DNS filter non-authenticated queries
+    description: |-
+      Gateway users can now select which endpoints to use for a given DNS location. Available endpoints include IPv4, IPv6, DNS over HTTPS (DoH), and DNS over TLS (DoT). Users can protect each configured endpoint by specifying allowed source networks. Additionally, for the DoH endpoint, users can filter  traffic based on source networks and/or authenticate user identity tokens.
+  - publish_date: "2024-06-25"
+    title: Gateway DNS policy setting to ignore CNAME category matches
+    description: |-
+      Gateway now offers the ability to selectively ignore CNAME domain categories in DNS policies via the [**Ignore CNAME domain categories** setting](/cloudflare-one/policies/gateway/domain-categories/#ignore-cname-domain-categories) in the policy builder and the [`ignore_cname_category_matches` setting](/api/resources/zero_trust/subresources/gateway/subresources/rules/methods/create/) in the API.
+  - publish_date: "2024-04-05"
+    title: Gateway file type control improvements
+    description: |-
+      Gateway now offers a more extensive, categorized [list of files](/cloudflare-one/policies/gateway/http-policies/#download-and-upload-file-types) to control uploads and downloads.

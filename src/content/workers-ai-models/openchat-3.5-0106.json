@@ -15,6 +15,10 @@
             "value": "true"
         },
         {
+            "property_id": "context_window",
+            "value": "8192"
+        },
+        {
             "property_id": "info",
             "value": "https://huggingface.co/openchat/openchat-3.5-0106"
         }

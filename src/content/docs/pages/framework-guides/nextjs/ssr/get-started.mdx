@@ -45,13 +45,13 @@ npm install --save-dev @cloudflare/next-on-pages
 
 ### 2. Add Wrangler file
 
-Then, add a [`wrangler.toml / wrangler.json` file](/pages/functions/wrangler-configuration/) to the root directory of your Next.js app:
+Then, add a [Wrangler configuration file](/pages/functions/wrangler-configuration/) to the root directory of your Next.js app:
 
 <WranglerConfig>
 
 ```toml
 name = "my-app"
-compatibility_date = "2024-07-29"
+compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = ".vercel/output/static"
 ```

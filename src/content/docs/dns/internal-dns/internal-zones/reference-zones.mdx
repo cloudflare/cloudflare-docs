@@ -1,0 +1,23 @@
+---
+pcx_content_type: how-to
+title: Set up reference zones
+sidebar:
+  order: 4
+---
+
+import { Example, Render } from "~/components";
+
+During an [internal DNS query resolution](/dns/internal-dns/#architecture-overview), if no internal record is found within a matching internal zone, Cloudflare will check if the matching internal zone is referencing another internal zone. Successive references can be followed with a maximum of five references in a chain.
+
+Each internal zone can only reference one other zone, but the same zone can be referenced by multiple internal zones. Public zones cannot be used as reference zones.
+
+## Steps
+
+To set up a reference zone, use the [Update DNS settings](/api/resources/dns/subresources/settings/methods/edit/) endpoint. In `--data`, specify the `internal_dns` object with the parameter `reference_zone_id`.
+
+<Example>
+<Render file="internal-reference-zone-api"/>
+
+A third zone (C) could also point to zone B as a reference, but zone A cannot add another zone as a reference while also having zone B configured as its reference zone.
+
+</ Example>

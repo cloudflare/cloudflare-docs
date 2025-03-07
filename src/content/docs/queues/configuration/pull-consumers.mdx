@@ -36,11 +36,11 @@ To configure a pull-based consumer and receive messages from a queue, you need t
 
 ## 1. Enable HTTP pull
 
-You can enable HTTP pull or change a queue from push-based to pull-based via the `wrangler.toml / wrangler.json` file, the `wrangler` CLI, or via the [Cloudflare dashboard](https://dash.cloudflare.com/).
+You can enable HTTP pull or change a queue from push-based to pull-based via the [Wrangler configuration file](/workers/wrangler/configuration/), the `wrangler` CLI, or via the [Cloudflare dashboard](https://dash.cloudflare.com/).
 
 ### Wrangler configuration file
 
-A HTTP consumer can be configured in the `wrangler.toml / wrangler.json` file by setting `type = "http_pull"` in the consumer configuration:
+A HTTP consumer can be configured in the [Wrangler configuration file](/workers/wrangler/configuration/) by setting `type = "http_pull"` in the consumer configuration:
 
 <WranglerConfig>
 
@@ -75,7 +75,7 @@ wrangler queues consumer worker remove $QUEUE-NAME $SCRIPT_NAME
 
 :::note
 
-If you remove the Worker consumer with `wrangler` but do not delete the `[[queues.consumer]]` configuration from `wrangler.toml / wrangler.json` file, subsequent deployments of your Worker will fail when they attempt to add a conflicting consumer configuration.
+If you remove the Worker consumer with `wrangler` but do not delete the `[[queues.consumer]]` configuration from your [Wrangler configuration file](/workers/wrangler/configuration/), subsequent deployments of your Worker will fail when they attempt to add a conflicting consumer configuration.
 
 Ensure you remove the consumer configuration first.
 

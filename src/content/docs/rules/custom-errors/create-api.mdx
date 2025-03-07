@@ -1,0 +1,319 @@
+---
+title: Create custom errors via API
+pcx_content_type: how-to
+sidebar:
+  order: 2
+  label: Create via API
+head:
+  - tag: title
+    content: Create custom errors via API
+---
+
+To configure custom errors via API:
+
+1. (Optional) [Create a custom error asset](#create-a-custom-error-asset) based on a URL you provide.
+2. [Create a custom error rule](#custom-error-rules) in the `http_custom_errors` phase, using the [Rulesets API](/ruleset-engine/rulesets-api/).
+
+## Custom error assets
+
+The following sections provide examples of common API calls for managing custom error assets at the zone level.
+
+To perform the same operations at the account level, use the corresponding account-level API endpoints.
+
+### Create a custom error asset
+
+The following `POST` request creates new a custom error asset in a zone based on the provided URL:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_pages/assets" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "name": "500_error_template",
+  "description": "Standard 5xx error template page",
+  "url": "https://example.com/errors/500_template.html"
+}'
+```
+
+```json output
+{
+	"result": {
+		"name": "500_error_template",
+		"description": "Standard 5xx error template page",
+		"url": "https://example.com/errors/500_template.html",
+		"last_updated": "2025-02-10T11:36:07.810215Z",
+		"size_bytes": 2048
+	},
+	"success": true
+}
+```
+
+To create an asset at the account level, use the account-level endpoint:
+
+```txt
+https://api.cloudflare.com/client/v4/accounts/{account_id}/custom_pages/assets
+```
+
+### List custom error assets
+
+The following `GET` request retrieves a list of custom error assets configured in the zone:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_pages/assets" \
+--header "Authorization: Bearer <API_TOKEN>"
+```
+
+```json output
+{
+	"result": [
+		{
+			"name": "500_error_template",
+			"description": "Standard 5xx error template page",
+			"url": "https://example.com/errors/500_template.html",
+			"last_updated": "2025-02-10T11:36:07.810215Z",
+			"size_bytes": 2048
+		}
+		// ...
+	],
+	"success": true,
+	"errors": [],
+	"messages": [],
+	"result_info": {
+		"count": 2,
+		"page": 1,
+		"per_page": 20,
+		"total_count": 2,
+		"total_pages": 1
+	}
+}
+```
+
+To retrieve a list of assets at the account level, use the account-level endpoint:
+
+```txt
+https://api.cloudflare.com/client/v4/accounts/{account_id}/custom_pages/assets
+```
+
+### Update a custom error asset
+
+The following `PUT` request updates the URL of an existing custom error asset at the zone level named `500_error_template`:
+
+```bash
+curl --request PUT \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_pages/assets/500_error_template" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "url": "https://example.com/errors/500_new_template.html"
+}'
+```
+
+```json output
+{
+	"result": {
+		"name": "500_error_template",
+		"description": "Standard 5xx error template page",
+		"url": "https://example.com/errors/500_new_template.html",
+		"last_updated": "2025-02-10T13:13:07.810215Z",
+		"size_bytes": 3145
+	},
+	"success": true
+}
+```
+
+You can update the asset description and URL. You cannot update the asset name after creation.
+
+If you provide the same URL when updating an asset, Cloudflare will fetch the URL again, along with its resources.
+
+To update an asset at the account level, use the account-level endpoint:
+
+```txt
+https://api.cloudflare.com/client/v4/accounts/{account_id}/custom_pages/assets/{asset_name}
+```
+
+### Get a custom error asset
+
+The following `GET` request retrieves the details of an existing custom error asset at the zone level named `500_error_template`:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_pages/assets/500_error_template" \
+--header "Authorization: Bearer <API_TOKEN>"
+```
+
+```json output
+{
+	"result": {
+		"name": "500_error_template",
+		"description": "Standard 5xx error template page",
+		"url": "https://example.com/errors/500_new_template.html",
+		"last_updated": "2025-02-10T13:13:07.810215Z",
+		"size_bytes": 3145
+	},
+	"success": true
+}
+```
+
+To retrieve an asset at the account level, use the account-level endpoint:
+
+```txt
+https://api.cloudflare.com/client/v4/accounts/{account_id}/custom_pages/assets/{asset_name}
+```
+
+### Delete a custom error asset
+
+The following `DELETE` request deletes an existing custom error asset at the zone level named `500_error_template`:
+
+```bash
+curl --request DELETE \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_pages/assets/500_error_template" \
+--header "Authorization: Bearer <API_TOKEN>"
+```
+
+If the request is successful, the response will have a `204` HTTP status code.
+
+To delete an asset at the account level, use the account-level endpoint:
+
+```txt
+https://api.cloudflare.com/client/v4/accounts/{account_id}/custom_pages/assets/{asset_name}
+```
+
+## Custom error rules
+
+When creating a custom error rule via API, make sure you:
+
+- Set the rule action to `serve_error`.
+- Define the [rule parameters](/rules/custom-errors/parameters/#custom-error-rules) in the `action_parameters` field according to response type.
+- Deploy the rule to the `http_custom_errors` phase.
+
+The first rule in the `http_custom_errors` phase ruleset that matches will be applied. No other rules in the ruleset will be matched or applied. Additionally, custom error rules defined at the zone level will have priority over rules defined at the account level.
+
+---
+
+The provided examples use the following fields in their rule expressions:
+
+- [`http.response.code`](/ruleset-engine/rules-language/fields/reference/http.response.code/): Represents the HTTP status code returned to the client, either set by a Cloudflare product or returned by the origin server. Use this field to customize the response for error codes returned by the origin server or by a Cloudflare product such as a Worker.
+
+- [`cf.response.1xxx_code`](/ruleset-engine/rules-language/fields/reference/cf.response.1xxx_code/): Contains the specific error code for Cloudflare-generated errors. This field will only work for Cloudflare-generated errors such as [52X](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/) and [1XXX](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/).
+
+### General procedure
+
+Follow this workflow to create a custom error rule for a given zone via API:
+
+1. Use the [List zone rulesets](/api/resources/rulesets/methods/list/) operation to check if there is already a ruleset for the `http_custom_errors` phase at the zone level.
+2. If the phase ruleset does not exist, create it using the [Update a zone entry point ruleset](/api/resources/rulesets/subresources/phases/methods/update/) operation, which allows you to create a ruleset if it does not exist and update all the rules in the ruleset. Create the ruleset in the `http_custom_errors` phase.
+
+   If the phase ruleset already exists, use the [Update a zone entry point ruleset](/api/resources/rulesets/subresources/phases/methods/update/) operation to replace all the rules in the ruleset, or the [Add rule to ruleset](/ruleset-engine/rulesets-api/add-rule/) operation to add a rule to the existing rules in the ruleset.
+
+To create a custom error rule at the account level, use the corresponding account-level API endpoints.
+
+### Custom JSON response for all 5XX errors
+
+This example configures a custom JSON error response for all 5XX errors (`500`-`599`) in the zone with ID `{zone_id}`. The HTTP status code of the custom error response will be set to `530`.
+
+```bash
+curl --request PUT \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_custom_errors/entrypoint" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "rules": [
+    {
+      "action": "serve_error",
+      "action_parameters": {
+        "content": "{\"message\": \"A server error occurred.\"}",
+        "content_type": "application/json",
+        "status_code": 530
+      },
+      "expression": "http.response.code ge 500 and http.response.code lt 600",
+      "enabled": true
+    }
+  ]
+}'
+```
+
+This `PUT` request, corresponding to the [Update a zone entry point ruleset](/api/resources/rulesets/subresources/phases/methods/update/) operation, replaces any existing rules in the `http_custom_errors` phase entry point ruleset.
+
+### Custom HTML response with updated status code
+
+This example configures a custom HTML error response for responses with a `500` HTTP status code, and redefines the response status code to `503`.
+
+```bash
+curl --request PUT \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_custom_errors/entrypoint" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "rules": [
+    {
+      "action": "serve_error",
+      "action_parameters": {
+        "content": "<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>Application unavailable</title></head><body><h1>Application temporarily unavailable</h1><p>Please try again later.</p></body></html>",
+        "content_type": "text/html",
+        "status_code": 503
+      },
+      "expression": "http.response.code eq 500",
+      "enabled": true
+    }
+  ]
+}'
+```
+
+This `PUT` request, corresponding to the [Update a zone entry point ruleset](/api/resources/rulesets/subresources/phases/methods/update/) operation, replaces any existing rules in the `http_custom_errors` phase entry point ruleset.
+
+### Custom HTML response for Cloudflare 1020 errors
+
+This example configures a custom HTML error response for [Cloudflare error 1020](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/#error-1020-access-denied) (Access Denied).
+
+```bash
+curl --request PUT \
+https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_custom_errors/entrypoint \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "rules": [
+    {
+      "action": "serve_error",
+      "action_parameters": {
+        "content": "<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>Access denied</title></head><body><h1>You do not have access to this page</h1><p>Contact us if you think this is an error.</p></body></html>",
+        "content_type": "text/html"
+      },
+      "expression": "cf.response.1xxx_code eq 1020",
+      "enabled": true
+    }
+  ]
+}'
+```
+
+This `PUT` request, corresponding to the [Update a zone entry point ruleset](/api/resources/rulesets/subresources/phases/methods/update/) operation, replaces any existing rules in the `http_custom_errors` phase entry point ruleset.
+
+### Custom error asset created from a URL
+
+This example configures a custom error rule returning a [previously created custom error asset](#create-a-custom-error-asset) named `500_error_template` for responses with a `500` HTTP status code.
+
+```bash
+curl --request PUT \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_custom_errors/entrypoint" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "rules": [
+    {
+      "action": "serve_error",
+      "action_parameters": {
+        "asset_name": "500_error_template",
+        "content_type": "text/html"
+      },
+      "expression": "http.response.code eq 500",
+      "enabled": true
+    }
+  ]
+}'
+```
+
+This `PUT` request, corresponding to the [Update a zone entry point ruleset](/api/resources/rulesets/subresources/phases/methods/update/) operation, replaces any existing rules in the `http_custom_errors` phase entry point ruleset.
+
+## Required API token permissions
+
+The API token used in API requests to manage Custom Error Responses must have at least the following permission:
+
+- _Custom Error Rules_ > _Edit_

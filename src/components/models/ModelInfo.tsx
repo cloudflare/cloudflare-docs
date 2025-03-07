@@ -5,7 +5,7 @@ const ModelInfo = ({ model }: { model: WorkersAIModelsSchema }) => {
 	const author =
 		authorData[model.name.split("/")[1]]?.name ?? model.name.split("/")[1];
 	return (
-		<span className="text-gray-400 !block mt-2 leading-5">
+		<span className="mt-2 !block leading-5 text-gray-400">
 			{model.task.name} • {author}
 		</span>
 	);

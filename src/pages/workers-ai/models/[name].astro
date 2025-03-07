@@ -6,7 +6,7 @@ import StarlightPage, {
 } from "@astrojs/starlight/components/StarlightPage.astro";
 import { LinkButton, Tabs, TabItem, Code, Aside, Badge } from "~/components";
 import ModelInfo from "~/components/models/ModelInfo.tsx";
-import ModelBadges from "~/components/models/ModelBadges.tsx";
+import ModelFeatures from "~/components/models/ModelFeatures.tsx";
 import SchemaViewer from "~/components/models/SchemaViewer.astro";
 
 import TextGenerationCode from "~/components/models/code/TextGenerationCode.astro";
@@ -22,6 +22,8 @@ import TranslationCode from "~/components/models/code/TranslationCode.astro";
 import StableDiffusionV15Img2ImgCode from "~/components/models/code/StableDiffusion-v1-5-img2imgCode.astro";
 import StableDiffusionV15InpaintingCode from "~/components/models/code/StableDiffusion-v1-5-inpaintingCode.astro";
 import Flux1Schnell from "~/components/models/code/Flux-1-Schnell.astro";
+import WhisperBase64Code from "~/components/models/code/WhisperBase64Code.astro";
+import LlamaGuard from "~/components/models/code/LlamaGuard.astro";
 
 import { authorData } from "~/components/models/data";
 
@@ -88,8 +90,15 @@ if (model.name === "@cf/black-forest-labs/flux-1-schnell") {
 	CodeExamples = Flux1Schnell;
 }
 
+if (model.name === "@cf/openai/whisper-large-v3-turbo") {
+	CodeExamples = WhisperBase64Code;
+}
+
+if (model.name === "@cf/meta/llama-guard-3-8b") {
+	CodeExamples = LlamaGuard;
+}
+
 const description = model.description;
-const terms = model.properties.find((x) => x.property_id === "terms");
 
 const isBeta = model.properties.find(
 	({ property_id, value }) => property_id === "beta" && value === "true",
@@ -149,24 +158,7 @@ const starlightPageProps = {
 	<span class="mt-4 block font-mono text-sm text-gray-400">{model.name}</span>
 
 	<p class="!mb-2 mt-3">{description}</p>
-	{terms && <a href={terms.value}>Terms and License</a>}
-	<ModelBadges model={model} />
 
-	{
-		model.name === "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b" && (
-			<Aside>
-				<p>
-					This model has a specialized pricing structure that's separate from
-					the standard Workers AI pricing plan. The pricing for
-					<code>@cf/deepseek-ai/deepseek-r1-distill-qwen-32b</code> is:
-					<ul>
-						<li>$0.50 per 1M input token</li>
-						<li>$4.88 per 1M output token</li>
-					</ul>
-				</p>
-			</Aside>
-		)
-	}
 	{
 		model.name === "@cf/meta/llama-3.2-11b-vision-instruct" && (
 			<Aside>
@@ -194,6 +186,8 @@ const starlightPageProps = {
 			</Aside>
 		)
 	}
+
+	<ModelFeatures model={model} />
 
 	{
 		hasPlayground && (

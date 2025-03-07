@@ -21,7 +21,11 @@ import { Tabs, TabItem } from '~/components';
    * `auth_client_id`: The **Client ID** of your service token.
    * `auth_client_secret`: The **Client Secret** of your service token.
 
-</TabItem> <TabItem label="Terraform">
+</TabItem> <TabItem label="Terraform (v4)">
+
+:::note[Provider versions]
+The following example requires Cloudflare provider version `>=4.40.0`.
+:::
 
 1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.40.0/docs/resources/api_token):
 	- `Access: Apps and Policies Write`

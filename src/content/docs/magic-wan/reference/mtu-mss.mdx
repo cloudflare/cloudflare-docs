@@ -10,15 +10,8 @@ import { Render } from "~/components";
 <Render
 	file="mtu-mss/mtu-mss"
 	product="magic-transit"
-	params={{ productName: "Magic WAN" }}
+	params={{
+		magicProduct: "Magic WAN",
+		productName: "Magic WAN"
+		}}
 />
-
-## MSS clamping recommendations
-
-### GRE tunnels as off-ramp
-
-<Render file="mtu-mss/mss-clamping-gre" />
-
-### IPsec tunnels
-
-<Render file="mtu-mss/mss-clamping-ipsec" />

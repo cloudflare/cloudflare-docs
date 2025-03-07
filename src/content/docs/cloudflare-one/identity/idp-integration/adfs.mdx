@@ -17,10 +17,10 @@ Active Directory is a directory service developed by Microsoft for Windows domai
 
 To get started, you need:
 
-- An Active Directory Domain Controller where all users have an email attribute
-- Generic SAML enabled for your Access Identity Provider (IdP)
+- An Active Directory Domain Controller where all users have an email attribute.
+- Generic SAML enabled for your Access Identity Provider (IdP).
 - A Microsoft server running with Active Directory Federation Services (AD FS) installed. All screenshots in these instructions are for Server 2012R2. Similar steps will work for newer versions.
-- A browser safe certificate for Active Directory Federation Services (AD FS)
+- A browser safe certificate for Active Directory Federation Services (AD FS).
 
 Once you fulfill the requirements above, you are ready to begin. Installation and basic configuration of Active Directory Federation Services (AD FS) is outside the scope of this guide. A detailed guide can be found in a [Microsoft KB](<https://docs.microsoft.com/en-us/previous-versions/dynamicscrm-2016/deployment-administrators-guide/gg188612(v=crm.8)>).
 
@@ -105,6 +105,11 @@ To create Claim Rules:
 5. Select **Active Directory** from the **Attribute store** drop-down list.
 
 6. Select **E-mail-Addresses** from the **LDAP Attribute** and **Outgoing Claim Type** drop-down lists.
+
+:::note[AD FS groups]
+
+If you wish to use AD FS groups in your SAML claims, use `token-groups - unqualified names` instead of `is-member-of-DL`. Using `is-member-of-DL` will display the group in the form of LDAP paths, whereas `token-groups - unqualified names` will return only the group name.
+:::
 
 7. Select **OK**. You return to the **Choose Rule Type** step.
 

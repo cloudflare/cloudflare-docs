@@ -38,9 +38,9 @@ In this example, a request to `example.com/api` doesn't match a static asset so 
 
 ## Invoking Worker Script Ahead of Assets
 
-You may wish to run code before assets are served. This is often the case when implementing authentication, logging, personalization, internationalization, or other similar functions. [`run_worker_first`](/workers/static-assets/binding/#run_worker_first) is a configuration option available in `wrangler.toml / wrangler.json` which controls this behavior. When enabled, `run_worker_first = true` will invoke your Worker's code, regardless of any assets that would have otherwise matched.
+You may wish to run code before assets are served. This is often the case when implementing authentication, logging, personalization, internationalization, or other similar functions. [`run_worker_first`](/workers/static-assets/binding/#run_worker_first) is a configuration option available in [Wrangler configuration file](/workers/wrangler/configuration/) which controls this behavior. When enabled, `run_worker_first = true` will invoke your Worker's code, regardless of any assets that would have otherwise matched.
 
-Take the following directory structure, `wrangler.toml / wrangler.json` file, and user Worker code:
+Take the following directory structure, [Wrangler configuration file](/workers/wrangler/configuration/), and user Worker code:
 
 <FileTree>
 
@@ -94,7 +94,7 @@ In this example, any request will be routed to our user Worker, due to `run_work
 
 ## Routing configuration
 
-There are two options for asset serving that can be [configured in the `wrangler.toml / wrangler.json` file](/workers/wrangler/configuration/#assets):
+There are two options for asset serving that can be configured in the [Wrangler configuration file](/workers/wrangler/configuration/#assets):
 
 #### 1. `html_handling`
 
@@ -156,9 +156,9 @@ For all non-matching requests, Cloudflare will return a null-body 404-status res
 
 ### Alternate configuration options
 
-Alternate configuration options are outlined on this page and can be specified in your project's [`wrangler.toml / wrangler.json` file](/workers/wrangler/configuration/#assets). If you're deploying using a [framework](/workers/frameworks/), these options will be defined by the framework provider.
+Alternate configuration options are outlined on this page and can be specified in your project's [Wrangler configuration file](/workers/wrangler/configuration/#assets). If you're deploying using a [framework](/workers/frameworks/), these options will be defined by the framework provider.
 
-Example `wrangler.toml / wrangler.json` file:
+Example Wrangler configuration file:
 
 <WranglerConfig>
 
@@ -303,7 +303,7 @@ For example, to serve assets from `example.com/blog/*`, create a `blog` director
 			- post2.html
 </FileTree>
 
-With a `wrangler.toml / wrangler.json` file like so:
+With a [Wrangler configuration file](/workers/wrangler/configuration/) like so:
 
 <WranglerConfig>
 ```toml

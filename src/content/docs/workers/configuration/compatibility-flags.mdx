@@ -18,7 +18,7 @@ You may provide a list of `compatibility_flags`, which enable or disable specifi
 
 #### Via Wrangler
 
-Compatibility flags can be set in a Worker's [`wrangler.toml / wrangler.json` file](/workers/wrangler/configuration/).
+Compatibility flags can be set in a Worker's [Wrangler configuration file](/workers/wrangler/configuration/).
 
 This example enables the specific flag `formdata_parser_supports_files`, which is described [below](/workers/configuration/compatibility-flags/#formdata-parsing-supports-file). As of the specified date, `2021-09-14`, this particular flag was not yet enabled by default, but, by specifying it in `compatibility_flags`, we can enable it anyway. `compatibility_flags` can also be used to disable changes that became the default in the past.
 
@@ -50,7 +50,7 @@ If your compatibility date is 2024-09-22 or before and you want to enable v2, ad
 If your compatibility date is after 2024-09-23, but you want to disable v2 to avoid increasing your bundle size, add the `no_nodejs_compat_v2` in addition to the `nodejs_compat flag`.
 :::
 
-A [growing subset](/workers/runtime-apis/nodejs/) of Node.js APIs are available directly as [Runtime APIs](/workers/runtime-apis/nodejs), with no need to add polyfills to your own code. To enable these APIs in your Worker, add the `nodejs_compat` compatibility flag to your `wrangler.toml`:
+A [growing subset](/workers/runtime-apis/nodejs/) of Node.js APIs are available directly as [Runtime APIs](/workers/runtime-apis/nodejs), with no need to add polyfills to your own code. To enable these APIs in your Worker, add the `nodejs_compat` compatibility flag to your [Wrangler configuration file](/workers/wrangler/configuration/):
 
 <Render file="nodejs_compat" product="workers" />
 

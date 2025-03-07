@@ -1,0 +1,55 @@
+---
+link: "/magic-wan/changelog/"
+productName: Magic WAN
+productLink: "/magic-wan/"
+productArea: Cloudflare One
+productAreaLink: /cloudflare-one/changelog/
+entries:
+  - publish_date: "2025-02-14"
+    title: Local console access for bootstrapping Magic WAN Connector
+    description: |-
+      Magic WAN Connector can now be configured to connect to the Cloudflare network via a static IP assignment through local console.
+  - publish_date: "2025-02-14"
+    title: Sites feature available to all Magic WAN customers
+    description: |-
+      All Magic WAN customers now have full access to the Magic WAN sites feature. Customers can configure a Magic WAN site either with or without a Magic WAN connector.
+  - publish_date: "2024-12-12"
+    title: LAN Policy improvements for the Magic WAN Connector
+    description: |-
+      Magic WAN Connector LAN Policy now supports unidirectional traffic flows and port-ranges.
+  - publish_date: "2024-12-17"
+    title: Magic WAN Connector configurable health checks
+    description: |-
+      Health check rate on Magic WAN Connector IPsec tunnels are now configurable.
+  - publish_date: "2024-12-17"
+    title: BGP support for Cloudflare Network Interconnect (CNI)
+    description: |-
+      Magic WAN customers can now establish BGP peering over Direct CNI circuits. Customers can now dynamically exchange routes and path availability status between their router device and the Magic WAN table.
+  - publish_date: "2024-10-01"
+    title: Early access testing for BGP on CNI 2.0 circuits
+    description: |-
+      Customers can exchange routes dynamically with their Magic virtual network overlay via Direct CNI or Cloud CNI based connectivity.
+  - publish_date: "2024-09-27"
+    title: Magic WAN Connector sends WARP client traffic to Internet
+    description: |-
+      All Magic WAN Connectors now route WARP client traffic directly to the Internet, bypassing IPsec tunneling, to prevent double encapsulation of WARP traffic.
+  - publish_date: "2024-07-17"
+    title: Updates to High Availability on the Magic WAN Connector
+    description: |-
+      The High Availability feature on Magic WAN Connector now supports additional failover conditions, DHCP lease syncing, and staggered upgrades.
+  - publish_date: "2024-06-23"
+    title: ICMP support for traffic sourced from private IPs
+    description: |-
+      Magic WAN will now support ICMP traffic sourced from private IPs going to the Internet via Gateway.
+  - publish_date: "2024-06-05"
+    title: Application based prioritization
+    description: |-
+      The Magic WAN Connector can now prioritize traffic on a per-application basis.
+  - publish_date: "2024-05-31"
+    title: WARP virtual IP addresses
+    description: |-
+      Customers using Gateway to filter traffic to Magic WAN destinations will now see traffic from Cloudflare egressing with WARP virtual IP addresses (CGNAT range), rather than public Cloudflare IP addresses. This simplifies configuration and improves visibility for customers.
+  - publish_date: "2024-01-23"
+    title: Network segmentation
+    description: |-
+      You can define policies in your Connector to either allow traffic to flow between your LANs without it leaving your local premises or to forward it via the Cloudflare network where you can add additional security features.

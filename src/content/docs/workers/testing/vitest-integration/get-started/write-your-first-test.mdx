@@ -17,14 +17,14 @@ This guide will instruct you through installing and setting up the `@cloudflare/
 
 - Make sure that your Worker is developed using the ES modules format. To migrate from the service worker format to the ES modules format, refer to the [Migrate to the ES modules format](/workers/reference/migrate-to-module-workers/) guide.
 
-- In your project's `wrangler.toml / wrangler.json` file, define a [compatibility date](/workers/configuration/compatibility-dates/) of `2022-10-31` or higher, and include `nodejs_compat` in your [compatibility flags](/workers/configuration/compatibility-flags).
+- In your project's [Wrangler configuration file](/workers/wrangler/configuration/), define a [compatibility date](/workers/configuration/compatibility-dates/) of `2022-10-31` or higher, and include `nodejs_compat` in your [compatibility flags](/workers/configuration/compatibility-flags).
 
 ## Install Vitest and `@cloudflare/vitest-pool-workers`
 
 Open a terminal window and make sure you are in your project's root directory. Once you have confirmed that, run:
 
 ```sh
-npm install vitest@2.1.8 --save-dev --save-exact
+npm install vitest@~3.0.0 --save-dev --save-exact
 npm install @cloudflare/vitest-pool-workers --save-dev
 ```
 
@@ -32,7 +32,7 @@ The above commands will add the packages to your `package.json` file and install
 
 :::note
 
-Currently, the `@cloudflare/vitest-pool-workers` package _only_ works with Vitest 2.0.x - 2.1.8.
+Currently, the `@cloudflare/vitest-pool-workers` package _only_ works with Vitest 2.0.x - 3.0.x.
 
 :::
 

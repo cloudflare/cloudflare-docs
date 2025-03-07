@@ -9,13 +9,27 @@ export default {
 	// can be used in local development and previews.
 	transformItems(items) {
 		return items.map((item) => {
-			const path = new URL(item.url).pathname;
-			const url = new URL(path, window.origin);
+			const { pathname, hash } = new URL(item.url);
+			const url = new URL(pathname + hash, window.location.origin);
 
 			return {
 				...item,
 				url: url.toString(),
 			};
 		});
+	},
+	resultsFooterComponent({ state }) {
+		return {
+			type: "a",
+			ref: undefined,
+			constructor: undefined,
+			__v: null,
+			key: state.query,
+			props: {
+				href: `/search/?query=${state.query}`,
+				target: "_blank",
+				children: "View all results",
+			},
+		};
 	},
 } satisfies DocSearchClientOptions;

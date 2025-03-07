@@ -1,0 +1,79 @@
+---
+pcx_content_type: how-to
+title: Capture screenshot
+sidebar:
+  order: 3
+---
+
+The `/screenshot` endpoint renders the webpage by processing its HTML and JavaScript, then captures a screenshot of the fully rendered page.
+
+## Basic usage
+
+Sets the HTML content of the page to `Hello World!` and then takes a screenshot. The option `omitBackground` hides the default white background and allows capturing screenshots with transparency.
+
+```bash
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/screenshot' \
+  -H 'Authorization: Bearer <apiToken>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "html": "Hello World!",
+    "screenshotOptions": {
+      "omitBackground": true
+    }
+  }' \
+  --output "screenshot.png"
+```
+
+For more options to control the final screenshot, like `clip`, `captureBeyondViewport`, `fullPage` and others, check the endpoint [reference](/api/resources/browser_rendering/subresources/screenshot/methods/create/).
+
+## Advanced usage
+
+Navigate to `https://cloudflare.com/`, changing the page size (`viewport`) and waiting until there are no active network connections (`waitUntil`) or up to a maximum of `4500ms` (`timeout`). Then take a `fullPage` screenshot.
+
+```bash
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/screenshot' \
+  -H 'Authorization: Bearer <apiToken>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "url": "https://cnn.com/",
+    "screenshotOptions": {
+       "fullPage": true
+    },
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    },
+    "gotoOptions": {
+      "waitUntil": "networkidle0",
+      "timeout": 45000
+    }
+  }' \
+  --output "advanced-screenshot.png"
+```
+
+## Customize CSS and embed custom JavaScript
+
+Instruct the browser to go to `https://example.com`, embed custom JavaScript (`addScriptTag`) and add extra styles (`addStyleTag`), both inline (`addStyleTag.content`) and by loading an external stylesheet (`addStyleTag.url`).
+
+```bash
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/screenshot' \
+  -H 'Authorization: Bearer <apiToken>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "url": "https://example.com/",
+    "addScriptTag": [
+      { "content": "document.querySelector(`h1`).innerText = `Hello World!!!`" }
+    ],
+    "addStyleTag": [
+      {
+        "content": "div { background: linear-gradient(45deg, #2980b9  , #82e0aa  ); }"
+      },
+      {
+        "url": "https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+      }
+    ]
+  }' \
+  --output "screenshot.png"
+```
+
+Many more options exist, like setting HTTP credentials using `authenticate`, setting `cookies`, and using `gotoOptions` to control page load behaviour - check the endpoint [reference](/api/resources/browser_rendering/subresources/screenshot/methods/create/) for all available parameters.

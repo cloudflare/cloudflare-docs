@@ -4,7 +4,8 @@ product:
   title: Agents
   url: /agents/
   group: Developer platform
-  preview_tryout: true
+  additional_groups: [AI]
+  tags: [AI]
 
 meta:
   title: Cloudflare Agents
