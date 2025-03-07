@@ -60,11 +60,7 @@ Before sending any file data, you need to tell Cloudflare which files you intend
 <Aside type="note" title="Asset Isolation Considerations">
 Static assets uploaded to Workers for Platforms are associated with the namespace rather than with individual User Worker. If multiple User Workers exist under the same namespace, assets with identical hashes may be shared across them. **JWTs should therefore only be shared with trusted platform services and should never be distributed to end-users.**
 
-If strict isolation between User Workers is required, we recommend:
-
-- **Prefixing asset hashes** with an account-specific or Worker-specific identifier to ensure uniqueness.
-- **Ensuring JWT tokens for asset uploads are only issued to trusted platform services**, and not directly exposed to end-users.
-- **Explicitly documenting asset-sharing expectations** for your customers if cross-project asset reuse is intended.
+If strict isolation of assets is required, we recommend either salting with a random value each time, or incorporating an end-user identifier (e.g. account ID or Worker script ID) within the hashing process, to ensure uniqueness. For example, `hash = slice(sha256(accountID + fileContents), 32)`.
 
 </Aside>
 
