@@ -1,5 +1,5 @@
 ---
-name: "Enable `cache: no-store` HTTP standard API"
+name: "Enable auto-populating `process.env`"
 sort_date: "2025-02-27"
 enable_date: "2025-04-01"
 enable_flag: "nodejs_compat_populate_process_env"
