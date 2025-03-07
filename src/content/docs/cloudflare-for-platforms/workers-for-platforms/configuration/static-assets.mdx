@@ -58,7 +58,7 @@ Before sending any file data, you need to tell Cloudflare which files you intend
 - The file size in bytes
 
 <Aside type="note" title="Asset Isolation Considerations">
-By default, static assets uploaded to Workers for Platforms are associated with the User Worker they are attached to. However, if multiple User Workers exist under the same account, assets with identical hashes may be shared across them.
+Static assets uploaded to Workers for Platforms are associated with the namespace rather than with individual User Worker. If multiple User Workers exist under the same namespace, assets with identical hashes may be shared across them. **JWTs should therefore only be shared with trusted platform services and should never be distributed to end-users.**
 
 If strict isolation between User Workers is required, we recommend:
 
