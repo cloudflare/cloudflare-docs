@@ -8,7 +8,7 @@ entries:
   - publish_date: "2025-03-07"
     title: Hyperdrive connects to your database using Cloudflare's IP address ranges
     description: |-
-      Hyperdrive now uses [Cloudflare's IP address ranges]((https://www.cloudflare.com/ips/) for egress. 
+      Hyperdrive now uses [Cloudflare's IP address ranges](https://www.cloudflare.com/ips/) for egress. 
 
       This enables you to configure the firewall policies on your database to allow access to this limited IP address range. 
 
