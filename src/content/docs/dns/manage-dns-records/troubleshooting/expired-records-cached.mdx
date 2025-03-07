@@ -1,0 +1,16 @@
+---
+title: Expired record served
+pcx_content_type: troubleshooting
+sidebar:
+  order: 15
+---
+
+You notice that stale data - for example, an IP address that you had removed from an A record - is returned even after the corresponding [Time to Live (TTL)](/dns/manage-dns-records/reference/ttl/).
+
+## Cause
+
+In the event that an upstream DNS server takes longer than 200 ms to respond, or the upstream returned a SERVFAIL, Cloudflare will serve the expired record from the cache and then attempt to update that cache async. The expired record will be used for up to a day, but with high traffic locations, the record should be updated even before the cache expires.
+
+## Solutions
+
+To avoid
