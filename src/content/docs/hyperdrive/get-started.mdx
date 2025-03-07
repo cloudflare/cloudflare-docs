@@ -129,18 +129,14 @@ If successful, the command will output your new Hyperdrive configuration:
 
 ```json
 {
-	"id": "<example id: 57b7076f58be42419276f058a8968187>",
-	"name": "YOUR_CONFIG_NAME",
-	"origin": {
-		"host": "YOUR_DATABASE_HOST",
-		"port": 5432,
-		"database": "DATABASE",
-		"user": "DATABASE_USER"
-	},
-	"caching": {
-		"disabled": false
-	}
+  "hyperdrive": [
+    {
+      "binding": "HYPERDRIVE",
+			"id": "<example id: 57b7076f58be42419276f058a8968187>"
+    }
+  ]
 }
+
 ```
 
 Copy the `id` field: you will use this in the next step to make Hyperdrive accessible from your Worker script.
@@ -150,6 +146,7 @@ Copy the `id` field: you will use this in the next step to make Hyperdrive acces
 Hyperdrive will attempt to connect to your database with the provided credentials to verify they are correct before creating a configuration. If you encounter an error when attempting to connect, refer to Hyperdrive's [troubleshooting documentation](/hyperdrive/observability/troubleshooting/) to debug possible causes.
 
 :::
+
 
 ## 4. Bind your Worker to Hyperdrive
 
