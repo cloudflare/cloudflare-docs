@@ -135,11 +135,7 @@ If the response to the Upload Session API returns `buckets`, that means you have
 Use the [Workers Assets Upload API](https://developers.cloudflare.com/api/resources/workers/subresources/assets/subresources/upload/) to transmit the raw file bytes in base64-encoded format for any missing or changed files. Once uploaded, Cloudflare will store these files so they can then be attached to a User Worker.
 
 <Aside type="caution">
-	Cloudflare automatically de-duplicates identical asset hashes within the same
-	account. If an asset with the same hash has already been uploaded, it may be
-	shared across different User Workers unless **explicitly made unique**. If you
-	require full asset isolation, prepend asset hashes with a unique identifier
-	(for example, an account ID or Worker name).
+	Asset uniqueness is determined by the provided hash and are associated globally to their namespace rather than with each specific User Worker. If an asset has already been uploaded for that namespace earlier, Cloudflare will automatically omit sending this asset hash back in the `buckets` response to save you from re-uploading the same thing twice. This means that an asset can be shared between multiple User Workers if it shares the same hash unless you **explicitly make the hash unique**. If you require full isolation between assets across User Workers, incorporate a unique identifier within your asset hashing process (either salting it with something entirely random each time, or by including the end-user account ID or their Worker name to retain per-customer re-use).
 </Aside>
 
 #### API Request Authentication
