@@ -31,10 +31,9 @@ To bind Images to your Worker, add the following to the end of your `wrangler.to
 binding = "IMAGES" # i.e. available in your Worker on env.IMAGES
 ```
 
-Within your Worker code, you can interact with this binding by using `env.IMAGES`.
+Within your Worker code, you can interact with this binding by using `env.IMAGES.input()` to build an object that can manipulate the image (passed as a `ReadableStream`).
 
 ## Methods
-
 
 ### `.transform()`
 
@@ -43,8 +42,30 @@ Within your Worker code, you can interact with this binding by using `env.IMAGES
 ### `.draw()`
 
 - Allows [drawing an image](/images/transform-images/draw-overlays/) over another image.
+- The drawn image can be a stream, or another image returned from `.input()` that has been manipulated.
 - The overlaid image can be manipulated using `opacity`, `repeat`, `top`, `left`, `bottom`, and `right`. To apply other parameters, you can pass a child `.transform()` function inside this method.
 
+For example, to draw a resized watermark on an image:
+
+```ts
+// Fetch the watermark from Workers Assets, R2, KV etc
+const watermark: ReadableStream = ...
+
+// Fetch the main image
+const image: ReadableStream = ...
+
+const response = (
+  await env.IMAGES.input(image)
+    .draw(
+        env.IMAGES.input(watermark)
+          .transform({ width: 32, height: 32}),
+        { bottom: 32, right: 32 }
+    )
+    .output({ format: "image/avif" })
+).response()
+
+return response;
+```
 
 ### `.output()`
 
@@ -52,16 +73,18 @@ Within your Worker code, you can interact with this binding by using `env.IMAGES
 
 For example, to rotate, resize, and blur an image, then output the image as AVIF:
 
-```js
+```ts
 ​​const info = await env.IMAGES.info(stream);
 // stream contains a valid image, and width/height is available on the info object
  
 const response = (
-await env.IMAGES.input(stream)
-        .transform({ rotate: 90 })
-        .transform({ width: 128 })
-        .output({ format: "image/avif" })
-      ).response();
+  await env.IMAGES.input(stream)
+    .transform({ rotate: 90 })
+    .transform({ width: 128 })
+    .transform({ blur: 20 })
+    .output({ format: "image/avif" }
+  )
+).response();
  
 return response;
 ```
