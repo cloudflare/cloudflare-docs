@@ -132,7 +132,7 @@ Lastly, Gateway evaluates all Allow, Block, and Do Not Scan policies. These poli
 
 ### Resolver policies
 
-When [resolver policies](/cloudflare-one/policies/gateway/resolver-policies/) are present, Gateway first evaluates any DNS policies with pre-resolution selectors, then routes any DNS queries according to the [order of precedence](#order-of-precedence) of your resolver policies, then lastly evaluates any DNS policies with post-resolution selectors.
+When [resolver policies](/cloudflare-one/policies/gateway/resolver-policies/) are present, Gateway first evaluates any DNS policies with pre-resolution selectors, then routes any DNS queries according to the [order of precedence](#order-of-precedence) of your resolver policies, and lastly evaluates any DNS policies with post-resolution selectors.
 
 ### Order of precedence
 
