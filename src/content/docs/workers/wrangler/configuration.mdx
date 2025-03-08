@@ -627,6 +627,8 @@ deleted_classes = ["DeprecatedClass"] # Array of deleted class names
 
 [Environment variables](/workers/configuration/environment-variables/) are a type of binding that allow you to attach text strings or JSON values to your Worker.
 
+If building Pages via Git Integration, and you get a BADENGINE error, ensure you define the "NODE_VERSION" env variable to your current version in your wrangler file.
+
 Example:
 
 <Render file="envvar-example" />
