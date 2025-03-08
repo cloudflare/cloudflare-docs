@@ -8,23 +8,73 @@ sidebar:
 
 import { Render, PackageManagers, WranglerConfig } from "~/components"
 
-Get up and running with the `agents-sdk`.
+This quick start tutorial will have you build a basic Agent that can generate code based on user questions. It will show you how the Agent SDK works, how to handle requests, store and sync state from within the Agent itself, and how to route to and call Agents from your Workers code.
 
-### Create a new project
 
-<PackageManagers type="create" pkg="cloudflare@latest" args={"my-agent", "--", "--type=agent"} />
+### Prerequisites
 
 TODO
+
+### Fetch the quick start project
+
+You can fetch the quick start project using the following command:
+
+<PackageManagers type="create" pkg="cloudflare@latest" args={"agents-quick-start", "--", "--type=agent"} />
+
+This will create a new directory called `agents-quick-start`, ask you a few basic questions, and install the necessary dependencies.
+
+Once complete, change into the Agent's directory:
+
+```sh
+cd agents-quick-start
+```
+
 
 ### Understand the Agent class
 
 TODO
 
+### Run your Agent
+
+You can run your Agent locally, which can be useful during development when iterating and/or when testing your Agent's functionality. To run your Agent locally, use the following command:
+
+```sh
+npm run dev
+```
+```sh output
+Your Worker and resources are simulated locally via Miniflare. For more information, see: https://developers.cloudflare.com/workers/testing/local-development.
+
+Your worker has access to the following bindings:
+- Durable Objects:
+  - MyAgent: MyAgent
+- AI:
+  - Name: AI [connected to remote resource]
+
+Starting local server...
+[wrangler:inf] Ready on http://localhost:8787
+```
+
+This will
+
+
+### Communicate with your Agent
+
+The example Agent in this quick start project exposes both HTTP and WebSocket endpoints
+
+```sh
+# The code in this project will automatically create a new Agent on-the-fly when
+# you provide a name: e.g. /agents/my-agent/foo or /agents/my-agent/user-1238139
+# This allows you to create as many Agents as you want, each with their own
+# state and able to manage their own tasks.
+wscat --connect "ws://localhost:8787/agents/my-agent/abc123def"
+```
+
+
 ### Deploy your Agent
 
-TODO
 
-### Teach your Agent
+
+### Extend the Agent
 
 TODO
 
