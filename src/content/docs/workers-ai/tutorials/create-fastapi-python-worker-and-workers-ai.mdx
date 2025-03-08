@@ -1,0 +1,604 @@
+---
+updated: 2025-03-08
+difficulty: Beginner
+content_type: 📝 Tutorial
+pcx_content_type: tutorial
+title: Create FastAPI with Cloudflare Python Worker and Workers AI
+tags:
+  - AI
+languages:
+  - Python
+
+head: []
+description: Explore how different AI models can be used to create a FastAPI worker, to help you reimagine ending of your favorite shows.
+---
+
+import { WranglerConfig } from "~/components";
+
+In this tutorial, you will learn how to create and deploy a FastAPI application on Cloudflare Workers and leverage Workers AI to generate creative, AI-powered images of alternate endings for your favorite shows or movies. By the end of this guide, you will learn how to configure FastAPI project for Cloudflare Workers, utilize a text generation model from Workers AI to create an image prompt based on user input, generate the alternate ending image using an image generation model, and finally, deploy your application to Cloudflare Workers.
+
+## Prerequisites
+
+You will need:
+
+- Cloudflare account with Python packages support enabled.
+- [Node.js](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm/)
+- [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/install-and-update/) installed on your local machine
+
+The entire codebase (including frontend) is available here: https://github.com/HackyRoot/what-if-ai. Please feel free to refer to this.
+
+## 1. Create FastAPI project
+
+First of all, you need to structure your project with the following files and configurations:
+
+### 1.1 FastAPI Code
+
+Create the main application file (main.py) in the src folder:
+This file will contain your FastAPI application code.
+
+```python
+from fastapi import FastAPI, HTTPException, Request
+
+app = FastAPI()
+
+async def on_fetch(request, env):
+   import asgi
+   return await asgi.fetch(app, request, env)
+
+@app.get("/")
+async def root():
+   return {"message": "Hello World"}
+```
+
+Inside on_fetch, asgi.fetch(app, request, env) processes the incoming request using your FastAPI app. The asgi module facilitates the communication between the Worker environment and your ASGI application.
+
+The rest of your FastAPI routes and logic will be defined as usual, like the example `@app.get("/")` route which returns a JSON response.
+
+### 1.2 Define project dependencies (requirements.txt) at the root:
+
+Create a new file at the root and name it requirements.txt. This file lists the Python packages that your FastAPI application depends on. Cloudflare Workers using Pyodide have support for a set of [built-in packages](https://developers.cloudflare.com/workers/languages/python/packages/#supported-packages). If a package is not supported, you can explore [vendoring options](https://github.com/mikenomitch/python-worker-packages-example?tab=readme-ov-file#using-vendored-packages).
+
+```text
+fastapi
+httpx
+pydantic
+```
+
+This requirements.txt specifies that your project requires fastapi, httpx, and pydantic. These are common packages used in FastAPI applications for building APIs, making HTTP requests, and data validation, respectively.
+
+### 1.3 Configure the Cloudflare Worker (wrangler.toml):
+
+Create a new file wrangler.toml at the root and paste the content below in that file. This file configures how your Cloudflare Worker is built and deployed.
+
+```
+name = 'what-if-ai-backend'
+main = "src/main.py"
+compatibility_flags = ["python_workers"]
+compatibility_date = "2023-12-18"
+```
+
+- name: This field defines the name of your Cloudflare Worker (what-if-ai-backend in this case). This name is also used when deploying and managing your Worker in the Cloudflare dashboard.
+- main: This specifies the entry point file for your Worker, which should be the path to your FastAPI application ("src/main.py").
+- compatibility_flags: The python_workers flag is essential for indicating that this Worker is a Python worker and enables Python-specific features within the Workers runtime. These flags are tied to a specific compatibility_date.
+- compatibility_date: This field specifies the version of the Cloudflare Workers runtime that your Worker should use ("2023-12-18" in this example). Choosing a compatibility_date ensures that your Worker runs against a stable and specific set of features and behaviors. You can find more information about available dates in the Cloudflare [documentation](https://developers.cloudflare.com/workers/configuration/compatibility-dates/).
+
+To verify the setup's functionality, execute the following command in your terminal from the root of your project:
+
+```shell
+npx wrangler dev
+```
+
+Once the development server is running, it will provide a localhost URL. Opening this URL in a web browser should display the following JSON response, confirming that your basic FastAPI application on Cloudflare Workers is operational:
+
+```json
+{ "message": "Hello World" }
+```
+
+## 2. Generate an Image Generation Prompt with Workers AI
+
+Now, let's proceed to generate an image generation prompt using Cloudflare Workers AI. This process involves taking user input (describing an alternate ending) and utilizing a text generation model to create a detailed prompt suitable for an image generation model.
+
+### 2.1 Add a system prompt for text generation model:
+
+First, create a file named prompt.py in the same src folder as your main.py file. This file will contain the system prompt for your text generation model.
+
+```python
+text_generation_system_prompt = """
+       Role: You are a cinematic prompt engineer specializing in alternate endings. Your expertise lies in blending narrative analysis with photorealistic visual design to create coherent, impactful image generation prompts.
+
+
+       Responsibilities:
+       1. Analyze the original visual style (e.g., color palette, cinematography, recurring motifs) of the input movie/show.
+       2. Preserve key visual elements (e.g., iconic props, settings, character designs) while adapting them to the alternate ending.
+       3. Generate a 2x2 grid prompt that:
+       - Reflects the emotional and narrative ripple effects of the alternate ending.
+       - Uses cinematic techniques (lighting, framing, composition) to emphasize contrasts.
+       - Specifies technical parameters (resolution, textures, lighting) for photorealism.
+
+
+       Input Requirements:
+       - Media Title: The movie/show name.
+       - Alternate Ending: A 1–2 sentence summary of the proposed ending.
+       - Style Notes: Optional descriptors for visual tone (e.g., "gritty," "surreal").
+
+
+       Output Structure:
+       A 2x2 grid with four scenes:
+       1. Top-Left: The alternate climax – Show the pivotal moment of the new ending. Include dynamic action, symbolic objects, and lighting that mirrors or subverts the original style. *(Example: "Wide-angle shot of a burning castle under a stormy sky, with crowds fleeing in silhouette—muted tones contrasting the original’s vibrant finale.")*
+       2. Top-Right: Character aftermath – A close-up of a protagonist/antagonist reacting to the new outcome. Highlight facial expressions, symbolic wardrobe changes, and environmental details. *(Example: "Close-up of the hero’s tear-streaked face under harsh fluorescent light, clutching a broken heirloom, with blurred chaos in the background.")*
+       3. Bottom-Left: Long-term world impact – A wide shot of a transformed setting (e.g., a utopia turned dystopia). Use color grading and recurring motifs to signal change. *(Example: "Desolate cityscape with overgrown vines engulfing skyscrapers, golden-hour lighting juxtaposed with decaying infrastructure.")*
+       4. Bottom-Right: Symbolic contrast – A still-life or object representing the new theme. Use macro details and lighting to evoke emotion. *(Example: "A cracked hourglass on a rain-soaked windowsill, lit by a single candle, symbolizing lost time.")*
+
+
+       Technical Parameters:
+       - Photorealism: Specify textures (e.g., "skin pores," "weathered metal"), lighting (e.g., "volumetric fog," "chiaroscuro"), and camera details (e.g., "85mm lens," "shallow depth of field").
+       - Consistency: Maintain the original’s color grading (e.g., "teal-and-orange palette") and cinematography style (e.g., "Steadicam tracking shots").
+       - Resolution: "Hyper-realistic textures, anti-aliasing, no visual artifacts."
+
+
+       Example:
+       Input:
+       - Media: Inception
+       - Alternate Ending: Cobb chooses to stay in the dream with Mal.
+       - Style Notes: Surreal, layered realities.
+
+
+       Output:
+       1. Top-Left: "Cobb and Mal embracing in a collapsing dream city, buildings folding like origami under a blood-red sky. Cinematic wide-angle, deep shadows with neon accents."
+       2. Top-Right: "Extreme close-up of Cobb’s conflicted face, half-lit by flickering dreamlight, reflecting Mal’s ghostly silhouette in his iris. Shallow depth of field."
+       3. Bottom-Left: "Aging Cobb wandering a labyrinthine dream library, reality warping into fractal patterns. Desaturated tones with glowing golden seams."
+       4. Bottom-Right: "A spinning top resting on a mirrored surface, reflecting infinite recursive layers. Macro shot, hyper-detailed brass texture, chiaroscuro lighting."
+       """
+```
+
+- This prompt act as a system prompt, which sets the context, role, and desired behavior for the text generation AI model. In this case, it instructs the model to act as a "cinematic prompt engineer".
+
+### 2.2 Create a Pydantic model for the text generation request (main.py):
+
+Next, within your main.py file, define a Pydantic model. This model will structure the data you expect to receive from the user for generating the alternate ending description.
+
+```python
+from pydantic import BaseModel
+
+class GenerateTextRequest(BaseModel):
+   content_name: str
+   ending_description: str
+
+```
+
+- The GenerateTextRequest class inherits from BaseModel, defining a data structure with two fields:
+- content_name: A string representing the name of the show or movie.
+- ending_description: A string containing the user's desired changes to the ending.
+- Pydantic will handle data validation and serialization for requests adhering to this model.
+
+### 2.3 Make an API call to Workers AI:
+
+Now, within your main.py file, you'll need to define the logic to interact with a Workers AI model for text generation.
+First, specify the model you intend to use. You can find a list of [available models](https://developers.cloudflare.com/workers-ai/models/) on the Cloudflare Workers AI platform. For this usecase, we will be using `llama-3-8b-instruct` model from Meta.
+
+For this tutorial, we will be using `llama-3-8b-instruct` model by Meta.
+
+```python
+from prompts import text_generation_system_prompt
+from fastapi import FastAPI, Request, HTTPException
+import httpx
+
+TEXT_GEN_MODEL = "@hf/meta-llama/meta-llama-3-8b-instruct"
+```
+
+Next, let's add a function that uses the REST API to communicate with the specified Workers AI model. This function will take the content name and an alternative ending description as input, along with the request object to access environment variables. It will then use the system prompt we defined earlier to guide the text generation.
+
+```python
+async def generate_text_message(content_name: str, ending_description: str, req: Request):
+    messages = [
+       {"role": "system", "content": text_generation_system_prompt},
+       {"role": "user", "content": f"""
+           Content Name: {content_name}
+           Alternative Ending: {ending_description}"""}
+   ]
+```
+
+When making requests to the Workers AI REST API, you need to provide your [Cloudflare API Key](https://developers.cloudflare.com/fundamentals/api/get-started/create-token/) and [Cloudflare Account ID](https://developers.cloudflare.com/fundamentals/setup/find-account-and-zone-ids/#find-account-id-workers-and-pages) for authentication.
+
+A secure practice is to store these sensitive credentials as environment variables and access them within your Python worker. You can typically access environment variables through the Request object in a Python worker environment like this:
+
+```python
+    env = req.scope['env']
+    CLOUDFLARE_API_KEY = env.CLOUDFLARE_API_KEY
+    CLOUDFLARE_ACCOUNT_ID = env.CLOUDFLARE_ACCOUNT_ID
+```
+
+Now, let's construct the base URL for the Workers AI API and set up the necessary headers for authentication.
+
+```python
+    API_BASE_URL = f"https://api.cloudflare.com/client/v4/accounts/{CLOUDFLARE_ACCOUNT_ID}/ai/run/"
+
+    headers = {
+        "Authorization": f"Bearer {CLOUDFLARE_API_KEY}",
+        "Content-Type": "application/json" # Ensure Content-Type is set for POST requests
+    }
+```
+
+Finally, you will make an asynchronous HTTP POST request to the Workers AI endpoint. Since text generation models can sometimes take a little time to process the request and return a response, it's a good idea to set a reasonable timeout for the HTTP request.
+
+```python
+
+    try:
+       async with httpx.AsyncClient() as client:
+            text_response = await client.post(
+               f"{API_BASE_URL}/{TEXT_GEN_MODEL}",
+               headers=headers,
+               json={"messages": messages},
+               timeout=60.0  # timeout to prevent hanging
+           )
+        print("Text Response Status:", text_response.status_code)
+        print("Text Response Content:", text_response.text)
+
+
+        response_json = text_response.json()
+        generated_text = response_json["result"]["response"]
+        return generated_text
+
+
+    except Exception as e:
+        print(f"Error in generation: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+```
+
+### 2.4 Add a FastAPI Endpoint for Text Generation
+
+This section will guide you through adding a **FastAPI endpoint** that leverages the `generate_text_message` function we defined in the previous step. This endpoint will accept data based on a `GenerateTextRequest` model (which you would have defined elsewhere in your application) and then call the `generate_text_message` function to interact with the Workers AI model.
+
+It's crucial to **pass the `Request` object as a parameter** when you call the `generate_text_message` function from within this endpoint. This allows the `generate_text_message` function to access the necessary environment variables, such as your Cloudflare API Key and Account ID.
+
+Here's the code for the FastAPI endpoint:
+
+```python
+@app.post('/generate-text')
+async def generate_ending(request_data: GenerateTextRequest, req: Request):
+   try:
+       prompt = await generate_text_message(
+           content_name=request_data.content_name,
+           ending_description=request_data.ending_description,
+           req=req)
+       return {"prompt": prompt, "content_name": request_data.content_name}
+   except HTTPException as e:
+       raise e
+   except Exception as e:
+       raise HTTPException(status_code=500, detail=str(e))
+```
+
+This code block defines a FastAPI endpoint at the path `/generate-text` that handles POST requests. Its main purpose is to trigger the text generation process by calling the `generate_text_message` function that was defined earlier.
+
+Finally your code should look like this.
+
+```python
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+import base64
+import httpx
+from prompts import text_generation_system_prompt
+
+async def on_fetch(request, env):
+   import asgi
+   return await asgi.fetch(app, request, env)
+
+TEXT_GEN_MODEL = "@hf/meta-llama/meta-llama-3-8b-instruct"
+
+app = FastAPI()
+
+class GenerateTextRequest(BaseModel):
+   content_name: str
+   ending_description: str
+
+async def generate_text_message(content_name: str, ending_description: str, req: Request):
+   messages = [
+       {"role": "system", "content": text_generation_system_prompt},
+       {"role": "user", "content": f"""
+           Content Name: {content_name}
+           Alternative Ending: {ending_description}"""}
+   ]
+
+   env = req.scope['env']
+   CLOUDFLARE_API_KEY = env.CLOUDFLARE_API_KEY
+   CLOUDFLARE_ACCOUNT_ID = env.CLOUDFLARE_ACCOUNT_ID
+   API_BASE_URL = f"https://api.cloudflare.com/client/v4/accounts/{CLOUDFLARE_ACCOUNT_ID}/ai/run/"
+
+   headers = {
+       "Authorization": f"Bearer {CLOUDFLARE_API_KEY}",
+       "Content-Type": "application/json"
+   }
+
+   try:
+       async with httpx.AsyncClient() as client:
+           text_response = await client.post(
+               f"{API_BASE_URL}/{TEXT_GEN_MODEL}",
+               headers=headers,
+               json={"messages": messages},
+               timeout=60.0  # timeout to prevent hanging
+           )
+
+       response_json = text_response.json()
+       generated_text = response_json["result"]["response"]
+       return generated_text
+
+   except Exception as e:
+       print(f"Error in generation: {str(e)}")
+       raise HTTPException(status_code=500, detail=str(e))
+
+@app.post('/generate-text')
+async def generate_ending(request_data: GenerateTextRequest, req: Request):
+   try:
+       prompt = await generate_text_message(
+           content_name=request_data.content_name,
+           ending_description=request_data.ending_description,
+           req=req)
+       return {"prompt": prompt, "content_name": request_data.content_name}
+   except HTTPException as e:
+       raise e
+   except Exception as e:
+       raise HTTPException(status_code=500, detail=str(e))
+```
+
+To verify the text generation endpoint's functionality.
+
+Return to your terminal and execute the following command again:
+
+```shell
+npx wrangler dev
+```
+
+This command starts your Cloudflare Worker in development mode, providing a local URL for testing. Once it's running, open the displayed localhost URL in your web browser and append `/docs` to the end of the URL. This will open the Swagger UI for your FastAPI application, providing an interactive documentation interface where you can test your API endpoints.
+
+Within the Swagger UI, locate the `/generate-text` tab. Expand this section, and you will find the parameters for this endpoint. Enter a value for content_name and an ending_description in the provided fields. After filling in the details, execute the request (the exact button name might vary depending on the Swagger UI version, but it's usually something like "Execute" or "Try it out!").
+
+Allow a short period for the request to be processed. If everything is configured correctly, the endpoint will call the Workers AI model and generate a detailed prompt based on your input. The response displayed in the Swagger UI will contain this generated prompt, which could then be used to create an AI-generated image visualizing your concept.
+
+Now that you have successfully tested the text generation capabilities and have a way to create prompts for images, the next step is to add another endpoint to your FastAPI application that will handle the actual image generation.
+
+## 3. Generate an Image Using an Image Generation Model
+
+Following a similar pattern to the generate-text endpoint, you will now add an endpoint specifically for generating images. This will involve defining a new Pydantic model for the image generation request and creating a corresponding FastAPI route
+
+### 3.1 Add a Pydantic Model for Image Generation Request
+
+To ensure proper data structure for incoming image generation requests, you'll define a Pydantic model named GenerateImageRequest. This model will have the following fields:
+
+- `prompt`: This field will be of type str and will contain the image generation prompt that was typically generated by the text generation model in the previous steps.
+- `content_name`: This field will also be of type str and will hold the name of the content for which the image is being generated.
+
+Here is the Python code for the GenerateImageRequest model:
+
+```python
+from pydantic import BaseModel
+
+class GenerateImageRequest(BaseModel):
+   prompt: str
+   content_name: str
+```
+
+This model clearly defines the expected input structure for your image generation endpoint, ensuring that incoming requests provide both the necessary prompt and the content name.
+
+### 3.2 Make an API Call to the Image Generation Model
+
+Now that you have defined the `GenerateImageRequest` Pydantic model, you can create the FastAPI endpoint and the function to call the Workers AI image generation model.
+
+First, define the image generation model you intend to use. As mentioned, the [Workers AI model catalogue](https://developers.cloudflare.com/workers-ai/models/) offers various options. For this tutorial, we will proceed with `flux` as it has been performing well for realistic image generation.
+
+Next, you will need to create a function, for example, `generate_image`, which will handle the API call to the chosen model. This function will be quite similar to the `generate_text_message` function you implemented earlier.
+
+Here's how you can define the `generate_image` function:
+
+```python
+IMAGE_GEN_MODEL = "@cf/black-forest-labs/flux-1-schnell"
+
+async def generate_image(prompt: str, req: Request):
+    env = req.scope['env']
+
+    CLOUDFLARE_API_KEY = env.CLOUDFLARE_API_KEY
+    CLOUDFLARE_ACCOUNT_ID = env.CLOUDFLARE_ACCOUNT_ID
+    API_BASE_URL = f"https://api.cloudflare.com/client/v4/accounts/{CLOUDFLARE_ACCOUNT_ID}/ai/run/"
+    headers = {
+        "Authorization": f"Bearer {CLOUDFLARE_API_KEY}",
+        "Content-Type": "application/json"
+    }
+
+    input_data = {"prompt": prompt, "steps": 8}
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.post(f"{API_BASE_URL}/{IMAGE_GEN_MODEL}", headers=headers, json=input_data, timeout=60.0)
+        return response.json()
+    except Exception as e:
+        print(f"Error in generation: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+```
+
+In this function:
+
+- The `steps` parameter controls the number of diffusion steps, influencing the quality and generation time of the image. Higher values generally lead to better quality but longer processing times. Here we are using 8, but you can adjust this.
+- The function returns `image.data`, which contains the generated image data. For many image generation models, this data will be in a format that needs to be further processed (here base64 encoded) to be displayed or saved. In case you’re planning to save the response images locally, you can check out the `save_base64_image` function in the GitHub repo.
+
+### 3.3 Add a FastAPI Endpoint for Image Generation
+
+Now that the `generate_image` function is defined, you need to create a corresponding **FastAPI endpoint** that will expose this functionality. You will add an endpoint named `generate_image_endpoint` which will utilize the `GenerateImageRequest` Pydantic model to receive the necessary input.
+
+Here's how you can define this endpoint:
+
+```python
+@app.post('/generate-image')
+async def generate_image_endpoint(request_data: GenerateImageRequest, req: Request):
+   try:
+       prompt = "In the "+request_data.content_name + \
+           "with an alternate ending"+request_data.prompt
+       response = await generate_image(prompt=prompt, req=req)
+       return response
+   except HTTPException as e:
+       raise e
+   except Exception as e:
+       raise HTTPException(status_code=500, detail=str(e))
+```
+
+Once you’re done, your code should look like this.
+
+```python
+from fastapi import FastAPI, HTTPException, Request
+from pydantic import BaseModel
+import base64
+import httpx
+from prompts import text_generation_system_prompt
+
+async def on_fetch(request, env):
+   import asgi
+   return await asgi.fetch(app, request, env)
+
+TEXT_GEN_MODEL = "@hf/meta-llama/meta-llama-3-8b-instruct"
+IMAGE_GEN_MODEL = "@cf/black-forest-labs/flux-1-schnell"
+
+app = FastAPI()
+
+class GenerateTextRequest(BaseModel):
+   content_name: str
+   ending_description: str
+
+class GenerateImageRequest(BaseModel):
+   prompt: str
+   content_name: str
+
+async def generate_text_message(content_name: str, ending_description: str, req: Request):
+   messages = [
+       {"role": "system", "content": text_generation_system_prompt},
+       {"role": "user", "content": f"""
+           Content Name: {content_name}
+           Alternative Ending: {ending_description}"""}
+   ]
+
+   env = req.scope['env']
+   CLOUDFLARE_API_KEY = env.CLOUDFLARE_API_KEY
+   CLOUDFLARE_ACCOUNT_ID = env.CLOUDFLARE_ACCOUNT_ID
+   API_BASE_URL = f"https://api.cloudflare.com/client/v4/accounts/{CLOUDFLARE_ACCOUNT_ID}/ai/run/"
+
+   headers = {
+       "Authorization": f"Bearer {CLOUDFLARE_API_KEY}",
+       "Content-Type": "application/json"
+   }
+
+   try:
+       async with httpx.AsyncClient() as client:
+           text_response = await client.post(
+               f"{API_BASE_URL}/{TEXT_GEN_MODEL}",
+               headers=headers,
+               json={"messages": messages},
+               timeout=60.0  # timeout to prevent hanging
+           )
+
+       response_json = text_response.json()
+       generated_text = response_json["result"]["response"]
+       return generated_text
+
+
+   except Exception as e:
+       print(f"Error in generation: {str(e)}")
+       raise HTTPException(status_code=500, detail=str(e))
+
+async def generate_image(prompt: str, req: Request):
+   env = req.scope['env']
+   CLOUDFLARE_API_KEY = env.CLOUDFLARE_API_KEY
+   CLOUDFLARE_ACCOUNT_ID = env.CLOUDFLARE_ACCOUNT_ID
+   API_BASE_URL = f"https://api.cloudflare.com/client/v4/accounts/{CLOUDFLARE_ACCOUNT_ID}/ai/run/"
+   headers = {
+       "Authorization": f"Bearer {CLOUDFLARE_API_KEY}",
+       "Content-Type": "application/json"
+   }
+
+   input_data = {"prompt": prompt, "steps": 8}
+   try:
+       async with httpx.AsyncClient() as client:
+           response = await client.post(f"{API_BASE_URL}/{IMAGE_GEN_MODEL}", headers=headers, json=input_data, timeout=60.0)
+       return response.json()
+   except Exception as e:
+       print(f"Error in generation: {str(e)}")
+       raise HTTPException(status_code=500, detail=str(e))
+
+@app.post('/generate-text')
+async def generate_ending(request_data: GenerateTextRequest, req: Request):
+   try:
+       prompt = await generate_text_message(
+           content_name=request_data.content_name,
+           ending_description=request_data.ending_description,
+           req=req)
+       return {"prompt": prompt, "content_name": request_data.content_name}
+   except HTTPException as e:
+       raise e
+   except Exception as e:
+       raise HTTPException(status_code=500, detail=str(e))
+
+@app.post('/generate-image')
+async def generate_image_endpoint(request_data: GenerateImageRequest, req: Request):
+   try:
+       prompt = "In the "+request_data.content_name + \
+           "with an alternate ending"+request_data.prompt
+       response = await generate_image(prompt=prompt, req=req)
+       return response
+   except HTTPException as e:
+       raise e
+   except Exception as e:
+       raise HTTPException(status_code=500, detail=str(e))
+```
+
+To test if everything is working correctly before deployment, you should first run your development server again. Navigate to your terminal, and restart the development server:
+
+```shell
+npx  wrangler dev
+```
+
+Once the development server is running, you can access the Swagger UI, which should now display two endpoints: one for text generation `/generate-text` and another for image generation `/generate-image`. You can interact with these endpoints through the Swagger UI to test their functionality.
+Specifically for the image generation endpoint, you mentioned that it returns a response in the following format:
+
+```json
+{
+	"result": {
+		"image": "/9j/4AAQSkZJRgABAQAA…"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
+}
+```
+
+As highlighted, the key element here is the "image" field within the "result" object. This field contains a base64-encoded string representing the generated image. To visualize this image, you will need to use a base64 decoder tool. Many such tools are available online.
+
+After you have thoroughly tested both the text and image generation functionalities in your local environment and confirmed they are working as intended, the next step is to prepare for deployment.
+
+To deploy your FastAPI Workers application to Cloudflare, you will first need to push your complete project code to a GitHub repository. This repository will be the source from which Cloudflare will build and deploy your application to Workers.
+
+## 4. Deploy the FastAPI workers on Cloudflare
+
+Once your code is on GitHub, follow these steps to deploy to Cloudflare Workers [the user's provided text]:
+
+1. Navigate to the Cloudflare dashboard at https://dash.cloudflare.com/ and go to Compute (Workers) > Workers and Pages. Click on Create application and then Connect to Git.
+2. If you haven't already, add your GitHub account and then select the repository where you have pushed your project code.
+3. In the "Set up build settings" section under "Configuration", you will need to configure your deployment:
+   - For the "Project name", provide a name for your Cloudflare Worker project. Ensure that this name is exactly the same as the name field specified in your wrangler.toml file.
+   - Regarding the "Path" field, if your backend code (including your FastAPI application files and the wrangler.toml file) is located within a subdirectory of your repository, then you need to enter `/backend` in this field. If your backend code is located at the root level of your repository, you can leave the "Path" field blank.
+4. After configuring the project name and path (if necessary), click on the Save and deploy button.
+
+Once your deployment is complete, navigate to the specific Worker you just created within the Cloudflare dashboard. Under the Settings tab, you will find a section to manage Environment Variables. You will need to update these environment variables to match the configuration you had set up earlier in your local development environment for `CLOUDFLARE_API_KEY` and `CLOUDFLARE_ACCOUNT_ID`.
+
+## 5. Bonus: Utilize FastAPI Endpoints in Your Frontend
+
+If you wish to further enhance your application by consuming the API endpoints you've created in your FastAPI backend within a separate frontend application, you can certainly do so. Feel free to explore this example frontend codebase built with React (using Vite): `https://github.com/HackyRoot/what-if-ai/tree/main/frontend`.
+
+To integrate this frontend, you can deploy it as you would any standard React (Vite) project, for instance, using [Cloudflare Pages](https://developers.cloudflare.com/pages/). The crucial step for connecting your frontend to your deployed FastAPI Worker is to update the API endpoint URLs within the frontend's environment variables. These URLs should point to the public URL of your Cloudflare Worker.
+
+## 6. Conclusion
+
+Congratulations! You have successfully built a FastAPI application on Cloudflare Workers that leverages Workers AI to generate creative alternate endings for your favorite shows and movies. This tutorial walked you through setting up your FastAPI project, integrating with Workers AI for both text and image generation, and deploying your application to Cloudflare. Your application is now ready to inspire new narratives and reimagine familiar stories with AI-powered creativity, accessible through a public Cloudflare Workers URL.
+
+## 7. Next Steps
+
+Here are some potential next steps to further enhance your Cloudflare Workers application:
+
+- Leverage [Cloudflare AI Gateway](https://developers.cloudflare.com/ai-gateway/): Integrate AI Gateway to gain access to valuable features such as rate limiting, caching, and analytics for your AI workloads.
+- Implement Streaming Output for Text Generation: Enhance the user experience by exploring how to implement streaming output for text generation requests from your Cloudflare Worker to the frontend.
+- Save AI generated images to [R2 storage](https://developers.cloudflare.com/r2/): Explore how to persist the AI-generated images using Cloudflare R2, a cost-effective object storage service.
