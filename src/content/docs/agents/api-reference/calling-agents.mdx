@@ -8,15 +8,11 @@ sidebar:
 
 import { MetaInfo, Render, Type, TypeScriptExample, WranglerConfig } from "~/components";
 
-This page shows you how to call your Agents from Workers, including approaches for how to address and route requests to Agents.
+Learn how to call your Agents from Workers, including how to create Agents on-the-fly, address them, and route requests to specific instances of an Agent.
 
 ## Calling your Agent
 
-TODO:
-
-- created on the fly
-- retrieved if exists
-- naming
+Agents are created on-the-fly and can serve multiple requests concurrently. Each Agent instance is isolated from other instances, can maintain its own state, and has a unique address.
 
 You can create and run an instance of an Agent directly from a Worker in one of three ways:
 
@@ -71,17 +67,43 @@ export class MyAgent extends Agent<Env> {
 
 ### Naming your Agents
 
-TODO:
+When creating names for your Agents, think about what the Agent represents. A unique user? A team or company? A room or channel for collaboration?
 
-- naming strategies
-- how to address them directly
-- validating names before you route to an agent
-- `this.name`
+A consistent approach to naming allows you to direct incoming requests directly to the right Agent, and deterministically route new requests back to that Agent, no matter where the client is in the world. For a given Agent definition (or 'namespace' in the code below), there can be millions (or tens of millions) of instances of that Agent, each handling their own requests, making calls to LLMs, and maintaining their own state.
 
+For example, you might have an Agent for every user using your new AI-based code editor. In that case, you'd want to create Agents based on the user ID from your system, which would then allow that Agent to handle all requests for that user. It also ensures that [state within the Agent](/agents/api-reference/store-and-sync-state/), including chat history, language preferences, model configuration and other context can associated specifically with that user, making it easier to manage state.
+
+<TypeScriptExample>
+
+```ts
+import { Agent, AgentNamespace, getAgentByName, routeAgentRequest } from 'agents-sdk';
+
+interface Env {
+	MyAgent: AgentNamespace<MyAgent>;
+}
+
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		let userId = new URL(request.url).searchParams.get('userId') || 'anonymous';
+		// Use an identifier that allows you to route to requests, WebSockets or call methods on the Agent
+		// You can also put authentication logic here - e.g. to only create or retrieve Agents for known users.
+		let namedAgent = getAgentByName<Env, MyAgent>(env.MyAgent, 'my-unique-agent-id');
+		return (await namedAgent).fetch(request);
+	},
+} satisfies ExportedHandler<Env>;
+
+export class MyAgent extends Agent<Env> {
+	// You can access the name of the agent via this.name in any method within
+	// the Agent
+	async onStartup() { console.log(`agent ${this.name} ready!`)}
+}
+```
+</TypeScriptExample>
 
 
 ### Next steps
 
+* Review the [API documentation](/agents/api-reference/sdk/) for the Agents class to learn how to define
 * [Build a chat Agent](/agents/getting-started/build-a-chat-agent/) using the `agents-sdk` and deploy it to Workers.
 * Learn more [using WebSockets](/agents/api-reference/websockets/) to build interactive Agents and stream data back from your Agent.
 * [Orchestrate asynchronous workflows](/agents/api-reference/run-workflows) from your Agent by combining the `agents-sdk` and [Workflows](/workflows).
