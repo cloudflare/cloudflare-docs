@@ -7,8 +7,12 @@ authorized_users:
   - pedrosousa
   - ranbel
   - RebeccaTamachiro
-style_guide:
+custom_style_guide:
   enabled: true
+  check_status_upon_review_failure: success
+reviewer:
+  limit_num_reviews: 2
+  limit_num_comments: 7
 openapi:
   enabled: true
   urls:
