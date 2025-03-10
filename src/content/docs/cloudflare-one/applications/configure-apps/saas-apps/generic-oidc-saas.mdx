@@ -127,3 +127,9 @@ Cloudflare allows various `response_type` values in the authorization request de
 | `code` | ✅ | ✅ | ❌ |
 | `id_token` | ❌ |✅  | ✅ |
 | `token` | ❌| ✅ |✅  |
+
+To include `id_token` in the authorization request, turn on **Return ID Token from Authorization Endpoint**. To include `token`, turn on **Return Access Token from Authorization Endpoint**
+
+:::note
+[Refresh tokens](#access-token-lifetime) are not supported with Hybrid or Implicit flows.
+:::
