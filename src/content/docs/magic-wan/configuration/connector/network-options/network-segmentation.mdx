@@ -272,6 +272,12 @@ Create a `DELETE` request [using the API](/api/resources/magic_transit/subresour
 
 Example:
 
+<APIRequest
+  path="/accounts/{account_id}/magic/sites/{site_id}/acls/{acl_id}"
+  method="DELETE"
+/>
+
+
 ```bash
 curl --request DELETE \
 https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/acls/{acl_identifier} \
