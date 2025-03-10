@@ -59,31 +59,6 @@ Send a [`POST` request](/api/resources/alerting/subresources/policies/methods/cr
 	}}
 />
 
-**OLD**
-
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/account_id/alerting/v3/policies \
---header 'Authorization: Bearer <YOUR_TOKEN>' \
---header 'Content-Type: application/json' \
---data '{
-  "alert_type": "magic_tunnel_health_check_event",
-  "description": "<DESCRIBE_POLICY>",
-  "enabled": true,
-  "filters": {
-    "slo": [
-      "99.9"
-    ]
-  },
-  "mechanisms": {
-    "email": [
-      {
-        "id": "EMAIL_ADDRESS"
-      }
-    ],
-  "name": "<DESCRIBE_ALERT>"
-}'
-```
-
 ```json output
 {
 	"result": [
