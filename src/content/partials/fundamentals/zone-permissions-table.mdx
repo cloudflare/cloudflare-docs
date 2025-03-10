@@ -1,83 +1,82 @@
 ---
-inputParameters: editWord
-
+params:
+  - editWord
+  - src
 ---
 
-import { Markdown } from "~/components"
+import { Markdown } from "~/components";
 
-| Name                             | Description                                                                                                                                |
-| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| Access: Apps and Policies Read   | Grants read access to [Cloudflare Access](/cloudflare-one/policies/access/) zone resources.                                                |
-| Access: Apps and Policies Revoke | Grants ability to revoke all tokens to [Cloudflare Access](/cloudflare-one/policies/access/) zone resources.                               |
-| Access: Apps and Policies {props.one}     | Grants write access to [Cloudflare Access](/cloudflare-one/policies/access/) zone resources.                                               |
-| Analytics Read                   | Grants read access to [analytics](/analytics/account-and-zone-analytics/zone-analytics/).                                                  |
-| API Gateway Read                 | Grants read access to [API Gateway](/api-shield/) zone resources.                                                                          |
-| API Gateway {props.one}                   | Grants write access to [API Gateway](/api-shield/) zone resources.                                                                         |
-| Apps {props.one}                          | Grants full access to [Cloudflare Apps](/support/more-dashboard-apps/cloudflare-apps/).                                                    |
-| Bot Management Read              | Grants read access to [Bot Management](/bots/plans/bm-subscription/).                                                                      |
-| Bot Management {props.one}                | Grants write access to [Bot Management](/bots/plans/bm-subscription/).                                                                     |
-| Bot Management Feedback Read     | Grants read access to [Bot Management feedback](/bots/concepts/feedback-loop/).                                                            |
-| Bot Management Feedback {props.one}       | Grants write access to [Bot Management feedback](/bots/concepts/feedback-loop/).                                                           |
-| Cache Purge                      | Grants access to [purge cache](/cache/how-to/purge-cache/).                                                                                |
-| Cache Rules Read                 | Grants read access to [Cache Rules](/cache/how-to/cache-rules/).                                                                           |
-| Cache Rules {props.one}                   | Grants write access to [Cache Rules](/cache/how-to/cache-rules/).                                                                 |
-| Cloud Connector Read             | Grants read access to [Cloud Connector rules](/rules/cloud-connector/).                                                                  |
-| Cloud Connector {props.one}               | Grants write access to [Cloud Connector rules](/rules/cloud-connector/).                                                                 |                                                                        |
-| Config Rules Read                | Grants read access to [Configuration Rules](/rules/configuration-rules/).                                                                  |
-| Config Rules {props.one}                  | Grants write access to [Configuration Rules](/rules/configuration-rules/).                                                                 |
-| Custom Errors Read               | Grants read access to [Custom Errors phase](/rules/custom-errors/create-api/).                                                             |
-| Custom Errors {props.one}        | Grants write access to [Custom Errors phase](/rules/custom-errors/create-api/).                                                            |
-| Custom Error Rules Read          | Grants read access to [Custom Error Rules](/rules/custom-errors/).                                                                         |
-| Custom Error Rules {props.one}   | Grants write access to [Custom Error Rules](/rules/custom-errors/).                                                                        |
-| Custom Pages Read                | Grants read access to [Custom Pages](/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/).  |
-| Custom Pages {props.one}                  | Grants write access to [Custom Pages](/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/). |
-| DMARC Management Read            | Grants read access to [DMARC Management](/dmarc-management/).                                                                              |
-| DMARC Management {props.one}              | Grants write access to [DMARC Management](/dmarc-management/).                                                                             |
-| DNS Read                         | Grants read access to [DNS](/dns/).                                                                                                        |
-| DNS Write                        | Grants write access to [DNS](/dns/).                                                                                                       |
-| Email Routing Rules Read         | Grants read access to [Email Routing Rules](/email-routing/setup/email-routing-addresses/).                                                |
-| Email Routing Rules {props.one}           | Grants write access to [Email Routing Rules](/email-routing/setup/email-routing-addresses/).                                               |
-| Firewall Services Read           | Grants read access to Firewall resources.                                                                                                  |
-| Firewall Services {props.one}             | Grants write access to Firewall resources.                                                                                                 |
-| Health Checks Read               | Grants read access to [Health Checks](/health-checks/).                                                                                    |
-| Health Checks {props.one}                 | Grants write access to [Health Checks](/health-checks/).                                                                                   |
-| HTTP DDoS Managed Ruleset Read   | Grants read access to [HTTP DDoS managed ruleset](/ddos-protection/managed-rulesets/http/).                                                |
-| HTTP DDoS Managed Ruleset {props.one}     | Grants write access to [HTTP DDoS managed ruleset](/ddos-protection/managed-rulesets/http/).                                               |
-| Load Balancers Read              | Grants read access to [load balancer resources](/load-balancing/).                                                                         |
-| Load Balancers {props.one}                | Grants write access to [load balancer resources](/load-balancing/).                                                                        |
-| Logs Read                        | Grants read access to logs using [Logpull](/logs/).                                                                                        |
-| Logs {props.one}                          | Grants write access to [Logpull and Logpush](/logs/).                                                                                      |
-| Managed Headers Read             | Grants read access to [Managed Headers](/rules/transform/managed-transforms/).                                                             |
-| Managed Headers {props.one}               | Grants write access to [Managed Headers](/rules/transform/managed-transforms/).                                                            |
-| Origin Rules Read                | Grants read access to [Origin Rules](/rules/origin-rules/).                                                                                |
-| Origin Rules {props.one}                  | Grants write access to [Origin Rules](/rules/origin-rules/).                                                                               |
-| Page Rules Read                  | Grants read access to [Page Rules](/rules/page-rules/).                                                                                    |
-| Page Rules {props.one}                    | Grants write access to [Page Rules](/rules/page-rules/).                                                                                   |
-| Page Shield Read                 | Grants read access to [Page Shield](/page-shield/).                                                                                        |
-| Page Shield {props.one}                   | Grants write access to [Page Shield](/page-shield/).                                                                                       |
-| Response Compression Read        | Grants read access to [Response Compression](/rules/compression-rules/).                                                                   |
-| Response Compression {props.one}          | Grants write access to [Response Compression](/rules/compression-rules/).                                                                  |
-| Sanitize Read                    | Grants read access to sanitization.                                                                                                        |
-| Sanitize {props.one}                      | Grants write access to sanitization.                                                                                                       |
-| Single Redirect Read        | Grants read access to zone-level [Single Redirects](/rules/url-forwarding/single-redirects/).                                              |
-| Single Redirect {props.one}          | Grants write access to zone-level [Single Redirects](/rules/url-forwarding/single-redirects/).                                             |
-| SSL and Certificates Read        | Grants read access to [SSL configuration and certificate management](/ssl/).                                                               |
-| SSL and Certificates {props.one}          | Grants write access to [SSL configuration and certificate management](/ssl/).                                                              |
-| Transform Rules Read             | Grants read access to [Transform Rules](/rules/transform/).                                                                                |
-| Transform Rules {props.one}               | Grants write access to [Transform Rules](/rules/transform/).                                                                               |
-| Waiting Room Read                | Grants read access to [Waiting Room](/waiting-room/).                                                                                      |
-| Waiting Room {props.one}                  | Grants write access to [Waiting Room](/waiting-room/).                                                                                     |
-| Web3 Hostnames Read              | Grants read access to [Web3 Hostnames](/web3/).                                                                                            |
-| Web3 Hostnames {props.one}                | Grants write access to [Web3 Hostnames](/web3/).                                                                                           |
-| Workers Routes Read              | Grants read access to [Cloudflare Workers](/workers/) and [Workers KV Storage](/kv/api/).                                                  |
-| Workers Routes {props.one}                | Grants write access to [Cloudflare Workers](/workers/) and [Workers KV Storage](/kv/api/).                                                 |
-| Zaraz Read                       | Grants read access to [Zaraz](/zaraz/) zone level settings.                                                                                |
-| Zaraz {props.one}                         | Grants write access to [Zaraz](/zaraz/) zone level settings.                                                                               |
-| Zone Read                        | Grants read access to zone management.                                                                                                     |
-| Zone {props.one}                          | Grants write access to zone management.                                                                                                    |
-| Zone Settings Read               | Grants read access to zone settings.                                                                                                       |
-| Zone Settings {props.one}                 | Grants write access to zone settings.                                                                                                      |
-| Zone Versioning Read             | Grants read access to [Zone Versioning](/version-management/) at zone level.                                                               |
-| Zone Versioning {props.one}               | Grants write access to [Zone Versioning](/version-management/) at zone level.                                                              |
-| Zone WAF Read                    | Grants read access to [Zone WAF](/waf/).                                                                                                   |
-| Zone WAF {props.one}                      | Grants write access to [Zone WAF](/waf/).                                                                                                  |
+| Name                                                                                            | Description                                                                                                                                |
+| ----------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| Access: Apps and Policies Read                                                                  | Grants read access to [Cloudflare Access](/cloudflare-one/policies/access/) zone resources.                                                |
+| Access: Apps and Policies Revoke                                                                | Grants ability to revoke all tokens to [Cloudflare Access](/cloudflare-one/policies/access/) zone resources.                               |
+| Access: Apps and Policies {props.editWord}                                                      | Grants write access to [Cloudflare Access](/cloudflare-one/policies/access/) zone resources.                                               |
+| Analytics Read                                                                                  | Grants read access to [analytics](/analytics/account-and-zone-analytics/zone-analytics/).                                                  |
+| { props.src === "api" && "Domain" } API Gateway Read                                            | Grants read access to [API Gateway](/api-shield/) zone resources.                                                                          |
+| { props.src === "api" && "Domain" } API Gateway {props.editWord}                                | Grants write access to [API Gateway](/api-shield/) zone resources.                                                                         |
+| Apps {props.editWord}                                                                           | Grants full access to [Cloudflare Apps](/support/more-dashboard-apps/cloudflare-apps/).                                                    |
+| Bot Management Read                                                                             | Grants read access to [Bot Management](/bots/plans/bm-subscription/).                                                                      |
+| Bot Management {props.editWord}                                                                 | Grants write access to [Bot Management](/bots/plans/bm-subscription/).                                                                     |
+| Bot Management Feedback Read                                                                    | Grants read access to [Bot Management feedback](/bots/concepts/feedback-loop/).                                                            |
+| Bot Management Feedback {props.editWord}                                                        | Grants write access to [Bot Management feedback](/bots/concepts/feedback-loop/).                                                           |
+| Cache Purge                                                                                     | Grants access to [purge cache](/cache/how-to/purge-cache/).                                                                                |
+| Cache { props.src === "dash" ? "Rules" : "Settings" } Read                                      | Grants read access to [Cache Rules](/cache/how-to/cache-rules/).                                                                           |
+| Cache { props.src === "dash" ? "Rules" : "Settings" } {props.editWord}                          | Grants write access to [Cache Rules](/cache/how-to/cache-rules/).                                                                          |
+| Cloud Connector Read                                                                            | Grants read access to [Cloud Connector rules](/rules/cloud-connector/).                                                                    |
+| Cloud Connector {props.editWord}                                                                | Grants write access to [Cloud Connector rules](/rules/cloud-connector/).                                                                   |
+| Config { props.src === "dash" ? "Rules" : "Settings" } Read                                     | Grants read access to [Configuration Rules](/rules/configuration-rules/).                                                                  |
+| Config { props.src === "dash" ? "Rules" : "Settings" } {props.editWord}                         | Grants write access to [Configuration Rules](/rules/configuration-rules/).                                                                 |
+| Custom { props.src === "dash" ? "Error Rules" : "Errors" } Read                                 | Grants read access to [Custom Error Rules](/rules/custom-errors/).                                                                         |
+| Custom { props.src === "dash" ? "Error Rules" : "Errors" } {props.editWord}                     | Grants write access to [Custom Error Rules](/rules/custom-errors/).                                                                        |
+| Custom Pages Read                                                                               | Grants read access to [Custom Pages](/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/).  |
+| Custom Pages {props.editWord}                                                                   | Grants write access to [Custom Pages](/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/). |
+| { props.src === "dash" ? "Dmarc Management" : "Email Security DMARC Reports" } Read             | Grants read access to [DMARC Management](/dmarc-management/).                                                                              |
+| { props.src === "dash" ? "Dmarc Management" : "Email Security DMARC Reports" } {props.editWord} | Grants write access to [DMARC Management](/dmarc-management/).                                                                             |
+| DNS Read                                                                                        | Grants read access to [DNS](/dns/).                                                                                                        |
+| DNS Write                                                                                       | Grants write access to [DNS](/dns/).                                                                                                       |
+| Email Routing Rules Read                                                                        | Grants read access to [Email Routing Rules](/email-routing/setup/email-routing-addresses/).                                                |
+| Email Routing Rules {props.editWord}                                                            | Grants write access to [Email Routing Rules](/email-routing/setup/email-routing-addresses/).                                               |
+| Firewall Services Read                                                                          | Grants read access to Firewall resources.                                                                                                  |
+| Firewall Services {props.editWord}                                                              | Grants write access to Firewall resources.                                                                                                 |
+| Health Checks Read                                                                              | Grants read access to [Health Checks](/health-checks/).                                                                                    |
+| Health Checks {props.editWord}                                                                  | Grants write access to [Health Checks](/health-checks/).                                                                                   |
+| HTTP DDoS Managed Ruleset Read                                                                  | Grants read access to [HTTP DDoS managed ruleset](/ddos-protection/managed-rulesets/http/).                                                |
+| HTTP DDoS Managed Ruleset {props.editWord}                                                      | Grants write access to [HTTP DDoS managed ruleset](/ddos-protection/managed-rulesets/http/).                                               |
+| Load Balancers Read                                                                             | Grants read access to [load balancer resources](/load-balancing/).                                                                         |
+| Load Balancers {props.editWord}                                                                 | Grants write access to [load balancer resources](/load-balancing/).                                                                        |
+| Logs Read                                                                                       | Grants read access to logs using [Logpull](/logs/).                                                                                        |
+| Logs {props.editWord}                                                                           | Grants write access to [Logpull and Logpush](/logs/).                                                                                      |
+| Managed { props.src === "dash" ? "Headers" : "headers" } Read                                   | Grants read access to [Managed Headers](/rules/transform/managed-transforms/).                                                             |
+| Managed { props.src === "dash" ? "Headers" : "headers" } {props.editWord}                       | Grants write access to [Managed Headers](/rules/transform/managed-transforms/).                                                            |
+| Origin { props.src === "dash" && "Rules" } Read                                                 | Grants read access to [Origin Rules](/rules/origin-rules/).                                                                                |
+| Origin { props.src === "dash" && "Rules" } {props.editWord}                                     | Grants write access to [Origin Rules](/rules/origin-rules/).                                                                               |
+| Page Rules Read                                                                                 | Grants read access to [Page Rules](/rules/page-rules/).                                                                                    |
+| Page Rules {props.editWord}                                                                     | Grants write access to [Page Rules](/rules/page-rules/).                                                                                   |
+| { props.src === "api" && "Domain" } Page Shield Read                                            | Grants read access to [Page Shield](/page-shield/).                                                                                        |
+| { props.src === "api" && "Domain" } Page Shield {props.editWord}                                | Grants write access to [Page Shield](/page-shield/).                                                                                       |
+| Response Compression Read                                                                       | Grants read access to [Response Compression](/rules/compression-rules/).                                                                   |
+| Response Compression {props.editWord}                                                           | Grants write access to [Response Compression](/rules/compression-rules/).                                                                  |
+| Sanitize Read                                                                                   | Grants read access to sanitization.                                                                                                        |
+| Sanitize {props.editWord}                                                                       | Grants write access to sanitization.                                                                                                       |
+| { props.src === "dash" ? "Single Redirect" : "Dynamic URL Redirects" } Read                     | Grants read access to zone-level [Single Redirects](/rules/url-forwarding/single-redirects/).                                              |
+| { props.src === "dash" ? "Single Redirect" : "Dynamic URL Redirects" } {props.editWord}         | Grants write access to zone-level [Single Redirects](/rules/url-forwarding/single-redirects/).                                             |
+| SSL and Certificates Read                                                                       | Grants read access to [SSL configuration and certificate management](/ssl/).                                                               |
+| SSL and Certificates {props.editWord}                                                           | Grants write access to [SSL configuration and certificate management](/ssl/).                                                              |
+| { props.src === "api" && "Zone" } Transform Rules Read                                          | Grants read access to [Transform Rules](/rules/transform/).                                                                                |
+| { props.src === "api" && "Zone" } Transform Rules {props.editWord}                              | Grants write access to [Transform Rules](/rules/transform/).                                                                               |
+| Waiting { props.src === "dash" ? "Room" : "Rooms" } Read                                        | Grants read access to [Waiting Room](/waiting-room/).                                                                                      |
+| Waiting { props.src === "dash" ? "Room" : "Rooms" } {props.editWord}                            | Grants write access to [Waiting Room](/waiting-room/).                                                                                     |
+| Web3 Hostnames Read                                                                             | Grants read access to [Web3 Hostnames](/web3/).                                                                                            |
+| Web3 Hostnames {props.editWord}                                                                 | Grants write access to [Web3 Hostnames](/web3/).                                                                                           |
+| Workers Routes Read                                                                             | Grants read access to [Cloudflare Workers](/workers/) and [Workers KV Storage](/kv/api/).                                                  |
+| Workers Routes {props.editWord}                                                                 | Grants write access to [Cloudflare Workers](/workers/) and [Workers KV Storage](/kv/api/).                                                 |
+| Zaraz Read                                                                                      | Grants read access to [Zaraz](/zaraz/) zone level settings.                                                                                |
+| Zaraz {props.editWord}                                                                          | Grants write access to [Zaraz](/zaraz/) zone level settings.                                                                               |
+| Zone Read                                                                                       | Grants read access to zone management.                                                                                                     |
+| Zone {props.editWord}                                                                           | Grants write access to zone management.                                                                                                    |
+| Zone Settings Read                                                                              | Grants read access to zone settings.                                                                                                       |
+| Zone Settings {props.editWord}                                                                  | Grants write access to zone settings.                                                                                                      |
+| Zone Versioning Read                                                                            | Grants read access to [Zone Versioning](/version-management/) at zone level.                                                               |
+| Zone Versioning {props.editWord}                                                                | Grants write access to [Zone Versioning](/version-management/) at zone level.                                                              |
+| Zone WAF Read                                                                                   | Grants read access to [Zone WAF](/waf/).                                                                                                   |
+| Zone WAF {props.editWord}                                                                       | Grants write access to [Zone WAF](/waf/).                                                                                                  |
