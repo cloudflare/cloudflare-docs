@@ -17,7 +17,7 @@ import { Tabs, TabItem } from '~/components';
    | ------------ | --------- | ------------- | -------------- |
    | Service Auth | Include   | Service Token | `<TOKEN-NAME>` |
 
-		 Make sure **Action** is set to _Service Auth_ and not _Allow_.
+		 Make sure to set **Action** to _Service Auth_ instead of _Allow_.
 4. Add the Access policy to your [device enrollment permissions](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/#set-device-enrollment-permissions).
 5. In your MDM [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/), add the following fields:
    * `auth_client_id`: The **Client ID** of your service token.
