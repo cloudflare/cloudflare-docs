@@ -120,7 +120,7 @@ Some SaaS applications require SSO providers to provide tokens to the browser wi
 - **Hybrid flows**: Used by applications that require information from the ID token before authenticating the user.
 - **Implicit flows**: (Not recommended) Typically used by frontend applications that cannot store secrets and which do not support **PKCE without client secret**.
 
-Cloudflare may include different `response_type` values in the authorization request depending on the selected flow. For example, the implicit flow allows Cloudflare to send the ID token, Access token, or both the ID token and Access token.
+Cloudflare allows various `response_type` values in the authorization request depending on the selected flow. For example, the implicit flow allows Cloudflare to return the ID token, Access token, or both the ID token and Access token from the Authorization endpoint.
 
 | `response_type` values | Default flow | Hybrid flow | Implicit flow |
 | -------------- | -- | -- | -- |
