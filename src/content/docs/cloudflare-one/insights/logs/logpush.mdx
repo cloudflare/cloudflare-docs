@@ -17,15 +17,15 @@ With Cloudflare's [Logpush](/logs/about/) service, you can configure the automat
 Zero Trust does not support configuring [Cloudflare R2](/logs/get-started/enable-destinations/r2/) as a Logpush destination in the dashboard. To use R2 as a destination for Zero Trust logs, configure your Logpush jobs [with the API](/logs/get-started/enable-destinations/r2/#manage-via-api).
 :::
 
-To enable Logpush for Zero Trust logs:
+To configure Logpush for Zero Trust logs:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Logs** > **Logpush**.
-2. Select **Add Logpush job**.
-3. Select **Create a Logpush job**.
-4. In **Select a destination**, select the service you want to export your logs to.
+2. If this is your first Logpush job, select **Add a Logpush job**. Otherwise, select **Go to logpush configurations**.
+3. In Logpush, select **Create a Logpush job**.
+4. Choose a [Logpush destination](/logs/get-started/enable-destinations/).
 5. Follow the service-specific instructions to configure and validate your destination.
-6. Choose the [**Zero Trust datasets**](#zero-trust-datasets) you would like to export.
-7. Enter a **Job name**, any [filters](/logs/reference/filters/) you would like to add, and the data fields you want to include in the log.
+6. Choose the [Zero Trust datasets](#zero-trust-datasets) to export.
+7. Enter a **Job name**, any [filters](/logs/reference/filters/) you would like to add, and the data fields you want to include in the logs.
 8. (Optional) In **Advanced settings**, choose the timestamp format you prefer and whether you want to enable log sampling.
 9. Select **Submit**.
 

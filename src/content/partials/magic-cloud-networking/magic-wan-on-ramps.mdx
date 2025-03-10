@@ -41,7 +41,7 @@ Choose this option if you have a single virtual private cloud (VPC) in your clou
 4. Go to **Connect an existing VPC to Cloudflare** > **Select**.
 5. Give your new on-ramp a name and a description (optional), then select **Continue**.
 6. From the drop-down menu, choose your cloud provider. You can choose between AWS, GCP and Azure. Then, select **Continue**.
-7. Select the network that you want to connect to. This list comes from the [cloud integrations](/magic-cloud-networking/get-started/#2-set-up-cloud-integrations) you have already set up. When you are done, select **Continue**.
+7. Select the network that you want to connect to. This list comes from the [cloud integrations](/magic-cloud-networking/get-started/) you have already set up. When you are done, select **Continue**.
 8. **Configure route propagation** shows where Cloudflare will install the new routes. Installing these routes is required to correctly configure both Magic WAN and your cloud provider, and ensure successful communication between them:
 	- **Add routes for your Magic WAN address space to your cloud network**: Select this option to install routes for reaching Magic WAN in your cloud network's route tables (refer to [Magic WAN Address Space](#magic-wan-address-space) to learn what routes are installed and how to customize them). If you prefer to do this manually, unselect this option.
 		:::caution[Warning]
@@ -75,7 +75,7 @@ When you configure a hub on-ramp, Cloudflare always manages the VPN tunnel betwe
 4. Go to **Connect an existing hub to Cloudflare** > **Select**.
 5. Give your new on-ramp a name and a description (optional), then select **Continue**.
 6. From the drop-down menu, choose your cloud provider. You can choose between AWS, GCP, and Azure. Then, select **Continue**.
-7. Choose an existing hub. This list comes from the [cloud integrations](/magic-cloud-networking/get-started/#2-set-up-cloud-integrations) you have already set up. When you are done, select **Continue**.
+7. Choose an existing hub. This list comes from the [cloud integrations](/magic-cloud-networking/get-started/) you have already set up. When you are done, select **Continue**.
 8. (*Optional*) In **VPC peering configuration**, you can enable **Manage VPC peering**. This allows Cloudflare to attach your chosen VPCs to the hub:
 	1. Select **Manage VPC peering** to enable this feature.
 	2. Choose the VPCs you want Cloudflare to attach to the hub.
@@ -104,7 +104,7 @@ You have successfully created your Magic WAN on-ramp. However, on-ramp creation 
 5. Give your new on-ramp a name and a description (optional), then select **Continue**.
 6. Configure your cloud in **Select your cloud details**:
 	1. From the drop-down menu, choose your cloud provider. You can choose between AWS, GCP, and Azure.
-	2. Choose an existing integration. This list comes from the [cloud integrations](/magic-cloud-networking/get-started/#2-set-up-cloud-integrations) you have already set up.
+	2. Choose an existing integration. This list comes from the [cloud integrations](/magic-cloud-networking/get-started/) you have already set up.
 	3. Choose a region in which to create the new hub.
 	4. Select **Continue**.
 7. (*Optional*) In **VPC peering configuration**, you can enable **Manage VPC peering**. This allows Cloudflare to attach your chosen VPCs to the hub:

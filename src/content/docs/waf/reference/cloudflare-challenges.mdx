@@ -166,11 +166,13 @@ You can customize your favicon by using the HTML snippet below.
 
 ---
 
-## Custom Content Security Policy not supported
+## Caveats for Transform Rules and custom error pages
 
 You cannot set your own Content Security Policy (CSP) and/or Referer-Policy via meta tags or [Transform Rules](/rules/transform/) in challenge pages.
 
-If you are setting a CSP using Transform Rules for your entire website, you should [exclude URI paths starting with `/cdn-cgi/challenge-platform/`](/rules/reference/troubleshooting/#interaction-between-cloudflare-challenges-and-rules-features) in the rule expression to avoid issues with challenges.
+Origin headers also cannot be modified for challenge pages.
+
+If you are setting any of these headers using Transform Rules for your entire website, you must prefix the rule with `not (starts_with(http.request.uri.path, "/cdn-cgi/challenge-platform/") or cf.response.error_type in {"managed_challenge" "iuam" "legacy_challenge" "country_challenge"})` in the rule expression to avoid issues with challenges.
 
 ---
 
