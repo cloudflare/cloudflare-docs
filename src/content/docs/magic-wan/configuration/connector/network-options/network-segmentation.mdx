@@ -4,7 +4,7 @@ title: Network segmentation
 description: Define policies to define if traffic should flow between your LANs without leaving your local premises, or if traffic should be forwarded to Cloudflare for additional security configurations.
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { APIRequest, Render, TabItem, Tabs } from "~/components";
 
 You can define policies in your Connector to either allow traffic to flow between your LANs without it leaving your local premises or to forward it via the Cloudflare network where you can add additional security features. The default behavior is to drop all LAN-to-LAN traffic. These policies can be created for specific subnets, and link two LANs.
 
@@ -76,11 +76,10 @@ Example:
 <APIRequest
   path="/accounts/{account_id}/magic/sites/{site_id}/acls"
   method="POST"
-  json={{
 
-  }}
 />
 
+**OLD**
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/acls \
 --header "X-Auth-Email: <EMAIL>" \
