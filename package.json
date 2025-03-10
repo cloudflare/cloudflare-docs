@@ -40,6 +40,7 @@
 		"@cloudflare/workers-types": "4.20250303.0",
 		"@codingheads/sticky-header": "1.0.2",
 		"@expressive-code/plugin-collapsible-sections": "0.40.2",
+		"@floating-ui/react": "0.27.5",
 		"@iarna/toml": "2.2.5",
 		"@marsidev/react-turnstile": "1.1.0",
 		"@octokit/webhooks-types": "7.6.1",
