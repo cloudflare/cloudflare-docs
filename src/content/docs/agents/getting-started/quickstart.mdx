@@ -6,20 +6,21 @@ sidebar:
 
 ---
 
-import { Render, PackageManagers, WranglerConfig } from "~/components"
+import { Render, GitHubCode, PackageManagers, TypeScriptExample, WranglerConfig } from "~/components"
 
 This quick start tutorial will have you build a basic Agent that can generate code based on user questions. It will show you how the Agent SDK works, how to handle requests, store and sync state from within the Agent itself, and how to route to and call Agents from your Workers code.
 
-
 ### Prerequisites
 
-TODO
+<Render file="prereqs" product="workers" />
 
-### Fetch the quick start project
+### Setup the Agent
 
 You can fetch the quick start project using the following command:
 
-<PackageManagers type="create" pkg="cloudflare@latest" args={"agents-quick-start", "--", "--type=agent"} />
+```sh
+npm create cloudflare@latest agents-quick-start -- --template="cloudflare/agents-quick-start"
+```
 
 This will create a new directory called `agents-quick-start`, ask you a few basic questions, and install the necessary dependencies.
 
@@ -35,6 +36,8 @@ cd agents-quick-start
 TODO
 
 ### Run your Agent
+
+OK, it's time to run your first Agent!
 
 You can run your Agent locally, which can be useful during development when iterating and/or when testing your Agent's functionality. To run your Agent locally, use the following command:
 
@@ -54,12 +57,21 @@ Starting local server...
 [wrangler:inf] Ready on http://localhost:8787
 ```
 
-This will
-
+Your Agent is now running locally on your machine, and ready to communicate with the outside world. Leave this server running so we can talk to your Agent in the next step.
 
 ### Communicate with your Agent
 
-The example Agent in this quick start project exposes both HTTP and WebSocket endpoints
+Let's communicate with your Agent and have it run a simple task.
+
+The example Agent in this quick start project exposes both HTTP and WebSocket endpoints, and so we'll use [`wscat`](https://github.com/websockets/wscat) as a command-line WebSocket client to communicate with our Agent's chat endpoint.
+
+Install `wscat`:
+
+```sh
+npm install -g wscat
+```
+
+Run `wscat` and connect to an instance of your Agent (running locally). Remember that each Agent can have many _instances_, each able to interact with users, tools and other APIs independently, as well as store state specific to that instance.
 
 ```sh
 # The code in this project will automatically create a new Agent on-the-fly when
@@ -70,14 +82,69 @@ wscat --connect "ws://localhost:8787/agents/my-agent/abc123def"
 ```
 
 
+#### Agent routing
+
+In the `agents-quick-start` we use the `routeAgentRequest` helper to automatically handle routing to existing and creating new Agent instances on-the-fly.
+
+If you open up `src/index.ts`,
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch(request, env, ctx) {
+		// Built-in Agent routing (recommended to start with)
+		// routeAgentRequest routes HTTP requests and/or WebSocket connections to a specific Agent instance
+		// Expects requests are of the format /agents/:agent/:name
+		//
+		// - :agent is the kebab-case of your Agent class name - e.g. MyAgent becomes my-agent
+		// - :name is provided by the incoming client and names the unique instance of the Agent. NOTE: If an Agent doesn't exist by that name, one will be created on-the-fly.
+		return (await routeAgentRequest(request, env, {})) || Response.json({ msg: 'no agent here' }, { status: 404 });
+	},
+} satisfies ExportedHandler<Env>
+```
+
+</TypeScriptExample>
+
+You can learn about more ways to call into your Agents, as well as how to add authentication in front of your Agents, by reviewing [documentation on Calling Agents](/agents/api-reference/calling-agents/).
+
 ### Deploy your Agent
 
+OK, we've:
 
+1. Learned how the `Agent` class works and how to define our own Agents using the Agents SDK.
+2. Run our Agent locally and communicated with it.
+3. Reviewed how routing to an Agent works, including how Agents are created and retrieved.
+
+Let's deploy our Agent
 
 ### Extend the Agent
 
-TODO
+TODO;
+
+- AI SDK
+
+
+<TypeScriptExample>
+
+```ts
+async aiSDKChat() {
+
+
+}
+```
+
+</TypeScriptExample>
+
+### Optional: Clean-up
+
+TODO: delete
 
 ### Next steps
 
-TODO
+What's next?
+
+* Deploy the [Agents SDK starter app](/agents/getting-started/build-a-chat-agent/): a fully-functioning AI Agent with a React front-end, tool calling, and state sync that is built on the Agents SDK.
+* Review the [Agents API reference](/agents/api-reference/creating-agents/) and the APIs exposed by the Agents SDK.
+* Learn more [using WebSockets](/agents/api-reference/websockets/) to build interactive Agents and stream data back from your Agent.
+* [Orchestrate asynchronous workflows](/agents/api-reference/run-workflows) from your Agent by combining the `agents-sdk` and [Workflows](/workflows).
