@@ -69,9 +69,17 @@ The new policy will ensure that traffic between the specified LANs flows locally
 
 <Render file="connector/account-id-api-key" />
 
-Create a `POST` request [using the API](/api/operations/magic-site-acls-create-acl) to create a network policy.
+Create a `POST` request [using the API](/api/resources/magic_transit/subresources/sites/subresources/acls/methods/create/) to create a network policy.
 
 Example:
+
+<APIRequest
+  path="/accounts/{account_id}/magic/sites/{site_id}/acls"
+  method="POST"
+  json={{
+
+  }}
+/>
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/acls \
