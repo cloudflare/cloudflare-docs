@@ -49,6 +49,19 @@ npx create-cloudflare@latest my-mcp-worker
 cd my-mcp-worker
 ```
 
+### Configure your wrangler file
+
+When you run the setup command, it will build your Worker using the configuration in your wrangler.toml or wrangler.jsonc file. By default, no additional configuration is needed, but if you have multiple Cloudflare accounts, you'll need to specify your account ID as shown below.
+
+<WranglerConfig>
+```toml
+name = "my-mcp-worker"
+main = "src/index.ts"
+compatibility_date = "2025-03-03"
+account_id = "your-account-id"
+```
+</WranglerConfig>
+
 ### Install the MCP tooling
 Inside your project directory, install the [workers-mcp](https://github.com/cloudflare/workers-mcp) package:
 
@@ -71,7 +84,7 @@ This guided installation process takes a brand new or existing Workers project a
 - Installs a local proxy so you can access it from your MCP desktop clients (like Claude Desktop)
 
 ### Set up the MCP Server
-Replace the contents of your src/index.ts with the following boilerplate code:
+The setup command will automatically update your src/index.ts with the following code:
 
 ```ts
 import { WorkerEntrypoint } from 'cloudflare:workers';
