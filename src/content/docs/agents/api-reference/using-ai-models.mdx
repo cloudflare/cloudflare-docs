@@ -34,8 +34,7 @@ import { OpenAI } from "openai"
 
 export class MyAgent extends Agent<Env> {
 	async onConnect(connection: Connection, ctx: ConnectionContext) {
-		// Omitted for simplicity: authenticating the user
-		connection.accept()
+		// 
 	}
 
 	async onMessage(connection: Connection, message: WSMessage) {

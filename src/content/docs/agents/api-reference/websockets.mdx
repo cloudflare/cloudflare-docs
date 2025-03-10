@@ -23,25 +23,10 @@ Here's an example of an Agent that echoes back any message it receives:
 import { Agent, Connection } from "agents-sdk";
 
 export class ChatAgent extends Agent {
-  async onConnect(connection: Connection, ctx: ConnectionContext) {
-  	// Access the request to verify any authentication tokens
-    // provided in headers or cookies
-    let token = ctx.request.headers.get("Authorization");
-    if (!token) {
-      await connection.close(4000, "Unauthorized");
-      return;
-    }
-
-		// Handle auth using your favorite library and/or auth scheme:
- 		// try {
-		// 	 await jwt.verify(token, env.JWT_SECRET);
-		// } catch (error) {
-		// 	 connection.close(4000, 'Invalid Authorization header');
-		// 	 return;
-		// }
-
-		// Accept valid connections
-  	connection.accept()
+	async onConnect(connection: Connection, ctx: ConnectionContext) {
+  	// Connections are automatically accepted by the SDK.
+    // You can also explicitly close a connection here with connection.close()
+    // Access the Request on ctx.request to inspect headers, cookies and the URL
   }
 
   async onMessage(connection: Connection, message: WSMessage) {

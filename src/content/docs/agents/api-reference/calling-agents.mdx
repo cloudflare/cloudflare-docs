@@ -124,7 +124,7 @@ interface Env {
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
 		// Use the onBeforeConnect and onBeforeRequest hooks to authenticate clients
-		// or run logic before handling a
+		// or run logic before handling a HTTP request or WebSocket.
 		return (
 			(await routeAgentRequest(request, env, {
 				// Run logic before a WebSocket client connects

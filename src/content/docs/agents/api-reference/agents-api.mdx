@@ -1,5 +1,5 @@
 ---
-title: Creating Agents
+title: Agents API
 pcx_content_type: concept
 sidebar:
   order: 1
@@ -74,11 +74,9 @@ class MyAgent extends Agent<Env, State> {
   // Called when a WebSocket connection is established
   // Access the original request via ctx.request for auth etc.
   async onConnect(connection: Connection, ctx: ConnectionContext) {
-    // Authenticate the connection
+  	// Connections are automatically accepted by the SDK.
+    // You can also explicitly close a connection here with connection.close()
     // Access the Request on ctx.request to inspect headers, cookies and the URL
-
-    // Accept the connection
-    connection.accept();
   }
 
   // Called for each message received on a WebSocket connection
