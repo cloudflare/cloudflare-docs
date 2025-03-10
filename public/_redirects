@@ -105,6 +105,7 @@
 /agents/examples/schedule-tasks/ /agents/api-reference/schedule-tasks/ 301
 /agents/examples/using-ai-models/ /agents/api-reference/using-ai-models/ 301
 /agents/examples/websockets/ /agents/api-reference/websockets/ 301
+/agents/examples/sdk/ /agents/api-reference/creating-agents/ 301
 
 # ai
 /ai/ /use-cases/ai/ 301

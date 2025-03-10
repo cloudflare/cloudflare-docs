@@ -100,6 +100,57 @@ export class MyAgent extends Agent<Env> {
 ```
 </TypeScriptExample>
 
+### Authenticating Agents
+
+When building and deploying Agents using the Agents SDK, you will often want to authenticate clients before passing requests to an Agent in order to restrict who the Agent will call, authorize specific users for specific Agents, and/or to limit who can access administrative or debug APIs exposed by an Agent.
+
+As best practices:
+
+* Handle authentication in your Workers code, before you invoke your Agent.
+* Use the built-in hooks when using the `routeAgentRequest` helper - `on
+* Use your preferred router (such as Hono) and authentication middleware or provider to apply custom authentication schemes before calling an Agent.
+
+The `routeAgentRequest` helper documented earlier in this guide exposes two useful hooks (`onBeforeConnect`, `onBeforeRequest`) that allow you to apply custom logic before creating or retrieving an Agent:
+
+<TypeScriptExample>
+
+```ts
+import { Agent, AgentNamespace, getAgentByName, routeAgentRequest } from 'agents-sdk';
+
+interface Env {
+	MyAgent: AgentNamespace<MyAgent>;
+}
+
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		// Use the onBeforeConnect and onBeforeRequest hooks to authenticate clients
+		// or run logic before handling a
+		return (
+			(await routeAgentRequest(request, env, {
+				// Run logic before a WebSocket client connects
+				onBeforeConnect: (request) => {
+					// Your code/auth code here
+					// You can return a Response here - e.g. a HTTP 403 Not Authorized -
+					// which will stop further request processing and will NOT invoke the
+					// Agent.
+					// return Response.json({"error": "not authorized"}, { status: 403 })
+				},
+				// Run logic before a HTTP client clients
+				onBeforeRequest: (request) => {
+					// Your code/auth code here
+					// Returning nothing will result in the call to the Agent continuing
+				},
+				// Prepend a prefix for how your Agents are named here
+				prefix: 'name-prefix-here',
+			})) || Response.json({ msg: 'no agent here' }, { status: 404 })
+		);
+
+	},
+} satisfies ExportedHandler<Env>;
+```
+</TypeScriptExample>
+
+If you are using `getAgentByName` or the underlying Durable Objects routing API, you should authenticate incoming requests or WebSocket connections before calling `getAgentByName`.
 
 ### Next steps
 
