@@ -5,7 +5,7 @@ head: []
 description: Enable your Worker to be executed on a schedule.
 ---
 
-import { WranglerConfig } from "~/components";
+import { Render, WranglerConfig } from "~/components";
 
 ## Background
 
@@ -27,7 +27,9 @@ Cron Triggers execute on UTC time.
 
 To respond to a Cron Trigger, you must add a [`"scheduled"` handler](/workers/runtime-apis/handlers/scheduled/) to your Worker.
 
-Refer to the following examples to write your code:
+<Render file="cron-trigger-example" />
+
+Refer to the following additional examples to write your code:
 
 - [Setting Cron Triggers](/workers/examples/cron-trigger/)
 - [Multiple Cron Triggers](/workers/examples/multiple-cron-triggers/)
@@ -56,8 +58,6 @@ crons = [ "*/3 * * * *", "0 15 1 * *", "59 23 LW * *" ]
 </WranglerConfig>
 
 You also can set a different Cron Trigger for each [environment](/workers/wrangler/environments/) in your [Wrangler configuration file](/workers/wrangler/configuration/). You need to put the `[triggers]` table under your chosen environment. For example:
-
-
 
 <WranglerConfig>
 

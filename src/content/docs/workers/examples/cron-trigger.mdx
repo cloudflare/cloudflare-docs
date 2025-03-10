@@ -13,34 +13,9 @@ sidebar:
 description: Set a Cron Trigger for your Worker.
 ---
 
-import { TabItem, Tabs, WranglerConfig } from "~/components";
+import { Render, TabItem, Tabs, WranglerConfig } from "~/components";
 
-<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
-
-```js
-export default {
-	async scheduled(event, env, ctx) {
-		console.log("cron processed");
-	},
-};
-```
-
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-
-```ts
-interface Env {}
-export default {
-	async scheduled(
-		controller: ScheduledController,
-		env: Env,
-		ctx: ExecutionContext,
-	) {
-		console.log("cron processed");
-	},
-};
-```
-
-</TabItem> </Tabs>
+<Render file="cron-trigger-example" />
 
 ## Set Cron Triggers in Wrangler
 
@@ -62,8 +37,6 @@ crons = ["0 * * * *"]
 </WranglerConfig>
 
 You also can set a different Cron Trigger for each [environment](/workers/wrangler/environments/) in your [Wrangler configuration file](/workers/wrangler/configuration/). You need to put the `[triggers]` table under your chosen environment. For example:
-
-
 
 <WranglerConfig>
 
