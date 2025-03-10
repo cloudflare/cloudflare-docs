@@ -13,44 +13,11 @@ import { Aside } from '@astrojs/starlight/components';
 
 [Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction) is an open standard that allows AI agents and assistants (like [Claude Desktop](https://claude.ai/download) or [Cursor](https://www.cursor.com/)) to interact with services directly. If you want users to access your service through an AI assistant, you can spin up an MCP server for your application.
 
-### Why use Cloudflare Workers for MCP?
+### Building an MCP Server on Workers
 
 With Cloudflare Workers and the [workers-mcp](https://github.com/cloudflare/workers-mcp/) package, you can turn any API or service into an MCP server with minimal setup. Just define your API methods as TypeScript functions, and workers-mcp takes care of tool discovery, protocol handling, and request routing. Once deployed, MCP clients like Claude can connect and interact with your service automatically.
 
-#### Example: Exposing a Weather API as an MCP server
-
-Here’s a Cloudflare Worker that fetches weather data from an external API and exposes it as an MCP tool that Claude can call directly:
-
-```ts
-import { WorkerEntrypoint } from 'cloudflare:workers';
-import { ProxyToSelf } from 'workers-mcp';
-
-export default class WeatherWorker extends WorkerEntrypoint<Env> {
-  /**
-   * Get current weather for a location
-   * @param location {string} City name or zip code
-   * @return {object} Weather information
-   */
-  async getWeather(location: string) {
-    // Connect to a weather API
-    const response = await fetch(`https://api.weather.example/v1/${location}`);
-    const data = await response.json();
-    return {
-      temperature: data.temp,
-      conditions: data.conditions,
-      forecast: data.forecast
-    };
-  }
-
-  /**
-   * @ignore
-   */
-  async fetch(request: Request): Promise<Response> {
-    // ProxyToSelf handles MCP protocol compliance
-    return new ProxyToSelf(this).fetch(request);
-  }
-}
-```
+Below we will run you through an example of building an MCP server that fetches weather data from an external API and exposes it as an MCP tool that Claude can call directly:
 
 **How it works:**
 * **TypeScript methods as MCP tools:** Each public method in your class is exposed as an MCP tool that agents can call. In this example, getWeather is the tool that fetches data from an external weather API.
@@ -138,11 +105,45 @@ This converts your Cloudflare Worker into an MCP server, enabling interactions w
 
 **Note:** Every public method that is annotated with JSDoc becomes an MCP tool that is discoverable by AI assistants. 
 
+### Add data fetching to the MCP
+
+When building an MCP, in many cases, you will need to connect to a resource or an API to take an action. To do this you can use the `fetch` method to make direct API calls, such as in the example below for grabbing the current wearther: 
+
+```ts
+import { WorkerEntrypoint } from 'cloudflare:workers';
+import { ProxyToSelf } from 'workers-mcp';
+
+export default class WeatherWorker extends WorkerEntrypoint<Env> {
+  /**
+   * Get current weather for a location
+   * @param location {string} City name or zip code
+   * @return {object} Weather information
+   */
+  async getWeather(location: string) {
+    // Connect to a weather API
+    const response = await fetch(`https://api.weather.example/v1/${location}`);
+    const data = await response.json();
+    return {
+      temperature: data.temp,
+      conditions: data.conditions,
+      forecast: data.forecast
+    };
+  }
+
+  /**
+   * @ignore
+   */
+  async fetch(request: Request): Promise<Response> {
+    // ProxyToSelf handles MCP protocol compliance
+    return new ProxyToSelf(this).fetch(request);
+  }
+}
+```
 
 ### Deploy the MCP server
 Update your wrangler.toml with the appropriate configuration then deploy your Worker:
 ```bash
-wrangler deploy
+npx wrangler deploy
 ```
 
 Your MCP server is now deployed globally and all your public class methods are exposed as MCP tools that AI assistants can now interact with. 
