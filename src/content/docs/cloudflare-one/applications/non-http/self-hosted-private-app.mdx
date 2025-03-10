@@ -18,7 +18,6 @@ This feature replaces the legacy [private network app type](/cloudflare-one/appl
 
 - Private IPs and hostnames are reachable over Cloudflare WARP, Magic WAN or Browser Isolation. For more details, refer to [Connect a private network](/cloudflare-one/connections/connect-networks/private-net/).
 - Private hostnames route to your custom DNS resolver through [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) or [Gateway resolver policies](/cloudflare-one/policies/gateway/resolver-policies/).
-- [Gateway TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) must be enabled if you would like to present a login page in the browser and issue an authorization JWT to your origin. Otherwise, users will receive a pop-up notification from the WARP client and all session management will be handled in the WARP client.
 
 ## Add your application to Access
 
@@ -70,6 +69,17 @@ This feature replaces the legacy [private network app type](/cloudflare-one/appl
 14. Select **Save**.
 
 Users can now connect to your private application after authenticating with Cloudflare Access.
+
+## Login page
+
+### Browser notification
+
+To prompt users to login in the browser, [Gateway TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) must be enabled. When the user connects to your private hostname or IP, Access will open your [login page](/cloudflare-one/applications/login-page/) and issue an authorization JWT to your origin.
+
+### System notification
+If you do not turn on [Gateway TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/), users will receive a pop-up notification from the WARP client and all session management will be handled in the WARP client.
+
+<Render file="gateway/client-notifications-os" product="cloudflare-one" />
 
 ## Modify order of precedence in Gateway
 
