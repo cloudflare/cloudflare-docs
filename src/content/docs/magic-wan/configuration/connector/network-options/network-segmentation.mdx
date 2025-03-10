@@ -76,7 +76,36 @@ Example:
 <APIRequest
   path="/accounts/{account_id}/magic/sites/{site_id}/acls"
   method="POST"
-
+	json={{
+		"acl": {
+    "description": "<POLICY_DESCRIPTION>",
+    "forward_locally": true,
+    "lan_1": {
+      "lan_id": "<LAN_ID>",
+      "lan_name": "<LAN_NAME>",
+      "ports": [
+        1
+      ],
+      "subnets": [
+        "192.0.2.1"
+      ]
+    },
+    "lan_2": {
+      "lan_id": "<LAN_ID>",
+      "lan_name": "<LAN_NAME",
+      "ports": [
+        1
+      ],
+      "subnets": [
+        "192.0.2.1"
+      ]
+    },
+    "name": "<POLICY_NAME>",
+    "protocols": [
+      "tcp"
+    ]
+  }
+  }}
 />
 
 **OLD**
