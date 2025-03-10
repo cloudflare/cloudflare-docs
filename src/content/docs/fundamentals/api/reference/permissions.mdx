@@ -39,14 +39,20 @@ The applicable scope of account permissions is `com.cloudflare.api.account`.
 
 <Render
 	file="account-permissions-table"
-	params={{ one: "Edit", two: "Cloudflare", three: "Cloudflare" }}
+	params={{
+		editWord: "Edit",
+		src: "dash",
+	}}
 />
 
 </TabItem> <TabItem label="API">
 
 <Render
 	file="account-permissions-table"
-	params={{ one: "Write", two: "Argo", three: "" }}
+	params={{
+		editWord: "Write",
+		src: "api",
+	}}
 />
 
 </TabItem> </Tabs>
