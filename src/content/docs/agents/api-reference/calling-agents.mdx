@@ -107,8 +107,8 @@ When building and deploying Agents using the Agents SDK, you will often want to 
 As best practices:
 
 * Handle authentication in your Workers code, before you invoke your Agent.
-* Use the built-in hooks when using the `routeAgentRequest` helper - `on
-* Use your preferred router (such as Hono) and authentication middleware or provider to apply custom authentication schemes before calling an Agent.
+* Use the built-in hooks when using the `routeAgentRequest` helper - `onBeforeConnect` and `onBeforeRequest`
+* Use your preferred router (such as Hono) and authentication middleware or provider to apply custom authentication schemes before calling an Agent using other methods.
 
 The `routeAgentRequest` helper documented earlier in this guide exposes two useful hooks (`onBeforeConnect`, `onBeforeRequest`) that allow you to apply custom logic before creating or retrieving an Agent:
 
@@ -184,6 +184,7 @@ app.get('/code-review/:id', async (c) => {
 
 </TypeScriptExample>
 
+This ensures we only create Agents for authenticated users, and allows you to validate Agent names conform to your preferred naming scheme before instances are created.
 
 ### Next steps
 
