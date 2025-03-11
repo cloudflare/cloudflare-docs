@@ -54,49 +54,7 @@ The traffic for that application will now go directly to the Internet and bypass
 
 <Render file="connector/account-id-api-key" />
 
-1.  Send a [`GET` request](/api/resources/magic_transit/subresources/apps/methods/list/) to list the applications associated with an account.
-
-	Example:
-
-	<APIRequest
-	path="/accounts/{account_id}/magic/apps"
-	method="GET"
-	/>
-
-	```json output
-	{
-		"errors": [
-			{
-				"code": 1000,
-				"message": "message"
-			}
-		],
-		"messages": [
-			{
-				"code": 1000,
-				"message": "message"
-			}
-		],
-		"result": [
-			{
-				"account_app_id": "ac60d3d0435248289d446cedd870bcf4",
-				"hostnames": [
-					"auth.cloudflare.com"
-				],
-				"ip_subnets": [
-					"192.0.2.0/24"
-				],
-				"name": "Cloudflare Dashboard",
-				"type": "Development"
-			}
-		],
-		"success": true
-	}
-	```
-
-	Take note of the `"managed_app_id"` value for any application you want to configure.
-
-2.  Send a [`POST` request](/api/resources/magic_transit/subresources/apps/methods/create/) to add new apps the breakout traffic policy.
+1.  Send a [`POST` request](/api/resources/magic_transit/subresources/apps/methods/create/) to add new apps the breakout traffic policy.
 
 	<APIRequest
 	path="/accounts/{account_id}/magic/apps"
