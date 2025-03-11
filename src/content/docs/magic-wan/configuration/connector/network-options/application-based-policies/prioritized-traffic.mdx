@@ -36,21 +36,21 @@ The traffic for the applications you chose are now processed first by Connector.
 
 <Render file="connector/account-id-api-key" />
 
+1. Send a [`POST` request](/api/resources/magic_transit/subresources/apps/methods/create/) to add new apps the priority traffic policy.
 
-2. Send a [`POST` request](/api/resources/magic_transit/subresources/apps/methods/create/) to add new apps the priority traffic policy.
+	Example:
 
-   Example:
+	<APIRequest
+	path="/accounts/{account_id}/magic/apps"
+	method="POST"
+	json={{
+	"name": "<MANAGED_APP_ID>",
+	"type": "priority"
+	}}
+	/>
 
-   ```bash
-   curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/app_configs \
-   --header "X-Auth-Email: <EMAIL>" \
-   --header "X-Auth-Key: <API_KEY>" \
-   --header "Content-Type: application/json" \
-   --data '{
-   	"managed_app_id": "<MANAGED_APP_ID>",
-   	"priority": 1
-   }'
-   ```
+
+
 
    ```json output
    {
