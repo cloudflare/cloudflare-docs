@@ -56,28 +56,43 @@ The traffic for that application will now go directly to the Internet and bypass
 
 1.  Send a [`GET` request](/api/resources/magic_transit/subresources/apps/methods/list/) to list the applications associated with an account.
 
-    Example:
+	Example:
 
-		<APIRequest
-		path="/accounts/{account_id}/magic/apps"
-		method="GET"
-		/>
+	<APIRequest
+	path="/accounts/{account_id}/magic/apps"
+	method="GET"
+	/>
 
-    ```json output
-    {
-    	"result": [
-    		{
-    			"managed_app_id": "<MANAGED_APP_ID>",
-    			"name": "<APP_NAME>",
-    			"type": "<TYPE_OF_APP>",
-    			"hostnames": ["<HOSTNAME1.com>", "<HOSTNAME2.info>"]
-    		}
-    	],
-    	"success": true,
-    	"errors": [],
-    	"messages": []
-    }
-    ```
+	```json output
+	{
+		"errors": [
+			{
+				"code": 1000,
+				"message": "message"
+			}
+		],
+		"messages": [
+			{
+				"code": 1000,
+				"message": "message"
+			}
+		],
+		"result": [
+			{
+				"account_app_id": "ac60d3d0435248289d446cedd870bcf4",
+				"hostnames": [
+					"auth.cloudflare.com"
+				],
+				"ip_subnets": [
+					"192.0.2.0/24"
+				],
+				"name": "Cloudflare Dashboard",
+				"type": "Development"
+			}
+		],
+		"success": true
+	}
+	```
 
     Take note of the `"managed_app_id"` value for any application you want to configure.
 
