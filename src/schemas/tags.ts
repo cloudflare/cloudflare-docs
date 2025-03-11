@@ -80,6 +80,8 @@ const protocols: Array<object> = [
 ];
 
 const operating_systems: Array<object> = [
+	{ label: "Android" },
+	{ label: "iOS" },
 	{ label: "Linux" },
 	{ label: "MacOS", variants: ["OS X"] },
 	{ label: "Windows", variants: ["ms windows"] },
