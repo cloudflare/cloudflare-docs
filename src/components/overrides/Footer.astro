@@ -2,29 +2,8 @@
 import Default from "@astrojs/starlight/components/Footer.astro";
 import OneTrust from "../OneTrust.astro";
 import FeedbackPrompt from "../FeedbackPrompt.tsx";
-import { getEntry } from "astro:content";
 
-let links = {
-	"Cloudflare Dashboard": "https://dash.cloudflare.com",
-	Discord: "https://discord.cloudflare.com",
-	Community: "https://community.cloudflare.com",
-	"Learning Center": "https://www.cloudflare.com/learning/",
-	"Support Portal": "/support/contacting-cloudflare-support/",
-};
-
-const currentSection = Astro.params.slug?.split("/")[0];
-
-if (currentSection) {
-	const product = await getEntry("products", currentSection);
-
-	if (product) {
-		if (product.data.resources?.dashboard_link) {
-			links["Cloudflare Dashboard"] = product.data.resources.dashboard_link;
-		}
-	}
-}
-
-const homepageLinks = Object.entries({
+const groups = Object.entries({
 	Resources: [
 		{ text: "API", href: "/api/" },
 		{
@@ -61,14 +40,15 @@ const homepageLinks = Object.entries({
 	],
 });
 
-const homepageLegalLinks = Object.entries({
+const links = Object.entries({
 	"Privacy Policy": "https://www.cloudflare.com/privacypolicy/",
 	"Terms of Use": "https://www.cloudflare.com/website-terms/",
 	"Report Security Issues": "https://www.cloudflare.com/disclosure/",
 	Trademark: "https://www.cloudflare.com/trademark/",
 });
 
-const isHomepage = Astro.locals.starlightRoute.id === "";
+const homepage = Astro.locals.starlightRoute.entry.id === "";
+const splash = Astro.locals.starlightRoute.entry.data.template === "splash";
 
 let isProduction = false;
 
@@ -81,76 +61,67 @@ if (
 ---
 
 {
-	isHomepage ? (
-		<>
-			<div class="bleed !mt-0">
-				<div class="flex flex-wrap justify-between bg-[#001C43] py-6">
-					{homepageLinks.map(([header, links]) => (
-						<div class="basis-1/2 md:basis-auto">
-							<strong class="text-gray-400">{header}</strong>
-							<ul class="list-none pl-0">
-								{links.map((link) => (
-									<li>
-										<a href={link.href} class="text-white no-underline">
-											{link.text}
-										</a>
-									</li>
-								))}
-							</ul>
-						</div>
-					))}
-				</div>
-			</div>
-			<div>
-				<ul class="flex list-outside justify-center gap-x-4 pl-0 text-xs text-gray-600 dark:!text-gray-400">
-					<li class="list-none text-gray-600 dark:text-gray-400">
-						2024 Cloudflare, Inc.
-					</li>
-					{homepageLegalLinks.map(([text, href]) => (
-						<li>
-							<a
-								href={href}
-								class="text-gray-600 no-underline dark:!text-gray-400"
-							>
-								{text}
-							</a>
-						</li>
-					))}
-					<li class="text-gray-600 dark:!text-gray-400">
-						{isProduction && <OneTrust />}
-					</li>
-				</ul>
-			</div>
-		</>
-	) : (
-		<div>
-			<div class="feedback-prompt">
-				<FeedbackPrompt client:idle />
-			</div>
-			<Default />
-			<div id="footer-links" class="mt-6 flex flex-wrap items-center space-x-4">
-				{Object.entries(links).map(([text, href]) => (
-					<a href={href} class="text-xs text-black decoration-accent">
-						<span>{text}</span>
-					</a>
-				))}
-				{isProduction && (
-					<div class="text-xs text-black [&>button]:underline [&>button]:decoration-accent">
-						<OneTrust />
-					</div>
-				)}
-			</div>
+	!homepage && (
+		<div class="feedback-prompt">
+			<FeedbackPrompt client:idle />
 		</div>
 	)
 }
+{!splash && <Default />}
+<div class="w-full">
+	<div class="grid grid-cols-2 gap-8 pb-10 pt-6 md:grid-cols-4">
+		{
+			groups.map(([title, items]) => (
+				<ul class="flex w-full list-none flex-col gap-3 pl-0">
+					<li class="text-xs leading-5">
+						<strong>{title}</strong>
+					</li>
+					{items.map((link) => (
+						<li class="text-sm">
+							<a href={link.href} class="!text-black no-underline">
+								{link.text}
+							</a>
+						</li>
+					))}
+				</ul>
+			))
+		}
+	</div>
+	<div>
+		<ul
+			class="flex list-inside flex-wrap items-center justify-center gap-3 gap-y-4 pl-0 text-xs !text-cl1-gray-4 dark:!text-cl1-gray-7"
+		>
+			<li class="list-none">2025 Cloudflare, Inc.</li>
+			{
+				links.map(([text, href]) => (
+					<li>
+						<a
+							href={href}
+							class="!text-cl1-gray-4 no-underline dark:!text-cl1-gray-7"
+						>
+							{text}
+						</a>
+					</li>
+				))
+			}
+			{
+				isProduction && (
+					<li>
+						<OneTrust />
+					</li>
+				)
+			}
+		</ul>
+	</div>
+</div>
 
 <style>
 	:global(footer) {
 		flex-direction: column-reverse !important;
-	}
 
-	:global(.meta) {
-		margin-top: 0 !important;
+		.meta {
+			margin-top: 0 !important;
+		}
 	}
 
 	.feedback-prompt {
@@ -169,10 +140,5 @@ if (
 				display: none;
 			}
 		}
-	}
-
-	.bleed {
-		box-shadow: 0 0 0 100vmax #001c43 !important;
-		clip-path: inset(0 -100vmax);
 	}
 </style>
