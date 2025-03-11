@@ -38,9 +38,13 @@ Review the [Agents API reference](/agents/api-reference/agents-api/) to learn mo
 
 ### Implementing Server-Sent Events
 
-The Agents SDK support Server-Sent Events: 
+The Agents SDK support Server-Sent Events directly: you can use SSE to stream data back to the client over a long running connection. This avoids buffering large responses, which can both make your Agent feel slow, and forces you to buffer the entire response in memory.
 
-The below example uses the AI SDK to generate text and stream it back to the client. It will automatically stream 
+When an Agent is deployed to Cloudflare Workers, there is no effective limit on the total time it takes to stream the response back: large AI model responses that take several minutes to reason and then respond will not be prematurely terminated.
+
+Note that this does not mean the client can't potentially disconnect during the streaming process: you can account for this by either [writing to the Agent's stateful storage](/agents/api-reference/store-and-sync-state/) and/or [using WebSockets](/agents/api-reference/websockets/). Because you can always [route to the same Agent](/agents/api-reference/calling-agents/), you do not need to use a centralized session store to pick back up where you left off when a client disconnects.
+
+The following example uses the AI SDK to generate text and stream it back to the client. It will automatically stream the response back to the client as the model generates it:
 
 <TypeScriptExample>
 
@@ -84,15 +88,18 @@ export class MyAgent extends Agent<Env> {
 
 export default {
 	async fetch(request: Request, env: Env) {
-		const agent = await getAgentByName<Env, MyAgent>(env.MyAgent, 'agent');
+		let agentId = new URL(request.url).searchParams.get('agent-id') || '';
+		const agent = await getAgentByName<Env, MyAgent>(env.MyAgent, agentId);
 		return agent.fetch(request);
 	},
 };
 ```
 
+
+
 </TypeScriptExample>
 
 ## WebSockets vs. Server-Sent Events
 
-TODO
+
 
