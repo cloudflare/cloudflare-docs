@@ -8,9 +8,17 @@ sidebar:
 
 import { AnchorHeading, MetaInfo, Render, Type, TypeScriptExample, WranglerConfig } from "~/components";
 
-Agents can communicate with AI models hosted on any provider, including [Workers AI](/workers-ai/), OpenAI, Anthropic, and Google's Gemini, and use the model routing features in [AI Gateway](/ai-gateway/) to route across providers, eval responses, and manage AI provider rate limits.
+Agents can communicate with AI models hosted on any provider, including:
 
-Because Agents are built on top of [Durable Objects](/durable-objects/), each Agent or chat session is associated with a stateful compute instance. Tradtional serverless architectures often present challenges for persistent connections needed in real-time applications like chat.
+* [Workers AI](/workers-ai/)
+* The [AI SDK](https://sdk.vercel.ai/docs/ai-sdk-core/overview)
+* [OpenAI](https://platform.openai.com/docs/quickstart?language=javascript)
+* [Anthropic](https://docs.anthropic.com/en/api/client-sdks#typescript
+* [Google's Gemini](https://ai.google.dev/gemini-api/docs/openai)
+
+You can also use the model routing features in [AI Gateway](/ai-gateway/) to route across providers, eval responses, and manage AI provider rate limits.
+
+Because Agents are built on top of [Durable Objects](/durable-objects/), each Agent or chat session is associated with a stateful compute instance. Traditional serverless architectures often present challenges for persistent connections needed in real-time applications like chat.
 
 A user can disconnect during a long-running response from a modern reasoning model (such as `o3-mini` or DeepSeek R1), or lose conversational context when refreshing the browser. Instead of relying on request-response patterns and managing an external database to track & store conversation state, state can be stored directly within the Agent. If a client disconnects, the Agent can write to its own distributed storage, and catch the client up as soon as it reconnects: even if it's hours or days later.
 
@@ -34,7 +42,7 @@ import { OpenAI } from "openai"
 
 export class MyAgent extends Agent<Env> {
 	async onConnect(connection: Connection, ctx: ConnectionContext) {
-		// 
+		//
 	}
 
 	async onMessage(connection: Connection, message: WSMessage) {
