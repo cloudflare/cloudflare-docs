@@ -416,7 +416,7 @@
 /durable-objects/reference/graphql-analytics/ /durable-objects/observability/graphql-analytics/ 301
 /durable-objects/reference/websockets/ /durable-objects/best-practices/websockets/ 301
 /durable-objects/api/transactional-storage-api/ /durable-objects/api/storage-api/ 301
-/durable-objects/platform/changelog/ /durable-objects/changelog/ 301
+/durable-objects/platform/changelog/ /durable-objects/release-notes/ 301
 /durable-objects/changelog/ /durable-objects/release-notes/ 301
 /durable-objects/glossary/ /durable-objects/reference/glossary/ 301
 /durable-objects/get-started/walkthrough/ /durable-objects/get-started/tutorial/ 301
