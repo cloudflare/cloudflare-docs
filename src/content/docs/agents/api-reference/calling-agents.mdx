@@ -14,6 +14,8 @@ Learn how to call your Agents from Workers, including how to create Agents on-th
 
 Agents are created on-the-fly and can serve multiple requests concurrently. Each Agent instance is isolated from other instances, can maintain its own state, and has a unique address.
 
+<Render file="unique-agents" />
+
 You can create and run an instance of an Agent directly from a Worker in one of three ways:
 
 1. Using the `routeAgentRequest` helper: this will automatically map requests to an individual Agent based on the `/agents/:agent/:name` URL pattern. The value of `:agent` will be the name of your Agent class converted to `kebab-case`, and the value of `:name` will be the name of the Agent instance you want to create or retrieve.

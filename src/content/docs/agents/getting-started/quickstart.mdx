@@ -39,6 +39,14 @@ Inside this directory, there are a number of files, but we only need to worry ab
 
 Let's take a look at how the Agent in the quick start is defined.
 
+:::note[Escape hatch]
+
+You can escape from the rest of this quickstart guide right here: run `npm run start` to run the code locally, open `src/index.ts` to explore the code, and run `npx wrangler@latest deploy` to deploy it your Cloudflare account.
+
+The rest of this quickstart briefly steps through the code and sending requests to the Agent: if this is your first time using the Agents SDK and/or Cloudflare Workers, you'll likely want to keep reading.
+
+:::
+
 ### Understand the Agent class
 
 Open the `src/index.ts` file in your editor:
@@ -71,33 +79,23 @@ Your Agent is now running locally on your machine, and ready to communicate with
 
 ### Communicate with your Agent
 
-Let's communicate with your Agent and have it run a simple task.
+Let's communicate with your Agent and have it book us a flight (well, pretend to).
 
-The example Agent in this quick start project exposes both HTTP and WebSocket endpoints, and so we'll use [`wscat`](https://github.com/websockets/wscat) as a command-line WebSocket client to communicate with our Agent's chat endpoint.
+TODO:
 
-Install `wscat`:
-
-```sh
-npm install -g wscat
-```
-
-Run `wscat` and connect to an instance of your Agent (running locally). Remember that each Agent can have many _instances_, each able to interact with users, tools and other APIs independently, as well as store state specific to that instance.
-
-```sh
-# The code in this project will automatically create a new Agent on-the-fly when
-# you provide a name: e.g. /agents/my-agent/foo or /agents/my-agent/user-1238139
-# This allows you to create as many Agents as you want, each with their own
-# state and able to manage their own tasks.
-wscat --connect "ws://localhost:8787/agents/my-agent/abc123def"
-```
-
+- Make a request for a booking
+- get a response
+- confirm the booking
+- get the booked flight
 
 
 #### Agent routing
 
 In the `agents-quick-start` we use the `routeAgentRequest` helper to automatically handle routing to existing and creating new Agent instances on-the-fly.
 
-If you open up `src/index.ts`,
+If you open up `src/index.ts`, you'll see that `routeAgentRequest` handles requests to `/agents/:agent/:name` - in our case, that's `/agents/flight-agent/:name`, where name is a unique identifier for that Agent instance.
+
+<Render file="unique-agents" />
 
 <TypeScriptExample filename="src/index.ts">
 
@@ -117,7 +115,7 @@ export default {
 
 </TypeScriptExample>
 
-You can learn about more ways to call into your Agents, as well as how to add authentication in front of your Agents, by reviewing [documentation on Calling Agents](/agents/api-reference/calling-agents/).
+You can learn about more ways to call into your Agents, as well as how to add authentication in front of your Agents, by reviewing the [documentation on calling Agents](/agents/api-reference/calling-agents/).
 
 ### Ship to production
 

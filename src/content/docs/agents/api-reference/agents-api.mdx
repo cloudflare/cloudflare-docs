@@ -30,6 +30,8 @@ An Agent can have many (millions of) instances: each instance is a separate micr
 
 Instances of an Agent are addressed by a unique identifier: that identifier (ID) can be the user ID, an email address, GitHub username, a flight ticket number, an invoice ID, or any other identifier that helps to uniquely identify the instance and for whom it is acting on behalf of.
 
+<Render file="unique-agents" />
+
 ### Agent
 
 Writing an Agent requires you to define a class that extends the `Agent` class from the `agents-sdk` package. An Agent encapsulates all of the logic for an Agent, including how clients can connect to it, how it stores state, the methods it exposes, and any error handling.
