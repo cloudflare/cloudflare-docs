@@ -151,24 +151,6 @@ We recommend you commit your generated types file for use in CI. Alternatively, 
 
 </TabItem> </Tabs>
 
-### Known issues
-
-#### Transitive loading of `@types/node` overrides `@cloudflare/workers-types`
-
-Your project's dependencies may load the `@types/node` package on their own. As of `@types/node@20.8.4` that package now overrides `Request`, `Response` and `fetch` types (possibly others) specified by `@cloudflare/workers-types` causing type errors.
-
-The way to get around this issue currently is to pin the version of `@types/node` to `20.8.3` in your `package.json` like this:
-
-```json
-{
-	"overrides": {
-		"@types/node": "20.8.3"
-	}
-}
-```
-
-For more information, refer to [this GitHub issue](https://github.com/cloudflare/workerd/issues/1298).
-
 ### Resources
 
 - [TypeScript template](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare/templates/hello-world/ts)
