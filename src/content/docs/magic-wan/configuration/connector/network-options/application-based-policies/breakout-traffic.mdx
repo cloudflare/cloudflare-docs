@@ -6,16 +6,11 @@ description: Breakout traffic allows you to define which applications should
   bypass Cloudflare's security filtering.
 ---
 
-import { APIRequest, Render, TabItem, Tabs } from "~/components";
+import { Render } from "~/components";
 
-
-
-
-
-<Render file="connector/account-id-api-key" />
-
-
-
-
-
-
+<Render file="connector/app-aware-policies/breakout-prioritized" params={{
+	magicWord: "breakout",
+	featureName: "Breakout traffic",
+	whatHappensApp: "will now go directly to the Internet and bypass Cloudflare's filtering",
+	jsonType: "breakout"
+	}} />
