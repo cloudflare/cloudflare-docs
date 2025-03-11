@@ -48,6 +48,7 @@ const languages: Array<object> = [
 	{ label: "PowerShell", variants: ["js"] },
 	{ label: "Python", variants: ["py"] },
 	{ label: "Rust", variants: ["rs"] },
+	{ label: "Shell", variants: ["sh"] },
 	{ label: "SQL" },
 	{ label: "TypeScript", variants: ["ts"] },
 	{ label: "WebAssembly", variants: ["Web Assembly", "wasm"] },
