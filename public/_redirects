@@ -305,6 +305,7 @@
 /d1/platform/environments/ /d1/configuration/environments/ 301
 /d1/platform/metrics-analytics/ /d1/observability/metrics-analytics/ 301
 /d1/platform/migrations/ /d1/reference/migrations/ 301
+/d1/platform/changelog/ /d1/platform/release-notes/ 301
 /d1/reference/client-api/ /d1/worker-api/ 301
 /d1/reference/environments/ /d1/configuration/environments/ 301
 /d1/reference/metrics-analytics/ /d1/observability/metrics-analytics/ 301
