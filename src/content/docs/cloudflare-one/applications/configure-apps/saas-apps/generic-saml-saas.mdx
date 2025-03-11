@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { Render } from "~/components";
+import { Render, Details } from "~/components";
 
 This page provides generic instructions for setting up a SaaS application in Cloudflare Access using the SAML authentication protocol.
 
@@ -39,9 +39,9 @@ Obtain the following URLs from your SaaS application account:
 
 8. Select the **Name ID Format** expected by your SaaS application (usually _Email_).
 
-9. Copy the **SSO endpoint**, **Access Entity ID or Issuer**, and **Public key**.
+9. (Optional) Configure any additional [SAML attribute statements](#saml-attributes) required by your SaaS application.
 
-10. If your SaaS application requires additional **SAML attribute statements**, add the mapping of your IdP's attributes you would like to include in the SAML statement sent to the SaaS application.
+10. Copy the **SSO endpoint**, **Access Entity ID or Issuer**, and **Public key**.
 
 :::note[IdP groups]
 
@@ -77,3 +77,315 @@ When acting as a SAML identity provider, Cloudflare will sign both the SAML Resp
 ## 4. Test the integration
 
 Open an incognito browser window and go to the SaaS application's login URL. You will be redirected to the Cloudflare Access login screen and prompted to sign in with your identity provider.
+
+## SAML attributes
+
+[SAML attributes](/cloudflare-one/identity/idp-integration/generic-saml/#saml-headers-and-attributes) refer to the user identity characteristics that Cloudflare Access shares with your SAML SaaS application upon successful authentication. By default, Cloudflare Access passes the following attributes (if available) to the SaaS application:
+
+- `id` - UUID of the user's Access identity
+- `name` - Full name of the user (for example, `John Doe`)
+- `email` - User's email address
+- `groups` - Identity provider group membership
+
+In Access for SaaS, you can add additional SAML attributes or customize the SAML statement sent to the SaaS application. This allows you to integrate SaaS applications which have specific SAML attribute requirements.
+
+### SAML attribute statements
+
+To send additional SAML attributes to your SaaS application, configure the following fields for each attribute:
+
+	- **Name**: SAML attribute name
+	- **SAML friendly name**: (Optional) A human readable name for the SAML attribute
+	- **Name format**: Specify the **Name** format expected by the SaaS application:
+			- `Unspecified`: (default) No specific format required.
+			- `URI`: Name is in a format such as `urn:ietf:params:scim:schemas:core:2.0:User:userName` or `urn:oid:2.5.4.42`.
+			- `Basic`: Name is a normal string such as `userName`.
+	- **IdP claim**: The identity provider value that should map to this SAML attribute. You can select any [SAML attribute](/cloudflare-one/identity/idp-integration/generic-saml/#saml-headers-and-attributes) or [OIDC claim](/cloudflare-one/identity/idp-integration/generic-oidc/#oidc-claims) that was configured in a Zero Trust IdP integration.
+	- **Required**: If a claim is marked as required but is not provided by an IdP, Cloudflare will fail the authentication request and show an error page.
+	- **Add per IdP claim**: (Optional) If you turned on multiple identity providers for the SaaS application, you can choose different attribute mappings for each IdP. These values will override the parent **IdP claim**.
+
+### JSONata transforms
+
+In **Advanced settings** > **Transformation**, you can enter a [JSONata](https://jsonata.org/) script that modifies a copy of the [User Registry identity](/cloudflare-one/insights/logs/users/). This is useful for setting default values, excluding email addresses, or ensuring usernames meet arbitrary criteria. Access will send the modified user identity to the SaaS application as SAML attributes.
+
+:::note
+JSONata transformations are not compatible with [SAML attribute statements](#saml-attribute-statements). JSONata transformations will override any specified SAML attributes.
+:::
+
+For example, the following JSONata script merges group names into a list and adds an `eduPersonPrincipalName` field which maps to the user email.
+
+```jsonata title = "JSONata expression"
+$merge([$, {"groups": groups.name, 'eduPersonPrincipalName': email}])
+```
+
+Here is an example of a user identity before applying the JSONata transform:
+
+```json title= "User identity before JSONata transform"
+{
+  "account_id": "699d98642c564d2e855e9661899b7252",
+  "amr": [
+    "pwd"
+  ],
+  "auth_status": "NONE",
+  "common_name": "",
+  "device_id": "c1744f8b-faa1-48a4-9e5c-02ac921467fa",
+  "device_sessions": {
+    "49e653db-991e-11ee-af26-2243bf8c3428": {
+      "last_authenticated": 1703004275
+    }
+  },
+  "devicePosture": {
+    "8534a230-e85e-4183-8964-a4b7dcf72986": {
+      "rule_name": "Warp",
+      "success": true,
+      "type": "warp"
+    }
+  },
+  "email": "jdoe@company.com",
+  "gateway_account_id": "bTSquyUGwLQjYJn8cI8S1h6M6wU",
+  "geo": {
+    "country": "US"
+  },
+  "groups": [
+    {
+      "id": "12fdf91a-fb23-41b3-995a-de2f72c61d0e",
+      "name": "IdentityProtection-RiskyUser-RiskLevel-low"
+    },
+    {
+      "id": "12348f47-8234-4860-a03f-c2a1513f267b",
+      "name": "Global Administrator"
+    },
+    {
+      "id": "11235980-87d7-4917-b0aa-74c01914c40e",
+      "name": "Application Administrator"
+    }
+  ],
+  "iat": 1659474397,
+  "id": "OidHvkPt-I-13IBSnd77UJ8cHgsrUpjs3W6_4t6ES7M",
+  "idp": {
+    "id": "b08e8c0c-a75d-4b3f-8e7b-cd427b7c7b47",
+    "type": "azureAD"
+  }
+}
+```
+
+Result after applying the example JSONata script:
+
+```json output
+{
+  "account_id": "699d98642c564d2e855e9661899b7252",
+  "amr": [
+    "pwd"
+  ],
+  "auth_status": "NONE",
+  "common_name": "",
+  "device_id": "c1744f8b-faa1-48a4-9e5c-02ac921467fa",
+  "device_sessions": {
+    "49e653db-991e-11ee-af26-2243bf8c3428": {
+      "last_authenticated": 1703004275
+    }
+  },
+  "devicePosture": {
+    "8534a230-e85e-4183-8964-a4b7dcf72986": {
+      "rule_name": "Warp",
+      "success": true,
+      "type": "warp"
+    }
+  },
+  "email": "jdoe@company.com",
+  "gateway_account_id": "bTSquyUGwLQjYJn8cI8S1h6M6wU",
+  "geo": {
+    "country": "US"
+  },
+  "groups": [
+    "IdentityProtection-RiskyUser-RiskLevel-low",
+    "Global Administrator",
+    "Application Administrator"
+  ],
+  "iat": 1659474397,
+  "id": "OidHvkPt-I-13IBSnd77UJ8cHgsrUpjs3W6_4t6ES7M",
+  "idp": {
+    "id": "b08e8c0c-a75d-4b3f-8e7b-cd427b7c7b47",
+    "type": "azureAD"
+  },
+  "eduPersonPrincipalName": "jdoe@company.com"
+}
+```
+
+For more JSONata transform use cases, refer to the following examples.
+
+<Details header="Remove groups attribute">
+
+The following JSONata script removes the `groups` SAML attribute. This can be useful if your SaaS application does not need to receive user group information.
+
+```jsonata title="JSONata expression"
+$ ~> |$|{}, ['groups']|
+```
+
+Result after applying the JSONata transform:
+```json output
+{
+  "account_id": "699d98642c564d2e855e9661899b7252",
+  "amr": [
+    "pwd"
+  ],
+  "auth_status": "NONE",
+  "common_name": "",
+  "device_id": "c1744f8b-faa1-48a4-9e5c-02ac921467fa",
+  "device_sessions": {
+    "49e653db-991e-11ee-af26-2243bf8c3428": {
+      "last_authenticated": 1703004275
+    }
+  },
+  "devicePosture": {
+    "8534a230-e85e-4183-8964-a4b7dcf72986": {
+      "rule_name": "Warp",
+      "success": true,
+      "type": "warp"
+    }
+  },
+  "email": "jdoe@company.com",
+  "gateway_account_id": "bTSquyUGwLQjYJn8cI8S1h6M6wU",
+  "geo": {
+    "country": "US"
+  },
+  "iat": 1659474397,
+  "id": "OidHvkPt-I-13IBSnd77UJ8cHgsrUpjs3W6_4t6ES7M",
+  "idp": {
+    "id": "b08e8c0c-a75d-4b3f-8e7b-cd427b7c7b47",
+    "type": "azureAD"
+  }
+}
+```
+</Details>
+
+<Details header="Rename groups field and remove group ID">
+
+The following JSONata script changes the `groups.name` field from `name` to `group_name` and removes the `groups.id` field:
+
+```jsonata title="JSONata expression"
+{
+  "account_id": account_id,
+  "amr": amr,
+  "auth_status": auth_status,
+  "common_name": common_name,
+  "devicePosture": devicePosture,
+  "device_id": device_id,
+  "device_sessions": device_sessions,
+  "email": email,
+  "gateway_account_id": gateway_account_id,
+  "geo": geo,
+	"groups": $map($.groups, function($group) {
+    {"group_name": $group.name}}),
+  "iat": iat,
+  "id": id,
+  "idp": idp
+}
+```
+
+Result after applying the JSONata transform:
+
+```json output
+{
+  "account_id": "699d98642c564d2e855e9661899b7252",
+  "amr": [
+    "pwd"
+  ],
+  "auth_status": "NONE",
+  "common_name": "",
+  "devicePosture": {
+    "8534a230-e85e-4183-8964-a4b7dcf72986": {
+      "rule_name": "Warp",
+      "success": true,
+      "type": "warp"
+    }
+  },
+  "device_id": "c1744f8b-faa1-48a4-9e5c-02ac921467fa",
+  "device_sessions": {
+    "49e653db-991e-11ee-af26-2210bf8c3428": {
+      "last_authenticated": 1703004275
+    }
+  },
+  "email": "jdoe@company.com",
+  "gateway_account_id": "bTSquyUGwLQjYJn8cI8S1h6M6wU",
+  "geo": {
+    "country": "US"
+  },
+  "groups": [
+    {
+      "group_name": "IdentityProtection-RiskyUser-RiskLevel-low"
+    },
+    {
+      "group_name": "Global Administrator"
+    },
+    {
+      "group_name": "Application Administrator"
+    }
+  ],
+  "iat": 1659474397,
+  "id": "OidHvkPt-I-13IBSnd77UJ8cHgsrUpjs3W6_4t6ES7M",
+  "idp": {
+    "id": "b08e8c0c-a75d-4b3f-8e7b-cd427b7c7b47",
+    "type": "azureAD"
+  }
+}
+```
+
+</Details>
+
+<Details header="Filter groups by name">
+
+The following JSONata script filters groups to those that match a regular expression.
+
+```jsonata title="JSONata expression"
+$merge([$, { "groups": $filter(groups, function($v) { $contains($v.name, /Administrator/) }) }])
+```
+
+Result after applying the JSONata transform:
+
+```json output
+{
+  "account_id": "699d98642c564d2e855e9661899b7252",
+  "amr": [
+    "pwd"
+  ],
+  "auth_status": "NONE",
+  "common_name": "",
+  "device_id": "c1744f8b-faa1-48a4-9e5c-02ac921467fa",
+  "device_sessions": {
+    "49e653db-991e-11ee-af26-2243bf8c3428": {
+      "last_authenticated": 1703004275
+    }
+  },
+  "devicePosture": {
+    "8534a230-e85e-4183-8964-a4b7dcf72986": {
+      "rule_name": "Warp",
+      "success": true,
+      "type": "warp"
+    }
+  },
+  "email": "jdoe@company.com",
+  "gateway_account_id": "bTSquyUGwLQjYJn8cI8S1h6M6wU",
+  "geo": {
+    "country": "US"
+  },
+  "groups": [
+    {
+      "id": "12348f47-8234-4860-a03f-c2a1513f267b",
+      "name": "Global Administrator"
+    },
+    {
+      "id": "11235980-87d7-4917-b0aa-74c01914c40e",
+      "name": "Application Administrator"
+    }
+  ],
+  "iat": 1659474397,
+  "id": "OidHvkPt-I-13IBSnd77UJ8cHgsrUpjs3W6_4t6ES7M",
+  "idp": {
+    "id": "b08e8c0c-a75d-4b3f-8e7b-cd427b7c7b47",
+    "type": "azureAD"
+  }
+}
+```
+</Details>
+
+

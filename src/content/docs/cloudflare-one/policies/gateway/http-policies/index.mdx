@@ -3,8 +3,6 @@ pcx_content_type: configuration
 title: HTTP policies
 sidebar:
   order: 4
-banner:
-  content: The default global Cloudflare root certificate expired on 2025-02-02. If you installed the default Cloudflare certificate before 2024-10-17, you must <a href="/cloudflare-one/connections/connect-devices/user-side-certificates/#generate-a-cloudflare-root-certificate">generate a new certificate</a> and activate it for your Zero Trust organization to avoid inspection errors.
 ---
 
 import { Details, InlineBadge, Render } from "~/components";
@@ -25,8 +23,10 @@ An HTTP policy consists of an **Action** as well as a logical expression that de
 
 <Render
 	file="gateway/response"
-	params={{ one: "query", two: "Source IP", three: "Resolved IP" }}
+	params={{ type: "query", example: "Source IP", example2: "Resolved IP" }}
 />
+
+<Render file="gateway/terraform-precedence-warning" product="cloudflare-one" />
 
 ## Actions
 
@@ -464,13 +464,25 @@ Use this selector to match against a domain and all subdomains -- for example, i
 | ------- | -------------------------------------------- |
 | Domain  | `any(http.conn.domains[*] == "example.com")` |
 
+### Download and Upload File Size
+
+Use these selectors to limit the file size of upload or download transactions. File sizes are measured in mebibytes (MiB).
+
+| UI name                  | API example                     |
+| ------------------------ | ------------------------------- |
+| Download File Size (MiB) | `http.download.file.size >= 10` |
+
+| UI name                | API example                  |
+| ---------------------- | ---------------------------- |
+| Upload File Size (MiB) | `http.upload.file.size < 10` |
+
 ### Download and Upload File Types
 
 :::caution[Deprecated selectors]
 The **Download File Types** and **Upload File Types** selectors supersede the **Download File Type** and **Upload File Type** selectors. Gateway will still evaluate policies with the previous selectors. However, Cloudflare recommends migrating any policies with deprecated selectors to the new corresponding selectors.
 :::
 
-These selectors will scan file signatures in the HTTP body. You can select from file categories or specific file types, such as executables, archives and compressed files, Microsoft 365/Office documents, and Adobe files:
+These selectors will scan file signatures in the HTTP body. You can select from file categories or specific file types, such as executables, archives and compressed files, unscannable files, Microsoft 365/Office documents, and Adobe files:
 
 <Details header="Supported file types">
 
@@ -516,6 +528,13 @@ These selectors will scan file signatures in the HTTP body. You can select from 
 **Other**
 
 - BitTorrent file (`.torrent`)
+
+**Unscannable**
+
+- Password-protected Microsoft Office document
+- Password-protected PDF
+- Password-protected ZIP archive
+- Unscannable ZIP archive
 
 </Details>
 
@@ -653,5 +672,5 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 <Render
 	file="gateway/response"
-	params={{ one: "request", two: "Source IP", three: "a DLP Profile" }}
+	params={{ type: "request", example: "Source IP", example2: "a DLP Profile" }}
 />

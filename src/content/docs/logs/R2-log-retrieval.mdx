@@ -12,7 +12,7 @@ Logs Engine gives you the ability to store your logs in R2 and query them direct
 
 :::note
 
-Logs Engine is going to be replaced by Log Explorer. For further details, consult the [Log Explorer](/logs/log-explorer/) documentation and to request access, complete the [sign-up form](https://cloudflare.com/lp/log-explorer/). 
+Logs Engine is going to be replaced by Log Explorer. For further details, consult the [Log Explorer](/logs/log-explorer/) documentation and to request access, complete the [sign-up form](https://cloudflare.com/lp/log-explorer/).
 :::
 
 ## Store logs in R2
@@ -81,7 +81,7 @@ Stream logs stored in R2 that match the provided query parameters, using the end
 ```bash
 curl --globoff "https://api.cloudflare.com/client/v4/accounts/{account_id}/logs/retrieve?start=2022-06-01T16:00:00Z&end=2022-06-01T16:05:00Z&bucket=cloudflare-logs&prefix=http_requests/example.com/{DATE}" \
 --header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \ 
+--header "X-Auth-Key: <API_KEY>" \
 --header "R2-Access-Key-Id: R2_ACCESS_KEY_ID" \
 --header "R2-Secret-Access-Key: R2_SECRET_ACCESS_KEY"
 ```

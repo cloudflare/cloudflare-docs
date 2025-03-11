@@ -33,32 +33,27 @@ To retrieve those values:
 
 1. Log in to your Falcon Dashboard.
 2. Go to **Support and resources** > **API Clients and Keys**.
-3. Select **Add new API client** and enter any name for the client.
-4. Enable the **Read** API Scope for **Zero Trust Assessment**, **Hosts**, **Detections**, **Event Streams**, and **User Management**.
-5. Select **Add**.
+3. Select **Create API client** and enter any name for the client.
+4. Turn on the following API permissions:
+	| Scope | Permission |
+	| ----- | ---------- |
+	| Detections | Read |
+	| Hosts      | Read |
+	| Event Streams | Read |
+	| User Management | Read |
+	| Zero Trust Assessment | Read |
+5. Select **Create**.
 6. Copy the **Client ID**, **Client Secret**, and **Base URL** to a safe place.
-7. Go to **Host setup and management** > **Sensor downloads** and copy your Customer ID.
-8. Get an auth token from your CrowdStrike API endpoint:
-
-   ```bash
-   curl -X POST "<BASE_URL>/oauth2/token" \
-       -H "accept: application/json" \
-       -H "Content-Type: application/x-www-form-urlencoded" \
-       -d "client_id=<CLIENT_ID>&client_secret=<CLIENT_SECRET>"
-   ```
-
-   This POST request authorizes Cloudflare Zero Trust to [add CrowdStrike as a service provider](#2-add-crowdstrike-as-a-service-provider). For more information, refer to the Crowdstrike [auth token documentation](https://falcon.us-2.crowdstrike.com/documentation/93/oauth2-auth-token-apis).
+7. Go to **Host setup and management** > **Sensor downloads** and copy your **Customer ID**.
 
 ### 2. Add CrowdStrike as a service provider
 
 <Render file="posture/add-service-provider" params={{ provider: "Crowdstrike" }} />
 5. Enter the **Client ID** and **Client secret** you noted down above.
-6. Enter your **Rest API URL**.
+6. In **Rest API URL**, enter your **Base URL**.
 7. Enter your **Customer ID**.
 8. Choose a **Polling frequency** for how often Cloudflare Zero Trust should query CrowdStrike for information.
-9. Select **Save**.
-
-<Render file="posture/test-posture-provider" />
+9. Select **Test and save**.
 
 ### 3. Configure the posture check
 

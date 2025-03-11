@@ -47,7 +47,9 @@ For example, if you use Gatsby, your `package.json` should include the following
 
 When your build starts, if not already [cached](/pages/configuration/build-caching/), version 5.13.7 of Gatsby will be installed using `npm install`.
 
-## Overriding default versions
+## Advanced Settings
+
+### Override default versions
 
 To override default versions of languages and tools in the build system, you can either set the desired version through environment variables or by adding files to your project.
 
@@ -62,6 +64,14 @@ Or, to set the version by adding a file to your project, you can:
 2. Add the specified file name to the root directory of your project, and add the desired version number as the contents of the file.
 
 For example, if you were previously relying on the default version of Node.js in the v1 build system, to migrate to v2, you must specify that you need Node.js `12.18.0` by setting a `NODE_VERSION = 12.18.0` environment variable or by adding a `.node-version` or `.nvmrc` file to your project with `12.18.0` added as the contents to the file.
+
+### Skip dependency install
+
+You can add the following environment variable to disable automatic dependency installation, and run a custom install command instead.
+
+| Build variable            | Value         |
+| ------------------------- | ------------- |
+| `SKIP_DEPENDENCY_INSTALL` | `1` or `true` |
 
 ## V2 build system
 

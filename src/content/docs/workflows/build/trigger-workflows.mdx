@@ -144,14 +144,14 @@ Calling `resume` on an instance that is not currently paused will have no effect
 
 ### Stop a Workflow
 
-You can stop a Workflow instance by calling `abort` against a specific instance ID.
+You can stop/terminate a Workflow instance by calling `terminate` against a specific instance ID.
 
 ```ts
 let instance = await env.MY_WORKFLOW.get("abc-123")
-await instance.abort() // Returns Promise<void>
+await instance.terminate() // Returns Promise<void>
 ```
 
-Once stopped, the Workflow instance *cannot* be resumed.
+Once stopped/terminated, the Workflow instance *cannot* be resumed.
 
 ### Restart a Workflow
 

@@ -1,11 +1,11 @@
-import type { Props } from "@astrojs/starlight/props";
+import type { StarlightRouteData } from "@astrojs/starlight/route-data";
 import { parse } from "node-html-parser";
 import he from "he";
 import { remark } from "remark";
 import strip from "strip-markdown";
 import { rehypeExternalLinksOptions } from "~/plugins/rehype/external-links";
 
-type TableOfContentsItems = NonNullable<Props["toc"]>["items"];
+type TableOfContentsItems = NonNullable<StarlightRouteData["toc"]>["items"];
 
 export async function generateTableOfContents(
 	html: string,

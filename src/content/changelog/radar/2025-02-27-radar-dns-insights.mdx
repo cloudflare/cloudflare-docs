@@ -1,0 +1,32 @@
+---
+title: DNS Insights in Cloudflare Radar
+description: Expanded DNS insights with new API endpoints for 1.1.1.1 resolver aggregated traffic data
+products:
+  - radar
+date: 2025-02-27T15:00:00Z
+---
+
+[**Radar**](/radar/) has expanded its DNS insights, providing visibility into aggregated traffic and usage trends observed by our [1.1.1.1](/1.1.1.1/) DNS resolver.
+In addition to global, location, and ASN traffic trends, we are also providing perspectives on protocol usage, query/response characteristics, and DNSSEC usage.
+
+Previously limited to the [`top`](/api/resources/radar/subresources/dns/subresources/top/) locations and ASes endpoints, we have now introduced the following endpoints:
+
+- [`timeseries`](/api/resources/radar/subresources/dns/methods/timeseries/): Retrieves DNS query volume over time.
+- [`summary`](/api/resources/radar/subresources/dns/subresources/summary/): Retrieves summaries of DNS query distribution across ten different dimensions.
+- [`timeseries_group`](/api/resources/radar/subresources/dns/subresources/timeseries_groups/): Retrieves timeseries data for DNS query distribution across ten different dimensions.
+
+For the `summary` and `timeseries_groups` endpoints, the following dimensions are available, displaying the distribution of DNS queries based on:
+
+- `cache_hit`: Cache status (hit vs. miss).
+- `dnsssec`: DNSSEC support status (secure, insecure, invalid or other).
+- `dnsssec_aware`: DNSSEC client awareness (aware vs. not-aware).
+- `dnsssec_e2e`: End-to-end security (secure vs. insecure).
+- `ip_version`: IP version (IPv4 vs. IPv6).
+- `matching_answer`: Matching answer status (match vs. no-match).
+- `protocol`: Transport protocol (UDP, TLS, HTTPS or TCP).
+- `query_type`: Query type (`A`, `AAAA`, `PTR`, etc.).
+- `response_code`: Response code (`NOERROR`, `NXDOMAIN`, `REFUSED`, etc.).
+- `response_ttl`: Response TTL.
+
+
+Learn more about the new Radar DNS insights in our [blog post](https://blog.cloudflare.com/new-dns-section-on-cloudflare-radar/), and check out the [new Radar page](https://radar.cloudflare.com/dns).

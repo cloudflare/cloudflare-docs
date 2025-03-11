@@ -242,6 +242,8 @@ To review whether your application is experiencing any downtime or returning any
 2. In **Account Home**, select **Workers & Pages**.
 3. In **Overview**, select your Worker and review your Worker's metrics.
 
+A `responseStreamDisconnected` event `outcome` occurs when one end of the connection hangs up during the deferred proxying stage of a Worker request flow. This is regarded as an error for request metrics, and presents in logs as a non-error log entry. It commonly appears for longer lived connections such as WebSockets.
+
 ## Debug exceptions
 
 After you have identified your Workers application is returning exceptions, use `wrangler tail` to inspect and fix the exceptions.

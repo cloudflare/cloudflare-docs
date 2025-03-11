@@ -72,7 +72,7 @@ This approach allows you to:
       async fetch(request, env, ctx) {
         // The name of the cookie
         const COOKIE_NAME = "CF_Authorization";
-      const CF_GET_IDENTITY = "https://<your-team-name>.cloudflareaccess.com>/cdn-cgi/access/get-identity";
+      const CF_GET_IDENTITY = "https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/get-identity";
         const cookie = parse(request.headers.get("Cookie") || "");
         if (cookie[COOKIE_NAME] != null) {
         try {

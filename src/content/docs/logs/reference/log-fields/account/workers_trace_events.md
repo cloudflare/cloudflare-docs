@@ -55,7 +55,7 @@ List of console messages emitted during the invocation.
 
 Type: `string`
 
-The outcome of the worker script invocation. <br />Possible values are <em>ok</em> \| <em>exception</em>.
+The outcome of the Worker script invocation. <br />Possible values are <em>ok</em> \| <em>exception</em>.
 
 ## ScriptName
 

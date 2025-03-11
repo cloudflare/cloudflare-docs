@@ -4,15 +4,13 @@ pcx_content_type: tutorial
 updated: 2024-09-17
 difficulty: Beginner
 content_type: 📝 Tutorial
-tags:
-  - Turnstile
+products:
   - Web Application Firewall
   - Bot Management
 languages:
   - JavaScript
 sidebar:
   order: 3
-
 ---
 
 This tutorial will guide you on how to integrate Cloudflare Turnstile, [Web Application Firewall (WAF)](/waf/), and [Bot Management](/bots/get-started/bm-subscription/) into an existing authentication system. This combination creates a robust defense against various threats, including automated attacks and malicious login attempts.
@@ -46,10 +44,9 @@ If your site is on Cloudflare's network and subscribed to an Enterprise plan, yo
 2. Go to **Security** > **WAF**.
 3. Create a new custom WAF rule by selecting "Edit expression":
    - Field: "Bot Score"
-	 - Operator: "less than or equal to"
-	 - Value: "30"
+   - Operator: "less than or equal to"
+   - Value: "30"
    - Action: "Managed Challenge"
-
 
 This configuration challenges requests with a low bot score, leveraging network signals to identify potential threats before they reach your application. You may customize the score threshold based on your specific use case.
 
@@ -65,7 +62,6 @@ Turnstile can be used on any site, regardless of whether it is on Cloudflare's n
 
 Turnstile adds an extra layer of security by analyzing browser and client-side signals, complementing the server-side checks performed by WAF and Bot Management.
 
-
 ### Enable the option to use the existing clearance cookie
 
 If your site is on Cloudflare, you can enable the option to use the existing [clearance cookie](/turnstile/concepts/pre-clearance-support/) in Turnstile's settings. This integration allows Turnstile to use the clearance cookie as part of its determination of whether a user should receive a challenge. This integration is optional, but recommended if you already are using WAF and Bot Management.
@@ -80,72 +76,85 @@ Add the Turnstile widget to your existing login form:
 
 ```html
 <form id="login-form">
-  <input type="text" id="username" placeholder="Username" required>
-  <input type="password" id="password" placeholder="Password" required>
-  <div class="cf-turnstile" data-sitekey="YOUR_SITE_KEY"></div>
-  <button type="submit">Log in</button>
+	<input type="text" id="username" placeholder="Username" required />
+	<input type="password" id="password" placeholder="Password" required />
+	<div class="cf-turnstile" data-sitekey="YOUR_SITE_KEY"></div>
+	<button type="submit">Log in</button>
 </form>
 
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<script
+	src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+	async
+	defer
+></script>
 ```
 
 Replace `YOUR_SITE_KEY` with your actual Turnstile site key.
-
 
 ## Handle the login request
 
 In your existing authentication route, add Turnstile validation:
 
 ```typescript
-async function validateTurnstileToken(ip: string, token: string, secret: string): Promise<boolean> {
-  const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ ip, secret, response: token })
-  });
+async function validateTurnstileToken(
+	ip: string,
+	token: string,
+	secret: string,
+): Promise<boolean> {
+	const response = await fetch(
+		"https://challenges.cloudflare.com/turnstile/v0/siteverify",
+		{
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ ip, secret, response: token }),
+		},
+	);
 
-  const outcome = await response.json();
-  return outcome.success;
+	const outcome = await response.json();
+	return outcome.success;
 }
 
 // Assume that this is a TypeScript route handler.
 // You may replace this with a different implementation,
 // based on your language or framework
 export async function onRequestPost(context) {
-  const { request, env } = context;
-  const { username, password, token } = await request.json();
+	const { request, env } = context;
+	const { username, password, token } = await request.json();
 
-  // Validate Turnstile token
-  const secretKey = env.TURNSTILE_SECRET_KEY;
-  const ip = request.headers.get('CF-Connecting-IP');
-  const turnstileValid = await validateTurnstileToken(ip, token, secretKey);
-  if (!turnstileValid) {
-    // Return back to the login page with an error message
-    return Response.redirect('/login', 302, {
-      headers: {
-        'Location': '/login?error=invalid-turnstile-token'
-      }
-    });
-  }
+	// Validate Turnstile token
+	const secretKey = env.TURNSTILE_SECRET_KEY;
+	const ip = request.headers.get("CF-Connecting-IP");
+	const turnstileValid = await validateTurnstileToken(ip, token, secretKey);
+	if (!turnstileValid) {
+		// Return back to the login page with an error message
+		return Response.redirect("/login", 302, {
+			headers: {
+				Location: "/login?error=invalid-turnstile-token",
+			},
+		});
+	}
 
-  // Perform your existing authentication logic here
-  const isValidLogin = await checkCredentials(username, password);
+	// Perform your existing authentication logic here
+	const isValidLogin = await checkCredentials(username, password);
 
-  if (isValidLogin) {
-    return new Response(JSON.stringify({ message: 'Login successful' }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' }
-    });
-  } else {
-    return new Response(JSON.stringify({ error: 'Invalid credentials' }), {
-      status: 401,
-      headers: { 'Content-Type': 'application/json' }
-    });
-  }
+	if (isValidLogin) {
+		return new Response(JSON.stringify({ message: "Login successful" }), {
+			status: 200,
+			headers: { "Content-Type": "application/json" },
+		});
+	} else {
+		return new Response(JSON.stringify({ error: "Invalid credentials" }), {
+			status: 401,
+			headers: { "Content-Type": "application/json" },
+		});
+	}
 }
 
-async function checkCredentials(username: string, password: string): Promise<boolean> {
-  // Your existing credential checking logic
+async function checkCredentials(
+	username: string,
+	password: string,
+): Promise<boolean> {
+	// Your existing credential checking logic
 }
 ```
 
@@ -155,8 +164,8 @@ This setup ensures that the Turnstile token is validated on the server-side befo
 
 After deployment, you will want to test your integration. Because your bot score will be low, you will probably not receive a challenge. However, you can add additional rules as needed to force a redirect to the challenge page. Some options to do this are:
 
-1) Add a WAF rule that always forwards your IP address to the challenge page.
-2) Add a WAF rule that checks for the presence of a query parameter, such as `?challenge=true`.
+1. Add a WAF rule that always forwards your IP address to the challenge page.
+2. Add a WAF rule that checks for the presence of a query parameter, such as `?challenge=true`.
 
 ## Best practices
 

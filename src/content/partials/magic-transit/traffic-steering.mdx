@@ -40,7 +40,7 @@ The use of ECMP routing provides load balancing across tunnels with routes of th
 
 ## Equal-cost multi-path routing
 
-Equal-cost multi-path routing uses hashes calculated from packet data to determine the route chosen. The hash always uses the source and destination IP addresses. For TCP and UDP packets, the hash includes the source and destination ports as well. The ECMP algorithm divides the hash for each packet by the number of equal-cost next hops. The modulus (remainder) determines the route the packet takes.
+Equal-cost multi-path routing uses hashes calculated from [packet](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) data to determine the route chosen. The hash always uses the source and destination IP addresses. For TCP and UDP packets, the hash includes the source and destination ports as well. The ECMP algorithm divides the hash for each packet by the number of equal-cost next hops. The modulus (remainder) determines the route the packet takes.
 
 Using ECMP has a number of consequences:
 

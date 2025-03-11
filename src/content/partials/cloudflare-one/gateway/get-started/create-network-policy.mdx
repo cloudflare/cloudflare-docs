@@ -35,9 +35,9 @@ To create a new network policy:
 3. Send a `POST` request to the [Create a Zero Trust Gateway rule](/api/resources/zero_trust/subresources/gateway/subresources/rules/methods/create/) endpoint. For example, you can use a list of [device serial numbers](/cloudflare-one/identity/devices/warp-client-checks/corp-device/) to ensure users can only access an application if they connect with the WARP client from a company device:
 
    ```sh title="curl API network policy example"
-   curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
+   curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
    --header "Content-Type: application/json" \
-   --header "Authorization: Bearer <API_TOKEN>" \
+   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
    --data '{
      "name": "Enforce device posture",
      "description": "Ensure only devices in Zero Trust organization can connect to application",

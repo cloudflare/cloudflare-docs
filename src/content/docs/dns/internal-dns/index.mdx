@@ -1,0 +1,115 @@
+---
+pcx_content_type: overview
+title: Internal DNS (beta)
+sidebar:
+  order: 14
+  label: Overview
+  group:
+    badge:
+      text: Beta
+    label: Internal DNS
+head:
+  - tag: title
+    content: Internal DNS
+---
+
+import { Render, Description, Plan, RelatedProduct, DirectoryListing, GlossaryTooltip, Example } from "~/components";
+
+<Description>
+Simplify private network management with Cloudflare DNS for your internal resources.
+</Description>
+
+<Plan type="enterprise" />
+
+Manage DNS records that should only be accessible within your private network. Internal DNS [zones](/dns/internal-dns/internal-zones/) and [views](/dns/internal-dns/dns-views/) pair up with [Gateway resolver policies](/cloudflare-one/policies/gateway/resolver-policies/) so that you can control how a DNS query should be responded to according to the query context, such as its source IP.
+
+<Render file="internal-dns-beta-note" />
+
+## Architecture overview
+
+You can use different [connectivity options](/dns/internal-dns/connectivity/) to on-ramp your traffic to Cloudflare. Then, Cloudflare Gateway resolver acts as an interface between the DNS client and internal DNS zones.
+
+Internal DNS zones do not get assigned Cloudflare nameservers and can only be queried via Cloudflare Gateway resolver.
+
+```mermaid
+flowchart LR
+        accTitle: Internal DNS query overview
+        accDescr: Diagram comparing internal DNS query with public DNS
+        A[Client]
+        subgraph Cloudflare account
+        subgraph Gateway
+				B[Default 1.1.1.1 resolver]
+        X[Resolver policy selecting an internal DNS view]
+        end
+        subgraph Authoritative DNS
+        Y[(Public DNS)]
+				Z[(Internal DNS)]
+        end
+        end
+
+			  C[Public resolver]
+
+        B --Query--> Y
+        X --Query + View ID--> Z
+        A --Query--> B
+				A --Query--> X
+				C --Query--> Y
+```
+
+Internal DNS zones are grouped into DNS views, which are selected by the resolver policy you define. Views are usually logical groupings relevant to your organization, such as different geographical locations.
+
+```mermaid
+flowchart LR
+        accTitle: Internal DNS views and zones
+        accDescr: Diagram exemplifying Internal DNS views and zones relationship
+        subgraph Internal DNS
+        subgraph View 111 - London
+        Y[Zone 600 <br /> example.local]
+				Z[Zone 601 <br /> local]
+        end
+        subgraph View 110 - San Francisco
+        X[Zone 101 <br /> example.com]
+				B[Zone 100 <br /> example.local]
+				S[Zone 102 <br /> com]
+        end
+				W[Zone 701 <br /> net]
+				end
+```
+
+Internal DNS zones contain the <GlossaryTooltip term="DNS record" link="/dns/manage-dns-records/">DNS records</ GlossaryTooltip> that should be used to resolve an internal DNS query. Also, if no internal record is found within a matching internal zone, Cloudflare will check if the matching internal zone is [referencing another internal zone](/dns/internal-dns/internal-zones/#reference-zones).
+
+<Example>
+
+```mermaid
+flowchart LR
+        accTitle: Internal DNS zones and internal records
+        accDescr: Diagram exemplifying Internal DNS zones and records relationship
+        subgraph View 111 - London
+				subgraph Zone 601 - local
+				S[@ A 192.0.2.10]
+				T[ghi.example A 192.0.2.15]
+				end
+        subgraph Zone 600 - example.local
+				X[@ A 192.0.2.1]
+				Y[abc A 192.0.2.6]
+				Z[def A 192.0.2.9]
+				end
+				end
+```
+In this example, a query for `ghi.example.local` routed to view ID 111 would go to zone 600, which presents the longest matching zone name (`example.local`). Zone 600 does not contain a record for `ghi` but, if it is referencing zone 601, Cloudflare will then look for the queried record within the reference zone.
+
+</Example>
+
+## Resources
+
+<DirectoryListing />
+
+## Related products
+
+<RelatedProduct header="Cloudflare Gateway" href="/cloudflare-one/policies/gateway/" product="privacy-gateway">
+Set up policies to inspect DNS, Network, HTTP, and Egress traffic.
+</RelatedProduct>
+
+<RelatedProduct header="Cloudflare Magic WAN" href="/magic-wan/" product="magic-wan">
+Improve security and performance for your entire corporate networking, reducing cost and operation complexity.
+</RelatedProduct>

@@ -23,8 +23,10 @@ A network policy consists of an **Action** as well as a logical expression that 
 
 <Render
 	file="gateway/response"
-	params={{ one: "query", two: "Source IP", three: "Resolved IP" }}
+	params={{ type: "query", example: "Source IP", example2: "Resolved IP" }}
 />
+
+<Render file="gateway/terraform-precedence-warning" product="cloudflare-one" />
 
 ## Actions
 
@@ -38,7 +40,7 @@ API value: `allow`
 
 **Traffic**
 
-- [All Access Private Apps](#all-access-private-apps)
+- [All Access Private Apps](#all-access-private-app-destinations)
 - [All Access App Targets](#all-access-app-targets)
 - [Application](#application)
 - [Content Categories](#content-categories)

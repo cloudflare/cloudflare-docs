@@ -8,13 +8,12 @@ params:
   - magicWANecmp?
   - createPath
   - tunnelEndpoints
-  - ipRanges?
 ---
 
-import { GlossaryTooltip, Markdown, AnchorHeading, Render, TabItem, Tabs } from "~/components";
+import { Aside, GlossaryTooltip, Markdown, AnchorHeading, Render, TabItem, Tabs } from "~/components";
 
 :::note
-If you are connecting to Cloudflare via a [Direct CNI connection](/network-interconnect/express-cni/), refer to <a href={props.BGPpath}>BGP peering</a> to learn how to take advantage of this routing protocol. If not, continue reading.
+If you are connecting to Cloudflare via a [Direct CNI connection](/network-interconnect/express-cni/), refer to <a href={props.BGPpath}>BGP peering</a> to learn how to take advantage of this [routing](https://www.cloudflare.com/learning/network-layer/what-is-routing/) protocol. If not, continue reading.
 :::
 
 {props.productName} uses a static configuration to route your traffic through <GlossaryTooltip term="anycast" link={props.anycastURL}>anycast tunnels</GlossaryTooltip> from Cloudflare's global network to your locations.
@@ -68,6 +67,29 @@ In the example below, `TUNNEL_2_IAD` is likely to receive twice as much traffic 
   )
 }
 
+{ props.magicProduct === "Magic Transit" && (
+  <>
+    <AnchorHeading title="Map routes prefixes bigger than onboarded prefixes" depth={2} />
+		<Markdown
+    text={`
+		If you have multiple onboarded \`/24\` subnets that belong to a larger contiguous block, you can configure a summary static route for the corresponding supernet (like a \`/23\` or a \`/22\`) instead of adding each \`/24\` individually. This eliminates the need to configure each \`/24\` route individually, as all traffic will be routed through the same GRE tunnels.
+
+		For example, if you have two tunnels:
+
+		- \`192.0.2.0/24\`
+		- \`192.0.3.0/24\`
+
+		You can summarize these into a single \`192.0.2.0/23\`.
+
+		Refer to [Add tunnels](/magic-transit/how-to/configure-tunnels/#add-tunnels) to learn more about configuring GRE tunnels.
+			`}
+				inline={false}
+  />
+	<Aside type="note">These address blocks are a part of <a href="https://datatracker.ietf.org/doc/rfc5737/" target="_blank" rel="noopener noreferrer">RFC 5737</a> and are reserved for use as examples in documentation.</Aside>
+  </>
+  )
+}
+
 ## Scoped routes for anycast GRE or IPsec tunnels
 
 To reduce latency for your <GlossaryTooltip term="anycast">anycast</GlossaryTooltip> <GlossaryTooltip term="GRE tunnel">GRE</GlossaryTooltip> or <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnel configurations, especially if you operate your own anycast network, Cloudflare can steer your traffic by scoping it to specific Cloudflare data center regions. Equal cost routes maintain an equal cost on a global scale so long as the routes are not scoped to specific regions. For example, if you use region-scoped routes, traffic from end users in New York will always land at their Ashburn network unless that tunnel is unhealthy.
@@ -107,17 +129,42 @@ Cloudflare has nine geographic regions across the world which are listed below.
 
 Configure scoping for your traffic in the **Region code** section when adding or editing a static route. Refer to [Create a static route](#create-a-static-route) and [Edit a static route](#edit-a-static-route) more information.
 
-## Allowed IP ranges
+{ props.magicProduct === "Magic Transit" && (
+  <>
+    <AnchorHeading title="Allowed IP ranges" depth={2} />
+		<Markdown
+    text={`
+Allowed IP ranges for static routes are:
 
-By default, you can only add static routes with [RFC 1918](https://datatracker.ietf.org/doc/html/rfc1918) IP prefixes like:
+- Cloudflare leased IPs assigned to your account
+- BYOIP prefixes. For BYOIP, you have the option to use them as-is, or to create a summary route to cover all your onboarded prefixes.
+			`}
+				inline={false}
+  />
+  </>
+  )
+}
 
-- `10.0.0.0/8`
-- `172.16.0.0/12`
-- `192.168.0.0/16`
+{ props.magicProduct === "Magic WAN" && (
+  <>
+    <AnchorHeading title="Allowed IP ranges" depth={2} />
+		<Markdown
+    text={`
+By default, you can only add static routes with RFC 1918 IP prefixes like:
+- \`10.0.0.0/8\`
+- \`172.16.0.0/12\`
+- \`192.168.0.0/16\`
 
-<Markdown text={props.ipRanges} />
-If your use case requires IP prefixes outside RFC 1918, contact your Cloudflare
-customer service manager.
+When using Magic WAN and Cloudflare Tunnel together, remember to consider the IP ranges utilized in the static routes of Cloudflare Tunnel when selecting static routes for Magic WAN. For more information, refer to [Cloudflare Tunnel](/magic-wan/zero-trust/cloudflare-tunnel/).
+
+For prefixes outside RFC 1918 contact your Cloudflare customer service manager.
+			`}
+				inline={false}
+  />
+  </>
+  )
+}
+
 
 ## Create a static route
 

@@ -44,7 +44,9 @@ For Durable Object classes with [SQLite storage backend](/durable-objects/best-p
 
 <Render file="limits_increase" product="workers" />
 
-## How much work can a single Durable Object do?
+## Frequently Asked Questions
+
+### How much work can a single Durable Object do?
 
 Durable Objects can scale horizontally across many Durable Objects. Each individual Object is inherently single-threaded.
 
@@ -54,7 +56,7 @@ Durable Objects can scale horizontally across many Durable Objects. Each individ
 
 A Durable Object that receives too many requests will, after attempting to queue them, return an [overloaded](/durable-objects/observability/troubleshooting/#durable-object-is-overloaded) error to the caller.
 
-## How many Durable Objects can I create?
+### How many Durable Objects can I create?
 
 Durable Objects are designed such that the number of individual objects in the system do not need to be limited, and can scale horizontally.
 

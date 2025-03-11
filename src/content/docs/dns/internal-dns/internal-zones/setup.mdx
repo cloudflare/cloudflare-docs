@@ -1,0 +1,36 @@
+---
+pcx_content_type: how-to
+title: Manage internal zones
+sidebar:
+  order: 2
+---
+
+import { Example, Render } from "~/components";
+
+Refer to the following sections to learn how to manage your internal DNS zones.
+
+## Configuration conditions
+
+When setting up internal zones, observe the following conditions:
+
+<Render file="internal-zones-conditions" />
+
+## Create an internal zone
+
+1. Use the [Create Zone](/api/resources/zones/) endpoint to create an internal zone. Specify your account ID and set the `type` to `internal`.
+2. Add DNS records to your internal zone using your preferred option:
+- [Import](/api/resources/dns/subresources/records/methods/import/) a formatted BIND file. Refer to the [DNS records how-to](/dns/manage-dns-records/how-to/import-and-export/) for guidance.
+- Use other API endpoints, such as [`/batch`](/api/resources/dns/subresources/records/methods/batch/), to manage DNS records. Refer to [Batch record changes](/dns/manage-dns-records/how-to/batch-record-changes/#use-the-api) for details.
+3. Repeat this process for each internal zone you wish to add.
+
+Since the resolver policy configuration will require a DNS view, you must link the internal zones to at least one view to be able to use them when routing requests to Internal DNS. For a full procedure overview, refer to [get started](/dns/internal-dns/get-started/).
+
+
+## Other actions
+
+The API endpoints to manage internal zones are the same as for managing public zones. The main difference is that the zone type must be set to `internal`. Refer to the API documentation below for details:
+
+- [Update an internal zone](/api/resources/zones/methods/edit/) (`PATCH`)
+- [Get internal zone details](/api/resources/zones/methods/get/) (`GET`)
+- [List internal zones](/api/resources/zones/methods/list/) (`GET`)
+- [Delete an internal zone](/api/resources/zones/methods/delete/) (`DELETE`)

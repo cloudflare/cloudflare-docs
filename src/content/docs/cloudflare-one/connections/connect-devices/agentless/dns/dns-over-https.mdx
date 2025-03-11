@@ -13,7 +13,7 @@ Location-based policies require that you send DNS requests to a [location-specif
 
 ## Filter DoH requests by location
 
-Location-based policies require that you send DNS requests to a unique <GlossaryTooltip term="DoH subdomain">DoH endpoint</GlossaryTooltip> assigned to the location:
+Location-based policies require that you send DNS queries to a unique <GlossaryTooltip term="DoH subdomain">DoH endpoint</GlossaryTooltip> assigned to the location:
 
 ```txt
 https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query
@@ -105,6 +105,17 @@ For more information, refer to [Microsoft's DoH guide](https://learn.microsoft.c
 
 </Details>
 
+### Use generic DoH endpoint
+
+You can send DoH requests to the generic Cloudflare DoH endpoint, `dns.cloudflare-gateway.com`. To specify a location in your request, include a header named `cf-dns-location` with a value of your location's DoH subdomain. For example:
+
+```http
+GET /dns-query?name=example.com&type=A HTTP/2
+Host: dns.cloudflare-gateway.com
+cf-dns-location: 9y65g5srsm
+Accept: application/dns-message
+```
+
 ## Filter DoH requests by user
 
 In order to filter DoH queries based on user identity, each query must include a user-specific authentication token. If you have several devices per user and want to apply device-specific policies, you will need to map each device to a different email.
@@ -114,9 +125,8 @@ Currently, authentication tokens can only be generated through the API. You can 
 ### 1. Create a service token for the account
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/access/service_tokens" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/service_tokens" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --header "Content-Type: application/json" \
 --data '{"name":"ACME Corporation service token"}'
 ```
@@ -148,12 +158,11 @@ Save the service token's `client_id`, `client_secret`, and `id`.
 
 ```bash
 curl --request PUT \
-"https://api.cloudflare.com/client/v4/accounts/{account_id}/access/organizations/doh/{service_token_id}" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>"
+"https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/organizations/doh/$SERVICE_TOKEN_ID" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
-If you get an `access.api.error.service_token_not_found` error, check that `{service_token_id}` is the value of `id` and not `client_id`.
+If you get an `access.api.error.service_token_not_found` error, check that `$SERVICE_TOKEN_ID` is the value of `id` and not `client_id`.
 
 <Details header="Example response">
 
@@ -181,9 +190,8 @@ If you get an `access.api.error.service_token_not_found` error, check that `{ser
 Create a new user and optionally add them to a group.
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/access/users" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/users" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --header "Content-Type: application/json" \
 --data '{
   "name": "John Doe",

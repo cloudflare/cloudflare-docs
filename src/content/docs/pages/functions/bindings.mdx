@@ -836,10 +836,5 @@ To add secrets to your Pages project:
 
 You use secrets the same way as environment variables. When setting secrets with Wrangler or in the Cloudflare dashboard, it needs to be done before a deployment that uses those secrets. For more guidance, refer to [Environment variables](#environment-variables).
 
-### Interact with your secrets locally
-
-When developing locally, add secrets by creating a `.dev.vars` file in the root directory of your Pages project. Then add the following code snippet to `.dev.vars`:
-
-```
-SECRET_NAME=<SECRET_VALUE>
-```
+### Local development with secrets
+<Render file="secrets-in-dev" product="workers" />

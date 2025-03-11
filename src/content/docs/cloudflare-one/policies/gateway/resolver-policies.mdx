@@ -52,7 +52,7 @@ You can protect your authoritative nameservers from DDoS attacks by enabling [DN
 
 ### Cloudflare Tunnel
 
-You can configure connections to a private resolver connected to Cloudflare with [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/). To ensure `cloudflared` can route UDP traffic to your resolver, connect your tunnel via [QUIC](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#protocol).
+You can configure connections to a private resolver connected to Cloudflare with [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/). To ensure `cloudflared` can route UDP traffic to your resolver, connect your tunnel via [QUIC](/cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/run-parameters/#protocol).
 
 For more information on connecting a private DNS resolver to Cloudflare with Cloudflare Tunnel, refer to [Private DNS](/cloudflare-one/connections/connect-networks/private-net/cloudflared/private-dns/).
 
@@ -78,6 +78,8 @@ Gateway will filter, resolve, and log your queries regardless of endpoint.
 <Render file="gateway/create-resolver-policy" />
 
 For more information on creating a DNS policy, refer to [DNS policies](/cloudflare-one/policies/gateway/dns-policies/).
+
+<Render file="gateway/terraform-precedence-warning" product="cloudflare-one" />
 
 ## Selectors
 

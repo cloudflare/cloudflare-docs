@@ -10,7 +10,7 @@ import { Render } from "~/components";
 
 <Render
   file="casb/integration-description"
-  params={{ one: "Gmail", two: "Google Workspace account" }}
+  params={{ integrationName: "Gmail", integrationAccountType: "Google Workspace account" }}
 />
 
 ## Integration prerequisites
@@ -21,14 +21,14 @@ import { Render } from "~/components";
 
 <Render
   file="casb/integration-perms"
-  params={{ one: "Google Workspace", two: "google-workspace" }}
+  params={{ parentIntegration: "Google Workspace", parentSlug: "google-workspace" }}
 />
 
 ## Security findings
 
 <Render
   file="casb/security-findings"
-  params={{ one: "Gmail", two: "google-workspace/gmail" }}
+  params={{ integrationName: "Gmail", slugRelativePath: "google-workspace/gmail" }}
 />
 
 ### Gmail administrator settings

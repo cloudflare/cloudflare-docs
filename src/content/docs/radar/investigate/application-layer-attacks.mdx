@@ -17,7 +17,7 @@ Since we are examining attacks, we can inspect both sides of an attack — both 
 
 This ability to filter by both sides of the attack is only available in the `top locations` endpoints. Unless otherwise specified, other endpoints are filtered by source location, like the origin location of the attack.
 
-The magnitude of the attack is defined by the total number of mitigated requests, unless otherwise specified.
+The magnitude of the attack is defined by the total number of mitigated requests.
 
 Like in [HTTP requests](/radar/investigate/http-requests), these endpoints can be split into the ability to fetch a timeseries, a single value summarizing the entire date range, and a list of top locations.
 
@@ -167,10 +167,8 @@ For more information refer to [Get layer 7 top target locations](/api/resources/
 
 Which source-target location pairs constitute the biggest attacks in the last 24 hours?
 
-How big an attack is, or the attack magnitude, can be defined by the number of mitigated requests (the default) or by the number of total zones under attack.
-
 ```bash
-curl "https://api.cloudflare.com/client/v4/radar/attacks/layer7/top/attacks?limit=5&dateRange=1d&magnitude=MITIGATED_REQUESTS&format=json" \
+curl "https://api.cloudflare.com/client/v4/radar/attacks/layer7/top/attacks?limit=5&dateRange=1d&format=json" \
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
@@ -231,8 +229,6 @@ A typical response will be similar to the following:
 ```
 
 This means that 3.79% of all mitigated requests are from and to the US, 3.6% of all mitigated requests are from the US to Belgium, etc..
-
-This response came from a query that is using attack `magnitude` as the sum of mitigated requests. To use the number of unique zones attacked as the metric, for example, use `attack_magnitude=AFFECTED_ZONES`.
 
 For more information refer to [Get layer 7 top attack pairs](/api/resources/radar/subresources/attacks/subresources/layer7/subresources/top/methods/attacks/).
 
