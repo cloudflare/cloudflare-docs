@@ -1,11 +1,11 @@
-const data_structures: Array<Object> = [
+const data_structures: Array<object> = [
 	{ label: "JSON" },
 	{ label: "TOML" },
 	{ label: "XML" },
 	{ label: "YAML" },
 ];
 
-const frameworks: Array<Object> = [
+const frameworks: Array<object> = [
 	{ label: "Angular" },
 	{ label: "Astro" },
 	{ label: "Hono" },
@@ -20,7 +20,7 @@ const frameworks: Array<Object> = [
 	{ label: "Web Crypto", variants: ["webcrypto"] },
 ];
 
-const integrations: Array<Object> = [
+const integrations: Array<object> = [
 	{ label: "Azure", variants: ["Microsoft Azure", "MS Azure"] },
 	{ label: "AWS", variants: ["Amazon Web Services"] },
 	{ label: "GCP", variants: ["Google Cloud", "Google Cloud Platform"] },
@@ -39,7 +39,7 @@ const integrations: Array<Object> = [
 	{ label: "WordPress" },
 ];
 
-const languages: Array<Object> = [
+const languages: Array<object> = [
 	{ label: "Go" },
 	{ label: "GraphQL" },
 	{ label: "JavaScript", variants: ["js"] },
@@ -53,7 +53,7 @@ const languages: Array<Object> = [
 	{ label: "WebAssembly", variants: ["Web Assembly", "wasm"] },
 ];
 
-const protocols: Array<Object> = [
+const protocols: Array<object> = [
 	{ label: "FTP", variants: ["file transfer protocol"] },
 	{ label: "IPsec" },
 	{ label: "IPv4" },
@@ -73,13 +73,13 @@ const protocols: Array<Object> = [
 	{ label: "Wireguard" },
 ];
 
-const operating_systems: Array<Object> = [
+const operating_systems: Array<object> = [
 	{ label: "Linux" },
 	{ label: "MacOS", variants: ["OS X"] },
 	{ label: "Windows", variants: ["ms windows"] },
 ];
 
-const use_cases: Array<Object> = [
+const use_cases: Array<object> = [
 	{ label: "Authentication", variants: ["auth"] },
 	{ label: "A/B testing", variants: ["ab test"] },
 	{ label: "Caching", variants: ["cache"] },
