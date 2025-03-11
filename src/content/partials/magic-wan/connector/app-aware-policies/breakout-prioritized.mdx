@@ -3,6 +3,7 @@ params:
   - magicWord
   - featureName
   - whatHappensApp
+  - jsonType
 ---
 
 import { APIRequest, Aside, AnchorHeading, Render, TabItem, Tabs } from "~/components";
@@ -82,7 +83,7 @@ The traffic for the application you chose {props.whatHappensApp}.
 	path="/accounts/{account_id}/magic/apps"
 	method="POST"
 	json={{
-		"name": "<APP_NAME>",
+		"name": "<MANAGED_APP_ID>",
     "type": props.jsonType
 	}}
 	/>
