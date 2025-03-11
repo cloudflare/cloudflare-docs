@@ -1,12 +1,4 @@
 content_dir: /src/content
-authorized_users:
-  - dcpena
-  - kodster28
-  - KianNH
-  - marciocloudflare
-  - pedrosousa
-  - ranbel
-  - RebeccaTamachiro
 reviewer:
   custom_comment: |-
     Howdy and thanks for contributing to our repo. The Cloudflare team reviews new, external PRs within **two (2) weeks**. If it's been two weeks or longer without any movement, please tag the PR **Assignees** in a comment.
@@ -22,7 +14,3 @@ reviewer:
     enabled: true
   limit_num_reviews: 2
   limit_num_comments: 7
-openapi:
-  enabled: true
-  urls:
-    - https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.json
