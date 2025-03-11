@@ -38,7 +38,7 @@ export class ChatAgent extends Agent {
 
 </TypeScriptExample>
 
-## Connecting clients
+### Connecting clients
 
 The Agent framework includes a useful helper package for connecting directly to your Agent (or other Agents) from a client application. Import `agents-sdk/client`, create an instance of `AgentClient` and use it to connect to an instance of your Agent:
 
@@ -66,7 +66,7 @@ connection.send(
 
 </TypeScriptExample>
 
-## React clients
+### React clients
 
 React-based applications can import `agents-sdk/react` and use the `useAgent` hook to connect to an instance of an Agent directly:
 
@@ -107,7 +107,7 @@ function AgentInterface() {
 
 The `useAgent` hook automatically handles the lifecycle of the connection, ensuring that it is properly initialized and cleaned up when the component mounts and unmounts. You can also [combine `useAgent` with `useState`](/agents/api-reference/store-and-sync-state/) to automatically synchronize state across all clients connected to your Agent.
 
-## Handling WebSocket events
+### Handling WebSocket events
 
 Define `onError` and `onClose` methods on your Agent to explicitly handle WebSocket client errors and close events. Log errors, clean up state, and/or emit metrics:
 

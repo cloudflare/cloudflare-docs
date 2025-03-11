@@ -113,7 +113,7 @@ class MyAgent extends Agent<Env, State> {
 }
 ```
 
-### WebSocket connection Handling
+### WebSocket connection handling
 
 #### Connection
 
@@ -166,7 +166,7 @@ interface ConnectionContext {
 
 ### State Management
 
-#### State Management
+#### State management
 
 Methods and types for managing Agent state.
 
@@ -280,9 +280,9 @@ type Schedule<T = any> = {
 let task = await this.schedule(300, "methodToCall", { message: "data-to-send-to-method" });
 ```
 
-### SQL Database Access
+### SQL database
 
-#### SQL Query API
+#### SQL query API
 
 Execute SQL queries against the Agent's built-in SQLite database using the `this.sql` method within any method on your `Agent` class.
 
@@ -359,7 +359,7 @@ function agentFetch(
 ): Promise<Response>;
 ```
 
-### React Integration
+### React API
 
 The `agents-sdk` provides a React API for simplifying connection and routing to Agents from front-end frameworks, including React Router (Remix), Next.js, and Astro.
 
@@ -425,7 +425,7 @@ class AIChatAgent<Env = unknown> extends Agent<Env> {
 }
 ```
 
-### AI React Hooks
+### Chat Agent React API
 
 #### useAgentChat
 
@@ -470,7 +470,6 @@ function useAgentChat(options: UseAgentChatOptions): {
 To learn more about how to manage state within an Agent, refer to the documentation on [managing and syncing state](/agents/api-reference/store-and-sync-state/).
 
 :::
-
 
 ### Next steps
 
