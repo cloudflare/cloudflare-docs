@@ -1,3 +1,8 @@
+/* This is the allowlist for the tags we allow
+in our page frontmatter. Refer to https://developers.cloudflare.com/style-guide/frontmatter/custom-properties/#tags
+and https://developers.cloudflare.com/style-guide/frontmatter/tags/ for more details.
+*/
+
 const data_structures: Array<object> = [
 	{ label: "JSON" },
 	{ label: "TOML" },
