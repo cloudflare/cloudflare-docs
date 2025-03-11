@@ -1651,6 +1651,7 @@
 # workers KV
 /kv/platform/environments/ /kv/reference/environments/ 301
 /kv/platform/kv-commands/ /kv/reference/kv-commands/ 301
+/kv/platform/changelog/ /kv/platform/release-notes/ 301
 /kv/learning/ /kv/reference/ 301
 /kv/learning/how-kv-works/ /kv/concepts/how-kv-works/ 301
 /kv/learning/kv-bindings/ /kv/concepts/kv-bindings/ 301
