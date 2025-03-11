@@ -133,25 +133,38 @@ The traffic for the applications you chose are now processed first by Connector.
 
 2. Send a `DELETE` request [using the API](/api/resources/magic_transit/subresources/apps/methods/delete/) to delete an application from the breakout traffic policy.
 
-   ```bash
-   curl --request DELETE \
-   https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/app_configs/{id} \
-   --header "X-Auth-Email: <EMAIL>" \
-   --header "X-Auth-Key: <API_KEY>"
-   ```
+	<APIRequest
+	path="/accounts/{account_id}/magic/apps/{account_app_id}"
+	method="DELETE"
+	/>
 
-   ```json output
-   {
-   	"result": {
-   		"id": "023e105f4ecef8ad9ca31a8372d0c353",
-   		"site_id": "023e105f4ecef8ad9ca31a8372d0c353",
-   		"managed_app_id": "<MANAGED_APP_ID>",
-   		"breakout": true
-   	},
-   	"success": true,
-   	"errors": [],
-   	"messages": []
-   }
-   ```
+	```json output
+	{
+		"errors": [
+			{
+				"code": 1000,
+				"message": "message"
+			}
+		],
+		"messages": [
+			{
+				"code": 1000,
+				"message": "message"
+			}
+		],
+		"result": {
+			"account_app_id": "ac60d3d0435248289d446cedd870bcf4",
+			"hostnames": [
+				"auth.cloudflare.com"
+			],
+			"ip_subnets": [
+				"192.0.2.0/24"
+			],
+			"name": "Cloudflare Dashboard",
+			"type": "Development"
+		},
+		"success": true
+	}
+	```
 
 </TabItem> </Tabs>
