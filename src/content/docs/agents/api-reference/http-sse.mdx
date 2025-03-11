@@ -38,32 +38,56 @@ Review the [Agents API reference](/agents/api-reference/agents-api/) to learn mo
 
 ### Implementing Server-Sent Events
 
-TODO
+The Agents SDK support Server-Sent Events: 
+
+The below example uses the AI SDK to generate text and stream it back to the client. It will automatically stream 
+
 <TypeScriptExample>
 
 ```ts
-import { Agent } from "agents-sdk";
+import { Agent, AgentNamespace, getAgentByName, routeAgentRequest } from 'agents-sdk';
 import { streamText } from 'ai';
 import { createOpenAI, openai } from '@ai-sdk/openai';
 
 interface Env {
+	MyAgent: AgentNamespace<MyAgent>;
 	OPENAI_API_KEY: string;
 }
 
-class MyAgent extends Agent<Env> {
-  // Handle HTTP requests coming to this Agent instance
-  // Returns a Response object
-  async onRequest(request: Request) {
-    return new Response("Hello from Agent!");
-  }
+export class MyAgent extends Agent<Env> {
+	async onRequest(request: Request) {
+		// Test it via:
+		// curl -d '{"prompt": "Write me a Cloudflare Worker"}' <url>
+		let data = await request.json<{ prompt: string }>();
+		let stream = await this.callAIModel(data.prompt);
+		// This uses Server-Sent Events (SSE)
+		return stream.toTextStreamResponse({
+			headers: {
+				'Content-Type': 'text/x-unknown',
+				'content-encoding': 'identity',
+				'transfer-encoding': 'chunked',
+			},
+		});
+	}
 
-  async callAIModel(prompt: string) {
- 		const openai = createOpenAI({
-  	  // custom settings, e.g.
-  	  compatibility: 'strict', // strict mode, enable when using the OpenAI API
-  	});
-  	}
+	async callAIModel(prompt: string) {
+		const openai = createOpenAI({
+			apiKey: this.env.OPENAI_API_KEY,
+		});
+
+		return streamText({
+			model: openai('gpt-4o'),
+			prompt: prompt,
+		});
+	}
 }
+
+export default {
+	async fetch(request: Request, env: Env) {
+		const agent = await getAgentByName<Env, MyAgent>(env.MyAgent, 'agent');
+		return agent.fetch(request);
+	},
+};
 ```
 
 </TypeScriptExample>
@@ -71,3 +95,4 @@ class MyAgent extends Agent<Env> {
 ## WebSockets vs. Server-Sent Events
 
 TODO
+
