@@ -106,6 +106,7 @@
 /agents/examples/using-ai-models/ /agents/api-reference/using-ai-models/ 301
 /agents/examples/websockets/ /agents/api-reference/websockets/ 301
 /agents/examples/sdk/ /agents/api-reference/agents-api/ 301
+/agents/examples/build-mcp-server/ /agents/api-reference/build-mcp-server/ 301
 
 # ai
 /ai/ /use-cases/ai/ 301
