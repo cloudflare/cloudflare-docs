@@ -22,7 +22,7 @@ const integrations: Array<Object> = [
 	{ label: "Azure", variants: ["Microsoft Azure", "MS Azure"] },
 	{ label: "AWS", variants: ["Amazon Web Services"] },
 	{ label: "GCP", variants: ["Google Cloud", "Google Cloud Platform"] },
-	{ label: "G Suite Groupe", variants: ["gsuite", "g suite"] },
+	{ label: "G Suite Group", variants: ["gsuite", "g suite"] },
 	{ label: "GitHub" },
 	{
 		label: "Microsoft Entra ID",
