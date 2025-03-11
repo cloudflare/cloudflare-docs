@@ -44,11 +44,11 @@ import { APIRequest, Aside, Markdown, Render, TabItem, Tabs } from "~/components
 	)
 }
 
-:::note[A note on security]
+## Security best practices
+
 We recommend [routing](https://www.cloudflare.com/learning/network-layer/what-is-routing/) all traffic through our global network for comprehensive security filtering and access controls. However, there may be specific cases where you want a subset of traffic to bypass Cloudflare's security filtering and route it directly to the Internet. You can scope this breakout traffic to specific applications from the Cloudflare dashboard.
 
 Refer to [Traffic steering](/magic-wan/reference/traffic-steering/) to learn how Cloudflare routes traffic.
-:::
 
 ## Add an application
 
