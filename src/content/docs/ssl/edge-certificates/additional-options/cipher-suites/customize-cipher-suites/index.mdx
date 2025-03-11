@@ -31,10 +31,10 @@ Custom cipher suites is a hostname-level setting, which implies that:
 
 ## Scope
 
-Currently, you can only customize cipher suites when using the API:
+Currently, you have the following options:
 
-* [Zone](/api/resources/zones/subresources/settings/methods/edit/) (Using `ciphers` as the setting name in the URI path.)
-* [Per-hostname](/api/resources/hostnames/subresources/settings/subresources/tls/methods/update/) (Regular zones only. For custom hostnames, consider the following section.)
+- Set custom cipher suites for a zone: either [via API](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/api/) or [on the dashboard](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/dashboard/).
+- Set custom cipher suites per-hostname: only available [via API](/api/resources/hostnames/subresources/settings/subresources/tls/methods/update/). Refer to the [how-to](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/api/) for details.
 
 ### Cloudflare for SaaS
 
@@ -47,7 +47,3 @@ To restrict cipher suites in connections to your own zone, continue on this guid
 Cloudflare uses the [hostname priority logic](/ssl/reference/certificate-and-hostname-priority/) to determine which setting to apply.
 
 ECDSA cipher suites are prioritized over RSA, and Cloudflare preserves the specified cipher suites in the order they are set. This means that, if both ECDSA and RSA are used, Cloudflare presents the ECDSA ciphers first - in the order they were set - and then the RSA ciphers, also in the order they were set.
-
-## Resources
-
-<DirectoryListing />
