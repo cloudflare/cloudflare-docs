@@ -156,14 +156,6 @@ Take note of the `"account_app_id"` value for the application that want to delet
 	method="DELETE"
 	/>
 
-
-   ```bash
-   curl --request DELETE \
-   https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/app_configs/{id} \
-   --header "X-Auth-Email: <EMAIL>" \
-   --header "X-Auth-Key: <API_KEY>"
-   ```
-
    ```json output
    {
    	"result": {
