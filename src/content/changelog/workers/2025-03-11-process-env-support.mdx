@@ -6,6 +6,8 @@ products:
 date: 2025-03-11T15:00:00Z
 ---
 
+import { WranglerConfig } from "~/components";
+
 You can now access [environment variables](/workers/configuration/environment-variables/) and
 [secrets](/workers/configuration/secrets/) on [`process.env`](/workers/runtime-apis/nodejs/process/#processenv)
 when using the [`nodejs_compat` compatability flag](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag).
@@ -26,7 +28,20 @@ Now, [environment variables](/workers/configuration/environment-variables/),
 [secrets](/workers/configuration/secrets/), and [version metadata](/workers/runtime-apis/bindings/version-metadata/)
 can all be accessed on `process.env`.
 
-After April 1, 2025, populating `process.env` will become the default behavior when `nodejs_compat` is enabled, and
-your Worker's compatability date is after "2025-04-01". Until then, users can opt-in to this behavior by adding the
-[`nodejs_compat_populate_process_env`](/workers/configuration/compatibility-flags/#enable-auto-populating-processenv)
-compatability flag.
+To opt-in to the new `process.env` behaviour now, add the [`nodejs_compat_populate_process_env`](/workers/configuration/compatibility-flags/#enable-auto-populating-processenv) compatibility flag to your
+`wrangler.json` configuration:
+
+<WranglerConfig>
+
+```jsonc
+{
+	// Rest of your configuration
+	// Add "nodejs_compat_populate_process_env" to your compatibility_flags array
+	"compatibility_flags": ["nodejs_compat", "nodejs_compat_populate_process_env"],
+	// Rest of your configuration
+```
+
+</WranglerConfig>
+
+After April 1, 2025, populating `process.env` will become the default behavior when both `nodejs_compat` is enabled and
+your Worker's `compatability_date` is after "2025-04-01".
