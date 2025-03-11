@@ -20,7 +20,6 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 
 - [`docs`](#docs) - Open this page in your default browser.
 - [`init`](#init) - Create a new project from a variety of web frameworks and templates.
-- [`generate`](#generate) - Create a Wrangler project using an existing [Workers template](https://github.com/cloudflare/worker-template).
 - [`d1`](#d1) - Interact with D1.
 - [`vectorize`](#vectorize) - Interact with Vectorize indexes.
 - [`hyperdrive`](#hyperdrive) - Manage your Hyperdrives.
@@ -154,29 +153,6 @@ wrangler init [<NAME>] [OPTIONS]
 - `--from-dash` <Type text="string" /> <MetaInfo text="optional" />
   - Fetch a Worker initialized from the dashboard. This is done by passing the flag and the Worker name. `wrangler init --from-dash <WORKER_NAME>`.
   - The `--from-dash` command will not automatically sync changes made to the dashboard after the command is used. Therefore, it is recommended that you continue using the CLI.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
----
-
-## `generate`
-
-:::note
-
-This command has been deprecated as of [Wrangler v3](/workers/wrangler/migration/update-v2-to-v3/) and will be removed in a future version.
-
-:::
-
-Create a new project using an existing [Workers template](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker).
-
-```txt
-wrangler generate [<NAME>] [TEMPLATE]
-```
-
-- `NAME` <Type text="string" /> <MetaInfo text="optional (default: name of working directory)" />
-  - The name of the Workers project. This is both the directory name and `name` property in the generated [Wrangler configuration](/workers/wrangler/configuration/).
-- `TEMPLATE` <Type text="string" /> <MetaInfo text="optional" />
-  - The URL of a GitHub template, with a default [worker-template](https://github.com/cloudflare/worker-template). Browse a list of available templates on the [cloudflare/workers-sdk](https://github.com/cloudflare/workers-sdk/tree/main/templates#usage) repository.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
@@ -476,8 +452,6 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
   - Host to act as origin in local mode, defaults to `dev.host` or route.
 - `--assets` <Type text="string" /> <MetaInfo text="optional beta" />
   - Folder of static assets to be served. Replaces [Workers Sites](/workers/configuration/sites/). Visit [assets](/workers/static-assets/) for more information.
-- `--legacy-assets` <Type text="string" /> <MetaInfo text="optional deprecated, use `--assets`" />
-  - Folder of static assets to be served.
 - `--site` <Type text="string" /> <MetaInfo text="optional deprecated, use `--assets`" />
   - Folder of static assets for Workers Sites.
     :::caution
@@ -501,8 +475,6 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
   - Path to a custom `tsconfig.json` file.
 - `--minify` <Type text="boolean" /> <MetaInfo text="optional" />
   - Minify the Worker.
-- `--node-compat` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Enable Node.js compatibility.
 - `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory to use for local persistence.
 - `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
@@ -554,8 +526,6 @@ None of the options for this command are required. Also, many can be set in your
   - Use the latest version of the Workers runtime.
 - `--assets` <Type text="string" /> <MetaInfo text="optional beta" />
   - Folder of static assets to be served. Replaces [Workers Sites](/workers/configuration/sites/). Visit [assets](/workers/static-assets/) for more information.
-- `--legacy-assets` <Type text="string" /> <MetaInfo text="optional deprecated, use `--assets`" />
-  - Folder of static assets to be served.
 - `--site` <Type text="string" /> <MetaInfo text="optional deprecated, use `--assets`" />
   - Folder of static assets for Workers Sites.
     :::caution
@@ -582,8 +552,6 @@ None of the options for this command are required. Also, many can be set in your
   - Path to a custom `tsconfig.json` file.
 - `--minify` <Type text="boolean" /> <MetaInfo text="optional" />
   - Minify the bundled Worker before deploying.
-- `--node-compat` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Enable node.js compatibility.
 - `--dry-run` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Compile a project without actually deploying to live servers. Combined with `--outdir`, this is also useful for testing the output of `npx wrangler deploy`. It also gives developers a chance to upload our generated sourcemap to a service like Sentry, so that errors from the Worker can be mapped against source code, but before the service goes live.
 - `--keep-vars` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
@@ -593,22 +561,6 @@ None of the options for this command are required. Also, many can be set in your
   - Specify the [Workers for Platforms dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/#2-create-a-dispatch-namespace) to upload this Worker to.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
-
----
-
-## `publish`
-
-Publish your Worker to Cloudflare.
-
-```txt
-wrangler publish [OPTIONS]
-```
-
-:::note
-
-This command has been deprecated as of v3 in favor of [`wrangler deploy`](#deploy). It will be removed in v4.
-
-:::
 
 ---
 
@@ -1144,22 +1096,6 @@ wrangler pages deploy <BUILD_OUTPUT_DIRECTORY> [OPTIONS]
 :::note
 
 Your site is deployed to `<PROJECT_NAME>.pages.dev`. If you do not provide the `--project-name` argument, you will be prompted to enter a project name in your terminal after you run the command.
-
-:::
-
-### `publish`
-
-Publish a directory of static assets as a Pages deployment.
-
-```txt
-wrangler pages publish [<DIRECTORY>] [OPTIONS]
-```
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-:::note
-
-This command has been deprecated as of v3 in favor of [`wrangler pages deploy`](#deploy-1). It will be removed in v4.
 
 :::
 
