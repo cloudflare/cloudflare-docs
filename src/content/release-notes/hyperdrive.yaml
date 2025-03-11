@@ -1,5 +1,5 @@
 ---
-link: "/hyperdrive/platform/changelog/"
+link: "/hyperdrive/platform/release-notes/"
 productName: Hyperdrive
 productLink: "/hyperdrive/"
 productArea: Developer platform
@@ -8,9 +8,9 @@ entries:
   - publish_date: "2025-03-07"
     title: Hyperdrive connects to your database using Cloudflare's IP address ranges
     description: |-
-      Hyperdrive now uses [Cloudflare's IP address ranges](https://www.cloudflare.com/ips/) for egress. 
+      Hyperdrive now uses [Cloudflare's IP address ranges](https://www.cloudflare.com/ips/) for egress.
 
-      This enables you to configure the firewall policies on your database to allow access to this limited IP address range. 
+      This enables you to configure the firewall policies on your database to allow access to this limited IP address range.
 
       Learn more about [configuring your database networking for Hyperdrive](/hyperdrive/configuration/firewall-and-networking-configuration/).
   - publish_date: "2025-03-07"
@@ -44,13 +44,13 @@ entries:
   - publish_date: "2024-10-30"
     title: New Hyperdrive configurations to private databases using Tunnels are validated before creation
     description: |-
-      When creating a new Hyperdrive configuration to a private database using Tunnels, Hyperdrive will verify that it can connect to the database to ensure that your Tunnel and Access application have been properly configured. This makes it easier to debug connectivity issues. 
+      When creating a new Hyperdrive configuration to a private database using Tunnels, Hyperdrive will verify that it can connect to the database to ensure that your Tunnel and Access application have been properly configured. This makes it easier to debug connectivity issues.
 
       Refer to [documentation on connecting to private databases](/hyperdrive/configuration/connect-to-private-database/) for more information.
   - publish_date: "2024-09-20"
     title: The `node-postgres` (pg) driver is now supported for Pages applications using Hyperdrive.
     description: |-
-      The popular `pg` ([node-postgres](https://github.com/brianc/node-postgres) driver no longer requires the legacy `node_compat` mode, and can now be used in both Workers and Pages for connecting to Hyperdrive. This uses the new (improved) Node.js compatibility in Workers and Pages. 
+      The popular `pg` ([node-postgres](https://github.com/brianc/node-postgres) driver no longer requires the legacy `node_compat` mode, and can now be used in both Workers and Pages for connecting to Hyperdrive. This uses the new (improved) Node.js compatibility in Workers and Pages.
 
       You can set [`compatibility_flags = ["nodejs_compat_v2"]`](/workers/runtime-apis/nodejs/) in your `wrangler.toml` or via the Pages dashboard to benefit from this change. Visit the [Hyperdrive documentation on supported drivers](/hyperdrive/configuration/connect-to-postgres/#supported-drivers) to learn more about the driver versions supported by Hyperdrive.
   - publish_date: "2024-08-19"
