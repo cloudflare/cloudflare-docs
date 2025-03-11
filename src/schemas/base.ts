@@ -10,12 +10,16 @@ const spotlightAuthorDetails = z
 	})
 	.optional()
 	.describe(
-		"These are used to automatically add the SpotlightAuthorDetails component to the page. Refer to https://developers.cloudflare.com/style-guide/components/spotlight-author-details/.",
+		"These are used to automatically add the [SpotlightAuthorDetails component](/style-guide/components/spotlight-author-details/) to the page.",
 	);
 
 export const baseSchema = ({ image }: SchemaContext) =>
 	z.object({
-		preview_image: image().optional(),
+		preview_image: image()
+			.optional()
+			.describe(
+				"A `src` path to the image that you want to use as a custom preview image for social sharing.",
+			),
 		pcx_content_type: z
 			.union([
 				z.literal("overview"),
@@ -41,15 +45,21 @@ export const baseSchema = ({ image }: SchemaContext) =>
 			.catch((ctx) => ctx.input)
 			.optional()
 			.describe(
-				"Refer to https://developers.cloudflare.com/style-guide/documentation-content-strategy/content-types/.",
+				"The purpose of the page, and defined through specific pages in [Content strategy](/style-guide/documentation-content-strategy/content-types/).",
 			),
 		content_type: z.string().optional(),
-		tags: z.string().array().optional(),
+		tags: z
+			.string()
+			.array()
+			.optional()
+			.describe(
+				"A group of related keywords relating to the purpose of the page. Refer to [Tags](/style-guide/frontmatter/tags/).",
+			),
 		external_link: z
 			.string()
 			.optional()
 			.describe(
-				"Links to this page (i.e sidebar, directory listing) will instead appear as the provided link.",
+				"Path to another page in our docs or elsewhere. Used to add a crosslink entry to the lefthand navigation sidebar.",
 			),
 		difficulty: z
 			.union([
@@ -60,23 +70,34 @@ export const baseSchema = ({ image }: SchemaContext) =>
 			.catch((ctx) => ctx.input)
 			.optional()
 			.describe(
-				"Difficulty is displayed as a column in the ListTutorials component.",
+				"Difficulty is displayed as a column in the [ListTutorials component](/style-guide/components/list-tutorials/).",
 			),
 		updated: z
 			.date()
 			.optional()
 			.describe(
-				"This is used to automatically add the LastReviewed component to a page. Refer to https://developers.cloudflare.com/style-guide/components/last-reviewed/.",
+				"This is used to automatically add the [LastReviewed component](/style-guide/components/last-reviewed/).",
 			),
 		spotlight: spotlightAuthorDetails,
 		release_notes_file_name: z.string().array().optional(),
 		release_notes_product_area_name: z.string().optional(),
-		products: z.string().array().optional(),
+		products: z
+			.string()
+			.array()
+			.optional()
+			.describe(
+				"The names of related products, which show on some grids for Examples, [Tutorials](/style-guide/documentation-content-strategy/content-types/tutorial/), and [Reference Architectures](/style-guide/documentation-content-strategy/content-types/reference-architecture/)",
+			),
 		languages: z.string().array().optional(),
 		summary: z.string().optional(),
 		goal: z.string().array().optional(),
 		operation: z.string().array().optional(),
-		noindex: z.boolean().optional(),
+		noindex: z
+			.boolean()
+			.optional()
+			.describe(
+				"If true, this property adds a `noindex` declaration to the page, which will tell internal / external search crawlers to ignore this page. Helpful for pages that are historically accurate, but no longer recommended, such as [Workers Sites](/workers/configuration/sites/).",
+			),
 		sidebar: z
 			.object({
 				order: z.number().optional(),
@@ -93,18 +114,21 @@ export const baseSchema = ({ image }: SchemaContext) =>
 							.boolean()
 							.default(false)
 							.describe(
-								"Hides the index page from the sidebar. Refer to https://developers.cloudflare.com/style-guide/frontmatter/sidebar/.",
+								"Hides the index page from the sidebar. Refer to [Sidebar](/style-guide/frontmatter/sidebar/).",
 							),
 						badge: BadgeConfigSchema(),
 					})
 					.optional(),
 			})
-			.optional(),
+			.optional()
+			.describe(
+				"Used to configure various sidebar options. Refer to [Sidebar](/style-guide/frontmatter/sidebar/).",
+			),
 		hideChildren: z
 			.boolean()
 			.optional()
 			.describe(
-				"Renders this group as a single link on the sidebar, to the index page. Refer to https://developers.cloudflare.com/style-guide/frontmatter/sidebar/.",
+				"Renders this group as a single link on the sidebar, to the index page. Refer to [Sidebar](https://developers.cloudflare.com/style-guide/frontmatter/sidebar/).",
 			),
 		styleGuide: z
 			.object({
