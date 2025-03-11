@@ -113,7 +113,6 @@ The traffic for the application you chose {props.whatHappensApp}.
 	method="GET"
 	/>
 
-
 Take note of the `"account_app_id"` value for the application that want to delete.
 
 2. Send a [`DELETE` request](/api/resources/magic_transit/subresources/apps/methods/delete/) to delete an application from the breakout traffic policy.
@@ -122,35 +121,6 @@ Take note of the `"account_app_id"` value for the application that want to delet
 	path="/accounts/{account_id}/magic/apps/{account_app_id}"
 	method="DELETE"
 	/>
-
-	```json output
-	{
-		"errors": [
-			{
-				"code": 1000,
-				"message": "message"
-			}
-		],
-		"messages": [
-			{
-				"code": 1000,
-				"message": "message"
-			}
-		],
-		"result": {
-			"account_app_id": "ac60d3d0435248289d446cedd870bcf4",
-			"hostnames": [
-				"auth.cloudflare.com"
-			],
-			"ip_subnets": [
-				"192.0.2.0/24"
-			],
-			"name": "Cloudflare Dashboard",
-			"type": "Development"
-		},
-		"success": true
-	}
-	```
 
 </TabItem> </Tabs>
 
