@@ -1,0 +1,111 @@
+---
+params:
+  - magicWord
+  - featureName
+  - whatHappensApp
+  - jsonType
+---
+
+import { APIRequest, Aside, Markdown, Render, TabItem, Tabs } from "~/components";
+
+{ props.magicWord === "breakout" && (
+	<>
+		<p>Breakout traffic allows you to define which applications should bypass Cloudflare's security filtering, and go directly to the Internet. It works via DNS requests inspection. This means that if your network is caching DNS requests, Breakout traffic will only take effect after you cache entries expire and your client issues a new DNS request that the Magic WAN Connector can detect. This can take several minutes.</p>
+		<Aside type="note">Breakout traffic will not work for applications that use DNS-over-HTTPs.</Aside>
+	</>
+	)
+}
+
+{ props.magicWord === "prioritized" && (
+	<>
+		<p>Prioritized traffic allows you to define which applications Magic WAN Connector should process first. Applications not in the list will be queued behind prioritized traffic.</p>
+		<p>Similarly to breakout traffic, prioritized traffic also works via DNS requests inspection.</p>
+		<Aside type="note">Prioritized traffic will not work for applications that use DNS-over-HTTPS.</Aside>
+	</>
+	)
+}
+
+{ props.magicWord === "breakout" && (
+	<>
+		<pre class="mermaid">
+			flowchart LR
+			accTitle: In this example, the applications go directly to the Internet, skipping Cloudflare's security. filtering
+			a(Magic WAN Connector) --{`>`} b(Cloudflare) --{`>`}|Filtered traffic|c(Internet)
+
+			a-- Breakout traffic ---d(Application1) & e(Application2) --{`>`} c
+
+			classDef orange fill:#f48120,color: black
+			class a,b orange
+		</pre>
+		<p><em>In the graph above, Applications 1 and 2 are configured to bypass Cloudflare's security filtering, and go straight to the Internet</em></p>
+	</>
+	)
+}
+
+:::note[A note on security]
+We recommend [routing](https://www.cloudflare.com/learning/network-layer/what-is-routing/) all traffic through our global network for comprehensive security filtering and access controls. However, there may be specific cases where you want a subset of traffic to bypass Cloudflare's security filtering and route it directly to the Internet. You can scope this breakout traffic to specific applications from the Cloudflare dashboard.
+
+Refer to [Traffic steering](/magic-wan/reference/traffic-steering/) to learn how Cloudflare routes traffic.
+:::
+
+## Add an application
+
+You need to configure {props.featureName} for each of your existing sites, as it is a per-site configuration.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+2. Select **Magic WAN** > **Connector on-ramps (beta)**.
+3. Select the Connector you want to configure > **Edit**.
+4. Select **Traffic Steering**.
+5. In **{props.featureName}**, select **Add**.
+6. Select one or more applications that should bypass Cloudflare filtering from the list. You can also use the search box.
+7. Select **Add applications**.
+
+The traffic for the application you chose {props.whatHappensApp}.
+
+</TabItem> <TabItem label="API">
+
+<Render file="connector/account-id-api-key" />
+
+1.  Send a [`POST` request](/api/resources/magic_transit/subresources/apps/methods/create/) to add new apps to the breakout traffic policy.
+
+	<APIRequest
+	path="/accounts/{account_id}/magic/apps"
+	method="POST"
+	json={{
+		"name": "<APP_NAME>",
+    "type": "props.jsonType"
+	}}
+	/>
+
+	```json output
+	{
+		"errors": [
+			{
+				"code": 1000,
+				"message": "message"
+			}
+		],
+		"messages": [
+			{
+				"code": 1000,
+				"message": "message"
+			}
+		],
+		"result": {
+			"account_app_id": "ac60d3d0435248289d446cedd870bcf4",
+			"hostnames": [
+				"auth.cloudflare.com"
+			],
+			"ip_subnets": [
+				"192.0.2.0/24"
+			],
+			"name": "Cloudflare Dashboard",
+			"type": "Development"
+		},
+		"success": true
+	}
+	```
+
+</TabItem> </Tabs>

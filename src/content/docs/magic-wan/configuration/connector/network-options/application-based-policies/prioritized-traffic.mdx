@@ -8,77 +8,7 @@ description: Prioritized traffic allows you to define which applications are
 
 import { APIRequest, Render, TabItem, Tabs } from "~/components";
 
-Prioritized traffic allows you to define which applications Magic WAN Connector should process first. Applications not in the list will be queued behind prioritized traffic.
 
-Similarly to breakout traffic, prioritized traffic also works via DNS requests inspection.
-
-:::caution
-Prioritized traffic will not work for applications that use DNS-over-HTTPS.
-:::
-
-## Add an application
-
-You need to configure Prioritized traffic for each of your existing sites, as it is a per-site configuration.
-
-<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
-
-<Render
-	file="connector/app-aware-policies/add-app"
-	params={{ featureName: "Prioritized traffic" }}
-/>
-
-6. Select one or more applications that should take precedence over other traffic. You can also use the search box.
-7. Select **Add applications**.
-
-The traffic for the applications you chose are now processed first by Connector.
-
-</TabItem> <TabItem label="API">
-
-<Render file="connector/account-id-api-key" />
-
-1. Send a [`POST` request](/api/resources/magic_transit/subresources/apps/methods/create/) to add new apps the priority traffic policy.
-
-	Example:
-
-	<APIRequest
-	path="/accounts/{account_id}/magic/apps"
-	method="POST"
-	json={{
-	"name": "<APP_NAME>",
-	"type": "priority"
-	}}
-	/>
-
-	```json output
-	{
-		"errors": [
-			{
-				"code": 1000,
-				"message": "message"
-			}
-		],
-		"messages": [
-			{
-				"code": 1000,
-				"message": "message"
-			}
-		],
-		"result": {
-			"account_app_id": "ac60d3d0435248289d446cedd870bcf4",
-			"hostnames": [
-				"auth.cloudflare.com"
-			],
-			"ip_subnets": [
-				"192.0.2.0/24"
-			],
-			"name": "Cloudflare Dashboard",
-			"type": "Development"
-		},
-		"success": true
-	}
-	```
-
-</TabItem> </Tabs>
 
 ## Delete an application
 
