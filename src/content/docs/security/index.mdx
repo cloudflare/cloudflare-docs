@@ -9,19 +9,25 @@ head:
     content: Overview
 ---
 
-import { CardGrid, Feature, LinkTitleCard, RelatedProduct } from "~/components";
+import { Card, CardGrid, Feature, LinkTitleCard, RelatedProduct } from "~/components";
 
 The Security dashboard (beta) is your starting point to better understand the security posture of your web applications, and to configure rules to protect them.
 
-:::note
-The new Security navigation in the Cloudflare dashboard is currently available in beta for users that opt in to the new user interface.
-:::
+<Card title="New dashboard experience" icon="rocket">
 
----
+The new **Security** navigation in the Cloudflare dashboard is currently available in beta for users that opt in to the new user interface. To opt in:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
+2. Open any page under **Security**.
+3. In the top right-hand corner of the page, select **Try new security dashboard**.
+
+You can swap back to the previous dashboard at any time by selecting **Return to old security dashboard** in the same page location.
+
+</Card>
 
 ## Features
 
-<Feature header="Security Overview" href="/security/overview/">
+<Feature header="Security Overview" href="/security/overview/" cta="Explore Security Overview">
 	Get a high-level overview of your domain's security posture.
 </Feature>
 
@@ -31,10 +37,10 @@ The new Security navigation in the Cloudflare dashboard is currently available i
 	cta="Explore Security Analytics"
 >
 	Shows information about all incoming HTTP requests or mitigated requests (rule
-	matches). Tailor your security configurations based on the activity log.
+	matches). Tailor your security configurations based on sampled logs.
 </Feature>
 
-<Feature header="Asset Management" href="/security/resources/">
+<Feature header="Web Asset Discovery" href="/security/resources/">
 	Discover your web assets (including API endpoints) and instruct Cloudflare how
 	to best protect them.
 </Feature>
@@ -42,40 +48,6 @@ The new Security navigation in the Cloudflare dashboard is currently available i
 <Feature header="Security Rules" href="/security/rules/">
 	Perform security actions on incoming requests that match specified filters.
 </Feature>
-
----
-
-## Related products
-
-The following products are available separately in the previous navigation structure in the Cloudflare dashboard. The documentation for these products contains additional information about individual security features not covered in the Security dashboard documentation.
-
-<RelatedProduct header="WAF" href="/waf/" product="waf">
-	Get automatic protection from vulnerabilities and the flexibility to create
-	custom rules.
-</RelatedProduct>
-
-<RelatedProduct header="Bots" href="/bots/" product="bots">
-	Cloudflare bot solutions identify and mitigate automated traffic to protect
-	your domain from bad bots.
-</RelatedProduct>
-
-<RelatedProduct header="API Shield" href="/api-shield/" product="api-shield">
-	Identify and address API vulnerabilities using API Shield.
-</RelatedProduct>
-
-<RelatedProduct header="Page Shield" href="/page-shield/" product="page-shield">
-	Page Shield is a comprehensive client-side security solution to ensure the
-	safety of your website visitors' browser environment.
-</RelatedProduct>
-
-<RelatedProduct
-	header="DDoS Protection"
-	href="/ddos-protection/"
-	product="ddos-protection"
->
-	Cloudflare DDoS protection secures websites, applications, and entire networks
-	while ensuring the performance of legitimate traffic is not compromised.
-</RelatedProduct>
 
 ---
 

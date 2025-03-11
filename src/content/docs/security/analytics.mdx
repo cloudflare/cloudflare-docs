@@ -27,6 +27,18 @@ For information on how to use the **Traffic** tab, refer to [Security Analytics]
 
 If you need to modify existing security-related rules you already configured, consider also using the [Events](#events) tab. This tab displays information about requests affected by Cloudflare security products.
 
+### Suspicious activity
+
+The suspicious activity gives you information about suspicious requests that were identified by the Cloudflare detections you have enabled. The supported detections include:
+
+- [Account takeover](/bots/concepts/detection-ids/#account-takeover-detections)
+- [Leaked credential check](/waf/detections/leaked-credentials/) (only for user and password leaked)
+- [Malicious uploads](/waf/detections/malicious-uploads/)
+- Firewall for AI
+- [WAF attack score](/waf/detections/attack-score/)
+
+Each suspicious activity is classified with a severity score that can vary from critical to low. You can use the filter option to investigate further.
+
 :::note
 The **Traffic** tab includes functionality available in the [Security Analytics](/waf/analytics/security-analytics/) page in the previous dashboard navigation structure. However, some page elements will appear in a different order, or they may be unavailable in the **Traffic** tab, such as Insights or the score-based analyses sidebar.
 :::
@@ -37,27 +49,10 @@ Use the **Events** tab to review <GlossaryTooltip term="mitigated request">mitig
 
 The **Events** tab displays information about requests actioned or flagged by Cloudflare security products. Each incoming HTTP request might generate one or more security events. The tab only shows these events, not the HTTP requests themselves. To obtain information on all incoming HTTP requests, use the [Traffic](#traffic) tab.
 
-Users on a Free plan can view summarized events by date in the **Activity log**. Customers on paid plans have access to additional graphs and dashboards that summarize the most relevant information about the current behavior of Cloudflare's security features on your zone.
+Users on a Free plan can view summarized events by date in sampled logs. Customers on paid plans have access to additional graphs and dashboards that summarize the most relevant information about the current behavior of Cloudflare's security features on your zone.
 
 For more information on the **Events** tab, refer to [Security Events](/waf/analytics/security-events/).
 
 :::note
 The **Events** tab corresponds to the [Security Events](/waf/analytics/security-events/) page in the previous dashboard navigation structure.
-:::
-
-## API sequences
-
-Use API sequences to discover how users interact with your API, by tracking the order of API session requests over time. API sequences will group and highlight popular user journeys across your API.
-
-Once you configure <GlossaryTooltip term="session identifier" link="/api-shield/management-and-monitoring/session-identifiers/">session identifiers</GlossaryTooltip>, the **API sequences** tab will start grouping and highlighting important user journeys (sequences) across your API.
-
-To configure session identifiers, go to **Security** > **Settings** > **All settings** tab and select **Edit** next to **Session identifiers**.
-
-For more information on how Cloudflare identifies API sequences and how you can configure API sequence rules, refer to the following resources:
-
-- [Sequence analytics](/api-shield/security/sequence-analytics/)
-- [Sequence mitigation](/api-shield/security/sequence-mitigation/)
-
-:::note
-The **API sequences** tab includes functionality available in [API Shield](/api-shield/) in the previous dashboard navigation structure.
 :::
