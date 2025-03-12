@@ -3,7 +3,7 @@ pcx_content_type: how-to
 title: DHCP server
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { APIRequest, Render, TabItem, Tabs } from "~/components";
 
 When you use a static IP address, Magic WAN Connector can also act as a DHCP server in your network. To enable this feature:
 
@@ -36,6 +36,24 @@ When you use a static IP address, Magic WAN Connector can also act as a DHCP ser
 Create a [`PUT` request](/api/resources/magic_transit/subresources/sites/subresources/lans/methods/update/) to update the LAN where you want to enable DHCP server:
 
 Example:
+
+<APIRequest
+  path="/accounts/{account_id}/magic/sites/{site_id}/lans/{lan_id}"
+  method="PUT"
+  json={{
+    "lan": {
+    "static_addressing": {
+      "dhcp_server": {
+        "dhcp_pool_end": "<IP_ADDRESS>",
+        "dhcp_pool_start": "<IP_ADDRESS>",
+        "dns_server": "<IP_ADDRESS>"
+      }
+    }
+  }
+  }}
+/>
+
+TESTE
 
 ```bash
 curl --request PUT \
