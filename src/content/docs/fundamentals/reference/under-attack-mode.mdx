@@ -2,31 +2,29 @@
 pcx_content_type: reference
 source: https://support.cloudflare.com/hc/en-us/articles/200170076-Understanding-Cloudflare-Under-Attack-mode-advanced-DDOS-protection-
 title: Under Attack mode
-
 ---
 
 import { Example } from "~/components"
 
-Cloudflare's **I'm Under Attack Mode** performs additional security checks to help mitigate layer 7 DDoS attacks. Validated users access your website and suspicious traffic is blocked. It is designed to be used as one of the last resorts when a zone is under attack (and will temporarily pause access to your site and impact your site analytics).
+Cloudflare's Under Attack mode performs additional security checks to help mitigate layer 7 DDoS attacks. Validated users access your website and suspicious traffic is blocked. It is designed to be used as one of the last resorts when a zone is under attack (and will temporarily pause access to your site and impact your site analytics).
 
 When enabled, visitors receive an interstitial page.
 
-## Enable Under Attack mode
+## Turn on Under Attack mode
 
-**I'm Under Attack Mode** is disabled by default for your zone.
+Under Attack mode is turned off by default for your zone.
 
 ### Globally
 
-To put your entire zone in **I'm Under Attack Mode**:
+To put your entire zone in Under Attack mode:
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. Select your account and zone.
-3. Go to **Security** > **Settings**.
-4. For **Security Level**, choose **I'm Under Attack!**.
+3. In the zone overview page, turn on **Under Attack Mode** in the **Quick Actions** sidebar.
 
 ### Selectively
 
-To enable **I'm Under Attack Mode** for specific pages or sections of your site, use a [Configuration Rule](/rules/configuration-rules/) to adjust the **Security Level**.
+To enable Under Attack mode for specific pages or sections of your site, use a [configuration rule](/rules/configuration-rules/) to adjust the **Security Level**.
 
 <Example>
 
@@ -48,11 +46,11 @@ If you are using the Expression Editor, enter the following expression:<br/>
 
 To turn it on for specific ASNs (hosts/ISPs that own IP addresses), countries, or IP ranges, use [IP Access Rules](/waf/tools/ip-access-rules/).
 
-***
+---
 
 ## Preview Under Attack mode
 
-To preview what **I'm Under Attack** mode looks like for your visitors:
+To preview what Under Attack mode looks like for your visitors:
 
 1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. Select your account.
@@ -60,9 +58,9 @@ To preview what **I'm Under Attack** mode looks like for your visitors:
 4. Go to **Custom Pages**.
 5. For **Managed Challenge / I'm Under Attack Mode™**, select **Custom Pages** > **View default**.
 
-The "Checking your browser before accessing..." challenge determines whether to block or allow a visitor within five seconds. After passing the challenge, the visitor does not observe another challenge until the duration configured in [**Challenge Passage**](/waf/tools/challenge-passage/).
+The `Checking your browser before accessing...` challenge determines whether to block or allow a visitor within five seconds. After passing the challenge, the visitor does not observe another challenge until the duration configured in [Challenge Passage](/waf/tools/challenge-passage/).
 
-***
+---
 
 ## Potential issues
 

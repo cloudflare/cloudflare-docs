@@ -41,7 +41,10 @@ if (!operation) {
 	);
 }
 
-const url = new URL(path, "https://api.cloudflare.com/client/v4");
+const url = new URL(
+	path.startsWith("/") ? path.slice(1) : path,
+	"https://api.cloudflare.com/client/v4/",
+);
 const headers: Record<string, string> = {};
 
 const providedParameters = Object.keys(parameters ?? {});

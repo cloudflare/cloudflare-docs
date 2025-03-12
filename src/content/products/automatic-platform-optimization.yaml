@@ -14,11 +14,3 @@ meta:
 resources:
   community: https://community.cloudflare.com/c/website-application-performance/apo/5
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/speed/optimization/content
-
-externals:
-  - title: Cloudflare homepage
-    url: https://cloudflare.com
-  - title: "Blog: Introducing APO"
-    url: https://blog.cloudflare.com/automatic-platform-optimizations-starting-with-wordpress/
-  - title: "Blog: APO Post-launch report"
-    url: https://blog.cloudflare.com/apo-post-launch-report/
