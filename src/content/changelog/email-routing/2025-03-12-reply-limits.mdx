@@ -13,7 +13,6 @@ It's now possible to keep a threaded email conversation with an [Email Worker](/
 * The email can only be replied to once in the same `EmailMessage` event.
 * The recipient in the reply must match the incoming sender.
 * The outgoing sender domain must match the same domain that received the email.
-* Both the `In-Reply-To` and `References` headers of the reply message must be set.
 * Every time an email passes through Email Routing or another MTA, an entry is added to the `References` list. We stop accepting replies to emails with more than 100 `References` entries to prevent abuse or accidental loops.
 
 Here's an example of a Worker responding to Emails using a Workers AI model:
