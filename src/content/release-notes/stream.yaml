@@ -5,6 +5,12 @@ productLink: "/stream/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-03-12"
+    title: Stream Live WebRTC WHIP/WHEP Upgrades
+    description: |-
+      Stream Live WHIP/WHEP will be progressively migrated to a new implementation powered by Cloudflare Realtime (Calls) starting Thursday 2025-03-13. No API or integration changes will be required as part of this upgrade. Customers can expect an improved playback experience. Otherwise, this should be a transparent change, although some error handling cases and status reporting may have changed.
+
+      For more information review the [Stream Live WebRTC beta](/stream/webrtc-beta/) documentation.
   - publish_date: "2025-02-10"
     title: Stream Player ad support adjustments for Google Ad Exchange Verification
     description: |-
