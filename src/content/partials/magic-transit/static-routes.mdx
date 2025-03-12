@@ -264,30 +264,28 @@ Example:
 
 <Render file="connector/account-id-api-key" product="magic-wan" />
 
-Create a `PUT` request [using the API](/api/resources/magic_transit/subresources/routes/methods/bulk_update/) to update one or more static routes.
+Create a `PUT` request [using the API](/api/resources/magic_transit/subresources/routes/methods/update/) to update one or more static routes.
 
 Example:
 
 <APIRequest
-  path="/accounts/{account_id}/magic/routes"
+  path="/accounts/{account_id}/magic/routes/{route_id}"
   method="PUT"
   json={{
-		"routes": {
-			"nexthop": "<IP_NEXT_HOP>",
-			"prefix": "<YOUR_IP_PREFIX>",
-			"priority": 0,
-			"id": "023e105f4ecef8ad9ca31a8372d0c353",
-			"description": "<ROUTE_DESCRIPTION>",
-			"scope": {
-				"colo_names": [
-					"den01"
-				],
-				"colo_regions": [
-					"APAC"
-				]
-			},
-			"weight": 0
-		}
+		"nexthop": "<IP_NEXT_HOP>",
+		"prefix": "<YOUR_IP_PREFIX>",
+		"priority": 0,
+		"id": "023e105f4ecef8ad9ca31a8372d0c353",
+		"description": "<ROUTE_DESCRIPTION>",
+		"scope": {
+			"colo_names": [
+				"den01"
+			],
+			"colo_regions": [
+				"APAC"
+			]
+		},
+		"weight": 0
   }}
 />
 
