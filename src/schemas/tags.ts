@@ -17,12 +17,10 @@ const frameworks: Array<object> = [
 	{ label: "Next.js", variants: ["nextjs"] },
 	{ label: "Node.js", variants: ["node", "nodejs"] },
 	{ label: "Nuxt" },
-	{ label: "RPC" },
 	{ label: "Ruby", variants: ["rb", "ruby on rails"] },
 	{ label: "Svelte" },
 	{ label: "SvelteKit" },
 	{ label: "Vue.js", variants: ["vue", "vuejs"] },
-	{ label: "Web Crypto", variants: ["webcrypto"] },
 ];
 
 const integrations: Array<object> = [
@@ -110,6 +108,7 @@ const use_cases: Array<object> = [
 	{ label: "Redirects", variants: ["redirect"] },
 	{ label: "Request modification", variants: ["request"] },
 	{ label: "Response modification", variants: ["response"] },
+	{ label: "RPC" },
 	{ label: "Security" },
 	{ label: "URL rewrite", variants: ["rewrite"] },
 ];
