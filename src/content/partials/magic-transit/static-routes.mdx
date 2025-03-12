@@ -211,6 +211,44 @@ Example:
   }}
 />
 
+```json output
+{
+  "errors": [
+    {
+      "code": 1000,
+      "message": "message"
+    }
+  ],
+  "messages": [
+    {
+      "code": 1000,
+      "message": "message"
+    }
+  ],
+  "result": {
+    "routes": [
+      {
+        "nexthop": "203.0.113.1",
+        "prefix": "192.0.2.0/24",
+        "priority": 0,
+        "id": "023e105f4ecef8ad9ca31a8372d0c353",
+        "description": "New route for new prefix 203.0.113.1",
+        "scope": {
+          "colo_names": [
+            "den01"
+          ],
+          "colo_regions": [
+            "APAC"
+          ]
+        },
+        "weight": 0
+      }
+    ]
+  },
+  "success": true
+}
+```
+
 </TabItem> </Tabs>
 
 ## Edit a static route
@@ -253,6 +291,45 @@ Example:
   }}
 />
 
+```json output
+{
+  "errors": [
+    {
+      "code": 1000,
+      "message": "message"
+    }
+  ],
+  "messages": [
+    {
+      "code": 1000,
+      "message": "message"
+    }
+  ],
+  "result": {
+    "modified": true,
+    "modified_routes": [
+      {
+        "nexthop": "203.0.113.1",
+        "prefix": "192.0.2.0/24",
+        "priority": 0,
+        "id": "023e105f4ecef8ad9ca31a8372d0c353",
+        "description": "New route for new prefix 203.0.113.1",
+        "scope": {
+          "colo_names": [
+            "den01"
+          ],
+          "colo_regions": [
+            "APAC"
+          ]
+        },
+        "weight": 0
+      }
+    ]
+  },
+  "success": true
+}
+```
+
 </TabItem> </Tabs>
 
 ## Delete static route
@@ -274,6 +351,43 @@ Example:
   path="/accounts/{account_id}/magic/routes/{route_id}"
   method="DELETE"
 />
+
+```json output
+{
+  "errors": [
+    {
+      "code": 1000,
+      "message": "message"
+    }
+  ],
+  "messages": [
+    {
+      "code": 1000,
+      "message": "message"
+    }
+  ],
+  "result": {
+    "deleted": true,
+    "deleted_route": {
+      "nexthop": "203.0.113.1",
+      "prefix": "192.0.2.0/24",
+      "priority": 0,
+      "id": "023e105f4ecef8ad9ca31a8372d0c353",
+      "description": "New route for new prefix 203.0.113.1",
+      "scope": {
+        "colo_names": [
+          "den01"
+        ],
+        "colo_regions": [
+          "APAC"
+        ]
+      },
+      "weight": 0
+    }
+  },
+  "success": true
+}
+```
 
 </TabItem> </Tabs>
 
