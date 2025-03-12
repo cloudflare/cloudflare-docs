@@ -211,33 +211,6 @@ Example:
   }}
 />
 
-
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/routes \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "routes": [
-    {
-      "description": "New route for new prefix",
-      "prefix": "<YOUR_IP_PREFIX>",
-      "nexthop": "<IP_NEXT_HOP>",
-      "priority": <PRIORITY>,
-      "scope": {
-        "colo_names": [
-          "<NAME_OF_CLOUDFLARE_SERVER>"
-        ],
-        "colo_regions": [
-          "<NAME_OF_REGION>"
-        ]
-      },
-      "weight": <WEIGHT>
-    }
-  ]
-}'
-```
-
 </TabItem> </Tabs>
 
 ## Edit a static route
