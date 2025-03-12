@@ -80,7 +80,7 @@ compatibility_date = "2023-12-18"
 - name: This field defines the name of your Cloudflare Worker (what-if-ai-backend in this case). This name is also used when deploying and managing your Worker in the Cloudflare dashboard.
 - main: This specifies the entry point file for your Worker, which should be the path to your FastAPI application ("src/main.py").
 - compatibility_flags: The python_workers flag is essential for indicating that this Worker is a Python worker and enables Python-specific features within the Workers runtime. These flags are tied to a specific compatibility_date.
-- compatibility_date: This field specifies the version of the Cloudflare Workers runtime that your Worker should use ("2023-12-18" in this example). Choosing a compatibility_date ensures that your Worker runs against a stable and specific set of features and behaviors. You can find more information about available dates in the Cloudflare [documentation](https://developers.cloudflare.com/workers/configuration/compatibility-dates/).
+- compatibility_date: This field specifies the version of the Cloudflare Workers runtime that your Worker should use ("2023-12-18" in this example). Choosing a compatibility_date ensures that your Worker runs against a stable and specific set of features and behaviors. You can find more information about available dates in the Cloudflare [documentation](/workers/configuration/compatibility-dates/).
 
 To verify the setup's functionality, execute the following command in your terminal from the root of your project:
 
@@ -174,7 +174,7 @@ class GenerateTextRequest(BaseModel):
 ### 2.3 Make an API call to Workers AI:
 
 Now, within your main.py file, you'll need to define the logic to interact with a Workers AI model for text generation.
-First, specify the model you intend to use. You can find a list of [available models](https://developers.cloudflare.com/workers-ai/models/) on the Cloudflare Workers AI platform. For this usecase, we will be using `llama-3-8b-instruct` model from Meta.
+First, specify the model you intend to use. You can find a list of [available models](/workers-ai/models/) on the Cloudflare Workers AI platform. For this usecase, we will be using `llama-3-8b-instruct` model from Meta.
 
 For this tutorial, we will be using `llama-3-8b-instruct` model by Meta.
 
@@ -200,7 +200,7 @@ async def generate_text_message(content_name: str, ending_description: str, req:
 
 When making requests to the Workers AI REST API, you need to provide your [Cloudflare API Key](https://developers.cloudflare.com/fundamentals/api/get-started/create-token/) and [Cloudflare Account ID](https://developers.cloudflare.com/fundamentals/setup/find-account-and-zone-ids/#find-account-id-workers-and-pages) for authentication.
 
-A secure practice is to store these sensitive credentials as environment variables and access them within your Python worker. You can typically access environment variables through the Request object in a Python worker environment like this:
+A secure practice is to store these sensitive credentials as environment variables and access them within your Python Worker. You can typically access environment variables through the Request object in a Python Worker environment like this:
 
 ```python
     env = req.scope['env']
@@ -572,7 +572,7 @@ After you have thoroughly tested both the text and image generation functionalit
 
 To deploy your FastAPI Workers application to Cloudflare, you will first need to push your complete project code to a GitHub repository. This repository will be the source from which Cloudflare will build and deploy your application to Workers.
 
-## 4. Deploy the FastAPI workers on Cloudflare
+## 4. Deploy the FastAPI Workers on Cloudflare
 
 Once your code is on GitHub, follow these steps to deploy to Cloudflare Workers [the user's provided text]:
 
@@ -601,4 +601,4 @@ Here are some potential next steps to further enhance your Cloudflare Workers ap
 
 - Leverage [Cloudflare AI Gateway](https://developers.cloudflare.com/ai-gateway/): Integrate AI Gateway to gain access to valuable features such as rate limiting, caching, and analytics for your AI workloads.
 - Implement Streaming Output for Text Generation: Enhance the user experience by exploring how to implement streaming output for text generation requests from your Cloudflare Worker to the frontend.
-- Save AI generated images to [R2 storage](https://developers.cloudflare.com/r2/): Explore how to persist the AI-generated images using Cloudflare R2, a cost-effective object storage service.
+- Save AI generated images to [R2 storage](/r2/): Explore how to persist the AI-generated images using Cloudflare R2, a cost-effective object storage service.
