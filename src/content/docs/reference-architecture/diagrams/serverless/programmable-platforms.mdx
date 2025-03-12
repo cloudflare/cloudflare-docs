@@ -1,0 +1,120 @@
+---
+title: Programmable Platforms
+pcx_content_type: reference-architecture-diagram
+products:
+  - Workers
+  - KV
+sidebar:
+  order: 1
+  label: Programmable Platforms
+updated: 2025-03-12
+---
+
+
+## Introduction
+
+A programmable platform is a software ecosystem that enables customers to extend and customize core functionality through code. Unlike traditional SaaS offerings with fixed features, programmable platforms empower customers to build bespoke solutions within the platform's infrastructure, creating unique experiences while leveraging the platform's core capabilities.
+
+Cloudflare Workers for Platforms provides the ideal infrastructure for building programmable platforms by offering secure, isolated environments where customers can safely execute custom code without compromising the integrity or performance of the underlying platform.
+
+## Core Architecture Components
+
+The Workers for Platforms architecture consists of several key components that work together to provide a secure, scalable, and efficient solution for multi-tenant applications:
+
+1. **Dynamic Dispatch Worker**: The entry point for client requests that routes traffic to the appropriate customer-specific worker based on request parameters.
+
+2. **Dispatch Namespace**: A logical grouping of customer-specific workers that isolates resources and execution environments.
+
+3. **User Workers**: Customer-specific workers that process isolated workloads within their own secure execution context.
+
+4. **Storage & Data Resources**: Various data storage options (D1, KV, R2, Durable Objects) that can be isolated per customer.
+
+5. **Observability Tools**: Logging and metrics collection services to monitor platform performance and troubleshoot issues.
+
+## Main Request Flow
+
+![Figure 2: Workers for Platforms: Invocation & Metadata](~/assets/images/reference-architecture/programmable-platforms/programmable-platforms-1.svg "Figure 2: Workers for Platforms: Invocation & Metadata")
+
+
+1. **Client Request**: A request is sent from a client application to the platform's Dynamic Dispatch Worker.
+
+2. **Tenant Identification & Routing**: The Dynamic Dispatch Worker identifies the appropriate customer environment using `env.namespace.get(customer-id)` and routes the request to the corresponding User Worker within the Dispatch Namespace.
+
+3. **Isolated Execution**: Each customer's workload runs in an isolated User Worker with its own resources and security boundaries.
+
+## Invocation & Metadata Flow
+
+![Figure 2: Workers for Platforms: Main Flow](~/assets/images/reference-architecture/programmable-platforms/programmable-platforms-2.svg "Figure 2: Workers for Platforms: Main Flow")
+
+
+
+1. **Request Routing**: Client requests are directed based on hostname or path patterns:
+   - Custom hostnames for specific customers 
+   - Routing within a shared domain (hostname or path-based)
+
+2. **Metadata Lookup**: The Dynamic Dispatch Worker may interact with KV storage to retrieve customer-specific configuration data.
+
+3. **Worker Invocation**: Based on the retrieved metadata, requests are routed to the appropriate User Worker in the Dispatch Namespace.
+
+## Egress Control Pattern
+
+![Figure 3: Workers for Platforms: Egress Control](~/assets/images/reference-architecture/programmable-platforms/programmable-platforms-3.svg "Figure 3: Workers for Platforms: Egress Control")
+
+
+1. **Internal Routing**: The Dynamic Dispatch Worker routes requests to the appropriate User Worker within the Dispatch Namespace.
+
+2. **Controlled External Access**: User Workers can make `fetch()` calls to external services through a controlled Outbound Worker.
+
+3. **External Service Integration**: The Outbound Worker provides a standardized interface for communicating with external services, allowing for centralized policy enforcement, rate limiting, and audit logging.
+
+## Metrics & Logging Architecture
+
+![Figure 4: Workers for Platforms: Metrics & Logging](~/assets/images/reference-architecture/programmable-platforms/programmable-platforms-4.svg "Figure 4: Workers for Platforms: Metrics & Logging")
+
+
+1. **Comprehensive Logging**: All Workers in the request flow can send logs to Tail Worker and Logpush services.
+
+2. **Metrics Collection**: Performance and usage metrics are captured through Analytics Engine and exposed via GraphQL.
+
+3. **Third-party Integration**: Logs and metrics can be exported to various external monitoring and analytics platforms like Datadog, Splunk, Grafana, and others.
+
+## Resource Isolation Model
+
+![Figure 5: Workers for Platforms: Resources](~/assets/images/reference-architecture/programmable-platforms/programmable-platforms-5.svg "Figure 5: Workers for Platforms: Resources")
+
+1. **Client Request**: Requests are routed through the Dynamic Dispatch Worker.
+
+2. **Customer Identification**: The Dynamic Dispatch Worker identifies the appropriate customer environment.
+
+3. **Resource Access**: Each User Worker has access only to its customer-specific resources:
+   - D1 for relational database storage
+   - Durable Objects for strongly consistent data
+   - KV for high-read, eventually consistent key-value storage
+   - R2 for object storage
+
+## Deployment & Management Flow
+
+![Figure 6: Workers for Platforms: Deployment & Management Flow](~/assets/images/reference-architecture/programmable-platforms/programmable-platforms-6.svg "Figure 6: Workers for Platforms: Deployment & Management Flow")
+
+
+1. **Management Interface**: End users interact with the platform through GUI, API, or CLI interfaces.
+
+2. **Platform Processing**: The SaaS provider processes these interactions to:
+   - Transform and bundle code
+   - Perform security checks
+   - Apply configuration
+
+3. **API Deployment**: The processed workloads are deployed to the Dispatch Namespace via the Cloudflare REST API.
+
+
+
+
+## Conclusion
+
+Cloudflare Workers for Platforms provides a robust foundation for building multi-tenant SaaS applications with strong isolation, global distribution, and scalable performance. By leveraging this architecture, platform providers can focus on delivering value to their customers while Cloudflare handles the underlying infrastructure complexity.
+
+## Related resources
+
+- [Workers for Platforms: Get started](cloudflare-for-platforms/workers-for-platforms/get-started/)
+- [Workers for Platforms: Outbound Workers](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/)
+- [Workers for Platforms: Observability](/cloudflare-for-platforms/workers-for-platforms/configuration/observability/)
