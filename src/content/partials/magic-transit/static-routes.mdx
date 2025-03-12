@@ -230,6 +230,29 @@ Create a `PUT` request [using the API](/api/resources/magic_transit/subresources
 
 Example:
 
+<APIRequest
+  path="/accounts/{account_id}/magic/routes"
+  method="PUT"
+  json={{
+		"routes": {
+			"nexthop": "<IP_NEXT_HOP>",
+			"prefix": "<YOUR_IP_PREFIX>",
+			"priority": 0,
+			"id": "023e105f4ecef8ad9ca31a8372d0c353",
+			"description": "New route for new prefix 203.0.113.1",
+			"scope": {
+				"colo_names": [
+					"den01"
+				],
+				"colo_regions": [
+					"APAC"
+				]
+			},
+			"weight": 0
+		}
+  }}
+/>
+
 ```bash
 curl --request PUT \
 https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/routes \
