@@ -1,6 +1,6 @@
 import { WorkerEntrypoint } from "cloudflare:workers";
 import { generateRedirectsEvaluator } from "redirects-in-workers";
-import redirectsFileContents from "../dist/_redirects";
+import redirectsFileContents from "../dist/_redirectsinworkers";
 
 const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents);
 
