@@ -28,12 +28,14 @@ const integrations: Array<object> = [
 	{ label: "Azure", variants: ["Microsoft Azure", "MS Azure"] },
 	{ label: "AWS", variants: ["Amazon Web Services"] },
 	{ label: "GCP", variants: ["Google Cloud", "Google Cloud Platform"] },
+	{ label: "Google" },
 	{ label: "G Suite Group", variants: ["gsuite", "g suite"] },
 	{ label: "GitHub" },
 	{
 		label: "Microsoft Entra ID",
 		variants: ["AzureAD", "Azure Active Directory", "MS Entra ID", "Entra ID"],
 	},
+	{ label: "Microsoft" },
 	{ label: "Postgres", variants: ["PostgresSQL"] },
 	{ label: "S3" },
 	{ label: "Sentry" },
@@ -65,6 +67,7 @@ const product_features: Array<object> = [
 
 const protocols: Array<object> = [
 	{ label: "FTP", variants: ["file transfer protocol", "ftps"] },
+	{ label: "ICMP" },
 	{ label: "IPsec" },
 	{ label: "IPv4" },
 	{ label: "IPv6" },
@@ -81,13 +84,14 @@ const protocols: Array<object> = [
 	{ label: "SFTP" },
 	{ label: "SSH" },
 	{ label: "TCP" },
+	{ label: "TLS" },
 	{ label: "UDP" },
 	{ label: "WebSockets", variants: ["websocket"] },
 	{ label: "Wireguard" },
 ];
 
 const operating_systems: Array<object> = [
-	{ label: "Android" },
+	{ label: "Android", variants: ["ChromeOS"] },
 	{ label: "iOS" },
 	{ label: "Linux" },
 	{ label: "MacOS", variants: ["OS X"] },
