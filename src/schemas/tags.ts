@@ -17,6 +17,7 @@ const frameworks: Array<object> = [
 	{ label: "Next.js", variants: ["nextjs"] },
 	{ label: "Node.js", variants: ["node", "nodejs"] },
 	{ label: "Nuxt" },
+	{ label: "Remix" },
 	{ label: "Ruby", variants: ["rb", "ruby on rails"] },
 	{ label: "Svelte" },
 	{ label: "SvelteKit" },
@@ -57,6 +58,11 @@ const languages: Array<object> = [
 	{ label: "WebAssembly", variants: ["Web Assembly", "wasm"] },
 ];
 
+const product_features: Array<object> = [
+	{ label: "Web Crypto", variants: ["webcrypto"] },
+	{ label: "RPC" },
+];
+
 const protocols: Array<object> = [
 	{ label: "FTP", variants: ["file transfer protocol", "ftps"] },
 	{ label: "IPsec" },
@@ -89,6 +95,7 @@ const operating_systems: Array<object> = [
 ];
 
 const use_cases: Array<object> = [
+	{ label: "AI" },
 	{ label: "Authentication", variants: ["auth"] },
 	{ label: "A/B testing", variants: ["ab test"] },
 	{ label: "Caching", variants: ["cache"] },
@@ -98,7 +105,6 @@ const use_cases: Array<object> = [
 	{ label: "Debugging", variants: ["debug", "troubleshooting"] },
 	{ label: "Forms" },
 	{ label: "Geolocation" },
-	{ label: "HTMLRewriter" },
 	{ label: "Headers", variants: ["header"] },
 	{ label: "Localization" },
 	{ label: "Logging" },
@@ -118,6 +124,7 @@ export const tags = {
 	frameworks,
 	integrations,
 	languages,
+	product_features,
 	protocols,
 	operating_systems,
 	use_cases,
