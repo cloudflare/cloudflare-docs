@@ -23,9 +23,9 @@ The Workers for Platforms architecture consists of several key components that w
 
 1. **Dynamic Dispatch Worker**: The entry point for client requests that routes traffic to the appropriate customer-specific Worker based on request parameters.
 
-2. **Dispatch Namespace**: A logical grouping of customer-specific workers that isolates resources and execution environments.
+2. **Dispatch Namespace**: A logical grouping of customer-specific Workers that isolates resources and execution environments.
 
-3. **User Workers**: Customer-specific workers that process isolated workloads within their own secure execution context.
+3. **User Workers**: Customer-specific Workers that process isolated workloads within their own secure execution context.
 
 4. **Storage & Data Resources**: Various data storage options (D1, KV, R2, Durable Objects) that can be isolated per customer.
 
