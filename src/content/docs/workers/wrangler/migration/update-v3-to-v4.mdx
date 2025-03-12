@@ -7,7 +7,7 @@ sidebar:
 
 Wrangler v4 is a major release focused on updates to underlying systems and dependencies, along with improvements to keep Wrangler commands consistent and clear. Unlike previous major versions of Wrangler, which were [foundational rewrites](https://blog.cloudflare.com/wrangler-v2-beta/) and [rearchitectures](https://blog.cloudflare.com/wrangler3/) — Version 4 of Wrangler includes a much smaller set of changes. If you use Wrangler today, your workflow is very unlikely to change.
 
-While many users should expect a no-op upgrade, the following sections outline significant changes and steps for migrating where necessary.
+While many users should expect a no-op upgrade, the following sections outline the more significant changes and steps for migrating where necessary.
 
 ### Summary of changes
 
@@ -16,7 +16,7 @@ While many users should expect a no-op upgrade, the following sections outline s
 
 - **esbuild Version Upgrade**: Wrangler v4 uses [esbuild](https://esbuild.github.io/) to bundle Worker code before deploying it, and was previously pinned to esbuild v0.17.19. Wrangler v4 uses esbuild v0.24, which could impact dynamic wildcard imports.
 
-- **Commands default to local mode**: All commands now run in local mode by default, requiring a `--remote` flag for API queries,
+- **Commands default to local mode**: All commands that can run in either local or remote mode now default to local, requiring a `--remote` flag for API queries.
 
 - **Deprecated commands and configurations removed:** Legacy commands, flags, and configurations have been removed.
 
@@ -45,10 +45,10 @@ All commands now run in **local mode by default.** Wrangler has many commands fo
 
 For example:
 
-- **Previous Behavior (Wrangler v3):** `wrangler kv list` queried remotely by default.
-- **New Behavior (Wrangler v4):** `wrangler kv list` queries locally unless `--remote` is specified.
+- **Previous Behavior (Wrangler v3):** `wrangler kv get` queried remotely by default.
+- **New Behavior (Wrangler v4):** `wrangler kv get` queries locally unless `--remote` is specified.
 
-Those using `wrangler kv` and/or `wrangler r2` commands to query or write to their data store will need to add the `--remote` flag in order to replicate previous behavior.
+Those using `wrangler kv key` and/or `wrangler r2 object` commands to query or write to their data store will need to add the `--remote` flag in order to replicate previous behavior.
 
 ### Deprecated Commands and Configurations Removed
 

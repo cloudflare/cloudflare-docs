@@ -28,7 +28,7 @@ This means the correct types for your Worker depend on:
 3. Your Worker's bindings, which are accessed on the `env` object.
 4. Any [module rules](/workers/wrangler/configuration/#inheritable-keys) you have specified in your Wrangler configuration file under `rules`.
 
-For example, the runtime will onlly allow you to use the [`AsyncLocalStorage`](https://nodejs.org/api/async_context.html#class-asynclocalstorage) class if you have `compatibility_flags = ["nodejs_als"]` in your [Wrangler configuration file](/workers/wrangler/configuration/). This should be reflected in the type definitions.
+For example, the runtime will only allow you to use the [`AsyncLocalStorage`](https://nodejs.org/api/async_context.html#class-asynclocalstorage) class if you have `compatibility_flags = ["nodejs_als"]` in your [Wrangler configuration file](/workers/wrangler/configuration/). This should be reflected in the type definitions.
 
 To ensure that your type definitions always match your Worker's configuration, you can dynamically generate types by running:
 
@@ -58,7 +58,13 @@ To ensure that your types are always up-to-date, make sure to run `wrangler type
 	Migrating from `@cloudflare/workers-types` to `wrangler types`
 </h3>
 
-We recommend you use `wrangler types` to generate runtime types, rather than using the `@cloudflare/workers-types` package, as it generates types based on your Worker's [compatibility date](https://github.com/cloudflare/workerd/tree/main/npm/workers-types#compatibility-dates) and `compatibility flags`, ensuring that types match the exact runtime APIs made available to your Worker. Note that there are no plans to stop publishing the `@cloudflare/workers-types` package.
+We recommend you use `wrangler types` to generate runtime types, rather than using the `@cloudflare/workers-types` package, as it generates types based on your Worker's [compatibility date](https://github.com/cloudflare/workerd/tree/main/npm/workers-types#compatibility-dates) and `compatibility flags`, ensuring that types match the exact runtime APIs made available to your Worker. 
+
+:::note
+
+There are no plans to stop publishing the `@cloudflare/workers-types` package, which will still be the recommended way to type libraries and shared packages in the workers environment.
+
+:::
 
 #### 1. Uninstall `@cloudflare/workers-types`
 
@@ -157,4 +163,3 @@ We recommend you commit your generated types file for use in CI. Alternatively, 
 - [@cloudflare/workers-types](https://github.com/cloudflare/workers-types)
 - [Runtime APIs](/workers/runtime-apis/)
 - [TypeScript Examples](/workers/examples/?languages=TypeScript)
-- [test link](/workers/languages/typescript/#type-short)
