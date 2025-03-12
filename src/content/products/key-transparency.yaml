@@ -10,7 +10,3 @@ meta:
   title: Key Transparency Auditor
   description: Key Transparency Auditor docs
   author: "@cloudflare"
-
-externals:
-  - title: Cloudflare homepage
-    url: https://cloudflare.com

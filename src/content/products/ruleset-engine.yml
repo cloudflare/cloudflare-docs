@@ -16,7 +16,3 @@ meta:
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/rulesets
-
-externals:
-  - title: Cloudflare homepage
-    url: https://cloudflare.com

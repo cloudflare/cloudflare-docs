@@ -10,9 +10,3 @@ meta:
   title: Cloudflare Time Services docs
   description: "Cloudflare's suite of time services: NTP, NTS, and Roughtime."
   author: "@cloudflare"
-
-externals:
-  - title: Cloudflare Time Services homepage
-    url: https://www.cloudflare.com/time/
-  - title: Cloudflare homepage
-    url: https://cloudflare.com

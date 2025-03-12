@@ -11,9 +11,3 @@ meta:
     Cloudflare’s API tokens allow you to make calls to our API to alter
     different settings.
   author: "@cloudflare"
-
-externals:
-  - title: Full API docs
-    url: https://api.cloudflare.com/
-  - title: Cloudflare homepage
-    url: https://cloudflare.com

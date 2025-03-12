@@ -11,7 +11,3 @@ meta:
   title: Pulumi
   description: Create, deploy, and manage Cloudflare resources in various programming languages.
   author: "@cloudflare"
-
-externals:
-  - title: Pulumi docs
-    url: https://www.pulumi.com/docs/

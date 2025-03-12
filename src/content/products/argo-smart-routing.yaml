@@ -15,7 +15,3 @@ meta:
   title: Cloudflare Argo Smart Routing docs
   description: Detect real-time congestion to route web traffic across the fastest and most reliable network paths.
   author: "@cloudflare"
-
-externals:
-  - title: Cloudflare homepage
-    url: https://cloudflare.com

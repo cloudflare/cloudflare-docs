@@ -13,7 +13,3 @@ meta:
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/support
-
-externals:
-  - title: Cloudflare home
-    url: https://www.cloudflare.com/
