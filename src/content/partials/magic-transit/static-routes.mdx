@@ -10,7 +10,7 @@ params:
   - tunnelEndpoints
 ---
 
-import { Aside, GlossaryTooltip, Markdown, AnchorHeading, Render, TabItem, Tabs } from "~/components";
+import { APIRequest, Aside, GlossaryTooltip, Markdown, AnchorHeading, Render, TabItem, Tabs } from "~/components";
 
 :::note
 If you are connecting to Cloudflare via a [Direct CNI connection](/network-interconnect/express-cni/), refer to <a href={props.BGPpath}>BGP peering</a> to learn how to take advantage of this [routing](https://www.cloudflare.com/learning/network-layer/what-is-routing/) protocol. If not, continue reading.
@@ -189,6 +189,28 @@ For prefixes outside RFC 1918 contact your Cloudflare customer service manager.
 Create a `POST` request [using the API](/api/resources/magic_transit/subresources/routes/methods/create/) to create one or more static routes.
 
 Example:
+
+<APIRequest
+  path="/accounts/{account_id}/magic/routes"
+  method="POST"
+  json={{
+		"nexthop": "<IP_NEXT_HOP>",
+		"prefix": "<YOUR_IP_PREFIX>",
+		"priority": 0,
+		"id": "023e105f4ecef8ad9ca31a8372d0c353",
+		"description": "New route for new prefix 203.0.113.1",
+		"scope": {
+			"colo_names": [
+				"den01"
+			],
+			"colo_regions": [
+				"APAC"
+			]
+		},
+		"weight": 0
+  }}
+/>
+
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/routes \
