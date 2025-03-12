@@ -11,7 +11,7 @@ import { APIRequest, Aside, AnchorHeading, Render, TabItem, Tabs } from "~/compo
 { props.magicWord === "breakout" && (
 	<>
 		<p>Breakout traffic allows you to define which applications should bypass Cloudflare's security filtering, and go directly to the Internet. It works via DNS requests inspection. This means that if your network is caching DNS requests, Breakout traffic will only take effect after you cache entries expire and your client issues a new DNS request that the Magic WAN Connector can detect. This can take several minutes.</p>
-		<Aside type="caution">Breakout traffic will not work for applications that use DNS-over-HTTPs.</Aside>
+		<Aside type="caution">Breakout traffic will not work for applications that use DNS-over-HTTPS.</Aside>
 	</>
 	)
 }
