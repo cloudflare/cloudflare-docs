@@ -5,6 +5,10 @@ productLink: "/load-balancing/"
 productArea: Application performance
 productAreaLink: /fundamentals/reference/changelog/performance/
 entries:
+  - publish_date: "2025-03-13"
+    title: Update to Load Balancing analytics
+    description: |-
+      Load Balancing request rates in analytics may decrease for some customers as an improvement is made to our infrastructure. This decrease in Load Balancing analytics does not indicate a decrease in HTTP requests received.
   - publish_date: "2025-02-20"
     title: Zone name added to Load Balancing API responses
     description: |-
