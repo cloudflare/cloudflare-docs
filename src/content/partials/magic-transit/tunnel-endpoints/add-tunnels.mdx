@@ -9,7 +9,7 @@ params:
   - tunnelHealthDash
 ---
 
-import { APIRequest, Details, Markdown, Render, TabItem, Tabs } from "~/components";
+import { APIRequest, CURL, Details, Markdown, Render, TabItem, Tabs } from "~/components";
 
 <Render file="icmp-mfirewall" product="magic-transit" />
 
@@ -205,7 +205,36 @@ Create a `POST` request [using the API](/api/resources/magic_transit/subresource
 		method="POST"
 	/>
 
-3. Use the above `psk` value to configure the IPsec tunnel on your equipment. You do not need to take further action to use the PSK on Cloudflare's side, as this value is automatically set.
+	```json output
+	{
+		"result": {
+			"ipsec_id": "<IPSEC_ID>",
+			"ipsec_tunnel_id": "<IPSEC_TUNNEL_ID>",
+			"psk": "<PSK_CODE>",
+			"psk_metadata": {
+				"last_generated_on": "2025-03-13T14:28:47.054317925Z"
+			}
+		},
+		"success": true,
+		"errors": [],
+		"messages": []
+	}
+	```
+
+	Take note of your `psk` value.
+
+3. Create a `PUT` [request](/api/resources/magic_transit/subresources/ipsec_tunnels/methods/update/) to update your IPsec tunnel with the PSK.
+
+	<CURL
+		url="https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{ipsec_tunnel_id}"
+		method="PUT"
+		json={{
+			"psk": "<PSK_VALUE>"
+		}}
+	/>
+
+
+4. Use the above `psk` value to configure the IPsec tunnel on your equipment as well.
 
 </Details>
 
