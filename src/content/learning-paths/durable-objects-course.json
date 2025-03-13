@@ -1,7 +1,7 @@
 {
 	"title": "Introduction to Durable Objects",
 	"path": "/learning-paths/durable-objects-course/series/introduction-to-series-1/",
-	"priority": 1,
+	"priority": 2,
 	"description":"Dive into a hands-on Durable Objects project and learn how to build stateful apps using serverless architecture",
 	"products": ["Durable Objects", "Workers"],
 	"product_group": "Developer platform",
