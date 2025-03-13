@@ -4,19 +4,23 @@ pcx_content_type: concept
 
 ---
 
+import { Render } from "~/components";
+
 ## Purpose
 
 The purpose of a navigation page is to direct users deeper into the doc set and act as a sub-landing page for a specific area of the docs.
 
 ## content_type
 
-`navigation`
+```yaml
+pcx_content_type: navigation
+```
 
-## Structure
+For more details, refer to [`pcx_content_type`](/style-guide/frontmatter/custom-properties/#pcx_content_type).
 
-Use the `{{</*directory-listing*/>}}` component
+## Components
 
-**Title**: Verb or noun phrase that describes the sub-pages in the section.
+[`DirectoryListing`](/style-guide/components/directory-listing/): <Render file="directory-listing-definition" />
 
 ## Template
 
@@ -27,9 +31,9 @@ pcx_content_type: navigation
 ---
 
 import { DirectoryListing } from "~/components"
- 
+
 # Name of section
- 
+
 <DirectoryListing />
 ```
 
