@@ -5,6 +5,6 @@
 	"description": "Watch this series and learn all about Cloudflare's Secure Access Service Edge (SASE) platform to learn how it can revolutionize your corporate network.",
 	"products": ["Cloudflare One"],
 	"product_group": "Cloudflare One",
-	"additional_groups": ["Cloudflare One"],
+	"additional_groups": ["Cloudflare One", "Cloudflare essentials"],
 	"video": true
 }
