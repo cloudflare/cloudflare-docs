@@ -151,8 +151,7 @@ Create a `POST` request [using the API](/api/resources/magic_transit/subresource
 			"description": "<TUNNEL_DESCRIPTION>",
 			"interface_address": "<INTERFACE_ADDRESS>",
 			"cloudflare_endpoint": "<CLOUDFLARE_ENDPOINT>",
-			"customer_endpoint": "<CUSTOMER_ENDPOINT>",
-			"psk": "YOUR_STRING"
+			"customer_endpoint": "<CUSTOMER_ENDPOINT>"
 		}}
 	/>
 
@@ -196,6 +195,15 @@ Create a `POST` request [using the API](/api/resources/magic_transit/subresource
 		"success": true
 	}
 	```
+
+	Take note of the tunnel `id` value. We will use it to generate a pre-shared key (PSK).
+
+2. Create a `POST` [request](/api/resources/magic_transit/subresources/ipsec_tunnels/methods/psk_generate/) to generate a PSK. Use the tunnel `id` value you received from the previous command.
+
+	<APIRequest
+		path="/accounts/{account_id}/magic/ipsec_tunnels/{ipsec_tunnel_id}/psk_generate"
+		method="POST"
+	/>
 
 3. Use the above `psk` value to configure the IPsec tunnel on your equipment. You do not need to take further action to use the PSK on Cloudflare's side, as this value is automatically set.
 
