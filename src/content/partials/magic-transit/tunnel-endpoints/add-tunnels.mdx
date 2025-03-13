@@ -141,7 +141,7 @@ Create a `POST` request [using the API](/api/resources/magic_transit/subresource
 
 1. Create a `POST` request [using the API](/api/resources/magic_transit/subresources/ipsec_tunnels/methods/create/) to create an IPsec tunnel.
 
-	Note that in example below, replay protection is disabled by default. You can enable it with the flag `"replay_protection": true` for each IPsec tunnel, if the devices you use do not support disabling this feature. If you have already created IPsec tunnels, update them with a [`PUT` request](https://developers.cloudflare.com/api/resources/magic_transit/subresources/ipsec_tunnels/methods/update/). <br/> Refer to <a href={props.antiReplayPagePath}>Anti-replay protection</a> for more information on this topic.
+	Note that in example below, replay protection is disabled by default. You can enable it with the flag `"replay_protection": true` for each IPsec tunnel, if the devices you use do not support disabling this feature. If you have already created IPsec tunnels, update them with a [`PUT` request](https://developers.cloudflare.com/api/resources/magic_transit/subresources/ipsec_tunnels/methods/update/). Refer to <a href={props.antiReplayPagePath}>Anti-replay protection</a> for more information on this topic.
 
 	<APIRequest
 		path="/accounts/{account_id}/magic/ipsec_tunnels"
@@ -151,7 +151,8 @@ Create a `POST` request [using the API](/api/resources/magic_transit/subresource
 			"description": "<TUNNEL_DESCRIPTION>",
 			"interface_address": "<INTERFACE_ADDRESS>",
 			"cloudflare_endpoint": "<CLOUDFLARE_ENDPOINT>",
-			"customer_endpoint": "<CUSTOMER_ENDPOINT>"
+			"customer_endpoint": "<CUSTOMER_ENDPOINT>",
+			"psk": "YOUR_STRING"
 		}}
 	/>
 
@@ -195,31 +196,6 @@ Create a `POST` request [using the API](/api/resources/magic_transit/subresource
 		"success": true
 	}
 	```
-
-2. Create a `POST` request to generate a PSK. Use the tunnel `id` you received from the previous command (exemplified by `<YOUR_TUNNEL_ID>` above):
-
-```bash
-curl --request POST \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{your_tunnel_id}/psk_generate \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>"
-```
-
-```json output
-{
-	"result": {
-		"ipsec_id": "<IPSEC_ID>",
-		"ipsec_tunnel_id": "<IPSEC_TUNNEL>",
-		"psk": "<YOUR_PSK_KEY>",
-		"psk_metadata": {
-			"last_generated_on": "2023-04-21T10:48:15.953887008Z"
-		}
-	},
-	"success": true,
-	"errors": [],
-	"messages": []
-}
-```
 
 3. Use the above `psk` value to configure the IPsec tunnel on your equipment. You do not need to take further action to use the PSK on Cloudflare's side, as this value is automatically set.
 
