@@ -1091,6 +1091,86 @@ entries:
     description: |-
       Requires a Cloudflare Enterprise plan. You must also enable [leaked credentials detection](/waf/detections/leaked-credentials/).
 
+  - name: cf.llm.prompt.detected
+    data_type: Boolean
+    categories: [Request]
+    keywords: [request, cloudflare, ai, client, visitor]
+    plan_info_label: Enterprise
+    summary: Indicates whether Cloudflare detected an LLM prompt in the incoming request.
+    description: |-
+      When a prompt is not present, the other LLM-related fields will have default values.
+
+      Requires a Cloudflare Enterprise plan. You must also enable [Firewall for AI](/waf/detections/firewall-for-ai/).
+
+  - name: cf.llm.prompt.pii_detected
+    data_type: Boolean
+    categories: [Request]
+    keywords: [request, cloudflare, ai, client, visitor]
+    plan_info_label: Enterprise
+    summary: Indicates whether any personally identifiable information (PII) has been detected in the LLM prompt included in the request.
+    description: |-
+      Equivalent to checking if the [`cf.llm.prompt.pii_categories`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_categories/) field is not empty.
+
+      Requires a Cloudflare Enterprise plan. You must also enable [Firewall for AI](/waf/detections/firewall-for-ai/).
+
+  - name: cf.llm.prompt.pii_categories
+    data_type: Array<String>
+    categories: [Request]
+    keywords: [request, cloudflare, ai, client, visitor]
+    plan_info_label: Enterprise
+    summary: Array of string values with the personally identifiable information (PII) categories found in the LLM prompt included in the request.
+    description: |-
+      The possible values are the following:
+
+      Category                    | Description
+      ----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------
+      `CREDIT_CARD`               | Credit card number
+      `CRYPTO`                    | Crypto wallet number (currently only Bitcoin address)
+      `DATE_TIME`                 | Absolute or relative dates or periods or times smaller than a day
+      `EMAIL_ADDRESS`             | Email address
+      `IBAN_CODE`                 | International Bank Account Number (IBAN)
+      `IP_ADDRESS`                | Internet Protocol (IP) address
+      `NRP`                       | A person's nationality, religious or political group
+      `LOCATION`                  | Name of politically or geographically defined location (cities, provinces, countries, international regions, bodies of water, mountains)
+      `PERSON`                    | Full person name
+      `PHONE_NUMBER`              | Telephone number
+      `MEDICAL_LICENSE`           | Common medical license numbers
+      `URL`                       | Uniform Resource Locator (URL), used to locate a resource on the Internet
+      `US_BANK_NUMBER`            | US bank account number
+      `US_DRIVER_LICENSE`         | US driver license
+      `US_ITIN`                   | US Individual Taxpayer Identification Number (ITIN)
+      `US_PASSPORT`               | US passport number
+      `US_SSN`                    | US Social Security Number (SSN)
+      `UK_NHS`                    | UK NHS number
+      `UK_NINO`                   | UK National Insurance Number
+      `ES_NIF`                    | Spanish NIF number (personal tax ID)
+      `ES_NIE`                    | Spanish NIE number (foreigners ID card)
+      `IT_FISCAL_CODE`            | Italian personal tax ID code
+      `IT_DRIVER_LICENSE`         | Italian driver license number
+      `IT_VAT_CODE`               | Italian VAT code number
+      `IT_PASSPORT`               | Italian passport number
+      `IT_IDENTITY_CARD`          | Italian identity card number
+      `PL_PESEL`                  | Polish PESEL number
+      `SG_NRIC_FIN`               | National Registration Identification Card (Singapore)
+      `SG_UEN`                    | Unique Entity Number (for entities registered in Singapore)
+      `AU_ABN`                    | Australian Business Number (ABN)
+      `AU_ACN`                    | Australian Company Number (ACN)
+      `AU_TFN`                    | Australian tax file number (TFN)
+      `AU_MEDICARE`               | Medicare number (issued by Australian government)
+      `IN_PAN`                    | Indian Permanent Account Number (PAN)
+      `IN_AADHAAR`                | Individual identity number (issued by Indian government)
+      `IN_VEHICLE_REGISTRATION`   | Vehicle registration number (issued by Indian government)
+      `IN_VOTER`                  | Numeric voter ID (issued by Indian Election Commission)
+      `IN_PASSPORT`               | Indian Passport Number
+      `FI_PERSONAL_IDENTITY_CODE` | Finnish Personal Identity Code
+
+      The categories list is based on the [list of PII entities supported by Presidio](https://microsoft.github.io/presidio/supported_entities/). Presidio is the data protection and de-identification SDK used in Firewall for AI.
+
+      Requires a Cloudflare Enterprise plan. You must also enable [Firewall for AI](/waf/detections/firewall-for-ai/).
+    example_block: |-
+      # Matches requests where PII categorized as "EMAIL_ADDRESS" or "IBAN_CODE" was detected:
+      (cf.llm.prompt.pii_detected and any(cf.llm.prompt.pii_categories[*] in {"EMAIL_ADDRESS" "IBAN_CODE"}))
+
   - name: cf.worker.upstream_zone
     data_type: String
     categories: [Request]
