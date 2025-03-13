@@ -59,7 +59,7 @@ An approach to achieve write-after-write consistency is to send all of your writ
 
 ## Comparison with other key-value stores
 
-Workers KV is optimized to provide edge data to Workers running across Cloudflare's network. KV can provide low-latency access to data for optimal Workers performance.
+Workers KV is optimized to provide edge data to Workers running across Cloudflare's network. This is ideal for configuration data, user preferences, cached values, etc.
 
 However, since Workers and Workers KV's central stores are not co-located by default, writes and uncached reads can have more latency than a typical web architecture using a co-located in-memory store like [Redis](https://redis.io).
 
