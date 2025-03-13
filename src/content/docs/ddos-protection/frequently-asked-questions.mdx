@@ -64,7 +64,7 @@ There is not a minimum threshold for activation. However, to provide additional 
 
 The RUDY (R-U-Dead-Yet?) DDoS attack is another type of denial-of-service (DoS) tool that performs slow-rate attacks on targeted servers. 
 
-Unlike conventional DDoS attacks that overwhelm servers with a high volume of requests in a short period, RUDY focuses on creating a few prolonged requests. It does this by submitting form data at an extremely slow pace to keep the web server tied up and unavailable to legitimate traffic. This approach makes RUDY attacks difficult to detect because the traffic can appear legitimate and doesn't flood the server with requests that would typically trigger conventional DDoS protection mechanisms​​​​​​.
+Unlike conventional DDoS attacks that overwhelm servers with a high volume of requests in a short period, RUDY focuses on creating a few prolonged requests. It does this by submitting form data at an extremely slow pace to keep the web server tied up and unavailable to legitimate traffic. This approach makes RUDY attacks difficult to detect, because the traffic can appear legitimate and does not flood the server with requests that would typically trigger conventional DDoS protection mechanisms​​​​​​.
 
 RUDY specifically targets the application layer (Layer 7) of web servers by exploiting the way web forms handle data submission. The attack works by injecting one byte of information into an application `POST` field at a time, then waiting. This process causes application threads to await the completion of the form submission indefinitely, effectively exhausting the server's resources and preventing it from processing legitimate requests​​​​.
 
