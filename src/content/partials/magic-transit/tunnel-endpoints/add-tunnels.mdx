@@ -85,6 +85,19 @@ Create a `POST` request [using the API](/api/resources/magic_transit/subresource
 
 Example:
 
+<APIRequest
+  path="/accounts/{account_id}/magic/gre_tunnels"
+  method="POST"
+  json={{
+		"name": "<TUNNEL_NAME>",
+		"description": "<TUNNEL_DESCRIPTION>",
+		"interface_address": "<INTERFACE_ADDRESS>",
+		"cloudflare_gre_endpoint": "<CLOUDFLARE_ENDPOINT>",
+		"customer_gre_endpoint": "<CUSTOMER_ENDPOINT>"
+  }}
+/>
+
+
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/gre_tunnels \
 --header "X-Auth-Email: <EMAIL>" \
