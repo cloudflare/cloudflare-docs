@@ -83,8 +83,6 @@ import { APIRequest, Details, Markdown, Render, TabItem, Tabs } from "~/componen
 
 Create a `POST` request [using the API](/api/resources/magic_transit/subresources/gre_tunnels/methods/create/) to create a GRE tunnel.
 
-Example:
-
 <APIRequest
   path="/accounts/{account_id}/magic/gre_tunnels"
   method="POST"
@@ -97,7 +95,45 @@ Example:
   }}
 />
 
-
+```json output
+{
+  "errors": [
+    {
+      "code": 1000,
+      "message": "message"
+    }
+  ],
+  "messages": [
+    {
+      "code": 1000,
+      "message": "message"
+    }
+  ],
+  "result": {
+    "gre_tunnels": [
+      {
+        "cloudflare_gre_endpoint": "203.0.113.1",
+        "customer_gre_endpoint": "203.0.113.1",
+        "interface_address": "192.0.2.0/31",
+        "name": "GRE_1",
+        "description": "Tunnel for ISP X",
+        "health_check": {
+          "direction": "unidirectional",
+          "enabled": true,
+          "rate": "low",
+          "target": {
+            "saved": "203.0.113.1"
+          },
+          "type": "reply"
+        },
+        "mtu": 0,
+        "ttl": 0
+      }
+    ]
+  },
+  "success": true
+}
+```
 
 </Details>
 
