@@ -9,7 +9,7 @@ params:
   - tunnelHealthDash
 ---
 
-import { Details, Markdown, Render, TabItem, Tabs } from "~/components";
+import { APIRequest, Details, Markdown, Render, TabItem, Tabs } from "~/components";
 
 <Render file="icmp-mfirewall" product="magic-transit" />
 
@@ -81,7 +81,7 @@ import { Details, Markdown, Render, TabItem, Tabs } from "~/components";
 
 <Details header="GRE tunnel">
 
-Create a `POST` request [using the API](/api/resources/magic_transit/subresources/gre_tunnels/methods/create/) to create a GRE tunnel. You will need your [API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key).
+Create a `POST` request [using the API](/api/resources/magic_transit/subresources/gre_tunnels/methods/create/) to create a GRE tunnel.
 
 Example:
 
