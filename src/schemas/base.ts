@@ -47,7 +47,6 @@ export const baseSchema = ({ image }: SchemaContext) =>
 			.describe(
 				"The purpose of the page, and defined through specific pages in [Content strategy](/style-guide/documentation-content-strategy/content-types/).",
 			),
-		content_type: z.string().optional(),
 		tags: z
 			.string()
 			.array()
