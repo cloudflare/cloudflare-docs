@@ -1,0 +1,73 @@
+---
+title: Client API
+pcx_content_type: concept
+sidebar:
+  order: 11
+---
+
+import { MetaInfo, Render, Type, TypeScriptExample, WranglerConfig } from "~/components";
+
+The Agents SDK provides a set of client APIs for interacting with Agents from client-side JavaScript code, including:
+
+* React hooks, including `useAgent` and `useAgentChat`, for connecting to Agents from client applications.
+* Client-side [state syncing](/agents/api-reference/store-and-sync-state/) that allows you to subscribe to state updates between the Agent and any connected client(s) when calling `this.setState` within your Agent's code.
+* The ability to call remote methods (Remote Procedure Calls; RPC) on the Agent from client-side JavaScript code using the `@callable` method decorator.
+
+## React hooks
+
+TODO
+
+#### `useAgent`
+
+TODO
+
+<TypeScriptExample>
+
+```ts
+import { useAgent } from "agents-sdk/react";
+
+// TODO
+```
+
+</TypeScriptExample>
+
+#### `useAgentChat`
+
+TODO
+
+<TypeScriptExample>
+
+```ts
+import { useAgent } from "agents-sdk/react";
+import { useAgentChat } from "agents-sdk/ai-react";
+
+// TODO
+```
+
+</TypeScriptExample>
+
+## State synchronization
+
+:::note
+
+Visit the [state management API documentation](/agents/api-reference/store-and-sync-state/) within the Agents SDK, including the native `state` APIs and the built-in `this.sql` API for storing and querying data within your Agents.
+
+:::
+
+TODO
+
+<TypeScriptExample>
+
+```ts
+import { useState } from "react";
+import { useAgent } from "agents-sdk/react";
+
+// TODO
+```
+
+</TypeScriptExample>
+
+
+## Call remote methods
+
+TODO

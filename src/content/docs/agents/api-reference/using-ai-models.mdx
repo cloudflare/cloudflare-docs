@@ -24,7 +24,7 @@ A user can disconnect during a long-running response from a modern reasoning mod
 
 ## Calling AI Models
 
-You can call models from any method within an Agent, including from HTTP requests using the [`onRequest`](/agents/api-reference/sdk/) handler, when a [scheduled task](/agents/api-reference/schedule-tasks/) runs, when handling a WebSocket message in the [`onMessage`](/agents/api-reference/websockets/) handler, or from any of your own methods.
+You can call models from any method within an Agent, including from HTTP requests using the [`onRequest`](/agents/api-reference/agents-api/) handler, when a [scheduled task](/agents/api-reference/schedule-tasks/) runs, when handling a WebSocket message in the [`onMessage`](/agents/api-reference/websockets/) handler, or from any of your own methods.
 
 Importantly, Agents can call AI models on their own — autonomously — and can handle long-running responses that can take minutes (or longer) to respond in full.
 
