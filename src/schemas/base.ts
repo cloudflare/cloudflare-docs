@@ -1,6 +1,7 @@
 import { z } from "astro:schema";
-import { BadgeConfigSchema } from "./types/badge";
 import type { SchemaContext } from "astro:content";
+
+import { sidebar } from "./types/sidebar";
 
 const spotlightAuthorDetails = z
 	.object({
@@ -98,32 +99,7 @@ export const baseSchema = ({ image }: SchemaContext) =>
 			.describe(
 				"If true, this property adds a `noindex` declaration to the page, which will tell internal / external search crawlers to ignore this page. Helpful for pages that are historically accurate, but no longer recommended, such as [Workers Sites](/workers/configuration/sites/).",
 			),
-		sidebar: z
-			.object({
-				order: z.number().optional(),
-				label: z.string().optional(),
-				group: z
-					.object({
-						label: z
-							.string()
-							.optional()
-							.describe(
-								"Overrides the default 'Overview' label for index pages in the sidebar. Refer to https://developers.cloudflare.com/style-guide/frontmatter/sidebar/.",
-							),
-						hideIndex: z
-							.boolean()
-							.default(false)
-							.describe(
-								"Hides the index page from the sidebar. Refer to [Sidebar](/style-guide/frontmatter/sidebar/).",
-							),
-						badge: BadgeConfigSchema(),
-					})
-					.optional(),
-			})
-			.optional()
-			.describe(
-				"Used to configure various sidebar options. Refer to [Sidebar](/style-guide/frontmatter/sidebar/).",
-			),
+		sidebar,
 		hideChildren: z
 			.boolean()
 			.optional()
