@@ -158,34 +158,42 @@ Note that in example below, replay protection is disabled by default. You can en
 
 ```json output
 {
-	"result": {
-		"ipsec_tunnels": [
-			{
-				"id": "<YOUR_TUNNEL_ID>",
-				"interface_address": "<INTERFACE_ADDRESS>",
-				"created_on": "2023-04-21T10:42:22.138586Z",
-				"modified_on": "2023-04-21T10:42:22.138586Z",
-				"name": "<TUNNEL_NAME>",
-				"cloudflare_endpoint": "<CLOUDFLARE_ENDPOINT>",
-				"customer_endpoint": "<CUSTOMER_ENDPOINT>",
-				"remote_identities": {
-					"hex_id": "<HEX_ID>",
-					"fqdn_id": "<FQDN_ID>.ipsec.cloudflare.com",
-					"user_id": "ipsec@<USER_ID>.ipsec.cloudflare.com"
-				},
-				"description": " test",
-				"health_check": {
-					"enabled": true,
-					"target": "<TARGET>",
-					"type": "reply",
-					"rate": "mid"
-				}
-			}
-		]
-	},
-	"success": true,
-	"errors": [],
-	"messages": []
+  "errors": [
+    {
+      "code": 1000,
+      "message": "message"
+    }
+  ],
+  "messages": [
+    {
+      "code": 1000,
+      "message": "message"
+    }
+  ],
+  "result": {
+    "ipsec_tunnels": [
+      {
+        "cloudflare_endpoint": "203.0.113.1",
+        "interface_address": "192.0.2.0/31",
+        "name": "IPsec_1",
+        "allow_null_cipher": true,
+        "customer_endpoint": "203.0.113.1",
+        "description": "Tunnel for ISP X",
+        "health_check": {
+          "direction": "unidirectional",
+          "enabled": true,
+          "rate": "low",
+          "target": {
+            "saved": "203.0.113.1"
+          },
+          "type": "reply"
+        },
+        "psk_metadata": {},
+        "replay_protection": false
+      }
+    ]
+  },
+  "success": true
 }
 ```
 
