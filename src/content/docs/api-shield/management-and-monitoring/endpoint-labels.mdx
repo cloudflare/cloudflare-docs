@@ -5,10 +5,9 @@ title: Endpoint labeling service
 sidebar:
   order: 1
   label: Labeling service
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 API Shield's labeling service will help you organize your endpoints and address vulnerabilities in your API. The labeling service comes with managed and user-defined labels.
 
@@ -46,6 +45,8 @@ Use managed labels to identify endpoints by use case. Cloudflare may automatical
 
 `cf-rss-feed`: Add this label to endpoints that expect traffic from RSS clients.
 
+`cf-llm`: Services that are (partially) powered by Large Language Model (LLM).
+
 ### Risk labels
 
 Cloudflare automatically runs risk scans every 24 hours on your saved endpoints. API Shield applies these labels when a scan finds security risks on your endpoints. A corresponding Security Center Insight is also raised when risks are found.
@@ -58,11 +59,11 @@ Cloudflare automatically runs risk scans every 24 hours on your saved endpoints.
 
 `cf-risk-missing-schema`: Automatically added when a learned schema is available for an endpoint that has no active schema.
 
-`cf-risk-error-anomaly`: Automatically added when an endpoint experiences a recent increase in response errors over the last 24 hours. 
+`cf-risk-error-anomaly`: Automatically added when an endpoint experiences a recent increase in response errors over the last 24 hours.
 
-`cf-risk-latency-anomaly`: Automatically added when an endpoint experiences a recent increase in response latency over the last 24 hours. 
+`cf-risk-latency-anomaly`: Automatically added when an endpoint experiences a recent increase in response latency over the last 24 hours.
 
-`cf-risk-size-anomaly`: Automatically added when an endpoint experiences a spike in response body size over the last 24 hours. 
+`cf-risk-size-anomaly`: Automatically added when an endpoint experiences a spike in response body size over the last 24 hours.
 
 :::note
 Cloudflare will only add authentication labels to endpoints with successful response codes. Refer to the below table for more details.
