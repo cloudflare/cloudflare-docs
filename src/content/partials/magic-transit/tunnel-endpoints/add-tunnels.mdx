@@ -141,61 +141,60 @@ Create a `POST` request [using the API](/api/resources/magic_transit/subresource
 
 1. Create a `POST` request [using the API](/api/resources/magic_transit/subresources/ipsec_tunnels/methods/create/) to create an IPsec tunnel.
 
-Note that in example below, replay protection is disabled by default. You can enable it with the flag `"replay_protection": true` for each IPsec tunnel, if the devices you use do not support disabling this feature. If you have already created IPsec tunnels, update them with a [`PUT` request](https://developers.cloudflare.com/api/resources/magic_transit/subresources/ipsec_tunnels/methods/update/). <br/> Refer to <a href={props.antiReplayPagePath}>Anti-replay protection</a> for more information on this topic.
+	Note that in example below, replay protection is disabled by default. You can enable it with the flag `"replay_protection": true` for each IPsec tunnel, if the devices you use do not support disabling this feature. If you have already created IPsec tunnels, update them with a [`PUT` request](https://developers.cloudflare.com/api/resources/magic_transit/subresources/ipsec_tunnels/methods/update/). <br/> Refer to <a href={props.antiReplayPagePath}>Anti-replay protection</a> for more information on this topic.
 
-<APIRequest
-  path="/accounts/{account_id}/magic/ipsec_tunnels"
-  method="POST"
-  json={{
-		"name": "<TUNNEL_NAME>",
-		"description": "<TUNNEL_DESCRIPTION>",
-		"interface_address": "<INTERFACE_ADDRESS>",
-		"cloudflare_endpoint": "<CLOUDFLARE_ENDPOINT>",
-		"customer_endpoint": "<CUSTOMER_ENDPOINT>"
-  }}
-/>
+	<APIRequest
+		path="/accounts/{account_id}/magic/ipsec_tunnels"
+		method="POST"
+		json={{
+			"name": "<TUNNEL_NAME>",
+			"description": "<TUNNEL_DESCRIPTION>",
+			"interface_address": "<INTERFACE_ADDRESS>",
+			"cloudflare_endpoint": "<CLOUDFLARE_ENDPOINT>",
+			"customer_endpoint": "<CUSTOMER_ENDPOINT>"
+		}}
+	/>
 
-
-```json output
-{
-  "errors": [
-    {
-      "code": 1000,
-      "message": "message"
-    }
-  ],
-  "messages": [
-    {
-      "code": 1000,
-      "message": "message"
-    }
-  ],
-  "result": {
-    "ipsec_tunnels": [
-      {
-        "cloudflare_endpoint": "203.0.113.1",
-        "interface_address": "192.0.2.0/31",
-        "name": "IPsec_1",
-        "allow_null_cipher": true,
-        "customer_endpoint": "203.0.113.1",
-        "description": "Tunnel for ISP X",
-        "health_check": {
-          "direction": "unidirectional",
-          "enabled": true,
-          "rate": "low",
-          "target": {
-            "saved": "203.0.113.1"
-          },
-          "type": "reply"
-        },
-        "psk_metadata": {},
-        "replay_protection": false
-      }
-    ]
-  },
-  "success": true
-}
-```
+	```json output
+	{
+		"errors": [
+			{
+				"code": 1000,
+				"message": "message"
+			}
+		],
+		"messages": [
+			{
+				"code": 1000,
+				"message": "message"
+			}
+		],
+		"result": {
+			"ipsec_tunnels": [
+				{
+					"cloudflare_endpoint": "203.0.113.1",
+					"interface_address": "192.0.2.0/31",
+					"name": "IPsec_1",
+					"allow_null_cipher": true,
+					"customer_endpoint": "203.0.113.1",
+					"description": "Tunnel for ISP X",
+					"health_check": {
+						"direction": "unidirectional",
+						"enabled": true,
+						"rate": "low",
+						"target": {
+							"saved": "203.0.113.1"
+						},
+						"type": "reply"
+					},
+					"psk_metadata": {},
+					"replay_protection": false
+				}
+			]
+		},
+		"success": true
+	}
+	```
 
 2. Create a `POST` request to generate a PSK. Use the tunnel `id` you received from the previous command (exemplified by `<YOUR_TUNNEL_ID>` above):
 
