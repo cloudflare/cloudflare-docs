@@ -11,29 +11,29 @@ While many users should expect a no-op upgrade, the following sections outline t
 
 ### Summary of changes
 
-- **Updated Node.js Support Policy:**
+- **Updated Node.js support policy:**
   Node.js v16, which reached End-of-Life in 2022, is no longer supported in Wrangler v4. Wrangler now follows Node.js's [official support lifecycle](https://nodejs.org/en/about/previous-releases).
 
-- **esbuild Version Upgrade**: Wrangler v4 uses [esbuild](https://esbuild.github.io/) to bundle Worker code before deploying it, and was previously pinned to esbuild v0.17.19. Wrangler v4 uses esbuild v0.24, which could impact dynamic wildcard imports.
+- **Upgraded esbuild version**: Wrangler uses [esbuild](https://esbuild.github.io/) to bundle Worker code before deploying it, and was previously pinned to esbuild v0.17.19. Wrangler v4 uses esbuild v0.24, which could impact dynamic wildcard imports.
 
 - **Commands default to local mode**: All commands that can run in either local or remote mode now default to local, requiring a `--remote` flag for API queries.
 
-- **Deprecated commands and configurations removed:** Legacy commands, flags, and configurations have been removed.
+- **Deprecated commands and configurations removed:** Legacy commands, flags, and configurations are removed.
 
 ## Detailed Changes
 
-### Updated Node.js Support Policy
+### Updated Node.js support policy
 
 Wrangler now supports only Node.js versions that align with [Node.js's official lifecycle](https://nodejs.org/en/about/previous-releases):
 
 - **Supported**: Current, Active LTS, Maintenance LTS
 - **No longer supported:** Node.js v16 (EOL in 2022)
 
-Wrangler tests no longer run on v16, and users still on this version may encounter unsupported behavior. Users still using Node.js v16 must upgrade to a supported version (currently v18 or higher) to continue receiving support and compatibility with Wrangler.
+Wrangler tests no longer run on v16, and users still on this version may encounter unsupported behavior. Users still using Node.js v16 must upgrade to a supported version to continue receiving support and compatibility with Wrangler.
 
-### esbuild Version Upgrade
+### Upgraded esbuild version
 
-Wrangler v4 upgraded esbuild from **v0.17.19** to **v0.24**, bringing improvements (such as the ability to use the `using` keyword with RPC) and changes to bundling behavior:
+Wrangler v4 upgrades esbuild from **v0.17.19** to **v0.24**, bringing improvements (such as the ability to use the `using` keyword with RPC) and changes to bundling behavior:
 
 - **Dynamic imports:** Wildcard imports (for example, `import('./data/' + kind + '.json')`) now automatically include all matching files in the bundle.
 
@@ -41,7 +41,7 @@ Users relying on wildcard dynamic imports may see unwanted files bundled. Prior 
 
 ### Commands default to local mode
 
-All commands now run in **local mode by default.** Wrangler has many commands for accessing resources like KV and R2, but the commands were previously inconsistent in whether they run in a local or remote environment. For example, D1 defaults to querying a local datastore, and requires the `--remote` flag to query via the API. KV, on the other hand, previously defaulted to querying via the API (implicitly using the `--remote` flag) and required a `--local` flag to query a local datastore. In order to make the behavior consistent across Wrangler, each command now uses the `--local` flag by default, and will require an explicit `--remote` flag to query via the API.
+All commands now run in **local mode by default.** Wrangler has many commands for accessing resources like KV and R2, but the commands were previously inconsistent in whether they ran in a local or remote environment. For example, D1 defaulted to querying a local datastore, and required the `--remote` flag to query via the API. KV, on the other hand, previously defaulted to querying via the API (implicitly using the `--remote` flag) and required a `--local` flag to query a local datastore. In order to make the behavior consistent across Wrangler, each command now uses the `--local` flag by default, and requires an explicit `--remote` flag to query via the API.
 
 For example:
 
@@ -50,9 +50,9 @@ For example:
 
 Those using `wrangler kv key` and/or `wrangler r2 object` commands to query or write to their data store will need to add the `--remote` flag in order to replicate previous behavior.
 
-### Deprecated Commands and Configurations Removed
+### Deprecated commands and configurations removed
 
-All previously deprecated features in [Wrangler v2](https://developers.cloudflare.com/workers/wrangler/deprecations/#wrangler-v2) and in [Wrangler v3](https://developers.cloudflare.com/workers/wrangler/deprecations/#wrangler-v3) have now been removed. Additionally, the following features that were deprecated during the Wrangler v3 release have been removed:
+All previously deprecated features in [Wrangler v2](https://developers.cloudflare.com/workers/wrangler/deprecations/#wrangler-v2) and in [Wrangler v3](https://developers.cloudflare.com/workers/wrangler/deprecations/#wrangler-v3) are now removed. Additionally, the following features that were deprecated during the Wrangler v3 release are also now removed:
 
 - Legacy Assets (using `wrangler dev/deploy --legacy-assets` or the `legacy_assets` config file property). Instead, we recommend you [migrate to Workers assets](https://developers.cloudflare.com/workers/static-assets/).
 - Legacy Node.js compatibility (using `wrangler dev/deploy --node-compat` or the `node_compat` config file property). Instead, use the [`nodejs_compat` compatibility flag](https://developers.cloudflare.com/workers/runtime-apis/nodejs). This includes the functionality from legacy `node_compat` polyfills and natively implemented Node.js APIs.

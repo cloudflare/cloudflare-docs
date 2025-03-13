@@ -25,8 +25,8 @@ This means the correct types for your Worker depend on:
 
 1. Your Worker's [compatibility date](/workers/configuration/compatibility-dates/).
 2. Your Worker's [compatibility flags](/workers/configuration/compatibility-flags/).
-3. Your Worker's bindings, which are accessed on the `env` object.
-4. Any [module rules](/workers/wrangler/configuration/#inheritable-keys) you have specified in your Wrangler configuration file under `rules`.
+3. Your Worker's bindings, which are defined in your [Wrangler configuration file](/workers/wrangler/configuration).
+4. Any [module rules](/workers/wrangler/configuration/#bundling) you have specified in your Wrangler configuration file under `rules`.
 
 For example, the runtime will only allow you to use the [`AsyncLocalStorage`](https://nodejs.org/api/async_context.html#class-asynclocalstorage) class if you have `compatibility_flags = ["nodejs_als"]` in your [Wrangler configuration file](/workers/wrangler/configuration/). This should be reflected in the type definitions.
 
@@ -50,7 +50,7 @@ You can commit your types file to git if you wish.
 
 :::note
 
-To ensure that your types are always up-to-date, make sure to run `wrangler types` after any changes to your config file.\*\*
+To ensure that your types are always up-to-date, make sure to run `wrangler types` after any changes to your config file.
 
 :::
 
