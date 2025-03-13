@@ -26,7 +26,7 @@ This documentation only refers to connections [between clients and the Cloudflar
 Custom cipher suites is a hostname-level setting, which implies that:
 
 * When you customize cipher suites for a zone, this will affect all hostnames within that zone. If you are not familiar with what a Cloudflare zone is, refer to [Fundamentals](/fundamentals/setup/accounts-and-zones/#zones).
-* The configuration is applicable to all edge certificates used to connect to the hostname(s), regardless of [certificate type](/ssl/edge-certificates/) (universal, advanced, or custom).
+* The configuration is applicable to all edge certificates used to connect to the hostname(s), regardless of the [certificate type](/ssl/edge-certificates/) (universal, advanced, or custom).
 * If you need to use a per-hostname cipher suite customization, you must ensure that the hostname is specified on the certificate.
 
 ## Scope
@@ -38,9 +38,9 @@ Currently, you have the following options:
 
 ### Cloudflare for SaaS
 
-If you are a SaaS provider looking to restrict cipher suites in connections to your custom hostnames, refer to [TLS settings - Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/enforce-mtls/#cipher-suites).
+If you are a SaaS provider looking to restrict cipher suites for connections to your custom hostnames, refer to [TLS settings - Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/enforce-mtls/#cipher-suites).
 
-To restrict cipher suites in connections to your own zone, continue on this guide. In this case, you must also have purchased [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/).
+To restrict cipher suites for connections to your own zone, continue on this guide. In this case, you must also have purchased [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/).
 
 ## Settings priority and ciphers order
 
