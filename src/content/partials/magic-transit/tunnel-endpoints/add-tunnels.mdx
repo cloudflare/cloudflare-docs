@@ -143,7 +143,18 @@ Create a `POST` request [using the API](/api/resources/magic_transit/subresource
 
 Note that in example below, replay protection is disabled by default. You can enable it with the flag `"replay_protection": true` for each IPsec tunnel, if the devices you use do not support disabling this feature. If you have already created IPsec tunnels, update them with a [`PUT` request](https://developers.cloudflare.com/api/resources/magic_transit/subresources/ipsec_tunnels/methods/update/). <br/> Refer to <a href={props.antiReplayPagePath}>Anti-replay protection</a> for more information on this topic.
 
-Example:
+<APIRequest
+  path="/accounts/{account_id}/magic/ipsec_tunnels"
+  method="POST"
+  json={{
+		"name": "<TUNNEL_NAME>",
+		"description": "<TUNNEL_DESCRIPTION>",
+		"interface_address": "<INTERFACE_ADDRESS>",
+		"cloudflare_endpoint": "<CLOUDFLARE_ENDPOINT>",
+		"customer_endpoint": "<CUSTOMER_ENDPOINT>"
+  }}
+/>
+
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels \
