@@ -266,6 +266,28 @@ export default {
 }
 ```
 
+### createBatch
+
+Create (trigger) a batch of new instance of the given Workflow, up to 100 instances at a time.
+
+* <code>createBatch(batch: WorkflowInstanceCreateOptions[]): Promise&lt;WorkflowInstance[]&gt;</code>
+
+  * `batch` - list of Options to pass when creating an instance, including a user-provided ID and payload parameters.
+
+Each element of the `batch` list is expected to the 
+
+```ts
+// Create a new batch of 3 Workflow instances, each with its own ID and pass params to the Workflow instances
+const listOfInstances = [
+  { id: "idFromBatch0", params: { "hello": "world-0" } },
+  { id: "idFromBatch1", params: { "hello": "world-1" } },
+  { id: "idFromBatch2", params: { "hello": "world-2" } }
+];
+let instances = await env.MY_WORKFLOW.createBatch(listOfInstances);
+```
+
+Returns a list of `WorkflowInstance`.
+
 ### get
 
 Get a specific Workflow instance by ID.
