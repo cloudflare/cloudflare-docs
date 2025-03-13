@@ -70,7 +70,7 @@ Workers KV is an eventually-consistent edge key-value store. That makes it ideal
 In these scenarios, Workers are invoked in a data center closest to the user and Workers KV data will be cached in that region for subsequent requests to minimize latency.
 
 For **write-heavy** workloads (or workloads that are less cacheable), using Workers with [smart placement](/workers/configuration/smart-placement/) and Workers KV or [Durable Objects](/durable-objects/) can reduce application latency by placing Workers closer to the central data stores.
-This could behave more similarly to a typical web architecture using a co-located in-memory store like [Redis](https://redis.io). Workers KV's key-value update per second [limits](/kv/platform/limits) may also apply to write-heavy workloads.
+This could behave more similarly to a typical web architecture using a co-located in-memory store like [Redis](https://redis.io). Workers KV's key-value update per second [limits](/kv/platform/limits) and minimum [`cacheTtl`](/kv/api/read-key-value-pairs/#cachettl-parameter) may also apply to write-heavy workloads.
 
 ## Security
 
