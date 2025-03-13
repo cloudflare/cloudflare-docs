@@ -14,7 +14,7 @@ While many users should expect a no-op upgrade, the following sections outline t
 - **Updated Node.js support policy:**
   Node.js v16, which reached End-of-Life in 2022, is no longer supported in Wrangler v4. Wrangler now follows Node.js's [official support lifecycle](https://nodejs.org/en/about/previous-releases).
 
-- **Upgraded esbuild version**: Wrangler uses [esbuild](https://esbuild.github.io/) to bundle Worker code before deploying it, and was previously pinned to esbuild v0.17.19. Wrangler v4 uses esbuild v0.24, which could impact dynamic wildcard imports.
+- **Upgraded esbuild version**: Wrangler uses [esbuild](https://esbuild.github.io/) to bundle Worker code before deploying it, and was previously pinned to esbuild v0.17.19. Wrangler v4 uses esbuild v0.24, which could impact dynamic wildcard imports. Going forward, Wrangler will be periodically updating the `esbuild` version included with Wrangler, and since `esbuild` is a pre-1.0.0 tool, this may sometimes include breaking changes to how bundling works. In particular, we may bump the `esbuild` version in a Wrangler minor version.
 
 - **Commands default to local mode**: All commands that can run in either local or remote mode now default to local, requiring a `--remote` flag for API queries.
 
