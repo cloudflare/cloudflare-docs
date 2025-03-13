@@ -35,7 +35,12 @@ for (let track of tracks) {
 					track = track.replace("noble-intel", "linux");
 				}
 
-				const path = `./src/content/warp-releases/${track}/${item.version}.yaml`;
+				const folder = `./src/content/warp-releases/${track}`;
+				const path = `${folder}/${item.version}.yaml`;
+
+				if (!fs.existsSync(folder)) {
+					fs.mkdirSync(folder, { recursive: true });
+				}
 
 				if (fs.existsSync(path)) {
 					console.log(`${track} ${item.version} already exists.`);
@@ -66,13 +71,16 @@ for (let track of tracks) {
 				});
 
 				const releaseNotes = tokens.reduce((s, t) => s + t.raw, "");
+				const platformName = data.platformName.startsWith("noble-")
+					? "Linux"
+					: data.platformName;
 
 				fs.writeFileSync(
 					`./src/content/warp-releases/${track}/${item.version}.yaml`,
 					YAML.stringify({
 						...item,
 						releaseNotes,
-						platformName: data.platformName,
+						platformName,
 					}),
 					"utf-8",
 				);
