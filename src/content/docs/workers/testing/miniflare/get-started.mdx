@@ -103,46 +103,46 @@ to workers respectively:
 import { Miniflare } from "miniflare";
 
 const mf = new Miniflare({
+	modules: true,
 	script: `
-  export default {
-    let lastScheduledController;
-    let lastQueueBatch;
-    async fetch(request, env, ctx) {
-      const { pathname } = new URL(request.url);
-      if (pathname === "/scheduled") {
-        return Response.json({
-          scheduledTime: lastScheduledController?.scheduledTime,
-          cron: lastScheduledController?.cron,
-        });
-      } else if (pathname === "/queue") {
-        return Response.json({
-          queue: lastQueueBatch.queue,
-          messages: lastQueueBatch.messages.map((message) => ({
-            id: message.id,
-            timestamp: message.timestamp.getTime(),
-            body: message.body,
-            bodyType: message.body.constructor.name,
-          })),
-        });
-      } else if (pathname === "/get-url") {
-        return new Response(request.url);
-      } else {
-        return new Response(null, { status: 404 });
-      }
-    },
-    async scheduled(controller, env, ctx) {
-      lastScheduledController = controller;
-      if (controller.cron === "* * * * *") controller.noRetry();
-    },
-    async queue(batch, env, ctx) {
-      lastQueueBatch = batch;
-      if (batch.queue === "needy") batch.retryAll();
-      for (const message of batch.messages) {
-        if (message.id === "perfect") message.ack();
-      }
-    }
-  }
-  `,
+	let lastScheduledController;
+	let lastQueueBatch;
+	export default {
+		async fetch(request, env, ctx) {
+			const { pathname } = new URL(request.url);
+			if (pathname === "/scheduled") {
+				return Response.json({
+					scheduledTime: lastScheduledController?.scheduledTime,
+					cron: lastScheduledController?.cron,
+				});
+			} else if (pathname === "/queue") {
+				return Response.json({
+					queue: lastQueueBatch.queue,
+					messages: lastQueueBatch.messages.map((message) => ({
+					id: message.id,
+					timestamp: message.timestamp.getTime(),
+					body: message.body,
+					bodyType: message.body.constructor.name,
+					})),
+				});
+			} else if (pathname === "/get-url") {
+				return new Response(request.url);
+			} else {
+				return new Response(null, { status: 404 });
+			}
+		},
+		async scheduled(controller, env, ctx) {
+			lastScheduledController = controller;
+			if (controller.cron === "* * * * *") controller.noRetry();
+		},
+		async queue(batch, env, ctx) {
+			lastQueueBatch = batch;
+			if (batch.queue === "needy") batch.retryAll();
+			for (const message of batch.messages) {
+				if (message.id === "perfect") message.ack();
+			}
+		}
+	}`,
 });
 
 const res = await mf.dispatchFetch("http://localhost:8787/", {
@@ -158,8 +158,8 @@ const scheduledResult = await worker.scheduled({
 console.log(scheduledResult); // { outcome: "ok", noRetry: true });
 
 const queueResult = await worker.queue("needy", [
-	{ id: "a", timestamp: new Date(1000), body: "a" },
-	{ id: "b", timestamp: new Date(2000), body: { b: 1 } },
+	{ id: "a", timestamp: new Date(1000), body: "a", attempts: 1 },
+	{ id: "b", timestamp: new Date(2000), body: { b: 1 }, attempts: 1 },
 ]);
 console.log(queueResult); // { outcome: "ok", retryAll: true, ackAll: false, explicitRetries: [], explicitAcks: []}
 ```
