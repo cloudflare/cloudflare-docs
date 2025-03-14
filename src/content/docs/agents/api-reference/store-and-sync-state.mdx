@@ -125,7 +125,7 @@ Any initial state is synced to clients connecting via [the `useAgent` hook](#syn
 
 ### Synchronizing state
 
-Clients can connect to an Agent and stay synchronized with its state using the React hooks provided as part of `agents-sdk/react`.
+Clients can connect to an Agent and stay synchronized with its state using the React hooks provided as part of `agents/react`.
 
 A React application can call `useAgent` to connect to a named Agent over WebSockets at
 
@@ -133,7 +133,7 @@ A React application can call `useAgent` to connect to a named Agent over WebSock
 
 ```ts
 import { useState } from "react";
-import { useAgent } from "agents-sdk/react";
+import { useAgent } from "agents/react";
 
 function StateInterface() {
   const [state, setState] = useState({ counter: 0 });

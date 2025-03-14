@@ -40,12 +40,12 @@ export class ChatAgent extends Agent {
 
 ### Connecting clients
 
-The Agent framework includes a useful helper package for connecting directly to your Agent (or other Agents) from a client application. Import `agents-sdk/client`, create an instance of `AgentClient` and use it to connect to an instance of your Agent:
+The Agent framework includes a useful helper package for connecting directly to your Agent (or other Agents) from a client application. Import `agents/client`, create an instance of `AgentClient` and use it to connect to an instance of your Agent:
 
 <TypeScriptExample>
 
 ```ts
-import { AgentClient } from "agents-sdk/client";
+import { AgentClient } from "agents/client";
 
 const connection = new AgentClient({
   agent: "dialogue-agent",
@@ -68,12 +68,12 @@ connection.send(
 
 ### React clients
 
-React-based applications can import `agents-sdk/react` and use the `useAgent` hook to connect to an instance of an Agent directly:
+React-based applications can import `agents/react` and use the `useAgent` hook to connect to an instance of an Agent directly:
 
 <TypeScriptExample>
 
 ```ts
-import { useAgent } from "agents-sdk/react";
+import { useAgent } from "agents/react";
 
 function AgentInterface() {
   const connection = useAgent({

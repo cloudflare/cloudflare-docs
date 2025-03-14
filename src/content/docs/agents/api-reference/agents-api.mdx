@@ -313,7 +313,7 @@ Visit the documentation on [storing and syncing state](/agents/api-reference/sto
 Client for connecting to an Agent from the browser.
 
 ```ts
-import { AgentClient } from "agents-sdk/client";
+import { AgentClient } from "agents/client";
 
 // Options for creating an AgentClient
 type AgentClientOptions = {
@@ -341,7 +341,7 @@ class AgentClient extends WebSocket {
 Make an HTTP request to an Agent.
 
 ```ts
-import { agentFetch } from "agents-sdk/client";
+import { agentFetch } from "agents/client";
 
 // Options for the agentFetch function
 type AgentClientFetchOptions = {
@@ -368,7 +368,7 @@ The Agents SDK provides a React API for simplifying connection and routing to Ag
 React hook for connecting to an Agent.
 
 ```ts
-import { useAgent } from "agents-sdk/react";
+import { useAgent } from "agents/react";
 
 // Options for the useAgent hook
 type UseAgentOptions<State = unknown> = {
@@ -399,14 +399,14 @@ function useAgent<State = unknown>(
 
 The Agents SDK exposes an `AIChatAgent` class that extends the `Agent` class and exposes an `onChatMessage` method that simplifies building interactive chat agents.
 
-You can combine this with the `useAgentChat` React hook from the `agents-sdk/ai-react` package to manage chat state and messages between a user and your Agent(s).
+You can combine this with the `useAgentChat` React hook from the `agents/ai-react` package to manage chat state and messages between a user and your Agent(s).
 
 #### AIChatAgent
 
 Extension of the `Agent` class with built-in chat capabilities.
 
 ```ts
-import { AIChatAgent } from "agents-sdk/ai-chat-agent";
+import { AIChatAgent } from "agents/ai-chat-agent";
 import { Message, StreamTextOnFinishCallback } from "ai";
 
 // Base class for chat-specific agents
@@ -432,8 +432,8 @@ class AIChatAgent<Env = unknown> extends Agent<Env> {
 React hook for building AI chat interfaces using an Agent.
 
 ```ts
-import { useAgentChat } from "agents-sdk/ai-react";
-import { useAgent } from "agents-sdk/react";
+import { useAgentChat } from "agents/ai-react";
+import { useAgent } from "agents/react";
 import type { Message } from "ai";
 
 // Options for the useAgentChat hook

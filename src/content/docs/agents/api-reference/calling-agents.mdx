@@ -26,7 +26,7 @@ See the usage patterns in the following example:
 <TypeScriptExample>
 
 ```ts
-import { Agent, AgentNamespace, getAgentByName, routeAgentRequest } from 'agents-sdk';
+import { Agent, AgentNamespace, getAgentByName, routeAgentRequest } from 'agents';
 
 interface Env {
 	// Define your Agent on the environment here
@@ -39,7 +39,7 @@ export default {
 	async fetch(request, env, ctx): Promise<Response> {
 		// Routed addressing
 		// Automatically routes HTTP requests and/or WebSocket connections to /agents/:agent/:name
-		// Best for: connecting React apps directly to Agents using useAgent from agents-sdk/react
+		// Best for: connecting React apps directly to Agents using useAgent from agents/react
 		return (await routeAgentRequest(request, env)) || Response.json({ msg: 'no agent here' }, { status: 404 });
 
 		// Named addressing
@@ -80,7 +80,7 @@ The example below shows how to create a unique agent Agent for each `userId` in 
 <TypeScriptExample>
 
 ```ts
-import { Agent, AgentNamespace, getAgentByName, routeAgentRequest } from 'agents-sdk';
+import { Agent, AgentNamespace, getAgentByName, routeAgentRequest } from 'agents';
 
 interface Env {
 	MyAgent: AgentNamespace<MyAgent>;
@@ -121,7 +121,7 @@ The `routeAgentRequest` helper documented earlier in this guide exposes two usef
 <TypeScriptExample>
 
 ```ts
-import { Agent, AgentNamespace, routeAgentRequest } from 'agents-sdk';
+import { Agent, AgentNamespace, routeAgentRequest } from 'agents';
 
 interface Env {
 	MyAgent: AgentNamespace<MyAgent>;
@@ -163,7 +163,7 @@ For example, if you are using [Hono](https://hono.dev/), you can authenticate in
 <TypeScriptExample>
 
 ```ts
-import { Agent, AgentNamespace, getAgentByName } from 'agents-sdk';
+import { Agent, AgentNamespace, getAgentByName } from 'agents';
 import { Hono } from 'hono';
 
 const app = new Hono<{ Bindings: Env }>();
