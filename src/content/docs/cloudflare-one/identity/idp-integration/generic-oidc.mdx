@@ -136,7 +136,7 @@ Setup instructions vary depending on the identity provider. In your identity pro
 If you would like to build policies based on IdP groups:
 
 - Ensure that your IdP sends a `groups` field. The naming must match exactly (case insensitive). All other values will be sent as a OIDC claim.
-- If your IdP requires creating a new SCIM application, ensure that the groups in the SCIM application match the groups in the [original SSO application](/cloudflare-one/identity/idp-integration/generic-oidc/#supported-algorithms-for-generic-oidc-tokens). Because SCIM group membership updates will overwrite any groups in a user's identity, assigning the same groups to each app ensures consistent policy evaluation.
+- If your IdP requires creating a new SCIM application, ensure that the groups in the SCIM application match the groups in the [original SSO application](/cloudflare-one/identity/idp-integration/generic-oidc/#1-create-an-application-in-your-identity-provider). Because SCIM group membership updates will overwrite any groups in a user's identity, assigning the same groups to each app ensures consistent policy evaluation.
 
 ### 3. Verify SCIM provisioning
 
