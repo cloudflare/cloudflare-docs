@@ -37,7 +37,7 @@ Instead of buffering the entire response, or risking the client disconecting, yo
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
-import { Agent } from "agents-sdk"
+import { Agent } from "agents"
 import { OpenAI } from "openai"
 
 export class MyAgent extends Agent<Env> {
@@ -95,7 +95,7 @@ Workers AI supports streaming responses out-of-the-box by setting `stream: true`
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
-import { Agent } from "agents-sdk"
+import { Agent } from "agents"
 
 interface Env {
 	AI: Ai;
@@ -145,7 +145,7 @@ Model routing allows you to route requests to different AI models based on wheth
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
-import { Agent } from "agents-sdk"
+import { Agent } from "agents"
 
 interface Env {
 	AI: Ai;
@@ -199,7 +199,7 @@ npm install ai @ai-sdk/openai
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
-import { Agent } from "agents-sdk"
+import { Agent } from "agents"
 import { generateText } from 'ai';
 import { openai } from '@ai-sdk/openai';
 
@@ -226,7 +226,7 @@ Agents can stream responses back over HTTP using Server Sent Events (SSE) from w
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
-import { Agent } from "agents-sdk"
+import { Agent } from "agents"
 import { OpenAI } from "openai"
 
 export class MyAgent extends Agent<Env> {

@@ -20,7 +20,7 @@ Here's an example of an Agent that echoes back any message it receives:
 <TypeScriptExample>
 
 ```ts
-import { Agent, Connection } from "agents-sdk";
+import { Agent, Connection } from "agents";
 
 export class ChatAgent extends Agent {
 	async onConnect(connection: Connection, ctx: ConnectionContext) {
@@ -114,7 +114,7 @@ Define `onError` and `onClose` methods on your Agent to explicitly handle WebSoc
 <TypeScriptExample>
 
 ```ts
-import { Agent, Connection } from "agents-sdk";
+import { Agent, Connection } from "agents";
 
 export class ChatAgent extends Agent {
  	// onConnect and onMessage methods

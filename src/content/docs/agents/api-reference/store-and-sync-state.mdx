@@ -26,7 +26,7 @@ Every Agent has built-in state management capabilities. You can set and update t
 <TypeScriptExample>
 
 ```ts
-import { Agent } from "agents-sdk";
+import { Agent } from "agents";
 
 export class MyAgent extends Agent {
   // Update state in response to events
@@ -61,7 +61,7 @@ If you're using TypeScript, you can also provide a type for your Agent's state b
 <TypeScriptExample>
 
 ```ts
-import { Agent } from "agents-sdk";
+import { Agent } from "agents";
 
 interface Env {}
 
@@ -285,6 +285,6 @@ This works because each instance of an Agent has its _own_ database, the state s
 ### Next steps
 
 * Review the [API documentation](/agents/api-reference/agents-api/) for the Agents class to learn how to define
-* [Build a chat Agent](/agents/getting-started/build-a-chat-agent/) using the `agents-sdk` and deploy it to Workers.
+* [Build a chat Agent](/agents/getting-started/build-a-chat-agent/) using the Agents SDK and deploy it to Workers.
 * Learn more [using WebSockets](/agents/api-reference/websockets/) to build interactive Agents and stream data back from your Agent.
-* [Orchestrate asynchronous workflows](/agents/api-reference/run-workflows) from your Agent by combining the `agents-sdk` and [Workflows](/workflows).
+* [Orchestrate asynchronous workflows](/agents/api-reference/run-workflows) from your Agent by combining the Agents SDK and [Workflows](/workflows).

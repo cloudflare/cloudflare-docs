@@ -8,14 +8,14 @@ sidebar:
 
 import { MetaInfo, Render, Type, TypeScriptExample, WranglerConfig } from "~/components";
 
-This page provides an overview of the Agent SDK API, including the `Agent` class, methods and properties built-in to the `agents-sdk`.
+This page provides an overview of the Agent SDK API, including the `Agent` class, methods and properties built-in to the Agents SDK.
 
-An Agent is a JavaScript class that extends the `Agent` class from the `agents-sdk` package. An Agent encapsulates all of the logic for an Agent, including how clients can connect to it, how it stores state, the methods it exposes, and any error handling.
+An Agent is a JavaScript class that extends the `Agent` class from the Agents SDK package. An Agent encapsulates all of the logic for an Agent, including how clients can connect to it, how it stores state, the methods it exposes, and any error handling.
 
 <TypeScriptExample>
 
 ```ts
-import { Agent } from "agents-sdk";
+import { Agent } from "agents";
 
 class MyAgent extends Agent {
 	// Define methods on the Agent
@@ -34,14 +34,14 @@ Instances of an Agent are addressed by a unique identifier: that identifier (ID)
 
 ### Agent
 
-Writing an Agent requires you to define a class that extends the `Agent` class from the `agents-sdk` package. An Agent encapsulates all of the logic for an Agent, including how clients can connect to it, how it stores state, the methods it exposes, and any error handling.
+Writing an Agent requires you to define a class that extends the `Agent` class from the Agents SDK package. An Agent encapsulates all of the logic for an Agent, including how clients can connect to it, how it stores state, the methods it exposes, and any error handling.
 
 You can also define your own methods on an Agent: it's technically valid to publish an Agent only has your own methods exposed, and create/get Agents directly from a Worker.
 
 Your own methods can access the Agent's environment variables and bindings on `this.env`, state on `this.setState`, and call other methods on the Agent via `this.yourMethodName`.
 
 ```ts
-import { Agent } from "agents-sdk";
+import { Agent } from "agents";
 
 interface Env {
 	// Define environment variables & bindings here
@@ -361,7 +361,7 @@ function agentFetch(
 
 ### React API
 
-The `agents-sdk` provides a React API for simplifying connection and routing to Agents from front-end frameworks, including React Router (Remix), Next.js, and Astro.
+The Agents SDK provides a React API for simplifying connection and routing to Agents from front-end frameworks, including React Router (Remix), Next.js, and Astro.
 
 #### useAgent
 
@@ -397,7 +397,7 @@ function useAgent<State = unknown>(
 
 ### Chat Agent
 
-The `agents-sdk` exposes an `AIChatAgent` class that extends the `Agent` class and exposes an `onChatMessage` method that simplifies building interactive chat agents.
+The Agents SDK exposes an `AIChatAgent` class that extends the `Agent` class and exposes an `onChatMessage` method that simplifies building interactive chat agents.
 
 You can combine this with the `useAgentChat` React hook from the `agents-sdk/ai-react` package to manage chat state and messages between a user and your Agent(s).
 
@@ -473,6 +473,6 @@ To learn more about how to manage state within an Agent, refer to the documentat
 
 ### Next steps
 
-* [Build a chat Agent](/agents/getting-started/build-a-chat-agent/) using the `agents-sdk` and deploy it to Workers.
+* [Build a chat Agent](/agents/getting-started/build-a-chat-agent/) using the Agents SDK and deploy it to Workers.
 * Learn more [using WebSockets](/agents/api-reference/websockets/) to build interactive Agents and stream data back from your Agent.
-* [Orchestrate asynchronous workflows](/agents/api-reference/run-workflows) from your Agent by combining the `agents-sdk` and [Workflows](/workflows).
+* [Orchestrate asynchronous workflows](/agents/api-reference/run-workflows) from your Agent by combining the Agents SDK and [Workflows](/workflows).

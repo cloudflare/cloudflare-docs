@@ -1,0 +1,70 @@
+---
+title: npm i agents
+description: Install the latest version of the `agents` SDK to build multi-agent applications, use the new RPC API, and visit the latest documentation updates.
+products:
+  - agents
+  - workers
+date: 2025-03-17T14:00:00Z
+---
+
+![npm i agents](~/assets/images/agents/npm-i-agents.apng)
+
+#### Multi-Agent applications and RPC
+
+We've added a number of big new features to the Agents SDK over the past few weeks, including:
+
+- TODO
+- TODO
+- TODO: the regular client now syncs state on the agent (just like the react version)
+- TODO: useAgentChat bug fixes for passing headers/credentials, properly clearing cache on unmount, etc
+- TODO: experiemental /schedule module with a prompt/schema for adding scheduling to your app (with evals!)
+
+We've also fixed a nubmer of bugs with state synchronization and the React hooks.
+
+### Call Agent methods from your client code
+
+We've added a new [`@callable` decorator](/agents/api-reference/client-api/) for defining methods that can be called directly from clients. This allows you call methods from within your client code: you can call methods (with arguments) and get native JavaScript objects back.
+
+<TypeScriptExample>
+
+```ts
+
+```
+
+</TypeScriptExample>
+
+#### agents-starter
+
+TODO
+
+- TODO
+- Upgraded to use the latest [wrangler v4](/changelog/2025-03-13-wrangler-v4/) release.
+- [Workers AI](/workers-ai/) is now the default AI provider in the [`agents-starter`](https://github.com/cloudflare/agents-starter) project: this uses the new [structured outputs](/changelog/2025-02-25-json-mode/) (or "JSON mode") support now in Workers AI and the [`workers-ai-provider`](https://sdk.vercel.ai/providers/community-providers/cloudflare-workers-ai#generateobject).
+
+#### More documentation
+
+We've contined to build out the Agents SDK documentation, including:
+
+- Expanded [API reference documentation](/agents/api-reference/), covering the methods and properties exposed by the Agents SDK, as well as more usage examples.
+- A new [Client API](/agents/api-reference/client-api/) reference that documents `useAgent`, `useAgentChat` and the new `@callable` decorator exposed by the SDK.
+- New documentation on how to [call agents](/agents/api-refererence/calling-agents/) and authenticate clients, using [Server-Sent Events (SSE)](/agents/api-refererence/http-sse/).
+
+#### `agents-sdk` -> `agents`
+
+We've also renamed the Agents package to just `agents` (it's cleaner). If you've already been building with the Agents SDK, you can update your dependencies to use the new package name:
+
+```sh
+# Remove the old (deprecated) package
+npm uninstall agents-sdk
+
+# Install the new package
+npm i agents
+
+# Find instances of the old package name in your codebase
+grep -r 'agents-sdk' .
+# Replace instances of the old package name with the new one
+# (or use find-replace in your editor)
+sed -i 's/agents-sdk/agents/g' $(grep -rl 'agents-sdk' .)
+```
+
+If you're still wondering what Agents are, [read our blog on building AI Agents on Cloudflare](https://blog.cloudflare.com/build-ai-agents-on-cloudflare/) and/or visit the [Agents documentation](/agents/) to learn more.
