@@ -7,7 +7,7 @@ product:
   additional_groups: [Storage]
 
 meta:
-  title: Cloudflare Workers KV
+  title: Cloudflare Workers KV docs
   description: Global, low-latency, key-value data store.
   author: "@cloudflare"
 

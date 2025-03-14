@@ -7,7 +7,7 @@ product:
   additional_groups: [Storage]
 
 meta:
-  title: Cloudflare Queues
+  title: Cloudflare Queues docs
   description: Reliably send and receive messages without the egress fees.
   author: "@cloudflare"
 

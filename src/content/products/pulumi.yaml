@@ -8,6 +8,6 @@ product:
   additional_groups: [Developer platform]
 
 meta:
-  title: Pulumi
+  title: Pulumi docs
   description: Create, deploy, and manage Cloudflare resources in various programming languages.
   author: "@cloudflare"
