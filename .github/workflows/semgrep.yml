@@ -1,4 +1,4 @@
-on:
++none
   workflow_dispatch: {}
   schedule:
     - cron: "0 4 * * *"
