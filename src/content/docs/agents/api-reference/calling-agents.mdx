@@ -59,6 +59,72 @@ export class MyAgent extends Agent<Env> {
 ```
 </TypeScriptExample>
 
+#### Calling methods directly
+
+When using `getAgentByName`, you can pass both requests (including WebSocket) connections and call methods defined directly on the Agent itself using the native [JavaScript RPC](/workers/runtime-apis/rpc/) (JSRPC) API.
+
+For example, once you have a handle (or "stub") to an unique instance of your Agent, you can call methods on it:
+
+<TypeScriptExample>
+
+```ts
+import { Agent, AgentNamespace, getAgentByName } from 'agents';
+
+interface Env {
+	// Define your Agent on the environment here
+	// Passing your Agent class as a TypeScript type parameter allows you to call
+	// methods defined on your Agent.
+	MyAgent: AgentNamespace<MyAgent>;
+}
+
+interface UserHistory {
+	history: string[];
+	lastUpdated: Date;
+}
+
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		let namedAgent = getAgentByName<Env, MyAgent>(env.MyAgent, 'my-unique-agent-id');
+		// Call methods directly on the Agent, and pass native JavaScript objects
+		let chatResponse = namedAgent.chat('Hello!');
+		// No need to serialize/deserialize it from a HTTP request or WebSocket
+		// message and back again
+		let agentState = getState() // agentState is of type UserHistory
+		return namedResp
+	},
+} satisfies ExportedHandler<Env>;
+
+export class MyAgent extends Agent<Env, UserHistory> {
+	// Your Agent implementation goes here
+	async chat(prompt: string) {
+		// call your favorite LLM
+		return "result"
+	}
+
+	async getState() {
+		// Return the Agent's state directly
+		return this.state;
+	}
+
+	// Other methods as you see fit!
+}
+```
+</TypeScriptExample>
+
+When using TypeScript, ensure you pass your Agent class as a TypeScript type parameter to the AgentNamespace type so that types are correctly inferred:
+
+```ts
+interface Env {
+	// Passing your Agent class as a TypeScript type parameter allows you to call
+	// methods defined on your Agent.
+	MyAgent: AgentNamespace<CodeReviewAgent>;
+}
+
+export class CodeReviewAgent extends Agent<Env, AgentState> {
+	// Agent methods here
+}
+```
+
 ### Naming your Agents
 
 When creating names for your Agents, think about what the Agent represents. A unique user? A team or company? A room or channel for collaboration?
