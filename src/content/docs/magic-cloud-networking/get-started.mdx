@@ -127,10 +127,11 @@ The first discovery of resources may not succeed in all regions, while the IAM p
 	- `Compute Viewer`
 3. Grant the **Service Account Token Creator** role to our bot account to allow it to impersonate this service account. Learn how to grant a specific role [in Google's documentation](https://cloud.google.com/iam/docs/manage-access-service-accounts#grant-single-role):
    - `mcn-integrations-bot-prod@mcn-gcp-01.iam.gserviceaccount.com`
-4. In **Provide the new service account email**, enter the email account that you used to create the GCP service account.
-5. In your newly created account, add the [values displayed on the dash](https://www.google.com/url?q=https://cloud.google.com/resource-manager/docs/creating-managing-labels%23create-labels&sa=D&source=docs&ust=1740049107852729&usg=AOvVaw2u7AYwBxhB39ojXesn7tlm).
-6. Select **I authorize Cloudflare to access my GCP account.** If your account does not have administrator privileges, you may need to pass this link to an account that has administrator privileges.
-7. Select **Authorize**.
+4. In the **service account email field**, enter the email account that you used to create the GCP service account.
+5. In the **Project ID field**, enter the [project ID](https://support.google.com/googleapi/answer/7014113?hl=en) associated with your project.
+6. [Add the label](https://cloud.google.com/resource-manager/docs/creating-managing-labels#create-labels) displayed on the dash to your project.
+7. Select **I authorize Cloudflare to access my GCP account.** If your account does not have administrator privileges, you may need to pass this link to an account that has administrator privileges.
+8. Select **Authorize**.
 
 You have successfully connected your cloud provider to Magic Cloud Networking. Cloud resources found by Magic Cloud Networking are available in the [Cloud resource catalog](/magic-cloud-networking/manage-resources/#cloud-resource-catalog).
 
