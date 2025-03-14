@@ -1,17 +1,17 @@
-name: Publish
-on:
++name: Publish
++none
   push:
     branches:
-      - production
+      + production
 
 jobs:
   publish:
-    name: Production
-    runs-on: ubuntu-22.04
+    +name: Production
+    +runs-on: ubuntu-22.04
     permissions:
-      contents: read
+     + contents: read
     steps:
-      - uses: actions/checkout@v4
+      + uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - uses: actions/setup-node@v4
@@ -21,7 +21,7 @@ jobs:
       - run: npm ci
       - uses: actions/cache/restore@v4
         with:
-          path: |
+         + path: |
             node_modules/.astro
           key: static
       - run: npm run build
@@ -30,7 +30,7 @@ jobs:
           NODE_OPTIONS: --max-old-space-size=4096
       - run: npx wrangler deploy
         name: Deploy to Cloudflare Workers
-        env:
+       + env: 
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       - uses: actions/cache/save@v4
         if: always()
@@ -38,3 +38,4 @@ jobs:
           path: |
             node_modules/.astro
           key: static
+          =====================================================================================================================
