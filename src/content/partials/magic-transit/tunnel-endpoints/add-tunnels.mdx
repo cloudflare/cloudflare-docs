@@ -5,8 +5,9 @@ params:
   - healthCheck
   - productPathProbe
   - antiReplayPagePath
-  - BiVsUniHealthCheck
+  - biVsUniHealthCheck
   - tunnelHealthDash
+  - biVsUniHealthCheckDefaults
 ---
 
 import { APIRequest, CURL, Details, Markdown, Render, TabItem, Tabs } from "~/components";
@@ -269,7 +270,7 @@ Create a `POST` request [using the API](/api/resources/magic_transit/subresource
 
 <Details header="Configure bidirectional health checks">
 
-Bidirectional health checks are available for GRE and IPsec tunnels. For Magic WAN this option defaults to bidirectional, while for Magic Transit it defaults to unidirectional.
+Bidirectional health checks are available for GRE and IPsec tunnels. {props.biVsUniHealthCheckDefaults}.
 
 You can enable bidirectional health checks via the API with `--data '{"health_check": {"direction": "bidirectional"}}'`. For example:
 
