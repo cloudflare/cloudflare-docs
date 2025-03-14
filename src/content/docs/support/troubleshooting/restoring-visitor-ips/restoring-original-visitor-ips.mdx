@@ -122,7 +122,7 @@ documentation](https://httpd.apache.org/docs/2.4/mod/mod_remoteip.html "Apache M
 Cloudflare no longer updates and supports _mod_cloudflare_, starting
 with versions **Debian 9** and **Ubuntu 18.04 LTS** of the Linux
 operating system. We now recommend
-[_mod_remoteip_](https://support.cloudflare.com/hc/articles/200170786#C5XWe97z77b3XZV)
+[_mod_remoteip_](https://httpd.apache.org/docs/2.4/mod/mod_remoteip.html)
 for customers using Apache web servers. Customers who are interested in
 building the _mod_cloudflare_ package can [download the
 codebase](https://github.com/cloudflare/mod_cloudflare) from GitHub.
@@ -181,7 +181,7 @@ Refer below for instructions on how to configure your web server to log origina
 Cloudflare no longer updates and supports _mod_cloudflare_, starting
 with versions **Debian 9** and **Ubuntu 18.04 LTS** of the Linux
 operating system. We now recommend
-[_mod_remoteip_](https://support.cloudflare.com/hc/articles/200170786#C5XWe97z77b3XZV)
+[_mod_remoteip_](https://httpd.apache.org/docs/2.4/mod/mod_remoteip.html)
 for customers using Apache web servers. Customers who are interested in
 building the _mod_cloudflare_ package can [download the
 codebase](https://github.com/cloudflare/mod_cloudflare) from GitHub.
@@ -238,7 +238,7 @@ Also refer to: [Cloudflare and NGINX](https://danielmiessler.com/blog/getting-r
 Cloudflare no longer updates and supports _mod_cloudflare_, starting
 with versions **Debian 9** and **Ubuntu 18.04 LTS** of the Linux
 operating system. We now recommend
-[_mod_remoteip_](https://support.cloudflare.com/hc/articles/200170786#C5XWe97z77b3XZV)
+[_mod_remoteip_](https://httpd.apache.org/docs/2.4/mod/mod_remoteip.html)
 for customers using Apache web servers. Customers who are interested in
 building the _mod_cloudflare_ package can [download the
 codebase](https://github.com/cloudflare/mod_cloudflare) from GitHub.
@@ -341,7 +341,7 @@ If your network environment means requests are handled through a proxy (such as 
 
 ### PHPBB
 
-If you are using an Apache server, then we would recommend installing [mod_remoteip](https://support.cloudflare.com/hc/articles/200170786#C5XWe97z77b3XZV) to restore the visitor IP back to your logs.
+If you are using an Apache server, then we would recommend installing [mod_remoteip](https://httpd.apache.org/docs/2.4/mod/mod_remoteip.html) to restore the visitor IP back to your logs.
 
 If you do not have access to your server to install a mod, then you may be able to [modify the core](https://www.phpbb.com/community/viewtopic.php?p=13936406#p13936406).
 
@@ -420,7 +420,7 @@ As this plugin was created by an outside party, we can't provide technical suppo
 
 If you use the hosting control panel VestaCP, you have both Nginx and Apache running on your server. Requests are proxied through Nginx before going to Apache.
 
-Because of this Nginx proxy, you actually need to the instructions to configure Nginx to return the real visitor IP address. [Mod_remoteip](https://support.cloudflare.com/hc/articles/200170786#C5XWe97z77b3XZV) for Apache is not needed unless you disable the Nginx server for some requests. Adding [mod_remoteip](https://support.cloudflare.com/hc/articles/200170786#C5XWe97z77b3XZV) to Apache will not conflict with the Nginx server configuration.
+Because of this Nginx proxy, you actually need to the instructions to configure Nginx to return the real visitor IP address. [mod_remoteip](https://httpd.apache.org/docs/2.4/mod/mod_remoteip.html) for Apache is not needed unless you disable the Nginx server for some requests. Adding [mod_remoteip](https://support.cloudflare.com/hc/articles/200170786#C5XWe97z77b3XZV) to Apache will not conflict with the Nginx server configuration.
 
 ### node.js
 
