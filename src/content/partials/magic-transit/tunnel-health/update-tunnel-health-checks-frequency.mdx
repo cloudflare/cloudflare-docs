@@ -47,6 +47,17 @@ You can adjust the health check frequency by updating your [GRE](/api/resources/
 
 Below is an example of how to adjust tunnel health check frequency to `low`. Note that this command applies to GRE, IPsec and CNI tunnels:
 
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{ipsec_tunnel_id}"
+	method="PUT"
+	json={{
+		"health_check":
+			{
+				"rate": "low"
+			}
+	}}
+/>
+
 ```bash
 curl --request PUT \
 https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/gre_tunnels/{tunnel_id} \
