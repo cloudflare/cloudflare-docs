@@ -93,10 +93,22 @@ export default {
 };
 ```
 
-
-
 </TypeScriptExample>
 
 ### WebSockets vs. Server-Sent Events
 
-TODO
+Both WebSockets and Server-Sent Events (SSE) enable real-time communication between clients and Agents. Agents built on the Agents SDK can expose both WebSocket and SSE endpoints directly.
+
+* WebSockets provide full-duplex communication, allowing data to flow in both directions simultaneously. SSE only supports server-to-client communication, requiring additional HTTP requests if the client needs to send data back.
+* WebSockets establish a single persistent connection that stays open for the duration of the session. SSE, being built on HTTP, may experience more overhead due to reconnection attempts and header transmission with each reconnection, especially when there is a lot of client-server communication.
+* While SSE works well for simple streaming scenarios, WebSockets are better suited for applications requiring minutes or hours of connection time, as they maintain a more stable connection with built-in ping/pong mechanisms to keep connections alive.
+* WebSockets use their own protocol (ws:// or wss://), separating them from HTTP after the initial handshake. This separation allows WebSockets to better handle binary data transmission and implement custom subprotocols for specialized use cases.
+
+If you're unsure of which is better for your use-case, we recommend WebSockets. The [WebSockets API documentation](/agents/api-reference/websockets/) provides detailed information on how to use WebSockets with the `agents-sdk`.
+
+### Next steps
+
+* Review the [API documentation](/agents/api-reference/agents-api/) for the Agents class to learn how to define
+* [Build a chat Agent](/agents/getting-started/build-a-chat-agent/) using the `agents-sdk` and deploy it to Workers.
+* Learn more [using WebSockets](/agents/api-reference/websockets/) to build interactive Agents and stream data back from your Agent.
+* [Orchestrate asynchronous workflows](/agents/api-reference/run-workflows) from your Agent by combining the `agents-sdk` and [Workflows](/workflows).

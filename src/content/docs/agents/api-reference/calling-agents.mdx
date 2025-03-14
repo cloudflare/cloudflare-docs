@@ -16,13 +16,12 @@ Agents are created on-the-fly and can serve multiple requests concurrently. Each
 
 <Render file="unique-agents" />
 
-You can create and run an instance of an Agent directly from a Worker in one of three ways:
+You can create and run an instance of an Agent directly from a Worker using either:
 
-1. Using the `routeAgentRequest` helper: this will automatically map requests to an individual Agent based on the `/agents/:agent/:name` URL pattern. The value of `:agent` will be the name of your Agent class converted to `kebab-case`, and the value of `:name` will be the name of the Agent instance you want to create or retrieve.
-2. Calling `getAgentByName`, which will create a new Agent instance if none exists by that name, or retrieve a handle to an existing instance.
-3. The [Durable Objects stub API](/durable-objects/api/id/), which provides a lower level API for creating and retrieving Agents.
+* The `routeAgentRequest` helper: this will automatically map requests to an individual Agent based on the `/agents/:agent/:name` URL pattern. The value of `:agent` will be the name of your Agent class converted to `kebab-case`, and the value of `:name` will be the name of the Agent instance you want to create or retrieve.
+* `getAgentByName`, which will create a new Agent instance if none exists by that name, or retrieve a handle to an existing instance.
 
-These three patterns are shown below: we recommend using either `routeAgentRequest` or `getAgentByName`, which help avoid some boilerplate.
+See the usage patterns in the following example:
 
 <TypeScriptExample>
 
@@ -41,23 +40,16 @@ export default {
 		// Routed addressing
 		// Automatically routes HTTP requests and/or WebSocket connections to /agents/:agent/:name
 		// Best for: connecting React apps directly to Agents using useAgent from agents-sdk/react
-		(await routeAgentRequest(request, env)) || Response.json({ msg: 'no agent here' }, { status: 404 });
+		return (await routeAgentRequest(request, env)) || Response.json({ msg: 'no agent here' }, { status: 404 });
 
 		// Named addressing
 		// Best for: convenience method for creating or retrieving an agent by name/ID.
+		// Bringing your own routing, middleware and/or plugging into an existing
+		// application or framework.
 		let namedAgent = getAgentByName<Env, MyAgent>(env.MyAgent, 'my-unique-agent-id');
 		// Pass the incoming request straight to your Agent
 		let namedResp = (await namedAgent).fetch(request);
-
-		// Durable Objects-style addressing
-		// Best for: controlling ID generation, associating IDs with your existing systems,
-		// and customizing when/how an Agent is created or invoked
-		const id = env.MyAgent.newUniqueId();
-		const agent = env.MyAgent.get(id);
-		// Pass the incoming request straight to your Agent
-		let resp = await agent.fetch(request);
-
-		return Response.json({ hello: 'visit https://developers.cloudflare.com/agents for more' });
+		return namedResp
 	},
 } satisfies ExportedHandler<Env>;
 
@@ -71,9 +63,19 @@ export class MyAgent extends Agent<Env> {
 
 When creating names for your Agents, think about what the Agent represents. A unique user? A team or company? A room or channel for collaboration?
 
-A consistent approach to naming allows you to direct incoming requests directly to the right Agent, and deterministically route new requests back to that Agent, no matter where the client is in the world. For a given Agent definition (or 'namespace' in the code below), there can be millions (or tens of millions) of instances of that Agent, each handling their own requests, making calls to LLMs, and maintaining their own state.
+A consistent approach to naming allows you to:
 
-For example, you might have an Agent for every user using your new AI-based code editor. In that case, you'd want to create Agents based on the user ID from your system, which would then allow that Agent to handle all requests for that user. It also ensures that [state within the Agent](/agents/api-reference/store-and-sync-state/), including chat history, language preferences, model configuration and other context can associated specifically with that user, making it easier to manage state.
+* direct incoming requests directly to the right Agent
+* deterministically route new requests back to that Agent, no matter where the client is in the world.
+* avoid having to rely on centralized session storage or external services for state management, since each Agent instance can maintain its own state.
+
+For a given Agent definition (or 'namespace' in the code below), there can be millions (or tens of millions) of instances of that Agent, each handling their own requests, making calls to LLMs, and maintaining their own state.
+
+For example, you might have an Agent for every user using your new AI-based code editor. In that case, you'd want to create Agents based on the user ID from your system, which would then allow that Agent to handle all requests for that user.
+
+It also ensures that [state within the Agent](/agents/api-reference/store-and-sync-state/), including chat history, language preferences, model configuration and other context can associated specifically with that user, making it easier to manage state.
+
+The example below shows how to create a unique agent Agent for each `userId` in a request:
 
 <TypeScriptExample>
 
@@ -101,6 +103,8 @@ export class MyAgent extends Agent<Env> {
 }
 ```
 </TypeScriptExample>
+
+Replace `userId` with `teamName`, `channel`, `companyName` as fits your Agents goals - and/or configure authentication to ensure Agents are only created for known, authenticated users.
 
 ### Authenticating Agents
 
