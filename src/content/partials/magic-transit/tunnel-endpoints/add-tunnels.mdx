@@ -272,7 +272,18 @@ Create a `POST` request [using the API](/api/resources/magic_transit/subresource
 
 Bidirectional health checks are available for GRE and IPsec tunnels. {props.biVsUniHealthCheckDefaults}.
 
-You can enable bidirectional health checks via the API with `--data '{"health_check": {"direction": "bidirectional"}}'`. For example:
+You can change this setting via the API with `"bidirectional"` or `"unidirectional"`:
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{ipsec_tunnel_id}"
+	method="PUT"
+	json={{
+		"health_check":
+			{
+				"direction": "bidirectional"
+			}
+	}}
+/>
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels \
