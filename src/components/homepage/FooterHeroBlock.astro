@@ -58,9 +58,7 @@ const blocks = [
 ] as const;
 ---
 
-<div
-	class="bleed flex items-start justify-between bg-gray-100 py-10 *:!mt-0 dark:bg-gray-800"
->
+<div class="flex items-start justify-between py-10 *:!mt-0">
 	{
 		blocks.map(({ title, text, links }) => (
 			<div>
@@ -84,19 +82,3 @@ const blocks = [
 		))
 	}
 </div>
-
-<style>
-	@tailwind utilities;
-
-	.bleed {
-		box-shadow: 0 0 0 100vmax theme(colors.gray.800);
-		clip-path: inset(0 -100vmax);
-	}
-
-	html[data-theme="light"] {
-		.bleed {
-			box-shadow: 0 0 0 100vmax theme(colors.gray.100);
-			clip-path: inset(0 -100vmax);
-		}
-	}
-</style>

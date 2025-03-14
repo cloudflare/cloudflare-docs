@@ -10,7 +10,7 @@ params:
   - tunnelEndpoints
 ---
 
-import { Aside, GlossaryTooltip, Markdown, AnchorHeading, Render, TabItem, Tabs } from "~/components";
+import { APIRequest, Aside, GlossaryTooltip, Markdown, AnchorHeading, Render, TabItem, Tabs } from "~/components";
 
 :::note
 If you are connecting to Cloudflare via a [Direct CNI connection](/network-interconnect/express-cni/), refer to <a href={props.BGPpath}>BGP peering</a> to learn how to take advantage of this [routing](https://www.cloudflare.com/learning/network-layer/what-is-routing/) protocol. If not, continue reading.
@@ -190,30 +190,63 @@ Create a `POST` request [using the API](/api/resources/magic_transit/subresource
 
 Example:
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/routes \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "routes": [
+<APIRequest
+  path="/accounts/{account_id}/magic/routes"
+  method="POST"
+  json={{
+		"nexthop": "<IP_NEXT_HOP>",
+		"prefix": "<YOUR_IP_PREFIX>",
+		"priority": 0,
+		"id": "023e105f4ecef8ad9ca31a8372d0c353",
+		"description": "<ROUTE_DESCRIPTION>",
+		"scope": {
+			"colo_names": [
+				"den01"
+			],
+			"colo_regions": [
+				"APAC"
+			]
+		},
+		"weight": 0
+  }}
+/>
+
+```json output
+{
+  "errors": [
     {
-      "description": "New route for new prefix",
-      "prefix": "<YOUR_IP_PREFIX>",
-      "nexthop": "<IP_NEXT_HOP>",
-      "priority": <PRIORITY>,
-      "scope": {
-        "colo_names": [
-          "<NAME_OF_CLOUDFLARE_SERVER>"
-        ],
-        "colo_regions": [
-          "<NAME_OF_REGION>"
-        ]
-      },
-      "weight": <WEIGHT>
+      "code": 1000,
+      "message": "message"
     }
-  ]
-}'
+  ],
+  "messages": [
+    {
+      "code": 1000,
+      "message": "message"
+    }
+  ],
+  "result": {
+    "routes": [
+      {
+        "nexthop": "203.0.113.1",
+        "prefix": "192.0.2.0/24",
+        "priority": 0,
+        "id": "023e105f4ecef8ad9ca31a8372d0c353",
+        "description": "New route for new prefix 203.0.113.1",
+        "scope": {
+          "colo_names": [
+            "den01"
+          ],
+          "colo_regions": [
+            "APAC"
+          ]
+        },
+        "weight": 0
+      }
+    ]
+  },
+  "success": true
+}
 ```
 
 </TabItem> </Tabs>
@@ -231,35 +264,66 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/routes \
 
 <Render file="connector/account-id-api-key" product="magic-wan" />
 
-Create a `PUT` request [using the API](/api/resources/magic_transit/subresources/routes/methods/bulk_update/) to update one or more static routes.
+Create a `PUT` request [using the API](/api/resources/magic_transit/subresources/routes/methods/update/) to update one or more static routes.
 
 Example:
 
-```bash
-curl --request PUT \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/routes \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "routes": [
+<APIRequest
+  path="/accounts/{account_id}/magic/routes/{route_id}"
+  method="PUT"
+  json={{
+		"nexthop": "<IP_NEXT_HOP>",
+		"prefix": "<YOUR_IP_PREFIX>",
+		"priority": 0,
+		"id": "023e105f4ecef8ad9ca31a8372d0c353",
+		"description": "<ROUTE_DESCRIPTION>",
+		"scope": {
+			"colo_names": [
+				"den01"
+			],
+			"colo_regions": [
+				"APAC"
+			]
+		},
+		"weight": 0
+  }}
+/>
+
+```json output
+{
+  "errors": [
     {
-      "description": "New route for new prefix",
-      "nexthop": "<IP_NEXT_HOP>",
-      "prefix": "<YOUR_IP_PREFIX>",
-      "priority": <PRIORITY>,
+      "code": 1000,
+      "message": "message"
+    }
+  ],
+  "messages": [
+    {
+      "code": 1000,
+      "message": "message"
+    }
+  ],
+  "result": {
+    "modified": true,
+    "modified_route": {
+      "nexthop": "203.0.113.1",
+      "prefix": "192.0.2.0/24",
+      "priority": 0,
+      "id": "023e105f4ecef8ad9ca31a8372d0c353",
+      "description": "New route for new prefix 203.0.113.1",
       "scope": {
         "colo_names": [
-          "<NAME_OF_CLOUDFLARE_SERVER>"
+          "den01"
         ],
         "colo_regions": [
-          "<NAME_OF_REGION>"
+          "APAC"
         ]
       },
-      "weight": <WEIGHT>
+      "weight": 0
     }
-  ]
-}'
+  },
+  "success": true
+}
 ```
 
 </TabItem> </Tabs>
@@ -279,11 +343,46 @@ Create a `DELETE` request [using the API](/api/resources/magic_transit/subresour
 
 Example:
 
-```bash
-curl --request DELETE \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/routes/{route_id} \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>"
+<APIRequest
+  path="/accounts/{account_id}/magic/routes/{route_id}"
+  method="DELETE"
+/>
+
+```json output
+{
+  "errors": [
+    {
+      "code": 1000,
+      "message": "message"
+    }
+  ],
+  "messages": [
+    {
+      "code": 1000,
+      "message": "message"
+    }
+  ],
+  "result": {
+    "deleted": true,
+    "deleted_route": {
+      "nexthop": "203.0.113.1",
+      "prefix": "192.0.2.0/24",
+      "priority": 0,
+      "id": "023e105f4ecef8ad9ca31a8372d0c353",
+      "description": "New route for new prefix 203.0.113.1",
+      "scope": {
+        "colo_names": [
+          "den01"
+        ],
+        "colo_regions": [
+          "APAC"
+        ]
+      },
+      "weight": 0
+    }
+  },
+  "success": true
+}
 ```
 
 </TabItem> </Tabs>

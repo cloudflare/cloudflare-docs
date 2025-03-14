@@ -4,7 +4,9 @@ styleGuide:
   component: DirectoryListing
 ---
 
-Use `<DirectoryListing />` to display the directory of a specific folder, which appears as a list of links.
+import { Render } from "~/components";
+
+<Render file="directory-listing-definition" />
 
 We also have an optional `descriptions` parameter which - if present - adds in the text from the [front matter `description`](/style-guide/frontmatter/) field.
 
@@ -13,3 +15,7 @@ import { DirectoryListing } from "~/components";
 
 <DirectoryListing folder="workers/wrangler" descriptions />
 ```
+
+## Associated content types
+
+- [Navigation](/style-guide/documentation-content-strategy/content-types/navigation/)

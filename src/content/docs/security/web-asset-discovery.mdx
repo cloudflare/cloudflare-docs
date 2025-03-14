@@ -1,0 +1,77 @@
+---
+title: Web asset discovery
+pcx_content_type: concept
+sidebar:
+  order: 4
+description: Discover web assets such as your API endpoints and instruct Cloudflare how to best protect them.
+---
+
+Discover web assets such as your API endpoints and instruct Cloudflare how to best protect them.
+
+## Endpoints
+
+Use the **Endpoints** tab to manage endpoints available on your domain and monitor their health.
+
+You can save endpoints directly from [API Discovery](/api-shield/security/api-discovery/), [manually](/api-shield/management-and-monitoring/#add-endpoints-manually) by method, path, and host, or via [Schema Validation](/api-shield/management-and-monitoring/#add-endpoints-from-schema-validation).
+
+This will add the specified endpoints to your list of managed endpoints. You can view your list of managed endpoints in the **Endpoints** tab.
+
+Cloudflare will start collecting [performance data](/api-shield/management-and-monitoring/#endpoint-analysis) on your endpoint when you save an endpoint.
+
+For more information on how to manage your endpoints, refer to the following resources.
+
+- [Endpoint Management](/api-shield/management-and-monitoring/)
+- [Endpoint schema learning](/api-shield/management-and-monitoring/#endpoint-schema-learning)
+- [Endpoint Analysis](/api-shield/management-and-monitoring/#endpoint-analysis)
+
+## Discovery
+
+**Discovery** continuously finds your active API endpoints via path normalization.
+
+[Add endpoints](/api-shield/management-and-monitoring/#add-endpoints-from-api-discovery) to produce recommendations and analytics of your APIs. Your [session identifiers](/api-shield/management-and-monitoring/session-identifiers/) must match your API traffic. Otherwise, API endpoints are also discoverable via [Machine Learning](/api-shield/security/api-discovery/#machine-learning-based-discovery).
+
+## Sequences
+
+Use **Sequences** to discover how users interact with your API, by tracking the order of API session requests over time. Sequences will group and highlight popular user journeys across your API.
+
+Once you configure [session identifiers](/api-shield/management-and-monitoring/session-identifiers/), the **Sequences** tab will start grouping and highlighting important user journeys (sequences) across your API.
+
+To configure session identifiers, go to **Security** > **Settings** > **All settings** tab and select **Edit** next to **Session identifiers**.
+
+For more information on how Cloudflare identifies API sequences and how you can configure API sequence rules, refer to the following resources:
+
+- [Sequence analytics](/api-shield/security/sequence-analytics/)
+- [Sequence mitigation](/api-shield/security/sequence-mitigation/)
+
+:::note
+The **Sequences** tab includes functionality available in [API Shield](/api-shield/) in the previous dashboard navigation structure.
+:::
+
+## Schema validation
+
+Use **Schema validation** to check if your incoming traffic complies with a previously supplied API Schema.
+
+API Schemas are defined by the validity of the API request's properties such as target endpoint, path or query variable format, and HTTP method. A rule is created for incoming traffic and defines which traffic is allowed and which traffic is logged or blocked based on the API schema that you provide or select from the list of learned schemas.
+
+You can add schema validation by:
+
+- [Uploading a schema](/api-shield/security/schema-validation/#add-validation-by-uploading-a-schema)
+- [Applying a learned schema to a single endpoint](/api-shield/security/schema-validation/#add-validation-by-applying-a-learned-schema-to-a-single-endpoint)
+- [Applying a learned schema to an entire hostname](/api-shield/security/schema-validation/#add-validation-by-applying-a-learned-schema-to-an-entire-hostname)
+- [Adding a fallthrough rule](/api-shield/security/schema-validation/#add-validation-by-adding-a-fallthrough-rule)
+
+:::note
+The **Schema validation** tab includes functionality available in [API Shield](/api-shield/) in the previous dashboard navigation structure.
+:::
+
+## Client-side resources
+
+Use **Client-side resources** to [monitor scripts, connections, and cookies](/page-shield/detection/monitor-connections-scripts/) on your domain.
+
+If you notice unexpected scripts or connections on the dashboard, check them for signs of malicious activity. You should also check for any new or unexpected cookies.
+
+Enterprise customers with a paid add-on will have their connections and scripts [classified as potentially malicious](/page-shield/how-it-works/malicious-script-detection/) based on threat feeds.
+
+:::note
+The **Client-side resources** tab includes functionality available in [Page Shield](/page-shield/) in the previous dashboard navigation structure.
+:::

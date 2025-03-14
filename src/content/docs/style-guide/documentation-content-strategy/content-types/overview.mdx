@@ -4,6 +4,8 @@ title: Overview
 
 ---
 
+import { Render } from "~/components";
+
 ## Purpose
 
 The purpose of a landing page is to welcome users and provide an overview of the product.
@@ -14,9 +16,17 @@ Accessible, welcoming, conversational, outspoken
 
 ## content\_type
 
-`overview`
+```yaml
+pcx_content_type: overview
+```
+
+For more details, refer to [`pcx_content_type`](/style-guide/frontmatter/custom-properties/#pcx_content_type).
 
 ## Structure
+
+### Most used components
+
+- [`PublicStats`](/style-guide/components/public-stats/): <Render file="public-stats-definition" />
 
 ### Required components
 
@@ -99,7 +109,7 @@ Description of external resource related to current product.
 
 ## Additional Information
 
-Overview pages are the default "first" page in any nested navigation. In some cases, to ensure good information architecture and navigability, you may need to rename or remove overview pages. 
+Overview pages are the default "first" page in any nested navigation. In some cases, to ensure good information architecture and navigability, you may need to rename or remove overview pages.
 
 ### When to consider removing an verview page
 

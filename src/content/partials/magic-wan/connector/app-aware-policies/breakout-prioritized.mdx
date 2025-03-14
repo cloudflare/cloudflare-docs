@@ -1,0 +1,192 @@
+---
+params:
+  - magicWord
+  - featureName
+  - whatHappensApp
+  - jsonType
+---
+
+import { APIRequest, Aside, AnchorHeading, Render, TabItem, Tabs } from "~/components";
+
+{ props.magicWord === "breakout" && (
+	<>
+		<p>Breakout traffic allows you to define which applications should bypass Cloudflare's security filtering, and go directly to the Internet. It works via DNS requests inspection. This means that if your network is caching DNS requests, Breakout traffic will only take effect after you cache entries expire and your client issues a new DNS request that the Magic WAN Connector can detect. This can take several minutes.</p>
+		<Aside type="caution">Breakout traffic will not work for applications that use DNS-over-HTTPS.</Aside>
+	</>
+	)
+}
+
+{ props.magicWord === "prioritized" && (
+	<>
+		<p>Prioritized traffic allows you to define which applications Magic WAN Connector should process first. Applications not in the list will be queued behind prioritized traffic.</p>
+		<p>Similarly to breakout traffic, prioritized traffic also works via DNS requests inspection.</p>
+		<Aside type="caution">Prioritized traffic will not work for applications that use DNS-over-HTTPS.</Aside>
+	</>
+	)
+}
+
+{ props.magicWord === "breakout" && (
+	<>
+		<pre class="mermaid">
+			{`
+			flowchart LR
+			accTitle: In this example, the applications go directly to the Internet, skipping Cloudflare's security. filtering
+			a(Magic WAN Connector) --> b(Cloudflare) -->|Filtered traffic|c(Internet)
+
+			a-- Breakout traffic ---d(Application1) & e(Application2) --> c
+
+			classDef orange fill:#f48120,color: black
+			class a,b orange
+			`}
+		</pre>
+		<p><em>In the graph above, Applications 1 and 2 are configured to bypass Cloudflare's security filtering, and go straight to the Internet</em></p>
+		<Aside type="note" header="A note on security">
+		<p>We recommend <a href="https://www.cloudflare.com/learning/network-layer/what-is-routing/" target="_blank" rel="noopener noreferrer">routing</a> all traffic through our global network for comprehensive security filtering and access controls. However, there may be specific cases where you want a subset of traffic to bypass Cloudflare's security filtering and route it directly to the Internet. You can scope this breakout traffic to specific applications from the Cloudflare dashboard.</p>
+		<p>Refer to <a href="/magic-wan/reference/traffic-steering/">Traffic steering</a> to learn how Cloudflare routes traffic.</p>
+		</Aside>
+	</>
+	)
+}
+
+## Add an application
+
+You need to configure {props.featureName} for each of your existing sites, as it is a per-site configuration.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+2. Select **Magic WAN** > **Connector on-ramps (beta)**.
+3. Select the Connector you want to configure > **Edit**.
+4. Select **Traffic Steering**.
+5. In **{props.featureName}**, select **Add**.
+6. Select one or more applications that should bypass Cloudflare filtering from the list. You can also use the search box.
+7. Select **Add applications**.
+
+The traffic for the application you chose {props.whatHappensApp}.
+
+</TabItem> <TabItem label="API">
+
+<Render file="connector/account-id-api-key" />
+
+1. Send a `GET` [request](/api/resources/magic_transit/subresources/apps/methods/list/) to list the applications associated with an account.
+
+	<APIRequest
+	path="/accounts/{account_id}/magic/apps"
+	method="GET"
+	/>
+
+	```json output
+		{
+			"result": [
+				{
+					"managed_app_id": "<APP_ID>",
+					"name": "<APP_NAME>",
+					"type": "File Sharing",
+					"hostnames": [
+						"<app_name.com>",
+						"<app-name.info>"
+					]
+				}
+			]
+		}
+	```
+
+	Take note of the `"managed_app_id"` value for any application you want to add.
+
+2.  Send a [`POST` request](/api/resources/magic_transit/subresources/apps/methods/create/) to add new apps to the breakout traffic policy.
+
+	<APIRequest
+	path="/accounts/{account_id}/magic/apps"
+	method="POST"
+	json={{
+		"name": "<MANAGED_APP_ID>",
+    "type": "<BREAKOUT_OR_PRIORITY>"
+	}}
+	/>
+
+	```json output
+	{
+		"result": {
+			"account_app_id": "<APP_ID>",
+			"name": "<APP_NAME>",
+			"type": "<BREAKOUT_OR_PRIORITY>"
+		},
+		"success": true,
+		"errors": [],
+		"messages": []
+	}
+	```
+
+</TabItem> </Tabs>
+
+## Delete an application
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+2. Select **Magic WAN** > **Connector on-ramps (beta)**.
+3. Select the Connector you want to configure > **Edit**.
+4. Select **Traffic Steering**.
+5. In **{props.featureName}**, find the application you want to delete, and select the **three dots** next to it.
+6. Select **Remove**.
+7. (Optional) If you have several pages of applications, you can use the search box to quickly find the application you are looking for.
+
+</TabItem> <TabItem label="API">
+
+<Render file="connector/account-id-api-key" />
+
+1. Send a [`GET` request](/api/resources/magic_transit/subresources/apps/methods/list/) to list the applications associated with a site.
+
+	<APIRequest
+	path="/accounts/{account_id}/magic/apps"
+	method="GET"
+	/>
+
+	```json output
+		{
+			"result": [
+				{
+					"managed_app_id": "<APP_ID>",
+					"name": "<APP_NAME>",
+					"type": "File Sharing",
+					"hostnames": [
+						"<app_name.com>",
+						"<app-name.info>"
+					]
+				}
+			]
+		}
+	```
+
+	Take note of the `"account_app_id"` value for the application that want to delete.
+
+2. Send a [`DELETE` request](/api/resources/magic_transit/subresources/apps/methods/delete/) to delete an application from the breakout traffic policy.
+
+	<APIRequest
+	path="/accounts/{account_id}/magic/apps/{account_app_id}"
+	method="DELETE"
+	/>
+
+	```json output
+	{
+		"result": {
+			"account_app_id": "<APP_ID>",
+			"name": "<APP_NAME>",
+			"type": "<BREAKOUT_OR_PRIORITY>"
+		},
+		"success": true,
+		"errors": [],
+		"messages": []
+	}
+	```
+
+</TabItem> </Tabs>
+
+{ props.magicWord === "breakout" && (
+	<>
+	<AnchorHeading title="WARP traffic" depth={2} />
+		<Render file="connector/app-aware-policies/warp-traffic" />
+	</>
+	)
+}
+

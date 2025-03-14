@@ -12,9 +12,3 @@ meta:
   description: Cloudflare Fundamentals provides information about features that
     span Cloudflare products.
   author: "@cloudflare"
-
-externals:
-  - title: How Cloudflare works
-    url: /fundamentals/concepts/how-cloudflare-works/
-  - title: Cloudflare homepage
-    url: https://cloudflare.com

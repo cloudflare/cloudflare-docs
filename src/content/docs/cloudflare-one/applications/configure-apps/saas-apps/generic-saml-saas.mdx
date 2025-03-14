@@ -100,7 +100,7 @@ To send additional SAML attributes to your SaaS application, configure the follo
 			- `URI`: Name is in a format such as `urn:ietf:params:scim:schemas:core:2.0:User:userName` or `urn:oid:2.5.4.42`.
 			- `Basic`: Name is a normal string such as `userName`.
 	- **IdP claim**: The identity provider value that should map to this SAML attribute. You can select any [SAML attribute](/cloudflare-one/identity/idp-integration/generic-saml/#saml-headers-and-attributes) or [OIDC claim](/cloudflare-one/identity/idp-integration/generic-oidc/#oidc-claims) that was configured in a Zero Trust IdP integration.
-	- **Required**: If a claim is marked as required but is not provided by an IdP, Cloudflare will fail the authentication request and show an error page.
+	- **Required**: If an attribute is marked as required but is not provided by an IdP, Cloudflare will fail the authentication request and show an error page.
 	- **Add per IdP claim**: (Optional) If you turned on multiple identity providers for the SaaS application, you can choose different attribute mappings for each IdP. These values will override the parent **IdP claim**.
 
 ### JSONata transforms

@@ -5,6 +5,24 @@ productLink: "/fundamentals/"
 productArea: Core platform
 productAreaLink: /fundamentals/reference/changelog/platform/
 entries:
+  - publish_date: "2025-03-11"
+    title: "Cloudflare Radar: Layer 7 attack magnitude parameter"
+    description: |-
+      Deprecation date: March 11, 2025
+
+      End of life date: June 11, 2025
+
+      The layer 7 attack `magnitude` query parameter, which allows you to define attack magnitude by total requests mitigated (`MITIGATED_REQUESTS`) or total zones attacked (`AFFECTED_ZONES`), is deprecated.
+      Moving forward, Cloudflare Radar will only support defining layer 7 attack magnitude based on the total number of mitigated requests.
+
+      Affected API:
+
+      `GET /radar/attacks/layer7/top/attacks`
+
+      Replacement:
+
+      Users should stop using the `magnitude` parameter, as the default behavior already uses `MITIGATED_REQUESTS`.
+
   - publish_date: "2025-07-01"
     title: Cloudflare DWeb Resolver
     description: |-
@@ -191,27 +209,27 @@ entries:
 
       The following URL parameters for filtering DNS records are deprecated:
 
-      - `name=contains:value`  
+      - `name=contains:value`
         Instead, use the supported `name.contains=value` syntax.
-      - `name=starts_with:value`  
+      - `name=starts_with:value`
         Instead, use the supported `name.startswith=value` syntax.
-      - `name=ends_with:value`  
+      - `name=ends_with:value`
         Instead, use the supported `name.endswith=value` syntax.
-      - `name=one,two,three` (searching for one of multiple possible names, separated by commas)  
+      - `name=one,two,three` (searching for one of multiple possible names, separated by commas)
         Instead, make multiple requests, one for each possible `name`.
         Alternatively, if only querying the `name` field, the `?match=any&name=one&name=two&name=three` syntax can be used instead.
         This syntax has an extended deprecation date of May 23, 2025.
-      - `content=contains:value`  
+      - `content=contains:value`
         Instead, use the supported `content.contains=value` syntax.
-      - `content=starts_with:value`  
+      - `content=starts_with:value`
         Instead, use the supported `content.startswith=value` syntax.
-      - `content=ends_with:value`  
+      - `content=ends_with:value`
         Instead, use the supported `content.endswith=value` syntax.
-      - `content=one,two,three` (searching for one of multiple possible contents, separated by commas)  
+      - `content=one,two,three` (searching for one of multiple possible contents, separated by commas)
         Instead, make multiple requests, one for each possible `content`.
         Alternatively, if only querying the `content` field, the `?match=any&content=one&content=two&content=three` syntax can be used instead.
         This syntax has an extended deprecation date of May 23, 2025.
-      - `type=contains:value`  
+      - `type=contains:value`
         Searching for substrings of a type name will no longer be supported.
         Instead, please search for an exact type name, such as `type=CNAME`.
         If the input value is a free-text search from a human user, consider using the `search` parameter instead.

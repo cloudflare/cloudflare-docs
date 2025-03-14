@@ -18,6 +18,8 @@ Egress policies allow you to control which dedicated egress IP is used and when,
 
 Cloudflare does not publish WARP egress IP ranges. WARP egress IPs are not documented at [Cloudflare's IP Ranges](https://cloudflare.com/ips). To obtain a dedicated WARP egress IP, contact your account team.
 
+<Render file="gateway/terraform-precedence-warning" product="cloudflare-one" />
+
 ## Force IP version
 
 To control whether only IPv4 or IPv6 is used to egress, ensure you are [filtering DNS traffic](/cloudflare-one/policies/gateway/initial-setup/dns/), then create a DNS policy to [block AAAA or A records](/cloudflare-one/policies/gateway/dns-policies/common-policies/#control-ip-version).

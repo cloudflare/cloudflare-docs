@@ -5,6 +5,10 @@ productLink: "/workers/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-02-28"
+    description: |-
+      - Updated v8 to version 13.4.
+      - When using `nodejs_compat`, the new `nodejs_compat_populate_process_env` compatibility flag will cause `process.env` to be automatically populated with text bindings configured for the worker.
   - publish_date: "2025-02-26"
     description: |-
       - [Workers Builds](/workers/ci-cd/builds/) now supports building projects that use **pnpm 10** as the package manager. If your build previously failed due to this unsupported version, retry your build. No config changes needed.

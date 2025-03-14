@@ -11,7 +11,3 @@ meta:
   title: Cloudflare Web Analytics docs
   description: Cloudflare Web Analytics helps you understand the performance of your web pages as experienced by your site visitors.
   author: "@cloudflare"
-
-externals:
-  - title: Cloudflare homepage
-    url: https://cloudflare.com

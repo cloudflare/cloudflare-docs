@@ -9,7 +9,7 @@ import { Render } from "~/components";
 
 Specify model or provider fallbacks with your [Universal endpoint](/ai-gateway/providers/universal/) to handle request failures and ensure reliability.
 
-Cloudflare can trigger your fallback provider in response to [request errors](#request-failures) or [predetermined request timeouts](#request-timeouts). The [response header `cf-aig-step`](#response-headercf-aig-step) indicates which step successfully processed the request.
+Cloudflare can trigger your fallback provider in response to [request errors](#request-failures) or [predetermined request timeouts](/ai-gateway/configuration/request-handling#request-timeouts). The [response header `cf-aig-step`](#response-headercf-aig-step) indicates which step successfully processed the request.
 
 ## Request failures
 

@@ -35,7 +35,7 @@ https://example.com/cdn-cgi/media/<OPTIONS>/<SOURCE-VIDEO>
 - `example.com`: Your website or zone on Cloudflare, with Transformations enabled.
 - `/cdn-cgi/media/`: A prefix that identifies a special path handled by Cloudflare's built-in media transformation service.
 - `<OPTIONS>`: A comma-separated list of options. Refer to the available options below.
-- `<SOURCE-VIDEO>`: An absolute path on the origin server or a full URL (starting with `https://` or `http://`) of the original asset to resize.
+- `<SOURCE-VIDEO>`: A full URL (starting with `https://` or `http://`) of the original asset to resize.
 
 For example, this URL will source an HD video from an R2 bucket, shorten it, crop and resize it as a square, and remove the audio.
 

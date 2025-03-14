@@ -1,0 +1,35 @@
+---
+title: Customize cipher suites via dashboard
+pcx_content_type: how-to
+sidebar:
+  order: 1
+  label: Use the dashboard
+---
+
+import { Render, Details } from "~/components";
+
+<Render file="cipher-suites-definition" />
+
+When configuring cipher suites via dashboard, you can use three different selection modes:
+
+- **By security level**: allows you to select between the predefined [Cloudflare recommendations](/ssl/edge-certificates/additional-options/cipher-suites/recommendations/) (Modern, Compatible, or Legacy).
+- **By compliance standard**: allows you to select cipher suites grouped according to [industry standards](/ssl/edge-certificates/additional-options/cipher-suites/compliance-status/) (PCI DSS or FIPS-140-2).
+- **Custom**: allows you to individually select the cipher suites you would like to support.
+
+For any of the modes, you should keep in mind the following configuration conditions. If using the **security level** or the **compliance standard** mode, some actions may be blocked and explained referencing these conditions.
+
+<Details header="Configuration conditions">
+* Cipher suites are used in combination with other [SSL/TLS settings](/ssl/edge-certificates/additional-options/cipher-suites/#related-ssltls-settings).
+* You cannot set specific TLS 1.3 ciphers. Instead, you can [enable TLS 1.3](/ssl/edge-certificates/additional-options/tls-13/#enable-tls-13) for your entire zone and Cloudflare will use all applicable [TLS 1.3 cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/supported-cipher-suites/).
+* Each cipher suite also supports a specific algorithm (RSA or ECDSA), so you should consider the algorithms in use by your edge certificates when making your ciphers selection. You can find this information under each certificate listed in [**SSL/TLS** > **Edge Certificates**](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates).
+* It is not possible to configure minimum TLS version nor cipher suites for [Cloudflare Pages](/pages/) hostnames.
+</ Details>
+
+## Steps
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
+2. Go to **SSL/TLS** > **Edge Certificates**.
+3. For the **Cipher suites** setting select **Configure**.
+4. Choose a mode to select your cipher suites and select **Next**.
+5. Select a predefined set of cipher suites or, if you opted for **Custom**, specify which cipher suites you want to allow. Make sure you are aware of how your selection will interact with Minimum TLS version, TLS 1.3, and the certificate algorithm (ECDSA or RSA).
+6. Select **Save** to confirm.

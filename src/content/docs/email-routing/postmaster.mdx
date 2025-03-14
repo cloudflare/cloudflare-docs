@@ -28,17 +28,22 @@ The best way to contact us is using our [community forum](https://community.clou
 
 Through this standard, the sender publishes its public key to a domain's DNS once, and then signs the body of each message before it leaves the server. The recipient server reads the message, gets the domain public key from the domain's DNS, and validates the signature to ensure the message was not altered in transit.
 
-Email Routing signs email on behalf of `email.cloudflare.net`. If the sender did not sign the email, the receiver will likely use Cloudflare's signature for authentication.
+Email Routing adds two new signatures to the emails in transit, one on behalf of the Cloudflare domain used for sender rewriting `email.cloudflare.net`, and another one on behalf of the customer's recipient domain.
 
 Below is the DKIM key for `email.cloudflare.net`:
 
 ```sh
-dig TXT 2022._domainkey.email.cloudflare.net +short
+dig TXT cf2024-1._domainkey.email.cloudflare.net +short
 ```
 
 ```sh output
+"v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAiweykoi+o48IOGuP7GR3X0MOExCUDY/BCRHoWBnh3rChl7WhdyCxW3jgq1daEjPPqoi7sJvdg5hEQVsgVRQP4DcnQDVjGMbASQtrY4WmB1VebF+RPJB2ECPsEDTpeiI5ZyUAwJaVX7r6bznU67g7LvFq35yIo4sdlmtZGV+i0H4cpYH9+3JJ78k" "m4KXwaf9xUJCWF6nxeD+qG6Fyruw1Qlbds2r85U9dkNDVAS3gioCvELryh1TxKGiVTkg4wqHTyHfWsp7KD3WQHYJn0RyfJJu6YEmL77zonn7p2SRMvTMP3ZEXibnC9gz3nnhR6wcYL8Q7zXypKTMD58bTixDSJwIDAQAB"
+```
 
-"v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnraPy1d8e6+lzeE1HIoUvYWoAOUSREkNHcwxA/ueVM8f6FKXvPu/9gVpgkn8iUyaCfk2z1MW+OVLuFeH64YRMa39mkaQalgke2tZ05SnjRUtYEHYvfrqPuMT+Ouk+GecpgvrtMq5gMXm6ZfeUhQkdWxmMQJGf4fdW5I0piUQJMhK/Qc1dNRSskk" "TiUtXKnsEdjTN2xcnHhyj985S0xOEAxm9Uj1rykPqVvKpqEdjUkujbXOwR0KmHTvPyFpBjCCfxAVqOwwo9zBYuvk/nh0qlDgLIpy0SimrYhNFCq2XBxIj4tdUzIl7qZ5Ck6zLCQ+rjzJ4sm/zA+Ov9kDkbcmyrwIDAQAB"
+You can find the DKIM key for the customer's `example.com` domain by querying the following:
+
+```sh
+dig TXT cf2024-1._domainkey.example.com +short
 ```
 
 ### DMARC enforcing
@@ -88,14 +93,34 @@ example.com. 300 IN TXT "v=spf1 include:_spf.mx.cloudflare.net ~all"
 
 [The MX (mail exchange) records](https://www.cloudflare.com/learning/dns/dns-records/dns-mx-record/) tell the Internet where the inbound servers receiving email messages for the zone are. In this case, anyone who wants to send an email to `example.com` can use the `amir.mx.cloudflare.net`, `linda.mx.cloudflare.net`, or `isaac.mx.cloudflare.net` SMTP servers.
 
+### Outbound prefixes
+
+Email Routing sends its traffic using both IPv4 and IPv6 prefixes, when supported by the upstream SMTP server.
+
+If you are a postmaster and are having trouble receiving Email Routing's emails, allow the following outbound IP addresses in your server configuration:
+
+**IPv4**
+
+`104.30.0.0/19`
+
+**IPv6**
+
+`2405:8100:c000::/38`
+
+_Ranges last updated: December 13th, 2023_
+
 ### Outbound hostnames
 
-In addition to the outbound prefixes, Email Routing will use the domain `email.cloudflare.net` for the `HELO/EHLO` command.
+In addition to the outbound prefixes, Email Routing will use the following outbound domains for the `HELO/EHLO` command:
+
+- `cloudflare-email.net`
+- `cloudflare-email.org`
+- `cloudflare-email.com`
 
 PTR records (reverse DNS) ensure that each hostname has an corresponding IP. For example:
 
 ```sh
-dig a0-7.email.cloudflare.net +short
+dig a-h.cloudflare-email.net +short
 ```
 
 ```sh output
@@ -107,24 +132,8 @@ dig -x 104.30.0.7 +short
 ```
 
 ```sh output
-a0-7.email.cloudflare.net.
+a-h.cloudflare-email.net.
 ```
-
-### Outbound prefixes
-
-Email Routing sends its traffic using both IPv4 and IPv6 prefixes, when supported by the upstream SMTP server.
-
-If you are a postmaster and are having trouble receiving Email Routing's emails, allow the following outbound IP addresses in your server configuration:
-
-**IPv4**
-
-`104.30.0.0/20`
-
-**IPv6**
-
-`2405:8100:c000::/38`
-
-_Ranges last updated: December 13th, 2023_
 
 ### Sender rewriting
 
@@ -136,13 +145,26 @@ This has no effect to the end user's experience, though. The message headers wil
 
 In most cases, Email Routing forwards the upstream SMTP errors back to the sender client in-session.
 
-### Spam and abusive traffic
+### Realtime Block Lists
 
-Handling spam and abusive traffic is essential to any email provider. Email Routing filters emails based on advanced anti-spam criteria, [powered by Email Security (formerly Area 1)](/email-security/). When Email Routing detects and blocks a spam email, you will receive a message with details explaining what happened. For example:
+Email Routing uses an internal Domain Name System Blocklists (DNSBL) service to check if the sender's IP is present in one or more Realtime Block Lists (RBL) lists. When the system detects an abusive IP, it blocks the email and returns an SMTP error:
 
 ```txt
-554 <YOUR_IP_ADDRESS> found on one or more DNSBLs (abusixip). Refer to https://developers.cloudflare.com/email-routing/postmaster/#spam-and-abusive-traffic/
+554 <YOUR_IP_ADDRESS> found on one or more RBLs (abusixip). Refer to https://developers.cloudflare.com/email-routing/postmaster/#spam-and-abusive-traffic/
 ```
+We update our RBLs regularly. You can use combined block list lookup services like [MxToolbox](https://mxtoolbox.com/blacklists.aspx) to check if your IP matches other RBLs. IP reputation blocks are usually temporary, but if you feel your IP should be removed immediately, please contact the RBL's maintainer mentioned in the SMTP error directly.
+
+### Anti-spam
+
+In addition to DNSBL, Email Routing uses advanced heuristic and statistical analysis of the email's headers and text to calculate a spam score. We inject the score in the custom `X-Cf-Spamh-Score` header:
+
+```
+X-Cf-Spamh-Score: 2
+```
+
+This header is visible in the forwarded email. The higher the score, 5 being the maximum, the more likely the email is spam. Currently, this system is experimental and passive; we do not act on it and suggest that upstream servers and email clients don't act on it either.
+
+We will update this page with more information as we fine-tune the system.
 
 ### SPF record
 

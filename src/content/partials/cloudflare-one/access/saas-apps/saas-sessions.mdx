@@ -1,0 +1,7 @@
+---
+params:
+  - session
+  - token
+---
+
+{props.session} only control the front door to a SaaS app; Access does not control how long the user can stay in the SaaS app itself. For example, if the user logs out of the SaaS app and then comes back to it, a valid {props.token} allows them to re-authenticate without another login. The SaaS app issues its own authorization cookie that manages the user's session within the app.

@@ -3,7 +3,7 @@ pcx_content_type: how-to
 title: DHCP relay
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { APIRequest, Render, TabItem, Tabs } from "~/components";
 
 DHCP Relay provides a way for DHCP clients to communicate with DHCP servers that are not available on the same local subnet/broadcast domain. When you enable DHCP Relay, Magic WAN Connector forwards DHCP discover messages to a predefined DHCP server, and routes the responses back to the original device that sent the discover message.
 
@@ -48,14 +48,11 @@ Create a [`PUT` request](/api/resources/magic_transit/subresources/sites/subreso
 
 Example:
 
-```bash
-curl --request PUT \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/lans/{lan_id} \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "lan": {
+<APIRequest
+  path="/accounts/{account_id}/magic/sites/{site_id}/lans/{lan_id}"
+  method="PUT"
+  json={{
+    "lan": {
     "static_addressing": {
       "dhcp_relay": {
         "server_addresses": [
@@ -64,7 +61,7 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}
       }
     }
   }
-}'
-```
+  }}
+/>
 
 </TabItem> </Tabs>

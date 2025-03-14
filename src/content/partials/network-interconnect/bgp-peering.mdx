@@ -92,7 +92,7 @@ BGP support currently has the following limitations:
 
 The Magic routing table is managed by the customer, who can select both the Cloudflare-side ASN and the ASN for their customer device.
 
-By default, each BGP peering session will use the same Cloudflare-side ASN to represent peering with the {props.productName} routing table. This default ASN is called the **CF Account ASN** and should be configured to a private 2-byte ASN (for example, any values between `64512` and `65534`). To set this ASN:
+By default, each BGP peering session will use the same Cloudflare-side ASN to represent peering with the {props.productName} routing table. This ASN is called the **CF Account ASN** and is set to `13335`. This can be configured to a private 2-byte ASN (for example, any values between `64512` and `65534`). To set this ASN:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
 2. Go to **{props.productName}** > **Configuration** > **BGP**.

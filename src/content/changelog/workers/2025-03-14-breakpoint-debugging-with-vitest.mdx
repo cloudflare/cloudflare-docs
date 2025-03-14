@@ -1,0 +1,17 @@
+---
+title: Set breakpoints and debug your Workers tests with @cloudflare/vitest-pool-workers
+description: You can now debug your workers tests with the Workers <> Vitest integration
+products:
+  - workers
+date: 2025-03-13T14:00:00Z
+---
+
+You can now debug your Workers tests with our [Vitest integration](/workers/testing/vitest-integration/) by running the following command:
+
+```sh
+vitest --inspect --no-file-parallelism
+```
+
+Attach a debugger to the port 9229 and you can start stepping through your Workers tests. This is available with `@cloudflare/vitest-pool-workers` v0.7.5 or later.
+
+Learn more in our [documentation](/workers/testing/vitest-integration/debugging/).

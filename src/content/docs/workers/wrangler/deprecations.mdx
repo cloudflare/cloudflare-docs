@@ -9,6 +9,16 @@ description: The differences between Wrangler versions, specifically
 
 Review the difference between Wrangler versions, specifically deprecations and breaking changes.
 
+## Wrangler v4
+
+### Workers Sites
+
+Usage of [Workers Sites](/workers/wrangler/configuration/#workers-sites) is deprecated. Instead, we recommend migrating to [Workers Static Assets](/workers/static-assets/). Support for using Workers Sites with Wrangler will be removed in a future version of Wrangler.
+
+### Service environments
+
+Usage of [Service Environments](https://blog.cloudflare.com/introducing-worker-services/#services-have-environments), enabled via the `legacy_env` property in Wrangler config, is deprecated. Instead, we recommend migrating to [Wrangler Environments](/workers/wrangler/configuration/#environments). Support for using Service Environments with Wrangler will be removed in a future version of Wrangler.
+
 ## Wrangler v3
 
 ### Deprecated commands

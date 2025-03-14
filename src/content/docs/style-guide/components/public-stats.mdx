@@ -4,7 +4,9 @@ styleGuide:
   component: PublicStats
 ---
 
-The `PublicStats` component allows you to reference specific values about Cloudflare's network without maintaining those values in multiple files.
+import { Render } from "~/components";
+
+<Render file="public-stats-definition" />
 
 Refer to the examples below for more information.
 
@@ -23,3 +25,11 @@ Cloudflare also has <PublicStats id="network_peers" />.
 If you need more stats or to update these stats, submit a pull request to update [PublicStats.astro](https://github.com/cloudflare/cloudflare-docs/blob/production/src/components/PublicStats.astro)
 
 :::
+
+## Associated content types
+
+The `PublicStats` component is commonly used on the following type of pages:
+
+- [Overview](/style-guide/documentation-content-strategy/content-types/overview/)
+- [Reference Architecture](/style-guide/documentation-content-strategy/content-types/reference-architecture/)
+- [Reference Architecture Diagrams](/style-guide/documentation-content-strategy/content-types/reference-architecture-diagram/)

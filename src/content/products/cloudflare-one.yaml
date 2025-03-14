@@ -16,11 +16,3 @@ resources:
   community: https://community.cloudflare.com/c/zero-trust/86
   dashboard_link: https://one.dash.cloudflare.com/
   learning_center: https://www.cloudflare.com/learning/security/glossary/what-is-zero-trust/
-
-externals:
-  - title: "Blog: Introducing Cloudflare One"
-    url: https://blog.cloudflare.com/introducing-cloudflare-one/
-  - title: Zero Trust and SASE plans and pricing
-    url: https://www.cloudflare.com/plans/zero-trust-services/
-  - title: Cloudflare homepage
-    url: https://cloudflare.com

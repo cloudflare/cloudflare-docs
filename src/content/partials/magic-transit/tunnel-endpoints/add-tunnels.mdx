@@ -5,11 +5,12 @@ params:
   - healthCheck
   - productPathProbe
   - antiReplayPagePath
-  - BiVsUniHealthCheck
+  - biVsUniHealthCheck
   - tunnelHealthDash
+  - biVsUniHealthCheckDefaults
 ---
 
-import { Details, Markdown, Render, TabItem, Tabs } from "~/components";
+import { APIRequest, CURL, Details, Markdown, Render, TabItem, Tabs } from "~/components";
 
 <Render file="icmp-mfirewall" product="magic-transit" />
 
@@ -81,131 +82,243 @@ import { Details, Markdown, Render, TabItem, Tabs } from "~/components";
 
 <Details header="GRE tunnel">
 
-Create a `POST` request [using the API](/api/resources/magic_transit/subresources/gre_tunnels/methods/create/) to create a GRE tunnel. You will need your [API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key).
+Create a `POST` request [using the API](/api/resources/magic_transit/subresources/gre_tunnels/methods/create/) to create a GRE tunnel.
 
-Example:
+<APIRequest
+  path="/accounts/{account_id}/magic/gre_tunnels"
+  method="POST"
+  json={{
+		"name": "<TUNNEL_NAME>",
+		"description": "<TUNNEL_DESCRIPTION>",
+		"interface_address": "<INTERFACE_ADDRESS>",
+		"cloudflare_gre_endpoint": "<CLOUDFLARE_ENDPOINT>",
+		"customer_gre_endpoint": "<CUSTOMER_ENDPOINT>"
+  }}
+/>
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/gre_tunnels \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "gre_tunnels": [
+```json output
+{
+  "errors": [
     {
-      "name": "<TUNNEL_NAME>",
-      "description": "<TUNNEL_DESCRIPTION>",
-      "interface_address": "<INTERFACE_ADDRESS>",
-      "cloudflare_gre_endpoint": "<CLOUDFLARE_ENDPOINT>",
-      "customer_gre_endpoint": "<CUSTOMER_ENDPOINT>"
+      "code": 1000,
+      "message": "message"
     }
-  ]
-}'
+  ],
+  "messages": [
+    {
+      "code": 1000,
+      "message": "message"
+    }
+  ],
+  "result": {
+    "gre_tunnels": [
+      {
+        "cloudflare_gre_endpoint": "<IP_ADDRESS>",
+        "customer_gre_endpoint": "<IP_ADDRESS>",
+        "interface_address": "<INTERFACE_CIDR>",
+        "name": "<TUNNEL_NAME>",
+        "description": "<TUNNEL_DESCRIPTION>",
+        "health_check": {
+          "direction": "unidirectional",
+          "enabled": true,
+          "rate": "low",
+          "type": "reply"
+        },
+        "mtu": 0,
+        "ttl": 0
+      }
+    ]
+  },
+  "success": true
+}
 ```
 
 </Details>
 
 <Details header="IPsec tunnel">
 
-1. Create a `POST` request [using the API](/api/resources/magic_transit/subresources/ipsec_tunnels/methods/create/) to create an IPsec tunnel. You will need your [API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key).
+1. Create a `POST` request [using the API](/api/resources/magic_transit/subresources/ipsec_tunnels/methods/create/) to create an IPsec tunnel.
 
-Note that in example below, replay protection is disabled by default. You can enable it with the flag `"replay_protection": true` for each IPsec tunnel, if the devices you use do not support disabling this feature. If you have already created IPsec tunnels, update them with a [`PUT` request](https://developers.cloudflare.com/api/resources/magic_transit/subresources/ipsec_tunnels/methods/update/). <br/> Refer to <a href={props.antiReplayPagePath}>Anti-replay protection</a> for more information on this topic.
+	Note that in example below, replay protection is disabled by default. You can enable it with the flag `"replay_protection": true` for each IPsec tunnel, if the devices you use do not support disabling this feature. If you have already created IPsec tunnels, update them with a [`PUT` request](/api/resources/magic_transit/subresources/ipsec_tunnels/methods/update/). Refer to <a href={props.antiReplayPagePath}>Anti-replay protection</a> for more information on this topic.
 
-Example:
+	<APIRequest
+		path="/accounts/{account_id}/magic/ipsec_tunnels"
+		method="POST"
+		json={{
+			"name": "<TUNNEL_NAME>",
+			"description": "<TUNNEL_DESCRIPTION>",
+			"interface_address": "<INTERFACE_ADDRESS>",
+			"cloudflare_endpoint": "<CLOUDFLARE_ENDPOINT>",
+			"customer_endpoint": "<CUSTOMER_ENDPOINT>"
+		}}
+	/>
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "ipsec_tunnels": [
-    {
-      "name": "<TUNNEL_NAME>",
-      "description": "<TUNNEL_DESCRIPTION>",
-      "interface_address": "<INTERFACE_ADDRESS>",
-      "cloudflare_endpoint": "<CLOUDFLARE_ENDPOINT>",
-      "customer_endpoint": "<CUSTOMER_ENDPOINT>",
-      "replay_protection": false
-    }
-  ]
-}'
-```
-
-```json output
-{
-	"result": {
-		"ipsec_tunnels": [
+	```json output
+	{
+		"errors": [
 			{
-				"id": "<YOUR_TUNNEL_ID>",
-				"interface_address": "<INTERFACE_ADDRESS>",
-				"created_on": "2023-04-21T10:42:22.138586Z",
-				"modified_on": "2023-04-21T10:42:22.138586Z",
-				"name": "<TUNNEL_NAME>",
-				"cloudflare_endpoint": "<CLOUDFLARE_ENDPOINT>",
-				"customer_endpoint": "<CUSTOMER_ENDPOINT>",
-				"remote_identities": {
-					"hex_id": "<HEX_ID>",
-					"fqdn_id": "<FQDN_ID>.ipsec.cloudflare.com",
-					"user_id": "ipsec@<USER_ID>.ipsec.cloudflare.com"
-				},
-				"description": " test",
-				"health_check": {
-					"enabled": true,
-					"target": "<TARGET>",
-					"type": "reply",
-					"rate": "mid"
-				}
+				"code": 1000,
+				"message": "message"
 			}
-		]
-	},
-	"success": true,
-	"errors": [],
-	"messages": []
-}
-```
+		],
+		"messages": [
+			{
+				"code": 1000,
+				"message": "message"
+			}
+		],
+		"result": {
+			"ipsec_tunnels": [
+				{
+					"id": "<IPSEC_TUNNEL_ID>",
+					"interface_address": "<INTERFACE_CIDR>",
+					"name": "<TUNNEL_NAME>",
+					"cloudflare_endpoint": "<IP_ADDRESS>",
+					"customer_endpoint": "<IP_ADDRESS>",
+					"description": "<TUNNEL_DESCRIPTION>",
+					"health_check": {
+						"direction": "unidirectional",
+						"enabled": true,
+						"rate": "low",
+						"type": "reply"
+					},
+					"psk_metadata": {},
+					"replay_protection": false
+				}
+			]
+		},
+		"success": true
+	}
+	```
 
-2. Create a `POST` request to generate a PSK. Use the tunnel `id` you received from the previous command (exemplified by `<YOUR_TUNNEL_ID>` above):
+	Take note of the tunnel `id` value. We will use it to generate a pre-shared key (PSK).
 
-```bash
-curl --request POST \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{your_tunnel_id}/psk_generate \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>"
-```
+2. Create a `POST` [request](/api/resources/magic_transit/subresources/ipsec_tunnels/methods/psk_generate/) to generate a PSK. Use the tunnel `id` value you received from the previous command.
+
+	<APIRequest
+		path="/accounts/{account_id}/magic/ipsec_tunnels/{ipsec_tunnel_id}/psk_generate"
+		method="POST"
+	/>
+
+	```json output
+	{
+		"result": {
+			"ipsec_id": "<IPSEC_ID>",
+			"ipsec_tunnel_id": "<IPSEC_TUNNEL_ID>",
+			"psk": "<PSK_CODE>",
+			"psk_metadata": {
+				"last_generated_on": "2025-03-13T14:28:47.054317925Z"
+			}
+		},
+		"success": true,
+		"errors": [],
+		"messages": []
+	}
+	```
+
+	Take note of your `psk` value.
+
+3. Create a `PUT` [request](/api/resources/magic_transit/subresources/ipsec_tunnels/methods/update/) to update your IPsec tunnel with the PSK.
+
+	<CURL
+		url="https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{ipsec_tunnel_id}"
+		method="PUT"
+		json={{
+			"psk": "<PSK_VALUE>"
+		}}
+	/>
 
 ```json output
 {
-	"result": {
-		"ipsec_id": "<IPSEC_ID>",
-		"ipsec_tunnel_id": "<IPSEC_TUNNEL>",
-		"psk": "<YOUR_PSK_KEY>",
-		"psk_metadata": {
-			"last_generated_on": "2023-04-21T10:48:15.953887008Z"
-		}
-	},
-	"success": true,
-	"errors": [],
-	"messages": []
+  "result": {
+    "modified": true,
+    "modified_ipsec_tunnel": {
+      "id": "<IPSEC_ID>",
+      "interface_address": "<IPSEC_CIDR>",
+      "created_on": "2025-03-13T14:28:21.139535Z",
+      "modified_on": "2025-03-13T14:33:26.09683Z",
+      "name": "<TUNNEL_NAME>",
+      "cloudflare_endpoint": "<IP_ADDRESS>",
+      "customer_endpoint": "<IP_ADDRESS>",
+      "remote_identities": {
+        "hex_id": "",
+        "fqdn_id": "",
+        "user_id": ""
+      },
+      "psk_metadata": {
+        "last_generated_on": "2025-03-13T14:28:47.054318Z"
+      },
+      "description": "<TUNNEL_DESCRIPTION>",
+      "health_check": {
+        "enabled": true,
+        "target": "",
+        "type": "reply",
+        "rate": "mid",
+        "direction": "unidirectional"
+      }
+    }
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 
-3. Use the above `psk` value to configure the IPsec tunnel on your equipment. You do not need to take further action to use the PSK on Cloudflare's side, as this value is automatically set.
+4. Use the `psk` value from step 3 to configure the IPsec tunnel on your equipment as well.
 
 </Details>
 
 <Details header="Configure bidirectional health checks">
 
-Bidirectional health checks are available for GRE and IPsec tunnels. For Magic WAN this option defaults to bidirectional, while for Magic Transit it defaults to unidirectional.
+Bidirectional health checks are available for GRE and IPsec tunnels. {props.biVsUniHealthCheckDefaults}.
 
-You can enable bidirectional health checks via the API with `--data '{"health_check": {"direction": "bidirectional"}}'`. For example:
+You can change this setting via the API with `"bidirectional"` or `"unidirectional"`:
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{"health_check": {"direction": "bidirectional"}}'
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{ipsec_tunnel_id}"
+	method="PUT"
+	json={{
+		"health_check":
+			{
+				"direction": "bidirectional"
+			}
+	}}
+/>
+
+```json output
+{
+  "result": {
+    "modified": true,
+    "modified_ipsec_tunnel": {
+      "id": "<IPSEC_ID>",
+      "interface_address": "<IPSEC_CIDR>",
+      "created_on": "2025-03-13T14:28:21.139535Z",
+      "modified_on": "2025-03-13T14:33:26.09683Z",
+      "name": "<TUNNEL_NAME>",
+      "cloudflare_endpoint": "<IP_ADDRESS>",
+      "customer_endpoint": "<IP_ADDRESS>",
+      "remote_identities": {
+        "hex_id": "",
+        "fqdn_id": "",
+        "user_id": ""
+      },
+      "psk_metadata": {
+        "last_generated_on": "2025-03-13T14:28:47.054318Z"
+      },
+      "description": "<TUNNEL_DESCRIPTION>",
+      "health_check": {
+        "enabled": true,
+        "target": "",
+        "type": "reply",
+        "rate": "mid",
+        "direction": "bidirectional"
+      }
+    }
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
 ```
 
 </Details>

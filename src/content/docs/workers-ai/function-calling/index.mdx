@@ -84,7 +84,7 @@ export default {
 		const response = await env.AI.run(
 			"@hf/nousresearch/hermes-2-pro-mistral-7b",
 			{
-				messages: [{ role: "user", content: "Who is Cloudflare on github?" }],
+				messages: [{ role: "user", content: "Who is Cloudflare on GitHub?" }],
 				tools: [
 					{
 						name: "getGithubUser",
@@ -130,16 +130,14 @@ export default {
 				messages: [
 					{
 						role: "user",
-						content: "Who is Cloudflare on github?",
+						content: "Who is Cloudflare on GitHub?",
 					},
 					{
 						role: "assistant",
-						content: "",
-						tool_call: selected_tool.name,
+						content: JSON.stringify(selected_tool),
 					},
 					{
 						role: "tool",
-						name: selected_tool.name,
 						content: JSON.stringify(res),
 					},
 				],

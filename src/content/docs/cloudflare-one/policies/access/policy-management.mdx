@@ -48,20 +48,42 @@ To delete a reusable Access policy:
 
 ## Test your policies
 
-You can test your policies against an existing user identity to see if they would be granted access. For the policy tester to work, the user must have logged into the [App Launcher](/cloudflare-one/applications/app-launcher/) or any other Access application at some point in time.
+You can test your Access policies against all existing user identities in your Zero Trust organization.  For the policy tester to work, users must have logged into the [App Launcher](/cloudflare-one/applications/app-launcher/) or any other Access application at some point in time.
 
-To check if a user has access to an application:
+### Test a single policy
+
+The Access policy builder allows you to test your rules before saving any changes.
+
+To test an individual Access policy:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Policies**.
+2. Locate the policy you want to test and select **Configure**.
+3. Go to **Policy tester** and select **Test policies**.
+
+The policy tester reports the percentage of active users who are allowed or denied access to an application based on this policy. You can expand the test results to view a list of allowed or blocked users.
+
+### Test all policies in an application
+
+You can test your Access application policies against your user population before deploying changes to your users. After saving your changes, you can also perform a more detailed policy test for a specific user.
+
+To test if users have access to an application:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
 2. Locate the application you want to test and select **Configure**.
-3. Go to the **Policies** tab and select **Test policies**.
-4. Enter the user's email address and select **Test policies**.
+3. Go to **Policies** > **Policy tester**.
+4. To test all active users in your organization, select **Test policies**.
 
-The policy tester reports the following information:
+		The policy tester reports the percentage of users who are allowed or denied access to this application based on all configured policies. You can expand the test results to view a list of allowed or blocked users.
 
-- Whether the user is allowed or denied access to the application based on all configured policies.
-- The user's identity from their most recent Access login attempt.
-- Whether the user matches individual Allow, Block, or Bypass policies.
+5. To perform a detailed test on a single user:
+	a. If you made any changes to your policies, first save the application.
+	b. Select **testing a single user**.
+	c. Enter their email address and select **Test policies**.
+
+	The single user test results will show:
+		- Whether the user is allowed or denied access to this application based on all configured policies.
+		- The user's identity from their most recent Access login attempt.
+		- Whether the user matches individual Allow, Block, or Bypass policies.
 
 ## Legacy policies
 

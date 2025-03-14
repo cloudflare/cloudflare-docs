@@ -225,6 +225,13 @@ async function handleGroup(group: Group): Promise<SidebarEntry> {
 	}
 
 	const idx = group.entries.indexOf(index);
+
+	if (idx === -1) {
+		throw new Error(
+			`[Sidebar] Originally located ${index.href} in ${group.label} entries but unable to find it post-transform`,
+		);
+	}
+
 	const removed = group.entries.splice(idx, 1).at(0) as Link;
 
 	removed.attrs = {
@@ -270,7 +277,7 @@ async function handleLink(link: Link): Promise<Link> {
 		link.badge = inferBadgeVariant(link.badge);
 	}
 
-	if (frontmatter.external_link) {
+	if (frontmatter.external_link && !frontmatter.sidebar.group?.hideIndex) {
 		return {
 			...link,
 			label: link.label.concat(rehypeExternalLinksOptions.content.value),

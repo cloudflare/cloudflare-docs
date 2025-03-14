@@ -4,7 +4,7 @@ title: Network segmentation
 description: Define policies to define if traffic should flow between your LANs without leaving your local premises, or if traffic should be forwarded to Cloudflare for additional security configurations.
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { APIRequest, Render, TabItem, Tabs } from "~/components";
 
 You can define policies in your Connector to either allow traffic to flow between your LANs without it leaving your local premises or to forward it via the Cloudflare network where you can add additional security features. The default behavior is to drop all LAN-to-LAN traffic. These policies can be created for specific subnets, and link two LANs.
 
@@ -69,17 +69,14 @@ The new policy will ensure that traffic between the specified LANs flows locally
 
 <Render file="connector/account-id-api-key" />
 
-Create a `POST` request [using the API](/api/operations/magic-site-acls-create-acl) to create a network policy.
+Create a `POST` request [using the API](/api/resources/magic_transit/subresources/sites/subresources/acls/methods/create/) to create a network policy.
 
 Example:
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/acls \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "acl": {
+<APIRequest
+  path="/accounts/{account_id}/magic/sites/{site_id}/acls"
+  method="POST"
+	json={{
     "description": "<POLICY_DESCRIPTION>",
     "forward_locally": true,
     "lan_1": {
@@ -106,38 +103,60 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{sit
     "protocols": [
       "tcp"
     ]
-  }
-}'
-```
+  }}
+/>
 
 ```json output
 {
-	"errors": [],
-	"messages": [],
-	"result": {
-		"acls": [
-			{
-				"description": "<POLICY_DESCRIPTION>",
-				"forward_locally": true,
-				"id": "023e105f4ecef8ad9ca31a8372d0c353",
-				"lan_1": {
-					"lan_id": "<LAN_ID>",
-					"lan_name": "<LAN_NAME>",
-					"ports": [1],
-					"subnets": ["192.0.2.1"]
-				},
-				"lan_2": {
-					"lan_id": "<LAN_ID>",
-					"lan_name": "<LAN_NAME>",
-					"ports": [1],
-					"subnets": ["192.0.2.1"]
-				},
-				"name": "<POLICY_NAME>",
-				"protocols": ["tcp"]
-			}
-		]
-	},
-	"success": true
+  "errors": [
+    {
+      "code": 1000,
+      "message": "message"
+    }
+  ],
+  "messages": [
+    {
+      "code": 1000,
+      "message": "message"
+    }
+  ],
+  "result": {
+    "id": "023e105f4ecef8ad9ca31a8372d0c353",
+    "description": "Allows local traffic between PIN pads and cash register.",
+    "forward_locally": true,
+    "lan_1": {
+      "lan_id": "lan_id",
+      "lan_name": "lan_name",
+      "port_ranges": [
+        "8080-9000"
+      ],
+      "ports": [
+        1
+      ],
+      "subnets": [
+        "192.0.2.1"
+      ]
+    },
+    "lan_2": {
+      "lan_id": "lan_id",
+      "lan_name": "lan_name",
+      "port_ranges": [
+        "8080-9000"
+      ],
+      "ports": [
+        1
+      ],
+      "subnets": [
+        "192.0.2.1"
+      ]
+    },
+    "name": "PIN Pad - Cash Register",
+    "protocols": [
+      "tcp"
+    ],
+    "unidirectional": true
+  },
+  "success": true
 }
 ```
 
@@ -163,18 +182,14 @@ The new policy will ensure that traffic between the specified LANs flows locally
 
 <Render file="connector/account-id-api-key" />
 
-Create a `PUT` request [using the API](/api/operations/magic-site-acls-update-acl) to edit a network policy.
+Create a `PUT` request [using the API](/api/resources/magic_transit/subresources/sites/subresources/acls/methods/update/) to edit a network policy.
 
 Example:
 
-```bash
-curl --request PUT \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/acls/{acl_id} \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "acl": {
+<APIRequest
+  path="/accounts/{account_id}/magic/sites/{site_id}/acls/{acl_id}"
+  method="PUT"
+  json={{
     "description": "<POLICY_DESCRIPTION>",
     "forward_locally": true,
     "lan_1": {
@@ -201,8 +216,37 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}
     "protocols": [
       "tcp"
     ]
-  }
-}'
+  }}
+/>
+
+```json output
+{
+  "errors": [
+    {
+      "code": 1000,
+      "message": "message"
+    }
+  ],
+  "messages": [
+    {
+      "code": 1000,
+      "message": "message"
+    }
+  ],
+  "result": {
+    "id": "023e105f4ecef8ad9ca31a8372d0c353",
+    "connector_id": "ac60d3d0435248289d446cedd870bcf4",
+    "description": "description",
+    "ha_mode": true,
+    "location": {
+      "lat": "37.6192",
+      "lon": "122.3816"
+    },
+    "name": "site_1",
+    "secondary_connector_id": "8d67040d3835dbcf46ce29da440dc482"
+  },
+  "success": true
+}
 ```
 
 </TabItem> </Tabs>
@@ -224,15 +268,13 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}
 
 <Render file="connector/account-id-api-key" />
 
-Create a `DELETE` request [using the API](/api/operations/magic-site-acls-delete-acl) to delete a network policy.
+Create a `DELETE` request [using the API](/api/resources/magic_transit/subresources/sites/subresources/acls/methods/delete/) to delete a network policy.
 
 Example:
 
-```bash
-curl --request DELETE \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/acls/{acl_identifier} \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>"
-```
+<APIRequest
+  path="/accounts/{account_id}/magic/sites/{site_id}/acls/{acl_id}"
+  method="DELETE"
+/>
 
 </TabItem> </Tabs>

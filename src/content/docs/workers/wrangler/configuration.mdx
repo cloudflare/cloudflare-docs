@@ -167,12 +167,6 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
 
   - Minify the Worker script before uploading.
 
-- `node_compat` <Type text="boolean" /> <MetaInfo text="optional" />
-
-  - Deprecated — Instead, [enable the `nodejs_compat` compatibility flag](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag), which enables both built-in Node.js APIs, and adds polyfills as necessary.
-    Setting `node_compat = true` will add polyfills for Node.js built-in modules and globals to your Worker's code, when bundled with Wrangler.
-    This is powered by `@esbuild-plugins/node-globals-polyfill` which in itself is powered by [rollup-plugin-node-polyfills](https://github.com/ionic-team/rollup-plugin-node-polyfills/).
-
 - `logpush` <Type text="boolean" /> <MetaInfo text="optional" />
 
   - Enables Workers Trace Events Logpush for a Worker. Any scripts with this property will automatically get picked up by the Workers Logpush job configured for your account. Defaults to `false`. Refer to [Workers Logpush](/workers/observability/logs/logpush/).
@@ -187,12 +181,6 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
 
 * `assets` <Type text="Assets" /> <MetaInfo text="optional" />
   - Configures static assets that will be served. Refer to [Assets](/workers/static-assets/binding/) for more details.
-
-### Usage model
-
-As of March 1, 2024 the [usage model](/workers/platform/pricing/#workers) configured in your Worker's configuration file will be ignored. The [Standard](/workers/platform/pricing/#example-pricing-standard-usage-model) usage model applies.
-
-Some Workers Enterprise customers maintain the ability to change usage models. Your usage model must be configured through the Cloudflare dashboard by going to **Workers & Pages** > select your Worker > **Settings** > **Usage Model**.
 
 ## Non-inheritable keys
 

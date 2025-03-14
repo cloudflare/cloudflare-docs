@@ -19,11 +19,11 @@ The available security levels are the following:
 
 Selecting a higher **Security Level** value means that even requests with a lower risk (that is, with a low [threat score](#threat-score)) will be challenged. Selecting a lower **Security Level** value means that only requests posing a higher risk (that is, with a high threat score) will be challenged.
 
-Security levels from _Essentially off_ to _High_ will challenge the visitor using a Managed Challenge. When you select _I'm Under Attack!_, which enables [I'm Under Attack mode](/fundamentals/reference/under-attack-mode/), Cloudflare will present a JS challenge page.
+Security levels from _Essentially off_ to _High_ will challenge the visitor using a Managed Challenge. When you select _I'm Under Attack!_, which enables [Under Attack mode](/fundamentals/reference/under-attack-mode/), Cloudflare will present a JS challenge page.
 
 :::caution
 
-Only use [I'm Under Attack mode](/fundamentals/reference/under-attack-mode/) when a website is under a DDoS attack. I'm Under Attack mode may affect some actions on your domain, such as your API traffic.
+Only use [Under Attack mode](/fundamentals/reference/under-attack-mode/) when a website is under a DDoS attack. Under Attack mode may affect some actions on your domain, such as your API traffic.
 
 To set a custom security level for your API or any other part of your domain, create a [configuration rule](/rules/configuration-rules/).
 :::

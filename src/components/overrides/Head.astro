@@ -10,6 +10,7 @@ import type { CollectionEntry } from "astro:content";
 // grab the current top-level folder. Remove . characters for 1.1.1.1 URL
 const currentSection = Astro.url.pathname.split("/")[1].replaceAll(".", "");
 const head = Astro.locals.starlightRoute.entry.data.head;
+const noIndexProductsList = ["style-guide", "security"];
 
 if (currentSection) {
 	const product = await getEntry("products", currentSection);
@@ -77,7 +78,7 @@ if (currentSection) {
 		}
 	}
 
-	if (currentSection === "style-guide") {
+	if (noIndexProductsList.includes(currentSection)) {
 		head.push({
 			tag: "meta",
 			attrs: {

@@ -3,7 +3,6 @@ pcx_content_type: concept
 title: How Hyperdrive works
 sidebar:
   order: 2
-
 ---
 
 Connecting to traditional centralized databases from Cloudflare's global network which consists of over [300 data center locations](https://www.cloudflare.com/network/) presents a few challenges as queries can originate from any of these locations.
@@ -16,9 +15,17 @@ Hyperdrive solves these challenges by managing the number of global connections 
 
 ![Hyperdrive connection](~/assets/images/hyperdrive/configuration/hyperdrive-comparison.svg)
 
+## Edge connection setup
+
+When a database driver connects to a database from a Cloudflare Worker (illustrated above on the right half of the diagram in **Direct (without Hyperdrive)**) it will first go through the connection setup. This may require multiple round trips to the database in order to verify and establish a secure connection. This can incur additional network latency due to the distance between your Cloudflare Worker and your database.
+
+**With Hyperdrive** (on the left half of the above diagram), this connection setup occurs between your Cloudflare Worker and Hyperdrive on the edge, as close to your Worker as possible. This incurs significantly less latency, since the connection setup is completed within the same location.
+
 ## Connection Pooling
 
-Hyperdrive creates a global pool of connections to your database that can be reused as your application executes queries against your database.
+Hyperdrive creates a pool of connections to your database that can be reused as your application executes queries against your database.
+
+The pool of database connections is placed in one or more regions closest to your origin database. This minimizes the latency incurred by roundtrips between your Cloudflare Workers and database to establish new connections. This also ensures that as little network latency is incurred for uncached queries.
 
 When a query hits Hyperdrive, the request is routed to the nearest connection pool.
 
@@ -28,15 +35,14 @@ If the connection pool does not have pre-existing connections, it will establish
 
 :::note
 
-Hyperdrive automatically manages the connection pool properties for you, including limiting the total number of connections to your origin database. Refer to [Limits](/hyperdrive/platform/limits/) to learn more. 
+Hyperdrive automatically manages the connection pool properties for you, including limiting the total number of connections to your origin database. Refer to [Limits](/hyperdrive/platform/limits/) to learn more.
 :::
 
 ## Pooling mode
 
 The Hyperdrive connection pooler operates in transaction mode, where the client that executes the query communicates through a single connection for the duration of a transaction. When that transaction has completed, the connection is returned to the pool.
 
-
-Hyperdrive supports [`SET` statements](https://www.postgresql.org/docs/current/sql-set.html) for the duration of a transaction or a query. For instance, if you manually create a transaction with `BEGIN`/`COMMIT`, `SET` statements within the transaction will take effect. Moreover, a query that includes a `SET` command (`SET X; SELECT foo FROM bar;`) will also apply the `SET` command. When a connection is returned to the pool, the connection is `RESET` such that the `SET` commands will not take effect on subsequent queries. 
+Hyperdrive supports [`SET` statements](https://www.postgresql.org/docs/current/sql-set.html) for the duration of a transaction or a query. For instance, if you manually create a transaction with `BEGIN`/`COMMIT`, `SET` statements within the transaction will take effect. Moreover, a query that includes a `SET` command (`SET X; SELECT foo FROM bar;`) will also apply the `SET` command. When a connection is returned to the pool, the connection is `RESET` such that the `SET` commands will not take effect on subsequent queries.
 
 This implies that a single Worker invocation may obtain multiple connections to perform its database operations and may need to `SET` any configurations for every query or transaction. It is not recommended to wrap multiple database operations with a single transaction to maintain the `SET` state. Doing so will affect the performance and scaling of Hyperdrive as the connection cannot be reused by other Worker isolates for the duration of the transaction.
 
@@ -46,11 +52,11 @@ Hyperdrive supports named prepared statements as implemented in the `postgres.js
 
 Hyperdrive does not support the following PostgreSQL features:
 
-* SQL-level management of prepared statements, such as using `PREPARE`, `DISCARD`, `DEALLOCATE`, or `EXECUTE`.
-* Advisory locks ([PostgreSQL documentation](https://www.postgresql.org/docs/current/explicit-locking.html#ADVISORY-LOCKS)).
-* `LISTEN` and `NOTIFY`.
-* `PREPARE` and `DEALLOCATE`.
-* Any modification to per-session state not explicitly documented as supported elsewhere.
+- SQL-level management of prepared statements, such as using `PREPARE`, `DISCARD`, `DEALLOCATE`, or `EXECUTE`.
+- Advisory locks ([PostgreSQL documentation](https://www.postgresql.org/docs/current/explicit-locking.html#ADVISORY-LOCKS)).
+- `LISTEN` and `NOTIFY`.
+- `PREPARE` and `DEALLOCATE`.
+- Any modification to per-session state not explicitly documented as supported elsewhere.
 
 In cases where you need to issue these unsupported statements from your application, the Hyperdrive team recommends setting up a second, direct client without Hyperdrive.
 
@@ -66,4 +72,4 @@ Caching reduces the burden on your origin database and accelerates the response 
 
 ## Related resources
 
-* [Query caching](/hyperdrive/configuration/query-caching/)
+- [Query caching](/hyperdrive/configuration/query-caching/)
