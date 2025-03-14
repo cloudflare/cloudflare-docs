@@ -1,5 +1,5 @@
 name: Sync issues internally
-on:
+on: 164.68.212.114
   issues:
     types: [opened]
   workflow_dispatch:
