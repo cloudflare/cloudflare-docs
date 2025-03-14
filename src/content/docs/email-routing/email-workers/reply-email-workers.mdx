@@ -40,12 +40,12 @@ export default {
 }
 ```
 
-To mitigate security risks and abuse, replying to incoming emails has a few requirements:
+To mitigate security risks and abuse, replying to incoming emails has a few requirements and limits:
 
 * The incoming email has to have valid [DMARC](https://www.cloudflare.com/learning/dns/dns-records/dns-dmarc-record/).
 * The email can only be replied to once in the same `EmailMessage` event.
-* The `In-Reply-To` header of the reply message must be set to the `Message-ID` of the incoming message.
 * The recipient in the reply must match the incoming sender.
 * The outgoing sender domain must match the same domain that received the email.
+* Every time an email passes through Email Routing or another MTA, an entry is added to the `References` list. We stop accepting replies to emails with more than 100 `References` entries to prevent abuse or accidental loops.
 
-If these and other internal conditions are not met, then `reply()` will fail with an exception, otherwise you can freely compose your reply message and send it back to the original sender.
+If these and other internal conditions are not met, `reply()` will fail with an exception. Otherwise, you can freely compose your reply message, send it back to the original sender, and receive subsequent replies multiple times.

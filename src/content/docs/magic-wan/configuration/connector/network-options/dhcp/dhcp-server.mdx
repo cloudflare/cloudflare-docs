@@ -3,7 +3,7 @@ pcx_content_type: how-to
 title: DHCP server
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { APIRequest, Render, TabItem, Tabs } from "~/components";
 
 When you use a static IP address, Magic WAN Connector can also act as a DHCP server in your network. To enable this feature:
 
@@ -37,14 +37,11 @@ Create a [`PUT` request](/api/resources/magic_transit/subresources/sites/subreso
 
 Example:
 
-```bash
-curl --request PUT \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/lans/{lan_id} \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "lan": {
+<APIRequest
+  path="/accounts/{account_id}/magic/sites/{site_id}/lans/{lan_id}"
+  method="PUT"
+  json={{
+    "lan": {
     "static_addressing": {
       "dhcp_server": {
         "dhcp_pool_end": "<IP_ADDRESS>",
@@ -53,7 +50,7 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}
       }
     }
   }
-}'
-```
+  }}
+/>
 
 </TabItem> </Tabs>

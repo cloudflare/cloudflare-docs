@@ -25,3 +25,7 @@ You can use `curl` to make requests to the GraphQL Analytics API. Alternatively,
 ## Clients
 
 We are using [GraphiQL](https://github.com/skevy/graphiql-app) for our example GraphQL queries. There are many other popular open-source clients that you can find online, such as [Altair](https://altair.sirmuel.design) and [Insomnia](https://insomnia.rest).
+
+## Limitations
+
+The purpose of the GraphQL API is to provide aggregated analytics about various Cloudflare products. These datasets should not be used as a measure for usage that Cloudflare uses for billing purposes. Billable traffic [excludes things like DDoS traffic](https://blog.cloudflare.com/unmetered-mitigation), while GraphQL is a measure of overall consumption/usage, so it will include all measurable traffic.

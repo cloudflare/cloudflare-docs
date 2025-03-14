@@ -11,6 +11,10 @@
     "tags": [],
     "properties": [
         {
+            "property_id": "context_window",
+            "value": "8192"
+        },
+        {
             "property_id": "terms",
             "value": "https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/LICENSE"
         }

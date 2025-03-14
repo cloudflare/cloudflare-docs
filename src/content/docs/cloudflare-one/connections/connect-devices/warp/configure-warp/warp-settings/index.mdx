@@ -27,13 +27,23 @@ WARP settings define the WARP client modes and permissions available to end user
 
 :::note
 
-In order to enable **Admin override**, [**Lock WARP switch**](#lock-warp-switch) must also be enabled.
+To use **Admin override**, you must first have enabled the [**Lock WARP switch**](#lock-warp-switch). **Admin override** is only needed and used when the WARP lock switch is turned on.
 
 :::
 
-When `Enabled`, end users can turn off the WARP client using an override code provided by an admin. This feature allows users to work around a temporary network issue (for example, an incompatible public Wi-Fi, or a firewall at a customer site blocking the connection).
+When the [**Lock WARP switch**](#lock-warp-switch) is enabled, users cannot toggle the WARP client on and off on their device. Enabling **Admin override** gives users the ability to temporarily turn off the WARP client using an override code provided by an admin. **Admin override** is only needed in a configuration where the **lock WARP switch** is enabled.
 
-You can set a **Timeout** to define how long a user can toggle on or off the WARP switch. The timer starts when the user first enters their code into the WARP client. The code remains valid and can be reused anytime during this time period. For example, if **Timeout** is 24 hours, the user can re-enter the code at 23:59:00 and continue to turn off WARP until 47:59:00 (up to 48 hours total).
+**Admin override** allows end users to momentarily turn off WARP with an override code to work around a temporary network issue (for example, an incompatible public Wi-Fi, or a firewall at a customer site blocking the connection).
+
+As admin, you can set a **Timeout** to define how long a user can toggle the WARP switch on or off after entering the override code. Cloudflare generates a new override code every hour that an admin can send to end users. The override code's validity adheres to fixed-hour time blocks and aims to be generous to the end user.
+
+:::caution[Troubleshooting]
+
+To learn more about override code timeouts and how Cloudflare calculates an override code's valid duration, refer to [Troubleshooting](/cloudflare-one/faq/troubleshooting/#i-entered-an-override-code-for-warp-that-was-supposed-to-be-valid-for-3-hours-but-the-override-code-expired-faster-than-i-expected).
+
+If [Auto connect](#auto-connect) is enabled, WARP will automatically reconnect, according to the value set for the auto connect timeout, even when using **Admin override**. Refer to [Troubleshooting](/cloudflare-one/faq/troubleshooting/#i-disabled-warp-using-an-override-code-but-warp-turned-on-by-itself-before-my-override-code-expired) for more information.
+
+:::
 
 #### Retrieve the override code
 
@@ -165,8 +175,8 @@ Allows the user to turn off the WARP switch and disconnect the client.
 
 **Value:**
 
-- `Disabled`: (default) The user is able to turn the switch on or off at their discretion. When the switch is off, the user will not have the ability to reach sites protected by Access that leverage certain device posture checks.
-- `Enabled`: The user is prevented from turning off the switch. The WARP client will always start in the connected state.
+- `Disabled`: (default) The user is able to turn the WARP switch on or off at their discretion. When the WARP switch is off, the user will not have the ability to reach sites protected by Access that leverage certain device posture checks.
+- `Enabled`: The user is prevented from turning off the WARP switch. The WARP client will always start in the connected state.
 
 On MDM deployments, you must also include the `auto_connect` parameter with at least a value of `0`. This will prevent clients from being deployed in the off state without a way for users to manually enable them.
 

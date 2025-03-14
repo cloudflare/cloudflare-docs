@@ -1,0 +1,120 @@
+{
+    "id": "cc80437b-9a8d-4f1a-9c77-9aaf0d226922",
+    "source": 1,
+    "name": "@cf/meta/llama-guard-3-8b",
+    "description": "Llama Guard 3 is a Llama-3.1-8B pretrained model, fine-tuned for content safety classification. Similar to previous versions, it can be used to classify content in both LLM inputs (prompt classification) and in LLM responses (response classification). It acts as an LLM – it generates text in its output that indicates whether a given prompt or response is safe or unsafe, and if unsafe, it also lists the content categories violated.",
+    "task": {
+        "id": "c329a1f9-323d-4e91-b2aa-582dd4188d34",
+        "name": "Text Generation",
+        "description": "Family of generative text models, such as large language models (LLM), that can be adapted for a variety of natural language tasks."
+    },
+    "tags": [],
+    "properties": [],
+    "schema": {
+        "input": {
+            "type": "object",
+            "properties": {
+                "messages": {
+                    "type": "array",
+                    "description": "An array of message objects representing the conversation history.",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "role": {
+                                "type": "string",
+                                "description": "The role of the message sender (e.g., 'user', 'assistant', 'system', 'tool')."
+                            },
+                            "content": {
+                                "type": "string",
+                                "maxLength": 131072,
+                                "description": "The content of the message as a string."
+                            }
+                        },
+                        "required": [
+                            "role",
+                            "content"
+                        ]
+                    }
+                },
+                "max_tokens": {
+                    "type": "integer",
+                    "default": 256,
+                    "description": "The maximum number of tokens to generate in the response."
+                },
+                "temperature": {
+                    "type": "number",
+                    "default": 0.6,
+                    "minimum": 0,
+                    "maximum": 5,
+                    "description": "Controls the randomness of the output; higher values produce more random results."
+                },
+                "response_format": {
+                    "type": "object",
+                    "description": "Dictate the output format of the generated response.",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "description": "Set to json_object to process and output generated text as JSON."
+                        }
+                    }
+                }
+            },
+            "required": [
+                "messages"
+            ]
+        },
+        "output": {
+            "type": "object",
+            "contentType": "application/json",
+            "properties": {
+                "response": {
+                    "oneOf": [
+                        {
+                            "type": "string",
+                            "description": "The generated text response from the model."
+                        },
+                        {
+                            "type": "object",
+                            "description": "The json response parsed from the generated text response from the model.",
+                            "properties": {
+                                "safe": {
+                                    "type": "boolean",
+                                    "description": "Whether the conversation is safe or not."
+                                },
+                                "categories": {
+                                    "type": "array",
+                                    "description": "A list of what hazard categories predicted for the conversation, if the conversation is deemed unsafe.",
+                                    "items": {
+                                        "type": "string",
+                                        "description": "Hazard category classname, from S1 to S14."
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                "usage": {
+                    "type": "object",
+                    "description": "Usage statistics for the inference request",
+                    "properties": {
+                        "prompt_tokens": {
+                            "type": "number",
+                            "description": "Total number of tokens in input",
+                            "default": 0
+                        },
+                        "completion_tokens": {
+                            "type": "number",
+                            "description": "Total number of tokens in output",
+                            "default": 0
+                        },
+                        "total_tokens": {
+                            "type": "number",
+                            "description": "Total number of input and output tokens",
+                            "default": 0
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

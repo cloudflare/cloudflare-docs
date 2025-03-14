@@ -46,7 +46,7 @@ query
         datetime_gt:"2022-08-15T00:00:00Z",
         destinationType:"s3",
         status_neq:200
-      }, 
+      },
       limit:10)
       {
         count,
@@ -60,3 +60,7 @@ query
   }
 }
 ```
+
+:::note
+If you get a `1105` status code error when checking your Logpush job health, it indicates a DNS resolution issue. This means Cloudflare is unable to resolve the target hostname for the Logpush job. To resolve this, check with your DNS service provider and confirm the hostname can be publicly resolved.
+:::

@@ -50,7 +50,7 @@ Learn more about our route leak detection system design and usages  in [How we d
 
 ## BGP origin hijacks
 
-[BGP origin hijack](https://en.wikipedia.org/wiki/bgp_hijacking) is one type of BGP anomaly where networks falsely announce
+[BGP origin hijack](https://www.cloudflare.com/learning/security/glossary/bgp-hijacking/) is one type of BGP anomaly where networks falsely announce
 ownership for groups of IP addresses (prefixes) that they do not own, control, or route to. A BGP origin hijack can redirect Internet traffic to the hijacker from its
 legitimate destination, causing data loss with potential leak of private/confidential information.
 
@@ -90,7 +90,7 @@ Cloudflare Speed Test measures latency multiple times over the course of the tes
 
 ## Content categories
 
-Cloudflare uses a variety of data sources to categorize domains. Using Cloudflare Radar, you can view the content categories associated with a given domain. Cloudflare customers using Cloudflare Gateway or [1.1.1.1 for Families](https://one.one.one.one/family/) can decide to block certain categories, like "Adult Content", in addition to security threats like malware and phishing.
+Cloudflare uses a variety of data sources to categorize domains. Using Cloudflare Radar, you can view the content categories associated with a given domain. Cloudflare customers using Cloudflare Gateway or [1.1.1.1 for Families](/1.1.1.1/setup/#1111-for-families) can decide to block certain categories, like "Adult Content", in addition to security threats like malware and phishing.
 
 In some cases, a domain may be miscategorized. For example, a social media site might be categorized as "Shopping & Auctions". If you believe a domain is miscategorized, or a domain has not yet been categorized, please provide your suggested category using [this form](https://radar.cloudflare.com/domains/feedback) to bring it to our attention.
 
@@ -99,11 +99,11 @@ In some cases, a domain may be miscategorized. For example, a social media site 
 The [Domain Name System (DNS)](https://www.cloudflare.com/learning/dns/what-is-dns/) is a network service that is most commonly used to translate human-readable domain names into numerical IP addresses that computers can use to talk to each other.
 It is an essential Internet service, and is also used to look up other network-related information.
 
-The data displayed on Radar for DNS is based on aggregated and anonymized DNS lookups to Cloudflare's [1.1.1.1](https://one.one.one.one/dns/) public resolver service.
+The data displayed on Radar for DNS is based on aggregated and anonymized DNS lookups to Cloudflare's [1.1.1.1](/1.1.1.1/) public resolver service.
 
 ## Domain rankings
 
-Domain Rankings is based on our anonymized and aggregated [1.1.1.1 resolver](https://one.one.one.one/dns/) data, complies with our [privacy policy](https://www.cloudflare.com/en-gb/privacypolicy/), and aims to identify the top most popular domains that reflect how people use the Internet globally. Domain Rankings’ popularity metric is best described as the estimated number of unique users that access a domain over some period of time.
+Domain Rankings is based on our anonymized and aggregated [1.1.1.1 DNS resolver](/1.1.1.1/) data, complies with our [privacy policy](https://www.cloudflare.com/en-gb/privacypolicy/), and aims to identify the top most popular domains that reflect how people use the Internet globally. Domain Rankings’ popularity metric is best described as the estimated number of unique users that access a domain over some period of time.
 
 Trending domains are domains which are currently experiencing an increase in popularity. Domains Trending Today are domains spiking in popularity, reflecting increased interest potentially related to a particular event or a topic. Domains Trending This Week are domains that have steadily grown in popularity, reflecting an increase of their user base over the week.
 
@@ -119,7 +119,7 @@ An early warning signal that an Internet outage may be underway on a given netwo
 
 ## Internet services ranking
 
-Internet services ranking is based on our anonymized and aggregated [1.1.1.1 resolver](https://one.one.one.one/dns/) data, complies with our [privacy policy](https://www.cloudflare.com/en-gb/privacypolicy/), and aims to identify the top most popular Internet services that reflect how people use the Internet globally. A service represents one or more domains aggregated together. Ranking popularity metric is best described as the estimated number of unique users that access domains associated with a service, over some period of time.
+Internet services ranking is based on our anonymized and aggregated [1.1.1.1 DNS resolver](/1.1.1.1/) data, complies with our [privacy policy](https://www.cloudflare.com/en-gb/privacypolicy/), and aims to identify the top most popular Internet services that reflect how people use the Internet globally. A service represents one or more domains aggregated together. Ranking popularity metric is best described as the estimated number of unique users that access domains associated with a service, over some period of time.
 
 ## Internet traffic trends
 

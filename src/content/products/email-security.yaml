@@ -1,19 +1,15 @@
 name: Email Security
 
 product:
-  title: Email Security
+  title: Email Security (formerly Area 1)
   url: /cloudflare-one/email-security/
   group: Cloudflare One
 
 meta:
   title: Cloudflare Email Security (formerly Area 1) docs
-  description: Cloudflare Email Security (formerly Area 1) is a cloud based service that stops phishing attacks, the biggest cybersecurity threat, across all traffic vectors - email, web and network.
+  description: Cloudflare Email Security is a cloud based service that stops phishing attacks, the biggest cybersecurity threat, across all traffic vectors - email, web and network.
   author: "@cloudflare"
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/email/security
   learning_center: https://www.cloudflare.com/learning/email-security/what-is-email-security/
-
-externals:
-  - title: Cloudflare Email Security (formerly Area 1)
-    url: https://www.cloudflare.com/products/zero-trust/email-security/

@@ -24,12 +24,16 @@ For code samples addressing common use cases, please refer to the [Examples](/ru
 
 ## Snippets elements
 
-To create and deploy a Snippet, you need to define the following elements:
+To create and deploy a snippet, you need to define the following elements:
 
 - **Code snippet**: JavaScript code to be executed during the request-handling process.
-- **Snippet rule**: A [filter expression](/ruleset-engine/rules-language/expressions/) that determines which requests the Snippet will be applied to. Each Snippet can only be associated with one Snippet Rule.
+- **Snippet rule**: A [filter expression](/ruleset-engine/rules-language/expressions/) that determines which requests the Snippet will be applied to. Each snippet can only be associated with one snippet rule.
 
-For more information, refer to the [How it works](/rules/snippets/how-it-works/) and [Create a snippet in the dashboard](/rules/snippets/create-dashboard/) sections.
+For more information, refer to [How it works](/rules/snippets/how-it-works/) and [Create a snippet in the dashboard](/rules/snippets/create-dashboard/).
+
+:::note
+If you have used the Cloudflare API to create a code snippet that is not associated with a snippet rule, the Cloudflare dashboard will show that code snippet in a separate tab called **Unused Snippets**. You can either edit the snippet code and associate it with a snippet rule, or delete the unused code snippet.
+:::
 
 ## Templates
 
@@ -41,9 +45,7 @@ For more information, refer to the [How it works](/rules/snippets/how-it-works/)
 
 <FeatureTable id="rules.snippets" />
 
-:::caution[Redirects will count as subrequests]
 Each <GlossaryTooltip term="Snippets subrequest" prepend="A subrequest is ">subrequest</GlossaryTooltip> in a redirect chain counts against the subrequest limit. This means that if a subrequest was redirected it would count as two subrequests. To avoid issues, ensure that you make a subrequest to the end location of the redirect chain.
-:::
 
 ## Limits
 

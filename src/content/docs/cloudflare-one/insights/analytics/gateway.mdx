@@ -14,4 +14,47 @@ To see the top Allowed and Blocked requests across all of your DNS locations, go
 
 ## GraphQL queries
 
-You can use the [GraphQL Analytics API](/analytics/graphql-api/) to query your Gateway Analytics data. For more information on the Gateway Analytics dataset, refer to the [available datasets](/analytics/graphql-api/features/data-sets/) table and use the [GraphiQL client](/analytics/graphql-api/getting-started/explore-graphql-schema/) to explore the schema.
+You can use the [GraphQL Analytics API](/analytics/graphql-api/) to query your Gateway Analytics data. Available [datasets](/analytics/graphql-api/features/data-sets/) for Gateway include:
+
+| Dataset                                                   | Description                                                                                                                              |
+| --------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `gatewayL4DownstreamSessionsAdaptiveGroups`               | Metrics for Gateway network sessions from user devices to the Cloudflare global network.                                                 |
+| `gatewayL4UpstreamSessionsAdaptiveGroups`                 | Metrics for Gateway network sessions from the Cloudflare global network to user devices.                                                 |
+| `gatewayL4SessionsAdaptiveGroups`                         | Metrics for Gateway network sessions with adaptive sampling.                                                                             |
+| `gatewayL7RequestsAdaptiveGroups`                         | Metrics for Gateway HTTP requests with adaptive sampling.                                                                                |
+| `gatewayResolverQueriesAdaptiveGroups`                    | Metrics for Gateway DNS queries with adaptive sampling.                                                                                  |
+| `gatewayResolverByRuleExecutionPerformanceAdaptiveGroups` | Time to execute Gateway DNS policies on the Cloudflare global network.                                                                   |
+| `gatewayResolverByCustomResolverGroups`                   | Metrics for Gateway DNS queries resolved using custom resolvers.                                                                         |
+| `gatewayResolverByCategoryAdaptiveGroups`                 | Metrics for Gateway DNS queries sorted by [domain category](/cloudflare-one/policies/gateway/domain-categories/) with adaptive sampling. |
+
+To explore the schema, you can use a GraphQL client such as [GraphiQL](https://github.com/graphql/graphiql/tree/main/packages/graphiql#readme) or [Altair](https://altairgraphql.dev/).
+
+1. [Create an API token](/analytics/graphql-api/getting-started/authentication/api-token-auth/) with the following permissions:
+
+   | Type    | Item              | Permission |
+   | ------- | ----------------- | ---------- |
+   | Account | Account Analytics | Read       |
+
+2. In your GraphQL client, [add your API token](/analytics/graphql-api/getting-started/authentication/graphql-client-headers/) as an Authorization header.
+3. Compose a query to access your Gateway Analytics datasets. For example, you can query the `gatewayResolverQueriesAdaptiveGroups` dataset to return the adaptive groups of DNS queries resolved by Gateway:
+
+   ```graphql
+   {
+   	viewer {
+   		accounts(filter: { accountTag: "<ACCOUNT_ID>" }) {
+   			gatewayResolverQueriesAdaptiveGroups(
+   				filter: { datetime_gt: "2025-02-28T00:00:00Z" }
+   				limit: 10
+   			) {
+   				count
+   				dimensions {
+   					queryNameReversed
+   					resolverDecision
+   				}
+   			}
+   		}
+   	}
+   }
+   ```
+
+For more information, refer to [Compose a query in GraphiQL](/analytics/graphql-api/getting-started/compose-graphql-query/).

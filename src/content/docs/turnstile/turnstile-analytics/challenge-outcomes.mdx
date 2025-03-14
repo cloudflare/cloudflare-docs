@@ -1,0 +1,48 @@
+---
+title: Challenge outcome
+pcx_content_type: concept
+sidebar:
+  order: 2
+---
+
+import { Render } from "~/components"
+
+When a visitor encounters Turnstile, it assesses whether they are human or bot-like based on various signals. These outcomes help you evaluate how effectively Turnstile is protecting your application.
+
+## Metrics
+
+A "solved" Turnstile challenge does not automatically confirm the visitor is human. You must [call the siteverify API](#call-siteverify) to validate the token and proceed only if the response returns `success:true`.
+
+For example, the challenge outcome values in your analytics may look like this: 
+
+![Challenge outcome example values](~/assets/images/turnstile/challenge-outcomes.png "Challenge outcome example")
+
+- **Challenges issued**: The total number of challenges presented to visitors within a specific timeframe.
+- **Challenges solved**: The number of challenges successfully completed by visitors in that period.
+- **Challenges unsolved**: Challenges that were abandoned or failed in that period.
+- **Likely human**: The total number of challenges solved or the total number of challenges issued.
+- **Likely bot**: The total number of challenges unsolved or the total number challenges issued.
+
+By analyzing these metrics, you can identify trends such as high failure rates in specific regions, device types, or traffic sources, which may indicate bot activity or misconfigurations.
+
+### Call siteverify
+
+<Render file="siteverify" />
+
+## Solve rates
+
+Turnstile's solve rate is a critical metric that helps gauge how many legitimate visitors are passing a challenge. Solve rates can be broken down into the total number of challenges solved and whether they are interactive, non-interactive, or pre-clearance solves. 
+
+If you are using [managed mode](/turnstile/concepts/widget/#widget-types), you can monitor how many of your visitors were prompted interactivity to check the box on the widget (interactive solves) and how many were verified without any disruptions to their experience (non-interactive solves). 
+
+For example, the solve rate values in your analytics may look like this: 
+
+![Solve rate example values](~/assets/images/turnstile/solve-rates.png "Solve rate example")
+
+### Metrics
+
+- **Non-interactive solves**: Challenges solved without requiring the visitor to click a checkbox.
+- **Interactive solves**: Challenges solved that required visitor interaction to be solved.
+- [**Pre-clearance solves**](/turnstile/concepts/pre-clearance-support/): Challenges solved that issued the `cf-clearance` cookie along with the Turnstile token.
+
+A low solve rate might indicate increased bot activity attempting to bypass Turnstile or anomalous traffic patterns that require further investigation.

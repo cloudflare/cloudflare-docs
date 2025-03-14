@@ -1,0 +1,10 @@
+---
+{}
+
+---
+
+- Internal zones can contain the same [DNS record types](/dns/manage-dns-records/reference/dns-record-types/) that Cloudflare supports for public zones.
+- An internal zone can have the same name as a public zone in the same account.
+- Each internal zone can be linked to multiple [views](/dns/internal-dns/dns-views/).
+- There can be several internal zones with the same name in one account. However, two internal zones with the same name cannot be linked to the same view.
+- Internal zones are not subject to any top-level domain (TLD) restrictions. This means that an internal zone can be created if its TLD is not registered publicly (for example, `xyz.local`), if it is created on the TLD itself (`local`), or even if on the root (`.`).

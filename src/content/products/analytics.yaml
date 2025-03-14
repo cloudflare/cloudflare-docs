@@ -14,7 +14,3 @@ meta:
     exactly what you need, from one metric for a domain to multiple metrics
     aggregated for your account.
   author: "@cloudflare"
-
-externals:
-  - title: Cloudflare homepage
-    url: https://cloudflare.com

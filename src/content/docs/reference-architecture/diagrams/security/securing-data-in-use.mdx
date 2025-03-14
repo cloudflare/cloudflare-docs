@@ -35,7 +35,7 @@ The following diagram visualizes a typical interaction between a user, RBI and a
 2. Cloudflare’s [Secure Web Gateway](/cloudflare-one/policies/gateway/) (SWG) will first verify that the user is permitted to access ChatGPT.
 3. Cloudflare’s patented Network Vector Rendering (NVR) process begins as a headless browser on our edge network starts and rasterizes the web app, which involves writing SKIA draw commands.
 4. NVR intercepts those draw commands > tokenizes them > compresses them > encrypts them > and sends them to the local web browser.
-5. Because this request is running isolated, the policy also enforces preventing the user from [copying and pasting](/cloudflare-one/policies/browser-isolation/isolation-policies/#disable-copy--paste) sensitive content to ChatGPT from their local machine. Additional [policy settings](/cloudflare-one/policies/browser-isolation/isolation-policies/#policy-settings), such as ‘Disable printing’, ‘Disable upload / download’, and more are available as well.
+5. Because this request is running isolated, the policy also enforces preventing the user from [copying and pasting](/cloudflare-one/policies/browser-isolation/isolation-policies/#copy-from-remote-to-client) sensitive content to ChatGPT from their local machine. Additional [policy settings](/cloudflare-one/policies/browser-isolation/isolation-policies/#policy-settings), such as ‘Disable printing’, ‘Disable upload / download’, and more are available as well.
 
 ## Related resources
 

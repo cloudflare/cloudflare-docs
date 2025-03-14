@@ -31,6 +31,19 @@ If you are using [HTTP DCV](/ssl/edge-certificates/changing-dcv-method/methods/h
 
 Cloudflare may remove the `Content-Length` header from responses delivered to website visitors. If the visitor must receive the `Content-Length` header, configure the origin server to include a `cache-control: no-transform` HTTP header in the response.
 
+## This rule may not apply to your traffic
+
+If your rule expression is matching a hostname for which you have neither created a DNS record nor enabled proxying traffic through Cloudflare, you will get a pop-up window with a couple of options:
+
+- **If no DNS record exists for the hostname**: Whether to proceed with the rule creation or to create a new proxied DNS record for that hostname.
+- **If there is a DNS record for the hostname, but traffic is not being proxied**: Whether to proceed with the rule creation or to enable proxying for the existing DNS record.
+
+If you choose to create a new DNS record, the new record will have a `rules` tag and the following associated comment:
+
+```txt
+Created during Cloudflare Rules deployment process for <RULE_NAME>
+```
+
 ## URL rewrites affect other Rules features executed later
 
 If you rewrite a URI path using a [URL rewrite](/rules/transform/url-rewrite/), this may affect other Rules features executed later — such as [Origin Rules](/rules/origin-rules/) — if they include the URI path in their filter expression.

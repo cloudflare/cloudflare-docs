@@ -15,6 +15,10 @@
             "value": "true"
         },
         {
+            "property_id": "context_window",
+            "value": "2048"
+        },
+        {
             "property_id": "info",
             "value": "https://huggingface.co/TinyLlama/TinyLlama-1.1B-Chat-v1.0"
         }

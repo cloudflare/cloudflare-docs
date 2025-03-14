@@ -11,6 +11,10 @@
     "tags": [],
     "properties": [
         {
+            "property_id": "context_window",
+            "value": "80000"
+        },
+        {
             "property_id": "terms",
             "value": "https://github.com/deepseek-ai/DeepSeek-R1/blob/main/LICENSE"
         }

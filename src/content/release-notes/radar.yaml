@@ -1,10 +1,14 @@
 ---
-link: "/radar/changelog/"
+link: "/radar/release-notes/"
 productName: Radar
 productLink: "/radar/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-02-27"
+    title: Add DNS endpoints
+    description: |-
+      * Added [DNS endpoints](/api/resources/radar/subresources/dns/).
   - publish_date: "2025-02-04"
     title: Add Internet services ranking, robots.txt, and AI inference endpoints
     description: |-
@@ -22,28 +26,28 @@ entries:
     title: Add more meta information's
     description: |-
       * Added meta.lastUpdated to all summaries and top endpoints (timeseries and timeseriesGroups already had this).
-      * Fix meta.dateRange to return date ranges for all requested series.
+      * Fixed meta.dateRange to return date ranges for all requested series.
   - publish_date: "2023-11-16"
-    title: Add new Layer 3 endpoints and Layer 7 dimensions
+    title: Add new layer 3 endpoints and layer 7 dimensions
     description: |-
-      * Added Layer 3 [top origin locations](/api/resources/radar/subresources/attacks/subresources/layer3/subresources/top/subresources/locations/methods/origin/)
+      * Added layer 3 [top origin locations](/api/resources/radar/subresources/attacks/subresources/layer3/subresources/top/subresources/locations/methods/origin/)
         and [top target location](/api/resources/radar/subresources/attacks/subresources/layer3/subresources/top/subresources/locations/methods/target/).
-      * Added Layer 7 Summaries by `http_method`, `http_version`, `ip_version`, `managed_rules`, `mitigation_product`.
-      * Added Layer 7 Timeseries Groups by `http_method`, `http_version`, `ip_version`, `managed_rules`, `mitigation_product`, `industry`, `vertical`.
-      * Added Layer 7 Top by `industry`, `vertical`.
-      * Deprecated Layer 7 timeseries groups without dimension.
+      * Added layer 7 Summaries by `http_method`, `http_version`, `ip_version`, `managed_rules`, `mitigation_product`.
+      * Added layer 7 Timeseries Groups by `http_method`, `http_version`, `ip_version`, `managed_rules`, `mitigation_product`, `industry`, `vertical`.
+      * Added layer 7 Top by `industry`, `vertical`.
+      * Deprecated layer 7 timeseries groups without dimension.
         * To continue getting this data, switch to the new
           [timeseries group by mitigation_product](/api/resources/radar/subresources/attacks/subresources/layer7/subresources/timeseries_groups/methods/mitigation_product/)
           endpoint.
-      * Deprecated Layer 7 summary without dimension.
+      * Deprecated layer 7 summary without dimension.
         * To continue getting this data, switch to the new
           [summary by mitigation_product](/api/resources/radar/subresources/attacks/subresources/layer7/subresources/summary/methods/mitigation_product/)
           endpoint.
       * Added new [Error codes](/radar/get-started/error-codes/).
   - publish_date: "2023-10-31"
-    title: Add new Layer 3 direction parameter
+    title: Add new layer 3 direction parameter
     description: |-
-      * Added a `direction` parameter to all Layer 3 endpoints. Use together with `location` parameter to filter by origin or
+      * Added a `direction` parameter to all layer 3 endpoints. Use together with `location` parameter to filter by origin or
         target location [timeseries groups](/api/resources/radar/subresources/attacks/subresources/layer3/subresources/timeseries_groups/methods/vector/).
   - publish_date: "2023-09-08"
     title: Add Connection Tampering endpoints
@@ -56,35 +60,35 @@ entries:
       * Added Regional Internet Registry (see field `source` in response)
         to [get asn by id](/api/resources/radar/subresources/entities/subresources/asns/methods/get/)
         and [get asn by ip](/api/resources/radar/subresources/entities/subresources/asns/methods/ip/) endpoints.
-      * Stopped collecting data in the old Layer 3 data source.
-      * Updated Layer 3
+      * Stopped collecting data in the old layer 3 data source.
+      * Updated layer 3
         [timeseries](/api/resources/radar/subresources/attacks/subresources/layer3/methods/timeseries/) endpoint
-        to start using the new Layer 3 data source by default, fetching the old data source now requires sending the parameter
+        to start using the new layer 3 data source by default, fetching the old data source now requires sending the parameter
         `metric=bytes_old`.
-      * Deprecated Layer 3 summary endpoint, this will stop receiving data after 2023-08-14.
+      * Deprecated layer 3 summary endpoint, this will stop receiving data after 2023-08-14.
         * To continue getting this data, switch to the
           new [timeseries group protocol](/api/resources/radar/subresources/attacks/subresources/layer3/subresources/summary/methods/protocol/)
           endpoint.
-      * Deprecated Layer 3 timeseries groups endpoint, this will stop receiving data after 2023-08-14.
+      * Deprecated layer 3 timeseries groups endpoint, this will stop receiving data after 2023-08-14.
         * To continue getting this data, switch to the
           new [timeseries group protocol](/api/resources/radar/subresources/attacks/subresources/layer3/subresources/timeseries_groups/methods/protocol/)
           endpoint.
   - publish_date: "2023-07-31"
-    title: Fix HTTP timeseries endpoint urls
+    title: Fix HTTP timeseries endpoint URLs
     description: |-
-      * Updated HTTP `timeseries` endpoints urls
-        to `timeseries_groups` ([example](/api/resources/radar/subresources/http/subresources/timeseries_groups/methods/browser_family/))
+      * Updated HTTP `timeseries` endpoints URLs
+        to [`timeseries_groups`](/api/resources/radar/subresources/http/subresources/timeseries_groups/)
         due to consistency. Old timeseries endpoints are still available, but will soon be removed.
   - publish_date: "2023-07-20"
     title: Add URL Scanner endpoints
     description: |-
-      * Added [urlscanner endpoints](/api/resources/url_scanner/). For more information, refer to [URL Scanner](/radar/investigate/url-scanner/).
+      * Added [URL Scanner endpoints](/api/resources/url_scanner/). For more information, refer to [URL Scanner](/radar/investigate/url-scanner/).
   - publish_date: "2023-06-20"
-    title: Add Quality endpoints
+    title: Add Internet quality endpoints
     description: |-
-      * Added [quality endpoints](/api/resources/radar/subresources/quality/).
+      * Added [Internet quality endpoints](/api/resources/radar/subresources/quality/).
   - publish_date: "2023-06-07"
-    title: Add BGP stats, pfx2as and moas endpoint
+    title: Add BGP stats, pfx2as and moas endpoints
     description: |-
       * Added BGP [stats](/api/resources/radar/subresources/bgp/subresources/routes/methods/stats/),
         [pfx2as](/api/resources/radar/subresources/bgp/subresources/routes/methods/pfx2as/)
@@ -107,13 +111,11 @@ entries:
   - publish_date: "2023-01-11"
     title: Add new layer 3 dataset
     description: |-
-      * Added new Layer 3 data source and related endpoints.
-      * Updated Layer 3
+      * Added new layer 3 data source and related endpoints.
+      * Updated layer 3
         [timeseries](/api/resources/radar/subresources/attacks/subresources/layer3/methods/timeseries/) endpoint
         to support fetching both current and new data sources. For retro-compatibility
         reasons, fetching the new data source requires sending the parameter `metric=bytes` else the current data
         source will be returned.
-      * Deprecated old Layer 3 endpoints
-        [TimeseriesGroups](/api/resources/radar/subresources/attacks/subresources/layer3/subresources/timeseries_groups/methods/get/) and
-        [Summary](/api/resources/radar/subresources/attacks/subresources/layer3/subresources/summary/methods/get/).
+      * Deprecated old layer 3 endpoints timeseries_groups and summary.
         Users should upgrade to newer endpoints.

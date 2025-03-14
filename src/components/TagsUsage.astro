@@ -1,0 +1,40 @@
+---
+import { getCollection } from "astro:content";
+import AnchorHeading from "./AnchorHeading.astro";
+import Details from "./Details.astro";
+
+const entries = await getCollection("docs", (e) => Boolean(e.data.tags));
+
+const byTag: Record<string, string[]> = {};
+
+for (const entry of entries) {
+	for (const tag of entry.data.tags!) {
+		byTag[tag] ??= [];
+		byTag[tag].push(entry.id);
+	}
+}
+---
+
+{
+	Object.entries(byTag)
+		.sort()
+		.map(([tag, pages]) => (
+			<>
+				<AnchorHeading depth={3} title={tag} />
+				<p>
+					<code>{tag}</code> is used on <code>{pages.length}</code> pages.
+				</p>
+				<Details header={`Pages tagged with ${tag}`}>
+					<ul>
+						{pages.map((path) => (
+							<li>
+								<a href={`/${path}/`} target="_blank">
+									{path}
+								</a>
+							</li>
+						))}
+					</ul>
+				</Details>
+			</>
+		))
+}

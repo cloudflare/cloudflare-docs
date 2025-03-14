@@ -6,7 +6,7 @@ params:
   - addTunnelsPath
 ---
 
-import {AnchorHeading, GlossaryTooltip, Markdown, TabItem, Tabs } from "~/components";
+import { CURL, AnchorHeading, GlossaryTooltip, Markdown, TabItem, Tabs } from "~/components";
 
 By default, Cloudflare servers send <GlossaryTooltip term="tunnel health-check" link={props.healthChecksUrl}>health checks</GlossaryTooltip> to each <GlossaryTooltip term="GRE tunnel">GRE</GlossaryTooltip>, CNI, or <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnel endpoint you configure to receive traffic from {props.productName}.
 
@@ -47,16 +47,17 @@ You can adjust the health check frequency by updating your [GRE](/api/resources/
 
 Below is an example of how to adjust tunnel health check frequency to `low`. Note that this command applies to GRE, IPsec and CNI tunnels:
 
-```bash
-curl --request PUT \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/gre_tunnels/{tunnel_id} \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "health_check": {"rate":"low"}
-}'
-```
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{ipsec_tunnel_id}"
+	method="PUT"
+	json={{
+		"health_check":
+			{
+				"rate": "low"
+			}
+	}}
+/>
+
 
 </TabItem> </Tabs>
 

@@ -5,7 +5,7 @@ head: []
 description: Enable your Worker to be executed on a schedule.
 ---
 
-import { WranglerConfig } from "~/components";
+import { Render, WranglerConfig } from "~/components";
 
 ## Background
 
@@ -27,7 +27,9 @@ Cron Triggers execute on UTC time.
 
 To respond to a Cron Trigger, you must add a [`"scheduled"` handler](/workers/runtime-apis/handlers/scheduled/) to your Worker.
 
-Refer to the following examples to write your code:
+<Render file="cron-trigger-example" />
+
+Refer to the following additional examples to write your code:
 
 - [Setting Cron Triggers](/workers/examples/cron-trigger/)
 - [Multiple Cron Triggers](/workers/examples/multiple-cron-triggers/)
@@ -48,16 +50,14 @@ Refer to the example below for a Cron Triggers configuration:
 [triggers]
 # Schedule cron triggers:
 # - At every 3rd minute
-# - At 3PM on first day of the month
-# - At 11:59PM on the last weekday of the month
+# - At 15:00 (UTC) on first day of the month
+# - At 23:59 (UTC) on the last weekday of the month
 crons = [ "*/3 * * * *", "0 15 1 * *", "59 23 LW * *" ]
 ```
 
 </WranglerConfig>
 
 You also can set a different Cron Trigger for each [environment](/workers/wrangler/environments/) in your [Wrangler configuration file](/workers/wrangler/configuration/). You need to put the `[triggers]` table under your chosen environment. For example:
-
-
 
 <WranglerConfig>
 
@@ -106,22 +106,22 @@ Some common time intervals that may be useful for setting up your Cron Trigger:
 
 - `0 17 * * sun` or `0 17 * * 1`
 
-  - 5PM on Sunday
+  - 17:00 (UTC) on Sunday
 
 - `10 7 * * mon-fri` or `10 7 * * 2-6`
 
-  - 7:10AM on weekdays
+  - 07:10 (UTC) on weekdays
 
 - `0 15 1 * *`
 
-  - 3PM on first day of the month
+  - 15:00 (UTC) on first day of the month
 
 - `0 18 * * 6L` or `0 18 * * friL`
 
-  - 6PM on the last Friday of the month
+  - 18:00 (UTC) on the last Friday of the month
 
 - `59 23 LW * *`
-  - 11:59PM on the last weekday of the month
+  - 23:59 (UTC) on the last weekday of the month
 
 ## Test Cron Triggers
 

@@ -1,0 +1,162 @@
+---
+title: Agents SDK
+pcx_content_type: concept
+sidebar:
+  order: 2
+
+---
+
+import { MetaInfo, Render, Type, TypeScriptExample, WranglerConfig } from "~/components";
+
+At its most basic, an Agent is a JavaScript class that extends the `Agent` class from the `agents-sdk` package. An Agent encapsulates all of the logic for an Agent, including how clients can connect to it, how it stores state, the methods it exposes, and any error handling.
+
+<TypeScriptExample>
+
+```ts
+import { Agent } from "agents-sdk";
+
+class MyAgent extends Agent {
+	// Define methods on the Agent
+}
+
+export default MyAgent;
+```
+
+</TypeScriptExample>
+
+An Agent can have many (millions of) instances: each instance is a separate micro-server that runs independently of the others. This allows Agents to scale horizontally: an Agent can be associated with a single user, or many thousands of users, depending on the agent you're building.
+
+Instances of an Agent are addressed by a unique identifier: that identifier (ID) can be the user ID, an email address, GitHub username, a flight ticket number, an invoice ID, or any other identifier that helps to uniquely identify the instance and for whom it is acting on behalf of.
+
+## The Agent class
+
+Writing an Agent requires you to define a class that extends the `Agent` class from the `agents-sdk` package. An Agent encapsulates all of the logic for an Agent, including how clients can connect to it, how it stores state, the methods it exposes, and any error handling.
+
+An Agent has the following class methods:
+
+<TypeScriptExample>
+
+```ts
+import { Agent } from "agents-sdk";
+
+interface Env {
+	// Define environment variables & bindings here
+}
+
+// Pass the Env as a TypeScript type argument
+// Any services connected to your Agent or Worker as Bindings
+// are then available on this.env.<BINDING_NAME>
+class MyAgent extends Agent<Env> {
+	// Called when an Agent is started (or woken up)
+	async onStart() {
+		// Can access this.env and this.state
+		console.log('Agent started');
+	}
+
+	// Called when a HTTP request is received
+	// Can be connected to routeAgentRequest to automatically route
+	// requests to an individual Agent.
+	async onRequest(request: Request) {
+			console.log("Received request!");
+	}
+
+	// Called when a WebSocket connection is established
+	async onConnect(connection: Connection, ctx: ConnectionContext) {
+		console.log("Connected!");
+		// Check the request at ctx.request
+		// Authenticate the client
+		// Give them the OK.
+		connection.accept();
+	}
+
+	// Called for each message received on the WebSocket connection
+	async onMessage(connection: Connection, message: WSMessage) {
+		console.log(`message from client ID: ${connection.id}`)
+		// Send messages back to the client
+		connection.send("Hello!");
+	}
+
+	// WebSocket error and disconnection (close) handling.
+	async onError(connection: Connection, error: unknown): Promise<void> {
+		console.error(`WS error: ${error}`);
+	}
+
+	async onClose(connection: Connection, code: number, reason: string, wasClean: boolean): Promise<void> {
+		console.log(`WS closed: ${code} - ${reason} - wasClean: ${wasClean}`);
+		connection.close();
+	}
+
+	// Called when the Agent's state is updated
+	// via this.setState or the useAgent hook from the agents-sdk/react package.
+	async onStateUpdate(state: any) {
+		// 'state' will be typed if you supply a type parameter to the Agent class.
+	}
+}
+
+export default MyAgent;
+```
+
+</TypeScriptExample>
+
+:::note
+
+To learn more about how to manage state within an Agent, refer to the documentation on [managing and syncing state](/agents/examples/manage-and-sync-state/).
+
+:::
+
+You can also define your own methods on an Agent: it's technically valid to publish an Agent only has your own methods exposed, and create/get Agents directly from a Worker.
+
+Your own methods can access the Agent's environment variables and bindings on `this.env`, state on `this.setState`, and call other methods on the Agent via `this.yourMethodName`.
+
+## Calling Agents from Workers
+
+You can create and run an instance of an Agent directly from a Worker in one of three ways:
+
+1. Using the `routeAgentRequest` helper: this will automatically map requests to an individual Agent based on the `/agents/:agent/:name` URL pattern. The value of `:agent` will be the name of your Agent class converted to `kebab-case`, and the value of `:name` will be the name of the Agent instance you want to create or retrieve.
+2. Calling `getAgentByName`, which will create a new Agent instance if none exists by that name, or retrieve a handle to an existing instance.
+3. The [Durable Objects stub API](/durable-objects/api/id/), which provides a lower level API for creating and retrieving Agents.
+
+These three patterns are shown below: we recommend using either `routeAgentRequest` or `getAgentByName`, which help avoid some boilerplate.
+
+<TypeScriptExample>
+
+```ts
+import { Agent, AgentNamespace, getAgentByName, routeAgentRequest } from 'agents-sdk';
+
+interface Env {
+	// Define your Agent on the environment here
+	// Passing your Agent class as a TypeScript type parameter allows you to call
+	// methods defined on your Agent.
+	MyAgent: AgentNamespace<MyAgent>;
+}
+
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		// Routed addressing
+		// Automatically routes HTTP requests and/or WebSocket connections to /agents/:agent/:name
+		// Best for: connecting React apps directly to Agents using useAgent from agents-sdk/react
+		(await routeAgentRequest(request, env)) || Response.json({ msg: 'no agent here' }, { status: 404 });
+
+		// Named addressing
+		// Best for: convenience method for creating or retrieving an agent by name/ID.
+		let namedAgent = getAgentByName<Env, MyAgent>(env.MyAgent, 'my-unique-agent-id');
+		// Pass the incoming request straight to your Agent
+		let namedResp = (await namedAgent).fetch(request);
+
+		// Durable Objects-style addressing
+		// Best for: controlling ID generation, associating IDs with your existing systems,
+		// and customizing when/how an Agent is created or invoked
+		const id = env.MyAgent.newUniqueId();
+		const agent = env.MyAgent.get(id);
+		// Pass the incoming request straight to your Agent
+		let resp = await agent.fetch(request);
+
+		return Response.json({ hello: 'visit https://developers.cloudflare.com/agents for more' });
+	},
+} satisfies ExportedHandler<Env>;
+
+export class MyAgent extends Agent<Env> {
+	// Your Agent implementation goes here
+}
+```
+</TypeScriptExample>

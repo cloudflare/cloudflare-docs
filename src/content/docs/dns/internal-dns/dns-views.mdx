@@ -1,0 +1,37 @@
+---
+pcx_content_type: how-to
+title: Manage DNS views
+sidebar:
+  order: 3
+  label: Views
+---
+
+import { Details, Render } from "~/components";
+
+Internal DNS views are logical groupings of [internal DNS zones](/dns/internal-dns/internal-zones/). As explained in the [architecture overview](/dns/internal-dns/#architecture-overview), DNS views are referenced by [Gateway resolver policies](/cloudflare-one/policies/gateway/resolver-policies/) to define how a specific query should be resolved.
+
+Refer to the sections below for details on how to manage your DNS views, or consider the [get started](/dns/internal-dns/#architecture-overview) for a complete workflow.
+
+## Configuration conditions
+
+When setting up DNS views, observe the following conditions:
+
+<Render file="internal-dns-view-conditions" />
+
+## Create a view
+
+Use the [Create Internal DNS View](/api/resources/dns/subresources/settings/subresources/views/methods/create/) endpoint. For each view you create, list all the internal zones that should be grouped under that view.
+
+## Delete a view
+
+Use the [Delete Internal DNS View](/api/resources/dns/subresources/settings/subresources/views/methods/delete/) endpoint.
+
+DNS views can be deleted even if they still have internal zones linked to them. The internal DNS zones will continue to exist but will be unlinked once the view is deleted.
+
+It is also possible to delete a DNS view that is being referenced by a Gateway resolver policy. In this case, queries matching the policy will return SERVFAIL.
+
+## Other actions
+
+- [Update a DNS view](/api/resources/dns/subresources/settings/subresources/views/methods/edit/) (`PATCH`)
+- [Get view details](/api/resources/dns/subresources/settings/subresources/views/methods/get/) (`GET`)
+- [List DNS views](/api/resources/dns/subresources/settings/subresources/views/methods/list/) (`GET`)

@@ -10,6 +10,18 @@ import { Render } from "~/components";
 
 JavaScript or TypeScript users may continue to use the [`@aws-sdk/client-s3`](https://www.npmjs.com/package/@aws-sdk/client-s3) npm package as per normal. You must pass in the R2 configuration credentials when instantiating your `S3` service client:
 
+:::note[Compatibility]
+Client version `3.729.0` introduced a modification to the default checksum behavior from the client that is currently incompatible with R2 APIs.
+
+To mitigate, users can use `3.726.1` or add the following to their S3Client config:
+
+```ts
+requestChecksumCalculation: "WHEN_REQUIRED",
+responseChecksumValidation: "WHEN_REQUIRED",
+```
+
+:::
+
 ```ts
 import {
 	S3Client,

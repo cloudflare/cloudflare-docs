@@ -6,16 +6,12 @@ sidebar:
   label: About
 ---
 
-import { Render } from "~/components"
+import { Render, GlossaryTooltip } from "~/components"
 
-CNAME flattening speeds up CNAME resolution and allows you to use a CNAME record at your root/apex domain (`example.com`).
+CNAME flattening speeds up CNAME resolution and allows you to use a CNAME record at your <GlossaryTooltip term="zone apex" link="/dns/concepts/#zone-apex">zone apex</GlossaryTooltip> (`example.com`).
 
 :::note
-
-
 This functionality is also what allows you to use a [root custom domain](/pages/configuration/custom-domains/) with a Cloudflare Pages site.
-
-
 :::
 
 ## How it works

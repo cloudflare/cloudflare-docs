@@ -58,3 +58,24 @@ Setting up a default SNI is currently only supported via API.
 2. Take note of the address map `id`. If needed, you can use the [List Address Maps](/api/resources/addressing/subresources/address_maps/methods/list/) endpoint to get it.
 3. Make sure you add the desired IPs to the address map. Cloudflare will respond with the default SNI on those IPs. Use the dashboard or refer to [Add An IP To An Address Map](/api/resources/addressing/subresources/address_maps/subresources/ips/methods/update/).
 4. Configure the `default_sni` value on the address map created in step 1. Refer to the [Update Address Map](/api/resources/addressing/subresources/address_maps/methods/edit/) API endpoint for details. The default SNI can be any valid domain or subdomain owned by your account.
+
+### Spectrum HTTPS applications
+
+Default SNI for Spectrum can only be created via API using the [Create Address Map](/api/resources/addressing/subresources/address_maps/methods/create/) endpoint.
+
+Do not include any membership in your command. Your API command should resemble the following:
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/addressing/address_maps \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+  "description": "default_sni",
+  "default_sni": "sni.example.com",
+  "enabled": false,
+  "ips": [
+    "192.0.0.1"
+  ],
+  "memberships": []
+}'
+```

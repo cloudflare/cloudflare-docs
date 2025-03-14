@@ -25,7 +25,7 @@ The ID of the cluster which handled this request.
 
 Type: `string`
 
-IATA airport code of data center that received the request.
+IATA airport code of the data center that received the request.
 
 ## EDNSSubnet
 

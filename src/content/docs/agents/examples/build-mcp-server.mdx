@@ -1,0 +1,211 @@
+---
+pcx_content_type: tutorial
+title: Build an MCP Server
+sidebar:
+  order: 100
+  group:
+    hideIndex: true
+description: Build and deploy an MCP server on Cloudflare Workers
+---
+
+import { MetaInfo, Render, Type, TypeScriptExample, WranglerConfig } from "~/components";
+import { Aside } from '@astrojs/starlight/components';
+
+[Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction) is an open standard that allows AI agents and assistants (like [Claude Desktop](https://claude.ai/download) or [Cursor](https://www.cursor.com/)) to interact with services directly. If you want users to access your service through an AI assistant, you can spin up an MCP server for your application.
+
+### Building an MCP Server on Workers
+
+With Cloudflare Workers and the [workers-mcp](https://github.com/cloudflare/workers-mcp/) package, you can turn any API or service into an MCP server with minimal setup. Just define your API methods as TypeScript functions, and workers-mcp takes care of tool discovery, protocol handling, and request routing. Once deployed, MCP clients like Claude can connect and interact with your service automatically.
+
+Below we will run you through an example of building an MCP server that fetches weather data from an external API and exposes it as an MCP tool that Claude can call directly:
+
+**How it works:**
+* **TypeScript methods as MCP tools:** Each public method in your class is exposed as an MCP tool that agents can call. In this example, getWeather is the tool that fetches data from an external weather API.
+* **Automatic tool documentation:** JSDoc comments define the tool description, parameters, and return values, so Claude knows exactly how to call your method and interpret the response.
+* **Build-in MCP compatibility:** The `ProxyToSelf` class translates incoming requests into relevant JS RPC methods
+* **Enforced type safety:** Parameter and return types are automatically derived from your TypeScript definitions
+
+## Get Started
+
+Follow these steps to create and deploy your own MCP server on Cloudflare Workers.
+
+<Aside type="note">
+Remote MCP servers are not supported yet. The workers-mcp tooling creates a local proxy that forwards requests to your Worker, allowing the server to be used by an MCP client.
+</Aside>
+
+
+### Create a new Worker 
+
+If you haven't already, install [Wrangler](https://developers.cloudflare.com/workers/wrangler/) and log in:
+
+```bash
+npm install wrangler
+wrangler login
+```
+
+Initialize a new project:
+```bash
+npx create-cloudflare@latest my-mcp-worker
+cd my-mcp-worker
+```
+
+### Configure your wrangler file
+
+When you run the setup command, it will build your Worker using the configuration in your wrangler.toml or wrangler.jsonc file. By default, no additional configuration is needed, but if you have multiple Cloudflare accounts, you'll need to specify your account ID as shown below.
+
+<WranglerConfig>
+```toml
+name = "my-mcp-worker"
+main = "src/index.ts"
+compatibility_date = "2025-03-03"
+account_id = "your-account-id"
+```
+</WranglerConfig>
+
+### Install the MCP tooling
+Inside your project directory, install the [workers-mcp](https://github.com/cloudflare/workers-mcp) package:
+
+```bash
+npm install workers-mcp
+```
+
+This package provides the tools needed to run your Worker as an MCP server.
+
+### Configure your Worker to support MCP
+Run the following setup command:
+
+```bash
+npx workers-mcp setup
+```
+
+This guided installation process takes a brand new or existing Workers project and adds the required tooling to turn it into an MCP server:
+- Automatic documentation generation
+- Shared-secret security using Wrangler Secrets
+- Installs a local proxy so you can access it from your MCP desktop clients (like Claude Desktop)
+
+### Set up the MCP Server
+The setup command will automatically update your src/index.ts with the following code:
+
+```ts
+import { WorkerEntrypoint } from 'cloudflare:workers';
+import { ProxyToSelf } from 'workers-mcp';
+
+export default class MyWorker extends WorkerEntrypoint<Env> {
+  /**
+   * A warm, friendly greeting from your new MCP server.
+   * @param name {string} The name of the person to greet.
+   * @return {string} The greeting message.
+   */
+  sayHello(name: string) {
+    return `Hello from an MCP Worker, ${name}!`;
+  }
+
+  /**
+   * @ignore
+   */
+  async fetch(request: Request): Promise<Response> {
+    // ProxyToSelf handles MCP protocol compliance.
+    return new ProxyToSelf(this).fetch(request);
+  }
+}
+```
+
+This converts your Cloudflare Worker into an MCP server, enabling interactions with AI assistants. **The key components are:**
+- **WorkerEntrypoint:** The WorkerEntrypoint class handles all incoming request management and routing. This provides the structure needed to expose MCP tools within the Worker.
+- **Tool Definition:** Methods, for example, sayHello, are annotated with JSDoc, which automatically registers the method as an MCP tool. AI assistants can call this method dynamically, passing a name and receiving a greeting in response. Additional tools can be defined using the same pattern.
+- **ProxyToSelf:** MCP servers must follow a specific request/response format. ProxyToSelf ensures that incoming requests are properly routed to the correct MCP tools. Without this, you would need to manually parse requests and validate responses.
+
+
+**Note:** Every public method that is annotated with JSDoc becomes an MCP tool that is discoverable by AI assistants. 
+
+### Add data fetching to the MCP
+
+When building an MCP, in many cases, you will need to connect to a resource or an API to take an action. To do this you can use the `fetch` method to make direct API calls, such as in the example below for grabbing the current wearther: 
+
+```ts
+import { WorkerEntrypoint } from 'cloudflare:workers';
+import { ProxyToSelf } from 'workers-mcp';
+
+export default class WeatherWorker extends WorkerEntrypoint<Env> {
+  /**
+   * Get current weather for a location
+   * @param location {string} City name or zip code
+   * @return {object} Weather information
+   */
+  async getWeather(location: string) {
+    // Connect to a weather API
+    const response = await fetch(`https://api.weather.example/v1/${location}`);
+    const data = await response.json();
+    return {
+      temperature: data.temp,
+      conditions: data.conditions,
+      forecast: data.forecast
+    };
+  }
+
+  /**
+   * @ignore
+   */
+  async fetch(request: Request): Promise<Response> {
+    // ProxyToSelf handles MCP protocol compliance
+    return new ProxyToSelf(this).fetch(request);
+  }
+}
+```
+
+### Deploy the MCP server
+Update your wrangler.toml with the appropriate configuration then deploy your Worker:
+```bash
+npx wrangler deploy
+```
+
+Your MCP server is now deployed globally and all your public class methods are exposed as MCP tools that AI assistants can now interact with. 
+
+#### Updating your MCP server
+When you make changes to your MCP server, run the following command to update it:
+```bash
+npm run deploy
+```
+**Note:** If you change method names, parameters, or add/remove methods, Claude and other MCP clients will not see these updates until you restart them. This is because MCP clients cache the tool metadata for performance reasons.
+### Connecting MCP clients to your server
+The `workers-mcp setup` command automatically configures Claude Desktop to work with your MCP server. To use your MCP server through other [MCP clients](https://modelcontextprotocol.io/clients), you'll need to configure them manually.
+
+#### Cursor
+To get your Cloudflare MCP server working in [Cursor](https://modelcontextprotocol.io/clients#cursor), you need to combine the 'command' and 'args' from your config file into a single string and use type 'command'.
+
+In Cursor, create an MCP server entry with:
+
+type: command
+command: /path/to/workers-mcp run your-mcp-server-name https://your-server-url.workers.dev /path/to/your/project
+
+For example, using the same configuration as above, your Cursor command would be:
+```
+/Users/username/path/to/my-new-worker/node_modules/.bin/workers-mcp run my-new-worker https://my-new-worker.username.workers.dev /Users/username/path/to/my-new-worker
+```
+
+#### Other MCP clients
+For [Windsurf](https://modelcontextprotocol.io/clients#windsurf-editor) and other [MCP clients](https://modelcontextprotocol.io/clients#client-details), update your configuration file to include your worker using the same format as Claude Desktop:
+```json
+{
+  "mcpServers": {
+    "your-mcp-server-name": {
+      "command": "/path/to/workers-mcp",
+      "args": [
+        "run",
+        "your-mcp-server-name",
+        "https://your-server-url.workers.dev",
+        "/path/to/your/project"
+      ],
+      "env": {}
+    }
+  }
+}
+```
+Make sure to replace the placeholders with your actual server name, URL, and project path. 
+### Coming soon
+The Model Context Protocol spec is [actively evolving](https://github.com/modelcontextprotocol/specification/discussions) and we're working on expanding Cloudflare's MCP support. Here's what we're working on:
+
+- **Remote MCP support**: Connect to MCP servers directly without requiring a local proxy
+- **Authentication**: OAuth support for secure MCP server connections
+- **Real-time communication**: SSE (Server-Sent Events) and WebSocket support for persistent connections and stateful interactions between clients and servers
+- **Extended capabilities**: Native support for more MCP protocol capabilities like [resources](https://modelcontextprotocol.io/docs/concepts/resources), [prompts](https://modelcontextprotocol.io/docs/concepts/prompts) and [sampling](https://modelcontextprotocol.io/docs/concepts/sampling)
