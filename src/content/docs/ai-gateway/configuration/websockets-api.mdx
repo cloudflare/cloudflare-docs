@@ -26,9 +26,28 @@ WebSockets are long-lived TCP connections that enable bi-directional, real-time 
    ```
 3. Open a WebSocket connection authenticated with a Cloudflare token with the AI Gateway Run permission.
 
-:::note
-Alternatively, we also support authentication via the `sec-websocket-protocol` header if you are using a browser WebSocket.
-:::
+## Authentication
+
+We support headers (for non browser environments) and `sec-websocket-protocol` for browser environments check the examples below:
+
+#### Non Browser
+
+```javascript
+import WebSocket from "ws";
+const ws = new WebSocket(
+	"wss://gateway.ai.cloudflare.com/v1/my-account-id/my-gateway/",
+	{ headers: { "cf-aig-authorization": "Bearer AI_GATEWAY_TOKEN" } },
+);
+```
+
+#### Browser
+
+```javascript
+const ws = new WebSocket(
+	"wss://gateway.ai.cloudflare.com/v1/my-account-id/my-gateway/",
+	["cf-aig-authorization.<cloudflare_aig_token>"],
+);
+```
 
 ## Example request
 
@@ -37,11 +56,7 @@ import WebSocket from "ws";
 
 const ws = new WebSocket(
 	"wss://gateway.ai.cloudflare.com/v1/my-account-id/my-gateway/",
-	{
-		headers: {
-			"cf-aig-authorization": "Bearer AI_GATEWAY_TOKEN",
-		},
-	},
+	{ headers: { "cf-aig-authorization": "Bearer AI_GATEWAY_TOKEN" } },
 );
 
 ws.send(
@@ -55,9 +70,7 @@ ws.send(
 				Authorization: "Bearer WORKERS_AI_TOKEN",
 				"Content-Type": "application/json",
 			},
-			query: {
-				prompt: "tell me a joke",
-			},
+			query: { prompt: "tell me a joke" },
 		},
 	}),
 );
@@ -112,12 +125,8 @@ After this initial message, all streaming chunks are relayed in real-time to the
 ```json
 {
 	"type": "universal.stream",
-	"metadata": {
-		"eventId": "my-request"
-	},
-	"response": {
-		"response": "would"
-	}
+	"metadata": { "eventId": "my-request" },
+	"response": { "response": "would" }
 }
 ```
 
@@ -134,4 +143,144 @@ Once all chunks for a request have been streamed, AI Gateway sends a final messa
 		"contentType": "text/event-stream"
 	}
 }
+```
+
+## Using realtime API for supported providers
+
+You can also use WebSockets to connect to realtime API for some of our supported providers
+
+:::note
+This requires your gateway to be [authenticated](/ai-gateway/configuration/authentication/)
+:::
+
+:::note
+Most of these models are multimodal
+:::
+
+Supported Providers:
+
+- [Open AI](https://platform.openai.com/docs/guides/realtime-websocket)
+- [Google AI Studio](https://ai.google.dev/gemini-api/docs/multimodal-live)
+- [Cartesia](https://docs.cartesia.ai/api-reference/tts/tts)
+- [ElevenLabs](https://elevenlabs.io/docs/conversational-ai/api-reference/conversational-ai/websocket)
+
+Below you can check some examples on how to use WebSockets with these providers:
+
+#### Open AI
+
+```javascript
+import WebSocket from "ws";
+
+const url = "wss://gateway.ai.cloudflare.com/v1/<account_id>/<gateway>/openai?model=gpt-4o-realtime-preview-2024-12-17";
+const ws = new WebSocket(url, {
+  headers: {
+	  "cf-aig-authorization": process.env.CLOUDFLARE_API_KEY
+    "Authorization": "Bearer " + process.env.OPENAI_API_KEY,
+    "OpenAI-Beta": "realtime=v1",
+  },
+});
+
+ws.on("open", function open() {
+  console.log("Connected to server.");
+});
+
+ws.on("message", function incoming(message) {
+  console.log(JSON.parse(message.toString()));
+});
+
+ws.send(JSON.stringify({
+    type: "response.create",
+    response: {
+        modalities: ["text"],
+        instructions: "Tell me a joke"
+    }
+}))
+```
+
+#### Google AI Studio
+
+```javascript
+const ws = new WebSocket(
+	"wss://gateway.ai.cloudflare.com/v1/<account_id>/<gateway>/google?api_key=<google_api_key>",
+	["cf-aig-authorization.<cloudflare_token>"],
+);
+
+ws.on("open", function open() {
+	console.log("Connected to server.");
+});
+
+ws.on("message", function incoming(message) {
+	console.log(message.data);
+});
+
+ws.send(
+	JSON.stringify({
+		setup: {
+			model: "models/gemini-2.0-flash-exp",
+			generationConfig: { responseModalities: ["TEXT"] },
+		},
+	}),
+);
+```
+
+#### Cartesia
+
+```javascript
+const ws = new WebSocket(
+	"wss://gateway.ai.cloudflare.com/v1/<account_id>/<gateway>/cartesia?cartesia_version=2024-06-10&api_key=<cartesia_api_key>",
+	["cf-aig-authorization.<cloudflare_token>"],
+);
+
+ws.on("open", function open() {
+	console.log("Connected to server.");
+});
+
+ws.on("message", function incoming(message) {
+	console.log(message.data);
+});
+
+ws.send(
+	JSON.stringify({
+		model_id: "sonic",
+		transcript: "Hello, world! I'm generating audio on ",
+		voice: { mode: "id", id: "a0e99841-438c-4a64-b679-ae501e7d6091" },
+		language: "en",
+		context_id: "happy-monkeys-fly",
+		output_format: {
+			container: "raw",
+			encoding: "pcm_s16le",
+			sample_rate: 8000,
+		},
+		add_timestamps: true,
+		continue: true,
+	}),
+);
+```
+
+#### ElevenLabs
+
+```javascript
+const ws = new WebSocket(
+	"wss://gateway.ai.cloudflare.com/v1/<account_id>/<gateway>/elevenlabs?agent_id=<elevenlabs_agent_id>",
+	[
+		"xi-api-key.<elevenlabs_api_key>",
+		"cf-aig-authorization.<cloudflare_token>",
+	],
+);
+
+ws.on("open", function open() {
+	console.log("Connected to server.");
+});
+
+ws.on("message", function incoming(message) {
+	console.log(message.data);
+});
+
+ws.send(
+	JSON.stringify({
+		text: "This is a sample text ",
+		voice_settings: { stability: 0.8, similarity_boost: 0.8 },
+		generation_config: { chunk_length_schedule: [120, 160, 250, 290] },
+	}),
+);
 ```
