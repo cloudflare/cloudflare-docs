@@ -28,14 +28,3 @@ Internal zones can contain the same [DNS record types](/dns/manage-dns-records/r
 You can manage internal DNS records in the same way as you would manage public DNS records, with the difference that [proxy status](/dns/proxy-status/) does not apply to internal DNS records.
 
 Refer to [Manage DNS records](/dns/manage-dns-records/how-to/create-dns-records/) or to the [API documentation](/api/resources/dns/subresources/records/) for further guidance.
-
-### CNAME flattening
-
-With CNAME flattening, Cloudflare finds the IP address that a CNAME points to and then returns the final IP address instead of a CNAME record. With Internal DNS, this behavior is applied by default and cannot be turned off.
-
-Cloudflare will try to flatten the CNAME record within the same [DNS view](/dns/internal-dns/dns-views/). If that is not possible, the following will happen:
-
-1. The CNAME record is returned to Gateway resolver as-is.
-2. Gateway resolver will process the returned record, depending on the **Fallback through public DNS** configuration:
-    - On: Gateway will try to resolve the query by sending it to Cloudflare's public DNS resolver ([1.1.1.1](/1.1.1.1/)).
-    - Off: Gateway will return the response as-is to the client.
