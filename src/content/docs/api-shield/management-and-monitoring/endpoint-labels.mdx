@@ -18,7 +18,11 @@ User-defined labels can also be added to endpoints in API Shield by creating a l
 
 You can filter your endpoints based on the labels.
 
-## Managed labels
+## Categories
+
+### Managed labels
+
+Use managed labels to identify endpoints by use case. Cloudflare may automatically apply these labels in a future release.
 
 `cf-log-in`: Add this label to endpoints that accept user credentials. You may have multiple endpoints if you accept username, password, and multi-factor authentication (MFA) across multiple endpoints or requests.
 
@@ -41,6 +45,10 @@ You can filter your endpoints based on the labels.
 `cf-account-update`: Add this label to endpoints that participate in user account or profile updates.
 
 `cf-rss-feed`: Add this label to endpoints that expect traffic from RSS clients.
+
+### Risk labels
+
+Cloudflare automatically runs risk scans every 24 hours on your saved endpoints. API Shield applies these labels when a scan finds security risks on your endpoints. A corresponding Security Center Insight is also raised when risks are found.
 
 `cf-risk-missing-auth`: Automatically added when all successful requests lack a session identifier. Refer to the table below for more information.
 
