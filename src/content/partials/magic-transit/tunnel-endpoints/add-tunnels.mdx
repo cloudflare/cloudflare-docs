@@ -285,6 +285,42 @@ You can change this setting via the API with `"bidirectional"` or `"unidirection
 	}}
 />
 
+```json output
+{
+  "result": {
+    "modified": true,
+    "modified_ipsec_tunnel": {
+      "id": "<IPSEC_ID>",
+      "interface_address": "<IPSEC_CIDR>",
+      "created_on": "2025-03-13T14:28:21.139535Z",
+      "modified_on": "2025-03-13T14:33:26.09683Z",
+      "name": "<TUNNEL_NAME>",
+      "cloudflare_endpoint": "<IP_ADDRESS>",
+      "customer_endpoint": "<IP_ADDRESS>",
+      "remote_identities": {
+        "hex_id": "",
+        "fqdn_id": "",
+        "user_id": ""
+      },
+      "psk_metadata": {
+        "last_generated_on": "2025-03-13T14:28:47.054318Z"
+      },
+      "description": "<TUNNEL_DESCRIPTION>",
+      "health_check": {
+        "enabled": true,
+        "target": "",
+        "type": "reply",
+        "rate": "mid",
+        "direction": "bidirectional"
+      }
+    }
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
 </Details>
 
 </TabItem> </Tabs>
