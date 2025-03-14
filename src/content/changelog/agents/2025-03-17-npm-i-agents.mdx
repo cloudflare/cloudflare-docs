@@ -20,11 +20,13 @@ import npmAgentsAnimated from "~/assets/images/agents/npm-i-agents.apng"
 If you've already been building with the Agents SDK, you can update your dependencies to use the new package name, and replace references to `agents-sdk` with `agents`:
 
 ```sh
-# Remove the old (deprecated) package
-npm uninstall agents-sdk
-
 # Install the new package
 npm i agents
+```
+
+```sh
+# Remove the old (deprecated) package
+npm uninstall agents-sdk
 
 # Find instances of the old package name in your codebase
 grep -r 'agents-sdk' .
