@@ -112,18 +112,15 @@ Create a `POST` request [using the API](/api/resources/magic_transit/subresource
   "result": {
     "gre_tunnels": [
       {
-        "cloudflare_gre_endpoint": "203.0.113.1",
-        "customer_gre_endpoint": "203.0.113.1",
-        "interface_address": "192.0.2.0/31",
-        "name": "GRE_1",
-        "description": "Tunnel for ISP X",
+        "cloudflare_gre_endpoint": "<IP_ADDRESS>",
+        "customer_gre_endpoint": "<IP_ADDRESS>",
+        "interface_address": "<INTERFACE_CIDR>",
+        "name": "<TUNNEL_NAME>",
+        "description": "<TUNNEL_DESCRIPTION>",
         "health_check": {
           "direction": "unidirectional",
           "enabled": true,
           "rate": "low",
-          "target": {
-            "saved": "203.0.113.1"
-          },
           "type": "reply"
         },
         "mtu": 0,
@@ -172,19 +169,16 @@ Create a `POST` request [using the API](/api/resources/magic_transit/subresource
 		"result": {
 			"ipsec_tunnels": [
 				{
-					"cloudflare_endpoint": "203.0.113.1",
-					"interface_address": "192.0.2.0/31",
-					"name": "IPsec_1",
-					"allow_null_cipher": true,
-					"customer_endpoint": "203.0.113.1",
-					"description": "Tunnel for ISP X",
+					"id": "<IPSEC_TUNNEL_ID>",
+					"interface_address": "<INTERFACE_CIDR>",
+					"name": "<TUNNEL_NAME>",
+					"cloudflare_endpoint": "<IP_ADDRESS>",
+					"customer_endpoint": "<IP_ADDRESS>",
+					"description": "<TUNNEL_DESCRIPTION>",
 					"health_check": {
 						"direction": "unidirectional",
 						"enabled": true,
 						"rate": "low",
-						"target": {
-							"saved": "203.0.113.1"
-						},
 						"type": "reply"
 					},
 					"psk_metadata": {},
@@ -233,8 +227,43 @@ Create a `POST` request [using the API](/api/resources/magic_transit/subresource
 		}}
 	/>
 
+```json output
+{
+  "result": {
+    "modified": true,
+    "modified_ipsec_tunnel": {
+      "id": "<IPSEC_ID>",
+      "interface_address": "<IPSEC_CIDR>",
+      "created_on": "2025-03-13T14:28:21.139535Z",
+      "modified_on": "2025-03-13T14:33:26.09683Z",
+      "name": "<TUNNEL_NAME>",
+      "cloudflare_endpoint": "<IP_ADDRESS>",
+      "customer_endpoint": "<IP_ADDRESS>",
+      "remote_identities": {
+        "hex_id": "",
+        "fqdn_id": "",
+        "user_id": ""
+      },
+      "psk_metadata": {
+        "last_generated_on": "2025-03-13T14:28:47.054318Z"
+      },
+      "description": "<TUNNEL_DESCRIPTION>",
+      "health_check": {
+        "enabled": true,
+        "target": "",
+        "type": "reply",
+        "rate": "mid",
+        "direction": "unidirectional"
+      }
+    }
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
 
-4. Use the above `psk` value to configure the IPsec tunnel on your equipment as well.
+4. Use the `psk` value from step 3 to configure the IPsec tunnel on your equipment as well.
 
 </Details>
 
