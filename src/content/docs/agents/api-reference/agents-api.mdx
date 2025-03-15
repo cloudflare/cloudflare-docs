@@ -9,7 +9,12 @@ import { MetaInfo, Render, Type, TypeScriptExample, WranglerConfig } from "~/com
 
 This page provides an overview of the Agent SDK API, including the `Agent` class, methods and properties built-in to the Agents SDK.
 
-An Agent is a JavaScript class that extends the `Agent` class from the Agents SDK package. An Agent encapsulates all of the logic for an Agent, including how clients can connect to it, how it stores state, the methods it exposes, and any error handling.
+The Agents SDK exposes two main APIs:
+
+* The server-side `Agent` class. An Agent encapsulates all of the logic for an Agent, including how clients can connect to it, how it stores state, the methods it exposes, how to call AI models, and any error handling.
+* The client-side `AgentClient` class, which allows you to connect to an Agent instance from a client-side application. The client APIs also include React hooks, including `useAgent` and `useAgentChat`, and allow you to automatically synchronize state between each unique Agent (running server-side) and your client applications.
+
+You can also find more specific usage examples for each API in the [Agents API Reference](/agents/api-reference/).
 
 <TypeScriptExample>
 
@@ -570,9 +575,20 @@ async searchUsers(term: string): Promise<User[]> {
 
 </TypeScriptExample>
 
-Visit the documentation on [storing and syncing state](/agents/api-reference/store-and-sync-state/) to learn more about the `this.setState` and `this.sql` APIs.
+:::note
+
+Visit the [state management API documentation](/agents/api-reference/store-and-sync-state/) within the Agents SDK, including the native `state` APIs and the built-in `this.sql` API for storing and querying data within your Agents.
+
+:::
+
 
 ### Client API
+
+The Agents SDK provides a set of client APIs for interacting with Agents from client-side JavaScript code, including:
+
+* React hooks, including `useAgent` and `useAgentChat`, for connecting to Agents from client applications.
+* Client-side [state syncing](/agents/api-reference/store-and-sync-state/) that allows you to subscribe to state updates between the Agent and any connected client(s) when calling `this.setState` within your Agent's code.
+* The ability to call remote methods (Remote Procedure Calls; RPC) on the Agent from client-side JavaScript code using the `@callable` method decorator.
 
 #### AgentClient
 
