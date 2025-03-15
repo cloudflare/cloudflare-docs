@@ -62,7 +62,7 @@ class MyAgent extends Agent {}
 
 #### Call Agent methods from your client code <Badge text="New" variant="tip" size="small" />
 
-We've added a new [`@callable()`](/agents/api-reference/client-api/) decorator for defining methods that can be called directly from clients. This allows you call methods from within your client code: you can call methods (with arguments) and get native JavaScript objects back.
+We've added a new [`@callable()`](/agents/api-reference/agents-api/) decorator for defining methods that can be called directly from clients. This allows you call methods from within your client code: you can call methods (with arguments) and get native JavaScript objects back.
 
 <TypeScriptExample>
 
@@ -116,10 +116,12 @@ $ npm run start
 
 #### More documentation <Badge text="Updated" variant="tip" size="small" />
 
-We've contined to build out the Agents SDK documentation, including:
+We've heard your feedback on the Agents SDK documentation, and we're shipping more API reference material and usage examples, including:
 
 - Expanded [API reference documentation](/agents/api-reference/), covering the methods and properties exposed by the Agents SDK, as well as more usage examples.
-- A new [Client API](/agents/api-reference/client-api/) reference that documents `useAgent`, `useAgentChat` and the new `@callable` RPC decorator exposed by the SDK.
+- More [Client API](/agents/api-reference/agents-api/#client-api) documentation that documents `useAgent`, `useAgentChat` and the new `@callable` RPC decorator exposed by the SDK.
 - New documentation on how to [call agents](/agents/api-refererence/calling-agents/) and (optionally) authenticate clients before they connect to your Agents.
+
+Note that the Agents SDK is continually growing: the type definitions included in the SDK will always include the latest APIs exposed by the `agents` package.
 
 If you're still wondering what Agents are, [read our blog on building AI Agents on Cloudflare](https://blog.cloudflare.com/build-ai-agents-on-cloudflare/) and/or visit the [Agents documentation](/agents/) to learn more.
