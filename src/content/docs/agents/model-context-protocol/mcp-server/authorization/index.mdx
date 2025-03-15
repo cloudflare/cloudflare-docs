@@ -1,0 +1,44 @@
+---
+title: Authorization
+sidebar:
+  order: 2
+  group:
+    hideIndex: false
+---
+
+import { DirectoryListing } from "~/components";
+
+When building an MCP (Model Context Protocol) server, you need both a way to allow users to login (authentication) and allow them to grant the MCP client access to resources on their account (authorization).
+
+<diagram>
+
+</diagram>
+
+The Model Context Protocol uses [a subset of OAuth 2.1 for authorization](https://spec.modelcontextprotocol.io/specification/draft/basic/authorization/). OAuth allows your users to grant limited access to resources, without them having to share API keys or other credentials.
+
+Cloudflare provides an oAuth SDK that implements the provider side of the OAuth 2.1 protocol, allowing you to easily add authorization to your MCP server. You can also use your own OAuth provider with the MCP Server SDK, including Stytch, Auth0, and other authorization providers.
+
+### Workers OAuth Provider SDK
+
+```ts
+import OAuthProvider from "workers-oauth-provider";
+
+export default new OAuthProvider({
+	apiRoute: "/mcp",
+	apiHandler: MyMCPServer.Router,
+	defaultHandler: MyMCPServer.defaultHandler,
+	authorizeEndpoint: "/authorize",
+	tokenEndpoint: "/token",
+	clientRegistrationEndpoint: "/register",
+});
+```
+
+Read the docs for the [Workers oAuth Provider SDK](/agents/model-context-protocol/mcp-server/authorization/oauth-sdk/) for more details.
+
+### External OAuth Providers
+
+You can also use an external OAuth provider with the MCP Server SDK.
+
+- [Stytch](/agents/model-context-protocol/mcp-server/examples/stytch/)
+
+<DirectoryListing />
