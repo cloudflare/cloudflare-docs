@@ -1,0 +1,30 @@
+---
+pcx_content_type: concept
+title: Built-in oAuth Provider
+sidebar:
+  order: 1
+---
+
+import { Render } from "~/components";
+
+When building an MCP (Model Context Protocol) server, you need a way to authenticate and authorize the AI agents and clients that access your server. OAuth 2.1 is the recommended authentication protocol for MCP servers, providing a secure way to grant limited access to your APIs without sharing credentials.
+Cloudflare Workers offers a built-in OAuth provider framework that allows you to implement the OAuth 2.1 protocol directly within your Worker, eliminating the need for external OAuth services. This guide explains how to set up and configure this built-in OAuth provider for your MCP server.
+
+#### What is an OAuth Provider?
+
+An OAuth provider is a service that:
+
+- Authenticates users (verifies their identity)
+- Issues access tokens to client applications
+- Validates tokens when protected resources are requested
+- Manages token lifecycle (issuance, expiration, and refresh)
+
+In the context of MCP servers, the OAuth provider ensures that AI agents (acting as MCP clients) can only access the resources they're authorized to use.
+
+### Architecture
+
+### Benefits of using Cloudflare as your OAuth Provider
+
+### Cloudflare's OAuth framework
+
+Cloudflare's OAuth provider framework handles the complex parts of OAuth implementation, allowing you to focus on your application logic. The framework manages:
