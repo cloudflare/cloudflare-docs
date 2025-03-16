@@ -39,3 +39,15 @@ In this example, the `add` method is decorated with the `@mcp.tool` decorator, w
 :::note
 Because decorators are a [Stage 3 TC39 proposed addition to the JavaScript language](https://github.com/tc39/proposal-decorators), to use decorators in your code, and to use the Cloudflare MCP Server SDK, you must use Wrangler v4.0.0 or later, or [`@cloudflare/vite-plugin`](https://www.npmjs.com/package/@cloudflare/vite-plugin). This ensures that decorators in your code are automatically transpiled into code that the [Cloudflare Workers runtime](/workers/reference/how-workers-works/) can understand.
 :::
+
+### How it works
+
+WIP
+
+- Explain what is functionally happening here with decorators
+- You add JSDOC to `@mcp.tool` to describe the tool
+- The MCP Server SDK parses the JSDOC to extract the tool's description, input parameters, and return type
+- The MCP Server SDK then uses the tool's description, input parameters, and return type to serialize and deserialize the tool's input and output
+- The MCP Server SDK then uses the serialized input and output to call the tool
+
+- Show the equivalent before/after using the raw @modelcontextprotocol/typescript-sdk — and ideally move this up to the top so that the reader "gets it" — maybe use tabs?
