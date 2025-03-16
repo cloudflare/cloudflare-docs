@@ -32,6 +32,14 @@ The MCP standard supports two modes of operation:
 
 Cloudflare's MCP Server SDK, is designed to support remote MCP connections. Remote MCP connections allow MCP clients that run in web browsers, mobile apps, and other environments outside of the end-user's machine to connect to your MCP server, such as [Claude.ai](https://www.anthropic.com/claude), and other AI agents.
 
+### Why deploy your MCP server to Cloudflare?
+
+- Define [tools](/agents/model-context-protocol/mcp-server/tools/) by just writing TypeScript methods, in the [same way you write RPC methods in Workers and Durable Objects](/workers/runtime-apis/rpc/).
+- Authorization is [built-in](/agents/model-context-protocol/mcp-server/authorization/). The MCP Server SDK handles the hard parts of the OAuth flow for you.
+- Transport over HTTP with Server-Sent Events (SSE) is [built-in](/agents/model-context-protocol/mcp-server/transport/), with automatic hibernation of idle connections to reduce costs
+- You can create stateful MCP Servers with the [Agents SDK](/agents/)
+- Your MCP server can be called by the [Agents SDK](/agents/), which is an MCP client
+
 ## Deploy your first MCP server
 
 {/* TODO: Update deploy to Workers button */}

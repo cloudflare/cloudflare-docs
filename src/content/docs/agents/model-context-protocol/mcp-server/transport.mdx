@@ -6,3 +6,26 @@ sidebar:
 ---
 
 import { Render } from "~/components";
+
+The Model Context Protocol (MCP) specification defines [two standard transport mechanisms](https://spec.modelcontextprotocol.io/specification/draft/basic/transport/):
+
+1. **stdio, communication over standard in and standard out** — designed for local MCP connections
+2. **HTTP with Server-Sent Events (SSE)** — designed for remote MCP connections
+
+{/* TODO: Update link and make sure this gets merged into @modelcontextprotocol/typescript-sdk: https://github.com/modelcontextprotocol/typescript-sdk/pull/178 */}
+
+The MCP Server SDK supports remote MCP connections, using [HTTP with Server-Sent Events (SSE)](https://github.com/modelcontextprotocol/typescript-sdk/pull/178) as transport. SSE requires a persistent HTTP connection, which is supported by Cloudflare [Durable Objects](/durable-objects/).
+
+Transport is configured and handled automatically by the MCP Server SDK. You don't need to configure anything — it just works.
+
+## Automatic hibernation to reduce your costs
+
+SSE requires a persistent HTTP connection. The MCP Client opens a connection to the MCP Server and keeps it open while the application is running. For example, an MCP Client running in a browser will keep the connection open until the browser is closed.
+
+This means idle connections can be held open indefinately. On other serverless platforms, this results in high costs, because you are billed for the "wall clock" time while the connection is open, even if the connection is idle.
+
+When you build MCP Servers with the MCP Server SDK, the SDK automatically hibernates idle connections, waking them up only when new events are available. This means you are only billed for the time that the MCP Server is actively running, and not for the time that the connection is open but idle.
+
+This works by using the [WebSocket hibernation API](https://developers.cloudflare.com/durable-objects/best-practices/websockets/#websocket-hibernation-api) provided by Cloudflare Durable Objects.
+
+{/* TODO: Should we link to source code or explain more? */}
