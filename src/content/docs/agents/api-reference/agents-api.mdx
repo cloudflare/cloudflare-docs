@@ -159,6 +159,8 @@ class MyAgent extends Agent<Env, MyState> {
 
 ### WebSocket API
 
+The WebSocket API allows you to accept and manage WebSocket connections made to an Agent.
+
 #### Connection
 
 Represents a WebSocket connection to an Agent.
@@ -191,30 +193,32 @@ interface Connection<State = unknown> {
 
 ```ts
 // Example of handling WebSocket messages
-async onMessage(connection: Connection, message: WSMessage) {
-  if (typeof message === 'string') {
-    try {
-      // Parse JSON message
-      const data = JSON.parse(message);
+export class YourAgent extends Agent {
+  async onMessage(connection: Connection, message: WSMessage) {
+    if (typeof message === 'string') {
+      try {
+        // Parse JSON message
+        const data = JSON.parse(message);
 
-      if (data.type === 'update') {
-        // Update connection-specific state
-        connection.setState({ ...connection.state, lastActive: Date.now() });
+        if (data.type === 'update') {
+          // Update connection-specific state
+          connection.setState({ ...connection.state, lastActive: Date.now() });
 
-        // Update global Agent state
-        this.setState({
-          ...this.state,
-          connections: this.state.connections + 1
-        });
+          // Update global Agent state
+          this.setState({
+            ...this.state,
+            connections: this.state.connections + 1
+          });
 
-        // Send response back to this client only
-        connection.send(JSON.stringify({
-          type: 'updated',
-          status: 'success'
-        }));
+          // Send response back to this client only
+          connection.send(JSON.stringify({
+            type: 'updated',
+            status: 'success'
+          }));
+        }
+      } catch (e) {
+        connection.send(JSON.stringify({ error: 'Invalid message format' }));
       }
-    } catch (e) {
-      connection.send(JSON.stringify({ error: 'Invalid message format' }));
     }
   }
 }
