@@ -2,7 +2,7 @@
 pcx_content_type: concept
 title: Tools
 sidebar:
-  order: 4
+  order: 2
 ---
 
 import { Render } from "~/components";
@@ -15,7 +15,7 @@ For example, the following code defines a simple MCP server that adds two number
 
 {/* TODO: Reference code in Github, link to a runnable example, use Deploy to Workers button */}
 
-```ts
+```ts title="src/index.ts"
 import { WorkerEntrypoint, env } from "cloudflare:workers";
 import { WorkersMCP, mcp } from "@cloudflare/model-context-protocol";
 
