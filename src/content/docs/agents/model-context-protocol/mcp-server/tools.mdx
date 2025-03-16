@@ -2,18 +2,18 @@
 pcx_content_type: concept
 title: Tools
 sidebar:
-  order: 3
+  order: 4
 ---
 
 import { Render } from "~/components";
-
-{/* Need to note that you must use Wrangler v4 since this uses decorators */}
 
 Model Context Protocol (MCP) tools are functions that a [MCP Server](/agents/model-context-protocol/mcp-server) provides and MCP clients can call.
 
 When you build MCP Servers with the `@cloudflare/model-context-protocol` package, you can define tools by writing JavaScript or TypeScript methods and decorating them with the `@mcp.tool` [decorator](https://github.com/tc39/proposal-decorators). This removes the need to manually implement the tool discovery, serialization, and invocation logic.
 
 For example, the following code defines a simple MCP server that adds two numbers together:
+
+{/* TODO: Reference code in Github, link to a runnable example, use Deploy to Workers button */}
 
 ```ts
 import { WorkerEntrypoint, env } from "cloudflare:workers";
