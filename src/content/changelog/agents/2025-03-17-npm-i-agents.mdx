@@ -37,7 +37,7 @@ sed -i 's/agents-sdk/agents/g' $(grep -rl 'agents-sdk' .)
 
 Future updates will be pushed to the new `agents` package, and the older package will be marked as deprecated.
 
-#### Multi-Agent applications and RPC <Badge text="New" variant="tip" size="small" />
+#### Agents SDK updates <Badge text="New" variant="tip" size="small" />
 
 We've added a number of big new features to the Agents SDK over the past few weeks, including:
 
@@ -48,17 +48,6 @@ We've added a number of big new features to the Agents SDK over the past few wee
 - TODO: experiemental /schedule module with a prompt/schema for adding scheduling to your app (with evals!)
 
 We've also fixed a number of bugs with state synchronization and the React hooks.
-
-<TypeScriptExample>
-
-```ts
-import { Agent } from 'agents';
-
-// TODO:  example of Multi-Agent or similar here
-class MyAgent extends Agent {}
-
-```
-</TypeScriptExample>
 
 #### Call Agent methods from your client code <Badge text="New" variant="tip" size="small" />
 
@@ -73,7 +62,7 @@ import { Agent, callable } from 'agents';
 // TODO: replace this with a real example
 class MyAgent extends Agent {
 	@callable()
-  async getHistory(limit: number): Promise<string[]> {
+  async getHistory(limit = 5: number): Promise<string[]> {
   	// Allow a client to directly fetch chat history
    	return this.state.chatHistory.slice(-limit)
   }
@@ -85,7 +74,7 @@ const { call } = useAgent({ agent: "rpc" });
 const fetchUserHistory = async () => {
     try {
         setLoading(true);
-        const result = await call("getHistory(5)");
+        const result = await call("getHistory");
         addToast(`Regular RPC result: ${result}`, "success");
     } catch (error) {
         addToast(`Error: ${error}`, "error");
