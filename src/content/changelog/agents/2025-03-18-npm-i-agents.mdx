@@ -15,7 +15,7 @@ import npmAgentsAnimated from "~/assets/images/agents/npm-i-agents.apng"
 
 #### `agents-sdk` -> `agents` <Badge text="Updated" variant="tip" size="small" />
 
-**We've renamed the Agents package to `agents`**!
+📝 **We've renamed the Agents package to `agents`**!
 
 If you've already been building with the Agents SDK, you can update your dependencies to use the new package name, and replace references to `agents-sdk` with `agents`:
 
@@ -35,7 +35,7 @@ grep -r 'agents-sdk' .
 sed -i 's/agents-sdk/agents/g' $(grep -rl 'agents-sdk' .)
 ```
 
-Future updates will be pushed to the new `agents` package, and the older package will be marked as deprecated.
+All future updates will be pushed to the new `agents` package, and the older package has been marked as deprecated.
 
 #### Agents SDK updates <Badge text="New" variant="tip" size="small" />
 
