@@ -751,24 +751,22 @@ interface TaskState {
 
 function TaskManager() {
   const [newTask, setNewTask] = useState("");
-
+  
   // Connect to a task-manager Agent instance
   const agent = useAgent<TaskState>({
     agent: "task-manager",
     name: "user-123-tasks",
-
     onStateUpdate: (state, source) => {
       console.log(`State updated from ${source}`, state);
     },
-
     onOpen: () => console.log("Connected to task manager agent"),
     onClose: () => console.log("Disconnected from task manager agent")
   });
-
+  
   function addTask(e: React.FormEvent) {
     e.preventDefault();
     if (!newTask.trim()) return;
-
+    
     // Update the Agent's state
     agent.setState({
       ...agent.state,
@@ -777,12 +775,12 @@ function TaskManager() {
         { id: Date.now().toString(), text: newTask, completed: false }
       ]
     });
-
+    
     setNewTask("");
   }
-
+  
   return (
-    <>
+    <div>
       <h1>Task Manager</h1>
       <form onSubmit={addTask}>
         <input
@@ -797,7 +795,7 @@ function TaskManager() {
           <li key={task.id}>{task.text}</li>
         ))}
       </ul>
-    </>
+    </div>
   );
 }
 
