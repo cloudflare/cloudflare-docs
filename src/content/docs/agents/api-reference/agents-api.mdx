@@ -291,30 +291,36 @@ interface ChatState {
   };
 }
 
-// Inside your Agent class
-async addMessage(sender: string, text: string) {
-  // Update state with new message
-  this.setState({
-    ...this.state,
-    messages: [
-      ...this.state.messages,
-      { sender, text, timestamp: Date.now() }
-    ].slice(-this.state.settings.maxHistoryLength) // Maintain max history
-  });
-
-  // The onStateUpdate method will automatically be called
-  // and all connected clients will receive the update
+interface Env {
+	// Your bindings and environment variables
 }
 
-// Override onStateUpdate to add custom behavior when state changes
-onStateUpdate(state: ChatState, source: "server" | Connection) {
-  console.log(`State updated by ${source === "server" ? "server" : "client"}`);
+// Inside your Agent class
+export class YourAgent extends Agent<Env, ChatState> {
+  async addMessage(sender: string, text: string) {
+    // Update state with new message
+    this.setState({
+      ...this.state,
+      messages: [
+        ...this.state.messages,
+        { sender, text, timestamp: Date.now() }
+      ].slice(-this.state.settings.maxHistoryLength) // Maintain max history
+    });
 
-  // You could trigger additional actions based on state changes
-  if (state.messages.length > 0) {
-    const lastMessage = state.messages[state.messages.length - 1];
-    if (lastMessage.text.includes('@everyone')) {
-      this.notifyAllParticipants(lastMessage);
+    // The onStateUpdate method will automatically be called
+    // and all connected clients will receive the update
+  }
+
+  // Override onStateUpdate to add custom behavior when state changes
+  onStateUpdate(state: ChatState, source: "server" | Connection) {
+    console.log(`State updated by ${source === "server" ? "server" : "client"}`);
+
+    // You could trigger additional actions based on state changes
+    if (state.messages.length > 0) {
+      const lastMessage = state.messages[state.messages.length - 1];
+      if (lastMessage.text.includes('@everyone')) {
+        this.notifyAllParticipants(lastMessage);
+      }
     }
   }
 }
