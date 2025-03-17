@@ -377,37 +377,39 @@ interface ReminderData {
   channel: string;
 }
 
-// Schedule a one-time reminder in 2 hours
-async scheduleReminder(userId: string, message: string) {
-  const twoHoursFromNow = new Date(Date.now() + 2 * 60 * 60 * 1000);
+export class YourAgent extends Agent {
+  // Schedule a one-time reminder in 2 hours
+  async scheduleReminder(userId: string, message: string) {
+    const twoHoursFromNow = new Date(Date.now() + 2 * 60 * 60 * 1000);
 
-  const schedule = await this.schedule<ReminderData>(
-    twoHoursFromNow,
-    'sendReminder',
-    { userId, message, channel: 'email' }
-  );
+    const schedule = await this.schedule<ReminderData>(
+      twoHoursFromNow,
+      'sendReminder',
+      { userId, message, channel: 'email' }
+    );
 
-  console.log(`Scheduled reminder with ID: ${schedule.id}`);
-  return schedule.id;
-}
+    console.log(`Scheduled reminder with ID: ${schedule.id}`);
+    return schedule.id;
+  }
 
-// Schedule a recurring daily task using cron
-async scheduleDailyReport() {
-  // Run at 08:00 AM every day
-  const schedule = await this.schedule(
-    '0 8 * * *',  // Cron expression: minute hour day month weekday
-    'generateDailyReport',
-    { reportType: 'daily-summary' }
-  );
+  // Schedule a recurring daily task using cron
+  async scheduleDailyReport() {
+    // Run at 08:00 AM every day
+    const schedule = await this.schedule(
+      '0 8 * * *',  // Cron expression: minute hour day month weekday
+      'generateDailyReport',
+      { reportType: 'daily-summary' }
+    );
 
-  console.log(`Scheduled daily report with ID: ${schedule.id}`);
-  return schedule.id;
-}
+    console.log(`Scheduled daily report with ID: ${schedule.id}`);
+    return schedule.id;
+  }
 
-// Method that will be called when the scheduled task runs
-async sendReminder(data: ReminderData) {
-  console.log(`Sending reminder to ${data.userId}: ${data.message}`);
-  // Add code to send the actual notification
+  // Method that will be called when the scheduled task runs
+  async sendReminder(data: ReminderData) {
+    console.log(`Sending reminder to ${data.userId}: ${data.message}`);
+    // Add code to send the actual notification
+  }
 }
 ```
 
@@ -455,30 +457,32 @@ type Schedule<T = any> = {
 <TypeScriptExample>
 
 ```ts
-// Example of managing scheduled tasks
-async viewAndManageSchedules() {
-  // Get all scheduled tasks
-  const allSchedules = this.getSchedules();
-  console.log(`Total scheduled tasks: ${allSchedules.length}`);
+export class YourAgent extends Agent {
+  // Example of managing scheduled tasks
+  async viewAndManageSchedules() {
+    // Get all scheduled tasks
+    const allSchedules = this.getSchedules();
+    console.log(`Total scheduled tasks: ${allSchedules.length}`);
 
-  // Get tasks scheduled for a specific time range
-  const upcomingSchedules = this.getSchedules({
-    timeRange: {
-      start: new Date(),
-      end: new Date(Date.now() + 24 * 60 * 60 * 1000) // Next 24 hours
+    // Get tasks scheduled for a specific time range
+    const upcomingSchedules = this.getSchedules({
+      timeRange: {
+        start: new Date(),
+        end: new Date(Date.now() + 24 * 60 * 60 * 1000) // Next 24 hours
+      }
+    });
+
+    // Get a specific task by ID
+    const taskId = "task-123";
+    const specificTask = await this.getSchedule(taskId);
+
+    if (specificTask) {
+      console.log(`Found task: ${specificTask.callback} at ${new Date(specificTask.time)}`);
+
+      // Cancel a scheduled task
+      const cancelled = await this.cancelSchedule(taskId);
+      console.log(`Task cancelled: ${cancelled}`);
     }
-  });
-
-  // Get a specific task by ID
-  const taskId = "task-123";
-  const specificTask = await this.getSchedule(taskId);
-
-  if (specificTask) {
-    console.log(`Found task: ${specificTask.callback} at ${new Date(specificTask.time)}`);
-
-    // Cancel a scheduled task
-    const cancelled = await this.cancelSchedule(taskId);
-    console.log(`Task cancelled: ${cancelled}`);
   }
 }
 ```
@@ -516,43 +520,44 @@ interface User {
   created_at: number;
 }
 
-// Inside your Agent class
-async setupDatabase() {
-  // Create a table if it doesn't exist
-  this.sql`
-    CREATE TABLE IF NOT EXISTS users (
-      id TEXT PRIMARY KEY,
-      name TEXT NOT NULL,
-      email TEXT UNIQUE,
-      created_at INTEGER
-    )
-  `;
-}
+export class YourAgent extends Agent {
+  async setupDatabase() {
+    // Create a table if it doesn't exist
+    this.sql`
+      CREATE TABLE IF NOT EXISTS users (
+        id TEXT PRIMARY KEY,
+        name TEXT NOT NULL,
+        email TEXT UNIQUE,
+        created_at INTEGER
+      )
+    `;
+  }
 
-async createUser(id: string, name: string, email: string) {
-  // Insert a new user
-  this.sql`
-    INSERT INTO users (id, name, email, created_at)
-    VALUES (${id}, ${name}, ${email}, ${Date.now()})
-  `;
-}
+  async createUser(id: string, name: string, email: string) {
+    // Insert a new user
+    this.sql`
+      INSERT INTO users (id, name, email, created_at)
+      VALUES (${id}, ${name}, ${email}, ${Date.now()})
+    `;
+  }
 
-async getUserById(id: string): Promise<User | null> {
-  // Query a user by ID
-  const users = this.sql<User>`
-    SELECT * FROM users WHERE id = ${id}
-  `;
+  async getUserById(id: string): Promise<User | null> {
+    // Query a user by ID
+    const users = this.sql<User>`
+      SELECT * FROM users WHERE id = ${id}
+    `;
 
-  return users.length ? users[0] : null;
-}
+    return users.length ? users[0] : null;
+  }
 
-async searchUsers(term: string): Promise<User[]> {
-  // Search users with a wildcard
-  return this.sql<User>`
-    SELECT * FROM users
-    WHERE name LIKE ${'%' + term + '%'} OR email LIKE ${'%' + term + '%'}
-    ORDER BY created_at DESC
-  `;
+  async searchUsers(term: string): Promise<User[]> {
+    // Search users with a wildcard
+    return this.sql<User>`
+      SELECT * FROM users
+      WHERE name LIKE ${'%' + term + '%'} OR email LIKE ${'%' + term + '%'}
+      ORDER BY created_at DESC
+    `;
+  }
 }
 ```
 
