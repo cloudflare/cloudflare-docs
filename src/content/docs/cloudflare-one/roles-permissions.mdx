@@ -13,19 +13,20 @@ To check the list of members in your account, or to manage roles and permissions
 
 Only Super Administrators will be able to assign or remove the following roles from users in their account. Scroll to the right to see a full list of permissions for each role.
 
-|                                 | Access Read | Access Edit | Gateway Read | Gateway Edit | Gateway Report | Billing Read | Billing Edit | DEX Read | DEX Edit |
-| ------------------------------- | ----------- | ----------- | ------------ | ------------ | -------------- | ------------ | ------------ | -------- | -------- |
-| Super Administrator             | ✅          | ✅          | ✅           | ✅           | ✅             | ✅           | ✅           | ✅       | ✅       |
-| Cloudflare Zero Trust           | ✅          | ✅          | ✅           | ✅           | ✅             | ✅           | ❌           | ✅       | ✅       |
-| Cloudflare Access               | ✅          | ✅          | ✅           | ❌           | ✅             | ✅           | ❌           | ❌       | ❌       |
-| Cloudflare Gateway              | ✅          | ❌          | ✅           | ✅           | ✅             | ✅           | ❌           | ❌       | ❌       |
-| Cloudflare Zero Trust Read Only | ✅          | ❌          | ✅           | ❌           | ✅             | ✅           | ❌           | ❌       | ❌       |
-| Cloudflare Zero Trust Reporting | ❌          | ❌          | ❌           | ❌           | ✅             | ✅           | ❌           | ✅       | ❌       |
-| Cloudflare DEX                  | ❌          | ❌          | ❌           | ❌           | ❌             | ❌           | ❌           | ✅       | ✅       |
+|                                               | Access Read | Access Edit | Gateway Read | Gateway Edit | Gateway Report | DNS Location Read | DNS Location Edit | Billing Read | Billing Edit | DEX Read | DEX Edit |
+| --------------------------------------------- | ----------- | ----------- | ------------ | ------------ | -------------- | ----------------- | ----------------- | ------------ | ------------ | -------- | -------- |
+| Super Administrator                           | ✅          | ✅          | ✅           | ✅           | ✅             | ✅                | ✅                | ✅           | ✅           | ✅       | ✅       |
+| Cloudflare Zero Trust[^1]                     | ✅          | ✅          | ✅           | ✅           | ✅             | ✅                | ✅                | ✅           | ❌           | ✅       | ✅       |
+| Cloudflare Access                             | ✅          | ✅          | ✅           | ❌           | ✅             | ❌                | ❌                | ✅           | ❌           | ❌       | ❌       |
+| Cloudflare Gateway                            | ✅          | ❌          | ✅           | ✅           | ✅             | ✅                | ✅                | ✅           | ❌           | ❌       | ❌       |
+| Cloudflare Zero Trust Read Only               | ✅          | ❌          | ✅           | ❌           | ✅             | ✅                | ❌                | ✅           | ❌           | ❌       | ❌       |
+| Cloudflare Zero Trust Reporting               | ❌          | ❌          | ❌           | ❌           | ✅             | ❌                | ❌                | ✅           | ❌           | ✅       | ❌       |
+| Cloudflare Zero Trust DNS Locations Write[^2] | ❌          | ❌          | ❌           | ❌           | ❌             | ✅                | ✅                | ❌           | ❌           | ❌       | ❌       |
+| Cloudflare DEX                                | ❌          | ❌          | ❌           | ❌           | ❌             | ❌                | ❌                | ❌           | ❌           | ✅       | ✅       |
 
-:::note
-The Cloudflare Zero Trust role grants administrator access to all Zero Trust products including Access, Gateway, WARP, Tunnel, Browser Isolation, CASB, DLP, DEX, and Email Security.
-:::
+[^1]: The **Cloudflare Zero Trust** role grants administrator access to all Zero Trust products including Access, Gateway, WARP, Tunnel, Browser Isolation, CASB, DLP, DEX, and Email Security.
+
+[^2]: Users with the **Cloudflare Zero Trust DNS Locations Write** role can view all DNS locations for an organization but can only create and edit [secure DNS locations](/cloudflare-one/connections/connect-devices/agentless/dns/locations/#secure-dns-locations).
 
 ### Cloudflare Zero Trust PII
 
