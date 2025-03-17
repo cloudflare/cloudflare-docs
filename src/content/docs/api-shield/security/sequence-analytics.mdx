@@ -40,7 +40,7 @@ To proactively secure your API, you should inspect your highest-scoring sequence
 
 Using the above example, if `POST /api/v1/transferFunds` must legitimately always be preceded by `GET /api/v1/users/{user_id}/accounts` and `GET /api/v1/accounts/{account_id}/balance?`, you should create an **Allow** rule in Sequence Mitigation on the final operation of the sequence.
 
-You should also consider applying other API Shield protections to these endpoints ([rate limiting suggestions](/api-shield/security/volumetric-abuse-detection/), [Schema Validation](/api-shield/security/schema-validation/), [JWT Validation](/api-shield/security/jwt-validation/), and [mTLS](/api-shield/security/mtls/)).
+You should also consider applying other API Shield protections to these endpoints ([rate limiting suggestions](/api-shield/security/volumetric-abuse-detection/), [Schema validation](/api-shield/security/schema-validation/), [JWT validation](/api-shield/security/jwt-validation/), and [mTLS](/api-shield/security/mtls/)).
 
 For more information, refer to our [blog post](https://blog.cloudflare.com/api-sequence-analytics).
 

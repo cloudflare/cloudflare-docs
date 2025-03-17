@@ -5,6 +5,11 @@ productLink: "/workers-ai/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-02-21"
+    title: Workers AI bug fixes
+    description: |-
+      - We fixed a bug where `max_tokens` defaults were not properly being respected - `max_tokens` now correctly defaults to `256` as displayed on the model pages. Users relying on the previous behaviour may observe this as a breaking change. If you want to generate more tokens, please set the `max_tokens` parameter to what you need.
+      - We updated model pages to show context windows - which is defined as the tokens used in the prompt + tokens used in the response. If your prompt + response tokens exceed the context window, the request will error. Please set `max_tokens` accordingly depending on your prompt length and the context window length to ensure a successful response.
   - publish_date: "2024-09-26"
     title: Workers AI Birthday Week 2024 announcements
     description: |-
