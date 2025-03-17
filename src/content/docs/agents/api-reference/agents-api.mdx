@@ -247,33 +247,6 @@ interface ConnectionContext {
 }
 ```
 
-<TypeScriptExample>
-
-```ts
-// Example of authenticating connections during connect
-async onConnect(connection: Connection, ctx: ConnectionContext) {
-  // Access request information from the connection context
-  const url = new URL(ctx.request.url);
-  const token = url.searchParams.get('token');
-
-  // Validate the token
-  if (!token || !await this.isValidToken(token)) {
-    // Reject invalid connections
-    connection.close(1008, 'Unauthorized');
-    return;
-  }
-
-  // Store user info in connection state
-  const userId = await this.getUserIdFromToken(token);
-  connection.setState({ userId, authenticated: true });
-
-  // Inform user they're connected
-  connection.send(JSON.stringify({ type: 'connected', userId }));
-}
-```
-
-</TypeScriptExample>
-
 ### State synchronization API
 
 :::note
