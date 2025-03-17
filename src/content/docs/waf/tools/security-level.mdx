@@ -15,16 +15,3 @@ import { Render } from "~/components";
 <Render file="security-level-scores" product="waf" />
 
 ---
-
-## Customize security level
-
-You can customize security level by enabling or disabling [Under Attack mode](/fundamentals/reference/under-attack-mode/) on the Cloudflare dashboard.
-
----
-
-## Recommendations
-
-To prevent bot IPs from attacking a website:
-
-- A new website owner might set a _Medium_ or _High_ **Security Level** and lower [**Challenge Passage**](/waf/tools/challenge-passage/) to a value below **30 minutes** to ensure that Cloudflare is constantly protecting the site.
-- An experienced website administrator confident in their security settings might set **Security Level** to _Essentially Off_ while setting a higher [**Challenge Passage**](/waf/tools/challenge-passage/) for a week, month, or even year to provide a less obtrusive visitor experience.
