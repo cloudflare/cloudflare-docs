@@ -50,4 +50,4 @@ $ npx run wrangler queues purge <QUEUE-NAME>
 ```
 
 ### Does purging a Queue affect my bill?
-Purging a Queue counts as a single billable operation. For example, if you purge a Queue which has 100 messages, all 100 messages will be permanently deleted, and you will be billed for 1 billable operation. Refer to the [pricing](/queues/platform/pricing) page for more information about how Queues is billed.
+Purging a Queue counts as a single billable operation, regardless of how many messages are deleted. For example, if you purge a Queue which has 100 messages, all 100 messages will be permanently deleted, and you will be billed for 1 billable operation. Refer to the [pricing](/queues/platform/pricing) page for more information about how Queues is billed.
