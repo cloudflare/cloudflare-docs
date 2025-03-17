@@ -92,7 +92,10 @@ This step makes sure that unnecessary files are not going to be included in the 
 
 ## Deploy with Cloudflare Pages
 
-<Render file="deploy-to-pages-steps-no-preset" />
+<Render
+	file="deploy-to-pages-steps-with-preset"
+	params={{ name: "VitePress" }}
+/>
 
 <PagesBuildPreset framework="vitepress" />
 
