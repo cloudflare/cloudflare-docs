@@ -1,11 +1,12 @@
 ---
-title: Pause delivery
+title: Pause and purge Queues
 pcx_content_type: concept
 sidebar:
   order: 2
 ---
 import { WranglerConfig, Type, MetaInfo } from "~/components";
 
+## Pause Delivery
 
 You can pause delivery of messages from your Queue to any connected consumers. Pausing a queue is useful to manage downtime (such as if your consumer Worker is unhealthy), without losing any messages.
 
@@ -28,5 +29,25 @@ $ npx run wrangler queues resume-delivery <QUEUE-NAME>
 - `queue-name` <Type text="string" /> <MetaInfo text="required" />
   - The name of the queue from which delivery should be resumed.
 
-### Using HTTP Pull consumers with a paused queue
+### What happens to HTTP Pull consumers with a paused queue?
 When a queue is paused, messages cannot be pulled by an [HTTP pull based consumer](/queues/configuration/pull-consumers). Requests to pull messages will receive a `409` response, along with an error message stating `queue_delivery_paused`.
+
+## Purge queue
+Purging a queue permanently deletes any messages currently stored in the Queue. Purging is useful while developing a new application, especially to clear out any test data. It can also be useful in production to handle scenarios when a batch of bad messages have been sent to a Queue.
+
+Note that any in flight messages, which are currently being processed by consumers, might still be processed. Messages sent to a queue during a purge operation might not be purged. Any delayed messages will also be deleted from the Queue.
+
+:::note
+Purging a queue is an irreversible operation. Make sure to use this operation carefully.
+:::
+
+### Purge queue using wrangler
+The following command will purge messages from your Queue. You will be prompted to enter the Queue name to confirm the operation.
+```sh
+$ npx run wrangler queues purge <QUEUE-NAME>
+
+🚨This operation will permanently delete all the messages in Queue <name>. Type <name> to proceed.
+```
+
+### Does purging my queue affect my bill?
+Purging a Queue counts as a single billable operation. For example, if you purge a Queue which has 100 messages, all 100 messages will be permanently deleted, and you will be billed for 1 billable operation. Refer to the [pricing](/queues/platform/pricing) page for more information about how Queues is billed.
