@@ -4,39 +4,39 @@ pcx_content_type: how-to
 type: overview
 head:
   - tag: title
-    content: Configure Schema Validation
+    content: Configure Schema validation
 ---
 
 import { GlossaryTooltip } from "~/components"
 
-Schema Validation 2.0 allows all corresponding configuration calls to be made via API. This validation centers more around individual <GlossaryTooltip term="API endpoint">endpoints</GlossaryTooltip> and lets you set mitigation actions for each endpoint individually. Additionally, you can use Cloudflare-provided learned schemas that we [learn automatically](/api-shield/management-and-monitoring/#endpoint-schema-learning) from your traffic for individual endpoints.
+Schema validation 2.0 allows all corresponding configuration calls to be made via API. This validation centers more around individual <GlossaryTooltip term="API endpoint">endpoints</GlossaryTooltip> and lets you set mitigation actions for each endpoint individually. Additionally, you can use Cloudflare-provided learned schemas that we [learn automatically](/api-shield/management-and-monitoring/#endpoint-schema-learning) from your traffic for individual endpoints.
 
 :::note
 
-[Classic Schema Validation documentation](/api-shield/reference/classic-schema-validation/) is available for reference only.
+[Classic Schema validation documentation](/api-shield/reference/classic-schema-validation/) is available for reference only.
 :::
 
-## Upload schemas via the API to Schema Validation
+## Upload schemas via the API to Schema validation
 
 1. Upload a schema.
 2. Ensure that your endpoints are added in Endpoint Management.
 3. Set the schema to `active` if it is not already done.
-4. Set the Schema Validation zone-wide action from `none` to `log`.
+4. Set the Schema validation zone-wide action from `none` to `log`.
 5. Send test traffic that violates the schema.
 6. View test traffic in Security Events by filtering for **Service** > **API Shield - Schema Validation**.
 7. Optional:
    - Set a single endpoint to `block`.
-   - Set the Schema Validation zone-wide to `block`.
+   - Set the Schema validation zone-wide to `block`.
    - Temporarily override all schemas zone-wide to `none`.
    - Remove the temporary override.
 
-Cloudflare recommends you to rerun test traffic and monitor the HTTP response codes after changing any settings to ensure Schema Validation is operating as expected.
+Cloudflare recommends you to rerun test traffic and monitor the HTTP response codes after changing any settings to ensure Schema validation is operating as expected.
 
 Settings changes may take a few minutes to implement.
 
 :::note
 
-Endpoints must be listed in Endpoint Management for Schema Validation to match requests.
+Endpoints must be listed in Endpoint Management for Schema validation to match requests.
 :::
 
 ## Configuration
@@ -72,7 +72,7 @@ curl --request POST "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_ga
 }
 ```
 
-By default, Schema Validation is disabled for an uploaded schema so that you can inspect it first. You can upload a schema and enable it immediately by setting the form parameter `validation_enabled=true`.
+By default, Schema validation is disabled for an uploaded schema so that you can inspect it first. You can upload a schema and enable it immediately by setting the form parameter `validation_enabled=true`.
 
 Use a `PATCH` request to activate a schema after inspection.
 
@@ -107,7 +107,7 @@ When a schema is active, it executes the mitigation action specified for each op
 
 ### Add new operations to Endpoint Management
 
-Schemas contain a set of servers, paths, and methods, which together define an operation. Schema Validation only acts on the requests to operations which have been added to the API Shield Endpoint Management. If a schema contains operations which have not been added to Endpoint Management, they can be retrieved together with the configuration information about added operations.
+Schemas contain a set of servers, paths, and methods, which together define an operation. Schema validation only acts on the requests to operations which have been added to the API Shield Endpoint Management. If a schema contains operations which have not been added to Endpoint Management, they can be retrieved together with the configuration information about added operations.
 
 ```bash title="cURL command"
 curl --request GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/user_schemas/{schema_id}/operations?feature=schema_info&operation_status=new&page=1&per_page=5000" \
@@ -417,9 +417,9 @@ curl --request PUT "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gat
 Parameter schemas are updated between every 24 hours up to one week. To ensure that a parameter schema has not been updated during the inspection, Cloudflare recommends that you pass the `last_updated` timestamp of the parameter-schema feature (not the `last_updated` of the whole operation) as an identifier in the timestamp query parameter.
 :::
 
-### Disable Schema Validation
+### Disable Schema validation
 
-To quickly disable schema validation for a whole zone, use `PATCH`. This operation will override all operation-mitigation actions.
+To quickly disable Schema validation for a whole zone, use `PATCH`. This operation will override all operation-mitigation actions.
 
 ```bash title="cURL command"
 curl --request PATCH "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/settings/schema_validation" \
