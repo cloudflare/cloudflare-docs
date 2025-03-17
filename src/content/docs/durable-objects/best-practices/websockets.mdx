@@ -11,7 +11,7 @@ This guide covers how to use Durable Objects as WebSocket servers that can conne
 
 There are two sets of WebSockets API 
 
-1. Using the native Durable Object WebSocket API, which allow your Durable Object to hibernate when not actively doing work without disconnecting clients **recommended**
+1. Native Durable Object WebSocket API, which allows your Durable Object to hibernate without disconnecting clients when not actively doing work  **(recommended)**
 2. Web Standard WebSocket APIs, using the familiar `addEventListener` event pattern.
 
 ### What are WebSockets? 
@@ -401,7 +401,7 @@ Code updates will disconnect all WebSockets. If you deploy a new version of a Wo
 
 :::
 
-### Related resources
+## Related resources
 
 - [Mozilla Developer Network's (MDN) documentation on the WebSocket class](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket)
 - [Cloudflare's WebSocket template for building applications on Workers using WebSockets](https://github.com/cloudflare/websocket-template)
