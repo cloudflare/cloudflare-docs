@@ -159,8 +159,8 @@ The traffic for the application you chose {props.whatHappensApp}.
 
 2. Send a [`DELETE` request](/api/resources/magic_transit/subresources/apps/methods/delete/) to delete an application from the breakout traffic policy.
 
-	<APIRequest
-	path="/accounts/{account_id}/magic/apps/{account_app_id}"
+	<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/app_configs/{id}"
 	method="DELETE"
 	/>
 
