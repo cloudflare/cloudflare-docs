@@ -10,5 +10,62 @@
     },
     "tags": [],
     "properties": [],
-    "schema": {}
+    "schema": {
+      "input": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "minLength": 1,
+            "description": "A query you wish to perform against the provided contexts."
+          },
+          "top_k": {
+            "type": "integer",
+            "default": null,
+            "minimum": 1,
+            "description": "Number of returned results starting with the best score."
+          },
+          "contexts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "One of the provided context content"
+                }
+              }
+            },
+            "description": "List of provided contexts. Note that the index in this array is important, as the response will refer to it."
+          }
+        },
+        "required": [
+          "query",
+          "contexts"
+        ]
+      },
+      "output": {
+        "type": "object",
+        "contentType": "application/json",
+        "properties": {
+          "response": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "Index of the context in the request"
+                },
+                "score": {
+                  "type": "number",
+                  "description": "Score of the context under the index."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
 }

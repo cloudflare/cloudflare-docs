@@ -10,5 +10,74 @@
     },
     "tags": [],
     "properties": [],
-    "schema": {}
+    "schema": {
+        "input": {
+            "type": "object",
+            "properties": {
+                "query": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "A query you wish to perform against the provided contexts. If no query is provided the model with respond with embeddings for contexts"
+                },
+                "contexts": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "text": {
+                                "type": "string",
+                                "minLength": 1,
+                                "description": "One of the provided context content"
+                            }
+                        }
+                    },
+                    "description": "List of provided contexts. Note that the index in this array is important, as the response will refer to it."
+                }
+            },
+            "required": [
+                "contexts"
+            ]
+        },
+        "output": {
+            "type": "object",
+            "contentType": "application/json",
+            "oneOf": [
+                {
+                    "title": "Query",
+                    "properties": {
+                        "response": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "description": "Index of the context in the request"
+                                    },
+                                    "score": {
+                                        "type": "number",
+                                        "description": "Score of the context under the index."
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "title": "Embedding",
+                    "properties": {
+                        "response": {
+                            "type": "array",
+                            "items": {
+                                "type": "array",
+                                "items": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    }
 }
