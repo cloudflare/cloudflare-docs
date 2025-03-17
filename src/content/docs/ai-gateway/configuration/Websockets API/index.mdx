@@ -1,0 +1,26 @@
+---
+title: WebSockets API
+pcx_content_type: configuration
+sidebar:
+  group:
+    badge: Beta
+---
+
+The AI Gateway WebSockets API provides a persistent connection for AI interactions, eliminating repeated handshakes and reducing latency. This API is divided into two categories:
+
+1. **Non-Realtime APIs** - Supports standard WebSocket communication for AI providers, including those that do not natively support WebSockets.
+2. **Realtime APIs** - Designed for AI providers that offer low-latency, multimodal interactions over WebSockets.
+
+## **Key differences**
+
+| Feature                 | Non-Realtime APIs                                                                                | Realtime APIs                                                                                         |
+| :---------------------- | :----------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------- |
+| **Purpose**             | Supports WebSocket-based AI interactions with providers that do not natively support WebSockets. | Enables real-time, multimodal AI interactions for providers that offer dedicated WebSocket endpoints. |
+| **Use Case**            | Text-based queries and responses, such as LLM requests.                                          | Streaming responses for voice, video, and live interactions.                                          |
+| **AI Provider Support** | All AI providers in AI Gateway.                                                                  | Limited to providers offering real-time WebSocket APIs.                                               |
+| **Streaming Support**   | AI Gateway handles streaming via WebSockets.                                                     | Providers natively support real-time data streaming.                                                  |
+
+For details on implementation, see the next section:
+
+- [Non-Realtime WebSockets API](/ai-gateway/configuration/websockets/non-realtime-api.mdx)
+- [Realtime WebSockets API](ai-gateway/configuration/websockets/realtime-api.mdx)
