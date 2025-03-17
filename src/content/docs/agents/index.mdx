@@ -52,9 +52,10 @@ And then define your first Agent by creating a class that extends the `Agent` cl
 ```ts
 import { Agent, AgentNamespace } from 'agents';
 
-export class MyAgent extends Agent<Env, State = unknown> {
+export class MyAgent extends Agent {
 	// Define methods on the Agent:
 	// https://developers.cloudflare.com/agents/api-reference/agents-api/
+	//
 	// Every Agent has built in state via this.setState and this.sql
 	// Built-in scheduling via this.schedule
 	// Agents support WebSockets, HTTP requests, state synchronization and
