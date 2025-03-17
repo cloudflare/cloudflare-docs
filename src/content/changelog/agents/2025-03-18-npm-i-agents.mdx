@@ -93,6 +93,7 @@ The [`agents-starter`](https://github.com/cloudflare/agents-starter) project —
 - TODO
 - Upgraded to use the latest [wrangler v4](/changelog/2025-03-13-wrangler-v4/) release.
 - [Workers AI](/workers-ai/) is now the default AI provider in the [`agents-starter`](https://github.com/cloudflare/agents-starter) project: this uses the new [structured outputs](/changelog/2025-02-25-json-mode/) (or "JSON mode") support now in Workers AI and the [`workers-ai-provider`](https://sdk.vercel.ai/providers/community-providers/cloudflare-workers-ai#generateobject).
+- Changed the internal `zod` schema to be compatible with the limitations of Google's Gemini models, allowing you to use Gemini models with the starter.
 
 If you're new to Agents, you can install and run the `agents-starter` project in two commands:
 
