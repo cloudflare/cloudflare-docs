@@ -106,11 +106,11 @@ Bindings are located on the `env` object, which can be accessed in several ways:
   console.log(`Hi, ${this.env.Name}`);
   ```
 
-### Importing `env`
+### Importing `env` as a global
 
 Importing `env` from `cloudflare:workers` is useful when you need to access a binding
 such as [secrets](/workers/configuration/secrets/) or [environment variables](/workers/configuration/environment-variables/)
-to do initial Worker configuration.
+in top-level global scope. For example, to initialize an API client:
 
 ```js
 import { env } from "cloudflare:workers";
