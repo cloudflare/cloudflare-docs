@@ -12,9 +12,9 @@ entries:
       
       Change date: March 17, 2025
 
-      Cloudflare now combines the IP address threat signal with threshold and botnet data, no longer requiring you to set a sensitivity level. Setting Security Level via API or Terraform to `low`, `medium`, or `high` will have no effect. Values `off`, `essentially_off`, and `under_attack` will still work as before.
+      Cloudflare now combines the IP address threat signal with threshold and botnet data, no longer requiring you to set a sensitivity level. Users will no longer be able to set Security level via the  Cloudflare dashboard. However, users can still rely on the existing API or Terraform configuration to set a Security level.
 
-      Additionally, threat score will always be `0` (zero). If you are using threat score in rule expressions, you should review those expressions to make sure the rule still triggers when appropriate. Cloudflare will audit and migrate your configuration in the future to update any references to threat score. If you are using the Rulesets API or Terraform to push your configuration, you should review your scripts and pipelines before the end of Q1 2026 to prevent issues.
+      If you are using threat score in rule expressions, you should review those expressions to make sure the rule still triggers when appropriate. Cloudflare will audit and migrate your configuration in the future to update any references to threat score. If you are using the Rulesets API or Terraform to push your configuration, you should review your scripts and pipelines before the end of Q1 2026 to prevent issues.
 
   - publish_date: "2025-03-11"
     title: "Cloudflare Radar: Layer 7 attack magnitude parameter"
