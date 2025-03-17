@@ -5,6 +5,12 @@ productLink: "/workers-ai/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-03-17"
+    title: Minor updates to the model schema for llama-3.2-1b-instruct, whisper-large-v3-turbo, llama-guard
+    description: |-
+      - [llama-3.2-1b-instruct](/workers-ai-models/llama-3.2-1b-instruct/) - updated context window to the accurate 60,000
+      - [whisper-large-v3-turbo](workers-ai-models/whisper-large-v3-turbo/) - new hyperparameters available
+      - [llama-guard-3-8b](/workers-ai-models/llama-guard-3-8b/) - the messages array must alternate between `user` and `assistant` to function correctly 
   - publish_date: "2025-02-21"
     title: Workers AI bug fixes
     description: |-
