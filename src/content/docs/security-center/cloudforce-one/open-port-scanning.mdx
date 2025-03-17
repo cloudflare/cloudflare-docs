@@ -1,0 +1,42 @@
+---
+pcx_content_type: how-to
+title: Open Port Scanning
+sidebar:
+  order: 11
+  badge:
+    text: Beta
+---
+
+Open Port Scanning Beta feature allows Magic Transit and Bring your Own IP customers to efficiently monitor their IP ranges for security vulnerabilities. This feature enables users to scan their designated IP ranges, detect any open ports, and receive daily notifications regarding newly opened ports.
+
+You can access this feature via the [API](https://developers.cloudflare.com/api/resources/cloudforce_one/subresources/scans/subresources/config/).
+
+## Prerequisites
+
+- User with specific permission: Cloudforce One Write, Administrator and Super Administrator.
+- Account token: **Custom API Token** >  **Cloudforce One:Edit**.
+
+## Configure Open Port Scanning
+
+To configure Open Port Scanning, follow these steps:
+
+1. Configure the first scan parameters:
+    - **IPs**: Enter the IP ranges you wish to monitor. Ensure that the ranges are correctly formatted to avoid scanning errors. The system will validate if the IPs requested are onboarded to Cloudflare and associated to the account belonging to the API token used.
+    - **Frequency**: Enter the scan frequency in days.
+    - **Ports**: Select the ports to scan. Choose among:
+        - All
+        - Default
+        - List of specific ports
+2. **Scan IPs**: Initiate the scanning process. The system will analyze the specified IP ranges to identify any open ports.
+3. **Generate list of Open Ports**: Once the scan is complete, the API will generate a list of detected open ports for review and action.
+4. **Select Open Ports to list**: Choose which open ports you would like to be notified about. You can exclude  any ports that do not require immediate attention.
+5. **View differences from previous scan**: The system will highlight any changes in open ports since the last scan, allowing you to quickly assess new vulnerabilities.
+6. **Stop Scanning**: If necessary, you can stop  the scanning process at any time.
+7. **Set up alerts**: Configure alerts for specific ports of interest. You will be notified immediately via email or webhook if any of these designated ports become newly open. 
+
+Note: permissions
+
+:::note[Beta feature notice]
+Open Port Scanning feature is currently in closed beta. We appreciate your feedback as we work to enhance its functionality and user experience.
+If you want to subscribe  to this feature or participate in the beta program, [Join Our Closed Beta For Port Scanning](https://www.cloudflare.com/en-gb/lp/open-port-scanning-beta/).
+:::
