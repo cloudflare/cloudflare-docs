@@ -49,8 +49,8 @@ export default {
 
 ### Configuring different environments in Wrangler
 
-You can set up [environments in Wrangler](/workers/wrangler/environments), and specify different values for your environment variables in each environment.
-`vars` is a non-inheritable key. [Non-inheritable keys](/workers/wrangler/configuration/#non-inheritable-keys) are configurable at the top-level, but cannot be inherited by environments and must be specified for each environment.
+[Environments in Wrangler](/workers/wrangler/environments) let you specify different configurations for the same worker, including different values for `vars` in each environment.
+As `vars` is a [non-inheritable key](/workers/wrangler/configuration/#non-inheritable-keys), they are not inherited by environments and must be specified for each environment.
 
 The example below sets up two environments, `staging` and `production`, with different values for `API_HOST` and `API_ACCOUNT_ID`.
 
@@ -62,17 +62,15 @@ name = "my-worker-dev"
 [env.staging.vars]
 API_HOST = "staging.example.com"
 API_ACCOUNT_ID = "staging_example_user"
-SERVICE_X_DATA = { URL = "service-x-api.dev.example", MY_ID = 123 }
 
 [env.production.vars]
 API_HOST = "production.example.com"
 API_ACCOUNT_ID = "production_example_user"
-SERVICE_X_DATA = { URL = "service-x-api.prod.example", MY_ID = 456 }
 ```
 
 </WranglerConfig>
 
-To run Wrangler commands in specific environments, you can pass in the `--env` or `-e` flag. For example, you can develop the Worker in the `dev` environment by running `npx wrangler dev -e=staging`, and deploy it with `npx wrangler deploy -e=production`.
+To run Wrangler commands in specific environments, you can pass in the `--env` or `-e` flag. For example, you can develop the Worker in an environment called `staging` by running `npx wrangler dev --env=staging`, and deploy it with `npx wrangler deploy --env=staging`.
 
 Learn about [environments in Wrangler](/workers/wrangler/environments).
 

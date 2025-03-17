@@ -867,6 +867,7 @@ To bind other Workers to your Worker, assign an array of the below object to the
 - `service` <Type text="string" /> <MetaInfo text="required" />
 
   - The name of the Worker.
+  - To bind to a Worker in a specific [environment](/workers/wrangler/environments), you need to append the environment name to the Worker name. This should be in the format `<worker-name>-<environment-name>`. For example, to bind to a Worker called `worker-name` in its `staging` environment, `service` should be set to `worker-name-staging`.
 
 - `entrypoint` <Type text="string" /> <MetaInfo text="optional" />
 

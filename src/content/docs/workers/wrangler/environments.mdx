@@ -8,10 +8,11 @@ description: Use environments to create different configurations for the same Wo
 import { WranglerConfig } from "~/components";
 
 Wrangler allows you to use environments to create different configurations for the same Worker application. Environments are configured in the Worker's [Wrangler configuration file](/workers/wrangler/configuration/).
+There is a default (top-level) environment and you can create named environments that provide environment-specific configuration.
 
 Review the following environments flow:
 
-1. You have created a Worker, named `my-worker` for example.
+1. Create a Worker, named `my-worker` for example.
 2. Create an environment, for example `dev`, in the Worker's [Wrangler configuration file](/workers/wrangler/configuration/), by adding a `[env.<ENV_NAME>]` section.
 
 <WranglerConfig>
@@ -55,7 +56,7 @@ Cloudflare effectively creates a new Worker for you when you create a Worker wit
 
 [Non-inheritable keys](/workers/wrangler/configuration/#non-inheritable-keys) are configurable at the top-level, but cannot be inherited by environments and must be specified for each environment.
 
-[Bindings](/workers/runtime-apis/bindings/) and [environment variables](/workers/configuration/environment-variables/) must be specified per each [environment](/workers/wrangler/environments/) in your [Wrangler configuration file](/workers/wrangler/configuration/).
+For example, [bindings](/workers/runtime-apis/bindings/) and [environment variables](/workers/configuration/environment-variables/) are non-inheritable, and must be specified per [environment](/workers/wrangler/environments/) in your [Wrangler configuration file](/workers/wrangler/configuration/).
 
 Review the following example Wrangler file:
 
@@ -83,8 +84,8 @@ kv_namespaces = [
 
 ### Service bindings
 
-To use a [service binding](/workers/wrangler/configuration/#service-bindings) that targets a Worker in a specific environment, you need to include the environment in `service` field. This should be in the format `<worker-name>-<environment-name>`.
-In the example below, we have two Workers, both with a `staging` environment. `worker-b` has a service binding to `worker-a`. Note how the service binding in the `staging` environment points to `worker-a-staging`, whereas the top-level service binding points to `worker-a`.
+To use a [service binding](/workers/wrangler/configuration/#service-bindings) that targets a Worker in a specific environment, you need to append the environment name to the target Worker name in the `service` field. This should be in the format `<worker-name>-<environment-name>`.
+In the example below, we have two Workers, both with a `staging` environment. `worker-b` has a service binding to `worker-a`. Note how the `service` field in the `staging` environment points to `worker-a-staging`, whereas the top-level service binding points to `worker-a`.
 
 <WranglerConfig>
 
