@@ -1,0 +1,131 @@
+---
+updated: 2024-10-28
+difficulty: Beginner
+content_type: Tutorial
+pcx_content_type: tutorial
+title: Import a CSV file to D1 using Wrangler CLI
+products:
+  - D1
+languages:
+  - JavaScript
+  - TypeScript
+  - SQL
+---
+
+import { Render, Steps } from "~/components";
+
+In this tutorial, you will learn how to import a CSV file to D1 using the Wrangler CLI.
+
+## Prerequisites
+
+<Render file="prereqs" product="workers" />
+
+## 1. Install and Verify Wrangler
+
+You'll use Wrangler to interact with D1. If you don't have it installed, follow the steps in the [Wrangler installation guide](/workers/wrangler/install-and-update/).
+
+If you're unsure if Wrangler is installed, run the following command to verify:
+
+```bash
+wrangler --version
+```
+
+## 2. Set up a D1 Database
+
+You can create a D1 database using the [Wrangler CLI](/workers/wrangler/install-and-update/) using the following command:
+
+    ```bash
+    # Create a D1 database
+    npx wrangler d1 create d1-csv-tutorial
+    ```
+
+Edit or create your `wrangler.toml` file to include the following:
+
+```toml
+[[ d1_databases ]]
+binding = "DB"
+database_id = "your-database-id"
+database_name = "d1-csv-tutorial"
+```
+
+## 3. Convert CSV to SQL
+
+D1 does not support importing CSV files directly. You need to convert your CSV to a SQL file. If you don't have a CSV file, you can use the NASA meteorite dataset from [here](https://data.nasa.gov/Space-Science/Meteorite-Landings/gh4g-9sfh/about_data).
+
+You'll be using SQLite to convert your CSV to a SQL file. For instructions on installing SQLite, refer to the [SQLite installation guide](https://www.sqlite.org/download.html).
+
+<Steps>
+1. Create a SQLite database.
+
+    ```bash
+    sqlite3 meteorites.db
+    ```
+
+2.  Inside the SQLite shell, create a table. You're matching the column names to the column names in your meteorites CSV file. If you're using a different CSV file, make sure to match the table and column names to the data contained in your CSV file.
+
+    ```sql
+    CREATE TABLE meteorites (
+        name TEXT,
+        id INTEGER PRIMARY KEY,
+        nametype TEXT,
+        recclass TEXT,
+        mass REAL,
+        fall TEXT,
+        year INTEGER,
+        reclat REAL,
+        reclong REAL,
+        GeoLocation TEXT
+    );
+    ```
+
+3.  Import the CSV file into the database.
+
+    ```sql
+    .mode csv
+    .import meteorites.csv meteorites
+    .exit
+    ```
+
+4.  Export the Database to a SQL file.
+
+    ```bash
+    sqlite3 -header -csv meteorites.db ".dump" > meteorites.sql
+    ```
+
+</Steps>
+
+## 4. Import SQL Data into Cloudflare D1
+
+Now that you have your SQL file, you can import it into your D1 database using the following command:
+
+```bash
+npx wrangler d1 import d1-csv-tutorial meteorites.sql
+```
+
+Once your import is complete, you can verify that the data was imported by running the following command:
+
+```bash
+npx wrangler d1 execute d1-csv-tutorial --command="SELECT COUNT(*) FROM meteorites;"
+```
+
+Or you can preview the data by running the following command:
+
+```bash
+npx wrangler d1 execute d1-csv-tutorial --command="SELECT * FROM meteorites;"
+```
+
+You will now see your target D1 table populated with the example data.
+
+## Summary
+
+By completing this tutorial, you have
+
+1. Set up a D1 database.
+2. Converted a CSV file to a SQL file.
+3. Imported the SQL file into a D1 database.
+4. Queried the data in the D1 database.
+
+## Next steps
+
+- Learn more about [D1](/d1/)
+- Learn more about [Wrangler](/workers/wrangler/)
