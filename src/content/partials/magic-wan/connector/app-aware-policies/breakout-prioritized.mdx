@@ -96,11 +96,11 @@ The traffic for the application you chose {props.whatHappensApp}.
 2.  Send a [`POST` request](/api/resources/magic_transit/subresources/apps/methods/create/) to add new apps to the breakout traffic policy.
 
 	<APIRequest
-	path="/accounts/{account_id}/magic/apps"
+	path="/accounts/{account_id}/magic/sites/{site_id}/app_configs"
 	method="POST"
 	json={{
-		"name": "<MANAGED_APP_ID>",
-    "type": "<BREAKOUT_OR_PRIORITY>"
+		"managed_app_id": "<MANAGED_APP_ID>",
+		"breakout": true
 	}}
 	/>
 
