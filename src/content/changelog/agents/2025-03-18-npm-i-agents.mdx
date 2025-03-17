@@ -85,6 +85,7 @@ import type { Env } from "../server";
    async getHistory() {
      return this.sql`SELECT * FROM history ORDER BY created_at DESC LIMIT 10`;
    }
+}
 ```
 ```tsx
 // client.tsx
