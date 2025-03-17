@@ -532,7 +532,7 @@ export class YourAgent extends Agent {
       )
     `;
   }
-  
+
   async createUser(id: string, name: string, email: string) {
     // Insert a new user
     this.sql`
@@ -540,16 +540,16 @@ export class YourAgent extends Agent {
       VALUES (${id}, ${name}, ${email}, ${Date.now()})
     `;
   }
-  
+
   async getUserById(id: string): Promise<User | null> {
     // Query a user by ID
     const users = this.sql<User>`
       SELECT * FROM users WHERE id = ${id}
     `;
-  
+
     return users.length ? users[0] : null;
   }
-  
+
   async searchUsers(term: string): Promise<User[]> {
     // Search users with a wildcard
     return this.sql<User>`
@@ -736,73 +736,6 @@ function useAgent<State = unknown>(
   setState: (state: State) => void
 };
 ```
-
-<TypeScriptExample>
-
-```tsx
-// Example of using useAgent in a React component
-import { useAgent } from "agents/react";
-import { useState } from "react";
-
-interface TaskState {
-  tasks: Array<{ id: string; text: string; completed: boolean }>;
-  filter: "all" | "active" | "completed";
-}
-
-function TaskManager() {
-  const [newTask, setNewTask] = useState("");
-  
-  // Connect to a task-manager Agent instance
-  const agent = useAgent<TaskState>({
-    agent: "task-manager",
-    name: "user-123-tasks",
-    onStateUpdate: (state, source) => {
-      console.log(`State updated from ${source}`, state);
-    },
-    onOpen: () => console.log("Connected to task manager agent"),
-    onClose: () => console.log("Disconnected from task manager agent")
-  });
-  
-  function addTask(e: React.FormEvent) {
-    e.preventDefault();
-    if (!newTask.trim()) return;
-    
-    // Update the Agent's state
-    agent.setState({
-      ...agent.state,
-      tasks: [
-        ...(agent.state?.tasks || []),
-        { id: Date.now().toString(), text: newTask, completed: false }
-      ]
-    });
-    
-    setNewTask("");
-  }
-  
-  return (
-    <div>
-      <h1>Task Manager</h1>
-      <form onSubmit={addTask}>
-        <input
-          value={newTask}
-          onChange={e => setNewTask(e.target.value)}
-          placeholder="Add a new task"
-        />
-        <button type="submit">Add</button>
-      </form>
-      <ul>
-        {agent.state?.tasks?.map(task => (
-          <li key={task.id}>{task.text}</li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-export default TaskManager;
-```
-
-</TypeScriptExample>
 
 ### Chat Agent
 
