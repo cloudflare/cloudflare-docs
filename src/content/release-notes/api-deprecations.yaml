@@ -7,13 +7,14 @@ productAreaLink: /fundamentals/reference/changelog/platform/
 entries:
 
   - publish_date: "2025-03-17"
-    title: "Security Center: Security level and Threat Score are deprecated"
+    title: "Security Level and Threat Score changes"
     description: |-
-      Deprecation date: March 17, 2025
+      
+      Change date: March 17, 2025
 
-      End of life date: March 31, 2026
+      Cloudflare now combines the IP address threat signal with threshold and botnet data, no longer requiring you to set a sensitivity level. Setting Security Level via API or Terraform to `low`, `medium`, or `high` will have no effect. Values `off`, `essentially_off`, and `under_attack` will still work as before.
 
-      Security Level and Threat Score are deprecated and will be removed on March 17, 2025. They will no longer be available via the Rulesets API or Terraform. They will not be available to be configured on the Cloudflare dashboard.
+      Additionally, threat score values will no longer be populated. If you are using threat score in rule expressions, you will not need to make any changes; Cloudflare will audit and migrate your configuration in the future to update any references to threat score. However, if you are using the Rulesets API or Terraform to push your configuration, you should review your scripts and pipelines before the end of Q1 2026 to prevent issues.
 
   - publish_date: "2025-03-11"
     title: "Cloudflare Radar: Layer 7 attack magnitude parameter"
