@@ -1,0 +1,50 @@
+---
+{}
+---
+
+import { Tabs, TabItem } from "~/components";
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector                 | Operator | Value   | Action |
+| ------------------------ | -------- | ------- | ------ |
+| Request Context Category | is       | Present | Block  |
+
+</TabItem>
+<TabItem label="API">
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "All-DNS-Bock-Category-Matches-In-Request",
+  "description": "Block all category matches in the requet edns context",
+  "precedence": 30,
+  "enabled": true,
+  "action": "block",
+  "filters": [
+    "dns"
+  ],
+  "traffic": "dns.categories_in_request_context_matches",
+  "identity": ""
+}'
+```
+
+</TabItem>
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "block_content_categories" {
+  account_id  = var.cloudflare_account_id
+  name        = "All-DNS-Bock-Category-Matches-In-Request"
+  description = "Block all category matches in the requet edns context"
+  enabled     = true
+  action      = "block"
+  filters     = ["dns"]
+  traffic     = "dns.categories_in_request_context_matches"
+  identity    = ""
+}
+```
+
+</TabItem> </Tabs>
