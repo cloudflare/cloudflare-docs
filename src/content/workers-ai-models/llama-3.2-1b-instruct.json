@@ -12,7 +12,7 @@
     "properties": [
         {
             "property_id": "context_window",
-            "value": "128000"
+            "value": "60000"
         },
         {
             "property_id": "terms",
