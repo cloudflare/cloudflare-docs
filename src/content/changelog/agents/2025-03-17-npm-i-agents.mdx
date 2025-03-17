@@ -62,7 +62,7 @@ import { Agent, callable } from 'agents';
 // TODO: replace this with a real example
 class MyAgent extends Agent {
 	@callable()
-  async getHistory(limit = 5: number): Promise<string[]> {
+  async getHistory(limit: number = 10): Promise<string[]> {
   	// Allow a client to directly fetch chat history
    	return this.state.chatHistory.slice(-limit)
   }
