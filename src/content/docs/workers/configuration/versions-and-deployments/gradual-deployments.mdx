@@ -240,7 +240,7 @@ Versions of Worker bundles containing new Durable Object migrations cannot be up
 npx wrangler versions deploy
 ```
 
-In order to limit the blast radius of Durable Object migration deployments, migrations should be deployed independently of other code changes.
+To limit the blast radius of Durable Object migration deployments, migrations should be deployed independently of other code changes.
 
 To understand why Durable Object migrations are atomic operations, consider the hypothetical example of gradually deploying a delete migration. If a delete migration were applied to 50% of Durable Object instances, then Workers requesting those Durable Object instances would fail because they would have been deleted. To do this without producing errors, a version of the Worker which does not depend on any Durable Object instances would have to have already been rolled out. At which point you can deploy a delete migration without affecting any traffic and there is no reason to do so gradually.
 
