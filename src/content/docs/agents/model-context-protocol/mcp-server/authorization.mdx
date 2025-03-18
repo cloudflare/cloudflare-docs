@@ -3,7 +3,7 @@ title: Authorization
 sidebar:
   order: 3
   group:
-    hideIndex: false
+    hideIndex: true
 ---
 
 import { DirectoryListing } from "~/components";
@@ -16,13 +16,13 @@ When building a [Model Context Protocol (MCP)](https://modelcontextprotocol.io) 
 
 The Model Context Protocol uses [a subset of OAuth 2.1 for authorization](https://spec.modelcontextprotocol.io/specification/draft/basic/authorization/). OAuth allows your users to grant limited access to resources, without them having to share API keys or other credentials.
 
-Cloudflare provides an [OAuth Provider Library](https://github.com/geelen/mcp-remote-examples/tree/main/.vendor/workers-oauth-provider) that implements the provider side of the OAuth 2.1 protocol, allowing you to easily add authorization to your MCP server.
+Cloudflare provides an [OAuth Provider Library](https://github.com/cloudflare/ai/demos/remote-mcp-server/lib/workers-oauth-provider) that implements the provider side of the OAuth 2.1 protocol, allowing you to easily add authorization to your MCP server.
 
 You can use the OAuth Provider Library in three ways:
 
 1. **Your Worker handles authorization itself.** Your MCP server, running on Cloudflare, handles the complete OAuth flow. ([Example](/agents/model-context-protocol/mcp-server/getting-started/))
-2. **Integrate with a third-party OAuth provider**, such as GitHub or Google. ([Example](/agents/model-context-protocol/mcp-server/examples/third-party-oauth-provider/))
-3. **Integrate with your own OAuth provider**, including authorization-as-a-service providers such as Stytch and Auth0. ([Example](/agents/model-context-protocol/mcp-server/examples/external-oauth-provider/))
+2. **Integrate directly with a third-party OAuth provider**, such as GitHub or Google. ([Example](/agents/model-context-protocol/mcp-server/examples/github/))
+3. **Integrate with your own OAuth provider**, including authorization-as-a-service providers you might already rely on, such as Stytch and Auth0.
 
 The following sections describe each of these options and link to runnable code examples for each.
 
@@ -30,26 +30,19 @@ The following sections describe each of these options and link to runnable code 
 
 ### (1) Your MCP Server handles authorization itself
 
-Your MCP Server, using the Cloudflare [MCP Server SDK](/agents/model-context-protocol/mcp-server/getting-started/) and [OAuth Provider Library](/agents/model-context-protocol/mcp-server/authorization/oauth-provider-api-reference/), can handle the complete OAuth authorization flow, without any third-party involvement.
+Your MCP Server, using [`workers-mcp`](/agents/model-context-protocol/mcp-server/getting-started/) and [OAuth Provider Library](/agents/model-context-protocol/mcp-server/authorization/oauth-provider-api-reference/), can handle the complete OAuth authorization flow, without any third-party involvement.
 
-The [Workers OAuth Provider Library](/agents/model-context-protocol/mcp-server/authorization/oauth-provider-api-reference/) is a Cloudflare Worker that implements a [`fetch()` handler](/workers/runtime-apis/handlers/fetch/), and handles incoming requests to your MCP server. You provide your own handlers for your MCP Server's API, and autentication and authorization logic, and URI paths for the OAuth endpoints, and the SDK handles the rest.
+The [Workers OAuth Provider Library](/agents/model-context-protocol/mcp-server/authorization/oauth-provider-api-reference/) is a Cloudflare Worker that implements a [`fetch()` handler](/workers/runtime-apis/handlers/fetch/), and handles incoming requests to your MCP server.
 
-{/* TODO: Update link */}
-The OAuth Provider Library comes with an [example handler implementation](https://github.com/geelen/mcp-remote-examples/tree/main/02-user-password/src/routes) for autentication and authorization, referenced below as `defaultHandler`:
-
-{/* TODO: GithubCodeComponent */}
+You provide your own handlers for your MCP Server's API, and autentication and authorization logic, and URI paths for the OAuth endpoints, as shown below:
 
 ```ts
-import OAuthProvider from "workers-oauth-provider";
-
-// TODO: Bunch of naming decisions here
 export default new OAuthProvider({
 	apiRoute: "/mcp",
 	// Your MCP server:
 	apiHandler: MyMCPServer.Router,
 	// Your handler for authentication and authorization:
 	defaultHandler: OAuthProvider.defaultHandler,
-	// TODO: Should these have default values?
 	authorizeEndpoint: "/authorize",
 	tokenEndpoint: "/token",
 	clientRegistrationEndpoint: "/register",
@@ -76,28 +69,23 @@ sequenceDiagram
     Note over C,M: Begin standard MCP message exchange
 ```
 
-Remember — [authentication is different from authorization](https://www.cloudflare.com/learning/access-management/authn-vs-authz/). Your MCP Server can handle authorization itself, while still relying on an external authentication service to first authenticate users. The [example](/agents/model-context-protocol/mcp-server/) in getting started provides a mock authentdcation flow. You will need to implement your own authentication handler — either handling authentication yourself, or using an external authentication service such as Clerk, Stytch, Auth0 or others.
-
-For a step-by-step example, refer to the [Worker as OAuth Provider](/agents/model-context-protocol/mcp-server/authorization/worker-as-oauth-provider/) section., and refer to the [API reference docs for the OAuth Provider SDK](/agents/model-context-protocol/mcp-server/authorization/oauth-sdk/).
+Remember — [authentication is different from authorization](https://www.cloudflare.com/learning/access-management/authn-vs-authz/). Your MCP Server can handle authorization itself, while still relying on an external authentication service to first authenticate users. The [example](/agents/model-context-protocol/mcp-server/getting-started) in getting started provides a mock authentdcation flow. You will need to implement your own authentication handler — either handling authentication yourself, or using an external authentication services.
 
 ### (2) Third-party OAuth Provider
 
-The OAuth Provider Library can be configured to use a third-party OAuth provider, such as [GitHub](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app) or [Google](https://developers.google.com/identity/protocols/oauth2).
+The OAuth Provider Library can be configured to use a third-party OAuth provider, such as GitHub or Google. You can see a complete example of this in the [GitHub example](/agents/model-context-protocol/mcp-server/examples/github/).
 
 When you use a third-party OAuth provider, you must provide a handler to the `OAuthProvider` that implements the OAuth flow for the third-party provider.
 
-```ts
-import OAuthProvider from "workers-oauth-provider";
+```ts ins="MyAuthHandler"
 import MyAuthHandler from "./auth-handler";
 
-// TODO: Bunch of naming decisions here
 export default new OAuthProvider({
 	apiRoute: "/mcp",
 	// Your MCP server:
 	apiHandler: MyMCPServer.Router,
-	// Your handler for authentication and authorization with the third-party provider:
+	// Replace this handler with your own handler for authentication and authorization with the third-party provider:
 	defaultHandler: MyAuthHandler,
-	// TODO: Should these have default values?
 	authorizeEndpoint: "/authorize",
 	tokenEndpoint: "/token",
 	clientRegistrationEndpoint: "/register",
@@ -134,13 +122,7 @@ Read the docs for the [Workers oAuth Provider Library](/agents/model-context-pro
 
 If your application already implements an Oauth Provider itself, or you use Stytch, Auth0, or authorization-as-a-service provider, you can use this in the same way that you would use a third-party OAuth provider, described above in (2).
 
-The following examples show how to use the OAuth Provider Library with an external OAuth provider:
-
-- [Stytch](/agents/model-context-protocol/mcp-server/examples/stytch/)
-- [Auth0](/agents/model-context-protocol/mcp-server/examples/auth0/)
-
 ## Next steps
 
 - [Learn how to use the OAuth Provider SDK](/agents/model-context-protocol/mcp-server/authorization/oauth-provider-api-reference/)
-- [Learn how to use a third-party OAuth provider](/agents/model-context-protocol/mcp-server/examples/third-party-oauth-provider/)
-- [Learn how to bring your own OAuth provider](/agents/model-context-protocol/mcp-server/examples/external-oauth-provider/)
+- Learn how to use a third-party OAuth provider, using the [GitHub](/agents/model-context-protocol/mcp-server/examples/github/) and [Slack](/agents/model-context-protocol/mcp-server/examples/slack/) examples.

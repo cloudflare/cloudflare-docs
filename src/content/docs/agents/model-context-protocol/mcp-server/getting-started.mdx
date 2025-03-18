@@ -9,24 +9,20 @@ import { Details, Render, PackageManagers } from "~/components";
 
 ## Deploy your first MCP server
 
-This guide will walk you through how to deploy an [example MCP server](https://github.com/geelen/mcp-remote-examples/tree/main/02-user-password) to your Cloudflare account. You will then customize this example to suit your needs.
+This guide will walk you through how to deploy an [example MCP server](https://github.com/cloudflare/ai/demos/remote-mcp-server) to your Cloudflare account. You will then customize this example to suit your needs.
 
-{/* TODO: Update link to example */}
-The link below will guide you through everything you need to do to deploy this [example MCP server](https://github.com/geelen/mcp-remote-examples/tree/main/02-user-password) to your Cloudflare account:
+The link below will guide you through everything you need to do to deploy this [example MCP server](https://github.com/cloudflare/ai/demos/remote-mcp-server) to your Cloudflare account:
 
-{/* TODO: Update deploy to Workers button */}
-[![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://dash.cloudflare.com/?to=/:account/workers-and-pages/create/deploy-to-workers&repository=https://github.com/cloudflare/mcp-server-example)
+[![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://dash.cloudflare.com/?to=/:account/workers-and-pages/create/deploy-to-workers&repository=https://github.com/cloudflare/ai/demos/remote-mcp-server)
 
 At the end of this process, you will have a new git repository on your GitHub or GitLab account for your MCP server, configured to automatically deploy Cloudflare each time you push a change or merge a pull request to the main branch of the repository. You can then clone this repository, [develop locally](/agents/model-context-protocol/mcp-server/getting-started/#local-development), and start writing code and building.
 
 Alternatively, you can use the command line as shown below to create a new MCP Server on your local machine.
 
-{/* TODO: Update path to example */}
-
 <PackageManagers
 	type="create"
 	pkg="cloudflare@latest"
-	args={"my-mcp-server --template=geelen/mcp-remote-examples/02-user-password"}
+	args={"my-mcp-server --template=cloudflare/ai/demos/remote-mcp-server"}
 />
 
 Now, you have the MCP server setup, with dependencies installed. Move into that project folder:
@@ -87,35 +83,74 @@ The example MCP server you just deployed above acts as an OAuth provider to MCP 
 
 In the next section, you will add a real authentication provider to your MCP server. Even if you already have an authentication provider in place, following these steps will show you more clearly how to integrate it with your MCP server.
 
-We'll use GitHub as the authentication provider here, but you can use any OAuth provider that supports the OAuth 2.0 specification, and we have examples for:
+We'll use GitHub as the authentication provider here, but you can use any OAuth provider that supports the OAuth 2.0 specification.
 
-- [Stytch](/agents/model-context-protocol/mcp-server/examples/stytch/)
-- [Clerk](/agents/model-context-protocol/mcp-server/examples/clerk/)
-- [Google](/agents/model-context-protocol/mcp-server/examples/google/)
+### Step 1 — Create and deploy a new MCP server
 
-### Step 1 — Update the default handler
+Run the following command to create a new MCP server:
 
-In your example MCP server, open `src/index.ts`, and change the value of `defaultHandler` in to instead use the `GitHubHandler`:
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"my-mcp-server --template=cloudflare/ai/demos/remote-mcp-server-github"}
+/>
 
-{/* TODO: GitHub Code Component */}
+Now, you have the MCP server setup, with dependencies installed. Move into that project folder:
+
+```sh
+cd my-mcp-server
+```
+
+Then, run the following command to deploy the MCP server:
+
+```sh
+npx wrangler@latest deploy
+```
+
+You'll notice that in the example MCP server, if you open `src/index.ts`, the primary difference is that the `defaultHandler` is set to the `GitHubHandler`:
 
 ```ts ins="OAuthProvider.GitHubHandler"
+import GitHubHandler from "./github-handler";
+
 export default new OAuthProvider({
 	apiRoute: "/sse",
 	apiHandler: MyMCP.Router,
-	defaultHandler: OAuthProvider.GitHubHandler,
+	defaultHandler: GitHubHandler,
 	authorizeEndpoint: "/authorize",
 	tokenEndpoint: "/token",
 	clientRegistrationEndpoint: "/register",
 });
 ```
 
-{/* TODO: Update code link */}
-This will ensure that your users are redirected to GitHub to authenticate. If you're curious to understand what the `GitHubHandler` does you can read the code [here](https://github.com/geelen/mcp-remote-examples/blob/main/04-oauth-pivot/src/index.ts#L48-L152).
+This will ensure that your users are redirected to GitHub to authenticate.
 
 ### Step 2 — Create a GitHub OAuth App
 
-{/* TODO: instructions */}
+You'll need to create two [GitHub OAuth Apps](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app) to use GitHub as an authentication provider for your MCP server — one for local development, and one for production.
+
+#### First create a new OAuth App for local development
+
+Navigate to [github.com/settings/developers](https://github.com/settings/developers) to create a new OAuth App with the following settings:
+
+- **Application name**: `My MCP Server (local)`
+- **Homepage URL**: `http://localhost:8787`
+- **Authorization callback URL**: `http://localhost:8787/callback`
+
+#### Next, run your MCP server locally
+
+Run the following command to start the development server:
+
+```sh
+npm start
+```
+
+#### Second — create a new OAuth App for production
+
+Navigate to [github.com/settings/developers](https://github.com/settings/developers) to create a new OAuth App with the following settings:
+
+- **Application name**: `My MCP Server (production)`
+- **Homepage URL**: Enter the workers.dev URL of your deployed MCP server (ex: `worker-name.account-name.workers.dev`)
+- **Authorization callback URL**: Enter the `/callback` path of the workers.dev URL of your deployed MCP server (ex: `worker-name.account-name.workers.dev/callback`)
 
 ## Next steps
 
