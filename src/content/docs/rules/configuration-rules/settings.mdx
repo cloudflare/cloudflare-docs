@@ -266,9 +266,10 @@ API configuration property name: `"rocket_loader"` (boolean).
 
 [Security Level](/waf/tools/security-level/) controls Managed Challenges for requests from low reputation IP addresses.
 
-On the Cloudflare dashboard, you can turn Under Attack mode on or off. 
+On the Cloudflare dashboard, you can turn Under Attack mode on or off.
 
 - Off
+- Essentially Off
 - I'm Under Attack
 
 Refer to [Under Attack mode](/fundamentals/reference/under-attack-mode/) for more information.
@@ -277,11 +278,11 @@ Refer to [Under Attack mode](/fundamentals/reference/under-attack-mode/) for mor
 
 API configuration property name: `"security_level"` (string).
 
-API values: `"off"`, `"essentially_off"`, `"low"`, `"medium"`, `"high"`, `"under_attack"`.
+API values: `"off"`, `"essentially_off"`, `"under_attack"`.
 
 ```json title="API configuration example"
 "action_parameters": {
-  "security_level": "low"
+  "security_level": "under_attack"
 }
 ```
 

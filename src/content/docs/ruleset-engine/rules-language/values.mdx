@@ -14,7 +14,7 @@ The values that populate the lookup tables of the Rules language are drawn from 
 
 - **Primitive properties** are obtained directly from the request (`http.request.uri.path`, for example).
 - **Derived values** are the product of a transformation, composition, or basic operation. For example, the transformation `lower(http.request.uri.path)` converts the value of `http.request.uri.path` to lowercase.
-- **Computed values** are the product of a lookup, computation, or other intelligence. For example, Cloudflare uses a machine learning process to dynamically calculate threat scores, represented by the `cf.threat_score` field.
+- **Computed values** are the product of a lookup, computation, or other intelligence. For example, Cloudflare uses a machine learning process to dynamically calculate attack scores, represented by `cf.waf.score*` fields.
 
 Besides these values, expressions may also contain literal values. These are static, known values that you incorporate into expressions to compare them with values from request/response fields with or without any transformations.
 
