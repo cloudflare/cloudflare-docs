@@ -59,6 +59,8 @@ The example below sets up two environments, `staging` and `production`, with dif
 ```toml
 name = "my-worker-dev"
 
+#top level environment
+[vars]
 API_HOST = "api.example.com"
 
 [env.staging.vars]
