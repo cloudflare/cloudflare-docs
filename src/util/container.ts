@@ -37,9 +37,14 @@ export async function componentToString(
 	component: AstroComponentFactory,
 	props: any,
 ) {
-	const renderers = await loadRenderers([getContainerRenderer()]);
-	const container = await experimental_AstroContainer.create({
-		renderers,
+	const container = await experimental_AstroContainer.create({});
+	container.addServerRenderer({
+		name: "astro:jsx",
+		renderer: mdxRenderer,
+	});
+	container.addServerRenderer({
+		name: "@astrojs/react",
+		renderer: reactRenderer,
 	});
 
 	const html = await container.renderToString(component, {
