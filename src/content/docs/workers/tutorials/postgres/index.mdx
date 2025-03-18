@@ -103,13 +103,9 @@ npx wrangler secret put DB_URL
 
 Set your `DB_URL` secret locally in a `.dev.vars` file as documented in [Local Development with Secrets](/workers/configuration/secrets/).
 
-<WranglerConfig>
-
-```toml
+```toml title='.dev.vars'
 DB_URL="<ENTER YOUR POSTGRESQL CONNECTION STRING>"
 ```
-
-</WranglerConfig>
 
 ### Set explicit parameters
 
