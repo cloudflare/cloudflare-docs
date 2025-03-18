@@ -8,7 +8,11 @@ entries:
   - publish_date: "2025-03-18"
     title: WebSockets
     description: |-
+<<<<<<< HEAD
       Added [WebSockets API](/ai-gateway/configuration/websockets-api/) to provide a persistent connection for AI interactions, eliminating repeated handshakes and reducing latency.
+=======
+      Added [WebSockets API](/ai-gateway/configuration/websockets-api/) provide a persistent connection for AI interactions, eliminating repeated handshakes and reducing latency.
+>>>>>>> 961b19fac (added release note)
   - publish_date: "2025-02-26"
     title: Guardrails
     description: |-
