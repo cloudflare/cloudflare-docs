@@ -5,13 +5,15 @@ sidebar:
   order: 3
 ---
 
-Cloudflare can render SSH, VNC, and RDP applications in a browser without the need for client software or end-user configuration changes. For SSH and VNC, user email prefixes must match their username on the server. RDP leverages your existing Windows username and passwords for authenticating to the Windows server; Cloudflare does not manage any credentials on the Windows server.
+import { Render } from "~/components";
+
+Cloudflare can render SSH, VNC, and RDP applications in a browser without the need for client software or end-user configuration changes. For SSH and VNC, user email prefixes must match their username on the server. RDP leverages your existing Windows usernames and passwords for authenticating to the Windows server; Cloudflare does not manage any credentials on the Windows server.
 
 ## Limitations
 
 - Browser rendering is only supported for [self-hosted public applications](/cloudflare-one/applications/configure-apps/self-hosted-public-app/), not private IPs or hostnames.
 - You can only render a browser-rendered terminal on domains and subdomains, not on specific paths.
-- Cloudflare does not control the length of an active SSH, VNC, or RDP session. [Application session durations](/cloudflare-one/identity/users/session-management/) only determine the window in which a user can initiate a new connection.
+- <Render file="access/self-hosted-app/ssh-sessions" />
 
 ## Turn on browser rendering
 

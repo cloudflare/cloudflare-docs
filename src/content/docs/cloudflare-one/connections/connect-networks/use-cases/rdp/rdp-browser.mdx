@@ -14,9 +14,11 @@ import { Render, GlossaryTooltip  } from "~/components"
 Browser-based RDP is currently in closed beta. To try out the feature, contact your account team.
 :::
 
-With Cloudflare Zero Trust, users can connect to an RDP server without installing an RDP client or the WARP client on their device. Browser-based RDP requires installing `cloudflared` on your RDP server (or any other host machine within the private network) and routing RDP traffic over a public hostname.
+With Cloudflare Zero Trust, users can connect to an RDP server without installing an RDP client or the [WARP client](/cloudflare-one/connections/connect-devices/warp/) on their device. Browser-based RDP leverages [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/), which creates a secure, outbound-only connection from your RDP server to Cloudflare's global network. Setup involves running the `cloudflared` daemon on the RDP server (or any other host machine within the private network) and routing RDP traffic over a public hostname.
 
-The user logs in first to the App Launcher with their Cloudflare Access credentials and then initiates an RDP connection within the browser to their Windows machine. Users will authenticate to the Windows machine using their pre-configured Windows username and password. Cloudflare does not manage any credentials on the Windows server. A user may also navigate directly to the Windows server using a public URL. The authentication flow will be unchanged; first users must log in to Cloudflare Access and then use their Windows credentials to authenticate to the Windows machine.
+There are two ways for users to [reach the RDP server in their browser](#4-connect-as-a-user):
+- **App Launcher**: Users can log in to the [Access App Launcher](/cloudflare-one/applications/app-launcher/) with their Cloudflare Access credentials and then initiate an RDP connection within the browser to their Windows machine. Users will authenticate to the Windows machine using their pre-configured Windows username and password. Cloudflare does not manage any credentials on the Windows server.
+- **Direct URL**: A user may also navigate directly to the Windows server using a public URL. The authentication flow is the same as for the App Launcher; first users must log in to Cloudflare Access and then use their Windows credentials to authenticate to the Windows machine.
 
 Browser-based RDP can be used in conjunction with [routing over WARP](/cloudflare-one/connections/connect-networks/use-cases/rdp/rdp-warp-to-tunnel/) so that there are multiple ways to connect to the server. You can reuse the same Cloudflare Tunnel when configuring each connection method.
 
@@ -58,7 +60,7 @@ Browser-based RDP can be used in conjunction with [routing over WARP](/cloudflar
 
 10. In **Port**, enter the [RDP listening port](https://docs.microsoft.com/en-us/windows-server/remote/remote-desktop-services/clients/change-listening-port) of your server. It will likely be port `3389`.
 
-11. (Optional) If you run RDP on more than one port, select **Add new target criteria** and reconfigure the same target hostname with the different port number.
+11. (Optional) If you run RDP on more than one port, select **Add new target criteria** and reconfigure the same target hostname(s) with the different port number.
 
 12. <Render file="access/add-access-policies" product="cloudflare-one" />
 
