@@ -25,7 +25,7 @@ In addition, leaked credentials detection provides a [managed transform](/rules/
 
 One common approach used in web applications when detecting the use of stolen credentials is to warn end users about the situation and ask them to update their password. You can do this based on the managed header received at your origin server.
 
-:::caution
+:::note
 Cloudflare does not store, log, or retain plaintext end-user passwords when performing leaked credential checks.
 Passwords are hashed, converted into a cryptographic representation, and then compared against a database of leaked credentials.
 :::
