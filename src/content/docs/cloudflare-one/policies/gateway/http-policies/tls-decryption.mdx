@@ -115,9 +115,13 @@ When FIPS compliance is enabled, Gateway will only choose [FIPS-compliant cipher
 
 FIPS-compliant traffic defaults to [HTTP/3](/cloudflare-one/policies/gateway/http-policies/http3/). To enforce HTTP policies for UDP traffic, you must turn on the [Gateway proxy for UDP](/cloudflare-one/policies/gateway/http-policies/http3/#enable-http3-inspection).
 
-### Cipher suites
+## FedRAMP compliance
 
-<GlossaryDefinition term="cipher suite" />
+TLS traffic on-ramped to Gateway via WARP will be FedRAMP compliant because Gateway's TLS decryption forces traffic to egress from a Cloudflare data center within Cloudflare's FedRAMP boundary.
+
+## Cipher suites
+
+<GlossaryDefinition term="cipher suite" prepend="A cipher suite is " />
 
 The following table lists the default cipher suites Gateway uses for TLS decryption.
 
