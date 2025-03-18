@@ -52,20 +52,20 @@ export default {
 [Environments in Wrangler](/workers/wrangler/environments) let you specify different configurations for the same Worker, including different values for `vars` in each environment.
 As `vars` is a [non-inheritable key](/workers/wrangler/configuration/#non-inheritable-keys), they are not inherited by environments and must be specified for each environment.
 
-The example below sets up two environments, `staging` and `production`, with different values for `API_HOST` and `API_ACCOUNT_ID`.
+The example below sets up two environments, `staging` and `production`, with different values for `API_HOST`. 
 
 <WranglerConfig>
 
 ```toml
 name = "my-worker-dev"
 
+API_HOST = "api.example.com"
+
 [env.staging.vars]
 API_HOST = "staging.example.com"
-API_ACCOUNT_ID = "staging_example_user"
 
 [env.production.vars]
 API_HOST = "production.example.com"
-API_ACCOUNT_ID = "production_example_user"
 ```
 
 </WranglerConfig>
