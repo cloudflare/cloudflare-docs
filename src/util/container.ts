@@ -1,7 +1,6 @@
 import { experimental_AstroContainer } from "astro/container";
 import reactRenderer from "@astrojs/react/server.js";
 import mdxRenderer from "@astrojs/mdx/server.js";
-import { loadRenderers } from "astro:container";
 import { render, type CollectionEntry } from "astro:content";
 import type { AstroComponentFactory } from "astro/runtime/server/index.js";
 
