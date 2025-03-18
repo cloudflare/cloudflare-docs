@@ -1401,6 +1401,8 @@
 /waf/analytics/security-events/free-plan/ /waf/analytics/security-events/ 301
 /waf/analytics/security-events/paid-plans/ /waf/analytics/security-events/ 301
 /waf/analytics/security-events/additional-information/ /waf/tools/validation-checks/ 301
+/waf/reference/cloudflare-challenges/ /fundamentals/security/cloudflare-challenges/ 301
+/waf/tools/challenge-passage/ /fundamentals/security/cloudflare-challenges/challenge-passage/ 301
 
 # waiting-room
 /waiting-room/how-to/mobile-traffic/ /waiting-room/how-to/json-response/ 301
