@@ -11,16 +11,25 @@ The AI Gateway WebSockets API provides a persistent connection for AI interactio
 1. **Non-Realtime APIs** - Supports standard WebSocket communication for AI providers, including those that do not natively support WebSockets.
 2. **Realtime APIs** - Designed for AI providers that offer low-latency, multimodal interactions over WebSockets.
 
+## When to use WebSockets?
+
+WebSockets are long-lived TCP connections that enable bi-directional, real-time and non realtime communication between client and server. Unlike HTTP connections, which require repeated handshakes for each request, WebSockets maintain the connection, supporting continuous data exchange with reduced overhead. WebSockets are ideal for applications needing low-latency, real-time data, such as voice assistants.
+
+## Key benefits
+
+- **Reduced Overhead**: Avoid overhead of repeated handshakes and TLS negotiations by maintaining a single, persistent connection.
+- **Provider Compatibility**: Works with all AI providers in AI Gateway. Even if your chosen provider does not support WebSockets, we handle it for you, managing the requests to your preferred AI provider.
+
 ## **Key differences**
 
-| Feature                 | Non-Realtime APIs                                                                                | Realtime APIs                                                                                         |
-| :---------------------- | :----------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------- |
-| **Purpose**             | Supports WebSocket-based AI interactions with providers that do not natively support WebSockets. | Enables real-time, multimodal AI interactions for providers that offer dedicated WebSocket endpoints. |
-| **Use Case**            | Text-based queries and responses, such as LLM requests.                                          | Streaming responses for voice, video, and live interactions.                                          |
-| **AI Provider Support** | All AI providers in AI Gateway.                                                                  | Limited to providers offering real-time WebSocket APIs.                                               |
-| **Streaming Support**   | AI Gateway handles streaming via WebSockets.                                                     | Providers natively support real-time data streaming.                                                  |
+| Feature                 | Non-Realtime APIs                                                                                | Realtime APIs                                                                                                                         |
+| :---------------------- | :----------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------ |
+| **Purpose**             | Supports WebSocket-based AI interactions with providers that do not natively support WebSockets. | Enables real-time, multimodal AI interactions for providers that offer dedicated WebSocket endpoints.                                 |
+| **Use Case**            | Text-based queries and responses, such as LLM requests.                                          | Streaming responses for voice, video, and live interactions.                                                                          |
+| **AI Provider Support** | [All AI providers in AI Gateway.](/ai-gateway/providers)                                         | [Limited to providers offering real-time WebSocket APIs.](/ai-gateway/configuration/websockets-api/realtime-api/#supported-providers) |
+| **Streaming Support**   | AI Gateway handles streaming via WebSockets.                                                     | Providers natively support real-time data streaming.                                                                                  |
 
 For details on implementation, see the next section:
 
-- [Non-Realtime WebSockets API](/ai-gateway/configuration/websockets-api/non-realtime-api/)
 - [Realtime WebSockets API](/ai-gateway/configuration/websockets-api/realtime-api/)
+- [Non-Realtime WebSockets API](/ai-gateway/configuration/websockets-api/non-realtime-api/)
