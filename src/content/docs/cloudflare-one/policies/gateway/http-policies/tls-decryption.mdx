@@ -117,7 +117,7 @@ FIPS-compliant traffic defaults to [HTTP/3](/cloudflare-one/policies/gateway/htt
 
 ## FedRAMP compliance
 
-TLS traffic on-ramped to Gateway via WARP will be FedRAMP compliant because Gateway's TLS decryption forces traffic to egress from a Cloudflare data center within Cloudflare's FedRAMP boundary.
+When you use the WARP client to on-ramp TLS traffic to Gateway, traffic will egress from a Cloudflare data center within Cloudflare's FedRAMP boundary. If a user's closest data center is non-FedRAMP compliant, their traffic will still egress from a FedRAMP compliant data center, maintaining FedRAMP compliance for the traffic.
 
 ```mermaid
 flowchart LR
@@ -131,13 +131,15 @@ flowchart LR
         n5["FedRAMP-compliant cloudflared"]
         n6(["Private server"])
   end
-    n1(["User"]) -- Gateway TLS connection wrapped with WARP TLS --> n2
+    n1(["User near non-FedRAMP compliant data center"]) -- Gateway TLS connection wrapped with WARP TLS --> n2
     n2 --> n3
     n3 --> n4(["HTTPS server"])
     n5 --> n3 & n6
 
     n5@{ shape: rect}
 ```
+
+To further control what data centers traffic egresses from, you can use [dedicated egress IPs](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/).
 
 ## Cipher suites
 
