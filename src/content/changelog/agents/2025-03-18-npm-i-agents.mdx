@@ -109,10 +109,7 @@ const fetchUserHistory = async () => {
 
 #### agents-starter <Badge text="Updated" variant="tip" size="small" />
 
-The [`agents-starter`](https://github.com/cloudflare/agents-starter) project — a real-time, chat-based example application with tool-calling & human-in-the-loop built using the Agents SDK — has seen the following updates:
-
-- Upgraded to use the latest [wrangler v4](/changelog/2025-03-13-wrangler-v4/) release.
-- [Workers AI](/workers-ai/) is now the default AI provider in the [`agents-starter`](https://github.com/cloudflare/agents-starter) project: this uses the new [structured outputs](/changelog/2025-02-25-json-mode/) (or "JSON mode") support now in Workers AI and the [`workers-ai-provider`](https://sdk.vercel.ai/providers/community-providers/cloudflare-workers-ai#generateobject).
+We've fixed a number of small bugs in the [`agents-starter`](https://github.com/cloudflare/agents-starter) project — a real-time, chat-based example application with tool-calling & human-in-the-loop built using the Agents SDK. The starter has also been upgraded to use the latest [wrangler v4](/changelog/2025-03-13-wrangler-v4/) release.
 
 If you're new to Agents, you can install and run the `agents-starter` project in two commands:
 
@@ -122,6 +119,8 @@ $ npm create cloudflare@latest agents-starter -- --template="cloudflare/agents-s
 # Run it
 $ npm run start
 ```
+
+You can use the starter as a template for your own Agents projects: open up `src/server.ts` and `src/client.tsx` to see how the Agents SDK is used.
 
 #### More documentation <Badge text="Updated" variant="tip" size="small" />
 
