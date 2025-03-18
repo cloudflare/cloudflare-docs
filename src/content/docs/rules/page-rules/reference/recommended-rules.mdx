@@ -54,13 +54,12 @@ This example redirects visitors to a specific page with an easy to remember URL:
 
 Certain sections of a website, like the login or admin section, have different security and performance requirements than your general public-facing pages.
 
-The following example page rule configuration performs several adjustments for requests targeting a specific path:
+The following example page rule configuration bypasses cache for requests targeting a specific path:
 
 <Example>
 
 - **If the URL matches**: `example.com/user*`
 - **Setting**: _Cache Level_ | **Value**: _Bypass_
-- **Setting**: _Disable Apps_
 
 </Example>
 
