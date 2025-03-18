@@ -9,45 +9,26 @@ import { Render } from "~/components";
 
 Model Context Protocol (MCP) tools are functions that a [MCP Server](/agents/model-context-protocol/mcp-server) provides and MCP clients can call.
 
-When you build MCP Servers with the `@cloudflare/model-context-protocol` package, you can define tools by writing JavaScript or TypeScript methods and decorating them with the `@mcp.tool` [decorator](https://github.com/tc39/proposal-decorators). This removes the need to manually implement the tool discovery, serialization, and invocation logic.
+When you build MCP Servers with the `@cloudflare/model-context-protocol` package, you can define tools using the `@modelcontextprotocol/typescript-sdk` package.
 
 For example, the following code defines a simple MCP server that adds two numbers together:
 
 {/* TODO: Reference code in Github, link to a runnable example, use Deploy to Workers button */}
 
 ```ts title="src/index.ts"
-import { WorkerEntrypoint, env } from "cloudflare:workers";
-import { WorkersMCP, mcp } from "@cloudflare/model-context-protocol";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp";
+import { DurableMCP } from "@cloudflare/model-context-protocol";
 
-@mcp({ name: "My MCP Server", version: "1.0.0", route: "/mcp" })
-class McpEntrypoint extends WorkerEntrypoint {
-	@mcp.tool(`
-    Add two numbers the way only MCP can
-    
-    @param a {number} The first number
-    @param b {number} The second number
-    @returns {number} The sum of the two numbers
-  `)
-	add(a: number, b: number) {
-		return a + b;
+export class MyMCP extends DurableMCP {
+	server = new McpServer({ name: "Demo", version: "1.0.0" });
+	async init() {
+		this.server.tool(
+			"add",
+			{ a: z.number(), b: z.number() },
+			async ({ a, b }) => ({
+				content: [{ type: "text", text: String(a + b) }],
+			}),
+		);
 	}
 }
 ```
-
-In this example, the `add` method is decorated with the `@mcp.tool` decorator, which adds the tool to the MCP server and provides the tool's description, input parameters, and return type.
-
-:::note
-Because decorators are a [Stage 3 TC39 proposed addition to the JavaScript language](https://github.com/tc39/proposal-decorators), to use decorators in your code, and to use the Cloudflare MCP Server SDK, you must use Wrangler v4.0.0 or later, or [`@cloudflare/vite-plugin`](https://www.npmjs.com/package/@cloudflare/vite-plugin). This ensures that decorators in your code are automatically transpiled into code that the [Cloudflare Workers runtime](/workers/reference/how-workers-works/) can understand.
-:::
-
-### How it works
-
-WIP
-
-- Explain what is functionally happening here with decorators
-- You add JSDOC to `@mcp.tool` to describe the tool
-- The MCP Server SDK parses the JSDOC to extract the tool's description, input parameters, and return type
-- The MCP Server SDK then uses the tool's description, input parameters, and return type to serialize and deserialize the tool's input and output
-- The MCP Server SDK then uses the serialized input and output to call the tool
-
-- Show the equivalent before/after using the raw @modelcontextprotocol/typescript-sdk — and ideally move this up to the top so that the reader "gets it" — maybe use tabs?
