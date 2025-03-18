@@ -9,10 +9,9 @@ head:
   - tag: title
     content: How to - Cloudflare Trace (beta)
 description: Learn how to use Cloudflare Trace in the dashboard and with the API.
-
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip } from "~/components";
 
 ## Use Trace in the dashboard
 
@@ -27,18 +26,18 @@ import { GlossaryTooltip } from "~/components"
 
 2. Enter a URL to trace. The URL must include a hostname that belongs to your account.
 
-3. Select an HTTP method. If you select *POST*, *PUT*, or *PATCH*, you should enter a value in **Request body**.
+3. Select an HTTP method. If you select _POST_, _PUT_, or _PATCH_, you should enter a value in **Request body**.
 
 4. (Optional) Define any custom request properties to simulate the conditions of a specific HTTP/S request. You can customize the following request properties:
 
-   * **Protocol** (HTTP protocol version)
-   * **Request headers**
-   * **Cookies**
-   * **Geolocation** (request source [country](/ruleset-engine/rules-language/fields/reference/ip.src.country/), [region](/ruleset-engine/rules-language/fields/reference/ip.src.region/), and [city](/ruleset-engine/rules-language/fields/reference/ip.src.city/))
-   * [**Bot score**](/bots/concepts/bot-score/)
-   * <GlossaryTooltip term="threat score" link="/ruleset-engine/rules-language/fields/reference/cf.threat_score/">**Threat score**</GlossaryTooltip>
-   * **Request body** (for `POST`, `PUT`, and `PATCH` requests)
-   * **Skip challenge** (skips a Cloudflare-issued [challenge](/waf/reference/cloudflare-challenges/), if any, allowing the trace to continue)
+   - **Protocol** (HTTP protocol version)
+   - **Request headers**
+   - **Cookies**
+   - **Geolocation** (request source [country](/ruleset-engine/rules-language/fields/reference/ip.src.country/), [region](/ruleset-engine/rules-language/fields/reference/ip.src.region/), and [city](/ruleset-engine/rules-language/fields/reference/ip.src.city/))
+   - [**Bot score**](/bots/concepts/bot-score/)
+   - **Threat score**
+   - **Request body** (for `POST`, `PUT`, and `PATCH` requests)
+   - **Skip challenge** (skips a Cloudflare-issued [challenge](/waf/reference/cloudflare-challenges/), if any, allowing the trace to continue)
 
 5. Select **Send trace**.
 
@@ -48,7 +47,7 @@ The **Trace results** page shows all evaluated and executed configurations from 
 
 1. Analyze the different [steps](#steps-in-trace-results) with evaluated and executed configurations for the current trace. Trace results include matches for all active rules and configurations, whether configured at the account level or for a specific domain or subdomain.
 
-   To show all configurations, including the ones that did not match the request, select *All configurations* in the **Results shown** dropdown.
+   To show all configurations, including the ones that did not match the request, select _All configurations_ in the **Results shown** dropdown.
 
 2. (Optional) Update your Cloudflare configuration (at the account or at the domain/subdomain level) and create a new trace to check the impact of your changes.
 
@@ -63,10 +62,10 @@ To run a trace later with the same configuration:
 
 Use the [Request Trace](/api/resources/request_tracers/subresources/traces/methods/create/) operation to perform a trace using the Cloudflare API.
 
-***
+---
 
 ## Steps in trace results
 
-* Execution of one or more rules of Cloudflare products built on the [Ruleset Engine](/ruleset-engine/). Refer to the Ruleset Engine's [Phases list](/ruleset-engine/reference/phases-list/) for a list of such products.
-* [Page Rules](/rules/page-rules/): Execution of one or more rules.
-* [Workers](/workers/): Execution of one or more scripts.
+- Execution of one or more rules of Cloudflare products built on the [Ruleset Engine](/ruleset-engine/). Refer to the Ruleset Engine's [Phases list](/ruleset-engine/reference/phases-list/) for a list of such products.
+- [Page Rules](/rules/page-rules/): Execution of one or more rules.
+- [Workers](/workers/): Execution of one or more scripts.
