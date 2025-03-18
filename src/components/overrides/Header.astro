@@ -17,6 +17,7 @@ import HeaderDropdowns from "../HeaderDropdowns.tsx";
 		<div id="right-group" class="hidden h-10 flex-wrap gap-x-8 overflow-hidden">
 			<HeaderDropdowns client:idle />
 			<a
+				id="header-login-button"
 				href="https://dash.cloudflare.com/"
 				class="flex items-center justify-center rounded bg-cl1-brand-orange px-6 font-medium text-cl1-black no-underline"
 			>
@@ -64,3 +65,13 @@ import HeaderDropdowns from "../HeaderDropdowns.tsx";
 		}
 	}
 </style>
+
+<script>
+	import { track } from "~/util/zaraz";
+
+	document
+		.querySelector("#header-login-button")
+		?.addEventListener("click", () => {
+			track("clicked header login button");
+		});
+</script>
