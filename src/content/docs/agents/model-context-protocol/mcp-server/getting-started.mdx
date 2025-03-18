@@ -7,55 +7,17 @@ sidebar:
 
 import { Details, Render, PackageManagers } from "~/components";
 
-# Deploy an MCP Server to Cloudflare
-
-You can build and deploy MCP servers on Cloudflare, using the `@cloudflare/model-context-protocol` package, which provides an SDK for [authorization](/agents/model-context-protocol/mcp-server/authorization/), [transport](/agents/model-context-protocol/mcp-server/transport/), and [tool definition and discovery](/agents/model-context-protocol/mcp-server/tools/).
-
-This guide and the accompanying [examples](/agents/model-context-protocol/mcp-server/examples/) will help you get started.
-
-### What is the Model Context Protocol (MCP)?
-
-[Model Context Protocol (MCP)](https://modelcontextprotocol.io) is an open standard that connects AI systems with external applications. Think of MCP like a USB-C port for AI applications. Just as USB-C provides a standardized way to connect your devices to various accessories, MCP provides a standardized way to connect AI agents to different services.
-
-#### MCP Terminology
-
-- **MCP Hosts**: AI assistants (like [Claude](http://claude.ai) or [Cursor](http://cursor.com)), AI agents, or applications that need to access external capabilities.
-- **MCP Clients**: Clients embedded within the MCP hosts that connect to MCP servers and invoke tools. Each MCP client instance has a single connection to an MCP server.
-- **MCP Servers**: Applications that expose [tools](/agents/model-context-protocol/mcp-server/tools/), [prompts](https://modelcontextprotocol.io/docs/concepts/prompts), and [resources](https://modelcontextprotocol.io/docs/concepts/resources) that MCP clients can use.
-
-#### Remote vs. local MCP connections
-
-The MCP standard supports two modes of operation:
-
-- **Remote MCP connections**: MCP clients connect to MCP servers over the Internet, establishing a [long-lived connection using HTTP and Server-Sent Events (SSE)](/agents/model-context-protocol/mcp-server/transport/), and authorizing the MCP client access to resources on the user's account using [OAuth](/agents/model-context-protocol/mcp-server/authorization/).
-- **Local MCP connections**: MCP clients connect to MCP servers on the same machine, using [stdio](https://spec.modelcontextprotocol.io/specification/draft/basic/transports/#stdio) as a local transport method.
-
-Cloudflare's MCP Server SDK, is designed to support remote MCP connections. Remote MCP connections allow MCP clients that run in web browsers, mobile apps, and other environments outside of the end-user's machine to connect to your MCP server, such as [Claude.ai](https://www.anthropic.com/claude), and other AI agents.
-
-### Why deploy your MCP server to Cloudflare?
-
-- Define [tools](/agents/model-context-protocol/mcp-server/tools/) by just writing TypeScript methods, in the [same way you write RPC methods in Workers and Durable Objects](/workers/runtime-apis/rpc/).
-- Authorization is [built-in](/agents/model-context-protocol/mcp-server/authorization/). The MCP Server SDK handles the hard parts of the OAuth flow for you.
-- Transport over HTTP with Server-Sent Events (SSE) is [built-in](/agents/model-context-protocol/mcp-server/transport/), with automatic hibernation of idle connections to reduce costs
-- You can create stateful MCP Servers with the [Agents SDK](/agents/)
-- Your MCP server can be called by the [Agents SDK](/agents/), which is an MCP client
-
 ## Deploy your first MCP server
 
-{/* TODO: Update deploy to Workers button */}
-The best way to get started is to deploy an [example MCP server](https://github.com/geelen/mcp-remote-examples/tree/main/02-user-password) to your Cloudflare account. You can then customize this example to suit your needs.
-
-### Option 1: Deploy your MCP server first, then develop locally
+This guide will walk you through how to deploy an [example MCP server](https://github.com/geelen/mcp-remote-examples/tree/main/02-user-password) to your Cloudflare account. You will then customize this example to suit your needs.
 
 {/* TODO: Update link to example */}
-The link below will guide you through everything you need to do to deploy an [example MCP server](https://github.com/geelen/mcp-remote-examples/tree/main/02-user-password) to your Cloudflare account:
+The link below will guide you through everything you need to do to deploy this [example MCP server](https://github.com/geelen/mcp-remote-examples/tree/main/02-user-password) to your Cloudflare account:
 
 {/* TODO: Update deploy to Workers button */}
-[![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/mcp-server-example)
+[![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://dash.cloudflare.com/?to=/:account/workers-and-pages/create/deploy-to-workers&repository=https://github.com/cloudflare/mcp-server-example)
 
-At the end of this process, you will have a new git repository on your GitHub or GitLab account for your MCP server that is configured to automatically deploy Cloudflare each time you push a change or merge a pull request to the main branch of the repository. You can then clone this repository, [develop locally](/agents/model-context-protocol/mcp-server/getting-started/#local-development), and customize the code to suit your needs.
-
-### Option 2: Create a new MCP Server via the CLI
+At the end of this process, you will have a new git repository on your GitHub or GitLab account for your MCP server, configured to automatically deploy Cloudflare each time you push a change or merge a pull request to the main branch of the repository. You can then clone this repository, [develop locally](/agents/model-context-protocol/mcp-server/getting-started/#local-development), and start writing code and building.
 
 Alternatively, you can use the command line as shown below to create a new MCP Server on your local machine.
 
@@ -117,7 +79,45 @@ npx wrangler@latest deploy
 
 If you have already [connected a git repository](/workers/ci-cd/builds/) to the Worker with your MCP server, you can deploy your MCP server by pushing a change or merging a pull request to the main branch of the repository.
 
-### Next Steps
+After deploying, take the URL of your deployed MCP server, and enter it in the MCP inspector running on `http://localhost:5173`. You now have a remote MCP server, deployed to Cloudflare, that MCP clients can connect to.
+
+## Add Authentication
+
+The example MCP server you just deployed above acts as an OAuth provider to MCP clients, handling authorization, but has a placeholder authentication flow. It lets you enter any username and password to log in, and doesn't actually authenticate you against any user database.
+
+In the next section, you will add a real authentication provider to your MCP server. Even if you already have an authentication provider in place, following these steps will show you more clearly how to integrate it with your MCP server.
+
+We'll use GitHub as the authentication provider here, but you can use any OAuth provider that supports the OAuth 2.0 specification, and we have examples for:
+
+- [Stytch](/agents/model-context-protocol/mcp-server/examples/stytch/)
+- [Clerk](/agents/model-context-protocol/mcp-server/examples/clerk/)
+- [Google](/agents/model-context-protocol/mcp-server/examples/google/)
+
+### Step 1 — Update the default handler
+
+In your example MCP server, open `src/index.ts`, and change the value of `defaultHandler` in to instead use the `GitHubHandler`:
+
+{/* TODO: GitHub Code Component */}
+
+```ts ins="OAuthProvider.GitHubHandler"
+export default new OAuthProvider({
+	apiRoute: "/sse",
+	apiHandler: MyMCP.Router,
+	defaultHandler: OAuthProvider.GitHubHandler,
+	authorizeEndpoint: "/authorize",
+	tokenEndpoint: "/token",
+	clientRegistrationEndpoint: "/register",
+});
+```
+
+{/* TODO: Update code link */}
+This will ensure that your users are redirected to GitHub to authenticate. If you're curious to understand what the `GitHubHandler` does you can read the code [here](https://github.com/geelen/mcp-remote-examples/blob/main/04-oauth-pivot/src/index.ts#L48-L152).
+
+### Step 2 — Create a GitHub OAuth App
+
+{/* TODO: instructions */}
+
+## Next steps
 
 - Add [tools](/agents/model-context-protocol/mcp-server/tools/) to your MCP server.
 - Customize your MCP Server's [authentication and authorization](/agents/model-context-protocol/mcp-server/authorization/).
