@@ -204,12 +204,16 @@ You need to create a new pipeline and connect it to your R2 bucket.
 Create a new pipeline `clickstream-pipeline-client` using the [Wrangler CLI](/workers/wrangler/):
 
 ```sh
-npx wrangler pipelines create clickstream-pipeline-client --r2-bucket <BUCKET_NAME>
+npx wrangler pipelines create clickstream-pipeline-client --r2-bucket <BUCKET_NAME> --compression none
 ```
 
 Replace `<BUCKET_NAME>` with the name of your R2 bucket.
 
 When you run the command, you will be prompted to authorize Cloudflare Workers Pipelines to create R2 API tokens on your behalf. These tokens are required by your Pipeline. Your Pipeline uses these tokens when loading data into your bucket. You can approve the request through the browser link which will open automatically.
+
+:::note
+In the above command, you create a pipeline with the `--compression none` flag. This flag will prevent the pipeline from compressing the data before storing it in the R2 bucket. This is useful for testing purposes. In a production environment, you should use compression. We recommend keeping the default settings.
+:::
 
 ```output
 🌀 Authorizing R2 bucket "<BUCKET_NAME>"
@@ -400,6 +404,12 @@ npx wrangler pipelines update clickstream-pipeline-client --cors-origins https:/
 ```
 
 You can access the application at the deployed URL. When you click on the `View Details` or `Add to Cart` button, the clickstream data will be sent to your pipeline.
+
+## 8. View the data in R2
+
+You can view the data in the R2 bucket. If you are not signed in to the Cloudflare dashboard, sign in and navigate to the R2 overview page.
+
+Open the bucket you configured for your pipeline in Step 3. You can see the clickstream data in the `Objects` column.
 
 ## Conclusion
 
