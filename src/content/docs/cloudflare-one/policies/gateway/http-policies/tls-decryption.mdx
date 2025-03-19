@@ -133,8 +133,8 @@ flowchart LR
   end
     n1(["User near non-FedRAMP compliant data center"]) -- Gateway TLS connection wrapped with WARP TLS --> n2
     n2 --> n3
-    n3 --> n4(["HTTPS server"])
-    n5 --> n3 & n6
+    n3 --> n4(["HTTPS server"]) & n5
+    n5 --> n6
 
     n5@{ shape: rect}
 ```
