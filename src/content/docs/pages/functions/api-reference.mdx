@@ -14,7 +14,7 @@ The following methods can be used to configure your Pages Function.
 
 ### `onRequests`
 
-`onRequest` will be called *unless* a more specific `onRequestVerb` method is exported. For example if both `onRequest` and `onRequestGet` are exported, the `onRequest` method will not be called for matching `GET` requests.
+`onRequest` will be called unless a more specific `onRequestVerb` method is exported. For example, if both `onRequest` and `onRequestGet` are exported, only `onRequestGet` will be called for `GET` requests.
 
 * <code>onRequest(context[EventContext](#eventcontext))</code> Response | Promise\<Response>
   * This function will be invoked on all requests no matter the request method, if no specific request verb method below is exported. It will not be called if `next(context.request)` is called from a `onRquestVerb function`.
