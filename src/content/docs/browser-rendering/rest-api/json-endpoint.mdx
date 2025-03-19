@@ -1,23 +1,23 @@
 ---
 pcx_content_type: how-to
-title: Capture Webpage Data in JSON Format
+title: Capture webpage data in JSON format
 sidebar:
   order: 9
 ---
 
-The `/json` endpoint extracts structured data from a webpage. You can specify the expected output using either a **prompt** or a **response_format** parameter (which accepts a JSON schema). The endpoint returns the extracted data in JSON format.
+The `/json` endpoint extracts structured data from a webpage. You can specify the expected output using either a `prompt` or a `response_format` parameter which accepts a JSON schema. The endpoint returns the extracted data in JSON format.
 
 ## Parameters
 
-| Parameter           | Mandatory | Note                                                                             |
-| ------------------- | --------- | -------------------------------------------------------------------------------- |
-| **url**             | **yes**   | The URL of the webpage to extract data from.                                     |
-| **prompt**          | **no**    | **Must supply one of `prompt` or `response_format`**.                            |
-| **response_format** | **no**    | **Must supply one of `prompt` or `response_format`**. May include a JSON schema. |
+| Parameter       | Mandatory | Note                                                                         |
+| --------------- | --------- | ---------------------------------------------------------------------------- |
+| url             | yes       | The URL of the webpage to extract data from.                                 |
+| prompt          | no        | Must supply one of `prompt` or `response_format`.                            |
+| response_format | no        | Must supply one of `prompt` or `response_format`. May include a JSON schema. |
 
-## Basic Usage
+## Basic usage
 
-### With a Prompt and JSON Schema
+### With a prompt and JSON schema
 
 This example captures webpage data by providing both a prompt and a JSON schema. If multiple headings exist, the first occurrence of each (e.g. `h1`, `h2`) is returned.
 
@@ -48,7 +48,7 @@ curl --request POST 'https://api.cloudflare.com/client/v4/accounts/CF_ACCOUNT_ID
   }'
 ```
 
-#### JSON Response
+#### JSON response
 
 ```json title="json response"
 {
@@ -60,7 +60,7 @@ curl --request POST 'https://api.cloudflare.com/client/v4/accounts/CF_ACCOUNT_ID
 }
 ```
 
-### With Only a Prompt
+### With only a prompt
 
 In this example, only a prompt is provided. The endpoint will use the prompt to extract the heading information from the page.
 
@@ -74,7 +74,7 @@ curl --request POST 'https://api.cloudflare.com/client/v4/accounts/CF_ACCOUNT_ID
   }'
 ```
 
-#### JSON Response
+#### JSON response
 
 ```json title="json response"
 {
@@ -86,7 +86,7 @@ curl --request POST 'https://api.cloudflare.com/client/v4/accounts/CF_ACCOUNT_ID
 }
 ```
 
-### With Only a JSON Schema (No Prompt)
+### With only a JSON schema (no prompt)
 
 In this case, you supply a JSON schema via the `response_format` parameter. The schema defines the structure of the extracted data.
 
@@ -116,7 +116,7 @@ curl --request POST 'https://api.cloudflare.com/client/v4/accounts/CF_ACCOUNT_ID
   }'
 ```
 
-#### JSON Response
+#### JSON response
 
 ```json title="json response"
 {
@@ -128,7 +128,7 @@ curl --request POST 'https://api.cloudflare.com/client/v4/accounts/CF_ACCOUNT_ID
 }
 ```
 
-## Potential Use-Cases
+## Potential use-cases
 
 1. **Extract Movie Data:** Retrieve details like name, genre, and release date for the top 10 action movies from the IMDB top 250 list by supplying the appropriate IMDB link and JSON schema.
 2. **Weather Information:** Fetch current weather conditions for a location (e.g., Edinburgh) using a weather website link (like from BBC Weather).
