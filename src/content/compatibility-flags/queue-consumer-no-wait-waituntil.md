@@ -12,7 +12,7 @@ enable_flag: "queue_consumer_no_wait_for_wait_until"
 
 By default, [Queue](/queues/) Consumer Workers acknowledge messages only after promises passed to [`ctx.waitUntil()`](/workers/runtime-apis/context) have resolved. This behavior can cause queue consumers which utilize `ctx.waitUntil()` to process messages slowly. The default behavior is documented in the [Queue Consumer Configuration Guide](/queues/configuration/javascript-apis#consumer).
 
-This Consumer Worker is an example of a Worker which utilizes `ctx.waitUntil()`. Under the default behavior, this consumer worker will only acknowledge a batch of after the sleep function has resolved.
+This Consumer Worker is an example of a Worker which utilizes `ctx.waitUntil()`. Under the default behavior, this consumer Worker will only acknowledge a batch of after the sleep function has resolved.
 ```js
 export default {
   async fetch(request, env, ctx) {
