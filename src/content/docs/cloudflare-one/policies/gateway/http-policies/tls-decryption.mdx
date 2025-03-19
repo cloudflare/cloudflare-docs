@@ -17,7 +17,7 @@ Cloudflare Gateway can perform [SSL/TLS decryption](https://www.cloudflare.com/l
 
 When you turn on TLS decryption, Gateway will decrypt all traffic sent over HTTPS, apply your HTTP policies, and then re-encrypt the request with a [user-side certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/).
 
-Cloudflare prevents traffic interference by decrypting, inspecting, and re-encrypting HTTPS requests in its data centers in memory only. Gateway only stores eligible cache content at rest. All cache disks are encrypted at rest. You can configure where TLS decryption takes place with [Regional Services](/data-localization/regional-services/) in the [Cloudflare Data Localization Suite (DLS)](/data-localization/).
+Cloudflare prevents traffic interference by decrypting, inspecting, and re-encrypting HTTPS requests in its data centers in memory only. Gateway only stores eligible cache content at rest. All cache disks are encrypted at rest. You can configure where TLS decryption takes place with [Regional Services](/data-localization/regional-services/) in the [Cloudflare Data Localization Suite (DLS)](/data-localization/). To further control what data centers traffic egresses from, you can use [dedicated egress IPs](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/).
 
 Cloudflare supports connections from users to Gateway over TLS 1.1, 1.2, and 1.3.
 
