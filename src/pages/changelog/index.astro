@@ -12,7 +12,7 @@ import { format } from "date-fns";
 import { getChangelogs } from "~/util/changelog";
 
 const notes = await getChangelogs({
-	filter: (entry) => Boolean(entry.data.hidden),
+	filter: (entry) => !entry.data.hidden,
 });
 
 const props = {
