@@ -33,6 +33,6 @@ function sleep(ms) {
 }
 ```
 
-If the `queue_consumer_no_wait_for_wait_until` flag is enabled, Queue consumers will no longer wait for promises passed to `ctx.waitUntil()` to resolve before acknowledging messages. This can improve the performance of queue consumers which utilize `ctx.waitUntil()`. With the flag enabled, in the above example, the consumer worker will acknowledge the batch without waiting for the sleep function to resolve.
+If the `queue_consumer_no_wait_for_wait_until` flag is enabled, Queue consumers will no longer wait for promises passed to `ctx.waitUntil()` to resolve before acknowledging messages. This can improve the performance of queue consumers which utilize `ctx.waitUntil()`. With the flag enabled, in the above example, the consumer Worker will acknowledge the batch without waiting for the sleep function to resolve.
 
 Using this flag will not affect the behavior of `ctx.waitUntil()`. `ctx.waitUntil()` will continue to extend the lifetime of your consumer worker, to continue to work even after the batch of messages has been acknowledged.
