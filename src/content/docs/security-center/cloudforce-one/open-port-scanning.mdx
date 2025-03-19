@@ -7,13 +7,13 @@ sidebar:
     text: Beta
 ---
 
-Open Port Scanning Beta feature allows Magic Transit and Bring your Own IP customers to efficiently monitor their IP ranges for security vulnerabilities. This feature enables users to scan their designated IP ranges, detect any open ports, and receive daily notifications regarding newly opened ports.
+Open Port Scanning allows [Magic Transit](/magic-transit/) and [Bring your Own IPs](/byoip/) users to efficiently monitor IP ranges for security vulnerabilities. This API enables users to scan their designated IP ranges, detect any open ports, and receive daily notifications regarding newly opened ports.
 
 You can access this feature via the [API](/api/resources/cloudforce_one/subresources/scans/subresources/config/).
 
 ## Prerequisites
 
-- Users with specific permissions: Cloudforce One Write, Administrator and Super Administrator.
+-  Cloudforce One Administrator, Administrator and Super Administrator roles.
 - Account token: **Custom API Token** >  **Cloudforce One:Edit**. 
 
 To create a custom API token:
@@ -30,25 +30,27 @@ To create a custom API token:
 5. Select **Continue to summary**.
 6. Review the token, then select **Create Token**.
 
+:::note
+The Open Port Scanner will run from a predetermined set of IPs. The Cloudforce One team recommends you to allowlist these IPs in your rules. 
+:::
+
 ## Configure Open Port Scanning
 
 To configure Open Port Scanning, follow these steps:
 
-1. **Create A New Scan Config**:
-    - **IPs**: Enter the IP ranges you wish to monitor. Ensure that the ranges are correctly formatted to avoid scanning errors. The system will validate if the IPs requested are onboarded to Cloudflare and associated to the account belonging to the API token used.
+1. **Create a new scan config**:
+    - **IPs**: Enter the IP ranges you wish to monitor. Ensure that the ranges are correctly formatted to avoid scanning errors. The API will validate if the IPs requested are onboarded to Cloudflare and associated to the account belonging to the API token used.
     - **Frequency**: Enter the scan frequency in days.
     - **Ports**: Select the ports to scan. Choose among:
         - All
         - Default
         - List of specific ports
 2. **Scan IPs**: Initiate the scanning process. The system will analyze the specified IP ranges to identify any open ports.
-3. **Generate list of Open Ports**: Once the scan is complete, the API will generate a list of detected open ports for review and action.
-4. **Select Open Ports to list**: Choose which open ports you would like to be notified about. You can exclude  any ports that do not require immediate attention.
+3. **Generate list of open ports**: Once the scan is complete, the API will generate a list of detected open ports for review and action.
+4. **Select open ports to list**: Choose which open ports you would like to be notified about. You can exclude  any ports that do not require immediate attention.
 5. **View differences from previous scan**: The API will highlight any changes in open ports since the last scan, allowing you to quickly assess new vulnerabilities.
-6. **Stop Scanning**: If necessary, you can stop  the scanning process at any time.
+6. **Stop scanning**: If necessary, you can stop  the scanning process at any time.
 7. **Set up alerts**: Configure alerts for specific ports of interest. You will be notified immediately via email or webhook if any of these designated ports become newly open. 
-
-Note: permissions
 
 :::note[Beta feature notice]
 Open Port Scanning feature is currently in closed beta. The Cloudforce One team appreciates your feedback as the team works to enhance its functionality and user experience.
