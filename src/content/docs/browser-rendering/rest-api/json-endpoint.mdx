@@ -1,0 +1,135 @@
+---
+pcx_content_type: how-to
+title: Capture structured data
+sidebar:
+  order: 9
+---
+
+The `/json` endpoint extracts structured data from a webpage. You can specify the expected output using either a `prompt` or a `response_format` parameter which accepts a JSON schema. The endpoint returns the extracted data in JSON format.
+
+## Parameters
+
+| Parameter       | Mandatory | Note                                                                         |
+| --------------- | --------- | ---------------------------------------------------------------------------- |
+| URL             | yes       | The URL of the webpage to extract data from.                                 |
+| prompt          | no        | Must supply one of `prompt` or `response_format`.                            |
+| response_format | no        | Must supply one of `prompt` or `response_format`. May include a JSON schema. |
+
+## Basic Usage
+
+### With a Prompt and JSON schema
+
+This example captures webpage data by providing both a prompt and a JSON schema. If multiple headings exist, the first occurrence of each (such as `h1`, `h2`) is returned.
+
+```bash
+curl --request POST 'https://api.cloudflare.com/client/v4/accounts/CF_ACCOUNT_ID/browser-rendering/json' \
+  --header 'authorization: Bearer CF_API_TOKEN' \
+  --header 'content-type: application/json' \
+  --data '{
+    "url": "http://demoto.xyz/headings",
+    "prompt": "Get the heading from the page. If there are many then grab the first one.",
+    "response_format": {
+      "type": "json_schema",
+      "json_schema": {
+        "type": "object",
+        "properties": {
+          "h1": {
+            "type": "string"
+          },
+          "h2": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "h1"
+        ]
+      }
+    }
+  }'
+```
+
+#### JSON response
+
+```json title="json response"
+{
+	"success": true,
+	"result": {
+		"h1": "Heading 1",
+		"h2": "Heading 2"
+	}
+}
+```
+
+### With only a prompt
+
+In this example, only a prompt is provided. The endpoint will use the prompt to extract the heading information from the page.
+
+```bash
+curl --request POST 'https://api.cloudflare.com/client/v4/accounts/CF_ACCOUNT_ID/browser-rendering/json' \
+  --header 'authorization: Bearer CF_API_TOKEN' \
+  --header 'content-type: application/json' \
+  --data '{
+    "url": "http://demoto.xyz/headings",
+    "prompt": "Get the heading from the page in the form of an object like h1, h2. If there are many headings of the same kind then grab the first one."
+  }'
+```
+
+#### JSON response
+
+```json title="json response"
+{
+	"success": true,
+	"result": {
+		"h1": "Heading 1",
+		"h2": "Heading 2"
+	}
+}
+```
+
+### With only a JSON schema (no prompt)
+
+In this case, you supply a JSON schema via the `response_format` parameter. The schema defines the structure of the extracted data.
+
+```bash
+curl --request POST 'https://api.cloudflare.com/client/v4/accounts/CF_ACCOUNT_ID/browser-rendering/json' \
+  --header 'authorization: Bearer CF_API_TOKEN' \
+  --header 'content-type: application/json' \
+  --data '{
+    "url": "http://demoto.xyz/headings",
+    "response_format": {
+      "type": "json_schema",
+      "json_schema": {
+        "type": "object",
+        "properties": {
+          "h1": {
+            "type": "string"
+          },
+          "h2": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "h1"
+        ]
+      }
+    }
+  }'
+```
+
+#### JSON response
+
+```json title="json response"
+{
+	"success": true,
+	"result": {
+		"h1": "Heading 1",
+		"h2": "Heading 2"
+	}
+}
+```
+
+## Potential use-cases
+
+1. **Extract movie data:** Retrieve details like name, genre, and release date for the top 10 action movies from the IMDB top 250 list by supplying the appropriate IMDB link and JSON schema.
+2. **Weather information:** Fetch current weather conditions for a location (such as., Edinburgh) using a weather website link (like from BBC Weather).
+3. **Trending news:** Extract top trending posts on Hacker News by providing the Hacker News link along with a JSON schema that includes post title and body.
