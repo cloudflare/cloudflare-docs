@@ -7,6 +7,29 @@ sidebar:
 
 import { Details, Render, PackageManagers } from "~/components";
 
+You can build both local and remote MCP servers on Cloudflare.
+
+Local MCP servers rely on running a local proxy on the same machine as your application. Remote MCP servers run on Cloudflare and support remote, authenticated connections over the Internet.
+
+This guide will teach you how to build and deploy your first remote MCP server to Cloudflare. If you want to build a local MCP server, see the [build a local MCP server](/agents/guides/build-mcp-server/) guide.
+
+### What is the Model Context Protocol (MCP)?
+
+[Model Context Protocol (MCP)](https://modelcontextprotocol.io) is an open standard that connects AI systems with external applications. Think of MCP like a USB-C port for AI applications. Just as USB-C provides a standardized way to connect your devices to various accessories, MCP provides a standardized way to connect AI agents to different services.
+
+#### MCP Terminology
+
+- **MCP Hosts**: AI assistants (like [Claude](http://claude.ai) or [Cursor](http://cursor.com)), AI agents, or applications that need to access external capabilities.
+- **MCP Clients**: Clients embedded within the MCP hosts that connect to MCP servers and invoke tools. Each MCP client instance has a single connection to an MCP server.
+- **MCP Servers**: Applications that expose [tools](/agents/model-context-protocol/mcp-server/tools/), [prompts](https://modelcontextprotocol.io/docs/concepts/prompts), and [resources](https://modelcontextprotocol.io/docs/concepts/resources) that MCP clients can use.
+
+#### Remote vs. local MCP connections
+
+The MCP standard supports two modes of operation:
+
+- **Remote MCP connections**: MCP clients connect to MCP servers over the Internet, establishing a [long-lived connection using HTTP and Server-Sent Events (SSE)](/agents/model-context-protocol/mcp-server/transport/), and authorizing the MCP client access to resources on the user's account using [OAuth](/agents/model-context-protocol/mcp-server/authorization/).
+- **Local MCP connections**: MCP clients connect to MCP servers on the same machine, using [stdio](https://spec.modelcontextprotocol.io/specification/draft/basic/transports/#stdio) as a local transport method.
+
 ## Deploy your first MCP server
 
 This guide will walk you through how to deploy an [example MCP server](https://github.com/cloudflare/ai/demos/remote-mcp-server) to your Cloudflare account. You will then customize this example to suit your needs.

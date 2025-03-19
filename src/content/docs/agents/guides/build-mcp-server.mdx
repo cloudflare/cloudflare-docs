@@ -1,6 +1,6 @@
 ---
 pcx_content_type: tutorial
-title: Build an MCP Server
+title: Build a Local MCP Server
 sidebar:
   order: 100
   group:
@@ -19,7 +19,7 @@ import { Aside } from "@astrojs/starlight/components";
 
 [Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction) is an open standard that allows AI agents and assistants (like [Claude Desktop](https://claude.ai/download) or [Cursor](https://www.cursor.com/)) to interact with services directly. If you want users to access your service through an AI assistant, you can spin up an MCP server for your application.
 
-### Building an MCP Server on Workers
+### Building a local MCP Server on Workers
 
 With Cloudflare Workers, you can turn any API or service into an MCP server with minimal setup.
 
@@ -36,11 +36,9 @@ Below we will run you through an example of building an MCP server that fetches 
 
 Follow these steps to create and deploy your own MCP server on Cloudflare Workers.
 
-<Aside type="note">
-	Remote MCP servers are not supported yet. The workers-mcp tooling creates a
-	local proxy that forwards requests to your Worker, allowing the server to be
-	used by an MCP client.
-</Aside>
+:::note
+Looking to deploy a MCP server that supports _remote_ connections over the Internet, with authentication and authorization? Check out our [guide](/docs/agents/model-context-protocol/getting-started) for building and deploying remote MCP servers to Cloudflare.
+:::
 
 ### Create a new Worker
 
@@ -63,8 +61,14 @@ cd my-mcp-worker
 When you run the setup command, it will build your Worker using the configuration in your wrangler.toml or wrangler.jsonc file. By default, no additional configuration is needed, but if you have multiple Cloudflare accounts, you'll need to specify your account ID as shown below.
 
 <WranglerConfig>
-	```toml name = "my-mcp-worker" main = "src/index.ts" compatibility_date =
-	"2025-03-03" account_id = "your-account-id" ```
+
+```toml
+name = "my-mcp-worker"
+main = "src/index.ts"
+compatibility_date = "2025-03-03"
+account_id = "your-account-id"
+```
+
 </WranglerConfig>
 
 ### Install the MCP tooling
@@ -224,11 +228,8 @@ For [Windsurf](https://modelcontextprotocol.io/clients#windsurf-editor) and othe
 
 Make sure to replace the placeholders with your actual server name, URL, and project path.
 
-### Coming soon
+## Next steps
 
-The Model Context Protocol spec is [actively evolving](https://github.com/modelcontextprotocol/specification/discussions) and we're working on expanding Cloudflare's MCP support. Here's what we're working on:
+Now that you've built an MCP server that users can install and run locally, you should consider building a remote MCP server that supports _remote_ connections over the Internet.
 
-- **Remote MCP support**: Connect to MCP servers directly without requiring a local proxy
-- **Authentication**: OAuth support for secure MCP server connections
-- **Real-time communication**: SSE (Server-Sent Events) and WebSocket support for persistent connections and stateful interactions between clients and servers
-- **Extended capabilities**: Native support for more MCP protocol capabilities like [resources](https://modelcontextprotocol.io/docs/concepts/resources), [prompts](https://modelcontextprotocol.io/docs/concepts/prompts) and [sampling](https://modelcontextprotocol.io/docs/concepts/sampling)
+Cloudflare provides [everything you need to start building a remote MCP server](/agents/model-context-protocol/getting-started), so that you're ready for when MCP clients become capable of connecting to remote servers.
