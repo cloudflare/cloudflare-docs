@@ -8,20 +8,6 @@ export default class extends WorkerEntrypoint<Env> {
 	override async fetch(request: Request) {
 		try {
 			try {
-				// Remove once the whacky double-slash rules get removed
-				const url = new URL(request.url);
-				request = new Request(
-					new URL(
-						url.pathname.replaceAll("//", "/") + url.search,
-						"https://developers.cloudflare.com/",
-					),
-					request,
-				);
-			} catch (error) {
-				console.error("Could not normalize request URL", error);
-			}
-
-			try {
 				// @ts-expect-error Ignore Fetcher type mismatch
 				const redirect = await redirectsEvaluator(request, this.env.ASSETS);
 				if (redirect) {
