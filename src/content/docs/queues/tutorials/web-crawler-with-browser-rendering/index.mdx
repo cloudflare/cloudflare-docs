@@ -45,7 +45,7 @@ To get started, create a Worker application using the [`create-cloudflare` CLI](
 	product="workers"
 	params={{
 		category: "hello-world",
-		type: "Hello World Worker",
+		type: "Worker only",
 		lang: "TypeScript",
 	}}
 />
@@ -109,8 +109,6 @@ npm install robots-parser
 
 Then, add a Browser Rendering binding. Adding a Browser Rendering binding gives the Worker access to a headless Chromium instance you will control with Puppeteer.
 
-
-
 <WranglerConfig>
 
 ```toml
@@ -136,8 +134,6 @@ Created queue queues-web-crawler.
 
 Then, in your Wrangler file, add the following:
 
-
-
 <WranglerConfig>
 
 ```toml
@@ -155,8 +151,6 @@ binding = "CRAWLER_QUEUE"
 Adding the `max_batch_timeout` of 60 seconds to the consumer queue is important because Browser Rendering has a limit of two new browsers per minute per account. This timeout waits up to a minute before collecting queue messages into a batch. The Worker will then remain under this browser invocation limit.
 
 Your final Wrangler file should look similar to the one below.
-
-
 
 <WranglerConfig>
 

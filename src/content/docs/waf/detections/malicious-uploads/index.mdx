@@ -2,7 +2,7 @@
 title: Malicious uploads detection
 pcx_content_type: concept
 sidebar:
-  order: 3
+  order: 4
   group:
     label: Malicious uploads
 ---
@@ -75,8 +75,8 @@ In these situations, configure a custom scan expression to tell the content scan
 
 When content scanning is enabled, you can use the following fields in WAF rules:
 
-| Field name in the dashboard                                                                | Field name in expressions                                                                                                           |
-| ------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------- |
+| Field name in the dashboard                                                                | Field name in expressions                                                                                                         |
+| ------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- |
 | Has content object                                                                         | [`cf.waf.content_scan.has_obj`](/ruleset-engine/rules-language/fields/reference/cf.waf.content_scan.has_obj/)                     |
 | Has malicious content object                                                               | [`cf.waf.content_scan.has_malicious_obj`](/ruleset-engine/rules-language/fields/reference/cf.waf.content_scan.has_malicious_obj/) |
 | Number of malicious content objects                                                        | [`cf.waf.content_scan.num_malicious_obj`](/ruleset-engine/rules-language/fields/reference/cf.waf.content_scan.num_malicious_obj/) |

@@ -1770,6 +1770,15 @@
 					"pro": "No",
 					"biz": "One field only",
 					"ent": "Yes"
+				},
+				"g_fw_for_ai": {
+					"title": "Firewall for AI (beta)",
+					"summary": "Enterprise-only",
+					"link": "/waf/detections/firewall-for-ai/",
+					"free": "No",
+					"pro": "No",
+					"biz": "No",
+					"ent": "Yes"
 				}
 			}
 		},
