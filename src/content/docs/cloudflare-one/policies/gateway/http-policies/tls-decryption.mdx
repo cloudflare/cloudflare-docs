@@ -17,7 +17,7 @@ Cloudflare Gateway can perform [SSL/TLS decryption](https://www.cloudflare.com/l
 
 When you turn on TLS decryption, Gateway will decrypt all traffic sent over HTTPS, apply your HTTP policies, and then re-encrypt the request with a [user-side certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/).
 
-Cloudflare prevents traffic interference by decrypting, inspecting, and re-encrypting HTTPS requests in its data centers in memory only. Gateway only stores eligible cache content at rest. All cache disks are encrypted at rest. Traffic on-ramped to Gateway with the WARP client will egress from [FedRAMP compliant data centers](#fedramp-compliance). You can configure where TLS decryption takes place with [Regional Services](/data-localization/regional-services/) in the [Cloudflare Data Localization Suite (DLS)](/data-localization/).
+Cloudflare prevents interference by decrypting, inspecting, and re-encrypting HTTPS requests in its data centers in memory only. Gateway only stores eligible cache content at rest. All cache disks are encrypted at rest. You can configure where TLS decryption takes place with [Regional Services](/data-localization/regional-services/) in the [Cloudflare Data Localization Suite (DLS)](/data-localization/).
 
 Cloudflare supports connections from users to Gateway over TLS 1.1, 1.2, and 1.3.
 
@@ -115,8 +115,9 @@ When FIPS compliance is enabled, Gateway will only choose [FIPS-compliant cipher
 
 FIPS-compliant traffic defaults to [HTTP/3](/cloudflare-one/policies/gateway/http-policies/http3/). To enforce HTTP policies for UDP traffic, you must turn on the [Gateway proxy for UDP](/cloudflare-one/policies/gateway/http-policies/http3/#enable-http3-inspection).
 
-## FedRAMP compliance
+### Cipher suites
 
+<<<<<<< HEAD
 When you use the WARP client to on-ramp TLS traffic to Gateway, traffic will egress from a Cloudflare data center within Cloudflare's FedRAMP boundary. If a user's closest data center is non-FedRAMP compliant, their traffic will still egress from a FedRAMP compliant data center, maintaining FedRAMP compliance for the traffic.
 
 ```mermaid
@@ -144,6 +145,9 @@ To further control what data centers traffic egresses from, you can use [dedicat
 ## Cipher suites
 
 <GlossaryDefinition term="cipher suite" prepend="A cipher suite is " />
+=======
+<GlossaryDefinition term="cipher suite" />
+>>>>>>> parent of 7b231e336a ([Gateway] TLS FedRAMP compliance (#20927))
 
 The following table lists the default cipher suites Gateway uses for TLS decryption.
 
