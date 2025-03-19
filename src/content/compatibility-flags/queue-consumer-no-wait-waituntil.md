@@ -24,7 +24,7 @@ export default {
     for (let i = 0; i < batch.messages.length; ++i) {
       console.log(`message #${i}: ${JSON.stringify(batch.messages[i])}`);
     }
-    ctx.waitUntil(sleep(60 * 1000));
+    ctx.waitUntil(sleep(30 * 1000));
   }
 };
 
