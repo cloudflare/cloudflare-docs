@@ -67,7 +67,7 @@ In summary:
 
 - Default BGP priority is `100`
 - You can use communities to influence routing priorities
-- When using AS prepending with communities, Cloudflare combines both values to determine the new route priority. For example, if a route is tagged with `13335:60010`, the base priority is set to `10`. If you prepend your ASN twice, Cloudflare adds `10` for each prepend, resulting in a final route priority of `30`.
+- When using AS prepending with communities, Cloudflare combines both values to determine the new route priority. For example, if a route is tagged with `13335:60010` the base priority is set to `10`. If you prepend your ASN twice, Cloudflare adds `10` for each prepend resulting in a final route priority of `30`.
 
 The community values supported for setting base route priority are:
 - `13335:60010` — set base Magic route priority to `10`
