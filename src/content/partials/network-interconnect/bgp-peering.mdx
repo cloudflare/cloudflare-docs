@@ -61,9 +61,7 @@ Additionally, when multiple BGP routes exist with the same prefix length and pri
 
 Cloudflare supports traffic engineering via BGP communities and AS prepending. You can use these traffic routing techniques to set route priorities and perform traffic engineering across multiple interconnects.
 
-The default BGP route priority is `100`. This base priority can be adjusted using communities. For example, when a route is tagged with the community `13335:60010` its priority is set to `10`. This makes it a higher priority than the default of `100` because lower numeric values are preferred. This operates similarly to local preference communities. However, unlike local preference, these combine numerically with AS prepends as follows.
-
-Additionally, for each AS prepending — where the customer ASN is added multiple times to the AS Path — an additional `10` is added to the route's base priority. By increasing the priority number, the route is less preferred.
+The default BGP route priority is `100`. This base priority can be adjusted using communities. For example, when a route is tagged with the community `13335:60010` its priority is set to `10`. This makes it a higher priority than the default of `100` because lower numeric values are preferred. This operates similarly to local preference communities. However, unlike local preference, these combine numerically with AS prepends. This means that for each AS prepending — where the customer ASN is added multiple times to the AS Path — an additional `10` is added to the route's base priority. By increasing the priority number, the route is less preferred.
 
 In summary:
 
