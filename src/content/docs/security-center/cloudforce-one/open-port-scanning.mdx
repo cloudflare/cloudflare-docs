@@ -7,6 +7,10 @@ sidebar:
     text: Beta
 ---
 
+import { Details } from "~/components"
+
+
+
 Open Port Scanning allows [Magic Transit](/magic-transit/) and [Bring your Own IPs](/byoip/) users to efficiently monitor IP ranges for security vulnerabilities. This API enables users to scan their designated IP ranges, detect any open ports, and receive daily notifications regarding newly opened ports.
 
 You can access this feature via the [API](/api/resources/cloudforce_one/subresources/scans/subresources/config/).
@@ -43,7 +47,7 @@ To configure Open Port Scanning, follow these steps:
     - **Frequency**: Enter the scan frequency in days.
     - **Ports**: Select the ports to scan. Choose among:
         - All
-        - Default
+        - Default (refer to [Default ports](/security-center/cloudforce-one/open-port-scanning/#default-ports) for a comprehensive list)
         - List of specific ports
 2. **Scan IPs**: Initiate the scanning process. The system will analyze the specified IP ranges to identify any open ports.
 3. **Generate list of open ports**: Once the scan is complete, the API will generate a list of detected open ports for review and action.
@@ -56,6 +60,111 @@ To configure Open Port Scanning, follow these steps:
 Open Port Scanning feature is currently in closed beta. The Cloudforce One team appreciates your feedback as the team works to enhance its functionality and user experience.
 If you want to subscribe  to this feature or participate in the beta program, [Join Our Closed Beta For Port Scanning](https://www.cloudflare.com/en-gb/lp/open-port-scanning-beta/).
 :::
+
+## Default ports
+
+<Details header="List of default ports">
+- 80
+- 631
+- 161
+- 137
+- 123
+- 138
+- 1434
+- 445
+- 135
+- 67
+- 23
+- 53
+- 443
+- 21
+- 139
+- 22
+- 500
+- 68
+- 520
+- 1900
+- 25
+- 4500
+- 514
+- 49152
+- 162
+- 69
+- 5353
+- 111
+- 49154
+- 3389
+- 110
+- 1701
+- 998
+- 996
+- 997
+- 999
+- 3283
+- 49153
+- 445
+- 1812
+- 136
+- 139
+- 143
+- 53
+- 2222
+- 135
+- 3306
+- 2049
+- 32768
+- 5060
+- 8080
+- 1025
+- 1433
+- 3456
+- 80
+- 1723
+- 111
+- 995
+- 993
+- 20031
+- 1026
+- 7
+- 5900
+- 1646
+- 1645
+- 593
+- 1025
+- 518
+- 2048
+- 626
+- 1027
+- 587
+- 177
+- 1719
+- 427
+- 497
+- 8888
+- 4444
+- 1023
+- 65024
+- 199
+- 19
+- 9
+- 49193
+- 1029
+- 1720
+- 49
+- 465
+- 88
+- 1028
+- 17185
+- 1718
+- 49186
+- 548
+- 113
+- 81
+- 6001
+- 2000
+- 10000
+- 31337
+</Details>
 
 ## Frequently Asked Questions
 
