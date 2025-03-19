@@ -84,7 +84,7 @@ The [PutObjectAsync](https://docs.aws.amazon.com/sdkfornet/v3/apidocs/items/S3/M
 
 :::caution
 
-`DisablePayloadSigning = true` must be passed as Cloudflare R2 does not currently support the Streaming SigV4 implementation used by AWSSDK.S3.
+`DisablePayloadSigning = true` and `DisableDefaultChecksumValidation = true` must be passed as Cloudflare R2 does not currently support the Streaming SigV4 implementation used by AWSSDK.S3.
 
 :::
 
@@ -95,7 +95,8 @@ static async Task PutObject()
 	{
 		FilePath = @"/path/file.txt",
 		BucketName = "sdk-example",
-		DisablePayloadSigning = true
+		DisablePayloadSigning = true,
+    DisableDefaultChecksumValidation = true
 	};
 
 	var response = await s3Client.PutObjectAsync(request);
