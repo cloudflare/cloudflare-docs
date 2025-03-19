@@ -14,13 +14,27 @@ You can access this feature via the [API](/api/resources/cloudforce_one/subresou
 ## Prerequisites
 
 - Users with specific permissions: Cloudforce One Write, Administrator and Super Administrator.
-- Account token: **Custom API Token** >  **Cloudforce One:Edit**.
+- Account token: **Custom API Token** >  **Cloudforce One:Edit**. 
+
+To create a custom API token:
+
+1. From the [Cloudflare dashboard](https://dash.cloudflare.com/profile/api-tokens/), go to **My Profile** > **API Tokens** for user tokens. Go to **Create Custom Token** > **Get started**.
+2. Enter a **Token name**, for example, `Open Port Scanning`.
+3. In **Permissions**:
+    - Choose **Account**.
+    - Select **Cloudforce One** as the account.
+    - Choose **Edit** access.
+4. In Client IP Address Filtering:
+    - In **Operator**, select `is in`.
+    - In **Value**, enter a valid IP address.
+5. Select **Continue to summary**.
+6. Review the token, then select **Create Token**.
 
 ## Configure Open Port Scanning
 
 To configure Open Port Scanning, follow these steps:
 
-1. Configure the first scan parameters:
+1. **Create A New Scan Config**:
     - **IPs**: Enter the IP ranges you wish to monitor. Ensure that the ranges are correctly formatted to avoid scanning errors. The system will validate if the IPs requested are onboarded to Cloudflare and associated to the account belonging to the API token used.
     - **Frequency**: Enter the scan frequency in days.
     - **Ports**: Select the ports to scan. Choose among:
@@ -30,14 +44,14 @@ To configure Open Port Scanning, follow these steps:
 2. **Scan IPs**: Initiate the scanning process. The system will analyze the specified IP ranges to identify any open ports.
 3. **Generate list of Open Ports**: Once the scan is complete, the API will generate a list of detected open ports for review and action.
 4. **Select Open Ports to list**: Choose which open ports you would like to be notified about. You can exclude  any ports that do not require immediate attention.
-5. **View differences from previous scan**: The system will highlight any changes in open ports since the last scan, allowing you to quickly assess new vulnerabilities.
+5. **View differences from previous scan**: The API will highlight any changes in open ports since the last scan, allowing you to quickly assess new vulnerabilities.
 6. **Stop Scanning**: If necessary, you can stop  the scanning process at any time.
 7. **Set up alerts**: Configure alerts for specific ports of interest. You will be notified immediately via email or webhook if any of these designated ports become newly open. 
 
 Note: permissions
 
 :::note[Beta feature notice]
-Open Port Scanning feature is currently in closed beta. We appreciate your feedback as we work to enhance its functionality and user experience.
+Open Port Scanning feature is currently in closed beta. The Cloudforce One team appreciates your feedback as the team works to enhance its functionality and user experience.
 If you want to subscribe  to this feature or participate in the beta program, [Join Our Closed Beta For Port Scanning](https://www.cloudflare.com/en-gb/lp/open-port-scanning-beta/).
 :::
 
@@ -45,6 +59,23 @@ If you want to subscribe  to this feature or participate in the beta program, [J
 
 1. What IPs will the scan come from?
 
-- 2a09:bac0:1008:5000:1000:0000:0000:0050/104.30.128.13
-- 2a09:bac0:1008:5000:1000:0000:0000:0048/104.30.129.33
-- 2001:19f0:1000:2941:5400:4ff:fe70:2a7a/140.82.60.241 
+    - `2a09:bac0:1008:5000:1000:0000:0000:0050/104.30.128.13`
+    - `2a09:bac0:1008:5000:1000:0000:0000:0048/104.30.129.33`
+    - `2001:19f0:1000:2941:5400:4ff:fe70:2a7a/140.82.60.241` 
+
+2. Can the Port Scanner bypass other security rules configured?
+
+    - The Cloudforce One team asks customers to ensure they allow the IPs for the scanner to run correctly.
+
+3. How long do scans take?
+
+    - Depending on the number of IP addresses, scans can take up to 10 hours.
+
+4. Can I stop automatic scanning?
+
+    - Yes, you can decide at any point to stop scan and restart scans when it is convenient for you.
+
+5. What are the limitations for the scans?
+
+    - Scans are limited to ranges of up to 5,000 IPs.
+    - The API scans both IPv4 and IPv6 IP addresses.
