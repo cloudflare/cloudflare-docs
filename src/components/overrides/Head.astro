@@ -7,7 +7,7 @@ import { getEntry } from "astro:content";
 import { getOgImage } from "~/util/og";
 import type { CollectionEntry } from "astro:content";
 
-const NOINDEX_PRODUCTS = ["style-guide", "security"];
+const NOINDEX_PRODUCTS = ["email-security", "style-guide", "security"];
 
 const currentSection = Astro.url.pathname.split("/")[1].replaceAll(".", "");
 
