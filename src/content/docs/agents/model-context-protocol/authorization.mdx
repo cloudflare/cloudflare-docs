@@ -20,8 +20,8 @@ Cloudflare provides an [OAuth Provider Library](https://github.com/cloudflare/ai
 
 You can use the OAuth Provider Library in three ways:
 
-1. **Your Worker handles authorization itself.** Your MCP server, running on Cloudflare, handles the complete OAuth flow. ([Example](/agents/model-context-protocol/mcp-server/getting-started/))
-2. **Integrate directly with a third-party OAuth provider**, such as GitHub or Google. ([Example](/agents/model-context-protocol/mcp-server/examples/github/))
+1. **Your Worker handles authorization itself.** Your MCP server, running on Cloudflare, handles the complete OAuth flow. ([Example](/agents/model-context-protocol/getting-started/))
+2. **Integrate directly with a third-party OAuth provider**, such as GitHub or Google. ([Example](/agents/model-context-protocol/examples/github/))
 3. **Integrate with your own OAuth provider**, including authorization-as-a-service providers you might already rely on, such as Stytch and Auth0.
 
 The following sections describe each of these options and link to runnable code examples for each.
@@ -49,7 +49,7 @@ export default new OAuthProvider({
 });
 ```
 
-Refer to the [getting started example](/agents/model-context-protocol/mcp-server/getting-started/) for a complete example of the `OAuthProvider` in use, with a mock authentication flow.
+Refer to the [getting started example](/agents/model-context-protocol/getting-started/) for a complete example of the `OAuthProvider` in use, with a mock authentication flow.
 
 The authorization flow in this case works like this:
 
@@ -73,7 +73,7 @@ sequenceDiagram
     Note over C,M: Begin standard MCP message exchange
 ```
 
-Remember — [authentication is different from authorization](https://www.cloudflare.com/learning/access-management/authn-vs-authz/). Your MCP Server can handle authorization itself, while still relying on an external authentication service to first authenticate users. The [example](/agents/model-context-protocol/mcp-server/getting-started) in getting started provides a mock authentdcation flow. You will need to implement your own authentication handler — either handling authentication yourself, or using an external authentication services.
+Remember — [authentication is different from authorization](https://www.cloudflare.com/learning/access-management/authn-vs-authz/). Your MCP Server can handle authorization itself, while still relying on an external authentication service to first authenticate users. The [example](/agents/model-context-protocol/getting-started) in getting started provides a mock authentdcation flow. You will need to implement your own authentication handler — either handling authentication yourself, or using an external authentication services.
 
 ### (2) Third-party OAuth Provider
 
@@ -128,5 +128,5 @@ If your application already implements an Oauth Provider itself, or you use Styt
 
 ## Next steps
 
-- [Learn how to use the OAuth Provider SDK](/agents/model-context-protocol/mcp-server/authorization/oauth-provider-api-reference/)
-- Learn how to use a third-party OAuth provider, using the [GitHub](/agents/model-context-protocol/mcp-server/examples/github/) and [Slack](/agents/model-context-protocol/mcp-server/examples/slack/) examples.
+- [Learn how to use the OAuth Provider SDK](/agents/model-context-protocol/authorization/oauth-provider-api-reference/)
+- Learn how to use a third-party OAuth provider, using the [GitHub](/agents/model-context-protocol/examples/github/) and [Slack](/agents/model-context-protocol/examples/slack/) examples.
