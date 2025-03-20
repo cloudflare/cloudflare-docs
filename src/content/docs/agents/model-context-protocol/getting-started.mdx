@@ -100,16 +100,16 @@ If you have already [connected a git repository](/workers/ci-cd/builds/) to the 
 
 After deploying, take the URL of your deployed MCP server, and enter it in the MCP inspector running on `http://localhost:5173`. You now have a remote MCP server, deployed to Cloudflare, that MCP clients can connect to.
 
-### Connect your MCP server to Claude and other MCP Clients
+### Connect your remote MCP server to Claude and other MCP Clients via a local proxy
 
-Now that your MCP server is running with OAuth authentication, you can connect Claude Desktop or other MCP clients to it. This lets you to test what an interaction with your OAuth-enabled MCP server will be like with a real MCP client.
+Now that your MCP server is running with OAuth authentication, you can use the [`mcp-remote` local proxy](https://www.npmjs.com/package/mcp-remote) to connect Claude Desktop or other MCP clients to it — even though if these tools aren't yet _remote_ MCP clients, and don't support remote transport or authorization on the client side. This lets you to test what an interaction with your OAuth-enabled MCP server will be like with a real MCP client.
 
 #### Connect to your MCP server running locally
 
 Follow these steps to connect Claude Desktop to the MCP server running on your local machine:
 
 1. Open Claude Desktop and navigate to Settings -> Developer -> Edit Config. This opens the configuration file that controls which MCP servers Claude can access.
-2. Replace the content with this configuration:
+2. Add the MCP server to your config:
 
 ```json
 {
@@ -124,7 +124,7 @@ Follow these steps to connect Claude Desktop to the MCP server running on your l
   }
 }
 ```
-This tells Claude to communicate with your MCP server running at `http://localhost:8787/sse`, with the `mcp-remote` tool handling the authentication between Claude and your server.
+This tells Claude to communicate with your MCP server running at `http://localhost:8787/sse`.
 
 3. Save the file and restart Claude Desktop (command/ctrl + R). When Claude restarts, a browser window will open showing your OAuth login page. Complete the authentication flow to grant Claude access to your MCP server.
 
