@@ -2,7 +2,6 @@
 import LanguageSelect from "@astrojs/starlight/components/LanguageSelect.astro";
 import DocSearch from "@astrojs/starlight-docsearch/DocSearch.astro";
 import SiteTitle from "@astrojs/starlight/components/SiteTitle.astro";
-import SocialIcons from "@astrojs/starlight/components/SocialIcons.astro";
 import ThemeSelect from "@astrojs/starlight/components/ThemeSelect.astro";
 
 import HeaderDropdowns from "../HeaderDropdowns.tsx";
@@ -14,18 +13,15 @@ import HeaderDropdowns from "../HeaderDropdowns.tsx";
 		<div id="docsearch">
 			<DocSearch />
 		</div>
-		<div id="right-group" class="hidden h-10 flex-wrap gap-x-8 overflow-hidden">
+		<div id="right-group" class="hidden h-10 flex-wrap gap-x-2 overflow-hidden">
 			<HeaderDropdowns client:idle />
 			<a
 				id="header-login-button"
 				href="https://dash.cloudflare.com/"
-				class="flex items-center justify-center rounded bg-cl1-brand-orange px-6 font-medium text-cl1-black no-underline"
+				class="mr-2 flex items-center justify-center rounded bg-cl1-brand-orange px-6 font-medium text-cl1-black no-underline"
 			>
-				Sign up / Log in
+				Log in
 			</a>
-			<div id="social-icons" class="flex items-center gap-4">
-				<SocialIcons />
-			</div>
 			<ThemeSelect />
 			<LanguageSelect />
 		</div>

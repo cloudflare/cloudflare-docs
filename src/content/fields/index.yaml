@@ -602,9 +602,9 @@ entries:
     data_type: Number
     categories: [Request]
     keywords: [request, cloudflare, score, client, visitor]
-    summary: Represents a Cloudflare threat score from 0–100, where 0 indicates low risk.
+    summary: Represents a Cloudflare threat score.
     description: |-
-      Values above 10 may represent spammers or bots, and values above 40 identify bad actors on the Internet. It is rare to see values above 60. A common recommendation is to challenge requests with a score above 10 and to block those above 50.
+      Previously, a threat score represented a Cloudflare threat score from 0–100, where 0 indicated low risk. Now, the threat score is always `0` (zero).
 
   - name: cf.tls_cipher
     data_type: String
