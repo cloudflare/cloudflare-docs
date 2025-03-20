@@ -8,7 +8,7 @@ head:
     content: Common DNS policies
 ---
 
-import { Render, Tabs, TabItem } from "~/components";
+import { Render, Tabs, TabItem, APIRequest } from "~/components";
 
 The following policies are commonly used to secure DNS traffic.
 
@@ -78,7 +78,7 @@ You can add a list of category IDs to the [EDNS header](https://datatracker.ietf
 }
 ```
 
-With the [Request Context Categories](/cloudflare-one/policies/gateway/dns-policies/#request-context-categories) selector, you can block the category IDs sent with EDNS. This is useful to filter by categories not known at the time of creating a policy, or to enforce device-specific DNS content filtering without reaching your account limit. When Gateway uses this selector to block a DNS query, Gateway will return an Extended DNS Error (EDE) Code 15 - Blocked error, along with a field containing an array of the matched categories.
+With the [Request Context Categories](/cloudflare-one/policies/gateway/dns-policies/#request-context-categories) selector, you can block the category IDs sent with EDNS. This is useful to filter by categories not known at the time of creating a policy, or to enforce device-specific DNS content filtering without reaching your account limit. When Gateway uses this selector to block a DNS query, the request will return an Extended DNS Error (EDE) Code 15 - Blocked error, along with a field containing an array of the matched categories.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -95,8 +95,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "name": "All-DNS-Bock-Category-Matches-In-Request",
-  "description": "Block all category matches in the requet edns context",
-  "precedence": 30,
+  "description": "Block all category matches in the request EDNS context",
   "enabled": true,
   "action": "block",
   "filters": [
@@ -114,7 +113,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 resource "cloudflare_zero_trust_gateway_policy" "block_content_categories" {
   account_id  = var.cloudflare_account_id
   name        = "All-DNS-Bock-Category-Matches-In-Request"
-  description = "Block all category matches in the requet edns context"
+  description = "Block all category matches in the request EDNS context"
   enabled     = true
   action      = "block"
   filters     = ["dns"]
