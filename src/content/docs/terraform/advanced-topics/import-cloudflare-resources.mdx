@@ -231,7 +231,13 @@ One way to ease the process of executing all the `terraform import`, is saving t
 
    This new file - `to-import.sh` - will have valid the necessary commands `terraform import ...` to import into the TF. state all the previously generated resources. 
 
-2. Now, you can just run the new `to-import.sh` file, like below. Terraform will import each resource individually into Terraform state.
+2. Mark it as executable:
+
+```bash
+chmod +x to-import.sh
+```
+
+3. Now, you can just run the new `to-import.sh` file, like below. Terraform will import each resource individually into Terraform state.
 
 ```bash
 bash to-import.sh
