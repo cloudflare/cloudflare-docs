@@ -2061,8 +2061,8 @@
 				"modes": {
 					"title": "Interactivity modes",
 					"link": "/turnstile/get-started/client-side-rendering/#appearance-modes",
-					"free": "Managed, Invisible, Interactive",
-					"ent": "Managed, Invisible, Interactive"
+					"free": "Managed, Invisible, Non-Interactive",
+					"ent": "Managed, Invisible, Non-Interactive"
 				},
 				"offlabel": {
 					"title": "Offlabel (remove Cloudflare branding)",
