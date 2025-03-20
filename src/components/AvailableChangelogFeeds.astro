@@ -2,7 +2,7 @@
 import AnchorHeading from "./AnchorHeading.astro";
 import RSSButton from "./RSSButton.astro";
 
-import { products, productsByGroup } from "~/util/products";
+import { productsByGroup } from "~/util/products";
 import Details from "./Details.astro";
 ---
 
@@ -23,7 +23,7 @@ import Details from "./Details.astro";
 				</p>
 				<Details header="Included products">
 					<ul>
-						{products.map((product) => (
+						{products?.map((product) => (
 							<li>
 								<p>
 									<a href={product.data.product.url}>
