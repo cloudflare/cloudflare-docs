@@ -6,10 +6,33 @@ productArea: Core platform
 productAreaLink: /fundamentals/reference/changelog/platform/
 entries:
 
+  - publish_date: "2025-03-20"
+    title: "Cloudflare Radar: Attack top industry and vertical endpoints"
+    description: |-
+      Deprecation date: March 20, 2025
+
+      End of life date: September 20, 2025
+
+      The `/top/industry` and `/top/vertical` attack endpoints are now deprecated and will be replaced by the corresponding summary endpoints.
+
+      Affected APIs:
+
+        * `GET /radar/attacks/layer3/top/industry`
+        * `GET /radar/attacks/layer3/top/vertical`
+        * `GET /radar/attacks/layer7/top/industry`
+        * `GET /radar/attacks/layer7/top/vertical`
+
+      Replacements:
+
+        * `GET /radar/attacks/layer3/summary/industry`
+        * `GET /radar/attacks/layer3/summary/vertical`
+        * `GET /radar/attacks/layer7/summary/industry`
+        * `GET /radar/attacks/layer7/summary/vertical`
+
   - publish_date: "2025-03-17"
     title: "Security Center: Security level and Threat Score are now automated"
     description: |-
-      
+
       Change date: March 17, 2025
 
       Cloudflare now combines the IP address threat signal with threshold and botnet data, no longer requiring you to set a sensitivity level. Users will no longer be able to set Security level via the  Cloudflare dashboard. However, users can still rely on the existing API or Terraform configuration to set a Security level.
