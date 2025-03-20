@@ -5,25 +5,33 @@ sidebar:
   order: 2
 ---
 
+import { Render, Tabs, TabItem } from "~/components";
+
+{/* TODO: create preamble specifically for compute accounts */}
+
 Cloudflare CASB detects when integrations are unhealthy or outdated.
 
 Common integration issues include changes to SaaS app or cloud environment configurations, user access, or permission scope. Integrations may need to be updated to support new features or permissions.
 
 ## Upgrade a compute account
 
-Upgrading a compute account applies the latest software features, bug fixes, and infrastructure changes to a cloud compute account. Upgrades should be run periodically to keep the compute account software up to date or when recommended by Cloudflare to address an issue.
+Upgrading a compute account applies the latest software features, bug fixes, and infrastructure changes to a cloud compute account. You should run upgrades periodically to keep the compute account software up to date or when recommended by Cloudflare to address an issue. CASB deploys compute account upgrades through Terraform updates.
 
 To upgrade a compute account:
 
-1. Download the latest Terraform configuration using the "latest templates" API route.
-   1. Navigate to your integration in the CASB Dashboard
-   2. Select the integration you created for cloud scanning
-   3. You should see a "Connect a compute account" module. Click "Open Connection Instructions" Here, you'll be able to see the latest terraform that you can download
-2. Validate that your local machine has the AWS or GCP CLI installed
-3. Validate that an AWS or GCP profile is configured and set to the intended region, and using IAM credentials for a user in the intended AWS or GCP account
-4. Validate that the Terraform state file created during previous Terraform activities for this account is available
-5. Update cached version of the CDS Terraform modules: terraform init --upgrade
-6. Apply the downloaded terraform configuration: terraform apply
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **CASB** > **Integrations**.
+2. Choose the integration you created for cloud scanning.
+3. Select **Open connection instructions**.
+4. Follow the instructions provided to validate your local Terraform and CLI configuration.
+5. Under **Step 2: Deploy Terraform Configuration**, copy the template to your local configuration.
+6. In a terminal, update the cached version of the CDS Terraform modules.
+   ```bash
+   terraform init --upgrade
+   ```
+7. Apply the downloaded terraform configuration:
+   ```bash
+   terraform apply
+   ```
 
 ## Rotate API tokens
 
