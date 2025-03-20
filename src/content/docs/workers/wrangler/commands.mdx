@@ -464,11 +464,11 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
   - Protocol to forward requests to host on.
 - `--var` <Type text="key:value\[]" /> <MetaInfo text="optional" />
   - Array of `key:value` pairs to inject as variables into your code. The value will always be passed as a string to your Worker.
-  - For example, `--var git_hash:$(git rev-parse HEAD) test:123` makes the `git_hash` and `test` variables available in your Worker's `env`.
+  - For example, `--var "git_hash:'$(git rev-parse HEAD)'" "test:123"` makes the `git_hash` and `test` variables available in your Worker's `env`.
   - This flag is an alternative to defining [`vars`](/workers/wrangler/configuration/#non-inheritable-keys) in your [Wrangler configuration file](/workers/wrangler/configuration/). If defined in both places, this flag's values will be used.
 - `--define` <Type text="key:value\[]" /> <MetaInfo text="optional" />
   - Array of `key:value` pairs to replace global identifiers in your code.
-  - For example, `--define GIT_HASH:$(git rev-parse HEAD)` will replace all uses of `GIT_HASH` with the actual value at build time.
+  - For example, `--define "GIT_HASH:'$(git rev-parse HEAD)'"` will replace all uses of `GIT_HASH` with the actual value at build time.
   - This flag is an alternative to defining [`define`](/workers/wrangler/configuration/#non-inheritable-keys) in your [Wrangler configuration file](/workers/wrangler/configuration/). If defined in both places, this flag's values will be used.
 - `--tsconfig` <Type text="string" /> <MetaInfo text="optional" />
   - Path to a custom `tsconfig.json` file.
