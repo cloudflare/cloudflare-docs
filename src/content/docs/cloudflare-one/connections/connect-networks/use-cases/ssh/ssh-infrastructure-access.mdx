@@ -20,9 +20,9 @@ import { Tabs, TabItem, Badge, Render } from "~/components";
 
 ## 1. Connect the server to Cloudflare
 
-1. Create a Cloudflare Tunnel for your server by following our [dashboard setup guide](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/). You can skip the connect an application step and go straight to connecting a network.
+<Render file="tunnel/connect-private-network" />
 
-2. In the **Private Networks** tab for the tunnel, enter the IP address of your server (or a range that includes the server IP). Typically this would be a private IP, but public IPs are also allowed.
+<Render file="tunnel/connect-private-network-infra-access" />
 
 ## 2. Set up the client
 
@@ -38,7 +38,7 @@ To connect your devices to Cloudflare:
 
 ## 4. Add a target
 
-<Render file="access/add-target" />
+<Render file="access/add-target" params={{ protocol: "generic" }} />
 
 ## 5. Add an infrastructure application
 

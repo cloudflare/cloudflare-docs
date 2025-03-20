@@ -21,7 +21,11 @@ Run the following command:
 cloudflared update
 ```
 
-This updates `cloudflared` and automatically restarts the service.
+After running `cloudflared update` to update `cloudflared`, you must restart the service for it to take effect. Run:
+
+```powershell
+net start cloudflared
+```
 
 </TabItem> <TabItem label="macOS">
 

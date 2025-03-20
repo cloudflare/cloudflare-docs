@@ -17,6 +17,7 @@ The diagram below illustrates a common interaction flow between Workers and Cach
 
 1. A User (a) Requests a URI, and this request is directed to a Worker. The Worker can then interact with the request, either requesting the content further upstream using (b) fetch() or sending a (f) Response back to the User.
 2. If the content is cached, the Cache will send a (e) Response back to the Worker which can now interact with the response before sending a (f) Response back to the user.
+3. When using cache rules with Workers, the cache rule should not be set based on the user URL/host (a). Instead, the rule must match the properties of the URL in the fetch() (b) request — such as headers, hostname, or URL path — otherwise, the rule will not be applied.
 
 Here are a few examples of how Workers can be used to customize cache behavior:
 
