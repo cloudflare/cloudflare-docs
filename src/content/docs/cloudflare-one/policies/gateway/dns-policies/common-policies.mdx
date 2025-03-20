@@ -72,10 +72,50 @@ The categories included in this policy are not always a security threat, but blo
 
 Block a set of categories sent in the EDNS section of the request. The integer category list to block on, can be sent to the gateway DNS as JSON(`{"categories": [<category-int-codes..>]}`) via OPT code 65050. This is useful to filter by categories, that are not known at the time of creating a rule. Whenever a DNS request is blocked because of the request context categories, gateway will reply with an EDE Blocked(15) field containing an array of matched categories.
 
-<Render
-	file="gateway/policies/dash-plus-api/dns/block-dynamic-categories"
-	product="cloudflare-one"
-/>
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector                 | Operator | Value   | Action |
+| ------------------------ | -------- | ------- | ------ |
+| Request Context Category | is       | Present | Block  |
+
+</TabItem>
+<TabItem label="API">
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "All-DNS-Bock-Category-Matches-In-Request",
+  "description": "Block all category matches in the requet edns context",
+  "precedence": 30,
+  "enabled": true,
+  "action": "block",
+  "filters": [
+    "dns"
+  ],
+  "traffic": "dns.categories_in_request_context_matches",
+  "identity": ""
+}'
+```
+
+</TabItem>
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "block_content_categories" {
+  account_id  = var.cloudflare_account_id
+  name        = "All-DNS-Bock-Category-Matches-In-Request"
+  description = "Block all category matches in the requet edns context"
+  enabled     = true
+  action      = "block"
+  filters     = ["dns"]
+  traffic     = "dns.categories_in_request_context_matches"
+  identity    = ""
+}
+```
+
+</TabItem> </Tabs>
 
 ## Block unauthorized applications
 
