@@ -18,7 +18,7 @@
 
 # AI
 
-/src/content/docs/agents/ @irvinebroque @rita3ko @elithrar @thomasgauvin @threepointone @harshil1712 @cloudflare/pcx-technical-writing
+/src/content/docs/agents/ @irvinebroque @rita3ko @elithrar @thomasgauvin @threepointone @cloudflare/pcx-technical-writing
 /src/content/docs/ai-gateway/ @kathayl @G4brym @mchenco @daisyfaithauma @cloudflare/pcx-technical-writing
 /src/content/docs/workers-ai/ @rita3ko @craigsdennis @markdembo @mchenco @daisyfaithauma @cloudflare/pcx-technical-writing
 /src/content/docs/vectorize/ @elithrar @vy-ton @sejoker @mchenco @cloudflare/pcx-technical-writing
@@ -93,10 +93,10 @@
 /src/content/docs/calls/ @cloudflare/pcx-technical-writing @cloudflare/calls
 /src/assets/images/calls/ @cloudflare/pcx-technical-writing @cloudflare/calls
 /public/calls/ @cloudflare/pcx-technical-writing @cloudflare/calls
-/src/content/docs/d1/ @elithrar @rozenmd @vy-ton @joshthoward @oxyjun @cloudflare/pcx-technical-writing
+/src/content/docs/d1/ @elithrar @rozenmd @vy-ton @joshthoward @oxyjun @harshil1712 @cloudflare/pcx-technical-writing
 /src/content/release-notes/d1.yaml @elithrar @rozenmd @vy-ton @joshthoward @oxyjun @cloudflare/pcx-technical-writing
-/src/content/partials/d1/ @elithrar @rozenmd @vy-ton @joshthoward @oxyjun @cloudflare/pcx-technical-writing
-/src/content/docs/durable-objects/ @elithrar @vy-ton @joshthoward @oxyjun @cloudflare/pcx-technical-writing
+/src/content/partials/d1/ @elithrar @rozenmd @vy-ton @joshthoward @oxyjun @harshil1712 @cloudflare/pcx-technical-writing
+/src/content/docs/durable-objects/ @elithrar @vy-ton @joshthoward @oxyjun @harshil1712 @cloudflare/pcx-technical-writing
 /src/content/release-notes/durable-objects.yaml @elithrar @rozenmd @vy-ton @joshthoward @oxyjun @cloudflare/pcx-technical-writing
 /src/content/docs/email-routing/ @cloudflare/pcx-technical-writing
 /src/content/docs/hyperdrive/ @elithrar @thomasgauvin @sejoker @oxyjun @cloudflare/pcx-technical-writing
@@ -111,9 +111,9 @@
 /src/content/release-notes/kv.yaml @elithrar @thomasgauvin @rts-rob @oxyjun @cloudflare/pcx-technical-writing
 /src/content/partials/kv/ @elithrar @thomasgauvin @rts-rob @oxyjun @cloudflare/pcx-technical-writing
 /src/content/docs/pub-sub/ @elithrar @dcpena @cloudflare/pcx-technical-writing
-/src/content/docs/queues/ @elithrar @toddmantell @maheshwarip @cloudflare/pcx-technical-writing
+/src/content/docs/queues/ @elithrar @toddmantell @maheshwarip @harshil1712 @cloudflare/pcx-technical-writing
 /src/content/release-notes/queues.yaml @elithrar @toddmantell @maheshwarip @cloudflare/pcx-technical-writing
-/src/content/docs/r2/ @oxyjun @elithrar @jonesphillip @cloudflare/workers-docs @cloudflare/pcx-technical-writing
+/src/content/docs/r2/ @oxyjun @elithrar @jonesphillip @harshil1712 @cloudflare/workers-docs @cloudflare/pcx-technical-writing
 /src/content/release-notes/r2.yaml @oxyjun @elithrar @cloudflare/workers-docs @cloudflare/pcx-technical-writing
 /src/content/docs/stream/ @tsmith512 @dcpena @cloudflare/pcx-technical-writing @renandincer @third774
 /src/content/release-notes/stream.yaml @tsmith512 @dcpena @cloudflare/pcx-technical-writing
