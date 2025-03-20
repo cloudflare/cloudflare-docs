@@ -9,12 +9,7 @@
         "description": "Automatic speech recognition (ASR) models convert a speech signal, typically an audio input, to text."
     },
     "tags": [],
-    "properties": [
-        {
-            "property_id": "beta",
-            "value": "true"
-        }
-    ],
+    "properties": [],
     "schema": {
         "input": {
             "type": "object",
@@ -44,7 +39,7 @@
                 },
                 "prefix": {
                     "type": "string",
-                    "description": "The prefix it appended the beginning of the output of the transcription and can guide the transcription result."
+                    "description": "The prefix it appended the the beginning of the output of the transcription and can guide the transcription result."
                 }
             },
             "required": [
@@ -85,52 +80,55 @@
                     "description": "The total number of words in the transcription."
                 },
                 "segments": {
-                    "type": "object",
-                    "properties": {
-                        "start": {
-                            "type": "number",
-                            "description": "The starting time of the segment within the audio, in seconds."
-                        },
-                        "end": {
-                            "type": "number",
-                            "description": "The ending time of the segment within the audio, in seconds."
-                        },
-                        "text": {
-                            "type": "string",
-                            "description": "The transcription of the segment."
-                        },
-                        "temperature": {
-                            "type": "number",
-                            "description": "The temperature used in the decoding process, controlling randomness in predictions. Lower values result in more deterministic outputs."
-                        },
-                        "avg_logprob": {
-                            "type": "number",
-                            "description": "The average log probability of the predictions for the words in this segment, indicating overall confidence."
-                        },
-                        "compression_ratio": {
-                            "type": "number",
-                            "description": "The compression ratio of the input to the output, measuring how much the text was compressed during the transcription process."
-                        },
-                        "no_speech_prob": {
-                            "type": "number",
-                            "description": "The probability that the segment contains no speech, represented as a decimal between 0 and 1."
-                        },
-                        "words": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "word": {
-                                        "type": "string",
-                                        "description": "The individual word transcribed from the audio."
-                                    },
-                                    "start": {
-                                        "type": "number",
-                                        "description": "The starting time of the word within the audio, in seconds."
-                                    },
-                                    "end": {
-                                        "type": "number",
-                                        "description": "The ending time of the word within the audio, in seconds."
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "start": {
+                                "type": "number",
+                                "description": "The starting time of the segment within the audio, in seconds."
+                            },
+                            "end": {
+                                "type": "number",
+                                "description": "The ending time of the segment within the audio, in seconds."
+                            },
+                            "text": {
+                                "type": "string",
+                                "description": "The transcription of the segment."
+                            },
+                            "temperature": {
+                                "type": "number",
+                                "description": "The temperature used in the decoding process, controlling randomness in predictions. Lower values result in more deterministic outputs."
+                            },
+                            "avg_logprob": {
+                                "type": "number",
+                                "description": "The average log probability of the predictions for the words in this segment, indicating overall confidence."
+                            },
+                            "compression_ratio": {
+                                "type": "number",
+                                "description": "The compression ratio of the input to the output, measuring how much the text was compressed during the transcription process."
+                            },
+                            "no_speech_prob": {
+                                "type": "number",
+                                "description": "The probability that the segment contains no speech, represented as a decimal between 0 and 1."
+                            },
+                            "words": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "word": {
+                                            "type": "string",
+                                            "description": "The individual word transcribed from the audio."
+                                        },
+                                        "start": {
+                                            "type": "number",
+                                            "description": "The starting time of the word within the audio, in seconds."
+                                        },
+                                        "end": {
+                                            "type": "number",
+                                            "description": "The ending time of the word within the audio, in seconds."
+                                        }
                                     }
                                 }
                             }

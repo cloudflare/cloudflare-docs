@@ -225,10 +225,10 @@ In addition to the Workers AI [binding](/workers-ai/configuration/bindings/), yo
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/tomarkdown \
   -H 'Authorization: Bearer {API_TOKEN}' \
-	--data-binary "@cat.jpeg" \
-	--data-binary "@somatosensory.pdf"
+	-F "files=@cat.jpeg" \
+	-F "files=@somatosensory.pdf"
 ```
 
 ## Pricing
 
-`toMarkdown` is free for most format conversions. In some cases, like image conversion, it can use Workers AI models for object detection and summarization, which may incur additional costs if it exceeds the Workers AI free allocation limits. See the [pricing page](/workers-ai/pricing/) for more details.
+`toMarkdown` is free for most format conversions. In some cases, like image conversion, it can use Workers AI models for object detection and summarization, which may incur additional costs if it exceeds the Workers AI free allocation limits. See the [pricing page](/workers-ai/platform/pricing/) for more details.
