@@ -392,6 +392,14 @@ Use this selector to filter based on the IP addresses that the query resolves to
 | ----------- | ------------------------------------------ | -------------------- |
 | Resolved IP | `any(dns.resolved_ips[*] == 198.51.100.0)` | After DNS resolution |
 
+### Request Context Categories
+
+Use this selector to match a dynamic list of [category IDs](/cloudflare-one/policies/gateway/domain-categories/#category-and-subcategory-ids) sent in the EDNS portion of a DNS query. Cloudflare includes request context in the OPT code `65050`.
+
+| UI name                    | API example                                                           | Evaluation phase      |
+| -------------------------- | --------------------------------------------------------------------- | --------------------- |
+| Request Context Categories | `any(dns.categories_in_request_context_matches[*] in {2 67 125 133})` | Before DNS resolution |
+
 ### Security Categories
 
 <Render file="gateway/selectors/security-categories" />
