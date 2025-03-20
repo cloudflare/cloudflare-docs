@@ -7,11 +7,11 @@ sidebar:
 
 import { Render } from "~/components";
 
-Model Context Protocol (MCP) tools are functions that a [MCP Server](/agents/model-context-protocol/mcp-server) provides and MCP clients can call.
+Model Context Protocol (MCP) tools are functions that a [MCP Server](/agents/model-context-protocol) provides and MCP clients can call.
 
 When you build MCP Servers with the `@cloudflare/model-context-protocol` package, you can define tools the [same way as shown in the `@modelcontextprotocol/typescript-sdk` package's examples](https://github.com/modelcontextprotocol/typescript-sdk?tab=readme-ov-file#tools).
 
-For example, the following code from [this example MCP server](https://github.com/cloudflare/ai/demos/remote-mcp-server) defines a simple MCP server that adds two numbers together:
+For example, the following code from [this example MCP server](https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-server) defines a simple MCP server that adds two numbers together:
 
 ```ts title="src/index.ts"
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp";
