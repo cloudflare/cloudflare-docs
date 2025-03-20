@@ -1,0 +1,41 @@
+---
+import AnchorHeading from "./AnchorHeading.astro";
+import RSSButton from "./RSSButton.astro";
+
+import { products, productsByGroup } from "~/util/products";
+import Details from "./Details.astro";
+---
+
+<AnchorHeading depth={2} title="Feeds" />
+
+<AnchorHeading depth={3} title="Global feed" />
+<p>
+	This feed contains entries for all Cloudflare products: <RSSButton />
+
+	<AnchorHeading depth={3} title="Area-specific feeds" />
+	{
+		productsByGroup.map(([group, products]) => (
+			<>
+				<AnchorHeading depth={4} title={group} />
+				<p>
+					This feed contains entries for all {group} products:{" "}
+					<RSSButton changelog={group} />
+				</p>
+				<Details header="Included products">
+					<ul>
+						{products.map((product) => (
+							<li>
+								<p>
+									<a href={product.data.product.url}>
+										{product.data.product.title}
+									</a>
+								</p>
+								<RSSButton changelog={product.id} />
+							</li>
+						))}
+					</ul>
+				</Details>
+			</>
+		))
+	}
+</p>
