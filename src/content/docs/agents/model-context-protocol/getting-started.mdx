@@ -216,15 +216,9 @@ wrangler secret put GITHUB_CLIENT_ID
 wrangler secret put GITHUB_CLIENT_SECRET
 ```
 
-#### Finally, deploy your MCP server
+#### Finally, connect to your MCP server
 
-Run the following command to deploy your MCP server:
-
-```sh
-npm run deploy
-```
-
-You should now be able to connect to your MCP server using the MCP inspector, and authenticate with GitHub.
+Now that you've added the ID and secret of your production OAuth app, you should now be able to connect to your MCP server running at `worker-name.account-name.workers.dev/sse` using the MCP inspector, and authenticate with GitHub.
 
 ## Next steps
 
