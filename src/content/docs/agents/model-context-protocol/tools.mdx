@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { Render } from "~/components";
+import { Render, TypeScriptExample } from "~/components";
 
 Model Context Protocol (MCP) tools are functions that a [MCP Server](/agents/model-context-protocol) provides and MCP clients can call.
 
@@ -13,6 +13,7 @@ When you build MCP Servers with the `@cloudflare/model-context-protocol` package
 
 For example, the following code from [this example MCP server](https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-server) defines a simple MCP server that adds two numbers together:
 
+<TypeScriptExample>
 ```ts title="src/index.ts"
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp";
 import { DurableMCP } from "@cloudflare/model-context-protocol";
@@ -30,3 +31,4 @@ export class MyMCP extends DurableMCP {
 	}
 }
 ```
+</TypeScriptExample>
