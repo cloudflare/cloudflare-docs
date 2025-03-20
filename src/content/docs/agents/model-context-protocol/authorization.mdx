@@ -16,7 +16,7 @@ When building a [Model Context Protocol (MCP)](https://modelcontextprotocol.io) 
 
 The Model Context Protocol uses [a subset of OAuth 2.1 for authorization](https://spec.modelcontextprotocol.io/specification/draft/basic/authorization/). OAuth allows your users to grant limited access to resources, without them having to share API keys or other credentials.
 
-Cloudflare provides an [OAuth Provider Library](https://github.com/cloudflare/workers-mcp/tree/next/vendor/workers-oauth-provider) that implements the provider side of the OAuth 2.1 protocol, allowing you to easily add authorization to your MCP server.
+Cloudflare provides an [OAuth Provider Library](https://github.com/cloudflare/workers-oauth-provider) that implements the provider side of the OAuth 2.1 protocol, allowing you to easily add authorization to your MCP server.
 
 You can use the OAuth Provider Library in three ways:
 
@@ -30,9 +30,9 @@ The following sections describe each of these options and link to runnable code 
 
 ### (1) Your MCP Server handles authorization and authentication itself
 
-Your MCP Server, using the [OAuth Provider Library](https://github.com/cloudflare/workers-mcp/tree/next/vendor/workers-oauth-provider), can handle the complete OAuth authorization flow, without any third-party involvement.
+Your MCP Server, using the [OAuth Provider Library](https://github.com/cloudflare/workers-oauth-provider), can handle the complete OAuth authorization flow, without any third-party involvement.
 
-The [Workers OAuth Provider Library](https://github.com/cloudflare/workers-mcp/tree/next/vendor/workers-oauth-provider) is a Cloudflare Worker that implements a [`fetch()` handler](/workers/runtime-apis/handlers/fetch/), and handles incoming requests to your MCP server.
+The [Workers OAuth Provider Library](https://github.com/cloudflare/workers-oauth-provider) is a Cloudflare Worker that implements a [`fetch()` handler](/workers/runtime-apis/handlers/fetch/), and handles incoming requests to your MCP server.
 
 You provide your own handlers for your MCP Server's API, and autentication and authorization logic, and URI paths for the OAuth endpoints, as shown below:
 
@@ -77,7 +77,7 @@ Remember — [authentication is different from authorization](https://www.cloud
 
 ### (2) Third-party OAuth Provider
 
-The [OAuth Provider Library](https://github.com/cloudflare/workers-mcp/tree/next/vendor/workers-oauth-provider) can be configured to use a third-party OAuth provider, such as GitHub or Google. You can see a complete example of this in the [GitHub example](/agents/guides/remote-mcp-server-github).
+The [OAuth Provider Library](https://github.com/cloudflare/workers-oauth-provider) can be configured to use a third-party OAuth provider, such as GitHub or Google. You can see a complete example of this in the [GitHub example](/agents/guides/remote-mcp-server-github).
 
 When you use a third-party OAuth provider, you must provide a handler to the `OAuthProvider` that implements the OAuth flow for the third-party provider.
 
@@ -120,7 +120,7 @@ sequenceDiagram
     M->>C: MCP access token
 ```
 
-Read the docs for the [Workers oAuth Provider Library](https://github.com/cloudflare/workers-mcp/tree/next/vendor/workers-oauth-provider) for more details.
+Read the docs for the [Workers oAuth Provider Library](https://github.com/cloudflare/workers-oauth-provider) for more details.
 
 ### (3) Bring your own OAuth Provider
 
@@ -128,5 +128,5 @@ If your application already implements an Oauth Provider itself, or you use Styt
 
 ## Next steps
 
-- [Learn how to use the Workers OAuth Provider Library](https://github.com/cloudflare/workers-mcp/tree/next/vendor/workers-oauth-provider)
+- [Learn how to use the Workers OAuth Provider Library](https://github.com/cloudflare/workers-oauth-provider)
 - Learn how to use a third-party OAuth provider, using the [GitHub](/agents/guides/remote-mcp-server-github/) and [Slack](/agents/guides/remote-mcp-server-slack/) examples.
