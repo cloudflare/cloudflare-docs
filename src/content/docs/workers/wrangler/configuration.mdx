@@ -52,10 +52,10 @@ kv_namespaces = [
 
 ## Environments
 
-The configuration for a Worker can become complex when you define different [environments](/workers/wrangler/environments/), and each environment has its own configuration.
-There is a default (top-level) environment and named environments that provide environment-specific configuration.
+You can define different configurations for a Worker using Wrangler [environments](/workers/wrangler/environments/).
+There is a default (top-level) environment and you can create named environments that provide environment-specific configuration.
 
-These are defined under `[env.name]` keys, such as `[env.staging]` which you can then preview or deploy with the `-e` / `--env` flag in the `wrangler` commands like `npx wrangler deploy --env staging`.
+These are defined under `[env.<name>]` keys, such as `[env.staging]` which you can then preview or deploy with the `-e` / `--env` flag in the `wrangler` commands like `npx wrangler deploy --env staging`.
 
 The majority of keys are inheritable, meaning that top-level configuration can be used in environments. [Bindings](/workers/runtime-apis/bindings/), such as `vars` or `kv_namespaces`, are not inheritable and need to be defined explicitly.
 
@@ -646,7 +646,7 @@ id = "<ID>"
 
 </WranglerConfig>
 
-### Images 
+### Images
 
 [Cloudflare Images](/images/transform-images/transform-via-workers/) lets you make transformation requests to optimize, resize, and manipulate images stored in remote sources.
 
@@ -867,6 +867,7 @@ To bind other Workers to your Worker, assign an array of the below object to the
 - `service` <Type text="string" /> <MetaInfo text="required" />
 
   - The name of the Worker.
+  - To bind to a Worker in a specific [environment](/workers/wrangler/environments), you need to append the environment name to the Worker name. This should be in the format `<worker-name>-<environment-name>`. For example, to bind to a Worker called `worker-name` in its `staging` environment, `service` should be set to `worker-name-staging`.
 
 - `entrypoint` <Type text="string" /> <MetaInfo text="optional" />
 
@@ -1304,17 +1305,17 @@ A common example of using a redirected configuration is where a custom build too
 
 <WranglerConfig>
 
-  ```toml title="wrangler.toml"
-  name = "my-worker"
-  main = "src/index.ts"
-  [[kv_namespaces]]
-  binding = "<BINDING_NAME1>"
-  id = "<NAMESPACE_ID1>"
-  ```
+```toml title="wrangler.toml"
+name = "my-worker"
+main = "src/index.ts"
+[[kv_namespaces]]
+binding = "<BINDING_NAME1>"
+id = "<NAMESPACE_ID1>"
+```
 
 </WranglerConfig>
 
-  Note that this configuration points `main` at the user's code entry-point.
+Note that this configuration points `main` at the user's code entry-point.
 
 - Then, the user runs a custom build, which might read the user's Wrangler configuration file to find the source code entry-point:
 

@@ -2,7 +2,7 @@
 title: Using WebSockets
 pcx_content_type: concept
 sidebar:
-  order: 2
+  order: 10
 
 ---
 
@@ -20,28 +20,13 @@ Here's an example of an Agent that echoes back any message it receives:
 <TypeScriptExample>
 
 ```ts
-import { Agent, Connection } from "agents-sdk";
+import { Agent, Connection } from "agents";
 
 export class ChatAgent extends Agent {
-  async onConnect(connection: Connection, ctx: ConnectionContext) {
-  	// Access the request to verify any authentication tokens
-    // provided in headers or cookies
-    let token = ctx.request.headers.get("Authorization");
-    if (!token) {
-      await connection.close(4000, "Unauthorized");
-      return;
-    }
-
-		// Handle auth using your favorite library and/or auth scheme:
- 		// try {
-		// 	 await jwt.verify(token, env.JWT_SECRET);
-		// } catch (error) {
-		// 	 connection.close(4000, 'Invalid Authorization header');
-		// 	 return;
-		// }
-
-		// Accept valid connections
-  	connection.accept()
+	async onConnect(connection: Connection, ctx: ConnectionContext) {
+  	// Connections are automatically accepted by the SDK.
+    // You can also explicitly close a connection here with connection.close()
+    // Access the Request on ctx.request to inspect headers, cookies and the URL
   }
 
   async onMessage(connection: Connection, message: WSMessage) {
@@ -53,14 +38,14 @@ export class ChatAgent extends Agent {
 
 </TypeScriptExample>
 
-## Connecting clients
+### Connecting clients
 
-The Agent framework includes a useful helper package for connecting directly to your Agent (or other Agents) from a client application. Import `agents-sdk/client`, create an instance of `AgentClient` and use it to connect to an instance of your Agent:
+The Agent framework includes a useful helper package for connecting directly to your Agent (or other Agents) from a client application. Import `agents/client`, create an instance of `AgentClient` and use it to connect to an instance of your Agent:
 
 <TypeScriptExample>
 
 ```ts
-import { AgentClient } from "agents-sdk/client";
+import { AgentClient } from "agents/client";
 
 const connection = new AgentClient({
   agent: "dialogue-agent",
@@ -81,14 +66,14 @@ connection.send(
 
 </TypeScriptExample>
 
-## React clients
+### React clients
 
-React-based applications can import `agents-sdk/react` and use the `useAgent` hook to connect to an instance of an Agent directly:
+React-based applications can import `agents/react` and use the `useAgent` hook to connect to an instance of an Agent directly:
 
 <TypeScriptExample>
 
 ```ts
-import { useAgent } from "agents-sdk/react";
+import { useAgent } from "agents/react";
 
 function AgentInterface() {
   const connection = useAgent({
@@ -120,16 +105,16 @@ function AgentInterface() {
 ```
 </TypeScriptExample>
 
-The `useAgent` hook automatically handles the lifecycle of the connection, ensuring that it is properly initialized and cleaned up when the component mounts and unmounts. You can also [combine `useAgent` with `useState`](/agents/examples/manage-and-sync-state/) to automatically synchronize state across all clients connected to your Agent.
+The `useAgent` hook automatically handles the lifecycle of the connection, ensuring that it is properly initialized and cleaned up when the component mounts and unmounts. You can also [combine `useAgent` with `useState`](/agents/api-reference/store-and-sync-state/) to automatically synchronize state across all clients connected to your Agent.
 
-## Handling WebSocket events
+### Handling WebSocket events
 
 Define `onError` and `onClose` methods on your Agent to explicitly handle WebSocket client errors and close events. Log errors, clean up state, and/or emit metrics:
 
 <TypeScriptExample>
 
 ```ts
-import { Agent, Connection } from "agents-sdk";
+import { Agent, Connection } from "agents";
 
 export class ChatAgent extends Agent {
  	// onConnect and onMessage methods

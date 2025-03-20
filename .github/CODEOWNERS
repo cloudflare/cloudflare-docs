@@ -14,11 +14,11 @@
 *.js @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @maxvp @marciocloudflare @GregBrimble @KianNH @WalshyDev
 *.ts @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @maxvp @marciocloudflare @GregBrimble @KianNH @WalshyDev
 /src/content/workers-ai-models/ @craigsdennis @pedrosousa @cloudflare/pcx-technical-writing
-/public/_redirects @GregBrimble @KianNH @pedrosousa @WalshyDev @cloudflare/pcx-technical-writing
+/public/__redirects @GregBrimble @KianNH @pedrosousa @WalshyDev @cloudflare/pcx-technical-writing
 
 # AI
 
-/src/content/docs/agents/ @irvinebroque @rita3ko @elithrar @thomasgauvin @threepointone @harshil1712 @megaconfidence @cloudflare/pcx-technical-writing
+/src/content/docs/agents/ @irvinebroque @rita3ko @elithrar @thomasgauvin @threepointone @harshil1712 @cloudflare/pcx-technical-writing
 /src/content/docs/ai-gateway/ @kathayl @G4brym @mchenco @daisyfaithauma @cloudflare/pcx-technical-writing
 /src/content/docs/workers-ai/ @rita3ko @craigsdennis @markdembo @mchenco @daisyfaithauma @cloudflare/pcx-technical-writing
 /src/content/docs/vectorize/ @elithrar @vy-ton @sejoker @mchenco @cloudflare/pcx-technical-writing
@@ -140,7 +140,7 @@
 /src/content/docs/cloudflare-for-platforms/workers-for-platforms/ @irvinebroque @angelampcosta @GregBrimble @cloudflare/deploy-config @cloudflare/pcx-technical-writing
 /src/content/docs/workers/observability/ @irvinebroque @mikenomitch @rohinlohe @ToriLindsay @cloudflare/pcx-technical-writing
 /src/content/docs/workers/static-assets @irvinebroque @GregBrimble @WalshyDev @ToriLindsay @cloudflare/deploy-config @cloudflare/pcx-technical-writing
-/src/content/docs/workflows/ @ToriLindsay @elithrar @celso @sidharthachatterjee @cloudflare/pcx-technical-writing
+/src/content/docs/workflows/ @elithrar @celso @sidharthachatterjee @cloudflare/pcx-technical-writing
 
 # DDoS Protection
 

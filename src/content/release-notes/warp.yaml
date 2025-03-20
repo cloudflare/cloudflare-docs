@@ -15,8 +15,8 @@ entries:
       - Improved [captive portal detection](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/captive-portals/) to make more public networks compatible
       and have faster detection.
       - Improved error messages shown in the app.
-      - Added the ability to control if the WARP interface IPs are registered with
-      DNS servers or not.
+      - Added the ability to control if the WARP interface IPs are [registered with
+      DNS servers](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#warp-interface-ip-dns-registration) or not.
       - Removed DNS logs view from the Windows client GUI. DNS logs can be viewed as
       part of `warp-diag` or by viewing the log file on the user's local directory.
       - Fixed issue that would result in a user receiving multiple re-authentication

@@ -5,6 +5,10 @@ productLink: "/radar/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-03-18"
+    title: Add leaked credential checks endpoints
+    description: |-
+      * Added [leaked credential checks endpoints](/api/resources/radar/subresources/leaked_credentials/).
   - publish_date: "2025-02-27"
     title: Add DNS endpoints
     description: |-

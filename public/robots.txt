@@ -6,5 +6,6 @@ Disallow: /constellation
 Disallow: /cdn-cgi/
 Disallow: /google-tag-first-party-mode/
 Disallow: /security/
+Disallow: /email-security/
 
 Sitemap: https://developers.cloudflare.com/sitemap-index.xml

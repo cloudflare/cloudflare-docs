@@ -6,7 +6,7 @@ params:
   - jsonType
 ---
 
-import { APIRequest, Aside, AnchorHeading, Render, TabItem, Tabs } from "~/components";
+import { APIRequest, Aside, AnchorHeading, CURL, Render, TabItem, Tabs } from "~/components";
 
 { props.magicWord === "breakout" && (
 	<>
@@ -96,11 +96,11 @@ The traffic for the application you chose {props.whatHappensApp}.
 2.  Send a [`POST` request](/api/resources/magic_transit/subresources/apps/methods/create/) to add new apps to the breakout traffic policy.
 
 	<APIRequest
-	path="/accounts/{account_id}/magic/apps"
+	path="/accounts/{account_id}/magic/sites/{site_id}/app_configs"
 	method="POST"
 	json={{
-		"name": "<MANAGED_APP_ID>",
-    "type": "<BREAKOUT_OR_PRIORITY>"
+		"managed_app_id": "<MANAGED_APP_ID>",
+		"breakout": true
 	}}
 	/>
 
@@ -138,7 +138,7 @@ The traffic for the application you chose {props.whatHappensApp}.
 1. Send a [`GET` request](/api/resources/magic_transit/subresources/apps/methods/list/) to list the applications associated with a site.
 
 	<APIRequest
-	path="/accounts/{account_id}/magic/apps"
+	path="/accounts/{account_id}/magic/sites/{site_id}/app_configs"
 	method="GET"
 	/>
 
@@ -146,37 +146,35 @@ The traffic for the application you chose {props.whatHappensApp}.
 		{
 			"result": [
 				{
-					"managed_app_id": "<APP_ID>",
-					"name": "<APP_NAME>",
-					"type": "File Sharing",
-					"hostnames": [
-						"<app_name.com>",
-						"<app-name.info>"
-					]
+					"id": "<APP_ID>",
+					"site_id": "<SITE_ID>",
+					"managed_app_id": "<APP_NAME>",
+					"breakout": true
 				}
 			]
 		}
 	```
 
-	Take note of the `"account_app_id"` value for the application that want to delete.
+	Take note of the `"id"` value for the application that want to delete.
 
 2. Send a [`DELETE` request](/api/resources/magic_transit/subresources/apps/methods/delete/) to delete an application from the breakout traffic policy.
 
-	<APIRequest
-	path="/accounts/{account_id}/magic/apps/{account_app_id}"
+	<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/app_configs/{id}"
 	method="DELETE"
 	/>
 
 	```json output
 	{
-		"result": {
-			"account_app_id": "<APP_ID>",
-			"name": "<APP_NAME>",
-			"type": "<BREAKOUT_OR_PRIORITY>"
-		},
-		"success": true,
-		"errors": [],
-		"messages": []
+			"result": {
+					"id": "<APP_ID>",
+					"site_id": "<SITE_ID>",
+					"managed_app_id": "<APP_NAME>",
+					"breakout": true
+			},
+			"success": true,
+			"errors": [],
+			"messages": []
 	}
 	```
 

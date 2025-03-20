@@ -1,5 +1,5 @@
 ---
-title: Manage and sync state
+title: Store and sync state
 pcx_content_type: concept
 sidebar:
   order: 6
@@ -7,14 +7,17 @@ sidebar:
 
 import { MetaInfo, Render, Type, TypeScriptExample, WranglerConfig } from "~/components";
 
-Every Agent has built-in state management capabilities, including built-in storage and synchronization between the Agent and frontend applications. State within an Agent is:
+Every Agent has built-in state management capabilities, including built-in storage and synchronization between the Agent and frontend applications.
 
-* Persisted across Agent restarts: data is permanently persisted within the Agent.
+State within an Agent is:
+
+* Persisted across Agent restarts: data is permanently stored within an Agent.
 * Automatically serialized/deserialized: you can store any JSON-serializable data.
 * Immediately consistent within the Agent: read your own writes.
 * Thread-safe for concurrent updates
+* Fast: state is colocated wherever the Agent is running. Reads and writes do not need to traverse the network.
 
-Agent state is stored in a SQL database that is embedded within each individual Agent instance: you can interact with it using the higher-level `this.setState` API (recommended) or by directly querying the database with `this.sql`.
+Agent state is stored in a SQL database that is embedded within each individual Agent instance: you can interact with it using the higher-level `this.setState` API (recommended), which allows you to sync state and trigger events on state changes, or by directly querying the database with `this.sql`.
 
 #### State API
 
@@ -23,7 +26,7 @@ Every Agent has built-in state management capabilities. You can set and update t
 <TypeScriptExample>
 
 ```ts
-import { Agent } from "agents-sdk";
+import { Agent } from "agents";
 
 export class MyAgent extends Agent {
   // Update state in response to events
@@ -58,7 +61,7 @@ If you're using TypeScript, you can also provide a type for your Agent's state b
 <TypeScriptExample>
 
 ```ts
-import { Agent } from "agents-sdk";
+import { Agent } from "agents";
 
 interface Env {}
 
@@ -66,7 +69,7 @@ interface Env {}
 interface FlightRecord {
 	id: string;
 	departureIata: string;
-	arrival: Date;;
+	arrival: Date;
 	arrivalIata: string;
 	price: number;
 }
@@ -90,9 +93,39 @@ export class MyAgent extends Agent<Env, FlightRecord> {
 
 </TypeScriptExample>
 
+### Set the initial state for an Agent
+
+You can also set the initial state for an Agent via the `initialState` property on the `Agent` class:
+
+<TypeScriptExample>
+
+```ts
+type State = {
+  counter: number;
+  text: string;
+  color: string;
+};
+
+class MyAgent extends Agent<Env, State> {
+	// Set a default, initial state
+  initialState = {
+    counter: 0,
+    text: "",
+    color: "#3B82F6",
+  };
+
+  doSomething() {
+    console.log(this.state); // {counter: 0, text: "", color: "#3B82F6"}, if you haven't set the state yet
+  }
+}
+```
+</TypeScriptExample>
+
+Any initial state is synced to clients connecting via [the `useAgent` hook](#synchronizing-state).
+
 ### Synchronizing state
 
-Clients can connect to an Agent and stay synchronized with its state using the React hooks provided as part of `agents-sdk/react`.
+Clients can connect to an Agent and stay synchronized with its state using the React hooks provided as part of `agents/react`.
 
 A React application can call `useAgent` to connect to a named Agent over WebSockets at
 
@@ -100,7 +133,7 @@ A React application can call `useAgent` to connect to a named Agent over WebSock
 
 ```ts
 import { useState } from "react";
-import { useAgent } from "agents-sdk/react";
+import { useAgent } from "agents/react";
 
 function StateInterface() {
   const [state, setState] = useState({ counter: 0 });
@@ -198,7 +231,7 @@ The SQL API exposed to an Agent is similar to the one [within Durable Objects](/
 
 ### Use Agent state as model context
 
-You can combine the state and SQL APIs in your Agent with its ability to [call AI models](/agents/examples/using-ai-models/) to include historical context within your prompts to a model. Modern Large Language Models (LLMs) often have very large context windows (up to millions of tokens), which allows you to pull relevant context into your prompt directly.
+You can combine the state and SQL APIs in your Agent with its ability to [call AI models](/agents/api-reference/using-ai-models/) to include historical context within your prompts to a model. Modern Large Language Models (LLMs) often have very large context windows (up to millions of tokens), which allows you to pull relevant context into your prompt directly.
 
 For example, you can use an Agent's built-in SQL database to pull history, query a model with it, and append to that history ahead of the next call to the model:
 
@@ -249,3 +282,9 @@ export class ReasoningAgent extends Agent<Env> {
 
 This works because each instance of an Agent has its _own_ database, the state stored in that database is private to that Agent: whether it's acting on behalf of a single user, a room or channel, or a deep research tool. By default, you don't have to manage contention or reach out over the network to a centralized database to retrieve and store state.
 
+### Next steps
+
+* Review the [API documentation](/agents/api-reference/agents-api/) for the Agents class to learn how to define them.
+* [Build a chat Agent](/agents/getting-started/build-a-chat-agent/) using the Agents SDK and deploy it to Workers.
+* Learn more [using WebSockets](/agents/api-reference/websockets/) to build interactive Agents and stream data back from your Agent.
+* [Orchestrate asynchronous workflows](/agents/api-reference/run-workflows) from your Agent by combining the Agents SDK and [Workflows](/workflows).

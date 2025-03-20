@@ -2,21 +2,29 @@
 title: Using AI Models
 pcx_content_type: concept
 sidebar:
-  order: 7
+  order: 3
 
 ---
 
 import { AnchorHeading, MetaInfo, Render, Type, TypeScriptExample, WranglerConfig } from "~/components";
 
-Agents can communicate with AI models hosted on any provider, including [Workers AI](/workers-ai/), OpenAI, Anthropic, and Google's Gemini, and use the model routing features in [AI Gateway](/ai-gateway/) to route across providers, eval responses, and manage AI provider rate limits.
+Agents can communicate with AI models hosted on any provider, including:
 
-Because Agents are built on top of [Durable Objects](/durable-objects/), each Agent or chat session is associated with a stateful compute instance. Tradtional serverless architectures often present challenges for persistent connections needed in real-time applications like chat.
+* [Workers AI](/workers-ai/)
+* The [AI SDK](https://sdk.vercel.ai/docs/ai-sdk-core/overview)
+* [OpenAI](https://platform.openai.com/docs/quickstart?language=javascript)
+* [Anthropic](https://docs.anthropic.com/en/api/client-sdks#typescript
+* [Google's Gemini](https://ai.google.dev/gemini-api/docs/openai)
+
+You can also use the model routing features in [AI Gateway](/ai-gateway/) to route across providers, eval responses, and manage AI provider rate limits.
+
+Because Agents are built on top of [Durable Objects](/durable-objects/), each Agent or chat session is associated with a stateful compute instance. Traditional serverless architectures often present challenges for persistent connections needed in real-time applications like chat.
 
 A user can disconnect during a long-running response from a modern reasoning model (such as `o3-mini` or DeepSeek R1), or lose conversational context when refreshing the browser. Instead of relying on request-response patterns and managing an external database to track & store conversation state, state can be stored directly within the Agent. If a client disconnects, the Agent can write to its own distributed storage, and catch the client up as soon as it reconnects: even if it's hours or days later.
 
 ## Calling AI Models
 
-You can call models from any method within an Agent, including from HTTP requests using the [`onRequest`](/agents/api-reference/sdk/) handler, when a [scheduled task](/agents/examples/schedule-tasks/) runs, when handling a WebSocket message in the [`onMessage`](/agents/examples/websockets/) handler, or from any of your own methods.
+You can call models from any method within an Agent, including from HTTP requests using the [`onRequest`](/agents/api-reference/agents-api/) handler, when a [scheduled task](/agents/api-reference/schedule-tasks/) runs, when handling a WebSocket message in the [`onMessage`](/agents/api-reference/websockets/) handler, or from any of your own methods.
 
 Importantly, Agents can call AI models on their own — autonomously — and can handle long-running responses that can take minutes (or longer) to respond in full.
 
@@ -24,18 +32,17 @@ Importantly, Agents can call AI models on their own — autonomously — and can
 
 Modern [reasoning models](https://platform.openai.com/docs/guides/reasoning) or "thinking" model can take some time to both generate a response _and_ stream the response back to the client.
 
-Instead of buffering the entire response, or risking the client disconecting, you can stream the response back to the client by using the [WebSocket API](/agents/examples/websockets/).
+Instead of buffering the entire response, or risking the client disconecting, you can stream the response back to the client by using the [WebSocket API](/agents/api-reference/websockets/).
 
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
-import { Agent } from "agents-sdk"
+import { Agent } from "agents"
 import { OpenAI } from "openai"
 
 export class MyAgent extends Agent<Env> {
 	async onConnect(connection: Connection, ctx: ConnectionContext) {
-		// Omitted for simplicity: authenticating the user
-		connection.accept()
+		//
 	}
 
 	async onMessage(connection: Connection, message: WSMessage) {
@@ -75,7 +82,7 @@ export class MyAgent extends Agent<Env> {
 
 </TypeScriptExample>
 
-You can also persist AI model responses back to [Agent's internal state](/agents/examples/manage-and-sync-state/) by using the `this.setState` method. For example, if you run a [scheduled task](/agents/examples/schedule-tasks/), you can store the output of the task and read it later. Or, if a user disconnects, read the message history back and send it to the user when they reconnect.
+You can also persist AI model responses back to [Agent's internal state](/agents/api-reference/store-and-sync-state/) by using the `this.setState` method. For example, if you run a [scheduled task](/agents/api-reference/schedule-tasks/), you can store the output of the task and read it later. Or, if a user disconnects, read the message history back and send it to the user when they reconnect.
 
 ### Workers AI
 
@@ -88,7 +95,7 @@ Workers AI supports streaming responses out-of-the-box by setting `stream: true`
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
-import { Agent } from "agents-sdk"
+import { Agent } from "agents"
 
 interface Env {
 	AI: Ai;
@@ -138,7 +145,7 @@ Model routing allows you to route requests to different AI models based on wheth
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
-import { Agent } from "agents-sdk"
+import { Agent } from "agents"
 
 interface Env {
 	AI: Ai;
@@ -192,7 +199,7 @@ npm install ai @ai-sdk/openai
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
-import { Agent } from "agents-sdk"
+import { Agent } from "agents"
 import { generateText } from 'ai';
 import { openai } from '@ai-sdk/openai';
 
@@ -214,12 +221,12 @@ export class MyAgent extends Agent<Env> {
 
 Agents can call models across any service, including those that support the OpenAI API. For example, you can use the OpenAI SDK to use one of [Google's Gemini models](https://ai.google.dev/gemini-api/docs/openai#node.js) directly from your Agent.
 
-Agents can stream responses back over HTTP using Server Sent Events (SSE) from within an `onRequest` handler, or by using the native [WebSockets](/agents/examples/websockets/) API in your Agent to responses back to a client, which is especially useful for larger models that can take over 30+ seconds to reply.
+Agents can stream responses back over HTTP using Server Sent Events (SSE) from within an `onRequest` handler, or by using the native [WebSockets](/agents/api-reference/websockets/) API in your Agent to responses back to a client, which is especially useful for larger models that can take over 30+ seconds to reply.
 
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
-import { Agent } from "agents-sdk"
+import { Agent } from "agents"
 import { OpenAI } from "openai"
 
 export class MyAgent extends Agent<Env> {

@@ -129,14 +129,14 @@ Your identity provider must support SCIM version 2.0.
 
 ### 2. Configure SCIM in the IdP
 
-Setup instructions vary depending on the identity provider. In your identity provider, you will either need to edit the [original SSO application](/cloudflare-one/identity/idp-integration/generic-oidc/#set-up-a-generic-oidc) or create a new SCIM application. Refer to your identity provider's documentation for more details. For example instructions, refer to our [Okta](/cloudflare-one/identity/idp-integration/okta/#synchronize-users-and-groups) or [Jumpcloud](/cloudflare-one/identity/idp-integration/jumpcloud-saml/#synchronize-users-and-groups) guides.
+Setup instructions vary depending on the identity provider. In your identity provider, you will either need to edit the [original SSO application](/cloudflare-one/identity/idp-integration/generic-oidc/#1-create-an-application-in-your-identity-provider) or create a new SCIM application. Refer to your identity provider's documentation for more details. For example instructions, refer to our [Okta](/cloudflare-one/identity/idp-integration/okta/#synchronize-users-and-groups) or [Jumpcloud](/cloudflare-one/identity/idp-integration/jumpcloud-saml/#synchronize-users-and-groups) guides.
 
 #### IdP groups
 
 If you would like to build policies based on IdP groups:
 
 - Ensure that your IdP sends a `groups` field. The naming must match exactly (case insensitive). All other values will be sent as a OIDC claim.
-- If your IdP requires creating a new SCIM application, ensure that the groups in the SCIM application match the groups in the [original SSO application](/cloudflare-one/identity/idp-integration/generic-oidc/#set-up-a-generic-oidc). Because SCIM group membership updates will overwrite any groups in a user's identity, assigning the same groups to each app ensures consistent policy evaluation.
+- If your IdP requires creating a new SCIM application, ensure that the groups in the SCIM application match the groups in the [original SSO application](/cloudflare-one/identity/idp-integration/generic-oidc/#1-create-an-application-in-your-identity-provider). Because SCIM group membership updates will overwrite any groups in a user's identity, assigning the same groups to each app ensures consistent policy evaluation.
 
 ### 3. Verify SCIM provisioning
 

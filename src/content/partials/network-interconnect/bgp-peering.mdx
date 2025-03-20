@@ -57,6 +57,29 @@ When BGP advertises a route, it is automatically added to the Magic routing tabl
 
 Additionally, when multiple BGP routes exist with the same prefix length and priority, traffic is distributed across them using <a href={props.ecmp}>equal-cost multi-path (ECMP) routing</a>.
 
+### BGP communities and AS prepending
+
+Cloudflare supports traffic engineering via BGP communities and AS prepending. You can use these traffic routing techniques to set route priorities and perform traffic engineering across multiple interconnects.
+
+The default BGP route priority is `100`. This base priority can be adjusted using communities. For example, when a route is tagged with the community `13335:60010` its priority is set to `10`. This makes it a higher priority than the default of `100` because lower numeric values are preferred. This operates similarly to local preference communities. However, unlike local preference, these combine numerically with AS prepends. This means that for each AS prepending — where the customer ASN is added multiple times to the AS Path — an additional `10` is added to the route's base priority. By increasing the priority number, the route is less preferred.
+
+In summary:
+
+- Default BGP priority is `100`
+- You can use communities to influence routing priorities
+- When using AS prepending with communities, Cloudflare combines both values to determine the new route priority. For example, if a route is tagged with `13335:60010` the base priority is set to `10`. If you prepend your ASN twice, Cloudflare adds `10` for each prepend resulting in a final route priority of `30`.
+
+The community values supported for setting base route priority are:
+- `13335:60010` — set base Magic route priority to `10`
+- `13335:60050` — set base Magic route priority to `50`
+- `UNSET` — set base Magic route priority to `100`
+- `13335:60150` — set base Magic route priority to `150`
+- `13335:60200` — set base Magic route priority to `200`
+- `13335:60901` — set base Magic route priority to `501000`
+- `13335:60902` — set base Magic route priority to `1001000`
+
+It is considered a misconfiguration to set multiple base priority communities in the same prefix update message. In this situation the highest priority (lowest integer value) is preferred.
+
 ## BGP timers and settings
 
 Cloudflare uses the timers as described below. These are not configurable:

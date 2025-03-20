@@ -7,10 +7,20 @@ import { getEntry } from "astro:content";
 import { getOgImage } from "~/util/og";
 import type { CollectionEntry } from "astro:content";
 
-// grab the current top-level folder. Remove . characters for 1.1.1.1 URL
+const NOINDEX_PRODUCTS = ["email-security", "style-guide", "security"];
+
 const currentSection = Astro.url.pathname.split("/")[1].replaceAll(".", "");
-const head = Astro.locals.starlightRoute.entry.data.head;
-const noIndexProductsList = ["style-guide", "security"];
+
+const entry = Astro.locals.starlightRoute.entry;
+const frontmatter = entry.data;
+const head = frontmatter.head;
+
+const metaTags = [] as Record<string, string>[];
+
+const shouldNoIndex =
+	NOINDEX_PRODUCTS.includes(currentSection) ||
+	frontmatter.noindex ||
+	frontmatter.external_link;
 
 if (currentSection) {
 	const product = await getEntry("products", currentSection);
@@ -31,7 +41,7 @@ if (currentSection) {
 					content: title,
 				};
 			} else {
-				title = `${Astro.locals.starlightRoute.entry.data.title} · ${product.data.meta.title}`;
+				title = `${frontmatter.title} · ${product.data.meta.title}`;
 				head.push({
 					tag: "title",
 					attrs: {},
@@ -39,30 +49,18 @@ if (currentSection) {
 				});
 			}
 
-			head.push({
-				tag: "meta",
-				attrs: { property: "og:title", content: title },
-				content: "",
+			metaTags.push({
+				property: "og:title",
+				content: title,
 			});
 		}
 
 		if (product.data.product.title) {
-			const productName = product.data.product.title;
-			head.push({
-				tag: "meta",
-				attrs: {
-					name: "pcx_product",
-					content: productName,
-				},
-				content: "",
-			});
-			head.push({
-				tag: "meta",
-				attrs: {
-					name: "algolia_product_filter",
-					content: productName,
-				},
-				content: "",
+			["pcx_product", "algolia_product_filter"].map((property) => {
+				metaTags.push({
+					property,
+					content: product.data.product.title,
+				});
 			});
 		}
 
@@ -77,100 +75,56 @@ if (currentSection) {
 			});
 		}
 	}
+}
 
-	if (noIndexProductsList.includes(currentSection)) {
-		head.push({
-			tag: "meta",
-			attrs: {
-				name: "robots",
-				content: "noindex",
-			},
-			content: "",
+if (shouldNoIndex) {
+	metaTags.push({
+		name: "robots",
+		content: "noindex",
+	});
+}
+
+if (frontmatter.pcx_content_type) {
+	["pcx_content_type", "algolia_content_type"].map((name) => {
+		metaTags.push({
+			name,
+			content: frontmatter.pcx_content_type as string,
 		});
-	}
-}
-
-// Add noindex tag if present in frontmatter
-
-if (Astro.locals.starlightRoute.entry.data.noindex) {
-	head.push({
-		tag: "meta",
-		attrs: {
-			name: "robots",
-			content: "noindex",
-		},
-		content: "",
 	});
 }
 
-// Adding metadata used for reporting and search indexing
-// content type
-if (Astro.locals.starlightRoute.entry.data.pcx_content_type) {
-	const contentType = Astro.locals.starlightRoute.entry.data.pcx_content_type;
-	head.push({
-		tag: "meta",
-		attrs: {
-			name: "pcx_content_type",
-			content: contentType,
-		},
-		content: "",
-	});
-	head.push({
-		tag: "meta",
-		attrs: {
-			name: "algolia_content_type",
-			content: contentType,
-		},
-		content: "",
+if (frontmatter.products) {
+	metaTags.push({
+		name: "pcx_additional_products",
+		content: frontmatter.products.toString(),
 	});
 }
 
-// other products
-if (Astro.locals.starlightRoute.entry.data.products) {
-	const additionalProducts = Astro.locals.starlightRoute.entry.data.products;
-	head.push({
-		tag: "meta",
-		attrs: {
-			name: "pcx_additional_products",
-			content: additionalProducts.toString(),
-		},
-		content: "",
+if (frontmatter.tags) {
+	metaTags.push({
+		name: "pcx_tags",
+		content: frontmatter.tags.toString(),
 	});
 }
 
-// other products
-if (Astro.locals.starlightRoute.entry.data.tags) {
-	const pageTags = Astro.locals.starlightRoute.entry.data.tags;
-	head.push({
-		tag: "meta",
-		attrs: {
-			name: "pcx_tags",
-			content: pageTags.toString(),
-		},
-		content: "",
+if (frontmatter.updated) {
+	const daysBetween = differenceInCalendarDays(new Date(), frontmatter.updated);
+
+	metaTags.push({
+		name: "pcx_last_reviewed",
+		content: daysBetween.toString(),
 	});
 }
 
-if (Astro.locals.starlightRoute.entry.data.updated) {
-	const daysBetween = differenceInCalendarDays(
-		new Date(),
-		Astro.locals.starlightRoute.entry.data.updated,
-	);
-	head.push({
-		tag: "meta",
-		attrs: {
-			name: "pcx_last_reviewed",
-			content: daysBetween.toString(),
-		},
-		content: "",
+if (frontmatter.external_link) {
+	metaTags.push({
+		content: `0; url=${frontmatter.external_link}`,
+		"http-equiv": "refresh",
 	});
 }
 
-// end metadata
-
-if (Astro.locals.starlightRoute.entry.data.pcx_content_type === "changelog") {
-	const href = new URL(Astro.site ?? "");
-	href.pathname = Astro.locals.starlightRoute.entry.slug.concat("/index.xml");
+if (frontmatter.pcx_content_type === "changelog") {
+	const href = new URL(entry.id.concat("/index.xml"), Astro.url.origin);
 
 	head.push({
 		tag: "link",
@@ -183,59 +137,26 @@ if (Astro.locals.starlightRoute.entry.data.pcx_content_type === "changelog") {
 	});
 }
 
-if (Astro.locals.starlightRoute.entry.data.external_link) {
-	head.push({
-		tag: "meta",
-		attrs: {
-			content: "noindex",
-			name: "robots",
-		},
-		content: "",
-	});
-	head.push({
-		tag: "meta",
-		attrs: {
-			content: `0; url=${Astro.locals.starlightRoute.entry.data.external_link}`,
-			"http-equiv": "refresh",
-		},
-		content: "",
-	});
-}
-
 const ogImagePath = await getOgImage(
 	(Astro.locals.starlightRoute.originalEntry as CollectionEntry<"changelog">) ??
 		Astro.locals.starlightRoute.entry,
 );
 const ogImageUrl = new URL(ogImagePath, Astro.url.origin).toString();
 
-const ogImageTags = [
-	{
-		tag: "meta",
-		attrs: {
-			name: "image",
-			content: ogImageUrl,
-		},
-		content: "",
-	},
-	{
-		tag: "meta",
-		attrs: {
-			name: "og:image",
-			content: ogImageUrl,
-		},
-		content: "",
-	},
-	{
-		tag: "meta",
-		attrs: {
-			name: "twitter:image",
-			content: ogImageUrl,
-		},
-		content: "",
-	},
-] as const;
+["image", "og:image", "twitter:image"].map((property) => {
+	metaTags.push({
+		property,
+		content: ogImageUrl,
+	});
+});
 
-head.push(...ogImageTags);
+metaTags.map((attrs) => {
+	head.push({
+		tag: "meta",
+		attrs,
+		content: "",
+	});
+});
 ---
 
 <script src="src/scripts/footnotes.ts"></script>

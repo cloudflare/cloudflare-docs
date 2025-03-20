@@ -6,7 +6,7 @@ sidebar:
   order: 2
 head:
   - tag: title
-    content: Configure the Worker for JWT Validation
+    content: Configure the Worker for JWT validation
 ---
 
 Use a Worker to automatically keep your identity provider’s latest public key in the JWT Validation configuration.
@@ -15,7 +15,7 @@ Use a Worker to automatically keep your identity provider’s latest public key 
 
 - Find your zone ID. You can locate this ID in your zone overview in the [Cloudflare dashboard](https://dash.cloudflare.com/).
 - Find your identity provider’s JSON Web Key Set (JWKs) URL. Identity providers commonly list it in Open Authorization (OAuth) settings.
-- Create a [Token Validation Configuration](/api-shield/security/jwt-validation/#add-a-token-validation-configuration).
+- Create a [token validation configuration](/api-shield/security/jwt-validation/#add-a-token-validation-configuration).
 - [Create a new API token](https://dash.cloudflare.com/profile/api-tokens) with the API Gateway `Write` permission.
 
 ## Process
@@ -64,7 +64,7 @@ curl https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/certs -s | jq 
 1. [Create a new Worker](/workers/get-started/guide/).
 2. Copy and paste the example code below into your new Worker, completely replacing any code that already exists.
 3. Replace the current zone ID with your zone ID.
-4. Replace the current Token Validation Configuration ID with your Token Validation Configuration.
+4. Replace the current token validation configuration ID with your token validation configuration.
 5. Replace the current identity provider’s URL with your identity provider’s key URL.
 
 :::note

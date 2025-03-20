@@ -122,7 +122,7 @@ export default defineConfig({
 								exclude: [
 									"/api/",
 									"/api/**",
-									"/changelog/",
+									"/changelog/**",
 									"/http/resources/**",
 									"{props.*}",
 									"/",
