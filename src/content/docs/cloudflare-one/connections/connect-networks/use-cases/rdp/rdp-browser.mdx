@@ -10,8 +10,8 @@ sidebar:
 
 import { Render, GlossaryTooltip  } from "~/components"
 
-:::note
-Browser-based RDP is currently in closed beta. To try out the feature, contact your account team.
+:::note[Availability]
+Browser-based RDP is currently available in closed beta to Enterprise customers. Availability for Free and Pay-as-you-go customers is coming soon. To request access, contact your account team.
 :::
 
 With Cloudflare Zero Trust, users can connect to an RDP server without installing an RDP client or the [WARP client](/cloudflare-one/connections/connect-devices/warp/) on their device. Browser-based RDP leverages [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/), which creates a secure, outbound-only connection from your RDP server to Cloudflare's global network. Setup involves running the `cloudflared` daemon on the RDP server (or any other host machine within the private network) and routing RDP traffic over a public hostname.
@@ -26,7 +26,7 @@ Browser-based RDP can be used in conjunction with [routing over WARP](/cloudflar
 
 - An [active domain on Cloudflare](/fundamentals/setup/manage-domains/add-site/)
 - Domain uses either a [full setup](/dns/zone-setups/full-setup/) or a [partial (`CNAME`) setup](/dns/zone-setups/partial-setup/)
-- RDP server runs Windows XXX or above.
+- Windows machine supports RDP connections. For a list of supported operating systems, refer to the [Windows documentation](https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/remotepc/remote-desktop-supported-config).
 
 ## 1. Connect the server to Cloudflare
 
@@ -86,7 +86,18 @@ Ensure that only **Allow** or **Block** policies are present. **Bypass** and **S
 
 19. Select **Save**.
 
-## 4. Connect as a user
+## 4. Create a DNS record
+
+In the [Cloudflare dashboard](https://dash.cloudflare.com/login), go to **DNS** > **Records** and verify that a [DNS record](/dns/manage-dns-records/how-to/create-dns-records/) exists for your domain. The DNS record allows Cloudflare to proxy browser-based RDP traffic to your private network. Any arbitrary DNS record will work.
+
+If you do not already have a DNS record, [create a new DNS record](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records). For example, you could create a `CNAME` record that points your Access application public hostname (`app.example.com`) to your Cloudflare Tunnel (`<tunnel-id>.cfargotunnel.com`):
+
+- **Type**: _CNAME_
+- **Name**: `app`
+- **Target**: `c1744f8b-faa1-48a4-9e5c-02ac921467fa.cfargotunnel.com`
+- **Proxy status**: On
+
+## 5. Connect as a user
 
 To connect to a Windows machine over RDP:
 
