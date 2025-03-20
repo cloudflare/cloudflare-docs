@@ -604,7 +604,7 @@ entries:
     keywords: [request, cloudflare, score, client, visitor]
     summary: Represents a Cloudflare threat score.
     description: |-
-      Threat score is defaulted to `0`.
+      Previously, a threat score represented a Cloudflare threat score from 0–100, where 0 indicated low risk. Now, the threat score is always `0` (zero).
 
   - name: cf.tls_cipher
     data_type: String
