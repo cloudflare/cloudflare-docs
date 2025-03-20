@@ -68,9 +68,17 @@ The categories included in this policy are not always a security threat, but blo
 	product="cloudflare-one"
 />
 
-## Block dynamic list of categories
+## Block a dynamic list of categories
 
-Block a set of categories sent in the EDNS section of the request. The integer category list to block on, can be sent to the gateway DNS as JSON(`{"categories": [<category-int-codes..>]}`) via OPT code 65050. This is useful to filter by categories, that are not known at the time of creating a rule. Whenever a DNS request is blocked because of the request context categories, gateway will reply with an EDE Blocked(15) field containing an array of matched categories.
+You can block a set of categories sent in the [EDNS](https://datatracker.ietf.org/doc/html/rfc6891) portion of a request with the [Request Context Categories](/cloudflare-one/policies/gateway/dns-policies/#request-context-categories) selector. The category ID list to block on can be sent to the gateway DNS as JSON using OPT code `65050`. For example:
+
+```json
+{
+	"categories": [2, 67, 125, 133]
+}
+```
+
+This is useful to filter by categories that are not known at the time of creating a rule. When a DNS request is blocked because of the request context categories, Gateway will reply with an EDE Blocked(15) field containing an array of the matched categories.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
