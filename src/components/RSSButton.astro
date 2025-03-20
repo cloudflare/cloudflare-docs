@@ -2,18 +2,24 @@
 import { z } from "astro:schema";
 import { Icon } from "@astrojs/starlight/components";
 
-const props = z.object({
-	changelog: z
-		.string()
-		.transform((val) => val.toLowerCase().replaceAll(" ", "-"))
-		.default("index"),
-});
+const props = z
+	.object({
+		changelog: z
+			.string()
+			.transform((val) => val.toLowerCase().replaceAll(" ", "-"))
+			.default("index"),
+	})
+	.or(
+		z.object({
+			href: z.string(),
+		}),
+	);
 
-const { changelog } = props.parse(Astro.props);
+const input = props.parse(Astro.props);
 ---
 
 <a
-	href={`/changelog/rss/${changelog}.xml`}
+	href={"href" in input ? input.href : `/changelog/rss/${input.changelog}.xml`}
 	class="inline-flex items-center justify-center gap-1 rounded font-semibold no-underline"
 	target="_blank"
 >

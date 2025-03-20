@@ -2,6 +2,8 @@
 import AnchorHeading from "./AnchorHeading.astro";
 import RSSButton from "./RSSButton.astro";
 
+import { Aside } from "@astrojs/starlight/components";
+
 import { productsByGroup } from "~/util/products";
 import Details from "./Details.astro";
 ---
@@ -18,6 +20,39 @@ import Details from "./Details.astro";
 	productsByGroup.map(([group, products]) => (
 		<>
 			<AnchorHeading depth={4} title={group} />
+			{group === "Application security" && (
+				<Aside type="note" title="DDoS and WAF ruleset feeds">
+					<p>
+						For <a href="/ddos-protection/">DDoS Protection</a> or{" "}
+						<a href="/waf/">WAF</a> updates to managed rulesets, please refer to
+						their independent feeds:
+						<ul>
+							<li>
+								<p>
+									<a href="/ddos-protection/change-log/network/">
+										Network-layer DDoS managed ruleset
+									</a>
+								</p>
+								<RSSButton href="/ddos-protection/change-log/network/index.xml" />
+							</li>
+							<li>
+								<p>
+									<a href="/ddos-protection/change-log/http/">
+										HTTP DDoS managed ruleset
+									</a>
+								</p>
+								<RSSButton href="/ddos-protection/change-log/http/index.xml" />
+							</li>
+							<li>
+								<p>
+									<a href="/waf/change-log/">WAF managed ruleset</a>
+								</p>
+								<RSSButton href="/waf/change-log/index.xml" />
+							</li>
+						</ul>
+					</p>
+				</Aside>
+			)}
 			<p>
 				This feed contains entries for all {group} products:{" "}
 				<RSSButton changelog={group} />
