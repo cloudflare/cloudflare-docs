@@ -212,27 +212,29 @@ To fix this, you must import the real state of those resources from Cloudflare i
 
 When you run `cf-terraforming import ...`, you will obtain a list of `terraform import ...` commands that you must run manually afterward to import those resources into Terraform state. This is currently a manual process, but it may be automated in the future.
 
+One way to ease the process of executing all the `terraform import`, is saving the result from `cf-terraforming import ...` into a shell script file.
+
+> **NOTE**
+> You can also just let cf-terraforming output directly to stdout (standard output, your terminal) and copy and run each of the command lines that `cf-terraforming import ...` generates for you
+>
+> These command lines will look something like:
+>
+> ```sh
+> terraform import cloudflare_record.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31 1109d899a5ff5fd74bc01e581693685b/3c0b456bc2aa443089c5f40f45f51b31
+> ```
+
 1. Run the following command:
 
    ```sh
-   cf-terraforming import --resource-type "cloudflare_record" --email $CLOUDFLARE_EMAIL --key $CLOUDFLARE_API_KEY --zone $CLOUDFLARE_ZONE_ID
+   cf-terraforming import --resource-type "cloudflare_record" --email $CLOUDFLARE_EMAIL --key $CLOUDFLARE_API_KEY --zone $CLOUDFLARE_ZONE_ID > to-import.sh
    ```
 
-2. Copy each `terraform import ...` command included in the output and run it. Terraform will import each resource individually into Terraform state.
+   This new file - `to-import.sh` - will have valid the necessary commands `terraform import ...` to import into the TF. state all the previously generated resources. 
 
-For example, if the output of the first command (`cf-terraforming import ...`) contained the following `terraform` commands:
+2. Now, you can just run the new `to-import.sh` file, like below. Terraform will import each resource individually into Terraform state.
 
-```txt
-terraform import cloudflare_record.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31 1109d899a5ff5fd74bc01e581693685b/3c0b456bc2aa443089c5f40f45f51b31
-terraform import cloudflare_record.terraform_managed_resource_5e10399a590a45279f09aa8fb1163354 1109d899a5ff5fd74bc01e581693685b/d09d916d059aa9fc8cb54bdd49deea5f
-terraform import cloudflare_record.terraform_managed_resource_de1cb74bae184b569bb7f83fefe72248 1109d899a5ff5fd74bc01e581693685b/8d6ec0d02c5b22212ff673782c816ef8
-terraform import cloudflare_record.terraform_managed_resource_5799bb01054843eea726758f935d2aa2 1109d899a5ff5fd74bc01e581693685b/3766b952a2dda4c47e71952aeef33c77
-```
-
-You would run each command individually in the terminal:
-
-```sh
-terraform import cloudflare_record.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31 1109d899a5ff5fd74bc01e581693685b/3c0b456bc2aa443089c5f40f45f51b31
+```bash
+bash to-import.sh
 ```
 
 ```txt output
@@ -241,53 +243,7 @@ cloudflare_record.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31: I
   Imported cloudflare_record [id=3c0b456bc2aa443089c5f40f45f51b31]
 cloudflare_record.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31: Refreshing state... [id=3c0b456bc2aa443089c5f40f45f51b31]
 
-Import successful!
-
-The resources that were imported are shown above. These resources are now in
-your Terraform state and will henceforth be managed by Terraform.
-```
-
-```sh
-terraform import cloudflare_record.terraform_managed_resource_5e10399a590a45279f09aa8fb1163354 1109d899a5ff5fd74bc01e581693685b/d09d916d059aa9fc8cb54bdd49deea5f
-```
-
-```txt output
-cloudflare_record.terraform_managed_resource_5e10399a590a45279f09aa8fb1163354: Importing from ID "1109d899a5ff5fd74bc01e581693685b/d09d916d059aa9fc8cb54bdd49deea5f"...
-cloudflare_record.terraform_managed_resource_5e10399a590a45279f09aa8fb1163354: Import complete!
-  Imported cloudflare_record [id=d09d916d059aa9fc8cb54bdd49deea5f]
-cloudflare_record.terraform_managed_resource_5e10399a590a45279f09aa8fb1163354: Refreshing state... [id=d09d916d059aa9fc8cb54bdd49deea5f]
-
-Import successful!
-
-The resources that were imported are shown above. These resources are now in
-your Terraform state and will henceforth be managed by Terraform.
-```
-
-```sh
-terraform import cloudflare_record.terraform_managed_resource_de1cb74bae184b569bb7f83fefe72248 1109d899a5ff5fd74bc01e581693685b/8d6ec0d02c5b22212ff673782c816ef8
-```
-
-```txt output
-cloudflare_record.terraform_managed_resource_de1cb74bae184b569bb7f83fefe72248: Importing from ID "1109d899a5ff5fd74bc01e581693685b/8d6ec0d02c5b22212ff673782c816ef8"...
-cloudflare_record.terraform_managed_resource_de1cb74bae184b569bb7f83fefe72248: Import complete!
-  Imported cloudflare_record [id=8d6ec0d02c5b22212ff673782c816ef8]
-cloudflare_record.terraform_managed_resource_de1cb74bae184b569bb7f83fefe72248: Refreshing state... [id=8d6ec0d02c5b22212ff673782c816ef8]
-
-Import successful!
-
-The resources that were imported are shown above. These resources are now in
-your Terraform state and will henceforth be managed by Terraform.
-```
-
-```sh
-terraform import cloudflare_record.terraform_managed_resource_5799bb01054843eea726758f935d2aa2 1109d899a5ff5fd74bc01e581693685b/3766b952a2dda4c47e71952aeef33c77
-```
-
-```txt output
-cloudflare_record.terraform_managed_resource_5799bb01054843eea726758f935d2aa2: Importing from ID "1109d899a5ff5fd74bc01e581693685b/3766b952a2dda4c47e71952aeef33c77"...
-cloudflare_record.terraform_managed_resource_5799bb01054843eea726758f935d2aa2: Import complete!
-  Imported cloudflare_record [id=3766b952a2dda4c47e71952aeef33c77]
-cloudflare_record.terraform_managed_resource_5799bb01054843eea726758f935d2aa2: Refreshing state... [id=3766b952a2dda4c47e71952aeef33c77]
+# Some other log output for the additional resources .....
 
 Import successful!
 
@@ -304,3 +260,5 @@ terraform plan | grep changes
 ```sh output
 No changes. Infrastructure is up-to-date.
 ```
+
+Happy *terraforming*!
