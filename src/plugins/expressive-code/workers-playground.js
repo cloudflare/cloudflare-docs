@@ -109,6 +109,7 @@ export default () => {
 											"!no-underline",
 										],
 										href: `https://workers.cloudflare.com/playground#${serialised}`,
+										target: "_blank",
 									},
 									children: [
 										{ type: "text", value: "Run Worker in Playground" },
