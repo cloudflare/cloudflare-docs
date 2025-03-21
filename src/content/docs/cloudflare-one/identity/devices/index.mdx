@@ -57,7 +57,7 @@ A --> G[Service provider] --interval--> C
 
 :::caution
 
-Gateway does not terminate an [active session](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/#configure-warp-sessions-in-gateway), even if a subsequent posture check fails during that session. Gateway only evaluates posture checks at the beginnning of a session, and ongoing sessions will remain uninterrupted.
+Gateway does not terminate an [active session](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/#configure-warp-sessions-in-gateway) even if a subsequent posture check fails during that session. Gateway only evaluates posture checks at the beginning of a session, and ongoing sessions will remain uninterrupted.
 
 For example, if you establish an SSH session based on a successful posture check, but a posture requirement fails after the session has started, the session will remain active.
 
