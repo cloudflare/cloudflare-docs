@@ -33,35 +33,48 @@ To upgrade a compute account:
    terraform apply
    ```
 
-## Rotate API tokens
+## Roll API tokens
 
-Rotating the API token used by the compute account is useful when there is a security or operational need to use a new API Token. Note that if the API Token is rolled in the Cloudflare Dashboard but isn't updated in the Compute Account, the Compute Account will get unhealthy and stop reporting scan results.
+:::caution
+If you roll your API token in CASB but do not update it in your compute account, CASB will set your compute account's status as **Broken** and stop reporting scan results.
+:::
 
-This procedure should be used whenever there is a need to updated the API Token or if the API Token is no longer present in the cloud Compute Account.
+You may need to roll the Cloudflare API token used for your compute account if a security or operational issue appears, your API token is compromised, or your API token is removed from your compute account.
 
-Steps
+<Render file="api-roll-token" product="fundamentals" />
 
-### Roll Token in the Cloudflare Dashboard
+4. Copy or make note of your API token.
 
-1. Log in to the Cloudflare dashboard ↗ and go to My Profile > API Tokens.
-2. Next to the API token you want to roll, select the three dot icon > Roll.
-3. Select Confirm to generate a new API token.
-4. Record the newly created token
+Once you roll your API token in Cloudflare, you can update the API token value in your compute account's secrets manager:
 
-### Set API key in Secrets Manager
+<Tabs> <TabItem label="Amazon Web Services (AWS)" >
 
-1. Open the AWS or GCP console and navigate to Secrets Manager
-2. Validate that the region in which Terraform deployed is selected
-   For AWS:
-   Click on the secret cloudflare-cds-secrets, click Retrieve secret value, and Edit
-   Paste in the Cloudflare API key previously created and click Save
-   For GCP:
-   Update the secret following the format below, replacing `<token>` with the recently created token: `{"cloudflare_api_token": "<token>"}`
-   Click Save
+1. In the AWS, open the [Secrets Manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/asm_access.html).
+2. Choose **cloudflare-cds-secrets**.
+3. Select **Retrieve secret value**, then select **Edit**.
+4. Enter your Cloudflare API token.
+5. Select **Save**.
 
-### Common issues
+For more information, refer to the [AWS Secrets Manager documentation](https://docs.aws.amazon.com/secretsmanager/latest/userguide/manage_update-secret-value.html).
 
-#### cloudflare-cds-secrets does not exist in AWS or GCP Secrets Manager
+</TabItem>
+
+<TabItem label="Google Cloud Platform (GCP)" >
+
+1. In GCP, open the [Secret Manager](https://cloud.google.com/secret-manager/docs/overview).
+2. Choose your compute account connected to CASB.
+3. In **Actions**, select **Edit**.
+4. Choose your Cloudflare secret, then select **Edit secret**.
+5. Enter your Cloudflare API token.
+6. Select **Update secret**.
+
+For more information, refer to the [GCP Secret Manager documentation](https://cloud.google.com/secret-manager/docs/edit-secrets).
+
+</TabItem> </Tabs>
+
+### Common token issues
+
+#### cloudflare-cds-secrets does not exist in the secrets manager
 
 Validate that the correct region is selected
 Rerun Terraform Apply to recreate the secret
