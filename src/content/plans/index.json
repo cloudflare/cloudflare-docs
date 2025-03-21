@@ -2055,14 +2055,8 @@
 				"widgets": {
 					"title": "Number of widgets",
 					"link": "/turnstile/concepts/widget/",
-					"free": "10 widgets",
+					"free": "20 widgets",
 					"ent": "Unlimited"
-				},
-				"modes": {
-					"title": "Interactivity modes",
-					"link": "/turnstile/get-started/client-side-rendering/#appearance-modes",
-					"free": "Managed, Invisible, Non-Interactive",
-					"ent": "Managed, Invisible, Non-Interactive"
 				},
 				"offlabel": {
 					"title": "Offlabel (remove Cloudflare branding)",
@@ -2078,13 +2072,13 @@
 				"hostname_validation": {
 					"title": "Hostname validation",
 					"link": "/turnstile/concepts/hostname-management/",
-					"free": "10 hostnames per widget",
+					"free": "15 hostnames per widget",
 					"ent": "Maximum of 200 hostnames per widget. <br> The `any hostname` entitlement removes hostname as a requirement and allows you to use the widget anywhere."
 				},
 				"graphql_analytics": {
 					"title": "Analytics time window",
 					"link": "/turnstile/turnstile-analytics/",
-					"free": "30 days maximum",
+					"free": "7 days maximum",
 					"ent": "30 days maximum"
 				},
 				"ephemeral_ids": {
