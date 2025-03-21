@@ -2824,6 +2824,22 @@
 				}
 			}
 		},
+		"custom_cipher_suites": {
+			"title": "Custom cipher suites",
+			"link": "/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/",
+			"paid_add_on": true,
+			"paid_add_on_plans": ["free", "pro", "biz", "ent"],
+			"properties": {
+				"availability": {
+					"title": "Availability",
+					"summary": "Custom cipher suites are available for domains that have purchased [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) and are currently using a [full DNS setup](/dns/zone-setups/full-setup/).",
+					"free": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
+					"pro": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
+					"biz": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
+					"ent": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)"
+				}
+			}
+		},
 		"total_tls": {
 			"title": "Total TLS",
 			"link": "/ssl/edge-certificates/additional-options/total-tls/",
