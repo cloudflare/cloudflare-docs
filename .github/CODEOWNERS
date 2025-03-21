@@ -10,10 +10,10 @@
 /.github/actions/assign-pr/index.js @cloudflare/pcx-technical-writing
 /.github/styles/cloudflare/spelling-exceptions.txt @cloudflare/pcx-technical-writing
 /src/components/ @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @marciocloudflare @haleycode @maxvp @GregBrimble @KianNH @WalshyDev
-/src/schemas/tags.ts @kodster28 @KianNH @joslyn-cf
 *.js @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble @KianNH @WalshyDev
 *.ts @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble @KianNH @WalshyDev
 *.astro @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble @KianNH @WalshyDev
+/src/schemas/tags.ts @kodster28 @KianNH @joslyn-cf
 /src/content/workers-ai-models/ @craigsdennis @pedrosousa @cloudflare/pcx-technical-writing
 /public/__redirects @GregBrimble @KianNH @pedrosousa @WalshyDev @cloudflare/pcx-technical-writing
 
