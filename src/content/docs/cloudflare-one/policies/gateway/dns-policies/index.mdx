@@ -398,9 +398,9 @@ Use this selector to filter based on the IP addresses that the query resolves to
 
 Use this selector to match a dynamic list of [category IDs](/cloudflare-one/policies/gateway/domain-categories/#category-and-subcategory-ids) sent in the [EDNS](https://datatracker.ietf.org/doc/html/rfc6891) portion of a DNS query. Gateway includes request context with the OPT code `65050`.
 
-| UI name                    | API example                                                           | Evaluation phase      |
-| -------------------------- | --------------------------------------------------------------------- | --------------------- |
-| Request Context Categories | `any(dns.categories_in_request_context_matches[*] in {2 67 125 133})` | Before DNS resolution |
+| UI name                    | API example                                 | Evaluation phase      |
+| -------------------------- | ------------------------------------------- | --------------------- |
+| Request Context Categories | `dns.categories_in_request_context_matches` | Before DNS resolution |
 
 ### Security Categories
 
