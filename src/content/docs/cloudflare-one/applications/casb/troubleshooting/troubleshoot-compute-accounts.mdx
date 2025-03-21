@@ -43,63 +43,32 @@ You may need to roll the Cloudflare API token used for your compute account if a
 
 <Render file="api-roll-token" product="fundamentals" />
 
-4. Copy or make note of your API token.
+4. Copy your API token.
 
-Once you roll your API token in Cloudflare, you can update the API token value in your compute account's secrets manager:
-
-<Tabs> <TabItem label="Amazon Web Services (AWS)" >
-
-1. In the AWS, open the [Secrets Manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/asm_access.html).
-2. Choose **cloudflare-cds-secrets**.
-3. Select **Retrieve secret value**, then select **Edit**.
-4. Enter your Cloudflare API token.
-5. Select **Save**.
-
-For more information, refer to the [AWS Secrets Manager documentation](https://docs.aws.amazon.com/secretsmanager/latest/userguide/manage_update-secret-value.html).
-
-</TabItem>
-
-<TabItem label="Google Cloud Platform (GCP)" >
-
-1. In GCP, open the [Secret Manager](https://cloud.google.com/secret-manager/docs/overview).
-2. Choose your compute account connected to CASB.
-3. In **Actions**, select **Edit**.
-4. Choose your Cloudflare secret, then select **Edit secret**.
-5. Enter your Cloudflare API token.
-6. Select **Update secret**.
-
-For more information, refer to the [GCP Secret Manager documentation](https://cloud.google.com/secret-manager/docs/edit-secrets).
-
-</TabItem> </Tabs>
+Once you roll your API token in Cloudflare, you can update the API token value in your secrets manager for [Amazon Web Services (AWS)](https://docs.aws.amazon.com/secretsmanager/latest/userguide/manage_update-secret-value.html) or [Google Cloud Platform (GCP)](https://cloud.google.com/secret-manager/docs/edit-secrets).
 
 ### Common token issues
 
-#### cloudflare-cds-secrets does not exist in the secrets manager
+#### `cloudflare-cds-secrets` does not exist in the compute account's secrets manager
 
-Validate that the correct region is selected
-Rerun Terraform Apply to recreate the secret
-Apply repeat the steps above to edit the secret's value
+To recreate the secret in your compute account:
 
-#### I no longer have access to the API token I created
+1. Validate that you selected the correct region.
+2. [Upgrade the compute account](#upgrade-a-compute-account) to recreate the secret.
+3. [Update the secret value](#roll-api-tokens) in your compute account.
 
-Following the above instructions, roll the API token again and add it to AWS or GCP Secrets Manager
-Validation: On the integration page, if the Compute Account is shown as "Healthy", the problem has been solved.
+#### I no longer have access to the Cloudflare API token I created
+
+[Roll your Cloudflare API token](#roll-api-tokens) and add it to your compute account.
+
+To validate your compute account's API access:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **CASB** > **Integrations**.
+2. Choose the integration you created for cloud scanning.
+3. Select **Manage compute accounts**. If the status of the compute account integration is set to **Healthy**, the problem has been solved.
 
 ## Troubleshoot an unhealthy compute account
 
-When a Compute Account becomes unhealthy, new scan configuration changes will not be put into use and new scan results will not appear in the dashboard.
+When CASB marks a compute account as **Unhealthy**, CASB will not use new scan configuration changes and new scan results will not appear in the dashboard.
 
-The following steps should be used when a Compute Account is appearing with the "Unhealthy" badge within the CASB Integration page. Example:
-
-Steps
-Rerun Terraform Apply
-Navigate to a directory that contains the Terraform state file created during previous Terraform activity for this Compute Account
-Pull the latest updates:
-terraform init --upgrade
-Recreate/Upgrade any missing resources:
-terraform apply
-After completion, review the health status of the Compute Account to verify recovery. If the Compute Account is now healthy, you can stop here. Else, continue to the next step.
-
-Roll API Token
-Follow the steps listed in "Rotating API Tokens" section
-Review the health status of the Compute Account to verify recovery.
+To fix a compute account marked as **Unhealthy**, first [upgrade the compute account](#upgrade-a-compute-account). If the compute account is still unhealthy, [roll your API token](#roll-api-tokens).
