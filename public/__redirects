@@ -741,7 +741,9 @@
 
 
 # learning-paths
-/support/about-cloudflare/attack-preparation-and-response/best-practices-ddos-preventative-measures/ /learning-paths/prevent-ddos-attacks/ 301
+
+/learning-paths/modules/cybersafe/cybersafe-account-creation/ /learning-paths/cybersafe/account-creation/ 301
+/learning-paths/modules/cybersafe/cybersafe-concepts/cipa-overview/ /learning-paths/cybersafe/concepts/cipa-overview/ 301
 /learning-paths/modules/security/ddos-concepts/ddos-prevention/ /learning-paths/prevent-ddos-attacks/concepts/ddos-prevention/ 301
 /learning-paths/modules/security/ddos-concepts/ddos-attacks/ /learning-paths/prevent-ddos-attacks/concepts/ddos-attacks/ 301
 /learning-paths/modules/security/dns-filtering-plan-deployment/user-authentication/ /learning-paths/dns-filtering/plan-deployment/user-authentication/ 301
@@ -758,6 +760,7 @@
 /learning-paths/cybersafe/area1-onboarding/area1-connection-methods/ /learning-paths/cybersafe/area1-onboarding/area1-inline/ 301
 /learning-paths/secure-internet-traffic/connect-networks/ /learning-paths/secure-internet-traffic/connect-devices-networks/ 301
 /learning-paths/secure-internet-traffic/connect-networks/choose-on-ramp/ /learning-paths/secure-internet-traffic/connect-devices/choose-on-ramp/ 301
+/support/about-cloudflare/attack-preparation-and-response/best-practices-ddos-preventative-measures/ /learning-paths/prevent-ddos-attacks/ 301
 
 ## dns-filtering / secure-internet-traffic
 /learning-paths/dns-filtering/ /learning-paths/secure-internet-traffic/ 301
@@ -1119,6 +1122,9 @@
 /ssl/advanced-certificate-manager/ /ssl/edge-certificates/advanced-certificate-manager/ 301
 /ssl/certificate-transparency-monitoring/ /ssl/edge-certificates/additional-options/certificate-transparency-monitoring/ 301
 /ssl/client-certificates/byo-ca-api-shield/ /ssl/client-certificates/byo-ca/ 301
+/ssl/custom-certificates/ /ssl/edge-certificates/custom-certificates/ 301
+/ssl/custom-certificates/renewing/ /ssl/edge-certificates/custom-certificates/renewing/ 301
+/ssl/custom-certificates/uploading/ /ssl/edge-certificates/custom-certificates/uploading/ 301
 /ssl/edge-certificates/certificate-transparency-monitoring/ /ssl/edge-certificates/additional-options/certificate-transparency-monitoring/ 301
 /ssl/edge-certificates/changing-dcv-method/methods/email/ /ssl/edge-certificates/changing-dcv-method/methods/ 301
 /ssl/edge-certificates/custom-certificates/caa-records/ /ssl/edge-certificates/caa-records/ 301
@@ -1200,6 +1206,7 @@
 /support/about-cloudflare/getting-started/troubleshooting-faq-for-new-cloudflare-customers/ /fundamentals/setup/troubleshooting/ 301
 /support/about-cloudflare/getting-started/ /fundamentals/setup/troubleshooting/ 301
 /support/account-management-billing/billing-cloudflare-add-on-services/ /support/account-management-billing/billing-add-on-service/ 301
+/support/cloudflare-client-api/ /fundamentals/api/ 301
 /support/firewall/learn-more/understanding-cloudflare-tor-support-and-onion-routing/ /network/onion-routing/ 301
 /support/firewall/managed-rules-web-application-firewall-waf/migrating-from-waf-managed-rules-to-waf-managed-rulesets/ /waf/reference/migration-guides/waf-managed-rules-migration/ 301
 /support/firewall/tools/understanding-cloudflare-zone-lockdown/ /waf/tools/zone-lockdown/ 301
@@ -1238,6 +1245,7 @@
 /support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/ /support/contacting-cloudflare-support/ 301
 /support/troubleshooting/performance/http2-and-enhanced-http2-prioritization-options-may-affect-content-loading-on-iossafari-devices/ /speed/optimization/protocol/troubleshooting/enhanced-http2-prioritization-ios-safari/ 301
 /support/troubleshooting/performance/ /speed/optimization/ 301
+/support/troubleshooting/planned-maintenance/ /support/troubleshooting/disruptive-maintenance/ 301
 /support/troubleshooting/planned-maintenance/disruptive-maintenance-windows/ /support/troubleshooting/disruptive-maintenance/ 301
 /support/page-rules/ /rules/page-rules/ 301
 /support/page-rules/configuring-url-forwarding-or-redirects-with-page-rules/ /rules/page-rules/how-to/url-forwarding/ 301
@@ -1839,6 +1847,7 @@
 /cloudflare-one/identity/devices/sentinel-one/ /cloudflare-one/identity/devices/warp-client-checks/sentinel-one/ 301
 /cloudflare-one/identity/idp-integration/azuread/ /cloudflare-one/identity/entra-id/ 301
 /cloudflare-one/identity/entra-id/ /cloudflare-one/identity/idp-integration/entra-id/ 301
+/cloudflare-one/identity/idp-integration/gsuite/ /cloudflare-one/identity/idp-integration/google-workspace/ 301
 /cloudflare-one/identity/idp-integration/one-time-pin/ /cloudflare-one/identity/one-time-pin/ 301
 /cloudflare-one/identity/idp-integration/saml-centrify/ /cloudflare-one/identity/idp-integration/centrify-saml/ 301
 /cloudflare-one/identity/idp-integration/ping-saml/ /cloudflare-one/identity/idp-integration/pingfederate-saml/ 301
@@ -1846,6 +1855,7 @@
 /cloudflare-one/identity/idp-integration/workspace-one/ /cloudflare-one/identity/devices/service-providers/workspace-one/ 301
 /cloudflare-one/identity/login-page/ /cloudflare-one/applications/login-page/ 301
 /cloudflare-one/insights/analytics/ /cloudflare-one/insights/analytics/analytics-overview/ 301
+/cloudflare-one/insights/dex/fleet-status/ /cloudflare-one/insights/dex/monitoring/ 301
 /cloudflare-one/insights/logs/logpush/rdata/ /cloudflare-one/insights/logs/logpush/#parse-logpush-logs 301
 /cloudflare-one/applications/custom-pages/ /cloudflare-one/applications/ 301
 /cloudflare-one/identity/service-auth/service-tokens/ /cloudflare-one/identity/service-tokens/ 301
@@ -1962,14 +1972,9 @@
 /cloudflare-one/policies/browser-isolation/agentless/* /cloudflare-one/policies/browser-isolation/setup/:splat 301
 /cloudflare-one/policies/filtering/http-policies/data-loss-prevention/* /cloudflare-one/policies/data-loss-prevention/ 301
 /cloudflare-one/policies/data-loss-prevention/configuration-guides/* /cloudflare-one/policies/data-loss-prevention/dlp-policies/common-policies/ 301
-/cloudflare-one/insights/dex/fleet-status/ /cloudflare-one/insights/dex/monitoring/ 301
-/cloudflare-one/identity/idp-integration/gsuite/ /cloudflare-one/identity/idp-integration/google-workspace/ 301
 
 # Learning paths
-/learning-paths/modules/cybersafe/cybersafe-account-creation/* /learning-paths/cybersafe/account-creation/:splat 301
-/learning-paths/modules/cybersafe/cybersafe-area1-onboarding/* /learning-paths/cybersafe/area1-onboarding/:splat 301
-/learning-paths/modules/cybersafe/cybersafe-concepts/* /learning-paths/cybersafe/concepts/:splat 301
-/learning-paths/modules/cybersafe/cybersafe-gateway-onboarding/* /learning-paths/cybersafe/gateway-onboarding/:splat 301
+
 /learning-paths/modules/get-started/onboarding/* /learning-paths/get-started-free/onboarding/:splat 301
 /learning-paths/modules/get-started/other-features-free/* /learning-paths/get-started-free/other-features/:splat 301
 /learning-paths/modules/get-started/performance-free/* /learning-paths/get-started-free/performance/:splat 301
@@ -1984,8 +1989,6 @@
 /learning-paths/modules/security/ddos-advanced/* /learning-paths/prevent-ddos-attacks/advanced/:splat 301
 /learning-paths/modules/security/ddos-baseline/* /learning-paths/prevent-ddos-attacks/baseline/:splat 301
 /learning-paths/modules/security/dns-filtering-connect-devices/* /learning-paths/dns-filtering/connect-devices/:splat 301
-/learning-paths/modules/security/dns-filtering-create-policy/* /learning-paths/dns-filtering/create-policy/:splat 301
-/learning-paths/modules/security/dns-filtering-deploy/* /learning-paths/dns-filtering/deploy/:splat 301
 ## DNS filtering --> Secure your Internet traffic and SaaS apps
 /learning-paths/dns-filtering/account/* /learning-paths/secure-internet-traffic/initial-setup/:splat 301
 /learning-paths/dns-filtering/create-policy/* /learning-paths/secure-internet-traffic/build-dns-policies/:splat 301
@@ -2031,10 +2034,7 @@
 /workers/observability/logging/* /workers/observability/logs/:splat 301
 
 # Others
-/ssl/custom-certificates/* /ssl/edge-certificates/custom-certificates/:splat 301
 /logs/analytics-integrations/* /fundamentals/data-products/analytics-integrations/:splat 301
 /fundamentals/notifications/* /notifications/:splat 301
 /support/other-languages/* /support/ 301
 /support/speed/* /speed/ 301
-/support/troubleshooting/planned-maintenance/* /support/troubleshooting/disruptive-maintenance/ 301
-/support/cloudflare-client-api/* /fundamentals/api/ 301
