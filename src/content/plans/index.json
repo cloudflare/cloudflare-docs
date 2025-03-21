@@ -2494,8 +2494,8 @@
 					"free": "0",
 					"pro": "0",
 					"pro_plus": "1",
-					"biz": "1 (Modern)\n1 (Legacy)",
-					"ent": "1 (Modern) (can purchase more)\n1 (Legacy) (can purchase more)"
+					"biz": "1 Modern and 1 Legacy",
+					"ent": "1 Modern (can purchase more) and 1 Legacy (can purchase more)"
 				}
 			}
 		},
@@ -2651,10 +2651,10 @@
 				},
 				"c_max_hostnames": {
 					"title": "Max hostnames",
-					"free": "5000",
-					"pro": "5000",
-					"biz": "5000",
-					"ent": "Unlimited, but contact sales if using over 5000."
+					"free": "5,000",
+					"pro": "5,000",
+					"biz": "5,000",
+					"ent": "Unlimited, but contact sales if using over 5,000."
 				},
 				"custom_analytics": {
 					"title": "[Custom analytics](/cloudflare-for-platforms/cloudflare-for-saas/hostname-analytics/)",
