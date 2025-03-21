@@ -2491,9 +2491,9 @@
 				},
 				"quantity": {
 					"title": "Certificates included",
-					"free": 0,
-					"pro": 0,
-					"pro_plus": 1,
+					"free": "0",
+					"pro": "0",
+					"pro_plus": "1",
 					"biz": "1 (Modern)\n1 (Legacy)",
 					"ent": "1 (Modern) (can purchase more)\n1 (Legacy) (can purchase more)"
 				}
@@ -2644,16 +2644,16 @@
 				"b_initial_quota": {
 					"title": "Hostnames included",
 					"summary": "Varies",
-					"free": 100,
-					"pro": 100,
-					"biz": 100,
-					"ent": 0
+					"free": "100",
+					"pro": "100",
+					"biz": "100",
+					"ent": "0"
 				},
 				"c_max_hostnames": {
 					"title": "Max hostnames",
-					"free": 5000,
-					"pro": 5000,
-					"biz": 5000,
+					"free": "5000",
+					"pro": "5000",
+					"biz": "5000",
 					"ent": "Unlimited, but contact sales if using over 5000."
 				},
 				"custom_analytics": {
