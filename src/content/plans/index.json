@@ -2601,6 +2601,13 @@
 					"pro": "Yes",
 					"biz": "Yes",
 					"ent": "Yes"
+				},
+				"per_hostname": {
+					"title": "Per-hostname",
+					"free": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
+					"pro": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
+					"biz": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
+					"ent": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)"
 				}
 			}
 		},
