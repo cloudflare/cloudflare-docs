@@ -110,7 +110,7 @@
 /agents/examples/build-mcp-server/ /agents/api-reference/build-mcp-server/ 301
 /agents/api-reference/build-mcp-server/ /agents/guides/build-mcp-server/ 301
 /agents/api-reference/sdk/ /agents/api-reference/ 301
-
+/agents/guides/build-mcp-server/ /agents/guides/remote-mcp-server/ 301
 
 # ai
 /ai/ /use-cases/ai/ 301

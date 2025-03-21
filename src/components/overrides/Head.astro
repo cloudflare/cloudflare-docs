@@ -56,9 +56,9 @@ if (currentSection) {
 		}
 
 		if (product.data.product.title) {
-			["pcx_product", "algolia_product_filter"].map((property) => {
+			["pcx_product", "algolia_product_filter"].map((name) => {
 				metaTags.push({
-					property,
+					name,
 					content: product.data.product.title,
 				});
 			});
