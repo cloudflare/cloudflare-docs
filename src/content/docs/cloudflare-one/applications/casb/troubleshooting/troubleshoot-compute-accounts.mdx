@@ -13,6 +13,22 @@ Cloudflare CASB detects when integrations are unhealthy or outdated.
 
 Common integration issues include changes to SaaS app or cloud environment configurations, user access, or permission scope. Integrations may need to be updated to support new features or permissions.
 
+## Identify unhealthy compute accounts
+
+To identify unhealthy compute accounts:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **CASB** > **Integrations**.
+2. Choose the integration you created for cloud scanning.
+3. Select **Manage compute accounts**.
+
+CASB will display the status of each compute account next to its name. If a compute account is broken or outdate, CASB will set its status to **Unhealthy**. If the status is **Healthy**, no action is required.
+
+## Repair an unhealthy compute account
+
+When CASB marks a compute account as **Unhealthy**, CASB will not use new scan configuration changes and new scan results will not appear in the dashboard.
+
+To repair a compute account marked as **Unhealthy**, first [upgrade the compute account](#upgrade-a-compute-account). If the compute account is still unhealthy, [roll your API token](#roll-api-tokens).
+
 ## Upgrade a compute account
 
 Upgrading a compute account applies the latest software features, bug fixes, and infrastructure changes to a cloud compute account. You should run upgrades periodically to keep the compute account software up to date or when recommended by Cloudflare to address an issue. CASB deploys compute account upgrades through Terraform updates.
@@ -59,16 +75,4 @@ To recreate the secret in your compute account:
 
 #### I no longer have access to the Cloudflare API token I created
 
-[Roll your Cloudflare API token](#roll-api-tokens) and add it to your compute account.
-
-To validate your compute account's API access:
-
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **CASB** > **Integrations**.
-2. Choose the integration you created for cloud scanning.
-3. Select **Manage compute accounts**. If the status of the compute account integration is set to **Healthy**, the problem has been solved.
-
-## Troubleshoot an unhealthy compute account
-
-When CASB marks a compute account as **Unhealthy**, CASB will not use new scan configuration changes and new scan results will not appear in the dashboard.
-
-To fix a compute account marked as **Unhealthy**, first [upgrade the compute account](#upgrade-a-compute-account). If the compute account is still unhealthy, [roll your API token](#roll-api-tokens).
+[Roll your Cloudflare API token](#roll-api-tokens) and add it to your compute account. If the [status of the compute account](#identify-unhealthy-compute-accounts) is set to **Healthy**, the issue has been solved.
