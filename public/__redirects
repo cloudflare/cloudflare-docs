@@ -235,7 +235,6 @@
 /cache/about/ /cache/concepts/ 301
 /cache/concepts/enable-http2-to-origin/ /speed/optimization/protocol/http2-to-origin/ 301
 /cache/how-to/enable-http2-to-origin/ /speed/optimization/protocol/http2-to-origin/ 301
-/cache/how-to/interact-with-workers/ /cache/interaction-cloudflare-products/workers/ 301
 /cache/concepts/interact-with-workers/ /cache/interaction-cloudflare-products/workers/ 301
 /cache/best-practices/cache-behavior/ /cache/concepts/cache-behavior/ 301
 /cache/best-practices/customize-cache/ /cache/concepts/customize-cache/ 301
@@ -269,7 +268,6 @@
 /network-interconnect/about/argo-for-packets/ /argo-smart-routing/argo-for-packets/ 301
 /network-interconnect/about/bfd/ /network-interconnect/classic-cni/set-up/configure-bgp-bfd/ 301
 /network-interconnect/set-up-cni/ /network-interconnect/classic-cni/set-up/ 301
-/network-interconnect/set-up-cni/scope-config/ /network-interconnect/classic-cni/set-up/scope-config/ 301
 /network-interconnect/set-up-cni/configure-bgp/ /network-interconnect/classic-cni/set-up/configure-bgp-bfd/ 301
 /network-interconnect/set-up-cni/peering-portal/ /network-interconnect/pni-and-peering/ 301
 
@@ -495,7 +493,6 @@
 /fundamentals/security/browser-integrity-check/ /waf/tools/browser-integrity-check/ 301
 /fundamentals/signed-exchanges/ /speed/optimization/other/signed-exchanges/ 301
 /fundamentals/signed-exchanges/amp-real-ulr/reference/ /speed/optimization/other/amp-real-url/reference/ 301
-/fundamentals/signed-exchanges/signed-exchanges/ /speed/optimization/other/signed-exchanges/ 301
 /fundamentals/speed/aim/ /speed/aim/ 301
 /fundamentals/speed/optimization/ /speed/optimization/ 301
 /fundamentals/speed/prefetch-urls/ /speed/optimization/content/prefetch-urls/ 301
@@ -619,8 +616,6 @@
 /fundamentals/setup/account-setup/add-site/ /fundamentals/setup/manage-domains/add-site/ 301
 /fundamentals/setup/account-setup/create-account/ /fundamentals/setup/account/create-account/ 301
 /fundamentals/setup/account-setup/create-billing-profile/ /fundamentals/subscriptions-and-billing/create-billing-profile/ 301
-/fundamentals/setup/account-setup/customize-account/communication-preference/ /fundamentals/setup/account/customize-account/communication-preference/ 301
-/fundamentals/setup/account-setup/customize-account/language-preference/ /fundamentals/setup/account/customize-account/language-preference/ 301
 /fundamentals/setup/account-setup/verify-email-address/ /fundamentals/setup/account/verify-email-address/ 301
 /fundamentals/setup/allow-cloudflare-ip-addresses/ /fundamentals/concepts/cloudflare-ip-addresses/ 301
 /fundamentals/basic-tasks/login/ /fundamentals/setup/account/login/ 301
@@ -703,8 +698,6 @@
 
 /learning-paths/modules/cybersafe/cybersafe-account-creation/ /learning-paths/cybersafe/account-creation/ 301
 /learning-paths/modules/cybersafe/cybersafe-concepts/cipa-overview/ /learning-paths/cybersafe/concepts/cipa-overview/ 301
-/learning-paths/modules/security/ddos-concepts/ddos-prevention/ /learning-paths/prevent-ddos-attacks/concepts/ddos-prevention/ 301
-/learning-paths/modules/security/ddos-concepts/ddos-attacks/ /learning-paths/prevent-ddos-attacks/concepts/ddos-attacks/ 301
 /learning-paths/modules/security/dns-filtering-plan-deployment/user-authentication/ /learning-paths/dns-filtering/plan-deployment/user-authentication/ 301
 /learning-paths/modules/security/dns-filtering-account/ /learning-paths/dns-filtering/account/ 301
 /learning-paths/modules/security/dns-filtering-account/create-zero-trust-org/ /learning-paths/dns-filtering/account/create-zero-trust-org/ 301
@@ -980,12 +973,10 @@
 /reference-architecture/secure-application-delivery-design-guide/ /reference-architecture/design-guides/secure-application-delivery/ 301
 
 # radar
-/fundamentals/radar/ /radar/ 301
 /fundamentals/radar/glossary/ /radar/glossary/ 301
 /radar/changelog/ /radar/release-notes/ 301
 
 # railgun
-/railgun/user-guide/increase-logging/ /railgun/user-guide/troubleshooting/increase-logging/ 301
 /support/speed/optimization-delivery-railgun/railgun-faq/ /railgun/ 301
 
 # registrar
@@ -1055,7 +1046,6 @@
 /support/speed/optimization-file-size/why-isnt-auto-minify-working/ /speed/optimization/content/troubleshooting/ 301
 /support/speed/optimization-mobile/why-is-the-mobile-redirect-i-set-up-through-cloudflare-redirecting-my-static-assets/ /speed/optimization/other/troubleshooting/mobile-redirect-affect-static-assets/ 301
 /speed/optimization/other/amp-real-ulr/ /speed/optimization/other/amp-real-url/ 301
-/speed/optimization/other/amp-real-ulr/enable-amp-real-url/ /speed/optimization/other/amp-real-url/enable-amp-real-url/ 301
 /speed/optimization/other/amp-real-ulr/reference/ /speed/optimization/other/amp-real-url/reference/ 301
 /speed/optimization/other/mobile-redirect/ /rules/url-forwarding/examples/perform-mobile-redirects/ 301
 /speed/optimization/other/troubleshooting/mobile-redirect-affect-static-assets/ /speed/optimization/other/ 301
@@ -1203,7 +1193,6 @@
 /support/more-dashboard-apps/cloudflare-scrape-shield/what-does-server-side-excludes-sse-do/ /waf/tools/scrape-shield/ 301
 /support/more-dashboard-apps/cloudflare-scrape-shield/what-is-email-address-obfuscation/ /waf/tools/scrape-shield/email-address-obfuscation/ 301
 /support/more-dashboard-apps/cloudflare-scrape-shield/why-doesnt-my-rss-feed-show-images/ /waf/tools/scrape-shield/hotlink-protection/ 301
-/support/more-dashboard-apps/cloudflare-scrape-shield/ /waf/tools/scrape-shield/ 301
 /support/about-cloudflare/attack-preparation-and-response/recovering-from-a-hacked-site/ /fundamentals/security/recovering-from-hacked-site/ 301
 /fundamentals/basic-tasks/recovering-from-hacked-site/ /fundamentals/security/recovering-from-hacked-site/ 301
 /support/firewall/learn-more/configuring-token-authentication/ /waf/custom-rules/use-cases/configure-token-authentication/ 301
@@ -1435,13 +1424,10 @@
 /workers/templates/ /workers/examples/ 301
 /workers/templates/pages/alter_headers/ /workers/examples/alter-headers/ 301
 /workers/templates/pages/cache_api/ /workers/examples/cache-api/ 301
-/workers/templates/pages/cache_ttl/ /workers/examples/cache-using-fetch/ 301
 /workers/templates/pages/cookie_extract/ /workers/examples/extract-cookie-value/ 301
 /workers/templates/pages/cors_header_proxy/ /workers/examples/cors-header-proxy/ 301
-/workers/templates/pages/fetch_html/ /workers/examples/fetch-html/ 301
 /workers/templates/pages/graphql_server/ /workers/get-started/quickstarts/ 301
 /workers/templates/pages/http2_server_push/ /workers/examples/103-early-hints/ 301
-/workers/templates/pages/rewrite_links_html/ /workers/examples/rewrite-links/ 301
 /workers/templates/pages/send_raw_html/ /workers/examples/return-html/ 301
 /workers/templates/pages/sites/ /workers/get-started/quickstarts/ 301
 /workers/templates/snippets/conditional_response/ /workers/examples/conditional-response/ 301
@@ -1690,7 +1676,6 @@
 /cloudflare-one/connections/connect-apps/configuration/config/ /cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/ 301
 /cloudflare-one/connections/connect-apps/do-more-with-tunnels/hosting-requirements/ /cloudflare-one/connections/connect-networks/downloads/system-requirements/ 301
 /cloudflare-one/connections/connect-apps/license/ /cloudflare-one/connections/connect-networks/downloads/license/ 301
-/cloudflare-one/connections/connect-apps/license/copyrights/ /cloudflare-one/connections/connect-networks/downloads/copyrights/ 301
 /cloudflare-one/connections/connect-apps/install-and-setup/installation/ /cloudflare-one/connections/connect-networks/downloads/ 301
 /cloudflare-one/connections/connect-apps/configuration/arguments/ /cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/ 301
 /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-commands/ /cloudflare-one/connections/connect-networks/configure-tunnels/local-management/tunnel-useful-commands/ 301
