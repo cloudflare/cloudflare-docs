@@ -11,6 +11,12 @@ description: Review common troubleshooting scenarios for Rules features.
 
 import { Example, Render } from "~/components";
 
+## Interaction between redirects and other Cloudflare products
+
+Your redirects may interfere with Cloudflare products and features such as challenges. Consider excluding the [`/cdn-cgi/*` URI path](/fundamentals/reference/cdn-cgi-endpoint/) in your rule expression to avoid issues. Alternatively, you may exclude only a sub-path such as `/cdn-cgi/challenge-platform/*` to avoid issues with specific features (in this example, [Cloudflare challenges](#interaction-between-cloudflare-challenges-and-rules-features)).
+
+You may also want to exclude the `/.well-known/*` URL path used by several validation services. Refer to [Interaction between redirects and verification procedures like HTTP DCV](#interaction-between-redirects-and-verification-procedures-like-http-dcv) for more information.
+
 ## Interaction between Cloudflare challenges and Rules features
 
 If you are issuing a [challenge](/waf/reference/cloudflare-challenges/) for a given URI path that has one or more Rules features enabled, you should exclude URI paths starting with `/cdn-cgi/challenge-platform/` in your rule expressions to avoid challenge loops.
@@ -21,11 +27,11 @@ For example, define a compound expression for your rule using the `and` operator
 <OTHER_RULE_CONDITIONS> and not starts_with(http.request.uri, "/cdn-cgi/challenge-platform/")
 ```
 
-## HTTP DCV and redirects
+## Interaction between redirects and verification procedures like HTTP DCV
 
-<Render file="dcv-definition" product="ssl" />
+Paths used in validation procedures such as custom hostname verification (Cloudflare for SaaS), [Pages domain validation](/pages/configuration/debugging-pages/), or [HTTP domain control validation (DCV)](/ssl/edge-certificates/changing-dcv-method/methods/http/) may be affected by redirects.
 
-If you are using [HTTP DCV](/ssl/edge-certificates/changing-dcv-method/methods/http/) and also have [Single Redirects](/rules/url-forwarding/single-redirects/) set up in your zone, consider excluding the `/.well-known/*` path from your rule to avoid DCV issues. For details and other resources refer to the [SSL/TLS documentation](/ssl/edge-certificates/changing-dcv-method/).
+Consider excluding the `/.well-known/*` URI path from your rule to avoid issues.
 
 ## Content-Length header removed from response
 
