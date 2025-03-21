@@ -1,6 +1,5 @@
 // @ts-check
 import { definePlugin } from "@expressive-code/core";
-import { h } from "@expressive-code/core/hast";
 
 import lzstring from "lz-string";
 
@@ -48,6 +47,7 @@ export default () => {
 		baseStyles: `
 		.wrapper {
 			box-shadow: var(--ec-frm-frameBoxShdCssVal);
+			border-radius: calc(var(--ec-brdRad) + var(--ec-brdWd));
 			margin-top: 0 !important;
 		}
 
