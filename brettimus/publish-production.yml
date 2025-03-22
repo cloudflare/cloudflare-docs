@@ -2,7 +2,18 @@ name: Publish
 on:
   push:
     branches:
-      - production
+      DirectoryPath: "public"
+EnforceHTTPS: false
+IgnoreURLs:
+- "\\api\\*"
+CheckLinks: true
+CheckImages: false
+CheckScripts: false
+CheckGeneric: false
+CheckExternal: false
+IgnoreInternalEmptyHash: true
+IgnoreEmptyHref: true
+IgnoreDirectoryMissingTrailingSlash: true
 
 jobs:
   publish:
