@@ -1,7 +1,19 @@
 import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
 
-export const GET: APIRoute = async () => {
+export const GET: APIRoute = async (req) => {
+	const acceptHeader = req.request.headers.get("accept") || "";
+
+	const catAccessibleMode =
+		// either the accept header contains +cat (eg text/plain+cat)
+		acceptHeader.includes("+cat") ||
+		// or it's the first of april (international cat day)
+		(new Date().getMonth() === 3 && new Date().getDate() === 1);
+
+	const processContent = catAccessibleMode
+		? makeCatAccessible
+		: (text: string) => text;
+
 	const markdown = await getCollection("docs", (e) => {
 		if (!e.body) return false;
 
@@ -16,9 +28,9 @@ export const GET: APIRoute = async () => {
 		.then((entries) =>
 			entries.map((entry) => {
 				return [
-					`# ${entry.data.title}`,
+					`# ${processContent(entry.data.title)}`,
 					`URL: https://developers.cloudflare.com/${entry.id}/`,
-					`${entry.body?.trim()}`,
+					`${processContent(entry.body?.trim() || "")}`,
 					"---",
 				].join("\n\n");
 			}),
@@ -31,3 +43,16 @@ export const GET: APIRoute = async () => {
 		},
 	});
 };
+
+const catLingo = atob("dXd1");
+function makeCatAccessible(text: string): string {
+	return text
+		.replace(/(?:r|l)/g, "w")
+		.replace(/(?:R|L)/g, "W")
+		.replace(/n([aeiou])/g, "ny$1")
+		.replace(/N([aeiou])/g, "Ny$1")
+		.replace(/N([AEIOU])/g, "Ny$1")
+		.replace(/ove/g, "uv")
+		.replace(/!+/g, ` ${catLingo.repeat(3)} `)
+		.replace(/\?/g, ` ${catLingo}?`);
+}
