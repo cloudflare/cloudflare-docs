@@ -24,6 +24,7 @@ import StableDiffusionV15InpaintingCode from "~/components/models/code/StableDif
 import Flux1Schnell from "~/components/models/code/Flux-1-Schnell.astro";
 import WhisperBase64Code from "~/components/models/code/WhisperBase64Code.astro";
 import LlamaGuard from "~/components/models/code/LlamaGuard.astro";
+import BgeRerankerBase from "~/components/models/code/Bge-Reranker-Base.astro";
 
 import { authorData } from "~/components/models/data";
 
@@ -96,6 +97,10 @@ if (model.name === "@cf/openai/whisper-large-v3-turbo") {
 
 if (model.name === "@cf/meta/llama-guard-3-8b") {
 	CodeExamples = LlamaGuard;
+}
+
+if (model.name === "@cf/baai/bge-reranker-base") {
+	CodeExamples = BgeRerankerBase;
 }
 
 const description = model.description;
