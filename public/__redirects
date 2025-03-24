@@ -123,6 +123,9 @@
 /ai-gateway/integration/ /ai-gateway/integrations/ 301
 /ai-gateway/providers/open-router/ /ai-gateway/providers/openrouter/ 301
 
+# agents
+/agents/capabilities/mcp-server/ /agents/model-context-protocol/ 301
+
 # analytics
 /analytics/migration-guides/zone-analytics/ /analytics/graphql-api/migration-guides/zone-analytics/ 301
 /analytics/web-analytics/about/ /web-analytics/about 301
@@ -824,6 +827,7 @@
 /pages/how-to/deploy-a-jekyll-site/ /pages/framework-guides/deploy-a-jekyll-site/ 301
 /pages/how-to/deploy-a-nextjs-site/ /pages/framework-guides/nextjs/ 301
 /pages/framework-guides/deploy-a-nextjs-site/ /pages/framework-guides/nextjs/ 301
+/pages/framework-guides/deploy-a-svelte-site/ /pages/framework-guides/deploy-a-svelte-kit-site/ 301
 /pages/framework-guides/nextjs/deploy-a-nextjs-site/ /pages/framework-guides/nextjs/ssr/get-started/ 301
 /pages/how-to/deploy-anything/ /pages/framework-guides/deploy-anything/ 301
 /pages/how-to/deploy-a-react-application/ /pages/framework-guides/deploy-a-react-site/ 301
@@ -1113,6 +1117,7 @@
 /support/third-party-software/content-management-system-cms/how-do-i-use-wordpress-multi-site-wpmu-with-cloudflare/ /automatic-platform-optimization/ 301
 /support/third-party-software/content-management-system-cms/modified_drupal/ /support/third-party-software/content-management-system-cms/caching-html-with-drupal/ 301
 /support/third-party-software/content-management-system-cms/using-cloudflare-with-wix-website-builder/ /dns/manage-dns-records/reference/vendor-specific-records/#wix 301
+/support/third-party-software/content-management-system-cms/wordpress.com-and-cloudflare/ /support/third-party-software/content-management-system-cms/wordpresscom-and-cloudflare/ 301
 /support/more-dashboard-apps/cloudflare-scrape-shield/what-does-scrape-shield-do/ /waf/tools/scrape-shield/ 301
 /support/third-party-software/others/how-do-i-get-cloudflare-to-work-with-vaultpress/ /automatic-platform-optimization/ 301
 /support/third-party-software/others/can-i-use-cloudflare-and-varnish-together/ /rules/snippets/ 301
