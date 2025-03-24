@@ -104,7 +104,7 @@ export default () => {
 											"!rounded",
 											"!px-6",
 											"!py-2",
-											"!text-black",
+											"!text-cl1-black",
 											"!font-medium",
 											"!no-underline",
 										],
