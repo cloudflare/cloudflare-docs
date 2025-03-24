@@ -51,16 +51,7 @@ IPsec tunnels only support Internet Key Exchange version 2 (IKEv2).
 
 Refer to <a href={props.tunnelsAndEncapsulationPagePath}>Tunnels and encapsulation</a> to learn more about the technical requirements for GRE and IPsec tunnels used in {props.productName}. In this page, you can also find the <a href={props.ciphersPagePath}>supported ciphers for IPsec</a>.
 
-
-
-
-{/* anti-replay.mdx */}
-
----
-params:
-  - productName
-  - antiReplayPagePath
----
+#### Anti-replay protection
 
 If you use {props.productName} and <GlossaryTooltip term="anycast">anycast</GlossaryTooltip> IPsec tunnels, we recommend disabling anti-replay protection. This setting is disabled on Cloudflare's side by default. However, it can be enabled via the API or the Cloudflare dashboard for devices that do not support disabling it, including Cisco Meraki, Velocloud, and AWS VPN Gateway.
 
