@@ -57,34 +57,11 @@ If you use {props.productName} and <GlossaryTooltip term="anycast">anycast</Glos
 
 Refer to <a href={props.antiReplayPagePath}>Anti-replay protection</a> for more information on this topic, or [Add IPsec tunnels](#add-tunnels) below to learn how to enable this feature.
 
-
-
-{/* cni.mdx */}
-
----
-params:
-  - cniLink
----
+### Network Interconnect (CNI)
 
 Beyond GRE and IPsec tunnels, you can also use Network Interconnect (CNI) to onboard your traffic to {props.productName}. Refer to <a href={props.cniLink}>Network Interconnect (CNI)</a> for more information.
 
-
-
-
-{/* add-tunnels.mdx */}
-
----
-params:
-  - productName
-  - productPathDash
-  - healthCheck
-  - productPathProbe
-  - antiReplayPagePath
-  - biVsUniHealthCheck
-  - tunnelHealthDash
-  - biVsUniHealthCheckDefaults
----
-
+## Add tunnels
 
 :::caution
 Internet Control Message Protocol (ICMP) traffic is subject to Magic Firewall rules. If you have Magic Firewall enabled, ensure your rules allow ICMP traffic sourced from Cloudflare public IPs. Otherwise, <GlossaryTooltip term="tunnel health-check">health checks</GlossaryTooltip> will fail. Refer to [Magic Firewall rules](/magic-firewall/about/ruleset-logic/#magic-firewall-rules-and-magic-transit-endpoint-health-checks) for more information.
