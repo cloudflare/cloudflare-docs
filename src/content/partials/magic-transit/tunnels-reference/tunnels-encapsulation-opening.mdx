@@ -108,39 +108,38 @@ Internet Key Exchange (IKE) is one of the protocols that makes up IPsec. Cloudfl
 
 Below is a list of the configuration parameters supported by Magic WAN. Choose which ones to use based on what your appliance supports.
 
-<Details header="IKE SA">
+<Details header="IKE SA (also known as Phase 1)">
 
 IKE SA is sometimes referred to as Phase 1 as per IKEv1 language.
 
 - **Encryption**
-
   - AES-GCM-16 with 128-bit or 256-bit key length
   - AES-CBC with 256-bit key length
 
 - **Integrity** (sometimes referred to as Authentication)
-
   - SHA2-256
 
 - **Diffie-Hellman group**:
-
   Below is a list of all Diffie-Hellman (DH) groups supported by Cloudflare.
-
-  :::caution
-  Cloudflare recommends that you use only one DH group when configuring your device, specifically **DH group 20**.
-  :::
 
   - DH group 20 (384-bit random ECP group)
   - DH group 14 (2048-bit MODP group)
   - DH group 5 (1536-bit MODP group)
 
-- **Pseudorandom function (PRF)** (not to be confused with PFS. PRF is often not a configurable setting.)
+	:::caution
+	Cloudflare recommends that you use only one DH group when configuring your device, specifically **DH group 20**.
+	:::
+
+- **Pseudorandom function (PRF)**
+
+	Not to be confused with Perfect Forward Secrecy (PFS). PRF is often not a configurable setting.
   - SHA2-256
   - SHA2-384
   - SHA2-512
 
 </Details>
 
-<Details header="IPsec">
+<Details header="Child SA (also known as Phase 2 or IPsec SA)">
 
 The Child SA. Sometimes referred to as Phase 2 as per IKEv1 language.
 
@@ -158,17 +157,17 @@ The Child SA. Sometimes referred to as Phase 2 as per IKEv1 language.
   When using AES-GCM-16, an integrity algorithm is not required because AES GCM includes integrity checking (since it is an AEAD algorithm). Even when using an AEAD algorithm, however, some routers still require an integrity algorithm to be selected.
   :::
 
-- **PFS group** (sometimes referred to as Phase 2 Diffie-Hellman Group. Not to be confused with PRF.)
+- **Perfect Forward Secrecy (PFS) group**
 
-  Below is a list of all Diffie-Hellman (DH) groups supported by Cloudflare.
-
-  :::caution
-  Cloudflare recommends that you use only one DH group when configuring your device, specifically **DH group 20**.
-  :::
+	Sometimes referred to as Phase 2 Diffie-Hellman Group. Not to be confused with PRF. Below is a list of all Diffie-Hellman (DH) groups supported by Cloudflare.
 
   - DH group 20 (384-bit random ECP group)
   - DH group 14 (2048-bit MODP group)
   - DH group 5 (1536-bit MODP group)
+
+	:::caution
+	Cloudflare recommends that you use only one DH group when configuring your device, specifically **DH group 20**.
+	:::
 
 </Details>
 
