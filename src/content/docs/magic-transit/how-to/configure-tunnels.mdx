@@ -28,31 +28,6 @@ import { GlossaryTooltip, Render } from "~/components";
 		biVsUniHealthCheckDefaults: "For Magic Transit this option defaults to unidirectional"
 	}} />
 
-
-## Add tunnels
-
-<Render
-	file="tunnel-endpoints/add-tunnels"
-	params={{
-
-	}}
-/>
-
-## Bidirectional vs unidirectional health checks
-
-<Render
-	file="tunnel-endpoints/bi-uni-health-checks"
-	params={{
-		productPathProbe: "/magic-transit/reference/tunnel-health-checks/",
-	}}
-/>
-
-<Render file="tunnel-endpoints/mt-egress" />
-
-### Legacy bidirectional health checks
-
-<Render file="legacy-hc-system" />
-
 ## Next steps
 
 Now that you have set up your tunnel endpoints, you need to configure <GlossaryTooltip term="static route" link="/magic-transit/how-to/configure-static-routes/">static routes</GlossaryTooltip> to route your traffic through Cloudflare.
