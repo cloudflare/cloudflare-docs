@@ -17,26 +17,19 @@ export default () => {
 				}
 				context.addStyles(`
 					div.expressive-code:has(figure.code-output) {
-						margin-top: 0 !important;
-					}
-
-					.code-output .copy {
-						display: none !important;
+						margin-top: 0.25rem !important;
 					}
 
 					.code-output > pre {
-						border-top-width: 0 !important;
 						background: var(--sl-color-gray-6) !important;
-					}
 
-					.code-output > pre > code {
-						user-select: none;
-						transition: opacity 0.5s ease;
-					}
+						& > code {
+							transition: opacity 0.5s ease;
 
-					.code-output > pre > code:hover {
-						cursor: default;
-						opacity: 0.5;
+							&:hover {
+								opacity: 0.5;
+							}
+						}
 					}
 				`);
 			},
