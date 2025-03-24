@@ -79,20 +79,20 @@ export default {
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py
-from js import Response, fetch
+from workers import Response, fetch
 
 async def on_fetch(request):
     PRESHARED_AUTH_HEADER_KEY = "X-Custom-PSK"
     PRESHARED_AUTH_HEADER_VALUE = "mypresharedkey"
 
-    psk = request.headers.get(PRESHARED_AUTH_HEADER_KEY)
+    psk = request.headers[PRESHARED_AUTH_HEADER_KEY]
 
     if psk == PRESHARED_AUTH_HEADER_VALUE:
       # Correct preshared header key supplied. Fetch request from origin.
       return fetch(request)
 
     # Incorrect key supplied. Reject the request.
-    return Response.new("Sorry, you have supplied an invalid key.", status=403);
+    return Response("Sorry, you have supplied an invalid key.", status=403)
 ```
 
 </TabItem> </Tabs>

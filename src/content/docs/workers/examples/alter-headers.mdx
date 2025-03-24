@@ -80,28 +80,27 @@ export default {
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py
-from js import Response, fetch
+from workers import Response, fetch
 
 async def on_fetch(request):
     response = await fetch("https://example.com")
 
-    # Clone the response so that it's no longer immutable
-    new_response = Response.new(response.body, response)
+    # Grab the response headers so they can be modified
+    new_headers = response.headers
 
     # Add a custom header with a value
-    new_response.headers.append(
-      "x-workers-hello",
-      "Hello from Cloudflare Workers"
-    )
-
+    new_headers["x-workers-hello"] = "Hello from Cloudflare Workers"
+    
     # Delete headers
-    new_response.headers.delete("x-header-to-delete")
-    new_response.headers.delete("x-header2-to-delete")
+    if "x-header-to-delete" in new_headers:
+        del new_headers["x-header-to-delete"]
+    if "x-header2-to-delete" in new_headers:
+        del new_headers["x-header2-to-delete"]
 
     # Adjust the value for an existing header
-    new_response.headers.set("x-header-to-change", "NewValue")
+    new_headers["x-header-to-change"] = "NewValue"
 
-    return new_response
+    return Response(response.body, headers=new_headers)
 ```
 
 </TabItem> </Tabs>
