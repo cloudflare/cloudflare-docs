@@ -88,6 +88,20 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 :::
 
+### Ensure Variables and Secrets are read correctly on Cloudflare Pages
+
+Open you file astro.config.mjs and add this vite config under the "export default defineConfig" section :
+
+```js
+export default defineConfig({
+  vite: {
+    define: {
+      "process.env":process.env
+    },
+  },
+});
+```
+
 ### Local runtime
 
 Local runtime support is configured via the `platformProxy` option:
