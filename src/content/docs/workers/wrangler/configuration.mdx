@@ -9,7 +9,7 @@ description: Use a configuration file to customize the
   Platform products.
 ---
 
-import { Render, Type, MetaInfo, WranglerConfig } from "~/components";
+import { Render, Type, MetaInfo, WranglerConfig, Details } from "~/components";
 import { FileTree } from "@astrojs/starlight/components";
 
 Wrangler optionally uses a configuration file to customize the development and deployment setup for a Worker.
@@ -1116,6 +1116,11 @@ local_protocol = "http"
 <Render file="secrets-in-dev" />
 
 ## Module Aliasing
+
+<Details header="⚡ Vite plugin">
+	This is replaced "resolve.alias" in Vite - refer to the Vite documentation for
+	usage: https://vite.dev/config/shared-options.html#resolve-alias".
+</Details>
 
 You can configure Wrangler to replace all calls to import a particular package with a module of your choice, by configuring the `alias` field:
 
