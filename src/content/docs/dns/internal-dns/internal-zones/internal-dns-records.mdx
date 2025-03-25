@@ -27,21 +27,22 @@ Cloudflare will try to flatten the CNAME record considering both the specified [
 
 ```mermaid
 flowchart LR
-        accTitle: Internal DNS zones and CNAME flattening example
-        accDescr: Diagram exemplifying Internal DNS zones and containing CNAME and A records
-        subgraph Internal DNS
-				subgraph Zone 700 - net
-				A[@ A 192.0.2.10]
-				B[xyz CNAME def.example.local]
-				end
-				subgraph View 111 - London
-        subgraph Zone 600 - example.local
-				X[@ A 192.0.2.1]
-				Y[abc CNAME xyz.net]
-				Z[def A 192.0.2.9]
-				end
-				end
-				end
+accTitle: Internal DNS zones and CNAME flattening example
+accDescr: Diagram exemplifying Internal DNS zones and containing CNAME and A records
+
+subgraph Internal DNS
+subgraph Zone 700 - net
+A["@ A 192.0.2.10"]
+B["xyz CNAME def.example.local"]
+end
+subgraph View 111 - London
+subgraph Zone 600 - example.local
+X["@ A 192.0.2.1"]
+Y["abc CNAME xyz.net"]
+Z["def A 192.0.2.9"]
+end
+end
+end
 ```
 
 After finding the CNAME record that points to `xyz.net`, Cloudflare cannot resolve it within zone 600. However, since this zone is referencing zone 700, this will be considered in the resolution.
