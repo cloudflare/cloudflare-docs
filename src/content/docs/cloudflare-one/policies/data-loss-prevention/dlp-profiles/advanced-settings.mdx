@@ -20,7 +20,7 @@ To edit profile settings for an existing predefined or custom DLP profile:
 
 ## Available settings
 
-The following settings are available for predefined and custom DLP profiles.
+The following advanced detection settings are available for predefined and custom DLP profiles.
 
 ### Match count
 
@@ -33,8 +33,6 @@ Optical Character Recognition (OCR) analyzes and interprets text within image fi
 OCR supports scanning `.jpg`/`.jpeg` and `.png` files between 4 KB and 1 MB in size. Text is encoded in UTF-8 format, including support for non-Latin characters.
 
 ### AI context analysis <Badge text="Beta" variant="caution" size="small" /> {/* ai-context-analysis */}
-
-{/* TODO: set up redirects for this section based on live docs */}
 
 :::note
 AI context analysis only supports Gateway HTTP and HTTPS traffic.
@@ -50,7 +48,7 @@ To use AI context analysis:
 2. [Add the profile](/cloudflare-one/policies/data-loss-prevention/dlp-policies/#2-create-a-dlp-policy) to a DLP policy.
 3. When configuring the DLP policy, turn on [payload logging](/cloudflare-one/policies/data-loss-prevention/dlp-policies/logging-options/#log-the-payload-of-matched-rules).
 
-AI context analysis results will appear in your DLP payload logs. To further train the machine learning model, you need to [report false and true positives](/cloudflare-one/policies/data-loss-prevention/dlp-policies/logging-options/#report-false-and-true-positives-to-ai-context-analysis).
+AI context analysis results will appear in the payload section of your [DLP logs](/cloudflare-one/policies/data-loss-prevention/dlp-policies/#4-view-dlp-logs). To further train the machine learning model, you need to [report false and true positives](/cloudflare-one/policies/data-loss-prevention/dlp-policies/logging-options/#report-false-and-true-positives-to-ai-context-analysis).
 
 ### Confidence thresholds
 
