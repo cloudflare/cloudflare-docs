@@ -79,7 +79,7 @@
 		"mdast-util-from-markdown": "2.0.2",
 		"mdast-util-mdx": "3.0.0",
 		"mdast-util-mdx-expression": "2.0.1",
-		"mermaid": "11.5.0",
+		"mermaid": "11.6.0",
 		"micromark-extension-mdxjs": "3.0.0",
 		"node-html-parser": "7.0.1",
 		"openapi-types": "12.1.3",
