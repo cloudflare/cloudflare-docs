@@ -398,7 +398,9 @@ watch_dir = "build_watch_dir"
 
 ## Limits
 
-You can impose limits on your Worker's behavior at runtime. Limits are only supported for the [Standard Usage Model](/workers/platform/pricing/#example-pricing-standard-usage-model). Limits are only enforced when deployed to Cloudflare's network, not in local development. The CPU limit can be set to a maximum of 30,000 milliseconds (30 seconds).
+You can impose limits on your Worker's behavior at runtime. Limits are only supported for the [Standard Usage Model](/workers/platform/pricing/#example-pricing-standard-usage-model).
+Limits are only enforced when deployed to Cloudflare's network, not in local development. The CPU limit
+can be set to a maximum of 300,000 milliseconds (5 minutes).
 
 <Render file="isolate-cpu-flexibility" /> <br />
 

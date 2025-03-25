@@ -62,7 +62,7 @@ Cloudflare does not enforce response limits on response body sizes, but cache li
 | ------------------------ | ------------------------------------------ | ---------------- |
 | [Request](#request)      | 100,000 requests/day<br/>1000 requests/min | No limit         |
 | [Worker memory](#memory) | 128 MB                                     | 128 MB           |
-| [CPU time](#cpu-time)    | 10 ms                                      | 30 s HTTP request <br/> 15 min [Cron Trigger](/workers/configuration/cron-triggers/)    	|
+| [CPU time](#cpu-time)    | 10 ms                                      | 5 min HTTP request <br/> 15 min [Cron Trigger](/workers/configuration/cron-triggers/)    	|
 | [Duration](#duration)    | No limit                                   | No limit for Workers. <br/>15 min duration limit for [Cron Triggers](/workers/configuration/cron-triggers/), [Durable Object Alarms](/durable-objects/api/alarms/) and [Queue Consumers](/queues/configuration/javascript-apis/#consumer) |
 
 ### Duration
@@ -82,7 +82,7 @@ CPU time is the amount of time the CPU actually spends doing work, during a give
 
 Using DevTools locally can help identify CPU intensive portions of your code. See the [CPU profiling with DevTools documentation](/workers/observability/dev-tools/cpu-usage/) to learn more.
 
-You can also set a custom limit on the amount of CPU time that can be used during each invocation of your Worker. To do so, navigate to the Workers section in the Cloudflare dashboard. Select the specific Worker you wish to modify, then click on the "Settings" tab where you can adjust the CPU time limit.
+You can also set a [custom limit](/workers/wrangler/configuration/#limits) on the amount of CPU time that can be used during each invocation of your Worker. To do so, navigate to the Workers section in the Cloudflare dashboard. Select the specific Worker you wish to modify, then click on the "Settings" tab where you can adjust the CPU time limit.
 
 :::note
 
