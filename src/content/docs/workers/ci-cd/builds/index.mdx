@@ -59,6 +59,7 @@ To disconnect a Worker from a GitHub or GitLab repository:
 3. Select the Worker you want to disconnect from a repository.
 4. Select **Settings** and then **Builds**.
 5. Select **Disconnect**.
+
 If you want to switch to a different repository for your Worker, you must first disable builds, then reconnect to select the new repository.
 
 To disable automatic deployments while still allowing builds to run automatically and save as [versions](/workers/configuration/versions-and-deployments/) (without promoting them to an active deployment), update your deploy command to: `npx wrangler versions upload`.
