@@ -3,7 +3,7 @@ name: Logs
 product:
   title: Logs
   url: /logs/
-  group: Cloudflare essentials
+  group: Core platform
   additional_groups: [Analytics]
 
 meta:
