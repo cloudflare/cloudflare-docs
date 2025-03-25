@@ -1,0 +1,35 @@
+---
+title: Pause & Purge Queues
+description: Manage downtime and bad messages by pausing delivery, or deleting messages, from a Queue.
+products:
+  - queues
+date: 2025-02-14 12:00:00 UTC
+---
+
+You can now pause message delivery from a Queue, and purge all messages from a Queue. These operations are useful to manage downtime, handle bad messages in a queue, or run migrations.
+
+To pause a queue using Wrangler, run the `pause-delivery` command. Paused queues continue to receive messages.
+```bash title="Pause a Queue"
+$ wrangler queues pause-delivery my-queue
+Pausing message delivery for queue my-queue.
+Paused message delivery for queue my-queue.
+```
+
+Pausing a queue is a reversible operation. To unpause the queue, run the `resume-delivery` command:
+```bash title="Resume a Queue"
+$ wrangler queues resume-delivery my-queue
+Resuming message delivery for Queue my-queue.
+Resumed message delivery for Queue my-queue.
+```
+
+Purging a queue permanently deletes all messages in the queue. Unlike pausing, purging is an irreversible operation:
+```bash title="Purge a Queue"
+$ wrangler queues purge my-queue
+✔ This operation will permanently delete all the messages in Queue my-queue. Type my-queue to proceed. … my-queue
+Purged Queue 'mar-21'
+```
+
+As seen above, you can do these operations using Wrangler. You can also do these operations using our REST API, or our Queues dashboard.
+![Pause and purge using the dashboard](~/assets/images/queues/pause-purge-queues.png)
+
+This feature is available on all new and existing queues. Head over to the [pause and purge documentation](/queues/configuration/pause-purge) to learn more. And if you haven't used Cloudflare Queues before, [get started with the Cloudflare Queues guide](/queues/get-started).
