@@ -48,6 +48,79 @@ Send a [`POST` request](/api/resources/alerting/subresources/policies/methods/cr
 
 { props.magicWord === "Magic Transit" && (
   <>
+	<APIRequest
+		path="/accounts/{account_id}/alerting/v3/policies"
+		method="POST"
+		json={{
+			"alert_type": "magic_tunnel_health_check_event",
+			"description": "<DESCRIBE_POLICY>",
+			"enabled": true,
+			"filters": {
+				"slo": [
+					"99.9"
+				]
+			},
+			"mechanisms": {
+				"email": [
+					{
+						"id": "EMAIL_ADDRESS"
+					}
+				]},
+			"name": "<DESCRIBE_ALERT>"
+
+		}}
+	/>
+
+	```json output
+	{
+		"result": [
+			{
+				"id": "f174e90a-fafe-4643-bbbc-4a0ed4fc8415",
+				"name": "<POLICY_NAME>",
+				"description": "<POLICY_DESCRIPTION>",
+				"enabled": true,
+				"alert_type": "magic_tunnel_health_check_event",
+				"mechanisms": {
+					"email": [
+						{
+							"id": "<YOUR_EMAIL>"
+						}
+					]
+				},
+				"created": "2024-09-11T14:13:29.585658Z",
+				"modified": "2024-09-11T14:13:29.585658Z",
+				"conditions": {
+					"and": [
+						{
+							"or": [
+								{
+									"<=": [
+										{
+											"var": "slo"
+										},
+										"99.9"
+									]
+								}
+							]
+						}
+					]
+				},
+				"filters": {
+					"slo": ["99.9"]
+				}
+			}
+		],
+		"success": true,
+		"errors": [],
+		"messages": []
+	}
+	```
+  </>
+  )
+}
+
+{ props.magicWord === "Magic WAN" && (
+  <>
 
   </>
   )
