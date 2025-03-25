@@ -12,7 +12,7 @@ You can now run a Worker for up to 5 minutes of CPU time for each request.
 
 Previously, each Workers request ran for a maximum of 30 seconds of CPU time. This
 meant that some compute-intensive tasks were impossible to do with a Worker. For instance,
-a user might want to take the cryptographic hash of a large file from R2. If
+you might want to take the cryptographic hash of a large file from R2. If
 this computation ran for over 30 seconds, the Worker request would have timed out.
 
 By default, Workers are still limited to 30 seconds of CPU time. This protects developers
