@@ -16,13 +16,13 @@ Refer to [Manage DNS records](/dns/manage-dns-records/how-to/create-dns-records/
 
 ## CNAME flattening in Internal DNS
 
-With CNAME flattening, Cloudflare finds the IP address that a CNAME points to and then returns the final IP address instead of a CNAME record. With Internal DNS, this behavior is applied by default and cannot be turned off.
+With CNAME flattening, Cloudflare finds the final target content that a CNAME points to and then returns this content instead of a CNAME record. With Internal DNS, CNAME flattening is applied by default and cannot be turned off.
 
 Cloudflare will try to flatten the CNAME record considering both the specified [DNS view](/dns/internal-dns/dns-views/) and any existing [reference zones](/dns/internal-dns/internal-zones/reference-zones/). If the reference zone then has another CNAME, the record will again be considered from the perspective of the original view.
 
 <Details header="Example">
 
-- Query for `abc.example.local` with view ID 111.
+- Query for the `A` record on `abc.example.local` with view ID 111.
 - Zone 600 references zone 700, which is not linked to any view.
 
 ```mermaid
@@ -39,6 +39,7 @@ subgraph View 111 - London
 subgraph Zone 600 - example.local
 X["@ A 192.0.2.1"]
 Y["abc CNAME xyz.net"]
+U["def TXT 15192-51"]
 Z["def A 192.0.2.9"]
 end
 end
@@ -47,7 +48,7 @@ end
 
 After finding the CNAME record that points to `xyz.net`, Cloudflare cannot resolve it within zone 600. However, since this zone is referencing zone 700, this will be considered in the resolution.
 
-The record in zone 700 then points to `def.example.local`, which Cloudflare will then try to resolve in the original view. As an `A` record can be found for `def.example.local`, Cloudflare will return the IP address `192.0.2.9`.
+The record in zone 700 points to `def.example.local`, which Cloudflare will then try to resolve in the original view. As an `A` record can be found for `def.example.local`, Cloudflare will return the corresponding IP address - in this example, `192.0.2.9`.
 
 </Details>
 
