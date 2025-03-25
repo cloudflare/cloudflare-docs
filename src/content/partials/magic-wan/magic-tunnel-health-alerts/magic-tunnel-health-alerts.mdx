@@ -123,30 +123,29 @@ Send a [`POST` request](/api/resources/alerting/subresources/policies/methods/cr
 
 { props.magicWord === "Magic WAN" && (
   <>
-<APIRequest
-  path="/accounts/{account_id}/alerting/v3/policies"
-  method="POST"
-  json={{
-    "alert_type": "magic_wan_tunnel_health",
-  	"description": "<DESCRIBE_POLICY>",
-  	"enabled": true,
-  	"filters": {
-  	  "slo": [
-  	    "99.9"
-  	  ]
-  	},
-  	"mechanisms": {
-  	  "email": [
-  	    {
-  	      "id": "EMAIL_ADDRESS"
-  	    }
-  	  ]},
-  	"name": "<DESCRIBE_ALERT>"
-  }}
-/>
+	<APIRequest
+		path="/accounts/{account_id}/alerting/v3/policies"
+		method="POST"
+		json={{
+			"alert_type": "magic_wan_tunnel_health",
+			"description": "<DESCRIBE_POLICY>",
+			"enabled": true,
+			"filters": {
+				"slo": [
+					"99.9"
+				]
+			},
+			"mechanisms": {
+				"email": [
+					{
+						"id": "EMAIL_ADDRESS"
+					}
+				]},
+			"name": "<DESCRIBE_ALERT>"
+		}}
+	/>
 
-<pre class="json output">
-	{`
+	<Code lang="json" code={`
 		{
 			"result": [
 				{
@@ -189,8 +188,9 @@ Send a [`POST` request](/api/resources/alerting/subresources/policies/methods/cr
 			"errors": [],
 			"messages": []
 		}
-	`}
-</pre>
+	`} />
+
+
   </>
   )
 }
