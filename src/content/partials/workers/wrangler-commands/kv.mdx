@@ -437,11 +437,10 @@ The command also accepts keys in the format output from `wrangler kv key list`:
 [{ "name": "test_key_1" }, { "name": "test_key_2" }]
 ```
 
-The following is an example of getting all the keys found in the `allthethingsdelete.json` file.
+The following is an example of getting all the keys found in the `keys_to_read.json` file.
 
 ```sh
-npx wrangler kv bulk get --binding=MY_KV allthethingsdelete.json
-```
+npx wrangler kv bulk get --binding=MY_KV keys_to_read.json
 
 ```sh output
 {
