@@ -52,7 +52,7 @@ To avoid these disruptions, it is important to implement strategies for managing
 
 Here are some mitigations you can employ:
 
-### Monitor Concurrent Requests
+### Monitor concurrent requests
 
 Track the number of concurrent requests to your bucket. If a client encounters a 5XX error, ensure that it retries the operation and communicates with other clients. By coordinating, clients can collectively slow down, reducing the request rate and maintaining a more stable flow of successful operations.
 
