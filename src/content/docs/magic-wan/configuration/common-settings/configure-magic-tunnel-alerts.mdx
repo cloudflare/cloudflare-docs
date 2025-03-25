@@ -5,21 +5,12 @@ head: []
 description: Use the API to set up and configure Magic Tunnel health alerts
 ---
 
-import { APIRequest, Render, Tabs, TabItem } from "~/components";
+import { Render } from "~/components";
 
 <Render
 	file="magic-tunnel-health-alerts/magic-tunnel-health-alerts"
 	params={{
 		productName: "Magic WAN",
-		backgroundInfoPath: "/magic-wan/reference/magic-tunnels/",
-	}}
-/>
-
-
-<Render
-	file="magic-tunnel-health-alerts/recommended-slo"
-	product="magic-wan"
-	params={{
 		backgroundInfoPath: "/magic-wan/reference/magic-tunnels/",
 		networkAnalyticsPath: "/magic-wan/analytics/network-analytics/",
 		healthChecks: "/magic-wan/reference/tunnel-health-checks/",
