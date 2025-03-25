@@ -1,19 +1,16 @@
 ---
-title: Available RSS Feeds
-description: Read about the various RSS feeds available for Cloudflare's changelogs.
+title: Consuming RSS Feeds
+pcx_content_type: reference
+description: Learn how to consume our changelog RSS feeds.
 ---
 
-import AvailableChangelogFeeds from '~/components/AvailableChangelogFeeds.astro';
-
-## Consuming RSS Feeds
-
-Our changelogs are published to various RSS feeds with HTML in the `<description>` tag.
+Our [changelogs](/changelog/) are published to [various RSS feeds](/fundamentals/new-features/available-rss-feeds/) with HTML in the `<description>` tag.
 
 In feeds with multiple products, such as the global or product-area feeds, the products associated with a given entry are in the `<category>` tag.
 
 A single product will also appear in the custom `<product>` tag for legacy reasons, but we recommend you use the `<category>`
 
-### Example XML
+## Example XML
 
 ```xml
 <rss version="2.0">
@@ -39,5 +36,3 @@ A single product will also appear in the custom `<product>` tag for legacy reaso
 	</channel>
 </rss>
 ```
-
-<AvailableChangelogFeeds />
