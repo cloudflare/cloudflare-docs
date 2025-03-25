@@ -1,28 +1,21 @@
 ---
-title: PDNS locations Management User Role
+title: Secure DNS Locations Management User Role
 description: Create secure DNS locations using the new Cloudflare Zero Trust Locations Write role.
 date: 2025-03-21T13:50:40Z
 products: []
 hidden: false
 ---
 
-We’re excited to introduce [Cloudflare Zero Trust Secure DNS Locations role](/cloudflare-one/connections/connect-devices/agentless/dns/locations/#secure-dns-locations), designed to give
-government customers granular control over third-party access while configuring their protective DNS (PDNS) solutions.
+We’re excited to introduce the [**Cloudflare Zero Trust Secure DNS Locations Write role**](/cloudflare-one/connections/connect-devices/agentless/dns/locations/#secure-dns-locations), designed to provide DNS filtering customers with granular control over third-party access when configuring their Protective DNS (PDNS) solutions.​
 
-This new role enables IT administrators to grant external service partners targeted permissions for managing DNS locations, ensuring that highest security standards are upheld.
+Many DNS filtering customers rely on external service partners to manage their DNS location endpoints. This role allows you to grant access to external parties to administer DNS locations without overprovisioning their permissions.​
 
-#### What makes a DNS location secure?
+**Secure DNS Location Requirements:**
 
-- Mandatory [BYO IPv4/v6](/cloudflare-one/connections/connect-devices/agentless/dns/locations/dns-resolver-ips/#bring-your-own-dns-resolver-ip) usage if available on the account.
-- Source network filtering for IPv4/IPv6/DoT endpoints; token authentication OR source network filtering for the DoH endpoint.
-- All enabled location endpoints must comply with the above security policies.
-- Non-compliant edits (e.g., disabling authentication, using shared IPs when BYO IPv4/v6 is available) will be blocked and error messages displayed.
-- Users with this role must use their [Global API Key](/fundamentals/api/get-started/keys/); dedicated API tokens currently are unsupported.
+- Mandate usage of [Bring Your Own (BYO) IPv4/IPv6](https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/agentless/dns/locations/dns-resolver-ips/#bring-your-own-dns-resolver-ip) Resolver ranges if available on the account.​
 
-#### Notes for Admins
+- Require source network filtering for IPv4/IPv6/DoT endpoints; token authentication or source network filtering for the DoH endpoint.​
 
-- **Role Assignment**:
-  - Assign via Cloudflare Dashboard (`Member Management > All domains`) or API.
-  - Requires `Cloudflare Secure DNS Locations Write Role` to view all DNS locations but only create/edit secure ones.
-  - Users need `Cloudflare Zero Trust Read Only` role to access the dashboard.
-- **Avoid Conflicts**: Do not combine this role with [other roles](/cloudflare-one/roles-permissions/#footnote-label) containing broader permissions (e.g., `Administrator`,`Super Administrator`,`Cloudflare Zero Trust Write` and `Cloudflare Gateway`) to maintain security constraints.
+You can assign the new role via Cloudflare Dashboard (`Manage Accounts > Members`) or via API. For more information, refer to the [Secure DNS Locations documentation](https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/agentless/dns/locations/#secure-dns-locations).
+
+
