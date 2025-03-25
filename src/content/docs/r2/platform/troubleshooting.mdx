@@ -14,8 +14,9 @@ If you do have a CORS issue, refer to [Resolving CORS issues](#if-its-actually-c
 
 ### If you are using a Custom domain
 
-Go to the Network tab and find the failing request (you may need to reload the page, since only requests after opening the developer tools are logged).
-You need to check the response headers for the following two headers:
+1. Open developer tools on your browser.
+2. Go to the **Network** tab and find the failing request. You may need to reload the page, as requests are only logged after developer tools have been opened.
+3. Check the response headers for the following two headers:
 - `cf-cache-status`
 - `cf-mitigated`
 
