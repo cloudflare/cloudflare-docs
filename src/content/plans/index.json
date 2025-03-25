@@ -580,16 +580,25 @@
 					"ent": "Yes"
 				},
 				"b_number_of_custom_lists": {
-					"title": "Number of custom lists",
+					"title": "Number of custom lists (any type)",
 					"link": "/waf/tools/lists/custom-lists/",
-					"free": 1,
-					"lite": 10,
-					"pro": 10,
-					"biz": 10,
-					"ent": 10
+					"free": "1",
+					"lite": "10",
+					"pro": "10",
+					"biz": "10",
+					"ent": "1,000"
 				},
-				"c_custom_lists_ip": {
-					"title": "Custom lists with IPs (IP lists)",
+				"c_max_list_items": {
+					"title": "Max. number of list items (across all custom lists)",
+					"link": "/waf/tools/lists/custom-lists/",
+					"free": "10,000",
+					"lite": "10,000",
+					"pro": "10,000",
+					"biz": "10,000",
+					"ent": "500,000"
+				},
+				"d_ip_lists": {
+					"title": "IP lists",
 					"link": "/waf/tools/lists/custom-lists/",
 					"free": "Yes",
 					"lite": "Yes",
@@ -597,8 +606,8 @@
 					"biz": "Yes",
 					"ent": "Yes"
 				},
-				"d_custom_lists_other": {
-					"title": "Other custom lists (ASNs, hostnames)",
+				"e_other_lists": {
+					"title": "Other custom lists (hostnames, ASNs)",
 					"link": "/waf/tools/lists/custom-lists/",
 					"free": "No",
 					"lite": "No",
@@ -606,7 +615,7 @@
 					"biz": "No",
 					"ent": "Yes"
 				},
-				"e_open_proxies_list": {
+				"t_open_proxies_list": {
 					"title": "Managed IP List: Cloudflare Open Proxies",
 					"link": "/waf/tools/lists/managed-lists/#managed-ip-lists",
 					"free": "No",
@@ -614,7 +623,7 @@
 					"biz": "No",
 					"ent": "Yes"
 				},
-				"f_all_managed_ip_lists": {
+				"u_all_managed_ip_lists": {
 					"title": "All Managed IP Lists",
 					"link": "/waf/tools/lists/managed-lists/#managed-ip-lists",
 					"free": "No",
