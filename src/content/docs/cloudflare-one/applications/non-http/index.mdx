@@ -23,11 +23,11 @@ If you would like to define how users access specific infrastructure servers wit
 
 ## Clientless access
 
-Clientless access methods are suited for organizations that cannot deploy the WARP client or need to support third-party contractors where installing a client is not possible. Clientless access requires onboarding a domain to Cloudflare and configuring a public hostname in order to make the server reachable. Command logging is not supported, and user email prefixes must match their username on the server.
+Clientless access methods are suited for organizations that cannot deploy the WARP client or need to support third-party contractors where installing a client is not possible. Clientless access requires onboarding a domain to Cloudflare and configuring a public hostname in order to make the server reachable. Command logging is not supported.
 
 ### Browser-rendered terminal
 
-Cloudflare's [browser-based terminal](/cloudflare-one/applications/non-http/browser-rendering/) allows users to connect over SSH and VNC without any configuration. When users visit the public hostname URL (for example, `https://ssh.example.com`) and log in with their Access credentials, Cloudflare will render a terminal in their browser.
+Cloudflare's [browser-based terminal](/cloudflare-one/applications/non-http/browser-rendering/) allows users to connect over SSH, RDP, and VNC without any configuration. When users visit the public hostname URL (for example, `https://ssh.example.com`) and log in with their Access credentials, Cloudflare will render a terminal in their browser. For RDP connections, users must authenticate to the Windows server using their Windows username and password in addition to being authenticated by Cloudflare Access.
 
 ### Client-side cloudflared (legacy)
 

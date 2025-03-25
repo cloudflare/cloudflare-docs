@@ -5,6 +5,10 @@ productLink: "/ai-gateway/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-03-18"
+    title: WebSockets
+    description: |-
+      Added [WebSockets API](/ai-gateway/configuration/websockets-api/) to provide a persistent connection for AI interactions, eliminating repeated handshakes and reducing latency.
   - publish_date: "2025-02-26"
     title: Guardrails
     description: |-

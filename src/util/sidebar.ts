@@ -2,7 +2,7 @@ import type { AstroGlobal } from "astro";
 import type { StarlightRouteData } from "@astrojs/starlight/route-data";
 
 import { getEntry, getCollection } from "astro:content";
-import { rehypeExternalLinksOptions } from "~/plugins/rehype/external-links";
+import { externalLinkArrow } from "~/plugins/rehype/external-links";
 
 type Link = Extract<StarlightRouteData["sidebar"][0], { type: "link" }> & {
 	order?: number;
@@ -280,7 +280,7 @@ async function handleLink(link: Link): Promise<Link> {
 	if (frontmatter.external_link && !frontmatter.sidebar.group?.hideIndex) {
 		return {
 			...link,
-			label: link.label.concat(rehypeExternalLinksOptions.content.value),
+			label: link.label.concat(externalLinkArrow),
 			href: frontmatter.external_link,
 			badge: frontmatter.external_link.startsWith("/api")
 				? {

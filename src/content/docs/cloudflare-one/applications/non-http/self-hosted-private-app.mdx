@@ -22,17 +22,7 @@ This feature replaces the legacy [private network app type](/cloudflare-one/appl
 
 ## Add your application to Access
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
-
-2. Select **Add an application**.
-
-3. Select **Self-hosted**.
-
-4. Enter any name for the application.
-
-5. In **Session Duration**, choose how often the user's [application token](/cloudflare-one/identity/authorization-cookie/application-token/) should expire.
-
-   Cloudflare checks every HTTPS request to your application for a valid application token. If the user's application token (and global token) has expired, they will be prompted to reauthenticate with the IdP. For more information, refer to [Session management](/cloudflare-one/identity/users/session-management/). If the application is non-HTTPS or you do not have TLS decryption turned on, the session is tracked by the WARP client per application.
+<Render file="access/self-hosted-app/create-app" product="cloudflare-one" params={{ private: true }}/>
 
 6. Add the private IP and/or private hostname that represents the application. You can use [wildcards](/cloudflare-one/policies/access/app-paths/) with private hostnames to protect multiple parts of an application that share a root path.
 
@@ -40,7 +30,7 @@ This feature replaces the legacy [private network app type](/cloudflare-one/appl
 	Private hostnames are currently only available over port `443` over HTTPS and the application must have a valid Server Name Indicator (SNI).
 	:::
 
-7. Add [Access policies](/cloudflare-one/policies/access/) to control who can connect to your application. All Access applications are deny by default -- a user must match an Allow policy before they are granted access.
+7.  <Render file="access/add-access-policies" product="cloudflare-one" />
 
 8. Configure how users will authenticate:
 
@@ -58,14 +48,9 @@ This feature replaces the legacy [private network app type](/cloudflare-one/appl
 
 12. Select **Next**.
 
-13. (Optional) Configure advanced settings. These settings only apply to private hostnames and require [Gateway TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/).
+13. <Render file="access/self-hosted-app/advanced-settings" product="cloudflare-one" />
 
-		- [**Cross-Origin Resource Sharing (CORS) settings**](/cloudflare-one/identity/authorization-cookie/cors/)
-		- [**Cookie settings**](/cloudflare-one/identity/authorization-cookie/#cookie-settings)
-		- **Browser rendering settings**:
-				- [Automatic `cloudflared` authentication](/cloudflare-one/applications/non-http/cloudflared-authentication/automatic-cloudflared-authentication/)
-				- [Browser rendering for SSH and VNC](/cloudflare-one/applications/non-http/browser-rendering/)
-		- **401 Response for Service Auth policies**: Return a `401` response code when a user (or machine) makes a request to the application without the correct [service token](/cloudflare-one/identity/service-tokens/).
+		These settings only apply to private hostnames and require [Gateway TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/).
 
 14. Select **Save**.
 

@@ -11,78 +11,24 @@ description: Cloudflare recommends two tunnels for each ISP and network location
 
 import { GlossaryTooltip, Render } from "~/components";
 
-<Render
-	file="tunnel-endpoints/tunnel-endpoints"
-	product="magic-transit"
-	params={{ ipRange: "(this address space is also a link-local address)" }}
-/>
-
-## Ways to onboard traffic to Cloudflare
-
-### GRE and IPsec tunnels
-
-<Render
-	file="tunnel-endpoints/gre-ipsec"
+<Render file="configure-tunnels"
 	product="magic-transit"
 	params={{
+		ipRange: "(this address space is also a link-local address)",
 		productName: "Magic WAN",
-		tunnelsPath: "/magic-wan/reference/tunnels/",
-		ciphersPath:
-			"/magic-wan/reference/tunnels/#supported-configuration-parameters",
-	}}
-/>
-
-#### Anti-replay protection
-
-<Render
-	file="tunnel-endpoints/anti-replay"
-	product="magic-transit"
-	params={{
-		productName: "Magic WAN",
+		tunnelsAndEncapsulationPagePath: "/magic-wan/reference/tunnels/",
+		ciphersPagePath: "/magic-wan/reference/tunnels/#supported-configuration-parameters",
 		antiReplayPagePath: "/magic-wan/reference/anti-replay-protection/",
-	}}
-/>
-
-### Network Interconnect (CNI)
-
-<Render
-	file="tunnel-endpoints/cni"
-	product="magic-transit"
-	params={{
-		magicName: "Magic WAN",
-		cniPath: "Network Interconnect (CNI)",
-		productLink: "/magic-wan/network-interconnect/",
-	}}
-/>
-
-## Add tunnels
-
-<Render
-	file="tunnel-endpoints/add-tunnels"
-	product="magic-transit"
-	params={{
-		productName: "Magic WAN",
+		cniLink: "/magic-wan/network-interconnect/",
 		productPathDash: "Magic WAN > Configuration",
-		healthCheck: "/magic-wan/configuration/common-settings/tunnel-health-checks/",
-		productPathProbe: "/magic-wan/reference/tunnel-health-checks/",
+		updateHCFrequencyPage: "/magic-wan/configuration/common-settings/tunnel-health-checks/",
+		tunnelHealthChecksPage: "/magic-wan/reference/tunnel-health-checks/",
 		antiReplayPagePath: "/magic-wan/reference/anti-replay-protection/",
 		biVsUniHealthCheck: "bidirectional",
 		tunnelHealthDash: "/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/",
 		biVsUniHealthCheckDefaults: "For Magic WAN this option defaults to bidirectional"
 	}}
 />
-
-## Bidirectional vs unidirectional health checks
-
-<Render
-	file="tunnel-endpoints/bi-uni-health-checks"
-	product="magic-transit"
-	params={{ productPathProbe: "/magic-wan/reference/tunnel-health-checks/" }}
-/>
-
-### Legacy bidirectional health checks
-
-<Render file="legacy-hc-system" product="magic-transit" />
 
 ## Next steps
 

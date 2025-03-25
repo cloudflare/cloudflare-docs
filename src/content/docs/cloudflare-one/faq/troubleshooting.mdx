@@ -305,3 +305,17 @@ This error is returned when proper API permissions are not set up in the identit
 For example, [Microsoft Entra](/cloudflare-one/identity/idp-integration/entra-id/#2-configure-api-permissions-in-entra-id) and [Okta](</cloudflare-one/identity/idp-integration/okta/#:~:text=(Optional)%20Create%20an%20Okta%20API%20token%20and%20enter%20it%20in%20Zero%20Trust%20(the%20token%20can%20be%20read%2Donly).%20This%20will%20prevent%20your%20Okta%20groups%20from%20failing%20if%20you%20have%20more%20than%20100%20groups>) have required permissions stated in their integration guides.
 
 You can also examine logs in your identity provider to identify any denied requests related to API access.
+
+## WSL2 is losing connectivity when using WARP.
+
+If your WSL2 environment is losing connectivity while using WARP, check your [split tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/).
+
+The issue may arise because the IP range that the WSL environment uses to communicate with the host device is included in the split tunnel configuration. Excluding the WSL environment’s IP range should restore connectivity.
+
+You must ensure the host device is included in the WARP tunnel while excluding the WSL environment to prevent connectivity issues between WSL and the host device.
+
+### To debug this issue:
+
+1. Review the WSL2 environment's IP address and compare it with the laptop’s IP.
+2. Check if the WSL network is [included in the split tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#change-split-tunnels-mode).
+3. If the WSL network is included, exclude it from the split tunnel to prevent connectivity issues.

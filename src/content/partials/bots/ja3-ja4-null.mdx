@@ -1,0 +1,8 @@
+---
+{}
+
+---
+
+The [JA3/JA4 fingerprint](/bots/concepts/ja3-ja4-fingerprint/) can be null or empty in some cases. The most common case is for HTTP requests because JA3 and JA4 are calculated in TLS. It can also be empty due to the Worker sending requests within the same zone or to a zone that is not proxied (or a third party).
+
+[Orange to Orange (O2O)](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/) should not cause null or empty JA3 or JA4 fingerprints, unless the eyeball zone is routing traffic to the target zone using a Worker.

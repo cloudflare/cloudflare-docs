@@ -78,6 +78,16 @@ Refer to the [events and parameters](/workflows/build/events-and-parameters/) do
   * `config` (optional) - an optional `WorkflowStepConfig` for configuring [step specific retry behaviour](/workflows/build/sleeping-and-retrying/).
   * `callback` - an asynchronous function that optionally returns serializable state for the Workflow to persist.
 
+:::note[Returning state]
+
+When returning state from a `step`, ensure that the object you return is _serializable_.
+
+Primitive types like `string`, `number`, and `boolean`, along with composite structures such as `Array` and `Object` (provided they only contain serializable values), can be serialized.
+
+Objects that include `Function` or `Symbol` types, and objects with circular references, cannot be serialized and the Workflow instance will throw an error if objects with those types is returned. 
+
+:::
+
 * <code>step.sleep(name: string, duration: WorkflowDuration): Promise&lt;void&gt;</code>
 
   * `name` - the name of the step.
@@ -265,6 +275,30 @@ export default {
 	}
 }
 ```
+
+### createBatch
+
+Create (trigger) a batch of new instance of the given Workflow, up to 100 instances at a time.
+
+This is useful when you are scheduling multiple instances at once. A call to `createBatch` is treated the same as a call to `create` (for a single instance) and allows you to work within the [instance creation limit](/workflows/reference/limits/).
+
+* <code>createBatch(batch: WorkflowInstanceCreateOptions[]): Promise&lt;WorkflowInstance[]&gt;</code>
+
+  * `batch` - list of Options to pass when creating an instance, including a user-provided ID and payload parameters.
+
+Each element of the `batch` list is expected to the 
+
+```ts
+// Create a new batch of 3 Workflow instances, each with its own ID and pass params to the Workflow instances
+const listOfInstances = [
+  { id: "id-abc123", params: { "hello": "world-0" } },
+  { id: "id-def456", params: { "hello": "world-1" } },
+  { id: "id-ghi789", params: { "hello": "world-2" } }
+];
+let instances = await env.MY_WORKFLOW.createBatch(listOfInstances);
+```
+
+Returns an array of `WorkflowInstance`.
 
 ### get
 

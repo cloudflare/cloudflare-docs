@@ -3,10 +3,9 @@ pcx_content_type: concept
 title: Bot scores
 sidebar:
   order: 2
-
 ---
 
-import { GlossaryTooltip, Render } from "~/components"
+import { GlossaryTooltip, Render } from "~/components";
 
 <Render file="bot-score-definition" />
 
@@ -14,7 +13,7 @@ Bot scores are available to be used in rule expressions and with Workers to cust
 
 :::note
 
-Granular bot scores are only available to Enterprise customers who have purchased Bot Management. All other customers can only access this information through [bot groupings](#bot-groupings) in Bot Analytics. 
+Granular bot scores are only available to Enterprise customers who have purchased Bot Management. All other customers can only access this information through [bot groupings](#bot-groupings) in Bot Analytics.
 :::
 
 ## Bot groupings
@@ -32,7 +31,7 @@ Bot scores are not computed for requests to paths that are handled by Cloudflare
 
 :::note
 
-The following detection engines only apply to Enterprise Bot Management. For specific details about the engines included in your plan, refer to [Plans](/bots/plans/). 
+The following detection engines only apply to Enterprise Bot Management. For specific details about the engines included in your plan, refer to [Plans](/bots/plans/).
 :::
 
 <Render file="bm-bot-detection-engines" />
@@ -48,7 +47,3 @@ The following detection engines only apply to Enterprise Bot Management. For spe
 ### Notes on detection
 
 <Render file="bots-cookie" />
-
-## Comparison to Threat Score
-
-Bot Score is different from <GlossaryTooltip term="threat score">Threat Score</GlossaryTooltip>. Bot Score identifies bots and Threat Score measures IP reputation across our services. Most customers achieve the best results by relying on bot scores and avoiding IP reputation entirely.

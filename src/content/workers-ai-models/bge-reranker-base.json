@@ -1,0 +1,71 @@
+{
+    "id": "145337e7-cec3-4ebb-8e78-16ddfc75e580",
+    "source": 1,
+    "name": "@cf/baai/bge-reranker-base",
+    "description": "Different from embedding model, reranker uses question and document as input and directly output similarity instead of embedding. You can get a relevance score by inputting query and passage to the reranker. And the score can be mapped to a float value in [0,1] by sigmoid function.\n\n",
+    "task": {
+        "id": "19606750-23ed-4371-aab2-c20349b53a60",
+        "name": "Text Classification",
+        "description": "Sentiment analysis or text classification is a common NLP task that classifies a text input into labels or classes."
+    },
+    "tags": [],
+    "properties": [],
+    "schema": {
+        "input": {
+            "type": "object",
+            "properties": {
+                "query": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "A query you wish to perform against the provided contexts."
+                },
+                "top_k": {
+                    "type": "integer",
+                    "default": null,
+                    "minimum": 1,
+                    "description": "Number of returned results starting with the best score."
+                },
+                "contexts": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "text": {
+                                "type": "string",
+                                "minLength": 1,
+                                "description": "One of the provided context content"
+                            }
+                        }
+                    },
+                    "description": "List of provided contexts. Note that the index in this array is important, as the response will refer to it."
+                }
+            },
+            "required": [
+                "query",
+                "contexts"
+            ]
+        },
+        "output": {
+            "type": "object",
+            "contentType": "application/json",
+            "properties": {
+                "response": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "integer",
+                                "description": "Index of the context in the request"
+                            },
+                            "score": {
+                                "type": "number",
+                                "description": "Score of the context under the index."
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

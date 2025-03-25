@@ -1,0 +1,132 @@
+---
+title: Authorization
+sidebar:
+  order: 2
+  group:
+    hideIndex: true
+---
+
+import { DirectoryListing } from "~/components";
+
+When building a [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server, you need both a way to allow users to login (authentication) and allow them to grant the MCP client access to resources on their account (authorization).
+
+<diagram>
+
+</diagram>
+
+The Model Context Protocol uses [a subset of OAuth 2.1 for authorization](https://spec.modelcontextprotocol.io/specification/draft/basic/authorization/). OAuth allows your users to grant limited access to resources, without them having to share API keys or other credentials.
+
+Cloudflare provides an [OAuth Provider Library](https://github.com/cloudflare/workers-oauth-provider) that implements the provider side of the OAuth 2.1 protocol, allowing you to easily add authorization to your MCP server.
+
+You can use the OAuth Provider Library in three ways:
+
+1. **Your Worker handles authorization itself.** Your MCP server, running on Cloudflare, handles the complete OAuth flow. ([Example](/agents/guides/remote-mcp-server/))
+2. **Integrate directly with a third-party OAuth provider**, such as GitHub or Google.
+3. **Integrate with your own OAuth provider**, including authorization-as-a-service providers you might already rely on, such as Stytch and Auth0.
+
+The following sections describe each of these options and link to runnable code examples for each.
+
+## Authorization options
+
+### (1) Your MCP Server handles authorization and authentication itself
+
+Your MCP Server, using the [OAuth Provider Library](https://github.com/cloudflare/workers-oauth-provider), can handle the complete OAuth authorization flow, without any third-party involvement.
+
+The [Workers OAuth Provider Library](https://github.com/cloudflare/workers-oauth-provider) is a Cloudflare Worker that implements a [`fetch()` handler](/workers/runtime-apis/handlers/fetch/), and handles incoming requests to your MCP server.
+
+You provide your own handlers for your MCP Server's API, and autentication and authorization logic, and URI paths for the OAuth endpoints, as shown below:
+
+```ts
+export default new OAuthProvider({
+	apiRoute: "/mcp",
+	// Your MCP server:
+	apiHandler: MyMCPServer.Router,
+	// Your handler for authentication and authorization:
+	defaultHandler: MyAuthHandler,
+	authorizeEndpoint: "/authorize",
+	tokenEndpoint: "/token",
+	clientRegistrationEndpoint: "/register",
+});
+```
+
+Refer to the [getting started example](/agents/guides/remote-mcp-server/) for a complete example of the `OAuthProvider` in use, with a mock authentication flow.
+
+The authorization flow in this case works like this:
+
+```mermaid
+sequenceDiagram
+    participant B as User-Agent (Browser)
+    participant C as MCP Client
+    participant M as MCP Server (your Worker)
+
+    C->>M: MCP Request
+    M->>C: HTTP 401 Unauthorized
+    Note over C: Generate code_verifier and code_challenge
+    C->>B: Open browser with authorization URL + code_challenge
+    B->>M: GET /authorize
+    Note over M: User logs in and authorizes
+    M->>B: Redirect to callback URL with auth code
+    B->>C: Callback with authorization code
+    C->>M: Token Request with code + code_verifier
+    M->>C: Access Token (+ Refresh Token)
+    C->>M: MCP Request with Access Token
+    Note over C,M: Begin standard MCP message exchange
+```
+
+Remember — [authentication is different from authorization](https://www.cloudflare.com/learning/access-management/authn-vs-authz/). Your MCP Server can handle authorization itself, while still relying on an external authentication service to first authenticate users. The [example](/agents/guides/remote-mcp-server) in getting started provides a mock authentdcation flow. You will need to implement your own authentication handler — either handling authentication yourself, or using an external authentication services.
+
+### (2) Third-party OAuth Provider
+
+The [OAuth Provider Library](https://github.com/cloudflare/workers-oauth-provider) can be configured to use a third-party OAuth provider, such as GitHub or Google. You can see a complete example of this in the [GitHub example](/agents/guides/remote-mcp-server/#add-authentication).
+
+When you use a third-party OAuth provider, you must provide a handler to the `OAuthProvider` that implements the OAuth flow for the third-party provider.
+
+```ts ins="defaultHandler: MyAuthHandler,"
+import MyAuthHandler from "./auth-handler";
+
+export default new OAuthProvider({
+	apiRoute: "/mcp",
+	// Your MCP server:
+	apiHandler: MyMCPServer.Router,
+	// Replace this handler with your own handler for authentication and authorization with the third-party provider:
+	defaultHandler: MyAuthHandler,
+	authorizeEndpoint: "/authorize",
+	tokenEndpoint: "/token",
+	clientRegistrationEndpoint: "/register",
+});
+```
+
+Note that as [defined in the Model Context Protocol specification](https://spec.modelcontextprotocol.io/specification/draft/basic/authorization/#292-flow-description) when you use a third-party OAuth provider, the MCP Server (your Worker) generates and issues its own token to the MCP client:
+
+```mermaid
+sequenceDiagram
+    participant B as User-Agent (Browser)
+    participant C as MCP Client
+    participant M as MCP Server (your Worker)
+    participant T as Third-Party Auth Server
+
+    C->>M: Initial OAuth Request
+    M->>B: Redirect to Third-Party /authorize
+    B->>T: Authorization Request
+    Note over T: User authorizes
+    T->>B: Redirect to MCP Server callback
+    B->>M: Authorization code
+    M->>T: Exchange code for token
+    T->>M: Third-party access token
+    Note over M: Generate bound MCP token
+    M->>B: Redirect to MCP Client callback
+    B->>C: MCP authorization code
+    C->>M: Exchange code for token
+    M->>C: MCP access token
+```
+
+Read the docs for the [Workers oAuth Provider Library](https://github.com/cloudflare/workers-oauth-provider) for more details.
+
+### (3) Bring your own OAuth Provider
+
+If your application already implements an Oauth Provider itself, or you use Stytch, Auth0, or authorization-as-a-service provider, you can use this in the same way that you would use a third-party OAuth provider, described above in (2).
+
+## Next steps
+
+- [Learn how to use the Workers OAuth Provider Library](https://github.com/cloudflare/workers-oauth-provider)
+- Learn how to use a third-party OAuth provider, using the [GitHub](/agents/guides/remote-mcp-server/#add-authentication) example MCP server.

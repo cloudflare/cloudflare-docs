@@ -98,15 +98,15 @@ RTT becomes important at scale. For example, if a client and endpoint are both l
 
 ![Latency compounds based on the number of requests](~/assets/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-3.svg "Figure 3: How latency can compound and affect the total time it takes to load a resource")
 
-In the same way a load balancer can pass traffic to a less-busy endpoint, it can also pass traffic to a geographically closer endpoint, resulting in a more responsive experience for the client. Specifically, the load balancer performs a lookup of the IP address that sent the request, determines its location, and selects the closest or most region-appropriate endpoint to send it to. (This is similar to functionality provided by DNS solutions like GeoDNS.
+In the same way a load balancer can pass traffic to a less-busy endpoint, it can also pass traffic to a geographically closer endpoint, resulting in a more responsive experience for the client. Specifically, the load balancer performs a lookup of the IP address that sent the request, determines its location, and selects the closest or most region-appropriate endpoint to send it to (this is similar to functionality provided by DNS solutions like GeoDNS).
 
 #### Availability
 
 Service availability encompasses both unintentional and intentional downtime of endpoints behind a load balancer. Several factors can contribute to unintentional downtime, including hardware failure, software bugs, network issues, and ISP or other vendor issues. Even for the most advanced organizations, these issues are inevitable.
 
-Load balancers solve these issues by always monitoring the health of endpoints. If an endpoint is slow to respond to a health check, or fails to respond entirely,the endpoint is marked as unhealthy. Several methods exist for doing so, including basic health tests like ICMP (ping) and TCP connection tests. More advanced health tests can be used like issuing an HTTP GET request and ensuring a specific response code and response body are returned from the endpoint. Once an endpoint is in a degraded state, the load balancer will send fewer or no requests its way in favor of healthier endpoints. As the endpoint becomes operational again and the load balancer is able to receive responses to its health checks, the endpoint is marked as operational and has traffic steered towards it once more.
+Load balancers solve these issues by always monitoring the health of endpoints. If an endpoint is slow to respond to a health check, or fails to respond entirely, the endpoint is marked as unhealthy. Several methods exist for monitoring, including basic health tests like ICMP (ping) and TCP connection tests. More advanced health tests can be used like issuing an HTTP GET request and ensuring a specific response code and response body are returned from the endpoint. Once an endpoint is in a degraded state, the load balancer will send fewer or no requests its way in favor of healthier endpoints. As the endpoint becomes operational again and the load balancer is able to receive responses to its health checks, the endpoint is marked as operational and has traffic steered towards it once more.
 
-Intentional downtime comes in a few different forms, including capacity changes, hardware or infrastructure upgrades, and software updates. Load balancers gracefully remove traffic from one or more endpoints to allow for such maintenance..
+Intentional downtime comes in a few different forms, including capacity changes, hardware or infrastructure upgrades, and software updates. Load balancers gracefully remove traffic from one or more endpoints to allow for such maintenance.
 
 #### Scale
 
@@ -190,7 +190,7 @@ Usually, GTM and Private Network Load Balancers are either separate hardware or 
 
 ### The structure of a Cloudflare Load Balancer
 
-A Cloudflare Load Balancer, often referred to as a Virtual IP (VIP), is configured with an entrypoint . Typically, this entrypoint is a DNS record. The load balancer first applies a defined traffic steering algorithm to select an endpoint pool, which is a group of endpoints selected based on function, geographic area, or region. A load balancer configuration can have one or multiple endpoint pools, and each endpoint pool can have one or many endpoints. After selecting an endpoint pool, the load balancer applies an endpoint steering algorithm to the list of endpoints and selects an endpoint to steer the traffic towards. Figure 11 shows the basic steps from client request to endpoint within a Cloudflare Load Balancer.
+A Cloudflare Load Balancer, often referred to as a Virtual IP (VIP), is configured with an entrypoint. Typically, this entrypoint is a DNS record. The load balancer first applies a defined traffic steering algorithm to select an endpoint pool, which is a group of endpoints selected based on function, geographic area, or region. A load balancer configuration can have one or multiple endpoint pools, and each endpoint pool can have one or many endpoints. After selecting an endpoint pool, the load balancer applies an endpoint steering algorithm to the list of endpoints and selects an endpoint to steer the traffic towards. Figure 11 shows the basic steps from client request to endpoint within a Cloudflare Load Balancer.
 
 ![The steps within a Cloudflare Load Balancer](~/assets/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-11.svg "Figure 11: The basic process flow through a Cloudflare Load Balancer")
 
@@ -371,11 +371,13 @@ All traffic steering methods marked above as Enterprise-only can also be obtaine
 
 ### Health monitors
 
-A health monitor determines the health of endpoints once they are configured inside an endpoint pool. Health monitors generate probes, which are connection attempts to endpoints. Health monitors use the responses to the probes to record endpoint health. Health monitors serve as templates that include service type, path, and port, and advanced features such as interval, timeout, and protocol specific settings for evaluating endpoint health The health monitor template is then applied to the endpoint pool, which contains endpoints hosting similar services. Once a health monitor is attached to the endpoint pool, the endpoint address is used as the destination for the health monitor probe. A single health monitor can be used across many endpoint pools, and health monitors are account-level objects, allowing them to be leveraged by multiple zones within the same Cloudflare account.
+A health monitor determines the health of endpoints once they are configured inside an endpoint pool. Health monitors generate probes, which are connection attempts to endpoints. Health monitors use the responses to the probes to record endpoint health. Health monitors serve as templates that include service type, path, and port, and advanced features such as interval, timeout, and protocol specific settings for evaluating endpoint health. The health monitor template is then applied to the endpoint pool, which contains endpoints hosting similar services. Once a health monitor is attached to the endpoint pool, the endpoint address is used as the destination for the health monitor probe. A single health monitor can be used across many endpoint pools, and health monitors are account-level objects, allowing them to be leveraged by multiple zones within the same Cloudflare account.
 
-By default, health monitors probes are sent directly to the endpoint address, bypassing the entire layer 7 stack. This means that actual traffic to the endpoint through the load balancer will receive different treatment than the health monitor probe. Depending on the configuration, this could result in a health monitor reporting an endpoint as healthy, even if actual connections or requests are failing.
+By default, health monitor probes are sent directly to the endpoint address, bypassing the entire layer 7 stack. This means that actual traffic to the endpoint through the load balancer will receive different treatment than the health monitor probe. Depending on the configuration, this could result in a health monitor reporting an endpoint as healthy, even if actual connections or requests are failing.
 
-The Simulate Zone feature ensures that health monitor probes follow the same path as actual requests, passing through the entire layer 7 stack. This makes health monitors take the exact same path through the network and through other layer 7 process to reach the endpoint. This is required for health monitors when certain features are enabled, such as [Authenticated Origin Pulls (AOP)](/ssl/origin-configuration/authenticated-origin-pull/), where probes would fail if they weren’t being provided with the proper mTLS certificate for authentication on the origin. Simulate Zone also ensures health monitor probes use the same path provided by [Argo Smart Routing](/argo-smart-routing/) and the same dedicated egress IPs when organizations leverage [Aegis](https://blog.cloudflare.com/cloudflare-aegis/) to restrict the edge IP addresses that Cloudflare uses to reach their endpoints.
+The Simulate Zone feature ensures that health monitor probes follow the same path as actual requests, passing through the entire layer 7 stack. This ensures health monitors take the exact same path through the network and through other layer 7 processes to reach the endpoint.
+
+The Simulate Zone feature is required for health monitors when certain features are enabled, such as [Authenticated Origin Pulls (AOP)](/ssl/origin-configuration/authenticated-origin-pull/), where probes would fail if they weren’t being provided with the proper mTLS certificate for authentication on the origin. Simulate Zone also ensures health monitor probes use the same path provided by [Argo Smart Routing](/argo-smart-routing/) and the same dedicated egress IPs when organizations leverage [Aegis](https://blog.cloudflare.com/cloudflare-aegis/) to restrict the edge IP addresses that Cloudflare uses to reach their endpoints.
 
 ![HTTPS health monitor to monitor the status of an endpoint](~/assets/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-16.png "Figure 16: HTTPS health monitor configuration")
 
@@ -421,7 +423,7 @@ The second setting after defining the health monitor in the endpoint pool is to 
 
 ![Endpoint pool settings to further customize the health monitors](~/assets/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-18.png "Figure 18: Health Threshold and region selection for an endpoint pool configuration")
 
-With the exception of “All Regions” and “All Data Centers”, health monitor probes will only endpointate from data centers in the selected region or regions. For locally relevant services, it may not matter whether or not a data center on the other side of the world can reach the endpoints. Therefore, limiting checks to a specific region or a set of regions may make sense. The selection of “All Regions” or “All Data Centers” is intended to be used for globally available services where reaching a set of endpoints could be crucial to the function of the application.
+With the exception of “All Regions” and “All Data Centers”, health monitor probes will only originate from data centers in the selected region or regions. For locally relevant services, it may not matter whether or not a data center on the other side of the world can reach the endpoints. Therefore, limiting checks to a specific region or a set of regions may make sense. The selection of “All Regions” or “All Data Centers” is intended to be used for globally available services where reaching a set of endpoints could be crucial to the function of the application.
 
 ### Endpoints and endpoint pools
 
@@ -437,7 +439,7 @@ As mentioned in the “HTTP(S) Load Balancing” section above, load balancing i
 
 ![Load balancing is the last process before dispatching to the endpoint](~/assets/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-19.svg "Figure 19: Differences in the Layer 7 paths between load balancer and endpoint")
 
-There are very few differences from a load balancer perspective when it comes to what type of endpoint is defined as part of an endpoint pool. Once the traffic and endpoint steering policies and the load balancer rules are applied, the Cloudflare Load Balancing service instructs the L7 stack where to forward the incoming request or connection . This request is sent directly to the endpoint. Depending on the type of connection to the endpoint, there may be a different path. Features like Argo Smart Routing or tunnel-connected endpoints that are terminated at different Cloudflare data centers will route traffic differently rather than sending the request out of the Cloudflare edge, over the internet, directly to the endpoint. Regardless of the path, however, load balancing is the last process in the stack and this means that traffic doesn’t receive any additional treatment. So while the connection to endpoint can change the path from Cloudflare to the endpoint, the treatment or processing doesn’t change once an endpoint is selected.
+There are very few differences from a load balancer perspective when it comes to what type of endpoint is defined as part of an endpoint pool. Once the traffic and endpoint steering policies and the load balancer rules are applied, the Cloudflare Load Balancing service instructs the L7 stack where to forward the incoming request or connection. This request is sent directly to the endpoint. Depending on the type of connection to the endpoint, there may be a different path. Features like Argo Smart Routing or tunnel-connected endpoints that are terminated at different Cloudflare data centers will route traffic differently rather than sending the request out of the Cloudflare edge, over the internet, directly to the endpoint. Regardless of the path, however, load balancing is the last process in the stack and this means that traffic doesn’t receive any additional treatment. So while the connection to endpoint can change the path from Cloudflare to the endpoint, the treatment or processing doesn’t change once an endpoint is selected.
 
 ##### Cloudflare Tunnel
 
@@ -465,7 +467,7 @@ From a load balancer perspective, it's very important to understand how these tu
 
 The second method is for private subnets. This method allows organizations to define private IP addresses and a subnet mask which will be used to create a private virtual network within the Cloudflare global network. The private subnet method does not allow the definition of a port and as such, once a subnet and mask are defined, the entire subnet can be reached over that tunnel but only to users within the organization that are allowed access via defined Zero Trust policies.
 
-This subnet then gets added to the virtual network inside of Cloudflare where the customer can control how users can access it and which users can access it. This subnet can be defined for any desired subnetting or routing, including using a 32-bit mask (single IP address, IE. 10.0.0.1/32). The allowed subnet does not need to exist on the host that is running the cloudflared process either. All that is required is layer 3 or IP connectivity between the host running cloudflared and the subnet that is going to be reachable over Cloudflare Tunnel.
+This subnet then gets added to the virtual network inside of Cloudflare where the customer can control how users can access it and which users can access it. This subnet can be defined for any desired subnetting or routing, including using a 32-bit mask (single IP address, i.e., 10.0.0.1/32). The allowed subnet does not need to exist on the host that is running the cloudflared process either. All that is required is layer 3 or IP connectivity between the host running cloudflared and the subnet that is going to be reachable over Cloudflare Tunnel.
 
 #### Endpoint pool details
 
@@ -473,7 +475,7 @@ Within the endpoint pool, there are several configuration options. This section 
 
 ##### Endpoint steering
 
-The first configuration, besides defining a name and description of the endpoint pool, is to determine the endpoint steering method. Endpoint steering is responsible for ultimately selecting the endpoint or endpoint that will receive the request or connection attempt. (Please refer to the [Steering methods](#steering-methods) section for a detailed description of each method.)
+The first configuration, besides defining a name and description of the endpoint pool, is to determine the endpoint steering method. Endpoint steering is responsible for ultimately selecting the endpoint or endpoint that will receive the request or connection attempt (please refer to the [Steering methods](#steering-methods) section for a detailed description of each method).
 
 ##### Endpoints
 
@@ -503,13 +505,13 @@ _Endpoint weight_ is only used for the random, hash, and least outstanding reque
 
 ##### Host header modification
 
-Endpoint pools allow for the host header to be modified before dispatching a request to an endpoint. This configuration only applies to the HTTP(S) layer 7 load balancer. (It will be ignored when used with layer 4 load balancers, including private IP and Spectrum.)
+Endpoint pools allow for the host header to be modified before dispatching a request to an endpoint. This configuration only applies to the HTTP(S) layer 7 load balancer (it will be ignored when used with layer 4 load balancers, including private IP and Spectrum).
 
 Within a layer 7 load balancer where requests are HTTP(S)-based, the Host header tells the endpoint which website is being requested, as a single endpoint may host several different web domains. When an endpoint is specifically configured to host a web domain, it may either not respond or send a failure response to a request for a resource, if it does not believe it is hosting the resource requested in the Host header (i.e., if there are mismatched Host headers).
 
 For example:
 
-- Say a user tries to reach `www.example.com`. The load balancer will be configured with the hostname of `www.example.com `to receive all the requests.
+- Say a user tries to reach `www.example.com`. The load balancer will be configured with the hostname of `www.example.com`to receive all the requests.
 - Since the endpoints can’t have the same public hostname in DNS, its hostname is `endpoint1.example.com`.
 - When the user makes a request to `www.example.com,` the Host header will be set to` www.example.com,` as well. The endpoint will need to be configured to respond to Host headers of `www.example.com`.
 - In some cases (such as with certain cloud or SaaS applications), however, endpoints aren’t configurable in that manner, so the endpoint may receive a request with an unknown Host header and fail to respond appropriately.
@@ -519,11 +521,11 @@ Figure 21 highlights the potential problem of mismatched Host headers:
 
 ![Mismatched Host headers may result in the endpoint rejecting the request](~/assets/images/reference-architecture/load-balancing-reference-architecture-images/lb-ref-arch-21.svg "Figure 21: How the load balancer can rewrite the Host header to match the endpoint")
 
-Also, at the endpoint pool, GPS coordinates for the pool (which are used with proximity traffic steering) can be defined. If proximity steering is not being used, then these coordinates are not required. (Please refer to the [Proximity Steering](#proximity-steering)
+Also, at the endpoint pool, GPS coordinates for the pool (which are used with proximity traffic steering) can be defined. If proximity steering is not being used, then these coordinates are not required (please refer to the [Proximity Steering](#proximity-steering)).
 
 ##### Load shedding
 
-[Load shedding ](/load-balancing/additional-options/load-shedding/)— a real-time response available to administrators to protect against endpoints in a pool that are [becoming unhealthy ](/load-balancing/understand-basics/health-details/)— is also configured on the endpoint pool.
+[Load shedding](/load-balancing/additional-options/load-shedding/) — a real-time response available to administrators to protect against endpoints in a pool that are [becoming unhealthy ](/load-balancing/understand-basics/health-details/) — is also configured on the endpoint pool.
 
 The load shedding setting is not intended to be enabled unless an administrator is trying to actively protect an endpoint pool from becoming unhealthy. It is activated, for example, when an endpoint that is still responding to requests is experiencing increased CPU or memory usage, increased response times, or occasionally failing to respond at all.
 
@@ -696,12 +698,13 @@ Endpoint draining is only applicable for session affinity because without sessio
 
 ##### Zero-downtime failover
 
-Zero-downtime failover automatically sends traffic to endpoints within an endpoint pool during transient network issues. <Render file="zero-downtime-failover-retry-on-error" product="fundamentals" /> These response codes are not returned from the endpoint, but from requests made by upstream Cloudflare services to an organization's endpoints.
+Zero-downtime failover automatically sends traffic to endpoints within an endpoint pool during transient network issues. <Render file="zero-downtime-failover-retry-on-error" product="fundamentals" /> 
+These response codes are not returned from the endpoint, but from requests made by upstream Cloudflare services to an organization's endpoints.
 
 Zero-downtime failover has three modes of operation:
 
 1. **None (Off):** No failover will take place and users may receive error messages or a poor user experience.
-2. **Temporary:** Traffic will be sent to other endpoint(s) until the endpointal endpoint is available again
+2. **Temporary:** Traffic will be sent to other endpoint(s) until the endpointal endpoint is available again.
 3. **Sticky:** The session affinity cookie is updated and subsequent requests are sent to the new endpoint moving forward as needed. This is not supported when session affinity is using HTTP header mode.
 
 ##### Adaptive routing - failover across pools

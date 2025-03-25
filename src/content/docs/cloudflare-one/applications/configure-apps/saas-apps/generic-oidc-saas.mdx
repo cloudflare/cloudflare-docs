@@ -53,7 +53,7 @@ Some SaaS applications provide the Redirect URL after you [configure the SSO pro
     | Key endpoint           | Returns the current public keys used to [verify the Access JWT](/cloudflare-one/identity/authorization-cookie/validating-json/) <br/> `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/sso/oidc/<client-id>/jwks`                                   |
     | User info endpoint     | Returns all user claims in JSON format <br/> `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/sso/oidc/<client-id>/userinfo`                                                                                                                        |
 
-11. Add [Access policies](/cloudflare-one/policies/access/) to control who can connect to your application. All Access applications are deny by default -- a user must match an Allow policy before they are granted access.
+11. <Render file="access/add-access-policies" product="cloudflare-one" />
 
 12. <Render file="access/access-choose-idps" product="cloudflare-one" />
 
