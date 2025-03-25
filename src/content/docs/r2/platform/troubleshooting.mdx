@@ -58,6 +58,6 @@ Track the number of concurrent requests to your bucket. If a client encounters a
 
 If your users are directly uploading to the bucket (for example, using the S3 or Workers API), you may not be able to monitor or enforce a concurrency limit. In that case, we recommend bucket sharding.
 
-### Bucket Sharding
+### Bucket sharding
 
 For higher capacity at the cost of added complexity, consider bucket sharding. This approach distributes reads and writes across multiple buckets, reducing the load on any single bucket.  While sharding cannot prevent a single hot object from exhausting capacity, it can mitigate the overall impact and improve system resilience.
