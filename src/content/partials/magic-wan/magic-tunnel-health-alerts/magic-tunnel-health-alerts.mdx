@@ -35,3 +35,19 @@ If a Magic Tunnel health alert is fired, customers can expect the following data
 6. Choose the tunnels you want to receive alerts for.
 7. Select the **Alert Sensitivity Level** threshold. It is predefined for _Medium_, but you can choose between _High_, _Medium_, and _Low_. If you need more than three sensitivity levels, use the API.
 8. Select **Create** when you are done.
+
+</TabItem> <TabItem label="API">
+
+:::note
+Refer to the [documentation for Notifications](/notifications/get-started/) to learn about specific permissions you need to access the service via the API.
+:::
+
+Send a [`POST` request](/api/resources/alerting/subresources/policies/methods/create/) to create a {props.productName} tunnel health alert. You can set tunnel health alerts with any SLO value between `0` and `99.99`.
+
+
+{ props.magicProduct === "Magic Transit" && (
+  <>
+
+  </>
+  )
+}

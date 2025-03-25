@@ -15,24 +15,7 @@ import { APIRequest, Render, Tabs, TabItem } from "~/components";
 	}}
 />
 
-## Set up Magic Tunnel health alerts
 
-<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
-
-<Render
-	file="magic-tunnel-health-alerts/setup-magic-tunnels-dash"
-	params={{
-		productName: "Magic WAN",
-	}}
-/>
-
-</TabItem> <TabItem label="API">
-
-:::note
-Refer to the [documentation for Notifications](/notifications/get-started/) to learn about specific permissions you need to access the service via the API.
-:::
-
-Send a [`POST` request](/api/resources/alerting/subresources/policies/methods/create/) to create a Magic WAN tunnel health alert. You can set tunnel health alerts with any SLO value between `0` and `99.99`.
 
 <APIRequest
   path="/accounts/{account_id}/alerting/v3/policies"
