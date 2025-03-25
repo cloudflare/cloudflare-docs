@@ -1485,27 +1485,35 @@ This is because such a file, when required, should be created based on a target 
 
 A common example of using a redirected configuration is where a custom build tool, or framework, wants to modify the user's configuration to be used when deploying, by generating a new configuration in a `dist` directory.
 
-- First, the user writes code that uses Cloudflare Workers resources, configured via a user's Wrangler configuration file.
+- First, the user writes code that uses Cloudflare Workers resources, configured via a user's Wrangler configuration file like the following:
 
-<WranglerConfig>
+  <WranglerConfig>
 
-```toml title="wrangler.toml"
-name = "my-worker"
-main = "src/index.ts"
-[[kv_namespaces]]
-binding = "<BINDING_NAME1>"
-id = "<NAMESPACE_ID1>"
-```
+  ```toml title="wrangler.toml"
+  name = "my-worker"
+  main = "src/index.ts"
 
-</WranglerConfig>
+  [[kv_namespaces]]
+  binding = "<BINDING_NAME1>"
 
-Note that this configuration points `main` at the user's code entry-point.
+  [vars]
+  MY_VARIABLE = "production variable"
+
+  [env.staging.vars]
+  MY_VARIABLE = "staging variable"
+  ```
+
+  </WranglerConfig>
+
+  Note that this configuration points `main` at the user's code entry-point and that it also defined the `MY_VARIABLE` in two different environments.
 
 - Then, the user runs a custom build, which might read the user's Wrangler configuration file to find the source code entry-point:
 
   ```bash
   > my-tool build
   ```
+
+  We'll assume that `my-tool` is specifically targeting the `staging` environment (for instance set by the user with some API of `my-tool`).
 
 - This `my-tool` generates a `dist` directory that contains both compiled code and a new generated deployment configuration file.
   It also creates a `.wrangler/deploy/config.json` file that redirects Wrangler to the new, generated deployment configuration file:
@@ -1527,11 +1535,17 @@ Note that this configuration points `main` at the user's code entry-point.
   {
   	"name": "my-worker",
   	"main": "./index.js",
-  	"kv_namespaces": [{ "binding": "<BINDING_NAME1>", "id": "<NAMESPACE_ID1>" }]
+  	"kv_namespaces": [
+  		{ "binding": "<BINDING_NAME1>", "id": "<NAMESPACE_ID1>" }
+  	],
+  	"vars": {
+  		"MY_VARIABLE": "staging variable"
+  	}
   }
   ```
 
-  Note that, now, the `main` property points to the generated code entry-point.
+  Note that, now, the `main` property points to the generated code entry-point, no environment is defined,
+  and the `MY_VARIABLE` variable is resolved to the staging environment value.
 
   And the `.wrangler/deploy/config.json` contains the path to the generated configuration file:
 
