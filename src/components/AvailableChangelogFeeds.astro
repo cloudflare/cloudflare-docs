@@ -1,11 +1,28 @@
 ---
-import AnchorHeading from "./AnchorHeading.astro";
-import RSSButton from "./RSSButton.astro";
-
 import { Aside } from "@astrojs/starlight/components";
 
-import { productsByGroup } from "~/util/products";
+import AnchorHeading from "./AnchorHeading.astro";
+import RSSButton from "./RSSButton.astro";
 import Details from "./Details.astro";
+
+import { getCollection } from "astro:content";
+import { getChangelogs } from "~/util/changelog";
+
+const changelogs = await getChangelogs({});
+const productsInChangelog = changelogs.flatMap((entry) =>
+	entry.data.products.map((product) => product.id),
+);
+
+const products = await getCollection("products", (entry) => {
+	return productsInChangelog.includes(entry.id);
+});
+
+const productsByGroup = Object.entries(
+	Object.groupBy(
+		products.filter((product) => Boolean(product.data.product.group)),
+		(product) => product.data.product.group,
+	),
+).sort();
 ---
 
 <AnchorHeading depth={2} title="Feeds" />
