@@ -29,13 +29,16 @@ const productsByGroup = Object.entries(
 
 <AnchorHeading depth={3} title="Global feed" />
 <p>
-	This feed contains entries for all Cloudflare products: <RSSButton />
+	This feed contains entries for all Cloudflare products in the <a
+		href="/changelog/">changelog</a
+	>: <RSSButton />
 </p>
 
 <AnchorHeading depth={3} title="Area-specific feeds" />
 
 <p>
-	Cloudflare also offers RSS feeds scoped to specific product areas or products.
+	Cloudflare also offers RSS feeds scoped to specific product areas or products
+	in the <a href="/changelog/">changelog</a>.
 </p>
 
 {
@@ -43,7 +46,7 @@ const productsByGroup = Object.entries(
 		<>
 			<AnchorHeading depth={4} title={group} />
 			<p>
-				This feed contains entries for all {group} products:{" "}
+				This feed is for all {group} products in the changelog:{" "}
 				<RSSButton changelog={group} />
 			</p>
 			<Details header="Included products">
