@@ -22,7 +22,7 @@ import { Render, WranglerConfig } from "~/components"
 | Per-queue backlog size <sup>4</sup>           									| 25GB                                                          |
 | Concurrent consumer invocations               									| 250 <sup>push-based only</sup>                                |
 | Consumer duration (wall clock time) 														| 15 minutes <sup>5</sup>                                       |
-| [Active Consumer CPU time]((/workers/platform/limits/#cpu-time))| 30 seconds (default). [Configurable to 5 minutes](/queues/platform/limits/#increasing-queue-consumer-worker-cpu-limits) 							|
+| [Consumer CPU time]((/workers/platform/limits/#cpu-time))| 30 seconds (default). [Configurable to 5 minutes](/queues/platform/limits/#increasing-queue-consumer-worker-cpu-limits) 							|
 | `visibilityTimeout` (pull-based queues)       									| 12 hours                                                      |
 | `delaySeconds` (when sending or retrying)     									| 12 hours                                                      |
 | Requests to the Queues API (incl. pulls/acks) 									| [1200 requests / 5 mins](/fundamentals/api/reference/limits/) |
