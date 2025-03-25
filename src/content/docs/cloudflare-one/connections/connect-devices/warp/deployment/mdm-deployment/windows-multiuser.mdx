@@ -33,6 +33,10 @@ To request participation in this beta, contact your account team.
 
 Cloudflare WARP supports multiple user registrations on a single Windows device. When deployed in multi-user mode, the WARP client will automatically switch user registrations after a user logs in to their Windows account. All traffic to Cloudflare will be attributed to the currently active Windows user. This allows administrators to apply identity-based policies and device settings, audit user activity, and remove individual users from a shared workstation.
 
+:::caution[User PII]
+WARP's DNS logging feature stores all DNS queries on the device onto disk. If a user enables **Log DNS queries** in the GUI or runs `warp-cli dns log enable`, any user on the device will be able to examine the DNS queries of another user.
+:::
+
 ## Enable multi-user mode
 
 To enable multi-user support on Windows, [deploy an MDM file](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/#windows) onto the device with the `multi_user` key set to `true`. For example:
