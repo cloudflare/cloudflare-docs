@@ -49,7 +49,7 @@ Many limits are inherited from those applied to Workers scripts and as documente
 
 Workflows are Worker scripts, and share the same [per invocation CPU limits](/workers/platform/limits/#worker-limits) as any Workers do. Note that CPU time is active processing time: not time spent waiting on network requests, storage calls, or other general I/O, which don't count towards your CPU time or Workflows compute consumption.
 
-By default, the maximum CPU time per Workflow invocation is set to 30 seconds, but can be increased for all invocations associated with a Workflow definition by setting `limits.cpu_ms` in your wrangler configuration:
+By default, the maximum CPU time per Workflow invocation is set to 30 seconds, but can be increased for all invocations associated with a Workflow definition by setting `limits.cpu_ms` in your Wrangler configuration:
 
 <WranglerConfig>
 
