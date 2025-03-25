@@ -44,7 +44,7 @@ Here are some common issues with CORS configurations:
 - `AllowedHeaders` is missing headers like `Authorization` or `Content-Type`
 - `AllowedMethods` is missing methods like `POST`/`PUT`
 
-## HTTP 5XX Errors and Capacity limitations of Cloudflare R2
+## HTTP 5XX Errors and capacity limitations of Cloudflare R2
 
 When you encounter an HTTP 5XX error, it's usually a sign that your Cloudflare R2 bucket has been overwhelmed by too many concurrent requests.
 These errors can trigger bucket-wide read and write locks, affecting the performance of all ongoing operations.
