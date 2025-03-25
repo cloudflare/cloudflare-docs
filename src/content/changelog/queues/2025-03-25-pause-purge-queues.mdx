@@ -6,24 +6,24 @@ products:
 date: 2025-03-27 12:00:00 UTC
 ---
 
-You can now pause message delivery from a queue, and purge all messages from a Queue. These operations are useful to manage downtime, handle invalid messages in a queue, or run migrations.
+You can now pause message delivery from a queue, and purge all messages from a queue. These operations are useful to manage downtime, handle invalid messages in a queue, or run migrations.
 
 To pause a queue using Wrangler, run the `pause-delivery` command. Paused queues continue to receive messages. And you can easily unpause a queue using the `resume-delivery` command.
-```bash title="Pause and resume a Queue"
+```bash title="Pause and resume a queue"
 $ wrangler queues pause-delivery my-queue
 Pausing message delivery for queue my-queue.
 Paused message delivery for queue my-queue.
 
 $ wrangler queues resume-delivery my-queue
-Resuming message delivery for Queue my-queue.
-Resumed message delivery for Queue my-queue.
+Resuming message delivery for queue my-queue.
+Resumed message delivery for queue my-queue.
 ```
 
 Purging a queue permanently deletes all messages in the queue. Unlike pausing, purging is an irreversible operation:
-```bash title="Purge a Queue"
+```bash title="Purge a queue"
 $ wrangler queues purge my-queue
-✔ This operation will permanently delete all the messages in Queue my-queue. Type my-queue to proceed. … my-queue
-Purged Queue 'mar-21'
+✔ This operation will permanently delete all the messages in queue my-queue. Type my-queue to proceed. … my-queue
+Purged queue 'mar-21'
 ```
 
 As seen above, you can do these operations using Wrangler. You can also do these operations using our REST API, or the dashboard page for a queue.
