@@ -3,14 +3,14 @@ title: Run Workers for up to 5 minutes of CPU-time
 description: Workers now support up to 5 minutes of CPU time per request. Allowing more CPU-intensive workloads.
 products:
   - workers
-date: 2025-03-25T17:00:00Z
+date: 2025-03-26T17:00:00Z
 ---
 
 import { Render, TypeScriptExample, WranglerConfig } from "~/components";
 
 You can now run a Worker for up to 5 minutes of CPU time for each request.
 
-Previously, each Workers request ran for a maximum of 30 seconds of CPU time. This
+Previously, each Workers request ran for a maximum of 30 seconds of CPU time — that is the time that a Worker is actually performing a task (we still allowed unlimited wall-clock time, in case you were waiting on slow resources). This
 meant that some compute-intensive tasks were impossible to do with a Worker. For instance,
 you might want to take the cryptographic hash of a large file from R2. If
 this computation ran for over 30 seconds, the Worker request would have timed out.
