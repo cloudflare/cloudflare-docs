@@ -5,7 +5,7 @@ sidebar:
   order: 5
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, Render } from "~/components";
 
 Updates will cause `cloudflared` to restart which will impact traffic currently being served. You can perform zero-downtime upgrades by using Cloudflare's [Load Balancer product](/cloudflare-one/connections/connect-networks/downloads/update-cloudflared/#update-with-cloudflare-load-balancer) or by using [multiple `cloudflared` instances](/cloudflare-one/connections/connect-networks/downloads/update-cloudflared/#update-with-multiple-cloudflared-instances).
 
@@ -62,7 +62,7 @@ sudo systemctl restart cloudflared.service
 
 **If installed manually via `dpkg -i`:**
 
-You can check if `cloudflared` was installed by a package manager by running `ls -la /usr/local/etc/cloudflared/` and looking for `.installedFromPackageManager` in the output.
+<Render file="tunnel/package-manager" product="cloudflare-one" />
 
 1. Update the `cloudflared` package:
 
@@ -107,7 +107,7 @@ If you installed `cloudflared` from GitHub-provided binaries or from source, run
 cloudflared update
 ```
 
-If you installed `cloudflared` with a package manager, you must update it using the same package manager. You can check if `cloudflared` was installed by a package manager by running `ls -la /usr/local/etc/cloudflared/` and looking for `.installedFromPackageManager` in the output.
+If you installed `cloudflared` with a package manager, you must update it using the same package manager. <Render file="tunnel/package-manager" product="cloudflare-one" />
 
 </TabItem> </Tabs>
 

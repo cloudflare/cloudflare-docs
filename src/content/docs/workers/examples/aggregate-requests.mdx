@@ -61,7 +61,9 @@ export default {
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py
-from js import Response, fetch, Headers, JSON, Promise
+from workers import Response, fetch
+import asyncio
+import json
 
 async def on_fetch(request):
     # some_host is set up to return JSON responses
@@ -69,11 +71,11 @@ async def on_fetch(request):
     url1 = some_host + "/todos/1"
     url2 = some_host + "/todos/2"
 
-    responses = await Promise.all([fetch(url1), fetch(url2)])
-    results = await Promise.all(map(lambda r: r.json(), responses))
+    responses = await asyncio.gather(fetch(url1), fetch(url2))
+    results = await asyncio.gather(*(r.json() for r in responses))
 
-    headers = Headers.new({"content-type": "application/json;charset=UTF-8"}.items())
-    return Response.new(JSON.stringify(results), headers=headers)
+    headers = {"content-type": "application/json;charset=UTF-8"}
+    return Response.json(results, headers=headers)
 ```
 
 </TabItem> </Tabs>

@@ -115,6 +115,35 @@ When FIPS compliance is enabled, Gateway will only choose [FIPS-compliant cipher
 
 FIPS-compliant traffic defaults to [HTTP/3](/cloudflare-one/policies/gateway/http-policies/http3/). To enforce HTTP policies for UDP traffic, you must turn on the [Gateway proxy for UDP](/cloudflare-one/policies/gateway/http-policies/http3/#enable-http3-inspection).
 
+## FedRAMP compliance
+
+When you use [Cloudflare Regional Services](/data-localization/regional-services/) in the United States and the WARP client to on-ramp TLS traffic to Gateway, traffic will egress from a Cloudflare data center within Cloudflare's FedRAMP boundary. If a user's closest data center is non-FedRAMP compliant, their traffic will still egress from a FedRAMP compliant data center, maintaining FedRAMP compliance for the traffic.
+
+```mermaid
+flowchart LR
+ %% Accessibility
+ accTitle: How Gateway routes FedRAMP compliant traffic with Regional Services
+ accDescr: Flowchart describing how WARP with Gateway routes traffic to egress from a FedRAMP compliant data center when used with Regional Services in the United States.
+
+ %% Flowchart
+ subgraph s1["Non-FedRAMP data center"]
+        n2["WARP TLS encryption terminated"]
+  end
+ subgraph s2["FedRAMP data center"]
+        n3["Gateway TLS encryption (FIPS) terminated"]
+  end
+ subgraph s3["Private internal network"]
+        n5["FedRAMP compliant cloudflared"]
+        n6(["Private server"])
+  end
+    n1(["User near non-FedRAMP compliant data center"]) -- Gateway TLS connection wrapped with WARP TLS (MASQUE) --> n2
+    n2 -- Gateway TLS connection --> n3
+    n3 <-- FIPS tunnel --> n5
+    n5 --> n6
+
+    n5@{ shape: rect}
+```
+
 ## Cipher suites
 
 <GlossaryDefinition term="cipher suite" prepend="A cipher suite is " />

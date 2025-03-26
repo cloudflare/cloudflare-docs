@@ -1277,6 +1277,35 @@ wrangler queues consumer remove <queue-name> <script-name>
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
+### `purge`
+
+Permanently delete all messages in a queue.
+
+```txt
+wrangler queues purge <queue-name>
+```
+- `queue-name` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the queue from which messages should be deleted.
+
+### `pause-delivery`
+
+Pause message delivery from a Queue to consumers (including push consumers, and HTTP pull consumers)
+
+```txt
+wrangler queues pause-delivery <queue-name>
+```
+- `queue-name` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the queue which delivery should be paused.
+
+### `resume-delivery`
+
+Resume delivery from a Queue to consumers (including push consumers, and HTTP pull consumers)
+```txt
+wrangler queues resume-delivery <queue-name>
+```
+- `queue-name` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the queue from which delivery should be resumed.
+
 ---
 
 ## `login`

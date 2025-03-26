@@ -213,7 +213,7 @@ Error `522` occurs when Cloudflare times out contacting the origin web server.
 
 Two different timeouts cause HTTP error `522` depending on when they occur between Cloudflare and the origin web server:
 
-- Before a connection is established, the origin web server does not return a SYN+ACK to Cloudflare within 15 seconds of Cloudflare sending a SYN.
+- Before a connection is established, the origin web server does not return a SYN+ACK to Cloudflare within 19 seconds of Cloudflare sending a SYN.
 - After a connection is established, the origin web server does not acknowledge (ACK) Cloudflare's resource request within 90 seconds.
 
 ### Resolution

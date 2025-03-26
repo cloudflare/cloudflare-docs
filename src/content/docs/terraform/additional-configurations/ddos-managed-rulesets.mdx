@@ -35,7 +35,7 @@ For more information on deploying and configuring rulesets using the Rulesets AP
 
 ## Example: Configure HTTP DDoS Attack Protection
 
-This example configures the [HTTP DDoS Attack Protection](/ddos-protection/managed-rulesets/http/) managed ruleset for a zone using Terraform, changing the sensitivity level of rule with ID <RuleID id="fdfdac75430c4c47a959592f0aa5e68a" /> to `low`.
+This example configures the [HTTP DDoS Attack Protection](/ddos-protection/managed-rulesets/http/) managed ruleset for a zone using Terraform.
 
 <Render file="v4-code-snippets" />
 
@@ -48,21 +48,36 @@ resource "cloudflare_ruleset" "zone_level_http_ddos_config" {
   phase       = "ddos_l7"
 
   rules {
-    ref         = "override_l7_ddos_ruleset_all"
-    description = "Override the HTTP DDoS Attack Protection managed ruleset"
-    expression  = "true"
-    action      = "execute"
+    action = "execute"
     action_parameters {
       # Cloudflare L7 DDoS Attack Protection Ruleset
       id = "4d21379b4f9f4bb088e0729962c8b3cf"
       overrides {
+        action = "block"
+        sensitivity_level = "default"
         rules {
-          # Rule: HTTP requests with unusual HTTP headers or URI path (signature #11).
-          id                = "fdfdac75430c4c47a959592f0aa5e68a"
-          sensitivity_level = "low"
+          # Adaptive DDoS Protection based on Locations (Available only to Enterprise zones with Advanced DDoS service)
+          id = "a8c6333711ff4b0a81371d1c444be2c3"
+          sensitivity_level = "default"    
+          action = "managed_challenge"      
+        }
+        rules {
+          # Adaptive DDoS Protection based on User-Agents (Available only to Enterprise zones with Advanced DDoS service)
+          id = "7709d496081e458899c1e3a6e4fe8e55"
+          sensitivity_level = "default"  
+          action = "managed_challenge"        
+        }
+        rules {
+          # HTTP requests causing a high number of origin errors.
+          id = "dd42da7baabe4e518eaf11c393596a9d"
+          sensitivity_level = "default"
+          action = "managed_challenge"
         }
       }
     }
+    expression = "true"
+    description = "Zone-wide HTTP DDoS Override"
+    enabled = true
   }
 }
 ```

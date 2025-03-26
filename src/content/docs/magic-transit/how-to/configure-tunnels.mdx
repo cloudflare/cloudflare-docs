@@ -11,73 +11,22 @@ description: Cloudflare recommends two tunnels for each ISP and network location
 
 import { GlossaryTooltip, Render } from "~/components";
 
-<Render file="tunnel-endpoints/tunnel-endpoints" params={{ ipRange: " " }} />
-
-## Ways to onboard traffic to Cloudflare
-
-### GRE and IPsec tunnels
-
-<Render
-	file="tunnel-endpoints/gre-ipsec"
+<Render file="configure-tunnels"
 	params={{
+		magicWord: "Magic Transit",
 		productName: "Magic Transit",
-		tunnelsPath: "/magic-transit/reference/tunnels/",
-		ciphersPath:
-			"/magic-transit/reference/tunnels/#supported-configuration-parameters",
-	}}
-/>
-
-#### Anti-replay protection
-
-<Render
-	file="tunnel-endpoints/anti-replay"
-	params={{
-		productName: "Magic Transit",
+		tunnelsAndEncapsulationPagePath: "/magic-transit/reference/tunnels/",
+		ciphersPagePath: "/magic-transit/reference/tunnels/#supported-configuration-parameters",
 		antiReplayPagePath: "/magic-transit/reference/anti-replay-protection/",
-	}}
-/>
-
-### Network Interconnect (CNI)
-
-<Render
-	file="tunnel-endpoints/cni"
-	params={{
-		magicName: "Magic Transit",
-		cniPath: "Network Interconnect and Magic Transit",
-		productLink: "/magic-transit/network-interconnect/",
-	}}
-/>
-
-## Add tunnels
-
-<Render
-	file="tunnel-endpoints/add-tunnels"
-	params={{
-		productName: "Magic Transit",
+		cniLink: "/magic-transit/network-interconnect/",
 		productPathDash: "Magic Transit > Configuration",
-		healthCheck: "/magic-transit/how-to/tunnel-health-checks/",
-		productPathProbe: "/magic-transit/reference/tunnel-health-checks/",
+		updateHCFrequencyPage: "/magic-transit/how-to/tunnel-health-checks/",
+		tunnelHealthChecksPage: "/magic-transit/reference/tunnel-health-checks/",
 		antiReplayPagePath: "/magic-transit/reference/anti-replay-protection/",
 		biVsUniHealthCheck: "unidirectional",
 		tunnelHealthDash: "/magic-transit/how-to/check-tunnel-health-dashboard/",
 		biVsUniHealthCheckDefaults: "For Magic Transit this option defaults to unidirectional"
-	}}
-/>
-
-## Bidirectional vs unidirectional health checks
-
-<Render
-	file="tunnel-endpoints/bi-uni-health-checks"
-	params={{
-		productPathProbe: "/magic-transit/reference/tunnel-health-checks/",
-	}}
-/>
-
-<Render file="tunnel-endpoints/mt-egress" />
-
-### Legacy bidirectional health checks
-
-<Render file="legacy-hc-system" />
+	}} />
 
 ## Next steps
 

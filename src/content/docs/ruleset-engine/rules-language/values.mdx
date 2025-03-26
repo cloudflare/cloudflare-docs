@@ -99,6 +99,15 @@ Since the evaluation of string literal values in expressions is case-sensitive, 
 
 Cloudflare Business and Enterprise customer plans have access to the `matches` [comparison operator](/ruleset-engine/rules-language/operators/#comparison-operators) which supports regular expressions, so that you can capture multiple variants of a value with a single expression.
 
+### Regular expression limits
+
+Cloudflare has a few limits in place regarding regular expressions. One of those limits is that each rule supports a maximum of 64 regular expressions (regexes), regardless of your domain's plan. 
+
+You can use the following strategies to reduce the number of regular expressions in a rule:
+- Use the [`contains`](/ruleset-engine/rules-language/operators/#comparison-operators) operator.
+- Use the [`wildcard`](/ruleset-engine/rules-language/operators/#wildcard-matching) / [`strict wildcard`](/ruleset-engine/rules-language/operators/#wildcard-matching) operators.
+- Use the [`starts_with()`](/ruleset-engine/rules-language/functions/#starts_with) and [`ends_with()`](/ruleset-engine/rules-language/functions/#ends_with) functions.
+
 ## Boolean values
 
 Simple expressions using boolean fields do not require operator notations or values. You only need to insert the field on its own, as shown in the `ssl` example below.
@@ -258,3 +267,5 @@ ip.src in {198.51.100.1 198.51.100.3..198.51.100.7 192.0.2.0/24 2001:0db8::/32}
 
 tcp.dstport in {8000..8009 8080..8089}
 ```
+
+

@@ -31,10 +31,9 @@ To bind Images to your Worker, add the following to the end of your `wrangler.to
 binding = "IMAGES" # i.e. available in your Worker on env.IMAGES
 ```
 
-Within your Worker code, you can interact with this binding by using `env.IMAGES`.
+Within your Worker code, you can interact with this binding by using `env.IMAGES.input()` to build an object that can manipulate the image (passed as a `ReadableStream`).
 
 ## Methods
-
 
 ### `.transform()`
 
@@ -43,8 +42,30 @@ Within your Worker code, you can interact with this binding by using `env.IMAGES
 ### `.draw()`
 
 - Allows [drawing an image](/images/transform-images/draw-overlays/) over another image.
+- The drawn image can be a stream, or another image returned from `.input()` that has been manipulated.
 - The overlaid image can be manipulated using `opacity`, `repeat`, `top`, `left`, `bottom`, and `right`. To apply other parameters, you can pass a child `.transform()` function inside this method.
 
+For example, to draw a resized watermark on an image:
+
+```ts
+// Fetch the watermark from Workers Assets, R2, KV etc
+const watermark: ReadableStream = ...
+
+// Fetch the main image
+const image: ReadableStream = ...
+
+const response = (
+  await env.IMAGES.input(image)
+    .draw(
+        env.IMAGES.input(watermark)
+          .transform({ width: 32, height: 32}),
+        { bottom: 32, right: 32 }
+    )
+    .output({ format: "image/avif" })
+).response()
+
+return response;
+```
 
 ### `.output()`
 
@@ -52,17 +73,17 @@ Within your Worker code, you can interact with this binding by using `env.IMAGES
 
 For example, to rotate, resize, and blur an image, then output the image as AVIF:
 
-```js
-​​const info = await env.IMAGES.info(stream);
+```ts
+const info = await env.IMAGES.info(stream);
 // stream contains a valid image, and width/height is available on the info object
  
 const response = (
-await env.IMAGES.input(stream)
-        .transform({ rotate: 90 })
-        .transform({ width: 128 })
-        .transform({ blur: 20 })
-        .output({ format: "image/avif" })
-      ).response();
+  await env.IMAGES.input(stream)
+    .transform({ rotate: 90 })
+    .transform({ width: 128 })
+    .transform({ blur: 20 })
+    .output({ format: "image/avif" })
+).response();
  
 return response;
 ```
@@ -70,8 +91,6 @@ return response;
 ### `.info()`
 
 - Outputs information about the image, such as `format`, `fileSize`, `width`, and `height`. 
-
-In this example, the transformed image is outputted as a WebP.
 
 Responses from the Images binding are not automatically cached. Workers lets you interact directly with the Cache API to customize cache behavior using Workers. You can implement logic in your script to store transformations in Cloudflare’s cache.
 
@@ -82,7 +101,7 @@ The Images API can be used in local development through [Wrangler](/workers/wran
 Wrangler supports two different versions of the Images API:
 
 - A high-fidelity version that supports all features that are available through the Images API. This is the same version that Cloudflare runs globally in production.
-- A low-fidelity version that supports only a subset of features, such as resizing and rotation.
+- A low-fidelity offline version that supports only a subset of features, such as resizing and rotation.
 
 To test the high-fidelity version of Images, you can run `wrangler dev`:
 
@@ -92,10 +111,12 @@ npx wrangler dev
 
 This creates a local-only environment that mirrors the production environment where Cloudflare runs the Images API. You can test your Worker with all available transformation features before deploying to production.
 
-To test the low-fidelity version of Images, add the `--experimental-images-local-mode` flag:
+To test the low-fidelity offline version of Images, add the `--experimental-images-local-mode` flag:
 
 ```txt
 npm wrangler dev --experimental-images-local-mode
 ```
 
 Currently, this version supports only `width`, `height`, `rotate`, and `format`.
+
+When testing with the [Workers Vitest integration](/workers/testing/vitest-integration/), the low-fidelity offline version is used by default, to avoid hitting the Cloudflare API in tests.

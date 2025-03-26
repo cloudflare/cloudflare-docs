@@ -14,6 +14,7 @@ const props = {
 	frontmatter: {
 		title: "Release notes",
 		template: "splash",
+		noindex: true,
 	},
 	hideBreadcrumbs: true,
 } as StarlightPageProps;
@@ -21,10 +22,9 @@ const props = {
 
 <StarlightPage {...props}>
 	<Aside>
-		Looking for API deprecations? They can be found on our <a
-			href="/fundamentals/api/reference/deprecations/"
-			>dedicated deprecations page.</a
-		>
+		This page is being deprecated. To keep up with product updates, refer to our <a
+			href="/changelog/">changelog</a
+		>.
 	</Aside>
 	<p id="productDescription">
 		Subscribe to all release notes via <a href="/release-notes/index.xml">RSS</a

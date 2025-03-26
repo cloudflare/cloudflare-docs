@@ -1,10 +1,13 @@
 ---
 params:
+  - magicWord
   - productName
   - backgroundInfoPath
+  - networkAnalyticsPath
+  - healthChecks
 ---
 
-import { GlossaryTooltip, Markdown, TabItem, Tabs } from "~/components";
+import { APIRequest, Code, GlossaryTooltip, Render, Tabs, TabItem } from "~/components";
 
 {props.productName} customers can configure Magic Tunnel health alerts to receive email, webhook, and PagerDuty notifications when the percentage of successful <GlossaryTooltip term="tunnel health-check">health checks</GlossaryTooltip> for a Magic Tunnel drops below the selected <a href={props.backgroundInfoPath}>service-level objective (SLO)</a>.
 
@@ -22,3 +25,200 @@ If a Magic Tunnel health alert is fired, customers can expect the following data
 - Tunnel status
 - Alert SLO
 - Timestamp
+
+## Set up Magic Tunnel health alerts
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+2. Select **Notifications** > **Add**.
+3. Select **{props.productName}** > **Magic Tunnel Health Check Alert** > **Select** to add a notification.
+4. Enter a name and description for the notification.
+5. Add webhooks or an email address for the person who should receive the notification, and select **Next**.
+6. Choose the tunnels you want to receive alerts for.
+7. Select the **Alert Sensitivity Level** threshold. It is predefined for _Medium_, but you can choose between _High_, _Medium_, and _Low_. If you need more than three sensitivity levels, use the API.
+8. Select **Create** when you are done.
+
+</TabItem> <TabItem label="API">
+
+:::note
+Refer to the [documentation for Notifications](/notifications/get-started/) to learn about specific permissions you need to access the service via the API.
+:::
+
+Send a [`POST` request](/api/resources/alerting/subresources/policies/methods/create/) to create a {props.productName} tunnel health alert. You can set tunnel health alerts with any SLO value between `0` and `99.99`.
+
+
+{ props.magicWord === "Magic Transit" && (
+  <>
+	<APIRequest
+		path="/accounts/{account_id}/alerting/v3/policies"
+		method="POST"
+		json={{
+			"alert_type": "magic_tunnel_health_check_event",
+			"description": "<DESCRIBE_POLICY>",
+			"enabled": true,
+			"filters": {
+				"slo": [
+					"99.9"
+				]
+			},
+			"mechanisms": {
+				"email": [
+					{
+						"id": "EMAIL_ADDRESS"
+					}
+				]},
+			"name": "<DESCRIBE_ALERT>"
+
+		}}
+	/>
+
+	<Code lang="json" code={`
+		{
+			"result": [
+				{
+					"id": "f174e90a-fafe-4643-bbbc-4a0ed4fc8415",
+					"name": "<POLICY_NAME>",
+					"description": "<POLICY_DESCRIPTION>",
+					"enabled": true,
+					"alert_type": "magic_tunnel_health_check_event",
+					"mechanisms": {
+						"email": [
+							{
+								"id": "<YOUR_EMAIL>"
+							}
+						]
+					},
+					"created": "2024-09-11T14:13:29.585658Z",
+					"modified": "2024-09-11T14:13:29.585658Z",
+					"conditions": {
+						"and": [
+							{
+								"or": [
+									{
+										"<=": [
+											{
+												"var": "slo"
+											},
+											"99.9"
+										]
+									}
+								]
+							}
+						]
+					},
+					"filters": {
+						"slo": ["99.9"]
+					}
+				}
+			],
+			"success": true,
+			"errors": [],
+			"messages": []
+		}
+	`} />
+  </>
+  )
+}
+
+{ props.magicWord === "Magic WAN" && (
+  <>
+	<APIRequest
+		path="/accounts/{account_id}/alerting/v3/policies"
+		method="POST"
+		json={{
+			"alert_type": "magic_wan_tunnel_health",
+			"description": "<DESCRIBE_POLICY>",
+			"enabled": true,
+			"filters": {
+				"slo": [
+					"99.9"
+				]
+			},
+			"mechanisms": {
+				"email": [
+					{
+						"id": "EMAIL_ADDRESS"
+					}
+				]},
+			"name": "<DESCRIBE_ALERT>"
+		}}
+	/>
+
+	<Code lang="json" code={`
+		{
+			"result": [
+				{
+					"id": "f174e90a-fafe-4643-bbbc-4a0ed4fc8415",
+					"name": "<POLICY_NAME>",
+					"description": "<POLICY_DESCRIPTION>",
+					"enabled": true,
+					"alert_type": "magic_wan_tunnel_health",
+					"mechanisms": {
+						"email": [
+							{
+								"id": "<YOUR_EMAIL>"
+							}
+						]
+					},
+					"created": "2024-09-11T14:13:29.585658Z",
+					"modified": "2024-09-11T14:13:29.585658Z",
+					"conditions": {
+						"and": [
+							{
+								"or": [
+									{
+										"<=": [
+											{
+												"var": "slo"
+											},
+											"99.9"
+										]
+									}
+								]
+							}
+						]
+					},
+					"filters": {
+						"slo": ["99.9"]
+					}
+				}
+			],
+			"success": true,
+			"errors": [],
+			"messages": []
+		}
+	`} />
+
+
+  </>
+  )
+}
+
+</TabItem> </Tabs>
+
+## Recommended SLO thresholds
+
+Currently, there are three SLO threshold values that are supported by the API. The SLO threshold for Magic Tunnel health alerts can be defined as the percentage of health checks that must be successful for each of the Magic Tunnel(s) included in the alert:
+
+| Alert Sensitivity Level | Recommended SLO threshold |
+| ----------------------- | ------------------------- |
+| High                    | 99.0                      |
+| Medium                  | 98.0                      |
+| Low                     | 97.0                      |
+
+With these settings, at 100% failure Cloudflare will send alerts at the following time frames, after a problem is detected:
+
+- **High sensitivity**: First alert within 10 minutes.
+- **Medium sensitivity**: First alert within 20 minutes.
+- **Low sensitivity**: First alert within 30 minutes.
+
+Refer to the <a href={props.backgroundInfoPath}>Magic tunnels background information page</a> for more information on this topic.
+
+## Test SLOs
+
+To test whether a specific alert sensitivity level works for your use case:
+
+1. [Create an alert](#set-up-magic-tunnel-health-alerts) with a specific sensitivity level for a tunnel with active traffic within the past six hours. If you are not sure of what tunnels to choose, refer to <a href={props.networkAnalyticsPath}>Network Analytics</a> to learn how you can view real-time and historical data about your network.
+2. Disable the tunnel you are testing, so there is 100% <a href={props.healthChecks}>health check failure</a>.
+3. The time it takes for Cloudflare to send you an alert will depend on the sensitivity you chose for your alerts (High, Medium or Low).

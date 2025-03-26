@@ -2,13 +2,16 @@ import { WorkerEntrypoint } from "cloudflare:workers";
 import { generateRedirectsEvaluator } from "redirects-in-workers";
 import redirectsFileContents from "../dist/__redirects";
 
-const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents);
+const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
+	maxLineLength: 10_000, // Usually 2_000
+	maxStaticRules: 10_000, // Usually 2_000
+	maxDynamicRules: 2_000, // Usually 100
+});
 
 export default class extends WorkerEntrypoint<Env> {
 	override async fetch(request: Request) {
 		try {
 			try {
-				// @ts-expect-error Ignore Fetcher type mismatch
 				const redirect = await redirectsEvaluator(request, this.env.ASSETS);
 				if (redirect) {
 					return redirect;
@@ -24,7 +27,6 @@ export default class extends WorkerEntrypoint<Env> {
 				);
 				const redirect = await redirectsEvaluator(
 					new Request(forceTrailingSlashURL, request),
-					// @ts-expect-error Ignore Fetcher type mismatch
 					this.env.ASSETS,
 				);
 				if (redirect) {

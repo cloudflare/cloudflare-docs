@@ -78,6 +78,16 @@ Refer to the [events and parameters](/workflows/build/events-and-parameters/) do
   * `config` (optional) - an optional `WorkflowStepConfig` for configuring [step specific retry behaviour](/workflows/build/sleeping-and-retrying/).
   * `callback` - an asynchronous function that optionally returns serializable state for the Workflow to persist.
 
+:::note[Returning state]
+
+When returning state from a `step`, ensure that the object you return is _serializable_.
+
+Primitive types like `string`, `number`, and `boolean`, along with composite structures such as `Array` and `Object` (provided they only contain serializable values), can be serialized.
+
+Objects that include `Function` or `Symbol` types, and objects with circular references, cannot be serialized and the Workflow instance will throw an error if objects with those types is returned. 
+
+:::
+
 * <code>step.sleep(name: string, duration: WorkflowDuration): Promise&lt;void&gt;</code>
 
   * `name` - the name of the step.
