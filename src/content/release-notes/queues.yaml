@@ -12,7 +12,7 @@ entries:
 
       Message delivery from a Queue to consumers can be paused / resumed. Queues continue to receive messages while paused.
 
-      Queues can be purged, to permanently delete all messages currently stored in a Queue. This operation is useful while testing a new application, if a queue producer was misconfigured and is sending bad messages.
+      Queues can be purged to permanently delete all messages currently stored in a Queue. This operation is useful while testing a new application, if a queue producer was misconfigured and is sending bad messages.
 
       Refer to the [documentation on Pause & Purge](/queues/configuration/pause-purge/) to learn how to use both operations.
   - publish_date: "2025-02-14"
