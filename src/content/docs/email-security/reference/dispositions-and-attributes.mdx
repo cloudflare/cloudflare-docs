@@ -34,7 +34,7 @@ You can use disposition values when [creating your quarantine policy](/email-sec
 | `SUSPICIOUS` | Traffic associated with phishing campaigns (and is under further analysis by our automated systems). | Research these messages internally to evaluate legitimacy. |
 | `SPOOF` | Traffic associated with phishing campaigns that is either non-compliant with your email authentication policies (SPF, DKIM, DMARC) or has mismatching `Envelope From` and `Header From` values. | Block after investigating (can be triggered by third-party mail services). |
 | `SPAM` | Traffic associated with non-malicious, commercial campaigns. | Route to existing Spam quarantine folder. |
-| `BULK` (dashboard only) | Traffic associated with [Graymail](https://en.wikipedia.org/wiki/Graymail_\(email\)), that fall in between the definitions of `SPAM` and `SUSPICIOUS`. For example, a marketing email that intentionally obscures its unsubscribe link. | Monitor or tag |
+| `BULK` (dashboard only) | Traffic associated with [Graymail](https://en.wikipedia.org/wiki/Graymail_\(email\)). | Monitor or tag |
 
 ### Header structure
 
