@@ -95,6 +95,18 @@ const productsByGroup = Object.entries(
 					</p>
 				</Aside>
 			)}
+			{group === "Cloudflare essentials" && (
+				<Aside type="note" title="API deprecations feed">
+					<p>
+						Cloudflare also maintains a separate{" "}
+						<a href="/fundamentals/api/reference/deprecations/">
+							API deprecations page.
+						</a>
+						<br />
+						<RSSButton href="/fundamentals/api/reference/deprecations/index.xml" />
+					</p>
+				</Aside>
+			)}
 		</>
 	))
 }
