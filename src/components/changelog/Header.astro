@@ -34,9 +34,8 @@ const products = await uniqueProducts(notes);
 >
 	<div class="text-center sm:text-left">
 		<h1>Changelog</h1>
-		<p>
-			New updates and improvements at Cloudflare.
-			<br />
+		<p>New updates and improvements at Cloudflare.</p>
+		<div class="changelog-rss-links">
 			<a
 				href="/changelog/rss/index.xml"
 				class="dark:!hover:text-[#79B1FF] -mx-2 whitespace-nowrap px-2 text-[#056DFF] no-underline hover:rounded-[4px] hover:bg-[#DCEBFF] hover:!text-[#056DFF] dark:text-[#79B1FF] dark:hover:bg-[#002B66] max-sm:block"
@@ -44,14 +43,13 @@ const products = await uniqueProducts(notes);
 				Subscribe to RSS
 				<StarlightIcon name="rss" size="18px" class="!inline align-text-top" />
 			</a>
-			&nbsp;&nbsp;<strong>|</strong>&nbsp;&nbsp;
 			<a
 				href="/fundamentals/new-features/available-rss-feeds/"
 				class="dark:!hover:text-[#79B1FF] -mx-2 whitespace-nowrap px-2 text-[#056DFF] no-underline hover:rounded-[4px] hover:bg-[#DCEBFF] hover:!text-[#056DFF] dark:text-[#79B1FF] dark:hover:bg-[#002B66] max-sm:block"
 			>
 				View all RSS feeds &gt;
 			</a>
-		</p>
+		</div>
 		{
 			products.length > 0 && (
 				<div>
@@ -82,5 +80,17 @@ const products = await uniqueProducts(notes);
 	.content-panel {
 		padding-top: 0 !important;
 		overflow-x: hidden;
+	}
+
+	.changelog-rss-links {
+		display: flex;
+		justify-content: space-between;
+		margin-top: 0.25em !important;
+	}
+
+	@media (max-width: 640px) {
+		.changelog-rss-links {
+			flex-direction: column;
+		}
 	}
 </style>
