@@ -3,7 +3,9 @@ import { Image } from "astro:assets";
 import { z } from "astro:schema";
 import { getEntry, type CollectionEntry } from "astro:content";
 
-import { StarlightIcon } from "..";
+import { Icon } from "@astrojs/starlight/components";
+import RSSButton from "~/components/RSSButton.astro";
+
 import HeroImage from "~/assets/images/changelog/hero.svg";
 
 type Props = z.input<typeof props>;
@@ -35,21 +37,11 @@ const products = await uniqueProducts(notes);
 	<div class="text-center sm:text-left">
 		<h1>Changelog</h1>
 		<p>New updates and improvements at Cloudflare.</p>
-		<div class="changelog-rss-links">
-			<a
-				href="/changelog/rss/index.xml"
-				class="dark:!hover:text-[#79B1FF] -mx-2 whitespace-nowrap px-2 text-[#056DFF] no-underline hover:rounded-[4px] hover:bg-[#DCEBFF] hover:!text-[#056DFF] dark:text-[#79B1FF] dark:hover:bg-[#002B66] max-sm:block"
-			>
-				Subscribe to RSS
-				<StarlightIcon name="rss" size="18px" class="!inline align-text-top" />
-			</a>
-			<a
-				href="/fundamentals/new-features/available-rss-feeds/"
-				class="dark:!hover:text-[#79B1FF] -mx-2 whitespace-nowrap px-2 text-[#056DFF] no-underline hover:rounded-[4px] hover:bg-[#DCEBFF] hover:!text-[#056DFF] dark:text-[#79B1FF] dark:hover:bg-[#002B66] max-sm:block"
-			>
-				View all RSS feeds &gt;
-			</a>
-		</div>
+		<p>
+			<RSSButton changelog="index" />
+			<br />
+			<RSSButton href="index" text="View all RSS feeds" icon="right-caret" />
+		</p>
 		{
 			products.length > 0 && (
 				<div>
