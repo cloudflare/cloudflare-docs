@@ -8,7 +8,7 @@ head:
     content: Create an origin rule via API
 ---
 
-import { Details, Render } from "~/components";
+import { Details, Render, APIRequest } from "~/components";
 
 Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create origin rules via API.
 
@@ -33,26 +33,24 @@ Make sure your API token has the [required permissions](#required-api-token-perm
 
 <Details header="Example: Add a rule that overrides the HTTP `Host` header">
 
-The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single origin rule — overriding the HTTP `Host` header — using the [Update a zone ruleset](/api/resources/rulesets/methods/update/) operation. The response will contain the complete definition of the ruleset you updated.
+The following example sets the rules of an existing phase ruleset (`$RULESET_ID`) to a single origin rule — overriding the HTTP `Host` header — using the [Update a zone ruleset](/api/resources/rulesets/methods/update/) operation. The response will contain the complete definition of the ruleset you updated.
 
-```bash
-curl --request PUT \
-https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "rules": [
-    {
-      "expression": "http.request.uri.query contains \"/eu/\"",
-      "description": "My first origin rule",
-      "action": "route",
-      "action_parameters": {
-        "host_header": "eu_server.example.net"
-      }
-    }
-  ]
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/rulesets/{ruleset_id}"
+	method="PUT"
+	json={{
+		rules: [
+			{
+				expression: 'http.request.uri.query contains "/eu/"',
+				description: "My first origin rule",
+				action: "route",
+				action_parameters: {
+					host_header: "eu_server.example.net",
+				},
+			},
+		],
+	}}
+/>
 
 ```json output
 {
@@ -89,56 +87,52 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 
 <Details header="Example: Add a rule that overrides the SNI value of incoming requests">
 
-The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single origin rule — overriding the SNI value of incoming requests addressed at `admin.example.com` — using the [Update a zone ruleset](/api/resources/rulesets/methods/update/) operation.
+The following example sets the rules of an existing phase ruleset (`$RULESET_ID`) to a single origin rule — overriding the SNI value of incoming requests addressed at `admin.example.com` — using the [Update a zone ruleset](/api/resources/rulesets/methods/update/) operation.
 
-```bash
-curl --request PUT \
-https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "rules": [
-    {
-      "expression": "http.host eq \"admin.example.com\"",
-      "description": "SNI Override for the admin area",
-      "action": "route",
-      "action_parameters": {
-        "sni": {
-          "value": "sni.example.com"
-        }
-      }
-    }
-  ]
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/rulesets/{ruleset_id}"
+	method="PUT"
+	json={{
+		rules: [
+			{
+				expression: 'http.host eq "admin.example.com"',
+				description: "SNI Override for the admin area",
+				action: "route",
+				action_parameters: {
+					sni: {
+						value: "sni.example.com",
+					},
+				},
+			},
+		],
+	}}
+/>
 
 </Details>
 
 <Details header="Example: Add a rule that overrides the resolved DNS record and the `Host` header of incoming requests">
 
-The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single origin rule — overriding the resolved DNS record and the `Host` header of incoming requests — using the [Update a zone ruleset](/api/resources/rulesets/methods/update/) operation. The response will contain the complete definition of the ruleset you updated.
+The following example sets the rules of an existing phase ruleset (`$RULESET_ID`) to a single origin rule — overriding the resolved DNS record and the `Host` header of incoming requests — using the [Update a zone ruleset](/api/resources/rulesets/methods/update/) operation. The response will contain the complete definition of the ruleset you updated.
 
-```bash
-curl --request PUT \
-https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "rules": [
-    {
-      "expression": "starts_with(http.request.uri.path, \"/hr-app/\")",
-      "description": "Origin rule for the company HR application",
-      "action": "route",
-      "action_parameters": {
-        "host_header": "hr-server.example.com",
-        "origin": {
-          "host": "hr-server.example.com"
-        }
-      }
-    }
-  ]
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/rulesets/{ruleset_id}"
+	method="PUT"
+	json={{
+		rules: [
+			{
+				expression: 'starts_with(http.request.uri.path, "/hr-app/")',
+				description: "Origin rule for the company HR application",
+				action: "route",
+				action_parameters: {
+					host_header: "hr-server.example.com",
+					origin: {
+						host: "hr-server.example.com",
+					},
+				},
+			},
+		],
+	}}
+/>
 
 ```json output
 {
@@ -178,28 +172,26 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 
 <Details header="Example: Add a rule that overrides the port of incoming requests">
 
-The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single origin rule — overriding the port of incoming requests — using the [Update a zone ruleset](/api/resources/rulesets/methods/update/) operation. The response will contain the complete definition of the ruleset you updated.
+The following example sets the rules of an existing phase ruleset (`$RULESET_ID`) to a single origin rule — overriding the port of incoming requests — using the [Update a zone ruleset](/api/resources/rulesets/methods/update/) operation. The response will contain the complete definition of the ruleset you updated.
 
-```bash
-curl --request PUT \
-https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "rules": [
-    {
-      "expression": "starts_with(http.request.uri.path, \"/team/calendar/\")",
-      "description": "Origin rule for the team calendar application",
-      "action": "route",
-      "action_parameters": {
-        "origin": {
-          "port": 9000
-        }
-      }
-    }
-  ]
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/rulesets/{ruleset_id}"
+	method="PUT"
+	json={{
+		rules: [
+			{
+				expression: 'starts_with(http.request.uri.path, "/team/calendar/")',
+				description: "Origin rule for the team calendar application",
+				action: "route",
+				action_parameters: {
+					origin: {
+						port: 9000,
+					},
+				},
+			},
+		],
+	}}
+/>
 
 ```json output
 {
