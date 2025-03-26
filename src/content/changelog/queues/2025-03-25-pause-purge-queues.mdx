@@ -1,6 +1,6 @@
 ---
 title: Pause & Purge Queues
-description: Queues now supports the ability to pause delivery and/or delete messages from a Queue, allowing you to better manage queue backlogs.
+description: Queues now supports the ability to pause delivery and/or delete messages from a queue, allowing you to better manage queue backlogs.
 products:
   - queues
 date: 2025-03-27 12:00:00 UTC
@@ -27,10 +27,10 @@ Purging a queue permanently deletes all messages in the queue. Unlike pausing, p
 ```bash title="Purge a queue"
 $ wrangler queues purge my-queue
 ✔ This operation will permanently delete all the messages in queue my-queue. Type my-queue to proceed. … my-queue
-Purged queue 'mar-21'
+Purged queue 'my-queue'
 ```
 
-You can also do these operations using our REST API, or the dashboard page for a queue.
+You can also do these operations using the [Queues REST API](/api/resources/queues/), or the dashboard page for a queue.
 
 ![Pause and purge using the dashboard](~/assets/images/queues/pause-purge.png)
 
