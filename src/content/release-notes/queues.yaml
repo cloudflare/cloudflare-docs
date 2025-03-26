@@ -8,7 +8,7 @@ entries:
   - publish_date: "2025-03-27"
     title: Pause delivery and purge queues
     description: |-
-      Queues includes message management controls to make it easier to handle downtime, or batches of bad messages.
+      Queues now supports the ability to pause delivery and/or delete messages from a queue, allowing you to better manage queue backlogs.
 
       Message delivery from a Queue to consumers can be paused / resumed. Queues continue to receive messages while paused.
 
