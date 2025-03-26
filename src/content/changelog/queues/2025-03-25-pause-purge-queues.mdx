@@ -6,7 +6,11 @@ products:
 date: 2025-03-27 12:00:00 UTC
 ---
 
-You can now pause message delivery from a [queue](/queues/), and purge all messages from a queue. These operations are useful to manage downtime, handle invalid messages, or run migrations.
+[Queues](/queues/) now supports the ability to pause message delivery and/or purge (delete) messages on a queue. These operations can be useful when:
+
+* Your consumer has a bug or downtime and you want to stop messages from being processed temporarily
+* If you've pushed invalid messages to a queue due to a code change during development, and need to clean up a queue without re-creating the queue
+* Your queue has a backlog that is stale and you want to clean it up to allow new messages to be delivered
 
 To pause a queue using [Wrangler](/workers/wrangler/), run the `pause-delivery` command. Paused queues continue to receive messages. And you can easily unpause a queue using the `resume-delivery` command.
 ```bash title="Pause and resume a queue"
