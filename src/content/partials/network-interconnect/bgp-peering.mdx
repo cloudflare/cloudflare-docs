@@ -103,7 +103,6 @@ BGP support currently has the following limitations:
 - The Cloudflare account ASN and the customer device ASN must be different. Only eBGP is supported.
 - Routes are always injected with a priority of `100`.
 - Bidirectional Forwarding Detection (BFD) is not supported.
-- 4-byte ASNs are not supported.
 
 <Markdown text={props.mtLimitations} />
 
@@ -113,7 +112,7 @@ BGP support currently has the following limitations:
 
 ## How to choose an ASN for BGP peering
 
-The Magic routing table is managed by the customer, who can select both the Cloudflare-side ASN and the ASN for their customer device.
+The Magic routing table is managed by the customer, who can select both the Cloudflare-side ASN and the ASN for their customer device. The customer device ASN can be 2-byte or 4-byte. [Public ASNs used for Magic Transit](/magic-transit/how-to/advertise-prefixes/#cloudflare-asn-vs-your-own-asn) are verified during the onboarding process.
 
 By default, each BGP peering session will use the same Cloudflare-side ASN to represent peering with the {props.productName} routing table. This ASN is called the **CF Account ASN** and is set to `13335`. This can be configured to a private 2-byte ASN (for example, any values between `64512` and `65534`). To set this ASN:
 
