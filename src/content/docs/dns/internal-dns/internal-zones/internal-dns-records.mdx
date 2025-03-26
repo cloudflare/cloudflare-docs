@@ -54,7 +54,7 @@ The record in zone 700 points to `def.example.local`, which Cloudflare will then
 
 If it is not possible to flatten the CNAME record, the following will happen:
 
-1. The CNAME record is returned to Gateway resolver as-is.
+1. The CNAME record is returned to [Gateway resolver](/dns/internal-dns/#architecture-overview) as-is.
 2. Gateway resolver will process the returned record, depending on the **Fallback through public DNS** configuration:
     - On: Gateway will try to resolve the query by sending it to Cloudflare's public DNS resolver ([1.1.1.1](/1.1.1.1/)).
     - Off: Gateway will return the response as-is to the client.
