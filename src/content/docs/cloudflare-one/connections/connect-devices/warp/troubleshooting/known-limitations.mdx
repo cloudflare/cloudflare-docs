@@ -86,7 +86,7 @@ The [Windows Teredo](https://learn.microsoft.com/en-us/windows/win32/teredo/abou
 
 [Docker](https://www.docker.com/products/container-runtime/) on Linux does not perform the underlying network tunnel MTU changes required by WARP. This can cause connectivity issues inside of a Docker container when WARP is enabled on the host machine. For example, `curl -v https://cloudflare.com > /dev/null` will fail if run from a Docker container that is using the default bridge network driver.
 
-To fix this issue, users of WARP with Docker on Linux can manually reconfigure the MTU on Docker's network interface. You can either modify `/etc/docker/daemon.json` to include:
+To avoid this issue, users of WARP with Docker on Linux can manually reconfigure the MTU on Docker's network interface. You can either modify `/etc/docker/daemon.json` to include:
 
 ```json
 {
