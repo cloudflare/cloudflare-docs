@@ -20,9 +20,9 @@ import {
 	Details,
 } from "~/components";
 
-[D1 Read Replication](/d1/features/read-replication/) is a feature that allows you to replicate your D1 database to multiple regions. This is useful for your e-commerce website to reduce read latencies and improve availability. In this tutorial, you will learn how to use D1 Read Replication for your e-commerce website.
+[D1 Read Replication](/d1/features/read-replication/) is a feature that allows you to replicate your D1 database to multiple regions. This is useful for your e-commerce website, as it reduces read latencies and improves availability. In this tutorial, you will learn how to use D1 read replication for your e-commerce website.
 
-While this tutorial uses a fictional e-commerce website, the principles can be applied to any use case that requires high availability and low read latencies, for example, a news website, a social media platform, or a marketing website.
+While this tutorial uses a fictional e-commerce website, the principles can be applied to any use-case that requires high availability and low read latencies, such as a news website, a social media platform, or a marketing website.
 
 ## Prerequisites
 
@@ -443,7 +443,7 @@ Create a new `public/product-details.html` file to display a single product.
 ```
 </Details>
 
-You now have a frontend that lists products and displays a single product. However, the frontend is not connected to the D1 database yet. If you start the development server now, you will see no products. In the next steps, you will create a D1 database and create APIs to fetch products and display them on the frontend.
+You now have a frontend that lists products and displays a single product. However, the frontend is not yet connected to the D1 database. If you start the development server now, you will see no products. In the next steps, you will create a D1 database and create APIs to fetch products and display them on the frontend.
 
 ## Step 3: Create a D1 database and enable read replication
 
@@ -451,7 +451,7 @@ Create a new D1 database by running the following command:
 
 ```sh
 npx wrangler d1 create fast-commerce
-````
+```
 
 Add the D1 bindings returned in the terminal to the `wrangler` file:
 
@@ -519,7 +519,7 @@ The above code creates three API routes:
 - `GET /api/products/:id`: Returns a single product.
 - `POST /api/product`: Creates or updates a product.
 
-However, the API routes are not connected to the D1 database yet. In the next steps, you will create a products table in the D1 database and update the API routes to connect to the D1 database.
+However, the API routes are not connected to the D1 database yet. In the next steps, you will create a products table in the D1 database, and update the API routes to connect to the D1 database.
 
 ## Step 5: Create the D1 database schema
 
@@ -614,13 +614,20 @@ app.post('/api/product', async (c) => {
 
 ```
 
-In the above code, you get the product data from the request body. You then check if the product exists in the database. If it does, you update the product. If it doesn't, you insert the product. You then set the bookmark in the cookie. Finally, you return the response.
+In the above code:
+
+- You get the product data from the request body.
+- You then check if the product exists in the database.
+  - If it does, you update the product.
+  - If it doesn't, you insert the product.
+- You then set the bookmark in the cookie.
+- Finally, you return the response.
 
 Since you are writing the data to the database, you use the `first-primary` constraint.
 
 The bookmark set in the cookie is used to get the latest data from the database.
 
-If you are using an external platform to manage your products, you can connect this API to the external platform such that when a product is created or updated in the external platform, the product details are automatically updated in the D1 database.
+If you are using an external platform to manage your products, you can connect this API to the external platform, such that, when a product is created or updated in the external platform, the D1 database automatically updates the product details.
 
 ### 2. GET /api/products
 
@@ -653,7 +660,14 @@ app.get('/api/products', async (c) => {
 
 ```
 
-In the above code, you get the database session bookmark from the cookie. If the bookmark is not set, you use the `first-unconstrained` constraint. You then create a database session with the bookmark. You fetch all the products from the database and get the latest bookmark. You then set this bookmark in the cookie. Finally, you return the results.
+In the above code:
+
+- You get the database session bookmark from the cookie.
+  - If the bookmark is not set, you use the `first-unconstrained` constraint.
+- You then create a database session with the bookmark.
+- You fetch all the products from the database and get the latest bookmark.
+- You then set this bookmark in the cookie.
+- Finally, you return the results.
 
 ### 3. GET /api/products/:id
 
@@ -694,7 +708,12 @@ app.get('/api/products/:id', async (c) => {
 
 ```
 
-In the above code, you get the product id from the request parameters. You then create a database session with the bookmark. You fetch the product from the database and get the latest bookmark. You then set this bookmark in the cookie. Finally, you return the results.
+In the above code:
+- You get the product ID from the request parameters.
+- You then create a database session with the bookmark.
+- You fetch the product from the database and get the latest bookmark.
+- You then set this bookmark in the cookie.
+- Finally, you return the results.
 
 
 ## Step 7: Test the application
@@ -705,9 +724,9 @@ You have now updated the API routes to connect to the D1 database. You can now t
 npm run dev
 ```
 
-Navigate to `http://localhost:8787` and you should see the products listed. Click on a product to view the product details.
+Navigate to `http://localhost:8787. You should see the products listed. Click on a product to view the product details.
 
-To insert a new product, you can use the following command:
+To insert a new product, use the following command:
 
 ```sh
 curl -X POST http://localhost:8787/api/product \
@@ -715,9 +734,9 @@ curl -X POST http://localhost:8787/api/product \
      -d '{"id": 6, "name": "Fast Computer", "description": "A computer for your home or office", "price": 1000.00, "inventory": 10, "category": "Electronics"}'
 ```
 
-Navigate to `http://localhost:8787/product-details?id=6` and you should see the new product.
+Navigate to `http://localhost:8787/product-details?id=6`. You should see the new product.
 
-Update the product, using the following command and navigate to `http://localhost:8787/product-details?id=6` again. You will see the updated product.
+Update the product using the following command, and navigate to `http://localhost:8787/product-details?id=6` again. You will see the updated product.
 
 ```sh
 curl -X POST http://localhost:8787/api/product \
@@ -759,7 +778,7 @@ In this tutorial, you learned how to use D1 Read Replication for your e-commerce
 
 You then created the products table in the remote database and deployed the application.
 
-You can use the same approach for your existing read heavy application to reduce read latencies and improve availability. If you are using an external platform to manage the content, you can connect the external platform to the D1 database so that the content is automatically updated in the database.
+You can use the same approach for your existing read heavy application to reduce read latencies and improve availability. If you are using an external platform to manage the content, you can connect the external platform to the D1 database, so that the content is automatically updated in the database.
 
 You can find the complete code for this tutorial in the [GitHub repository](https://github.com/harshil1712/e-com-d1-hono).
 
