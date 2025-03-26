@@ -110,14 +110,14 @@ Cloudflare only recommends applying a MSS clamp to adjust the size of TCP packet
 
 { props.magicProduct === "Magic WAN" && (
   <>
-    <Render file="mtu-mss/mss-clamping-ipsec" product="magic-wan" />
+    <Render file="magic-wan/mtu-mss/mss-clamping-ipsec" product="networking-services" />
   </>
   )
 }
 
 { props.magicProduct === "Magic Transit" && (
   <>
-    <Render file="mtu-mss/mss-clamping-ipsec" />
+    <Render file="magic-transit/mtu-mss/mss-clamping-ipsec" product="networking-services" />
   </>
   )
 }
