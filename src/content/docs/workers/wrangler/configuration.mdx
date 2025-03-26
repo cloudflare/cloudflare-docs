@@ -176,8 +176,7 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
 - `minify` <Type text="boolean" /> <MetaInfo text="optional" />
 
   - Minify the Worker script before uploading.
-  - If you're using the [Cloudflare Vite plugin](/workers/local-development/vite/), `minify` is replaced by Vite's `build.minify` - refer to the [Vite
-    documentation](https://vite.dev/config/build-options.html#build-minify).
+  - If you're using the [Cloudflare Vite plugin](/workers/local-development/vite/), `minify` is replaced by Vite's [`build.minify`](https://vite.dev/config/build-options.html#build-minify).
 
 - `logpush` <Type text="boolean" /> <MetaInfo text="optional" />
 
@@ -201,8 +200,7 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
 - `define` <Type text="Record<string, string>" /> <MetaInfo text="optional" />
 
   - A map of values to substitute when deploying your Worker.
-  - If you're using the [Cloudflare Vite plugin](/workers/local-development/vite/), this is replaced by Vite's `define` - refer to the [Vite
-    documentation](https://vite.dev/config/shared-options.html#define).
+  - If you're using the [Cloudflare Vite plugin](/workers/local-development/vite/), this is replaced by Vite's [`define`](https://vite.dev/config/shared-options.html#define).
 
 - `vars` <Type text="object" /> <MetaInfo text="optional" />
 
@@ -383,7 +381,7 @@ head_sampling_rate = 0.1 # 10% of requests are logged
 
 ## Custom builds
 
-::: note
+:::note
 Not applicable if you're using the [Cloudflare Vite plugin](/workers/local-development/vite/).
 :::
 
@@ -1036,7 +1034,7 @@ assets = { directory = "./public", binding = "ASSETS", html_handling = "force-tr
 
 ## Bundling
 
-::: note
+:::note
 Wrangler bundling is not applicable if you're using the [Cloudflare Vite plugin](/workers/local-development/vite/).
 :::
 
@@ -1097,7 +1095,9 @@ See https://developers.cloudflare.com/workers/wrangler/bundling/ for more detail
 
 ## Local development settings
 
-Q: is this replaced by vite's server options?
+:::note
+If you're using the [Cloudflare Vite plugin](/workers/local-development/vite/), you should use Vite's [server options]](https://vite.dev/config/server-options.html) instead.
+:::
 
 You can configure various aspects of local development, such as the local protocol or port.
 
@@ -1143,8 +1143,7 @@ local_protocol = "http"
 ## Module Aliasing
 
 :::note
-If you're using the [Cloudflare Vite plugin](/workers/local-development/vite/), `alias` is replaced Vite's `resolve.alias` - refer to the [Vite
-documentation](https://vite.dev/config/shared-options.html#resolve-alias).
+If you're using the [Cloudflare Vite plugin](/workers/local-development/vite/), `alias` is replaced Vite's [`resolve.alias`](https://vite.dev/config/shared-options.html#resolve-alias).
 :::
 
 You can configure Wrangler to replace all calls to import a particular package with a module of your choice, by configuring the `alias` field:
