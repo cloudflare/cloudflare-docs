@@ -33,7 +33,7 @@ To do this you need to deploy a Worker that allows email clients to pull Cloudfl
 
 4. Go to your **Account** > **Workers & Pages** and press **Create Application**. Pick the default "Hello World" option button, and replace the sample worker code with the following:
 
-```index.js
+```js
 export default {
   async fetch(request, env, ctx) {
     return await fetch("https://mta-sts.mx.cloudflare.net/.well-known/mta-sts.txt")
