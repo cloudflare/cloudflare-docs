@@ -39,7 +39,11 @@ const products = await uniqueProducts(notes);
 		<p>
 			<RSSButton changelog="index" />
 			<br />
-			<RSSButton href="index" text="View all RSS feeds" icon="right-caret" />
+			<RSSButton
+				href="/fundamentals/new-features/available-rss-feeds/"
+				text="View all RSS feeds"
+				icon="right-caret"
+			/>
 		</p>
 		{
 			products.length > 0 && (
