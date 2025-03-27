@@ -59,7 +59,7 @@ Below is an example of configuring a lifecycle configuration (a collection of li
 
 ```js title="Configure the S3 client to interact with R2"
 const client = new S3({
-	endpoint: "https://<bucket>.r2.cloudflarestorage.com",
+	endpoint: "https://<account_id>.r2.cloudflarestorage.com",
 	credentials: {
 		accessKeyId: "<access_key_id>",
 		secretAccessKey: "<access_key_secret>",
@@ -154,7 +154,7 @@ import S3 from "aws-sdk/clients/s3.js";
 
 // Configure the S3 client to talk to R2.
 const client = new S3({
-	endpoint: "https://<bucket>.r2.cloudflarestorage.com",
+	endpoint: "https://<account_id>.r2.cloudflarestorage.com",
 	credentials: {
 		accessKeyId: "<access_key_id>",
 		secretAccessKey: "<access_key_secret>",
@@ -197,7 +197,7 @@ import S3 from "aws-sdk/clients/s3.js";
 
 // Configure the S3 client to talk to R2.
 const client = new S3({
-	endpoint: "https://<bucket>.r2.cloudflarestorage.com",
+	endpoint: "https://<account_id>.r2.cloudflarestorage.com",
 	credentials: {
 		accessKeyId: "<access_key_id>",
 		secretAccessKey: "<access_key_secret>",

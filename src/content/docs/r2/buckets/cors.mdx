@@ -43,7 +43,7 @@ The example below shows how to generate a presigned `PutObject` URL using the [`
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 const S3 = new S3Client({
-	endpoint: "https://<bucket>.r2.cloudflarestorage.com",
+	endpoint: "https://<account_id>.r2.cloudflarestorage.com",
 	credentials: {
 		accessKeyId: "<access_key_id>",
 		secretAccessKey: "<access_key_secret>",
