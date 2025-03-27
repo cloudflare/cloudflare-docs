@@ -9,6 +9,7 @@ head:
 ---
 
 import { Render } from "~/components";
+import SubtractIPCalculator from "~/components/SubtractIPCalculator.tsx";
 
 This guide covers how to connect an Amazon Web Services (AWS) virtual machine to Cloudflare using our lightweight connector, `cloudflared`.
 
@@ -98,7 +99,20 @@ EOF
 [Private network routes](/cloudflare-one/connections/connect-networks/private-net/cloudflared/) allow users to connect to your virtual private cloud (VPC) using the WARP client. To add a private network route for your Cloudflare Tunnel:
 
 1. In the **Private Network** tab, enter the **Private IPv4 address** of your AWS instance (for example, `172.31.19.0`). You can expand the IP range later if necessary.
-2. In your [Split Tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route), make sure the private IP is routing through WARP. For example, if you are using Split Tunnels in Exclude mode, delete `172.16.0.0/12`. We recommend re-adding the IPs that are not explicitly used by your AWS instance -- you can use [this calculator](https://www.procustodibus.com/blog/2021/03/wireguard-allowedips-calculator/) to determine which IP addresses to re-add.
+2. In your [Split Tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route), make sure the private IP is routing through WARP. For example, if you are using Split Tunnels in Exclude mode, delete `172.16.0.0/12`. We recommend re-adding the IPs that are not explicitly used by your AWS instance.
+
+		To determine which IP addresses to re-add, subtract your AWS instance IPs from `172.16.0.0/12`:
+
+		<SubtractIPCalculator
+			client:load
+			defaults={{
+				base: "172.16.0.0/12",
+				exclude: ["172.31.19.0", "172.24.0.0/16"]
+			}}
+		/>
+
+		Add the results back to your Split Tunnel Exclude mode list.
+
 3. To test on a user device:
 
    1. [Log in to the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/).

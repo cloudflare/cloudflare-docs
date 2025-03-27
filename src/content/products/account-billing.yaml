@@ -2,7 +2,7 @@ name: Account and Billing
 
 product:
   title: Account and Billing
-  group: Cloudflare essentials
+  group: Core platform
   url: /fundamentals/subscriptions-and-billing/
 
 meta:

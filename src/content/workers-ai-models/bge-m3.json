@@ -1,0 +1,83 @@
+{
+    "id": "eed32bc1-8775-4985-89ce-dd1405508ad8",
+    "source": 1,
+    "name": "@cf/baai/bge-m3",
+    "description": "Multi-Functionality, Multi-Linguality, and Multi-Granularity embeddings model.",
+    "task": {
+        "id": "0137cdcf-162a-4108-94f2-1ca59e8c65ee",
+        "name": "Text Embeddings",
+        "description": "Feature extraction models transform raw data into numerical features that can be processed while preserving the information in the original dataset. These models are ideal as part of building vector search applications or Retrieval Augmented Generation workflows with Large Language Models (LLM)."
+    },
+    "tags": [],
+    "properties": [],
+    "schema": {
+        "input": {
+            "type": "object",
+            "properties": {
+                "query": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "A query you wish to perform against the provided contexts. If no query is provided the model with respond with embeddings for contexts"
+                },
+                "contexts": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "text": {
+                                "type": "string",
+                                "minLength": 1,
+                                "description": "One of the provided context content"
+                            }
+                        }
+                    },
+                    "description": "List of provided contexts. Note that the index in this array is important, as the response will refer to it."
+                }
+            },
+            "required": [
+                "contexts"
+            ]
+        },
+        "output": {
+            "type": "object",
+            "contentType": "application/json",
+            "oneOf": [
+                {
+                    "title": "Query",
+                    "properties": {
+                        "response": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "description": "Index of the context in the request"
+                                    },
+                                    "score": {
+                                        "type": "number",
+                                        "description": "Score of the context under the index."
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "title": "Embedding",
+                    "properties": {
+                        "response": {
+                            "type": "array",
+                            "items": {
+                                "type": "array",
+                                "items": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

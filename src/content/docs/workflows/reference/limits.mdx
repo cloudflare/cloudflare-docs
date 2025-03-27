@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { Render } from "~/components"
+import { Render, WranglerConfig } from "~/components"
 
 Limits that apply to authoring, deploying, and running Workflows are detailed below.
 
@@ -16,7 +16,7 @@ Many limits are inherited from those applied to Workers scripts and as documente
 | ----------------------------------------- | ----------------------- | --------------------- |
 | Workflow class definitions per script     | 3MB max script size per [Worker size limits](/workers/platform/limits/#account-plan-limits) | 10MB max script size per [Worker size limits](/workers/platform/limits/#account-plan-limits)
 | Total scripts per account                 | 100 | 500 (shared with [Worker script limits](/workers/platform/limits/#account-plan-limits) |
-| Compute time per step [^3]                | 10 seconds | 30 seconds of [active CPU time](/workers/platform/limits/#cpu-time) |
+| Compute time per step [^3]                | 10 seconds | 30 seconds (default) / configurable to 5 minutes of [active CPU time](/workers/platform/limits/#cpu-time) |
 | Duration (wall clock) per step [^3]       | Unlimited | Unlimited - for example, waiting on network I/O calls or querying a database |
 | Maximum persisted state per step          | 1MiB (2^20 bytes) | 1MiB (2^20 bytes) |
 | Maximum event [payload size](/workflows/build/events-and-parameters/) | 1MiB (2^20 bytes) | 1MiB (2^20 bytes) |
@@ -35,7 +35,7 @@ Many limits are inherited from those applied to Workers scripts and as documente
 
 [^2]: Workflow state and logs will be retained for 3 days on the Workers Free plan and for 7 days on the Workers Paid plan.
 
-[^3]: A Workflow instance can run forever, as long as each step does not take more than the CPU time limit and the maximum number of steps per Workflow is not reached.
+[^3]: A Workflow instance can run forever, as long as each step does not take more than the CPU time limit and the maximum number of steps per Workflow is not reached. 
 
 [^4]: Match pattern: _```^[a-zA-Z0-9_][a-zA-Z0-9-_]*$```_
 
@@ -44,3 +44,25 @@ Many limits are inherited from those applied to Workers scripts and as documente
 [^6]: Workflows will return a HTTP 429 rate limited error if you exceed the rate of new Workflow instance creation.
 
 <Render file="limits_increase" product="workers" />
+
+### Increasing Workflow CPU limits
+
+Workflows are Worker scripts, and share the same [per invocation CPU limits](/workers/platform/limits/#worker-limits) as any Workers do. Note that CPU time is active processing time: not time spent waiting on network requests, storage calls, or other general I/O, which don't count towards your CPU time or Workflows compute consumption.
+
+By default, the maximum CPU time per Workflow invocation is set to 30 seconds, but can be increased for all invocations associated with a Workflow definition by setting `limits.cpu_ms` in your Wrangler configuration:
+
+<WranglerConfig>
+
+```jsonc
+{
+  // ...rest of your configuration...
+  "limits": {
+    "cpu_ms": 300000, // 300,000 milliseconds = 5 minutes
+  },
+  // ...rest of your configuration...
+}
+```
+
+</WranglerConfig>
+
+To learn more about CPU time and limits, [review the Workers documentation](/workers/platform/limits/#cpu-time).

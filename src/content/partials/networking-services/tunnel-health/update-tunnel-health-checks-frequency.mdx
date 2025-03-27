@@ -1,0 +1,70 @@
+---
+params:
+  - magicProduct?
+  - productName
+  - healthChecksUrl
+  - addTunnelsPath
+---
+
+import { CURL, AnchorHeading, GlossaryTooltip, Markdown, TabItem, Tabs } from "~/components";
+
+By default, Cloudflare servers send <GlossaryTooltip term="tunnel health-check" link={props.healthChecksUrl}>health checks</GlossaryTooltip> to each <GlossaryTooltip term="GRE tunnel">GRE</GlossaryTooltip>, CNI, or <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnel endpoint you configure to receive traffic from {props.productName}.
+
+{ props.magicProduct === "Magic WAN" && (
+  <>
+		<p>For Magic WAN Connector, health checks are sent to IPsec tunnel endpoints.</p>
+  </>
+  )
+}
+
+You can configure the health check frequency via the dashboard or [the API](/api/resources/magic_transit/subresources/gre_tunnels/methods/update/) to suit your use case. For example, if you are connecting a lower-traffic site for which you do not need immediate failover and would rather receive a lower volume of health check traffic, you should set the frequency to `low`. On the other hand, if you are connecting a site that is extremely sensitive to any issues, and you want a more proactive failover at the earliest sign of a potential problem, you should set this to `high`.
+
+Available options are `low`, `mid`, and `high`.
+
+{ props.magicProduct === "Magic WAN" && (
+  <>
+		<p>To configure health checks frequency in Magic WAN Connector, refer to <a href="#configure-connector">Configure Connector</a></p>
+  </>
+  )
+}
+
+{ props.magicProduct === "Magic WAN" && (
+  <>
+		<AnchorHeading depth={2} title="Manual configuration" />
+  </>
+  )
+}
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. Refer to <a href={props.addTunnelsPath}>Add tunnels</a> to learn how to create or edit your tunnel.
+2. Change the **Health check rate** to your desired rate. For example, _Low_.
+3. Save your changes.
+
+</TabItem> <TabItem label="API">
+
+You can adjust the health check frequency by updating your [GRE](/api/resources/magic_transit/subresources/gre_tunnels/methods/update/), [IPsec](/api/resources/magic_transit/subresources/ipsec_tunnels/methods/update/), or [CNI](/api/resources/magic_transit/subresources/cf_interconnects/methods/update/) tunnels.
+
+Below is an example of how to adjust tunnel health check frequency to `low`. Note that this command applies to GRE, IPsec and CNI tunnels:
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{ipsec_tunnel_id}"
+	method="PUT"
+	json={{
+		"health_check":
+			{
+				"rate": "low"
+			}
+	}}
+/>
+
+
+</TabItem> </Tabs>
+
+{ props.magicProduct === "Magic WAN" && (
+  <>
+		<AnchorHeading depth={2} title="Configure Connector" />
+		<ol><li>Log in to the <a href='https://dash.cloudflare.com/'>Cloudflare dashboard</a> and select your account.</li><li>Go to <strong>Magic WAN</strong> {'>'} <strong>Sites</strong>.</li><li>Select your site {'>'} <strong>Edit</strong>.</li><li>In <strong>Network</strong> {'>'} <strong>WAN configuration</strong> {'>'} select your WAN {'>'} <strong>Edit</strong>.</li><li>Change the <strong>Health check rate</strong> to your desire rate.</li><li>Select <strong>Save</strong>.</li></ol>
+  </>
+  )
+}

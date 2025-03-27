@@ -38,7 +38,7 @@ This guide will instruct you through setting up and deploying a static site on W
 <PackageManagers
 	type="create"
 	pkg="cloudflare@latest"
-	args={"my-static-site --experimental"}
+	args={"my-static-site"}
 />
 
 <Render
@@ -46,7 +46,7 @@ This guide will instruct you through setting up and deploying a static site on W
 	product="workers"
 	params={{
 		category: "hello-world",
-		type: "Hello World - Assets-only",
+		type: "Assets only",
 		lang: "TypeScript",
 	}}
 />
@@ -96,7 +96,7 @@ Open a terminal window and run C3 to create your Worker project:
 <PackageManagers
 	type="create"
 	pkg="cloudflare@latest"
-	args={"my-dynamic-site --experimental"}
+	args={"my-dynamic-site"}
 />
 
 <Render
@@ -104,7 +104,7 @@ Open a terminal window and run C3 to create your Worker project:
 	product="workers"
 	params={{
 		category: "hello-world",
-		type: "Hello World - Worker with Assets",
+		type: "Worker + Assets",
 		lang: "TypeScript",
 	}}
 />

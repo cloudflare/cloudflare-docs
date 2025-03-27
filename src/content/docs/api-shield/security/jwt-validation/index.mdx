@@ -1,6 +1,6 @@
 ---
 pcx_content_type: concept
-title: JSON Web Tokens Validation
+title: JSON Web Tokens validation
 sidebar:
   order: 6
 
@@ -10,15 +10,15 @@ import { GlossaryTooltip } from "~/components"
 
 <GlossaryTooltip term="JSON web token (JWT)">JSON web tokens (JWT)</GlossaryTooltip> are often used as part of an authentication component on many web applications today. Since JWTs are crucial to identifying users and their access, ensuring the token’s integrity is important.
 
-API Shield’s JWT Validation stops JWT replay attacks and JWT tampering by cryptographically verifying incoming JWTs before they are passed to your API origin. JWT Validation will also stop requests with expired tokens or tokens that are not yet valid.
+API Shield’s JWT validation stops JWT replay attacks and JWT tampering by cryptographically verifying incoming JWTs before they are passed to your API origin. JWT validation will also stop requests with expired tokens or tokens that are not yet valid.
 
 ## Process
 
-Endpoints must be added to [Endpoint Management](/api-shield/management-and-monitoring/) for JWT Validation to protect them.
+Endpoints must be added to [Endpoint Management](/api-shield/management-and-monitoring/) for JWT validation to protect them.
 
-A JWT Validation configuration consists of creating a Token Validation Configuration by adding your JWT signer's public JSON Web Key Set (JWKS) and a JWT Validation Rule by specifying which hostnames and endpoints should be included for validation.
+A JWT validation configuration consists of creating a token validation configuration by adding your JWT signer's public JSON Web Key Set (JWKS) and a JWT validation rule by specifying which hostnames and endpoints should be included for validation.
 
-### Add a Token Validation Configuration
+### Add a token validation configuration
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
 2. Go to **Security** > **API Shield** > **Settings**.
@@ -31,17 +31,17 @@ Each JWT issuer typically publishes public keys (JWKS) for verification at a kno
 
 To automatically keep your JWKS up to date when your identity provider refreshes them, you can use a Worker. Refer to [Configure Workers to automatically update keys](/api-shield/security/jwt-validation/jwt-worker/) to learn more about setting up the Worker.
 
-### Add a JWT Validation Rule
+### Add a JWT validation rule
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
 2. Go to **Security** > **API Shield** > **API Rules**.
 3. <a id="rule-form"/>
    Add a name for your rule.
 4. Select a hostname to protect requests with saved endpoints using the rule.
-5. Deselect any endpoints that you want JWT Validation to ignore (for example, an endpoint used to generate a JWT).
-6. Select the Token Validation Configuration that corresponds to the incoming requests.
+5. Deselect any endpoints that you want JWT validation to ignore (for example, an endpoint used to generate a JWT).
+6. Select the token validation configuration that corresponds to the incoming requests.
 7. Choose whether to strictly enforce token presence on these endpoints.
-  - You may not expect 100% of clients to send in JWTs with their requests. If this is the case, choose *Ignore*. JWT Validation will still validate JWTs that are present.
+  - You may not expect 100% of clients to send in JWTs with their requests. If this is the case, choose *Ignore*. JWT validation will still validate JWTs that are present.
   - You may otherwise expect all requests to the selected hostname and endpoints to contain JWTs. If this is the case, choose *Mark as non-compliant*.
 8. Choose an action to take for non-compliant requests. For example, JWTs that do not pass validation (expired, tampered with, or bad signature tokens) or requests with missing JWTs when *Mark as non-compliant* is selected in the previous step.
 9. Select **Save**.
@@ -67,11 +67,11 @@ API Shield will verify JSON Web Tokens regardless of whether or not they have th
 
 ## Availability
 
-JWT Validation is available for all API Shield customers. Enterprise customers who have not purchased API Shield can preview [API Shield as a non-contract service](https://dash.cloudflare.com/?to=/:account/:zone/security/api-shield) in the Cloudflare dashboard or by contacting your account team.
+JWT validation is available for all API Shield customers. Enterprise customers who have not purchased API Shield can preview [API Shield as a non-contract service](https://dash.cloudflare.com/?to=/:account/:zone/security/api-shield) in the Cloudflare dashboard or by contacting your account team.
 
 ## Limitations
 
 Currently, the following known limitations exist:
 
-1. JWT Validation only operates on JWTs sent in client request headers or cookies. If your clients send in JWTs in a `POST` body, direct that feedback to your account team.
-2. JWT Validation only operates for <GlossaryTooltip term="API endpoint">endpoints</GlossaryTooltip> (host, method, and path) added to Endpoint Management. You can add all of your endpoints to endpoint management through [API Discovery](/api-shield/management-and-monitoring/#add-endpoints-from-api-discovery), [Schema Validation](/api-shield/management-and-monitoring/#add-endpoints-from-schema-validation), [manually via the Cloudflare dashboard](/api-shield/management-and-monitoring/#add-endpoints-manually), or via the [API](/api/resources/api_gateway/subresources/operations/methods/create/).
+1. JWT validation only operates on JWTs sent in client request headers or cookies. If your clients send in JWTs in a `POST` body, direct that feedback to your account team.
+2. JWT validation only operates for <GlossaryTooltip term="API endpoint">endpoints</GlossaryTooltip> (host, method, and path) added to Endpoint Management. You can add all of your endpoints to endpoint management through [API Discovery](/api-shield/management-and-monitoring/#add-endpoints-from-api-discovery), [Schema validation](/api-shield/management-and-monitoring/#add-endpoints-from-schema-validation), [manually via the Cloudflare dashboard](/api-shield/management-and-monitoring/#add-endpoints-manually), or via the [API](/api/resources/api_gateway/subresources/operations/methods/create/).

@@ -8,7 +8,7 @@ product:
   tags: [AI]
 
 meta:
-  title: Vectorize
+  title: Cloudflare Vectorize docs
   description: Documentation for Vectorize, Cloudflare's vector database
   author: "@cloudflare"
 

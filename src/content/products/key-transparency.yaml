@@ -7,6 +7,6 @@ product:
   additional_groups: [Privacy]
 
 meta:
-  title: Key Transparency Auditor
-  description: Key Transparency Auditor docs
+  title: Key Transparency Auditor docs
+  description: Secure the distribution of public keys in your end-to-end encrypted messaging systems.
   author: "@cloudflare"

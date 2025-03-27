@@ -2,6 +2,6 @@ dist
 # generated actions JS
 .github/**/*/index.js
 .github/CODEOWNERS
-public/_redirects
+public/__redirects
 public/analytics/static/downloads/main.css
 src/content/workers-ai-models/*.json

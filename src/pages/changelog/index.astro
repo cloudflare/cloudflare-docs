@@ -11,7 +11,9 @@ import { Steps } from "~/components";
 import { format } from "date-fns";
 import { getChangelogs } from "~/util/changelog";
 
-const notes = await getChangelogs({});
+const notes = await getChangelogs({
+	filter: (entry) => !entry.data.hidden,
+});
 
 const props = {
 	frontmatter: {

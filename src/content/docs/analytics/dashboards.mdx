@@ -1,0 +1,96 @@
+---
+pcx_content_type: reference
+title: Custom dashboards
+sidebar:
+  order: 9
+
+---
+
+Custom dashboards allow you to create tailored dashboards to monitor application security, performance, and usage. You can create monitors for ongoing monitoring of a previous incident, use them to identify indicators of suspicious activity, and access templates to help you get started.
+
+Dashboards provide a visual interface that displays key metrics and analytics, helping you monitor and analyze data efficiently. Different dashboards serve different purposes. For example, a security dashboard tracks attack attempts and threats, a performance dashboard monitors API latency and uptime, and a usage dashboard analyzes traffic patterns and user behavior.
+
+Different metrics serve distinct roles in providing insights into your application’s performance. For example, total HTTP requests offers an overview of traffic volume, while average response time helps assess application speed. Additionally, usage metrics such as traffic patterns and user behavior provide insight into how users interact with your application. These metrics together enable you to spot trends, identify problems, and make informed, data-driven decisions.
+
+:::note
+Custom Dashboards is currently available to customers participating in the Log Explorer beta. To begin using custom dashboards, you will first need to request access to [Log Explorer](/logs/log-explorer/). 
+:::
+
+## Create a new dashboard
+
+To create a new dashboard, log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account. Then, navigate to **Analytics & Logs** and open the **Dashboards** section.
+
+When creating a dashboard, you have two options: building one from scratch or using a pre-designed template.
+
+- A **from-scratch dashboard** gives you full control over its structure, allowing you to choose the exact datasets, metrics, and visualizations that fit your needs. This approach is ideal if you have specific monitoring goals or need a highly customized view of your data.
+- On the other hand, **templates** provide a faster way to set up a dashboard with commonly used metrics and charts. They are useful for standard use cases, such as monitoring security threats, API performance, or bot traffic. Templates help you get started quickly while still allowing modifications to fit your requirements.
+
+Choosing between these options depends on whether you need a quick setup with predefined insights or a fully customized dashboard tailored to your unique analysis needs.
+
+### Create a dashboard from scratch
+
+When creating a dashboard from scratch, select the option **Create a new**. You can follow the instructions in the following sections to start adding charts to your dashboard. 
+
+#### Create a new chart
+
+To create a new chart, select **Add chart**. There are two ways to create a chart:
+
+- **Use a prompt**: Enter a query like `Compare status code ranges over time`. The AI model decides the most appropriate visualization and constructs your chart configuration.
+- **Customize your chart**: Select the chart elements manually, including the chart type, title, dataset to query, metrics, and filters. This option gives you full control over your chart’s structure. 
+
+Refer to the following sections for more information about the charts, datasets, fields, metrics, and filters available.
+
+##### Chart types
+
+The available chart types include:
+
+- **Timeseries**: Displays trends over time, enabling comparisons across multiple series.
+- **Categorical**: Compares proportions across different series.
+- **Stat**: Highlights a single value, showing its delta and sparkline for quick insights.
+- **Percentage**: Represents one value as a percentage of another.
+- **Top N**: Identifies the highest-ranking values for a given attribute.
+
+##### Datasets and metrics
+
+The available metrics and filters vary based on the dataset you want to use. For example, when using the HTTP Requests dataset, you can select **origin response duration** as a metric. You can then choose your preferred aggregation method for that metric, such as total, median, or quantiles. The following table outlines the datasets, fields, and available metrics:
+
+
+| Dataset          | Field                  | Definition | Metrics |
+|-----------------|-----------------|------------|---------|
+| HTTP Requests | Requests | The number of requests sent by a client to a server over the HTTP protocol. | Total |
+| | DNS Response Time | The time taken for a DNS query to be resolved, measured from when a request is made to when a response is received. | Total, Average, Median, 95th percentile, 99th percentile |
+| | Time to First Byte | The duration from when a request is made to when the first byte of the response is received from the server. | Total, Average, Median, 95th percentile, 99th percentile |
+| | Bytes returned to the Client | The amount of data (in bytes) sent from the server to the client in response to requests. | Total, Average, Median, 95th percentile, 99th percentile |
+| | Number of visits | Unique visits or sessions to a website or application. | Total |
+| | Origin response duration | The time taken by the origin server to process and respond to a request. | Total, Average, Median, 95th percentile, 99th percentile |
+| Security Events | Security events | Actions taken by Application Security products such as WAF and Bot Management. | Total |
+
+##### Filters
+
+You can also adjust the scope of your analytics by entering filter conditions. This allows you to focus on the most relevant data.
+
+1. Select **Add filter**.
+2. Select a **field**, an **operator**, and a **value**. For example, to filter events by source IP address, select the _Source IP_ field, select the _equals_ operator, and enter the _IP address_.
+3. Select **Apply**.
+
+### Create a dashboard from a template
+
+Alternatively, you can choose to create your dashboard using a pre-designed dashboard template. The templates available are:
+
+- **Bot monitoring**: Allows you to identify automated traffic accessing your website.
+- **API Security**: Allows you to monitor data transfers and exceptions for API endpoints in your application.
+- **API Performance**: Allows you to view timing data for API endpoints in your application, along with error rates. 
+- **Account takeover**: Allows you to monitor login attempts, usage of leaked credentials, and account takeover attacks.
+
+## Edit a dashboard or chart
+
+After creating your dashboard, to view your saved dashboards, select **Back to all dashboards** to access the full list. Regardless of the way you choose to create your dashboard, you can always edit existing charts and add new ones as needed.
+
+## Further analysis
+
+For each chart, you can:
+
+- Review related traffic in [Security Analytics](/waf/analytics/security-analytics/).
+- Explore detailed logs in [Log Explorer](/logs/log-explorer/).
+
+This ensures deeper insights into your application's security, performance, and usage patterns.

@@ -22,7 +22,11 @@ In this guide, you will create a new Nuxt application and deploy it using Cloudf
 
 ### Video Tutorial
 
-<Stream id="fd106a56e13af42eb39b35c499432e4b" title="Deploy a Nuxt Application to Cloudflare" thumbnail="2.5s" />
+<Stream
+	id="fd106a56e13af42eb39b35c499432e4b"
+	title="Deploy a Nuxt Application to Cloudflare"
+	thumbnail="2.5s"
+/>
 
 ## Create a new project using the `create-cloudflare` CLI (C3)
 
@@ -74,12 +78,7 @@ git push -u origin main
 
 ### Create a Pages project
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Workers & Pages** > **Create application** > **Pages** > **Connect to Git** and create a new Pages project.
-
-You will be asked to authorize access to your GitHub account if you have not already done so. Cloudflare needs this so that it can monitor and deploy your projects from the source. You may narrow access to specific repositories if you prefer; however, you will have to manually update this list [within your GitHub settings](https://github.com/settings/installations) when you want to add more repositories to Cloudflare Pages.
-
-3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
+<Render file="deploy-to-pages-steps-with-preset" params={{ name: "Nuxt.js" }} />
 
 <PagesBuildPreset framework="nuxt-js" />
 

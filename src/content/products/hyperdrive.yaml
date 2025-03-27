@@ -7,7 +7,7 @@ product:
   additional_groups: [Storage]
 
 meta:
-  title: Hyperdrive
+  title: Hyperdrive docs
   description: Service which accelerates queries you make to existing databases.
   author: "@cloudflare"
 

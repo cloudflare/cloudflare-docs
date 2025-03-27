@@ -1,0 +1,27 @@
+---
+import { z } from "astro:schema";
+import { Icon } from "@astrojs/starlight/components";
+
+const props = z
+	.object({
+		changelog: z
+			.string()
+			.transform((val) => val.toLowerCase().replaceAll(" ", "-")),
+	})
+	.or(
+		z.object({
+			href: z.string(),
+		}),
+	);
+
+const input = props.parse(Astro.props);
+---
+
+<a
+	href={"href" in input ? input.href : `/changelog/rss/${input.changelog}.xml`}
+	class="inline-flex items-center justify-center gap-1 rounded font-semibold no-underline"
+	target="_blank"
+>
+	Subscribe to RSS
+	<Icon name="rss" size="1.25rem" />
+</a>

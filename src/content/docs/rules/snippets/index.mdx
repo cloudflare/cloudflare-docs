@@ -11,7 +11,7 @@ head:
     content: Cloudflare Snippets (beta)
 ---
 
-import { FeatureTable, GlossaryTooltip, Render } from "~/components";
+import { FeatureTable, GlossaryTooltip, Render, Card } from "~/components";
 
 Cloudflare Snippets (beta) provide a powerful and flexible way to customize the behavior of your website or application using short pieces of JavaScript code. With Snippets, you can modify HTTP response headers, implement <GlossaryTooltip term="JSON web token (JWT)" prepend="JSON web token (JWT) is ">JWT</GlossaryTooltip> validation, perform complex <GlossaryTooltip term="redirect">redirects</GlossaryTooltip>, and much more.
 
@@ -49,13 +49,19 @@ Each <GlossaryTooltip term="Snippets subrequest" prepend="A subrequest is ">subr
 
 ## Limits
 
-Cloudflare Snippets are lightweight compared to [Cloudflare Workers](/workers/). The following limits apply:
+Cloudflare Snippets are designed for fast, lightweight edge logic. The following limits apply:
 
 | Description                | All plans |
 | -------------------------- | --------- |
 | Maximum execution time     | 5 ms      |
 | Maximum memory             | 2 MB      |
 | Maximum total package size | 32 KB     |
+
+<Card title="Need guidance on choosing between Snippets and Workers?" icon="magnifier">
+
+Explore our [detailed guide](/rules/snippets/when-to-use/) for best practices, real-world use cases, and example implementations.
+
+</Card>
 
 ## Execution order
 

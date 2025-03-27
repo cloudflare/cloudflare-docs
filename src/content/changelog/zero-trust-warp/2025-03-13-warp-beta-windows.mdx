@@ -1,0 +1,39 @@
+---
+title: WARP client for Windows (version 2025.2.460.1)
+description: WARP client for Windows (version 2025.2.460.1)
+date: 2025-02-03T11:00:00Z
+---
+
+A new beta release for the Windows WARP client is now available on the [Downloads page](/cloudflare-one/connections/connect-devices/warp/download-warp/beta-releases/). This release contains significant improvements to our captive portal / public Wi-Fi detection logic. If you have experienced captive portal issues in the past, re-test and give this version a try.
+
+**Changes and improvements**
+
+- Improved [captive portal detection](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/captive-portals/) to make more public networks compatible
+  and have faster detection.
+- Improved error messages shown in the app.
+- Added the ability to control if the WARP interface IPs are [registered with
+  DNS servers](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#warp-interface-ip-dns-registration) or not.
+- Removed DNS logs view from the Windows client GUI. DNS logs can be viewed as
+  part of `warp-diag` or by viewing the log file on the user's local directory.
+- Fixed issue that would result in a user receiving multiple re-authentication
+  requests when waking their device from sleep.
+- WARP tunnel protocol details can now be viewed using the `warp-cli tunnel stats`
+  command.
+- Improvements to [Windows multi-user](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/windows-multiuser/) including support for fast user
+  switching. If you are interested in testing this feature, reach out to
+  your Cloudflare account team.
+- Fixed issue with device revocation and re-registration when switching
+  configurations.
+- Fixed issue where DEX tests would run during certain sleep states where the
+  networking stack was not fully up. This would result in failures that would be
+  ignored.
+
+**Known issues**
+
+- DNS resolution may be broken when the following conditions are all true:
+
+  - WARP is in Secure Web Gateway without DNS filtering (tunnel-only) mode.
+  - A custom DNS server address is configured on the primary network adapter.
+  - The custom DNS server address on the primary network adapter is changed while WARP is connected.
+
+  To work around this issue, reconnect the WARP client by toggling off and back on.

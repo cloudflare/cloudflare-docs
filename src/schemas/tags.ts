@@ -60,6 +60,16 @@ const languages: Array<object> = [
 	{ label: "WebAssembly", variants: ["Web Assembly", "wasm"] },
 ];
 
+const operating_systems: Array<object> = [
+	{ label: "Android", variants: ["ChromeOS"] },
+	{ label: "iOS" },
+	{ label: "Linux" },
+	{ label: "MacOS", variants: ["OS X"] },
+	{ label: "Windows", variants: ["ms windows"] },
+];
+
+const presentation: Array<object> = [{ label: "Video" }];
+
 const product_features: Array<object> = [
 	{ label: "Web Crypto", variants: ["webcrypto"] },
 	{ label: "RPC" },
@@ -88,14 +98,6 @@ const protocols: Array<object> = [
 	{ label: "UDP" },
 	{ label: "WebSockets", variants: ["websocket"] },
 	{ label: "Wireguard" },
-];
-
-const operating_systems: Array<object> = [
-	{ label: "Android", variants: ["ChromeOS"] },
-	{ label: "iOS" },
-	{ label: "Linux" },
-	{ label: "MacOS", variants: ["OS X"] },
-	{ label: "Windows", variants: ["ms windows"] },
 ];
 
 const use_cases: Array<object> = [
@@ -128,6 +130,7 @@ export const tags = {
 	frameworks,
 	integrations,
 	languages,
+	presentation,
 	product_features,
 	protocols,
 	operating_systems,

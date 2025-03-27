@@ -69,6 +69,14 @@ export default defineConfig({
 			rehypeTitleFigure,
 		],
 	},
+	image: {
+		service: {
+			entrypoint: "astro/assets/services/sharp",
+			config: {
+				limitInputPixels: false,
+			},
+		},
+	},
 	experimental: {
 		contentIntellisense: true,
 	},
@@ -122,7 +130,7 @@ export default defineConfig({
 								exclude: [
 									"/api/",
 									"/api/**",
-									"/changelog/",
+									"/changelog/**",
 									"/http/resources/**",
 									"{props.*}",
 									"/",

@@ -85,7 +85,7 @@ There is no functional difference between known and verified bots. However, the 
 
 Cloudflare issues challenges to website visitors to protect against malicious activity such as bot attacks and DDoS attacks. Key reasons include:
 
-- **High Threat Score**: IP addresses with a high-risk score trigger challenges.
+- **High threat score**: IP addresses with a high-risk score trigger challenges.
 - **IP reputation**: If your IP has a history of suspicious activity, it may be flagged.
 - **Bot detection**: Automated traffic resembling bots is filtered by Cloudflare.
 - **Web Application Firewall (WAF) custom rules**: Site owners may set rules targeting specific regions or user agents.
@@ -107,16 +107,16 @@ The examples below illustrate a few possible approaches.
 
 **Example 1**
 
-Exclude multiple IP addresses from a blocking/challenging rule that assesses Threat Score.
+Exclude multiple IP addresses from a blocking/challenging rule that assesses attack score.
 
 - Basic rule, no exclusion:
 
-  - **Expression**: `(http.host eq "example.com" and cf.threat_score > 5)`
+  - **Expression**: `(http.host eq "example.com" and cf.waf.score lt 20)`
   - **Action**: Block (or a challenge action)
 
 - Rule that excludes IP addresses from being blocked/challenged:
 
-  - **Expression**: `(http.host eq "example.com" and cf.threat_score > 5) and not (ip.src in {192.0.2.1 198.51.100.42 203.0.113.0/24})`
+  - **Expression**: `(http.host eq "example.com" and cf.waf.score lt 20) and not (ip.src in {192.0.2.1 198.51.100.42 203.0.113.0/24})`
   - **Action**: Block (or a challenge action)
 
 - Two rules to skip remaining custom rules for specific IPs and block the rest.
@@ -128,7 +128,7 @@ Exclude multiple IP addresses from a blocking/challenging rule that assesses Thr
 
   2. Rule 2:
 
-     - Expression: `(http.host eq "example.com" and cf.threat_score > 5)`
+     - Expression: `(http.host eq "example.com" and cf.waf.score lt 20)`
      - Action: Block (or a challenge action)
 
 **Example 2**
@@ -161,7 +161,7 @@ Block Amazon Web Services (AWS) and Google Cloud Platform (GCP) because of large
 
 Previously, unless you customize your front-end application, any AJAX request that is challenged will fail because AJAX calls are not rendered in the DOM.
 
-Now, you can [opt-in to Turnstile’s Pre-Clearance cookies](/turnstile/concepts/pre-clearance-support/). This allows you to issue a challenge early in your web application flow and pre-clear users to interact with sensitive APIs. Clearance cookies issued by a Turnstile widget are automatically applied to the Cloudflare zone that the Turnstile widget is embedded on, with no configuration necessary. The duration of the clearance cookie’s validity is controlled by the zone-specific configurable [Challenge Passage](/waf/tools/challenge-passage/) security setting.
+Now, you can [opt-in to Turnstile’s Pre-Clearance cookies](/turnstile/concepts/pre-clearance-support/). This allows you to issue a challenge early in your web application flow and pre-clear users to interact with sensitive APIs. Clearance cookies issued by a Turnstile widget are automatically applied to the Cloudflare zone that the Turnstile widget is embedded on, with no configuration necessary. The duration of the clearance cookie’s validity is controlled by the zone-specific configurable [Challenge Passage](/fundamentals/security/cloudflare-challenges/challenge-passage/) security setting.
 
 ### Why would I not find any failed challenges?
 

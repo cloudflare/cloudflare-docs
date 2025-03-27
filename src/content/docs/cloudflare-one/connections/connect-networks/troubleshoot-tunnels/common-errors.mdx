@@ -173,3 +173,6 @@ By default the [`cloudflared` Docker container](https://github.com/cloudflare/cl
 
 </TabItem> </Tabs>
 
+## Cloudflare Tunnel is buffering my streaming response instead of streaming it live.
+
+Proxied traffic through Cloudflare Tunnel is buffered by default unless the origin server includes the response header `Content-Type: text/event-stream`. The `Content-Type: text/event-stream` response header tells `cloudflared` to stream data as it arrives instead of buffering the entire response.

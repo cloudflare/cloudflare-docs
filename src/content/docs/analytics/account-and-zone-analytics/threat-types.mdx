@@ -2,7 +2,6 @@
 pcx_content_type: reference
 source: https://support.cloudflare.com/hc/en-us/articles/204191238-What-are-the-types-of-Threats-
 title: Threat types
-
 ---
 
 Cloudflare classifies the threats that it blocks or challenges. To help you understand more about your site’s traffic, the “Type of Threats Mitigated” metric on the analytics page measures threats blocked or challenged by the following categories:
@@ -21,19 +20,19 @@ Cloudflare's [Browser Integrity Check](/waf/tools/browser-integrity-check/) look
 
 Visitors were presented with an interactive challenge page and failed to pass.
 
-*Note: An interactive challenge page is a difficult to read word or set of numbers that only a human can translate. If entered incorrectly or not answered in a timely fashion, the request is blocked.*
+_Note: An interactive challenge page is a difficult to read word or set of numbers that only a human can translate. If entered incorrectly or not answered in a timely fashion, the request is blocked._
 
 ## Browser challenge
 
 A bot gave an invalid answer to the JavaScript challenge (in most cases this will not happen, bots typically do not respond to the challenge at all, so "failed" JavaScript challenges would not get logged).
 
-*Note: During a JavaScript challenge you will be shown an interstitial page for about five seconds while Cloudflare performs a series of mathematical challenges to make sure it is a legitimate human visitor.*
+_Note: During a JavaScript challenge you will be shown an interstitial page for about five seconds while Cloudflare performs a series of mathematical challenges to make sure it is a legitimate human visitor._
 
 ## Bad IP
 
-A request that came from an IP address that is not trusted by Cloudflare based on the Threat Score.
+A request that came from an IP address that is not trusted by Cloudflare based on the threat score.
 
-Cloudflare uses Threat Scores gathered from sources such as Project Honeypot, as well as our own communities' traffic to determine whether a visitor is legitimate or malicious. When a legitimate visitor passes a challenge, that helps offset the Threat Score against the previous negative behavior seen from that IP address. Our system learns who is a threat from this activity. Site owners may override the Threat Score at any time using Cloudflare's security settings.
+Cloudflare uses threat scores gathered from sources such as Project Honeypot, as well as our own communities' traffic to determine whether a visitor is legitimate or malicious. When a legitimate visitor passes a challenge, that helps offset the threat score against the previous negative behavior seen from that IP address. Our system learns who is a threat from this activity.
 
 ## Country block
 
@@ -53,13 +52,13 @@ A /24 IP range that was blocked based on the [user configuration](/waf/tools/ip-
 
 ## New Challenge (user)
 
-[Challenge](/waf/reference/cloudflare-challenges/) based on user configurations set for visitor’s IP in either WAF managed rules or custom rules, configured in **Security** > **WAF**.
+[Challenge](/fundamentals/security/cloudflare-challenges/) based on user configurations set for visitor’s IP in either WAF managed rules or custom rules, configured in **Security** > **WAF**.
 
 ## Challenge error
 
 Requests made by a bot that failed to pass the challenge.
 
-*Note: An interactive challenge page is a difficult to read word or set of numbers that only a human can translate. If entered incorrectly or not answered in a timely fashion, the request is blocked.*
+_Note: An interactive challenge page is a difficult to read word or set of numbers that only a human can translate. If entered incorrectly or not answered in a timely fashion, the request is blocked._
 
 ## Bot Request
 
@@ -67,6 +66,6 @@ Request that came from a bot.
 
 ## Unclassified
 
-Unclassified threats comprises a number of automatic blocks that are not related to the Browser Integrity Challenge (Bad Browser). These threats usually relate to Hotlink Protection, and other actions that happen on Cloudflare's global network based on the composition of the request (and not its content).
+Unclassified threats comprises a number of automatic blocks that are not related to the Browser Integrity Challenge (Bad Browser). These threats usually relate to Hotlink Protection, and other actions that happen on Cloudflare's global network based on the composition of the request (and not its content).
 
 Unclassified means a number of conditions under which we group common threats related to Hotlink Protection as well as certain cases of IP reputation and specific requests that are blocked at Cloudflare's global network before reaching your servers.

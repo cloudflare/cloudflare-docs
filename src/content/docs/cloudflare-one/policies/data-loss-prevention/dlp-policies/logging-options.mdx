@@ -43,11 +43,24 @@ Data Loss Prevention will now store a portion of the payload for HTTP requests t
 3. Select **Decrypt Payload Log**.
 4. Enter your private key and select **Decrypt**.
 
-You will see the [ID of the matched DLP Profile](/api/resources/zero_trust/subresources/dlp/subresources/profiles/methods/list/) followed by the decrypted payload. Note that DLP currently logs only the first match.
+You will see the [ID of the matched DLP Profile](/api/resources/zero_trust/subresources/dlp/subresources/profiles/methods/list/) followed by the decrypted payload.
 
 :::note
-Neither the key nor the decrypted payload will be stored by Cloudflare.
+Cloudflare does not store the key or the decrypted payload.
 :::
+
+### Report false and true positives to AI context analysis
+
+When you have [AI context analysis](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/advanced-settings/#ai-context-analysis) turned on for a DLP profile, you can train the AI model to adjust its confident threshold by reporting false and true positives.
+
+To report a DLP match payload as a false or true positive:
+
+1. [Find and decrypt](#4-view-payload-logs) the payload log you want to report.
+2. In **Log details**, choose a detected context match.
+3. In **Context**, select the redacted match data.
+4. In **Match details**, choose whether you want to report the match as a false positive or a true positive.
+
+Based on your report, DLP's machine learning will adjust its confidence in future matches for the associated profile.
 
 ### Data privacy
 

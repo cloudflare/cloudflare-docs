@@ -74,7 +74,8 @@ export default {
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py
-from js import Response, fetch, Headers, JSON
+from workers import Response, fetch
+import json
 
 async def on_fetch(request):
     url = "https://jsonplaceholder.typicode.com/todos/1"
@@ -85,15 +86,15 @@ async def on_fetch(request):
         content_type = headers["content-type"] or ""
 
         if "application/json" in content_type:
-            return (content_type, JSON.stringify(await response.json()))
+            return (content_type, json.dumps(await response.json()))
         return (content_type, await response.text())
 
     response = await fetch(url)
     content_type, result = await gather_response(response)
 
 
-    headers = Headers.new({"content-type": content_type}.items())
-    return Response.new(result, headers=headers)
+    headers = {"content-type": content_type}
+    return Response(result, headers=headers)
 ```
 
 </TabItem> </Tabs>

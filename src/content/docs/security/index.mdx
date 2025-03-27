@@ -1,17 +1,23 @@
 ---
-title: Security dashboard (beta)
+title: Application security dashboard (beta)
 pcx_content_type: overview
 sidebar:
   order: 1
-description: The Security dashboard (beta) helps you understand the current security posture of your web applications and allows you configure different security rules for those applications.
+description: The application security dashboard (beta) helps you understand the current security posture of your web applications and allows you configure different security rules for those applications.
 head:
   - tag: title
     content: Overview
 ---
 
-import { Card, CardGrid, Feature, LinkTitleCard, RelatedProduct } from "~/components";
+import {
+	Card,
+	CardGrid,
+	Feature,
+	LinkTitleCard,
+	RelatedProduct,
+} from "~/components";
 
-The Security dashboard (beta) is your starting point to better understand the security posture of your web applications, and to configure rules to protect them.
+The application security dashboard (beta) is your starting point to better understand the security posture of your web applications, and to configure rules to protect them.
 
 <Card title="New dashboard experience" icon="rocket">
 
@@ -27,7 +33,11 @@ You can swap back to the previous dashboard at any time by selecting **Return to
 
 ## Features
 
-<Feature header="Security overview" href="/security/overview/" cta="Explore Security overview">
+<Feature
+	header="Security overview"
+	href="/security/overview/"
+	cta="Explore Security overview"
+>
 	Get a high-level overview of your domain's security posture.
 </Feature>
 
@@ -40,7 +50,7 @@ You can swap back to the previous dashboard at any time by selecting **Return to
 	matches). Tailor your security configurations based on sampled logs.
 </Feature>
 
-<Feature header="Web asset discovery" href="/security/resources/">
+<Feature header="Web assets" href="/security/web-assets/">
 	Discover your web assets (including API endpoints) and instruct Cloudflare how
 	to best protect them.
 </Feature>
