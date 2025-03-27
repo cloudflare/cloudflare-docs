@@ -5,6 +5,9 @@ productLink: "/workers/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-03-27"
+    description: |-
+      - Updated v8 to version 13.5.
   - publish_date: "2025-02-28"
     description: |-
       - Updated v8 to version 13.4.
