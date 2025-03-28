@@ -1169,7 +1169,9 @@
 /fundamentals/basic-tasks/preparing-for-surges-or-spikes-in-web-traffic/ /fundamentals/performance/preparing-for-surges-or-spikes-in-web-traffic/ 301
 /support/third-party-software/others/configuring-an-amazon-web-services-static-site-to-use-cloudflare/ /rules/cloud-connector/providers/ 301
 /support/third-party-software/others/enabling-cloudflare-ssl-on-azure-storage-static-web-hosting-applications/ /rules/cloud-connector/providers/ 301
-
+/support/more-dashboard-apps/cloudflare-apps/ /workers/ 301
+/support/more-dashboard-apps/cloudflare-apps/managing-cloudflare-apps/ /workers/ 301
+/support/more-dashboard-apps/cloudflare-apps/removing-cloudflare-apps/ /workers/ 301
 
 # r2
 /r2/platform/s3-compatibility/api/ /r2/api/s3/api/ 301
