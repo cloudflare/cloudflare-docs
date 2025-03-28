@@ -48,4 +48,10 @@ After promoting to each environment, test the new version in your new environmen
 
 For new changes to your zone, [create a new version](/version-management/how-to/versions/#create-version) and repeat this process.
 
+## Delete specific version
 
+It is not possible to delete a specific version in Version Management. 
+The versions created in Version Management are immutable and cannot be deleted. This is to ensure that changes are tracked and can be rolled back if needed.
+
+However, you can create a new version and clone the configuration from the previous version, making any necessary changes before promoting it to your desired environment. 
+This way, you can effectively "delete" the old version by no longer using it. 
