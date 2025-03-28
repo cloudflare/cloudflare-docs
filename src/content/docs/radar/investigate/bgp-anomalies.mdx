@@ -187,7 +187,7 @@ First, create a new Workers app in a local directory:
 	product="workers"
 	params={{
 		category: "hello-world",
-		type: "Hello World Worker",
+		type: "Worker only",
 		lang: "JavaScript",
 	}}
 />
@@ -215,8 +215,6 @@ crons = [ "*/5 * * * *" ]
 </WranglerConfig>
 
 In this example, we will also need to use Cloudflare KV to save the latest checked event IDs which allows us to know what events are new. Once you have created a KV, you can head back to the `wranglers.toml` file and add the following sections:
-
-
 
 <WranglerConfig>
 
@@ -371,8 +369,6 @@ The last step is to deploy the application with command `npx wrangler deploy` an
 If you have [Email Routing][email-routing] enabled for your domain, you can also send email alerts directly from Workers. Refer to [Send emails from Workers][email-workers-tutorial] to learn more.
 
 For this alert to work, you will need to configure the proper email bindings in the [Wrangler configuration file][wrangler-send-email].
-
-
 
 <WranglerConfig>
 

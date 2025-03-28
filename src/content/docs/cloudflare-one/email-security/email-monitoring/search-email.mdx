@@ -219,9 +219,47 @@ Email Security displays the following details:
    - Autonomous sys number: This number identifies your [autonomous system (AS)](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-an-autonomous-system/).
    - Autonomous sys name: This name identifies your autonomous system (AS).
    - Country
-4. **Links identified**: A list of malicious links identified by Email Security.
-5. **Attachments**: If an email has an attachment, the dashboard will display the filename, and the disposition assigned.
+4. **Links identified**: A list of malicious links identified by Email Security. Refer to [Open links](/cloudflare-one/email-security/email-monitoring/search-email/#open-links) to open links in Security Center, Browser Isolation or an external tool of your choice.
+5. **Attachments**: If an email has an attachment, the dashboard will display the filename, and the disposition assigned. You can open attachments in [Browser Isolation](/cloudflare-one/policies/browser-isolation/).
 6. **Reasons for disposition**: Description of why the email was deemed as malicious, suspicious, or spam.
+
+#### Open links
+
+You can open links in [Security Center](/security-center/) or [Browser Isolation](/cloudflare-one/policies/browser-isolation/), or copy and paste the link so you can investigate links in external tools.
+
+To open links in Security Center:
+
+1. Go to the link you want to open.
+2. Select **Open in Security Center**.
+3. You will be redirected to Security Center's Investigate.
+4. Select **Scan now**.
+5. The dashboard will generate a report for your link.
+
+To open links in Browser Isolation:
+
+1. Go to the link you want to open.
+2. Select **Open in Browser Isolation**.
+3. The link will open in a separate window where you will be able to browse the content securely.
+
+You may receive a HTTP 400 Bad Request Error when opening a link in Browser Isolation. Follow these steps if you encounter this problem:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), select **Settings**.
+2. Select **Browser Isolation**, then enable **Clientless Web Isolation**. 
+
+If you still receive a 400 Bad Request error after enabling Clientless Web Isolation:
+
+1. Go to **Settings** > **Resources**.
+2. Select **Generate certificate**.
+3. Choose the **Expiration** (5 years is recommended), then select **Generate certificate**. Your certificate is now generated, and the dashboard will display its **Deployment Status** as **INACTIVE**.
+4. Select the three dots, and then select **Activate** to activate your certificate.
+5. Select the three dots, and then select **Mark as in-use**.
+6. Your certificate deployment status should display **AVAILABLE IN-USE**.
+
+To open and investigate a link in an external tool:
+
+1. Go to the link you want to open.
+2. Select **Copy URL**.
+3. Paste the link in your external tool.
 
 ### Action log
 

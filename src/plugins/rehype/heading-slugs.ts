@@ -1,7 +1,7 @@
 import { toString } from "hast-util-to-string";
 import { visit } from "unist-util-visit";
 import GithubSlugger from "github-slugger";
-import { rehypeExternalLinksOptions } from "./external-links";
+import { externalLinkArrow } from "./external-links";
 import type { Root } from "hast";
 import type { MdxTextExpression } from "mdast-util-mdx-expression";
 
@@ -34,7 +34,7 @@ export default function () {
 				} else {
 					if (!element.properties.id) {
 						const string = toString(element)
-							.replaceAll(rehypeExternalLinksOptions.content.value, "")
+							.replaceAll(externalLinkArrow, "")
 							.trimEnd();
 
 						element.properties.id = slugs.slug(string);

@@ -35,7 +35,7 @@ Detection tags are available in Security Analytics, but not in the Security Even
 
 ## Bot Detection IDs via Logpush
 
-You can create or edit their existing Logpush jobs to include the new Bot Detection IDs field which will provide an array of IDs for each request that has heuristics match on it. The `BotDetectionIDs` field is available as part of the HTTP Requests dataset and you can add it to new or existing jobs via the Logpush API or on the Cloudflare dashboard. This is the primary method to discover Detection IDs.
+You can create or edit existing Logpush jobs to include the new Bot Detection IDs field which will provide an array of IDs for each request that has heuristics match on it. The `BotDetectionIDs` field is available as part of the HTTP Requests dataset and you can add it to new or existing jobs via the Logpush API or on the Cloudflare dashboard. This is the primary method to discover Detection IDs.
 
 ### Via the Cloudflare dashboard
 
@@ -87,7 +87,7 @@ and not any(cf.bot_management.detection_ids[*] in {3355446 12577893})
 
 ### Challenges for account takeover detections
 
-Cloudflare's [Managed Challenge](/waf/reference/cloudflare-challenges/) can limit brute-force attacks on your login endpoints.
+Cloudflare's [Managed Challenge](/fundamentals/security/cloudflare-challenges/) can limit brute-force attacks on your login endpoints.
 
 To access account takeover detections:
 

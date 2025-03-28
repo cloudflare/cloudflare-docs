@@ -3,9 +3,6 @@ pcx_content_type: how-to
 title: Add an infrastructure application
 sidebar:
   order: 2
-  badge:
-    variant: tip
-    text: New
 ---
 
 import { Badge, Details, Tabs, TabItem, Render } from "~/components";
@@ -40,7 +37,7 @@ Access for Infrastructure currently only supports [SSH](/cloudflare-one/connecti
 
 ## 1. Add a target
 
-<Render file="access/add-target" />
+<Render file="access/add-target" params={{ protocol: "generic" }}/>
 
 ## 2. Add an infrastructure application
 

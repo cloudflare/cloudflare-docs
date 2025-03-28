@@ -14,9 +14,9 @@ import { RelatedProduct, LinkCard} from "~/components";
 
 ## Introduction
 
-Companies using Zero Trust Network Access (ZTNA) services build policies to determine if a user can access a protected resource such as a privately hosted Wiki server or source code repository. Policies typically use group membership, authentication methods, device security posture to determine which users can access which resources. 
+Companies using Zero Trust Network Access (ZTNA) services build policies to determine if a user can access a protected resource such as a privately hosted Wiki server or source code repository. Policies typically use group membership, authentication methods, device security posture to determine which users can access which resources.
 
-Secure access requires a range of attributes being available to the policy engine for evaluation. With Cloudflare's ZTNA service, [Access](/cloudflare-one/policies/access/), it is possible to include in the policy an external request to another API that provides part of the data required for the access decision. 
+Secure access requires a range of attributes being available to the policy engine for evaluation. With Cloudflare's ZTNA service, [Access](/cloudflare-one/policies/access/), it is possible to include in the policy an external request to another API that provides part of the data required for the access decision.
 
 For example, you might have a policy which states all members of the group "Engineers", who have authenticated with credentials that required a hard token, can have access to the self-hosted source code repository. But you also want to only allow engineers who have completed security training. That data might be available in another system, so Cloudflare allows you to, as part of the policy check, make a call using [Workers](https://workers.cloudflare.com/) to the training system to determine if this user has passed security training.
 
@@ -64,7 +64,7 @@ The code typically makes calls to either a [database](/d1/) or another API to ev
 
 ### 2. Analyze and validate the authentication material (JWT)
 
-When a user successfully authenticates and is authorized to access a protected application, Cloudflare inserts a [JSON Web Token (JWT)](/cloudflare-one/identity/authorization-cookie/validating-json/) into the HTTP traffic sent to the origin. This token serves as a valuable asset for expanding custom business logic through secure processing. The format for that JWT is deterministic and rather lightweight to avoid overloading the requests towards origin unnecessarily. 
+When a user successfully authenticates and is authorized to access a protected application, Cloudflare inserts a [JSON Web Token (JWT)](/cloudflare-one/identity/authorization-cookie/validating-json/) into the HTTP traffic sent to the origin. This token serves as a valuable asset for expanding custom business logic through secure processing. The format for that JWT is deterministic and rather lightweight to avoid overloading the requests towards origin unnecessarily.
 
 Here is an example of a JWT sent to an origin (use [JWT.io](http://jwt.io) to read the contents of a JWT)
 

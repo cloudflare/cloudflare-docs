@@ -8,7 +8,7 @@ head:
     content: Common DNS policies
 ---
 
-import { Render, Tabs, TabItem } from "~/components";
+import { Render, Tabs, TabItem, APIRequest } from "~/components";
 
 The following policies are commonly used to secure DNS traffic.
 
@@ -67,6 +67,62 @@ The categories included in this policy are not always a security threat, but blo
 	file="gateway/policies/dash-plus-api/dns/block-content-categories"
 	product="cloudflare-one"
 />
+
+## Block a dynamic list of categories
+
+You can add a list of category IDs to the [EDNS header](https://datatracker.ietf.org/doc/html/rfc6891) of a request sent to Gateway as a JSON object using OPT code `65050`. For example:
+
+```json
+{
+	"categories": [2, 67, 125, 133]
+}
+```
+
+With the [Request Context Categories](/cloudflare-one/policies/gateway/dns-policies/#request-context-categories) selector, you can block the category IDs sent with EDNS. This is useful to filter by categories not known at the time of creating a policy, or to enforce device-specific DNS content filtering without reaching your account limit. When Gateway uses this selector to block a DNS query, the request will return an Extended DNS Error (EDE) Code 15 - Blocked error, along with a field containing an array of the matched categories.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector                 | Operator | Value   | Action |
+| ------------------------ | -------- | ------- | ------ |
+| Request Context Category | is       | _Present_ | Block  |
+
+</TabItem>
+<TabItem label="API">
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "All-DNS-Bock-Category-Matches-In-Request",
+  "description": "Block all category matches in the request EDNS context",
+  "enabled": true,
+  "action": "block",
+  "filters": [
+    "dns"
+  ],
+  "traffic": "dns.categories_in_request_context_matches",
+  "identity": ""
+}'
+```
+
+</TabItem>
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "block_content_categories" {
+  account_id  = var.cloudflare_account_id
+  name        = "All-DNS-Bock-Category-Matches-In-Request"
+  description = "Block all category matches in the request EDNS context"
+  enabled     = true
+  action      = "block"
+  filters     = ["dns"]
+  traffic     = "dns.categories_in_request_context_matches"
+  identity    = ""
+}
+```
+
+</TabItem> </Tabs>
 
 ## Block unauthorized applications
 

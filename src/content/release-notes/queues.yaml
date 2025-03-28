@@ -5,6 +5,22 @@ productLink: "/queues/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-03-27"
+    title: Pause delivery and purge queues
+    description: |-
+      Queues now supports the ability to pause delivery and/or delete messages from a queue, allowing you to better manage queue backlogs.
+
+      Message delivery from a Queue to consumers can be paused / resumed. Queues continue to receive messages while paused.
+
+      Queues can be purged to permanently delete all messages currently stored in a Queue. This operation is useful while testing a new application, if a queue producer was misconfigured and is sending bad messages.
+
+      Refer to the [documentation on Pause & Purge](/queues/configuration/pause-purge/) to learn how to use both operations.
+  - publish_date: "2025-02-14"
+    title: Customize message retention period
+    description: |-
+      You can now customize a queue's message retention period, from a minimum of 60 seconds to a maximum of 14 days. Previously, it was fixed to the default of 4 days.
+
+      Refer to the [Queues confiuguration documentation](/queues/configuration/configure-queues/#queue-configuration) to learn more.
   - publish_date: "2024-09-26"
     title: Queues is GA, with higher throughput & consumer concurrency
     description: |-
@@ -13,7 +29,6 @@ entries:
       The per-queue message throughput has increased from 400 to 5,000 messages per second. This applies to new and existing queues.
 
       Maximum concurrent consumers has increased from 20 to 250. This applies to new and existing queues. Queues with no explicit limit will automatically scale to the new maximum. Review the [consumer concurrency documentation](/queues/configuration/consumer-concurrency) to learn more.
-
   - publish_date: "2024-03-26"
     title: Delay messages published to a queue
     description: |-

@@ -20,16 +20,18 @@ Within your Worker code, you can interact with this binding by using `env.IMAGES
 
 Here's how you can rotate, resize, and blur an image, then output the image as AVIF:
 
-```js
+```ts
 ​​const info = await env.IMAGES.info(stream);
 // stream contains a valid image, and width/height is available on the info object
 
 const response = (
-await env.IMAGES.input(stream)
-        .transform({ rotate: 90 })
-        .transform({ width: 128 })
-        .output({ format: "image/avif" })
-      ).response();
+  await env.IMAGES.input(stream)
+    .transform({ rotate: 90 })
+    .transform({ width: 128 })
+    .transform({ blur: 20 })
+    .output({ format: "image/avif" }
+  )
+).response();
 
 return response;
 ```

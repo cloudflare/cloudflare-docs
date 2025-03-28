@@ -64,7 +64,7 @@ Select the time frame you wish to analyze from the _Previous 24 hours_ drop-down
 
 ## Create custom rule from current filters
 
-To create a [custom rule](/waf/custom-rules/) with an expression based on the filters you applied in Security Analytics, select **Create custom rule** above the main chart.
+To create a [custom rule](/waf/custom-rules/) with an expression based on the filters you applied in Security Analytics, select **Create custom security rule** above the main chart.
 
 ---
 
@@ -92,9 +92,9 @@ To apply the filters for an insight to the data displayed in the Security Analyt
 
 ### Score-based analyses
 
-The **Attack likelihood**, **Bot likelihood**, **Malicious uploads**, and **Account abuse likelihood** sections display statistics related to WAF attack scores, bot scores, WAF content scanning scores, and leaked credentials scanning of incoming requests for the selected time frame. All plans include access to the **Leaked Credentials Check** under **Account Abuse Likelihood**. This feature detects login attempts using credentials that have been exposed online. For more information on what to do if you have credentials that have been leaked, refer to the [mitigation examples page](/waf/detections/leaked-credentials/examples/).
+The **Attack analysis**, **Bot analysis**, **Malicious uploads**, and **Account abuse detection** sections display statistics related to WAF attack scores, bot scores, WAF content scanning scores, and leaked credentials scanning of incoming requests for the selected time frame. All plans include access to the **Leaked credential check** under **Account abuse detection**. This feature detects login attempts using credentials that have been exposed online. For more information on what to do if you have credentials that have been leaked, refer to the [mitigation examples page](/waf/detections/leaked-credentials/examples/).
 
-You can examine different traffic segments according to the current metric (attack score, bot score, or content scanning). To apply score filters for different segments, select the buttons below the traffic chart. For example, select **Likely attack** under **Attack likelihood** to filter requests that are likely an attack (requests with WAF attack score values between 21 and 50).
+You can examine different traffic segments according to the current metric (attack score, bot score, or content scanning). To apply score filters for different segments, select the buttons below the traffic chart. For example, select **Likely attack** under **Attack analysis** to filter requests that are likely an attack (requests with WAF attack score values between 21 and 50).
 
 Additionally, you can use the slider tool below the chart to filter incoming requests according to the current metric. This allows you to filter traffic groups outside the predefined segments.
 
@@ -108,13 +108,13 @@ The main chart displays the following data for the selected time frame, accordin
   - **Served by Cloudflare**: Requests served by the Cloudflare global network such as cached content and redirects.
   - **Served by origin**: Requests served by your origin server.
 
-- **Attack likelihood**: [WAF attack score](/waf/detections/attack-score/) analysis of incoming requests, classifying them as _Clean_, _Likely clean_, _Likely attack_, or _Attack_.
+- **Attack analysis**: [WAF attack score](/waf/detections/attack-score/) analysis of incoming requests, classifying them as _Clean_, _Likely clean_, _Likely attack_, or _Attack_.
 
-- **Bot likelihood**: [Bot score](/bots/concepts/bot-score/) analysis of incoming requests, classifying them as _Automated_, _Likely automated_, _Likely human_, or _Verified bot_.
+- **Bot analysis**: [Bot score](/bots/concepts/bot-score/) analysis of incoming requests, classifying them as _Automated_, _Likely automated_, _Likely human_, or _Verified bot_.
 
 - **Rate limit analysis**: Displays data on the request rate for traffic matching the selected filters and time period. Use this tab to [find an appropriate rate limit](/waf/rate-limiting-rules/find-rate-limit/) for incoming traffic matching the applied filters.
 
-- **AI Assistant** (beta): Get insights about your application security by using plain language to interrogate your data. For more information, refer to [our blog post](https://blog.cloudflare.com/security-analytics-ai-assistant).
+- **Cloudy analysis** (beta): Get insights about your application security by using plain language to interrogate your data. For more information, refer to [our blog post](https://blog.cloudflare.com/security-analytics-ai-assistant).
 
 ### Logs
 

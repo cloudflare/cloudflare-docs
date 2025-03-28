@@ -1,0 +1,98 @@
+---
+pcx_content_type: reference
+title: Google Cloud Platform (GCP) Cloud Storage
+rss: file
+---
+
+import { Render } from "~/components";
+
+<Render
+	file="casb/integration-description"
+	params={{
+		integrationName: "Google Cloud Platform (GCP) Cloud Storage",
+		integrationAccountType: "GCP account",
+	}}
+/>
+
+## Integration prerequisites
+
+- A GCP account using Cloud Storage.
+- For initial setup, access to the GCP account with permission to create a new Service Account with the scopes listed below.
+
+## Integration permissions
+
+For the GCP Cloud Storage integration to function, Cloudflare CASB requires the following access scopes via a Service Account:
+
+- `roles/viewer`
+- `roles/storage.admin`
+
+These permissions follow the principle of least privilege to ensure that only the minimum required access is granted. To learn more about each permission scope, refer to the [GCP IAM roles for Cloud Storage documentation](https://cloud.google.com/storage/docs/access-control/iam-roles).
+
+## Compute account
+
+You can connect a GCP compute account to your CASB integration to perform [Data Loss Prevention](/cloudflare-one/policies/data-loss-prevention/) scans within your Cloud Storage bucket and avoid data egress. CASB will scan any objects that exist in the bucket at the time of configuration.
+
+### Add a compute account
+
+To connect a compute account to your GCP integration:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **CASB** > **Integrations**.
+2. Find and select your GCP integration.
+3. Select **Open connection instructions**.
+4. Follow the instructions provided to connect a new compute account.
+5. Select **Refresh**.
+
+You can only connect one compute account to an integration. To remove a compute account, select **Manage compute accounts**.
+
+### Configure compute account scanning
+
+Once your GCP compute account has successfully connected to your CASB integration, you can configure where and how to scan for sensitive data:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **CASB** > **Integrations**.
+2. Find and select your GCP integration.
+3. Select **Create new configuration**.
+4. In **Resources**, choose the buckets you want to scan. Select **Continue**.
+5. Choose the file types, sampling percentage, and [DLP profiles](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/) to scan for.
+6. (Optional) Configure additional settings, such as the limit of API calls over time for CASB to adhere to.
+7. Select **Continue**.
+8. Review the details of the scan, then select **Start scan**.
+
+CASB will take up to one hour to begin scanning. To view the scan results, go to **CASB** > **Content** > **Cloud**.
+
+To manage your resources, go to **CASB** > **Integrations**, then find and select your GCP integration. From here, you can pause all or individual scans, add or remove resources, and change scan settings.
+
+For more information, refer to [Content findings](/cloudflare-one/applications/casb/manage-findings/#content-findings).
+
+## Security findings
+
+<Render
+	file="casb/security-findings"
+	params={{
+		integrationName: "GCP Cloud Storage",
+		slugRelativePath: "gcp-cloud-storage",
+	}}
+/>
+
+### Cloud Storage Bucket security
+
+Flag security issues in Cloud Storage Buckets, including overpermissioning, access policies, and user security best practices.
+
+| Finding type                                                                     | FindingTypeID                          | Severity |
+| -------------------------------------------------------------------------------- | -------------------------------------- | -------- |
+| Google Cloud Platform: GCS Bucket Allows Public Write                            | `4583f5a9-a343-4e2f-a8b3-9237a911f337` | Critical |
+| Google Cloud Platform: GCS Bucket IAM Policy Allows Public Access                | `032c1e88-0cff-47f6-8d75-046e0a7330de` | Critical |
+| Google Cloud Platform: GCS Bucket Publicly Accessible                            | `cc028a95-46d4-4156-ac11-bc5713529824` | Critical |
+| Google Cloud Platform: Public Access Prevention Enabled But Policy Grants Public | `cc02680e-9cc3-49d1-99d5-29d425bf142f` | Critical |
+| Google Cloud Platform: GCS Bucket ACL Grants All Authenticated Users Access      | `e1a588af-0500-482e-b59d-fd2693ce7fc0` | Critical |
+| Google Cloud Platform: GCS Bucket ACL Grants All Users Public Access             | `1904c004-8d4f-470e-9460-e77db23d6a86` | Critical |
+| Google Cloud Platform: Public Access Prevention but ACL Grants allUsers          | `fcf2e27e-673f-4cd2-9b76-ec89c4c5872c` | Critical |
+| Google Cloud Platform: GCS Bucket Versioning Disabled                            | `bd66e214-f205-4e00-bd68-121dad0a7988` | High     |
+| Google Cloud Platform: GCS Bucket Without KMS Encryption                         | `0105d9c4-1a01-4b65-b33e-df6c55905147` | High     |
+| Google Cloud Platform: GCS Uniform Bucket-Level Access Disabled                  | `6960b459-aa9e-4b41-84f6-26cdb75a1995` | High     |
+| Google Cloud Platform: GCS Bucket IAM Policy Allows Public Read                  | `10420f34-8fdd-49cb-8d38-096a2de5824f` | High     |
+| Google Cloud Platform: GCS Bucket Lacks Lifecycle Rules                          | `edcd5a8b-b128-404b-8207-23a80f669b65` | Medium   |
+| Google Cloud Platform: GCS Bucket Logging Disabled                               | `d26f43c8-9406-481c-8c8b-1a7f05f3cc27` | Medium   |
+| Google Cloud Platform: GCS Bucket Not Using 'Soft Delete'                        | `5542ed8e-77a6-43c1-8b9e-935e66009d34` | Medium   |
+| Google Cloud Platform: GCS Bucket Retention Policy Disabled                      | `2d4a247c-8adb-4f2b-ae58-3568d633cb81` | Medium   |
+| Google Cloud Platform: GCS Bucket IAM Policy Not Version 3                       | `ade2ede6-08c7-4962-b084-f6a29ee4a5b8` | Low      |
+| Google Cloud Platform: GCS Bucket IAM Policy Using Legacy Roles                  | `11a592b9-4f51-4a1a-9925-a48a5ed01521` | Low      |

@@ -46,7 +46,7 @@ Running `create cloudflare@latest` will install [Wrangler](/workers/wrangler/ins
 	product="workers"
 	params={{
 		category: "hello-world",
-		type: "Hello World Worker using Durable Objects",
+		type: "Worker + Durable Objects",
 		lang: "JavaScript / TypeScript",
 	}}
 />
@@ -205,8 +205,6 @@ Migrations are performed through the `[[migrations]]` configurations key in your
 
 The Durable Object migration to create a new Durable Object class will look like the following in your Worker's Wrangler file:
 
-
-
 <WranglerConfig>
 
 ```toml
@@ -228,8 +226,6 @@ New beta version of Durable Objects is available where each Durable Object has a
 A Durable Object class can only have a single storage type, which cannot be changed after the Durable Object class is created.
 
 To configure SQL storage and API, replace `new_classes` with `new_sqlite_classes` in your Worker's Wrangler file:
-
-
 
 <WranglerConfig>
 

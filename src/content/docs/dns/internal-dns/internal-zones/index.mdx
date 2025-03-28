@@ -7,24 +7,14 @@ sidebar:
     label: Internal zones
 ---
 
-import { Example, Render } from "~/components";
+import { Example, Render, DirectoryListing } from "~/components";
 
-Internal DNS zones are groupings of internal DNS records. While [public DNS records](/dns/manage-dns-records/) contain information about resources that you want to make available to the public Internet, [internal DNS records](#internal-dns-records) allow you to manage resources that should only be available within your private network.
+Internal DNS zones are groupings of internal DNS records. While [public DNS records](/dns/manage-dns-records/) contain information about resources that you want to make available to the public Internet, [internal DNS records](/dns/internal-dns/internal-zones/internal-dns-records/) allow you to manage resources that should only be available within your private network.
 
 Refer to [Manage internal zones](/dns/internal-dns/internal-zones/setup/) for a full list of configuration conditions and step-by-step instructions.
 
 Internal DNS zones do not get assigned Cloudflare nameservers and can only be queried via [Cloudflare Gateway](/cloudflare-one/policies/gateway/resolver-policies/) when linked to a [DNS view](/dns/internal-dns/dns-views/). The Gateway configuration must exist within the same Cloudflare account where the internal zone exists.
 
-## Reference zones
+## Resources
 
-<Render file="reference-zone-intro" />
-
-Refer to [Set up reference zones](/dns/internal-dns/internal-zones/reference-zones/) for step-by-step instructions.
-
-## Internal DNS records
-
-Internal zones can contain the same [DNS record types](/dns/manage-dns-records/reference/dns-record-types/) that Cloudflare supports for public zones.
-
-You can manage internal DNS records in the same way as you would manage public DNS records, with the difference that [proxy status](/dns/proxy-status/) does not apply to internal DNS records.
-
-Refer to [Manage DNS records](/dns/manage-dns-records/how-to/create-dns-records/) or to the [API documentation](/api/resources/dns/subresources/records/) for further guidance.
+<DirectoryListing />

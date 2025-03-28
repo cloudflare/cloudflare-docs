@@ -111,7 +111,7 @@ export default {
 
 ```py
 import re
-from js import Response, Headers
+from workers import Response
 
 CSS = "body { color: red; }"
 HTML = """
@@ -129,11 +129,11 @@ HTML = """
 """
 def on_fetch(request):
     if re.search("test.css", request.url):
-        headers = Headers.new({"content-type": "text/css"}.items())
-        return Response.new(CSS, headers=headers)
+        headers = {"content-type": "text/css"}
+        return Response(CSS, headers=headers)
     else:
-        headers = Headers.new({"content-type": "text/html","link": "</test.css>; rel=preload; as=style"}.items())
-        return Response.new(HTML, headers=headers)
+        headers = {"content-type": "text/html","link": "</test.css>; rel=preload; as=style"}
+        return Response(HTML, headers=headers)
 ```
 
 </TabItem> </Tabs>

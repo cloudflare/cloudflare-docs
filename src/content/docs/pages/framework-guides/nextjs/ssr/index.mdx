@@ -11,9 +11,9 @@ import { DirectoryListing } from "~/components"
 [Next.js](https://nextjs.org) is an open-source React.js framework for building full-stack applications. This section helps you deploy a full-stack Next.js project to Cloudflare Pages using [`@cloudflare/next-on-pages`](https://github.com/cloudflare/next-on-pages/tree/main/packages/next-on-pages/docs).
 
 :::note
-You may want to consider using [`@opennextjs/cloudflare`](https://opennext.js.org/cloudflare), which allows you to build and deploy Next.js apps to [Cloudflare Workers](/workers/static-assets/), use [Node.js APIs](/workers/runtime-apis/nodejs/) that Cloudflare Workers supports, and supports additional Next.js features.
+You should consider using [`@opennextjs/cloudflare`](https://opennext.js.org/cloudflare), which allows you to build and deploy Next.js apps to [Cloudflare Workers](/workers/static-assets/), use [Node.js APIs](/workers/runtime-apis/nodejs/) that Cloudflare Workers supports, and supports additional Next.js features.
 
-Refer to the [OpenNext docs](https://opennext.js.org/cloudflare) and the [Workers vs. Pages compatibility matrix](/workers/static-assets/compatibility-matrix/) for more information to help you decide whether Workers or Pages currently fits best for your Next.js app.
+If you're coming from Vercel, you can easily migrate your Next.js app to Cloudflare by using [Diverce](https://github.com/ygwyg/diverce), which will automatically add OpenNext to your project and create a pull request that makes it deployable to Cloudflare. 
 :::
 
 <DirectoryListing />

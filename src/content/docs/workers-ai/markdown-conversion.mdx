@@ -1,0 +1,234 @@
+---
+title: Markdown Conversion
+pcx_content_type: how-to
+sidebar:
+  order: 5
+  badge:
+    text: Beta
+---
+
+import { Code, Type, MetaInfo, Details } from "~/components";
+
+[Markdown](https://en.wikipedia.org/wiki/Markdown) is essential for text generation and large language models (LLMs) in training and inference because it can provide structured, semantic, human, and machine-readable input. Likewise, Markdown facilitates chunking and structuring input data for better retrieval and synthesis in the context of RAGs, and its simplicity and ease of parsing and rendering make it ideal for AI Agents.
+
+For these reasons, document conversion plays an important role when designing and developing AI applications. Workers AI provides the `toMarkdown` utility method that developers can use from the [`env.AI`](/workers-ai/configuration/bindings/) binding or the REST APIs for quick, easy, and convenient conversion and summary of documents in multiple formats to Markdown language.
+
+## Methods and definitions
+
+### async env.AI.toMarkdown()
+
+Takes a list of documents in different formats and converts them to Markdown.
+
+#### Parameter
+
+- <code>documents</code>: <Type text="array"/>
+  - An array of `toMarkdownDocument`s.
+
+#### Return values
+
+- <code>results</code>: <Type text="array"/>
+  - An array of `toMarkdownDocumentResult`s.
+
+### `toMarkdownDocument` definition
+
+- `name` <Type text="string" />
+
+  - Name of the document to convert.
+
+- `blob` <Type text="Blob" />
+
+  - A new [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob/Blob) object with the document content.
+
+### `toMarkdownDocumentResult` definition
+
+- `name` <Type text="string" />
+
+  - Name of the converted document. Matches the input name.
+
+- `mimetype` <Type text="string" />
+
+  - The detected [mime type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/MIME_types/Common_types) of the document.
+
+- `tokens` <Type text="number" />
+
+  - The estimated number of tokens of the converted document.
+
+- `data` <Type text="string" />
+
+  - The content of the converted document in Markdown format.
+
+## Supported formats
+
+This is the list of support formats. We are constantly adding new formats and updating this table.
+
+<table>
+  <tbody>
+    <th colspan="5" rowspan="1" style="width:160px">
+        Format
+    </th>
+    <th colspan="5" rowspan="1">
+      File extensions
+    </th>
+    <th colspan="5" rowspan="1">
+      Mime Types
+    </th>
+    <tr>
+      <td colspan="5" rowspan="1">
+			PDF Documents
+      </td>
+      <td colspan="5" rowspan="1">
+			`.pdf`
+      </td>
+      <td colspan="5" rowspan="1">
+			`application/pdf`
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5" rowspan="1">
+			Images <sup>1</sup>
+      </td>
+      <td colspan="5" rowspan="1">
+			`.jpeg`, `.jpg`, `.png`, `.webp`, `.svg`
+      </td>
+      <td colspan="5" rowspan="1">
+			`image/jpeg`, `image/png`, `image/webp`, `image/svg+xml`
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5" rowspan="1">
+			HTML Documents
+      </td>
+      <td colspan="5" rowspan="1">
+			`.html`
+      </td>
+      <td colspan="5" rowspan="1">
+			`text/html`
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5" rowspan="1">
+			XML Documents
+      </td>
+      <td colspan="5" rowspan="1">
+			`.xml`
+      </td>
+      <td colspan="5" rowspan="1">
+			`application/xml`
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5" rowspan="1">
+			Microsoft Office Documents
+      </td>
+      <td colspan="5" rowspan="1">
+			`.xlsx`, `.xlsm`, `.xlsb`, `.xls`, `.et`
+      </td>
+      <td colspan="5" rowspan="1">
+			`application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`, `application/vnd.ms-excel.sheet.macroenabled.12`, `application/vnd.ms-excel.sheet.binary.macroenabled.12`, `application/vnd.ms-excel`, `application/vnd.ms-excel`
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5" rowspan="1">
+			Open Document Format
+      </td>
+      <td colspan="5" rowspan="1">
+			`.ods`
+      </td>
+      <td colspan="5" rowspan="1">
+			`application/vnd.oasis.opendocument.spreadsheet`
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5" rowspan="1">
+			CSV
+      </td>
+      <td colspan="5" rowspan="1">
+			`.csv`
+      </td>
+      <td colspan="5" rowspan="1">
+			`text/csv`
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5" rowspan="1">
+			Apple Documents
+      </td>
+      <td colspan="5" rowspan="1">
+			`.numbers`
+      </td>
+      <td colspan="5" rowspan="1">
+			`application/vnd.apple.numbers`
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<sup>1</sup> Image conversion uses two Workers AI models for object detection and summarization. See [pricing](/workers-ai/markdown-conversion/#pricing) for more details.
+
+## Example
+
+In this example, we fetch a PDF document and an image from R2 and feed them both to `env.AI.toMarkdown`. The result is a list of converted documents. Workers AI models are used automatically to detect and summarize the image.
+
+```typescript
+import { Env } from "./env";
+
+export default {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext) {
+
+    // https://pub-979cb28270cc461d94bc8a169d8f389d.r2.dev/somatosensory.pdf
+    const pdf = await env.R2.get('somatosensory.pdf');
+
+    // https://pub-979cb28270cc461d94bc8a169d8f389d.r2.dev/cat.jpeg
+    const cat = await env.R2.get('cat.jpeg');
+
+    return Response.json(
+      await env.AI.toMarkdown([
+        {
+          name: "somatosensory.pdf",
+          blob: new Blob([await pdf.arrayBuffer()], { type: "application/octet-stream" }),
+        },
+        {
+          name: "cat.jpeg",
+          blob: new Blob([await cat.arrayBuffer()], { type: "application/octet-stream" }),
+        },
+      ]),
+    );
+  },
+};
+```
+
+This is the result:
+
+```json
+[
+	{
+		"name": "somatosensory.pdf",
+		"mimeType": "application/pdf",
+		"format": "markdown",
+		"tokens": 0,
+		"data": "# somatosensory.pdf\n## Metadata\n- PDFFormatVersion=1.4\n- IsLinearized=false\n- IsAcroFormPresent=false\n- IsXFAPresent=false\n- IsCollectionPresent=false\n- IsSignaturesPresent=false\n- Producer=Prince 20150210 (www.princexml.com)\n- Title=Anatomy of the Somatosensory System\n\n## Contents\n### Page 1\nThis is a sample document to showcase..."
+	},
+	{
+		"name": "cat.jpeg",
+		"mimeType": "image/jpeg",
+		"format": "markdown",
+		"tokens": 0,
+		"data": "The image is a close-up photograph of Grumpy Cat, a cat with a distinctive grumpy expression and piercing blue eyes. The cat has a brown face with a white stripe down its nose, and its ears are pointed upright. Its fur is light brown and darker around the face, with a pink nose and mouth. The cat's eyes are blue and slanted downward, giving it a perpetually grumpy appearance. The background is blurred, but it appears to be a dark brown color. Overall, the image is a humorous and iconic representation of the popular internet meme character, Grumpy Cat. The cat's facial expression and posture convey a sense of displeasure or annoyance, making it a relatable and entertaining image for many people."
+	}
+]
+```
+
+## REST API
+
+In addition to the Workers AI [binding](/workers-ai/configuration/bindings/), you can use the [REST API](/workers-ai/get-started/rest-api/):
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/tomarkdown \
+  -H 'Authorization: Bearer {API_TOKEN}' \
+	-F "files=@cat.jpeg" \
+	-F "files=@somatosensory.pdf"
+```
+
+## Pricing
+
+`toMarkdown` is free for most format conversions. In some cases, like image conversion, it can use Workers AI models for object detection and summarization, which may incur additional costs if it exceeds the Workers AI free allocation limits. See the [pricing page](/workers-ai/platform/pricing/) for more details.

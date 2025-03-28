@@ -47,6 +47,13 @@ Many Cloudflare Zero Trust services rely on traffic going through WARP, such as 
 - The application protected by the Access or Gateway policy
 - `edge.browser.run` if using [Browser Isolation](/cloudflare-one/policies/browser-isolation/)
 
+## Cloudflare Zero Trust IP addresses
+
+In [Secure Web Gateway without DNS filtering](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#secure-web-gateway-without-dns-filtering) WARP mode, you cannot [add domains](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#cloudflare-zero-trust-domains) to the Split Tunnel. If you are using Split Tunnels in Include mode, you must include the IPs that resolve to `<your-team-name>.cloudflareaccess.com` instead:
+
+- `104.19.194.29`
+- `104.19.195.29`
+
 ## Domain-based Split Tunnels
 
 Domain-based split tunneling has a few ramifications you should be aware of before deploying in your organization:.
