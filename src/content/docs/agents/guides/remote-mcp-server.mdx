@@ -39,7 +39,7 @@ In the directory of your new project, run the following command to start the dev
 npm start
 ```
 
-Your MCP server is now running on `http://localhost:8787/sse`.
+Your MCP server is now running on `http://localhost:8788/sse`.
 
 In a new terminal, run the [MCP inspector](https://github.com/modelcontextprotocol/inspector). The MCP inspector is an interactive MCP client that allows you to connect to your MCP server and invoke tools from a web browser.
 
@@ -53,7 +53,7 @@ Open the MCP inspector in your web browser:
 open http://localhost:5173
 ```
 
-In the inspector, enter the URL of your MCP server, `http://localhost:8787/sse`, and click **Connect**:
+In the inspector, enter the URL of your MCP server, `http://localhost:8788/sse`, and click **Connect**:
 
 ![MCP inspector — where to enter the URL of your MCP server](~/assets/images/agents/mcp-inspector-enter-url.png)
 
@@ -83,7 +83,7 @@ After deploying, take the URL of your deployed MCP server, and enter it in the M
 
 Now that your MCP server is running with OAuth authentication, you can use the [`mcp-remote` local proxy](https://www.npmjs.com/package/mcp-remote) to connect Claude Desktop or other MCP clients to it — even though these tools aren't yet _remote_ MCP clients, and don't support remote transport or authorization on the client side. This lets you to test what an interaction with your OAuth-enabled MCP server will be like with a real MCP client.
 
-Update your Claude Desktop configuration to point to the URL of your MCP server. You can use either the `localhost:8787/sse` URL, or the URL of your deployed MCP server:
+Update your Claude Desktop configuration to point to the URL of your MCP server. You can use either the `localhost:8788/sse` URL, or the URL of your deployed MCP server:
 
 ```json
 {
@@ -159,8 +159,8 @@ You'll need to create two [GitHub OAuth Apps](https://docs.github.com/en/apps/oa
 Navigate to [github.com/settings/developers](https://github.com/settings/developers) to create a new OAuth App with the following settings:
 
 - **Application name**: `My MCP Server (local)`
-- **Homepage URL**: `http://localhost:8787`
-- **Authorization callback URL**: `http://localhost:8787/callback`
+- **Homepage URL**: `http://localhost:8788`
+- **Authorization callback URL**: `http://localhost:8788/callback`
 
 For the OAuth app you just created, add the client ID of the OAuth app as `GITHUB_CLIENT_ID` and generate a client secret, adding it as `GITHUB_CLIENT_SECRET` to a `.dev.vars` file in the root of your project, which [will be used to set secrets in local development](/workers/configuration/secrets/).
 
@@ -179,7 +179,7 @@ Run the following command to start the development server:
 npm start
 ```
 
-Your MCP server is now running on `http://localhost:8787/sse`.
+Your MCP server is now running on `http://localhost:8788/sse`.
 
 In a new terminal, run the [MCP inspector](https://github.com/modelcontextprotocol/inspector). The MCP inspector is an interactive MCP client that allows you to connect to your MCP server and invoke tools from a web browser.
 
@@ -193,7 +193,7 @@ Open the MCP inspector in your web browser:
 open http://localhost:5173
 ```
 
-In the inspector, enter the URL of your MCP server, `http://localhost:8787/sse`, and click **Connect**:
+In the inspector, enter the URL of your MCP server, `http://localhost:8788/sse`, and click **Connect**:
 
 You should be redirected to a GitHub login or authorization page. After authorizing the MCP Client (the inspector) access to your GitHub account, you will be redirected back to the inspector. You should see the "List Tools" button, which will list the tools that your MCP server exposes.
 
