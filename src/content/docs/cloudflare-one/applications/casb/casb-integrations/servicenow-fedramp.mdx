@@ -7,6 +7,13 @@ rss: file
 import { Render } from "~/components";
 
 <Render
+	file="casb/fedramp-availability"
+	params={{
+		integrationName: "ServiceNow (FedRAMP)",
+	}}
+/>
+
+<Render
 	file="casb/servicenow-integration"
 	params={{
 		integrationName: "ServiceNow (FedRAMP)",

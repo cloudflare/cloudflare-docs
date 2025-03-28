@@ -7,6 +7,13 @@ rss: file
 import { Render } from "~/components";
 
 <Render
+	file="casb/fedramp-availability"
+	params={{
+		integrationName: "Google Admin (FedRAMP)",
+	}}
+/>
+
+<Render
 	file="casb/google/integrations/google-admin"
 	params={{
 		integrationName: "Google Admin (FedRAMP)",

@@ -7,6 +7,13 @@ rss: file
 import { Render } from "~/components";
 
 <Render
+	file="casb/fedramp-availability"
+	params={{
+		integrationName: "Google Calendar (FedRAMP)",
+	}}
+/>
+
+<Render
 	file="casb/google/integrations/google-calendar"
 	params={{
 		integrationName: "Google Calendar (FedRAMP)",
