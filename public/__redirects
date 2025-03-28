@@ -695,6 +695,14 @@
 /learning-paths/secure-internet-traffic/connect-networks/choose-on-ramp/ /learning-paths/secure-internet-traffic/connect-devices/choose-on-ramp/ 301
 /support/about-cloudflare/attack-preparation-and-response/best-practices-ddos-preventative-measures/ /learning-paths/prevent-ddos-attacks/ 301
 
+/learning-paths/cybersafe/account-creation/create-area1-org/ /learning-paths/cybersafe/account-creation/create-email-security-account/ 301
+/learning-paths/cybersafe/area1-onboarding/area1-inline/ /learning-paths/cybersafe/email-security-onboarding/api-deployment/ 301
+/learning-paths/cybersafe/area1-onboarding/area1-next-steps/ /learning-paths/cybersafe/email-security-onboarding/email-security-next-steps/ 301
+/learning-paths/cybersafe/concepts/what-is-area1/ /learning-paths/cybersafe/concepts/what-is-email-security/ 301
+/learning-paths/cybersafe/area1-onboarding/ /learning-paths/cybersafe/email-security-onboarding/ 301
+
+
+
 ## dns-filtering / secure-internet-traffic
 /learning-paths/dns-filtering/ /learning-paths/secure-internet-traffic/ 301
 /learning-paths/dns-filtering/connect-devices/change-dns-resolver/ /learning-paths/secure-internet-traffic/build-dns-policies/onboard-dns/ 301
