@@ -492,6 +492,8 @@ When you are ready to connect your Magic WAN Connector to the Cloudflare network
 		<p>Advanced users can locally configure their Magic WAN Connector to work in a static IP configuration. This local method does not require having access to a DHCP Internet connection. However, it does require being comfortable with using tools to access the serial port on Magic WAN Connector as well as using a serial terminal client to access the Connector's environment.</p>
 		<p>Below is a detailed description of how to use the serial port to configure your Magic WAN Connector locally.</p>
 
+		<Aside type="note">The <code>reset device</code> option in your Connector clears most of the configuration that is locally cached, resets the password to the default, and reboots.</Aside>
+
 		<AnchorHeading title="Equipment required" depth={3} />
 		<p>To access the serial port on Magic WAN Connector you will need the following equipment:</p>
 		<ul>
@@ -559,7 +561,7 @@ When you are ready to connect your Magic WAN Connector to the Cloudflare network
 		</ol>
 
 		<AnchorHeading title="3. Configure a static IP on Magic WAN Connector" depth={3} />
-		<Aside type="note">The <code>reset device</code> option in your Connector clears most of the configuration that is locally cached, resets the password to the default, and reboots.</Aside>
+		<p>The <code>reset device</code> option in your Connector clears most of the configuration that is locally cached, resets the password to the default, and reboots.</p>
 		<ol>
 			<li>Log into the Connector.
 				<ol>
