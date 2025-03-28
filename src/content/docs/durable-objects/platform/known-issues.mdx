@@ -3,12 +3,7 @@ pcx_content_type: concept
 title: Known issues
 ---
 
-import {
-	GlossaryTooltip,
-	Steps,
-	WranglerConfig,
-	PackageManagers,
-} from "~/components";
+import { GlossaryTooltip, Steps } from "~/components";
 
 Durable Objects is generally available. However, there are some known issues.
 
@@ -41,74 +36,3 @@ The Workers editor in the [Cloudflare dashboard](https://dash.cloudflare.com/) a
 Currently, when developing locally (using `npx wrangler dev`), Durable Object [alarm methods](/durable-objects/api/alarms) may fail after a hot reload (if you edit the code while the code is running locally).
 
 To avoid this issue, when using Durable Object alarms, close and restart your `wrangler dev` command after editing your code.
-
-## Local development with web frameworks
-
-When developing a Pages or Workers Assets application, you may have to define your Durable Object in a separate Worker in order to develop locally.
-This only applies to frameworks that use a development server that runs in Node.js. We are working to improve this experience - for example, frameworks that use the Cloudflare Vite plugin do not have this issue.
-
-For now, you can set up your project like this to enable local development. In this example, we assume you have a pre-existing Worker that you want to add a DO binding to.
-
-<Steps>
-1. Create a second Worker with your Durable Object code.
-
-    ```ts title="src/index.ts"
-    export class MyDurableObject extends DurableObject {
-    	// Your DO code goes here
-    }
-
-    export default {
-    	fetch() {
-    		// Doesn't have to do anything, but a DO cannot be the default export
-    			return new Response("Hello, world!");
-    	},
-    };
-    ```
-
-2.  Create a **new** Wrangler config file for this Worker.
-
-        <WranglerConfig>
-        ```json
-        {
-        	"name": "external-do-worker",
-        	"main": "src/index.ts",
-        	"compatibility_date": "XXXX-XX-XX"
-        }
-        ```
-        </WranglerConfig>
-
-3.  Update your **original** Durable Object bindings in your pre-existing Wrangler config file to include the `script_name` field. This should be the same as the `name` field in the new Worker's config.
-
-    <WranglerConfig>
-
-        ```json
-        {
-        	...
-        	"durable_objects": {
-        		"bindings": [
-        			{
-        				"name": "BINDING",
-        				"class_name": "MyDurableObject",
-        				"script_name": "external-do-worker",
-        			},
-        		],
-        	},
-        	...
-        },
-        ```
-
-        </WranglerConfig>
-
-4.  Develop locally
-
-        If you are not using RPC with your Durable Object, you can run a separate Wrangler dev session alongside your framework development server.
-
-        		Otherwise, you can build your application and run both Workers in the same Wrangler dev session.
-
-        	  If you are using Pages:
-        <PackageManagers type="exec" pkg="wrangler" args="pages dev -c path/to/pages/wrangler.jsonc -c path/to/external-do-worker/wrangler.jsonc" />
-
-        If you are using Workers with Assets:
-        <PackageManagers type="exec" pkg="wrangler" args="dev -c path/to/workers-assets/wrangler.jsonc -c path/to/external-do-worker/wrangler.jsonc" />
-
-</Steps>
