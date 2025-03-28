@@ -101,6 +101,10 @@ entries:
     general_definition: |-
       an origin response status code is an HTTP response code sent from the origin server to Cloudflare.
 
+  - term: origin/host server
+    general_definition: |-
+      the server where the website content is hosted.
+
   - term: plan
     general_definition: |-
       plans distinguish the breadth of Cloudflare features accessible to a specific domain. Plan options include [Free, Pro, Business, or Enterprise](https://www.cloudflare.com/plans/).
@@ -108,6 +112,10 @@ entries:
   - term: protocol
     general_definition: |-
       a protocol is a set of rules governing the exchange or transmission of data between devices.
+  
+  - term: proxy server
+    general_definition: |-
+      the server that sits between the origin server and the client. Cloudflare is a proxy server for example.
 
   - term: redirect
     general_definition: |-
