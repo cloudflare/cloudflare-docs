@@ -72,24 +72,6 @@ Other drivers and ORMs not listed may also be supported: this list is not exhaus
 
 <Render file="nodejs_compat" product="workers" />
 
-## Supported TLS (SSL) modes
-
-Hyperdrive supports the following [PostgreSQL TLS (SSL)](https://www.postgresql.org/docs/current/libpq-ssl.html) connection modes when connecting to your origin database:
-
-| Mode          | Supported                       | Details                                                                                                                                   |
-| ------------- | ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `none`        | No                              | Hyperdrive does not support insecure plain text connections.                                                                              |
-| `prefer`      | No (use `require`)              | Hyperdrive will always use TLS.                                                                                                           |
-| `require`     | Yes (default)                   | TLS is required, and server certificates are validated (based on WebPKI).                                                                 |
-| `verify-ca`   | Not currently supported in beta | Verifies the server's TLS certificate is signed by a root CA on the client. This ensures the server has a certificate the client trusts.  |
-| `verify-full` | Not currently supported in beta | Identical to `verify-ca`, but also requires the database hostname must match a Subject Alternative Name (SAN) present on the certificate. |
-
-:::caution
-
-Hyperdrive does not currently support uploading client CA certificates. In the future, you will be able to provide the client CA to Hyperdrive as part of your database configuration.
-
-:::
-
 ## Driver examples
 
 The following examples show you how to:
