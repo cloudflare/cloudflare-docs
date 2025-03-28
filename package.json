@@ -83,7 +83,7 @@
 		"micromark-extension-mdxjs": "3.0.0",
 		"node-html-parser": "7.0.1",
 		"openapi-types": "12.1.3",
-		"parse-duration": "2.1.3",
+		"parse-duration": "2.1.4",
 		"prettier": "3.5.3",
 		"prettier-plugin-astro": "0.14.1",
 		"prettier-plugin-tailwindcss": "0.6.9",
