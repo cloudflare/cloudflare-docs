@@ -187,6 +187,7 @@
 /bots/concepts/ja3-fingerprint/ /bots/concepts/ja3-ja4-fingerprint/ 301
 /bots/reference/verified-bot-categories/ /bots/concepts/bot/verified-bots/categories/ 301
 /bots/reference/verified-bot-policy/ /bots/concepts/bot/verified-bots/policy/ 301
+/bots/concepts/challenge-solve-rate/ /fundamentals/security/cloudflare-challenges/challenge-solve-rate/ 301
 
 #browser-rendering
 /browser-rendering/get-started/browser-rendering-with-do/ /browser-rendering/workers-binding-api/browser-rendering-with-do/ 301
