@@ -229,6 +229,9 @@ To add a Connector on-ramp:
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. In **WAN configuration**, select **Create**. You can create one or more [wide area networks (WANs)](https://www.cloudflare.com/learning/network-layer/what-is-a-wan/). Configuring multiple WANs will create multiple <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels (one IPsec tunnel per WAN port). This allows the Connector to failover between circuits according to their <GlossaryTooltip term="tunnel health-check" link="/magic-wan/reference/tunnel-health-checks/">health</GlossaryTooltip>.
+		:::note
+		This is not the same as a high availability (HA) configuration. HA configurations need two Connectors to work. Refer to [About high availability configurations](#about-high-availability-configurations) for more information.
+		:::
 2. In **Interface name**, enter a descriptive name for your WAN.
 3. **Interface number** <Markdown text={props.wan} />
 4. In **VLAN ID**, enter a number between `0` and `4094` to specify a [VLAN ID](/magic-wan/configuration/connector/reference/#vlan-id).
