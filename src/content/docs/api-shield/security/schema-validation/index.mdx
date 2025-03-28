@@ -1,6 +1,6 @@
 ---
 pcx_content_type: concept
-title: Schema Validation
+title: Schema validation
 sidebar:
   order: 8
 
@@ -12,15 +12,15 @@ import { GlossaryDefinition, GlossaryTooltip, Plan } from "~/components"
 
 <GlossaryDefinition term="API schema" />
 
-Schema Validation allows you to check if incoming traffic complies with a previously supplied API schema. When you provide an API schema or select from a list of learned schema, API Shield creates rules for incoming traffic from the schema definitions. These rules define which traffic is allowed and which traffic gets logged or blocked.
+Schema validation allows you to check if incoming traffic complies with a previously supplied API schema. When you provide an API schema or select from a list of learned schema, API Shield creates rules for incoming traffic from the schema definitions. These rules define which traffic is allowed and which traffic gets logged or blocked.
 
-Cloudflare has recently launched Schema Validation 2.0. For help configuring the previous version of Schema Validation for one or more hosts using the dashboard, refer to [Configure Classic Schema Validation](/api-shield/reference/classic-schema-validation/). You can make changes to your Classic Schema Validation settings but you cannot add any new schemas.
+Cloudflare has recently launched Schema validation 2.0. For help configuring the previous version of Schema validation for one or more hosts using the dashboard, refer to [Configure Classic Schema validation](/api-shield/reference/classic-schema-validation/). You can make changes to your Classic Schema validation settings but you cannot add any new schemas.
 
-You can migrate to Schema Validation 2.0 manually by uploading your schemas to the new system, or you can wait for a future release where we will add an easy migrate option per-schema.
+You can migrate to Schema validation 2.0 manually by uploading your schemas to the new system, or you can wait for a future release where we will add an easy migrate option per-schema.
 
 ## Process
 
-<GlossaryTooltip term="API endpoint">Endpoints</GlossaryTooltip> must be added to [Endpoint Management](/api-shield/management-and-monitoring/) for Schema Validation to protect them. Uploading a schema via the Cloudflare dashboard will automatically add endpoints, or you can manually add them from [API Discovery](/api-shield/security/api-discovery/).
+<GlossaryTooltip term="API endpoint">Endpoints</GlossaryTooltip> must be added to [Endpoint Management](/api-shield/management-and-monitoring/) for Schema validation to protect them. Uploading a schema via the Cloudflare dashboard will automatically add endpoints, or you can manually add them from [API Discovery](/api-shield/security/api-discovery/).
 
 If you are uploading a schema via the API or Terraform, you must parse the schema and add your endpoints manually.
 
@@ -35,7 +35,7 @@ To view the contents in your learned schema, refer to [Export a schema](/api-shi
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Select **Security** > **API Shield**.
-3. Go to **Schema Validation** and select **Add validation**.
+3. Go to **Schema validation** and select **Add validation**.
 4. Select your schema file for upload.
 5. Observe the listed endpoints, their host, method, and path. Any new endpoints will automatically be added to Endpoint Management.
 6. Choose an action for the non-compliant requests to your endpoints.
@@ -50,7 +50,7 @@ Changes may take a few minutes to process depending on the number of added endpo
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Select **Security** > **API Shield**.
-3. Go to **Schema Validation** and filter by the learned schema available.
+3. Go to **Schema validation** and filter by the learned schema available.
 4. Select **Apply learned schema**.
 5. Choose an action and select **Apply schema**.
 
@@ -60,7 +60,7 @@ At this time, learned schemas will not overwrite customer-uploaded schemas. If a
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Select **Security** > **API Shield**.
-3. Go to **Schema Validation** and select **Add Validation**.
+3. Go to **Schema validation** and select **Add validation**.
 4. Select **Apply learned schema**.
 5. Choose a hostname and review the endpoints that will be protected by the learned schema.
 6. (Optional) Change the action if a request does not match the schema.
@@ -99,16 +99,16 @@ You can use the `cf.api_gateway.fallthrough_triggered` syntax in your own custom
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Select **Security** > **API Shield**.
-3. Go to **Schema Validation** and select the schema in the Schema list.
+3. Go to **Schema validation** and select the schema in the Schema list.
 4. Check the multi-select box to select the endpoints shown on the current page.
 5. Choose **Select all endpoints**.
 6. Select **Change Action**.
 7. Choose an action from the dropdown menu.
 8. Select **Set action**.
 
-### Change the global default action of Schema Validation
+### Change the global default action of Schema validation
 
-Schema Validation’s default action is visible on the main Schema Validation page. This action applies to any endpoint with its action set to `Default`.
+Schema validation’s default action is visible on the main Schema validation page. This action applies to any endpoint with its action set to `Default`.
 
 - `Log` action: logs events to [Firewall Events](/firewall/).
 - `Block` action: blocks requests that fail the schema for an endpoint and logs events to [Firewall Events](/firewall/).
@@ -118,7 +118,7 @@ To change the default action:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Go to **Security** > **API Shield**.
-3. Select **Schema Validation**.
+3. Select **Schema validation**.
 4. Under the default `Log` action, select **Change**.
 5. Choose a new action from the dropdown menu.
 6. Observe the current action and accept the change by selecting **Change default action** in the popup window.
@@ -127,7 +127,7 @@ Alternatively, you can modify the global action via **Security** > **API Shield*
 
 ### Change the action of a single endpoint
 
-You can change individual endpoint actions separately from the default action in Schema Validation.
+You can change individual endpoint actions separately from the default action in Schema validation.
 
 This allows you to be stricter on blocking non-compliant requests on certain endpoints when the default action is `Log`. It can also be used to relax constraints on non-compliant requests on certain endpoints when the default action is set to `Block`. You may want to silence known false positives on an endpoint by setting the action to `None`.
 
@@ -135,18 +135,18 @@ To change the action on an individual endpoint:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Go to **Security** > **API Shield**.
-3. Select **Schema Validation** and filter the selected endpoint.
+3. Select **Schema validation** and filter the selected endpoint.
 4. Select the ellipses on the endpoint's row.
 5. Select **Change Action**.
 6. Choose a new action from the dropdown menu and select **Set action**.
 
-### Disable Schema Validation without changing actions
+### Disable Schema validation without changing actions
 
-You can disable Schema Validation entirely for temporary troubleshooting. You can override all actions at once, preventing Schema Validation from taking any action while you complete your troubleshooting.
+You can disable Schema validation entirely for temporary troubleshooting. You can override all actions at once, preventing Schema validation from taking any action while you complete your troubleshooting.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Select **Security** > **API Shield**.
-3. Go to the **Schema Validation** settings.
+3. Go to the **Schema validation** settings.
 4. Select **Disable**.
 
 Your per-endpoint configurations will be saved when modifying the setting, so that you do not lose your configuration. To re-enable your configurations after troubleshooting, navigate back to the settings and select **Enable**.
@@ -157,7 +157,7 @@ To view currently uploaded or learned schemas:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Select **Security** > **API Shield**.
-3. Go to your **Schema Validation** settings.
+3. Go to your **Schema validation** settings.
 4. View your schemas under **Uploaded Schemas** and **Learned schemas**.
 5. Select **Filter** on the endpoints in either schema.
 
@@ -169,19 +169,19 @@ To delete currently uploaded or learned schemas:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Select **Security** > **API Shield**.
-3. Go to your **Schema Validation** settings.
+3. Go to your **Schema validation** settings.
 4. View your schemas under **Uploaded Schemas** and **Learned schemas**.
 5. Select the ellipses to access the menu and download or delete the listed schema.
 
 ## Specifications
 
-Cloudflare currently only accepts [OpenAPI v3 schemas](https://swagger.io/specification/). The accepted file formats are YAML (`.yml` or `.yaml` file extension) and JSON (`.json` file extension).
+Cloudflare currently only accepts [OpenAPI v3 schemas](https://spec.openapis.org/oas/v3.0.3.html). The accepted file formats are YAML (`.yml` or `.yaml` file extension) and JSON (`.json` file extension).
 
-OpenAPI schemas generated by different tooling may not be specific enough to import to Schema Validation. We recommend using a third-party tool such as [Swagger Editor](https://swagger.io/tools/swagger-editor/) to ensure that schemas are compliant to the OpenAPI specification.
+OpenAPI schemas generated by different tooling may not be specific enough to import to Schema validation. We recommend using a third-party tool such as [Swagger Editor](https://swagger.io/tools/swagger-editor/) to ensure that schemas are compliant to the OpenAPI specification.
 
 ## Limitations
 
-Schema Validation supports [OpenAPI Version 3.0.x schemas](https://spec.openapis.org/oas/v3.0.3). OpenAPI 3.1 is not supported yet, and we do not plan to expand support for OpenAPI 2.0. 
+Schema validation supports [OpenAPI Version 3.0.x schemas](https://spec.openapis.org/oas/v3.0.3). OpenAPI 3.1 is not supported yet, and we do not plan to expand support for OpenAPI 2.0. 
 
 Currently, API Shield does not support some features of API schemas, including the following: all responses, external references, non-basic path templating, or unique items.
 
@@ -191,26 +191,26 @@ For limits on Free, Pro, Business, or Enterprise customers not subscribed to API
 
 ### Required fields
 
-Although not strictly required by the OpenAPI specification, Schema Validation strictly requires these fields.
+Although not strictly required by the OpenAPI specification, Schema validation strictly requires these fields.
 
 #### `schema`
 
 - [`type`](https://spec.openapis.org/oas/v3.0.3#schema-object)
-   - All schemas require a type to be set. If the specific type is not supported by Schema Validation, it is usually best to simply set the type to `string` instead.
+   - All schemas require a type to be set. If the specific type is not supported by Schema validation, it is usually best to simply set the type to `string` instead.
 
 #### `parameter`
 
 - [`schema`](https://spec.openapis.org/oas/v3.0.3#schema-object)
-   - Schema Validation does not support the content field in parameters. For more details, refer to the [notes on validated and supported fields](#notes-on-validated-and-supported-fields) below. Instead, a schema is strictly required on all parameters objects.
+   - Schema validation does not support the content field in parameters. For more details, refer to the [notes on validated and supported fields](#notes-on-validated-and-supported-fields) below. Instead, a schema is strictly required on all parameters objects.
 
 ### Notes on validated and supported fields
 
-Refer to the information below for more details on Schema Validation's current support for various OpenAPI specification (OAS) objects and fields.
+Refer to the information below for more details on Schema validation's current support for various OpenAPI specification (OAS) objects and fields.
 
 #### `servers`
 
 - [`url`](https://spec.openapis.org/oas/v3.0.3#server-object)
-   - Schema Validation does not support relative URLs.
+   - Schema validation does not support relative URLs.
 - [`variables`](https://spec.openapis.org/oas/v3.0.3#server-variable-object)
    - Server variables are not validated.
 
@@ -235,7 +235,7 @@ Refer to the information below for more details on Schema Validation's current s
 - `content`
    - [Request Body Object](https://spec.openapis.org/oas/v3.0.3#request-body-object)
    - [Media Type Object](https://spec.openapis.org/oas/v3.0.3#media-type-object)
-      - Schema Validation is able to validate `application/json` documents. If a given schema allows other content types, Schema Validation will accept those requests without validation.
+      - Schema validation is able to validate `application/json` documents. If a given schema allows other content types, Schema validation will accept those requests without validation.
 
 #### `parameter/schema`
 
@@ -270,13 +270,13 @@ Refer to the information below for more details on Schema Validation's current s
      - `uint64`
 
 - [`uniqueItems`](https://spec.openapis.org/oas/v3.0.3#schema-object)
-   - This field is currently not validated by Schema Validation.
+   - This field is currently not validated by Schema validation.
 
 ## Body inspection
 
 API Shield has the ability to identify body specifications contained in uploaded schemas and validate that the data of incoming API requests adheres to them.
 
-Schema Validation currently supports validating requests with content-type `application/json`.
+Schema validation currently supports validating requests with content-type `application/json`.
 
 Within the OpenAPI specification, request body schemas are associated to media-ranges (such as `application/*`, `application/xml` or `application/json`).
 
@@ -300,4 +300,4 @@ Media-ranges can also be configured to enforce a `charset` parameter. For this, 
 
 ## Availability
 
-Schema Validation is available for all customers. Refer to [Plans](/api-shield/plans/) for more information based on your plan type. 
+Schema validation is available for all customers. Refer to [Plans](/api-shield/plans/) for more information based on your plan type. 

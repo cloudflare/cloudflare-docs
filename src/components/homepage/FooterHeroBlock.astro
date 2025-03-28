@@ -58,9 +58,7 @@ const blocks = [
 ] as const;
 ---
 
-<div
-	class="flex bg-gray-100 dark:bg-gray-800 bleed *:!mt-0 items-start justify-between py-10"
->
+<div class="flex items-start justify-between py-10 *:!mt-0">
 	{
 		blocks.map(({ title, text, links }) => (
 			<div>
@@ -68,13 +66,13 @@ const blocks = [
 				<p class="w-80">{text}</p>
 				<ul class="list-none pl-0">
 					{links.map((link) => (
-						<li class="flex !mt-4">
+						<li class="!mt-4 flex">
 							<Icon
 								name={link.icon}
 								size="1.5rem"
 								color="var(--sl-color-white)"
 							/>
-							<a href={link.href} class="pl-2 no-underline !text-black">
+							<a href={link.href} class="pl-2 !text-black no-underline">
 								{link.text}
 							</a>
 						</li>
@@ -84,19 +82,3 @@ const blocks = [
 		))
 	}
 </div>
-
-<style>
-	@tailwind utilities;
-
-	.bleed {
-		box-shadow: 0 0 0 100vmax theme(colors.gray.800);
-		clip-path: inset(0 -100vmax);
-	}
-
-	html[data-theme="light"] {
-		.bleed {
-			box-shadow: 0 0 0 100vmax theme(colors.gray.100);
-			clip-path: inset(0 -100vmax);
-		}
-	}
-</style>

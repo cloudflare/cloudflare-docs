@@ -8,14 +8,15 @@ import starlightLinksValidator from "starlight-links-validator";
 import icon from "astro-icon";
 import sitemap from "@astrojs/sitemap";
 import react from "@astrojs/react";
+
 import { readdir } from "fs/promises";
+import { fileURLToPath } from "url";
 
 import rehypeTitleFigure from "rehype-title-figure";
 import rehypeMermaid from "./src/plugins/rehype/mermaid.ts";
 import rehypeAutolinkHeadings from "./src/plugins/rehype/autolink-headings.ts";
 import rehypeExternalLinks from "./src/plugins/rehype/external-links.ts";
 import rehypeHeadingSlugs from "./src/plugins/rehype/heading-slugs.ts";
-import { fileURLToPath } from "url";
 
 async function autogenSections() {
 	const sections = (
@@ -36,7 +37,21 @@ async function autogenSections() {
 	});
 }
 
+async function autogenStyles() {
+	const styles = (
+		await readdir("./src/styles/", {
+			withFileTypes: true,
+			recursive: true,
+		})
+	)
+		.filter((x) => x.isFile())
+		.map((x) => x.parentPath + x.name);
+
+	return styles;
+}
+
 const sidebar = await autogenSections();
+const customCss = await autogenStyles();
 
 const runLinkCheck = process.env.RUN_LINK_CHECK || false;
 
@@ -53,6 +68,14 @@ export default defineConfig({
 			// @ts-expect-error plugins types are outdated but functional
 			rehypeTitleFigure,
 		],
+	},
+	image: {
+		service: {
+			entrypoint: "astro/assets/services/sharp",
+			config: {
+				limitInputPixels: false,
+			},
+		},
 	},
 	experimental: {
 		contentIntellisense: true,
@@ -88,26 +111,15 @@ export default defineConfig({
 			components: {
 				Footer: "./src/components/overrides/Footer.astro",
 				Head: "./src/components/overrides/Head.astro",
+				Header: "./src/components/overrides/Header.astro",
 				Hero: "./src/components/overrides/Hero.astro",
 				MarkdownContent: "./src/components/overrides/MarkdownContent.astro",
 				Sidebar: "./src/components/overrides/Sidebar.astro",
 				PageTitle: "./src/components/overrides/PageTitle.astro",
-				SocialIcons: "./src/components/overrides/SocialIcons.astro",
 				TableOfContents: "./src/components/overrides/TableOfContents.astro",
 			},
 			sidebar,
-			customCss: [
-				"./src/asides.css",
-				"./src/badges.css",
-				"./src/code.css",
-				"./src/footnotes.css",
-				"./src/headings.css",
-				"./src/input.css",
-				"./src/mermaid.css",
-				"./src/table.css",
-				"./src/tailwind.css",
-				"./src/title.css",
-			],
+			customCss,
 			pagination: false,
 			plugins: [
 				...(runLinkCheck
@@ -118,7 +130,7 @@ export default defineConfig({
 								exclude: [
 									"/api/",
 									"/api/**",
-									"/changelog/",
+									"/changelog/**",
 									"/http/resources/**",
 									"{props.*}",
 									"/",
@@ -136,10 +148,7 @@ export default defineConfig({
 						]
 					: []),
 				starlightDocSearch({
-					appId: "D32WIYFTUF",
-					apiKey: "5cec275adc19dd3bc17617f7d9cf312a",
-					indexName: "prod_devdocs",
-					insights: true,
+					clientOptionsModule: "./src/plugins/docsearch/index.ts",
 				}),
 				starlightImageZoom(),
 			],
@@ -148,9 +157,7 @@ export default defineConfig({
 		tailwind({
 			applyBaseStyles: false,
 		}),
-		liveCode({
-			layout: "~/components/live-code/Layout.astro",
-		}),
+		liveCode({}),
 		icon(),
 		sitemap({
 			filter(page) {

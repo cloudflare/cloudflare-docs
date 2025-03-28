@@ -1,5 +1,5 @@
 ---
-title: Create a remotely-managed tunnel (dashboard)
+title: Create a tunnel (dashboard)
 pcx_content_type: how-to
 sidebar:
   order: 1
@@ -7,7 +7,7 @@ sidebar:
 
 import { Render } from "~/components";
 
-Follow this step-by-step guide to get your first tunnel up and running using Zero Trust.
+Follow this step-by-step guide to create your first [remotely-managed tunnel](/cloudflare-one/connections/connect-networks/get-started/tunnel-useful-terms/#remotely-managed-tunnel) using Zero Trust.
 
 ## 1. Create a tunnel
 
@@ -25,8 +25,6 @@ Before you connect an application through your tunnel, you must:
 Follow these steps to connect an application through your tunnel. If you are looking to connect a network, skip to the [Connect a network section](#2b-connect-a-network).
 
 <Render file="tunnel/add-public-hostname" product="cloudflare-one" />
-
-If you add a multi-level subdomain (more than one level of subdomain), you must [order an Advanced Certificate for the hostname](/cloudflare-one/faq/troubleshooting/#i-see-this-site-cant-provide-a-secure-connection).
 
 The application is now publicly available on the Internet. To allow or block specific users, [create an Access application](/cloudflare-one/applications/configure-apps/self-hosted-public-app/).
 

@@ -11,6 +11,10 @@ Only `A`, `AAAA`, and `CNAME` DNS records that serve `HTTP` or `HTTPS` traffic c
 
 If you encounter a `CNAME` record that you cannot proxy — usually associated with another CDN provider — a proxied version of that record will cause connectivity errors. Cloudflare is purposely preventing that record from being proxied to protect you from a misconfiguration.
 
+#### Secondary DNS zones with pre-signed DNSSEC
+
+If you use Cloudflare as your [secondary DNS provider](/dns/concepts/#dns-setups) and leverage [Secondary DNS Overrides](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/) to set records to proxied, note that opting for [Pre-signed DNSSEC](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/dnssec-for-secondary/) will cause Cloudflare to treat your records as **DNS only**.
+
 #### Ports and protocols
 
 To proxy `HTTP/HTTPS` traffic on [non-standard ports](/fundamentals/reference/network-ports/) or to proxy a `TCP-` or `UDP-` based application, use [Cloudflare Spectrum](/spectrum/).
@@ -19,7 +23,7 @@ To proxy `HTTP/HTTPS` traffic on [non-standard ports](/fundamentals/reference/ne
 
 <Render file="onboard-warning" product="dns" /> <br/>
 
-This means that DNS records — even those set to [proxy traffic through Cloudflare](#proxied-records) — will be [DNS-only](/dns/manage-dns-records/reference/proxied-dns-records/#dns-only-records) until your zone has been activated and any requests to your DNS records will return your origin server's IP address.
+This means that DNS records — even those set to proxy traffic through Cloudflare — will be [DNS-only](/dns/proxy-status/#dns-only-records) until your zone has been activated and any requests to your DNS records will return your origin server's IP address.
 
 If this warning is still present after 24 hours, refer to [Troubleshooting](/dns/troubleshooting/).
 

@@ -1,0 +1,49 @@
+---
+pcx_content_type: navigation
+title: Secure remote access to your critical infrastructure
+sidebar:
+  order: 4
+prev: true
+next: true
+tableOfContents: false
+---
+
+import { Render, Tabs, TabItem, Stream, Card } from "~/components";
+
+<Tabs>
+  <TabItem label="Watch this episode">
+
+    In this video learn how Cloudflare's SASE platform can provide highly secure access to your critical infrastructure by leveraging a modern ZTNA service to implement Zero Trust principles. Applications, databases and their servers are running in a variety of locations from on-premises data centers to cloud hyperscalers, making the need to secure administrative access more important than ever.
+
+    <Card>
+        <Stream
+        id="f13b085ed4d28a9dbb8faf19ae986125"
+        title="Secure remote access to your critical infrastructure"
+        thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/Secure-remote-access-to-your-critical-infrastructure.jpg"
+        showMoreVideos={false}
+        chapters={{
+          "Introduction to SASE and Securing Access to Critical Infrastructure" : "0s",
+          "Connecting and Securing Private Servers with Cloudflare Tunnels" : "50s",
+          "Using Internal DNS to Securely Resolve Private Network Resources" : "2m12s",
+          "Connecting User Devices Securely with Cloudflare's Device Agent" : "3m1s",
+          "Enforcing Access Control with Identity, Network and Device Based Security Policies" : "3m48s",
+          "Auditing and Logging Access to Critical Infrastructure" : "5m3s"
+        }}
+      />
+
+      **Related content**
+
+      If you want to dive into detail about using Cloudflare to access critical infrastructure, refer to the following pages:
+
+        - [Evolving to a SASE architecture with Cloudflare](/reference-architecture/architectures/sase/)
+        - [SSH with Access for Infrastructure](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/)
+        - [Using a Zero Trust framework to secure SaaS applications](/reference-architecture/design-guides/zero-trust-for-saas/)
+        - [Building Zero Trust architecture into your startup](/reference-architecture/design-guides/zero-trust-for-startups/)
+
+    </Card>
+  </TabItem>
+
+  <TabItem label="Series overview">
+    <Render file="sase-series-navigation" />
+  </TabItem>
+</Tabs>

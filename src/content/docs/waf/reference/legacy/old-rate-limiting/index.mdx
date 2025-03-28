@@ -4,6 +4,9 @@ source: https://support.cloudflare.com/hc/en-us/articles/115001635128-Configurin
 title: Rate Limiting (previous version)
 sidebar:
   order: 3
+  group:
+    badge:
+      text: Deprecated
 ---
 
 Cloudflare Rate Limiting automatically identifies and mitigates excessive request rates for specific URLs or for an entire domain.
@@ -30,7 +33,7 @@ Are you trying to enable Rate Limiting? [Enable Rate Limiting](https://dash.clou
 
 ### Rate limiting and SEO
 
-Cached resources and known Search Engine crawlers are exempted from your rate limiting rules (previous version only). Therefore, they do not affect your website's [SEO ranking](/fundamentals/basic-tasks/improve-seo/).
+Cached resources and known Search Engine crawlers are exempted from your rate limiting rules (previous version only). Therefore, they do not affect your website's [SEO ranking](/fundamentals/performance/improve-seo/).
 
 ---
 
@@ -125,7 +128,7 @@ Rate limit actions are based on the domain plan as mentioned in [Availability](#
 - **Interactive Challenge**: Visitor must pass an Interactive Challenge. If passed, Cloudflare allows the request.
 - **Log**: Requests are logged in [Cloudflare Logs](/logs/). This helps test rules before applying to production.
 
-For more information on challenge actions, refer to [Cloudflare challenges](/waf/reference/cloudflare-challenges/).
+For more information on challenge actions, refer to [Cloudflare challenges](/fundamentals/security/cloudflare-challenges/).
 
 #### Ban duration
 

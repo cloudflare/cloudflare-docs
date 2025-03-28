@@ -27,8 +27,90 @@ Magic WAN Connector software is certified for use on the [Dell Networking Virtua
 
 ## VLAN ID
 
-This feature allows you to have multiple [virtual LANs](https://www.cloudflare.com/learning/network-layer/what-is-a-lan/) (VLANs) configured over the same physical port on your Magic WAN Connector. VLAN tagging adds an extra header to packets in order to identify which VLAN the packet belongs to and to route it appropriately. This effectively allows you to run multiple networks over the same physical port.
+This feature allows you to have multiple [virtual LANs](https://www.cloudflare.com/learning/network-layer/what-is-a-lan/) (VLANs) configured over the same physical port on your Magic WAN Connector. VLAN tagging adds an extra header to [packets](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) in order to identify which VLAN the packet belongs to and to route it appropriately. This effectively allows you to run multiple networks over the same physical port.
 
 A non-zero value set up for the VLAN ID field in your WAN/LAN is used to handle VLAN-tagged traffic. Cloudflare uses the VLAN ID to handle traffic coming into your Magic WAN Connector device, and applies a VLAN tag with the configured VLAN ID for traffic going out of your Connector through WAN/LAN.
 
 You can setup VLAN IDs both for WAN and LAN. Refer to [Configure hardware connector](/magic-wan/configuration/connector/configure-hardware-connector/) or [Configure software connector](/magic-wan/configuration/connector/configure-virtual-connector/) to learn where you can set up VLAN IDs.
+
+## High availability configurations
+
+### Terminology
+
+- **Primary/Secondary**: Used to identify the two nodes which are part of a high availability (HA) configuration pair of Magic WAN Connectors. This identity allows the node to identify which configuration is attributed to it — for example, specifying a primary and secondary IP in a LAN configuration. This identity is configured by the user on the Cloudflare dashboard.
+- **Active/Standby**: These are states that the two nodes in a HA pair will dynamically assume based on an election process. Only one node at any time is expected to be active.
+
+### High availability
+
+A site set up in high availability (HA) mode has two Magic WAN Connectors with the same configuration but replicated in two nodes. In case of failure of a Connector, the other Connector becomes the active node, taking over configuration of the LAN gateway IP and allowing traffic to continue without disruption.
+
+### Active/Standby Election
+
+During the LAN configuration, one of the LAN links is configured as a HA link, which is used to exchange heartbeats, resulting in the active / standby election of nodes.
+
+The state election uses a `PRIORITY` parameter where the node with the higher priority becomes active and the other assumes the standby state. If the priority is the same, the state machine automatically picks one of the nodes as active.
+
+The HA pair is configured in non-preemptive mode, meaning that once a node becomes active, it will remain active unless its priority drops below that of the other node.
+
+### Configuration
+
+The two Connectors of a high availability (HA) pair are part of a single site. You designate the connectors [as primary and secondary](/magic-wan/configuration/connector/configure-hardware-connector/#create-a-high-availability-configuration) in the Cloudflare dashboard.
+
+:::note
+The HA link cannot be connected back-to-back. It has to be connected over a switch. This is because, in a direct connection, if the link is unplugged on one end, the other end also detects a link failure. Since we have configured the system to enter a `FAULT` state when the HA link goes down, the affected node will be unable to function as the active node.
+:::
+
+### Failure Detection and Failover
+
+The Magic WAN Connector's health can be in one of three states:
+
+- **Good** : All health parameters are good
+- **Degraded** : One of the following is true:
+  - Health of at least one configured tunnel is `DOWN`
+  - At least one of the LAN links is disconnected (physically unplugged)
+- **Down** : If one of the following is true:
+  - Health of all tunnels is `DOWN`
+  - All LAN interfaces are disconnected
+  - Connector software is not healthy
+
+A failover happens when the active node's health declines to a level lower than that of the standby node. For example, from `GOOD` to `DEGRADED`, or from `DEGRADED` to `DOWN`. In the case of a failover where a Connector is acting as a DHCP server, DHCP leases will be synchronized.
+
+When a failover occurs, traffic is moved to the new active node. It could take up to 30 seconds for traffic to be fully restored over the new active node.
+
+## WAN settings
+
+This is where you add and configure your WAN connections. Each configured WAN will create one IPsec tunnel.
+
+When you have multiple WANs you can attribute different priorities to each one. Lower values mean a higher priority. This translates in Connector routing traffic through the higher priority WANs or, more precisely, over the IPsec tunnels established over that interface. On the other hand, if you configure multiple WANs of equal priority, traffic will be distributed over those links through [(Equal-Cost Multi-Path) ECMP routing](/magic-wan/reference/traffic-steering/#equal-cost-multi-path-routing).
+
+Creating several WAN connections also means Connector can failover between circuits according to their health.
+
+### High-capacity use cases
+
+For high-capacity use cases, multiple tunnels can be established with equal priority. Outgoing traffic is then distributed across all available connections using an [ECMP routing](/magic-wan/reference/traffic-steering/#equal-cost-multi-path-routing) algorithm, which balances the load base.
+
+### Configure multiple tunnels in the same WAN profile
+
+If you need to configure multiple tunnels for the same WAN profile, [set up multiple WAN connections](/magic-wan/configuration/connector/configure-hardware-connector/#2-create-a-wan). Each WAN is assigned one IPsec tunnel.
+
+### WAN settings
+
+- **Interface number:** When using the hardware version of Connector, this refers to the Ethernet port that you are using for your WAN. If you need a throughput higher than 1 Gbps, you can use one of the SFP+ ports. Refer to [SFP+ port information](/magic-wan/configuration/connector/configure-hardware-connector/sfp-port-information/) for more information on the hardware supported. <br />  If you are using Virtual Connector, this needs to correspond to the virtual network interface on the Virtual Connector instance you have set up in VMware.
+- **VLAN ID**: Allows you to have multiple virtual WANs configured over the same port on your Magic WAN Connector. Refer to [VLAN ID](https://developers.cloudflare.com/magic-wan/configuration/connector/reference/#vlan-id) for more information.
+- **Priority**: Assigns a priority to the WAN interface. Lower numbers have higher priority. Refer to [Traffic steering](https://developers.cloudflare.com/magic-wan/reference/traffic-steering/) to learn more about how Cloudflare calculates priorities.
+- **Health check rate:** Configures the health check frequency for your WAN. Options are low, mid, and high. Refer to [Update tunnel health checks frequency](https://developers.cloudflare.com/magic-wan/configuration/common-settings/tunnel-health-checks/) for more information.
+- **Addressing:** Configures the Connector to work in a DHCP or static IP environment.
+
+## LAN settings
+
+- **Interface number:** When using the hardware version of Connector, this refers to the Ethernet port that you are using for your LAN. If you need a throughput higher than 1 Gbps, you can use one of the SFP+ ports. Refer to [SFP+ port information](/magic-wan/configuration/connector/configure-hardware-connector/sfp-port-information/) for more information on the hardware supported. <br />  If you are using the Virtual Connector, this needs to correspond to the virtual LAN interface on the Virtual Connector instance you have set up in VMware.
+- **VLAN ID**: Allows you to have multiple virtual LANs configured over the same port on your Magic WAN Connector. Refer to [VLAN ID](https://developers.cloudflare.com/magic-wan/configuration/connector/reference/#vlan-id) for more information.
+- **Static addressing:** Configures the type of IP addressing for your Connector. Depending on your use case, this is where you configure your LAN interface IP address, or enable  DHCP server or DHCP relay. Refer to [DHCP options](/magic-wan/configuration/connector/network-options/dhcp/) to learn more.
+- **Static NAT prefix**: Enable NAT (network address translation). This is an optional setting.
+- **Routed subnets:** Configures additional subnets behind a layer 3 router. Refer to [Routed subnets](/magic-wan/configuration/connector/network-options/routed-subnets/) for more information.
+
+### Restrict traffic to your premises
+
+Depending on your use case, you can define policies in your connector to either allow traffic to flow between your LANs without it leaving your local premises or to forward it via the Cloudflare network where you can add additional security features. The default behavior is to drop all LAN-to-LAN traffic. These policies can be created for specific subnets, and link two LANs.
+
+Refer to [Network segmentation](/magic-wan/configuration/connector/network-options/network-segmentation/) for more information.

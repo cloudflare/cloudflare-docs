@@ -60,9 +60,9 @@ entries:
     general_definition: |-
       A Durable Object alarm is a mechanism that allows you to schedule the Durable Object to be woken up at a time in the future.
 
-  - term: "event context"
+  - term: "request context"
     general_definition: |-
-      The duration of time that a Durable Object is processing an event, such as a remote procedure call. [Compute duration charges](/durable-objects/platform/pricing) are incurred for the duration of the event context.
+      The duration of time that a Durable Object is processing a request, such as a remote procedure call. [Compute duration charges](/durable-objects/platform/pricing) are incurred for the duration of the request context. Note that the request context for a Durable Object extends at least 60 seconds after the last client disconnects.
 
   - term: "input gate"
     general_definition: |-

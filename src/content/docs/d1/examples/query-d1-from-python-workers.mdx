@@ -1,9 +1,8 @@
 ---
 type: example
 summary: Learn how to query D1 from a Python Worker
-tags:
+languages:
   - Python
-  - D1
 pcx_content_type: example
 title: Query D1 from Python Workers
 sidebar:
@@ -33,7 +32,7 @@ If you are new to Cloudflare Workers, refer to the [Get started guide](/workers/
 
 ## Query from Python
 
-This example assumes you have an existing D1 database. To allow your Python Worker to query your database, you first need to create a [binding](/workers/runtime-apis/bindings/) between your Worker and your D1 database and define this in your `wrangler.toml / wrangler.json` file.
+This example assumes you have an existing D1 database. To allow your Python Worker to query your database, you first need to create a [binding](/workers/runtime-apis/bindings/) between your Worker and your D1 database and define this in your [Wrangler configuration file](/workers/wrangler/configuration/).
 
 You will need the `database_name` and `database_id` for a D1 database. You can use the `wrangler` CLI to create a new database or fetch the ID for an existing database as follows:
 
@@ -82,7 +81,7 @@ The value of `binding` is how you will refer to your database from within your W
 To create a Python Worker, create an empty file at `src/entry.py`, matching the value of `main` in your Wrangler file with the contents below:
 
 ```python
-from js import Response
+from workers import Response
 
 async def on_fetch(request, env):
     # Do anything else you'd like on request here!
@@ -119,8 +118,8 @@ Your Worker will be available at `https://python-and-d1.YOUR_SUBDOMAIN.workers.d
 
 If you receive an error deploying:
 
-- Make sure you have configured your `wrangler.toml / wrangler.json` file with the `database_id` and `database_name` of a valid D1 database.
-- Ensure `compatibility_flags = ["python_workers"]` is set in your `wrangler.toml / wrangler.json` file, which is required for Python.
+- Make sure you have configured your [Wrangler configuration file](/workers/wrangler/configuration/) with the `database_id` and `database_name` of a valid D1 database.
+- Ensure `compatibility_flags = ["python_workers"]` is set in your [Wrangler configuration file](/workers/wrangler/configuration/), which is required for Python.
 - Review the [list of error codes](/workers/observability/errors/), and ensure your code does not throw an uncaught exception.
 
 ## Next steps

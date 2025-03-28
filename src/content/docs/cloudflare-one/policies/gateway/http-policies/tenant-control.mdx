@@ -3,8 +3,6 @@ pcx_content_type: how-to
 title: Tenant control
 sidebar:
   order: 4
-banner:
-  content: The default global Cloudflare root certificate will expire on 2025-02-02. If you installed the default Cloudflare certificate before 2024-10-17, you must <a href="/cloudflare-one/connections/connect-devices/user-side-certificates/#generate-a-cloudflare-root-certificate">generate a new certificate</a> and activate it for your Zero Trust organization to avoid inspection errors.
 ---
 
 With Gateway tenant control, you can allow your users access to corporate SaaS applications while blocking access to personal applications. This helps prevent the loss of sensitive or confidential data from a corporate network.
@@ -86,6 +84,22 @@ For more information, refer to the [Slack documentation](https://slack.com/help/
 | `X-Dropbox-allowed-Team-Ids` | Your organization's ID |
 
 For more information, refer to the [Dropbox documentation](https://help.dropbox.com/security/network-control).
+
+## Exempt users in Cloudflare WAF
+
+You can include custom headers in an HTTP policy to allow your users through [Cloudflare WAF](/waf/). This is useful for allowing only WARP users through your WAF.
+
+1. Create an Allow policy for an internal domain behind your WAF with a custom header.
+
+   | Selector | Operator | Value             | Action |
+   | -------- | -------- | ----------------- | ------ |
+   | Domain   | in       | `internalapp.com` | Allow  |
+
+   | Custom header name | Custom header value |
+   | ------------------ | ------------------- |
+   | `X-Example-Header` | `example-value`     |
+
+2. In Cloudflare WAF, [create a custom rule](/waf/custom-rules/) to [require the same HTTP header](/waf/custom-rules/use-cases/require-specific-headers/#example-2-require-http-header-with-a-specific-value).
 
 ## Use tenant control with Browser Isolation
 

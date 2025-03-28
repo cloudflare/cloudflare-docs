@@ -26,7 +26,7 @@ Use `step.sleep` to have a Workflow sleep for a relative period of time:
 await step.sleep("sleep for a bit", "1 hour")
 ```
 
-The second argument to `step.sleep` accepts both `number` (seconds) or a human-readable format, such as "1 minute" or "26 hours". The accepted units for `step.sleep` when used this way are as follows:
+The second argument to `step.sleep` accepts both `number` (milliseconds) or a human-readable format, such as "1 minute" or "26 hours". The accepted units for `step.sleep` when used this way are as follows:
 
 ```ts
 | "second"
@@ -48,7 +48,7 @@ const workflowsLaunchDate = Date.parse("24 Oct 2024 13:00:00 UTC");
 await step.sleepUntil("sleep until X times out", workflowsLaunchDate)
 ```
 
-You can also provide a Unix timestamp (seconds since the Unix epoch) directly to `sleepUntil`.
+You can also provide a UNIX timestamp (milliseconds since the UNIX epoch) directly to `sleepUntil`.
 
 ## Retry steps
 
@@ -69,7 +69,7 @@ const defaultConfig: WorkflowStepConfig = {
 
 When providing your own `StepConfig`, you can configure:
 
-* The total number of attempts to make for a step
+* The total number of attempts to make for a step (accepts `Infinity` for unlimited retries)
 * The delay between attempts (accepts both `number` (ms) or a human-readable format)
 * What backoff algorithm to apply between each attempt: any of `constant`, `linear`, or `exponential`
 * When to timeout (in duration) before considering the step as failed (including during a retry attempt)

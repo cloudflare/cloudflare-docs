@@ -2,17 +2,18 @@
 pcx_content_type: how-to
 title: Check tunnel health in the dashboard
 sidebar:
-  order: 2
+  order: 3
 ---
 
 import { Render } from "~/components";
 
 <Render
-	file="tunnel-healthchecks-dash"
+	file="tunnel-health/check-tunnel-healthchecks-dash"
+	product="networking-services"
 	params={{
 		dashInfo:
 			"The dashboard shows the view of tunnel health as measured from each Cloudflare location where your traffic is likely to land.",
-		productPath: "**Magic WAN** > **Tunnel health check**",
+		productPath: "**Magic WAN** > **Tunnel health**",
 	}}
 />
 

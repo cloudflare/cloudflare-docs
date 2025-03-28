@@ -41,22 +41,22 @@ The second expression uses the `http.request.uri.path` field, combined with the 
 
 Because the [action](/ruleset-engine/rules-language/actions/) for your rule is _Block_, only requests that present a valid client certificate can access the specified hosts.
 
-For enhanced security, Cloudflare recommends that you validate the SHA-256 certificate hash alongside the verified certificate field. This ensures that only requests presenting a valid client certificate with a specific fingerprint are allowed.
+For enhanced security, Cloudflare recommends that you validate the issuer Subject Key Identifier (SKI) hash alongside the verified certificate field. This ensures that only requests presenting a valid client certificate with a specific issuer are allowed.
 
 You can implement this by using an expression similar to the following:
 
 ```txt
-not (cf.tls_client_auth.cert_verified and cf.tls_client_auth.cert_fingerprint_sha256 eq "253E08C1AB67EB7630C61734D377D75D5DCCDE2F6E69986C221D66E848B64321")
+not (cf.tls_client_auth.cert_verified and cf.tls_client_auth.cert_issuer_ski eq "A5AC554235DBA6D963B9CDE0185CFAD6E3F55E9F")
 ```
 
-To obtain the SHA-256 fingerprint of a client certificate stored in the `mtls.crt` file, you can run the following OpenSSL command:
+To obtain the issuer Subject Key Identifier (SKI) hash of a client certificate stored in the `mtls.crt` file, you can run the following OpenSSL command:
 
 ```sh
-openssl x509 -noout -fingerprint -sha256 -inform pem -in mtls.crt | cut -d "=" -f 2 | tr -d ':'
+openssl x509 -noout -ext authorityKeyIdentifier -in mtls.crt | tail -n1 | tr -d ': '
 ```
 
 ```txt output
-253E08C1AB67EB7630C61734D377D75D5DCCDE2F6E69986C221D66E848B64321
+A5AC554235DBA6D963B9CDE0185CFAD6E3F55E9F
 ```
 
 ### Check for revoked certificates

@@ -1,0 +1,40 @@
+---
+title: Expanded AI insights in Cloudflare Radar
+description: Expanded AI insights with new API endpoints for Internet services rankings, robots.txt, and inference data
+products:
+  - radar
+date: 2025-02-04T11:00:00Z
+---
+
+[**Radar**](/radar/) has expanded its AI insights with new API endpoints for Internet services rankings, robots.txt analysis, and AI inference data.
+
+#### Internet services ranking
+
+Radar now provides [rankings for Internet services](/radar/glossary/#internet-services-ranking), including Generative AI platforms, based on anonymized 1.1.1.1 resolver data.
+Previously limited to the annual Year in Review, these insights are now available daily via the [API](/api/resources/radar/subresources/ranking/subresources/internet_services/), through the following endpoints:
+
+- [`top`](/api/resources/radar/subresources/ranking/subresources/internet_services/methods/top/) show service popularity at a specific date.
+- [`timeseries_groups`](/api/resources/radar/subresources/ranking/subresources/internet_services/methods/timeseries_groups/) track ranking trends over time.
+
+#### Robots.txt
+
+Radar now analyzes [robots.txt](/radar/glossary/#robotstxt) files from the top 10,000 domains, identifying AI bot access rules.
+AI-focused user agents from [ai.robots.txt](https://github.com/ai-robots-txt/ai.robots.txt) are categorized as:
+
+- **Fully allowed/disallowed** if directives apply to all paths (`*`).
+- **Partially allowed/disallowed** if restrictions apply to specific paths.
+
+These insights are now available weekly via the [API](/api/resources/radar/subresources/robots_txt/), through the following endpoints:
+
+- [`top/user_agents/directive`](/api/resources/radar/subresources/robots_txt/subresources/top/subresources/user_agents/methods/directive/) to get the top AI user agents by directive.
+- [`top/domain_categories`](/api/resources/radar/subresources/robots_txt/subresources/top/methods/domain_categories/) to get the top domain categories by robots.txt files.
+
+#### Workers AI
+
+Radar now provides insights into public AI inference models from [Workers AI](/workers-ai/), tracking usage trends across **models** and **tasks**.
+These insights are now available via the [API](/api/resources/radar/subresources/ai/subresources/inference/), through the following endpoints:
+
+- [`summary`](/api/resources/radar/subresources/ai/subresources/inference/subresources/summary/) to view aggregated `model` and `task` popularity.
+- [`timeseries_groups`](/api/resources/radar/subresources/ai/subresources/inference/subresources/timeseries_groups/) to track changes over time for `model` or `task`.
+
+Learn more about the new Radar AI insights in our [blog post](https://blog.cloudflare.com/expanded-ai-insights-on-cloudflare-radar/).

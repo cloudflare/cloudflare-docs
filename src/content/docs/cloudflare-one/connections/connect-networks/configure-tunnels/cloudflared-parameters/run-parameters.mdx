@@ -1,0 +1,171 @@
+---
+pcx_content_type: reference
+title: Tunnel run parameters
+sidebar:
+  order: 4
+---
+
+import { Render } from "~/components";
+
+This page lists general-purpose configuration options that you can [add](/cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/#update-tunnel-run-parameters) to the `cloudflared tunnel run` command.
+
+Alternatively, if you are running a [locally-managed tunnel](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/) you can add these flags to your [configuration file](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/configuration-file/) as key/value pairs.
+
+## `autoupdate-freq`
+
+| Syntax                                                           | Default |
+| ---------------------------------------------------------------- | ------- |
+| `cloudflared tunnel --autoupdate-freq <FREQ> run <UUID or NAME>` | `24h`   |
+
+Configures the frequency of `cloudflared` updates.
+
+By default, `cloudflared` will periodically check for updates and restart with the new version. Restarts are performed by spawning a new process that connects to the Cloudflare global network. On successful connection, the old process will gracefully shut down after handling all outstanding requests. See also: [`no-autoupdate`](#no-autoupdate).
+
+## `config`
+
+:::note
+
+For locally-managed tunnels only.
+:::
+
+| Syntax                                                  | Default                     |
+| ------------------------------------------------------- | --------------------------- |
+| `cloudflared tunnel --config <PATH> run <UUID or NAME>` | `~/.cloudflared/config.yml` |
+
+Specifies the path to a [configuration file](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/configuration-file/) in YAML format.
+
+## `edge-bind-address`
+
+| Syntax                                                           | Environment Variable       |
+| ---------------------------------------------------------------- | -------------------------- |
+| `cloudflared tunnel --edge-bind-address <IP> run <UUID or NAME>` | `TUNNEL_EDGE_BIND_ADDRESS` |
+
+Specifies the outgoing IP address used to establish a connection between `cloudflared` and the Cloudflare global network.
+
+By default, `cloudflared` lets the operating system decide which IP address to use. This option is useful if you have multiple network interfaces available and want to prefer a specific interface.
+
+The IP version of `edge-bind-address` will override [`edge-ip-version`](#edge-ip-version) (if provided). For example, if you enter an IPv6 source address, `cloudflared` will always connect to an IPv6 destination.
+
+## `edge-ip-version`
+
+| Syntax                                                              | Default | Environment Variable     |
+| ------------------------------------------------------------------- | ------- | ------------------------ |
+| `cloudflared tunnel --edge-ip-version <VERSION> run <UUID or NAME>` | `4`     | `TUNNEL_EDGE_IP_VERSION` |
+
+Specifies the IP address version (IPv4 or IPv6) used to establish a connection between `cloudflared` and the Cloudflare global network. Available values are `auto`, `4`, and `6`.
+
+The value `auto` relies on the host operating system to determine which IP version to select. The first IP version returned from the DNS resolution of the region lookup will be used as the primary set. In dual IPv6 and IPv4 network setups, `cloudflared` will separate the IP versions into two address sets that will be used to fallback in connectivity failure scenarios.
+
+## `grace-period`
+
+| Syntax                                                          | Default | Environment Variable  |
+| --------------------------------------------------------------- | ------- | --------------------- |
+| `cloudflared tunnel --grace-period <PERIOD> run <UUID or NAME>` | `30s`   | `TUNNEL_GRACE_PERIOD` |
+
+When `cloudflared` receives SIGINT/SIGTERM it will stop accepting new requests, wait for in-progress requests to terminate, then shut down. Waiting for in-progress requests will timeout after this grace period, or when a second SIGTERM/SIGINT is received.
+
+## `logfile`
+
+| Syntax                                                   | Environment Variable |
+| -------------------------------------------------------- | -------------------- |
+| `cloudflared tunnel --logfile <PATH> run <UUID or NAME>` | `TUNNEL_LOGFILE`     |
+
+Saves application log to this file. Mainly useful for reporting issues. For more details on what information you need when contacting Cloudflare support, refer to [this guide](/cloudflare-one/faq/cloudflare-tunnels-faq/).
+
+## `loglevel`
+
+| Syntax                                                     | Default | Environment Variable |
+| ---------------------------------------------------------- | ------- | -------------------- |
+| `cloudflared tunnel --loglevel <VALUE> run <UUID or NAME>` | `info`  | `TUNNEL_LOGLEVEL`    |
+
+Specifies the verbosity of logging for the local `cloudflared` instance. Available values are `debug`, `info` (default), `warn`, `error`, and `fatal`. At the `debug` level, `cloudflared` will log and display the request URL, method, protocol, content length, as well as all request and response headers. However, note that this can expose sensitive information in your logs.
+
+## `metrics`
+
+| Syntax                                                      | Default                                                                                          | Environment Variable |
+| ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------ | -------------------- |
+| `cloudflared tunnel --metrics <IP:PORT> run <UUID or NAME>` | Refer to [Tunnel metrics](/cloudflare-one/connections/connect-networks/monitor-tunnels/metrics/) | `TUNNEL_METRICS`     |
+
+Exposes a Prometheus endpoint on the specified IP address and port, which you can then query for [usage metrics](/cloudflare-one/connections/connect-networks/monitor-tunnels/metrics/).
+
+## `no-autoupdate`
+
+:::note
+
+Does not apply if you installed `cloudflared` using a package manager. <Render file="tunnel/package-manager" product="cloudflare-one" />
+
+:::
+
+| Syntax                                                  | Environment Variable |
+| ------------------------------------------------------- | -------------------- |
+| `cloudflared tunnel --no-autoupdate run <UUID or NAME>` | `NO_AUTOUPDATE`      |
+
+Disables automatic `cloudflared` updates. See also: [`autoupdate-freq`](#autoupdate-freq).
+
+## `origincert`
+
+:::note
+
+For locally-managed tunnels only.
+:::
+
+| Syntax                                                      | Default                   | Environment Variable |
+| ----------------------------------------------------------- | ------------------------- | -------------------- |
+| `cloudflared tunnel --origincert <PATH> run <UUID or NAME>` | `~/.cloudflared/cert.pem` | `TUNNEL_ORIGIN_CERT` |
+
+Specifies the [account certificate](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/tunnel-permissions/) for one of your zones, authorizing the client to serve as an origin for that zone. You can obtain a certificate by using the `cloudflared tunnel login` command or by visiting `https://dash.cloudflare.com/argotunnel`.
+
+## `pidfile`
+
+| Syntax                                                   | Environment Variable |
+| -------------------------------------------------------- | -------------------- |
+| `cloudflared tunnel --pidfile <PATH> run <UUID or NAME>` | `TUNNEL_PIDFILE`     |
+
+Writes the application's process identifier (PID) to this file after the first successful connection. Mainly useful for scripting and service integration.
+
+## `protocol`
+
+| Syntax                                                     | Default | Environment Variable        |
+| ---------------------------------------------------------- | ------- | --------------------------- |
+| `cloudflared tunnel --protocol <VALUE> run <UUID or NAME>` | `auto`  | `TUNNEL_TRANSPORT_PROTOCOL` |
+
+Specifies the protocol used to establish a connection between `cloudflared` and the Cloudflare global network. Available values are `auto`, `http2`, and `quic`.
+
+The `auto` value will automatically configure the `quic` protocol. If `cloudflared` is unable to establish UDP connections, it will fallback to using the `http2` protocol.
+
+## `region`
+
+| Syntax                                                   | Environment Variable |
+| -------------------------------------------------------- | -------------------- |
+| `cloudflared tunnel --region <VALUE> run <UUID or NAME>` | `TUNNEL_REGION`      |
+
+Allows you to choose the regions to which connections are established. Currently the only available value is `us`, which routes all connections through data centers in the United States. Omit or leave empty to connect to the global region.
+
+## `retries`
+
+| Syntax                                                    | Default | Environment Variable |
+| --------------------------------------------------------- | ------- | -------------------- |
+| `cloudflared tunnel --retries <VALUE> run <UUID or NAME>` | `5`     | `TUNNEL_RETRIES`     |
+
+Specifies the maximum number of retries for connection/protocol errors. Retries use exponential backoff (retrying at 1, 2, 4, 8, 16 seconds by default), so it is not recommended that you increase this value significantly.
+
+## `tag`
+
+| Syntax                                                  | Environment Variable |
+| ------------------------------------------------------- | -------------------- |
+| `cloudflared tunnel --tag <KEY=VAL> run <UUID or NAME>` | `TUNNEL_TAG`         |
+
+Specifies custom tags used to identify this tunnel. Multiple tags may be specified by adding additional `--tag <KEY=VAL>` flags to the command. If entering multiple tags into a configuration file, delimit with commas: `tag: {KEY1=VALUE1, KEY2=VALUE2}`.
+
+## `token`
+
+:::note
+
+For remotely-managed tunnels only.
+:::
+
+| Syntax                                          | Environment Variable |
+| ----------------------------------------------- | -------------------- |
+| `cloudflared tunnel run --token <TUNNEL_TOKEN>` | `TUNNEL_TOKEN`       |
+
+Associates the `cloudflared` instance with a specific tunnel. The tunnel's token is shown in the dashboard when you first [create the tunnel](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/). You can also retrieve the token using the [API](/api/resources/zero_trust/subresources/tunnels/subresources/token/methods/get/).

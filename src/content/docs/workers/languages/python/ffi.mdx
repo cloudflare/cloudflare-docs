@@ -22,7 +22,7 @@ The details of Pyodide's Foreign Function Interface are documented [here](https:
 
 Bindings allow your Worker to interact with resources on the Cloudflare Developer Platform. When you declare a binding on your Worker, you grant it a specific capability, such as being able to read and write files to an [R2](/r2/) bucket.
 
-For example, to access a [KV](/kv) namespace from a Python Worker, you would declare the following in your Worker's [`wrangler.toml / wrangler.json` file](/workers/wrangler/configuration/):
+For example, to access a [KV](/kv) namespace from a Python Worker, you would declare the following in your Worker's [Wrangler configuration file](/workers/wrangler/configuration/):
 
 <WranglerConfig>
 
@@ -38,12 +38,12 @@ kv_namespaces = [
 ...and then call `.get()` on the binding object that is exposed on `env`:
 
 ```python
-from js import Response
+from workers import Response
 
 async def on_fetch(request, env):
     await env.FOO.put("bar", "baz")
     bar = await env.FOO.get("bar")
-    return Response.new(bar) # returns "baz"
+    return Response(bar) # returns "baz"
 ```
 
 Under the hood, `env` is actually a JavaScript object. When you call `.FOO`, you are accessing this property via a [`JsProxy`](https://pyodide.org/en/stable/usage/api/python-api/ffi.html#pyodide.ffi.JsProxy) — special proxy object that makes a JavaScript object behave like a Python object.

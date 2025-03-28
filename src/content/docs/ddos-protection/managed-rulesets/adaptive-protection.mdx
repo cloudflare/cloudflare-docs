@@ -1,6 +1,7 @@
 ---
 title: Adaptive DDoS Protection
 pcx_content_type: concept
+description: Explore Cloudflare's Adaptive DDoS Protection, which learns traffic patterns to defend against sophisticated DDoS attacks on layers 3/4 and 7.
 sidebar:
   order: 5
 
@@ -19,8 +20,6 @@ Adaptive DDoS Protection provides the following types of protection:
 
 Cloudflare Adaptive DDoS Protection is available to Enterprise customers according to the following table:
 
-
-
 | Feature                           | Profiling dimension                        | WAF/CDN<sup>1</sup> | Magic Transit /<br/>Spectrum BYOIP<sup>2</sup> |
 | --------------------------------- | ------------------------------------------ | :-----------------: | :--------------------------------------------: |
 | **HTTP Adaptive DDoS Protection** |                                            |                     |                                                |
@@ -31,9 +30,7 @@ Cloudflare Adaptive DDoS Protection is available to Enterprise customers accordi
 | For Protocols                     | IP protocol                                |          —          |                       Yes                      |
 | For Protocols                     | Client IP country and Region for UDP       |          —          |                       Yes                      |
 
-
-
-<sup>1</sup> _WAF/CDN customers on the Enterprise plan with the Advanced DDoS Protection subscription._<br/> 
+<sup>1</sup> _WAF/CDN customers on the Enterprise plan with the Advanced DDoS Protection subscription._<br/>
 <sup>2</sup> _Magic Transit and Spectrum BYOIP customers on an Enterprise plan._
 
 ## How it works
@@ -69,9 +66,23 @@ To view traffic flagged by L3/4 Adaptive DDoS Protection rules:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to Account Home > **Analytics & Logs** > **Network Analytics**.
-3. Filter by `Ruleset ID equals 3b64149bfa6e4220bbbc2bd6db589552` (the ID of the Network-layer DDoS Attack Protection managed ruleset) and by rule ID.
+3. Filter by rule ID.
 
 You may also obtain information about flagged traffic through [Logpush](/logs/about/) or the [GraphQL API](/analytics/graphql-api/).
+
+To determine if an adaptive rule fits your traffic in a way that will only mitigate attack traffic and will not cause false positives, review the traffic that is _Logged_ by the adaptive rules.
+
+:::note
+You may not see any traffic matching the adaptive rules. This can be because there was no deviation from your traffic profile, so you may want to increase the time range and look for any _Logged_ traffic. Another reason why you may not see _Logged_ traffic by the adaptive rules is that there was not sufficient traffic volume to generate a traffic profile for your zone.
+:::
+
+If you do see traffic that was _Logged_ by the adaptive rules, use the dashboard to determine if the traffic matches the characteristics of legitimate users or that of attack traffic. As each Internet property is unique, understanding if the traffic is legitimate requires your understanding of how your legitimate traffic looks. For example, the user agent, source country, headers, query string for HTTP requests, and protocols and ports for L3/4 traffic. 
+
+- In cases where you are certain that the rule is only flagging attack traffic, you should consider creating an override and enabling that rule with a [Managed Challenge](/fundamentals/security/cloudflare-challenges/#managed-challenge-recommended) or `Block` action.
+- In cases where you see legitimate traffic being flagged, you should lower the sensitivity level of the rule and observe the flagged traffic. You can continue reducing the sensitivity level until you reach a point where legitimate traffic is not flagged. Then, you should create an override to enable the rule with a mitigation action.
+- If the rule is still flagging legitimate traffic you can consider using the expression filters to condition the rules to exclude certain types of traffic.
+
+The default rule action for `log` with a sensitivity set to `high` will only show packets or requests with suspected attack traffic over internal `high` thresholds in your logs. For instance, if you set the threshold to `medium` or `low`, then only packets over those thresholds will be logged.
 
 ## Configure the rules
 

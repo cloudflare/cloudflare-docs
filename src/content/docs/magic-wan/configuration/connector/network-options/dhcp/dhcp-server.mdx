@@ -3,48 +3,36 @@ pcx_content_type: how-to
 title: DHCP server
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { APIRequest, Render, TabItem, Tabs } from "~/components";
 
 When you use a static IP address, Magic WAN Connector can also act as a DHCP server in your network. To enable this feature:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Magic WAN** > **Sites**.
-3. Select your site > **Edit**.
-4. Select **Network**.
+2. Go to **Magic WAN** > **Connector on-ramps (beta)**.
+3. Select the Connector you want to configure > **Edit**.
+4. Select **Network Configuration**, and scroll down to **LAN configuration**.
 5. In **LAN configuration**, select the LAN where you want to enable DHCP server.
 6. Select **Edit**.
 7. Under **Static addressing**, select **This is a DHCP Server**. You also have to specify:
-
-   - The DNS server address
-   - The DHCP pool start
-   - The DHCP pool end
-
-   For example:
-
-    <div class="medium-img">
-
-   ![An example of how to configure you Magic WAN Connector LAN](~/assets/images/magic-wan/connector/lan-static.png)
-
-    </div>
+	- The DNS server address
+	- The DHCP pool start
+	- The DHCP pool end
 
 </TabItem> <TabItem label="API">
 
-<Render file="connector/account-id-api-key" />
+<Render file="account-id-api-key" product="networking-services" />
 
 Create a [`PUT` request](/api/resources/magic_transit/subresources/sites/subresources/lans/methods/update/) to update the LAN where you want to enable DHCP server:
 
 Example:
 
-```bash
-curl --request PUT \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/lans/{lan_id} \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "lan": {
+<APIRequest
+  path="/accounts/{account_id}/magic/sites/{site_id}/lans/{lan_id}"
+  method="PUT"
+  json={{
+    "lan": {
     "static_addressing": {
       "dhcp_server": {
         "dhcp_pool_end": "<IP_ADDRESS>",
@@ -53,7 +41,7 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}
       }
     }
   }
-}'
-```
+  }}
+/>
 
 </TabItem> </Tabs>

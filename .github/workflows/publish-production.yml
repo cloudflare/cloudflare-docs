@@ -28,12 +28,7 @@ jobs:
         name: Build
         env:
           NODE_OPTIONS: --max-old-space-size=4096
-      - run: npx wrangler pages deploy --project-name cloudflare-docs dist
-        name: Deploy to Cloudflare Pages
-        env:
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      - run: npx wrangler deploy -c ./wrangler-workers.toml
+      - run: npx wrangler deploy
         name: Deploy to Cloudflare Workers
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}

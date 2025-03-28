@@ -9,6 +9,8 @@ sidebar:
 updated: 2024-12-17
 ---
 
+import { PublicStats } from "~/components";
+
 ## Introduction
 
 Many organizations and businesses offer free wireless Internet access to their customers, clients, patients, students, and visitors. In industries like hospitality, providing guest Wi-Fi is often essential. For colleges and universities, having a reliable and secure Wi-Fi service can be a significant factor in attracting potential students and visitors.
@@ -41,7 +43,7 @@ This reference architecture guide will help readers understand:
 
 ### Gateway DNS
 
-Cloudflare offers an enhanced, protected DNS resolver service for Zero Trust customers. This service utilizes Anycast, a routing technology that enables multiple servers or data centers to share the same IP address. When a request is sent to an Anycast IP address, routers use the Border Gateway Protocol (BGP) to direct the request to the nearest server. As a result, DNS queries are always routed to the closest Cloudflare data center based on your location. With data centers in over [320 cities worldwide](https://www.cloudflare.com/network/), Cloudflare operates one of the largest global networks. This service can also strengthen your organization's security by enabling the creation of policies to filter DNS resolutions for potentially malicious, questionable, or inappropriate destinations. This guide explains how to enable this service and configure your environment to secure guest wireless networks, reducing risks to your organization.
+Cloudflare offers an enhanced, protected DNS resolver service for Zero Trust customers. This service utilizes Anycast, a routing technology that enables multiple servers or data centers to share the same IP address. When a request is sent to an Anycast IP address, routers use the Border Gateway Protocol (BGP) to direct the request to the nearest server. As a result, DNS queries are always routed to the closest Cloudflare data center based on your location. With data centers in <PublicStats id="data_center_cities" />, Cloudflare operates one of the [largest global networks](https://www.cloudflare.com/network/). This service can also strengthen your organization's security by enabling the creation of policies to filter DNS resolutions for potentially malicious, questionable, or inappropriate destinations. This guide explains how to enable this service and configure your environment to secure guest wireless networks, reducing risks to your organization.
 
 ### DNS locations
 
@@ -174,7 +176,7 @@ For these reasons you should also consider applying security in layers and add n
 
 ![Figure 4: This diagram shows how to connect guest networks to Cloudflare and the high level traffic flow to reach Internet resources.](~/assets/images/reference-architecture/securing-guest-wireless-networks/figure4.svg "Figure 4: This diagram shows how to connect guest networks to Cloudflare and the high level traffic flow to reach Internet resources.")
 
-To provide network level filtering, Cloudflare must be in the traffic path for more than just the DNS request. This is achieved by routing Internet-bound traffic over an [IPsec](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/) tunnel to Cloudflare. Cloudflare's [Magic WAN](/magic-wan/) service allows  third-party devices to establish IPsec or GRE tunnels to the Cloudflare network. It is also possible to just deploy our [Magic WAN Connector](/magic-wan/configuration/connector/), a pre-configured lightweight network appliance that automatically creates the tunnel back to Cloudflare and can be managed remotely. Once traffic reaches Cloudflare multiple security controls can be overlaid such as:
+To provide network level filtering, Cloudflare must be in the traffic path for more than just the DNS request. This is achieved by routing Internet-bound traffic over an [IPsec](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/) tunnel to Cloudflare. Cloudflare's [Magic WAN](/magic-wan/) service allows third-party devices to establish IPsec or GRE tunnels to the Cloudflare network. It is also possible to just deploy our [Magic WAN Connector](/magic-wan/configuration/connector/), a pre-configured lightweight network appliance that automatically creates the tunnel back to Cloudflare and can be managed remotely. Once traffic reaches Cloudflare multiple security controls can be overlaid such as:
 
 - Cloud based network firewall ([Magic Firewall](/magic-firewall/))
 - Secure web gateway ([Gateway](/cloudflare-one/policies/gateway/))

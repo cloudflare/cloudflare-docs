@@ -1,7 +1,6 @@
 ---
 updated: 2024-10-01
 difficulty: Intermediate
-content_type: 🎥 Video
 pcx_content_type: tutorial
 title: Build a Comments API
 products:
@@ -28,7 +27,7 @@ Use [C3](https://developers.cloudflare.com/learning-paths/workers/get-started/c3
 	product="workers"
 	params={{
 		category: "hello-world",
-		type: "Hello World Worker",
+		type: "Worker only",
 		lang: "JavaScript",
 	}}
 />
@@ -42,9 +41,9 @@ cd d1-example
 ## Video Tutorial
 
 <Stream
-	videoId="8d20dd6cf5679f3272ca44a9fa01728c"
-	videoTitle="Build a Comments API with D1"
-	thumbnailTimeOrURL="22s"
+	id="8d20dd6cf5679f3272ca44a9fa01728c"
+	title="Build a Comments API with D1"
+	thumbnail="22s"
 />
 
 ## 1. Install Hono
@@ -82,13 +81,13 @@ export default app;
 
 ## 3. Create a database
 
-You will now create a D1 database. In Wrangler v2, there is support for the `wrangler d1` subcommand, which allows you to create and query your D1 databases directly from the command line. Create a new database with `wrangler d1 create`:
+You will now create a D1 database. In Wrangler, there is support for the `wrangler d1` subcommand, which allows you to create and query your D1 databases directly from the command line. Create a new database with `wrangler d1 create`:
 
 ```sh
 npx wrangler d1 create d1-example
 ```
 
-Reference your created database in your Worker code by creating a [binding](/workers/runtime-apis/bindings/) inside of your Wrangler file, Wrangler's configuration file. Bindings allow us to access Cloudflare resources, like D1 databases, KV namespaces, and R2 buckets, using a variable name in code. In the `wrangler.toml / wrangler.json` file, set up the binding `DB` and connect it to the `database_name` and `database_id`:
+Reference your created database in your Worker code by creating a [binding](/workers/runtime-apis/bindings/) inside of your [Wrangler configuration file](/workers/wrangler/configuration/). Bindings allow us to access Cloudflare resources, like D1 databases, KV namespaces, and R2 buckets, using a variable name in code. In the Wrangler configuration file, set up the binding `DB` and connect it to the `database_name` and `database_id`:
 
 <WranglerConfig>
 

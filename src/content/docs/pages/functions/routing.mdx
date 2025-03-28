@@ -100,7 +100,7 @@ The following requests will match the following files:
 | /users/special        | /users/special.js                                 |
 | /users/daniel/xyz/123 | /users/\[\[catchall]].js                          |
 
-The URL segment(s) that match the placeholder (`[user]`) will be available in the request [`context`](/pages/functions/api-reference/#eventcontext) object. The [`context.params`](/pages/functions/api-reference/#params) object can be used to find the matched value for a given filename placeholder.
+The URL segment(s) that match the placeholder (`[user]`) will be available in the request [`context`](/pages/functions/api-reference/#eventcontext) object. The [`context.params`](/pages/functions/api-reference/#eventcontext) object can be used to find the matched value for a given filename placeholder.
 
 For files which match a single URL segment (use a single set of brackets), the values are returned as a string:
 

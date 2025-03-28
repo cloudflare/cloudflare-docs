@@ -1,23 +1,81 @@
 ---
 title: Stream
+styleGuide:
+  component: Stream
 ---
+
+## Import
 
 ```mdx
 import { Stream } from "~/components"
-
-<Stream
-    videoId="3c46281a9b2b84ee6776a53f87580c45"
-    videoTitle="Explore Workers AI Models Using a Jupyter Notebook"
-		thumbnailTimeOrURL="2.5s"
-/>
 ```
 
----
+## Usage
 
 import { Stream } from "~/components"
 
 <Stream
-    videoId="3c46281a9b2b84ee6776a53f87580c45"
-    videoTitle="Explore Workers AI Models Using a Jupyter Notebook"
-		thumbnailTimeOrURL="2.5s"
+    id="0f5d548ef3f606e6833b78e0193847c4"
+    title="Connect and secure from any network to anywhere"
+		thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/Connect-and-secure-from-any-network-to-anywhere.jpg"
+		chapters={{
+			"Chapter 1": "30s",
+			"Chapter 2": "1m30s",
+			"Chapter 3": "3m15s",
+			"Chapter 4": "3m25s",
+			"Chapter 5": "3m35s",
+		}}
 />
+
+```mdx
+<Stream
+    id="0f5d548ef3f606e6833b78e0193847c4"
+    title="Connect and secure from any network to anywhere"
+		thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/Connect-and-secure-from-any-network-to-anywhere.jpg"
+		chapters={{
+			"Chapter 1": "30s",
+			"Chapter 2": "1m30s",
+			"Chapter 3": "3m15s",
+			"Chapter 4": "3m25s",
+			"Chapter 5": "3m35s",
+		}}
+/>
+```
+
+## `<Stream>` Props
+
+### `id`
+
+**required**
+
+**type:** `string`
+
+The ID of the Stream video.
+
+### `title`
+
+**required**
+
+**type:** `string`
+
+The title of the Stream video.
+
+### `thumbnail`
+
+**type:** `string`
+
+Either a timestamp (i.e `2.5s` or `1m35s`) or a URL to an image.
+
+### `chapters`
+
+**type:** `Record<string, string>`
+
+Optional chapters displayed as cards below the video.
+
+### `showMoreVideos`
+
+**type:** `boolean`
+
+**default:** `true`
+
+Whether to show the "Watch more videos on our Developer Channel" link below the video.

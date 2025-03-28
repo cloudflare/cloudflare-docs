@@ -37,6 +37,7 @@ When resizing fails, the response body contains an error message explaining the 
 * 9420 — The origin server redirected to an invalid URL. Confirm settings at your origin and try again.
 * 9421 — The origin server redirected too many times. Confirm settings at your origin and try again.
 * 9422 - The transformation request is rejected because the usage limit was reached. If you need to request more than 5,000 unique transformations, upgrade to an Images Paid plan.
+* 9432 — The Images Binding is not available using legacy billing. Your account is using the legacy Image Resizing subscription. To bind Images to your Worker, you will need to update your plan to the Images subscription in the dashboard.
 * 9504, 9505, & 9510 — The origin server could not be contacted because the origin server may be down or overloaded. Try again later.
 * 9523 — The `/cdn-cgi/image/` resizing service could not perform resizing. This may happen when an image has invalid format. Use correctly formatted image and try again.
 * 9524 — The `/cdn-cgi/image/` resizing service could not perform resizing. This may happen when an image URL is intercepted by a Worker. As an alternative you can [resize within the Worker](/images/transform-images/transform-via-workers/). This can also happen when using a `pages.dev` URL of a [Cloudflare Pages](/pages/) project. In that case, you can use a [Custom Domain](/pages/configuration/custom-domains/) instead.

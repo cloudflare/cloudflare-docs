@@ -5,10 +5,9 @@ title: Endpoint labeling service
 sidebar:
   order: 1
   label: Labeling service
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 API Shield's labeling service will help you organize your endpoints and address vulnerabilities in your API. The labeling service comes with managed and user-defined labels.
 
@@ -16,9 +15,13 @@ Today, managed labels are useful for organizing endpoints by use case. In a futu
 
 User-defined labels can also be added to endpoints in API Shield by creating a label and adding it to an individual endpoint or multiple endpoints. User-defined labels will be useful for organizing your endpoints by owner, version, or type.
 
-You can filter your endpoints based on the labels. 
+You can filter your endpoints based on the labels.
 
-## Managed labels
+## Categories
+
+### Managed labels
+
+Use managed labels to identify endpoints by use case. Cloudflare may automatically apply these labels in a future release.
 
 `cf-log-in`: Add this label to endpoints that accept user credentials. You may have multiple endpoints if you accept username, password, and multi-factor authentication (MFA) across multiple endpoints or requests.
 
@@ -32,7 +35,7 @@ You can filter your endpoints based on the labels.
 
 `cf-add-cart`: Add this label to endpoints that add items to a user's shopping cart or verify item availability.
 
-`cf-add-payment`: Add this label to endpoints that accept credit card or bank account details where fraudsters may iterate through account numbers to guess valid combinations of payment information. 
+`cf-add-payment`: Add this label to endpoints that accept credit card or bank account details where fraudsters may iterate through account numbers to guess valid combinations of payment information.
 
 `cf-check-value`: Add this label to endpoints that check the balance of rewards points, in-game currency, or other stored value products that can be earned, transferred, and redeemed for cash or physical goods.
 
@@ -42,11 +45,25 @@ You can filter your endpoints based on the labels.
 
 `cf-rss-feed`: Add this label to endpoints that expect traffic from RSS clients.
 
+`cf-llm`: Services that are (partially) powered by Large Language Model (LLM).
+
+### Risk labels
+
+Cloudflare automatically runs risk scans every 24 hours on your saved endpoints. API Shield applies these labels when a scan finds security risks on your endpoints. A corresponding Security Center Insight is also raised when risks are found.
+
 `cf-risk-missing-auth`: Automatically added when all successful requests lack a session identifier. Refer to the table below for more information.
 
-`cf-risk-mixed-auth`: Automatically added when some successful requests contain a session identifier and some successful requests lack a session identifier. Refer to the table below for more information. 
+`cf-risk-mixed-auth`: Automatically added when some successful requests contain a session identifier and some successful requests lack a session identifier. Refer to the table below for more information.
 
-`cf-risk-sensitive`: Cloudflare will automatically add this label to endpoints when HTTP responses match the WAF's [Sensitive Data Detection](/api-shield/management-and-monitoring/#sensitive-data-detection) ruleset.
+`cf-risk-sensitive`: Automatically added to endpoints when HTTP responses match the WAF's [Sensitive Data Detection](/api-shield/management-and-monitoring/#sensitive-data-detection) ruleset.
+
+`cf-risk-missing-schema`: Automatically added when a learned schema is available for an endpoint that has no active schema.
+
+`cf-risk-error-anomaly`: Automatically added when an endpoint experiences a recent increase in response errors over the last 24 hours.
+
+`cf-risk-latency-anomaly`: Automatically added when an endpoint experiences a recent increase in response latency over the last 24 hours.
+
+`cf-risk-size-anomaly`: Automatically added when an endpoint experiences a spike in response body size over the last 24 hours.
 
 :::note
 Cloudflare will only add authentication labels to endpoints with successful response codes. Refer to the below table for more details.
@@ -56,40 +73,40 @@ Cloudflare will only add authentication labels to endpoints with successful resp
 
 ## Create a label
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain. 
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Go to **Security** > **Settings** > **Labels**.
 3. Under **Security labels**, select **Create label**.
-4. Name the label and add an optional label description. 
-5. Apply the label to your selected endpoints. 
-6. Select **Create label**. 
+4. Name the label and add an optional label description.
+5. Apply the label to your selected endpoints.
+6. Select **Create label**.
 
-Alternatively, you can create a user-defined label via Endpoint Management in API Shield. 
+Alternatively, you can create a user-defined label via Endpoint Management in API Shield.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain. 
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Go to **Security** > **Settings** > **Labels**.
-3. Choose the endpoint that you want to label. 
+3. Choose the endpoint that you want to label.
 4. Select **Edit labels**.
-5. Under **User**, select **Create user label**. 
-6. Enter the label name. 
-7. Select **Create**. 
+5. Under **User**, select **Create user label**.
+6. Enter the label name.
+7. Select **Create**.
 
 ## Apply a label to an individual endpoint
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain. 
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Go to **Security** > **API Shield** > **Endpoint Management**.
-3. Choose the endpoint that you want to label. 
+3. Choose the endpoint that you want to label.
 4. Select **Edit labels**.
-5. Add the label(s) that you want to use for the endpoint from the list of managed and user-defined labels. 
-6. Select **Save labels**. 
+5. Add the label(s) that you want to use for the endpoint from the list of managed and user-defined labels.
+6. Select **Save labels**.
 
 ## Bulk apply labels to multiple endpoints
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain. 
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Go to **Security** > **Settings** > **Labels**.
-3. On the existing label that you want to apply to multiple endpoints, select **Bulk apply**. 
-4. Choose the endpoints that you want to label by selecting its checkbox. 
-5. Select **Save label**. 
+3. On the existing label that you want to apply to multiple endpoints, select **Bulk apply**.
+4. Choose the endpoints that you want to label by selecting its checkbox.
+5. Select **Save label**.
 
 ## Availability
 
-Endpoint Management's labeling service is currently available to Enterprise API Shield subscribers.
+Endpoint Management's labeling service is available to all customers.

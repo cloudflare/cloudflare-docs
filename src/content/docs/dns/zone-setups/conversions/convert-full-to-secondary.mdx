@@ -21,7 +21,7 @@ Follow the steps below to achieve this conversion.
 3. At your Cloudflare zone, use the [Update DNS Settings](/api/resources/dns/subresources/settings/methods/edit/) endpoint to enable [secondary DNS overrides](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/). Set the value for `secondary_overrides` to `true`.
 
     :::note
-    Enabling secondary DNS overrides is necessary in case you have DNS records that you wish to keep <GlossaryTooltip term="proxy status" link="/dns/manage-dns-records/reference/proxied-dns-records/">proxied</GlossaryTooltip>.
+    Enabling secondary DNS overrides is necessary in case you have DNS records that you wish to keep <GlossaryTooltip term="proxy status" link="/dns/proxy-status/">proxied</GlossaryTooltip>.
     :::
 
 ## 2. Prepare the zone transfers

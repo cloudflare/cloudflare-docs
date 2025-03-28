@@ -30,13 +30,7 @@ To learn about potential cost savings from using R2, refer to the [R2 pricing ca
 | Class A Operations                 | $4.50 / million requests | $9.00 / million requests                               |
 | Class B Operations                 | $0.36 / million requests | $0.90 / million requests                               |
 | Data Retrieval (processing)        | None                     | $0.01 / GB                                             |
-| Egress (data transfer to Internet) | Free <sup>1</sup>        | Free <sup>1</sup>                                      |
-
-<sup>1</sup> Egressing directly from R2, including via the [Workers
-API](/r2/api/workers/), [S3 API](/r2/api/s3/), and [`r2.dev`
-domains](/r2/buckets/public-buckets/#enable-managed-public-access) does not
-incur data transfer (egress) charges and is free. If you connect other metered
-services to an R2 bucket, you may be charged by those services.
+| Egress (data transfer to Internet) | Free [^1]                | Free [^1]                                              |
 
 ### Free tier
 
@@ -44,16 +38,10 @@ You can use the following amount of storage and operations each month for free. 
 
 |                                    | Free                        |
 | ---------------------------------- | --------------------------- |
-| Storage                            | 10 GB / month               |
+| Storage                            | 10 GB-month / month         |
 | Class A Operations                 | 1 million requests / month  |
 | Class B Operations                 | 10 million requests / month |
-| Egress (data transfer to Internet) | Free <sup>1</sup>           |
-
-<sup>1</sup> Egressing directly from R2, including via the [Workers
-API](/r2/api/workers/), [S3 API](/r2/api/s3/), and [`r2.dev`
-domains](/r2/buckets/public-buckets/#enable-managed-public-access) does not
-incur data transfer (egress) charges and is free. If you connect other metered
-services to an R2 bucket, you may be charged by those services.
+| Egress (data transfer to Internet) | Free [^1]                   |
 
 ### Storage usage
 
@@ -112,7 +100,7 @@ To learn about potential cost savings from using R2, refer to the [R2 pricing ca
 
 ## R2 billing examples
 
-### Data storage
+### Data storage example 1
 
 If a user writes 1,000 objects in R2 for 1 month with an average size of 1 GB and requests each 1,000 times per month, the estimated cost for the month would be:
 
@@ -120,8 +108,20 @@ If a user writes 1,000 objects in R2 for 1 month with an average size of 1 GB an
 | ------------------ | ------------------------------------------- | ------------ | ----------------- | ---------- |
 | Class B Operations | (1,000 objects) \* (1,000 reads per object) | 10 million   | 0                 | $0.00      |
 | Class A Operations | (1,000 objects) \* (1 write per object)     | 1 million    | 0                 | $0.00      |
-| Storage            | (1,000 objects) \* (1GB per object)         | 10 GB-months | 990 GB-months     | $14.85     |
+| Storage            | (1,000 objects) \* (1 GB per object)        | 10 GB-months | 990 GB-months     | $14.85     |
 | **TOTAL**          |                                             |              |                   | **$14.85** |
+|                    |                                             |              |                   |            |
+
+### Data storage example 2
+
+If a user writes 10 objects in R2 for 1 month with an average size of 1 GB and requests 1,000 times per month, the estimated cost for the month would be:
+
+|                    | Usage                                       | Free Tier    | Billable Quantity | Price      |
+| ------------------ | ------------------------------------------- | ------------ | ----------------- | ---------- |
+| Class B Operations | (1,000 objects) \* (1,000 reads per object) | 10 million   | 0                 | $0.00      |
+| Class A Operations | (1,000 objects) \* (1 write per object)     | 1 million    | 0                 | $0.00      |
+| Storage            | (10 objects) \* (1 GB per object)           | 10 GB-months | 0                 | $0.00      |
+| **TOTAL**          |                                             |              |                   | **$0.00**  |
 |                    |                                             |              |                   |            |
 
 ### Asset hosting
@@ -145,3 +145,5 @@ To learn more about how usage is billed, refer to [Cloudflare Billing Policy](/s
 ### Will I be charged for unauthorized requests to my R2 bucket?
 
 No. You are not charged for operations when the caller does not have permission to make the request (HTTP 401 `Unauthorized` response status code).
+
+[^1]: Egressing directly from R2, including via the [Workers API](/r2/api/workers/), [S3 API](/r2/api/s3/), and [`r2.dev` domains](/r2/buckets/public-buckets/#enable-managed-public-access) does not incur data transfer (egress) charges and is free. If you connect other metered services to an R2 bucket, you may be charged by those services.

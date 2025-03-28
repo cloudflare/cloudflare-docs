@@ -1,7 +1,6 @@
 ---
 updated: 2024-11-20
 difficulty: Beginner
-content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Automate analytics reporting with Cloudflare Workers and email routing
 products:
@@ -59,7 +58,7 @@ In this tutorial, name your Worker as `account-analytics`.
 	product="workers"
 	params={{
 		category: "hello-world",
-		type: "Hello World Worker",
+		type: "Worker only",
 		lang: "JavaScript",
 	}}
 />
@@ -94,7 +93,7 @@ yarn add mimetext
 
 ## 2. Update Wrangler configuration file
 
-[`wrangler.json`](/workers/wrangler/configuration/) contains the configuration for your Worker. It was created when you ran `c3` CLI. Open `wrangler.json` in your code editor and update it with the following configuration:
+[`wrangler.jsonc`](/workers/wrangler/configuration/) contains the configuration for your Worker. It was created when you ran `c3` CLI. Open `wrangler.jsonc` in your code editor and update it with the following configuration:
 
 <WranglerConfig>
 ```toml

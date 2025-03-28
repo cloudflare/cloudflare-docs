@@ -43,7 +43,7 @@ The ID of the policy which was violated.
 
 Type: `string`
 
-The resource type of the violated directive. Possible values are 'script', 'connection' or 'other' for unmonitored resource types
+The resource type of the violated directive. Possible values are 'script', 'connection', or 'other' for unmonitored resource types.
 
 ## Timestamp
 
@@ -61,7 +61,7 @@ The resource URL.
 
 Type: `bool`
 
-Whether the resource URL contains the CDN-CGI path.
+Whether the resource URL contains the '/cdn-cgi/' path.
 
 ## URLHost
 

@@ -12,33 +12,83 @@ When you write a Worker, you may need to import packages from [npm](https://www.
 Cloudflare Workers provides a subset of Node.js APIs in two forms:
 
 1. As built-in APIs provided by the Workers Runtime
-2. As polyfills that [Wrangler](/workers/wrangler/) adds to your Worker's code
-
-You can view which APIs are supported using the [Node.js compatibility matrix](https://workers-nodejs-compat-matrix.pages.dev).
+2. As polyfill shim implementations that [Wrangler](/workers/wrangler/) adds to your Worker's code, allowing it to import the module, but calling API methods will throw errors.
 
 ## Get Started
 
-import { Render } from "~/components";
+To enable built-in Node.js APIs and add polyfills, add the `nodejs_compat` compatibility flag to your [wrangler configuration file](/workers/wrangler/configuration/), and ensure that your Worker's [compatibility date](/workers/configuration/compatibility-dates/) is 2024-09-23 or later. [Learn more about the Node.js compatibility flag and v2](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag).
 
-<Render file="nodejs_compat" product="workers" />
+<WranglerConfig>
 
-## Built-in Node.js Runtime APIs
+```toml title="wrangler.toml"
+compatibility_flags = [ "nodejs_compat" ]
+compatibility_date = "2024-09-23"
+```
 
-The following APIs from Node.js are provided directly by the Workers Runtime when either `nodejs_compat` or `nodejs_compat_v2` are enabled:
+</WranglerConfig>
 
-<DirectoryListing />
+## Supported Node.js APIs
 
-Unless otherwise specified, implementations of Node.js APIs in Workers are intended to match the implementation in the [Current release of Node.js](https://github.com/nodejs/release#release-schedule).
+The runtime APIs from Node.js listed below as "🟢 supported" are currently natively supported in the Workers Runtime.
 
-## Node.js API Polyfills
+[Deprecated or experimental APIs from Node.js](https://nodejs.org/docs/latest/api/documentation.html#stability-index) are not included as part of the list below:
 
-When you enable the `nodejs_compat` compatibility flag and set your compatibility date to `2024-09-23` or later, in addition to enabling Node.js APIs in the Workers Runtime, [Wrangler](/workers/wrangler/) will use [unenv](https://github.com/unjs/unenv) to automatically detect uses of Node.js APIs, and add polyfills where relevant.
+| API Name                                                                             | Natively supported by the Workers Runtime |
+|--------------------------------------------------------------------------------------|-------------------------------------------|
+| [Assertion testing](/workers/runtime-apis/nodejs/assert/)                            | 🟢 supported                              |
+| [Asynchronous context tracking](/workers/runtime-apis/nodejs/asynclocalstorage/)     | 🟢 supported                              |
+| [Buffer](/workers/runtime-apis/nodejs/buffer/)                                       | 🟢 supported                              |
+| C++ addons                                                                           | ⚪ not supported                          |
+| C/C++ addons with Node-API                                                           | ⚪ not supported                          |
+| C++ embedder API                                                                     | ⚪ not supported                          |
+| Child processes                                                                      | ⚪ not supported                          |
+| Cluster                                                                              | ⚪ not supported                          |
+| Console                                                                              | 🟢 supported                              |
+| [Crypto](/workers/runtime-apis/nodejs/crypto/)                                       | 🟡 partially supported                    |
+| [Debugger](/workers/observability/dev-tools/)                                        | 🟢 supported via [Chrome Dev Tools integration](/workers/observability/dev-tools/) |
+| [Diagnostics Channel](/workers/runtime-apis/nodejs/diagnostics-channel/)             | 🟢 supported                              |
+| [DNS](/workers/runtime-apis/nodejs/dns/)                                             | 🟢 supported                              |
+| Errors                                                                               | 🟢 supported                              |
+| Events                                                                               | 🟢 supported                              |
+| File system                                                                          | ⚪ not supported                          |
+| Globals                                                                              | 🟢 supported                              |
+| HTTP                                                                                 | ⚪ not supported                          |
+| HTTP/2                                                                               | ⚪ not supported                          |
+| HTTPS                                                                                | ⚪ not supported                          |
+| Inspector                                                                            | 🟢 supported via [Chrome Dev Tools integration](/workers/observability/dev-tools/) |
+| [Net](/workers/runtime-apis/nodejs/net/)                                             | 🟢 supported                              |
+| OS                                                                                   | ⚪ not supported                          |
+| [Path](/workers/runtime-apis/nodejs/path/)                                           | 🟢 supported                              |
+| Performance hooks                                                                    | 🟡 partially supported                    |
+| Process                                                                              | 🟢 supported                              |
+| Query strings                                                                        | 🟢 supported                              |
+| Readline                                                                             | ⚪ not supported                          |
+| Stream                                                                               | 🟢 supported                              |
+| [String decoder](/workers/runtime-apis/nodejs/string-decoder/)                       | 🟢 supported                              |
+| Test runner                                                                          | ⚪ not supported                          |
+| [Timers](/workers/runtime-apis/nodejs/timers/)                                       | 🟢 supported                              |
+| TLS/SSL                                                                              | 🟡 partially supported                         |
+| TTY                                                                                  | ⚪ not supported                          |
+| UDP/datagram                                                                         | ⚪ not supported                          |
+| [URL](/workers/runtime-apis/nodejs/url/)                                             | 🟢 supported                              |
+| [Utilities](/workers/runtime-apis/nodejs/util/)                                      | 🟢 supported                              |
+| V8                                                                                   | ⚪ not supported                          |
+| VM                                                                                   | ⚪ not supported                          |
+| Web Crypto API                                                                       | 🟢 supported                              |
+| Web Streams API                                                                      | 🟢 supported                              |
+| Worker threads                                                                       | ⚪ not supported                          |
+| [Zlib](/workers/runtime-apis/nodejs/zlib/)                                           | 🟢 supported                              |
 
-Adding polyfills maximizes compatibility with existing npm packages, while recognizing that not all APIs from Node.js make sense in the context of serverless functions.
+Unless otherwise specified, native implementations of Node.js APIs in Workers are intended to match the implementation in the [Current release of Node.js](https://github.com/nodejs/release#release-schedule).
 
-Where it is possible to provide a fully functional polyfill of the relevant Node.js API, unenv will do so.
-In cases where this is not possible, such as the [`fs`](https://nodejs.org/api/fs.html), unenv adds a module with mocked methods.
-Calling these mocked methods will either noop or will throw an error with a message like:
+If an API you wish to use is missing and you want to suggest that Workers support it, please add a post or comment in the
+[Node.js APIs discussions category](https://github.com/cloudflare/workerd/discussions/categories/node-js-apis) on GitHub.
+
+### Node.js API Polyfills
+
+Node.js APIs that are not yet supported in the Workers runtime are polyfilled via [Wrangler](/workers/wrangler/), which uses [unenv](https://github.com/unjs/unenv). If the `nodejs_compat` [compatibility flag](/workers/configuration/compatibility-flags/) is enabled, and your Worker's [compatibility date](/workers/configuration/compatibility-dates/) is 2024-09-23 or later, Wrangler will automatically inject polyfills into your Worker's code.
+
+Adding polyfills maximizes compatibility with existing npm packages by providing modules with mocked methods. Calling these mocked methods will either noop or will throw an error with a message like:
 
 ```
 [unenv] <method name> is not implemented yet!
@@ -46,14 +96,9 @@ Calling these mocked methods will either noop or will throw an error with a mess
 
 This allows you to import packages that use these Node.js modules, even if certain methods are not supported.
 
-For a full list of APIs supported, including information on which are mocked, see the [Node.js compatibility matrix](https://workers-nodejs-compat-matrix.pages.dev).
-
-If an API you wish to use is missing and you want to suggest that Workers support it, please add a post or comment in the
-[Node.js APIs discussions category](https://github.com/cloudflare/workerd/discussions/categories/node-js-apis) on GitHub.
-
 ## Enable only AsyncLocalStorage
 
-To enable only the Node.js `AsyncLocalStorage` API, use the `nodejs_als` compatibility flag.
+If you need to enable only the Node.js `AsyncLocalStorage` API, you can enable the `nodejs_als` compatibility flag:
 
 <WranglerConfig>
 

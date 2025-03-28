@@ -2,28 +2,18 @@
 {}
 ---
 
-## Security levels
+In the Cloudflare dashboard, security level has the value _Always protected_ and you cannot change this setting. To turn Under Attack mode on or off, use the separate toggle.
 
-Security levels are based on the threat score (except _Off_ and _I'm Under Attack!_). You can adjust the security level to challenge incoming requests based on the threat they pose.
+In the API and in Terraform, use security level to turn Under Attack mode on or off.
 
-The available security levels are the following:
+Cloudflare's Under Attack mode performs additional security checks to help mitigate layer 7 DDoS attacks.
 
-| Security Level                      | Description                                                                          |
-| ----------------------------------- | ------------------------------------------------------------------------------------ |
-| Off (Enterprise<br/>customers only) | Does not challenge IP addresses.                                                     |
-| Essentially off                     | Only challenges IP addresses with the worst reputation.                              |
-| Low                                 | Challenges only threatening visitors.                                                |
-| Medium                              | Challenges both threatening and moderately threatening visitors.                     |
-| High                                | Challenges all visitors that exhibited threatening behavior within the last 14 days. |
-| I'm Under Attack!                   | Only for use if your website is currently under a DDoS attack.                       |
-
-Selecting a higher **Security Level** value means that even requests with a lower risk (that is, with a low [threat score](#threat-score)) will be challenged. Selecting a lower **Security Level** value means that only requests posing a higher risk (that is, with a high threat score) will be challenged.
-
-Security levels from _Essentially off_ to _High_ will challenge the visitor using a Managed Challenge. When you select _I'm Under Attack!_, which enables [I'm Under Attack mode](/fundamentals/reference/under-attack-mode/), Cloudflare will present a JS challenge page.
+When you select _I'm Under Attack!_, which enables [Under Attack mode](/fundamentals/reference/under-attack-mode/), Cloudflare will present a JS challenge page.
 
 :::caution
 
-Only use [I'm Under Attack mode](/fundamentals/reference/under-attack-mode/) when a website is under a DDoS attack. I'm Under Attack mode may affect some actions on your domain, such as your API traffic.
+Only use [Under Attack mode](/fundamentals/reference/under-attack-mode/) when a website is under a DDoS attack. Under Attack mode may affect some actions on your domain, such as your API traffic.
 
 To set a custom security level for your API or any other part of your domain, create a [configuration rule](/rules/configuration-rules/).
+
 :::

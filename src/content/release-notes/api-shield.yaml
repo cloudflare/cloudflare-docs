@@ -1,0 +1,66 @@
+---
+link: "/api-shield/changelog/"
+productName: API Shield
+productLink: "/api-shield/"
+productArea: Application security
+productAreaLink: /fundamentals/reference/changelog/security/
+entries:
+  - publish_date: "2025-02-17"
+    title: New automatically applied risk labels
+    description: |-
+      API Shield now automatically labels endpoints with risks due to missing schemas and performance anomalies (spikes in error rates, latency, and body response sizes).
+
+  - publish_date: "2025-01-16"
+    title: API Authentication Posture
+    description: |-
+      Customers will see per-endpoint authentication details inside API Shield's [Endpoint Management](/api-shield/management-and-monitoring/) for zones with configured session identifiers.
+
+  - publish_date: "2024-12-19"
+    title: Automatically applied endpoint risk labels
+    description: |-
+      API Shield now automatically labels endpoints with risks due to authentication status and sensitive data detection.
+
+  - publish_date: "2024-11-04"
+    title: Endpoint labels
+    description: |-
+      Customers can now organize their endpoints by use case and custom labels in [Endpoint Management](/api-shield/management-and-monitoring/endpoint-labels/) for easy reference and future machine learning (ML) model training.
+
+  - publish_date: "2024-10-18"
+    title: API Shield fields in Custom Rules
+    description: |-
+      Customers can now use API Shield product feature fields in [custom rules](/waf/custom-rules/), referencing features such as [JWT Validation](/api-shield/security/jwt-validation/), [session identifiers](/api-shield/get-started/#session-identifiers), and [Schema Validation](/api-shield/security/schema-validation/).
+
+  - publish_date: "2024-09-25"
+    title: Fallthrough rule for Schema Validation 2.0
+    description: |-
+      Customers can now enable the [Fallthrough Action](/api-shield/security/schema-validation/#add-validation-by-adding-a-fallthrough-rule) for Schema Validation 2.0 to block or log requests that do not match the endpoints listed in schemas protected by Schema Validation 2.0.
+
+  - publish_date: "2024-08-28"
+    title: Increased capacity for Endpoint Management and Schema Validation
+    description: |-
+      Endpoint Management and Schema Validation now support up to 10,000 saved and validated API endpoints.
+
+  - publish_date: "2024-07-08"
+    title: API Discovery's hostname variables
+    description: |-
+      Customers can now see when [API Discovery](/api-shield/security/api-discovery/) groups similar subdomains with the same methods and paths, making it easy to discover and manage APIs that share many vanity domains or subdomains.
+
+  - publish_date: "2024-07-02"
+    title: Route API requests using API Routing
+    description: |-
+      Customers can now route requests to different back-end services through [API Routing](/api-shield/management-and-monitoring/api-routing/), creating a unified front for their APIs distributed across otherwise disparate systems.
+
+  - publish_date: "2024-05-13"
+    title: Use JWT claims in Advanced Rate Limiting, Transform Rules, and as session IDs
+    description: |-
+      Customers can now use the fields inside [JSON Web Tokens (known as claims)](/api-shield/security/jwt-validation/transform-rules/#enhance-transform-rules-with-jwt-claims) as [session identifiers in API Shield](/api-shield/get-started/#session-identifiers), to count values in [Advanced Rate Limiting](/waf/rate-limiting-rules/), and to send on useful information in [Transform Rules](/rules/transform/#transform-rules).
+
+  - publish_date: "2024-04-30"
+    title: Build Sequence Mitigation rules via the Cloudflare dashboard
+    description: |-
+      Customers can now build [Sequence Mitigation](/api-shield/security/sequence-mitigation/) rules with a new user interface inside the API Shield section of the [Cloudflare dashboard](https://dash.cloudflare.com/).
+
+  - publish_date: "2024-02-23"
+    title: Endpoint Management supports hostname variables
+    description: |-
+      Customers can now save endpoints in [Endpoint Management](/api-shield/management-and-monitoring/) that contain variables in the hostname. Hostname variables are supported across all product features.

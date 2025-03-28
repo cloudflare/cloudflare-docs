@@ -2,7 +2,7 @@ name: GraphQL Analytics API
 
 product:
   title: GraphQL Analytics API
-  group: Cloudflare essentials
+  group: Core platform
   additional_groups: [Analytics]
   url: /analytics/graphql-api/
   wrap: true

@@ -1,0 +1,69 @@
+---
+pcx_content_type: how-to
+title: Vue
+head: []
+description: Create a Vue application and deploy it to Cloudflare Workers with Workers Assets.
+---
+
+import {
+	Badge,
+	Description,
+	InlineBadge,
+	Render,
+	PackageManagers,
+} from "~/components";
+
+In this guide, you will create a new [Vue](https://vuejs.org/) application and deploy to Cloudflare Workers (with the new [<InlineBadge preset="beta" /> Workers Assets](/workers/static-assets/)).
+
+## 1. Set up a new project
+
+Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up a new project. C3 will create a new project directory, use code from the official Vue template, and provide the option to deploy instantly.
+
+To use `create-cloudflare` to create a new Vue project with <InlineBadge preset="beta" /> Workers Assets, run the following command:
+
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest my-vue-app"
+	args={"--framework=vue --platform=workers"}
+/>
+
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		category: "web-framework",
+		framework: "Vue",
+	}}
+/>
+
+After setting up your project, change your directory by running the following command:
+
+```sh
+cd my-vue-app
+```
+
+## 2. Develop locally
+
+After you have created your project, run the following command in the project directory to start a local server. This will allow you to preview your project locally during development.
+
+<PackageManagers type="run" args={"dev"} />
+
+## 3. Deploy your project
+
+Your project can be deployed to a `*.workers.dev` subdomain or a [Custom Domain](/workers/configuration/routing/custom-domains/), from your own machine or from any CI/CD system, including [Cloudflare's own](/workers/ci-cd/builds/).
+
+The following command will build and deploy your project. If you are using CI, ensure you update your ["deploy command"](/workers/ci-cd/builds/configuration/#build-settings) configuration appropriately.
+
+<PackageManagers type="run" args={"deploy"} />
+
+---
+
+## Static assets
+
+You can serve static assets in your Vue application by [placing them in the `./public/` directory](https://vite.dev/guide/assets#the-public-directory). This can be useful for resource files such as images, stylesheets, fonts, and manifests.
+
+<Render file="workers-assets-routing-summary" />
+
+## Use bindings with Vue
+
+Your new project also contains a Worker at `./server/index.ts`, which you can use as a backend API for your Vue application. While your Vue application cannot directly access Workers bindings, it can interact with them through this Worker. You can make [`fetch()` requests](/workers/runtime-apis/fetch/) from your Vue application to the Worker, which can then handle the request and use bindings. Learn how to [configure Workers bindings](/workers/runtime-apis/bindings/).

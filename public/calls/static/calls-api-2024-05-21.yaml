@@ -27,6 +27,11 @@ paths:
           schema:
             type: boolean
           description: Session is intended to connect to an ICE-lite peer like a third party SFU/server
+        - in: query
+          name: correlationId
+          schema:
+            type: string
+          description: Associate session to an user-provided correlation id
       responses:
         "201":
           description: Created
@@ -502,7 +507,7 @@ components:
                   errorCode:
                     type: string
                   errorDescription:
-                     type: string
+                    type: string
         requiresImmediateRenegotiation:
           type: boolean
     GetSessionStateResponse:
@@ -538,6 +543,3 @@ components:
           type: string
         sessionDescription:
           $ref: "#/components/schemas/SessionDescription"
-
-
-  

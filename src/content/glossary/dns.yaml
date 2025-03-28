@@ -27,7 +27,7 @@ entries:
 
   - term: DNS record
     general_definition: |-
-      DNS records are instructions that live in authoritative DNS servers and provide information about a domain including what IP address is associated with that domain and how to handle requests for that domain.
+      DNS records are instructions that live in authoritative DNS servers and provide information about a domain, including what IP address is associated with that domain and how to handle requests for that domain.
 
   - term: DNS server
     general_definition: |-
@@ -76,6 +76,10 @@ entries:
     general_definition: |-
       the proxy status of a DNS record defines whether requests for your domain will route through Cloudflare (`proxied`) or not (`DNS-only`).
 
-      When a [DNS record is proxied](/dns/manage-dns-records/reference/proxied-dns-records/), requests are processed according to your configurations, and Cloudflare can optimize, cache, and protect your domain. Refer to [How Cloudflare works](/fundamentals/concepts/how-cloudflare-works/) for details.
+      When a [DNS record is proxied](/dns/proxy-status/), requests are processed according to your configurations, and Cloudflare can optimize, cache, and protect your domain. Refer to [How Cloudflare works](/fundamentals/concepts/how-cloudflare-works/) for details.
     associated_products:
       - Fundamentals
+
+  - term: zone apex
+    general_definition: |-
+      zone apex refers to the domain or subdomain on which the control of DNS records starts.

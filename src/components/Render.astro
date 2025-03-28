@@ -13,29 +13,49 @@ const props = z.object({
 let { file, product, params } = props.parse(Astro.props);
 
 if (!product) {
-	product = Astro.params.slug?.split("/")[0];
+	const fromSlug = Astro.params.slug?.split("/")[0];
+
+	if (!fromSlug) {
+		throw new Error(
+			`[Render] Unable to infer which folder ${file} is in, please provide a "product" input with your "file" input.`,
+		);
+	}
+
+	product = fromSlug;
 }
 
-if (!product) {
-	throw new Error(
-		`[Render] Unable to infer which folder ${file} is in, please provide a "product" input with your "file" input.`,
-	);
-}
-
-const partial = await getEntry("partials", `${product}/${file}`);
+const id = `${product}/${file}`;
+const partial = await getEntry("partials", id);
 
 if (!partial) {
 	throw new Error(
-		`[Render] Couldn't find partial: ${file}. Included on ${Astro.params.slug}`,
+		`[Render] Couldn't find "${id}" included on "${Astro.url.pathname}"`,
 	);
 }
 
+// We currently only enforce parameters if `params` is set in the frontmatter,
+// until we can migrate existing `inputParameters` frontmatter to `params`.
 if (partial.data.params) {
-	const expected = partial.data.params;
-	if (!params)
+	const expected = partial.data.params.sort();
+	const optional = expected.filter((p) => p.endsWith("?"));
+	const received = Object.keys(params ?? {}).sort();
+
+	const maximum = expected.length;
+	const minimum = maximum - optional.length;
+
+	if (
+		received.length < minimum ||
+		received.length > maximum ||
+		expected.some((p: string) => {
+			if (p.endsWith("?")) return false;
+
+			return !received.includes(p);
+		})
+	) {
 		throw new Error(
-			`${file} included on ${Astro.params.slug} expected parameters: ${expected}, got none`,
+			`[Render] Expected parameters ${JSON.stringify(expected)} but received parameters ${JSON.stringify(received)} for "${file}" included on "${Astro.url.pathname}"`,
 		);
+	}
 }
 
 const { Content } = await render(partial);

@@ -50,7 +50,7 @@ Learn more about our route leak detection system design and usages  in [How we d
 
 ## BGP origin hijacks
 
-[BGP origin hijack](https://en.wikipedia.org/wiki/bgp_hijacking) is one type of BGP anomaly where networks falsely announce
+[BGP origin hijack](https://www.cloudflare.com/learning/security/glossary/bgp-hijacking/) is one type of BGP anomaly where networks falsely announce
 ownership for groups of IP addresses (prefixes) that they do not own, control, or route to. A BGP origin hijack can redirect Internet traffic to the hijacker from its
 legitimate destination, causing data loss with potential leak of private/confidential information.
 
@@ -66,7 +66,7 @@ of the table are defined as follows:
 * `Confidence`: The level of confidence that we have on the event being a true hijacks. Values can be `High`, `Medium`, or `Low`.
 * `Tags`: The relevant evidence presented as short tags, presenting key facts we compiled using additional data sources, such as RPKI validation results or network relationship.
 
-You can also access the detection result programmatically via our [public API](https://developers.cloudflare.com/api/resources/radar/subresources/bgp/subresources/hijacks/subresources/events/methods/list/) ([CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) license).
+You can also access the detection result programmatically via our [public API](/api/resources/radar/subresources/bgp/subresources/hijacks/subresources/events/methods/list/) ([CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) license).
 
 ## Certificates
 
@@ -90,13 +90,20 @@ Cloudflare Speed Test measures latency multiple times over the course of the tes
 
 ## Content categories
 
-Cloudflare uses a variety of data sources to categorize domains. Using Cloudflare Radar, you can view the content categories associated with a given domain. Cloudflare customers using Cloudflare Gateway or 1.1.1.1 for Families can decide to block certain categories, like "Adult Content", in addition to security threats like malware and phishing.
+Cloudflare uses a variety of data sources to categorize domains. Using Cloudflare Radar, you can view the content categories associated with a given domain. Cloudflare customers using Cloudflare Gateway or [1.1.1.1 for Families](/1.1.1.1/setup/#1111-for-families) can decide to block certain categories, like "Adult Content", in addition to security threats like malware and phishing.
 
 In some cases, a domain may be miscategorized. For example, a social media site might be categorized as "Shopping & Auctions". If you believe a domain is miscategorized, or a domain has not yet been categorized, please provide your suggested category using [this form](https://radar.cloudflare.com/domains/feedback) to bring it to our attention.
 
+## DNS
+
+The [Domain Name System (DNS)](https://www.cloudflare.com/learning/dns/what-is-dns/) is a network service that is most commonly used to translate human-readable domain names into numerical IP addresses that computers can use to talk to each other.
+It is an essential Internet service, and is also used to look up other network-related information.
+
+The data displayed on Radar for DNS is based on aggregated and anonymized DNS lookups to Cloudflare's [1.1.1.1](/1.1.1.1/) public resolver service.
+
 ## Domain rankings
 
-Domain Rankings is based on our anonymized and aggregated 1.1.1.1 resolver data, complies with our [privacy policy](https://www.cloudflare.com/en-gb/privacypolicy/), and aims to identify the top most popular domains that reflect how people use the Internet globally. Domain Rankings’ popularity metric is best described as the estimated number of unique users that access a domain over some period of time.
+Domain Rankings is based on our anonymized and aggregated [1.1.1.1 DNS resolver](/1.1.1.1/) data, complies with our [privacy policy](https://www.cloudflare.com/en-gb/privacypolicy/), and aims to identify the top most popular domains that reflect how people use the Internet globally. Domain Rankings’ popularity metric is best described as the estimated number of unique users that access a domain over some period of time.
 
 Trending domains are domains which are currently experiencing an increase in popularity. Domains Trending Today are domains spiking in popularity, reflecting increased interest potentially related to a particular event or a topic. Domains Trending This Week are domains that have steadily grown in popularity, reflecting an increase of their user base over the week.
 
@@ -109,6 +116,10 @@ Countries contributing traffic to this AS, and their relative contribution as pe
 Internet connectivity can experience outages or disruptions due to a number of factors. These factors include power outages, damage to fiber optic cables, severe weather, natural disasters, or government directed shutdowns. Outages may be sub-national or national in geographic scope, or may impact one or more [ASNs](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-an-autonomous-system/). Some outages may be brief, lasting just a few minutes, while others can stretch on for months — the duration can be related, in part, to the underlying cause. Internet outages listed in the Cloudflare Radar Outage Center are notable drops in traffic that have generally been corroborated with third party-information, which may include a social media or status page post from a telecommunications provider, a news report, or industry/community mailing lists.
 
 An early warning signal that an Internet outage may be underway on a given network or in a given country is an anomalous drop in traffic as compared to historical traffic patterns and trends. Internet anomalies listed in the Cloudflare Radar Outage Center represent an algorithmically-observed anomalous drop in traffic for the listed entity. If a given entry is marked as verified, it means that we have manually corroborated the observed drop in traffic across multiple Cloudflare data sources and/or third-party sources such as [IODA](https://ioda.inetintel.cc.gatech.edu/), or third-party sources of information, such as those listed above. In the case of the latter, an associated Internet outage event will be opened, with the event listed in the Internet Outages table (and API).
+
+## Internet services ranking
+
+Internet services ranking is based on our anonymized and aggregated [1.1.1.1 DNS resolver](/1.1.1.1/) data, complies with our [privacy policy](https://www.cloudflare.com/en-gb/privacypolicy/), and aims to identify the top most popular Internet services that reflect how people use the Internet globally. A service represents one or more domains aggregated together. Ranking popularity metric is best described as the estimated number of unique users that access domains associated with a service, over some period of time.
 
 ## Internet traffic trends
 
@@ -134,6 +145,10 @@ The Internet Quality Index estimates connection performance under average utiliz
 
 The IQI methodology requires a minimum number of measurements to generate estimates. As a result, graphs for smaller countries and ASNs may display occasional gaps, especially during nighttime. These gaps do not indicate outages. The number of measurements underlying IQI does not necessarily correlate with the volume of traffic observed by Cloudflare in a specific country or ASN.
 
+## Leaked credentials
+
+[Leaked credentials detection](/waf/detections/leaked-credentials/) scans incoming HTTP requests for known authentication patterns from common web apps and any custom detection locations that were configured. Cloudflare Radar provides visibility into aggregate trends in authentication requests, including the detection of leaked credentials.
+
 ## Mobile operating systems
 
 The Mobile Operating Systems graph shows the distribution of mobile device requests by operating system, representing trends observed in Internet traffic originating globally or within a given location or autonomous system within the selected time range, based on aggregated data from our network. "Mobile device" includes phones and tablets only, and does not include other types of devices, such as those classified as desktops/laptops, smart TVs, or gaming consoles.
@@ -153,6 +168,14 @@ Network-level DDoS attacks graphs are based on traffic measured in bytes.
 ## Post-quantum encryption adoption
 
 The Post-Quantum Encryption Adoption graph shows the share of HTTPS requests to Cloudflare that are encrypted with post-quantum (PQ) cryptography. Additional details about Cloudflare's support for PQ cryptography can be found at [Cloudflare Research](https://pq.cloudflareresearch.com/).
+
+## Robots.txt
+
+A [robots.txt](https://www.cloudflare.com/learning/bots/what-is-robots-txt/) file contains instructions for bots that tell them which webpages they can and cannot access.
+
+The data displayed for robots.txt is based on successfully parsed robots.txt files from the top 10,000 domains. From these files, we count the occurrences of each user agent under the `Allow` and `Disallow` directives. A user agent is classified as "fully allowed" or "fully disallowed" if the directive value is `*`. Otherwise, if the user agent is only allowed or disallowed to crawl specific paths, it is classified as "partially allowed" or "partially disallowed."
+
+Currently, we only include AI-focused user agents listed in the [ai.robots.txt](https://github.com/ai-robots-txt/ai.robots.txt) repository.
 
 ## TCP resets and timeouts
 
@@ -205,3 +228,7 @@ The data displayed on domain-specific geographic traffic patterns is based solel
 ## WHOIS
 
 WHOIS is a standard for publishing the contact and nameserver information for all registered domains. Each registrar maintains their own WHOIS service. Anyone can query the registrar's WHOIS service to reveal the data behind a given domain.
+
+## Workers AI
+
+[Workers AI](/workers-ai/) allows you to run machine learning models, on the Cloudflare network, from your own code -- whether that be from Workers, Pages, or anywhere via the Cloudflare API. The data displayed for Workers AI is based on the number of Cloudflare accounts using a model during a specific time interval.

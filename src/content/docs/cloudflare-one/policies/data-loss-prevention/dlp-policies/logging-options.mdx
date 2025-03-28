@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-Data Loss Prevention allows you to capture, store, and view the data that triggered a specific DLP policy for use as forensic evidence. Users on all plans can [log the payload](#log-the-payload-of-matched-policies) of matched HTTP requests in their Cloudflare logs. Additionally, Enterprise users can [configure a Logpush job](#send-http-requests-to-logpush-destination) to send copies of entire matched HTTP requests to storage destinations.
+Data Loss Prevention allows you to capture, store, and view the data that triggered a specific DLP policy for use as forensic evidence. Users on all plans can [log the payload](#log-the-payload-of-matched-rules) of matched HTTP requests in their Cloudflare logs. Additionally, Enterprise users can [configure a Logpush job](#send-http-requests-to-logpush-destination) to send copies of entire matched HTTP requests to storage destinations.
 
 ## Log the payload of matched rules
 
@@ -43,11 +43,24 @@ Data Loss Prevention will now store a portion of the payload for HTTP requests t
 3. Select **Decrypt Payload Log**.
 4. Enter your private key and select **Decrypt**.
 
-You will see the [ID of the matched DLP Profile](/api/resources/zero_trust/subresources/dlp/subresources/profiles/methods/list/) followed by the decrypted payload. Note that DLP currently logs only the first match.
+You will see the [ID of the matched DLP Profile](/api/resources/zero_trust/subresources/dlp/subresources/profiles/methods/list/) followed by the decrypted payload.
 
 :::note
-Neither the key nor the decrypted payload will be stored by Cloudflare.
+Cloudflare does not store the key or the decrypted payload.
 :::
+
+### Report false and true positives to AI context analysis
+
+When you have [AI context analysis](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/advanced-settings/#ai-context-analysis) turned on for a DLP profile, you can train the AI model to adjust its confident threshold by reporting false and true positives.
+
+To report a DLP match payload as a false or true positive:
+
+1. [Find and decrypt](#4-view-payload-logs) the payload log you want to report.
+2. In **Log details**, choose a detected context match.
+3. In **Context**, select the redacted match data.
+4. In **Match details**, choose whether you want to report the match as a false positive or a true positive.
+
+Based on your report, DLP's machine learning will adjust its confidence in future matches for the associated profile.
 
 ### Data privacy
 
@@ -66,13 +79,16 @@ Gateway allows you to send copies of entire HTTP requests matched in DLP policie
 
 To set up the DLP Forensic Copy Logpush job:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Logs** > **Logpush**. Select **Add a Logpush job**.
-2. Set up a [Logpush destination](/logs/get-started/enable-destinations/) with the DLP Forensic Copy Logpush job.
-3. Return to Zero Trust and go to **Gateway** > **Firewall policies** > **HTTP**.
-4. Edit an existing Allow or Block DLP policy, or [create a new policy](/cloudflare-one/policies/data-loss-prevention/dlp-policies/#2-create-a-dlp-policy).
-5. In the policy builder, scroll down to **Configure policy settings** and turn on **Send copy to storage**.
-6. Select a storage destination. Gateway will list any configured Logpush jobs or integrations that can receive HTTP requests.
-7. Select **Save**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Logs** > **Logpush**.
+2. If this is your first Logpush job, select **Add a Logpush job**. Otherwise, select **Go to logpush configurations**.
+3. In Logpush, select **Create a Logpush job**.
+4. Choose a [Logpush destination](/logs/get-started/enable-destinations/).
+5. In **Configure logpush job**, choose the _DLP forensic copies_ dataset. Select **Create Logpush job**.
+6. Return to Zero Trust and go to **Gateway** > **Firewall policies** > **HTTP**.
+7. Edit an existing Allow or Block DLP policy, or [create a new policy](/cloudflare-one/policies/data-loss-prevention/dlp-policies/#2-create-a-dlp-policy).
+8. In the policy builder, scroll down to **Configure policy settings** and turn on **Send copy to storage**.
+9. Select a storage destination. Gateway will list any configured Logpush jobs or integrations that can receive HTTP requests.
+10. Select **Save policy**.
 
 DLP will now send a copy of HTTP requests that match this policy to your Logpush destination.
 

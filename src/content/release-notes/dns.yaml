@@ -1,0 +1,32 @@
+---
+link: "/dns/changelog/"
+productName: DNS
+productLink: "/dns/"
+productArea: Core platform
+productAreaLink: /fundamentals/reference/changelog/performance/
+entries:
+  - publish_date: "2025-02-03"
+    title: Removal of unused DNS record meta fields
+    description: |-
+      Cloudflare is removing five fields from the `meta` object of DNS records.
+      These fields have been unused for more than a year and are no longer set on new records.
+      This change may take up to four weeks to fully roll out.
+      The affected fields are:
+      - the `auto_added` boolean
+      - the `managed_by_apps` boolean and corresponding `apps_install_id`
+      - the `managed_by_argo_tunnel` boolean and corresponding `argo_tunnel_id`
+  - publish_date: "2025-01-27"
+    title: Zone IDs and names on individual DNS records
+    description: |-
+      Records returned by the API will no longer contain the `zone_id` and `zone_name` fields.
+      This change may take up to four weeks to fully roll out.
+      The affected fields were deprecated with an End of Life (EOL) date of November 30, 2024.
+  - publish_date: "2024-10-15"
+    title: Quote validation for TXT records added via dashboard
+    description: |-
+      When creating [TXT records](/dns/manage-dns-records/reference/dns-record-types/#txt) via the dashboard you will now find:
+      - Field validation errors if double quotes `"` are added inconsistently.
+      - Automatically quoted TXT content upon save if no quotes exist in the record content field.
+  - publish_date: "2024-10-07"
+    title: API support for per-record CNAME flattening
+    description: Paid zones now have the option to flatten specific CNAME records. When using the API, specify the setting `cname_flatten` as `true` or `false`. Refer to the [documentation](/dns/cname-flattening/set-up-cname-flattening/#per-record) for details.

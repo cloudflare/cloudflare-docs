@@ -8,7 +8,7 @@ head:
     content: Common DNS policies
 ---
 
-import { Render, Tabs, TabItem } from "~/components";
+import { Render, Tabs, TabItem, APIRequest } from "~/components";
 
 The following policies are commonly used to secure DNS traffic.
 
@@ -29,9 +29,9 @@ This policy allows users to access official corporate domains. By deploying the 
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "name": "Allow corporate domains",
   "description": "Allow any internal corporate domains added to a list",
@@ -54,65 +54,72 @@ To get the UUIDs of your lists, use the [List Zero Trust lists](/api/resources/z
 
 Block [security categories](/cloudflare-one/policies/gateway/domain-categories/#security-categories) such as Command & Control, Botnet and Malware based on Cloudflare's threat intelligence.
 
-<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
-
 <Render
-	file="gateway/policies/block-security-categories"
+	file="gateway/policies/dash-plus-api/dns/block-security-categories"
 	product="cloudflare-one"
 />
-
-</TabItem>
-
-<TabItem label="API">
-
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
---data '{
-  "name": "Block security threats",
-  "description": "Block all default Cloudflare DNS security categories",
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "dns"
-  ],
-  "traffic": "any(dns.security_category[*] in {68 178 80 83 176 175 117 131 134 151 153})",
-  "identity": ""
-}'
-```
-
-</TabItem> </Tabs>
 
 ## Block content categories
 
 The categories included in this policy are not always a security threat, but blocking them can help minimize the risk that your organization is exposed to. For more information, refer to [domain categories](/cloudflare-one/policies/gateway/domain-categories/).
 
+<Render
+	file="gateway/policies/dash-plus-api/dns/block-content-categories"
+	product="cloudflare-one"
+/>
+
+## Block a dynamic list of categories
+
+You can add a list of category IDs to the [EDNS header](https://datatracker.ietf.org/doc/html/rfc6891) of a request sent to Gateway as a JSON object using OPT code `65050`. For example:
+
+```json
+{
+	"categories": [2, 67, 125, 133]
+}
+```
+
+With the [Request Context Categories](/cloudflare-one/policies/gateway/dns-policies/#request-context-categories) selector, you can block the category IDs sent with EDNS. This is useful to filter by categories not known at the time of creating a policy, or to enforce device-specific DNS content filtering without reaching your account limit. When Gateway uses this selector to block a DNS query, the request will return an Extended DNS Error (EDE) Code 15 - Blocked error, along with a field containing an array of the matched categories.
+
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-| Selector           | Operator | Value                                                     | Action |
-| ------------------ | -------- | --------------------------------------------------------- | ------ |
-| Content Categories | in       | _Questionable Content_, _Security Risks_, _Miscellaneous_ | Block  |
+| Selector                 | Operator | Value   | Action |
+| ------------------------ | -------- | ------- | ------ |
+| Request Context Category | is       | _Present_ | Block  |
 
 </TabItem>
-
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
-  "name": "Block content categories",
-  "description": "Block common content categories that may pose a risk",
+  "name": "All-DNS-Bock-Category-Matches-In-Request",
+  "description": "Block all category matches in the request EDNS context",
   "enabled": true,
   "action": "block",
   "filters": [
     "dns"
   ],
-  "traffic": "any(dns.content_category[*] in {17 85 87 102 157 135 138 180 162 32 169 177 128 15 115 119 124 141 161})",
+  "traffic": "dns.categories_in_request_context_matches",
   "identity": ""
 }'
+```
+
+</TabItem>
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "block_content_categories" {
+  account_id  = var.cloudflare_account_id
+  name        = "All-DNS-Bock-Category-Matches-In-Request"
+  description = "Block all category matches in the request EDNS context"
+  enabled     = true
+  action      = "block"
+  filters     = ["dns"]
+  traffic     = "dns.categories_in_request_context_matches"
+  identity    = ""
+}
 ```
 
 </TabItem> </Tabs>
@@ -121,34 +128,10 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
 
 <Render file="gateway/policies/block-applications" product="cloudflare-one" />
 
-<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
-
-| Selector    | Operator | Value                     | Action |
-| ----------- | -------- | ------------------------- | ------ |
-| Application | in       | _Artificial Intelligence_ | Block  |
-
-</TabItem>
-
-<TabItem label="API">
-
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
---data '{
-  "name": "Block unauthorized applications",
-  "description": "Block access to unauthorized AI applications",
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "dns"
-  ],
-  "traffic": "any(app.type.ids[*] in {25})",
-  "identity": ""
-}'
-```
-
-</TabItem> </Tabs>
+<Render
+	file="gateway/policies/dash-plus-api/dns/block-applications"
+	product="cloudflare-one"
+/>
 
 ## Block banned countries
 
@@ -165,9 +148,9 @@ You can implement policies to block websites hosted in countries categorized as 
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "name": "Block banned countries",
   "description": "Block access to banned countries",
@@ -200,9 +183,9 @@ Blocking [frequently misused](https://www.spamhaus.org/statistics/tlds/) top-lev
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "name": "Block top-level domains",
   "description": "Block top-level domains that are frequently used for malicious practices",
@@ -234,9 +217,9 @@ To protect against [sophisticated phishing attacks](https://blog.cloudflare.com/
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "name": "Block phishing attacks",
   "description": "Block attempts to phish specific domains targeting your organization",
@@ -269,9 +252,9 @@ To safeguard user privacy, some organizations will block tracking domains such a
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "name": "Block online tracking",
   "description": "Block domains used for tracking at an OS level",
@@ -304,9 +287,9 @@ Block specific IP addresses that are known to be malicious or pose a threat to y
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "name": "Block malicious IPs",
   "description": "Block specific IP addresses that are known to be malicious or pose a threat to your organization",
@@ -339,9 +322,9 @@ The CIPA (Children's Internet Protection Act) Filter is a collection of subcateg
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "name": "Turn on CIPA filter",
   "description": "Block access to unwanted or harmful online content for children",
@@ -372,9 +355,9 @@ SafeSearch is a feature of search engines that helps you filter explicit or offe
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "name": "Hide explicit search results",
   "description": "Force SafeSearch on search engines to filter explicit or offensive content",
@@ -406,9 +389,9 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "name": "Check user identity",
   "description": "Filter traffic based on a user identity group name",
@@ -444,9 +427,9 @@ The following example includes two policies. The first policy allows the specifi
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "name": "Allow social media for Marketing",
   "description": "Allow access to social media sites for users in the Marketing group",
@@ -476,9 +459,9 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "name": "Block social media",
   "description": "Block social media for all other users",
@@ -497,7 +480,9 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
 
 ## Control IP version
 
-Enterprise users can pair these policies with an [egress policy](/cloudflare-one/policies/gateway/egress-policies/) to control which IP address is used to egress to the origin server.
+Enterprise users can pair these policies with an [egress policy](/cloudflare-one/policies/gateway/egress-policies/) to control which IP version is used to egress to the origin server.
+
+Optionally, you can use the Domain selector to control the IP version for specific sites.
 
 :::note
 To ensure traffic routes through your preferred IP version, disable **Display block page**.
@@ -509,19 +494,18 @@ Force users to connect with IPv4 by blocking IPv6 resolution.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-| Selector          | Operator | Value         | Logic | Action |
-| ----------------- | -------- | ------------- | ----- | ------ |
-| Query Record Type | is       | _AAAA_        | And   | Block  |
-| Domain            | is       | `example.com` |       |        |
+| Selector          | Operator | Value  | Action |
+| ----------------- | -------- | ------ | ------ |
+| Query Record Type | is       | _AAAA_ | Block  |
 
 </TabItem>
 
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "name": "Force IPv4",
   "description": "Force users to connect with IPv4 by blocking IPv6 resolution",
@@ -530,7 +514,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
   "filters": [
     "dns"
   ],
-  "traffic": "dns.query_rtype == \"AAAA\" and any(dns.domains[*] == \"example.com\")",
+  "traffic": "dns.query_rtype == \"AAAA\"",
   "identity": ""
 }'
 ```
@@ -543,19 +527,18 @@ Force users to connect with IPv6 by blocking IPv4 resolution.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-| Selector          | Operator | Value         | Logic | Action |
-| ----------------- | -------- | ------------- | ----- | ------ |
-| Query Record Type | is       | _A_           | And   | Block  |
-| Domain            | is       | `example.com` |       |        |
+| Selector          | Operator | Value | Action |
+| ----------------- | -------- | ----- | ------ |
+| Query Record Type | is       | _A_   | Block  |
 
 </TabItem>
 
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "name": "Force IPv6",
   "description": "Force users to connect with IPv6 by blocking IPv4 resolution",
@@ -564,7 +547,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
   "filters": [
     "dns"
   ],
-  "traffic": "dns.query_rtype == \"A\" and any(dns.domains[*] == \"example.com\")",
+  "traffic": "dns.query_rtype == \"A\"",
   "identity": ""
 }'
 ```

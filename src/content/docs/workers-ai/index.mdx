@@ -1,5 +1,5 @@
 ---
-title: Overview
+title: Cloudflare Workers AI
 order: 0
 type: overview
 pcx_content_type: overview
@@ -7,22 +7,24 @@ sidebar:
   order: 1
 head:
   - tag: title
-    content: Workers AI
-
+    content: Overview
 ---
 
 import { CardGrid, Description, Feature, LinkTitleCard, Plan, RelatedProduct, Render, LinkButton, Flex } from "~/components"
 
 <Description>
 
-Run machine learning models, powered by serverless GPUs, on Cloudflare's global network. 
+Run machine learning models, powered by serverless GPUs, on Cloudflare's global network.
 </Description>
 
 <Plan type="workers-all" />
 
-Workers AI allows you to run machine learning models, on the Cloudflare network, from your own code -- whether that be from [Workers](/workers/), [Pages](/pages/), or anywhere via [the Cloudflare API](/api/resources/ai/methods/run/).
+Workers AI allows you to run AI models in a serverless way, without having to worry about scaling, maintaining, or paying for unused infrastructure. You can invoke models running on GPUs on Cloudflare's network from your own code — from [Workers](/workers/), [Pages](/pages/), or anywhere via [the Cloudflare API](/api/resources/ai/methods/run/).
 
-With the launch of Workers AI, Cloudflare is rolling out GPUs to its global network. This enables you to build and deploy ambitious AI applications that run near your users, wherever they are.
+Workers AI gives you access to:
+- **50+ [open-source models](/workers-ai/models/)**, available as a part of our model catalog
+- Serverless, **pay-for-what-you-use** [pricing model](/workers-ai/platform/pricing/)
+- All as part of a **fully-featured developer platform**, including [AI Gateway](/ai-gateway/), [Vectorize](/vectorize/), [Workers](/workers/) and more...
 
 <div>
   <LinkButton href="/workers-ai/get-started">Get started</LinkButton>

@@ -10,7 +10,7 @@ description: Vitest configuration specific to the Workers integration.
 
 import { Details } from "~/components"
 
-The Workers Vitest integration provides additional configuration on top of Vitest's usual options. To configure the Workers Vitest integration, use the `poolOptions.workers` key. Use the [`defineWorkersConfig()`](/workers/testing/vitest-integration/configuration/#functions) function from the `@cloudflare/vitest-pool-workers/config` module for type checking and completions.
+The Workers Vitest integration provides additional configuration on top of Vitest's usual options. You can use the [`defineWorkersConfig()`](/workers/testing/vitest-integration/configuration/#defineworkersconfigoptions) API for better type checking and completions.
 
 An example configuration would be:
 
@@ -33,8 +33,7 @@ export default defineWorkersConfig({
 :::note
 
 
-Use [Vitest Workspaces](https://vitest.dev/guide/workspace) to only use the Workers Vitest integration for certain tests.
-
+Use [`defineWorkersProject`](#defineworkersprojectoptions) with [Vitest Workspaces](https://vitest.dev/guide/workspace) to specify a different configuration for certain tests.
 
 :::
 
@@ -46,25 +45,121 @@ Custom Vitest `environment`s or `runner`s are not supported when using the Worke
 
 :::
 
-## Functions
+## APIs
 
-The following functions are exported from the `@cloudflare/vitest-pool-workers/config` module.
+The following APIs are exported from the `@cloudflare/vitest-pool-workers/config` module.
 
+### `defineWorkersConfig(options)`
 
+Ensures Vitest is configured to use the Workers integration with the correct module resolution settings, and provides type checking for [WorkersPoolOptions](#workerspooloptions). This should be used in place of the [`defineConfig()`](https://vitest.dev/config/file.html) function from Vitest.
 
-* `defineWorkersConfig(options:UserConfig & { test?: { poolOptions?: { workers?: WorkersPoolOptions | ((ctx: WorkerPoolOptionsContext) => Awaitable\<WorkersPoolOptions>) } } })`
+It also accepts a `Promise` of `options`, or an optionally-`async` function returning `options`.
 
-  * Ensures Vitest is configured to use the Workers integration with the correct module resolution settings, and provides type checking for `WorkersPoolOptions`. This should be used in place of the [`defineConfig()`](https://vitest.dev/config/file.html) function from Vitest. The `defineWorkersConfig()` function also accepts a `Promise` of `options`, or an optionally-`async` function returning `options`.
+```ts
+import { defineWorkersConfig } from "@cloudflare/vitest-pool-workers/config";
 
-* `defineWorkersProject(options:UserWorkspaceConfig & { test?: { poolOptions?: { workers?: WorkersPoolOptions | ((ctx: WorkerPoolOptionsContext) => Awaitable\<WorkersPoolOptions>) } } })`
+export default defineWorkersConfig({
+  test: {
+    poolOptions: {
+      workers: {
+        // ...
+      },
+    },
+  },
+});
+```
 
-  * Ensures Vitest is configured to use the Workers integration with the correct module resolution settings, and provides type checking for `WorkersPoolOptions`. This should be used in place of the [`defineProject()`](https://vitest.dev/guide/workspace) function from Vitest. The `defineWorkersProject()` function also accepts a `Promise` of `options`, or an optionally-`async` function returning `options`.
+### `defineWorkersProject(options)`
 
-* `readD1Migrations(migrationsPath:string)`: `D1Migration[]`
+Similar to [`defineWorkersConfig()`](#defineworkersconfigoptions), this ensures Vitest is configured to use the Workers integration with the correct module resolution settings, and provides type checking for [WorkersPoolOptions](#workerspooloptions), except it should be used in place of the [`defineProject()`](https://vitest.dev/guide/workspace) function from Vitest.
 
-  * Reads all [D1 migrations](/d1/reference/migrations/) stored at `migrationsPath` and returns them ordered by migration number. Each migration will have its contents split into an array of individual SQL queries. Call the [`applyD1Migrations()`](/workers/testing/vitest-integration/test-apis/#d1) function inside a test or [setup file](https://vitest.dev/config/#setupfiles) to apply migrations. Refer to the [D1 recipe](https://github.com/cloudflare/workers-sdk/tree/main/fixtures/vitest-pool-workers-examples/d1) for an example project using migrations.
+It also accepts a `Promise` of `options`, or an optionally-`async` function returning `options`.
 
+```ts
+import { defineWorkspace, defineProject } from "vitest/config";
+import { defineWorkersProject } from "@cloudflare/vitest-pool-workers/config";
 
+const workspace = defineWorkspace([
+	defineWorkersProject({
+		test: {
+			name: "Workers",
+			include: ["**/*.worker.test.ts"],
+			poolOptions: {
+				workers: {
+					// ...
+				},
+			},
+		},
+	}),
+
+	// ...
+]);
+
+export default workspace;
+```
+
+### `buildPagesASSETSBinding(assetsPath)`
+
+Creates a Pages ASSETS binding that serves files insides the `assetsPath`. This is required if you uses `createPagesEventContext()` or `SELF` to test your **Pages Functions**. Refer to the [Pages recipe](/workers/testing/vitest-integration/recipes) for a full example.
+
+```ts
+import path from "node:path";
+import {
+	buildPagesASSETSBinding,
+	defineWorkersProject,
+} from "@cloudflare/vitest-pool-workers/config";
+
+export default defineWorkersProject(async () => {
+	const assetsPath = path.join(__dirname, "public");
+
+	return {
+		test: {
+			poolOptions: {
+				workers: {
+					miniflare: {
+						serviceBindings: {
+							ASSETS: await buildPagesASSETSBinding(assetsPath),
+						},
+					},
+				},
+			},
+		},
+	};
+});
+
+```
+
+### `readD1Migrations(migrationsPath)`
+
+Reads all [D1 migrations](/d1/reference/migrations/) stored at `migrationsPath` and returns them ordered by migration number. Each migration will have its contents split into an array of individual SQL queries. Call the [`applyD1Migrations()`](/workers/testing/vitest-integration/test-apis/#d1) function inside a test or [setup file](https://vitest.dev/config/#setupfiles) to apply migrations. Refer to the [D1 recipe](https://github.com/cloudflare/workers-sdk/tree/main/fixtures/vitest-pool-workers-examples/d1) for an example project using migrations.
+
+```ts
+import path from "node:path";
+import {
+	defineWorkersProject,
+	readD1Migrations,
+} from "@cloudflare/vitest-pool-workers/config";
+
+export default defineWorkersProject(async () => {
+	// Read all migrations in the `migrations` directory
+	const migrationsPath = path.join(__dirname, "migrations");
+	const migrations = await readD1Migrations(migrationsPath);
+
+	return {
+		test: {
+			setupFiles: ["./test/apply-migrations.ts"],
+			poolOptions: {
+				workers: {
+					miniflare: {
+						// Add a test-only binding for migrations, so we can apply them in a setup file
+						bindings: { TEST_MIGRATIONS: migrations },
+					},
+				},
+			},
+		},
+	};
+});
+```
 
 ## `WorkersPoolOptions`
 
@@ -145,7 +240,7 @@ The following functions are exported from the `@cloudflare/vitest-pool-workers/c
 
 * `miniflare`: `SourcelessWorkerOptions & { workers?: WorkerOptions\[]; }` optional
 
-  * Use this to provide configuration information that is typically stored within the `wrangler.toml / wrangler.json` file, such as [bindings](/workers/runtime-apis/bindings/), [compatibility dates](/workers/configuration/compatibility-dates/), and [compatibility flags](/workers/configuration/compatibility-flags/). The `WorkerOptions` interface is defined [here](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare#interface-workeroptions). Use the `main` option above to configure the entry point, instead of the Miniflare `script`, `scriptPath`, or `modules` options.
+  * Use this to provide configuration information that is typically stored within the [Wrangler configuration file](/workers/wrangler/configuration/), such as [bindings](/workers/runtime-apis/bindings/), [compatibility dates](/workers/configuration/compatibility-dates/), and [compatibility flags](/workers/configuration/compatibility-flags/). The `WorkerOptions` interface is defined [here](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare#interface-workeroptions). Use the `main` option above to configure the entry point, instead of the Miniflare `script`, `scriptPath`, or `modules` options.
 
   * If your project makes use of multiple Workers, you can configure auxiliary Workers that run in the same `workerd` process as your tests and can be bound to. Auxiliary Workers are configured using the `workers` array, containing regular Miniflare [`WorkerOptions`](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare#interface-workeroptions) objects. Note that unlike the `main` Worker, auxiliary Workers:
     * Cannot have TypeScript entrypoints. You must compile auxiliary Workers to JavaScript first. You can use the [`wrangler deploy --dry-run --outdir dist`](/workers/wrangler/commands/#deploy) command for this.
@@ -157,7 +252,7 @@ The following functions are exported from the `@cloudflare/vitest-pool-workers/c
 
 * `wrangler`: `{ configPath?: string; environment?: string; }` optional
 
-  * Path to `wrangler.toml / wrangler.json` file to load `main`, [compatibility settings](/workers/configuration/compatibility-dates/) and [bindings](/workers/runtime-apis/bindings/) from. These options will be merged with the `miniflare` option above, with `miniflare` values taking precedence. For example, if your Wrangler configuration defined a [service binding](/workers/runtime-apis/bindings/service-bindings/) named `SERVICE` to a Worker named `service`, but you included `serviceBindings: { SERVICE(request) { return new Response("body"); } }` in the `miniflare` option, all requests to `SERVICE` in tests would return `body`. Note `configPath` accepts both `.toml` and `.json` files.
+  * Path to [Wrangler configuration file](/workers/wrangler/configuration/) to load `main`, [compatibility settings](/workers/configuration/compatibility-dates/) and [bindings](/workers/runtime-apis/bindings/) from. These options will be merged with the `miniflare` option above, with `miniflare` values taking precedence. For example, if your Wrangler configuration defined a [service binding](/workers/runtime-apis/bindings/service-bindings/) named `SERVICE` to a Worker named `service`, but you included `serviceBindings: { SERVICE(request) { return new Response("body"); } }` in the `miniflare` option, all requests to `SERVICE` in tests would return `body`. Note `configPath` accepts both `.toml` and `.json` files.
 
   * The environment option can be used to specify the [Wrangler environment](/workers/wrangler/environments/) to pick up bindings and variables from.
 

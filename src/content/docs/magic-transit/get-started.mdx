@@ -51,12 +51,15 @@ If you are using a Cloudflare IP, you do not need to verify your IRR entries.
 
 You can also use the Resource Public Key Infrastructure (RPKI) as an additional option to validate your prefixes. RPKI is a [security framework method](https://blog.cloudflare.com/rpki/) that associates a route with an autonomous system. It uses cryptography to validate the information before being passed onto the routers.
 
+If you operate a network (ISP, cloud provider, enterprise, etc.), using RPKI ensures that your IP prefixes are correctly recognized. This prevents service disruptions and protects your brand's reputation. Without RPKI, attackers could announce your IP space, misdirect your traffic, and potentially harm your business.
+
 To check your prefixes, you can use [Cloudflare's RPKI Portal](https://rpki.cloudflare.com/?view=validator).
 
 ### Set maximum segment size
 
 <Render
 	file="prerequisites/maximum-segment-size"
+	product="networking-services"
 	params={{ productName: "Magic Transit" }}
 />
 
@@ -64,11 +67,11 @@ To check your prefixes, you can use [Cloudflare's RPKI Portal](https://rpki.clou
 
 ##### GRE tunnels as off-ramp
 
-<Render file="mtu-mss/mss-clamping-gre" />
+<Render file="magic-transit/mtu-mss/mss-clamping-gre" product="networking-services" />
 
 ##### IPsec tunnels
 
-<Render file="mtu-mss/mss-clamping-ipsec" />
+<Render file="magic-transit/mtu-mss/mss-clamping-ipsec" product="networking-services" />
 
 :::caution[Important]
 Refer to your device documentation to check if it sets IPsec MSS clamping automatically. If that is not the case and you are using IPsec inside GRE, you have to set MSS clamp manually.
@@ -78,7 +81,7 @@ Refer to [Maximum transmission unit and maximum segment size](/magic-transit/ref
 
 #### Clear Do not fragment (DF)
 
-If you are unable to set the MSS on your physical interfaces to a value lower than 1500 bytes, you can choose to clear the `do not fragment` bit in the IP header. When this option is enabled, Cloudflare fragments packets greater than 1500 bytes, and the packets are reassembled on your infrastructure after decapsulation. In most environments, enabling this option does not have significant impact on traffic throughput.
+If you are unable to set the MSS on your physical interfaces to a value lower than 1500 bytes, you can choose to clear the `do not fragment` bit in the IP header. When this option is enabled, Cloudflare fragments [packets](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) greater than 1500 bytes, and the packets are reassembled on your infrastructure after decapsulation. In most environments, enabling this option does not have significant impact on traffic throughput.
 
 To enable this option for your network, contact your account team.
 
@@ -86,19 +89,21 @@ Refer to [Maximum transmission unit and maximum segment size](/magic-transit/ref
 
 ### Follow router vendor guidelines
 
-<Render file="prerequisites/router-vendor-guidelines-mss-settings-origin" />
+<Render file="prerequisites/router-vendor-guidelines-mss-settings-origin"
+	product="networking-services"
+/>
 
 ## 3. Configure tunnels
 
 [Configure the tunnels](/magic-transit/how-to/configure-tunnels/) on both the Cloudflare side and your router side to connect to your origin infrastructure.
 
-## 4. Configure static routes
+## 4. Configure static routes or BGP peering
 
-Configure [static routes](/magic-transit/how-to/configure-static-routes/) to route traffic from Cloudflare's global network to your locations.
+Configure [static routes](/magic-transit/how-to/configure-static-routes/) or [BGP peering](/magic-transit/how-to/bgp-peering/) to route traffic from Cloudflare's global network to your locations.
 
 ## 5. Run pre-flight checks
 
-After setting up your tunnels and static routes, Cloudflare validates tunnel connectivity, tunnel and endpoint [health checks](/magic-transit/reference/tunnel-health-checks/#tunnel-health-checks), <GlossaryTooltip term="letter of agency">Letter of Agency (LOA)</GlossaryTooltip>, Internet Routing Registry (IRR), and <GlossaryTooltip term="maximum segment size (MSS)">maximum segment size (MSS) configurations</GlossaryTooltip>. Configurations for Cloudflare global network are applied and take around one day to rollout.
+After setting up your tunnels and routes, Cloudflare validates tunnel connectivity, tunnel and endpoint [health checks](/magic-transit/reference/tunnel-health-checks/#tunnel-health-checks), <GlossaryTooltip term="letter of agency">Letter of Agency (LOA)</GlossaryTooltip>, Internet Routing Registry (IRR), and <GlossaryTooltip term="maximum segment size (MSS)">maximum segment size (MSS) configurations</GlossaryTooltip>. Configurations for Cloudflare global network are applied and take around one day to rollout.
 
 ## 6. Advertise prefixes
 
@@ -107,7 +112,7 @@ Once pre-flight checks are completed, Cloudflare will unlock your <GlossaryToolt
 If you are using a Cloudflare IP, you do not need to advertise your prefixes.
 
 :::caution[Important]
-You must [put the appropriate MSS clamps](#set-maximum-segment-size) in place before routing changes are made. Failure to apply an MSS clamp can result in dropped packets and hard-to-debug connectivity issues.
+You must [put the appropriate MSS clamps](#set-maximum-segment-size) in place before [routing](https://www.cloudflare.com/learning/network-layer/what-is-routing/) changes are made. Failure to apply an MSS clamp can result in dropped packets and hard-to-debug connectivity issues.
 
 Also, when using [Cloudflare Network Interconnect](/magic-transit/network-interconnect/) with Magic Transit you must set the following MSS clamp sizes to accommodate additional overhead:
 

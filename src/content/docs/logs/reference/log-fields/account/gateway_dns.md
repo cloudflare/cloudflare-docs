@@ -61,13 +61,13 @@ Resolved intermediate cname domains in reverse (for example, ['com.example.alias
 
 Type: `string`
 
-The name of the colo that received the DNS query (for example, 'SJC', 'MIA', 'IAD').
+The name of the data center that received the DNS query (for example, 'SJC', 'MIA', 'IAD').
 
 ## ColoID
 
 Type: `int`
 
-The ID of the colo that received the DNS query (for example, 46, 72, 397).
+The ID of the data center that received the DNS query (for example, 46, 72, 397).
 
 ## CustomResolveDurationMs
 

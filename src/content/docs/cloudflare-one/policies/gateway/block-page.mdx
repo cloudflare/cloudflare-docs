@@ -2,9 +2,7 @@
 pcx_content_type: how-to
 title: Block page
 sidebar:
-  order: 11
-banner:
-  content: The default global Cloudflare root certificate will expire on 2025-02-02. If you installed the default Cloudflare certificate before 2024-10-17, you must <a href="/cloudflare-one/connections/connect-devices/user-side-certificates/#generate-a-cloudflare-root-certificate">generate a new certificate</a> and activate it for your Zero Trust organization to avoid inspection errors.
+  order: 14
 ---
 
 import { Render } from "~/components";
@@ -23,7 +21,7 @@ If your organization is still using the default Cloudflare certificate, you will
 
 ## Prerequisites
 
-In order to display the block page as the URL of the blocked domain, your devices must have a [Cloudflare certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/manual-deployment/) installed. Enterprise users can also [deploy their own root CA certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/custom-certificate/). If you do not install a certificate, the block page [will not display correctly](#certificate-warning).
+In order to display the block page as the URL of the blocked domain, your devices must have a [Cloudflare certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/manual-deployment/) installed. Enterprise users can also [deploy their own root CA certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/custom-certificate/). If you do not install a certificate, the block page [will not display correctly](#certificate-error).
 
 ## Turn on the block page
 

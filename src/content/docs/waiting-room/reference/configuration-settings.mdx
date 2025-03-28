@@ -202,6 +202,34 @@ You can customize a variety of options for your waiting rooms.
       </td>
       <td></td>
     </tr>
+    <tr>
+      <td>Turnstile Widget Mode</td>
+      <td>
+        <code>turnstile_mode</code>
+      </td>
+      <td>Yes, defaults <code>invisible</code>.</td>
+      <td>
+        The type of Turnstile widget to use - refer to the [Turnstile documentation](/turnstile/concepts/widget/#widget-types) for details. Valid values are <code>off</code>, <code>invisible</code>, <code>visible_non_interactive</code>, and <code>visible_managed</code>. Setting this to <code>off</code> will completely disable the Turnstile integration.
+      </td>
+      <td>
+        Setting this to <code>invisible</code> makes sense for most rooms, unless you would like end users to be aware the challenge is running.
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Turnstile Fail Action</td>
+      <td>
+        <code>turnstile_action</code>
+      </td>
+      <td>Yes, defaults to <code>log</code>.</td>
+      <td>
+        The action to take when an end user fails a Turnstile challenge. Valid values are <code>log</code> and <code>infinite_queue</code>.
+      </td>
+      <td>
+        Setting this to <code>log</code> makes sense for most rooms, unless you wish to aggressively block bots using an infinite queue.
+      </td>
+      <td></td>
+    </tr>
   </tbody>
 </table>
 

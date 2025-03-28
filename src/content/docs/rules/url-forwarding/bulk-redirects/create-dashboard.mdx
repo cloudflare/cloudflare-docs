@@ -16,16 +16,13 @@ To create Bulk Redirects in the Cloudflare dashboard you must:
 You can create Bulk Redirect Lists and Bulk Redirect Rules in the Cloudflare dashboard:
 
 - At the account level, in **Bulk Redirects**.
-- At the zone level:
-  1. Go to **Rules** > **Overview**.
-  2. Next to **Redirect Rules** select **Manage Redirect Rules**.
-  3. Select the **Bulk Redirects** tab.
+- At the zone level, go to **Rules** > **Settings** and select the **Bulk Redirects** tab.
 
 However, the lists and rules only exist at the account level and every zone in the same account will show the same items.
 
 <Render
 	file="url-forwarding/requires-proxied-site"
-	params={{ one: "Bulk Redirects" }}
+	params={{ forwardingRuleName: "Bulk Redirects" }}
 />
 
 ## 1. Create a Bulk Redirect List
@@ -87,3 +84,5 @@ However, the lists and rules only exist at the account level and every zone in t
 4. (Optional) If necessary, select **Or use the expression editor** to edit the [rule expression](/rules/url-forwarding/bulk-redirects/concepts/#expression) or the [rule key](/rules/url-forwarding/bulk-redirects/concepts/#key).
 
 5. To save and deploy the Bulk Redirect Rule, select **Save and Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
+
+   <Render file="rules-creation-dash-dns-popup" />

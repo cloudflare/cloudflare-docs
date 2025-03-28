@@ -27,15 +27,13 @@ const props = z
 		}),
 	);
 
-// @ts-expect-error plans are not typed
-const { id, type } = props.parse(Astro.props);
+const input = props.parse(Astro.props);
 
 let availability;
-if (type) {
-	// @ts-expect-error plans are not typed
-	availability = mappings[type];
+if ("type" in input) {
+	availability = mappings[input.type];
 } else {
-	availability = await indexPlans(id);
+	availability = await indexPlans(input.id);
 }
 ---
 

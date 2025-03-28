@@ -1,7 +1,6 @@
 ---
 updated: 2024-06-17
 difficulty: Beginner
-content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Custom access control for files in R2 using D1 and Workers
 products:
@@ -42,7 +41,7 @@ To get started developing your Worker you will use the [`create-cloudflare` CLI]
 	product="workers"
 	params={{
 		category: "hello-world",
-		type: "Hello World Worker",
+		type: "Worker only",
 		lang: "TypeScript",
 	}}
 />
@@ -96,8 +95,6 @@ npx wrangler r2 bucket create <YOUR_BUCKET_NAME>
 This works similar to the D1 database creation, where you will need to replace `<YOUR_BUCKET_NAME>` with the name you want to use for your bucket.
 To do this, go to the Wrangler file again and then add the following lines:
 
-
-
 <WranglerConfig>
 
 ```toml
@@ -110,7 +107,7 @@ bucket_name = "<YOUR_BUCKET_NAME>"
 
 Now that you have prepared the Wrangler configuration, you should update the `worker-configuration.d.ts` file to include the new bindings.
 This file will then provide TypeScript with the correct type definitions for the bindings, which allows for type checking and code completion in your editor.
-You could either update it manually or run the following command in the directory of your project to update it automatically based on the `wrangler.toml / wrangler.json` file (recommended).
+You could either update it manually or run the following command in the directory of your project to update it automatically based on the [Wrangler configuration file](/workers/wrangler/configuration/) (recommended).
 
 ```sh
 npm run cf-typegen

@@ -9,6 +9,8 @@ head:
 
 ---
 
+import { Type } from "~/components";
+
 Cloudflare Queues is integrated with [Cloudflare Workers](/workers). To send and receive messages, you must use a Worker.
 
 A Worker that can send messages to a Queue is a producer Worker, while a Worker that can receive messages from a Queue is a consumer Worker. It is possible for the same Worker to be a producer and consumer, if desired.
@@ -62,12 +64,12 @@ interface Queue<Body = unknown> {
 
 
 
-* `send(bodyunknown, options?{ contentType?: QueuesContentType })`: `Promise<void>`
+* `send(bodyunknown, options?{ contentType?: QueuesContentType })` <Type text="Promise<void>" />
 
   * Sends a message to the Queue. The body can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types), as long as its size is less than 128 KB.
   * When the promise resolves, the message is confirmed to be written to disk.
 
-* `sendBatch(bodyIterable<MessageSendRequest<unknown>>)`: `Promise<void>`
+* `sendBatch(bodyIterable<MessageSendRequest<unknown>>)` <Type text="Promise<void>" />
 
   * Sends a batch of messages to the Queue. Each item in the provided [Iterable](https://www.typescriptlang.org/docs/handbook/iterators-and-generators.html) must be supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types). A batch can contain up to 100 messages, though items are limited to 128 KB each, and the total size of the array cannot exceed 256 KB.
   * When the promise resolves, the messages are confirmed to be written to disk.
@@ -87,12 +89,12 @@ type MessageSendRequest<Body = unknown> = {
 
 
 
-* <code>body</code> unknown
+* <code>body</code> <Type text="unknown" />
 
   * The body of the message.
   * The body can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types), as long as its size is less than 128 KB.
 
-* <code>optionsQueueSendOptions</code>
+* <code>options</code> <Type text="QueueSendOptions" />
 
   * Options to apply to the current message, including content type and message delay settings.
 
@@ -102,13 +104,13 @@ type MessageSendRequest<Body = unknown> = {
 
 Optional configuration that applies when sending a message to a queue.
 
-* <code>contentTypeQueuesContentType</code>
+* <code>contentType</code> <Type text="QueuesContentType" />
 
   * The explicit content type of a message so it can be previewed correctly with the [List messages from the dashboard](/queues/examples/list-messages-from-dash/) feature. Optional argument.
   * As of now, this option is for internal use. In the future, `contentType` will be used by alternative consumer types to explicitly mark messages as serialized so they can be consumed in the desired type.
   * See [QueuesContentType](#queuescontenttype) for possible values.
 
-* <code>delaySecondsnumber</code>
+* <code>delaySeconds</code> <Type text="number" />
 
   * The number of seconds to [delay a message](/queues/configuration/batching-retries/) for within the queue, before it can be delivered to a consumer.
   * Must be an integer between 0 and 43200 (12 hours). Setting this value to zero will explicitly prevent the message from being delayed, even if there is a global (default) delay at the queue level.
@@ -117,7 +119,7 @@ Optional configuration that applies when sending a message to a queue.
 
 Optional configuration that applies when sending a batch of messages to a queue.
 
-* <code>delaySecondsnumber</code>
+* <code>delaySeconds</code> <Type text="number" />
 
   * The number of seconds to [delay messages](/queues/configuration/batching-retries/) for within the queue, before it can be delivered to a consumer.
   * Must be a positive integer.
@@ -217,19 +219,20 @@ interface MessageBatch<Body = unknown> {
 
 
 
-* <code>queue</code> string
+* <code>queue</code> <Type text="string" />
 
   * The name of the Queue that belongs to this batch.
 
-* <code>messages</code> Message\[]
+* <code>messages</code> <Type text="Message[]" />
 
   * An array of messages in the batch. Ordering of messages is best effort -- not guaranteed to be exactly the same as the order in which they were published. If you are interested in guaranteed FIFO ordering, please [email the Queues team](mailto:queues@cloudflare.com).
 
-* <code>ackAll()</code> void
+* <code>ackAll()</code> <Type text="void" />
+
 
   * Marks every message as successfully delivered, regardless of whether your `queue()` consumer handler returns successfully or not.
 
-* <code>retryAll(options?: QueueRetryOptions)</code> void
+* <code>retryAll(options?: QueueRetryOptions)</code> <Type text="void" />
 
   * Marks every message to be retried in the next batch.
   * Supports an optional `options` object.
@@ -253,28 +256,28 @@ interface Message<Body = unknown> {
 
 
 
-* <code>id</code> string
+* <code>id</code> <Type text="string" />
 
   * A unique, system-generated ID for the message.
 
-* <code>timestamp</code> Date
+* <code>timestamp</code> <Type text="Date" />
 
   * A timestamp when the message was sent.
 
-* <code>body</code> unknown
+* <code>body</code> <Type text="unknown" />
 
   * The body of the message.
   * The body can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types), as long as its size is less than 128 KB.
 
-* <code>attempts</code> number
+* <code>attempts</code> <Type text="number" />
 
 	* The number of times the consumer has attempted to process this message. Starts at 1.
 
-* <code>ack()</code> void
+* <code>ack()</code> <Type text="void" />
 
   * Marks a message as successfully delivered, regardless of whether your `queue()` consumer handler returns successfully or not.
 
-* <code>retry(options?: QueueRetryOptions)</code> void
+* <code>retry(options?: QueueRetryOptions)</code> <Type text="void" />
 
   * Marks a message to be retried in the next batch.
   * Supports an optional `options` object.
@@ -286,12 +289,12 @@ interface Message<Body = unknown> {
 Optional configuration when marking a message or a batch of messages for retry.
 
 ```ts
-declare interface QueueRetryOptions {
+interface QueueRetryOptions {
   delaySeconds?: number;
 }
 ```
 
-* <code>delaySecondsnumber</code>
+* <code>delaySeconds</code> <Type text="number" />
 
   * The number of seconds to [delay a message](/queues/configuration/batching-retries/) for within the queue, before it can be delivered to a consumer.
   * Must be a positive integer.

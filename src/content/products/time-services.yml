@@ -4,15 +4,9 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 49"><path d="M24 5
 product:
   title: Time Services
   url: /time-services/
-  group: Cloudflare essentials
+  group: Core platform
 
 meta:
   title: Cloudflare Time Services docs
   description: "Cloudflare's suite of time services: NTP, NTS, and Roughtime."
   author: "@cloudflare"
-
-externals:
-  - title: Cloudflare Time Services homepage
-    url: https://www.cloudflare.com/time/
-  - title: Cloudflare homepage
-    url: https://cloudflare.com

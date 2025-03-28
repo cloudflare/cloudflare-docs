@@ -1,12 +1,12 @@
 ---
 title: aws-sdk-net
 pcx_content_type: example
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="keys" /><br/>
+<Render file="keys" />
+<br />
 
 This example uses version 3 of the [aws-sdk-net](https://www.nuget.org/packages/AWSSDK.S3) package. You must pass in the R2 configuration credentials when instantiating your `S3` service client:
 
@@ -84,9 +84,7 @@ The [PutObjectAsync](https://docs.aws.amazon.com/sdkfornet/v3/apidocs/items/S3/M
 
 :::caution
 
-
 `DisablePayloadSigning = true` must be passed as Cloudflare R2 does not currently support the Streaming SigV4 implementation used by AWSSDK.S3.
-
 
 :::
 

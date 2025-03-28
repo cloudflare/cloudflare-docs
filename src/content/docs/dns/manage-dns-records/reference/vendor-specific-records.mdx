@@ -151,7 +151,7 @@ Refer to Rackspace CloudFiles's documentation to [get a `CNAME` value](https://d
 
 :::caution
 
-The `CNAME` record needs to be [DNS-only (unproxied)](/dns/manage-dns-records/reference/proxied-dns-records/#dns-only-records) since rackcdn.com is
+The `CNAME` record needs to be [DNS-only (unproxied)](/dns/proxy-status/#dns-only-records) since rackcdn.com is
 not compatible with Cloudflare.
 :::
 
@@ -180,7 +180,7 @@ Then, set up your Squarespace DNS records:
 
 1. Get your Squarespace DNS information by following [these instructions](https://support.squarespace.com/hc/articles/213469948).
 2. In Cloudflare, [add those records](/dns/manage-dns-records/how-to/create-dns-records/):
-   * All `A` records should be [Proxied](/dns/manage-dns-records/reference/proxied-dns-records/)
+   * All `A` records should be [Proxied](/dns/proxy-status/)
    * The `CNAME` record for `www` should also be **Proxied**.
    * The `CNAME` record for `verify.squarespace.com` should be **DNS-only**.
 3. If set up properly, your Squarespace DNS Settings page will now indicate that your 'Settings contain problems.' **This is the expected behavior**.
@@ -205,7 +205,7 @@ Refer to Unbounce's documentation to [get a `CNAME` value](https://documentation
 
 :::caution
 
-If Cloudflare is activated via one of our hosting partners, your `CNAME` record should be [DNS-only (unproxied)](/dns/manage-dns-records/reference/proxied-dns-records/#dns-only-records).
+If Cloudflare is activated via one of our hosting partners, your `CNAME` record should be [DNS-only (unproxied)](/dns/proxy-status/#dns-only-records).
 :::
 
 ### Vercel
@@ -223,7 +223,7 @@ This is because Wix [does not support](https://support.wix.com/en/article/reques
 
 If you want to manage your DNS through Cloudflare or you bought a domain through [Cloudflare Registrar](/registrar/), you can connect that domain to Wix through [domain pointing](https://support.wix.com/en/article/connecting-a-domain-to-wix-using-the-pointing-method).
 
-This method means your website is using Cloudflare for DNS only, so all your DNS records should be [DNS-only (unproxied)](/dns/manage-dns-records/reference/proxied-dns-records/#dns-only-records).
+This method means your website is using Cloudflare for DNS only, so all your DNS records should be [DNS-only (unproxied)](/dns/proxy-status/#dns-only-records).
 
 ### WPEngine
 

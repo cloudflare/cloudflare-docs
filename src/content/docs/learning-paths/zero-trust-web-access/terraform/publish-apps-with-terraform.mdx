@@ -3,20 +3,19 @@ title: Publish applications with Terraform
 pcx_content_type: overview
 sidebar:
   order: 1
-
 ---
 
-import { Details, Render } from "~/components"
+import { Details, Render } from "~/components";
 
 This guide covers how to use the [Cloudflare Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs) to quickly publish and secure a private application. In the following example, we will add a new public hostname route to an existing Cloudflare Tunnel, configure how `cloudflared` proxies traffic to the application, and secure the application with Cloudflare Access.
 
 ## Prerequisites
 
-* [Add your domain to Cloudflare](/learning-paths/zero-trust-web-access/initial-setup/add-site/)
-* [Configure an IdP integration](/learning-paths/zero-trust-web-access/initial-setup/configure-idp/)
-* [Create a Cloudflare Tunnel](/learning-paths/zero-trust-web-access/connect-private-applications/create-tunnel/#create-a-tunnel) via the Zero Trust dashboard
-* Install the [Terraform client](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
-* [Create an API token](https://developers.cloudflare.com/fundamentals/api/get-started/create-token/) (refer to the [minimum required permissions](/cloudflare-one/connections/connect-networks/deploy-tunnels/deployment-guides/terraform/#3-create-a-cloudflare-api-token))
+- [Add your domain to Cloudflare](/learning-paths/zero-trust-web-access/initial-setup/add-site/)
+- [Configure an IdP integration](/learning-paths/zero-trust-web-access/initial-setup/configure-idp/)
+- [Create a Cloudflare Tunnel](/learning-paths/zero-trust-web-access/connect-private-applications/create-tunnel/#create-a-tunnel) via the Zero Trust dashboard
+- Install the [Terraform client](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
+- [Create an API token](/fundamentals/api/get-started/create-token/) (refer to the [minimum required permissions](/cloudflare-one/connections/connect-networks/deployment-guides/terraform/#3-create-a-cloudflare-api-token))
 
 ## 1. Create a Terraform configuration directory
 
@@ -30,7 +29,7 @@ Create a `.tf` file and copy-paste the following example. Fill in your API token
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Networks** > **Tunnels**.
 2. Select the tunnel name.
-3. Copy the **Tunnel ID**. 
+3. Copy the **Tunnel ID**.
 
 </Details>
 
@@ -67,7 +66,7 @@ variable "tunnel_id" {
 
 :::caution
 
-To prevent accidentally exposing your Cloudflare credentials, do not save this file in your version control system. Learn more about [tracking a Terraform configuration](/terraform/tutorial/track-history/). 
+To prevent accidentally exposing your Cloudflare credentials, do not save this file in your version control system. Learn more about [tracking a Terraform configuration](/terraform/tutorial/track-history/).
 :::
 
 ## 3. Configure Cloudflare resources
@@ -76,11 +75,11 @@ Add the following resources to your Terraform configuration.
 
 ### Add public hostname route to Cloudflare Tunnel
 
-Using the [`cloudflare_tunnel_config`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/tunnel_config) resource, create an ingress rule that maps your application to a public DNS record. This example makes `localhost:8080` available on `app.mycompany.com`, sets the [Connect Timeout](/cloudflare-one/connections/connect-networks/configure-tunnels/origin-configuration/#connecttimeout), and enables [Access JWT validation](/cloudflare-one/connections/connect-networks/configure-tunnels/origin-configuration/#access).
+Using the [`cloudflare_tunnel_config`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/tunnel_config) resource, create an ingress rule that maps your application to a public DNS record. This example makes `localhost:8080` available on `app.mycompany.com`, sets the [Connect Timeout](/cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/origin-parameters/#connecttimeout), and enables [Access JWT validation](/cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/origin-parameters/#access).
 
 ```txt
 resource "cloudflare_tunnel_config" "example_config" {
-  account_id = var.account_id
+  account_id = var.cloudflare_account_id
   tunnel_id  = var.tunnel_id
 
   config {
@@ -106,7 +105,7 @@ resource "cloudflare_tunnel_config" "example_config" {
 
 :::note
 
-Public hostname configurations must include a catch-all ingress rule at the bottom of the file. 
+Public hostname configurations must include a catch-all ingress rule at the bottom of the file.
 :::
 
 ### Create an Access application
@@ -152,5 +151,5 @@ Users can now access the private application by going to the public URL and auth
 
 :::note
 
-If you need to modify the Access application, Access policy or DNS record, you must make the changes via Terraform. Changes made via the dashboard will break Terraform’s state. To prevent this from happening, [set the dashboard to read-only](/cloudflare-one/api-terraform/#set-dashboard-to-read-only). 
+If you need to modify the Access application, Access policy or DNS record, you must make the changes via Terraform. Changes made via the dashboard will break Terraform's state. To prevent this from happening, [set the dashboard to read-only](/cloudflare-one/api-terraform/#set-dashboard-to-read-only).
 :::

@@ -3,8 +3,6 @@ pcx_content_type: concept
 title: AV scanning
 sidebar:
   order: 5
-banner:
-  content: The default global Cloudflare root certificate will expire on 2025-02-02. If you installed the default Cloudflare certificate before 2024-10-17, you must <a href="/cloudflare-one/connections/connect-devices/user-side-certificates/#generate-a-cloudflare-root-certificate">generate a new certificate</a> and activate it for your Zero Trust organization to avoid inspection errors.
 ---
 
 import { Render, Details } from "~/components";
@@ -107,7 +105,7 @@ Gateway cannot scan [certain archive files](#non-scannable-files) regardless of 
 
 Gateway cannot scan all files for malware. When Gateway encounters a non-scannable file, you can configure AV scanning whether to fail open (allow the file to pass through unscanned) or to fail closed (deny the file transfer).
 
-<Render file="gateway/nonscannable-files" />
+<Render file="gateway/nonscannable-files" params={{ fileSizeLimitMB: "100" }} />
 
 - Password protected archives
 - Archives with more than three recursion levels

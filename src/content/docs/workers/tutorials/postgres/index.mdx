@@ -1,7 +1,6 @@
 ---
 updated: 2024-08-23
 difficulty: Beginner
-content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Connect to a PostgreSQL database with Cloudflare Workers
 products:
@@ -43,7 +42,7 @@ This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/
 	product="workers"
 	params={{
 		category: "hello-world",
-		type: "Hello World Worker",
+		type: "Worker only",
 		lang: "TypeScript",
 	}}
 />
@@ -104,13 +103,9 @@ npx wrangler secret put DB_URL
 
 Set your `DB_URL` secret locally in a `.dev.vars` file as documented in [Local Development with Secrets](/workers/configuration/secrets/).
 
-<WranglerConfig>
-
-```toml
+```toml title='.dev.vars'
 DB_URL="<ENTER YOUR POSTGRESQL CONNECTION STRING>"
 ```
-
-</WranglerConfig>
 
 ### Set explicit parameters
 
@@ -195,7 +190,19 @@ import postgres from "postgres";
 
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
-		const sql = postgres(env.DB_URL);
+		const sql = postgres(
+            env.DB_URL,
+            {
+                // Workers limit the number of concurrent external connections, so be sure to limit
+                // the size of the local connection pool that postgres.js may establish.
+                max: 5,
+
+                // If you are using array types in your Postgres schema, it is necessary to fetch
+                // type information to correctly de/serialize them. However, if you are not using
+                // those, disabling this will save you an extra round-trip every time you connect.
+                fetch_types: false,
+            },
+        );
 
 		// Query the products table
 		const result = await sql`SELECT * FROM products;`;

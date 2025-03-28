@@ -18,7 +18,8 @@ import { Render } from "~/components";
 
 3. To create a new empty rule, select **Create rule**. To duplicate an existing rule, select the three dots next to it > **Duplicate**.
 
-4. Enter a descriptive name for the rule in **Rule name**.
+4. <a id="rule-form" />
+   Enter a descriptive name for the rule in **Rule name**.
 
    ![Custom rule creation page in the Cloudflare dashboard](~/assets/images/waf/custom-rules/firewall-custom-rule-create.png)
 
@@ -34,5 +35,9 @@ import { Render } from "~/components";
 
 <Render
 	file="custom-response-blocked-requests"
-	params={{ one: "WAF block", two: "403", three: "2 KB" }}
+	params={{
+		responseType: "WAF block",
+		defaultStatusCode: "403",
+		maxBodySize: "2 KB",
+	}}
 />

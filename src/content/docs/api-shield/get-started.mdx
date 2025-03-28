@@ -20,19 +20,21 @@ Enabling API Shield features will have no impact on your traffic until you choos
 
 <Render file="session-identifiers" />
 
+<Render file="required-session-identifiers" />
+
 ### To set up session identifiers
 
 <Render file="set-up-session-identifiers" />
 
-## Upload a schema using Schema Validation (optional)
+## Upload a schema using Schema validation (optional)
 
-Schema Validation protects your APIs by ensuring only requests matching your <GlossaryTooltip term="API schema">API schema</GlossaryTooltip> are allowed to communicate with your origin.
+Schema validation protects your APIs by ensuring only requests matching your <GlossaryTooltip term="API schema">API schema</GlossaryTooltip> are allowed to communicate with your origin.
 
-While not strictly required, uploading a pre-existing schema will offer the chance to automatically add endpoints to Endpoint Management. If you already have a schema, you can upload it to [Schema Validation](/api-shield/security/schema-validation/).
+While not strictly required, uploading a pre-existing schema will offer the chance to automatically add endpoints to Endpoint Management. If you already have a schema, you can upload it to [Schema validation](/api-shield/security/schema-validation/).
 
 :::note
 
-It is recommended to start with Schema Validation rules set to `log` to review logged requests in **Security** > **Events**. When you are confident that only the correct requests are logged, you should switch the rule to `block`. 
+It is recommended to start with Schema validation rules set to `log` to review logged requests in **Security** > **Events**. When you are confident that only the correct requests are logged, you should switch the rule to `block`. 
 :::
 
 If you do not have a schema to upload, continue reading this guide to learn how to generate a schema with API Shield.
@@ -54,14 +56,14 @@ Cloudflare’s machine learning models have already inspected your existing traf
 
 :::note
 
-Schema Validation, Schema Learning, JWT Validation, Sequence Analytics, Sequence Mitigation, and rate limit recommendations only run on endpoints saved to Endpoint Management. 
+Schema validation, Schema Learning, JWT validation, Sequence Analytics, Sequence Mitigation, and rate limit recommendations only run on endpoints saved to Endpoint Management. 
 :::
 
-You can save your endpoints directly from [API Discovery](/api-shield/management-and-monitoring/#add-endpoints-from-api-discovery), [Schema Validation](/api-shield/management-and-monitoring/#add-endpoints-from-schema-validation), or [manually](/api-shield/management-and-monitoring/#add-endpoints-manually) by method, path, and host.
+You can save your endpoints directly from [API Discovery](/api-shield/management-and-monitoring/#add-endpoints-from-api-discovery), [Schema validation](/api-shield/management-and-monitoring/#add-endpoints-from-schema-validation), or [manually](/api-shield/management-and-monitoring/#add-endpoints-manually) by method, path, and host.
 
 This will add the specified endpoints to your list of managed endpoints. You can view your list of saved endpoints in the **Endpoint Management** page.
 
-Cloudflare will aggregate [performance data](/api-shield/management-and-monitoring/#endpoint-performance-analysis) and security data on your endpoint once it is saved.
+Cloudflare will aggregate [performance data](/api-shield/management-and-monitoring/#endpoint-analysis) and security data on your endpoint once it is saved.
 
 ### Allow the system to learn your traffic patterns
 
@@ -79,7 +81,7 @@ We recommend proceeding with [additional configurations](/api-shield/get-started
 
 You can observe Cloudflare suggested rate limits in Endpoint Management for endpoints using session identifiers. Unlike many security tools, these recommended rate limits are per-endpoint and per-session, not site-wide and not based on IP address. When creating a rule, it will be based on only traffic to that specific endpoint from unique visitors during their session. This feature allows you to be very specific and targeted with your rate limit enforcement, both lowering abusive traffic and false positives due to broadly scoped rules.
 
-## Import a learned schema to Schema Validation
+## Import a learned schema to Schema validation
 
 Cloudflare learns schema parameters via traffic inspection for all endpoints stored in Endpoint Management. You can export OpenAPI schemas in OpenAPI v3.0.0 format by hostname.
 
@@ -101,15 +103,15 @@ You can observe the top sequences in your API traffic that contain endpoints sto
 
 [Sequence Mitigation](/api-shield/security/sequence-mitigation/) allows you to enforce request patterns for authenticated clients communicating with your API. Use Sequence Analytics to better understand the request sequences used by your API clients.
 
-You should apply all possible API Shield protections (rate limiting suggestions, Schema Validation, JWT Validation, and mTLS) to API endpoints found in high correlation score sequences that make up the critical request flows in your application. You should also check their specific endpoint order with your development team.
+You should apply all possible API Shield protections (rate limiting suggestions, Schema validation, JWT validation, and mTLS) to API endpoints found in high correlation score sequences that make up the critical request flows in your application. You should also check their specific endpoint order with your development team.
 
 For more information, refer to [Detecting API abuse automatically using sequence analysis](https://blog.cloudflare.com/api-sequence-analytics) blog post.
 
 ## Additional configuration
 
-### Set up JSON Web Tokens (JWT) Validation
+### Set up JSON Web Tokens (JWT) validation
 
-Use the Cloudflare API to configure [JSON Web Tokens Validation](/api-shield/security/jwt-validation/), which validates the integrity and validity of JWTs sent by clients to your API or web application.
+Use the Cloudflare API to configure [JSON Web Tokens validation](/api-shield/security/jwt-validation/), which validates the integrity and validity of JWTs sent by clients to your API or web application.
 
 ### Set up GraphQL Malicious Query Protection
 

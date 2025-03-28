@@ -1,0 +1,87 @@
+---
+link: "/cloudflare-one/changelog/access/"
+productName: Access
+productLink: "/cloudflare-one/applications/configure-apps/"
+productArea: Cloudflare One
+productAreaLink: /cloudflare-one/changelog/
+entries:
+  - publish_date: "2025-02-12"
+    title: Access policies support filtering
+    description: |-
+      You can now filter Access policies by their action, selectors, rule groups, and assigned applications.
+  - publish_date: "2025-02-11"
+    title: Private self-hosted applications and reusable policies GA
+    description: |-
+      [Private self-hosted applications](/cloudflare-one/applications/non-http/self-hosted-private-app/) and [reusable Access policies](/cloudflare-one/policies/access/policy-management/) are now generally available (GA) for all customers.
+  - publish_date: "2025-01-21"
+    title: Access Applications support private hostnames/IPs and reusable Access policies.
+    description: |-
+      Cloudflare Access self-hosted applications can now be defined by [private IPs](/cloudflare-one/applications/non-http/self-hosted-private-app/), [private hostnames](/cloudflare-one/applications/non-http/self-hosted-private-app/) (on port 443) and [public hostnames](/cloudflare-one/applications/configure-apps/self-hosted-public-app/). Additionally, we made Access policies into their own object which can be reused across multiple applications. These updates involved significant updates to the overall Access dashboard experience. The updates will be slowly rolled out to different customer cohorts. If you are an Enterprise customer and would like early access, reach out to your account team.
+  - publish_date: "2025-01-15"
+    title: Logpush for SSH command logs
+    description: |-
+      Enterprise customers can now use Logpush to export SSH command logs for Access for Infrastructure targets.
+  - publish_date: "2024-12-04"
+    title: SCIM GA for Okta and Microsoft Entra ID
+    description: |-
+      Cloudflare's SCIM integrations with [Okta](/cloudflare-one/identity/idp-integration/okta/#synchronize-users-and-groups) and [Microsoft Entra ID](//cloudflare-one/identity/idp-integration/entra-id/#synchronize-users-and-groups) (formerly AzureAD) are now out of beta and generally available (GA) for all customers. These integrations can be used for Access and Gateway policies and Zero Trust user management. Note: This GA release does not include [Dashboard SSO SCIM](/fundamentals/setup/account/account-security/scim-setup/) support.
+  - publish_date: "2024-10-23"
+    title: SSH with Access for Infrastructure
+    description: |-
+      Admins can now use [Access for Infrastructure](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) to manage privileged access to SSH servers. Access for Infrastructure provides improved control and visibility over who accessed what service and what they did during their SSH session. Access for Infrastructure also eliminates the risk and overhead associated with managing SSH keys by using short-lived SSH certificates to access SSH servers.
+  - publish_date: "2024-08-26"
+    title: Reduce automatic seat deprovisioning minimum to 1 month, down from 2 months.
+    description: |-
+      Admins can now configure Zero Trust seats to [automatically expire](/cloudflare-one/identity/users/seat-management/#enable-seat-expiration) after 1 month of user inactivity. The previous minimum was 2 months.
+  - publish_date: "2024-06-06"
+    title: Scalability improvements to the App Launcher
+    description: |-
+      Applications now load more quickly for customers with a large number of applications or complex policies.
+  - publish_date: "2024-04-28"
+    title: Add option to bypass CORS to origin server
+    description: |-
+      Access admins can [defer all CORS enforcement to their origin server](/cloudflare-one/identity/authorization-cookie/cors/#bypass-options-requests-to-origin) for specific Access applications.
+  - publish_date: "2024-04-15"
+    title: Zero Trust User identity audit logs
+    description: |-
+      All user identity changes via SCIM or Authentication events are logged against a user's registry identity.
+  - publish_date: "2024-02-22"
+    title: Access for SaaS OIDC Support
+    description: |-
+      Access for SaaS applications can be setup with OIDC as an authentication method. OIDC and SAML 2.0 are now both fully supported.
+  - publish_date: "2024-02-22"
+    title: WARP as an identity source for Access
+    description: |-
+      Allow users to log in to Access applications with their WARP session identity. Users need to reauthenticate based on default session durations. WARP authentication identity must be turned on in your device enrollment permissions and can be enabled on a per application basis.
+  - publish_date: "2023-12-20"
+    title: Unique Entity IDs in Access for SaaS
+    description: |-
+      All new Access for SaaS applications have unique Entity IDs. This allows for multiple integrations with the same SaaS provider if required. The unique Entity ID has the application audience tag appended. Existing apps are unchanged.
+  - publish_date: "2023-12-15"
+    title: Default relay state support in Access for SaaS
+    description: |-
+      Allows Access admins to set a default relay state on Access for SaaS apps.
+  - publish_date: "2023-09-15"
+    title: App launcher supports tags and filters
+    description: |-
+      Access admins can now tag applications and allow users to filter by those tags in the App Launcher.
+  - publish_date: "2023-09-15"
+    title: App launcher customization
+    description: |-
+      Allow Access admins to configure the App Launcher page within Zero Trust.
+  - publish_date: "2023-09-15"
+    title: View active Access user identities in the dashboard and API
+    description: |-
+      Access admins can now view the full contents of a user's identity and device information for all active application sessions.
+  - publish_date: "2023-09-08"
+    title: Custom OIDC claims for named IdPs
+    description: |-
+      Access admins can now add custom claims to the existing named IdP providers. Previously this was locked to the generic OIDC provider.
+  - publish_date: "2023-08-02"
+    title: Azure AD authentication contexts
+    description: |-
+      Support Azure AD authentication contexts directly in Access policies.
+  - publish_date: "2023-06-23"
+    title: Custom block pages for Access applications
+    description: |-
+      Allow Access admins to customize the block pages presented by Access to end users.

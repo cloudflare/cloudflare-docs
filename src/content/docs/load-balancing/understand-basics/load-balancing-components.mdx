@@ -16,7 +16,7 @@ For a hostname (`blog.example.com`) to resolve, the Domain Name System (DNS) mus
 
 When you set up a load balancer, Cloudflare automatically creates an [LB DNS record](/load-balancing/load-balancers/dns-records/) for the specified hostname. This means that, according to a [priority order](/load-balancing/load-balancers/dns-records/#priority-order), instead of simply returning an IP address, the logic you introduced using the Cloudflare Load Balancing solution will be considered.
 
-Note that you can use the root domain as a Load Balancer hostname. When doing so, make sure you enter the hostname without including the auto-generated dot that typically precedes your zone's name. 
+Note that you can use the root domain as a Load Balancer hostname. When doing so, make sure you enter the hostname without including the auto-generated dot that typically precedes your zone's name.
 
 <Render file="load-balancing-diagram" />
 

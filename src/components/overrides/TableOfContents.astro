@@ -1,10 +1,35 @@
 ---
-import type { Props } from "@astrojs/starlight/props";
 import Default from "@astrojs/starlight/components/TableOfContents.astro";
 
-import { FeedbackPrompt } from "~/components";
+import { Icon } from "@astrojs/starlight/components";
+import FeedbackPrompt from "../FeedbackPrompt.tsx";
 ---
 
-<Default {...Astro.props} />
+<Default />
 <br />
-<FeedbackPrompt />
+<FeedbackPrompt client:idle />
+{
+	!Astro.url.pathname.startsWith("/support/") && (
+		<>
+			<br />
+			<div class="flex gap-2">
+				{Astro.locals.starlightRoute.editUrl && (
+					<a
+						href={Astro.locals.starlightRoute.editUrl}
+						class="inline-flex h-8 items-center justify-center gap-2 rounded border border-[--sl-color-hairline] px-3 text-black"
+					>
+						<Icon name="pencil" />
+						Edit
+					</a>
+				)}
+				<a
+					href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose"
+					class="inline-flex h-8 items-center justify-center gap-2 rounded border border-[--sl-color-hairline] px-3 text-black"
+				>
+					<Icon name="github" />
+					Issue
+				</a>
+			</div>
+		</>
+	)
+}

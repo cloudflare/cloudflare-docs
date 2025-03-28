@@ -1,7 +1,7 @@
 import { toString } from "hast-util-to-string";
 import { visit } from "unist-util-visit";
 import GithubSlugger from "github-slugger";
-import { rehypeExternalLinksOptions } from "./external-links";
+import { externalLinkArrow } from "./external-links";
 import type { Root } from "hast";
 import type { MdxTextExpression } from "mdast-util-mdx-expression";
 
@@ -16,7 +16,8 @@ export default function () {
 			if (/^h[1-6]$/.test(element.tagName)) {
 				const last = element.children.at(-1);
 
-				// @ts-expect-error this is added by mdast-util-mdx-expression
+				if (!last) return;
+
 				if (last.type === "mdxTextExpression") {
 					const lastElement = last as MdxTextExpression;
 					if (
@@ -33,7 +34,7 @@ export default function () {
 				} else {
 					if (!element.properties.id) {
 						const string = toString(element)
-							.replaceAll(rehypeExternalLinksOptions.content.value, "")
+							.replaceAll(externalLinkArrow, "")
 							.trimEnd();
 
 						element.properties.id = slugs.slug(string);

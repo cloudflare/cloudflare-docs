@@ -4,7 +4,7 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M39 4
 product:
   title: Rules
   url: /rules/
-  group: Cloudflare essentials
+  group: Core platform
   additional_groups:
     [Application performance, Application security, Network security]
 
@@ -16,7 +16,3 @@ meta:
 resources:
   community: https://community.cloudflare.com/c/general/rules/66
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/rules
-
-externals:
-  - title: Cloudflare homepage
-    url: https://cloudflare.com

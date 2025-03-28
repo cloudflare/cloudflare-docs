@@ -1,0 +1,397 @@
+---
+params:
+  - magicWord?
+  - ipRange?
+  - productName
+  - tunnelsAndEncapsulationPagePath
+  - ciphersPagePath
+  - antiReplayPagePath
+  - cniLink
+  - productPathDash
+  - updateHCFrequencyPage
+  - tunnelHealthChecksPage
+  - antiReplayPagePath
+  - biVsUniHealthCheck
+  - tunnelHealthDash
+  - biVsUniHealthCheckDefaults
+---
+
+import { APIRequest, CURL, Details, GlossaryTooltip, Render, TabItem, Tabs } from "~/components";
+
+Cloudflare recommends two tunnels for each ISP and network location router combination, one per Cloudflare endpoint. Shortly after your onboarding kickoff call, Cloudflare will assign two Cloudflare endpoint addresses  that you can use as the tunnel destinations on your network location's routers/endpoints.
+
+To configure the tunnels between Cloudflare and your locations, you must provide the following data for each tunnel:
+
+- **Tunnel name**: For GRE tunnels, the name must have 15 or fewer characters. IPsec tunnels have no character limit. For both GRE and IPsec tunnels, the name cannot contain spaces or special characters, and cannot be shared with other tunnels.
+- **Cloudflare endpoint address**: The public IP address of the Cloudflare side of the tunnel.
+- **Customer endpoint**: A public Internet routable IP address which is outside of the prefixes that Cloudflare will advertise on your behalf. These are generally IP addresses provided by your ISP. If you intend to use a physical or virtual connection like [Cloudflare Network Interconnect](/network-interconnect/), you do not need to provide endpoints because Cloudflare will provide them. <br/>
+  This value is not required for <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels, unless your router is using an <GlossaryTooltip term="Internet key exchange (IKE)">Internet Key Exchange (IKE)</GlossaryTooltip> ID of type `ID_IPV4_ADDR`.
+- **Interface address**: A 31-bit (recommended) or 30-bit subnet (`/31` or `/30` in CIDR notation) supporting two hosts, one for each side of the tunnel. Select the subnet from the following private IP space:
+  - `10.0.0.0/8`
+  - `172.16.0.0/12`
+  - `192.168.0.0/16`
+  - `169.254.240.0/20` {props.ipRange}
+    :::caution
+    Make sure the prefixes are always within the allowed Cloudflare ranges, especially for cloud service providers that might automatically generate prefixes for you. Otherwise, the tunnel will not work.
+    :::
+- **TTL**: Time to Live (TTL) in number of hops for the <GlossaryTooltip term="GRE tunnel">GRE</GlossaryTooltip> tunnel. The default value is 64.
+- **MTU**: Maximum transmission unit (MTU) in bytes for the GRE tunnel. The default value is 1476.
+
+## Ways to onboard traffic to Cloudflare
+
+### GRE and IPsec tunnels
+
+You can use GRE or IPsec tunnels to onboard your traffic to {props.productName}, and set them up via the Cloudflare dashboard or the API. However, if you want to use the API, be sure to have your [account ID](/fundamentals/setup/find-account-and-zone-ids/) and [API key](/fundamentals/api/get-started/keys/#view-your-global-api-key) ready before you begin.
+
+:::note
+IPsec tunnels only support Internet Key Exchange version 2 (IKEv2).
+:::
+
+#### IPsec supported ciphers
+
+Refer to <a href={props.tunnelsAndEncapsulationPagePath}>Tunnels and encapsulation</a> to learn more about the technical requirements for GRE and IPsec tunnels used in {props.productName}. In this page, you can also find the <a href={props.ciphersPagePath}>supported ciphers for IPsec</a>.
+
+#### Anti-replay protection
+
+If you use {props.productName} and <GlossaryTooltip term="anycast">anycast</GlossaryTooltip> IPsec tunnels, we recommend disabling anti-replay protection. This setting is disabled on Cloudflare's side by default. However, it can be enabled via the API or the Cloudflare dashboard for devices that do not support disabling it, including Cisco Meraki, Velocloud, and AWS VPN Gateway.
+
+Refer to <a href={props.antiReplayPagePath}>Anti-replay protection</a> for more information on this topic, or [Add IPsec tunnels](#add-tunnels) below to learn how to enable this feature.
+
+### Network Interconnect (CNI)
+
+Beyond GRE and IPsec tunnels, you can also use Network Interconnect (CNI) to onboard your traffic to {props.productName}. Refer to <a href={props.cniLink}>Network Interconnect (CNI)</a> for more information.
+
+## Add tunnels
+
+<Render file="icmp-mfirewall" product="networking-services" />
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+2. Select **{props.productPathDash}**.
+3. From the **Tunnels** tab, select **Create**.
+4. On the **Add tunnels** page, choose either a **GRE tunnel** or **IPsec tunnel**.
+
+<Details header="GRE tunnel">
+
+5. In **Name**, give your tunnel a descriptive name. This name must be unique, must not contain spaces or special characters, and must be 15 or fewer characters. Hover the mouse over `i` in the dashboard for more information.
+6. Give your tunnel a description in **Description**. You do not have character restrictions here.
+7. In **IPv4 Interface address**, enter the internal IP address for your tunnel along with the interface's prefix length (either `/31` or `/30`). This is used to route traffic through the tunnel on the Cloudflare side. We recommend using an RFC1918 address scheme with a `/31` netmask, as it provides the most efficient use of IP address space.
+8. In **Customer GRE endpoint**, enter your router's public IP address. This value is not needed if you intend to use a physical or virtual connection like Cloudflare Network Interconnect because Cloudflare will provide it.
+9. In **Cloudflare GRE endpoint**, enter the anycast address you received from your account team.
+10. Leave the default values for **TTL** and **MTU**.
+11. _(Optional)_ **Tunnel health checks** are enabled by default. If you disable Tunnel health checks, your tunnels will appear 100% down in your <a href={props.tunnelHealthDash}>tunnel health dashboard</a> even when working. Cloudflare will keep sending traffic through the tunnel, without the means to detect if the tunnel goes down. You will have to set up your own system to detect down tunnels, as Cloudflare will not be able to warn you about down tunnels. Refer to <a href={props.tunnelHealthChecksPage}>Tunnel health checks</a> for more information.
+12. _(Optional)_ If you keep **Tunnel health checks** enabled, choose the <a href={props.updateHCFrequencyPage}>**Health check rate**</a> for your tunnel. Available options are _Low_, _Medium_, and _High_.
+13. The **Health check type** defaults to _Reply_ and to creating an ICMP reply. If your firewall drops this type of packet for assuming it is a type of attack, change this option to _Request_ which will create an ICMP request. Refer to <a href={props.tunnelHealthChecksPage}>Tunnel health checks</a> for more information.
+14. The **Health check direction** defaults to **{props.BiVsUniHealthCheck}** for {props.productName}. Refer to [Bidirectional vs unidirectional health checks](#bidirectional-vs-unidirectional-health-checks) for more details.
+15. _(Optional)_ **Health check target** is the customer end of the tunnel. This field is only visible when the **Health check direction** is set to _Unidirectional_.
+16. _(Optional)_ We recommend you test your tunnel before officially adding it. To test the tunnel, select **Test tunnels**.
+17. To add multiple tunnels, select **Add GRE tunnel** for each new tunnel.
+18. After adding your tunnel information, select **Add tunnels** to save your changes.
+
+</Details>
+
+<Details header="IPsec tunnel">
+
+5. In **Name**, give your tunnel a descriptive name. This name must be unique, must not contain spaces or special characters, and must be 15 or fewer characters. Hover the mouse over `i` in the dashboard for more information.
+6. Give your tunnel a description in **Description**. You do not have character restrictions here.
+7. In **IPv4 Interface address**, enter the internal IP address for your tunnel along with the interface's prefix length (either `/31` or `/30`). This is used to route traffic through the tunnel on the Cloudflare side. We recommend using an RFC1918 address scheme with a `/31` netmask, as it provides the most efficient use of IP address space.
+8. In **Customer endpoint**, enter your router's public IP address. This value is only required if your router is using an IKE ID of type `ID_IPV4_ADDR`.
+9. In **Cloudflare endpoint**, enter the anycast address you received from your account team.
+10. _(Optional)_ **Tunnel health checks** are enabled by default. If you disable Tunnel health checks, your tunnels will appear 100% down in your <a href={props.tunnelHealthDash}>tunnel health dashboard</a> even when working. Cloudflare will keep sending traffic through the tunnel, without the means to detect if the tunnel goes down. You will have to set up your own system to detect down tunnels, as Cloudflare will not be able to warn you about down tunnels. Refer to <a href={props.tunnelHealthChecksPage}>Tunnel health checks</a> for more information.
+11. _(Optional)_ If you keep **Tunnel health checks** enabled, choose the <a href={props.updateHCFrequencyPage}>**Health check rate**</a> for your tunnel. Available options are _Low_, _Medium_ and _High_.
+12. _(Optional)_ The **Health check type** defaults to _Reply_ and to creating an ICMP reply. If your firewall drops this type of packet for assuming it is a type of attack, change this option to _Request_ which will create an ICMP request. Refer to <a href={props.tunnelHealthChecksPage}>Tunnel health checks</a> for more information.
+13. _(Optional)_ The **Health check direction** defaults to **{props.BiVsUniHealthCheck}** for {props.productName}. Refer to [Bidirectional vs unidirectional health checks](#bidirectional-vs-unidirectional-health-checks) for more details.
+14. _(Optional)_ **Health check target** is the customer end of the tunnel. This field is only visible when the **Health check direction** is set to _Unidirectional_.
+
+    :::note
+    IPsec tunnels will not function without a pre-shared key (PSK).
+    :::
+
+15. If you do not have a pre-shared key yet:
+
+    1. Select **Add pre-shared key later**.
+    2. _(Optional)_ We recommend you test your tunnel configuration before officially adding it. To test the tunnel, select **Test tunnels**.
+    3. Select **Add tunnels**.
+    4. The Cloudflare dashboard will load the list of tunnels you have configured. The IPsec tunnel you have just created will be listed with a warning in the form of a triangle to let you know it is not yet functional. Select **Edit**.
+    5. Choose **Generate a new pre-shared key** > **Update and generate a pre-shared key**. Save the key to a safe place, and select **Done**.
+
+16. If you already have a pre-shared key:
+
+    1. Select **Use my own pre-shared key**.
+    2. Paste your key in **Your pre-shared key**.
+    3. _(Optional)_ We recommend you test your tunnel before officially adding it. To test the tunnel, select **Test tunnels**.
+    4. Select **Add tunnels**.
+
+17. (Optional) Enable **Replay protection** if you have devices that do not support disabling it. Refer to <a href={props.antiReplayPagePath}>Anti-replay protection</a> for more information.
+
+</Details>
+
+</TabItem> <TabItem label="API">
+
+<Render file="account-id-api-key" product="networking-services" />
+
+<Details header="GRE tunnel">
+
+Create a `POST` request [using the API](/api/resources/magic_transit/subresources/gre_tunnels/methods/create/) to create a GRE tunnel.
+
+<APIRequest
+  path="/accounts/{account_id}/magic/gre_tunnels"
+  method="POST"
+  json={{
+		"name": "<TUNNEL_NAME>",
+		"description": "<TUNNEL_DESCRIPTION>",
+		"interface_address": "<INTERFACE_ADDRESS>",
+		"cloudflare_gre_endpoint": "<CLOUDFLARE_ENDPOINT>",
+		"customer_gre_endpoint": "<CUSTOMER_ENDPOINT>"
+  }}
+/>
+
+```json output
+{
+  "errors": [
+    {
+      "code": 1000,
+      "message": "message"
+    }
+  ],
+  "messages": [
+    {
+      "code": 1000,
+      "message": "message"
+    }
+  ],
+  "result": {
+    "gre_tunnels": [
+      {
+        "cloudflare_gre_endpoint": "<IP_ADDRESS>",
+        "customer_gre_endpoint": "<IP_ADDRESS>",
+        "interface_address": "<INTERFACE_CIDR>",
+        "name": "<TUNNEL_NAME>",
+        "description": "<TUNNEL_DESCRIPTION>",
+        "health_check": {
+          "direction": "unidirectional",
+          "enabled": true,
+          "rate": "low",
+          "type": "reply"
+        },
+        "mtu": 0,
+        "ttl": 0
+      }
+    ]
+  },
+  "success": true
+}
+```
+
+</Details>
+
+<Details header="IPsec tunnel">
+
+1. Create a `POST` request [using the API](/api/resources/magic_transit/subresources/ipsec_tunnels/methods/create/) to create an IPsec tunnel.
+
+	Note that in example below, replay protection is disabled by default. You can enable it with the flag `"replay_protection": true` for each IPsec tunnel, if the devices you use do not support disabling this feature. If you have already created IPsec tunnels, update them with a [`PUT` request](/api/resources/magic_transit/subresources/ipsec_tunnels/methods/update/). Refer to <a href={props.antiReplayPagePath}>Anti-replay protection</a> for more information on this topic.
+
+	<APIRequest
+		path="/accounts/{account_id}/magic/ipsec_tunnels"
+		method="POST"
+		json={{
+			"name": "<TUNNEL_NAME>",
+			"description": "<TUNNEL_DESCRIPTION>",
+			"interface_address": "<INTERFACE_ADDRESS>",
+			"cloudflare_endpoint": "<CLOUDFLARE_ENDPOINT>",
+			"customer_endpoint": "<CUSTOMER_ENDPOINT>"
+		}}
+	/>
+
+	```json output
+	{
+		"errors": [
+			{
+				"code": 1000,
+				"message": "message"
+			}
+		],
+		"messages": [
+			{
+				"code": 1000,
+				"message": "message"
+			}
+		],
+		"result": {
+			"ipsec_tunnels": [
+				{
+					"id": "<IPSEC_TUNNEL_ID>",
+					"interface_address": "<INTERFACE_CIDR>",
+					"name": "<TUNNEL_NAME>",
+					"cloudflare_endpoint": "<IP_ADDRESS>",
+					"customer_endpoint": "<IP_ADDRESS>",
+					"description": "<TUNNEL_DESCRIPTION>",
+					"health_check": {
+						"direction": "unidirectional",
+						"enabled": true,
+						"rate": "low",
+						"type": "reply"
+					},
+					"psk_metadata": {},
+					"replay_protection": false
+				}
+			]
+		},
+		"success": true
+	}
+	```
+
+	Take note of the tunnel `id` value. We will use it to generate a pre-shared key (PSK).
+
+2. Create a `POST` [request](/api/resources/magic_transit/subresources/ipsec_tunnels/methods/psk_generate/) to generate a PSK. Use the tunnel `id` value you received from the previous command.
+
+	<APIRequest
+		path="/accounts/{account_id}/magic/ipsec_tunnels/{ipsec_tunnel_id}/psk_generate"
+		method="POST"
+	/>
+
+	```json output
+	{
+		"result": {
+			"ipsec_id": "<IPSEC_ID>",
+			"ipsec_tunnel_id": "<IPSEC_TUNNEL_ID>",
+			"psk": "<PSK_CODE>",
+			"psk_metadata": {
+				"last_generated_on": "2025-03-13T14:28:47.054317925Z"
+			}
+		},
+		"success": true,
+		"errors": [],
+		"messages": []
+	}
+	```
+
+	Take note of your `psk` value.
+
+3. Create a `PUT` [request](/api/resources/magic_transit/subresources/ipsec_tunnels/methods/update/) to update your IPsec tunnel with the PSK.
+
+	<CURL
+		url="https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{ipsec_tunnel_id}"
+		method="PUT"
+		json={{
+			"psk": "<PSK_VALUE>"
+		}}
+	/>
+
+```json output
+{
+  "result": {
+    "modified": true,
+    "modified_ipsec_tunnel": {
+      "id": "<IPSEC_ID>",
+      "interface_address": "<IPSEC_CIDR>",
+      "created_on": "2025-03-13T14:28:21.139535Z",
+      "modified_on": "2025-03-13T14:33:26.09683Z",
+      "name": "<TUNNEL_NAME>",
+      "cloudflare_endpoint": "<IP_ADDRESS>",
+      "customer_endpoint": "<IP_ADDRESS>",
+      "remote_identities": {
+        "hex_id": "",
+        "fqdn_id": "",
+        "user_id": ""
+      },
+      "psk_metadata": {
+        "last_generated_on": "2025-03-13T14:28:47.054318Z"
+      },
+      "description": "<TUNNEL_DESCRIPTION>",
+      "health_check": {
+        "enabled": true,
+        "target": "",
+        "type": "reply",
+        "rate": "mid",
+        "direction": "unidirectional"
+      }
+    }
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+4. Use the `psk` value from step 3 to configure the IPsec tunnel on your equipment as well.
+
+</Details>
+
+<Details header="Configure bidirectional health checks">
+
+Bidirectional health checks are available for GRE and IPsec tunnels. {props.biVsUniHealthCheckDefaults}.
+
+You can change this setting via the API with `"bidirectional"` or `"unidirectional"`:
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{ipsec_tunnel_id}"
+	method="PUT"
+	json={{
+		"health_check":
+			{
+				"direction": "bidirectional"
+			}
+	}}
+/>
+
+```json output
+{
+  "result": {
+    "modified": true,
+    "modified_ipsec_tunnel": {
+      "id": "<IPSEC_ID>",
+      "interface_address": "<IPSEC_CIDR>",
+      "created_on": "2025-03-13T14:28:21.139535Z",
+      "modified_on": "2025-03-13T14:33:26.09683Z",
+      "name": "<TUNNEL_NAME>",
+      "cloudflare_endpoint": "<IP_ADDRESS>",
+      "customer_endpoint": "<IP_ADDRESS>",
+      "remote_identities": {
+        "hex_id": "",
+        "fqdn_id": "",
+        "user_id": ""
+      },
+      "psk_metadata": {
+        "last_generated_on": "2025-03-13T14:28:47.054318Z"
+      },
+      "description": "<TUNNEL_DESCRIPTION>",
+      "health_check": {
+        "enabled": true,
+        "target": "",
+        "type": "reply",
+        "rate": "mid",
+        "direction": "bidirectional"
+      }
+    }
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+</Details>
+
+</TabItem> </Tabs>
+
+## Bidirectional vs unidirectional health checks
+
+To check for tunnel health, Cloudflare sends a <a href={props.tunnelHealthChecksPage}>health check probe</a> consisting of ICMP (Internet Control Message Protocol) reply [packets](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) to your network. Cloudflare needs to receive these probes to know if your tunnel is healthy.
+
+Cloudflare defaults to bidirectional health checks for Magic WAN, and unidirectional health checks for Magic Transit (direct server return). However, routing unidirectional ICMP reply packets over the Internet to Cloudflare is sometimes subject to drops by intermediate network devices, such as stateful firewalls. Magic Transit customers with egress traffic can modify this setting to bidirectional.
+
+{ props.magicWord === "Magic Transit" && (
+  <>
+	<p>If you are a Magic Transit customer with egress traffic, refer to <a href="/magic-transit/reference/egress/" rel="noopener noreferrer">Magic Transit egress traffic</a> for more information on the technical aspects you need to consider to create a successful connection to Cloudflare.</p>
+  </>
+  )
+}
+
+### Legacy bidirectional health checks
+
+For customers using the legacy health check system with a public IP range, Cloudflare recommends:
+
+- Configuring the tunnel health check target IP address to one within the `172.64.240.252/30` prefix range.
+- Applying a policy-based route that matches [packets](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) with a source IP address equal to the configured tunnel health check target (for example `172.64.240.253/32`), and route them over the tunnel back to Cloudflare.

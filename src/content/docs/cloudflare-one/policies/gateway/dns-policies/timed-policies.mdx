@@ -50,9 +50,8 @@ If you [do not specify a time zone](#example-users-time-zone), Gateway will enab
 The following command creates a DNS policy to block `facebook.com` only on weekdays from 8:00 AM - 12:30 PM and 1:30 PM - 5:00 PM in the Chicago, USA time zone.
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --header "Content-Type: application/json" \
 --data '{
   "name": "office-no-facebook-policy",
@@ -77,9 +76,8 @@ Refer to [this table](https://en.wikipedia.org/wiki/List_of_tz_database_time_zon
 The following command creates a DNS policy to block `clockin.com` only on weekends in the time zone where the user is currently located.
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --header "Content-Type: application/json" \
 --data '{
   "name": "clock-in-policy",

@@ -34,7 +34,8 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           reporter: github-pr-review
-          fail_level: "error"
+          fail_level: error
+          filter_mode: nofilter
 
       - run: npm run format:core:check
       ## TODO: content formatting checks
@@ -56,3 +57,10 @@ jobs:
 
       - name: Tests
         run: npm run test
+
+      - name: Post PR CI failure comment
+        if: always()
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx tsx bin/post-pr-ci-failure-comment/index.ts

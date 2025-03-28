@@ -29,13 +29,13 @@ The integration of Access as a single sign-on provider for your Google Workspace
 
 3. Fill in the following information:
    - **Application**: _Google_.
-   - **Entity ID**: `google.com`
+   - **Entity ID**: Use the value provided to you by Google when [configuring your SAML SSO provider](https://saml-doc.okta.com/SAML_Docs/How-to-Enable-SAML-2.0-in-Google-Apps.html).
    - **Assertion Consumer Service URL**: `https://www.google.com/a/<your_domain.com>/acs`, where `<your_domain.com>` is your Google Workspace domain.
    - **Name ID Format**: _Email_.
 
 :::caution
 
-When you put your Google Workspace behind Access, users will not be able to log in using [Google](/cloudflare-one/identity/idp-integration/google/) or [Google Workspace](/cloudflare-one/identity/idp-integration/gsuite/) as an identity provider.
+When you put your Google Workspace behind Access, users will not be able to log in using [Google](/cloudflare-one/identity/idp-integration/google/) or [Google Workspace](/cloudflare-one/identity/idp-integration/google-workspace/) as an identity provider.
 :::
 
 4. [Create an Access policy](/cloudflare-one/policies/access/) for your application. For example, you could allow users with an `@your_domain.com` email address.

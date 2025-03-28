@@ -1,0 +1,31 @@
+---
+title: Request timeouts and retries with AI Gateway
+description: AI Gateway has added additional request handling, with request timeouts and request retries
+products:
+  - ai-gateway
+date: 2025-02-06T11:00:00Z
+---
+
+AI Gateway adds additional ways to handle requests - [Request Timeouts](/ai-gateway/configuration/request-handling/#request-timeouts) and [Request Retries](/ai-gateway/configuration/request-handling/#request-retries), making it easier to keep your applications responsive and reliable.
+
+Timeouts and retries can be used on both the [Universal Endpoint](/ai-gateway/providers/universal) or directly to a [supported provider](/ai-gateway/providers/).
+
+**Request timeouts**
+A [request timeout](/ai-gateway/configuration/request-handling/#request-timeouts) allows you to trigger [fallbacks](/ai-gateway/configuration/fallbacks/) or a retry if a provider takes too long to respond. 
+
+To set a request timeout directly to a provider, add a `cf-aig-request-timeout` header.
+
+```bash title="Provider-specific endpoint example" {4}
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/workers-ai/@cf/meta/llama-3.1-8b-instruct \
+ --header 'Authorization: Bearer {cf_api_token}' \
+ --header 'Content-Type: application/json' \
+ --header 'cf-aig-request-timeout: 5000'
+ --data '{"prompt": "What is Cloudflare?"}'
+```
+**Request retries**
+A [request retry](/ai-gateway/configuration/request-handling/#request-retries) automatically retries failed requests, so you can recover from temporary issues without intervening.
+
+To set up request retries directly to a provider, add the following headers:
+- cf-aig-max-attempts (number)
+- cf-aig-retry-delay (number)
+- cf-aig-backoff ("constant" | "linear" | "exponential) 

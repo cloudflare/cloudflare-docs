@@ -8,29 +8,14 @@ head:
     content: Network Interconnect and Magic Transit
 ---
 
-import { GlossaryTooltip } from "~/components";
+import { Render } from "~/components";
 
-Cloudflare Network Interconnect (CNI) allows you to connect your network infrastructure directly with Cloudflare - rather than using the public Internet - for a more reliable and secure experience. With CNI, you can bring Cloudflare's full suite of network functions to your physical network edge.
-
-Use Cloudflare Network Interconnect with Magic Transit to improve throughput and harden infrastructure to attack.
-
-## Guidelines
-
-When working with Magic Transit and CNI, there are a few guidelines you should follow.
-
-### Direct CNI
-
-With [Direct CNI](/network-interconnect/express-cni/) you can use the Cloudflare dashboard to provision a connection to Cloudflare in three minutes or less. This type of connection supports IP packets with 1,500 bytes, both for ingress and egress traffic.
-
-With Direct CNI you can also setup BGP peering between your network and Cloudflare.
-
-### Classic CNI
-
-With Classic CNI you need to [set up an onboarding process](/network-interconnect/classic-cni/) with Cloudflare. There is no self-serving option through the dashboard.
-
-With Classic CNI, you can create:
-
-- **GRE tunnels over CNI**: For ingress and egress traffic. To accommodate overhead from additional headers, you will need to set the MTU size of your GRE tunnel interface to 1,476 bytes and your MSS clamp to be 1,436 bytes. These are used to backhaul data from the data center where traffic is ingested - close to the end user - to the facility with the CNI link.
-- **CNI connections without GRE tunnels**: For ingress traffic from Cloudflare to customer device. There is no need to set <GlossaryTooltip term="maximum segment size (MSS)">MSS clamping</GlossaryTooltip>, as this supports IP packets with 1,500 bytes.
-
-For more information about Network Interconnect, refer to the [Cloudflare Network Interconnect documentation](/network-interconnect/).
+<Render
+  file="magic-cni"
+  product="networking-services"
+  params={{
+    magic: "Magic Transit",
+    productName: "Magic Transit",
+    legacyHCLink: "/magic-transit/how-to/configure-tunnels/#legacy-bidirectional-health-checks"
+  }}
+/>

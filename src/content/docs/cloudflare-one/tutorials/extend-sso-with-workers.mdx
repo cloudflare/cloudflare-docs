@@ -52,7 +52,7 @@ This approach allows you to:
 			product="workers"
 			params={{
 				category: "hello-world",
-				type: "Hello World Worker",
+				type: "Worker only",
 				lang: "JavaScript",
 			}}
 		/>
@@ -72,7 +72,7 @@ This approach allows you to:
       async fetch(request, env, ctx) {
         // The name of the cookie
         const COOKIE_NAME = "CF_Authorization";
-      const CF_GET_IDENTITY = "https://<your-team-name>.cloudflareaccess.com>/cdn-cgi/access/get-identity";
+      const CF_GET_IDENTITY = "https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/get-identity";
         const cookie = parse(request.headers.get("Cookie") || "");
         if (cookie[COOKIE_NAME] != null) {
         try {
@@ -185,7 +185,7 @@ Below is an example of a user identity that includes the `disk_encryption` and `
 
 ## 3. Route the Worker to your application
 
-In the `wrangler.toml / wrangler.json` file, [set up a route](/workers/configuration/routing/routes/) that maps the Worker to your Access application domain:
+In the [Wrangler configuration file](/workers/wrangler/configuration/), [set up a route](/workers/configuration/routing/routes/) that maps the Worker to your Access application domain:
 
 <WranglerConfig>
 

@@ -3,8 +3,6 @@ pcx_content_type: concept
 title: File sandboxing
 sidebar:
   order: 6
-banner:
-  content: The default global Cloudflare root certificate will expire on 2025-02-02. If you installed the default Cloudflare certificate before 2024-10-17, you must <a href="/cloudflare-one/connections/connect-devices/user-side-certificates/#generate-a-cloudflare-root-certificate">generate a new certificate</a> and activate it for your Zero Trust organization to avoid inspection errors.
 ---
 
 import { Render, Details } from "~/components";
@@ -83,4 +81,4 @@ Gateway will quarantine and scan the file, display an interstitial status page i
 
 ### Non-scannable files
 
-<Render file="gateway/nonscannable-files" />
+<Render file="gateway/nonscannable-files" params={{ fileSizeLimitMB: "100" }} />

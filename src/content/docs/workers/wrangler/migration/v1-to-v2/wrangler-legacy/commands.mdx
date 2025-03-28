@@ -45,7 +45,7 @@ Default values indicated by =value.
 
 ## init
 
-Create a skeleton `wrangler.toml / wrangler.json` file in an existing directory. This command can be used as an alternative to `generate` if you prefer to clone a template repository yourself or you already have a JavaScript project and would like to use Wrangler.
+Create a skeleton [Wrangler configuration file](/workers/wrangler/configuration/) in an existing directory. This command can be used as an alternative to `generate` if you prefer to clone a template repository yourself or you already have a JavaScript project and would like to use Wrangler.
 
 ```sh
 wrangler init [$NAME] [--type=$TYPE] [--site]
@@ -848,7 +848,7 @@ wrangler kv:key delete --binding= [--env=] [--preview] [--namespace-id=] "$KEY"
   - Perform on a specific environment specified as `$ENVIRONMENT_NAME`.
 
 - `--preview` optional
-  - Interact with a preview namespace instead of production. Pass this to use your `wrangler.toml / wrangler.json` file's `kv_namespaces.preview_id` instead of `kv_namespaces.id`
+  - Interact with a preview namespace instead of production. Pass this to use your Wrangler configuration file's `kv_namespaces.preview_id` instead of `kv_namespaces.id`
 
 ##### Usage
 
@@ -1007,7 +1007,7 @@ y
 
 ## Environment variables
 
-Wrangler supports any `wrangler.toml / wrangler.json` file keys passed in as environment variables. This works by passing in `CF_` + any uppercased TOML key. For example:
+Wrangler supports any [Wrangler configuration file](/workers/wrangler/configuration/) keys passed in as environment variables. This works by passing in `CF_` + any uppercased TOML key. For example:
 
 `CF_NAME=my-worker CF_ACCOUNT_ID=1234 wrangler dev`
 

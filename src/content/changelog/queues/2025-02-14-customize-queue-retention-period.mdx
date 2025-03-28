@@ -1,0 +1,19 @@
+---
+title: Customize queue message retention periods
+description: Customize the retention period for a queue, from a minimum of 60 seconds to a maximum of 14 days.
+products:
+  - queues
+date: 2025-02-14 12:00:00 UTC
+---
+
+You can now customize a queue's message retention period, from a minimum of 60 seconds to a maximum of 14 days. Previously, it was fixed to the default of 4 days.
+
+![Customize a queue's message retention period](~/assets/images/queues/customize-retention-period.png)
+
+You can customize the retention period on the settings page for your queue, or using Wrangler:
+
+```bash title="Update message retention period"
+$ wrangler queues update my-queue --message-retention-period-secs 600
+```
+
+This feature is available on all new and existing queues. If you haven't used Cloudflare Queues before, [get started with the Cloudflare Queues guide](/queues/get-started).

@@ -3,8 +3,6 @@ pcx_content_type: get-started
 title: User-side certificates
 sidebar:
   order: 2
-banner:
-  content: The default global Cloudflare root certificate will expire on 2025-02-02. If you installed the default Cloudflare certificate before 2024-10-17, you must <a href="/cloudflare-one/connections/connect-devices/user-side-certificates/#generate-a-cloudflare-root-certificate">generate a new certificate</a> and activate it for your Zero Trust organization to avoid inspection errors.
 ---
 
 import { Tabs, TabItem } from "~/components";
@@ -13,11 +11,10 @@ Advanced security features such as [HTTPS traffic inspection](/cloudflare-one/po
 
 Zero Trust [generates a unique root CA](#generate-a-cloudflare-root-certificate) for each account and deploys it across the Cloudflare global network. Alternatively, Enterprise users can upload and deploy their own [custom certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/custom-certificate/).
 
-:::caution[Default WARP certificate expiring on 2025-02-02]
+:::caution[Default certificate expired on 2025-02-02]
+The default Cloudflare certificate expired on 2025-02-02 at 16:05 UTC.
 
-The default Cloudflare certificate will expire on 2025-02-02.
-
-Review how this change will impact certificate propagation to your end-user devices and how to address browser issues in [Troubleshooting](/cloudflare-one/faq/troubleshooting/#as-of-february-2-2025-my-end-user-devices-browser-is-returning-a-your-connection-is-not-private-warning).
+Review how this change impacts certificate propagation to your end-user devices and how to address browser issues in [Troubleshooting](/cloudflare-one/faq/troubleshooting/#as-of-february-2-2025-my-end-user-devices-browser-is-returning-a-your-connection-is-not-private-warning).
 :::
 
 ## Certificate status
@@ -51,8 +48,8 @@ Send a `POST` request to the [Create Zero Trust certificate](/api/resources/zero
 
 ```sh
 curl --request POST \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/certificates \
---header "Authorization: Bearer <API_TOKEN>"
+https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/certificates \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
 The API will respond with the ID and contents of the new certificate.
@@ -88,8 +85,8 @@ Send a `POST` request to the [Activate a Zero Trust certificate](/api/resources/
 
 ```sh
 curl --request POST \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/certificates/{certificate_id}/activate \
---header "Authorization: Bearer <API_TOKEN>"
+https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/certificates/$CERTIFICATE_ID/activate \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
 </TabItem> </Tabs>
@@ -113,13 +110,13 @@ Send a `PUT` request to the [Update Zero Trust account configuration](/api/resou
 
 ```sh
 curl --request PUT \
-'https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/configuration' \
+"https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/configuration" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
 --data '{
   "settings": {
     "certificate": {
-      "id": "<CERTIFICATE_ID>",
+      "id": "$CERTIFICATE_ID",
       "in_use": true
     }
   }

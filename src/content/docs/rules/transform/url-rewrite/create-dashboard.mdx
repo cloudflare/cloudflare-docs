@@ -8,6 +8,8 @@ head:
     content: Create a rewrite URL rule in the dashboard
 ---
 
+import { Render } from "~/components";
+
 Refer to the [Rules examples gallery](/rules/transform/examples/?operation=Rewrite+URL) for examples of rule definitions.
 
 To create a rule:
@@ -16,7 +18,7 @@ To create a rule:
 
 2. Go to **Rules** > **Overview**.
 
-3. Next to **URL Rewrite Rules**, select **Create rule**.
+3. Select **Create rule** > **URL Rewrite Rule**.
 
 4. (Optional) Select one of the rule templates that address common use cases. Then, review and adjust the proposed rule configuration.
 
@@ -50,7 +52,7 @@ To create a rule:
 
 9. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
 
-If you choose to deploy your rewrite URL rule, the new rule will be enabled. If you save the rule as a draft, the new rule will be disabled.
+   <Render file="rules-creation-dash-dns-popup" />
 
 ## Wildcard pattern parameters
 
@@ -70,6 +72,6 @@ Refer to [URL rewrite parameters](/rules/transform/url-rewrite/reference/paramet
 
 The **Request URL** value is only used to match the incoming request with a rule. It will not be used for capturing URL patterns for rewrites. If you are matching the URL path or query string in **Target path** or **Target query**, respectively, make sure that the **Request URL** pattern also matches the incoming request, or else the rule will not trigger.
 
-To validate rewrite URL rule matches, use [Cloudflare Trace](/fundamentals/basic-tasks/trace-request/). To validate rewritten URLs, check your origin server.
+To validate rewrite URL rule matches, use [Cloudflare Trace](/fundamentals/trace-request/). To validate rewritten URLs, check your origin server.
 
 :::

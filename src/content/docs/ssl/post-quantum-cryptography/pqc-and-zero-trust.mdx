@@ -1,0 +1,56 @@
+---
+pcx_content_type: reference
+title: Post-quantum cryptography in Cloudflare's Zero Trust platform
+sidebar:
+  order: 4
+  label: PQC and Zero Trust
+---
+
+The [Cloudflare Zero Trust platform](/cloudflare-one/) replaces legacy corporate security perimeters with Cloudflare's global network, making access to the Internet and to corporate resources faster and safer for teams around the world.
+
+Refer to the sections below to learn about the use cases supported by the Zero Trust platform in this [first phase of quantum readiness](/ssl/post-quantum-cryptography/).
+
+## Agentless Cloudflare Access
+
+You can use [Cloudflare Access](/cloudflare-one/policies/access/) [self-hosted applications](/cloudflare-one/applications/configure-apps/self-hosted-public-app/) in an agentless configuration to protect your organization's Internet traffic to internal web applications. Refer to the [learning path](/learning-paths/zero-trust-web-access/initial-setup/) for detailed guidance.
+
+Even if the applications themselves have not yet migrated to post-quantum (PQ) cryptography, they will be protected against quantum threats.
+
+![Diagram of how post-quantum cryptography works in clientless connections to Access applications](~/assets/images/ssl/pqc-clientless-access.png).
+
+Here is how it works today:
+
+**1. PQ connection via browser**
+
+As long as the end-user uses a modern web browser that supports post-quantum key agreement (for example, Chrome, Edge, or Firefox), the connection from the device to Cloudflare's network is secured via TLS 1.3 with post-quantum key agreement.
+
+**2. PQ within Cloudflare's global network**
+
+If the user and origin server are geographically distant, then the user's traffic will enter Cloudflare's global network in one geographic location (such as Frankfurt), and exit at another (such as San Francisco). As this traffic moves from one data center to another inside Cloudflare's global network, these hops through the network are secured via TLS 1.3 with post-quantum key agreement.
+
+**3. PQ Cloudflare Tunnel**
+
+Customers establish a [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) from their data center or public cloud — where their corporate web application is hosted — to Cloudflare's network. This tunnel is secured using TLS 1.3 with post-quantum key agreement, safeguarding it from [harvest now, decrypt later attacks](https://en.wikipedia.org/wiki/Harvest_now,_decrypt_later).
+
+Putting it together, Cloudflare Access can provide end-to-end quantum safety for accessing corporate HTTPS applications, without requiring customers to upgrade the security of corporate web applications.
+
+## Secure Web Gateway
+
+A [secure web gateway (SWG)](https://www.cloudflare.com/learning/access-management/what-is-a-secure-web-gateway/) is used to secure access to third-party websites on the public Internet by intercepting and inspecting TLS traffic.
+
+[Cloudflare Gateway](/cloudflare-one/policies/gateway/http-policies/) is now a [quantum-safe SWG for HTTPS traffic](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#post-quantum-support). As long as the third-party website that is being inspected supports post-quantum key agreement, then Cloudflare's SWG also supports post-quantum key agreement. This is true regardless of the on-ramp that you use to get to Cloudflare's network, and only requires the use of a browser that supports post-quantum key agreement.
+
+![Diagram of how post-quantum cryptography works with Cloudflare's Secure Web Gateway](~/assets/images/ssl/pqc-secure-web-gateway.png).
+
+Cloudflare Gateway's HTTPS filtering feature involves two post-quantum TLS connections, as follows:
+
+**1. PQ connection via browsers**
+
+A TLS connection is initiated from the user's browser to a data center in Cloudflare's network that performs the TLS inspection. As long as the end-user uses a modern web browser that supports post-quantum key agreement (for example, Chrome, Edge, or Firefox), this connection is secured by TLS 1.3 with post-quantum key agreement.
+
+**2. PQ connection to the origin server**
+
+A TLS connection is initiated from a data center in Cloudflare's network to the origin server, which is typically controlled by a third party. The connection from Cloudflare's SWG currently supports post-quantum key agreement, as long as the third-party's origin server also already supports post-quantum key agreement. You can test this out by using https://pq.cloudflareresearch.com/ as your third-party origin server.
+
+Putting it together, Cloudflare Gateway is quantum-ready to support secure access to any third-party website that is quantum ready today or in the future.
+

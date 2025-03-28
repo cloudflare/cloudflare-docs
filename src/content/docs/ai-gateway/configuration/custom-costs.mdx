@@ -32,7 +32,7 @@ In this example, if you have a negotiated price of $1 per million input tokens a
 
 ```bash title="Request with custom cost"
 curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
-  --header 'Authorization: Bearer $TOKEN' \
+  --header "Authorization: Bearer $TOKEN" \
   --header 'Content-Type: application/json' \
   --header 'cf-aig-custom-cost: {"per_token_in":0.000001,"per_token_out":0.000002}' \
   --data ' {
@@ -45,3 +45,8 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/
         ]
       }'
 ```
+
+:::note
+
+If a response is served from cache (cache hit), the cost is always `0`, even if you specified a custom cost. Custom costs only apply when the request reaches the model provider.
+:::
