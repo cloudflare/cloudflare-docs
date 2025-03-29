@@ -52,7 +52,7 @@ const props = {
 	<div>
 		<h2>{note.data.title}</h2>
 		<div>
-			<time class="font-bold" datetime={format(note.data.date, "yyyy-MM-dd'T'HH:mm:ssXXX")}
+			<time class="font-bold" datetime={note.data.date}
 				>{format(note.data.date, "MMM dd, yyyy")}, {
 					format(note.data.date, "hh:mm a")
 				}</time
