@@ -1752,6 +1752,7 @@
 /cloudflare-one/tutorials/zsh-env-var/ /cloudflare-one/tutorials/cli/ 301
 
 ### DYNAMIC REDIRECTS ###
+/*/index.html.md /:splat/index.md 301
 /api-next/* /api/:splat 301
 /changelog-next/* /changelog/:splat 301
 /browser-rendering/quick-actions-rest-api/* /browser-rendering/rest-api/:splat 301

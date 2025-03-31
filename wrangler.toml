@@ -6,7 +6,7 @@ compatibility_flags = ["nodejs_compat"]
 main = "./worker/index.ts"
 
 workers_dev = true
-route = { pattern = "developers.cloudflare.com/*", zone_name = "developers.cloudflare.com"}
+route = { pattern = "developers.cloudflare.com/*", zone_name = "developers.cloudflare.com" }
 
 rules = [
 	{ type = "Text", globs = ["**/__redirects"], fallthrough = true },
