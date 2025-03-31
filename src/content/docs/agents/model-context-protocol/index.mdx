@@ -1,0 +1,31 @@
+---
+title: Model Context Protocol (MCP)
+pcx_content_type: navigation
+sidebar:
+  order: 4
+  group:
+    hideIndex: false
+---
+
+You can build and deploy [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) servers on Cloudflare.
+
+## What is the Model Context Protocol (MCP)?
+
+[Model Context Protocol (MCP)](https://modelcontextprotocol.io) is an open standard that connects AI systems with external applications. Think of MCP like a USB-C port for AI applications. Just as USB-C provides a standardized way to connect your devices to various accessories, MCP provides a standardized way to connect AI agents to different services.
+
+### MCP Terminology
+
+- **MCP Hosts**: AI assistants (like [Claude](http://claude.ai) or [Cursor](http://cursor.com)), AI agents, or applications that need to access external capabilities.
+- **MCP Clients**: Clients embedded within the MCP hosts that connect to MCP servers and invoke tools. Each MCP client instance has a single connection to an MCP server.
+- **MCP Servers**: Applications that expose [tools](/agents/model-context-protocol/tools/), [prompts](https://modelcontextprotocol.io/docs/concepts/prompts), and [resources](https://modelcontextprotocol.io/docs/concepts/resources) that MCP clients can use.
+
+### Remote vs. local MCP connections
+
+The MCP standard supports two modes of operation:
+
+- **Remote MCP connections**: MCP clients connect to MCP servers over the Internet, establishing a [long-lived connection using HTTP and Server-Sent Events (SSE)](/agents/model-context-protocol/transport/), and authorizing the MCP client access to resources on the user's account using [OAuth](/agents/model-context-protocol/authorization/).
+- **Local MCP connections**: MCP clients connect to MCP servers on the same machine, using [stdio](https://spec.modelcontextprotocol.io/specification/draft/basic/transports/#stdio) as a local transport method.
+
+### Get Started
+
+Go to the [Getting Started](/agents/guides/remote-mcp-server/) guide to learn how to build and deploy your first remote MCP server to Cloudflare.

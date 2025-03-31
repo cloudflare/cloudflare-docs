@@ -17,7 +17,3 @@ meta:
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/security-center
-
-externals:
-  - title: Cloudflare homepage
-    url: https://cloudflare.com

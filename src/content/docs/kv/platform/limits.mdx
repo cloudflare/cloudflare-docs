@@ -10,22 +10,22 @@ sidebar:
 
 import { Render } from "~/components"
 
-| Feature                      | Free                  | Paid         |
-| ---------------------------- | --------------------- | ------------ |
-| Reads                        | 100,000 reads per day | Unlimited    |
-| Writes to different keys     | 1,000 writes per day  | Unlimited    |
-| Writes to same key           | 1 per second          | 1 per second |
-| Operations/worker invocation | 1000                  | 1000         |
-| Namespaces                   | 1000                  | 1000         |
-| Storage/account              | 1 GB                  | Unlimited    |
-| Storage/namespace            | 1 GB                  | Unlimited    |
-| Keys/namespace               | Unlimited             | Unlimited    |
-| Key size                     | 512 bytes             | 512 bytes    |
-| Key metadata                 | 1024 bytes            | 1024 bytes   |
-| Value size                   | 25 MiB                | 25 MiB       |
+| Feature                           | Free                  | Paid         |
+| --------------------------------- | --------------------- | ------------ |
+| Reads                             | 100,000 reads per day | Unlimited    |
+| Writes to different keys          | 1,000 writes per day  | Unlimited    |
+| Writes to same key                | 1 per second          | 1 per second |
+| Operations/Worker invocation [^1] | 1000                  | 1000         |
+| Namespaces                        | 1000                  | 1000         |
+| Storage/account                   | 1 GB                  | Unlimited    |
+| Storage/namespace                 | 1 GB                  | Unlimited    |
+| Keys/namespace                    | Unlimited             | Unlimited    |
+| Key size                          | 512 bytes             | 512 bytes    |
+| Key metadata                      | 1024 bytes            | 1024 bytes   |
+| Value size                        | 25 MiB                | 25 MiB       |
 | Minimum [`cacheTtl`](/kv/api/read-key-value-pairs/#cachettl-parameter)         | 60 seconds            | 60 seconds   |
 
-
+[^1]: Within a single invocation, a Worker can make up to 1,000 operations to external services (for example, 500 Workers KV reads and 500 R2 reads).
 
 <Render file="limits_increase" product="workers" />
 

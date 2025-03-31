@@ -1,7 +1,6 @@
 ---
 updated: 2023-03-27
 difficulty: Intermediate
-content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Generate YouTube thumbnails with Workers and Cloudflare Image Resizing
 products:
@@ -369,7 +368,7 @@ Create a Worker to serve the image you uploaded to Images by running:
 	product="workers"
 	params={{
 		category: "hello-world",
-		type: "Hello World Worker",
+		type: "Worker only",
 		lang: "JavaScript",
 	}}
 />
@@ -497,8 +496,6 @@ fetch(imageURL, {
 Image transformations can only be tested when you deploy your Worker.
 
 To deploy your Worker, open your Wrangler file and update the `name` key with your project's name. Below is an example with this tutorial's project name:
-
-
 
 <WranglerConfig>
 

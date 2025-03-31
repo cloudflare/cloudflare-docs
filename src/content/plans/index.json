@@ -1770,6 +1770,15 @@
 					"pro": "No",
 					"biz": "One field only",
 					"ent": "Yes"
+				},
+				"g_fw_for_ai": {
+					"title": "Firewall for AI (beta)",
+					"summary": "Enterprise-only",
+					"link": "/waf/detections/firewall-for-ai/",
+					"free": "No",
+					"pro": "No",
+					"biz": "No",
+					"ent": "Yes"
 				}
 			}
 		},
@@ -2046,14 +2055,8 @@
 				"widgets": {
 					"title": "Number of widgets",
 					"link": "/turnstile/concepts/widget/",
-					"free": "10 widgets",
+					"free": "20 widgets",
 					"ent": "Unlimited"
-				},
-				"modes": {
-					"title": "Interactivity modes",
-					"link": "/turnstile/get-started/client-side-rendering/#appearance-modes",
-					"free": "Managed, Invisible, Interactive",
-					"ent": "Managed, Invisible, Interactive"
 				},
 				"offlabel": {
 					"title": "Offlabel (remove Cloudflare branding)",
@@ -2069,13 +2072,13 @@
 				"hostname_validation": {
 					"title": "Hostname validation",
 					"link": "/turnstile/concepts/hostname-management/",
-					"free": "10 hostnames per widget",
+					"free": "15 hostnames per widget",
 					"ent": "Maximum of 200 hostnames per widget. <br> The `any hostname` entitlement removes hostname as a requirement and allows you to use the widget anywhere."
 				},
 				"graphql_analytics": {
 					"title": "Analytics time window",
 					"link": "/turnstile/turnstile-analytics/",
-					"free": "30 days maximum",
+					"free": "7 days maximum",
 					"ent": "30 days maximum"
 				},
 				"ephemeral_ids": {
@@ -2482,11 +2485,11 @@
 				},
 				"quantity": {
 					"title": "Certificates included",
-					"free": 0,
-					"pro": 0,
-					"pro_plus": 1,
-					"biz": "1 (Modern)\n1 (Legacy)",
-					"ent": "1 (Modern) (can purchase more)\n1 (Legacy) (can purchase more)"
+					"free": "0",
+					"pro": "0",
+					"pro_plus": "1",
+					"biz": "1 Modern and 1 Legacy",
+					"ent": "1 Modern (can purchase more) and 1 Legacy (can purchase more)"
 				}
 			}
 		},
@@ -2592,6 +2595,13 @@
 					"pro": "Yes",
 					"biz": "Yes",
 					"ent": "Yes"
+				},
+				"per_hostname": {
+					"title": "Per-hostname",
+					"free": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
+					"pro": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
+					"biz": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
+					"ent": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)"
 				}
 			}
 		},
@@ -2628,17 +2638,17 @@
 				"b_initial_quota": {
 					"title": "Hostnames included",
 					"summary": "Varies",
-					"free": 100,
-					"pro": 100,
-					"biz": 100,
-					"ent": 0
+					"free": "100",
+					"pro": "100",
+					"biz": "100",
+					"ent": "0"
 				},
 				"c_max_hostnames": {
 					"title": "Max hostnames",
-					"free": 5000,
-					"pro": 5000,
-					"biz": 5000,
-					"ent": "Unlimited, but contact sales if using over 5000."
+					"free": "5,000",
+					"pro": "5,000",
+					"biz": "5,000",
+					"ent": "Unlimited, but contact sales if using over 5,000."
 				},
 				"custom_analytics": {
 					"title": "[Custom analytics](/cloudflare-for-platforms/cloudflare-for-saas/hostname-analytics/)",
@@ -2812,6 +2822,22 @@
 					"pro": "Yes",
 					"biz": "Yes",
 					"ent": "Yes"
+				}
+			}
+		},
+		"custom_cipher_suites": {
+			"title": "Custom cipher suites",
+			"link": "/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/",
+			"paid_add_on": true,
+			"paid_add_on_plans": ["free", "pro", "biz", "ent"],
+			"properties": {
+				"availability": {
+					"title": "Availability",
+					"summary": "Custom cipher suites are available for domains that have purchased [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) and are currently using a [full DNS setup](/dns/zone-setups/full-setup/).",
+					"free": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
+					"pro": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
+					"biz": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
+					"ent": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)"
 				}
 			}
 		},

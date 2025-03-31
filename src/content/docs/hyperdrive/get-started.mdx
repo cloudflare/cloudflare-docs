@@ -1,5 +1,5 @@
 ---
-title: Get started
+title: Getting started
 pcx_content_type: get-started
 sidebar:
   order: 2
@@ -11,7 +11,7 @@ Hyperdrive accelerates access to your existing databases from Cloudflare Workers
 
 By maintaining a connection pool to your database within Cloudflare's network, Hyperdrive reduces seven round-trips to your database before you can even send a query: the TCP handshake (1x), TLS negotiation (3x), and database authentication (3x).
 
-Hyperdrive understands the difference between read and write queries to your database, and can cache the most common read queries, improving performance and reducing load on your origin database.
+Hyperdrive understands the difference between read and write queries to your database, and caches the most common read queries, improving performance and reducing load on your origin database.
 
 This guide will instruct you through:
 
@@ -64,7 +64,7 @@ Create a new project named `hyperdrive-tutorial` by running:
 	product="workers"
 	params={{
 		category: "hello-world",
-		type: "Hello World Worker",
+		type: "Worker only",
 		lang: "TypeScript",
 	}}
 />
@@ -125,22 +125,26 @@ To create a Hyperdrive connection, run the `wrangler` command, replacing the pla
 npx wrangler hyperdrive create <YOUR_CONFIG_NAME> --connection-string="postgres://user:password@HOSTNAME_OR_IP_ADDRESS:PORT/database_name"
 ```
 
+:::note[Manage caching]
+If you wish to disable caching, pass the flag `--caching-disabled`.
+
+Alternatively, you can use the `--max-age` flag to specify the maximum duration (in seconds) for which items should persist in the cache, before they are evicted. Default value is 60 seconds.
+
+Refer to [Hyperdrive Wrangler commands](/hyperdrive/reference/wrangler-commands/) for more information.
+:::
+
 If successful, the command will output your new Hyperdrive configuration:
 
 ```json
 {
-	"id": "<example id: 57b7076f58be42419276f058a8968187>",
-	"name": "YOUR_CONFIG_NAME",
-	"origin": {
-		"host": "YOUR_DATABASE_HOST",
-		"port": 5432,
-		"database": "DATABASE",
-		"user": "DATABASE_USER"
-	},
-	"caching": {
-		"disabled": false
-	}
+  "hyperdrive": [
+    {
+      "binding": "HYPERDRIVE",
+			"id": "<example id: 57b7076f58be42419276f058a8968187>"
+    }
+  ]
 }
+
 ```
 
 Copy the `id` field: you will use this in the next step to make Hyperdrive accessible from your Worker script.
@@ -150,6 +154,7 @@ Copy the `id` field: you will use this in the next step to make Hyperdrive acces
 Hyperdrive will attempt to connect to your database with the provided credentials to verify they are correct before creating a configuration. If you encounter an error when attempting to connect, refer to Hyperdrive's [troubleshooting documentation](/hyperdrive/observability/troubleshooting/) to debug possible causes.
 
 :::
+
 
 ## 4. Bind your Worker to Hyperdrive
 

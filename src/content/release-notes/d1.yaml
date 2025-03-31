@@ -1,5 +1,5 @@
 ---
-link: "/d1/platform/changelog/"
+link: "/d1/platform/release-notes/"
 productName: D1
 productLink: "/d1/"
 productArea: Developer platform
@@ -44,7 +44,7 @@ entries:
   - publish_date: "2024-08-23"
     title: D1 alpha databases have stopped accepting SQL queries
     description: |-
-      Following the [deprecation warning](/d1/platform/changelog/#2024-04-30) on 2024-04-30, D1 alpha databases have stopped accepting queries (you are still able to create and retrieve backups).
+      Following the [deprecation warning](/d1/platform/release-notes/#2024-04-30) on 2024-04-30, D1 alpha databases have stopped accepting queries (you are still able to create and retrieve backups).
 
       Requests to D1 alpha databases now respond with a HTTP 400 error, containing the following text:
 
@@ -69,7 +69,7 @@ entries:
   - publish_date: "2024-04-30"
     title: D1 alpha databases will stop accepting live SQL queries on August 15, 2024
     description: |-
-      Previously [deprecated alpha](/d1/platform/changelog/#2024-04-05) D1 databases need to be migrated by August 15, 2024 to accept new queries.
+      Previously [deprecated alpha](/d1/platform/release-notes/#2024-04-05) D1 databases need to be migrated by August 15, 2024 to accept new queries.
 
       Refer to [alpha database migration guide](/d1/platform/alpha-migration/) to migrate to the new, generally available, database architecture.
 
@@ -146,7 +146,7 @@ entries:
     description: |-
       Databases using D1's legacy alpha backend will no longer run automated [hourly backups](/d1/reference/backups/). You may still choose to take manual backups of these databases.
 
-      The D1 team recommends moving to D1's new [production backend](/d1/platform/changelog/#the-d1-public-beta-is-here), which will require you to export and import your existing data. D1's production backend is faster than the original alpha backend. The new backend also supports [Time Travel](/d1/reference/time-travel/), which allows you to restore your database to any minute in the past 30 days without relying on hourly or manual snapshots.
+      The D1 team recommends moving to D1's new [production backend](/d1/platform/release-notes/#2023-09-28), which will require you to export and import your existing data. D1's production backend is faster than the original alpha backend. The new backend also supports [Time Travel](/d1/reference/time-travel/), which allows you to restore your database to any minute in the past 30 days without relying on hourly or manual snapshots.
 
   - publish_date: "2023-10-03"
     title: Create up to 50,000 D1 databases
@@ -167,7 +167,7 @@ entries:
       * Developers with a Workers Paid plan now have a 2 GB per-database limit (up from 500 MB) and can create 25 databases per account (up from 10). These limits will continue to increase automatically during the public beta.
       * Developers with a Workers Free plan retain the 500 MB per-database limit and can create up to 10 databases per account.
 
-      Databases must be using D1's [new storage subsystem](/d1/platform/changelog/#new-default-storage-subsystem) to benefit from the increased database limits.
+      Databases must be using D1's [new storage subsystem](/d1/platform/release-notes/#2023-07-27) to benefit from the increased database limits.
 
       Read the [announcement blog](https://blog.cloudflare.com/d1-open-beta-is-here/) for more details about what is new in the beta and what is coming in the future for D1.
 
@@ -200,7 +200,7 @@ entries:
   - publish_date: "2023-08-01"
     title: Per-database limit now 500 MB
     description: |-
-      Databases using D1's [new storage subsystem](/d1/platform/changelog/#new-default-storage-subsystem) can now grow to 500 MB each, up from the previous 100 MB limit. This applies to both existing and newly created databases.
+      Databases using D1's [new storage subsystem](/d1/platform/release-notes/#2023-07-27) can now grow to 500 MB each, up from the previous 100 MB limit. This applies to both existing and newly created databases.
 
       Refer to [Limits](/d1/platform/limits/) to learn about D1's limits.
   - publish_date: "2023-07-27"

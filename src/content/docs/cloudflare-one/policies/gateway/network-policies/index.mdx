@@ -26,6 +26,8 @@ A network policy consists of an **Action** as well as a logical expression that 
 	params={{ type: "query", example: "Source IP", example2: "Resolved IP" }}
 />
 
+<Render file="gateway/terraform-precedence-warning" product="cloudflare-one" />
+
 ## Actions
 
 Like actions in DNS and HTTP policies, actions in network policies define which decision you want to apply to a given set of elements. You can assign one action per policy.
@@ -38,7 +40,7 @@ API value: `allow`
 
 **Traffic**
 
-- [All Access Private Apps](#all-access-private-apps)
+- [All Access Private Apps](#all-access-private-app-destinations)
 - [All Access App Targets](#all-access-app-targets)
 - [Application](#application)
 - [Content Categories](#content-categories)
@@ -177,7 +179,7 @@ Policies with Block actions block network traffic from reaching certain IPs or p
 
 #### WARP client block notifications
 
-<Render file="gateway/client-notifications" />
+<Render file="gateway/client-notifications-os" product="cloudflare-one" />
 
 ### Network Override
 

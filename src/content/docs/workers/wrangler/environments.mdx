@@ -2,38 +2,37 @@
 pcx_content_type: concept
 title: Environments
 head: []
-description: Deploy the same Worker application with different configuration for
-  each environment.
+description: Use environments to create different configurations for the same Worker application.
 ---
 
 import { WranglerConfig } from "~/components";
 
-## Background
-
-Wrangler allows you to deploy the same Worker application with different configuration for each environment. You must configure environments in your Worker application's Wrangler file.
+Wrangler allows you to use environments to create different configurations for the same Worker application. Environments are configured in the Worker's [Wrangler configuration file](/workers/wrangler/configuration/).
+There is a default (top-level) environment and you can create named environments that provide environment-specific configuration.
 
 Review the following environments flow:
 
-1. You have created a Worker application named `my-worker`.
-2. You create an environment, for example, `dev`, in the Worker's [Wrangler configuration file](/workers/wrangler/configuration/).
-3. In the Wrangler configuration file, you configure the `dev` environment by [adding bindings](/workers/runtime-apis/bindings/) and/or [routes](/workers/configuration/routing/routes/).
-4. You deploy the Worker using `npx wrangler deploy -e dev`.
-5. In the background, Wrangler creates a new Worker named `my-worker-dev`.
-6. You can now change your `my-worker` Worker code and configuration, and choose which environment to deploy your changes to.
+1. Create a Worker, named `my-worker` for example.
+2. Create an environment, for example `dev`, in the Worker's [Wrangler configuration file](/workers/wrangler/configuration/), by adding a `[env.<ENV_NAME>]` section.
 
-Environments are used with the `--env` or `-e` flag on `wrangler dev`, `npx wrangler deploy`, and `wrangler secret`.
+<WranglerConfig>
 
-## Configuration
+```json
+{
+	"name": "my-worker",
+	"env": {
+		"<ENV_NAME>": {
+			// environment-specific configuration goes here
+		}
+	}
+}
+```
 
-To create an environment:
+</WranglerConfig>
 
-1. Open your Worker's Wrangler file.
-2. Add `[env.<NAME>]` and change `<NAME>` to the desired name of your environment.
-3. Repeat step 2 to create multiple environments.
+3. You can configure the `dev` environment with different values to the top-level environment. Refer [here](/workers/wrangler/configuration/#environments) for how different options are inherited - or not inherited - between environments.
 
-Be careful when naming your environments that they do not contain sensitive information, such as, `migrating-service-from-company1-to-company2` or `company1-acquisition-load-test`.
-
-Review the layout of an example `[env.dev]` environment that sets up a custom `dev.example.com` route:
+For example, to set a different route for a Worker in the `dev` environment:
 
 <WranglerConfig>
 
@@ -46,22 +45,20 @@ route = "dev.example.com"
 ```
 
 </WranglerConfig>
+4. Environments are used with the `--env` or `-e` flag on Wrangler commands. For example, you can develop the Worker in the `dev` environment by running `npx wrangler dev -e=dev`, and deploy it with `npx wrangler deploy -e=dev`.
 
-You cannot specify multiple environments with the same name.
+:::note
 
-Wrangler appends the environment name to the top-level name to deploy a Worker. For example, a Worker project named `my-worker` with an environment `[env.dev]` would deploy a Worker named `my-worker-dev`.
-
-After you have configured your environment, run `npx wrangler deploy` in your Worker project directory for the changes to take effect.
+Cloudflare effectively creates a new Worker for you when you create a Worker with an environment. Wrangler appends the environment name to the top-level name. For example, a Worker project named `my-worker` with an environment `dev` would deploy a Worker named `my-worker-dev`. You must use this name when referencing a Worker in a particular environment, for example in a [service binding](/workers/wrangler/configuration/#service-bindings).
+:::
 
 ## Non-inheritable keys and environments
 
 [Non-inheritable keys](/workers/wrangler/configuration/#non-inheritable-keys) are configurable at the top-level, but cannot be inherited by environments and must be specified for each environment.
 
-[Bindings](/workers/runtime-apis/bindings/) and [environment variables](/workers/configuration/environment-variables/) must be specified per each [environment](/workers/wrangler/environments/) in your [Wrangler configuration file](/workers/wrangler/configuration/).
+For example, [bindings](/workers/runtime-apis/bindings/) and [environment variables](/workers/configuration/environment-variables/) are non-inheritable, and must be specified per [environment](/workers/wrangler/environments/) in your [Wrangler configuration file](/workers/wrangler/configuration/).
 
 Review the following example Wrangler file:
-
-
 
 <WranglerConfig>
 
@@ -85,7 +82,41 @@ kv_namespaces = [
 
 </WranglerConfig>
 
-You may assign environment-specific [secrets](/workers/configuration/secrets/) by running the command [`wrangler secret put <KEY> -env`](/workers/wrangler/commands/#put).
+### Service bindings
+
+To use a [service binding](/workers/wrangler/configuration/#service-bindings) that targets a Worker in a specific environment, you need to append the environment name to the target Worker name in the `service` field. This should be in the format `<worker-name>-<environment-name>`.
+In the example below, we have two Workers, both with a `staging` environment. `worker-b` has a service binding to `worker-a`. Note how the `service` field in the `staging` environment points to `worker-a-staging`, whereas the top-level service binding points to `worker-a`.
+
+<WranglerConfig>
+
+```toml
+name = "worker-a"
+
+vars = { FOO = "<top-level-var>" }
+[env.staging.vars]
+FOO = "<staging-var>"
+```
+
+</WranglerConfig>
+
+<WranglerConfig>
+
+```toml
+name = "worker-b"
+
+services = { binding = "<BINDING_NAME>", service = "worker-a" }
+
+# Note how `service = "worker-a-staging"`
+env.staging.service ={ binding = "<BINDING_NAME>", service = "worker-a-staging" }
+```
+
+</WranglerConfig>
+
+### Secrets
+
+You may assign environment-specific [secrets](/workers/configuration/secrets/) by running the command [`wrangler secret put <KEY> -env`](/workers/wrangler/commands/#put). You can also create `dotenv` type files named `.dev.vars.<environment-name>`.
+
+Like other environment variables, secrets are [non-inheritable](/workers/wrangler/configuration/#non-inheritable-keys) and must be defined per environment.
 
 ---
 
@@ -94,8 +125,6 @@ You may assign environment-specific [secrets](/workers/configuration/secrets/) b
 ### Staging and production environments
 
 The following Wrangler file adds two environments, `[env.staging]` and `[env.production]`, to the Wrangler file. If you are deploying to a [Custom Domain](/workers/configuration/routing/custom-domains/) or [route](/workers/configuration/routing/routes/), you must provide a [`route` or `routes` key](/workers/wrangler/configuration/) for each environment.
-
-
 
 <WranglerConfig>
 
@@ -118,7 +147,7 @@ routes = [
 
 </WranglerConfig>
 
-In order to use environments with this configuration, you can pass the name of the environment via the `--env` flag.
+You can pass the name of the environment via the `--env` flag to run commands in a specific environment.
 
 With this configuration, Wrangler will behave in the following manner:
 
@@ -168,8 +197,6 @@ if (ENVIRONMENT === "staging") {
 
 To deploy your code to your `*.workers.dev` subdomain, include `workers_dev = true` in the desired environment. Your Wrangler file may look like this:
 
-
-
 <WranglerConfig>
 
 ```toml
@@ -206,6 +233,6 @@ Published my-worker
 
 :::caution
 
-When you create a Worker via an environment, Cloudflare automatically creates an SSL certification for it. SSL certifications are discoverable and a matter of public record.
+When you create a Worker via an environment, Cloudflare automatically creates an SSL certification for it. SSL certifications are discoverable and a matter of public record. Be careful when naming your environments that they do not contain sensitive information, such as, `migrating-service-from-company1-to-company2` or `company1-acquisition-load-test`.
 
 :::

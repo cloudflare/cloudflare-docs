@@ -1,10 +1,9 @@
 ---
 pcx_content_type: how-to
 title: Static HTML
-
 ---
 
-import { Details, Render } from "~/components"
+import { Details, Render } from "~/components";
 
 Cloudflare supports deploying any static HTML website to Cloudflare Pages. If you manage your website without using a framework or static site generator, or if your framework is not listed in [Framework guides](/pages/framework-guides/), you can still deploy it using this guide.
 
@@ -14,11 +13,7 @@ Cloudflare supports deploying any static HTML website to Cloudflare Pages. If yo
 
 ## Deploy with Cloudflare Pages
 
-To deploy your site to Pages:
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
-3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
+<Render file="deploy-to-pages-steps-no-preset" />
 
 <div>
 
@@ -36,19 +31,15 @@ After configuring your site, you can begin your first deploy. Your custom build 
 
 :::note
 
-
 For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
-
 
 :::
 
 After you have deployed your site, you will receive a unique subdomain for your project on `*.pages.dev`. Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/configuration/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
-
 <Details header="Getting 404 errors on *.pages.dev?">
 
 If you are getting `404` errors when visiting your `*.pages.dev` domain, make sure your website has a top-level file for `index.html`. This `index.html` is what Pages will serve on your apex with no page specified.
-
 
 </Details>
 

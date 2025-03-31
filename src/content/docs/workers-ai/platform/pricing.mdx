@@ -26,6 +26,10 @@ All limits reset daily at 00:00 UTC. If you exceed any one of the above limits, 
 
 Neurons are our way of measuring AI outputs across different models, representing the GPU compute needed to perform your request. Our serverless model allows you to pay only for what you use without having to worry about renting, managing, or scaling GPUs.
 
+:::note
+The Price in Tokens column is equivalent to the Price in Neurons column - the different units are displayed so you can easily compare and understand pricing.
+:::
+
 ## LLM model pricing
 
 | Model                                        | Price in Tokens                                            | Price in Neurons                                                          |
@@ -46,15 +50,23 @@ Neurons are our way of measuring AI outputs across different models, representin
 | @cf/meta/llama-2-7b-chat-fp16                | $0.556 per M input tokens <br/> $6.667 per M output tokens | 50505 neurons per M input tokens <br/> 606061 neurons per M output tokens |
 | @cf/meta/llama-guard-3-8b                    | $0.484 per M input tokens <br/> $0.030 per M output tokens | 44003 neurons per M input tokens <br/> 2730 neurons per M output tokens   |
 
+## Embeddings model pricing
+| Model                                 | Price in Tokens                                            | Price in Neurons                                                         |
+| ------------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------ |
+| @cf/baai/bge-small-en-v1.5            | $0.020 per M input tokens                                  | 1841 neurons per M input tokens                                          |
+| @cf/baai/bge-base-en-v1.5             | $0.067 per M input tokens                                  | 6058 neurons per M input tokens                                          |
+| @cf/baai/bge-large-en-v1.5            | $0.204 per M input tokens                                  | 18582 neurons per M input tokens                                         |
+|@cf/baai/bge-m3                  |$0.012 per M input tokens|1075 neurons per M input tokens  |
+
 ## Other model pricing
 
 | Model                                 | Price in Tokens                                            | Price in Neurons                                                         |
 | ------------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------ |
 | @cf/black-forest-labs/flux-1-schnell  | $0.0000528 per 512x512 tile <br/> $0.0001056 per step      | 4.80 neurons per 512x512 tile <br/> 9.60 neurons per step                |
 | @cf/huggingface/distilbert-sst-2-int8 | $0.026 per M input tokens                                  | 2394 neurons per M input tokens                                          |
-| @cf/baai/bge-small-en-v1.5            | $0.020 per M input tokens                                  | 1841 neurons per M input tokens                                          |
-| @cf/baai/bge-base-en-v1.5             | $0.067 per M input tokens                                  | 6058 neurons per M input tokens                                          |
-| @cf/baai/bge-large-en-v1.5            | $0.204 per M input tokens                                  | 18582 neurons per M input tokens                                         |
+|@cf/baai/bge-reranker-base       |$0.003 per M input tokens|283 neurons per M input tokens   |
 | @cf/meta/m2m100-1.2b                  | $0.342 per M input tokens <br/> $0.342 per M output tokens | 31050 neurons per M input tokens <br/> 31050 neurons per M output tokens |
 | @cf/microsoft/resnet-50               | $2.51 per M images                                         | 228055 neurons per M images                                              |
 | @cf/openai/whisper                    | $0.0005 per audio minute                                   | 41.14 neurons per audio minute                                           |
+|@cf/openai/whisper-large-v3-turbo|$0.0005 per audio minute |46.63 neurons per audio minute   |
+|@cf/myshell-ai/melotts           |$3.416 per M input tokens|310577 neurons per M input tokens|

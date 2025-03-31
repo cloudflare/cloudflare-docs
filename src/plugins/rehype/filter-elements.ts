@@ -1,5 +1,6 @@
 import { SKIP, visit, type VisitorResult } from "unist-util-visit";
 import type { Root, Element, Parents } from "hast";
+import { selectAll } from "hast-util-select";
 
 const remove = (index: number, parent: Parents): VisitorResult => {
 	parent.children.splice(index, 1);
@@ -38,7 +39,7 @@ const ALLOWED_ELEMENTS = [
 	"div",
 	"dl",
 	"dt",
-	"figcaption",
+	// "figcaption",
 	"figure",
 	"hr",
 	"li",
@@ -90,12 +91,19 @@ const ALLOWED_ELEMENTS = [
 	"th",
 	"thead",
 	"tr",
+	// Images
+	"img",
 	// Custom elements
 	"rule-id",
+	"starlight-tabs",
+	"starlight-image-zoom-zoomable",
 ];
 
 const ALLOWED_ATTRIBUTES: Record<string, string[]> = {
 	a: ["href", "id", "target"],
+	pre: ["dataLanguage"],
+	code: ["className"],
+	img: ["src", "alt"],
 	"rule-id": ["id"],
 };
 
@@ -128,6 +136,43 @@ export default function () {
 					}
 				}
 
+				if (tag === "pre") {
+					if (classNames.includes("mermaid")) {
+						const definition = element.children.find(
+							(child) => child.type === "text",
+						);
+						if (!definition) return;
+
+						element.children = [
+							{
+								type: "element",
+								tagName: "code",
+								properties: {
+									className: ["language-mermaid"],
+								},
+								children: [
+									{
+										type: "text",
+										value: definition.value,
+									},
+								],
+							},
+						];
+
+						return;
+					}
+
+					const language = element.properties.dataLanguage;
+					if (!language) return;
+
+					const code = element.children.find(
+						(child) => child.type === "element" && child.tagName === "code",
+					);
+					if (!code) return;
+
+					(code as Element).properties.className = [`language-${language}`];
+				}
+
 				if (tag === "rule-id") {
 					return unwrap(index, parent, {
 						...element,
@@ -135,6 +180,47 @@ export default function () {
 							{ type: "text", value: element.properties.id as string },
 						],
 					});
+				}
+
+				if (tag === "starlight-tabs") {
+					const tabs = selectAll('[role="tab"]', element);
+					const panels = selectAll('[role="tabpanel"]', element);
+
+					element.tagName = "ul";
+					element.properties = {};
+					element.children = [];
+
+					for (const tab of tabs) {
+						const id = (tab.properties?.id as string)?.split("tab-")[1];
+						if (!id) continue;
+
+						const panel = panels.find(
+							(panel) => panel.properties?.id === `tab-panel-${id}`,
+						);
+						if (!panel) continue;
+
+						const label = tab.children
+							.filter((child) => child.type === "text" && child.value.trim())
+							.map((child) => child.type === "text" && child.value.trim())
+							.join("");
+
+						const el = {
+							type: "element",
+							tagName: "li",
+							properties: {},
+							children: [
+								{
+									type: "element",
+									tagName: "p",
+									children: [{ type: "text", value: label }],
+									properties: {},
+								},
+								panel,
+							],
+						} as Element;
+
+						element.children.push(el);
+					}
 				}
 			}
 		});

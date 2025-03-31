@@ -5,10 +5,9 @@ title: Endpoint labeling service
 sidebar:
   order: 1
   label: Labeling service
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 API Shield's labeling service will help you organize your endpoints and address vulnerabilities in your API. The labeling service comes with managed and user-defined labels.
 
@@ -18,7 +17,11 @@ User-defined labels can also be added to endpoints in API Shield by creating a l
 
 You can filter your endpoints based on the labels.
 
-## Managed labels
+## Categories
+
+### Managed labels
+
+Use managed labels to identify endpoints by use case. Cloudflare may automatically apply these labels in a future release.
 
 `cf-log-in`: Add this label to endpoints that accept user credentials. You may have multiple endpoints if you accept username, password, and multi-factor authentication (MFA) across multiple endpoints or requests.
 
@@ -42,6 +45,12 @@ You can filter your endpoints based on the labels.
 
 `cf-rss-feed`: Add this label to endpoints that expect traffic from RSS clients.
 
+`cf-llm`: Services that are (partially) powered by Large Language Model (LLM).
+
+### Risk labels
+
+Cloudflare automatically runs risk scans every 24 hours on your saved endpoints. API Shield applies these labels when a scan finds security risks on your endpoints. A corresponding Security Center Insight is also raised when risks are found.
+
 `cf-risk-missing-auth`: Automatically added when all successful requests lack a session identifier. Refer to the table below for more information.
 
 `cf-risk-mixed-auth`: Automatically added when some successful requests contain a session identifier and some successful requests lack a session identifier. Refer to the table below for more information.
@@ -50,11 +59,11 @@ You can filter your endpoints based on the labels.
 
 `cf-risk-missing-schema`: Automatically added when a learned schema is available for an endpoint that has no active schema.
 
-`cf-risk-error-anomaly`: Automatically added when an endpoint experiences a recent increase in response errors over the last 24 hours. 
+`cf-risk-error-anomaly`: Automatically added when an endpoint experiences a recent increase in response errors over the last 24 hours.
 
-`cf-risk-latency-anomaly`: Automatically added when an endpoint experiences a recent increase in response latency over the last 24 hours. 
+`cf-risk-latency-anomaly`: Automatically added when an endpoint experiences a recent increase in response latency over the last 24 hours.
 
-`cf-risk-size-anomaly`: Automatically added when an endpoint experiences a spike in response body size over the last 24 hours. 
+`cf-risk-size-anomaly`: Automatically added when an endpoint experiences a spike in response body size over the last 24 hours.
 
 :::note
 Cloudflare will only add authentication labels to endpoints with successful response codes. Refer to the below table for more details.
@@ -100,4 +109,4 @@ Alternatively, you can create a user-defined label via Endpoint Management in AP
 
 ## Availability
 
-Endpoint Management's labeling service is currently available to Enterprise API Shield subscribers.
+Endpoint Management's labeling service is available to all customers.

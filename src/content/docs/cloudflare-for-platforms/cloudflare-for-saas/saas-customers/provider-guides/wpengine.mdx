@@ -44,6 +44,14 @@ If you cannot activate your domain using [proxied DNS records](/dns/proxy-status
 
 <Render file="provider-guide-compatibility" />
 
+## Zone hold
+
+If your own Cloudflare zone is on the Enterprise plan, you have access to the [zone hold feature](/fundamentals/setup/account/account-security/zone-holds/), which is a toggle that prevents your domain name from being created as a zone in a different Cloudflare account. Additionally, if the zone hold is enabled, it prevents the activation of custom hostnames onboarded to WP Engine. WP Engine would receive the following error message for your custom hostname: `The hostname is associated with a held zone. Please contact the owner of this domain to have the hold removed.`
+
+To successfully activate the custom hostname on WP Engine, the owner of the zone needs to [temporarily release the hold](/fundamentals/setup/account/account-security/zone-holds/#release-zone-holds). If you are only onboarding a subdomain as a custom hostname to WP Engine, only the subfeature titled `Also prevent Subdomains` needs to be temporarily disabled.
+
+Once the zone hold is temporarily disabled, follow WP Engine's instructions to refresh the custom hostname and it should activate.
+
 ## Additional support
 
 <Render file="provider-guide-help" params={{ one: "WP Engine" }} />

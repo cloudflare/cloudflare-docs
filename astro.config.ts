@@ -69,6 +69,14 @@ export default defineConfig({
 			rehypeTitleFigure,
 		],
 	},
+	image: {
+		service: {
+			entrypoint: "astro/assets/services/sharp",
+			config: {
+				limitInputPixels: false,
+			},
+		},
+	},
 	experimental: {
 		contentIntellisense: true,
 	},
@@ -103,11 +111,11 @@ export default defineConfig({
 			components: {
 				Footer: "./src/components/overrides/Footer.astro",
 				Head: "./src/components/overrides/Head.astro",
+				Header: "./src/components/overrides/Header.astro",
 				Hero: "./src/components/overrides/Hero.astro",
 				MarkdownContent: "./src/components/overrides/MarkdownContent.astro",
 				Sidebar: "./src/components/overrides/Sidebar.astro",
 				PageTitle: "./src/components/overrides/PageTitle.astro",
-				SocialIcons: "./src/components/overrides/SocialIcons.astro",
 				TableOfContents: "./src/components/overrides/TableOfContents.astro",
 			},
 			sidebar,
@@ -122,7 +130,7 @@ export default defineConfig({
 								exclude: [
 									"/api/",
 									"/api/**",
-									"/changelog/",
+									"/changelog/**",
 									"/http/resources/**",
 									"{props.*}",
 									"/",

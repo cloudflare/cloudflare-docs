@@ -63,3 +63,7 @@ The following command will build and deploy your project. If you are using CI, e
 You can serve static assets in your React application by [placing them in the `./public/` directory](https://vite.dev/guide/assets#the-public-directory). This can be useful for resource files such as images, stylesheets, fonts, and manifests.
 
 <Render file="workers-assets-routing-summary" />
+
+## Use bindings with React
+
+Your new project also contains a Worker at `./api/index.ts`, which you can use as a backend API for your React application. While your React application cannot directly access Workers bindings, it can interact with them through this Worker. You can make [`fetch()` requests](/workers/runtime-apis/fetch/) from your React application to the Worker, which can then handle the request and use bindings. Learn how to [configure Workers bindings](/workers/runtime-apis/bindings/).

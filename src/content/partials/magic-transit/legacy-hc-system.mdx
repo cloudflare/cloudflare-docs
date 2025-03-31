@@ -1,9 +1,0 @@
----
-{}
-
----
-
-For customers using the legacy health check system with a public IP range, Cloudflare recommends:
-
-- Configuring the tunnel health check target IP address to one within the `172.64.240.252/30` prefix range.
-- Applying a policy-based route that matches [packets](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) with a source IP address equal to the configured tunnel health check target (for example `172.64.240.253/32`), and route them over the tunnel back to Cloudflare.

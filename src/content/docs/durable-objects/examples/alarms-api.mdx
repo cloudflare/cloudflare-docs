@@ -1,16 +1,11 @@
 ---
 type: example
 summary: Use the Durable Objects Alarms API to batch requests to a Durable Object.
-tags:
-  - Durable Objects
-  - Alarms
-  - API
 pcx_content_type: example
 title: Use the Alarms API
 sidebar:
   order: 3
 description: Use the Durable Objects Alarms API to batch requests to a Durable Object.
-
 ---
 
 import { GlossaryTooltip, WranglerConfig } from "~/components";
@@ -22,57 +17,57 @@ When a request is received and no alarm is set, it sets an alarm for 10 seconds 
 If no new requests are received, no further alarms will be set until the next request arrives.
 
 ```js
-import { DurableObject } from 'cloudflare:workers';
+import { DurableObject } from "cloudflare:workers";
 
 // Worker
 export default {
-  async fetch(request, env) {
-    let id = env.BATCHER.idFromName("foo");
-    return await env.BATCHER.get(id).fetch(request);
-  },
+	async fetch(request, env) {
+		let id = env.BATCHER.idFromName("foo");
+		return await env.BATCHER.get(id).fetch(request);
+	},
 };
 
 const SECONDS = 10;
 
 // Durable Object
 export class Batcher extends DurableObject {
-  constructor(state, env) {
-    this.state = state;
-    this.storage = state.storage;
-    this.state.blockConcurrencyWhile(async () => {
-      let vals = await this.storage.list({ reverse: true, limit: 1 });
-      this.count = vals.size == 0 ? 0 : parseInt(vals.keys().next().value);
-    });
-  }
+	constructor(state, env) {
+		this.state = state;
+		this.storage = state.storage;
+		this.state.blockConcurrencyWhile(async () => {
+			let vals = await this.storage.list({ reverse: true, limit: 1 });
+			this.count = vals.size == 0 ? 0 : parseInt(vals.keys().next().value);
+		});
+	}
 
-  async fetch(request) {
-    this.count++;
+	async fetch(request) {
+		this.count++;
 
-    // If there is no alarm currently set, set one for 10 seconds from now
-    // Any further POSTs in the next 10 seconds will be part of this batch.
-    let currentAlarm = await this.storage.getAlarm();
-    if (currentAlarm == null) {
-      this.storage.setAlarm(Date.now() + (1000 * SECONDS));
-    }
+		// If there is no alarm currently set, set one for 10 seconds from now
+		// Any further POSTs in the next 10 seconds will be part of this batch.
+		let currentAlarm = await this.storage.getAlarm();
+		if (currentAlarm == null) {
+			this.storage.setAlarm(Date.now() + 1000 * SECONDS);
+		}
 
-    // Add the request to the batch.
-    await this.storage.put(this.count, await request.text());
-    return new Response(JSON.stringify({ queued: this.count }), {
-      headers: {
-        "content-type": "application/json;charset=UTF-8",
-      },
-    });
-  }
+		// Add the request to the batch.
+		await this.storage.put(this.count, await request.text());
+		return new Response(JSON.stringify({ queued: this.count }), {
+			headers: {
+				"content-type": "application/json;charset=UTF-8",
+			},
+		});
+	}
 
-  async alarm() {
-    let vals = await this.storage.list();
-    await fetch("http://example.com/some-upstream-service", {
-      method: "POST",
-      body: Array.from(vals.values()),
-    });
-    await this.storage.deleteAll();
-    this.count = 0;
-  }
+	async alarm() {
+		let vals = await this.storage.list();
+		await fetch("http://example.com/some-upstream-service", {
+			method: "POST",
+			body: Array.from(vals.values()),
+		});
+		await this.storage.deleteAll();
+		this.count = 0;
+	}
 }
 ```
 

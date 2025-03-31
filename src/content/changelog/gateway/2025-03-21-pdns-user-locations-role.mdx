@@ -1,0 +1,21 @@
+---
+title: Secure DNS Locations Management User Role
+description: Create secure DNS locations using the new Cloudflare Zero Trust Locations Write role.
+date: 2025-03-21T13:50:40Z
+products: []
+hidden: false
+---
+
+We’re excited to introduce the [**Cloudflare Zero Trust Secure DNS Locations Write role**](/cloudflare-one/connections/connect-devices/agentless/dns/locations/#secure-dns-locations), designed to provide DNS filtering customers with granular control over third-party access when configuring their Protective DNS (PDNS) solutions.​
+
+Many DNS filtering customers rely on external service partners to manage their DNS location endpoints. This role allows you to grant access to external parties to administer DNS locations without overprovisioning their permissions.​
+
+**Secure DNS Location Requirements:**
+
+- Mandate usage of [Bring your own DNS resolver IP addresses](https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/agentless/dns/locations/dns-resolver-ips/#bring-your-own-dns-resolver-ip) if available on the account.​
+
+- Require source network filtering for IPv4/IPv6/DoT endpoints; token authentication or source network filtering for the DoH endpoint.​
+
+You can assign the new role via Cloudflare Dashboard (`Manage Accounts > Members`) or via API. For more information, refer to the [Secure DNS Locations documentation](https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/agentless/dns/locations/#secure-dns-locations).
+
+

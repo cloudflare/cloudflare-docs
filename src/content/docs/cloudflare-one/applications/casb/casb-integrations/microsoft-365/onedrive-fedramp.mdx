@@ -1,0 +1,25 @@
+---
+pcx_content_type: reference
+title: OneDrive (FedRAMP)
+rss: file
+sidebar:
+  order: 6
+---
+
+import { Render } from "~/components";
+
+<Render
+	file="casb/fedramp-availability"
+	params={{
+		integrationName: "OneDrive (FedRAMP)",
+	}}
+/>
+
+<Render
+	file="casb/microsoft/integrations/onedrive"
+	params={{
+		integrationName: "OneDrive (FedRAMP)",
+		environmentName: "Microsoft 365 account",
+		slugifiedName: "microsoft-365/onedrive-fedramp",
+	}}
+/>

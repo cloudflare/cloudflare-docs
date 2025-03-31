@@ -549,8 +549,10 @@ wrangler r2 object get <OBJECT_PATH> [OPTIONS]
 
 - `OBJECT_PATH` <Type text="string" /> <MetaInfo text="required" />
   - The source object path in the form of `{bucket}/{key}`.
-- `--local` <Type text="boolean" /> <MetaInfo text="optional" />
+- `--local` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
   - Interact with locally persisted data.
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Interact with remote storage.
 - `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory for locally persisted data.
 
@@ -580,8 +582,10 @@ wrangler r2 object put <OBJECT_PATH> [OPTIONS]
   - Specifies caching behavior along the request/reply chain.
 - `--expires` <Type text="string" /> <MetaInfo text="optional" />
   - The date and time at which the object is no longer cacheable.
-- `--local` <Type text="boolean" /> <MetaInfo text="optional" />
+- `--local` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
   - Interact with locally persisted data.
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Interact with remote storage.
 - `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory for locally persisted data.
 
@@ -595,8 +599,10 @@ wrangler r2 object delete <OBJECT_PATH> [OPTIONS]
 
 - `OBJECT_PATH` <Type text="string" /> <MetaInfo text="required" />
   - The destination object path in the form of `{bucket}/{key}`.
-- `--local` <Type text="boolean" /> <MetaInfo text="optional" />
+- `--local` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
   - Interact with locally persisted data.
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Interact with remote storage.
 - `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory for locally persisted data.
 

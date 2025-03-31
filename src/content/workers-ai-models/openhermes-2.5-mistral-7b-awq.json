@@ -29,8 +29,25 @@
                         "prompt": {
                             "type": "string",
                             "minLength": 1,
-                            "maxLength": 131072,
                             "description": "The input text prompt for the model to generate a response."
+                        },
+                        "lora": {
+                            "type": "string",
+                            "description": "Name of the LoRA (Low-Rank Adaptation) model to fine-tune the base model."
+                        },
+                        "response_format": {
+                            "title": "JSON Mode",
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "type": "string",
+                                    "enum": [
+                                        "json_object",
+                                        "json_schema"
+                                    ]
+                                },
+                                "json_schema": {}
+                            }
                         },
                         "raw": {
                             "type": "boolean",
@@ -89,10 +106,6 @@
                             "minimum": 0,
                             "maximum": 2,
                             "description": "Increases the likelihood of the model introducing new topics."
-                        },
-                        "lora": {
-                            "type": "string",
-                            "description": "Name of the LoRA (Low-Rank Adaptation) model to fine-tune the base model."
                         }
                     },
                     "required": [
@@ -114,7 +127,6 @@
                                     },
                                     "content": {
                                         "type": "string",
-                                        "maxLength": 131072,
                                         "description": "The content of the message as a string."
                                     }
                                 },
@@ -283,10 +295,29 @@
                                 ]
                             }
                         },
+                        "response_format": {
+                            "title": "JSON Mode",
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "type": "string",
+                                    "enum": [
+                                        "json_object",
+                                        "json_schema"
+                                    ]
+                                },
+                                "json_schema": {}
+                            }
+                        },
+                        "raw": {
+                            "type": "boolean",
+                            "default": false,
+                            "description": "If true, a chat template is not applied and you must adhere to the specific model's expected formatting."
+                        },
                         "stream": {
                             "type": "boolean",
                             "default": false,
-                            "description": "If true, the response will be streamed back incrementally."
+                            "description": "If true, the response will be streamed back incrementally using SSE, Server Sent Events."
                         },
                         "max_tokens": {
                             "type": "integer",
@@ -304,7 +335,7 @@
                             "type": "number",
                             "minimum": 0,
                             "maximum": 2,
-                            "description": "Controls the creativity of the AI's responses by adjusting how many possible words it considers. Lower values make outputs more predictable; higher values allow for more varied and creative responses."
+                            "description": "Adjusts the creativity of the AI's responses by controlling how many possible words it considers. Lower values make outputs more predictable; higher values allow for more varied and creative responses."
                         },
                         "top_k": {
                             "type": "integer",
@@ -391,7 +422,10 @@
                                 }
                             }
                         }
-                    }
+                    },
+                    "required": [
+                        "response"
+                    ]
                 },
                 {
                     "type": "string",

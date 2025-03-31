@@ -48,7 +48,7 @@ Obtain the following URLs from your SaaS application account:
 If you are using Okta, Microsoft Entra ID (formerly Azure AD), Google Workspace, or GitHub as your IdP, Access will automatically send a SAML attribute titled `groups` with all of the user's associated groups as attribute values.
 :::
 
-11. Add [Access policies](/cloudflare-one/policies/access/) to control who can connect to your application. All Access applications are deny by default -- a user must match an Allow policy before they are granted access.
+11. <Render file="access/add-access-policies" product="cloudflare-one" />
 
 12. <Render file="access/access-choose-idps" product="cloudflare-one" />
 
@@ -100,7 +100,7 @@ To send additional SAML attributes to your SaaS application, configure the follo
 			- `URI`: Name is in a format such as `urn:ietf:params:scim:schemas:core:2.0:User:userName` or `urn:oid:2.5.4.42`.
 			- `Basic`: Name is a normal string such as `userName`.
 	- **IdP claim**: The identity provider value that should map to this SAML attribute. You can select any [SAML attribute](/cloudflare-one/identity/idp-integration/generic-saml/#saml-headers-and-attributes) or [OIDC claim](/cloudflare-one/identity/idp-integration/generic-oidc/#oidc-claims) that was configured in a Zero Trust IdP integration.
-	- **Required**: If a claim is marked as required but is not provided by an IdP, Cloudflare will fail the authentication request and show an error page.
+	- **Required**: If an attribute is marked as required but is not provided by an IdP, Cloudflare will fail the authentication request and show an error page.
 	- **Add per IdP claim**: (Optional) If you turned on multiple identity providers for the SaaS application, you can choose different attribute mappings for each IdP. These values will override the parent **IdP claim**.
 
 ### JSONata transforms

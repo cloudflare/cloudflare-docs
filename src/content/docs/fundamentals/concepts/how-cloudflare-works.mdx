@@ -37,7 +37,7 @@ A reverse proxy is a network of servers that sits in front of web servers and ei
 
 ![The flow of a request from a server through Cloudflare to the origin server when Cloudflare is a reverse proxy.](~/assets/images/fundamentals/reverse-proxy.png)
 
-When Cloudflare receives a DNS query for your domain, the response is determined by the configuration [set in your DNS table](/dns/manage-dns-records/how-to/create-dns-records/), including the [type of the record](/dns/manage-dns-records/reference/dns-record-types/), the record's [proxy eligibility](/dns/proxy-status/limitations/#proxy-eligibility), and its [proxy status](/dns/proxy-status/#proxy-eligibility).
+When Cloudflare receives a DNS query for your domain, the response is determined by the configuration [set in your DNS table](/dns/manage-dns-records/how-to/create-dns-records/), including the [type of the record](/dns/manage-dns-records/reference/dns-record-types/), the record's [proxy eligibility](/dns/proxy-status/limitations/#proxy-eligibility), and its [proxy status](/dns/proxy-status/#proxied-records).
 
 When DNS records in your DNS table have a `proxied` status, the record's HTTP/HTTPS traffic will route through Cloudflare on its way between the client and the origin server. If the domain's status is active, all HTTP/HTTPS requests for proxied DNS records route through Cloudflare.
 

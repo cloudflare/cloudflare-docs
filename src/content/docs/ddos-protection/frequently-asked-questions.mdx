@@ -1,0 +1,111 @@
+---
+title: FAQ
+pcx_content_type: FAQ
+sidebar:
+  order: 18
+  label: FAQ
+head:
+  - tag: title
+    content: Frequently asked questions for DDoS Protection
+
+---
+
+## What is a DDoS attack event?
+
+When Cloudflare's DDoS systems detect and mitigate attacks, they drop, rate-limit, or challenge (as applicable) packets, DNS queries, or HTTP requests, based on the type of attack.
+
+There are three main DDoS mitigation systems:
+
+1. [DDoS Managed Ruleset](/ddos-protection/managed-rulesets/)
+    
+    a. [Network-layer DDoS Managed Ruleset](/ddos-protection/managed-rulesets/network/)
+    
+    b. [HTTP DDoS Managed Ruleset](/ddos-protection/managed-rulesets/http/)
+
+3. [Advanced TCP Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-tcp-protection/)
+4. [Advanced DNS Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-dns-protection/)
+
+The DDoS Managed Ruleset includes many individual rules. Each rule provides the heuristics that instructs the system how to identify attack traffic. When the DDoS Managed Ruleset identifies an attack, it will generate a real-time fingerprint to match against the attack traffic, and install an ephemeral mitigation rule to mitigate the attack. 
+
+The start time of the attack is when the mitigation rule is installed. The attack ends when there is no more traffic matching the rule. This is a single DDoS attack. 
+
+A DDoS attack therefore has a start time, end time, and additional attack metadata such as:
+
+1. Attack ID
+2. Attack vector
+3. Mitigating rule
+4. Total bytes
+5. Total packets
+6. Attack target
+
+This information is used to populate the [Executive Summary](/analytics/network-analytics/understand/main-dashboard/#executive-summary) section in the [Network Analytics](/analytics/network-analytics/) dashboard.
+
+It can also be retrieved via GraphQL API using the `dosdAttackAnalyticsGroups` node.
+
+Currently, the concept of a DDoS attack only exists for the Network-layer DDoS Managed Ruleset. There is no such grouping of individual packets, queries, or HTTP requests for the other systems, although we plan to implement it.
+
+---
+
+## How does Cloudflare protect against "low and slow" DDoS attacks?
+
+A [low and slow DDoS attack](https://www.cloudflare.com/learning/ddos/ddos-low-and-slow-attack/) is most commonly a non-volumetric attack. The attacker will send a low volume of HTTP requests, and do so slowly. This type of attack aims to be less detectable and slowly exhausts resources.
+
+[Slowloris](https://www.cloudflare.com/learning/ddos/ddos-attack-tools/slowloris/) is a type of low and slow attack where the attacker establishes [TCP connections](/fundamentals/reference/tcp-connections/) to the target server, often using HTTP or HTTPS protocols.
+
+In the case of a Slowloris attack, the attacker sends incomplete HTTP header lines, thus never completing the HTTP request. The server waits for the complete request, holding the connection open. The attacker periodically sends additional HTTP header fields or partial lines to keep the connection alive. This can be achieved by sending partial HTTP headers, or using the `content-length` header to declare a message body size larger than what is actually sent.
+
+The best practice to defend against low and slow attacks is by using an HTTP reverse proxy, such as Cloudflare's [CDN](/fundamentals/concepts/how-cloudflare-works/) or [WAF](/waf/) service. The reverse proxy acts as a shield. It waits for a full HTTP request before forwarding it to the origin, serving from cache, or applying other actions based on user configuration. If you are using our CDN/WAF services, our L7 reverse proxy will absorb low and slow attacks. It will buffer uploads at the edge by default. The proxy will wait for the full HTTP request before passing it on. The client requests must be completed. 
+
+The request will be served from Cloudflare's [Cache](/cache/) or [Workers](/workers/), if applicable. If not, it will only be sent to the origin — assuming it was fully completed and has passed WAF checks. So the attack does not exist, similar to TCP Slowloris attacks protection.
+
+Additionally, the reverse proxy will timeout incomplete HTTP requests after a series of [keepalive probes](/fundamentals/reference/tcp-connections/#tcp-connections-and-keepalives).
+
+There is not a minimum threshold for activation. However, to provide additional security, custom firewall rules check for payload sizes and conducts basic sanity checks to ensure the content looks like what is expected.
+
+The RUDY (R-U-Dead-Yet?) DDoS attack is another type of denial-of-service (DoS) tool that performs slow-rate attacks on targeted servers. 
+
+Unlike conventional DDoS attacks that overwhelm servers with a high volume of requests in a short period, RUDY focuses on creating a few prolonged requests. It does this by submitting form data at an extremely slow pace to keep the web server tied up and unavailable to legitimate traffic. This approach makes RUDY attacks difficult to detect, because the traffic can appear legitimate and does not flood the server with requests that would typically trigger conventional DDoS protection mechanisms​​​​​​.
+
+RUDY specifically targets the application layer (Layer 7) of web servers by exploiting the way web forms handle data submission. The attack works by injecting one byte of information into an application `POST` field at a time, then waiting. This process causes application threads to await the completion of the form submission indefinitely, effectively exhausting the server's resources and preventing it from processing legitimate requests​​​​.
+
+Refer to the [learning center](https://www.cloudflare.com/learning/ddos/ddos-attack-tools/r-u-dead-yet-rudy/) for more information on RUDY attacks.
+
+---
+
+## How does Cloudflare deal with SSL/TLS negotiation attacks or floods?
+
+SSL/TLS based attacks such as BEAST, Poodle, and CRIME are mitigated by Cloudflare's TLS settings, configuration, and cipher limitations. Because Cloudflare serves as the HTTP reverse proxy, TLS exhaustion style attacks are mitigated by terminating TLS sessions before passing HTTP requests to origin servers. TLS traffic is not proxied to origin servers without completing a proper TLS handshake. Additionally, our automated DDoS detection and mitigation systems leverage cipher suites, packet fields, HTTP request attributes and metadata, origin health, traffic profiling, Machine Learning models, and threat intelligence to detect and mitigate additional SSL-based attacks. 
+
+---
+
+## Does Cloudflare use BGP Flowspec for upstream mitigation?
+
+Yes. Using our anycast network, along with Traffic Manager, Unimog, and Plurimog, we conduct automated traffic engineering to spread the load of traffic (legitimate and attack) to ensure our network is performant, especially during mitigation of large attacks.
+
+---
+
+## Where can I see DDoS trends?
+
+Refer to [Reports](/ddos-protection/reference/reports/) or [Radar](/radar/) for more information on viewing DDoS trends.
+
+---
+
+## What is the Ping of Death DDoS attacks?
+
+The Ping of Death (PoD) attack involves sending malformed or oversized packets to another computer or server, which can cause the system to freeze, crash, or reboot. Packets are pieces of data sent over the Internet, and the Ping of Death takes advantage of the fact that the IP protocol requires packets to be a maximum of 65,535 bytes in size. By sending a packet larger than this size, the attacker can exploit vulnerabilities in the target's TCP/IP stack, causing a buffer overflow and leading to unpredictable behavior, including system crashes. This type of attack is less common nowadays, as most modern systems and networking equipment have been patched to handle such anomalies.
+
+---
+
+## What are LOIC and HOIC?
+
+LOIC is a popular network stress testing and DoS attack application that is used to flood a server with TCP, UDP, or HTTP requests with the intention of disrupting the service. It is known for its simplicity and ability to be used by individuals with minimal hacking experience. LOIC can be directed by the user to attack a small server, which can cause the server to slow down or crash from the overload of requests. It became famous around 2010 for its use by the hacker group Anonymous in attacks against major companies and organizations.
+
+HOIC is an upgrade from LOIC, designed to overcome some of its limitations, especially in terms of detection and mitigation. It allows users to launch a more powerful DoS attack by enabling attacks on multiple websites at the same time with a higher volume of requests. HOIC also incorporates a feature that makes it more difficult for defense mechanisms to identify and mitigate the attack traffic, partly because it uses a technique that allows the traffic to mimic legitimate HTTP traffic, which is more challenging for traditional network security tools to detect. HOIC supports the use of "booster" scripts that enable it to target various websites simultaneously, significantly increasing its potency as a tool for conducting broad-scale DoS attacks.
+
+These tools and attacks exploit different aspects of network protocols and behaviors to overwhelm targets with unwanted traffic, leading to denial of service. Due to their potential for abuse, their use is illegal and unethical outside of controlled environments for testing purposes.
+
+---
+
+## Can I exclude a user agent from DDoS protection?
+
+You can override a user agent using a low sensitivity level or `Log` if you want visibility.

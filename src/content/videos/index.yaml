@@ -9,7 +9,6 @@
   author: craig
   updated: 2024-06-20
   difficulty: Beginner
-  content_type: 🎥 Video
   pcx_content_type: tutorial
 - link: https://www.youtube.com/watch?v=MlV9Kvkh9hw
   id: Build a URL Shortener with an AI-based admin section
@@ -21,7 +20,6 @@
   author: craig
   updated: 2024-07-01
   difficulty: Beginner
-  content_type: 🎥 Video
   pcx_content_type: tutorial
 - link: https://www.youtube.com/watch?v=dttu4QtKkO0
   id: Build Rust Powered Apps
@@ -33,7 +31,6 @@
   author: confidence
   updated: 2024-06-25
   difficulty: Beginner
-  content_type: 🎥 Video
   pcx_content_type: tutorial
 - link: https://www.youtube.com/watch?v=GRpwVMkVmKo
   id: API Roll (Father's Day)
@@ -45,7 +42,6 @@
   author: craig
   updated: 2024-06-15
   difficulty: Beginner
-  content_type: 🎥 Video
   pcx_content_type: tutorial
 - link: https://www.youtube.com/watch?v=MLbo7MGY_lU
   id: AI can see clearly now - Build Vision Apps on Cloudflare Workers AI
@@ -57,7 +53,6 @@
   author: craig
   updated: 2024-06-11
   difficulty: Beginner
-  content_type: 🎥 Video
   pcx_content_type: tutorial
 - link: https://www.youtube.com/watch?v=QTsaAhFvX9o
   id: Stateful Apps with Cloudflare Workers
@@ -69,7 +64,6 @@
   author: kristian
   updated: 2024-05-22
   difficulty: Intermediate
-  content_type: 🎥 Video
   pcx_content_type: tutorial
 - link: https://www.youtube.com/watch?v=5UTExUQ8Fwo
   id: Workers AI - Getting Started - Vanilla Chat App
@@ -81,7 +75,6 @@
   author: craig
   updated: 2024-04-17
   difficulty: Beginner
-  content_type: 🎥 Video
   pcx_content_type: tutorial
 - link: https://www.youtube.com/watch?v=H7Qe96fqg1M
   id: Learn Cloudflare Workers - Full Course for Beginners
@@ -93,7 +86,6 @@
   author: kristian
   updated: 2024-03-12
   difficulty: Beginner
-  content_type: 🎥 Video
   pcx_content_type: tutorial
 - link: https://www.youtube.com/watch?v=8SnrvAYAJ4Q
   id: Image Generation, Inpainting, and Vision Models
@@ -105,7 +97,6 @@
   author: craig
   updated: 2024-03-08
   difficulty: Beginner
-  content_type: 🎥 Video
   pcx_content_type: tutorial
 - link: https://www.youtube.com/watch?v=9JM5Z0KzQsQ
   id: Learn AI Development (models, embeddings, vectors)
@@ -116,7 +107,6 @@
   author: kristian
   updated: 2023-12-14
   difficulty: Advanced
-  content_type: 🎥 Video
   pcx_content_type: tutorial
 - link: https://www.youtube.com/watch?v=idKdjA8t0jw
   id: Optimize your AI App & fine-tune models (AI Gateway, R2)
@@ -128,7 +118,6 @@
   author: kristian
   updated: 2023-12-14
   difficulty: Advanced
-  content_type: 🎥 Video
   pcx_content_type: tutorial
 - link: https://www.youtube.com/watch?v=CHfKeFakGAI
   id: How to use Cloudflare AI models and inference in Python with Jupyter Notebooks
@@ -140,7 +129,6 @@
   author: craig
   updated: 2023-12-14
   difficulty: Intermediate
-  content_type: 🎥 Video
   pcx_content_type: tutorial
 - link: https://youtu.be/cK_leoJsBWY
   id: Cloudflare Workers AI, Building a "Hello, World" AI App!
@@ -153,7 +141,6 @@
   author: craig
   updated: 2024-09-11
   difficulty: Beginner
-  content_type: 🎥 Video
   pcx_content_type: tutorial
 - link: https://youtu.be/9IjfyBJsJRQ
   id: Use Vectorize to add additional context to your AI Applications through RAG
@@ -166,7 +153,6 @@
   author: craig
   updated: 2024-09-12
   difficulty: Intermediate
-  content_type: 🎥 Video
   pcx_content_type: tutorial
 - link: https://youtu.be/doKt9wWQF9A
   id: AI meets Maps | Using Cloudflare AI, Langchain, Mapbox, Folium and Streamlit
@@ -179,7 +165,6 @@
   author: lizzie
   updated: 2024-09-16
   difficulty: Intermediate
-  content_type: 🎥 Video
   pcx_content_type: tutorial
 - link: https://youtu.be/bwJkwD-F0kQ
   id: Welcome to the Cloudflare Developer Channel
@@ -192,7 +177,6 @@
   author: craig
   updated: 2024-09-18
   difficulty: Beginner
-  content_type: 🎥 Video
   pcx_content_type: tutorial
 - link: https://youtu.be/10-kiyJNr8s
   id: Build a private AI chatbot using Meta's Llama 3.1
@@ -205,7 +189,6 @@
   author: confidence
   updated: 2024-10-07
   difficulty: Beginner
-  content_type: 🎥 Video
   pcx_content_type: tutorial
 - link: https://developers.cloudflare.com/pages/framework-guides/deploy-a-hono-site/#creator-interview
   id: DevTalk | Episode 01 - Yusuke Wada, creator of Hono Framework
@@ -217,7 +200,6 @@
   author: yusuke
   updated: 2024-10-08
   difficulty: Beginner
-  content_type: 🎥 Video
   pcx_content_type: interview
 - link: https://youtu.be/W45MIi_t_go
   id: Building Front-End Applications | Now Supported by Cloudflare Workers
@@ -230,7 +212,6 @@
   author: confidence
   updated: 2024-10-23
   difficulty: Beginner
-  content_type: 🎥 Video
   pcx_content_type: tutorial
 - link: https://youtu.be/HXOpxNaKUzw
   id: How to Build Event-Driven Applications with Cloudflare Queues
@@ -243,7 +224,6 @@
   author: harshil
   updated: 2024-09-26
   difficulty: Intermediate
-  content_type: 🎥 Video
   pcx_content_type: tutorial
 - link: https://youtu.be/slS4RBV0SBk
   id: Cloudflare Workflows | Introduction (Part 1 of 3)
@@ -256,7 +236,6 @@
   author: craig
   updated: 2024-10-30
   difficulty: Intermediate
-  content_type: 🎥 Video
   pcx_content_type: tutorial
 - link: https://youtu.be/y4PPsvHrQGA
   id: Cloudflare Workflows | Batching and Monitoring Your Durable Execution (Part 2 of 3)
@@ -269,7 +248,6 @@
   author: craig
   updated: 2024-10-30
   difficulty: Intermediate
-  content_type: 🎥 Video
   pcx_content_type: tutorial
 - link: https://youtu.be/L6gR4Yr3UW8
   id: Cloudflare Workflows | Schedule and Sleep For Your Apps (Part 3 of 3)
@@ -282,7 +260,6 @@
   author: craig
   updated: 2024-10-30
   difficulty: Intermediate
-  content_type: 🎥 Video
   pcx_content_type: tutorial
 - link: https://developers.cloudflare.com/workers/frameworks/framework-guides/nextjs/#video-tutorial
   id: Deploy Your NextJS Application To Workers
@@ -295,7 +272,6 @@
   author: confidence
   updated: 2024-10-31
   difficulty: Beginner
-  content_type: 🎥 Video
   pcx_content_type: tutorial
 - link: https://developers.cloudflare.com/workers/observability/logs/#video-tutorial
   id: Workers Observability
@@ -308,7 +284,6 @@
   author: confidence
   updated: 2024-10-31
   difficulty: Intermediate
-  content_type: 🎥 Video
   pcx_content_type: tutorial
 - link: https://youtu.be/RmF05GpLE20
   id: DevTalk Episode 02 | Post-Quantum Cryptography
@@ -320,7 +295,6 @@
   author: bas
   updated: 2024-11-14
   difficulty: Beginner
-  content_type: 🎥 Video
   pcx_content_type: tutorial
 - link: https://youtu.be/xu4Wb-IppmM
   id: OpenAI Relay Server on Cloudflare Workers
@@ -332,7 +306,6 @@
   author: craig
   updated: 2024-11-14
   difficulty: Intermediate
-  content_type: 🎥 Video
   pcx_content_type: tutorial
 - link: https://developers.cloudflare.com/workers/runtime-apis/rpc/#video-tutorial
   id: Workers RPC Tutorial
@@ -344,7 +317,6 @@
   author: confidence
   updated: 2024-11-10
   difficulty: Beginner
-  content_type: 🎥 Video
   pcx_content_type: tutorial
 - link: https://youtu.be/B2bLUc3iOsI
   id: Deploy your React App to Cloudflare Workers
@@ -356,7 +328,6 @@
   author: confidence
   updated: 2024-11-05
   difficulty: Intermediate
-  content_type: 🎥 Video
   pcx_content_type: tutorial
 - link: https://developers.cloudflare.com/pages/framework-guides/deploy-an-astro-site/#video-tutorial
   id: Build a Full-Stack Application using Astro and Cloudflare Workers
@@ -368,7 +339,6 @@
   author: kristian
   updated: 2024-11-19
   difficulty: Beginner
-  content_type: 🎥 Video
   pcx_content_type: tutorial
 - link: https://developers.cloudflare.com/workflows/examples/twilio/
   id: Schedule Twilio Messaging and Phone Calls with Workflows
@@ -380,7 +350,6 @@
   author: craig
   updated: 2024-11-30
   difficulty: Intermediate
-  content_type: 🎥 Video
   pcx_content_type: tutorial
 - link: https://developers.cloudflare.com/pages/framework-guides/deploy-a-nuxt-site/#video-tutorial
   id: Deploy Your Nuxt Application To Workers
@@ -392,7 +361,6 @@
   author: kristian
   updated: 2025-01-08
   difficulty: Beginner
-  content_type: 🎥 Video
   pcx_content_type: tutorial
 - link: https://developers.cloudflare.com/workers-ai/tutorials/image-generation-playground/
   id: How to Build an Image Generator using Workers AI
@@ -404,7 +372,6 @@
   author: kristian
   updated: 2025-01-29
   difficulty: Beginner
-  content_type: 🎥 Video
   pcx_content_type: tutorial
 # - link:
 #   id:
@@ -416,5 +383,4 @@
 #   author:
 #   updated:
 #   difficulty: Intermediate
-#   content_type: 🎥 Video
 #   pcx_content_type: tutorial

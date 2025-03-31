@@ -9,7 +9,7 @@ workers_dev = true
 route = { pattern = "developers.cloudflare.com/*", zone_name = "developers.cloudflare.com"}
 
 rules = [
-	{ type = "Text", globs = ["**/_redirects"], fallthrough = true },
+	{ type = "Text", globs = ["**/__redirects"], fallthrough = true },
 ]
 
 [assets]

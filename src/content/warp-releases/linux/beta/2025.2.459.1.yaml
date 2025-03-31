@@ -1,0 +1,29 @@
+releaseNotes: >-
+  This release contains minor fixes and improvements.
+
+
+  **Changes and improvements**
+
+  - Improved command line interface for Access for Infrastructure
+  with added function for filtering and ordering.
+
+  - Fixed client connectivity issues when switching between managed network
+  profiles that use different WARP protocols.
+
+  - Added support for WARP desktop to use additional DoH endpoints to help
+  reduce NAT congestion.
+
+  - Improved Wireguard connection stability on reconnections.
+
+  - Added additional HTTP/3 QUIC connectivity test to `warp-diag`.
+
+  - Added support for collection of system health metrics for enhanced device
+  Digital Experience Monitoring.
+
+  - Automated the removal of active registrations for devices with multiple
+  registrations with the same Zero Trust organization.
+version: 2025.2.459.1
+releaseDate: 2025-03-13T17:13:33.600Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/noble-intel/version/2025.2.459.1
+packageSize: 44462470
+platformName: Linux

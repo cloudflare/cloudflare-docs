@@ -122,7 +122,8 @@ export default {
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py
-from js import Response, fetch, JSON
+from workers import Response, fetch
+import json
 
 async def on_fetch(request):
     header_name_src = "foo" # Header to get the new value from
@@ -132,12 +133,12 @@ async def on_fetch(request):
     original_response = await fetch(request)
 
     # Change status and statusText, but preserve body and headers
-    response = Response.new(original_response.body, status=500, statusText="some message", headers=original_response.headers)
+    response = Response(original_response.body, status=500, status_text="some message", headers=original_response.headers)
 
     # Change response body by adding the foo prop
-    original_body = await original_response.json()
-    original_body.foo = "bar"
-    response = Response.new(JSON.stringify(original_body), response)
+    new_body = await original_response.json()
+    new_body["foo"] = "bar"
+    response.replace_body(json.dumps(new_body))
 
     # Add a new header
     response.headers["foo"] = "bar"
