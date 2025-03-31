@@ -62,6 +62,37 @@ async fn fetch(req: HttpRequest, _env: Env, _ctx: Context) -> Result<Response> {
     Response::ok("hello world")
 }
 ```
+</TabItem> <TabItem label="Hono" icon="seti:typescript">
+
+```ts
+import { Hono } from 'hono';
+
+const app = new Hono();
+
+app.get('*', (c) => {
+  // Different ways to log headers in Hono:
+  
+  // 1. Using Map to display headers in console
+  console.log('Headers as Map:', new Map(c.req.raw.headers));
+  
+  // 2. Using spread operator to log headers
+  console.log('Headers spread:', [...c.req.raw.headers]);
+  
+  // 3. Using Object.fromEntries to convert to an object
+  console.log('Headers as Object:', Object.fromEntries(c.req.raw.headers));
+  
+  // 4. Hono's built-in header accessor (for individual headers)
+  console.log('User-Agent:', c.req.header('User-Agent'));
+  
+  // 5. Using c.req.headers to get all headers
+  console.log('All headers from Hono context:', c.req.headers);
+  
+  return c.text('Hello world');
+});
+
+export default app;
+```
+
 </TabItem> </Tabs>
 
 ---

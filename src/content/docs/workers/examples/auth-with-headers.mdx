@@ -95,4 +95,39 @@ async def on_fetch(request):
     return Response("Sorry, you have supplied an invalid key.", status=403)
 ```
 
+</TabItem> <TabItem label="Hono" icon="seti:typescript">
+
+```ts
+import { Hono } from 'hono';
+
+const app = new Hono();
+
+// Add authentication middleware
+app.use('*', async (c, next) => {
+  /**
+   * Define authentication constants
+   */
+  const PRESHARED_AUTH_HEADER_KEY = "X-Custom-PSK";
+  const PRESHARED_AUTH_HEADER_VALUE = "mypresharedkey";
+  
+  // Get the pre-shared key from the request header
+  const psk = c.req.header(PRESHARED_AUTH_HEADER_KEY);
+
+  if (psk === PRESHARED_AUTH_HEADER_VALUE) {
+    // Correct preshared header key supplied. Continue to the next handler.
+    await next();
+  } else {
+    // Incorrect key supplied. Reject the request.
+    return c.text("Sorry, you have supplied an invalid key.", 403);
+  }
+});
+
+// Handle all authenticated requests by passing through to origin
+app.all('*', async (c) => {
+  return fetch(c.req.raw);
+});
+
+export default app;
+```
+
 </TabItem> </Tabs>

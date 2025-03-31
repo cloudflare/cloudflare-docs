@@ -142,4 +142,77 @@ async def on_fetch(request, _env, ctx):
     return response
 ```
 
+</TabItem> <TabItem label="Hono" icon="seti:typescript">
+
+```ts
+import { Hono } from 'hono';
+
+// Define the environment with appropriate types
+interface Env {}
+
+const app = new Hono<{ Bindings: Env }>();
+
+// Service configured to receive logs
+const LOG_URL = "https://log-service.example.com/";
+
+// Function to post logs to an external service
+async function postLog(data: string) {
+  return await fetch(LOG_URL, {
+    method: "POST",
+    body: data,
+  });
+}
+
+// Middleware to handle error logging
+app.use('*', async (c, next) => {
+  try {
+    // Process the request with the next handler
+    await next();
+    
+    // After processing, check if the response indicates an error
+    if (c.res && (!c.res.ok && !c.res.redirected)) {
+      const body = await c.res.clone().text();
+      throw new Error(
+        "Bad response at origin. Status: " +
+        c.res.status +
+        " Body: " +
+        // Ensure the string is small enough to be a header
+        body.trim().substring(0, 10)
+      );
+    }
+    
+  } catch (err) {
+    // Without waitUntil, the fetch to the logging service may not complete
+    c.executionCtx.waitUntil(
+      postLog(err.toString())
+    );
+    
+    // Get the error stack or error itself
+    const stack = JSON.stringify(err.stack) || err.toString();
+    
+    // Create a new response with the error information
+    const response = c.res ? 
+      new Response(stack, {
+        status: c.res.status,
+        headers: c.res.headers
+      }) : 
+      new Response(stack, { status: 500 });
+    
+    // Add debug headers
+    response.headers.set("X-Debug-stack", stack);
+    response.headers.set("X-Debug-err", err.toString());
+    
+    // Set the modified response
+    c.res = response;
+  }
+});
+
+// Default route handler that passes requests through
+app.all('*', async (c) => {
+  return fetch(c.req.raw);
+});
+
+export default app;
+```
+
 </TabItem> </Tabs>

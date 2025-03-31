@@ -65,6 +65,22 @@ async fn fetch(_req: Request, _env: Env, _ctx: Context) -> Result<Response> {
 
 ```
 
+</TabItem> <TabItem label="Hono" icon="seti:typescript">
+
+```ts
+import { Hono } from 'hono';
+
+const app = new Hono();
+
+app.all('*', (c) => {
+  const destinationURL = "https://example.com";
+  const statusCode = 301;
+  return c.redirect(destinationURL, statusCode);
+});
+
+export default app;
+```
+
 </TabItem> </Tabs>
 
 ## Redirect requests from one domain to another
@@ -145,6 +161,28 @@ async fn fetch(req: Request, _env: Env, _ctx: Context) -> Result<Response> {
     Response::redirect_with_status(base, status_code)
 }
 
+```
+
+</TabItem> <TabItem label="Hono" icon="seti:typescript">
+
+```ts
+import { Hono } from 'hono';
+
+const app = new Hono();
+
+app.all('*', (c) => {
+  const base = "https://example.com";
+  const statusCode = 301;
+
+  const { pathname, search } = new URL(c.req.url);
+  
+  const destinationURL = `${base}${pathname}${search}`;
+  console.log(destinationURL);
+  
+  return c.redirect(destinationURL, statusCode);
+});
+
+export default app;
 ```
 
 </TabItem> </Tabs>

@@ -129,4 +129,56 @@ async def on_fetch(request):
     return res
 ```
 
+</TabItem> <TabItem label="Hono" icon="seti:typescript">
+
+```ts
+import { Hono } from 'hono';
+import { html } from 'hono/html';
+
+const app = new Hono();
+
+app.get('*', async (c) => {
+  const OLD_URL = "developer.mozilla.org";
+  const NEW_URL = "mynewdomain.com";
+
+  class AttributeRewriter {
+    attributeName: string;
+    
+    constructor(attributeName: string) {
+      this.attributeName = attributeName;
+    }
+    
+    element(element: Element) {
+      const attribute = element.getAttribute(this.attributeName);
+      if (attribute) {
+        element.setAttribute(
+          this.attributeName,
+          attribute.replace(OLD_URL, NEW_URL)
+        );
+      }
+    }
+  }
+
+  // Make a fetch request using the original request
+  const res = await fetch(c.req.raw);
+  const contentType = res.headers.get("Content-Type") || "";
+
+  // If the response is HTML, transform it with HTMLRewriter
+  if (contentType.startsWith("text/html")) {
+    const rewriter = new HTMLRewriter()
+      .on("a", new AttributeRewriter("href"))
+      .on("img", new AttributeRewriter("src"));
+    
+    return new Response(rewriter.transform(res).body, {
+      headers: res.headers
+    });
+  } else {
+    // Pass through the response as is
+    return res;
+  }
+});
+
+export default app;
+```
+
 </TabItem> </Tabs>

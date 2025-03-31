@@ -49,4 +49,24 @@ async def on_fetch(request):
     return await fetch(remote, request)
 ```
 
+</TabItem> <TabItem label="Hono" icon="seti:typescript">
+
+```ts
+import { Hono } from 'hono';
+
+const app = new Hono();
+
+app.all('*', async (c) => {
+  /**
+   * Replace `remote` with the host you wish to send requests to
+   */
+  const remote = "https://example.com";
+
+  // Forward the request to the remote server
+  return await fetch(remote, c.req.raw);
+});
+
+export default app;
+```
+
 </TabItem> </Tabs>

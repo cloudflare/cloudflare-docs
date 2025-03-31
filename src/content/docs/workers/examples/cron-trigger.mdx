@@ -17,6 +17,58 @@ import { Render, TabItem, Tabs, WranglerConfig } from "~/components";
 
 <Render file="cron-trigger-example" />
 
+<Tabs syncKey="workersExamples"> <TabItem label="TypeScript (Standard)" icon="seti:typescript">
+
+```ts
+interface Env {}
+export default {
+  async scheduled(
+    controller: ScheduledController,
+    env: Env,
+    ctx: ExecutionContext,
+  ) {
+    console.log("cron processed");
+  },
+};
+```
+
+</TabItem> <TabItem label="Hono" icon="seti:typescript">
+
+```ts
+import { Hono } from 'hono';
+
+interface Env {}
+
+// Create Hono app
+const app = new Hono<{ Bindings: Env }>();
+
+// Regular routes for normal HTTP requests
+app.get('/', (c) => c.text('Hello World!'));
+
+// Export both the app and a scheduled function
+export default {
+  // The Hono app handles regular HTTP requests
+  fetch: app.fetch,
+  
+  // The scheduled function handles Cron triggers
+  async scheduled(
+    controller: ScheduledController,
+    env: Env,
+    ctx: ExecutionContext,
+  ) {
+    console.log("cron processed");
+    
+    // You could also perform actions like:
+    // - Fetching data from external APIs
+    // - Updating KV or Durable Object storage
+    // - Running maintenance tasks
+    // - Sending notifications
+  },
+};
+```
+
+</TabItem> </Tabs>
+
 ## Set Cron Triggers in Wrangler
 
 Refer to [Cron Triggers](/workers/configuration/cron-triggers/) for more information on how to add a Cron Trigger.

@@ -59,6 +59,34 @@ export default {
 } satisfies ExportedHandler;
 ```
 
+</TabItem> <TabItem label="Hono" icon="seti:typescript">
+
+```ts
+import { Hono } from 'hono';
+
+interface Env {
+  // You can store your account hash as a binding variable
+  ACCOUNT_HASH?: string;
+}
+
+const app = new Hono<{ Bindings: Env }>();
+
+app.get('*', async (c) => {
+  // You can find this in the dashboard, it should look something like this: ZWd9g1K7eljCn_KDTu_MWA
+  // Either get it from environment or hardcode it here
+  const accountHash = c.env.ACCOUNT_HASH || "";
+  
+  const url = new URL(c.req.url);
+  
+  // A request to something like cdn.example.com/83eb7b2-5392-4565-b69e-aff66acddd00/public
+  // will fetch "https://imagedelivery.net/<accountHash>/83eb7b2-5392-4565-b69e-aff66acddd00/public"
+  
+  return fetch(`https://imagedelivery.net/${accountHash}${url.pathname}`);
+});
+
+export default app;
+```
+
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py

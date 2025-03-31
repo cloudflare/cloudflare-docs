@@ -25,8 +25,7 @@ export default {
 		const params = requestUrl.searchParams;
 		const tags =
 			params && params.has("tags") ? params.get("tags").split(",") : [];
-		const url =
-			params && params.has("uri") ? JSON.parse(params.get("uri")) : "";
+		const url = params && params.has("uri") ? params.get("uri") : "";
 		if (!url) {
 			const errorObject = {
 				error: "URL cannot be empty",
@@ -69,8 +68,7 @@ export default {
 		const params = requestUrl.searchParams;
 		const tags =
 			params && params.has("tags") ? params.get("tags").split(",") : [];
-		const url =
-			params && params.has("uri") ? JSON.parse(params.get("uri")) : "";
+		const url = params && params.has("uri") ? params.get("uri") : "";
 		if (!url) {
 			const errorObject = {
 				error: "URL cannot be empty",
@@ -102,6 +100,50 @@ export default {
 			});
 	},
 } satisfies ExportedHandler;
+```
+
+</TabItem> <TabItem label="Hono" icon="seti:typescript">
+
+```ts
+import { Hono } from "hono";
+
+type Bindings = {};
+
+const app = new Hono<{ Bindings: Bindings }>();
+
+app.all("*", async (c) => {
+	try {
+		const url = new URL(c.req.url);
+		const params = url.searchParams;
+		const tags = params.has("tags") ? params.get("tags").split(",") : [];
+		const uri = params.has("uri") ? params.get("uri") : "";
+
+		if (!uri) {
+			return c.json({ error: "URL cannot be empty" }, 400);
+		}
+
+		const init = {
+			cf: {
+				cacheTags: tags,
+			},
+		};
+
+		const result = await fetch(uri, init);
+		const cacheStatus = result.headers.get("cf-cache-status");
+		const lastModified = result.headers.get("last-modified");
+
+		const response = {
+			cache: cacheStatus,
+			lastModified: lastModified,
+		};
+
+		return c.json(response, result.status);
+	} catch (err: any) {
+		return c.json({ error: err.message }, 500);
+	}
+});
+
+export default app;
 ```
 
 </TabItem> <TabItem label="Python" icon="seti:python">

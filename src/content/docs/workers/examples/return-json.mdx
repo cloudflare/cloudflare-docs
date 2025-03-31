@@ -73,4 +73,22 @@ async fn fetch(_req: Request, _env: Env, _ctx: Context) -> Result<Response> {
 }
 ```
 
+</TabItem> <TabItem label="Hono" icon="seti:typescript">
+
+```ts
+import { Hono } from 'hono';
+
+const app = new Hono();
+
+app.get('*', (c) => {
+  const data = {
+    hello: "world",
+  };
+
+  return c.json(data);
+});
+
+export default app;
+```
+
 </TabItem> </Tabs>

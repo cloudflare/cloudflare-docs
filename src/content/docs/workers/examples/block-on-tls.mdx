@@ -69,6 +69,45 @@ export default {
 } satisfies ExportedHandler;
 ```
 
+</TabItem> <TabItem label="Hono" icon="seti:typescript">
+
+```ts
+import { Hono } from "hono";
+
+type Bindings = {};
+
+const app = new Hono<{ Bindings: Bindings }>();
+
+// Middleware to check TLS version
+app.use("*", async (c, next) => {
+	try {
+		// Access the raw request to get the cf object with TLS info
+		const request = c.req.raw;
+		const tlsVersion = request.cf?.tlsVersion;
+
+		// Allow only TLS versions 1.2 and 1.3
+		if (tlsVersion !== "TLSv1.2" && tlsVersion !== "TLSv1.3") {
+			return c.text("Please use TLS version 1.2 or higher.", 403);
+		}
+
+		// Continue to the next handler if TLS version is acceptable
+		return next();
+	} catch (err: any) {
+		// Handle errors (especially in preview mode where request.cf might not exist)
+		console.error(
+			"request.cf does not exist in the previewer, only in production",
+		);
+		return c.text(`Error in workers script: ${err.message}`, 500);
+	}
+});
+
+app.get("/", async (c) => {
+	return c.text(`TLS Version: ${c.req.raw.cf.tlsVersion}`);
+});
+
+export default app;
+```
+
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py
