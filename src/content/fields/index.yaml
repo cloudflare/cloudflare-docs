@@ -786,9 +786,27 @@ entries:
     data_type: String
     categories: [Request, SSL/TLS]
     keywords: [request, ssl, tls, client, visitor]
-    summary: The SHA-1 fingerprint of TLS client extensions, encoded in Base64.
+    summary: The SHA-1 fingerprint of TLS client extensions, encoded in Base64 using big-endian format.
+    description: For the little-endian version of this field, refer to [`cf.tls_client_extensions_sha1_le`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_extensions_sha1_le/).
     example_value: |-
       "OWFiM2I5ZDc0YWI0YWYzZmFkMGU0ZjhlYjhiYmVkMjgxNTU5YTU2Mg=="
+
+  - name: cf.tls_client_extensions_sha1_le
+    data_type: String
+    categories: [Request, SSL/TLS]
+    keywords: [request, ssl, tls, client, visitor]
+    summary: The SHA-1 fingerprint of TLS client extensions, encoded in Base64 using little-endian format.
+    description: For the big-endian version of this field, refer to [`cf.tls_client_extensions_sha1`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_extensions_sha1/).
+    example_value: |-
+      "7zIpdDU5pvFPPBI2/PCzqbaXnRA="
+
+  - name: cf.tls_ciphers_sha1
+    data_type: String
+    categories: [Request, SSL/TLS]
+    keywords: [request, ssl, tls, client, visitor]
+    summary: The SHA-1 fingerprint of the client TLS cipher list in received order, encoded in Base64 using big-endian format.
+    example_value: |-
+      "GXSPDLP4G3X+prK73a4wBuOaHRc="
 
   - name: cf.tls_client_hello_length
     data_type: Number
