@@ -24,6 +24,20 @@ import {
 
 While this tutorial uses a fictional e-commerce website, the principles can be applied to any use-case that requires high availability and low read latencies, such as a news website, a social media platform, or a marketing website.
 
+## Quick start
+
+If you want to skip the steps and get started quickly, click on the below button:
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/harshil1712/e-com-d1-hono)
+
+This will create a repository in your GitHub account and deploy the application to Cloudflare Workers. It will also create and bind a D1 database, create the required tables, and add some sample data. You can visit the deployed application. However, you need to enable D1 Read Replication for your database.
+
+To enable D1 Read Replication for your database, run the following command:
+
+```sh
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<accountid>/d1/database/<databaseId>" -H "Authorization: Bearer $TOKEN" -H "Content-Type:application/json" --data '{ "read_replication": { "mode": "auto" } }'
+```
+
 ## Prerequisites
 
 <Render file="prereqs" product="workers" />
@@ -483,7 +497,7 @@ Read replication is only used when the application has been [deployed](/d1/tutor
 :::
 
 ```sh
-fetch -X PUT "https://api.cloudflare.com/client/v4/accounts/<accountid>/d1/database/<databaseId>" \
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<accountid>/d1/database/<databaseId>" \
      -H "Authorization: Bearer $TOKEN" \
      -H "Content-Type:application/json" --data '{ "read_replication": { "mode": "auto" } }'
 ```
@@ -629,9 +643,9 @@ In the above code:
 - You then set the bookmark in the cookie.
 - Finally, you return the response.
 
-Since you are writing the data to the database, you use the `first-primary` constraint.
+Since you are writing the data to the database, you use the `first-primary` constraint. Even if you use the `first-unconstrained` constraint or pass a bookmark, the write request will always be routed to the primary database.
 
-The bookmark set in the cookie is used to get the latest data from the database.
+The bookmark set in the cookie can be used to get the data from the database for a new session from that instance.
 
 If you are using an external platform to manage your products, you can connect this API to the external platform, such that, when a product is created or updated in the external platform, the D1 database automatically updates the product details.
 
