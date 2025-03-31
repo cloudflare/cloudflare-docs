@@ -37,7 +37,7 @@ Access for Infrastructure currently only supports [SSH](/cloudflare-one/connecti
 
 ## 1. Add a target
 
-<Render file="access/add-target" params={{ protocol: "generic" }}/>
+<Render file="access/add-target" params={{ protocol: "generic" }} />
 
 ## 2. Add an infrastructure application
 
@@ -122,9 +122,9 @@ The following [Access policy selectors](/cloudflare-one/policies/access/#selecto
 
 By default, Cloudflare will evaluate Access infrastructure application policies after evaluating all Gateway network policies. To evaluate Access infrastructure applications before or after specific Gateway policies, create the following [Gateway network policy](/cloudflare-one/policies/gateway/network-policies/):
 
-| Selector               | Operator | Value | Action |
-| ---------------------- | -------- | ----- | ------ |
-| All Access App Targets | is       | on    | Allow  |
+| Selector                     | Operator | Value     | Action |
+| ---------------------------- | -------- | --------- | ------ |
+| Access Infrastructure Target | is       | _Present_ | Allow  |
 
 You can move this policy in the Gateway policy builder to change its [order of precedence](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence).
 
