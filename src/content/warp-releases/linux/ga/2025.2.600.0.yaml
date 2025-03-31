@@ -1,6 +1,7 @@
 releaseNotes: >-
   This release contains support for a new WARP setting, [Global WARP override](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#global-warp-override). It also includes significant improvements to our captive portal / public Wi-Fi detection logic. If you have experienced captive portal issues in the past, re-test and give this version a try.
 
+
   **Changes and improvements**
 
   - Improved [captive portal detection](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/captive-portals/) to make more public networks compatible and have faster detection.
