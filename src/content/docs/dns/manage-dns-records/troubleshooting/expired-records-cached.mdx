@@ -3,9 +3,16 @@ title: Stale response for upstream DNS resolution
 pcx_content_type: troubleshooting
 sidebar:
   order: 15
+  label: Stale response
 ---
 
-You notice that stale data - for example, an IP address that you had removed from an A record - is returned even after the corresponding [Time to Live (TTL)](/dns/manage-dns-records/reference/ttl/).
+import { GlossaryTooltip } from "~/components";
+
+In one of the scenarios below, you notice that stale responses are used, causing wrong content or no content to be returned.
+
+- A <GlossaryTooltip term="proxy status">proxied</GlossaryTooltip> CNAME record.
+- A DNS-only CNAME record that has [flattening enabled](/dns/cname-flattening/set-up-cname-flattening/).
+- A [Workers](/workers/) script making a subrequest to an external hostname.
 
 ## Cause
 
