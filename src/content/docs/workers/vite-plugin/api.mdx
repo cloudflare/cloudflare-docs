@@ -36,12 +36,19 @@ It accepts an optional `PluginConfig` parameter.
   Optional Vite environment options.
   By default, the environment name is the Worker name with `-` characters replaced with `_`.
   Setting the name here will override this.
+  A typical use case is setting `viteEnvironment: { name: "ssr" }` to apply the Worker to the SSR environment.
 
 - `persistState?: boolean | { path: string }`
 
   An optional override for state persistence.
   By default, state is persisted to `.wrangler/state` in a `v3` subdirectory.
   A custom `path` can be provided or, alternatively, persistence can be disabled by setting the value to `false`.
+
+- `inspectorPort?: number | false`
+
+  An optional inspector port to use for debugging your Workers.
+  The default value is `9229`.
+  Setting this to `false` will disable the debugging inspector.
 
 - `auxiliaryWorkers?: Array<AuxiliaryWorkerConfig>`
 

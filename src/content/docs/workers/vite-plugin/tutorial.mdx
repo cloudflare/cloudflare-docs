@@ -72,6 +72,16 @@ This output file is a snapshot of your configuration at the time of the build an
 It is the configuration that is used for preview and deployment.
 :::
 
+#### Update the .gitignore file
+
+When developing Workers, additional files are used and/or generated that should not be stored in git.
+Add the following lines to your `.gitignore` file:
+
+```txt
+.wrangler
+.dev.vars*
+```
+
 #### Run the development server
 
 Run `npm run dev` to verify that your application is working as expected.
