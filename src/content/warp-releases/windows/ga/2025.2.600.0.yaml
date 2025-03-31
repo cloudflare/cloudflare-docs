@@ -10,29 +10,19 @@ releaseNotes: >-
 
   - Added the ability to control if the WARP interface IPs are [registered with DNS servers](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#warp-interface-ip-dns-registration) or not.
 
-  - Removed DNS logs view from the Windows client GUI. DNS logs can be viewed as
-  part of `warp-diag` or by viewing the log file on the user's local directory.
+  - Removed DNS logs view from the Windows client GUI. DNS logs can be viewed as part of `warp-diag` or by viewing the log file on the user's local directory.
 
-  - Fixed issue that would result in a user receiving multiple re-authentication
-  requests when waking their device from sleep.
+  - Fixed an issue that would result in a user receiving multiple re-authentication requests when waking their device from sleep.
 
-  - WARP tunnel protocol details can now be viewed using the `warp-cli tunnel stats`
-  command.
+  - WARP tunnel protocol details can now be viewed using the `warp-cli tunnel stats` command.
 
-  - Improvements to [Windows multi-user](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/windows-multiuser/) including support for fast user
-  switching. If you are interested in testing this feature, reach out to
-  your Cloudflare account team.
+  - Improvements to [Windows multi-user](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/windows-multiuser/) including support for fast user switching. If you are interested in testing this feature, reach out to your Cloudflare account team.
 
-  - Fixed issue with device revocation and re-registration when switching
-  configurations.
+  - Fixed an issue with device revocation and re-registration when switching configurations.
 
-  - Fixed issue where DEX tests would run during certain sleep states where the
-  networking stack was not fully up. This would result in failures that would be
-  ignored.
+  - Fixed an issue where DEX tests would run during certain sleep states where the networking stack was not fully up. This would result in failures that would be ignored.
 
-  - Added a new [Global WARP override](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#global-warp-override) setting. This setting puts account admins
-  in control of disabling and enabling WARP across all devices registered to an
-  account from the dashboard. Global WARP override is disabled by default.
+  - Added a new [Global WARP override](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#global-warp-override) setting. This setting puts account administrators in control of disabling and enabling WARP across all devices registered to an account from the dashboard. Global WARP override is disabled by default.
 
 
   **Known issues**
