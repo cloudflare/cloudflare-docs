@@ -8,9 +8,9 @@ sidebar:
 
 import { GlossaryTooltip } from "~/components";
 
-In one of the scenarios below, you notice that stale responses are used, causing wrong content or no content to be returned.
+In one of the scenarios below, you notice that stale responses are used. Depending on the scenario and other aspects of your configuration, this can cause wrong content or no content to be returned.
 
-- A <GlossaryTooltip term="proxy status">proxied</GlossaryTooltip> CNAME record.
+- A <GlossaryTooltip term="proxy status">proxied</GlossaryTooltip> CNAME record ([flattened by default](/dns/cname-flattening/)).
 - A DNS-only CNAME record that has [flattening enabled](/dns/cname-flattening/set-up-cname-flattening/).
 - A [Workers](/workers/) script making a subrequest to an external hostname.
 
