@@ -111,6 +111,7 @@ These tools and attacks exploit different aspects of network protocols and behav
 ## Can I exclude a specific user agent from the HTTP DDoS protection?
 
 Yes, you can create an [override](/managed-rulesets/http/override-expressions/) and use the expression fields to match against HTTP requests with the user agent. There are a variety of [fields](/managed-rulesets/http/override-expressions/#available-expression-fields) that you can use.
+
 You can then adjust the [sensitivity level](/managed-rulesets/http/override-parameters/#sensitivity-level) or [mitigation action](/http/override-parameters/#action).
 
 Refer to the guide on how to [create an override](/managed-rulesets/http/configure-dashboard/#create-a-ddos-override).
@@ -119,9 +120,5 @@ The use of expression fields is subject to [availability](#availability).
 
 ## Does Cloudflare charge for DDoS attack traffic?
 
-No. Sinece 2017, Cloudflare offers [free unmeterered and unlimited DDoS protection](https://blog.cloudflare.com/unmetered-mitigation/). There is no limit to the number of DDoS attacks, their duration, or their size. Cloudflare's billing systems automatically exclude DDoS attack traffic from your usage. 
-
-
-
-
+No. Since 2017, Cloudflare offers [free, unmetered, and unlimited DDoS protection](https://blog.cloudflare.com/unmetered-mitigation/). There is no limit to the number of DDoS attacks, their duration, or their size. Cloudflare's billing systems automatically exclude DDoS attack traffic from your usage. 
 
