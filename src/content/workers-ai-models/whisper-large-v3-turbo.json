@@ -8,8 +8,20 @@
         "name": "Automatic Speech Recognition",
         "description": "Automatic speech recognition (ASR) models convert a speech signal, typically an audio input, to text."
     },
+    "created_at": "2024-05-22 00:02:18.656",
     "tags": [],
-    "properties": [],
+    "properties": [
+        {
+            "property_id": "price",
+            "value": [
+                {
+                    "unit": "per audio minute",
+                    "price": 0.00051,
+                    "currency": "USD"
+                }
+            ]
+        }
+    ],
     "schema": {
         "input": {
             "type": "object",
