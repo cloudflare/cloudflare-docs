@@ -75,6 +75,17 @@ config system settings
 end
 ```
 
+### Configure NAT-T (optional)
+
+If you have NAT traversal (NAT-T) on your network you need to enable this feature and initiate IKE communications on port `4500`.
+
+```txt
+config system settings
+    set ike-port 4500
+		set nattraversal enable
+end
+```
+
 ### Disable anti-replay protection
 
 For route-based IPsec configurations, you will need to disable anti-replay protection. The command below disables anti-replay protection globally, but you can also do this per firewall policy. Refer to Fortinet's documentation on [anti-replay support per policy](https://community.fortinet.com/t5/FortiGate/Technical-Tip-Anti-Replay-option-support-per-policy/ta-p/191435) to learn more.
