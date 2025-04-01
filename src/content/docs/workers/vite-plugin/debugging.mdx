@@ -13,7 +13,7 @@ There are two recommended methods for debugging your Workers during local develo
 
 ### DevTools
 
-When running `vite dev` or `vite preview`, a `/__debug` route is added that provides access to [Cloudflare's implementation](/packages/chrome-devtools-patches) of [Chrome's DevTools](https://developer.chrome.com/docs/devtools/overview).
+When running `vite dev` or `vite preview`, a `/__debug` route is added that provides access to [Cloudflare's implementation](https://github.com/cloudflare/workers-sdk/tree/main/packages/chrome-devtools-patches) of [Chrome's DevTools](https://developer.chrome.com/docs/devtools/overview).
 Navigating to this route will open a DevTools tab for each of the Workers in your application.
 
 Once the tab(s) are open, you can make a request to your application and start debugging your Worker code.
@@ -24,7 +24,7 @@ When debugging multiple Workers, you may need to allow your browser to open pop-
 
 ### VS Code
 
-To set up VS Code to support breakpoint debugging in your application, you should create a `.vscode/launch.json` file that contains the following configuration:
+To set up [VS Code](https://code.visualstudio.com/) to support breakpoint debugging in your application, you should create a `.vscode/launch.json` file that contains the following configuration:
 
 ```json
 {
@@ -54,7 +54,7 @@ Here, `<NAME_OF_WORKER>` indicates the name of the Worker as specified in your W
 If you have used the `inspectorPort` option to set a custom port then this should be the value provided in the `websocketaddress` field.
 
 :::note
-If you have more than one Worker in your application, you need to add a configuration in the `configurations` field for each and include the configuration name in the `compounds` `configurations` array.
+If you have more than one Worker in your application, you should add a configuration in the `configurations` field for each and include the configuration name in the `compounds` `configurations` array.
 :::
 
 With this set up, you can run `vite dev` or `vite preview` and then select **Debug Workers** at the top of the **Run & Debug** panel to start debugging.

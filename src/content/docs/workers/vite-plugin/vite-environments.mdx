@@ -3,7 +3,7 @@ pcx_content_type: reference
 title: Vite Environments
 head: []
 sidebar:
-  order: 4
+  order: 3
 description: Vite environments and the Vite plugin
 ---
 
@@ -15,11 +15,13 @@ It is not necessary to understand all the intricacies of the Environment API as 
 ### Default behavior
 
 Vite creates two environments by default: `client` and `ssr`.
-A front-end only application uses just the `client` environment, whereas a full-stack application created with a framework typically uses the `client` environment for front-end code and the `ssr` environment for server-side rendering.
+A front-end only application uses the `client` environment, whereas a full-stack application created with a framework typically uses the `client` environment for front-end code and the `ssr` environment for server-side rendering.
 
 By default, when you add a Worker using the Cloudflare Vite plugin, an additional environment is created.
 Its name is derived from the Worker name, with any dashes replaced with underscores.
 This name can be used to reference the environment in your Vite config in order to apply environment specific configuration.
+
+### Environment configuration
 
 In the following example we have a Worker named `my-worker` that is associated with a Vite environment named `my_worker`.
 We use the Vite config to set global constant replacements for this environment:
@@ -54,7 +56,7 @@ export default defineConfig({
 
 For more information about Vite's configuration options, see [Configuring Vite](https://vite.dev/config/).
 
-The default behavior of using the Worker name as the environment name is appropriate when you have a standalone Worker, such as an API that is accessed from your front-end application, or an [auxiliary Worker](../api#interface-pluginconfig) that is accessed via service bindings.
+The default behavior of using the Worker name as the environment name is appropriate when you have a standalone Worker, such as an API that is accessed from your front-end application, or an [auxiliary Worker](../api/#interface-pluginconfig) that is accessed via service bindings.
 
 ### React Router v7
 
@@ -73,4 +75,4 @@ export default defineConfig({
 });
 ```
 
-This merges the configuration with the framework's SSR configuration and ensures that the Worker is included as part of the framework's build output.
+This merges the Worker's environment configuration with the framework's SSR configuration and ensures that the Worker is included as part of the framework's build output.
