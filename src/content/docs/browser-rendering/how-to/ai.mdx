@@ -121,7 +121,7 @@ export default {
 ## Call an LLM
 
 Having the webpage text, the user's goal and output schema, we can now use an LLM to transform it to JSON according to the user's request.
-The example below uses `@hf/thebloke/deepseek-coder-6.7b-instruct-awq` but other [models](/workers-ai/models/), or services like OpenAI, could be used with minimal changes:
+The example below uses `@hf/thebloke/deepseek-coder-6.7b-instruct-awq` but other [models](/workers-ai/models/) or services like OpenAI, could be used with minimal changes:
 
 ```ts
 async function getLLMResult(env, prompt: string, schema?: any) {
