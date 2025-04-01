@@ -1,6 +1,6 @@
 ---
 pcx_content_type: tutorial
-title: Tutorial
+title: Tutorial - React SPA
 head: []
 sidebar:
   order: 2
@@ -9,7 +9,16 @@ description: Create a React SPA with an API Worker using the Vite plugin
 
 import { PackageManagers, WranglerConfig } from "~/components";
 
-In this tutorial, you will create a React SPA that can be deployed as a Worker with Workers Assets.
+This tutorial takes you through the steps needed to adapt a Vite project to use the Cloudflare Vite plugin.
+Much of the content can also be applied to adapting existing Vite projects and to front-end frameworks other than React.
+
+:::note
+If you just want to start a new app with a template already set up with Vite, React and the Cloudflare Vite plugin, refer to the [React framework guide](/workers/frameworks/framework-guides/react/).
+:::
+
+### Introduction
+
+In this tutorial, you will create a React SPA that can be deployed as a Worker with static assets.
 You will then add an API Worker that can be accessed from the front-end code.
 You will develop, build, and preview the application using Vite before finally deploying to Cloudflare.
 
@@ -66,7 +75,7 @@ Note that the [`directory`](/workers/static-assets/binding/#directory) field is 
 The `directory` in the output configuration will automatically point to the client build output.
 
 :::note
-When using the Cloudflare Vite plugin, the Worker config (for example, `wrangler.toml`) that you provide is the input configuration file.
+When using the Cloudflare Vite plugin, the Worker config (for example, `wrangler.jsonc`) that you provide is the input configuration file.
 A separate output `wrangler.json` file is created when you run `vite build`.
 This output file is a snapshot of your configuration at the time of the build and is modified to reference your build artifacts.
 It is the configuration that is used for preview and deployment.
@@ -128,14 +137,11 @@ However, this tutorial will show you how to go a step further and add an API Wor
 ```toml
 name = "cloudflare-vite-tutorial"
 compatibility_date = "2024-12-30"
-assets = { not_found_handling = "single-page-application", binding = "ASSETS" }
+assets = { not_found_handling = "single-page-application" }
 main = "./api/index.ts"
 ```
 
 </WranglerConfig>
-
-The assets `binding` defined here will allow you to access the assets functionality from your Worker.
-
 #### Add your API Worker
 
 ```ts
@@ -155,14 +161,16 @@ export default {
 			});
 		}
 
-		return env.ASSETS.fetch(request);
+		return new Response(null, { status: 404 });
 	},
 } satisfies ExportedHandler<Env>;
 ```
 
-The Worker above will be invoked for any request not matching a static asset.
-It returns a JSON response if the `pathname` starts with `/api/` and otherwise passes the incoming request through to the assets binding.
-This means that for paths that do not start with `/api/`, the `not_found_handling` behavior defined in the Worker config will be evaluated and the `index.html` file will be returned, enabling SPA navigations.
+The Worker above will be invoked for any non-navigation request that does not match a static asset.
+It returns a JSON response if the `pathname` starts with `/api/` and otherwise return a `404` response.
+
+Browser navigations will invoke the `not_found_handling` behavior defined in the Worker config.
+As we have set this to `single-page-application`, the `index.html` file is always returned.
 
 #### Call the API from the client
 
@@ -232,7 +240,8 @@ Now, if you click the button, it will display 'Name from API is: Cloudflare'.
 Increment the counter to update the application state in the browser.
 Next, edit `api/index.ts` by changing the `name` it returns to `'Cloudflare Workers'`.
 If you click the button again, it will display the new `name` while preserving the previously set counter value.
-With Vite and the Cloudflare plugin, you can iterate on the client and server parts of your app quickly without losing UI state between edits.
+
+With Vite and the Cloudflare plugin, you can iterate on the client and server parts of your app together, without losing UI state between edits.
 
 #### Build your application
 
