@@ -16,12 +16,11 @@ The action of a rule tells Cloudflare how to handle matches for the rule [expres
 
 The table below lists the actions available in the Rules language.
 
-Some actions like *Block*, called terminating actions, will stop the evaluation of the remaining rules. The *Skip* action will skip the evaluation of *some* rules when there is a match, but the exact behavior will depend on the rule configuration.
+Some actions like _Block_, called terminating actions, will stop the evaluation of the remaining rules. The _Skip_ action will skip the evaluation of _some_ rules when there is a match, but the exact behavior will depend on the rule configuration.
 
 The available actions depend on the [phase](/ruleset-engine/about/phases/) where you are configuring the rule. Refer to each product’s documentation for details on the phase(s) supported by that product.
 
-
-
+{/* prettier-ignore */}
 <table style="width: 100%">
   <thead>
     <tr>
@@ -123,6 +122,12 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
         <p>
           The available skip options depend on the phase where you configure the rule. Refer to each
           product’s documentation for details.
+        </p>
+        <p>
+          If you configure a rule with the <em>Skip</em> action at the account level it will only
+          affect rules/phases configured at the account level, not at the zone level.
+          To skip rules/phases at the zone level you must configure a rule with the <em>Skip</em>
+          action at the zone level.
         </p>
       </td>
       <td>
@@ -283,9 +288,6 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
   </tbody>
 </table>
 
-
-
 :::note
-
-Cloudflare Firewall Rules, now deprecated, supports a different set of actions, including the *Allow* and *Bypass* actions. Refer to [Firewall rules actions](/firewall/cf-firewall-rules/actions/) for more information.
+Cloudflare Firewall Rules, now deprecated, supports a different set of actions, including the _Allow_ and _Bypass_ actions. Refer to [Firewall rules actions](/firewall/cf-firewall-rules/actions/) for more information.
 :::
