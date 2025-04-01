@@ -77,32 +77,31 @@ export default {
 </TabItem> <TabItem label="Hono" icon="seti:typescript">
 
 ```ts
-import { Hono } from 'hono';
-
-type Bindings = {};
+import { Hono } from "hono";
+import { proxy } from "hono/proxy";
 
 // An object with different URLs to fetch
 const ORIGINS: Record<string, string> = {
-  "starwarsapi.yourdomain.com": "swapi.dev",
-  "google.yourdomain.com": "www.google.com",
+	"starwarsapi.yourdomain.com": "swapi.dev",
+	"google.yourdomain.com": "www.google.com",
 };
 
-const app = new Hono<{ Bindings: Bindings }>();
+const app = new Hono();
 
-app.all('*', async (c) => {
-  const url = new URL(c.req.url);
-  
-  // Check if incoming hostname is a key in the ORIGINS object
-  if (url.hostname in ORIGINS) {
-    const target = ORIGINS[url.hostname];
-    url.hostname = target;
-    
-    // If it is, proxy request to that third party origin
-    return fetch(url.toString(), c.req.raw);
-  }
-  
-  // Otherwise, process request as normal
-  return fetch(c.req.raw);
+app.all("*", async (c) => {
+	const url = new URL(c.req.url);
+
+	// Check if incoming hostname is a key in the ORIGINS object
+	if (url.hostname in ORIGINS) {
+		const target = ORIGINS[url.hostname];
+		url.hostname = target;
+
+		// If it is, proxy request to that third party origin
+		return proxy(url, c.req.raw);
+	}
+
+	// Otherwise, process request as normal
+	return fetch(c.req.raw);
 });
 
 export default app;

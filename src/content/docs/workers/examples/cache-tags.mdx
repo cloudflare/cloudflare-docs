@@ -107,40 +107,36 @@ export default {
 ```ts
 import { Hono } from "hono";
 
-type Bindings = {};
-
-const app = new Hono<{ Bindings: Bindings }>();
+const app = new Hono();
 
 app.all("*", async (c) => {
-	try {
-		const url = new URL(c.req.url);
-		const params = url.searchParams;
-		const tags = params.has("tags") ? params.get("tags").split(",") : [];
-		const uri = params.has("uri") ? params.get("uri") : "";
+	const tags = c.req.query("tags") ? c.req.query("tags").split(",") : [];
+	const uri = c.req.query("uri") ? c.req.query("uri") : "";
 
-		if (!uri) {
-			return c.json({ error: "URL cannot be empty" }, 400);
-		}
-
-		const init = {
-			cf: {
-				cacheTags: tags,
-			},
-		};
-
-		const result = await fetch(uri, init);
-		const cacheStatus = result.headers.get("cf-cache-status");
-		const lastModified = result.headers.get("last-modified");
-
-		const response = {
-			cache: cacheStatus,
-			lastModified: lastModified,
-		};
-
-		return c.json(response, result.status);
-	} catch (err: any) {
-		return c.json({ error: err.message }, 500);
+	if (!uri) {
+		return c.json({ error: "URL cannot be empty" }, 400);
 	}
+
+	const init = {
+		cf: {
+			cacheTags: tags,
+		},
+	};
+
+	const result = await fetch(uri, init);
+	const cacheStatus = result.headers.get("cf-cache-status");
+	const lastModified = result.headers.get("last-modified");
+
+	const response = {
+		cache: cacheStatus,
+		lastModified: lastModified,
+	};
+
+	return c.json(response, result.status);
+});
+
+app.onError((err, c) => {
+	return c.json({ error: err.message }, 500);
 });
 
 export default app;

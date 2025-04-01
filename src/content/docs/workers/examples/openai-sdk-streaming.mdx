@@ -67,45 +67,33 @@ export default {
 </TabItem> <TabItem label="Hono" icon="seti:typescript">
 
 ```ts
-import { Hono } from 'hono';
-import OpenAI from 'openai';
+import { Hono } from "hono";
+import { streamText } from "hono/streaming";
+import OpenAI from "openai";
 
 interface Env {
-  OPENAI_API_KEY: string;
+	OPENAI_API_KEY: string;
 }
 
 const app = new Hono<{ Bindings: Env }>();
 
-app.get('*', async (c) => {
-  const openai = new OpenAI({
-    apiKey: c.env.OPENAI_API_KEY,
-  });
+app.get("*", async (c) => {
+	const openai = new OpenAI({
+		apiKey: c.env.OPENAI_API_KEY,
+	});
 
-  // Create a TransformStream to handle streaming data
-  let { readable, writable } = new TransformStream();
-  let writer = writable.getWriter();
-  const textEncoder = new TextEncoder();
+	const chatStream = await openai.chat.completions.create({
+		model: "gpt-4o-mini",
+		messages: [{ role: "user", content: "Tell me a story" }],
+		stream: true,
+	});
 
-  c.executionCtx.waitUntil(
-    (async () => {
-      const stream = await openai.chat.completions.create({
-        model: "gpt-4o-mini",
-        messages: [{ role: "user", content: "Tell me a story" }],
-        stream: true,
-      });
-
-      // Loop over the data as it is streamed and write to the writeable
-      for await (const part of stream) {
-        writer.write(
-          textEncoder.encode(part.choices[0]?.delta?.content || ""),
-        );
-      }
-      writer.close();
-    })()
-  );
-
-  // Send the readable back to the browser
-  return new Response(readable);
+	return streamText(c, async (stream) => {
+		for await (const message of chatStream) {
+			await stream.write(message.choices[0].delta.content || "");
+		}
+		stream.close();
+	});
 });
 
 export default app;

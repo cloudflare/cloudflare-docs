@@ -266,15 +266,15 @@ use worker::*;
 
 #[event(fetch)]
 async fn fetch(req: Request, env: Env, _ctx: Context) -> Result<Response> {
-    let basic_user = "admin";
-    // You will need an admin password. This should be
-    // attached to your Worker as an encrypted secret.
-    // Refer to https://developers.cloudflare.com/workers/configuration/secrets/
-    let basic_pass = match env.secret("PASSWORD") {
-        Ok(s) => s.to_string(),
-        Err(_) => "password".to_string(),
-    };
-    let url = req.url()?;
+let basic_user = "admin";
+// You will need an admin password. This should be
+// attached to your Worker as an encrypted secret.
+// Refer to https://developers.cloudflare.com/workers/configuration/secrets/
+let basic_pass = match env.secret("PASSWORD") {
+Ok(s) => s.to_string(),
+Err(_) => "password".to_string(),
+};
+let url = req.url()?;
 
     match url.path() {
         "/" => Response::ok("Anyone can access the homepage."),
@@ -328,8 +328,10 @@ async fn fetch(req: Request, env: Env, _ctx: Context) -> Result<Response> {
         }
         _ => Response::error("Not Found.", 404),
     }
+
 }
-```
+
+````
 </TabItem> <TabItem label="Hono" icon="seti:typescript">
 
 ```ts
@@ -341,7 +343,6 @@ async fn fetch(req: Request, env: Env, _ctx: Context) -> Result<Response> {
 
 import { Hono } from 'hono';
 import { auth } from 'hono/basic-auth';
-import { Buffer } from "node:buffer";
 
 // Define environment interface
 interface Env {
@@ -352,21 +353,6 @@ interface Env {
 
 const app = new Hono<Env>();
 
-// Helper function for comparing strings safely
-const encoder = new TextEncoder();
-function timingSafeEqual(a: string, b: string) {
-  const aBytes = encoder.encode(a);
-  const bBytes = encoder.encode(b);
-
-  if (aBytes.byteLength !== bBytes.byteLength) {
-    // Strings must be the same length in order to compare
-    // with crypto.subtle.timingSafeEqual
-    return false;
-  }
-
-  return crypto.subtle.timingSafeEqual(aBytes, bBytes);
-}
-
 // Public homepage - accessible to everyone
 app.get('/', (c) => {
   return c.text("Anyone can access the homepage.");
@@ -374,52 +360,14 @@ app.get('/', (c) => {
 
 // Logout route
 app.get('/logout', (c) => {
-  // Invalidate the "Authorization" header by returning a HTTP 401.
-  // We do not send a "WWW-Authenticate" header, as this would trigger
-  // a popup in the browser, immediately asking for credentials again.
   return c.text("Logged out.", 401);
 });
 
 // Admin route - protected with Basic Auth
-app.get('/admin', async (c) => {
-  const BASIC_USER = "admin";
-  
-  // You will need an admin password. This should be
-  // attached to your Worker as an encrypted secret.
-  // Refer to https://developers.cloudflare.com/workers/configuration/secrets/
-  const BASIC_PASS = c.env.PASSWORD ?? "password";
-  
-  // The "Authorization" header is sent when authenticated
-  const authorization = c.req.header('Authorization');
-  if (!authorization) {
-    // Prompts the user for credentials
-    return c.text("You need to login.", 401, {
-      'WWW-Authenticate': 'Basic realm="my scope", charset="UTF-8"',
-    });
-  }
-  
-  const [scheme, encoded] = authorization.split(" ");
-  
-  // The Authorization header must start with Basic, followed by a space
-  if (!encoded || scheme !== "Basic") {
-    return c.text("Malformed authorization header.", 400);
-  }
-  
-  const credentials = Buffer.from(encoded, "base64").toString();
-  
-  // The username & password are split by the first colon
-  //=> example: "username:password"
-  const index = credentials.indexOf(":");
-  const user = credentials.substring(0, index);
-  const pass = credentials.substring(index + 1);
-  
-  if (!timingSafeEqual(BASIC_USER, user) || !timingSafeEqual(BASIC_PASS, pass)) {
-    // Prompts the user for credentials again
-    return c.text("You need to login.", 401, {
-      'WWW-Authenticate': 'Basic realm="my scope", charset="UTF-8"',
-    });
-  }
-  
+app.get('/admin',
+	basicAuth({ username: BASIC_USER, password: c.env.PASSWORD }),
+	async (c) => {
+
   // Success! User is authenticated
   return c.text("🎉 You have private access!", 200, {
     'Cache-Control': 'no-store',
@@ -432,6 +380,6 @@ app.notFound((c) => {
 });
 
 export default app;
-```
+````
 
 </TabItem> </Tabs>

@@ -248,7 +248,8 @@ export default {
 
 ```ts
 import { Buffer } from "node:buffer";
-import { Hono } from 'hono';
+import { Hono } from "hono";
+import { proxy } from "hono/proxy";
 
 const encoder = new TextEncoder();
 
@@ -256,112 +257,110 @@ const encoder = new TextEncoder();
 const EXPIRY = 60;
 
 interface Env {
-  SECRET_DATA: string;
+	SECRET_DATA: string;
 }
 
-const app = new Hono<{ Bindings: Env }>();
+const app = new Hono();
 
 // Handle URL generation requests
-app.get('/generate/*', async (c) => {
-  const env = c.env;
-  
-  // You will need some secret data to use as a symmetric key
-  const secretKeyData = encoder.encode(
-    env.SECRET_DATA ?? "my secret symmetric key"
-  );
+app.get("/generate/*", async (c) => {
+	const env = c.env;
 
-  // Import the secret as a CryptoKey for both 'sign' and 'verify' operations
-  const key = await crypto.subtle.importKey(
-    "raw",
-    secretKeyData,
-    { name: "HMAC", hash: "SHA-256" },
-    false,
-    ["sign", "verify"]
-  );
-  
-  const url = new URL(c.req.url);
-  
-  // Replace "/generate/" prefix with "/"
-  url.pathname = url.pathname.replace("/generate/", "/");
-  
-  const timestamp = Math.floor(Date.now() / 1000);
-  
-  // Data to authenticate: pathname + timestamp
-  const dataToAuthenticate = `${url.pathname}${timestamp}`;
-  
-  // Sign the data
-  const mac = await crypto.subtle.sign(
-    "HMAC",
-    key,
-    encoder.encode(dataToAuthenticate)
-  );
-  
-  // Convert the signature to base64
-  const base64Mac = Buffer.from(mac).toString("base64");
-  
-  // Add verification parameter to URL
-  url.searchParams.set("verify", `${timestamp}-${base64Mac}`);
-  
-  return c.text(`${url.pathname}${url.search}`);
+	// You will need some secret data to use as a symmetric key
+	const secretKeyData = encoder.encode(
+		env.SECRET_DATA ?? "my secret symmetric key",
+	);
+
+	// Import the secret as a CryptoKey for both 'sign' and 'verify' operations
+	const key = await crypto.subtle.importKey(
+		"raw",
+		secretKeyData,
+		{ name: "HMAC", hash: "SHA-256" },
+		false,
+		["sign", "verify"],
+	);
+
+	// Replace "/generate/" prefix with "/"
+	let pathname = c.req.path.replace("/generate/", "/");
+
+	const timestamp = Math.floor(Date.now() / 1000);
+
+	// Data to authenticate: pathname + timestamp
+	const dataToAuthenticate = `${pathname}${timestamp}`;
+
+	// Sign the data
+	const mac = await crypto.subtle.sign(
+		"HMAC",
+		key,
+		encoder.encode(dataToAuthenticate),
+	);
+
+	// Convert the signature to base64
+	const base64Mac = Buffer.from(mac).toString("base64");
+
+	// Add verification parameter to URL
+	url.searchParams.set("verify", `${timestamp}-${base64Mac}`);
+
+	return c.text(`${pathname}${url.search}`);
 });
 
 // Handle verification for all other requests
-app.all('*', async (c) => {
-  const env = c.env;
-  const url = new URL(c.req.url);
-  
-  // You will need some secret data to use as a symmetric key
-  const secretKeyData = encoder.encode(
-    env.SECRET_DATA ?? "my secret symmetric key"
-  );
+app.all("*", async (c) => {
+	const env = c.env;
+	const url = c.req.url)
 
-  // Import the secret as a CryptoKey for both 'sign' and 'verify' operations
-  const key = await crypto.subtle.importKey(
-    "raw",
-    secretKeyData,
-    { name: "HMAC", hash: "SHA-256" },
-    false,
-    ["sign", "verify"]
-  );
-  
-  // Make sure the request has the verification parameter
-  if (!url.searchParams.has("verify")) {
-    return c.text("Missing query parameter", 403);
-  }
-  
-  // Extract timestamp and signature
-  const [timestamp, hmac] = url.searchParams.get("verify")!.split("-");
-  const assertedTimestamp = Number(timestamp);
-  
-  // Recreate the data that should have been signed
-  const dataToAuthenticate = `${url.pathname}${assertedTimestamp}`;
-  
-  // Convert base64 signature back to ArrayBuffer
-  const receivedMac = Buffer.from(hmac, "base64");
-  
-  // Verify the signature
-  const verified = await crypto.subtle.verify(
-    "HMAC",
-    key,
-    receivedMac,
-    encoder.encode(dataToAuthenticate)
-  );
-  
-  // If verification fails, return 403
-  if (!verified) {
-    return c.text("Invalid MAC", 403);
-  }
-  
-  // Check if the signature has expired
-  if (Date.now() / 1000 > assertedTimestamp + EXPIRY) {
-    return c.text(
-      `URL expired at ${new Date((assertedTimestamp + EXPIRY) * 1000)}`,
-      403
-    );
-  }
-  
-  // If verification passes, proxy the request to example.com
-  return fetch(new URL(url.pathname, "https://example.com"), c.req.raw);
+	// You will need some secret data to use as a symmetric key
+	const secretKeyData = encoder.encode(
+		env.SECRET_DATA ?? "my secret symmetric key",
+	);
+
+	// Import the secret as a CryptoKey for both 'sign' and 'verify' operations
+	const key = await crypto.subtle.importKey(
+		"raw",
+		secretKeyData,
+		{ name: "HMAC", hash: "SHA-256" },
+		false,
+		["sign", "verify"],
+	);
+
+	// Make sure the request has the verification parameter
+	if (!c.req.query("verify")) {
+		return c.text("Missing query parameter", 403);
+	}
+
+	// Extract timestamp and signature
+	const [timestamp, hmac] = c.req.query("verify")!.split("-");
+	const assertedTimestamp = Number(timestamp);
+
+	// Recreate the data that should have been signed
+	const dataToAuthenticate = `${c.req.path}${assertedTimestamp}`;
+
+	// Convert base64 signature back to ArrayBuffer
+	const receivedMac = Buffer.from(hmac, "base64");
+
+	// Verify the signature
+	const verified = await crypto.subtle.verify(
+		"HMAC",
+		key,
+		receivedMac,
+		encoder.encode(dataToAuthenticate),
+	);
+
+	// If verification fails, return 403
+	if (!verified) {
+		return c.text("Invalid MAC", 403);
+	}
+
+	// Check if the signature has expired
+	if (Date.now() / 1000 > assertedTimestamp + EXPIRY) {
+		return c.text(
+			`URL expired at ${new Date((assertedTimestamp + EXPIRY) * 1000)}`,
+			403,
+		);
+	}
+
+	// If verification passes, proxy the request to example.com
+	return proxy(`https://example.com/${c.req.path}`, ...c.req);
 });
 
 export default app;
@@ -384,7 +383,7 @@ EXPIRY = 60
 async def on_fetch(request, env):
     # Get the secret key
     secret_key_data = encoder.encode(env.SECRET_DATA if hasattr(env, "SECRET_DATA") else "my secret symmetric key")
-    
+
     # Import the secret as a CryptoKey for both 'sign' and 'verify' operations
     key = await crypto.subtle.importKey(
         "raw",
@@ -393,45 +392,45 @@ async def on_fetch(request, env):
         False,
         ["sign", "verify"]
     )
-    
+
     url = URL.new(request.url)
-    
+
     if url.pathname.startswith("/generate/"):
         url.pathname = url.pathname.replace("/generate/", "/", 1)
-        
+
         timestamp = int(Date.now() / 1000)
-        
+
         # Data to authenticate
         data_to_authenticate = f"{url.pathname}{timestamp}"
-        
+
         # Sign the data
         mac = await crypto.subtle.sign(
             "HMAC",
             key,
             encoder.encode(data_to_authenticate)
         )
-        
+
         # Convert to base64
         base64_mac = Buffer.from(mac).toString("base64")
-        
+
         # Set the verification parameter
         url.searchParams.set("verify", f"{timestamp}-{base64_mac}")
-        
+
         return Response.new(f"{url.pathname}{url.search}")
     else:
         # Verify the request
         if not "verify" in url.searchParams:
             return Response.new("Missing query parameter", status=403)
-        
+
         verify_param = url.searchParams.get("verify")
         timestamp, hmac = verify_param.split("-")
-        
+
         asserted_timestamp = int(timestamp)
-        
+
         data_to_authenticate = f"{url.pathname}{asserted_timestamp}"
-        
+
         received_mac = Buffer.from(hmac, "base64")
-        
+
         # Verify the signature
         verified = await crypto.subtle.verify(
             "HMAC",
@@ -439,15 +438,15 @@ async def on_fetch(request, env):
             received_mac,
             encoder.encode(data_to_authenticate)
         )
-        
+
         if not verified:
             return Response.new("Invalid MAC", status=403)
-        
+
         # Check expiration
         if Date.now() / 1000 > asserted_timestamp + EXPIRY:
             expiry_date = Date.new((asserted_timestamp + EXPIRY) * 1000)
             return Response.new(f"URL expired at {expiry_date}", status=403)
-    
+
     # Proxy to example.com if verification passes
     return fetch(URL.new(f"https://example.com{url.pathname}"), request)
 ```
