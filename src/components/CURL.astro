@@ -41,7 +41,8 @@ if (json) {
 
 if (form) {
 	const formLines = Object.entries(form).map(
-		([key, value]) => `\t--form "${key}=${value}"`,
+		([key, value]) =>
+			`\t--form "${key}=${value.toString().replaceAll('"', '\\"')}"`,
 	);
 	lines.push(...formLines);
 }
