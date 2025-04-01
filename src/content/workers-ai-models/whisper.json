@@ -12,8 +12,14 @@
     "tags": [],
     "properties": [
         {
-            "property_id": "beta",
-            "value": "false"
+            "property_id": "price",
+            "value": [
+                {
+                    "unit": "per audio minute",
+                    "price": 0.00045,
+                    "currency": "USD"
+                }
+            ]
         },
         {
             "property_id": "info",

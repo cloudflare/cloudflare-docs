@@ -12,8 +12,19 @@
     "tags": [],
     "properties": [
         {
-            "property_id": "beta",
-            "value": "false"
+            "property_id": "price",
+            "value": [
+                {
+                    "unit": "per M input tokens",
+                    "price": 0.11,
+                    "currency": "USD"
+                },
+                {
+                    "unit": "per M output tokens",
+                    "price": 0.19,
+                    "currency": "USD"
+                }
+            ]
         },
         {
             "property_id": "context_window",

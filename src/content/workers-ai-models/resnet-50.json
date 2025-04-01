@@ -12,8 +12,14 @@
     "tags": [],
     "properties": [
         {
-            "property_id": "beta",
-            "value": "false"
+            "property_id": "price",
+            "value": [
+                {
+                    "unit": "per inference request",
+                    "price": 0.0000025,
+                    "currency": "USD"
+                }
+            ]
         },
         {
             "property_id": "info",
