@@ -47,7 +47,7 @@
 		"@stoplight/json-schema-tree": "4.0.0",
 		"@types/hast": "3.0.4",
 		"@types/he": "1.2.3",
-		"@types/node": "22.13.14",
+		"@types/node": "22.13.17",
 		"@types/react": "19.0.7",
 		"@types/react-dom": "19.0.4",
 		"@typescript-eslint/parser": "8.28.0",
