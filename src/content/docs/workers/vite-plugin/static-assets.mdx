@@ -1,0 +1,17 @@
+---
+pcx_content_type: reference
+title: Static Assets
+head: []
+sidebar:
+  order: 6
+description: Static assets with the Vite plugin
+---
+
+When using the Cloudflare Vite plugin, it is the `client` environment that is deployed as your static assets.
+This will typically include files such as static HTML, front-end JavaScript, CSS, images and fonts.
+
+On running `vite build`, an output `wrangler.json` configuration file is included as part of the build output.
+The `assets.directory` field in this file is automatically populated with the path to your `client` build output.
+It is therefore not necessary to provide the `assets.directory` field in your input Worker configuration.
+
+For more information about using static assets in Vite, see [Static Asset Handling](https://vite.dev/guide/assets).
