@@ -5,14 +5,16 @@ import { Code } from "@astrojs/starlight/components";
 
 type Props = z.input<typeof props>;
 
+const Record = z.record(z.string(), z.any());
+
 const props = z.object({
 	method: z
 		.enum(["GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"])
 		.default("GET"),
 	url: z.string().url(),
 	headers: z.record(z.string(), z.string()).default({}),
-	json: z.record(z.string(), z.any()).optional(),
-	form: z.record(z.string(), z.any()).optional(),
+	json: z.union([Record, z.array(Record)]).optional(),
+	form: Record.optional(),
 	code: z
 		.custom<Omit<ComponentProps<typeof Code>, "code" | "lang">>()
 		.optional(),
