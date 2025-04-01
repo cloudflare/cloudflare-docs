@@ -451,10 +451,10 @@
                 },
                 "limits_single_file": {
                     "title": "Purge limits (single file purge). The limits are per account.",
-                    "free": "800 urls per second",
-                    "pro": "1500 urls per second",
-                    "biz": "1500 urls per second",
-                    "ent": "3000 urls per second"
+                    "free": "800 URLs per second",
+                    "pro": "1500 URLs per second",
+                    "biz": "1500 URLs per second",
+                    "ent": "3000 URLs per second"
 				}
 			}
 		},
