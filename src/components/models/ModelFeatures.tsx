@@ -2,6 +2,11 @@ import type { WorkersAIModelsSchema } from "~/schemas";
 
 const ModelFeatures = ({ model }: { model: WorkersAIModelsSchema }) => {
 	const nf = new Intl.NumberFormat("en-US");
+	const currencyFormatter = new Intl.NumberFormat("en-US", {
+		style: "currency",
+		currency: "USD",
+		maximumFractionDigits: 10,
+	});
 	const properties: any = {};
 	model.properties.forEach((property: any) => {
 		properties[property.property_id] = property.value;
@@ -15,7 +20,7 @@ const ModelFeatures = ({ model }: { model: WorkersAIModelsSchema }) => {
 						<thead>
 							<tr>
 								<>
-									<th>Features</th>
+									<th>Model Info</th>
 									<th />
 								</>
 							</tr>
@@ -105,6 +110,17 @@ const ModelFeatures = ({ model }: { model: WorkersAIModelsSchema }) => {
 									<td>Yes</td>
 								</tr>
 							)}
+							{properties.price &&
+								properties.price.map(
+									(price: { price: number; unit: string }) => (
+										<tr key={price.price}>
+											<td>Pricing</td>
+											<td>
+												{currencyFormatter.format(price.price)} {price.unit}
+											</td>
+										</tr>
+									),
+								)}
 						</tbody>
 					</table>
 				</>

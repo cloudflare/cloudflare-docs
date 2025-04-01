@@ -52,10 +52,10 @@ const props = {
 	<div>
 		<h2>{note.data.title}</h2>
 		<div>
-			<strong
+			<time class="font-bold" datetime={note.data.date.toISOString()}
 				>{format(note.data.date, "MMM dd, yyyy")}, {
 					format(note.data.date, "hh:mm a")
-				}</strong
+				}</time
 			>
 			<ProductPills products={note.data.products} />
 		</div>

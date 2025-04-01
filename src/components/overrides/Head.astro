@@ -150,6 +150,16 @@ const ogImageUrl = new URL(ogImagePath, Astro.url.origin).toString();
 	});
 });
 
+head.push({
+	tag: "link",
+	attrs: {
+		rel: "alternate",
+		type: "text/markdown",
+		href: Astro.url.pathname + "index.md",
+	},
+	content: "",
+});
+
 metaTags.map((attrs) => {
 	head.push({
 		tag: "meta",

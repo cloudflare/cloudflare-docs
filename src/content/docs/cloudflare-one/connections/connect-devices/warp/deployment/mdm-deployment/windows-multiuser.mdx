@@ -22,7 +22,7 @@ To request participation in this beta, contact your account team.
 
 | System   | Availability | Minimum WARP version |
 | -------- | ------------ | -------------------- |
-| Windows  | ✅           | 2025.1.447.1         |
+| Windows  | ✅           |  2025.2.460.1        |
 | macOS    | ❌           |                      |
 | Linux    | ❌           |                      |
 | iOS      | ❌           |                      |
@@ -33,8 +33,8 @@ To request participation in this beta, contact your account team.
 
 Cloudflare WARP supports multiple user registrations on a single Windows device. When deployed in multi-user mode, the WARP client will automatically switch user registrations after a user logs in to their Windows account. All traffic to Cloudflare will be attributed to the currently active Windows user. This allows administrators to apply identity-based policies and device settings, audit user activity, and remove individual users from a shared workstation.
 
-:::note
-A user must log out of their Windows account before switching to another account. A user cannot lock the screen and log in to another account, use the **Switch users** option in Windows, or have any other type of concurrent sessions.
+:::caution[DNS logging]
+If a user enables **Log DNS queries** in the WARP GUI (or runs `warp-cli dns log enable`), WARP will store all DNS queries on the device onto disk. Any user on the device will be able to examine the DNS queries of another user.
 :::
 
 ## Enable multi-user mode
@@ -100,6 +100,7 @@ The following flowchart shows how WARP registration settings take effect as user
 flowchart TB
     start(["Enable multi-user mode"])-->reg["Active Windows user is prompted to register WARP"]
 		reg--"Log out of Windows"-->prelogin
+		reg--"Switch user"-->regexists
 
     subgraph preloginbehavior["Windows login screen"]
 		prelogin{{"Is there a pre-login <br />registration?"}}
@@ -113,4 +114,14 @@ flowchart TB
 		regexists--"Yes"-->user["Switch to that user's registration"]
 		regexists-. "No" .->reg
 ```
+
+### Fast user switching
+
+:::note
+Requires [multi-user mode](#enable-multi-user-mode).
+:::
+
+[Fast user switching](https://learn.microsoft.com/windows/win32/shell/fast-user-switching) is a Windows feature that allows users to switch accounts without logging out. With fast user switching, multiple users may be logged in to the device and generating network traffic. The WARP client will attribute all traffic to the user who has the [interactive windows station](http://techcommunity.microsoft.com/blog/askperf/sessions-desktops-and-windows-stations/372473). For example, if user A is logged in and fast user switches to user B, traffic from both accounts will appear to come from user B. This is because user B is now actively using the Windows desktop GUI. Now assume that user B logs out and there is no [pre-login registration](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/windows-prelogin/); WARP will continue to attribute traffic to user B until user A logs back in to the Windows desktop.
+
+To accurately attribute network traffic to specific users, Cloudflare recommends disabling fast user switching or at the very least configuring a [pre-login registration](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/windows-prelogin/).
 

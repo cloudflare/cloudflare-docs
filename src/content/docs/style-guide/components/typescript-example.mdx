@@ -16,13 +16,39 @@ Some TypeScript syntax influences runtime behaviour, and cannot be stripped.
 Please refer to the [Unsupported Syntax](https://github.com/bloomberg/ts-blank-space?tab=readme-ov-file#unsupported-syntax) section of the project's README.
 :::
 
+:::caution
+Code blocks are typically configured with options on the opening fence, like so:
+
+````mdx
+```ts collapse={1-2}
+// ...
+```
+````
+
+These cannot be extracted by `TypeScriptExample` so they must be moved to the [`code`](#code) prop.
+
+````mdx
+<TypeScriptExample code={{
+  collapse: "1-2"
+}}>
+```ts
+// ...
+```
+</TypeScriptExample>
+````
+:::
+
 ## Component
 
 ````mdx live
 import { TypeScriptExample } from "~/components";
 
-<TypeScriptExample>
+<TypeScriptExample code={{
+  collapse: "1-2"
+}}>
 ```ts
+// comment to demonstrate
+// collapsible sections
 interface Environment {
   KV: KVNamespace;
 }

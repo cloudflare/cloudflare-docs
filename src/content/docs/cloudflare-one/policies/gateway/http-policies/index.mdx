@@ -40,6 +40,8 @@ API value: `allow`
 
 **Traffic**
 
+- [Access Infrastructure Target](#access-infrastructure-target)
+- [Access Private App](#access-private-app)
 - [Application](#application)
 - [Content Categories](#content-categories)
 - [Destination Continent IP Geolocation](#destination-continent)
@@ -105,6 +107,8 @@ API value: `block`
 
 **Traffic**
 
+- [Access Infrastructure Target](#access-infrastructure-target)
+- [Access Private App](#access-private-app)
 - [Application](#application)
 - [Content Categories](#content-categories)
 - [Destination Continent IP Geolocation](#destination-continent)
@@ -393,13 +397,13 @@ Policies created using the URL selector are case-sensitive.
 
 Gateway matches HTTP traffic against the following selectors, or criteria:
 
-### All Access Private App Destinations
-
-<Render file="gateway/selectors/all-access-private-app-destinations" />
-
-### All Access App Targets
+### Access Infrastructure Target
 
 <Render file="gateway/selectors/all-access-app-targets" />
+
+### Access Private App
+
+<Render file="gateway/selectors/all-access-private-app-destinations" />
 
 ### Application
 

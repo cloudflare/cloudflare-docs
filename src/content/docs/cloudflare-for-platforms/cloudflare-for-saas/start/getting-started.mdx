@@ -71,6 +71,10 @@ Requests to `mystore.example.com` would go to your CNAME target (`customers.saas
 
 [^1]: <Render file="regional-services" />
 
+:::caution
+If your customer needs to use an A record to point to the SaaS target, you will need to get [apex proxying](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/apex-proxying/). By default, using an A record to point to the target is not a supported setup.
+:::
+
 #### Service continuation
 
 <Render file="get-started-service-continuation" />

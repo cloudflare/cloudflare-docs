@@ -437,10 +437,24 @@
 				},
 				"options": {
 					"title": "Purge options",
-					"free": "URL",
-					"pro": "URL",
-					"biz": "URL",
-					"ent": "URL, Hostname, Tag, or Prefix"
+					"free": "URL, Hostname, Tag, Prefix, and Purge Everything",
+                    "pro": "URL, Hostname, Tag, Prefix, and Purge Everything",
+                    "biz": "URL, Hostname, Tag, Prefix, and Purge Everything",
+                    "ent": "URL, Hostname, Tag, Prefix, and Purge Everything"
+                },
+                "limits": {
+                    "title": "Purge limits (tags, prefix URL, hostname, and purge everything). The limits are per account.",
+                    "free": "5 requests per minute with a bucket size of 25, supporting up to 100 operations per request. Purge everything: 5 requests per second with a bucket size of 25, supporting up to 100 operations per request",
+                    "pro": "5 requests per second with a bucket size of 25, supporting up to 100 operations per request",
+                    "biz": "10 requests per second with a bucket size of 50, supporting up to 100 operations per request",
+                    "ent": "50 requests per second with a bucket size of 500, supporting up to 100 operations per request"
+                },
+                "limits_single_file": {
+                    "title": "Purge limits (single file purge). The limits are per account.",
+                    "free": "800 URLs per second",
+                    "pro": "1500 URLs per second",
+                    "biz": "1500 URLs per second",
+                    "ent": "3000 URLs per second"
 				}
 			}
 		},

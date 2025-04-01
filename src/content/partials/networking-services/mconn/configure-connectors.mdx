@@ -229,6 +229,9 @@ To add a Connector on-ramp:
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. In **WAN configuration**, select **Create**. You can create one or more [wide area networks (WANs)](https://www.cloudflare.com/learning/network-layer/what-is-a-wan/). Configuring multiple WANs will create multiple <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels (one IPsec tunnel per WAN port). This allows the Connector to failover between circuits according to their <GlossaryTooltip term="tunnel health-check" link="/magic-wan/reference/tunnel-health-checks/">health</GlossaryTooltip>.
+		:::note
+		This is not the same as a high availability (HA) configuration. HA configurations need two Connectors to work. Refer to [About high availability configurations](#about-high-availability-configurations) for more information.
+		:::
 2. In **Interface name**, enter a descriptive name for your WAN.
 3. **Interface number** <Markdown text={props.wan} />
 4. In **VLAN ID**, enter a number between `0` and `4094` to specify a [VLAN ID](/magic-wan/configuration/connector/reference/#vlan-id).
@@ -237,13 +240,6 @@ To add a Connector on-ramp:
 7. **Addressing**: Select **DHCP**. This is needed the first time you set up your Connector to successfully download all settings to the machine and activate it. If you need a static IP address in your network environment:
 	1. Continue the set up flow below to activate your Connector.
 	2. Refer to [WAN with a static IP address](#wan-with-a-static-ip-address). If you choose a static IP, you also need to specify the static IP and gateway addresses.
-
-  <div class="medium-img">
-
-![An example of how to configure you Magic WAN Connector WAN](~/assets/images/magic-wan/connector/wan-config.png)
-
-  </div>
-
 8. Select **Save** when you are finished.
 
 </TabItem> <TabItem label="API">
@@ -496,6 +492,8 @@ When you are ready to connect your Magic WAN Connector to the Cloudflare network
 		<p>Advanced users can locally configure their Magic WAN Connector to work in a static IP configuration. This local method does not require having access to a DHCP Internet connection. However, it does require being comfortable with using tools to access the serial port on Magic WAN Connector as well as using a serial terminal client to access the Connector's environment.</p>
 		<p>Below is a detailed description of how to use the serial port to configure your Magic WAN Connector locally.</p>
 
+		<Aside type="note">The <code>reset device</code> option in your Connector clears most of the configuration that is locally cached, resets the password to the default, and reboots.</Aside>
+
 		<AnchorHeading title="Equipment required" depth={3} />
 		<p>To access the serial port on Magic WAN Connector you will need the following equipment:</p>
 		<ul>
@@ -563,6 +561,7 @@ When you are ready to connect your Magic WAN Connector to the Cloudflare network
 		</ol>
 
 		<AnchorHeading title="3. Configure a static IP on Magic WAN Connector" depth={3} />
+		<p>The <code>reset device</code> option in your Connector clears most of the configuration that is locally cached, resets the password to the default, and reboots.</p>
 		<ol>
 			<li>Log into the Connector.
 				<ol>
@@ -572,7 +571,7 @@ When you are ready to connect your Magic WAN Connector to the Cloudflare network
 			<li>From the menu, go to <strong>Bootstrap</strong> with the arrow keys and select it with the Enter key.</li>
 			<li>Select the Jack (physical port) you want to configure for the initialization of the connector.</li>
 			<li>Enter the VLAN tag (if applicable) of the network. Leave it blank if untagged.</li>
-			<li>Select whether the network is DHCP or static.</li>
+			<li>Select the <code>static</code> option as your network type.</li>
 
 			<Aside>The main reason to use the bootstrapper is if every network the Connector is plugged into is either static, behind a VLAN, or both. If you find yourself here and configuring a network with DHCP and no VLAN, you are probably not in the right place. See the section on configuring your Connector <a href="#set-up-cloudflare-dashboard">via the dashboard</a>.</Aside>
 
