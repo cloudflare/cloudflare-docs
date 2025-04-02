@@ -32,7 +32,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`r2 bucket`](#r2-bucket) - Manage Workers R2 buckets.
 - [`r2 object`](#r2-object) - Manage Workers R2 objects.
 - [`secret`](#secret) - Manage the secret variables for a Worker.
-- [`secret bulk`](#secretbulk) - Manage multiple secret variables for a Worker.
+- [`secret bulk`](#secret-bulk) - Manage multiple secret variables for a Worker.
 - [`workflows`](#workflows) - Manage and configure Workflows.
 - [`tail`](#tail) - Start a session to livestream logs from a deployed Worker.
 - [`pages`](#pages) - Configure Cloudflare Pages.
@@ -1284,6 +1284,7 @@ Permanently delete all messages in a queue.
 ```txt
 wrangler queues purge <queue-name>
 ```
+
 - `queue-name` <Type text="string" /> <MetaInfo text="required" />
   - The name of the queue from which messages should be deleted.
 
@@ -1294,15 +1295,18 @@ Pause message delivery from a Queue to consumers (including push consumers, and 
 ```txt
 wrangler queues pause-delivery <queue-name>
 ```
+
 - `queue-name` <Type text="string" /> <MetaInfo text="required" />
   - The name of the queue which delivery should be paused.
 
 ### `resume-delivery`
 
 Resume delivery from a Queue to consumers (including push consumers, and HTTP pull consumers)
+
 ```txt
 wrangler queues resume-delivery <queue-name>
 ```
+
 - `queue-name` <Type text="string" /> <MetaInfo text="required" />
   - The name of the queue from which delivery should be resumed.
 
