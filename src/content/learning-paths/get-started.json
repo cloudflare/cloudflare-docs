@@ -4,6 +4,6 @@
 	"priority": 1,
 	"description": "Set up your application to benefit from Cloudflare’s speed, security, and reliability.",
 	"products": ["Cloudflare Essentials", "DNS", "SSL/TLS", "WAF", "Cache"],
-	"product_group": "Cloudflare essentials",
+	"product_group": "Core platform",
 	"additional_groups": ["Application security", "Application performance"]
 }

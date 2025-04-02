@@ -187,6 +187,7 @@
 /bots/concepts/ja3-fingerprint/ /bots/concepts/ja3-ja4-fingerprint/ 301
 /bots/reference/verified-bot-categories/ /bots/concepts/bot/verified-bots/categories/ 301
 /bots/reference/verified-bot-policy/ /bots/concepts/bot/verified-bots/policy/ 301
+/bots/concepts/challenge-solve-rate/ /fundamentals/security/cloudflare-challenges/challenge-solve-rate/ 301
 
 #browser-rendering
 /browser-rendering/get-started/browser-rendering-with-do/ /browser-rendering/workers-binding-api/browser-rendering-with-do/ 301
@@ -695,6 +696,14 @@
 /learning-paths/secure-internet-traffic/connect-networks/choose-on-ramp/ /learning-paths/secure-internet-traffic/connect-devices/choose-on-ramp/ 301
 /support/about-cloudflare/attack-preparation-and-response/best-practices-ddos-preventative-measures/ /learning-paths/prevent-ddos-attacks/ 301
 
+/learning-paths/cybersafe/account-creation/create-area1-org/ /learning-paths/cybersafe/account-creation/create-email-security-account/ 301
+/learning-paths/cybersafe/area1-onboarding/area1-inline/ /learning-paths/cybersafe/email-security-onboarding/api-deployment/ 301
+/learning-paths/cybersafe/area1-onboarding/area1-next-steps/ /learning-paths/cybersafe/email-security-onboarding/email-security-next-steps/ 301
+/learning-paths/cybersafe/concepts/what-is-area1/ /learning-paths/cybersafe/concepts/what-is-email-security/ 301
+/learning-paths/cybersafe/area1-onboarding/ /learning-paths/cybersafe/email-security-onboarding/ 301
+
+
+
 ## dns-filtering / secure-internet-traffic
 /learning-paths/dns-filtering/ /learning-paths/secure-internet-traffic/ 301
 /learning-paths/dns-filtering/connect-devices/change-dns-resolver/ /learning-paths/secure-internet-traffic/build-dns-policies/onboard-dns/ 301
@@ -1097,10 +1106,10 @@
 /support/firewall/managed-rules-web-application-firewall-waf/migrating-from-waf-managed-rules-to-waf-managed-rulesets/ /waf/reference/migration-guides/waf-managed-rules-migration/ 301
 /support/firewall/tools/understanding-cloudflare-zone-lockdown/ /waf/tools/zone-lockdown/ 301
 /support/firewall/tools/understanding-cloudflare-user-agent-blocking/ /waf/tools/user-agent-blocking/ 301
-/support/more-dashboard-apps/cloudflare-apps/installing-cloudflare-apps/ /support/more-dashboard-apps/cloudflare-apps/ 301
-/support/more-dashboard-apps/cloudflare-apps/reporting-bugs-or-feature-requests-for-cloudflare-apps/ /support/more-dashboard-apps/cloudflare-apps/ 301
-/support/more-dashboard-apps/cloudflare-apps/troubleshooting-issues-with-cloudflare-apps/ /support/more-dashboard-apps/cloudflare-apps/ 301
-/support/more-dashboard-apps/cloudflare-apps/will-cloudflare-apps-make-my-site-slower/ /support/more-dashboard-apps/cloudflare-apps/ 301
+/support/more-dashboard-apps/cloudflare-apps/installing-cloudflare-apps/ /workers/ 301
+/support/more-dashboard-apps/cloudflare-apps/reporting-bugs-or-feature-requests-for-cloudflare-apps/ /workers/ 301
+/support/more-dashboard-apps/cloudflare-apps/troubleshooting-issues-with-cloudflare-apps/ /workers/ 301
+/support/more-dashboard-apps/cloudflare-apps/will-cloudflare-apps-make-my-site-slower/ /workers/ 301
 /support/network/ /network/ 301
 /support/network/configuring-ip-geolocation/ /network/ip-geolocation/ 301
 /support/network/setting-up-response-buffering/ /network/response-buffering/ 301
@@ -1169,7 +1178,10 @@
 /fundamentals/basic-tasks/preparing-for-surges-or-spikes-in-web-traffic/ /fundamentals/performance/preparing-for-surges-or-spikes-in-web-traffic/ 301
 /support/third-party-software/others/configuring-an-amazon-web-services-static-site-to-use-cloudflare/ /rules/cloud-connector/providers/ 301
 /support/third-party-software/others/enabling-cloudflare-ssl-on-azure-storage-static-web-hosting-applications/ /rules/cloud-connector/providers/ 301
-
+/support/more-dashboard-apps/cloudflare-apps/ /workers/ 301
+/support/more-dashboard-apps/cloudflare-apps/managing-cloudflare-apps/ /workers/ 301
+/support/more-dashboard-apps/cloudflare-apps/removing-cloudflare-apps/ /workers/ 301
+/support/troubleshooting/http-status-codes/http-status-codes/ /support/troubleshooting/http-status-codes/ 301
 
 # r2
 /r2/platform/s3-compatibility/api/ /r2/api/s3/api/ 301
@@ -1328,6 +1340,8 @@
 /workers/learning/fetch-event-lifecycle/ /workers/runtime-apis/fetch-event/ 301
 /workers/learning/getting-started/ /workers/get-started/quickstarts/ 301
 /workers/learning/profiling-workers/ /workers/reference/how-workers-works/ 301
+/workers/platform/changelog/wrangler/ https://github.com/cloudflare/workers-sdk/releases 301
+/workers/platform/changelog/wrangler/index.xml https://github.com/cloudflare/workers-sdk/releases.atom 301
 /workers/platform/scripts/ /api/resources/workers/subresources/scripts/methods/list/ 301
 /workers/platform/services/ /workers/runtime-apis/bindings/service-bindings/ 301
 /workers/platform/web-assembly/ /workers/platform/webassembly/ 301
@@ -1739,6 +1753,7 @@
 /cloudflare-one/tutorials/zsh-env-var/ /cloudflare-one/tutorials/cli/ 301
 
 ### DYNAMIC REDIRECTS ###
+/*/index.html.md /:splat/index.md 301
 /api-next/* /api/:splat 301
 /changelog-next/* /changelog/:splat 301
 /browser-rendering/quick-actions-rest-api/* /browser-rendering/rest-api/:splat 301

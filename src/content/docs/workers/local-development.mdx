@@ -7,6 +7,8 @@ head: []
 description: Develop your Workers locally via Wrangler.
 ---
 
+import { Aside } from "~/components";
+
 Cloudflare Workers and most connected resources can be fully developed and tested locally - providing confidence that the applications you build locally will work the same way in production. This allows you to be more efficient and effective by providing a faster feedback loop and removing the need to [test against remote resources](#develop-using-remote-resources-and-bindings). Local development runs against the same production runtime used by Cloudflare Workers, [workerd](https://github.com/cloudflare/workerd).
 
 In addition to testing Workers locally with [`wrangler dev`](/workers/wrangler/commands/#dev), the use of Miniflare allows you to test other Developer Platform products locally, such as [R2](/r2/), [KV](/kv/), [D1](/d1/), and [Durable Objects](/durable-objects/).
@@ -126,6 +128,19 @@ npx wrangler dev --remote
 ```
 
 For some products like KV and R2, remote resources used for `wrangler dev --remote` must be specified with preview ID/names in the [Wrangler configuration file](/workers/wrangler/configuration/) such as `preview_id` for KV or `preview_bucket name` for R2. Resources used for remote mode (preview) can be different from resources used for production to prevent changing production data during development. To use production data in `wrangler dev --remote`, set the preview ID/name of the resource to the ID/name of your production resource.
+
+<Aside
+	type="note"
+	title="Number of routes per zone in a remote development session"
+>
+	When you run a remote development session using the `--remote` flag, a
+	[limit](/workers/platform/limits/#routes-and-domains) of 50
+	[routes](/workers/configuration/routing/routes/) per zone is enforced. The
+	Quick Editor in the Cloudflare Dashboard also uses `wrangler dev --remote`, so
+	any changes made there are subject to the same 50-route limit. If your zone
+	has more than 50 routes, you **will not be able to run a remote session**. To
+	fix this, you must remove routes until you are under the 50-route limit.
+</Aside>
 
 ## Customize `wrangler dev`
 

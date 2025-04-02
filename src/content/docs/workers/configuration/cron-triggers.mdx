@@ -88,6 +88,13 @@ Cloudflare supports cron expressions with five fields, along with most [Quartz s
 | Months        | 1-12, case-insensitive 3-letter abbreviations ("JAN", "aug", etc.) | \* , - /     |
 | Weekdays      | 1-7, case-insensitive 3-letter abbreviations ("MON", "fri", etc.)  | \* , - / L # |
 
+:::note
+
+Days of the week go from 1 = Sunday to 7 = Saturday, which is different on some other cron systems (where 0 = Sunday and 6 = Saturday).
+To avoid ambiguity you may prefer to use the three latter abbreviations (e.g. `SUN` rather than 1).
+
+:::
+
 ### Examples
 
 Some common time intervals that may be useful for setting up your Cron Trigger:

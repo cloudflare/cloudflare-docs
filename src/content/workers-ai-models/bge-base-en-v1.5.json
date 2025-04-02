@@ -8,11 +8,18 @@
         "name": "Text Embeddings",
         "description": "Feature extraction models transform raw data into numerical features that can be processed while preserving the information in the original dataset. These models are ideal as part of building vector search applications or Retrieval Augmented Generation workflows with Large Language Models (LLM)."
     },
+    "created_at": "2023-09-25 19:21:11.898",
     "tags": [],
     "properties": [
         {
-            "property_id": "beta",
-            "value": "false"
+            "property_id": "price",
+            "value": [
+                {
+                    "unit": "per M input tokens",
+                    "price": 0.067,
+                    "currency": "USD"
+                }
+            ]
         },
         {
             "property_id": "info",

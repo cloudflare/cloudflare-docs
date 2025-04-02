@@ -95,6 +95,15 @@ entries:
     nextSteps: No action needed. Everything is working correctly.
     otherFilters: None.
 
+  - name: Secondary DNS Warning
+    audience: Customers who are using Cloudflare for Secondary DNS and want to receive notifications about warnings issued by the transferred zone.
+    availability: Enterprise plans.
+    associatedProducts: DNS
+    nextSteps: |-
+      Actions for failure notifications will depend on the type of failure.
+
+    otherFilters: None.
+
   - name: Secondary DNSSEC Validation Warning
     audience: Customers who are using Cloudflare for Secondary DNS and want to receive notifications about the failure or success of zone transfers from their primary nameservers.
     availability: Enterprise plans.

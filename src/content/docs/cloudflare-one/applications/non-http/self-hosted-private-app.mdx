@@ -22,25 +22,27 @@ This feature replaces the legacy [private network app type](/cloudflare-one/appl
 
 ## Add your application to Access
 
-<Render file="access/self-hosted-app/create-app" product="cloudflare-one" params={{ private: true }}/>
+<Render
+	file="access/self-hosted-app/create-app"
+	product="cloudflare-one"
+	params={{ private: true }}
+/>
 
-6. Add the private IP and/or private hostname that represents the application. You can use [wildcards](/cloudflare-one/policies/access/app-paths/) with private hostnames to protect multiple parts of an application that share a root path.
+6.  Add the private IP and/or private hostname that represents the application. You can use [wildcards](/cloudflare-one/policies/access/app-paths/) with private hostnames to protect multiple parts of an application that share a root path.
 
-	:::note
-	Private hostnames are currently only available over port `443` over HTTPS and the application must have a valid Server Name Indicator (SNI).
-	:::
+    :::note
+    Private hostnames are currently only available over port `443` over HTTPS and the application must have a valid Server Name Indicator (SNI).
+    :::
 
 7.  <Render file="access/add-access-policies" product="cloudflare-one" />
 
-8. Configure how users will authenticate:
+8.  Configure how users will authenticate:
 
-		1. Select the [**Identity providers**](/cloudflare-one/identity/idp-integration/) you want to enable for your application.
+        1. Select the [**Identity providers**](/cloudflare-one/identity/idp-integration/) you want to enable for your application.
+        2. (Recommended) If you plan to only allow access via a single IdP, turn on **Instant Auth**. End users will not be shown the [Cloudflare Access login page](/cloudflare-one/applications/login-page/). Instead, Cloudflare will redirect users directly to your SSO login event.
+        3. (Recommended) Turn on **WARP authentication identity** to allow users to authenticate to the application using their [WARP session identity](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/). We recommend turning this on if your application is not in the browser and cannot handle a `302` redirect.
 
-		2. (Recommended) If you plan to only allow access via a single IdP, turn on **Instant Auth**. End users will not be shown the [Cloudflare Access login page](/cloudflare-one/applications/login-page/). Instead, Cloudflare will redirect users directly to your SSO login event.
-
-		3. (Recommended) Turn on **WARP authentication identity** to allow users to authenticate to the application using their [WARP session identity](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/). We recommend turning this on if your application is not in the browser and cannot handle a `302` redirect.
-
-9. Select **Next**.
+9.  Select **Next**.
 
 10. (Optional) Configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application.
 
@@ -48,9 +50,12 @@ This feature replaces the legacy [private network app type](/cloudflare-one/appl
 
 12. Select **Next**.
 
-13. <Render file="access/self-hosted-app/advanced-settings" product="cloudflare-one" />
+13. <Render
+    	file="access/self-hosted-app/advanced-settings"
+    	product="cloudflare-one"
+    />
 
-		These settings only apply to private hostnames and require [Gateway TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/).
+        These settings only apply to private hostnames and require [Gateway TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/).
 
 14. Select **Save**.
 
@@ -74,9 +79,9 @@ The WARP client manages sessions for all non-HTTPS applications. Users will rece
 
 By default, Cloudflare will evaluate a private application's Access policies after evaluating all Gateway network policies. To evaluate Access private applications before or after specific Gateway policies, create the following [Gateway network policy](/cloudflare-one/policies/gateway/network-policies/):
 
-| Selector                            | Operator | Value | Action |
-| ----------------------------------- | -------- | ----- | ------ |
-| All Access App Private Destinations | is       | on    | Allow  |
+| Selector           | Operator | Value     | Action |
+| ------------------ | -------- | --------- | ------ |
+| Access Private App | is       | _Present_ | Allow  |
 
 You can move this policy in the Gateway policy builder to change its [order of precedence](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence).
 

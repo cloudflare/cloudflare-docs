@@ -1,9 +1,6 @@
 ---
 pcx_content_type: reference
 title: Logging
-sidebar:
-  badge:
-    text: Beta
 ---
 
 import { Render } from "~/components";
@@ -53,7 +50,7 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/
 ## Managing log storage
 
 To manage your log storage effectively, you can:
-- Set Storage Limits: Configure a limit on the number of logs stored per gateway in your gateway settings to ensure you only pay for what you need. 
+- Set Storage Limits: Configure a limit on the number of logs stored per gateway in your gateway settings to ensure you only pay for what you need.
 - Enable Automatic Log Deletion: Activate the Automatic Log Deletion feature in your gateway settings to automatically delete the oldest logs once the log limit you’ve set or the default storage limit of 10 million logs is reached. This ensures new logs are always saved without manual intervention.
 
 ## How to delete logs
@@ -62,7 +59,7 @@ To manage your log storage effectively and ensure continuous logging, you can de
 
 ### Automatic Log Deletion
 
-​To maintain continuous logging within your gateway's storage constraints, enable Automatic Log Deletion in your Gateway settings. This feature automatically deletes the oldest logs once the log limit you've set or the default storage limit of 10 million logs is reached, ensuring new logs are saved without manual intervention. 
+​To maintain continuous logging within your gateway's storage constraints, enable Automatic Log Deletion in your Gateway settings. This feature automatically deletes the oldest logs once the log limit you've set or the default storage limit of 10 million logs is reached, ensuring new logs are saved without manual intervention.
 
 ### Manual deletion
 
@@ -88,4 +85,4 @@ See full list of available filters and their descriptions below:
 
 ### API deletion
 
-You can programmatically delete logs using the AI Gateway API. For more comprehensive information on the `DELETE` logs endpoint, check out the [Cloudflare API documentation](https://developers.cloudflare.com/api/resources/ai_gateway/subresources/logs/methods/delete/). 
+You can programmatically delete logs using the AI Gateway API. For more comprehensive information on the `DELETE` logs endpoint, check out the [Cloudflare API documentation](https://developers.cloudflare.com/api/resources/ai_gateway/subresources/logs/methods/delete/).

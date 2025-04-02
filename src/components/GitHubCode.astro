@@ -17,6 +17,7 @@ const props = z
 			.transform((val) => val.split("-").map(Number))
 			.optional(),
 		tag: z.string().optional(),
+		useTypeScriptExample: z.boolean().default(false),
 		code: z.custom<ComponentProps<typeof Code>>().optional(),
 	})
 	.strict()
@@ -25,9 +26,19 @@ const props = z
 			return !(val.lines && val.tag);
 		},
 		{ message: "Lines and tag are mutually exclusive filters." },
+	)
+	.refine(
+		(val) => {
+			return val.useTypeScriptExample && val.lang === "ts";
+		},
+		{
+			message:
+				"useTypeScriptExample can only be used when 'lang' is set to 'ts'",
+		},
 	);
 
-const { repo, commit, file, lang, lines, tag, code } = props.parse(Astro.props);
+const { repo, commit, file, lang, lines, tag, useTypeScriptExample, code } =
+	props.parse(Astro.props);
 
 const res = await fetch(
 	`https://gh-code.developers.cloudflare.com/${repo}/${commit}/${file}`,
@@ -69,9 +80,9 @@ contentLines = contentLines.filter(
 	(line) => !/<[/]?docs-tag name=".*">/.test(line),
 );
 
-const Wrapper = lang === "ts" ? TypeScriptExample : Fragment;
+const Wrapper = useTypeScriptExample ? TypeScriptExample : Fragment;
 ---
 
-<Wrapper>
+<Wrapper code={code}>
 	<Code {...code} code={contentLines.join("\n")} lang={lang} />
 </Wrapper>

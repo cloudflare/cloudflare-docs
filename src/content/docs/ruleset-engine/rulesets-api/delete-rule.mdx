@@ -6,6 +6,8 @@ sidebar:
   order: 9
 ---
 
+import { APIRequest } from "~/components";
+
 Deletes a single rule in a ruleset at the account or zone level.
 
 Use one of the following API endpoints:
@@ -22,15 +24,17 @@ If the delete operation succeeds, the API method call returns a `200 OK` HTTP st
 
 ## Example
 
-The following example deletes rule `{rule_id_1}` belonging to ruleset `{ruleset_id}`.
+The following example deletes rule `$RULE_ID_1` belonging to ruleset `$RULESET_ID`.
 
 The response will include the complete ruleset after deleting the rule.
 
-```bash
-curl --request DELETE \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{ruleset_id}/rules/{rule_id_1} \
---header "Authorization: Bearer <API_TOKEN>"
-```
+<APIRequest
+	path="/accounts/{account_id}/rulesets/{ruleset_id}/rules/{rule_id}"
+	method="DELETE"
+	parameters={{
+		rule_id: "$RULE_ID_1",
+	}}
+/>
 
 ```json output
 {

@@ -484,7 +484,7 @@ entries:
     keywords: [request, bots, client, visitor]
     summary: Provides the type and purpose of a verified bot.
     description: |-
-      For more details, refer to [Verified Bot Categories](/bots/reference/verified-bot-categories/).
+      For more details, refer to [Verified bot categories](/bots/concepts/bot/verified-bots/categories/).
 
   - name: cf.bot_management.score
     data_type: Number

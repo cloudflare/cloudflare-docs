@@ -1,6 +1,6 @@
 ---
 pcx_content_type: concept
-title: Build a remote MCP server
+title: Build a Remote MCP server
 sidebar:
   order: 4
 ---
@@ -57,7 +57,9 @@ In the inspector, enter the URL of your MCP server, `http://localhost:8787/sse`,
 
 ![MCP inspector — where to enter the URL of your MCP server](~/assets/images/agents/mcp-inspector-enter-url.png)
 
-You will be redirected to an example OAuth login page. Enter any username and password and click "Log in and approve" to continue. (you can add your own authentication and/or authorization provider to replace this. Refer to the [authorization](/agents/model-context-protocol/authorization/) section for details on how to do this.)
+You will be redirected to an example OAuth login page. Enter any username and password and click "Log in and approve" to continue. 
+
+Note: You can add your own authentication and/or authorization provider to replace this. Refer to the [authorization](/agents/model-context-protocol/authorization/) section for details on how to do this.
 
 ![MCP OAuth Login Page](~/assets/images/agents/mcp-demo-oauth-flow.png)
 
@@ -77,7 +79,7 @@ If you have already [connected a git repository](/workers/ci-cd/builds/) to the 
 
 After deploying, take the URL of your deployed MCP server, and enter it in the MCP inspector running on `http://localhost:5173`. You now have a remote MCP server, deployed to Cloudflare, that MCP clients can connect to.
 
-### Connect your remote MCP server to Claude and other MCP Clients via a local proxy
+### Connect your Remote MCP server to Claude and other MCP Clients via a local proxy
 
 Now that your MCP server is running with OAuth authentication, you can use the [`mcp-remote` local proxy](https://www.npmjs.com/package/mcp-remote) to connect Claude Desktop or other MCP clients to it — even though these tools aren't yet _remote_ MCP clients, and don't support remote transport or authorization on the client side. This lets you to test what an interaction with your OAuth-enabled MCP server will be like with a real MCP client.
 

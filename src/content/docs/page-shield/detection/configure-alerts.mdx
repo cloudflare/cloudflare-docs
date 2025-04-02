@@ -36,14 +36,16 @@ For each alert configured with a filter, Page Shield will do the following:
 3. If the resource is allowed by the policy, check if the new or modified resource should trigger the current Page Shield alert.
 4. If the alert should trigger, send an alert notification to the configured destinations.
 
-:::note
 When you set the **Policies of these zones** filter in an alert you will not receive notifications for resources blocked by an allow policy. These are [policy violations](/page-shield/policies/violations/) that you can review in the dashboard, through GraphQL, or via Logpush.
-:::
+
+:::note
 
 You will not receive notifications for alerts configured with a **Policies of these zones** filter in the following cases:
 
 - No configured policies in the zone
 - Policy configured in log mode
 - Policy is not enabled
+
+:::
 
 For alerts without a **Policies of these zones** filter, you will receive alerts for resources detected in all your zones, and you may receive alerts about resources that are blocked by one of your configured allow policies.
