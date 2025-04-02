@@ -60,53 +60,28 @@ For more information on list operations, refer to the [Lists API](/waf/tools/lis
 
 Use the [Create list items](/api/resources/rules/subresources/lists/subresources/items/methods/create/) operation to add URL redirect items to the list. Enter the list ID from the previous step in the endpoint URL:
 
-TODO Fix example.
-
 <APIRequest
 	path="/accounts/{account_id}/rules/lists/{list_id}/items"
 	method="POST"
 	parameters={{
 		list_id: "f848b6ccb07647749411f504d6f88794",
 	}}
-	json={{
-		remove_me: [
-			{
-				redirect: {
-					source_url: "example.com/blog/",
-					target_url: "https://example.com/blog/latest",
-				},
+	json={[
+		{
+			redirect: {
+				source_url: "example.com/blog/",
+				target_url: "https://example.com/blog/latest",
 			},
-			{
-				redirect: {
-					source_url: "example.net/",
-					target_url: "https://example.net/under-construction.html",
-					status_code: 307,
-				},
+		},
+		{
+			redirect: {
+				source_url: "example.net/",
+				target_url: "https://example.net/under-construction.html",
+				status_code: 307,
 			},
-		],
-	}}
+		},
+	]}
 />
-
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rules/lists/f848b6ccb07647749411f504d6f88794/items \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '[
-  {
-    "redirect": {
-      "source_url": "example.com/blog/",
-      "target_url": "https://example.com/blog/latest"
-    }
-  },
-  {
-    "redirect": {
-      "source_url": "example.net/",
-      "target_url": "https://example.net/under-construction.html",
-      "status_code": 307
-    }
-  }
-]'
-```
 
 ```json output
 {
