@@ -45,7 +45,7 @@ To disable **HTTP/2** with the API, send a [`PATCH`](/api/resources/zones/subres
 
 ## ERR_HTTP2_PROTOCOL_ERROR
 
-Requests proxied by Cloudflare may result with an error for the visitors with `ERR_HTTP2_PROTOCOL_ERROR` visible in the Developer Tools Console. These errors are usually due to an issue on the origin web server configuration, but might only materialize when requests are proxied by Cloudflare depending on the client browser's behavior. Some possible causes are:
+Requests proxied by Cloudflare may result in an error for visitors with the error code `ERR_HTTP2_PROTOCOL_ERROR` visible in the Developer Tools Console. These errors are usually due to an issue on the origin web server configuration, but might only materialize when requests are proxied by Cloudflare depending on the client browser's behavior. Some possible causes are:
 
 ### Malformed HTTP response headers
 
