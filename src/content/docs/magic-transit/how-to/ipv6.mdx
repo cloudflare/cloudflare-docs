@@ -1,6 +1,20 @@
 ---
 pcx_content_type: how-to
-title: Configure BGP peering
+title: Configure IPv6
 sidebar:
   order: 4
+  group:
+    badge: Beta
 ---
+
+IPv6 (beta) for Magic Transit allows customers with existing IPv4 tunnels to enable and test IPv6 functionality with minimal configuration changes. This beta provides an opportunity to evaluate IPv6 addressing, routing, and security within Magic Transit while maintaining the existing IPv4 setup.
+
+As this is a beta release, we encourage customers to contact their account team to enable the feature and provide feedback to help refine the IPv6 functionality before general availability.
+
+## Cloudflare support for IPv6 in Magic Transit
+
+Cloudflare transports IPv6 traffic over an IPv6-over-IPv4 GRE tunnel. Here is how it works:
+
+- The IPv6 packet is encapsulated into an IPv4 GRE packet, with the IP protocol field set to `47` (indicating it's a GRE packet), along with a GRE header
+- The IPv4 packet header and GRE header are the additional headers (or encapsulation overhead) that ensure the correct routing of the IPv6 traffic
+- On most routers that support this tunneling method, the tunnel mode is set to `gre`
