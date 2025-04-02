@@ -37,12 +37,12 @@ And because R2 is natively integrated with Cloudflare's global network, files st
 **How it Works**
 
 1. **User initiates upload from the frontend:** The app collects file details (e.g. size, name) and calls a backend API (a Cloudflare Worker) to begin the upload process.
-2. **Worker authenticates the user and validates the request:** The Worker confirms that the user is logged in, has upload permissions, and that the file is within acceptable limits (e.g. 10MB max, allowed MIME types).
-3. **Worker returns a signed PUT URL to R2:** A signed URL allows the frontend to upload directly to R2 for a limited time, under a specific key or namespace. No need for the Worker to handle large files directly.
+2. **Worker authenticates the user and validates the request:** The Worker confirms that the user is logged in, has upload permissions, and that the file is within acceptable limits (for example, 10MB max, allowed MIME types).
+3. **Worker returns a signed PUT URL to R2:** A signed URL allows the frontend to upload directly to R2 for a limited time, under a specific key or namespace. There is no need for the Worker to handle large files directly.
 4. **Frontend uploads the file directly to R2:** The file is streamed directly from the client to R2.
 5. **(Optional) Trigger post-upload workflows:** R2 offers [event notifications](/r2/buckets/event-notifications/) to send messages to a queue when data in your R2 bucket changes, like a new upload. Example post-processing:
    - Scan, moderate, or transform the file.
-   - Write metadata (e.g. `user_id`, `file_path`, `timestamp`) to [D1](/d1/), Cloudflare's serverless SQL database.
+   - Write metadata (for example, `user_id`, `file_path`, `timestamp`) to [D1](/d1/), Cloudflare's serverless SQL database.
    - Notify the user or update a dashboard/UI.
 
 For more information on uploading data directly from the client to R2, refer to the documentation on [presigned URLs](/r2/api/s3/presigned-urls/).
@@ -57,7 +57,7 @@ This architecture employs [Workers AI](/workers-ai/) to perform inference at the
 
 **How it Works**
 
-1. **User initiates content generation:** The frontend sends a request to a Cloudflare Worker to create content using an AI model (e.g. "Create a thumbnail image for this product").
+1. **User initiates content generation:** The frontend sends a request to a Cloudflare Worker to create content using an AI model (for example, "Create a thumbnail image for this product").
 2. **Worker invokes Workers AI:** The Worker passes the user input to a model deployed on Workers AI.
 3. **Generated output is returned to the Worker:** The response could be plain text, a Base64 image, a binary buffer, or other structured data—depending on the model type.
 4. **Worker uploads the output to R2 directly:** No signed URL or client upload is needed. The Worker performs a secure, authenticated `PUT` request to store the output in a designated bucket.
