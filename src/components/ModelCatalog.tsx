@@ -266,13 +266,17 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 
 					const author = model.model.name.split("/")[1];
 					const authorInfo = authorData[author];
+					const isPinned = pinnedModelNames.includes(model.model.name);
 
 					return (
 						<a
 							key={model.model.id}
-							className="mb-3 block w-full self-start rounded-md border border-solid border-gray-200 p-3 !text-inherit no-underline hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800 lg:w-[48%]"
+							className="mb-3 block w-full self-start rounded-md border border-solid border-gray-200 p-3 !text-inherit no-underline hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800 lg:w-[48%] relative"
 							href={`/workers-ai/models/${model.model_display_name}`}
 						>
+							{isPinned && (
+								<span className="absolute top-1 right-2" title="Pinned model">📌</span>
+							)}
 							<div className="-mb-1 flex items-center">
 								{authorInfo?.logo ? (
 									<img
