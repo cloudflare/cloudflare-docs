@@ -1110,6 +1110,7 @@
 /support/more-dashboard-apps/cloudflare-apps/reporting-bugs-or-feature-requests-for-cloudflare-apps/ /workers/ 301
 /support/more-dashboard-apps/cloudflare-apps/troubleshooting-issues-with-cloudflare-apps/ /workers/ 301
 /support/more-dashboard-apps/cloudflare-apps/will-cloudflare-apps-make-my-site-slower/ /workers/ 301
+/support/more-dashboard-apps/cloudflare-stream/delivering-videos-with-cloudflare/ /fundamentals/reference/policies-compliances/delivering-videos-with-cloudflare/ 301
 /support/network/ /network/ 301
 /support/network/configuring-ip-geolocation/ /network/ip-geolocation/ 301
 /support/network/setting-up-response-buffering/ /network/response-buffering/ 301
