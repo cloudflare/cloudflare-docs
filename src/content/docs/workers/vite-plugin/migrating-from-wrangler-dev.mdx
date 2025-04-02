@@ -7,7 +7,7 @@ sidebar:
 description: Migrating from wrangler dev to the Vite plugin
 ---
 
-In most cases, migrating from `wrangler dev` is straightforward and you can follow the instructions in [Get started](../get-started/).
+In most cases, migrating from `wrangler dev` is straightforward and you can follow the instructions in [Get started](/workers/vite-plugin/get-started/).
 There are a few key differences to highlight:
 
 ### Input and output Worker config files
@@ -21,14 +21,14 @@ Once you have run `vite build`, running `wrangler deploy` will automatically loc
 
 With the Cloudflare Vite plugin, Cloudflare environments are applied at dev and build time.
 Running `wrangler deploy --env some-env` is therefore not applicable and the environment to deploy should instead be set by running `CLOUDFLARE_ENV=some-env vite build`.
-See [Cloudflare Environments](../cloudflare-environments/) for more information.
+See [Cloudflare Environments](/workers/vite-plugin/cloudflare-environments/) for more information.
 
 ### Redundant fields in the Wrangler config file
 
 There are various options in the Worker config file that are ignored when using Vite, as they are either no longer applicable or are replaced by Vite equivalents.
 If these options are provided, then warnings will be printed to the console with suggestions for how to proceed.
 Examples where the Vite configuration should be used instead include `alias` and `define`.
-See [Vite Environments](../vite-environments/) for more information about configuring your Worker environments in Vite.
+See [Vite Environments](/workers/vite-plugin/vite-environments/) for more information about configuring your Worker environments in Vite.
 
 ### Local only data during local development
 
