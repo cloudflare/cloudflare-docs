@@ -24,7 +24,7 @@ A single-file purge performed through your Cloudflare dashboard does not clear o
 You can purge objects with these characteristics using an API call to ([purge files by URL](/api/resources/cache/methods/purge/)). In the data/header section of the API call, you must include all headers and cache keys contained in the cached resource, along with their matching values.
 
 :::caution
-Always use UTF-8 encoded URLs for single-file cache purges. Wildcards are not supported on single file purge, and you must use purge by hostname, prefix, or implement cache tags as an alternative solution. All of the listed options are Enterprise features.
+Always use UTF-8 encoded URLs for single-file cache purges. Wildcards are not supported on single file purge, and you must use purge by hostname, prefix, or implement cache tags as an alternative solution.
 :::
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
