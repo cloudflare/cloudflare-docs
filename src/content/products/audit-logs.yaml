@@ -1,0 +1,7 @@
+name: Audit Logs
+
+product:
+  title: Audit Logs
+  group: Core Platform
+  url: /audit-logs/
+  show: false
