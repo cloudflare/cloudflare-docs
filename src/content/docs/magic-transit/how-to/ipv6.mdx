@@ -32,7 +32,7 @@ Cloudflare transports IPv6 traffic over an IPv6-over-IPv4 GRE tunnel. Here is ho
 
 ## How to configure IPv6
 
-Since IPv6 works over an existing IPv4 tunnel you will need to choose either an existing IPv4 GRE tunnel or create a new one to test IPv6. All settings that apply to the IPv4 GRE tunnel apply to the IPv6 tunnel as well, and there is only one new field you need to fill out: **IPv6 Interface address**. Here, you enter one of the IPv6 `/127` address from `2606:54c1:7::/48` that Cloudflare automatically allocates for the GRE tunnel. The other, you need to enter in your router.
+Since IPv6 works over an existing IPv4 tunnel you will need to choose either an existing IPv4 GRE tunnel or create a new one to test IPv6. All settings that apply to the IPv4 GRE tunnel apply to the IPv6 tunnel as well, and there is only one new field you need to fill out: **IPv6 Interface address**. Here, you enter one of the two IPv6 addresses from the `/127` subnet that Cloudflare automatically allocates for the GRE tunnel. The other, you need to enter in your router.
 
 To configure IPv6:
 
