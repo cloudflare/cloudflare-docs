@@ -24,4 +24,4 @@ export const workersAiModelsSchema = z.object({
 		input: z.object({}).passthrough(),
 		output: z.object({}).passthrough(),
 	}),
-})
+});

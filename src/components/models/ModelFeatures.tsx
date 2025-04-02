@@ -115,8 +115,9 @@ const ModelFeatures = ({ model }: { model: WorkersAIModelsSchema }) => {
 									<td>Unit Pricing</td>
 									<td>
 										{properties.price
-											.map((price: { price: number; unit: string }) => 
-												`${currencyFormatter.format(price.price)} ${price.unit}`
+											.map(
+												(price: { price: number; unit: string }) =>
+													`${currencyFormatter.format(price.price)} ${price.unit}`,
 											)
 											.join(", ")}
 									</td>
