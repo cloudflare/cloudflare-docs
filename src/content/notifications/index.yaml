@@ -78,7 +78,7 @@ entries:
     otherFilters: None.
 
   - name: Secondary DNS Primaries Failing
-    audience: Enterprise customers who have at least one secondary zone and want to receive a notification if at least one of their primary nameservers is failing.
+    audience: Enterprise customers who have at least one secondary zone and want to receive a notification if at least one of their primary nameservers is failing while transfers from at least one other primary are still successful.
     availability: Purchase of Secondary DNS.
     associatedProducts: DNS
     nextSteps: |-
