@@ -504,7 +504,7 @@ entries:
     plan_info_label: Enterprise add-on
     summary: Indicates whether static resources should be included when you create a rule using [`cf.bot_management.score`](/ruleset-engine/rules-language/fields/reference/cf.bot_management.score/).
     description: |-
-      For more details, refer to [Static resource protection](/bots/reference/static-resources/).
+      For more details, refer to [Static resource protection](/bots/additional-configurations/static-resources/).
 
       Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
 
@@ -515,7 +515,7 @@ entries:
     plan_info_label: Enterprise add-on
     summary: Provides an SSL/TLS fingerprint to help you identify potential bot requests.
     description: |-
-      For more details, refer to [JA3/JA4 Fingerprint](/bots/concepts/ja3-ja4-fingerprint/).
+      For more details, refer to [JA3/JA4 Fingerprint](/bots/additional-configurations/ja3-ja4-fingerprint/).
 
       Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
 
@@ -526,7 +526,7 @@ entries:
     plan_info_label: Enterprise add-on
     summary: Provides an SSL/TLS fingerprint to help you identify potential bot requests.
     description: |-
-      For more details, refer to [JA3/JA4 Fingerprint](/bots/concepts/ja3-ja4-fingerprint/).
+      For more details, refer to [JA3/JA4 Fingerprint](/bots/additional-configurations/ja3-ja4-fingerprint/).
 
       Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
 
@@ -537,7 +537,7 @@ entries:
     plan_info_label: Enterprise add-on
     summary: Indicates whether the visitor has previously passed a JS Detection.
     description: |-
-      For more details, refer to [JavaScript detections](/bots/reference/javascript-detections/).
+      For more details, refer to [JavaScript detections](/bots/additional-configurations/javascript-detections/).
 
       Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
 
