@@ -1182,6 +1182,7 @@
 /support/more-dashboard-apps/cloudflare-apps/managing-cloudflare-apps/ /workers/ 301
 /support/more-dashboard-apps/cloudflare-apps/removing-cloudflare-apps/ /workers/ 301
 /support/troubleshooting/http-status-codes/http-status-codes/ /support/troubleshooting/http-status-codes/ 301
+/support/troubleshooting/cloudflare-errors/troubleshooting-other-errors/ /speed/optimization/protocol/http2/#err_http2_protocol_error 301
 
 # r2
 /r2/platform/s3-compatibility/api/ /r2/api/s3/api/ 301
