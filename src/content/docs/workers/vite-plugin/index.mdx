@@ -12,7 +12,24 @@ Your Worker code runs inside [workerd](https://github.com/cloudflare/workerd), m
 
 ### Features
 
+- Uses the Vite [Environment API](https://vite.dev/guide/api-environment) to integrate Vite with the Workers runtime
 - Provides direct access to Workers runtime APIs and bindings
-- Supports Workers Assets, enabling you to build static sites, SPAs, and full-stack applications
+- Builds your front-end assets for deployment to Cloudflare, enabling you to build static sites, SPAs, and full-stack applications
+- Official support for [React Router v7](https://reactrouter.com/) with server-side rendering
 - Leverages Vite's hot module replacement for consistently fast updates
 - Supports `vite preview` for previewing your build output in the Workers runtime prior to deployment
+
+### Use cases
+
+- React Router v7 (support for more full-stack frameworks is coming soon)
+- Single-page applications (SPAs), with or without an integrated backend API
+- Standalone Workers
+- Multi-Worker applications
+
+### Get started
+
+{/* Add link to React Router framework guide */}To create a new application from a ready-to-go template, refer to the [React](/workers/frameworks/framework-guides/react/) or [Vue](/workers/frameworks/framework-guides/vue/) framework guides.
+
+To create a standalone Worker from scratch, refer to [Get started](./get-started/).
+
+For a more in-depth look at adapting an existing Vite project and an introduction to key concepts, refer to the [Tutorial](./tutorial/).

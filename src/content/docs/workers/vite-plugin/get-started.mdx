@@ -9,6 +9,11 @@ description: Get started with the Vite plugin
 
 import { PackageManagers, WranglerConfig } from "~/components";
 
+:::note
+This guide demonstrates creating a standalone Worker from scratch.
+{/* Add link to React Router framework guide */}If you would instead like to create a new application from a ready-to-go template, refer to the [React](/workers/frameworks/framework-guides/react/) or [Vue](/workers/frameworks/framework-guides/vue/) framework guides.
+:::
+
 ### Start with a basic `package.json`
 
 ```json
@@ -20,7 +25,8 @@ import { PackageManagers, WranglerConfig } from "~/components";
 	"scripts": {
 		"dev": "vite",
 		"build": "vite build",
-		"preview": "vite preview"
+		"preview": "vite preview",
+		"deploy": "wrangler deploy"
 	}
 }
 ```
@@ -70,4 +76,4 @@ export default {
 };
 ```
 
-You can now develop (`vite dev`), build (`vite build`), preview (`vite preview`), and deploy (`wrangler deploy`) your application.
+You can now develop (`npm run dev`), build (`npm run build`), preview (`npm run preview`), and deploy (`npm run deploy`) your application.
