@@ -110,17 +110,18 @@ const ModelFeatures = ({ model }: { model: WorkersAIModelsSchema }) => {
 									<td>Yes</td>
 								</tr>
 							)}
-							{properties.price &&
-								properties.price.map(
-									(price: { price: number; unit: string }) => (
-										<tr key={price.price}>
-											<td>Pricing</td>
-											<td>
-												{currencyFormatter.format(price.price)} {price.unit}
-											</td>
-										</tr>
-									),
-								)}
+							{properties.price && properties.price.length > 0 && (
+								<tr>
+									<td>Unit Pricing</td>
+									<td>
+										{properties.price
+											.map((price: { price: number; unit: string }) => 
+												`${currencyFormatter.format(price.price)} ${price.unit}`
+											)
+											.join(", ")}
+									</td>
+								</tr>
+							)}
 						</tbody>
 					</table>
 				</>
