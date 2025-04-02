@@ -104,21 +104,6 @@ entries:
 
     otherFilters: None.
 
-  - name: Secondary DNSSEC Validation Warning
-    audience: Customers who are using Cloudflare for Secondary DNS and want to receive notifications about the failure or success of zone transfers from their primary nameservers.
-    availability: Enterprise plans.
-    associatedProducts: DNS
-    nextSteps: |-
-      Success alerts require no further action. Actions for failure notifications will depend on the type of failure.
-
-      Possible actions include:
-
-      * Checking the Access Control List (ACL) on your primary nameserver.
-      * Checking if Cloudflare IPs have been [configured correctly on your primary nameserver](/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/).
-      * Checking logs on primary nameservers for other errors.
-
-    otherFilters: None.
-
   - name: HTTP DDoS Attack Alert
     audience: "[WAF](/waf/) or [CDN](/cache/) customers who want to receive a notification when Cloudflare has mitigated HTTP attacks that generate more than 100 requests per second."
     availability: All Cloudflare plans.
