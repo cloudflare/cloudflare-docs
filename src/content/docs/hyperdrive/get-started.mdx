@@ -109,6 +109,14 @@ Hyperdrive accepts the combination of these parameters in the common connection 
 		postgres://USERNAME:PASSWORD@HOSTNAME_OR_IP_ADDRESS:PORT/database_name
 
     	```
+
+			Most database providers will provide a connection string you can directly copy-and-paste directly into Hyperdrive.
+
+To create a Hyperdrive connection, run the `wrangler` command, replacing the placeholder values passed to the `--connection-string` flag with the values of your existing database:
+
+```sh
+npx wrangler hyperdrive create <YOUR_CONFIG_NAME> --connection-string="postgres://user:password@HOSTNAME_OR_IP_ADDRESS:PORT/database_name"
+```
     </TabItem>
     <TabItem label="MySQL">
     	```txt
@@ -116,17 +124,19 @@ Hyperdrive accepts the combination of these parameters in the common connection 
     	mysql://USERNAME:PASSWORD@HOSTNAME_OR_IP_ADDRESS:PORT/database_name
 
     	```
+
+			Most database providers will provide a connection string you can directly copy-and-paste directly into Hyperdrive.
+
+			To create a Hyperdrive connection, run the `wrangler` command, replacing the placeholder values passed to the `--connection-string` flag with the values of your existing database:
+
+```sh
+npx wrangler hyperdrive create <YOUR_CONFIG_NAME> --connection-string="mysql://user:password@HOSTNAME_OR_IP_ADDRESS:PORT/database_name"
+```
     </TabItem>
 
 </Tabs>
 
-Most database providers will provide a connection string you can directly copy-and-paste directly into Hyperdrive.
 
-To create a Hyperdrive connection, run the `wrangler` command, replacing the placeholder values passed to the `--connection-string` flag with the values of your existing database:
-
-```sh
-npx wrangler hyperdrive create <YOUR_CONFIG_NAME> --connection-string="postgres://user:password@HOSTNAME_OR_IP_ADDRESS:PORT/database_name"
-```
 
 :::note[Manage caching]
 By default, Hyperdrive will cache query results. If you wish to disable caching, pass the flag `--caching-disabled`.

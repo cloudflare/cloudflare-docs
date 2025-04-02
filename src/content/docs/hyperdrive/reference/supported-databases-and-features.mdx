@@ -1,6 +1,6 @@
 ---
 pcx_content_type: concept
-title: Supported databases
+title: Supported databases and features
 sidebar:
   order: 2
 ---
@@ -38,5 +38,16 @@ Hyperdrive does not support the following PostgreSQL features:
 - `LISTEN` and `NOTIFY`.
 - `PREPARE` and `DEALLOCATE`.
 - Any modification to per-session state not explicitly documented as supported elsewhere.
+
+## Unsupported MySQL features:
+
+Hyperdrive does not support the following MySQL features:
+
+- Non-UTF8 characters in queries
+- `USE` statements
+- Multi-statement queries
+- Prepared statement queries via SQL (using `PREPARE` and `EXECUTE` statements)
+- `COM_INIT_DB` messages
+- [Authentication plugins](https://dev.mysql.com/doc/refman/8.4/en/authentication-plugins.html) other than `caching_sha2_password` or `mysql_native_password`
 
 In cases where you need to issue these unsupported statements from your application, the Hyperdrive team recommends setting up a second, direct client without Hyperdrive.

@@ -28,7 +28,7 @@ Turn your existing regional database into a globally distributed database.
 
 </Description>
 
-<Plan type="workers-paid" />
+<Plan type="workers-all" />
 
 Hyperdrive is a service that accelerates queries you make to existing databases, making it faster to access your data from across the globe from [Cloudflare Workers](/workers/), irrespective of your users' location.
 
@@ -109,22 +109,23 @@ export default {
      database: env.DB_NAME,
      port: env.DB_PORT
 
-		 // This is needed to use mysql2 with Workers
+    	 // This is needed to use mysql2 with Workers
      // This configures mysql2 to use static parsing instead of eval() parsing (not available on Workers)
      disableEval: true
-   });
 
-   const [results, fields] = await connection.query(
-     'SHOW tables;'
-   );
+});
 
-   return new Response(JSON.stringify({ results, fields }), {
-     headers: {
-       'Content-Type': 'application/json',
-       'Access-Control-Allow-Origin': '*',
-     },
-   });
- },
+const [results, fields] = await connection.query(
+'SHOW tables;'
+);
+
+return new Response(JSON.stringify({ results, fields }), {
+headers: {
+'Content-Type': 'application/json',
+'Access-Control-Allow-Origin': '\*',
+},
+});
+},
 } satisfies ExportedHandler<Env>;
 
 ````
@@ -152,6 +153,7 @@ export default {
 		]
 	}
 ````
+
 </TabItem>
 </Tabs>
 
@@ -170,9 +172,15 @@ Connect Hyperdrive to your existing database and deploy a [Worker](/workers/) th
 
 </Feature>
 
-<Feature header="PostgreSQL support" href="/hyperdrive/configuration/connect-to-postgres/" cta="Connect Hyperdrive to your PostgreSQL database">
+<Feature header="PostgreSQL support" href="/hyperdrive/examples/connect-to-postgres/" cta="Connect Hyperdrive to your PostgreSQL database">
 
 Hyperdrive allows you to connect to any PostgreSQL or PostgreSQL-compatible database.
+
+</Feature>
+
+<Feature header="MySQL support" href="/hyperdrive/examples/connect-to-mysql/" cta="Connect Hyperdrive to your MySQL database">
+
+Hyperdrive allows you to connect to any MySQL or MySQL-compatible database.
 
 </Feature>
 

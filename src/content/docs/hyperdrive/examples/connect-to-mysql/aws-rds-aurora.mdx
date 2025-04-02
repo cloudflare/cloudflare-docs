@@ -2,7 +2,7 @@
 type: example
 summary: Connect Hyperdrive to an AWS RDS or Aurora database instance.
 pcx_content_type: example
-title: Connect to AWS RDS and Aurora
+title: AWS RDS and Aurora
 sidebar:
   order: 14
 description: Connect Hyperdrive to an AWS RDS or Aurora database instance.
@@ -23,7 +23,7 @@ To allow Hyperdrive to connect to your database, you will need to ensure that Hy
 When creating or modifying an instance in the AWS console:
 
 1. Configure a **DB cluster identifier** and other settings you wish to customize.
-2. Under **Settings** > **Credential settings**, note down the **Master username** and **Master password**.
+2. Under **Settings** > **Credential settings**, note down the **Master username** and **Master password** (Aurora only).
 3. Under the **Connectivity** header, ensure **Public access** is set to **Yes**.
 4. Select an **Existing VPC security group** that allows public Internet access from `0.0.0.0/0` to the port your database instance is configured to listen on (default: `5432` for PostgreSQL instances).
 5. Select **Create database**.
@@ -90,4 +90,4 @@ With a database user, password, database endpoint (hostname and port) and databa
 
 ## 3. Create a database configuration
 
-<Render file="create-hyperdrive-config" />
+<Render file="create-hyperdrive-config-mysql" />

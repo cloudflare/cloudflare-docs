@@ -1,0 +1,29 @@
+---
+type: example
+summary: Connect Hyperdrive to a Planetscale Postgres database.
+pcx_content_type: example
+title: Planetscale
+sidebar:
+  order: 4
+description: Connect Hyperdrive to a Planetscale Postgres database.
+---
+
+import { Render } from "~/components";
+
+This example shows you how to connect Hyperdrive to a [Planetscale](https://Planetscale.tech/) Postgres database.
+
+## 1. Allow Hyperdrive access
+
+You can connect Hyperdrive to any existing Planetscale database by creating a new user and fetching your database connection string.
+
+### Planetscale Dashboard
+
+1. Go to the [**Planetscale dashboard**](https://app.planetscale.com/) and select the database you wish to connect to.
+2. Click **Connect**. Enter `hyperdrive-user` as the password name (or your preferred name) and configure the permissions as desired. Select **Create password**. Note the username and password as they will not be displayed again.
+3. Select **Other** as your language or framework. Note down the database host, database name, database username, and password. You will need these to create a database configuration in Hyperdrive.
+
+With the host, database name, username and password, you can now create a Hyperdrive database configuration.
+
+## 2. Create a database configuration
+
+<Render file="create-hyperdrive-config-mysql" />

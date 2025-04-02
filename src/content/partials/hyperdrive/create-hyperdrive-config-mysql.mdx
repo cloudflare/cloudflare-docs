@@ -9,12 +9,12 @@ To configure Hyperdrive, you will need:
 - The IP address (or hostname) and port of your database.
 - The database username (for example, `hyperdrive-demo`) you configured in a previous step.
 - The password associated with that username.
-- The name of the database you want Hyperdrive to connect to. For example, `postgres`.
+- The name of the database you want Hyperdrive to connect to. For example, `mysql`.
 
 Hyperdrive accepts the combination of these parameters in the common connection string format used by database drivers:
 
 ```txt
-postgres://USERNAME:PASSWORD@HOSTNAME_OR_IP_ADDRESS:PORT/database_name
+mysql://USERNAME:PASSWORD@HOSTNAME_OR_IP_ADDRESS:PORT/database_name
 ```
 
 Most database providers will provide a connection string you can directly copy-and-paste directly into Hyperdrive.
@@ -22,7 +22,7 @@ Most database providers will provide a connection string you can directly copy-a
 To create a Hyperdrive configuration with the [Wrangler CLI](/workers/wrangler/install-and-update/), open your terminal and run the following command. Replace \<NAME_OF_HYPERDRIVE_CONFIG> with a name for your Hyperdrive configuration and paste the connection string provided from your database host, or replace `user`, `password`, `HOSTNAME_OR_IP_ADDRESS`, `port`, and `database_name` placeholders with those specific to your database:
 
 ```sh
-npx wrangler hyperdrive create <NAME_OF_HYPERDRIVE_CONFIG> --connection-string="postgres://user:password@HOSTNAME_OR_IP_ADDRESS:PORT/database_name"
+npx wrangler hyperdrive create <NAME_OF_HYPERDRIVE_CONFIG> --connection-string="mysql://user:password@HOSTNAME_OR_IP_ADDRESS:PORT/database_name"
 ```
 
 :::note
@@ -51,7 +51,7 @@ id = "<ID OF THE CREATED HYPERDRIVE CONFIGURATION>"
 
 ## 3. Use Hyperdrive from your Worker
 
-<Render file="use-postgresjs-to-make-query" />
+<Render file="use-mysql2-to-make-query" />
 
 ## Next steps
 

@@ -40,7 +40,7 @@ entries:
     description: |-
       When connecting to a database that requires secure clear-text password authentication over TLS, Hyperdrive will now support this authentication method.
 
-      Refer to the documentation to see [all PostgreSQL authentication modes supported by Hyperdrive](/hyperdrive/reference/supported-databases#supported-postgresql-authentication-modes).
+      Refer to the documentation to see [all PostgreSQL authentication modes supported by Hyperdrive](/hyperdrive/reference/supported-databases-and-features#supported-postgresql-authentication-modes).
   - publish_date: "2024-10-30"
     title: New Hyperdrive configurations to private databases using Tunnels are validated before creation
     description: |-
