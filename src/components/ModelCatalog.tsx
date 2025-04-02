@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import ModelInfo from "./models/ModelInfo";
 import ModelBadges from "./models/ModelBadges";
 import { authorData } from "./models/data";
@@ -19,6 +19,18 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 		capabilities: [],
 	});
 
+	// Sort models by created_at date (newest first)
+	const sortedModels = useMemo(() => {
+		return [...models].sort((a, b) => {
+			// Default dates if created_at is not available
+			const dateA = a.created_at ? new Date(a.created_at) : new Date(0);
+			const dateB = b.created_at ? new Date(b.created_at) : new Date(0);
+			
+			// Sort in descending order (newest first)
+			return dateB.getTime() - dateA.getTime();
+		});
+	}, [models]);
+
 	useEffect(() => {
 		const params = new URLSearchParams(window.location.search);
 
@@ -35,7 +47,7 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 		});
 	}, []);
 
-	const mapped = models.map((model) => ({
+	const mapped = sortedModels.map((model) => ({
 		model: {
 			...model,
 			capabilities: model.properties

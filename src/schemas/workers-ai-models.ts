@@ -12,6 +12,7 @@ export const workersAiModelsSchema = z.object({
 		name: z.string(),
 		description: z.string(),
 	}),
+	created_at: z.string().optional(),
 	tags: z.string().array().optional(),
 	properties: z
 		.object({
@@ -23,4 +24,4 @@ export const workersAiModelsSchema = z.object({
 		input: z.object({}).passthrough(),
 		output: z.object({}).passthrough(),
 	}),
-});
+})
