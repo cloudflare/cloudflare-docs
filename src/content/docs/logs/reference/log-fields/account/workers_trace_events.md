@@ -9,6 +9,12 @@ sidebar:
 
 The descriptions below detail the fields available for `workers_trace_events`.
 
+## CPUTimeMs
+
+Type: `int`
+
+The amount of CPU time used by the Worker script, in milliseconds.
+
 ## DispatchNamespace
 
 Type: `string`
@@ -74,3 +80,9 @@ A list of user-defined tags used to categorize the Worker.
 Type: `object`
 
 The version of the script that was invoked.
+
+## WallTimeMs
+
+Type: `int`
+
+The elapsed time in milliseconds between the start of a Worker invocation, and when the Workers Runtime determines that no more JavaScript needs to run. Specifically, this measures the wall-clock time that the JavaScript context remained open. For example, when returning a response with a large body, the Workers runtime can, in some cases, determine that no more JavaScript needs to run, and closes the JS context before all the bytes have passed through and been sent. Alternatively, if you use the `waitUntil()` API to perform work without blocking the return of a response, this work may continue executing after the response has been returned, and will be included in `WallTimeMs`.
