@@ -1110,6 +1110,7 @@
 /support/more-dashboard-apps/cloudflare-apps/reporting-bugs-or-feature-requests-for-cloudflare-apps/ /workers/ 301
 /support/more-dashboard-apps/cloudflare-apps/troubleshooting-issues-with-cloudflare-apps/ /workers/ 301
 /support/more-dashboard-apps/cloudflare-apps/will-cloudflare-apps-make-my-site-slower/ /workers/ 301
+/support/more-dashboard-apps/cloudflare-stream/delivering-videos-with-cloudflare/ /fundamentals/reference/policies-compliances/delivering-videos-with-cloudflare/ 301
 /support/network/ /network/ 301
 /support/network/configuring-ip-geolocation/ /network/ip-geolocation/ 301
 /support/network/setting-up-response-buffering/ /network/response-buffering/ 301
@@ -1182,6 +1183,7 @@
 /support/more-dashboard-apps/cloudflare-apps/managing-cloudflare-apps/ /workers/ 301
 /support/more-dashboard-apps/cloudflare-apps/removing-cloudflare-apps/ /workers/ 301
 /support/troubleshooting/http-status-codes/http-status-codes/ /support/troubleshooting/http-status-codes/ 301
+/support/troubleshooting/cloudflare-errors/troubleshooting-other-errors/ /speed/optimization/protocol/http2/#err_http2_protocol_error 301
 
 # r2
 /r2/platform/s3-compatibility/api/ /r2/api/s3/api/ 301
@@ -1526,6 +1528,38 @@
 /workers/observability/baselime-integration/ /workers/observability/integrations/baselime-integration/ 301
 /workers-ai/tutorials/image-generator-flux/ /workers-ai/tutorials/image-generation-playground/ 301
 
+# Workers AI reorganization redirects
+# Function calling
+/workers-ai/function-calling/ /workers-ai/features/function-calling/ 301
+/workers-ai/function-calling/embedded/ /workers-ai/features/function-calling/embedded/ 301
+/workers-ai/function-calling/embedded/get-started/ /workers-ai/features/function-calling/embedded/get-started/ 301
+/workers-ai/function-calling/embedded/api-reference/ /workers-ai/features/function-calling/embedded/api-reference/ 301
+/workers-ai/function-calling/embedded/examples/ /workers-ai/features/function-calling/embedded/examples/ 301
+/workers-ai/function-calling/embedded/examples/kv/ /workers-ai/features/function-calling/embedded/examples/kv/ 301
+/workers-ai/function-calling/embedded/examples/openapi/ /workers-ai/features/function-calling/embedded/examples/openapi/ 301
+/workers-ai/function-calling/embedded/examples/fetch/ /workers-ai/features/function-calling/embedded/examples/fetch/ 301
+/workers-ai/function-calling/embedded/examples/troubleshooting/ /workers-ai/features/function-calling/embedded/examples/troubleshooting/ 301
+/workers-ai/function-calling/traditional/ /workers-ai/features/function-calling/traditional/ 301
+
+# JSON Mode
+/workers-ai/json-mode/ /workers-ai/features/json-mode/ 301
+
+# Fine-tunes
+/workers-ai/fine-tunes/ /workers-ai/features/fine-tunes/ 301
+/workers-ai/fine-tunes/public-loras /workers-ai/features/fine-tunes/public-loras/ 301
+/workers-ai/fine-tunes/loras /workers-ai/features/fine-tunes/loras/ 301
+
+# Prompting
+/workers-ai/guides/prompting/ /workers-ai/features/prompting/ 301
+
+# Platform section
+/workers-ai/privacy/ /workers-ai/platform/privacy/ 301
+/workers-ai/glossary/ /workers-ai/platform/glossary/ 301
+/workers-ai/workers-ai-errors/ /workers-ai/platform/errors/ 301
+
+# Guides section
+/workers-ai/demos/ /workers-ai/guides/demos-architectures/ 301
+
 # workflows
 
 /workflows/reference/storage-options/ /workers/platform/storage-options/ 301
@@ -1864,6 +1898,11 @@
 /workers/reference/apis/* /workers/runtime-apis/:splat 301
 /workers/templates/pages/* /workers/examples/:splat 301
 /workers/observability/logging/* /workers/observability/logs/:splat 301
+
+# Workers AI
+/workers-ai/demos/* /workers-ai/guides/demos-architectures/:splat 301
+/workers-ai/tutorials/* /workers-ai/guides/tutorials/:splat 301
+
 
 # Others
 /logs/analytics-integrations/* /fundamentals/data-products/analytics-integrations/:splat 301

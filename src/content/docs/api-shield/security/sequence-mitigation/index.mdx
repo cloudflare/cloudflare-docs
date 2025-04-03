@@ -34,6 +34,10 @@ You can create Sequence Mitigation rules for a sequence even if the sequence is 
 
 You can create a sequence rule to enforce behavior on your API over time in two different ways. Sequence rules can either protect an endpoint from users performing a known specific sequence of API calls (otherwise known as a negative security model) or from users making API requests outside of your expectations (otherwise known as a positive security model).
 
+Sequence rules built via the Cloudflare dashboard using API Shield rules utilize a lookback window to match endpoints in the sequence. The rule will match as long as both endpoints are found within [10 requests](/api-shield/security/sequence-mitigation/#request-limitations) (to endpoints within Endpoint Management) of each other and made within [10 minutes](/api-shield/security/sequence-mitigation/#time-limitations) of each other.
+
+If you want to add multiple endpoints, ignore the lookback window, and configure time-based constraints, refer to [Sequence Mitigation custom rules](/api-shield/security/sequence-mitigation/custom-rules/).
+
 In the bank funds transfer example, enforcing that a user requests `GET /api/v1/accounts/{account_id}/balance` before `POST /api/v1/transferFunds` is considered a positive security model, since a user may only perform a funds transfer after listing an account balance.
 
 A negative security model may be useful if you see abusive behavior that is outside the norm of your application and you need to stop the requests while researching the correct positive security model to implement.

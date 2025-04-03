@@ -43,7 +43,7 @@ If you make a preflighted cross-origin request to an Access-protected domain, th
 There are three ways you can resolve this error:
 
 - **Option 1** — [Bypass OPTIONS requests to origin](#bypass-options-requests-to-origin).
-- **Option 2** - [Configure Cloudflare to respond to the OPTIONS request](#configure-response-to-preflight-requests).
+- **Option 2** — [Configure Cloudflare to respond to the OPTIONS request](#configure-response-to-preflight-requests).
 - **Option 3** — [Create a Cloudflare Worker which automatically sends an authentication token](#send-authentication-token-with-cloudflare-worker). This method only works if both sites involved in the CORS exchange are behind Access.
 
 ### Bypass OPTIONS requests to origin
