@@ -20,6 +20,10 @@ import { Details, Render, PackageManagers, WranglerConfig } from "~/components";
 
 This guide will instruct you through setting up and deploying your first application with Cloudflare AI. You will build a fully-featured AI-powered application, using tools like Workers AI, Vectorize, D1, and Cloudflare Workers.
 
+:::note[Looking for a managed option?]
+[AutoRAG](/autorag) offers a fully managed way to build RAG pipelines on Cloudflare, handling ingestion, indexing, and querying out of the box. [Get started](/autorag/get-started/).
+:::
+
 At the end of this tutorial, you will have built an AI tool that allows you to store information and query it using a Large Language Model. This pattern, known as Retrieval Augmented Generation, or RAG, is a useful project you can build by combining multiple aspects of Cloudflare's AI toolkit. You do not need to have experience working with AI tools to build this application.
 
 <Render file="prereqs" product="workers" />
@@ -220,9 +224,9 @@ import { WorkflowEntrypoint } from "cloudflare:workers";
 
 export class RAGWorkflow extends WorkflowEntrypoint {
 	async run(event, step) {
-		await step.do('example step', async () => {
-			console.log("Hello World!")
-		})
+		await step.do("example step", async () => {
+			console.log("Hello World!");
+		});
 	}
 }
 ```
@@ -232,7 +236,7 @@ This class will define a single workflow step that will log "Hello World!" to th
 On its own, this workflow will not do anything. To execute the workflow, we will call the `RAG_WORKFLOW` binding, passing in any parameters that the workflow needs to properly complete. Here is an example of how we can call the workflow:
 
 ```js
-env.RAG_WORKFLOW.create({ params: { text } })
+env.RAG_WORKFLOW.create({ params: { text } });
 ```
 
 ## 6. Creating notes and adding them to Vectorize
@@ -271,36 +275,36 @@ import { WorkflowEntrypoint } from "cloudflare:workers";
 
 export class RAGWorkflow extends WorkflowEntrypoint {
 	async run(event, step) {
-		const env = this.env
-		const { text } = event.payload
+		const env = this.env;
+		const { text } = event.payload;
 
 		const record = await step.do(`create database record`, async () => {
-			const query = "INSERT INTO notes (text) VALUES (?) RETURNING *"
+			const query = "INSERT INTO notes (text) VALUES (?) RETURNING *";
 
-			const { results } = await env.DB.prepare(query)
-				.bind(text)
-				.run()
+			const { results } = await env.DB.prepare(query).bind(text).run();
 
-			const record = results[0]
-			if (!record) throw new Error("Failed to create note")
+			const record = results[0];
+			if (!record) throw new Error("Failed to create note");
 			return record;
-		})
+		});
 
 		const embedding = await step.do(`generate embedding`, async () => {
-			const embeddings = await env.AI.run('@cf/baai/bge-base-en-v1.5', { text: text })
-			const values = embeddings.data[0]
-			if (!values) throw new Error("Failed to generate vector embedding")
-			return values
-		})
+			const embeddings = await env.AI.run("@cf/baai/bge-base-en-v1.5", {
+				text: text,
+			});
+			const values = embeddings.data[0];
+			if (!values) throw new Error("Failed to generate vector embedding");
+			return values;
+		});
 
 		await step.do(`insert vector`, async () => {
 			return env.VECTOR_INDEX.upsert([
 				{
 					id: record.id.toString(),
 					values: embedding,
-				}
+				},
 			]);
-		})
+		});
 	}
 }
 ```
@@ -317,12 +321,12 @@ By doing this, you will create a new vector representation of the note, which ca
 To complete the code, we will add a route that allows users to submit notes to the database. This route will parse the JSON request body, get the `note` parameter, and create a new instance of the workflow, passing the parameter:
 
 ```js
-app.post('/notes', async (c) => {
+app.post("/notes", async (c) => {
 	const { text } = await c.req.json();
 	if (!text) return c.text("Missing text", 400);
-	await c.env.RAG_WORKFLOW.create({ params: { text } })
+	await c.env.RAG_WORKFLOW.create({ params: { text } });
 	return c.text("Created note", 201);
-})
+});
 ```
 
 ## 7. Querying Vectorize to retrieve notes
@@ -344,45 +348,51 @@ const app = new Hono();
 // Existing post route...
 // app.post('/notes', async (c) => { ... })
 
-app.get('/', async (c) => {
-  const question = c.req.query('text') || "What is the square root of 9?"
+app.get("/", async (c) => {
+	const question = c.req.query("text") || "What is the square root of 9?";
 
-  const embeddings = await c.env.AI.run('@cf/baai/bge-base-en-v1.5', { text: question })
-  const vectors = embeddings.data[0]
+	const embeddings = await c.env.AI.run("@cf/baai/bge-base-en-v1.5", {
+		text: question,
+	});
+	const vectors = embeddings.data[0];
 
-  const vectorQuery = await c.env.VECTOR_INDEX.query(vectors, { topK: 1 });
-  let vecId;
-  if (vectorQuery.matches && vectorQuery.matches.length > 0 && vectorQuery.matches[0]) {
-    vecId = vectorQuery.matches[0].id;
-  } else {
-    console.log("No matching vector found or vectorQuery.matches is empty");
-  }
+	const vectorQuery = await c.env.VECTOR_INDEX.query(vectors, { topK: 1 });
+	let vecId;
+	if (
+		vectorQuery.matches &&
+		vectorQuery.matches.length > 0 &&
+		vectorQuery.matches[0]
+	) {
+		vecId = vectorQuery.matches[0].id;
+	} else {
+		console.log("No matching vector found or vectorQuery.matches is empty");
+	}
 
-  let notes = []
-  if (vecId) {
-    const query = `SELECT * FROM notes WHERE id = ?`
-    const { results } = await c.env.DB.prepare(query).bind(vecId).all()
-    if (results) notes = results.map(vec => vec.text)
-  }
+	let notes = [];
+	if (vecId) {
+		const query = `SELECT * FROM notes WHERE id = ?`;
+		const { results } = await c.env.DB.prepare(query).bind(vecId).all();
+		if (results) notes = results.map((vec) => vec.text);
+	}
 
-  const contextMessage = notes.length
-    ? `Context:\n${notes.map(note => `- ${note}`).join("\n")}`
-    : ""
+	const contextMessage = notes.length
+		? `Context:\n${notes.map((note) => `- ${note}`).join("\n")}`
+		: "";
 
-  const systemPrompt = `When answering the question or responding, use the context provided, if it is provided and relevant.`
+	const systemPrompt = `When answering the question or responding, use the context provided, if it is provided and relevant.`;
 
-  const { response: answer } = await c.env.AI.run(
-    '@cf/meta/llama-3-8b-instruct',
-    {
-      messages: [
-        ...(notes.length ? [{ role: 'system', content: contextMessage }] : []),
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: question }
-      ]
-    }
-  )
+	const { response: answer } = await c.env.AI.run(
+		"@cf/meta/llama-3-8b-instruct",
+		{
+			messages: [
+				...(notes.length ? [{ role: "system", content: contextMessage }] : []),
+				{ role: "system", content: systemPrompt },
+				{ role: "user", content: question },
+			],
+		},
+	);
 
-  return c.text(answer);
+	return c.text(answer);
 });
 
 app.onError((err, c) => {
@@ -506,7 +516,7 @@ const splitter = new RecursiveCharacterTextSplitter({
 });
 
 const output = await splitter.createDocuments([text]);
-console.log(output) // [{ pageContent: 'Some long piece of text...' }]
+console.log(output); // [{ pageContent: 'Some long piece of text...' }]
 ```
 
 To use this splitter, we'll update the workflow to split the text into smaller chunks. We'll then iterate over the chunks and run the rest of the workflow for each chunk of text:
@@ -514,45 +524,53 @@ To use this splitter, we'll update the workflow to split the text into smaller c
 ```js
 export class RAGWorkflow extends WorkflowEntrypoint {
 	async run(event, step) {
-		const env = this.env
+		const env = this.env;
 		const { text } = event.payload;
-		let texts = await step.do('split text', async () => {
+		let texts = await step.do("split text", async () => {
 			const splitter = new RecursiveCharacterTextSplitter();
 			const output = await splitter.createDocuments([text]);
-			return output.map(doc => doc.pageContent);
-		})
+			return output.map((doc) => doc.pageContent);
+		});
 
-		console.log("RecursiveCharacterTextSplitter generated ${texts.length} chunks")
+		console.log(
+			"RecursiveCharacterTextSplitter generated ${texts.length} chunks",
+		);
 
 		for (const index in texts) {
-			const text = texts[index]
-			const record = await step.do(`create database record: ${index}/${texts.length}`, async () => {
-				const query = "INSERT INTO notes (text) VALUES (?) RETURNING *"
+			const text = texts[index];
+			const record = await step.do(
+				`create database record: ${index}/${texts.length}`,
+				async () => {
+					const query = "INSERT INTO notes (text) VALUES (?) RETURNING *";
 
-				const { results } = await env.DB.prepare(query)
-					.bind(text)
-					.run()
+					const { results } = await env.DB.prepare(query).bind(text).run();
 
-				const record = results[0]
-				if (!record) throw new Error("Failed to create note")
-				return record;
-			})
+					const record = results[0];
+					if (!record) throw new Error("Failed to create note");
+					return record;
+				},
+			);
 
-			const embedding = await step.do(`generate embedding: ${index}/${texts.length}`, async () => {
-				const embeddings = await env.AI.run('@cf/baai/bge-base-en-v1.5', { text: text })
-				const values = embeddings.data[0]
-				if (!values) throw new Error("Failed to generate vector embedding")
-				return values
-			})
+			const embedding = await step.do(
+				`generate embedding: ${index}/${texts.length}`,
+				async () => {
+					const embeddings = await env.AI.run("@cf/baai/bge-base-en-v1.5", {
+						text: text,
+					});
+					const values = embeddings.data[0];
+					if (!values) throw new Error("Failed to generate vector embedding");
+					return values;
+				},
+			);
 
 			await step.do(`insert vector: ${index}/${texts.length}`, async () => {
 				return env.VECTOR_INDEX.upsert([
 					{
 						id: record.id.toString(),
 						values: embedding,
-					}
+					},
 				]);
-			})
+			});
 		}
 	}
 }
