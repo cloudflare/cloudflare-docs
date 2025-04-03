@@ -1530,7 +1530,7 @@
 
 # Workers AI reorganization redirects
 # Function calling
-/workers-ai/function-calling /workers-ai/features/function-calling/ 301
+/workers-ai/function-calling/ /workers-ai/features/function-calling/ 301
 /workers-ai/function-calling/embedded/ /workers-ai/features/function-calling/embedded/ 301
 /workers-ai/function-calling/embedded/get-started/ /workers-ai/features/function-calling/embedded/get-started 301
 /workers-ai/function-calling/embedded/api-reference/ /workers-ai/features/function-calling/embedded/api-reference 301
