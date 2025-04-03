@@ -1517,6 +1517,8 @@ entries:
       - **Decoding**: No decoding performed
       - **Whitespace**: Preserved
       - **Non-ASCII**: Preserved
+
+      When the HTTP request contains too many headers, this field may not contain all of the headers sent in the HTTP request. In this situation, the [`http.request.headers.truncated`](/ruleset-engine/rules-language/fields/reference/http.request.headers.truncated/) field will be set to `true`.
     example_value: |-
       {"content-type": ["application/json"]}
     example_block: |-
@@ -1537,6 +1539,8 @@ entries:
       - **Decoding**: No decoding performed
       - **Whitespace**: Preserved
       - **Non-ASCII**: Preserved
+
+      When the HTTP request contains too many headers, this field may not contain the names of all of the headers sent in the HTTP request. In this situation, the [`http.request.headers.truncated`](/ruleset-engine/rules-language/fields/reference/http.request.headers.truncated/) field will be set to `true`.
 
       **Note**: In HTTP/2, the names of HTTP headers are always in lowercase. Recent versions of the `curl` tool [enable HTTP/2 by default](https://curl.se/docs/manpage.html#--http2) for HTTPS connections.
     example_value: |-
@@ -1560,6 +1564,8 @@ entries:
       - **Whitespace**: Preserved
       - **Non-ASCII**: Preserved
 
+      When the HTTP request contains too many headers, this field may not contain the values of all of the headers sent in the HTTP request. In this situation, the [`http.request.headers.truncated`](/ruleset-engine/rules-language/fields/reference/http.request.headers.truncated/) field will be set to `true`.
+
       **Note**: In HTTP/2, the names of HTTP headers are always in lowercase. Recent versions of the `curl` tool [enable HTTP/2 by default](https://curl.se/docs/manpage.html#--http2) for HTTPS connections.
     example_value: |-
       Example 1: ["application/json"]
@@ -1578,7 +1584,7 @@ entries:
     keywords: [request, client, visitor]
     summary: Indicates whether the HTTP request contains too many headers.
     description: |-
-      When `true`, [`http.request.headers`](/ruleset-engine/rules-language/fields/reference/http.request.headers), [`http.request.headers.names`](/ruleset-engine/rules-language/fields/reference/http.request.headers.names), and [`http.request.headers.values`](/ruleset-engine/rules-language/fields/reference/http.request.headers.values) may not contain all of the headers sent in the HTTP request.
+      When `true`, [`http.request.headers`](/ruleset-engine/rules-language/fields/reference/http.request.headers/), [`http.request.headers.names`](/ruleset-engine/rules-language/fields/reference/http.request.headers.names/), and [`http.request.headers.values`](/ruleset-engine/rules-language/fields/reference/http.request.headers.values/) may not contain all of the headers sent in the HTTP request.
 
   - name: http.request.accepted_languages
     data_type: Array<String>
