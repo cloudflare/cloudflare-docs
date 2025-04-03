@@ -78,7 +78,7 @@ entries:
     otherFilters: None.
 
   - name: Secondary DNS Primaries Failing
-    audience: Enterprise customers who have at least one secondary zone and want to receive a notification if at least one of their primary nameservers is failing.
+    audience: Enterprise customers who have at least one secondary zone and want to receive a notification if at least one of their primary nameservers is failing while transfers from at least one other primary are still successful.
     availability: Purchase of Secondary DNS.
     associatedProducts: DNS
     nextSteps: |-
@@ -101,21 +101,6 @@ entries:
     associatedProducts: DNS
     nextSteps: |-
       Actions for failure notifications will depend on the type of failure.
-
-    otherFilters: None.
-
-  - name: Secondary DNSSEC Validation Warning
-    audience: Customers who are using Cloudflare for Secondary DNS and want to receive notifications about the failure or success of zone transfers from their primary nameservers.
-    availability: Enterprise plans.
-    associatedProducts: DNS
-    nextSteps: |-
-      Success alerts require no further action. Actions for failure notifications will depend on the type of failure.
-
-      Possible actions include:
-
-      * Checking the Access Control List (ACL) on your primary nameserver.
-      * Checking if Cloudflare IPs have been [configured correctly on your primary nameserver](/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/).
-      * Checking logs on primary nameservers for other errors.
 
     otherFilters: None.
 

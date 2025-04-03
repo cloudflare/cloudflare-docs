@@ -9,7 +9,7 @@ description: Create a compression rule to set Gzip compression as the preferred
   compression method for CSV files.
 ---
 
-import { Example, TabItem, Tabs } from "~/components";
+import { Example, TabItem, Tabs, APIRequest } from "~/components";
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -34,25 +34,20 @@ The following example rule will configure Gzip compression as the preferred comp
 
 The following example sets the rules of an existing [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) (with ID `{ruleset_id}`) for the `http_response_compression` phase to a single compression rule, using the [Update a zone ruleset](/api/resources/rulesets/methods/update/) operation:
 
-```bash
-curl --request PUT \
-https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "rules": [
-    {
-      "expression": "http.request.uri.path.extension eq \"csv\"",
-      "action": "compress_response",
-      "action_parameters": {
-        "algorithms": [
-          { "name": "gzip" },
-          { "name": "auto" }
-        ]
-      }
-    }
-  ]
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/rulesets/{ruleset_id}"
+	method="PUT"
+	json={{
+		rules: [
+			{
+				expression: 'http.request.uri.path.extension eq "csv"',
+				action: "compress_response",
+				action_parameters: {
+					algorithms: [{ name: "gzip" }, { name: "auto" }],
+				},
+			},
+		],
+	}}
+/>
 
 </TabItem> </Tabs>

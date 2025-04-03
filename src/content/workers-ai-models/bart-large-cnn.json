@@ -8,6 +8,7 @@
         "name": "Summarization",
         "description": "Summarization is the task of producing a shorter version of a document while preserving its important information. Some models can extract text from the original input, while other models can generate entirely new text."
     },
+    "created_at": "2024-02-27 18:28:11.833",
     "tags": [],
     "properties": [
         {

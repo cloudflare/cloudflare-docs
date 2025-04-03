@@ -14,10 +14,10 @@ The following methods can be used to configure your Pages Function.
 
 ### `onRequests`
 
-
+The `onRequest` method will be called unless a more specific `onRequestVerb` method is exported. For example, if both `onRequest` and `onRequestGet` are exported, only `onRequestGet` will be called for `GET` requests.
 
 * <code>onRequest(context[EventContext](#eventcontext))</code> Response | Promise\<Response>
-  * This function will be invoked on all requests no matter the request method.
+  * This function will be invoked on all requests no matter what the request method is, as long as no specific request verb (like one of the methods below) is exported.
 * <code>onRequestGet(context[EventContext](#eventcontext))</code> Response | Promise\<Response>
   * This function will be invoked on all `GET` requests.
 * <code>onRequestPost(context[EventContext](#eventcontext))</code> Response | Promise\<Response>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import ModelInfo from "./models/ModelInfo";
 import ModelBadges from "./models/ModelBadges";
 import { authorData } from "./models/data";
@@ -19,6 +19,37 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 		capabilities: [],
 	});
 
+	// List of model names to pin at the top
+	const pinnedModelNames = [
+		"@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+		"@cf/meta/llama-3.1-8b-instruct-fast",
+	];
+
+	// Sort models by pinned status first, then by created_at date
+	const sortedModels = useMemo(() => {
+		return [...models].sort((a, b) => {
+			// First check if either model is pinned
+			const isPinnedA = pinnedModelNames.includes(a.name);
+			const isPinnedB = pinnedModelNames.includes(b.name);
+
+			// If pinned status differs, prioritize pinned models
+			if (isPinnedA && !isPinnedB) return -1;
+			if (!isPinnedA && isPinnedB) return 1;
+
+			// If both are pinned, sort by position in pinnedModelNames array (for manual ordering)
+			if (isPinnedA && isPinnedB) {
+				return (
+					pinnedModelNames.indexOf(a.name) - pinnedModelNames.indexOf(b.name)
+				);
+			}
+
+			// If neither is pinned, sort by created_at date (newest first)
+			const dateA = a.created_at ? new Date(a.created_at) : new Date(0);
+			const dateB = b.created_at ? new Date(b.created_at) : new Date(0);
+			return dateB.getTime() - dateA.getTime();
+		});
+	}, [models]);
+
 	useEffect(() => {
 		const params = new URLSearchParams(window.location.search);
 
@@ -35,7 +66,7 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 		});
 	}, []);
 
-	const mapped = models.map((model) => ({
+	const mapped = sortedModels.map((model) => ({
 		model: {
 			...model,
 			capabilities: model.properties
@@ -237,13 +268,19 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 
 					const author = model.model.name.split("/")[1];
 					const authorInfo = authorData[author];
+					const isPinned = pinnedModelNames.includes(model.model.name);
 
 					return (
 						<a
 							key={model.model.id}
-							className="mb-3 block w-full self-start rounded-md border border-solid border-gray-200 p-3 !text-inherit no-underline hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800 lg:w-[48%]"
+							className="relative mb-3 block w-full self-start rounded-md border border-solid border-gray-200 p-3 !text-inherit no-underline hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800 lg:w-[48%]"
 							href={`/workers-ai/models/${model.model_display_name}`}
 						>
+							{isPinned && (
+								<span className="absolute right-2 top-1" title="Pinned model">
+									📌
+								</span>
+							)}
 							<div className="-mb-1 flex items-center">
 								{authorInfo?.logo ? (
 									<img

@@ -6,7 +6,9 @@ sidebar:
   order: 4
 ---
 
-Use the [Rulesets API](/ruleset-engine/rulesets-api/) to deploy a ruleset. To deploy a ruleset, add a rule with `"action": "execute"` to a phase entry point ruleset, specifying the ruleset ID to execute as an action parameter. Use a separate rule for each ruleset you want to deploy.
+import { APIRequest } from "~/components";
+
+Use the [Rulesets API](/ruleset-engine/rulesets-api/) to deploy a ruleset. To deploy a ruleset, add a rule with `"action": "execute"` to a [phase entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset), specifying the ruleset ID to execute as an action parameter. Use a separate rule for each ruleset you want to deploy.
 
 A rule that executes a ruleset consists of:
 
@@ -22,26 +24,27 @@ To apply a rule to every request in a phase at the **zone** level, set the rule 
 
 ## Example
 
-The following example deploys a managed ruleset to the `http_request_firewall_managed` phase of a given zone (`{zone_id}`) by adding a rule that executes the managed ruleset.
+The following example deploys a managed ruleset to the `http_request_firewall_managed` phase of a given zone (`$ZONE_ID`) by adding a rule that executes the managed ruleset.
 
-```bash
-curl --request PUT \
-https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "rules": [
-    {
-      "action": "execute",
-      "action_parameters": {
-        "id": "<CLOUDFLARE_MANAGED_RULESET_ID>"
-      },
-      "expression": "true",
-      "description": "Execute Cloudflare Managed Ruleset on my zone ruleset"
-    }
-  ]
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/rulesets/phases/{ruleset_phase}/entrypoint"
+	method="PUT"
+	parameters={{
+		ruleset_phase: "http_request_firewall_managed",
+	}}
+	json={{
+		rules: [
+			{
+				action: "execute",
+				action_parameters: {
+					id: "<CLOUDFLARE_MANAGED_RULESET_ID>",
+				},
+				expression: "true",
+				description: "Execute Cloudflare Managed Ruleset on my zone ruleset",
+			},
+		],
+	}}
+/>
 
 ```json output
 {
