@@ -6,6 +6,9 @@ sidebar:
   order: 1
 ---
 
+import { WranglerConfig } from "~/components"
+
+
 In this guide, you will build an app that accepts image uploads, overlays the image with a visual watermark, then stores the transformed image in your R2 bucket.
 
 ---
@@ -40,7 +43,8 @@ To start, you will need to set up your project to use the following resources on
 
 Configure your `wrangler.toml` file to add the Images, R2, and Assets bindings:
 
-```txt
+<WranglerConfig>
+```toml
 [images]
 binding = "IMAGES"
 
@@ -53,6 +57,7 @@ directory = "./<DIRECTORY>"
 binding = "ASSETS"
 ```
 
+</WranglerConfig>
 Replace `<BUCKET>` with the name of the R2 bucket where you will upload the images after they are transformed. In your Worker code, you will be able to refer to this bucket using `env.R2.`
 
 Replace `./<DIRECTORY>` with the name of the project's directory where the overlay image will be stored. In your Worker code, you will be able to refer to these assets using `env.ASSETS`.
