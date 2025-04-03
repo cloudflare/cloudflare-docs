@@ -42,7 +42,7 @@ Next, open the `cloudflare-vite-tutorial` directory in your editor of choice.
 
 ### Add the plugin to your Vite config
 
-```ts {5, 8} title="vite.config.ts"
+```ts {3, 6} title="vite.config.ts"
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { cloudflare } from "@cloudflare/vite-plugin";
@@ -118,7 +118,7 @@ This tutorial, however, will show you how to go a step further and add an API Wo
 }
 ```
 
-```jsonc {8} title="tsconfig.json"
+```jsonc {6} title="tsconfig.json"
 {
 	"files": [],
 	"references": [
@@ -178,7 +178,7 @@ If this is present and the URL does not match a static asset, the `not_found_han
 
 Edit `src/App.tsx` so that it includes an additional button that calls the API and sets some state:
 
-```tsx {10, 34-48} collapse={14-29} title="src/App.tsx"
+```tsx {8, 32-46} collapse={12-27} title="src/App.tsx"
 import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
