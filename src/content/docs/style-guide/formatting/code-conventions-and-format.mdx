@@ -8,16 +8,18 @@ Use the conventions described below throughout Cloudflare product content.
 
 ## Angle brackets ( `<` and `>` )
 
-Use angle brackets as a placeholder for variables you want the user to enter (except in URLs, where you should use curly braces for placeholders).
+Use angle brackets to denote placeholders for variables you want the user to enter (except in [API URLs and API authentication headers](/style-guide/api-content-strategy/guidelines-for-curl-commands/#request-guidelines), where you should use the `$ZONE_ID` / `$CLOUDFLARE_API_TOKEN` format). Placeholder text should have all capital letters and use underscores (`_`) to separate words.
 
-Example:
-
-Type your user-specified domain in this format: `https://<user-specified domain>.cloudflare.com`
+Examples:
 
 ```
 {
   "description": "<RULE_DESCRIPTION>"
 }
+```
+
+```
+https://<YOUR_DOMAIN>.cloudflare.com
 ```
 
 Angle brackets that contain numbers separated by an ellipsis represent a range of values associated with a bit or single name - for example, AO `<0...3>`.
@@ -32,13 +34,7 @@ Specify a subsearch that starts with this search command: `tag=dns query [search
 
 ## Curly braces ( `{` and `}` )
 
-Use curly braces in the following situations, such as:
-
-When they are part of a code sample or other string literal, such as in placeholders inside a URL.
-
-Example:
-
-`https://api.cloudflare.com/client/v4/organizations/{organization_identifier}/invites`
+Do not use curly braces for URL or variable placeholders. Instead, refer to [angle brackets](#angle-brackets---and--).
 
 ## >
 

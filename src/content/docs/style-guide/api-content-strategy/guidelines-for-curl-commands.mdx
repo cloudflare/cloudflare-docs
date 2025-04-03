@@ -15,7 +15,7 @@ To automatically incorporate our conventions into your examples, use:
 - [`APIRequest`](/style-guide/components/api-request/): For examples hitting endpoints in the Cloudflare API schema.
 - [`CURL`](/style-guide/components/curl/): For other cURL commands.
 
-## Paramter names
+## Parameter names
 
 Use long parameter names for clarity:
 
@@ -45,7 +45,7 @@ If you must suggest the use of this tool, you can add a link to the [Make API ca
 
 * Make sure not to use typographical or smart quotes in a cURL command, or the command will fail.
 * Placeholders in the URL should follow the same format as in the API documentation: `$ZONE_ID`
-* Placeholders in the request body (that is, the data included in a `POST`/`PUT`/`PATCH` request) should use this format: `<RULE_ID>`
+* Placeholders in the request body (that is, the data included in a `POST`/`PUT`/`PATCH` request) should use [angle brackets](/style-guide/formatting/code-conventions-and-format/#angle-brackets---and--): `<RULE_ID>`
 
 The same placeholder name should correspond to the same value – use different placeholder names for different ID values. You can use the same request placeholders in the response, if they should match the values in the request.
 
