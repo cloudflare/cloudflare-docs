@@ -21,6 +21,11 @@ By default, when you add a Worker using the Cloudflare Vite plugin, an additiona
 Its name is derived from the Worker name, with any dashes replaced with underscores.
 This name can be used to reference the environment in your Vite config in order to apply environment specific configuration.
 
+:::note
+The default Vite environment name for a Worker is always the top-level Worker name.
+This enables you to reference the Worker consistently in your Vite config when using multiple [Cloudflare Environments](/workers/vite-plugin/cloudflare-environments/).
+:::
+
 ### Environment configuration
 
 In the following example we have a Worker named `my-worker` that is associated with a Vite environment named `my_worker`.
