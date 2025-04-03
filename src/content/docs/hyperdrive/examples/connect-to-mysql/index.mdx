@@ -60,8 +60,6 @@ Hyperdrive uses Workers [TCP socket support](/workers/runtime-apis/tcp-sockets/#
 | mysql                    | [mysql documentation](https://github.com/mysqljs/mysql)          | `mysql@2.18.0`           | Requires `compatibility_flags = ["nodejs_compat"]` and `compatibility_date = "2024-09-23"` - refer to [Node.js compatibility](/workers/runtime-apis/nodejs). Requires wrangler `3.78.7` or later. |
 | Drizzle                  | [Drizzle documentation](https://orm.drizzle.team/)               | Requires `mysql2@3.13.0` |                                                                                                                                                                                                   |
 | Kysely                   | [Kysely documentation](https://kysely.dev/)                      | Requires `mysql2@3.13.0` |                                                                                                                                                                                                   |
-| Prisma                   | [Prisma documentation](https://www.prisma.io/)                   | Requires `mysql2@3.13.0` |                                                                                                                                                                                                   |
-| TypeORM                  | [Kysely documentation](https://typeorm.io/)                      | Requires `mysql2@3.13.0` |                                                                                                                                                                                                   |
 
 ^ _The marked libraries can use either mysql or mysql2 as a dependency._
 
@@ -158,6 +156,13 @@ export default {
 	},
 } satisfies ExportedHandler<Env>;
 ```
+
+## Identify connections from Hyperdrive
+
+To identify active connections to your MySQL database server from Hyperdrive:
+
+- Hyperdrive's connections to your database will show up with `Cloudflare Hyperdrive` in the `PROGRAM_NAME` column in the `performance_schema.threads` table.
+- Run `SELECT DISTINCT USER, HOST, PROGRAM_NAME FROM performance_schema.threads WHERE PROGRAM_NAME = 'Cloudflare Hyperdrive'` to show whether Hyperdrive is currently holding a connection (or connections) open to your database.
 
 ## Next steps
 
