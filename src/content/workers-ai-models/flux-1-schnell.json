@@ -46,7 +46,7 @@
                 "seed": {
                     "type": "integer",
                     "default": 1,
-                    "maximum": 8,
+                    "maximum": 10,
                     "description": "A positive integer that controls randomness. Using the same seed value will produce identical images, while different seeds create variations."
                 }
             },

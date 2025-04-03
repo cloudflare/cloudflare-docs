@@ -58,7 +58,7 @@ const curl = `
 curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/${name}  \\
   -X POST  \\
   -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"  \\
-  -d '{ "prompt": "cyberpunk cat", "seed": "Put a different number on each call" }'
+  -d '{ "prompt": "cyberpunk cat", "seed": "Random positive integer" }'
 `;
 ---
 
