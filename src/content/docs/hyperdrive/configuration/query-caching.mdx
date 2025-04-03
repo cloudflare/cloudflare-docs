@@ -18,24 +18,14 @@ Besides determining the difference between a `SELECT` and an `INSERT`, Hyperdriv
 For example, a read query that populates the front page of a news site would be cached:
 
 <Tabs>
-  <TabItem label="PostgreSQL">
-    ```sql
-    -- Cacheable
-    SELECT * FROM articles
-    WHERE DATE(published_time) = CURRENT_DATE()
-    ORDER BY published_time DESC
-    LIMIT 50
-    ```
-  </TabItem>
-  <TabItem label="MySQL">
-    ```sql
-    -- Cacheable
-    SELECT * FROM articles
-    WHERE DATE(published_time) = CURDATE()
-    ORDER BY published_time DESC
-    LIMIT 50
-    ```
-  </TabItem>
+	<TabItem label="PostgreSQL">
+		```sql -- Cacheable SELECT * FROM articles WHERE DATE(published_time) =
+		CURRENT_DATE() ORDER BY published_time DESC LIMIT 50 ```
+	</TabItem>
+	<TabItem label="MySQL">
+		```sql -- Cacheable SELECT * FROM articles WHERE DATE(published_time) =
+		CURDATE() ORDER BY published_time DESC LIMIT 50 ```
+	</TabItem>
 </Tabs>
 
 Mutating queries (including `INSERT`, `UPSERT`, or `CREATE TABLE`) and queries that use [functions designated as `volatile` by PostgreSQL](https://www.postgresql.org/docs/current/xfunc-volatility.html) are not cached:
@@ -48,6 +38,7 @@ Mutating queries (including `INSERT`, `UPSERT`, or `CREATE TABLE`) and queries t
 
     SELECT LASTVAL(), * FROM articles LIMIT 50;
     ```
+
   </TabItem>
   <TabItem label="MySQL">
     ```sql
@@ -56,6 +47,7 @@ Mutating queries (including `INSERT`, `UPSERT`, or `CREATE TABLE`) and queries t
 
     SELECT LAST_INSERT_ID(), * FROM articles LIMIT 50;
     ```
+
   </TabItem>
 </Tabs>
 
@@ -161,5 +153,5 @@ const connectionNoCache = createConnection({
 ## Next steps
 
 - Learn more about [How Hyperdrive works](/hyperdrive/configuration/how-hyperdrive-works/).
-- Learn how to [Connect to PostgreSQL](/hyperdrive/configuration/connect-to-postgres/) from Hyperdrive.
+- Learn how to [Connect to PostgreSQL](/hyperdrive/examples/connect-to-postgres/) from Hyperdrive.
 - Review [Troubleshooting common issues](/hyperdrive/observability/troubleshooting/) when connecting a database to Hyperdrive.

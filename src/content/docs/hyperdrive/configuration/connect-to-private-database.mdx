@@ -33,7 +33,7 @@ If your organization also uses [Super Bot Fight Mode](/bots/get-started/pro/), k
 
 ## Prerequisites
 
-- A database in your private network, [configured to use TLS/SSL](/hyperdrive/configuration/connect-to-postgres/#supported-tls-ssl-modes).
+- A database in your private network, [configured to use TLS/SSL](/hyperdrive/examples/connect-to-postgres/#supported-tls-ssl-modes).
 - A hostname on your Cloudflare account, which will be used to route requests to your database.
 
 ## 1. Create a tunnel in your private network
@@ -223,7 +223,6 @@ npx wrangler deploy
 ```
 
 If you successfully receive the list of tables from your database when you access your deployed Worker, your Hyperdrive has now been configured to securely connect to a private database using [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) and [Cloudflare Access](/cloudflare-one/policies/access/).
-
 
 </TabItem>
 </Tabs>
