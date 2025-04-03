@@ -7,35 +7,40 @@ sidebar:
 
 By default, DNS is sent over a plaintext connection. DNS over TLS (DoT) is a standard for encrypting DNS queries to keep them secure and private. DoT uses the same security protocol, TLS, that HTTPS websites use to encrypt and authenticate communications.
 
-Cloudflare supports DoT on standard port `853` and is compliant with [RFC7858](https://tools.ietf.org/html/rfc7858).
+Cloudflare supports DoT on standard port `853` over TLS 1.2 and TLS 1.3 in compliance with [RFC7858](https://tools.ietf.org/html/rfc7858).
 
-## 1. Obtain your DoT hostname
+## Configure DoT queries
+
+### 1. Obtain your DoT hostname
 
 Each Gateway DNS location has a unique DoT hostname. DNS locations and corresponding DoT hostnames have policies associated with them.
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **DNS locations**.
-2. If you have more than one location set up, you will see a list of all your locations.
-3. Expand the location card for the location whose DoT hostname you'd like to retrieve.
-4. Get the **DoT hostname** for the location.
+2. [Add a new location](/cloudflare-one/connections/connect-devices/agentless/dns/locations/) or select an existing location from the list.
+3. Under **DoT endpoint**, copy the value in **DoT addresses**.
 
-In the example below, the DoT hostname is: `9y65g5srsm.cloudflare-gateway.com`.
+The DoT hostname contains your unique location name. For example, if the DoT hostname is `9y65g5srsm.cloudflare-gateway.com`, the location name is `9y65g5srsm`.
 
-![Getting the DoT hostname for a DNS location from the dashboard](~/assets/images/cloudflare-one/connections/get-unique-subdomain.png)
+### 2. Configure your DoT client
 
-Next, configure your DoT client with the DoT hostname.
-
-## 2. Configure your DoT client
-
-Depending on your operating system, you can choose from a variety of standalone DoT clients.
-
-To configure your DoT client, enter the following IP address and the DoT hostname for your location (for example, `9y65g5srsm.cloudflare-gateway.com`):
+To configure a DoT client such as `dig`, specify the IP address and the DoT hostname for your location in your query. For example:
 
 ```txt
-Hostname: <DoT hostname>
+Hostname: 9y65g5srsm.cloudflare-gateway.com
 IP address: 162.159.36.5
 ```
 
-Alternatively, stub resolvers (e.g., Unbound) support DoT natively. An example configuration is shown below.
+Alternatively, you can use the generic DoT endpoint (`dns.cloudflare-gateway.com`) and include an `OPT` record with code `65011`. You can select a specific location for the value of the `OPT` record. For example:
+
+```txt
+Hostname: dns.cloudflare-gateway.com
+IP address: 162.159.36.5
+OPT Record:
+  - Code: 65011
+  - Value: 9y65g5srsm
+```
+
+Some stub resolvers support DoT natively. For example, you can configure Unbound to send a DoT query:
 
 ```txt
 # Unbound TLS Config
@@ -44,15 +49,6 @@ tls-cert-bundle: "/etc/ssl/cert.pem"
 forward-zone:
  name: "."
  forward-tls-upstream: yes
- forward-addr: 172.64.36.1@853#9y65g5srsm.cloudflare-gateway.com
- forward-addr: <IPv6 address>#<DoT hostname>
+ forward-addr: 162.159.36.5@853#9y65g5srsm.cloudflare-gateway.com
+ forward-addr: 2001:db8:abcd::1234#9y65g5srsm.cloudflare-gateway.com
 ```
-
-:::note
-
-Each DNS location has a unique DoT hostname and IPv6 address. Remember to substitute your location's values into the `<IPv6 address>` and `<DoT hostname>` fields.
-:::
-
-## Supported TLS versions
-
-Cloudflare's DNS over TLS supports TLS 1.3 and TLS 1.2.

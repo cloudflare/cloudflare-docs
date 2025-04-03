@@ -1,0 +1,40 @@
+---
+import { getComponentsUsage } from "~/util/components";
+import AnchorHeading from "./AnchorHeading.astro";
+import Details from "./Details.astro";
+
+const components = await getComponentsUsage();
+
+const alphabetical = Object.entries(components).sort(([a], [b]) =>
+	a.localeCompare(b),
+);
+---
+
+{
+	alphabetical.map(([component, usage]) => (
+		<>
+			<AnchorHeading depth={2} title={component} />
+			<p>
+				<code>{component}</code> is used <code>{usage.count}</code> times on{" "}
+				<code>{usage.pages.size}</code> pages.
+			</p>
+			<Details header={`Pages which use ${component}`}>
+				<ul>
+					{[...usage.pages].map((path) => (
+						<li>
+							<a
+								href={
+									"https://github.com/cloudflare/cloudflare-docs/blob/production/" +
+									path
+								}
+								target="_blank"
+							>
+								{path}
+							</a>
+						</li>
+					))}
+				</ul>
+			</Details>
+		</>
+	))
+}

@@ -8,7 +8,10 @@ import { Render } from "~/components";
 
 <Render
 	file="casb/integration-description"
-	params={{ one: "Amazon Web Services (AWS) S3", two: "AWS account" }}
+	params={{
+		integrationName: "Amazon Web Services (AWS) S3",
+		integrationAccountType: "AWS account",
+	}}
 />
 
 ## Integration prerequisites
@@ -32,13 +35,7 @@ You can connect an AWS compute account to your CASB integration to perform [Data
 
 ### Add a compute account
 
-To connect a compute account to your AWS integration:
-
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **CASB** > **Integrations**.
-2. Find and select your AWS integration.
-3. Select **Open connection instructions**.
-4. Follow the instructions provided to connect a new compute account.
-5. Select **Refresh**.
+<Render file="casb/aws-compute-account" />
 
 You can only connect one computer account to an integration. To remove a compute account, select **Manage compute accounts**.
 
@@ -65,7 +62,7 @@ For more information, refer to [Content findings](/cloudflare-one/applications/c
 
 <Render
 	file="casb/security-findings"
-	params={{ one: "AWS S3", two: "aws-s3" }}
+	params={{ integrationName: "AWS S3", slugRelativePath: "aws-s3" }}
 />
 
 ### S3 Bucket security

@@ -5,6 +5,10 @@ productLink: "/browser-rendering/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-02-27"
+    title: New Browser Rendering REST API
+    description: |-
+      * Released a new [REST API](/browser-rendering/rest-api/) in open beta. Available to all customers with a Workers Paid Plan.
   - publish_date: "2025-01-31"
     title: Increased limits
     description: |-

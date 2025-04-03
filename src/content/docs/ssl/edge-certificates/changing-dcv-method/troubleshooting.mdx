@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Troubleshooting Domain Control Validation
-
 ---
 
-import { GlossaryTooltip, Render } from "~/components"
+import { GlossaryTooltip, Render } from "~/components";
 
 Taking into account the [steps involved in DCV](/ssl/edge-certificates/changing-dcv-method/dcv-flow/), some situations may interfere with certificate issuance and renewal.
 
@@ -24,12 +23,14 @@ If you are using the Cloudflare API, error messages are presented under the `val
 
 If you have issues while HTTP DCV is in place, review the following settings:
 
-* **Anything affecting `/.well-known/*`**: Review [WAF custom rules](/waf/custom-rules/), [IP Access Rules](/waf/tools/ip-access-rules/), and other [configuration rules](/rules/configuration-rules/) to make sure that your rules *do not* enable interactive challenge on the validation URL.
+- **Anything affecting `/.well-known/*`**: Review [WAF custom rules](/waf/custom-rules/), [IP Access Rules](/waf/tools/ip-access-rules/), and other [configuration rules](/rules/configuration-rules/) to make sure that your rules _do not_ enable interactive challenge on the validation URL.
 
-* **Cloudflare Account Settings** and **Page Rules**: Review your [account settings](/fundamentals/reference/under-attack-mode/), [Configuration Rules](/rules/configuration-rules/), and [Page Rules](/rules/page-rules/) to ensure you have not enabled **I'm Under Attack Mode** on the validation URL.
+- **Cloudflare Account Settings** and **Page Rules**: Review your [account settings](/fundamentals/reference/under-attack-mode/), [Configuration Rules](/rules/configuration-rules/), and [Page Rules](/rules/page-rules/) to ensure you have not enabled Under Attack mode on the validation URL.
 
   :::caution
-   <Render file="dcv-path-security" />
+
+  <Render file="dcv-path-security" />
+
   :::
 
 ## Redirection
@@ -44,14 +45,15 @@ When using [Redirect Rules](/rules/url-forwarding/single-redirects/) the `/.well
 
 The errors below refer to situations that have to be addressed at the authoritative DNS provider:
 
-* `the Certificate Authority had trouble performing a DNS lookup: dns problem: looking up caa for nsheiapp.codeacloud.com: dnssec: bogus`
-* `Certificate authority encountered a SERVFAIL during DNS lookup, please check your DNS reachability.`
+- `the Certificate Authority had trouble performing a DNS lookup: dns problem: looking up caa for nsheiapp.codeacloud.com: dnssec: bogus`
+- `Certificate authority encountered a SERVFAIL during DNS lookup, please check your DNS reachability.`
 
 Consider the following when troubleshooting:
 
-* [DNSSEC](https://www.cloudflare.com/learning/dns/dns-security/) must be configured correctly. You can use [DNSViz](https://dnsviz.net/) to understand and troubleshoot the deployment of DNSSEC.
-* Your [CAA records](/ssl/edge-certificates/caa-records/) should allow Cloudflare's partner [certificate authorities (CAs)](/ssl/reference/certificate-authorities/) to issue certificates on your behalf.
-* The HTTP verification process is done preferably over **IPv6**, so if any `AAAA` record exists and does not point to the same dual-stack location as the `A` record, the validation will fail.
+- [DNSSEC](https://www.cloudflare.com/learning/dns/dns-security/) must be configured correctly. You can use [DNSViz](https://dnsviz.net/) to understand and troubleshoot the deployment of DNSSEC.
+- Your [CAA records](/ssl/edge-certificates/caa-records/) should allow Cloudflare's partner [certificate authorities (CAs)](/ssl/reference/certificate-authorities/) to issue certificates on your behalf.
+- The HTTP verification process is done preferably over **IPv6**, so if any AAAA record exists and does not point to the same dual-stack location as the A record, the validation will fail.
+- If an [NS record](/dns/manage-dns-records/reference/dns-record-types/#ns) is present for the hostname or its parent, DNS resolution will be managed externally by the DNS provider defined in the NS target. In this case, you must either add the DCV TXT record at the external DNS provider, or remove the NS record at Cloudflare.
 
 ## CA errors
 

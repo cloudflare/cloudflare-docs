@@ -4,6 +4,6 @@
 	"priority": 3,
 	"description": "Learn how you can get the most out of your Free plan.",
 	"products": ["Cache", "DNS", "SSL/TLS", "WAF"],
-	"product_group": "Cloudflare essentials",
+	"product_group": "Core platform",
 	"additional_groups": ["Application security", "Application performance"]
 }

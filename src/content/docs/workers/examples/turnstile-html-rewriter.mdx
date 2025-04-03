@@ -2,8 +2,6 @@
 type: example
 summary: Inject [Turnstile](/turnstile/) implicitly into HTML elements using the
   HTMLRewriter runtime API.
-tags:
-  - HTMLRewriter
 languages:
   - JavaScript
   - TypeScript
@@ -24,31 +22,37 @@ import { TabItem, Tabs } from "~/components";
 export default {
 	async fetch(request, env) {
 		const SITE_KEY = env.SITE_KEY; // The Turnstile Sitekey of your widget (pass as env or secret)
-		const TURNSTILE_ATTR_NAME = 'your_id_to_replace'; // The id of the element to put a Turnstile widget in
-		let res = await fetch(request)
+		const TURNSTILE_ATTR_NAME = "your_id_to_replace"; // The id of the element to put a Turnstile widget in
+		let res = await fetch(request);
 
 		// Instantiate the API to run on specific elements, for example, `head`, `div`
 		let newRes = new HTMLRewriter()
 
 			// `.on` attaches the element handler and this allows you to match on element/attributes or to use the specific methods per the API
-			.on('head', {
+			.on("head", {
 				element(element) {
 					// In this case, you are using `append` to add a new script to the `head` element
-					element.append(`<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>`, { html: true });
+					element.append(
+						`<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>`,
+						{ html: true },
+					);
 				},
 			})
-			.on('div', {
+			.on("div", {
 				element(element) {
 					// Add a turnstile widget element into if an element with the id of TURNSTILE_ATTR_NAME is found
-					if (element.getAttribute('id') === TURNSTILE_ATTR_NAME) {
-						element.append(`<div class="cf-turnstile" data-sitekey="${SITE_KEY}"></div>`, { html: true });
+					if (element.getAttribute("id") === TURNSTILE_ATTR_NAME) {
+						element.append(
+							`<div class="cf-turnstile" data-sitekey="${SITE_KEY}"></div>`,
+							{ html: true },
+						);
 					}
 				},
 			})
 			.transform(res);
-		return newRes
-	}
-}
+		return newRes;
+	},
+};
 ```
 
 </TabItem> <TabItem label="TypeScript" icon="seti:typescript">
@@ -57,32 +61,37 @@ export default {
 export default {
 	async fetch(request, env): Promise<Response> {
 		const SITE_KEY = env.SITE_KEY; // The Turnstile Sitekey of your widget (pass as env or secret)
-		const TURNSTILE_ATTR_NAME = 'your_id_to_replace'; // The id of the element to put a Turnstile widget in
+		const TURNSTILE_ATTR_NAME = "your_id_to_replace"; // The id of the element to put a Turnstile widget in
 
-		let res = await fetch(request)
+		let res = await fetch(request);
 
 		// Instantiate the API to run on specific elements, for example, `head`, `div`
 		let newRes = new HTMLRewriter()
 
 			// `.on` attaches the element handler and this allows you to match on element/attributes or to use the specific methods per the API
-			.on('head', {
+			.on("head", {
 				element(element) {
-
 					// In this case, you are using `append` to add a new script to the `head` element
-					element.append(`<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>`, { html: true });
+					element.append(
+						`<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>`,
+						{ html: true },
+					);
 				},
 			})
-			.on('div', {
+			.on("div", {
 				element(element) {
 					// Add a turnstile widget element into if an element with the id of TURNSTILE_ATTR_NAME is found
-					if (element.getAttribute('id') === TURNSTILE_ATTR_NAME) {
-						element.append(`<div class="cf-turnstile" data-sitekey="${SITE_KEY}" data-theme="light"></div>`, { html: true });
+					if (element.getAttribute("id") === TURNSTILE_ATTR_NAME) {
+						element.append(
+							`<div class="cf-turnstile" data-sitekey="${SITE_KEY}" data-theme="light"></div>`,
+							{ html: true },
+						);
 					}
 				},
 			})
 			.transform(res);
-		return newRes
-	}
+		return newRes;
+	},
 } satisfies ExportedHandler<Env>;
 ```
 

@@ -1,0 +1,35 @@
+---
+type: example
+summary: Connect Hyperdrive to a Digital Ocean database instance.
+pcx_content_type: example
+title: Connect to Digital Ocean
+sidebar:
+  order: 9
+description: Connect Hyperdrive to a Digital Ocean database instance.
+---
+
+import { Render } from "~/components";
+
+This example shows you how to connect Hyperdrive to a Digital Ocean database instance.
+
+## 1. Allow Hyperdrive access
+
+To allow Hyperdrive to connect to your database, you will need to ensure that Hyperdrive has valid user credentials and network access.
+
+### DigitalOcean Dashboard
+
+1. Go to the DigitalOcean dashboard and select the database you wish to connect to.
+2. Go to the **Overview** tab.
+3. Under the **Connection Details** panel, select **Public network**.
+4. On the dropdown menu, select **Connection string** > **show-password**.
+5. Copy the connection string.
+
+With the connection string, you can now create a Hyperdrive database configuration.
+
+## 2. Create a database configuration
+
+<Render file="create-hyperdrive-config" />
+
+:::note
+If you see a DNS-related error, it is possible that the DNS for your vendor's database has not yet been propagated. Try waiting 10 minutes before retrying the operation. Refer to [DigitalOcean support page](https://docs.digitalocean.com/support/why-does-my-domain-fail-to-resolve/) for more information.
+:::

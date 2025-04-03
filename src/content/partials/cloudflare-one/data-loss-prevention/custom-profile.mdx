@@ -1,11 +1,10 @@
 ---
 {}
-
 ---
 
-import { Details } from "~/components"
+import { Details } from "~/components";
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **DLP** > **DLP Profiles**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **DLP** > **DLP profiles**.
 
 2. Select **Create profile**.
 
@@ -13,22 +12,19 @@ import { Details } from "~/components"
 
 4. Add custom or existing detection entries.
 
-
    <Details header="Add a custom entry">
 
    1. Select **Add custom entry** and give it a name.
 
    2. In **Value**, enter a regular expression (or regex) that defines the text pattern you want to detect. For example, `test\d\d` will detect the word `test` followed by two digits.
 
-      * Regular expressions are written in Rust. We recommend validating your regex with [Rustexp](https://rustexp.lpil.uk/).
-      * DLP detects UTF-8 characters, which can be up to 4 bytes each. Custom text pattern detections are limited to 1024 bytes in length.
-      * DLP does not support regular expressions with `+` or `*` operators because they are prone to exceeding the length limit. For example, the regex pattern `a+` can detect an infinite number of `a` characters. We recommend using `a{min,max}` instead, such as `a{1,1024}`.
+      - Regular expressions are written in Rust. We recommend validating your regex with [Rustexp](https://rustexp.lpil.uk/).
+      - DLP detects UTF-8 characters, which can be up to 4 bytes each. Custom text pattern detections are limited to 1024 bytes in length.
+      - DLP does not support regular expressions with `+` or `*` operators because they are prone to exceeding the length limit. For example, the regex pattern `a+` can detect an infinite number of `a` characters. We recommend using `a{min,max}` instead, such as `a{1,1024}`.
 
    3. To save the detection entry, select **Done**.
 
-
    </Details>
-
 
    <Details header="Add existing entries">
 
@@ -38,9 +34,8 @@ import { Details } from "~/components"
    2. Choose which entries you want to add, then select **Confirm**.
    3. To save the detection entry, select **Done**.
 
-
    </Details>
 
-5. (Optional) Configure [**Advanced settings**](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/advanced-settings/) for the profile.
+5. (Optional) Configure [**profile settings**](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/advanced-settings/) for the profile.
 
 6. Select **Save profile**.

@@ -3,7 +3,7 @@ name: Tenant
 product:
   title: Tenant
   url: /tenant/
-  group: Cloudflare essentials
+  group: Core platform
   additional_groups: [Developer platform]
 
 meta:
@@ -13,7 +13,3 @@ meta:
     new set of APIs built into our Client v4 API library make a streamlined
     onboarding and setup experience
   author: "@cloudflare"
-
-externals:
-  - title: Cloudflare homepage
-    url: https://cloudflare.com

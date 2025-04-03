@@ -19,6 +19,8 @@ Purging everything instantly clears all resources from your CDN cache in all Clo
 When purging everything for a non-production cache environment, all files for that specific cache environment will be purged. However, when purging everything for the production environment, all files will be purged across all environments.
 :::
 
+For information on rate limits, refer to the [Availability and limits](/cache/how-to/purge-cache/#availability-and-limits) section.
+
 ## Resulting cache status
 
 Purge Everything invalidates the resource, resulting in the `CF-Cache-Status` header indicating [`EXPIRED`](/cache/concepts/cache-responses/#expired) for subsequent requests.

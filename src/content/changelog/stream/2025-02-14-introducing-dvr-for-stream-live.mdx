@@ -1,0 +1,23 @@
+---
+title: "Rewind, Replay, Resume: Introducing DVR for Stream Live"
+description: >
+  Stream has added support for DVR for Live broadcasts. In other words, for those
+  who didn’t witness the magic of TiVo, you can now allow your viewers to rewind
+  and replay Live content during broadcasts.
+date: 2025-02-14T12:00:00Z
+---
+
+Previously, all viewers watched "the live edge," or the latest content of the
+broadcast, synchronously. If a viewer paused for more than a few seconds,
+the player would automatically "catch up" when playback started again. Seeking
+through the broadcast was only available once the recording was available after
+it conluded.
+
+Starting today, customers can make a small adjustment to the player
+embed or manifest URL to enable the DVR experience for their viewers. By
+offering this feature as an opt-in adjustment, our customers are empowered to
+pick the best experiences for their applications.
+
+When building a player embed code or manifest URL, just add `dvrEnabled=true` as
+a query parameter. There are some things to be aware of when using this option.
+For more information, refer to [DVR for Live](/stream/stream-live/dvr-for-live/).

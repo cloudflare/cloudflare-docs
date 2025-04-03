@@ -1,0 +1,64 @@
+---
+title: Use the latest JavaScript features with Wrangler CLI v4.0.0-rc.0
+description: You can now try out the v4 RC for Wrangler by installing `wrangler@4.0.0-rc.0`
+products:
+  - workers
+date: 2025-02-28T22:30:00Z
+---
+
+import { PackageManagers } from "~/components";
+
+We've released a release candidate of the next major version of [Wrangler](/workers/wrangler/), the CLI for Cloudflare Workers — `wrangler@4.0.0-rc.0`.
+
+You can run the following command to install it and be one of the first to try it out:
+
+<PackageManagers pkg="wrangler@v4-rc" />
+
+Unlike previous major versions of Wrangler, which were [foundational rewrites](https://blog.cloudflare.com/wrangler-v2-beta/) and [rearchitectures](https://blog.cloudflare.com/wrangler3/) — Version 4 of Wrangler includes a much smaller set of changes. If you use Wrangler today, your workflow is very unlikely to change. Before we release Wrangler v4 and advance past the release candidate stage, we'll share a detailed migration guide in the Workers developer docs. But for the vast majority of cases, you won't need to do anything to migrate — things will just work as they do today. We are sharing this release candidate in advance of the official release of v4, so that you can try it out early and share feedback.
+
+#### New JavaScript language features that you can now use with Wrangler v4
+
+Version 4 of Wrangler updates the version of [esbuild](https://esbuild.github.io/) that Wrangler uses internally, allowing you to use modern JavaScript language features, including:
+
+##### The `using` keyword from Explicit Resource Management
+
+The [`using` keyword from the Explicit Resource Management standard](/workers/runtime-apis/rpc/lifecycle/#explicit-resource-management) makes it easier to work with the [JavaScript-native RPC system built into Workers](/workers/runtime-apis/rpc/). This means that when you obtain a stub, you can ensure that it is automatically disposed when you exit scope it was created in:
+
+```js
+function sendEmail(id, message) {
+  using user = await env.USER_SERVICE.findUser(id);
+  await user.sendEmail(message);
+
+  // user[Symbol.dispose]() is implicitly called at the end of the scope.
+}
+```
+
+##### Import attributes
+
+[Import attributes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import/with) allow you to denote the type or other attributes of the module that your code imports. For example, you can import a JSON module, using the following syntax:
+
+```js
+import data from "./data.json" with { type: "json" };
+```
+
+#### Other changes
+
+##### `--local` is now the default for all CLI commands
+
+All commands that access resources (for example, `wrangler kv`, `wrangler r2`, `wrangler d1`) now access local datastores by default, ensuring consistent behavior.
+
+##### Clearer policy for the minimum required version of Node.js required to run Wrangler
+
+Moving forward, the [active, maintenance, and current versions of Node.js](https://nodejs.org/en/about/previous-releases) will be officially supported by Wrangler. This means the minimum officially supported version of Node.js you must have installed for Wrangler v4 will be Node.js v18 or later. This policy mirrors how many other packages and CLIs support older versions of Node.js, and ensures that as long as you are using a version of Node.js that the Node.js project itself supports, this will be supported by Wrangler as well.
+
+##### Features previously deprecated in Wrangler v3 are now removed in Wrangler v4
+
+All previously deprecated features in [Wrangler v2](https://developers.cloudflare.com/workers/wrangler/deprecations/#wrangler-v2) and in [Wrangler v3](https://developers.cloudflare.com/workers/wrangler/deprecations/#wrangler-v3) have now been removed. Additionally, the following features that were deprecated during the Wrangler v3 release have been removed:
+
+- Legacy Assets (using `wrangler dev/deploy --legacy-assets` or the `legacy_assets` config file property). Instead, we recommend you [migrate to Workers assets](https://developers.cloudflare.com/workers/static-assets/).
+- Legacy Node.js compatibility (using `wrangler dev/deploy --node-compat` or the `node_compat` config file property). Instead, use the [`nodejs_compat` compatibility flag](https://developers.cloudflare.com/workers/runtime-apis/nodejs). This includes the functionality from legacy `node_compat` polyfills and natively implemented Node.js APIs.
+- `wrangler version`. Instead, use `wrangler --version` to check the current version of Wrangler.
+- `getBindingsProxy()` (via `import { getBindingsProxy } from "wrangler"`). Instead, use the [`getPlatformProxy()` API](https://developers.cloudflare.com/workers/wrangler/api/#getplatformproxy), which takes exactly the same arguments.
+- `usage_model`. This no longer has any effect, after the [rollout of Workers Standard Pricing](https://blog.cloudflare.com/workers-pricing-scale-to-zero/).
+
+We'd love your feedback! If you find a bug or hit a roadblock when upgrading to Wrangler v4, [open an issue on the `cloudflare/workers-sdk` repository on GitHub](https://github.com/cloudflare/workers-sdk/issues/new?template=bug-template.yaml).

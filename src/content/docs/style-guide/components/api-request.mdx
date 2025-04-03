@@ -1,0 +1,101 @@
+---
+title: API request
+styleGuide:
+  component: APIRequest
+---
+
+## Import
+
+```mdx
+import { APIRequest } from "~/components";
+```
+
+## Usage
+
+```mdx live
+import { APIRequest } from "~/components";
+
+<APIRequest
+	path="/zones/{zone_id}/api_gateway/settings/schema_validation"
+	method="PUT"
+	json={{
+		validation_default_mitigation_action: "block"
+	}}
+/>
+
+<APIRequest
+	path="/zones/{zone_id}/hostnames/settings/{setting_id}/{hostname}"
+	method="DELETE"
+	parameters={{
+		setting_id: "ciphers",
+	}}
+/>
+
+<APIRequest
+	path="/accounts/{account_id}/images/v2/direct_upload"
+	method="POST"
+	form={{
+		requireSignedURLs: true,
+		metadata: '{"key":"value"}'
+	}}
+/>
+
+<APIRequest
+	path="/zones/{zone_id}/cloud_connector/rules"
+	method="PUT"
+	json={[
+		{
+			expression: 'http.request.uri.path wildcard "/images/*"',
+			provider: "cloudflare_r2",
+			description: "Connect to R2 bucket containing images",
+			parameters: {
+				host: "mybucketcustomdomain.example.com",
+			},
+		},
+	]}
+/>
+```
+
+## `<APIRequest>` Props
+
+### `path`
+
+**required**
+
+**type:** `string`
+
+The path for the API endpoint.
+
+This can be found in our [API documentation](https://api.cloudflare.com), under the name of the endpoint.
+
+### `method`
+
+**required**
+
+**type:** `"GET" | "POST" | "PUT" | "PATCH" | "DELETE" | "HEAD"`
+
+The HTTP method to use.
+
+### `parameters`
+
+**type:** `Record<string, any>`
+
+The path parameters to substitute.
+
+If not provided, the component will default to an environment variable. For example, `{setting_id}` will be replaced with `$SETTING_ID`.
+
+### `json`
+
+**type:** `Record<string, any> | Record<string, any>[]`
+
+The JSON payload to send.
+
+If required properties are missing, the component will throw an error.
+
+### `form`
+
+**type:** `Record<string, any>`
+
+The FormData payload to send.
+
+This field is not currently validated against the schema.

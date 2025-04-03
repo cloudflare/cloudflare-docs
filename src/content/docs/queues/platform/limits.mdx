@@ -6,26 +6,26 @@ sidebar:
 
 ---
 
-import { Render } from "~/components"
+import { Render, WranglerConfig } from "~/components"
 
 
-| Feature                                       | Limit                                                         |
-| --------------------------------------------- | ------------------------------------------------------------- |
-| Queues                                        | 10,000 per account								                            |
-| Message size                                  | 128 KB <sup>1</sup>                                           |
-| Message retries                               | 100                                                           |
-| Maximum consumer batch size                   | 100 messages 								                                  |
-| Maximum messages per `sendBatch` call         | 100 (or 256KB in total)                                       |
-| Maximum Batch wait time                       | 60 seconds                                                    |
-| Per-queue message throughput    							| 5,000 messages per second <sup>2</sup>                        |
-| Message retention period <sup>3</sup>         | 14 days                                                       |
-| Per-queue backlog size <sup>4</sup>           | 25GB                                                          |
-| Concurrent consumer invocations               | 250 <sup>push-based only</sup>                                |
-| Consumer duration (wall clock time) 					| 15 minutes <sup>5</sup>                                       |
-| Consumer CPU time							                | 30 seconds																										|
-| `visibilityTimeout` (pull-based queues)       | 12 hours                                                      |
-| `delaySeconds` (when sending or retrying)     | 12 hours                                                      |
-| Requests to the Queues API (incl. pulls/acks) | [1200 requests / 5 mins](/fundamentals/api/reference/limits/) |
+| Feature                                       									| Limit                                                         |
+| ----------------------------------------------------------------| ------------------------------------------------------------- |
+| Queues                                        									| 10,000 per account								                            |
+| Message size                                  									| 128 KB <sup>1</sup>                                           |
+| Message retries                               									| 100                                                           |
+| Maximum consumer batch size                   									| 100 messages 								                                  |
+| Maximum messages per `sendBatch` call         									| 100 (or 256KB in total)                                       |
+| Maximum Batch wait time                       									| 60 seconds                                                    |
+| Per-queue message throughput    																| 5,000 messages per second <sup>2</sup>                        |
+| Message retention period <sup>3</sup>         									| 14 days                                                       |
+| Per-queue backlog size <sup>4</sup>           									| 25GB                                                          |
+| Concurrent consumer invocations               									| 250 <sup>push-based only</sup>                                |
+| Consumer duration (wall clock time) 														| 15 minutes <sup>5</sup>                                       |
+| [Consumer CPU time](/workers/platform/limits/#cpu-time)| 30 seconds (default). [Configurable to 5 minutes](/queues/platform/limits/#increasing-queue-consumer-worker-cpu-limits) 							|
+| `visibilityTimeout` (pull-based queues)       									| 12 hours                                                      |
+| `delaySeconds` (when sending or retrying)     									| 12 hours                                                      |
+| Requests to the Queues API (incl. pulls/acks) 									| [1200 requests / 5 mins](/fundamentals/api/reference/limits/) |
 
 
 
@@ -40,3 +40,24 @@ import { Render } from "~/components"
 <sup>5</sup> Refer to [Workers limits](/workers/platform/limits/#cpu-time).
 
 <Render file="limits_increase" product="workers" />
+
+### Increasing Queue Consumer Worker CPU Limits
+[Queue consumer Workers](/queues/reference/how-queues-works/#consumers) are Worker scripts, and share the same [per invocation CPU limits](/workers/platform/limits/#worker-limits) as any Workers do. Note that CPU time is active processing time: not time spent waiting on network requests, storage calls, or other general I/O.
+
+By default, the maximum CPU time per consumer Worker invocation is set to 30 seconds, but can be increased by setting `limits.cpu_ms` in your Wrangler configuration:
+
+<WranglerConfig>
+
+```jsonc
+{
+  // ...rest of your configuration...
+  "limits": {
+    "cpu_ms": 300000, // 300,000 milliseconds = 5 minutes
+  },
+  // ...rest of your configuration...
+}
+```
+
+</WranglerConfig>
+
+To learn more about CPU time and limits, [review the Workers documentation](/workers/platform/limits/#cpu-time).

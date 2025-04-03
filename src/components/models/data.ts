@@ -5,6 +5,9 @@ import mistral from "../../assets/images/workers-ai/mistralai.svg";
 import stabilityai from "../../assets/images/workers-ai/stabilityai.svg";
 import huggingface from "../../assets/images/workers-ai/huggingface.svg";
 import google from "../../assets/images/workers-ai/google.svg";
+import deepseek from "../../assets/images/workers-ai/deepseek.svg";
+import qwen from "../../assets/images/workers-ai/qwen.svg";
+import blackforestlabs from "../../assets/images/workers-ai/blackforestlabs.svg";
 
 export const authorData: Record<string, { name: string; logo: string }> = {
 	openai: {
@@ -38,5 +41,17 @@ export const authorData: Record<string, { name: string; logo: string }> = {
 	google: {
 		name: "Google",
 		logo: google.src,
+	},
+	"deepseek-ai": {
+		name: "DeepSeek",
+		logo: deepseek.src,
+	},
+	qwen: {
+		name: "Qwen",
+		logo: qwen.src,
+	},
+	"black-forest-labs": {
+		name: "Black Forest Labs",
+		logo: blackforestlabs.src,
 	},
 };

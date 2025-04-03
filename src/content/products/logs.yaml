@@ -3,7 +3,7 @@ name: Logs
 product:
   title: Logs
   url: /logs/
-  group: Cloudflare essentials
+  group: Core platform
   additional_groups: [Analytics]
 
 meta:
@@ -16,7 +16,3 @@ meta:
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/analytics/logs
-
-externals:
-  - title: Cloudflare homepage
-    url: https://cloudflare.com

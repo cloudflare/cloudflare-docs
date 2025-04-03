@@ -142,14 +142,11 @@ const FieldCatalog = ({ fields }: { fields: Fields }) => {
 									{field.name}
 								</span>
 							</div>
-							<Markdown
-								className="!mt-2 line-clamp-2 text-sm leading-6"
-								disallowedElements={["a"]}
-								unwrapDisallowed={true}
-							>
-								{field.summary}
-							</Markdown>
-
+							<div className="!mt-2 line-clamp-2 text-sm leading-6">
+								<Markdown disallowedElements={["a"]} unwrapDisallowed={true}>
+									{field.summary}
+								</Markdown>
+							</div>
 							{field.plan_info_label && (
 								<div className="!mt-2 text-xs">
 									<FieldBadges badges={[field.plan_info_label]} />

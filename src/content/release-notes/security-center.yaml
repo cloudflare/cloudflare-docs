@@ -7,7 +7,7 @@ productAreaLink: /fundamentals/reference/changelog/security/
 entries:
   - publish_date: "2025-02-03"
     description: |-
-      - Security Center now has a role called Brand Protection. This role gives you access to the Brand Protection feature on the API and Cloudflare dashboard. Brand Protection role also gives you access to the Investigate platform, where you can consume the Threat Intel API and URL scanner API calls. 
+      - Security Center now has a role called Brand Protection. This role gives you access to the Brand Protection feature on the API and Cloudflare dashboard. Brand Protection role also gives you access to the Investigate platform, where you can consume the Threat Intel API and URL scanner API calls.
   - publish_date: "2025-01-20"
     description: |-
       - On the URL scanner, customers who search for a report will now get a list of all reports related to that specific hostname. A hash is also available in the security report. By selecting the hash, the dashboard will list reports containing the same hash.

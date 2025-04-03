@@ -57,3 +57,10 @@ jobs:
 
       - name: Tests
         run: npm run test
+
+      - name: Post PR CI failure comment
+        if: always()
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx tsx bin/post-pr-ci-failure-comment/index.ts

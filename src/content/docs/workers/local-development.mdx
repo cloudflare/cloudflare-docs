@@ -7,6 +7,8 @@ head: []
 description: Develop your Workers locally via Wrangler.
 ---
 
+import { Aside } from "~/components";
+
 Cloudflare Workers and most connected resources can be fully developed and tested locally - providing confidence that the applications you build locally will work the same way in production. This allows you to be more efficient and effective by providing a faster feedback loop and removing the need to [test against remote resources](#develop-using-remote-resources-and-bindings). Local development runs against the same production runtime used by Cloudflare Workers, [workerd](https://github.com/cloudflare/workerd).
 
 In addition to testing Workers locally with [`wrangler dev`](/workers/wrangler/commands/#dev), the use of Miniflare allows you to test other Developer Platform products locally, such as [R2](/r2/), [KV](/kv/), [D1](/d1/), and [Durable Objects](/durable-objects/).
@@ -40,23 +42,26 @@ npx wrangler dev
 | D1                                  | ✅                  | ✅                   |
 | Durable Objects                     | ✅                  | ✅                   |
 | Email Bindings                      | ❌                  | ✅                   |
-| Hyperdrive                          | ✅                  | ✅                   |
+| Hyperdrive                          | ✅[^2]              | ✅                   |
+| Images                              | ✅                  | ✅                   |
 | KV                                  | ✅                  | ✅                   |
 | mTLS                                | ❌                  | ✅                   |
 | Queues                              | ✅                  | ❌                   |
 | R2                                  | ✅                  | ✅                   |
 | Rate Limiting                       | ✅                  | ✅                   |
 | Service Bindings (multiple workers) | ✅                  | ✅                   |
-| Vectorize                           | ✅[^2]              | ✅                   |
-| Workflows                           | ✅[^3]              | ❌                   |
+| Vectorize                           | ✅[^3]              | ✅                   |
+| Workflows                           | ✅[^4]              | ❌                   |
 
 With any bindings that are not supported locally, you will need to use the [`--remote` command](#develop-using-remote-resources-and-bindings) in wrangler, such as `wrangler dev --remote`.
 
 [^1]: Using Workers AI always accesses your Cloudflare account in order to run AI models and will incur usage charges even in local development.
 
-[^2]: Using Vectorize always accesses your Cloudflare account to run queries, and will incur usage charges even in local development.
+[^2]: Using Hyperdrive with local development allows you to connect to a local database (running on `localhost`) but you cannot connect to a remote database. To connect to a remote database, use remote development.
 
-[^3]: `pause()` and `resume()` are not available in local development.
+[^3]: Using Vectorize always accesses your Cloudflare account to run queries, and will incur usage charges even in local development.
+
+[^4]: `pause()` and `resume()` are not available in local development.
 
 ## Work with local data
 
@@ -89,14 +94,14 @@ The following [Wrangler commands](/workers/wrangler/commands/) have a `--local` 
 | Command                                              |
 | ---------------------------------------------------- |
 | [`d1 execute`](/workers/wrangler/commands/#execute)  |
-| [`kv:key`](/workers/wrangler/commands/#kv-key)       |
-| [`kv:bulk`](/workers/wrangler/commands/#kv-bulk)     |
+| [`kv key`](/workers/wrangler/commands/#kv-key)       |
+| [`kv bulk`](/workers/wrangler/commands/#kv-bulk)     |
 | [`r2 object`](/workers/wrangler/commands/#r2-object) |
 
 If using `--persist-to` to specify a custom folder with `wrangler dev` you should also add `--persist-to` with the same directory name along with the `--local` flag when running the commands above. For example, to put a custom KV key into a local namespace via the CLI you would run:
 
 ```sh
-npx wrangler kv:key put test 12345 --binding MY_KV_NAMESPACE --local --persist-to worker-local
+npx wrangler kv key put test 12345 --binding MY_KV_NAMESPACE --local --persist-to worker-local
 ```
 
 Running `wrangler kv key put` will create a new key `test` with a value of `12345` on the local namespace specified via the binding `MY_KV_NAMESPACE` in the [Wrangler configuration file](/workers/wrangler/configuration/). This example command sets the local persistence directory to `worker-local` using `--persist-to`, to ensure that the data is created in the correct location. If `--persist-to` was not set, it would create the data in the `.wrangler` folder.
@@ -125,6 +130,19 @@ npx wrangler dev --remote
 ```
 
 For some products like KV and R2, remote resources used for `wrangler dev --remote` must be specified with preview ID/names in the [Wrangler configuration file](/workers/wrangler/configuration/) such as `preview_id` for KV or `preview_bucket name` for R2. Resources used for remote mode (preview) can be different from resources used for production to prevent changing production data during development. To use production data in `wrangler dev --remote`, set the preview ID/name of the resource to the ID/name of your production resource.
+
+<Aside
+	type="note"
+	title="Number of routes per zone in a remote development session"
+>
+	When you run a remote development session using the `--remote` flag, a
+	[limit](/workers/platform/limits/#routes-and-domains) of 50
+	[routes](/workers/configuration/routing/routes/) per zone is enforced. The
+	Quick Editor in the Cloudflare Dashboard also uses `wrangler dev --remote`, so
+	any changes made there are subject to the same 50-route limit. If your zone
+	has more than 50 routes, you **will not be able to run a remote session**. To
+	fix this, you must remove routes until you are under the 50-route limit.
+</Aside>
 
 ## Customize `wrangler dev`
 

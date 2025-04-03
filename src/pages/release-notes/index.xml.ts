@@ -2,7 +2,6 @@ import rss from "@astrojs/rss";
 import { getCollection, getEntry } from "astro:content";
 import type { APIRoute } from "astro";
 import { marked, type Token } from "marked";
-import { getWranglerReleases } from "~/util/release-notes";
 import { slug } from "github-slugger";
 import { entryToString } from "~/util/container";
 
@@ -20,8 +19,6 @@ export const GET: APIRoute = async (context) => {
 	const releaseNotes = await getCollection("release-notes", (e) => {
 		return e.id !== "api-deprecations";
 	});
-
-	releaseNotes.push(await getWranglerReleases());
 
 	const mapped = await Promise.all(
 		releaseNotes.flatMap((product) => {

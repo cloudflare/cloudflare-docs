@@ -84,11 +84,6 @@ routes = [
 
 </WranglerConfig>
 
-:::note
-
-The `zone_id` and `zone_name` options are interchangeable. However, if using Cloudflare for SaaS with a `*/*` pattern, use the `zone_name` option to avoid errors. Currently, [publishing `*/*` routes with a `zone_id` option fails with an `Invalid URL` error](https://github.com/cloudflare/workers-sdk/issues/2953).
-:::
-
 ## Matching behavior
 
 Route patterns look like this:

@@ -11,17 +11,23 @@ import { Tabs, TabItem } from '~/components';
 
 2. Copy the token's **Client ID** and **Client Secret**.
 
-3. In your [device enrollment permissions](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/#set-device-enrollment-permissions), create the following policy:
+3. Go to **Access** > **Policies** and create the following policy:
 
    | Rule Action  | Rule type | Selector      | Value          |
    | ------------ | --------- | ------------- | -------------- |
    | Service Auth | Include   | Service Token | `<TOKEN-NAME>` |
 
-4. In your MDM [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/), add the following fields:
+		 Make sure to set **Action** to _Service Auth_ instead of _Allow_.
+4. Add the Access policy to your [device enrollment permissions](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/#set-device-enrollment-permissions).
+5. In your MDM [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/), add the following fields:
    * `auth_client_id`: The **Client ID** of your service token.
    * `auth_client_secret`: The **Client Secret** of your service token.
 
-</TabItem> <TabItem label="Terraform">
+</TabItem> <TabItem label="Terraform (v4)">
+
+:::note[Provider versions]
+The following example requires Cloudflare provider version `>=4.40.0`.
+:::
 
 1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.40.0/docs/resources/api_token):
 	- `Access: Apps and Policies Write`

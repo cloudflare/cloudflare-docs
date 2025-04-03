@@ -1,0 +1,73 @@
+---
+import LanguageSelect from "@astrojs/starlight/components/LanguageSelect.astro";
+import DocSearch from "@astrojs/starlight-docsearch/DocSearch.astro";
+import SiteTitle from "@astrojs/starlight/components/SiteTitle.astro";
+import ThemeSelect from "@astrojs/starlight/components/ThemeSelect.astro";
+
+import HeaderDropdowns from "../HeaderDropdowns.tsx";
+---
+
+<div class="flex h-full items-center justify-between gap-4">
+	<SiteTitle />
+	<div class="flex gap-8">
+		<div id="docsearch">
+			<DocSearch />
+		</div>
+		<div id="right-group" class="hidden h-10 flex-wrap gap-x-2 overflow-hidden">
+			<HeaderDropdowns client:idle />
+			<a
+				id="header-login-button"
+				href="https://dash.cloudflare.com/"
+				class="mr-2 flex items-center justify-center rounded bg-cl1-brand-orange px-6 font-medium text-cl1-black no-underline"
+			>
+				Log in
+			</a>
+			<ThemeSelect />
+			<LanguageSelect />
+		</div>
+	</div>
+</div>
+
+<style>
+	:global(.site-title) {
+		gap: 0.5rem;
+		min-width: fit-content;
+		overflow: none;
+
+		span {
+			color: var(--sl-color-white);
+		}
+
+		img {
+			height: 1.25rem;
+		}
+	}
+
+	#social-icons {
+		--sl-icon-color: var(--sl-color-white);
+	}
+
+	:global(starlight-theme-select > label > select) {
+		line-height: 1.25rem;
+	}
+
+	@media screen and (min-width: 800px) {
+		#right-group {
+			display: flex;
+		}
+
+		#docsearch {
+			width: 20rem;
+		}
+	}
+</style>
+
+<script>
+	import { track } from "~/util/zaraz";
+
+	document
+		.querySelector("#header-login-button")
+		?.addEventListener("click", () => {
+			track("clicked header login button");
+		});
+</script>

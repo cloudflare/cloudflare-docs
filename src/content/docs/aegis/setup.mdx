@@ -1,0 +1,36 @@
+---
+title: Setup
+pcx_content_type: how-to
+sidebar:
+  order: 2
+  group:
+    hideIndex: true
+---
+
+You can control Aegis enablement on your zones via API. If you are not familiar with how Cloudflare API works, refer to [Fundamentals](/fundamentals/api/).
+
+:::caution[Availability]
+Cloudflare Aegis is available in early access to Enterprise customers. Contact your account team to request access.
+:::
+
+## Requirements
+
+- The Aegis zone setting endpoint is only available within Cloudflare accounts that own leased IPs, or accounts to which a [BYOIP prefix](/byoip/) has been delegated. If you wish to use Aegis for zones that do not meet this criteria, contact your account team.
+- Each Aegis pool can consist of either IPs from a BYOIP prefix or Cloudflare-leased IPs. A single dedicated egress pool cannot contain both BYOIPs and leased IPs.
+
+## Steps
+
+1. Contact your account team to get the ID for your dedicated egress pool.
+2. Make a `PATCH` request to the [Edit Zone Setting](/api/resources/zones/subresources/settings/methods/edit/) endpoint:
+- Specify `aegis` as the setting ID in the URL.
+- In the request body, set `enabled` to `true` and use the ID from the previous step as `pool_id`.
+
+```bash
+--data '{
+  "id": "aegis",
+  "value": {
+    "enabled": true,
+    "pool_id": "<YOUR_EGRESS_POOL_ID>"
+  },
+}'
+```

@@ -1,0 +1,169 @@
+---
+import { z } from "astro:schema";
+import { getProperty } from "dot-prop";
+import { getSchema } from "~/util/api.ts";
+import type { OpenAPIV3 } from "openapi-types";
+import CURL from "./CURL.astro";
+import Details from "./Details.astro";
+
+type Props = z.input<typeof props>;
+
+const Record = z.record(z.string(), z.any());
+
+const props = z
+	.object({
+		path: z.string(),
+		method: z.enum(["GET", "HEAD", "POST", "PUT", "DELETE", "PATCH"]),
+		parameters: z.record(z.string(), z.any()).optional(),
+		json: z.union([Record, z.array(Record)]).optional(),
+		form: Record.optional(),
+	})
+	.strict();
+
+let { path, method, parameters, json, form } = props.parse(Astro.props);
+
+if (json && form) {
+	throw new Error(`[APIRequest] Cannot use both "json" and "form" properties.`);
+}
+
+const schema = await getSchema();
+
+const operation = getProperty(
+	schema,
+	`paths.${path}.${method.toLowerCase()}`,
+) as unknown as
+	| OpenAPIV3.OperationObject<{
+			"x-api-token-group"?: string[];
+	  }>
+	| undefined;
+
+if (!operation) {
+	throw new Error(
+		`[APIRequest] Operation ${method} ${path} not found in schema.`,
+	);
+}
+
+const url = new URL(
+	path.startsWith("/") ? path.slice(1) : path,
+	"https://api.cloudflare.com/client/v4/",
+);
+const headers: Record<string, string> = {};
+
+const providedParameters = Object.keys(parameters ?? {});
+const endpointParameters = (operation.parameters ??
+	[]) as OpenAPIV3.ParameterObject[];
+
+const extraneousParameters = providedParameters.filter(
+	(parameter) =>
+		!endpointParameters.some(
+			(endpointParam) => endpointParam.name === parameter,
+		),
+);
+
+if (extraneousParameters.length > 0) {
+	throw new Error(
+		`[APIRequest] Provided parameters ${extraneousParameters.join(", ")} not found in ${method} ${path} schema.`,
+	);
+}
+
+for (const parameter of endpointParameters) {
+	if (parameter.in === "path") {
+		const encoded = encodeURIComponent(`{${parameter.name}}`);
+
+		if (parameters?.[parameter.name]) {
+			url.pathname = url.pathname.replace(encoded, parameters[parameter.name]);
+		}
+	}
+}
+
+const segments = url.pathname.split("/").filter(Boolean);
+
+for (const segment of segments) {
+	const decoded = decodeURIComponent(segment);
+
+	if (decoded.startsWith("{") && decoded.endsWith("}")) {
+		const placeholder = "$" + decoded.slice(1, -1).toUpperCase();
+		url.pathname = url.pathname.replace(segment, placeholder);
+	}
+}
+
+const security = operation.security as
+	| OpenAPIV3.SecurityRequirementObject[]
+	| undefined;
+
+if (security) {
+	const keys = security.flatMap((requirement) => Object.keys(requirement));
+
+	if (keys.includes("api_token")) {
+		headers["Authorization"] = `Bearer $CLOUDFLARE_API_TOKEN`;
+	} else if (keys.includes("api_key")) {
+		headers["X-Auth-Email"] = "$CLOUDFLARE_EMAIL";
+		headers["X-Auth-Key"] = "$CLOUDFLARE_API_KEY";
+	}
+}
+
+const requestBody = operation?.requestBody as
+	| OpenAPIV3.RequestBodyObject
+	| undefined;
+
+const jsonSchema = requestBody?.content?.["application/json"]?.schema as
+	| OpenAPIV3.SchemaObject
+	| undefined;
+
+if (jsonSchema?.required) {
+	const checkProperties = (obj?: object) => {
+		const providedProperties = Object.keys(obj ?? {});
+		const requiredProperties = jsonSchema.required!;
+
+		const missingProperties = requiredProperties.filter(
+			(property) => !providedProperties.includes(property),
+		);
+
+		if (missingProperties.length > 0) {
+			throw new Error(
+				`[APIRequest] Missing the following required properties for ${method} ${path}: ${missingProperties.join(", ")}`,
+			);
+		}
+	};
+
+	if (Array.isArray(json)) {
+		for (const obj of json) {
+			checkProperties(obj);
+		}
+	} else {
+		checkProperties(json);
+	}
+}
+
+const tokenGroups = operation["x-api-token-group"];
+---
+
+{
+	tokenGroups && (
+		<Details header="Required API token permissions">
+			<span>
+				At least one of the following{" "}
+				<a href="/fundamentals/api/reference/permissions/">token permissions</a>{" "}
+				is required:
+			</span>
+			<ul>
+				{tokenGroups.map((group) => (
+					<li>
+						<code>{group}</code>
+					</li>
+				))}
+			</ul>
+		</Details>
+	)
+}
+
+<CURL
+	url={url.toString()}
+	method={method}
+	headers={headers}
+	json={json}
+	form={form}
+	code={{
+		title: operation.summary,
+	}}
+/>

@@ -5,14 +5,10 @@ product:
   title: Randomness Beacon
   url: /randomness-beacon/
   wrap: true
-  group: Cloudflare essentials
+  group: Core platform
 
 meta:
   title: Cloudflare Randomness Beacon docs
   description: "Explore drand: a distributed service providing public randomness
     in an application-agnostic, secure, and efficient way."
   author: "@cloudflare"
-
-externals:
-  - title: Cloudflare homepage
-    url: https://cloudflare.com

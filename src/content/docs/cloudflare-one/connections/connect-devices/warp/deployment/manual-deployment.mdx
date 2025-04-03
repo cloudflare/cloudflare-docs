@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Details, GlossaryTooltip, Render } from "~/components";
+import { Details, GlossaryTooltip, Render, Badge } from "~/components";
 
 If you plan to direct your users to manually download and configure the WARP client, users will need to connect the client to your organization's Cloudflare Zero Trust instance.
 
@@ -15,13 +15,13 @@ If you plan to direct your users to manually download and configure the WARP cli
 
 ## Windows, macOS, and Linux
 
-### Enroll via the GUI
+### Enroll using the GUI
 
 <Render file="warp/enroll-desktop" />
 
 The device is now protected by your organization's Zero Trust policies.
 
-### Enroll via the CLI
+### Enroll using the CLI
 
 To enroll your device using the terminal:
 
@@ -74,7 +74,72 @@ The device is now protected by your organization's Zero Trust policies. For more
 
 ## iOS, Android, and ChromeOS
 
+### Enroll manually
+
 <Render file="warp/enroll-ios-android" />
+
+The device is now protected by your organization's Zero Trust policies.
+
+### Enroll using a URL <Badge text="Beta" variant="caution"/>
+
+<Details header="Feature availability">
+
+| System   | Availability | Minimum WARP version |
+| -------- | ------------ | -------------------- |
+| Windows  | ❌           |                      |
+| macOS    | ❌           |                      |
+| Linux    | ❌           |                      |
+| iOS      | ✅           | 1.10                  |
+| Android  | ✅           | 2.4                   |
+| ChromeOS | ✅           | 2.4                   |
+
+</Details>
+
+Administrators can provide users with a custom login URL that automatically fills in your organization's <GlossaryTooltip term="team name">team name</GlossaryTooltip> during device enrollment. Using a URL reduces the potential for error that comes with manual entry of the team name.
+
+The WARP client supports URLs accessed through a direct link or with a URL handler such as a QR code. Direct links are currently only supported in Safari and Firefox. If your default browser is Chrome (or another unsupported browser), we recommend embedding the link in a QR code.
+
+#### Generate a login URL
+
+To generate a URL for device enrollment:
+
+1. Copy the following link, replacing `<your-team-name>` with your Zero Trust <GlossaryTooltip term="team name">team name</GlossaryTooltip>:
+		```txt
+		cf1app://oneapp.cloudflare.com/team?name=<your-team-name>
+		```
+2. (Optional) Use any QR code generator to embed the link in a QR code.
+3. Distribute the link or QR code to users.
+
+#### Use the login URL
+
+To enroll a device using a login URL:
+
+1. [Download](/cloudflare-one/connections/connect-devices/warp/download-warp/) and install the Cloudflare One Agent app.
+2. Go to the [login URL](#generate-a-login-url) provided by your account administrator. To use a QR code, open the QR scanner app on your device and scan the QR code.
+
+		The Cloudflare One Agent app will open and start the onboarding flow.
+
+		:::note
+		If the device is already enrolled in the account associated with this URL, Cloudflare One agent will bypass onboarding and show the **Connected** switch.
+		:::
+
+3. To complete the onboarding flow:
+
+		a. Review the privacy policy and select **Accept**.
+
+    b. On the **Enter team name** screen, confirm that the pre-populated <GlossaryTooltip term="team name">team name</GlossaryTooltip> matches your organization.
+
+		:::note[`Already Authenticated` error]
+		If Cloudflare One Agent is logged in using another team name, you must first log out of that account. Go to **Settings** > **Account** to log out, and then retry the QR code or login link.
+		:::
+
+    c. Complete the authentication steps required by your organization.
+
+ 		d. After authenticating, select **Install VPN Profile**.
+
+		e. In the **Connection request** popup window, select **OK**.
+
+4. If you did not enable [auto-connect](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#auto-connect), manually turn on the switch to **Connected**.
 
 The device is now protected by your organization's Zero Trust policies.
 

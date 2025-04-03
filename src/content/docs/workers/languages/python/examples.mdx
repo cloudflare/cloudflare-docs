@@ -14,7 +14,7 @@ In addition to those examples, consider the following ones that illustrate Pytho
 ## Parse an incoming request URL
 
 ```python
-from js import Response
+from workers import Response
 from urllib.parse import urlparse, parse_qs
 
 async def on_fetch(request, env):
@@ -25,30 +25,31 @@ async def on_fetch(request, env):
 
     if "name" in params:
         greeting = "Hello there, {name}".format(name=params["name"][0])
-        return Response.new(greeting)
+        return Response(greeting)
 
 
     if url.path == "/favicon.ico":
-      return Response.new("")
+      return Response("")
 
-    return Response.new("Hello world!")
+    return Response("Hello world!")
 ```
 
 ## Parse JSON from the incoming request
 
 ```python
-from js import Response
+from workers import Response
 
 async def on_fetch(request):
     name = (await request.json()).name
-    return Response.new("Hello, {name}".format(name=name))
+    return Response("Hello, {name}".format(name=name))
 ```
 
 ## Emit logs from your Python Worker
 
 ```python
 # To use the JavaScript console APIs
-from js import console, Response
+from js import console
+from workers import Response
 # To use the native Python logging
 import logging
 
@@ -69,14 +70,16 @@ async def on_fetch(request):
     # Or just use print()
     print("print() from Python!")
 
-    return Response.new("We're testing logging!")
+    return Response("We're testing logging!")
 ```
 
 ## Publish to a Queue
 
 ```python
-from js import Response, Object
+from js import Object
 from pyodide.ffi import to_js as _to_js
+
+from workers import Response
 
 # to_js converts between Python dictionaries and JavaScript Objects
 def to_js(obj):
@@ -93,13 +96,13 @@ async def on_fetch(request, env):
     await env.QUEUE.send(to_js({"hello": "world"}))
 
     # Return a response
-    return Response.json(to_js({"write": "success"}))
+    return Response.json({"write": "success"})
 ```
 
 ## Query a D1 Database
 
 ```python
-from js import Response
+from workers import Response
 
 async def on_fetch(request, env):
     results = await env.DB.prepare("PRAGMA table_list").all()

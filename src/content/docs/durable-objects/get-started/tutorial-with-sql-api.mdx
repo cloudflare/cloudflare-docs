@@ -53,7 +53,7 @@ Running `create cloudflare@latest` will install [Wrangler](/workers/wrangler/ins
 	product="workers"
 	params={{
 		category: "hello-world",
-		type: "Hello World Worker Using Durable Objects",
+		type: "Worker + Durable Objects",
 		lang: "TypeScript",
 	}}
 />
@@ -228,8 +228,6 @@ A migration is a mapping process from a class name to a runtime state. You perfo
 Migrations are performed through the `[[migrations]]` configurations key in your Wrangler file.
 
 The Durable Object migration to create a new Durable Object class with SQLite storage backend will look like the following in your Worker's Wrangler file:
-
-
 
 <WranglerConfig>
 

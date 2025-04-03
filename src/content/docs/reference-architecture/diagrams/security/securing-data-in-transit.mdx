@@ -59,7 +59,7 @@ The following diagram shows a common flow for how Cloudflare inspects a request 
 1. User attempts to upload a file to a SaaS application (via a secure tunnel to Cloudflare created by our [device agent](/cloudflare-one/connections/connect-devices/warp/download-warp/)). [Clientless](/cloudflare-one/connections/connect-devices/agentless/) options are supported as well.
 2. Cloudflare's [Secure Web Gateway](/cloudflare-one/policies/gateway/) (SWG) will first verify that the user is permitted to use the requested SaaS application, and then scrutinize the file's payload for [malicious code](/cloudflare-one/policies/gateway/http-policies/antivirus-scanning/) and [sensitive data](/cloudflare-one/policies/data-loss-prevention/).
 3. The DLP profile determines the file contains national identifiers like US Social Security Numbers (SSN).
-4. The SWG policy is configured with a ['block' action](/cloudflare-one/policies/gateway/http-policies/#block), so the attempt is [logged](/cloudflare-one/policies/data-loss-prevention/dlp-policies/logging-options/#log-the-payload-of-matched-rules/) and a [block page](/cloudflare-one/policies/gateway/block-page/) returned to the end user's web browser.
+4. The SWG policy is configured with a ['block' action](/cloudflare-one/policies/gateway/http-policies/#block), so the attempt is [logged](/cloudflare-one/policies/data-loss-prevention/dlp-policies/logging-options/#log-the-payload-of-matched-rules) and a [block page](/cloudflare-one/policies/gateway/block-page/) returned to the end user's web browser.
 
 ## Related resources
 

@@ -1,0 +1,47 @@
+---
+title: Upload a certificate bundle with an RSA and ECDSA certificate per custom hostname
+description: Upload a certificate bundle with an RSA and ECDSA certificate per custom hostname
+date: 2025-02-14T11:00:00Z
+---
+import { Card, Render, Details } from "~/components"
+
+Cloudflare has supported both RSA and ECDSA certificates across our platform for a number of years. Both certificates offer the same security, but ECDSA is more performant due to a smaller key size. However, RSA is more widely adopted and ensures compatibility with legacy clients. Instead of choosing between them, you may want both – that way, ECDSA is used when clients support it, but RSA is available if not.
+
+Now, you can upload both an RSA and ECDSA certificate on a custom hostname via the API.
+
+```
+curl -X POST https://api.cloudflare.com/client/v4/zones/$ZONE_ID/custom_hostnames \
+    -H 'Content-Type: application/json' \
+    -H "X-Auth-Email: $CLOUDFLARE_EMAIL" \
+    -H "X-Auth-Key: $CLOUDFLARE_API_KEY" \
+    -d '{
+    "hostname": "hostname",
+    "ssl": {
+        "custom_cert_bundle": [
+            {
+                "custom_certificate": "RSA Cert",
+                "custom_key": "RSA Key"
+            },
+            {
+                "custom_certificate": "ECDSA Cert",
+                "custom_key": "ECDSA Key"
+            }
+        ],
+        "bundle_method": "force",
+        "wildcard": false,
+        "settings": {
+            "min_tls_version": "1.0"
+        }
+    }
+}’
+```
+
+You can also:
+
+* [Upload](/api/resources/custom_hostnames/methods/create/) an RSA or ECDSA certificate to a custom hostname with an existing ECDSA or RSA certificate, respectively.
+
+* [Replace](/api/resources/custom_hostnames/subresources/certificate_pack/subresources/certificates/methods/update/) the RSA or ECDSA certificate with a certificate of its same type.
+
+* [Delete](/api/resources/custom_hostnames/subresources/certificate_pack/subresources/certificates/methods/delete/) the RSA or ECDSA certificate (if the custom hostname has both an RSA and ECDSA uploaded).
+
+This feature is available for Business and Enterprise customers who have purchased custom certificates.

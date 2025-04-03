@@ -1,0 +1,37 @@
+---
+title:  AI Gateway launches Realtime WebSockets API
+description:  AI Gateway now supports end-to-end, client-to-provider WebSockets 
+date: 2025-03-21T09:00:00Z
+---
+We are excited to announce that [AI Gateway](/ai-gateway/) now supports real-time AI interactions with the new [Realtime WebSockets API](/ai-gateway/configuration/websockets-api/realtime-api/). 
+
+This new capability allows developers to establish persistent, low-latency connections between their applications and AI models, enabling natural, real-time conversational AI experiences, including speech-to-speech interactions.
+
+The Realtime WebSockets API works with the [OpenAI Realtime API](https://platform.openai.com/docs/guides/realtime#connect-with-websockets), [Google Gemini Live API](https://ai.google.dev/gemini-api/docs/multimodal-live), and supports real-time text and speech interactions with models from [Cartesia](https://docs.cartesia.ai/api-reference/tts/tts), and [ElevenLabs](https://elevenlabs.io/docs/conversational-ai/api-reference/conversational-ai/websocket).
+
+Here's how you can connect AI Gateway to [OpenAI's Realtime API](https://platform.openai.com/docs/guides/realtime#connect-with-websockets) using WebSockets:
+```javascript title="OpenAI Realtime API example"
+import WebSocket from "ws";
+
+const url =
+  "wss://gateway.ai.cloudflare.com/v1/<account_id>/<gateway>/openai?model=gpt-4o-realtime-preview-2024-12-17";
+const ws = new WebSocket(url, {
+  headers: {
+    "cf-aig-authorization": process.env.CLOUDFLARE_API_KEY,
+    Authorization: "Bearer " + process.env.OPENAI_API_KEY,
+    "OpenAI-Beta": "realtime=v1",
+  },
+});
+
+ws.on("open", () => console.log("Connected to server."));
+ws.on("message", (message) => console.log(JSON.parse(message.toString())));
+
+ws.send(
+  JSON.stringify({
+    type: "response.create",
+    response: { modalities: ["text"], instructions: "Tell me a joke" },
+  }),
+);
+```
+
+Get started by checking out the [Realtime WebSockets API](/ai-gateway/configuration/websockets-api/realtime-api/) documentation.

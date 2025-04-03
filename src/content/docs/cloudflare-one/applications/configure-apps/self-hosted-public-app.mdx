@@ -17,7 +17,7 @@ You can securely publish internal tools and applications by adding Cloudflare Ac
 
 ## 1. Add your application to Access
 
-<Render file="access/self-hosted-app" />
+<Render file="access/self-hosted-app/generic-public-app" />
 
 ## 2. Connect your origin to Cloudflare
 
@@ -37,12 +37,4 @@ Users can now connect to your self-hosted application after authenticating with 
 
 ## Product compatibility
 
-When using Access self-hosted applications, the majority of Cloudflare products will be compatible with your application.
-
-However, the following products are not supported:
-
-* [Automatic Signed Exchanges](/speed/optimization/other/signed-exchanges/)
-* [Automatic Platform Optimization](/automatic-platform-optimization)
-* [Zaraz](/zaraz)
-
-You can disable Automatic Signed Exchanges and Zaraz for a specific application - instead of across your entire zone - using a [Configuration Rule](/rules/configuration-rules/) scoped to the application domain.
+ <Render file="access/self-hosted-app/product-compatibility" product="cloudflare-one" />

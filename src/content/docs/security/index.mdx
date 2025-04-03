@@ -1,0 +1,76 @@
+---
+title: Application security dashboard (beta)
+pcx_content_type: overview
+sidebar:
+  order: 1
+description: The application security dashboard (beta) helps you understand the current security posture of your web applications and allows you configure different security rules for those applications.
+head:
+  - tag: title
+    content: Overview
+---
+
+import {
+	Card,
+	CardGrid,
+	Feature,
+	LinkTitleCard,
+	RelatedProduct,
+} from "~/components";
+
+The application security dashboard (beta) is your starting point to better understand the security posture of your web applications, and to configure rules to protect them.
+
+<Card title="New dashboard experience" icon="rocket">
+
+The new **Security** navigation in the Cloudflare dashboard is currently available in beta for users that opt in to the new user interface. To opt in:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
+2. Open any page under **Security**.
+3. In the top right-hand corner of the page, select **Try new security dashboard**.
+
+You can swap back to the previous dashboard at any time by selecting **Return to old security dashboard** in the same page location.
+
+</Card>
+
+## Features
+
+<Feature
+	header="Security overview"
+	href="/security/overview/"
+	cta="Explore Security overview"
+>
+	Get a high-level overview of your domain's security posture.
+</Feature>
+
+<Feature
+	header="Security Analytics"
+	href="/security/analytics/"
+	cta="Explore Security Analytics"
+>
+	Shows information about all incoming HTTP requests or mitigated requests (rule
+	matches). Tailor your security configurations based on sampled logs.
+</Feature>
+
+<Feature header="Web assets" href="/security/web-assets/">
+	Discover your web assets (including API endpoints) and instruct Cloudflare how
+	to best protect them.
+</Feature>
+
+<Feature header="Security rules" href="/security/rules/">
+	Perform security actions on incoming requests that match specified filters.
+</Feature>
+
+---
+
+## More resources
+
+<CardGrid>
+
+<LinkTitleCard
+	title="Plans"
+	href="https://www.cloudflare.com/plans/#overview"
+	icon="document"
+>
+	Compare available Cloudflare plans
+</LinkTitleCard>
+
+</CardGrid>

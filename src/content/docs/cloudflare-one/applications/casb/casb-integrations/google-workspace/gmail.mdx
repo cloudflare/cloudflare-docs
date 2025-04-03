@@ -3,38 +3,16 @@ pcx_content_type: reference
 title: Gmail
 rss: file
 sidebar:
-  order: 2
+  order: 1
 ---
 
 import { Render } from "~/components";
 
 <Render
-  file="casb/integration-description"
-  params={{ one: "Gmail", two: "Google Workspace account" }}
+	file="casb/google/integrations/gmail"
+	params={{
+		integrationName: "Gmail",
+		environmentName: "Google Workspace account",
+		slugifiedName: "google-workspace/gmail",
+	}}
 />
-
-## Integration prerequisites
-
-<Render file="casb/google/google-prereqs" />
-
-## Integration permissions
-
-<Render
-  file="casb/integration-perms"
-  params={{ one: "Google Workspace", two: "google-workspace" }}
-/>
-
-## Security findings
-
-<Render
-  file="casb/security-findings"
-  params={{ one: "Gmail", two: "google-workspace/gmail" }}
-/>
-
-### Gmail administrator settings
-
-<Render file="casb/google/gmail-admin-settings" />
-
-### Email forwarding
-
-<Render file="casb/google/email-forwarding" />

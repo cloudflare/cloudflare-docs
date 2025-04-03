@@ -3,8 +3,6 @@ pcx_content_type: configuration
 title: HTTP policies
 sidebar:
   order: 4
-banner:
-  content: The default global Cloudflare root certificate expired on 2025-02-02. If you installed the default Cloudflare certificate before 2024-10-17, you must <a href="/cloudflare-one/connections/connect-devices/user-side-certificates/#generate-a-cloudflare-root-certificate">generate a new certificate</a> and activate it for your Zero Trust organization to avoid inspection errors.
 ---
 
 import { Details, InlineBadge, Render } from "~/components";
@@ -25,8 +23,10 @@ An HTTP policy consists of an **Action** as well as a logical expression that de
 
 <Render
 	file="gateway/response"
-	params={{ one: "query", two: "Source IP", three: "Resolved IP" }}
+	params={{ type: "query", example: "Source IP", example2: "Resolved IP" }}
 />
+
+<Render file="gateway/terraform-precedence-warning" product="cloudflare-one" />
 
 ## Actions
 
@@ -40,6 +40,8 @@ API value: `allow`
 
 **Traffic**
 
+- [Access Infrastructure Target](#access-infrastructure-target)
+- [Access Private App](#access-private-app)
 - [Application](#application)
 - [Content Categories](#content-categories)
 - [Destination Continent IP Geolocation](#destination-continent)
@@ -89,17 +91,13 @@ The Allow action allows outbound traffic to reach destinations you specify withi
 
 #### Untrusted certificates
 
-:::note
-To use this feature, deploy a [custom root certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/custom-certificate/).
-:::
-
 The **Untrusted certificate action** determines how to handle insecure requests.
 
-| Option       | Action                                                                                                                                                                                                                                                                                                                                                                                                |
-| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Error        | Display Gateway error page. Matches the default behavior when no action is configured.                                                                                                                                                                                                                                                                                                                |
-| Block        | Display [block page](/cloudflare-one/policies/gateway/block-page/) as set in Zero Trust.                                                                                                                                                                                                                                                                                                              |
-| Pass through | Bypass insecure connection warnings and seamlessly connect to the upstream. To use this feature, deploy a [custom root certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/custom-certificate/). For more information on what statuses are bypassed, refer to the [troubleshooting FAQ](/cloudflare-one/faq/troubleshooting/#i-see-error-526-when-browsing-to-a-website). |
+| Option       | Action                                                                                                                                                                                                                                               |
+| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Error        | Display Gateway error page. Matches the default behavior when no action is configured.                                                                                                                                                               |
+| Block        | Display [block page](/cloudflare-one/policies/gateway/block-page/) as set in Zero Trust.                                                                                                                                                             |
+| Pass through | Bypass insecure connection warnings and seamlessly connect to the upstream. For more information on what statuses are bypassed, refer to the [troubleshooting FAQ](/cloudflare-one/faq/troubleshooting/#i-see-error-526-when-browsing-to-a-website). |
 
 ### Block
 
@@ -109,6 +107,8 @@ API value: `block`
 
 **Traffic**
 
+- [Access Infrastructure Target](#access-infrastructure-target)
+- [Access Private App](#access-private-app)
 - [Application](#application)
 - [Content Categories](#content-categories)
 - [Destination Continent IP Geolocation](#destination-continent)
@@ -159,7 +159,7 @@ The Block action blocks outbound traffic from reaching destinations you specify 
 
 #### WARP client block notifications
 
-<Render file="gateway/client-notifications" />
+<Render file="gateway/client-notifications-os" product="cloudflare-one" />
 
 ### Isolate
 
@@ -397,13 +397,13 @@ Policies created using the URL selector are case-sensitive.
 
 Gateway matches HTTP traffic against the following selectors, or criteria:
 
-### All Access Private App Destinations
-
-<Render file="gateway/selectors/all-access-private-app-destinations" />
-
-### All Access App Targets
+### Access Infrastructure Target
 
 <Render file="gateway/selectors/all-access-app-targets" />
+
+### Access Private App
+
+<Render file="gateway/selectors/all-access-private-app-destinations" />
 
 ### Application
 
@@ -464,13 +464,25 @@ Use this selector to match against a domain and all subdomains -- for example, i
 | ------- | -------------------------------------------- |
 | Domain  | `any(http.conn.domains[*] == "example.com")` |
 
+### Download and Upload File Size
+
+Use these selectors to limit the file size of upload or download transactions. File sizes are measured in mebibytes (MiB).
+
+| UI name                  | API example                     |
+| ------------------------ | ------------------------------- |
+| Download File Size (MiB) | `http.download.file.size >= 10` |
+
+| UI name                | API example                  |
+| ---------------------- | ---------------------------- |
+| Upload File Size (MiB) | `http.upload.file.size < 10` |
+
 ### Download and Upload File Types
 
 :::caution[Deprecated selectors]
 The **Download File Types** and **Upload File Types** selectors supersede the **Download File Type** and **Upload File Type** selectors. Gateway will still evaluate policies with the previous selectors. However, Cloudflare recommends migrating any policies with deprecated selectors to the new corresponding selectors.
 :::
 
-These selectors will scan file signatures in the HTTP body. You can select from file categories or specific file types, such as executables, archives and compressed files, Microsoft 365/Office documents, and Adobe files:
+These selectors will scan file signatures in the HTTP body. You can select from file categories or specific file types, such as executables, archives and compressed files, unscannable files, Microsoft 365/Office documents, and Adobe files:
 
 <Details header="Supported file types">
 
@@ -516,6 +528,10 @@ These selectors will scan file signatures in the HTTP body. You can select from 
 **Other**
 
 - BitTorrent file (`.torrent`)
+
+**Unscannable**
+
+<Render file="gateway/policies/unscannable-files" />
 
 </Details>
 
@@ -653,5 +669,5 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 <Render
 	file="gateway/response"
-	params={{ one: "request", two: "Source IP", three: "a DLP Profile" }}
+	params={{ type: "request", example: "Source IP", example2: "a DLP Profile" }}
 />

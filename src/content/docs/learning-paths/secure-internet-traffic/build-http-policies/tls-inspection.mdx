@@ -77,7 +77,7 @@ For example, if users are issued a corporate-managed iPhone with limited permiss
 1. Create a list of device serial numbers that you do not want to inspect.
 
    ```bash
-   curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/lists \
+   curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/lists \
    --header "X-Auth-Email: <EMAIL>" \
    --header "X-Auth-Key: <API_KEY>" \
    --header "Content-Type: application/json" \
@@ -96,7 +96,7 @@ For example, if users are issued a corporate-managed iPhone with limited permiss
 2. Create a Do Not Inspect policy that checks the device against the list of serial numbers.
 
    ```bash
-   curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
+   curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
    --header "X-Auth-Email: <EMAIL>" \
    --header "X-Auth-Key: <API_KEY>" \
    --header "Content-Type: application/json" \
@@ -141,9 +141,8 @@ If you filter your network-connected devices with Magic WAN tunnels, the WARP Co
 </TabItem> <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --header "Content-Type: application/json" \
 --data '{
   "name": "Do not inspect corporate devices",

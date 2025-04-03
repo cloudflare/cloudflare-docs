@@ -1,4 +1,4 @@
-import { z, defineCollection } from "astro:content";
+import { defineCollection } from "astro:content";
 
 import { docsLoader, i18nLoader } from "@astrojs/starlight/loaders";
 import { docsSchema, i18nSchema } from "@astrojs/starlight/schema";
@@ -20,6 +20,7 @@ import {
 	warpReleasesSchema,
 	releaseNotesSchema,
 	fieldsSchema,
+	partialsSchema,
 } from "~/schemas";
 
 function contentLoader(name: string) {
@@ -35,10 +36,6 @@ function dataLoader(name: string) {
 		base: "./src/content/" + name,
 	});
 }
-
-const partialSchema = z.object({
-	params: z.string().array().optional(),
-});
 
 export const collections = {
 	docs: defineCollection({
@@ -61,7 +58,7 @@ export const collections = {
 	}),
 	partials: defineCollection({
 		loader: contentLoader("partials"),
-		schema: partialSchema,
+		schema: partialsSchema,
 	}),
 	glossary: defineCollection({
 		loader: dataLoader("glossary"),

@@ -43,7 +43,7 @@ export default {
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py
-from js import Response
+from workers import Response
 
 def on_fetch(request):
     destinationURL = "https://example.com"
@@ -110,15 +110,16 @@ export default {
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py
-from js import Response, URL
+from workers import Response
+from urllib.parse import urlparse
 
 async def on_fetch(request):
     base = "https://example.com"
     statusCode = 301
 
-    url = URL.new(request.url)
+    url = urlparse(request.url)
 
-    destinationURL = f'{base}{url.pathname}{url.search}'
+    destinationURL = f'{base}{url.path}{url.query}'
     print(destinationURL)
 
     return Response.redirect(destinationURL, statusCode)
