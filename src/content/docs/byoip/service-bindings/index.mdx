@@ -17,9 +17,11 @@ Service binding operations are currently only available via API. You can find al
 
 ## Scope
 
-Customers using BYOIP with Magic Transit can leverage the [service binding API endpoints](/api/resources/addressing/subresources/prefixes/subresources/service_bindings/) to selectively route traffic through the CDN [^1] or Spectrum [^2] pipelines on a per-IP address basis.
+Customers using BYOIP with Magic Transit, [CDN services](/cache/), or [Spectrum](/spectrum/) can leverage the [service binding API endpoints](/api/resources/addressing/subresources/prefixes/subresources/service_bindings/) to selectively route traffic through the CDN [^1] or Spectrum [^2] pipelines on a per-IP address basis. This means:
 
-You can upgrade individual IPs within a Magic Transit prefix to either a CDN IP or a Spectrum IP. For example, if you have `203.0.113.0/24`, you can upgrade `203.0.113.1` to CDN and `203.0.113.2` to Spectrum.
+- You can upgrade individual IPs within a Magic Transit prefix to either a CDN IP or a Spectrum IP. For example, if you have a Magic Transit prefix `203.0.113.0/24`, you can upgrade `203.0.113.1` to CDN and `203.0.113.2` to Spectrum.
+- You can upgrade individual IPs within a CDN prefix to a Spectrum IP. For example, if you have a CDN prefix `203.0.113.0/24`, you can upgrade `203.0.113.1` to Spectrum.
+- You can upgrade individual IPs within a Spectrum prefix to a CDN IP. For example, if you have a Spectrum prefix `203.0.113.0/24`, you can upgrade `203.0.113.1` to CDN.
 
 :::caution
 Magic Transit customers must ensure that their contract includes CDN and/or Spectrum according to their needs.
@@ -37,7 +39,6 @@ When a service binding of type `Spectrum` is applied, once the change has propag
 
 ## Limitations
 
-- You must keep Magic Transit as a common base service, spanning all addresses in your prefix.
 - When adding a service binding for a given IP address, it must be either a CDN service binding or a Spectrum service binding. It is not possible (or necessary) to bind both services.
 -  Once a service binding is created (or deleted), it will take four to six hours to propagate across Cloudflare's global network. Services for the IP addresses in scope will likely be disrupted during this window.
 
