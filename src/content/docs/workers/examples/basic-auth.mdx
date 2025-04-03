@@ -364,14 +364,8 @@ app.get('/logout', (c) => {
 });
 
 // Admin route - protected with Basic Auth
-app.get('/admin',
-	basicAuth({ username: BASIC_USER, password: c.env.PASSWORD }),
-	async (c) => {
-
-  // Success! User is authenticated
-  return c.text("🎉 You have private access!", 200, {
-    'Cache-Control': 'no-store',
-  });
+app.get('/admin', async (c, next) => {
+	return basicAuth({ username: c.env.USERNAME, password: c.env.PASSWORD })(c, next);
 });
 
 // Handle 404 for any other routes
