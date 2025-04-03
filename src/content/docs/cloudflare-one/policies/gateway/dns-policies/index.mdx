@@ -63,6 +63,7 @@ API value: `allow`
 - [Resolved Continent IP Geolocation](#resolved-continent)
 - [Resolved Country IP Geolocation](#resolved-country)
 - [Resolved IP](#resolved-ip)
+- [Request Context Categories](#request-context-categories)
 - [Security Categories](#security-categories)
 - [Source Continent IP Geolocation](#source-continent)
 - [Source Country IP Geolocation](#source-country)
@@ -114,6 +115,7 @@ API value: `block`
 - [Resolved Continent IP Geolocation](#resolved-continent)
 - [Resolved Country IP Geolocation](#resolved-country)
 - [Resolved IP](#resolved-ip)
+- [Request Context Categories](#request-context-categories)
 - [Security Categories](#security-categories)
 - [Source Continent IP Geolocation](#source-continent)
 - [Source Country IP Geolocation](#source-country)
@@ -391,6 +393,14 @@ Use this selector to filter based on the IP addresses that the query resolves to
 | UI name     | API example                                | Evaluation phase     |
 | ----------- | ------------------------------------------ | -------------------- |
 | Resolved IP | `any(dns.resolved_ips[*] == 198.51.100.0)` | After DNS resolution |
+
+### Request Context Categories
+
+Use this selector to match a dynamic list of [category IDs](/cloudflare-one/policies/gateway/domain-categories/#category-and-subcategory-ids) sent in the [EDNS](https://datatracker.ietf.org/doc/html/rfc6891) portion of a DNS query. Gateway includes request context with the OPT code `65050`.
+
+| UI name                    | API example                                 | Evaluation phase      |
+| -------------------------- | ------------------------------------------- | --------------------- |
+| Request Context Categories | `dns.categories_in_request_context_matches` | Before DNS resolution |
 
 ### Security Categories
 

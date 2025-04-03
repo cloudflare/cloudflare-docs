@@ -1,0 +1,73 @@
+---
+pcx_content_type: concept
+title: Test a Remote MCP Server
+sidebar:
+  order: 6
+---
+
+import { Render } from "~/components";
+
+Remote, authorized connections are an evolving part of the [Model Context Protocol (MCP) specification](https://spec.modelcontextprotocol.io/specification/draft/basic/authorization/). Not all MCP clients support remote connections yet.
+
+This guide will show you options for how to start using your remote MCP server with MCP clients that support remote connections. If you haven't yet created and deployed a remote MCP server, you should follow the [Build a Remote MCP Server](/agents/guides/remote-mcp-server/) guide first.
+
+## The Model Context Protocol (MCP) inspector
+
+The [`@modelcontextprotocol/inspector` package](https://github.com/modelcontextprotocol/inspector) is a visual testing tool for MCP servers.
+
+You can run it locally by running the following command:
+
+```bash
+npx @modelcontextprotocol/inspector
+```
+
+Then, enter the URL of your remote MCP server. You can use an MCP server running on your local machine on localhost, or you can use a remote MCP server running on Cloudflare.
+
+![MCP inspector](~/assets/images/agents/mcp-inspector-enter-url.png)
+
+Once you have authenticated, you will be redirected back to the inspector. You should see the "List Tools" button, which will list the tools that your MCP server exposes.
+
+![MCP inspector — authenticated](~/assets/images/agents/mcp-inspector-authenticated.png)
+
+## Connect your remote MCP server to Claude Desktop via a local proxy
+
+Even though [Claude Desktop](https://claude.ai/download) doesn't yet support remote MCP clients, you can use the [`mcp-remote` local proxy](https://www.npmjs.com/package/mcp-remote) to connect it to your remote MCP server. This lets you to test what an interaction with your remote MCP server will be like with a real-world MCP client.
+
+1. Open Claude Desktop and navigate to Settings -> Developer -> Edit Config. This opens the configuration file that controls which MCP servers Claude can access.
+2. Replace the content with a configuration like this:
+
+```json
+{
+	"mcpServers": {
+		"math": {
+			"command": "npx",
+			"args": ["mcp-remote", "http://my-mcp-server.my-account.workers.dev/sse"]
+		}
+	}
+}
+```
+
+This tells Claude to communicate with your MCP server running at `http://localhost:8787/sse`.
+
+3. Save the file and restart Claude Desktop (command/ctrl + R). When Claude restarts, a browser window will open showing your OAuth login page. Complete the authorization flow to grant Claude access to your MCP server.
+
+Once authenticated, you'll be able to see your tools by clicking the tools icon in the bottom right corner of Claude's interface.
+
+## Connect your remote MCP server to Cursor
+
+To connect [Cursor](https://www.cursor.com/) with your remote MCP server, choose `Type`: "Command" and in the `Command` field, combine the command and args fields into one (e.g.`npx mcp-remote https://your-worker-name.your-account.workers.dev/sse`).
+
+## Connect your remote MCP server to Windsurf
+
+You can connect your remote MCP server to [Windsurf](https://codeium.com/windsurf) by editing the [`mcp_config.json` file](https://docs.codeium.com/windsurf/mcp), and adding the following configuration:
+
+```json
+{
+	"mcpServers": {
+		"math": {
+			"command": "npx",
+			"args": ["mcp-remote", "http://my-mcp-server.my-account.workers.dev/sse"]
+		}
+	}
+}
+```

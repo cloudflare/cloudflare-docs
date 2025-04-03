@@ -7,6 +7,14 @@ topLevelLink: "/waf/change-log/"
 productArea: Application security
 productAreaLink: /fundamentals/reference/changelog/security/
 entries:
+  - publish_date: "2025-03-07"
+    title: Updated leaked credentials database
+    description: |-
+      Added new records to the leaked credentials database. The record sources are: Have I Been Pwned (HIBP) database, RockYou 2024 dataset, and another third-party database.
+  - publish_date: "2025-02-04"
+    title: Updated leaked credentials database
+    description: |-
+      Added new records to the leaked credentials database from a third-party database.
   - publish_date: "2024-12-18"
     title: Improved VPN Managed List
     description: |-

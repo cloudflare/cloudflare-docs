@@ -1,0 +1,25 @@
+---
+title: Partner domain TLS
+pcx_content_type: how-to
+sidebar:
+  order: 3
+---
+
+To add additional TLS (Transport Layer Security) requirements for emails coming from certain domains, you can enforce higher levels of SSL/TLS inspection. If TLS is required, mail without TLS from the specified domain will be dropped.
+
+:::note
+To enforce TLS across all emails, you will need to enforce TLS requirements when you are onboarding your domain. To only enforce TLS for specific emails, you can do so by going to **Settings** > **Partner domain TLS** > **Add a domain**.
+:::
+
+To set up a partner domain:
+
+1. Log in to [Zero Trust](https://one.dash.cloudflare.com/) and select **Email security**.
+2. Select **Settings** > **Partner domain TLS** > **View**.
+3. Select **Add a domain**.
+4. Enter a valid domain name. You can also exclude subdomains by selecting **Add exclude**.
+5. (Optional) Add an optional note to describe your rule(s).
+6. Select **Save**.
+
+To edit a partner domain, select the three dots > **Edit**.
+
+To delete a partner domain, select the three dots > **Delete**.

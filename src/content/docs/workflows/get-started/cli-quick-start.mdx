@@ -188,6 +188,7 @@ class_name = "MyWorkflow"
 You can then invoke the methods on this binding directly from your Worker script's `env` parameter. The `Workflow` type has methods for:
 
 * `create()` - creating (triggering) a new instance of the Workflow, returning the ID.
+* `createBatch()` - creating (triggering) a batch of new instances of the Workflow, returning the IDs.
 * `get()`- retrieve a Workflow instance by its ID.
 * `status()` - get the current status of a unique Workflow instance.
 

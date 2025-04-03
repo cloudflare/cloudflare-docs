@@ -6,7 +6,7 @@ sidebar:
 description: Learn how to configure Managed Transforms.
 ---
 
-import { Details, TabItem, Tabs, Render } from "~/components";
+import { Details, TabItem, Tabs, Render, APIRequest } from "~/components";
 
 <Tabs syncKey="dashPlusAPIPlusTerraform"> <TabItem label="Dashboard">
 
@@ -28,60 +28,60 @@ Each Managed Transform item will optionally contain a `conflicts_with` array inf
 
 The response will only include available Managed Transforms according to your Cloudflare plan and product subscriptions.
 
-```bash title="Request"
-curl https://api.cloudflare.com/client/v4/zones/{zone_id}/managed_headers \
---header "Authorization: Bearer <API_TOKEN>"
-```
+<APIRequest path="/zones/{zone_id}/managed_headers" method="GET" />
 
-<Details header="Response">
-
-```json
+```json output collapse={9-40,48-52}
 {
 	"result": {
 		"managed_request_headers": [
 			{
-				"id": "add_bot_protection_headers",
-				"enabled": false,
-				"has_conflict": false
-			},
-			{
-				"id": "add_client_certificate_headers",
-				"enabled": false,
-				"has_conflict": false
-			},
-			{
-				"id": "add_visitor_location_headers",
-				"enabled": false,
-				"has_conflict": false
-			},
-			{
-				"id": "add_true_client_ip_headers",
 				"enabled": false,
 				"has_conflict": false,
-				"conflicts_with": ["remove_visitor_ip_headers"]
+				"id": "add_bot_protection_headers"
 			},
 			{
-				"id": "remove_visitor_ip_headers",
 				"enabled": false,
 				"has_conflict": false,
-				"conflicts_with": ["add_true_client_ip_headers"]
+				"id": "add_client_certificate_headers"
 			},
 			{
-				"id": "add_waf_credential_check_status_header",
 				"enabled": false,
-				"has_conflict": false
+				"has_conflict": false,
+				"id": "add_visitor_location_headers"
+			},
+			{
+				"conflicts_with": ["remove_visitor_ip_headers"],
+				"enabled": false,
+				"has_conflict": false,
+				"id": "add_true_client_ip_headers"
+			},
+			{
+				"conflicts_with": ["add_true_client_ip_headers"],
+				"enabled": false,
+				"has_conflict": false,
+				"id": "remove_visitor_ip_headers"
+			},
+			{
+				"enabled": false,
+				"has_conflict": false,
+				"id": "add_waf_credential_check_status_header"
+			},
+			{
+				"enabled": false,
+				"has_conflict": false,
+				"id": "add_waf_content_scan_status_header"
 			}
 		],
 		"managed_response_headers": [
 			{
-				"id": "remove_x-powered-by_header",
 				"enabled": false,
-				"has_conflict": false
+				"has_conflict": false,
+				"id": "remove_x-powered-by_header"
 			},
 			{
-				"id": "add_security_headers",
 				"enabled": false,
-				"has_conflict": false
+				"has_conflict": false,
+				"id": "add_security_headers"
 			}
 		]
 	},
@@ -90,8 +90,6 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/managed_headers \
 	"messages": []
 }
 ```
-
-</Details>
 
 **2. Change the status of Managed Transforms**
 
@@ -101,73 +99,79 @@ Add the Managed Transforms you wish to change to the request body, and update th
 
 Make sure you include the Managed Transforms you are updating in the correct JSON object (`managed_request_headers` or `managed_response_headers`).
 
-```bash title="Request"
-curl --request PATCH \
-https://api.cloudflare.com/client/v4/zones/{zone_id}/managed_headers \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "managed_request_headers": [
-    {
-      "id": "add_visitor_location_headers",
-      "enabled": true
-    }
-  ],
-  "managed_response_headers": [
-    {
-      "id": "remove_x-powered-by_header",
-      "enabled": true
-    }
-  ]
-}'
-```
-
 The response will include all the available Managed Transforms and their new status after the update.
 
-<Details header="Response">
+<APIRequest
+	path="/zones/{zone_id}/managed_headers"
+	method="PATCH"
+	json={{
+		managed_request_headers: [
+			{
+				id: "add_visitor_location_headers",
+				enabled: true,
+			},
+		],
+		managed_response_headers: [
+			{
+				id: "remove_x-powered-by_header",
+				enabled: true,
+			},
+		],
+	}}
+/>
 
-```json
+```json output collapse={4-13,19-40,48-52}
 {
 	"result": {
 		"managed_request_headers": [
 			{
-				"id": "add_bot_protection_headers",
 				"enabled": false,
-				"has_conflict": false
+				"has_conflict": false,
+				"id": "add_bot_protection_headers"
 			},
 			{
-				"id": "add_client_certificate_headers",
 				"enabled": false,
-				"has_conflict": false
+				"has_conflict": false,
+				"id": "add_client_certificate_headers"
 			},
 			{
-				"id": "add_visitor_location_headers",
 				"enabled": true,
-				"has_conflict": false
+				"has_conflict": false,
+				"id": "add_visitor_location_headers"
 			},
 			{
-				"id": "add_true_client_ip_headers",
+				"conflicts_with": ["remove_visitor_ip_headers"],
 				"enabled": false,
 				"has_conflict": false,
-				"conflicts_with": ["remove_visitor_ip_headers"]
+				"id": "add_true_client_ip_headers"
 			},
 			{
-				"id": "remove_visitor_ip_headers",
+				"conflicts_with": ["add_true_client_ip_headers"],
 				"enabled": false,
 				"has_conflict": false,
-				"conflicts_with": ["add_true_client_ip_headers"]
+				"id": "remove_visitor_ip_headers"
+			},
+			{
+				"enabled": false,
+				"has_conflict": false,
+				"id": "add_waf_credential_check_status_header"
+			},
+			{
+				"enabled": false,
+				"has_conflict": false,
+				"id": "add_waf_content_scan_status_header"
 			}
 		],
 		"managed_response_headers": [
 			{
-				"id": "remove_x-powered-by_header",
 				"enabled": true,
-				"has_conflict": false
+				"has_conflict": false,
+				"id": "remove_x-powered-by_header"
 			},
 			{
-				"id": "add_security_headers",
 				"enabled": false,
-				"has_conflict": false
+				"has_conflict": false,
+				"id": "add_security_headers"
 			}
 		]
 	},
@@ -176,8 +180,6 @@ The response will include all the available Managed Transforms and their new sta
 	"messages": []
 }
 ```
-
-</Details>
 
 </TabItem> <TabItem label="Terraform">
 

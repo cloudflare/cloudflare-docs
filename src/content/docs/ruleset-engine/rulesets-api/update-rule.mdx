@@ -6,7 +6,7 @@ sidebar:
   order: 8
 ---
 
-import { Render } from "~/components";
+import { Render, APIRequest } from "~/components";
 
 Applies one or more changes to an existing rule in a ruleset at the account or zone level.
 
@@ -28,17 +28,19 @@ To update the definition of a rule, include the new rule definition in the reque
 
 The response will include the complete ruleset after updating the rule.
 
-```bash
-curl --request PATCH \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{ruleset_id}/rules/{rule_id_1} \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "action": "js_challenge",
-  "expression": "(ip.src.country eq \"GB\" or ip.src.country eq \"FR\") or cf.threat_score > 0",
-  "description": "challenge GB and FR or based on IP Reputation"
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/rulesets/{ruleset_id}/rules/{rule_id}"
+	method="PATCH"
+	parameters={{
+		rule_id: "$RULE_ID_1",
+	}}
+	json={{
+		action: "js_challenge",
+		expression:
+			'(ip.src.country eq "GB" or ip.src.country eq "FR") or cf.threat_score > 0',
+		description: "challenge GB and FR or based on IP Reputation",
+	}}
+/>
 
 ```json output
 {
@@ -103,19 +105,20 @@ The following examples build upon the following (abbreviated) ruleset:
 
 #### Example 1
 
-The following request with the `position` object places rule `<RULE_ID_2>` as the first rule:
+The following request with the `position` object places rule `$RULE_ID_2` as the first rule:
 
-```bash
-curl --request PATCH \
-https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules/{rule_id_2} \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "position": {
-    "before": ""
-  }
-}
-```
+<APIRequest
+	path="/zones/{zone_id}/rulesets/{ruleset_id}/rules/{rule_id}"
+	method="PATCH"
+	parameters={{
+		rule_id: "$RULE_ID_2",
+	}}
+	json={{
+		position: {
+			before: "",
+		},
+	}}
+/>
 
 In this case, the new rule order would be:
 
@@ -123,19 +126,20 @@ In this case, the new rule order would be:
 
 #### Example 2
 
-The following request with the `position` object places rule `<RULE_ID_2>` after rule 3:
+The following request with the `position` object places rule `$RULE_ID_2` after rule 3:
 
-```bash
-curl --request PATCH \
-https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules/{rule_id_2} \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "position": {
-    "after": "<RULE_ID_3>"
-  }
-}
-```
+<APIRequest
+	path="/zones/{zone_id}/rulesets/{ruleset_id}/rules/{rule_id}"
+	method="PATCH"
+	parameters={{
+		rule_id: "$RULE_ID_2",
+	}}
+	json={{
+		position: {
+			after: "<RULE_ID_3>",
+		},
+	}}
+/>
 
 In this case, the new rule order would be:
 
@@ -143,19 +147,20 @@ In this case, the new rule order would be:
 
 #### Example 3
 
-The following request with the `position` object places rule `<RULE_ID_1>` in position 3, becoming the third rule in the ruleset:
+The following request with the `position` object places rule `$RULE_ID_1` in position 3, becoming the third rule in the ruleset:
 
-```bash
-curl --request PATCH \
-https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules/{rule_id_1} \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "position": {
-    "index": 3
-  }
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/rulesets/{ruleset_id}/rules/{rule_id}"
+	method="PATCH"
+	parameters={{
+		rule_id: "$RULE_ID_1",
+	}}
+	json={{
+		position: {
+			index: 3,
+		},
+	}}
+/>
 
 In this case, the new rule order would be:
 

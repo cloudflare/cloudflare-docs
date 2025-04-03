@@ -6,7 +6,12 @@ sidebar:
   order: 6
 ---
 
-You can use the API to update **basic properties** of a ruleset (currently only the description) and the **list of rules** in the ruleset.
+import { APIRequest } from "~/components";
+
+You can use the API to update:
+
+- The basic properties of a ruleset (currently only the description)
+- The list of rules in a ruleset
 
 Use one of the following API endpoints:
 
@@ -28,31 +33,29 @@ You cannot update the name of the ruleset or its type. Do not include these fiel
 
 ## Example - Set the rules of a ruleset
 
-Use this API method to set the rules of a ruleset. You must include all the rules you want to associate with the ruleset in every request.
+The following `PUT` request defines the list of rules of a ruleset, setting it to a single rule. You must include all the rules you want to associate with the ruleset in every request.
 
-```bash
-curl --request PUT \
-https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "rules": [
-    {
-      "action": "execute",
-      "action_parameters": {
-        "id": "<MANAGED_RULESET_ID>"
-      },
-      "expression": "true"
-    }
-  ]
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/rulesets/{ruleset_id}"
+	method="PUT"
+	json={{
+		rules: [
+			{
+				action: "execute",
+				action_parameters: {
+					id: "<MANAGED_RULESET_ID>",
+				},
+				expression: "true",
+			},
+		],
+	}}
+/>
 
 ```json output
 {
 	"result": {
 		"id": "<RULESET_ID>",
-		"name": "Zone-level phase entry point",
+		"name": "Zone-level phase entry point ruleset",
 		"description": "This ruleset executes a managed ruleset.",
 		"kind": "zone",
 		"version": "4",
@@ -65,10 +68,10 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 				"action_parameters": {
 					"id": "<MANAGED_RULESET_ID>"
 				},
-				"last_updated": "2023-03-17T15:42:37.917815Z"
+				"last_updated": "2025-03-17T15:42:37.917815Z"
 			}
 		],
-		"last_updated": "2023-03-17T15:42:37.917815Z",
+		"last_updated": "2025-03-17T15:42:37.917815Z",
 		"phase": "http_request_firewall_managed"
 	},
 	"success": true,
@@ -81,32 +84,34 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 
 To deploy a ruleset, create a rule with `"action": "execute"` that executes the ruleset, and add the ruleset ID to the `action_parameters` field in the `id` parameter.
 
-The following example deploys a managed ruleset to the zone-level `http_request_firewall_managed` phase of a zone (`{zone_id}`).
+The following `PUT` request deploys a managed ruleset to the `http_request_firewall_managed` phase of a zone (`$ZONE_ID`).
 
-```bash
-curl --request PUT \
-https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "rules": [
-    {
-      "action": "execute",
-      "action_parameters": {
-        "id": "<MANAGED_RULESET_ID>"
-      },
-      "expression": "true",
-      "description": "Execute Cloudflare Managed Ruleset on my phase entry point"
-    }
-  ]
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/rulesets/phases/{ruleset_phase}/entrypoint"
+	method="PUT"
+	parameters={{
+		ruleset_phase: "http_request_firewall_managed",
+	}}
+	json={{
+		rules: [
+			{
+				action: "execute",
+				action_parameters: {
+					id: "<MANAGED_RULESET_ID>",
+				},
+				expression: "true",
+				description:
+					"Execute Cloudflare Managed Ruleset on my phase entry point ruleset",
+			},
+		],
+	}}
+/>
 
 ```json output
 {
 	"result": {
-		"id": "<ZONE_PHASE_RULESET_ID>",
-		"name": "Zone-level phase entry point",
+		"id": "<RULESET_ID>",
+		"name": "Zone-level phase entry point ruleset",
 		"description": "",
 		"kind": "zone",
 		"version": "4",
@@ -120,13 +125,13 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_reques
 					"version": "latest"
 				},
 				"expression": "true",
-				"description": "Execute Cloudflare Managed Ruleset on my phase entry point",
-				"last_updated": "2023-03-21T11:02:08.769537Z",
+				"description": "Execute Cloudflare Managed Ruleset on my phase entry point ruleset",
+				"last_updated": "2025-03-21T11:02:08.769537Z",
 				"ref": "<RULE_REF_1>",
 				"enabled": true
 			}
 		],
-		"last_updated": "2023-03-21T11:02:08.769537Z",
+		"last_updated": "2025-03-21T11:02:08.769537Z",
 		"phase": "http_request_firewall_managed"
 	},
 	"success": true,
@@ -139,7 +144,7 @@ For more information on deploying rulesets, refer to [Deploy rulesets](/ruleset-
 
 ## Example - Update ruleset description
 
-You can use this API method to update the description of an existing ruleset or phase entry point.
+The following `PUT` request updates the description of an existing ruleset or phase entry point.
 
 The response will include the complete ruleset definition, including all the rules.
 
@@ -147,28 +152,26 @@ The response will include the complete ruleset definition, including all the rul
 You cannot update the description or the rules in a managed ruleset. You can only [define overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/) to customize the ruleset behavior.
 :::
 
-```bash
-curl --request PUT \
-https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "description": "My updated phase entry point"
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/rulesets/{ruleset_id}"
+	method="PUT"
+	json={{
+		description: "My updated phase entry point ruleset",
+	}}
+/>
 
 ```json output
 {
 	"result": {
 		"id": "<RULESET_ID>",
 		"name": "Zone entry point",
-		"description": "My updated phase entry point",
+		"description": "My updated phase entry point ruleset",
 		"kind": "zone",
 		"version": "4",
 		"rules": [
 			// (...)
 		],
-		"last_updated": "2023-03-30T10:49:11.006109Z",
+		"last_updated": "2025-03-30T10:49:11.006109Z",
 		"phase": "http_request_firewall_managed"
 	},
 	"success": true,

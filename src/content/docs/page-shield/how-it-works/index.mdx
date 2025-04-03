@@ -18,7 +18,7 @@ Enabling Page Shield adds a <GlossaryTooltip term="content security policy (CSP)
 
 The **Monitors** dashboard shows the list of active scripts, connections, and cookies. The **All Reported Scripts** and **All Reported Connections** dashboards show the full list of detected scripts and connections in your domain, respectively, including infrequent and inactive ones.
 
-Since Page Shield monitoring is based on sampling, there may be a small delay between deploying a script or cookie and having its data displayed in Page Shield's dashboards.
+Page Shield adds a CSP report-only HTTP header used to monitor webpage resources to a sample of sent responses. This means that there may be a [small delay](/page-shield/troubleshooting/#why-do-i-not-see-scripts-after-i-activated-page-shield) between deploying a script or cookie and having its data displayed in Page Shield's dashboards.
 
 Enterprise customers with a paid add-on have access to additional classification mechanisms based on threat feeds to determine if a script, or a connection made by a script, is malicious. For more information, refer to [Malicious script and connection detection](/page-shield/how-it-works/malicious-script-detection/).
 

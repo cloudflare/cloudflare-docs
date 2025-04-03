@@ -172,7 +172,7 @@ export class Browser {
 			await page.setViewport({ width: width[i], height: height[i] });
 			await page.goto("https://workers.cloudflare.com/");
 			const fileName = "screenshot_" + width[i] + "x" + height[i];
-			const sc = await page.screenshot({ path: fileName + ".jpg" });
+			const sc = await page.screenshot();
 
 			await this.env.BUCKET.put(folder + "/" + fileName + ".jpg", sc);
 		}

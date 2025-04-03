@@ -100,7 +100,7 @@ export default {
 ```py
 import random
 from urllib.parse import urlparse, urlunparse
-from js import Response, Headers, fetch
+from workers import Response, fetch
 
 NAME = "myExampleWorkersABTest"
 
@@ -132,8 +132,7 @@ async def on_fetch(request):
         res = await fetch(urlunparse(url))
         headers = dict(res.headers)
         headers["Set-Cookie"] = f'{NAME}={group}; path=/'
-        headers  = Headers.new(headers.items())
-        return Response.new(res.body, headers=headers)
+        return Response(res.body, headers=headers)
 
     return fetch(urlunparse(url))
 ```

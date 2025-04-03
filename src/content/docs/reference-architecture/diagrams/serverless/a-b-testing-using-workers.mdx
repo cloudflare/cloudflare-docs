@@ -35,8 +35,11 @@ This architecture shows a same-URL A/B testing endpoint. The A/B testing logic a
 3. **Origin requests**: Check for already existing cookies in the request headers. If no cookie for group assignment is set, randomly assign a group. If a cookie is set, extract assigned group from the cookie header. Send request to either the control endpoint (A) or variant endpoints (B) depending on the configuration and the assigned group.
 4. **Response**: Return the response from the origin. Additionally, if no cookie was previously set, set a cookie with the respective assigned group for session affinity.
 
+For an example with code snippets on how to use Workers and Workers KV to route requests to different origin web servers, refer to Workers KV's example on [routing across web servers](/kv/examples/routing-with-workers-kv/).
+
 ## Related resources
 
 - [Workers: Get started](/workers/get-started/guide/)
-- [KV: Get started](/kv/get-started/)
+- [Workers KV: Get started](/kv/get-started/)
+- [Workers KV: Route requests to web servers with Workers and Workers KV](/kv/examples/routing-with-workers-kv/)
 - [Code Example: A/B testing with same-URL direct access](/workers/examples/ab-testing/)

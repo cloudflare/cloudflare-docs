@@ -3,7 +3,7 @@ name: BYOIP
 product:
   title: BYOIP
   url: /byoip/
-  group: Cloudflare essentials
+  group: Core platform
   additional_groups: [Application performance, Network security]
 
 meta:

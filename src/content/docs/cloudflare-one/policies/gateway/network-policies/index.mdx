@@ -40,8 +40,8 @@ API value: `allow`
 
 **Traffic**
 
-- [All Access Private Apps](#all-access-private-app-destinations)
-- [All Access App Targets](#all-access-app-targets)
+- [Access Infrastructure Target](#access-infrastructure-target)
+- [Access Private App](#access-private-app)
 - [Application](#application)
 - [Content Categories](#content-categories)
 - [Destination Continent IP Geolocation](#destination-continent)
@@ -137,6 +137,8 @@ API value: `block`
 
 **Traffic**
 
+- [Access Infrastructure Target](#access-infrastructure-target)
+- [Access Private App](#access-private-app)
 - [Application](#application)
 - [Content Categories](#content-categories)
 - [Destination Continent IP Geolocation](#destination-continent)
@@ -232,13 +234,13 @@ Gateway will only log successful override connections in your [network logs](/cl
 
 Gateway matches network traffic against the following selectors, or criteria.
 
-### All Access Private App Destinations
-
-<Render file="gateway/selectors/all-access-private-app-destinations" />
-
-### All Access App Targets
+### Access Infrastructure Target
 
 <Render file="gateway/selectors/all-access-app-targets" />
+
+### Access Private App
+
+<Render file="gateway/selectors/all-access-private-app-destinations" />
 
 ### Application
 

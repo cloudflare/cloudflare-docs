@@ -69,6 +69,14 @@ export default defineConfig({
 			rehypeTitleFigure,
 		],
 	},
+	image: {
+		service: {
+			entrypoint: "astro/assets/services/sharp",
+			config: {
+				limitInputPixels: false,
+			},
+		},
+	},
 	experimental: {
 		contentIntellisense: true,
 	},
@@ -82,15 +90,6 @@ export default defineConfig({
 				src: "./src/assets/logo.svg",
 			},
 			favicon: "/favicon.png",
-			head: ["image", "og:image", "twitter:image"].map((name) => {
-				return {
-					tag: "meta",
-					attrs: {
-						name,
-						content: "https://developers.cloudflare.com/cf-twitter-card.png",
-					},
-				};
-			}),
 			social: {
 				github: "https://github.com/cloudflare/cloudflare-docs",
 				"x.com": "https://x.com/cloudflare",

@@ -3,13 +3,11 @@ pcx_content_type: configuration
 title: Source maps and stack traces
 head: []
 description: Adding source maps and generating stack traces for Workers.
-sidebar:
-  badge:
-    text: Beta
 
 ---
 
-import { Render, WranglerConfig } from "~/components"
+import { Render, WranglerConfig } from "~/components";
+import { FileTree } from "@astrojs/starlight/components";
 
 <Render file="source-maps" product="workers" />
 
@@ -38,9 +36,7 @@ When `upload_source_maps` is set to `true`, Wrangler will automatically generate
 
 :::note
 
-
 Miniflare can also [output source maps](https://miniflare.dev/developing/source-maps) for use in local development or [testing](/workers/testing/integration-testing/#miniflares-api).
-
 
 :::
 
@@ -60,6 +56,34 @@ The source map is retrieved after your Worker invocation completes — it's an a
 :::
 
 When Cloudflare attempts to remap a stack trace to the Worker's source map, it does so line-by-line, remapping as much as possible. If a line of the stack trace cannot be remapped for any reason, Cloudflare will leave that line of the stack trace unchanged, and continue to the next line of the stack trace.
+
+## Limits
+
+| Description                    | Limit         |
+| ------------------------------ | ------------- |
+| Maximum Source Map Size        | 15 MB gzipped |
+
+## Example
+
+Consider a simple project. `src/index.ts` serves as the entrypoint of the application and `src/calculator.ts` defines a ComplexCalculator class that supports basic arithmetic.
+
+<FileTree>
+- wrangler.jsonc
+- tsconfig.json
+- src
+	- calculator.ts
+	- index.ts
+</FileTree>
+
+Let's see how source maps can simplify debugging an error in the ComplexCalculator class.
+
+![Stack Trace without Source Map remapping](~/assets/images/workers-observability/without-source-map.png)
+
+With **no source maps uploaded**: notice how all the Javascript has been minified to one file, so the stack trace is missing information on file name, shows incorrect line numbers, and incorrectly references `js` instead of `ts`.
+
+![Stack Trace with Source Map remapping](~/assets/images/workers-observability/with-source-map.png)
+
+With **source maps uploaded**: all methods reference the correct files and line numbers.
 
 ## Related resources
 

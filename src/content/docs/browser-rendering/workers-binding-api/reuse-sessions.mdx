@@ -28,7 +28,7 @@ Create a new Worker project named `browser-worker` by running:
 	product="workers"
 	params={{
 		category: "hello-world",
-		type: "Hello World Worker",
+		type: "Worker only",
 		lang: "TypeScript",
 	}}
 />
@@ -99,7 +99,7 @@ export default {
 		const html = await response!.text();
 
 		// All work done, so free connection (IMPORTANT!)
-		await browser.disconnect();
+		browser.disconnect();
 
 		return new Response(
 			`${launched ? "Launched" : "Connected to"} ${sessionId} \n-----\n` + html,

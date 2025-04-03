@@ -73,11 +73,20 @@ The request context for a Durable Objects extends at least 60 seconds after the 
 
 `blockConcurrencyWhile` executes an async callback while blocking any other events from being delivered to the Durable Object until the callback completes. This method guarantees ordering and prevents concurrent requests. All events that were not explicitly initiated as part of the callback itself will be blocked. Once the callback completes, all other events will be delivered.
 
-`blockConcurrencyWhile` is commonly used within the constructor of the Durable Object class to enforce initialization to occur before any requests are delivered. Another use case is executing `async` operations based on the current state of the Durable Object and using `blockConcurrencyWhile` to prevent that state from changing while yielding the event loop.
-
-If the callback throws an exception, the object will be terminated and reset. This ensures that the object cannot be left stuck in an uninitialized state if something fails unexpectedly. To avoid this behavior, enclose the body of your callback in a `try...catch` block to ensure it cannot throw an exception.
+* `blockConcurrencyWhile` is commonly used within the constructor of the Durable Object class to enforce initialization to occur before any requests are delivered.
+* Another use case is executing `async` operations based on the current state of the Durable Object and using `blockConcurrencyWhile` to prevent that state from changing while yielding the event loop.
+* If the callback throws an exception, the object will be terminated and reset. This ensures that the object cannot be left stuck in an uninitialized state if something fails unexpectedly.
+* To avoid this behavior, enclose the body of your callback in a `try...catch` block to ensure it cannot throw an exception.
 
 To help mitigate deadlocks there is a 30 second timeout applied when executing the callback. If this timeout is exceeded, the Durable Object will be reset. It is best practice to have the callback do as little work as possible to improve overall request throughput to the Durable Object.
+
+:::note
+
+You should only need `blockConcurrencyWhile` if you are making additional, asynchronous calls (such as to another API or service), and cannot tolerate other requests processed by the Durable Object changing its internal while the event loop is yielded from the original request.
+
+In practice, this is quite rare, and most use cases do not need `blockConcurrencyWhile`.
+
+:::
 
 ```js
 // Durable Object
