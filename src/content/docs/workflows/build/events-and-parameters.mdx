@@ -74,14 +74,16 @@ A running Workflow can wait for an event (or events) by calling `step.waitForEve
 ```ts
 export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
 	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
-		// TODO
-		//
-		// TODO
+		// Other steps in your Workflow
+		let event = await step.waitForEvent<IncomingStripeWebhook>("receive invoice paid webhook from Stripe", { type: "stripe-webhook", timeout: "1 hour" })
+		// Rest of your Workflow
 	}
 }
 ```
 
 </TypeScriptExample>
+
+TODO
 
 ### Sending events to running workflows
 
@@ -90,13 +92,21 @@ TODO
 <TypeScriptExample>
 
 ```ts
-export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
-	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
-		// TODO
-		//
-		// TODO
-	}
-}
+export default {
+  async fetch(req: Request, env: Env) {
+    const instanceId = new URL(req.url).searchParams.get("instanceId")
+    const webhookPayload = await req.json<Payload>()
+
+    let instance = await env.MY_WORKFLOW.get(instanceId);
+    // Send our event, with `type` matching the event type defined in
+    // our step.waitForEvent call
+    await instance.sendEvent({type: "stripe-webhook", payload: webhookPayload})
+
+    return Response.json({
+      status: await instance.status(),
+    });
+  },
+};
 ```
 
 </TypeScriptExample>

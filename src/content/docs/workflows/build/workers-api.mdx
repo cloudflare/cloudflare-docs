@@ -112,8 +112,21 @@ More information about the limits imposed on Workflow can be found in the [Workf
   * `name` - the name of the step.
   * `options` - an object with properties for `type`, which determines which event type this `waitForEvent` call will match on when calling `instance.sendEvent`, and an optional `timeout` property, which defines how long the `waitForEvent` call will block for before throwing a timeout exception. The default timeout is 24 hours.
 
-Review the documentation on [events and parameters](/workflows/build/events-and-parameters/) to learn how to send events to a running Workflow instance.
+<TypeScriptExample>
 
+```ts
+export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
+	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
+		// Other steps in your Workflow
+		let event = await step.waitForEvent<IncomingStripeWebhook>("receive invoice paid webhook from Stripe", { type: "stripe-webhook", timeout: "1 hour" })
+		// Rest of your Workflow
+	}
+}
+```
+
+</TypeScriptExample>
+
+Review the documentation on [events and parameters](/workflows/build/events-and-parameters/) to learn how to send events to a running Workflow instance.
 
 ## WorkflowStepConfig
 
@@ -414,28 +427,39 @@ Terminate a Workflow instance.
 
 ### sendEvent
 
-[Send an event]() to a running Workflow instance.
+[Send an event](/workflows/build/events-and-parameters/) to a running Workflow instance.
 
 * <code>sendEvent(): Promise&lt;void&gt;</code>
 
-  * `options` - the event `type` and `payload` to send to the Workflow instance. The `type` must match the `type` in
+  * `options` - the event `type` and `payload` to send to the Workflow instance. The `type` must match the `type` in the corresponding `waitForEvent` call in your Workflow.
 
 Return `void` on success; throws an exception if the Workflow is not running or is an errored state.
 
 <TypeScriptExample>
 
 ```ts
-export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
-	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
-		// TODO
-		//
-		// TODO
-	}
-}
+export default {
+  async fetch(req: Request, env: Env) {
+    const instanceId = new URL(req.url).searchParams.get("instanceId")
+    const webhookPayload = await req.json<Payload>()
+
+    let instance = await env.MY_WORKFLOW.get(instanceId);
+    // Send our event, with `type` matching the event type defined in
+    // our step.waitForEvent call
+    await instance.sendEvent({type: "stripe-webhook", payload: webhookPayload})
+
+    return Response.json({
+      status: await instance.status(),
+    });
+  },
+};
 ```
 
 </TypeScriptExample>
 
+You can call `sendEvent` multiple times, setting the value of the `type` property to match the specific `waitForEvent` calls in your Workflow.
+
+This allows you to wait for multiple events at once, or use `Promise.race` to wait for multiple events and allow the first event to progress the Workflow.
 
 ### InstanceStatus
 
