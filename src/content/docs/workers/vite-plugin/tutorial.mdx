@@ -35,7 +35,7 @@ Start by creating a React TypeScript project with Vite.
 	args="cloudflare-vite-tutorial --template react-ts"
 />
 
-Open the `cloudflare-vite-tutorial` directory in your editor of choice.
+Next, open the `cloudflare-vite-tutorial` directory in your editor of choice.
 
 #### Add the Cloudflare dependencies
 
@@ -54,6 +54,10 @@ export default defineConfig({
 	plugins: [react(), cloudflare()],
 });
 ```
+
+The Cloudflare Vite plugin doesn't require any configuration by default and will look for a `wrangler.jsonc`, `wrangler.json` or `wrangler.toml` in the root of your application.
+
+Refer to the [API reference](/workers/vite-plugin/api/) for configuration options.
 
 #### Create your Worker config file
 
@@ -145,7 +149,7 @@ main = "./worker/index.ts"
 
 </WranglerConfig>
 
-Setting the `not_found_handling` to `single-page-application` means that navigation requests that do not match a static asset will always return the `index.html` file.
+The `main` field specifies the entry file for your Worker code.
 
 #### Add your API Worker
 
@@ -257,7 +261,7 @@ Run `npm run build` to build your application.
 If you inspect the `dist` directory, you will see that it contains two subdirectories:
 
 - `client` - the client code that runs in the browser
-- `cloudflare-vite-tutorial` - the Worker code and the output `wrangler.json` Worker configuration
+- `cloudflare-vite-tutorial` - the Worker code alongside the output `wrangler.json` configuration file
 
 #### Preview your application
 

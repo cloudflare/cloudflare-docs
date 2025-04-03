@@ -31,12 +31,15 @@ It accepts an optional `PluginConfig` parameter.
   An optional path to your Worker config file.
   By default, a `wrangler.jsonc`, `wrangler.json`, or `wrangler.toml` file in the root of your application will be used as the Worker config.
 
+  For more information about the Worker configuration, see [Configuration](/workers/wrangler/configuration/).
+
 - `viteEnvironment?: { name?: string }`
 
   Optional Vite environment options.
   By default, the environment name is the Worker name with `-` characters replaced with `_`.
   Setting the name here will override this.
   A typical use case is setting `viteEnvironment: { name: "ssr" }` to apply the Worker to the SSR environment.
+
   See [Vite Environments](/workers/vite-plugin/vite-environments/) for more information.
 
 - `persistState?: boolean | { path: string }`
@@ -50,6 +53,7 @@ It accepts an optional `PluginConfig` parameter.
   An optional override for debugging your Workers.
   By default, the debugging inspector is enabled and listens on port `9229`.
   A custom port can be provided or, alternatively, setting this to `false` will disable the debugging inspector.
+
   See [Debugging](/workers/vite-plugin/debugging/) for more information.
 
 - `auxiliaryWorkers?: Array<AuxiliaryWorkerConfig>`
@@ -72,9 +76,12 @@ You can inspect the `dist` directory and then run `wrangler deploy -c dist/<auxi
 
   A required path to your Worker config file.
 
+  For more information about the Worker configuration, see [Configuration](/workers/wrangler/configuration/).
+
 - `viteEnvironment?: { name?: string }`
 
   Optional Vite environment options.
   By default, the environment name is the Worker name with `-` characters replaced with `_`.
   Setting the name here will override this.
+
   See [Vite Environments](/workers/vite-plugin/vite-environments/) for more information.
