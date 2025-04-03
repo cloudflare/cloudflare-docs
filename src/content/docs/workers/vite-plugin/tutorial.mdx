@@ -14,6 +14,7 @@ Much of the content can also be applied to adapting existing Vite projects and t
 
 :::note
 If you want to start a new app with a template already set up with Vite, React and the Cloudflare Vite plugin, refer to the [React framework guide](/workers/frameworks/framework-guides/react/).
+To create a standalone Worker, refer to [Get started](/workers/vite-plugin/get-started/).
 :::
 
 ### Introduction
@@ -69,10 +70,11 @@ assets = { not_found_handling = "single-page-application" }
 The [`not_found_handling`](/workers/static-assets/routing/#not_found_handling--404-page--single-page-application--none) value has been set to `single-page-application`.
 This means that all not found requests will serve the `index.html` file.
 With the Cloudflare plugin, the `assets` routing configuration is used in place of Vite's default behavior.
-This ensures that your application's routing works the same way while developing as it does when deployed to production.
+This ensures that your application's [routing configuration](/workers/static-assets/routing/#routing-configuration) works the same way while developing as it does when deployed to production.
 
 Note that the [`directory`](/workers/static-assets/binding/#directory) field is not used when configuring assets with Vite.
 The `directory` in the output configuration will automatically point to the client build output.
+See [Static Assets](/workers/vite-plugin/static-assets/) for more information.
 
 :::note
 When using the Cloudflare Vite plugin, the Worker config (for example, `wrangler.jsonc`) that you provide is the input configuration file.
@@ -93,10 +95,10 @@ Add the following lines to your `.gitignore` file:
 
 #### Run the development server
 
-Run `npm run dev` to verify that your application is working as expected.
+Run `npm run dev` to start the Vite development server and verify that your application is working as expected.
 
 For a purely front-end application, you could now build (`npm run build`), preview (`npm run preview`), and deploy (`npm exec wrangler deploy`) your application.
-However, this tutorial will show you how to go a step further and add an API Worker.
+This tutorial, however, will show you how to go a step further and add an API Worker.
 
 ### Add an API Worker
 
@@ -113,7 +115,7 @@ However, this tutorial will show you how to go a step further and add an API Wor
 		"tsBuildInfoFile": "./node_modules/.tmp/tsconfig.worker.tsbuildinfo",
 		"types": ["@cloudflare/workers-types/2023-07-01", "vite/client"],
 	},
-	"include": ["api"],
+	"include": ["worker"],
 }
 ```
 
@@ -138,14 +140,17 @@ However, this tutorial will show you how to go a step further and add an API Wor
 name = "cloudflare-vite-tutorial"
 compatibility_date = "2024-12-30"
 assets = { not_found_handling = "single-page-application" }
-main = "./api/index.ts"
+main = "./worker/index.ts"
 ```
 
 </WranglerConfig>
+
+Setting the `not_found_handling` to `single-page-application` means that navigation requests that do not match a static asset will always return the `index.html` file.
+
 #### Add your API Worker
 
 ```ts
-// api/index.ts
+// worker/index.ts
 
 interface Env {
 	ASSETS: Fetcher;
@@ -169,8 +174,10 @@ export default {
 The Worker above will be invoked for any non-navigation request that does not match a static asset.
 It returns a JSON response if the `pathname` starts with `/api/` and otherwise return a `404` response.
 
-Browser navigations will invoke the `not_found_handling` behavior defined in the Worker config.
-As we have set this to `single-page-application`, the `index.html` file is always returned.
+:::note
+For top-level navigation requests, browsers send a `Sec-Fetch-Mode: navigate` header.
+If this is present and the URL does not match a static asset, the `not_found_handling` behavior will be invoked rather than the Worker.
+:::
 
 #### Call the API from the client
 
@@ -247,8 +254,10 @@ With Vite and the Cloudflare plugin, you can iterate on the client and server pa
 
 Run `npm run build` to build your application.
 
-If you inspect the `dist` directory, you will see that it contains two subdirectories: `client` and `cloudflare-vite-tutorial`.
-The `cloudflare-vite-tutorial` directory contains your Worker code and the output `wrangler.json` configuration.
+If you inspect the `dist` directory, you will see that it contains two subdirectories:
+
+- `client` - the client code that runs in the browser
+- `cloudflare-vite-tutorial` - the Worker code and the output `wrangler.json` Worker configuration
 
 #### Preview your application
 
@@ -262,10 +271,12 @@ This command will automatically use the output `wrangler.json` that was included
 
 ### Next steps
 
-In this tutorial, we created an SPA that could be deployed as a Worker with Workers Assets.
-We then added an API Worker that could be accessed from the front-end code and deployed to Cloudflare.
+In this tutorial, we created an SPA that could be deployed as a Worker with static assets.
+We then added an API Worker that could be accessed from the front-end code.
+Finally, we deployed both the client and server-side parts of the application to Cloudflare.
+
 Possible next steps include:
 
 - Adding a binding to another Cloudflare service such as a [KV namespace](/kv/) or [D1 database](/d1/)
 - Expanding the API to include additional routes
-- Using a library, such as [tRPC](https://trpc.io/) or [Hono](https://hono.dev/), in your API Worker
+- Using a library, such as [Hono](https://hono.dev/) or [tRPC](https://trpc.io/), in your API Worker

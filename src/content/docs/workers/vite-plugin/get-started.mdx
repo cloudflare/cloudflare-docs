@@ -52,6 +52,10 @@ export default defineConfig({
 });
 ```
 
+The Cloudflare Vite plugin doesn't require any configuration by default and will look for a `wrangler.jsonc`, `wrangler.json` or `wrangler.toml` in the root of your application.
+
+Refer to the [API reference](/workers/vite-plugin/api/) for configuration options.
+
 ### Create your Worker config file
 
 <WranglerConfig>
@@ -63,6 +67,12 @@ main = "./src/index.ts"
 ```
 
 </WranglerConfig>
+
+The `name` field specifies the name of your Worker.
+By default, this is also used as the name of the Worker's Vite Environment (see [Vite Environments](/workers/vite-plugin/vite-environments/) for more information).
+The `main` field specifies the entry file for your Worker code.
+
+For more information about the Worker configuration, see [Configuration](/workers/wrangler/configuration/).
 
 ### Create your Worker entry file
 
@@ -76,4 +86,8 @@ export default {
 };
 ```
 
-You can now develop (`npm run dev`), build (`npm run build`), preview (`npm run preview`), and deploy (`npm run deploy`) your application.
+A request to this Worker will return 'Running in Cloudflare-Workers!', demonstrating that the code is running inside the Workers runtime.
+
+### Dev, build, preview and deploy
+
+You can now start the Vite development server (`npm run dev`), build the application (`npm run build`), preview the built application (`npm run preview`), and deploy to Cloudflare (`npm run deploy`).
