@@ -75,7 +75,7 @@ new_sqlite_classes = ["DurableObjectAClass"]
 
 ### Create Durable Object class with key-value storage
 
-We recommend all new <GlossaryTooltip term="Durable Object class">Durable Object classes</GlossaryTooltip> use the SQLite storage backend. Key-value storage backend remains for backwards compatibility. 
+We recommend all new <GlossaryTooltip term="Durable Object class">Durable Object classes</GlossaryTooltip> use the SQLite storage backend. Key-value storage backend remains for backwards compatibility.
 
 Use `new_classes` on the migration in your Worker's Wrangler file:
 
@@ -130,7 +130,7 @@ To delete a Durable Object binding `DEPRECATED_OBJECT`, your `wrangler.toml / wr
 
 [[migrations]]
 tag = "v3" # Should be unique for each entry
-deleted_classes = ["DeprecatedObjectClass"] # Array of new classes
+deleted_classes = ["DeprecatedObjectClass"] # Array of deleted classes
 ```
 </WranglerConfig>
 </Details>

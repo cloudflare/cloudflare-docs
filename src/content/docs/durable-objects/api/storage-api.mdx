@@ -15,18 +15,7 @@ import {
 
 The Durable Object Storage API allows <GlossaryTooltip term="Durable Object">Durable Objects</GlossaryTooltip> to access transactional and strongly consistent storage. A Durable Object's attached storage is private to its unique instance and cannot be accessed by other objects.
 
-:::note[Scope of Durable Object storage]
-Note that Durable Object storage is scoped by individual <GlossaryTooltip term="Durable Object">Durable Objects</GlossaryTooltip>.
-
-- An account can have many Durable Object <GlossaryTooltip term="namespace">namespaces</GlossaryTooltip>.
-- A namespace can have many Durable Objects.
-
-However, storage is scoped per individual Durable Object.
-:::
-
 <Render file="storage-intro-text"/>
-
-JavaScript is a single-threaded and event-driven programming language. This means that JavaScript runtimes, by default, allow requests to interleave with each other which can lead to concurrency bugs. The Durable Objects runtime uses a combination of <GlossaryTooltip term="input gate">input gates</GlossaryTooltip> and <GlossaryTooltip term="output gate">output gates</GlossaryTooltip> to avoid this type of concurrency bug when performing storage operations.
 
 The following code snippet shows you how to store and retrieve data using the Durable Object Storage API.
 
@@ -49,7 +38,20 @@ export class Counter extends DurableObject {
 ```
 </TypeScriptExample>
 
+JavaScript is a single-threaded and event-driven programming language. This means that JavaScript runtimes, by default, allow requests to interleave with each other which can lead to concurrency bugs. The Durable Objects runtime uses a combination of <GlossaryTooltip term="input gate">input gates</GlossaryTooltip> and <GlossaryTooltip term="output gate">output gates</GlossaryTooltip> to avoid this type of concurrency bug when performing storage operations.
+
+:::note[Scope of Durable Object storage]
+Note that Durable Object storage is scoped by individual <GlossaryTooltip term="Durable Object">Durable Objects</GlossaryTooltip>.
+
+- An account can have many Durable Object <GlossaryTooltip term="namespace">namespaces</GlossaryTooltip>.
+- A namespace can have many Durable Objects.
+
+However, storage is scoped per individual Durable Object.
+:::
+
 ## SQL API
+
+<Render file="do-sqlite-storage-no-bill-note"/>
 
 The `SqlStorage` interface encapsulates methods that modify the SQLite database embedded within a Durable Object. The `SqlStorage` interface is accessible via the [`sql` property](/durable-objects/api/storage-api/#) of `DurableObjectStorage` class.
 

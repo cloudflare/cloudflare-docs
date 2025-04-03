@@ -10,3 +10,14 @@ The Durable Object Storage API comes with several methods, including [SQL API](/
 - Durable Object classes with the key-value storage backend can only use KV API.
 
 Each method is implicitly wrapped inside a transaction, such that its results are atomic and isolated from all other storage operations, even when accessing multiple key-value pairs.
+
+| Type of storage API | SQLite backed Durable Object | KV backed Durable Object |
+| ------------------- | ---------------------------- | ------------------------ |
+| SQL API             | ✅                           | ❌                       |
+| PITR API            | ✅                           | ❌                       |
+| KV API              | ✅                           | ✅                       |
+| Alarms API          | ✅                           | ✅                       |
+
+:::note[Recommended SQLite-backed Durable Object]
+We recommend using SQLite-backed Durable Object over key-value backed Durable Object. SQLite-backed Durable Objects allow you to store more types of data (such as tables), and offers Point In Time Recovery API which can restore a the Durable Object's embedded SQLite database contents (both SQL data and key-value data) to any point in the past 30 days.
+:::

@@ -14,9 +14,15 @@ A Durable Object's [in-memory state](/durable-objects/reference/in-memory-state/
 
 ## Access storage
 
-We recommend all new <GlossaryTooltip term="Durable Object class">Durable Object classes</GlossaryTooltip> use the SQLite storage backend. [Key-value storage backend](/durable-objects/reference/durable-objects-migrations/#create-durable-object-class -with-key-value-storage) remains for backwards compatibility, and a migration path from key-value storage to SQL storage for existing Durable Object classes will be offered in the future.
+We recommend all new <GlossaryTooltip term="Durable Object class">Durable Object classes</GlossaryTooltip> use the SQLite storage backend.
 
 [Storage API methods](/durable-objects/api/storage-api/#methods) are available on `ctx.storage` parameter passed to the Durable Object constructor. Storage API has SQL APIs and key-value APIs. Only Durable Object classes with a SQLite storage backend can access SQL API.
+
+<Render file="do-sqlite-storage-no-bill-note"/>
+
+:::note[Key-value storage]
+[Key-value storage backend](/durable-objects/reference/durable-objects-migrations/#create-durable-object-class-with-key-value-storage) remains for backwards compatibility, and a migration path from key-value storage to SQL storage for existing Durable Object classes will be offered in the future.
+:::
 
 ### Create SQLite-backed Durable Object class
 

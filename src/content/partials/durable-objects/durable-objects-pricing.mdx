@@ -2,7 +2,7 @@
 {}
 ---
 
-import { Markdown, GlossaryTooltip, Details, AnchorHeading } from "~/components";
+import {Render, Markdown, GlossaryTooltip, Details, AnchorHeading } from "~/components";
 
 { props.product === "durable-objects" && <><AnchorHeading title="Compute billing" depth={2}/></> }
 { props.product === "workers" && <><AnchorHeading title="Compute billing" depth={3}/></> }
@@ -52,9 +52,7 @@ The [Durable Objects Storage API](/durable-objects/api/storage-api) is only acce
 { props.product === "durable-objects" && <><AnchorHeading title="SQLite storage backend" depth={3}/></> }
 { props.product === "workers" && <><AnchorHeading title="SQLite storage backend" depth={4}/></> }
 
-:::note
-Storage billing is not yet enabled for Durable Object classes using SQLite storage backend. SQLite-backed Durable Objects will incur [charges for requests and duration](/durable-objects/platform/pricing/#compute-billing). Storage billing for Durable Objects using SQLite storage backend will be enabled at a later date with advance notice with the following pricing.
-:::
+<Render file="do-sqlite-storage-no-bill-note"/>
 
 |                               | Workers Free plan         | Workers Paid plan                                         |
 | ----------------------------- | ------------------------- | --------------------------------------------------------- |
