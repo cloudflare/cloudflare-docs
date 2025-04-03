@@ -9,7 +9,7 @@ head:
 description: Deploy your first Cloudflare Workers AI project using the CLI.
 ---
 
-import { Render, PackageManagers, WranglerConfig } from "~/components";
+import { Render, PackageManagers, WranglerConfig, TypeScriptExample } from "~/components";
 
 This guide will instruct you through setting up and deploying your first Workers AI project. You will use [Workers](/workers/), a Workers AI binding, and a large language model (LLM) to deploy your first AI-powered application on the Cloudflare global network.
 
@@ -73,7 +73,9 @@ You are now ready to run an inference task in your Worker. In this case, you wil
 
 Update the `index.ts` file in your `hello-ai` application directory with the following code:
 
-```typescript title="src/index.ts"
+<TypeScriptExample filename="index.ts">
+
+```ts
 export interface Env {
 	// If you set another name in the Wrangler config file as the value for 'binding',
 	// replace "AI" with the variable name you defined.
@@ -90,6 +92,7 @@ export default {
 	},
 } satisfies ExportedHandler<Env>;
 ```
+</TypeScriptExample>
 
 Up to this point, you have created an AI binding for your Worker and configured your Worker to be able to execute the Llama 3.1 model. You can now test your project locally before you deploy globally.
 

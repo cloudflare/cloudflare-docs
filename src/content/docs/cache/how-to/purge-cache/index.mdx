@@ -18,6 +18,18 @@ If versioning is active on your zone and multiple environments are configured, y
 
 <FeatureTable id="cache.purge_cache" />
 
+### Hostname, tag, prefix URL, and purge everything limits
+
+The current purge limits are applied per **account**: 
+
+<FeatureTable id="cache.purge_limits" />
+
+### Single-file purge limits
+
+The current purge limits are applied per **account**:
+
+<FeatureTable id="cache.single_file_purge" />
+
 ### Token bucket rate limiting
 
 Cloudflare uses token bucket rate limiting to limit the number of purge requests flowing through the system at any given time, ensuring a steady and manageable flow. 
