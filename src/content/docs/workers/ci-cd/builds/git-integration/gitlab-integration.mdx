@@ -6,16 +6,15 @@ sidebar:
   order: 2
 ---
 
-Cloudflare supports connecting your GitLab repository to your Cloudflare Worker, and will automatically deploy your code every time you push a change to a selected branch.
+Cloudflare supports connecting your GitLab repository to your Cloudflare Worker, and will automatically deploy your code every time you push a change.
 
 ## Features
 
 Beyond automatic builds and deployments, the Cloudflare GitLab integration lets you monitor builds directly in GitLab, keeping you informed without leaving your workflow.
-
 :::note[Upcoming features]
-In Beta, Workers Builds supports automatic builds and deployments only from a single selected branch (e.g. `main`).
+While you can still [enable builds for non-production branches](/workers/ci-cd/builds/build-branches/#configure-non-production-branch-builds), when using GitLab, we don't currently create PR comments.
 
-Support for building and deploying preview versions from multiple branches will be added soon, along with the ability to generate [Preview URLs](/workers/configuration/previews/) for pull requests (PRs).
+This feature will be available soon.
 :::
 
 ### Commit Status
@@ -38,7 +37,7 @@ You can deploy projects to Cloudflare Workers from your company or side project 
 
 ### Organizational access
 
-When you authorize Cloudflare Workers to access your GitLab account, you automatically give Cloudflare Workers access to organizations, groups, and namespaces accessed by your GitLab account.  Managing access to these organizations and groups is handled by GitLab.
+When you authorize Cloudflare Workers to access your GitLab account, you automatically give Cloudflare Workers access to organizations, groups, and namespaces accessed by your GitLab account. Managing access to these organizations and groups is handled by GitLab.
 
 ### Remove access
 

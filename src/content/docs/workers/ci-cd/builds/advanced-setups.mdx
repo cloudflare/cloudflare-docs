@@ -3,7 +3,7 @@ pcx_content_type: reference
 title: Advanced setups
 description: Learn how to use Workers Builds with more advanced setups
 sidebar:
-  order: 7
+  order: 8
 ---
 
 ## Monorepos
@@ -53,7 +53,7 @@ You can use [Wrangler Environments](/workers/wrangler/environments/) with Worker
 1. [Deploy via Wrangler](/workers/wrangler/commands/#deploy) to create the Workers for your environments on the Dashboard, if you do not already have them.
 2. Find the Workers for your environments. They are typically named `[name of Worker] - [environment name]`.
 3. Connect your repository to each of the Workers for your environment.
-4. In each of the Workers, edit your Wrangler deploy command to include the flag `--env: <environment name>` in the build configurations.
+4. In each of the Workers, edit your Wrangler commands to include the flag `--env: <environment name>` in the build configurations for both the deploy command, and the non-production branch deploy command ([if applicable](/workers/ci-cd/builds/build-branches/#configure-non-production-branch-builds)).
 
 When a new commit is detected in the repository, a new build/deploy will trigger for each associated Worker.
 
@@ -61,4 +61,4 @@ When a new commit is detected in the repository, a new build/deploy will trigger
 
 Imagine you have a Worker named `my-worker`, and you want to set up two environments `staging` and `production` set in the `wrangler.toml`. If you have not already, you can deploy `my-worker` for each environment using the commands `wrangler deploy --env staging` and `wrangler deploy --env production`.
 
-In your Cloudflare Dashboard, you should find the two Workers `my-worker-staging` and `my-worker-production`. Then, connect the Git repository for the Worker, `my-worker`, to both of the environment Workers. In the build configurations of each environment Worker, edit the deploy commands to be `npx wrangler deploy --env staging` and `npx wrangler deploy --env production` respectively.
+In your Cloudflare Dashboard, you should find the two Workers `my-worker-staging` and `my-worker-production`. Then, connect the Git repository for the Worker, `my-worker`, to both of the environment Workers. In the build configurations of each environment Worker, edit the deploy commands to be `npx wrangler deploy --env staging` and `npx wrangler deploy --env production` and the non-production branch deploy commands to be `npx wrangler versions upload --env staging` and `npx wrangler versions upload --env production` respectively.
