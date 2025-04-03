@@ -134,8 +134,8 @@ You can choose between two different scopes:
 If you need to map only specific subdomains (and not all proxied DNS records) to specific IP addresses, you can use a [Subdomain setup](/dns/zone-setups/subdomain-setup/).
 :::
 
-<Tabs labels="Dashboard | API">
-<TabItem label="dashboard" no-code="true">
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Dashboard" no-code="true">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **IP Addresses** > **Address Maps**.
@@ -146,7 +146,7 @@ If you need to map only specific subdomains (and not all proxied DNS records) to
 7. Review the information and select **Save and Deploy**.
 
 </TabItem>
-<TabItem label="api" no-code="true">
+<TabItem label="API" no-code="true">
 
 Use the [Create Address Map](/api/resources/addressing/subresources/address_maps/methods/create/) endpoint.
 
@@ -157,8 +157,8 @@ Make sure you have the correct Key/Token and permissions.
 
 ## 4. Create DNS records
 
-<Tabs labels="Dashboard | API">
-<TabItem label="dashboard" no-code="true">
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Dashboard" no-code="true">
 
 To create a DNS record in the dashboard:
 
@@ -170,8 +170,7 @@ To create a DNS record in the dashboard:
 6.  Select **Save**.
 
 </TabItem>
-
-<TabItem label="api" no-code="true">
+<TabItem label="API" no-code="true">
 
 To create records with the API, use a [POST request](/api/resources/dns/subresources/records/methods/create/). For field definitions, select a record type under the request body specification.
 
