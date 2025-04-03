@@ -13,6 +13,4 @@ meta:
   author: '@cloudflare'
 
 resources:
-    community: 
-    dashboard_link:
     discord: https://discord.gg/cloudflaredev
