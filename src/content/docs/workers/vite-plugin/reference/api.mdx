@@ -6,6 +6,8 @@ sidebar:
 description: Vite plugin API
 ---
 
+import { Type, MetaInfo } from "~/components";
+
 ## `cloudflare()`
 
 The `cloudflare` plugin should be included in the Vite `plugins` array:
@@ -23,14 +25,14 @@ It accepts an optional `PluginConfig` parameter.
 
 ## `interface PluginConfig`
 
-- `configPath?: string`
+- `configPath` <Type text='string' /> <MetaInfo text='optional' />
 
   An optional path to your Worker config file.
   By default, a `wrangler.jsonc`, `wrangler.json`, or `wrangler.toml` file in the root of your application will be used as the Worker config.
 
   For more information about the Worker configuration, see [Configuration](/workers/wrangler/configuration/).
 
-- `viteEnvironment?: { name?: string }`
+- `viteEnvironment` <Type text='{ name?: string }' /> <MetaInfo text='optional' />
 
   Optional Vite environment options.
   By default, the environment name is the Worker name with `-` characters replaced with `_`.
@@ -39,13 +41,13 @@ It accepts an optional `PluginConfig` parameter.
 
   See [Vite Environments](/workers/vite-plugin/reference/vite-environments/) for more information.
 
-- `persistState?: boolean | { path: string }`
+- `persistState` <Type text='boolean | { path: string }' /> <MetaInfo text='optional' />
 
   An optional override for state persistence.
   By default, state is persisted to `.wrangler/state`.
   A custom `path` can be provided or, alternatively, persistence can be disabled by setting the value to `false`.
 
-- `inspectorPort?: number | false`
+- `inspectorPort` <Type text='number | false' /> <MetaInfo text='optional' />
 
   An optional override for debugging your Workers.
   By default, the debugging inspector is enabled and listens on port `9229`.
@@ -53,7 +55,7 @@ It accepts an optional `PluginConfig` parameter.
 
   See [Debugging](/workers/vite-plugin/reference/debugging/) for more information.
 
-- `auxiliaryWorkers?: Array<AuxiliaryWorkerConfig>`
+- `auxiliaryWorkers` <Type text='Array<AuxiliaryWorkerConfig>' /> <MetaInfo text='optional' />
 
   An optional array of auxiliary Workers.
   Auxiliary Workers are additional Workers that are used as part of your application.
@@ -69,13 +71,13 @@ You can inspect the `dist` directory and then run `wrangler deploy -c dist/<auxi
 
 ## `interface AuxiliaryWorkerConfig`
 
-- `configPath: string`
+- `configPath` <Type text='string' />
 
   A required path to your Worker config file.
 
   For more information about the Worker configuration, see [Configuration](/workers/wrangler/configuration/).
 
-- `viteEnvironment?: { name?: string }`
+- `viteEnvironment` <Type text='{ name?: string }' /> <MetaInfo text='optional' />
 
   Optional Vite environment options.
   By default, the environment name is the Worker name with `-` characters replaced with `_`.
