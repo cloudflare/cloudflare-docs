@@ -3,24 +3,23 @@ pcx_content_type: concept
 title: Limits
 sidebar:
   order: 2
-
 ---
 
 The following limits apply to Hyperdrive configuration, connections, and queries made to your configured origin databases.
 
-| Feature                                        | Limit                                                                                 |
-| ---------------------------------------------- | ------------------------------------------------------------------------------------- |
-| Maximum configured databases                   | 25 per account                                                                        |
-| Initial connection timeout                     | 15 seconds                                                                            |
-| Idle connection timeout                        | 10 minutes                                                                            |
-| Maximum cached query response size             | 50 MB                                                                                 |
-| Maximum query (statement) duration             | 60 seconds                                                                            |
-| Maximum username length                        | 63 characters (bytes) [^1]                                                            |
-| Maximum database name length                   | 63 characters (bytes) [^1]                                                            |
-| Maximum potential origin database connections  | approx. \~100 connections [^2]																													 |
+| Feature                                            | Free                     | Paid                      |
+| -------------------------------------------------- | ------------------------ | ------------------------- |
+| Maximum configured databases                       | 10 per account           | 25 per account            |
+| Initial connection timeout                         | 15 seconds               | 15 seconds                |
+| Idle connection timeout                            | 10 minutes               | 10 minutes                |
+| Maximum cached query response size                 | 50 MB                    | 50 MB                     |
+| Maximum query (statement) duration                 | 60 seconds               | 60 seconds                |
+| Maximum username length [^1]                       | 63 characters (bytes)    | 63 characters (bytes)     |
+| Maximum database name length [^1]                  | 63 characters (bytes)    | 63 characters (bytes)     |
+| Maximum potential origin database connections [^2] | approx. \~20 connections | approx. \~100 connections |
 
 :::note
-Hyperdrive does not have a hard limit on the number of concurrent *client* connections made from your Workers.
+Hyperdrive does not have a hard limit on the number of concurrent _client_ connections made from your Workers.
 
 As many hosted databases have limits on the number of unique connections they can manage, Hyperdrive attempts to keep number of concurrent pooled connections to your origin database lower.
 :::
