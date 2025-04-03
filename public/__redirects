@@ -178,16 +178,28 @@
 /api-shield/security/sequential-abuse-detection/ /api-shield/security/sequence-analytics/ 301
 
 # bots
-/bots/about/javascript-detections/ /bots/reference/javascript-detections/ 301
 /bots/about/plans/ /bots/plans/ 301
 /bots/about/plans/biz-and-ent/ /bots/plans/biz-and-ent/ 301
 /bots/about/plans/bm-subscription/ /bots/plans/bm-subscription/ 301
 /support/firewall/tools/cloudflare-bot-products-faqs/ /bots/troubleshooting/ 301
 /support/other-languages/deutsch/cloudflare-bot/ /bots/troubleshooting/ 301
-/bots/concepts/ja3-fingerprint/ /bots/concepts/ja3-ja4-fingerprint/ 301
 /bots/reference/verified-bot-categories/ /bots/concepts/bot/verified-bots/categories/ 301
 /bots/reference/verified-bot-policy/ /bots/concepts/bot/verified-bots/policy/ 301
 /bots/concepts/challenge-solve-rate/ /fundamentals/security/cloudflare-challenges/challenge-solve-rate/ 301
+/bots/concepts/detection-ids/ /bots/additional-configurations/detection-ids/ 301
+/bots/concepts/ja3-ja4-fingerprint/ /bots/additional-configurations/ja3-ja4-fingerprint/ 301
+/bots/concepts/signals-intelligence/ /bots/additional-configurations/ja3-ja4-fingerprint/signals-intelligence/ 301
+/bots/reference/javascript-detections/ /bots/additional-configurations/javascript-detections/ 301
+/bots/concepts/sequence-rules/ /bots/additional-configurations/sequence-rules/ 301
+/bots/reference/static-resources/ /bots/additional-configurations/static-resources/ 301
+/bots/bot-analytics/biz-and-ent/ /bots/bot-analytics/ 301
+/bots/bot-analytics/bm-subscription/ /bots/bot-analytics/ 301
+/bots/bot-analytics/ /bots/bot-analytics/ 301
+/bots/concepts/cloudflare-bot-tags/ /bots/concepts/bot-tags/ 301
+/bots/get-started/biz-and-ent/ /bots/get-started/super-bot-fight-mode/ 301
+/bots/get-started/free/ /bots/get-started/bot-fight-mode/ 301
+/bots/get-started/bm-subscription/ /bots/get-started/bot-management/ 301
+/bots/get-started/pro/ /bots/get-started/super-bot-fight-mode/ 301
 
 #browser-rendering
 /browser-rendering/get-started/browser-rendering-with-do/ /browser-rendering/workers-binding-api/browser-rendering-with-do/ 301
