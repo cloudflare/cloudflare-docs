@@ -1,19 +1,16 @@
 ---
 pcx_content_type: reference
 title: API
-head: []
 sidebar:
   order: 3
 description: Vite plugin API
 ---
 
-### `cloudflare()`
+## `cloudflare()`
 
 The `cloudflare` plugin should be included in the Vite `plugins` array:
 
-```ts {4, 7}
-// vite.config.ts
-
+```ts {4, 7} title="vite.config.ts"
 import { defineConfig } from "vite";
 import { cloudflare } from "@cloudflare/vite-plugin";
 
@@ -24,7 +21,7 @@ export default defineConfig({
 
 It accepts an optional `PluginConfig` parameter.
 
-### `interface PluginConfig`
+## `interface PluginConfig`
 
 - `configPath?: string`
 
@@ -40,7 +37,7 @@ It accepts an optional `PluginConfig` parameter.
   Setting the name here will override this.
   A typical use case is setting `viteEnvironment: { name: "ssr" }` to apply the Worker to the SSR environment.
 
-  See [Vite Environments](/workers/vite-plugin/vite-environments/) for more information.
+  See [Vite Environments](/workers/vite-plugin/reference/vite-environments/) for more information.
 
 - `persistState?: boolean | { path: string }`
 
@@ -54,7 +51,7 @@ It accepts an optional `PluginConfig` parameter.
   By default, the debugging inspector is enabled and listens on port `9229`.
   A custom port can be provided or, alternatively, setting this to `false` will disable the debugging inspector.
 
-  See [Debugging](/workers/vite-plugin/debugging/) for more information.
+  See [Debugging](/workers/vite-plugin/reference/debugging/) for more information.
 
 - `auxiliaryWorkers?: Array<AuxiliaryWorkerConfig>`
 
@@ -70,7 +67,7 @@ If using multiple Workers, each auxiliary Worker must be deployed individually.
 You can inspect the `dist` directory and then run `wrangler deploy -c dist/<auxiliary-worker>/wrangler.json` for each.
 :::
 
-### `interface AuxiliaryWorkerConfig`
+## `interface AuxiliaryWorkerConfig`
 
 - `configPath: string`
 
@@ -84,4 +81,4 @@ You can inspect the `dist` directory and then run `wrangler deploy -c dist/<auxi
   By default, the environment name is the Worker name with `-` characters replaced with `_`.
   Setting the name here will override this.
 
-  See [Vite Environments](/workers/vite-plugin/vite-environments/) for more information.
+  See [Vite Environments](/workers/vite-plugin/reference/vite-environments/) for more information.

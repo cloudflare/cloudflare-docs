@@ -1,7 +1,6 @@
 ---
 pcx_content_type: reference
 title: Cloudflare Environments
-head: []
 sidebar:
   order: 9
 description: Using Cloudflare environments with the Vite plugin
@@ -48,7 +47,7 @@ This flattened configuration combines [top-level only](/workers/wrangler/configu
 :::note
 The default Vite environment name for a Worker is always the top-level Worker name.
 This enables you to reference the Worker consistently in your Vite config when using multiple Cloudflare environments.
-See [Vite Environments](/workers/vite-plugin/vite-environments/) for more information.
+See [Vite Environments](/workers/vite-plugin/reference/vite-environments/) for more information.
 :::
 
 Cloudflare environments can also be used in development.
@@ -60,7 +59,7 @@ Running `vite dev` or `vite build` without providing `CLOUDFLARE_ENV` will use t
 As Cloudflare environments are applied at dev and build time, specifying `CLOUDFLARE_ENV` when running `vite preview` or `wrangler deploy` will have no effect.
 :::
 
-### Combining Cloudflare environments and Vite modes
+## Combining Cloudflare environments and Vite modes
 
 You may wish to combine the concepts of [Cloudflare environments](/workers/wrangler/environments/) and [Vite modes](https://vite.dev/guide/env-and-mode.html#modes).
 With this approach, the Vite mode can be used to select the Cloudflare environment and a single method can be used to determine environment specific configuration and code.

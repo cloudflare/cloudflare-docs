@@ -1,7 +1,6 @@
 ---
 pcx_content_type: reference
 title: Vite Environments
-head: []
 sidebar:
   order: 8
 description: Vite environments and the Vite plugin
@@ -12,7 +11,7 @@ import { WranglerConfig } from "~/components";
 The [Vite Environment API](https://vite.dev/guide/api-environment), released in Vite 6, is the key feature that enables the Cloudflare Vite plugin to integrate Vite directly with the Workers runtime.
 It is not necessary to understand all the intricacies of the Environment API as an end user, but it is useful to have a high-level understanding.
 
-### Default behavior
+## Default behavior
 
 Vite creates two environments by default: `client` and `ssr`.
 A front-end only application uses the `client` environment, whereas a full-stack application created with a framework typically uses the `client` environment for front-end code and the `ssr` environment for server-side rendering.
@@ -23,10 +22,10 @@ This name can be used to reference the environment in your Vite config in order 
 
 :::note
 The default Vite environment name for a Worker is always the top-level Worker name.
-This enables you to reference the Worker consistently in your Vite config when using multiple [Cloudflare Environments](/workers/vite-plugin/cloudflare-environments/).
+This enables you to reference the Worker consistently in your Vite config when using multiple [Cloudflare Environments](/workers/vite-plugin/reference/cloudflare-environments/).
 :::
 
-### Environment configuration
+## Environment configuration
 
 In the following example we have a Worker named `my-worker` that is associated with a Vite environment named `my_worker`.
 We use the Vite config to set global constant replacements for this environment:
@@ -41,9 +40,7 @@ main = "./src/index.ts"
 
 </WranglerConfig>
 
-```ts
-// vite.config.ts
-
+```ts title="vite.config.ts"
 import { defineConfig } from "vite";
 import { cloudflare } from "@cloudflare/vite-plugin";
 
@@ -61,16 +58,14 @@ export default defineConfig({
 
 For more information about Vite's configuration options, see [Configuring Vite](https://vite.dev/config/).
 
-The default behavior of using the Worker name as the environment name is appropriate when you have a standalone Worker, such as an API that is accessed from your front-end application, or an [auxiliary Worker](/workers/vite-plugin/api/#interface-pluginconfig) that is accessed via service bindings.
+The default behavior of using the Worker name as the environment name is appropriate when you have a standalone Worker, such as an API that is accessed from your front-end application, or an [auxiliary Worker](/workers/vite-plugin/reference/api/#interface-pluginconfig) that is accessed via service bindings.
 
-### React Router v7
+## React Router v7
 
 If you are using the Cloudflare Vite plugin with [React Router v7](https://reactrouter.com/), then your Worker is used for server-side rendering and tightly integrated with the framework.
 To support this, you should assign it to the `ssr` environment by setting `viteEnvironment.name` in the plugin config.
 
-```ts
-// vite.config.ts
-
+```ts title="vite.config.ts"
 import { defineConfig } from "vite";
 import { cloudflare } from "@cloudflare/vite-plugin";
 import { reactRouter } from "@react-router/dev/vite";

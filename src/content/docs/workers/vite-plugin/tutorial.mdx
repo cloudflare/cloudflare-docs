@@ -1,7 +1,6 @@
 ---
 pcx_content_type: tutorial
 title: Tutorial - React SPA with an API
-head: []
 sidebar:
   order: 2
 description: Create a React SPA with an API Worker using the Vite plugin
@@ -17,15 +16,15 @@ If you want to start a new app with a template already set up with Vite, React a
 To create a standalone Worker, refer to [Get started](/workers/vite-plugin/get-started/).
 :::
 
-### Introduction
+## Introduction
 
 In this tutorial, you will create a React SPA that can be deployed as a Worker with static assets.
 You will then add an API Worker that can be accessed from the front-end code.
 You will develop, build, and preview the application using Vite before finally deploying to Cloudflare.
 
-### Set up and configure the React SPA
+## Set up and configure the React SPA
 
-#### Scaffold a Vite project
+### Scaffold a Vite project
 
 Start by creating a React TypeScript project with Vite.
 
@@ -37,15 +36,13 @@ Start by creating a React TypeScript project with Vite.
 
 Next, open the `cloudflare-vite-tutorial` directory in your editor of choice.
 
-#### Add the Cloudflare dependencies
+### Add the Cloudflare dependencies
 
 <PackageManagers type="add" pkg="@cloudflare/vite-plugin wrangler" dev />
 
-#### Add the plugin to your Vite config
+### Add the plugin to your Vite config
 
-```ts {5, 8}
-// vite.config.ts
-
+```ts {5, 8} title="vite.config.ts"
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { cloudflare } from "@cloudflare/vite-plugin";
@@ -57,9 +54,9 @@ export default defineConfig({
 
 The Cloudflare Vite plugin doesn't require any configuration by default and will look for a `wrangler.jsonc`, `wrangler.json` or `wrangler.toml` in the root of your application.
 
-Refer to the [API reference](/workers/vite-plugin/api/) for configuration options.
+Refer to the [API reference](/workers/vite-plugin/reference/api/) for configuration options.
 
-#### Create your Worker config file
+### Create your Worker config file
 
 <WranglerConfig>
 
@@ -78,7 +75,7 @@ This ensures that your application's [routing configuration](/workers/static-ass
 
 Note that the [`directory`](/workers/static-assets/binding/#directory) field is not used when configuring assets with Vite.
 The `directory` in the output configuration will automatically point to the client build output.
-See [Static Assets](/workers/vite-plugin/static-assets/) for more information.
+See [Static Assets](/workers/vite-plugin/reference/static-assets/) for more information.
 
 :::note
 When using the Cloudflare Vite plugin, the Worker config (for example, `wrangler.jsonc`) that you provide is the input configuration file.
@@ -87,32 +84,30 @@ This output file is a snapshot of your configuration at the time of the build an
 It is the configuration that is used for preview and deployment.
 :::
 
-#### Update the .gitignore file
+### Update the .gitignore file
 
 When developing Workers, additional files are used and/or generated that should not be stored in git.
 Add the following lines to your `.gitignore` file:
 
-```txt
+```txt title=".gitignore"
 .wrangler
 .dev.vars*
 ```
 
-#### Run the development server
+### Run the development server
 
 Run `npm run dev` to start the Vite development server and verify that your application is working as expected.
 
 For a purely front-end application, you could now build (`npm run build`), preview (`npm run preview`), and deploy (`npm exec wrangler deploy`) your application.
 This tutorial, however, will show you how to go a step further and add an API Worker.
 
-### Add an API Worker
+## Add an API Worker
 
-#### Configure TypeScript for your Worker code
+### Configure TypeScript for your Worker code
 
 <PackageManagers type="add" pkg="@cloudflare/workers-types" dev />
 
-```jsonc
-// tsconfig.worker.json
-
+```jsonc title="tsconfig.worker.json"
 {
 	"extends": "./tsconfig.node.json",
 	"compilerOptions": {
@@ -123,9 +118,7 @@ This tutorial, however, will show you how to go a step further and add an API Wo
 }
 ```
 
-```jsonc {8}
-// tsconfig.json
-
+```jsonc {8} title="tsconfig.json"
 {
 	"files": [],
 	"references": [
@@ -136,7 +129,7 @@ This tutorial, however, will show you how to go a step further and add an API Wo
 }
 ```
 
-#### Add to your Worker configuration
+### Add to your Worker configuration
 
 <WranglerConfig>
 
@@ -151,11 +144,9 @@ main = "./worker/index.ts"
 
 The `main` field specifies the entry file for your Worker code.
 
-#### Add your API Worker
+### Add your API Worker
 
-```ts
-// worker/index.ts
-
+```ts title="worker/index.ts"
 interface Env {
 	ASSETS: Fetcher;
 }
@@ -183,13 +174,11 @@ For top-level navigation requests, browsers send a `Sec-Fetch-Mode: navigate` he
 If this is present and the URL does not match a static asset, the `not_found_handling` behavior will be invoked rather than the Worker.
 :::
 
-#### Call the API from the client
+### Call the API from the client
 
 Edit `src/App.tsx` so that it includes an additional button that calls the API and sets some state:
 
-```tsx {10, 34-48} collapse={14-29}
-// src/App.tsx
-
+```tsx {10, 34-48} collapse={14-29} title="src/App.tsx"
 import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
@@ -254,26 +243,40 @@ If you click the button again, it will display the new `name` while preserving t
 
 With Vite and the Cloudflare plugin, you can iterate on the client and server parts of your app together, without losing UI state between edits.
 
-#### Build your application
+### Build your application
 
 Run `npm run build` to build your application.
+
+```sh
+npm run build
+```
 
 If you inspect the `dist` directory, you will see that it contains two subdirectories:
 
 - `client` - the client code that runs in the browser
 - `cloudflare-vite-tutorial` - the Worker code alongside the output `wrangler.json` configuration file
 
-#### Preview your application
+### Preview your application
 
 Run `npm run preview` to validate that your application runs as expected.
+
+```sh
+npm run preview
+```
+
 This command will run your build output locally in the Workers runtime, closely matching its behaviour in production.
 
-#### Deploy to Cloudflare
+### Deploy to Cloudflare
 
 Run `npm exec wrangler deploy` to deploy your application to Cloudflare.
+
+```sh
+npm exec wrangler deploy
+```
+
 This command will automatically use the output `wrangler.json` that was included in the build output.
 
-### Next steps
+## Next steps
 
 In this tutorial, we created an SPA that could be deployed as a Worker with static assets.
 We then added an API Worker that could be accessed from the front-end code.
