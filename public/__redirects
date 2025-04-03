@@ -1571,6 +1571,24 @@
 /hyperdrive/learning/ /hyperdrive/configuration/ 301
 /hyperdrive/reference/metrics/ /hyperdrive/observability/metrics/ 301
 /hyperdrive/reference/troubleshooting/ /hyperdrive/observability/troubleshooting/ 301
+/hyperdrive/examples/aws-rds-aurora/ /hyperdrive/examples/connect-to-postgres/aws-rds-aurora/ 301
+/hyperdrive/examples/azure/ /hyperdrive/examples/connect-to-postgres/azure/ 301
+/hyperdrive/examples/cockroachdb/ /hyperdrive/examples/connect-to-postgres/cockroachdb/ 301
+/hyperdrive/examples/digital-ocean/ /hyperdrive/examples/connect-to-postgres/digital-ocean/ 301
+/hyperdrive/examples/google-cloud-sql/ /hyperdrive/examples/connect-to-postgres/google-cloud-sql/ 301
+/hyperdrive/examples/materialize/ /hyperdrive/examples/connect-to-postgres/materialize/ 301
+/hyperdrive/examples/neon/ /hyperdrive/examples/connect-to-postgres/neon/ 301
+/hyperdrive/examples/nile/ /hyperdrive/examples/connect-to-postgres/nile/ 301
+/hyperdrive/examples/pgedge/ /hyperdrive/examples/connect-to-postgres/pgedge/ 301
+/hyperdrive/examples/supabase/ /hyperdrive/examples/connect-to-postgres/supabase/ 301
+/hyperdrive/examples/timescale/ /hyperdrive/examples/connect-to-postgres/timescale/ 301
+/hyperdrive/examples/xata/ /hyperdrive/examples/connect-to-postgres/xata/ 301
+/hyperdrive/examples/fly/ /hyperdrive/examples/connect-to-postgres/fly/ 301
+
+
+/hyperdrive/reference/supported-databases/ /hyperdrive/reference/supported-databases-and-features/ 301
+/hyperdrive/configuration/connect-to-postgres/ /hyperdrive/examples/connect-to-postgres/ 301
+
 
 # zaraz
 
