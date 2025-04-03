@@ -1531,44 +1531,34 @@
 # Workers AI reorganization redirects
 # Function calling
 /workers-ai/function-calling /workers-ai/features/function-calling/ 301
-/workers-ai/function-calling/ /workers-ai/features/function-calling/ 301
 /workers-ai/function-calling/embedded/ /workers-ai/features/function-calling/embedded/ 301
-/workers-ai/function-calling/embedded/get-started /workers-ai/features/function-calling/embedded/get-started 301
-/workers-ai/function-calling/embedded/api-reference /workers-ai/features/function-calling/embedded/api-reference 301
+/workers-ai/function-calling/embedded/get-started/ /workers-ai/features/function-calling/embedded/get-started 301
+/workers-ai/function-calling/embedded/api-reference/ /workers-ai/features/function-calling/embedded/api-reference 301
 /workers-ai/function-calling/embedded/examples/ /workers-ai/features/function-calling/embedded/examples/ 301
-/workers-ai/function-calling/embedded/examples/kv /workers-ai/features/function-calling/embedded/examples/kv 301
-/workers-ai/function-calling/embedded/examples/openapi /workers-ai/features/function-calling/embedded/examples/openapi 301
-/workers-ai/function-calling/embedded/examples/fetch /workers-ai/features/function-calling/embedded/examples/fetch 301
-/workers-ai/function-calling/embedded/examples/troubleshooting /workers-ai/features/function-calling/embedded/examples/troubleshooting 301
+/workers-ai/function-calling/embedded/examples/kv/ /workers-ai/features/function-calling/embedded/examples/kv 301
+/workers-ai/function-calling/embedded/examples/openapi/ /workers-ai/features/function-calling/embedded/examples/openapi 301
+/workers-ai/function-calling/embedded/examples/fetch/ /workers-ai/features/function-calling/embedded/examples/fetch 301
+/workers-ai/function-calling/embedded/examples/troubleshooting/ /workers-ai/features/function-calling/embedded/examples/troubleshooting 301
 /workers-ai/function-calling/traditional/ /workers-ai/features/function-calling/traditional/ 301
-/workers-ai/function-calling/ /workers-ai/features/function-calling/ 301
 
 # JSON Mode
 /workers-ai/json-mode /workers-ai/features/json-mode/ 301
-/workers-ai/json-mode/ /workers-ai/features/json-mode/ 301
 
 # Fine-tunes
 /workers-ai/fine-tunes /workers-ai/features/fine-tunes/ 301
-/workers-ai/fine-tunes/ /workers-ai/features/fine-tunes/ 301
 /workers-ai/fine-tunes/public-loras /workers-ai/features/fine-tunes/public-loras 301
 /workers-ai/fine-tunes/loras /workers-ai/features/fine-tunes/loras 301
 
 # Prompting
-/workers-ai/guides/prompting /workers-ai/features/prompting/ 301
 /workers-ai/guides/prompting/ /workers-ai/features/prompting/ 301
 
 # Platform section
-/workers-ai/privacy /workers-ai/platform/privacy/ 301
 /workers-ai/privacy/ /workers-ai/platform/privacy/ 301
-/workers-ai/glossary /workers-ai/platform/glossary/ 301
 /workers-ai/glossary/ /workers-ai/platform/glossary/ 301
-/workers-ai/workers-ai-errors /workers-ai/platform/errors/ 301
 /workers-ai/workers-ai-errors/ /workers-ai/platform/errors/ 301
 
 # Guides section
-/workers-ai/demos /workers-ai/guides/demos-architectures/ 301
 /workers-ai/demos/ /workers-ai/guides/demos-architectures/ 301
-/workers-ai/tutorials /workers-ai/guides/tutorials/ 301
 /workers-ai/tutorials/ /workers-ai/guides/tutorials/ 301
 
 # workflows
