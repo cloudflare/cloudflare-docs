@@ -19,9 +19,9 @@ export default {
         const watermarkKey = "my-watermark";
         const sourceKey = "my-source-image";
 
-        let cache = await caches.open("transformed-images");
-        let cacheKey = watermarkKey + "/" + sourceKey;
-        let cacheResponse = await cache.match(watermarkKey + "/" + sourceKey);
+        const cache = await caches.open("transformed-images");
+        const cacheKey = new URL(sourceKey + "/" + watermarkKey, request.url);
+        const cacheResponse = await cache.match(cacheKey);
 
         if (cacheResponse) {
             return cacheResponse;
@@ -40,7 +40,7 @@ export default {
 
         const response = result.response();
 
-        ctx.waitUntil(cache.put(cacheKey, response));
+        ctx.waitUntil(cache.put(cacheKey, response.clone()));
 
         return result.response();
   },
