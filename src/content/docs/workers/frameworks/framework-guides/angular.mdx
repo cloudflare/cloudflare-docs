@@ -27,15 +27,6 @@ To use `create-cloudflare` to create a new Angular project with <InlineBadge pre
 	args={"--framework=angular --platform=workers"}
 />
 
-<Render
-	file="c3-post-run-steps"
-	product="workers"
-	params={{
-		category: "web-framework",
-		framework: "Angular",
-	}}
-/>
-
 After setting up your project, change your directory by running the following command:
 
 ```sh
@@ -59,7 +50,5 @@ The following command will build and deploy your project. If you're using CI, en
 ---
 
 ## Static assets
-
-You can serve static assets your Angular application by placing them in [the `./public/` directory](https://angular.dev/reference/configs/file-structure#workspace-configuration-files). This can be useful for resource files such as images, stylesheets, fonts, and manifests.
 
 <Render file="workers-assets-routing-summary" />
