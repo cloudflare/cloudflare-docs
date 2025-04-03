@@ -32,6 +32,7 @@ export default {
 			if (contentType.includes("application/json")) {
 				return { contentType, result: JSON.stringify(await response.json()) };
 			}
+			
 			return { contentType, result: await response.text() };
 		}
 
