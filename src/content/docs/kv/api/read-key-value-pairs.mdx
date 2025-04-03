@@ -11,7 +11,9 @@ To get the value for a given key, call the `get()` method of the [KV binding](/k
 env.NAMESPACE.get(key);
 ```
 
-The `get()` method returns a promise you can `await` on to get the value. If the key is not found, the promise will resolve with the literal value `null`.
+The `get()` method returns a promise you can `await` on to get the value.
+If you request a single key as a string, you will get a single response in the promise. If the key is not found, the promise will resolve with the literal value `null`.
+Instead of a single key, you can also request an array of keys. In this case the response is a map with the key-value pairs.
 
 #### Example
 
@@ -34,6 +36,22 @@ export default {
 };
 ```
 
+Or if you request multiple keys:
+
+```js
+export default {
+	async fetch(request, env, ctx) {
+		try {
+			const value = await env.NAMESPACE.get(["first-key", "second-key"]);
+
+			return new Response("values: " + value.get("second-key") + " " + value.get("second-key"));
+		} catch (e) {
+			return new Response(e.message, { status: 500 });
+		}
+	},
+};
+```
+
 ## Reference
 
 The following methods are provided to read from KV:
@@ -43,7 +61,11 @@ The following methods are provided to read from KV:
 
 ### `get()` method
 
-To get the value for a given key, call the `get()` method on any KV namespace you have bound to your Worker code:
+The `get()` method can be used to get a single value, or multiple values, if given multiple keys
+
+#### Requesting a single key
+
+To get the value for a single key, call the `get()` method on any KV namespace you have bound to your Worker code with:
 
 ```js
 env.NAMESPACE.get(key, type?);
@@ -51,9 +73,7 @@ env.NAMESPACE.get(key, type?);
 env.NAMESPACE.get(key, options?);
 ```
 
-The `get()` method returns a promise you can `await` on to get the value. If the key is not found, the promise will resolve with the literal value `null`.
-
-#### Parameters
+##### Parameters
 
 - `key`: `string`
   - The key of the KV pair.
@@ -65,7 +85,7 @@ The `get()` method returns a promise you can `await` on to get the value. If the
 }`
   - Optional. Object containing the optional `cacheTtl` and `type` properties. The `cacheTtl` property defines the length of time in seconds that a KV result is cached in the global network location it is accessed from (minimum: 60). The `type` property defines the type of the value to be returned.
 
-#### Response
+##### Response
 
 - `response`: `Promise<string | Object | ArrayBuffer | ReadableStream | null>`
   - The value for the requested KV pair. The response type will depend on the `type` parameter provided for the `get()` command as follows:
@@ -76,7 +96,46 @@ The `get()` method returns a promise you can `await` on to get the value. If the
 
 The `get()` method may return stale values. If a given key has recently been read in a given location, writes or updates to the key made in other locations may take up to 60 seconds (or the duration of the `cacheTtl`) to display.
 
+#### Requesting multiple keys
+
+To get the values for multiple keys, call the `get()` method on any KV namespace you have bound to your Worker code with:
+
+```js
+env.NAMESPACE.get(keys, type?);
+// OR
+env.NAMESPACE.get(keys, options?);
+```
+
+##### Parameters
+
+- `keys`: `string[]`
+  - The keys of the KV pairs. Max: 100 keys
+- `type`: `"text" | "json"`
+  - Optional. The type of the value to be returned. `text` is the default.
+- `options`: `{
+    cacheTtl?: number,
+    type?: "text" | "json"
+}`
+  - Optional. Object containing the optional `cacheTtl` and `type` properties. The `cacheTtl` property defines the length of time in seconds that a KV result is cached in the global network location it is accessed from (minimum: 60). The `type` property defines the type of the value to be returned.
+
+##### Response
+
+- `response`: `Promise<Map<string, string | Object | null>`
+  - The value for the requested KV pair. The response type will depend on the `type` parameter provided for the `get()` command as follows:
+    - `text`: A `string` (default).
+    - `json`: An object decoded from a JSON string.
+
+When requesting multiple keys, the promise will never resolve to a null value. It may, however, resolve to a map that contains a key that corresponds to a null value, similarly to what happens for a single get.
+
+You cannot request over 25MB of data. If you do, the request will fail with a `413` Error.
+
+The `get()` method may return stale values. If a given key has recently been read in a given location, writes or updates to the key made in other locations may take up to 60 seconds (or the duration of the `cacheTtl`) to display.
+
 ### `getWithMetadata()` method
+
+The `getWithMetadata()` method can be used to get a single value or multiple values, if given multiple keys.
+
+#### Requesting a single key
 
 To get the value for a given key along with its metadata, call the `getWithMetadata()` method on any KV namespace you have bound to your Worker code:
 
@@ -88,7 +147,7 @@ env.NAMESPACE.getWithMetadata(key, options?);
 
 Metadata is a serializable value you append to each KV entry.
 
-#### Parameters
+##### Parameters
 
 - `key`: `string`
   - The key of the KV pair.
@@ -100,7 +159,7 @@ Metadata is a serializable value you append to each KV entry.
 }`
   - Optional. Object containing the optional `cacheTtl` and `type` properties. The `cacheTtl` property defines the length of time in seconds that a KV result is cached in the global network location it is accessed from (minimum: 60). The `type` property defines the type of the value to be returned.
 
-#### Response
+##### Response
 
 - `response`: `Promise<{
 value: string | Object | ArrayBuffer | ReadableStream | null,
@@ -117,7 +176,7 @@ If there is no metadata associated with the requested key-value pair, `null` wil
 
 The `getWithMetadata()` method may return stale values. If a given key has recently been read in a given location, writes or updates to the key made in other locations may take up to 60 seconds (or the duration of the `cacheTtl`) to display.
 
-#### Example
+##### Example
 
 An example of reading a key with metadata from within a Worker:
 
@@ -132,6 +191,61 @@ export default {
 				return new Response("Value not found", { status: 404 });
 			}
 			return new Response(value);
+		} catch (e) {
+			return new Response(e.message, { status: 500 });
+		}
+	},
+};
+```
+
+#### Requesting multiple keys
+
+To get the values for a given set of keys along with their metadata, call the `getWithMetadata()` method on any KV namespace you have bound to your Worker code with:
+
+```js
+env.NAMESPACE.getWithMetadata(keys, type?);
+// OR
+env.NAMESPACE.getWithMetadata(keys, options?);
+```
+
+##### Parameters
+
+- `keys`: `string[]`
+  - The keys of the KV pairs. Max: 100 keys
+- `type`: `"text" | "json"`
+  - Optional. The type of the value to be returned. `text` is the default.
+- `options`: `{
+    cacheTtl?: number,
+    type?: "text" | "json"
+}`
+  - Optional. Object containing the optional `cacheTtl` and `type` properties. The `cacheTtl` property defines the length of time in seconds that a KV result is cached in the global network location it is accessed from (minimum: 60). The `type` property defines the type of the value to be returned.
+
+##### Response
+
+- `response`: `Promise<Map<string, {
+value: string | Object | null,
+metadata: string | Object | null
+}>`
+
+  - An object containing the value and the metadata for the requested KV pair. The type of the value attribute will depend on the `type` parameter provided for the `getWithMetadata()` command as follows:
+    - `text`: A `string` (default).
+    - `json`: An object decoded from a JSON string.
+  - The type of the metadata will just depend on what is stored, which can be either a string or an object.
+
+If there is no metadata associated with the requested key-value pair, `null` will be returned for metadata.
+
+You cannot request over 25MB of data. If you do, the request will fail with a `413` Error .
+##### Example
+
+An example of reading a key with metadata from within a Worker:
+
+```js
+export default {
+	async fetch(request, env, ctx) {
+		try {
+			const response = await env.NAMESPACE.getWithMetadata(["first-key"]);
+			const firstValue = response.get("first-key");
+			return new Response("value: " + firstValue?.value + " metadata: " + firstValue?.metadata);
 		} catch (e) {
 			return new Response(e.message, { status: 500 });
 		}
