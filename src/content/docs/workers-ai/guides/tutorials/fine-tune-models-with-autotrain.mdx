@@ -5,12 +5,9 @@ pcx_content_type: tutorial
 title: Fine Tune Models With AutoTrain from HuggingFace
 tags:
   - AI
-
 ---
 
-
-
-Fine tuning an AI model gives you the opportunity to add additional training data to the model. Workers AI allows for [Low-Rank Adaptation, LoRA, adapters](/workers-ai/fine-tunes/loras/) that will allow you to finetune our models.
+Fine tuning an AI model gives you the opportunity to add additional training data to the model. Workers AI allows for [Low-Rank Adaptation, LoRA, adapters](/workers-ai/features/fine-tunes/loras/) that will allow you to finetune our models.
 
 In this tutorial, we will explore how to create our own LoRAs. We will focus on [LLM Finetuning using AutoTrain](https://huggingface.co/docs/autotrain/llm_finetuning).
 
@@ -55,12 +52,12 @@ The notebook contains a few interactive sections that we will need to change.
 
 Modify the following fields
 
-* **project\_name**: Choose a descriptive name for you to remember later
-* **model\_name**: Choose from the one of the official HuggingFace base models that we support:
-  * `mistralai/Mistral-7B-Instruct-v0.2`
-  * `google/gemma-2b-it`
-  * `google/gemma-7b-it`
-  * `meta-llama/llama-2-7b-chat-hf`
+- **project_name**: Choose a descriptive name for you to remember later
+- **model_name**: Choose from the one of the official HuggingFace base models that we support:
+  - `mistralai/Mistral-7B-Instruct-v0.2`
+  - `google/gemma-2b-it`
+  - `google/gemma-7b-it`
+  - `meta-llama/llama-2-7b-chat-hf`
 
 ### Optional Section: Push to Hub
 
@@ -74,8 +71,8 @@ Follow the instructions [in the notebook](https://colab.research.google.com/gith
 
 We only need to change a few of these fields to ensure things work on Cloudflare Workers AI.
 
-* **quantization**: Change the drop down to `none`
-* **lora-r**: Change the value to `8`
+- **quantization**: Change the drop down to `none`
+- **lora-r**: Change the value to `8`
 
 :::caution
 
@@ -112,16 +109,16 @@ subprocess.CalledProcessError: Command '['/usr/bin/python3', '-m', 'autotrain.tr
 
 ### Optional: HuggingFace
 
-If you pushed to HuggingFace you will find your new model card that you named in **project\_name** above. Your model card is private by default. Navigate to the files and download the files listed below.
+If you pushed to HuggingFace you will find your new model card that you named in **project_name** above. Your model card is private by default. Navigate to the files and download the files listed below.
 
 ### Notebook
 
-In your Notebook you can also find the needed files. A new folder that matches your **project\_name** will be there.
+In your Notebook you can also find the needed files. A new folder that matches your **project_name** will be there.
 
 Download the following files:
 
-* `adapter_model.safetensors`
-* `adapter_config.json`
+- `adapter_model.safetensors`
+- `adapter_config.json`
 
 ## 6. Update Adapter Config
 
@@ -135,8 +132,8 @@ Where `model_type` is the architecture. Current valid values are `mistral`, `gem
 
 Now that you have your files, you can add them to your account.
 
-You can either use the [REST API or Wrangler](/workers-ai/fine-tunes/loras/).
+You can either use the [REST API or Wrangler](/workers-ai/features/fine-tunes/loras/).
 
 ## 8. Use your Fine Tune in your Generations
 
-After you have your new fine tune all set up, you are ready to [put it to use in your inference requests](/workers-ai/fine-tunes/loras/#running-inference-with-loras).
+After you have your new fine tune all set up, you are ready to [put it to use in your inference requests](/workers-ai/features/fine-tunes/loras/#running-inference-with-loras).
