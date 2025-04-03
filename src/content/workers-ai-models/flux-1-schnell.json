@@ -42,12 +42,6 @@
                     "default": 4,
                     "maximum": 8,
                     "description": "The number of diffusion steps; higher values can improve quality but take longer."
-                },
-                "seed": {
-                    "type": "integer",
-                    "default": 1,
-                    "maximum": 10,
-                    "description": "A positive integer that controls randomness. Using the same seed value will produce identical images, while different seeds create variations."
                 }
             },
             "required": [
