@@ -1,0 +1,14 @@
+---
+title: SQLite in Durable Objects GA
+description: SQLite-bakced Durable Objects are generally available.
+products:
+  - durable-objects
+  - workers 
+date: 2025-04-07T13:00:00Z
+---
+
+SQLite in Durable Objects is now generally available (GA). Since the [beta announcement](https://blog.cloudflare.com/sqlite-in-durable-objects/) in September 2024, we've added feature parity and robustness for the SQLite storage backed compared to the key-value (KV) storage backend that Durable Objects had had before then. 
+
+SQLite-backed Durable Objects are recommended for all new Durable Object classes, using `new_sqlite_classes` [wrangler configuration](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class). Only SQLite-backed Durable Objects have access to Storage API's [SQL](/durable-objects/api/storage-api/#sql-api) and [point-in-time recovery](/durable-objects/api/storage-api/#pitr-point-in-time-recovery-api) methods, which provide flexible, relational data modeling, SQL access, and better data management. 
+
+KV-backend Durable Objects remain for backwards compatibility, and a migration path from key-value storage to SQL storage for existing Durable Object classes will be offered in the future.
