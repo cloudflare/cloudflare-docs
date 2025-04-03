@@ -58,7 +58,7 @@ Hyperdrive supports [`SET` statements](https://www.postgresql.org/docs/current/s
 
 This implies that a single Worker invocation may obtain multiple connections to perform its database operations and may need to `SET` any configurations for every query or transaction. It is not recommended to wrap multiple database operations with a single transaction to maintain the `SET` state. Doing so will affect the performance and scaling of Hyperdrive as the connection cannot be reused by other Worker isolates for the duration of the transaction.
 
-Hyperdrive supports named prepared statements as implemented in the `postgres.js` and `node-postgres` drivers. Named prepared statements in other drivers may have worse performance.
+Hyperdrive supports named prepared statements as implemented in the `postgres.js` and `node-postgres` drivers. Named prepared statements in other drivers may have worse performance or may not be supported.
 
 ## Related resources
 

@@ -21,7 +21,9 @@ This guide will instruct you through:
 
 :::note
 
-Hyperdrive currently works with PostgreSQL, MySQL and compatible databases. This includes CockroachDB and Materialize (which are PostgreSQL-compatible), and MariaDB and Planetscale (which are MySQL compatible).
+Hyperdrive currently works with PostgreSQL, MySQL and many compatible databases. This includes CockroachDB and Materialize (which are PostgreSQL-compatible), and Planetscale.
+
+Learn more about the [databases that Hyperdrive supports](/hyperdrive/reference/supported-databases-and-features).
 
 :::
 
@@ -110,13 +112,14 @@ Hyperdrive accepts the combination of these parameters in the common connection 
 
     	```
 
-			Most database providers will provide a connection string you can directly copy-and-paste directly into Hyperdrive.
+    		Most database providers will provide a connection string you can directly copy-and-paste directly into Hyperdrive.
 
 To create a Hyperdrive connection, run the `wrangler` command, replacing the placeholder values passed to the `--connection-string` flag with the values of your existing database:
 
 ```sh
 npx wrangler hyperdrive create <YOUR_CONFIG_NAME> --connection-string="postgres://user:password@HOSTNAME_OR_IP_ADDRESS:PORT/database_name"
 ```
+
     </TabItem>
     <TabItem label="MySQL">
     	```txt
@@ -125,18 +128,17 @@ npx wrangler hyperdrive create <YOUR_CONFIG_NAME> --connection-string="postgres:
 
     	```
 
-			Most database providers will provide a connection string you can directly copy-and-paste directly into Hyperdrive.
+    		Most database providers will provide a connection string you can directly copy-and-paste directly into Hyperdrive.
 
-			To create a Hyperdrive connection, run the `wrangler` command, replacing the placeholder values passed to the `--connection-string` flag with the values of your existing database:
+    		To create a Hyperdrive connection, run the `wrangler` command, replacing the placeholder values passed to the `--connection-string` flag with the values of your existing database:
 
 ```sh
 npx wrangler hyperdrive create <YOUR_CONFIG_NAME> --connection-string="mysql://user:password@HOSTNAME_OR_IP_ADDRESS:PORT/database_name"
 ```
+
     </TabItem>
 
 </Tabs>
-
-
 
 :::note[Manage caching]
 By default, Hyperdrive will cache query results. If you wish to disable caching, pass the flag `--caching-disabled`.
@@ -226,7 +228,7 @@ export interface Env {
 
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
-		// Create a connection using the Postgres.js driver (or any support driver, ORM or query builder)
+		// Create a connection using the Postgres.js driver (or any supported driver, ORM or query builder)
 		// with the Hyperdrive credentials. These credentials are only accessible from your Worker.
 		const sql = postgres(env.HYPERDRIVE.connectionString, {
 			// Workers limit the number of concurrent external connections, so be sure to limit

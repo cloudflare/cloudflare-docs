@@ -29,6 +29,12 @@ The following is a non-exhaustive list of database providers:
 | CockroachDB     | ✅        | All                      | Postgres-compatible. Refer to the [CockroachDB](/hyperdrive/examples/connect-to-postgres/cockroachdb/) guide to connect. |
 | Planetscale     | ✅        | All                      | Planetscale currently runs MySQL 8.x                                                                                     |
 
+:::note[Support for MySQL-compatible providers]
+
+Support for AWS Aurora MySQL and MariaDB databases is coming soon. Join our early preview support by reaching out to us in the [Hyperdrive Discord channel](https://discord.cloudflare.com/).
+
+:::
+
 ## Supported PostgreSQL authentication modes
 
 Hyperdrive supports the following [authentication modes](https://www.postgresql.org/docs/current/auth-methods.html) for connecting to PostgreSQL databases:
@@ -54,7 +60,7 @@ Hyperdrive does not support the following MySQL features:
 - Non-UTF8 characters in queries
 - `USE` statements
 - Multi-statement queries
-- Prepared statement queries via SQL (using `PREPARE` and `EXECUTE` statements)
+- Prepared statement queries via SQL (using `PREPARE` and `EXECUTE` statements) and [protocol-level prepared statements](https://sidorares.github.io/node-mysql2/docs/documentation/prepared-statements).
 - `COM_INIT_DB` messages
 - [Authentication plugins](https://dev.mysql.com/doc/refman/8.4/en/authentication-plugins.html) other than `caching_sha2_password` or `mysql_native_password`
 

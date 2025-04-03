@@ -1,16 +1,16 @@
 ---
 type: example
-summary: Connect Hyperdrive to an AWS RDS or Aurora database instance.
+summary: Connect Hyperdrive to an AWS RDS database instance.
 pcx_content_type: example
-title: AWS RDS and Aurora
+title: AWS
 sidebar:
   order: 14
-description: Connect Hyperdrive to an AWS RDS or Aurora database instance.
+description: Connect Hyperdrive to an AWS RDS database instance.
 ---
 
 import { Render } from "~/components";
 
-This example shows you how to connect Hyperdrive to an Amazon Relational Database Service (Amazon RDS) Postgres or Amazon Aurora database instance.
+This example shows you how to connect Hyperdrive to an Amazon Relational Database Service (Amazon RDS) MySQL database instance.
 
 ## 1. Allow Hyperdrive access
 
@@ -22,29 +22,20 @@ To allow Hyperdrive to connect to your database, you will need to ensure that Hy
 
 When creating or modifying an instance in the AWS console:
 
-1. Configure a **DB cluster identifier** and other settings you wish to customize.
-2. Under **Settings** > **Credential settings**, note down the **Master username** and **Master password** (Aurora only).
-3. Under the **Connectivity** header, ensure **Public access** is set to **Yes**.
-4. Select an **Existing VPC security group** that allows public Internet access from `0.0.0.0/0` to the port your database instance is configured to listen on (default: `5432` for PostgreSQL instances).
-5. Select **Create database**.
+1. Configure a **database cluster** and other settings you wish to customize.
+2. Under the **Connectivity** header, ensure **Public access** is set to **Yes**.
+3. Select an **Existing VPC security group** that allows public Internet access from `0.0.0.0/0` to the port your database instance is configured to listen on (default: `5432` for PostgreSQL instances).
+4. Select **Create database**.
 
 :::caution
 
 You must ensure that the [VPC security group](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-groups.html) associated with your database allows public IPv4 access to your database port.
 
-Refer to AWS' [database server rules](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/security-group-rules-reference.html#sg-rules-db-server) for details on how to configure rules specific to your RDS or Aurora database.
+Refer to AWS' [database server rules](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/security-group-rules-reference.html#sg-rules-db-server) for details on how to configure rules specific to your RDS database.
 
 :::
 
-### Retrieve the database endpoint (Aurora)
-
-To retrieve the database endpoint (hostname) for Hyperdrive to connect to:
-
-1. Go to **Databases** view under **RDS** in the AWS console.
-2. Select the database you want Hyperdrive to connect to.
-3. Under the **Endpoints** header, note down the **Endpoint name** with the type `Writer` and the **Port**.
-
-### Retrieve the database endpoint (RDS PostgreSQL)
+### Retrieve the database endpoint (RDS MySQL)
 
 For regular RDS instances (non-Aurora), you will need to fetch the endpoint and port of the database:
 
@@ -53,6 +44,12 @@ For regular RDS instances (non-Aurora), you will need to fetch the endpoint and 
 3. Under the **Connectivity & security** header, note down the **Endpoint** and the **Port**.
 
 The endpoint will resemble `YOUR_DATABASE_NAME.cpuo5rlli58m.AWS_REGION.rds.amazonaws.com` and the port will default to `5432`.
+
+:::note[Support for MySQL-compatible providers]
+
+Support for AWS Aurora MySQL databases is coming soon. Join our early preview support by reaching out to us in the [Hyperdrive Discord channel](https://discord.cloudflare.com/).
+
+:::
 
 ## 2. Create your user
 
