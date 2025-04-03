@@ -9,11 +9,15 @@ head:
     content: Configure Snippets using Terraform
 ---
 
+import { Render } from "~/components";
+
 You can create Snippets using the [Terraform Cloudflare provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest).
 
 To get started with Terraform for Cloudflare configuration, refer to [Terraform: Get started](/terraform/installing/).
 
 ## Example configuration
+
+<Render file="v4-code-snippets" product="terraform" />
 
 The following example Terraform configuration creates a snippet and an associated snippet rule that defines when the snippet code will run. The snippet code is loaded from the `file1.js` file in your machine.
 
