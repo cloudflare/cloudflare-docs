@@ -404,6 +404,31 @@ Terminate a Workflow instance.
 
 * <code>terminate(): Promise&lt;void&gt;</code>
 
+### sendEvent
+
+[Send an event]() to a running Workflow instance.
+
+* <code>sendEvent(): Promise&lt;void&gt;</code>
+
+  * `options` - the event `type` and `payload` to send to the Workflow instance. The `type` must match the `type` in
+
+Return `void` on success; throws an exception if the Workflow is not running or is an errored state.
+
+<TypeScriptExample>
+
+```ts
+export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
+	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
+		// TODO
+		//
+		// TODO
+	}
+}
+```
+
+</TypeScriptExample>
+
+
 ### InstanceStatus
 
 Details the status of a Workflow instance.

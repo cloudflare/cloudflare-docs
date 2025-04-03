@@ -30,6 +30,8 @@ Store state durably by returning it from your `step.do` callbacks.
 
 :::
 
+<TypeScriptExample>
+
 ```ts
 export default {
   async fetch(req: Request, env: Env) {
@@ -52,6 +54,8 @@ export default {
 };
 ```
 
+</TypeScriptExample>
+
 To pass parameters via the `wrangler` command-line interface, pass a JSON string as the second parameter to the `workflows trigger` sub-command:
 
 ```sh
@@ -63,7 +67,23 @@ npx wrangler@latest workflows trigger workflows-starter '{"some":"data"}'
 
 ### Wait for events
 
-TODO - 
+A running Workflow can wait for an event (or events) by calling `step.waitForEvent`.
+
+<TypeScriptExample>
+
+```ts
+export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
+	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
+		// TODO
+		//
+		// TODO
+	}
+}
+```
+
+</TypeScriptExample>
+
+Visit the [guide on sending data to Workflows] to learn about how to pass event data to a running Workflow, including via HTTP (webhooks) and/or Workers bindings.
 
 ## TypeScript and type parameters
 
