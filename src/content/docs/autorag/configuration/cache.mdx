@@ -5,11 +5,11 @@ sidebar:
   order: 6
 ---
 
-Similarity-based caching in AutoRAG lets you serve responses from Cloudflare’s cache for queries that are _similar enough_ to previous requests, not just exact matches. This speeds up response times and cuts costs by reusing answers for questions that are close in meaning.
+Similarity-based caching in AutoRAG lets you serve responses from Cloudflare’s cache for queries that are similar to previous requests, rather than creating new, unique responses for every request. This speeds up response times and cuts costs by reusing answers for questions that are close in meaning.
 
 ## How It Works
 
-Unlike basic caching, which only works for identical requests to compare prompts based on their content. When a request comes in:
+Unlike with basic caching, which creates a new response with every request, this is what happens when a request is received using similarity-based caching:
 
 1. AutoRAG checks if a _similar_ prompt (based on your chosen threshold) has been answered before.
 2. If a match is found, it returns the cached response instantly.
@@ -17,13 +17,14 @@ Unlike basic caching, which only works for identical requests to compare prompts
 
 To see if a response came from the cache, check the `cf-aig-cache-status` header: `HIT` for cached and `MISS` for new.
 
-## Cache behavior
+## What to consider when using similarity cache
 
+Consider these behaviors when using similarity caching:
 - **Volatile Cache**: If two similar requests hit at the same time, the first might not cache in time for the second to use it, resulting in a `MISS`.
 - **30-Day Cache**: Cached responses last 30 days, then expire automatically. No custom durations for now.
 - **Data Dependency**: Cached responses are tied to specific document chunks. If those chunks change or get deleted, the cache clears to keep answers fresh.
 
-## How Similarity Matching Works
+## How similarity matching works
 
 Similarity caching in AutoRAG uses **MinHash with Locality-Sensitive Hashing (LSH)** to detect prompts that are lexically similar.
 
@@ -34,9 +35,9 @@ When a new prompt is received:
 3. Fingerprints are grouped into LSH buckets, which allow AutoRAG to quickly find past prompts that are likely to be similar without scanning every cached prompt.
 4. If a prompt in the same bucket meets the configured similarity threshold, its cached response is reused.
 
-## Choosing a Threshold
+## Choosing a threshold
 
-The similarity threshold decides how close two prompts need to be to reuse a cached response. Here’s what you can pick from:
+The similarity threshold decides how close two prompts need to be to reuse a cached response. Here are the available thresholds:
 
 | Threshold        | Description                 | Example Match                                                                   |
 | ---------------- | --------------------------- | ------------------------------------------------------------------------------- |

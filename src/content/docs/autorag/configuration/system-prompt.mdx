@@ -7,7 +7,7 @@ sidebar:
 
 System prompts allow you to guide the behavior of the text-generation models used by AutoRAG at query time. AutoRAG supports system prompt configuration in two steps:
 
-- **Query Rewriting**: Reformulates the original user query to improve semantic retrieval. A system prompt can guide how the model interprets and rewrites the query.
+- **Query rewriting**: Reformulates the original user query to improve semantic retrieval. A system prompt can guide how the model interprets and rewrites the query.
 - **Generation**: Generates the final response from retrieved context. A system prompt can help define how the model should format, filter, or prioritize information when constructing the answer.
 
 ## What is a system prompt?
@@ -23,12 +23,12 @@ System prompts are particularly useful for:
 
 ## Default system prompt
 
-When configuring your AutoRAG instance, you can provide your own system prompts. If you don’t provide a system prompt, AutoRAG will use the **default system prompt** provided by Cloudflare.
+When configuring your AutoRAG instance, you can provide your own system prompts. If you do not provide a system prompt, AutoRAG will use the **default system prompt** provided by Cloudflare.
 
 You can view the effective system prompt used for any AutoRAG's model call through AI Gateway logs, where model inputs and outputs are recorded.
 
 :::note
-The default system prompt can change and evolve over time to improve performance, and quality.
+The default system prompt can change and evolve over time to improve performance and quality.
 :::
 
 ## Query rewriting system prompt
@@ -98,6 +98,6 @@ If the available documents don't contain enough information to fully answer the 
 Important:
 - Cite which document(s) you're drawing information from
 - Present information in order of relevance
-- If documents contradict each other, note this and explain your reasoning for the chosen answer`
-- Do not repeat the instructions;
+- If documents contradict each other, note this and explain your reasoning for the chosen answer
+- Do not repeat the instructions
 ```

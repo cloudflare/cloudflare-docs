@@ -12,7 +12,7 @@ AutoRAG consists of two core processes:
 - **Indexing:** An asynchronous background process that monitors your data source for changes and transforms your data into vector representation for search.
 - **Querying:** A synchronous process triggered by user queries. It retrieves the most relevant content and generates context-aware responses using a large language model (LLM).
 
-## Indexing
+## How indexing works
 
 Indexing begins automatically when you create an AutoRAG instance and connect a data source. It runs asynchronously in the background and checks for updates periodically, so new or updated data are automatically indexed in the vector index.
 
@@ -22,25 +22,22 @@ Here is what happens during indexing:
 2. **Markdown conversion:** AutoRAG uses [Workers AI’s Markdown Conversion](/workers-ai/markdown-conversion/) to convert all data into structured Markdown. This ensures consistency across diverse file types. For images, Workers AI is used to perform object detection followed by vision-to-language transformation to convert images into Markdown text.
 3. **Chunking:** The extracted text is chunked into smaller pieces to improve retrieval granularity.
 4. **Embedding:** Each chunk is embedded using Workers AI’s embedding model to transform the content into vectors.
-5. **Vector storage:** The resulting vectors, along with metadata like source location and file name, are stored in a Cloudflare’s Vectorize database created on your account.
+5. **Vector storage:** The resulting vectors, along with metadata like source location and file name, are stored in a the Vectorize database created on your Cloudflare account.
 
 ![Indexing](~/assets/images/autorag/indexing.png)
 
-## Querying
+## How querying works
 
 Once indexing is complete, AutoRAG is ready to respond to end-user queries in real time.
 
-Here’s how the querying pipeline works:
+Here is how the querying pipeline works:
 
-1. **Receive query from AutoRAG API:** The query workflow begins when you send a request to either the AutoRAG’s AI Search or Search endpoint.
+1. **Receive query from AutoRAG API:** The query workflow begins when you send a request to either the AutoRAG’s AI Search or search endpoint.
 2. **Query rewriting (optional):** AutoRAG provides the option to rewrite the input query using one of Workers AI’s LLMs to improve retrieval quality by transforming the original query into a more effective search query.
 3. **Embedding the query:** The rewritten (or original) query is transformed into a vector via the same embedding model used to embed your data so that it can be compared against your vectorized data to find the most relevant matches.
 4. **Querying Vectorize index:** The query vector is searched against stored vectors in the associated Vectorize database for your AutoRAG.
-5. **Content retrieval:** Vectorize returns the most relevant chunks and their metadata. And the original content is retrieved from the R2 bucket. These are passed to a text-generation model.
+5. **Content retrieval:** Vectorize returns the most relevant chunks and their metadata and the original content is retrieved from the R2 bucket. These are passed to a text-generation model.
 6. **Response generation:** A text-generation model from Workers AI is used to generate a response using the retrieved content and the original user’s query.
 
 ![Querying](~/assets/images/autorag/querying.png)
 
-## Get Started
-
-Learn how to [get started](/autorag/get-started/) with AutoRAG.

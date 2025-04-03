@@ -14,7 +14,7 @@ AutoRAG uses the [`query()`](/vectorize/best-practices/query-vectors/) method fr
 
 ## Match threshold
 
-The `match_threshold` sets the minimum similarity score (e.g., cosine similarity) that a document chunk must meet to be included in the results. Threshold values range from `0` to `1`.
+The `match_threshold` sets the minimum similarity score (for example, cosine similarity) that a document chunk must meet to be included in the results. Threshold values range from `0` to `1`.
 
 - A higher threshold means stricter filtering, returning only highly similar matches.
 - A lower threshold allows broader matches, increasing recall but possibly reducing precision.
@@ -39,6 +39,6 @@ If no results meet the threshold, AutoRAG will not generate a response.
 
 ## Configuration
 
-These values can be configured at the AutoRAG instance level or overridden on a per-request basis using the [REST API](/autorag/usage/rest-api/) or the [Workers binding](/autorag/usage/workers-binding/).
+These values can be configured at the AutoRAG instance level or overridden on a per-request basis using the [REST API](/autorag/usage/rest-api/) or the [Workers Binding](/autorag/usage/workers-binding/).
 
 Use the parameters `match_threshold` and `max_num_results` to customize retrieval behavior per request.
