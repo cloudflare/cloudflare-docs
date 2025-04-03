@@ -52,7 +52,7 @@ For regular RDS instances (non-Aurora), you will need to fetch the endpoint and 
 2. Select the database you want Hyperdrive to connect to.
 3. Under the **Connectivity & security** header, note down the **Endpoint** and the **Port**.
 
-The endpoint will resemble `YOUR_DATABASE_NAME.cpuo5rlli58m.AWS_REGION.rds.amazonaws.com` and the port will default to `3306`.
+The endpoint will resemble `YOUR_DATABASE_NAME.cpuo5rlli58m.AWS_REGION.rds.amazonaws.com` and the port will default to `5432`.
 
 ## 2. Create your user
 
@@ -62,30 +62,31 @@ To create a new user, log in to the database and use the `CREATE ROLE` command:
 
 ```sh
 # Log in to the database
-mysql -h ENDPOINT_NAME -P PORT -u MASTER_USERNAME -p
+psql postgresql://MASTER_USERNAME:MASTER_PASSWORD@ENDPOINT_NAME:PORT/database_name
 ```
 
 Run the following SQL statements:
 
 ```sql
+-- Create a role for Hyperdrive
+CREATE ROLE hyperdrive;
 
--- Create a database for your application
-CREATE DATABASE your_database_name;
+-- Allow Hyperdrive to connect
+GRANT CONNECT ON DATABASE postgres TO hyperdrive;
+
+-- Grant database privileges to the hyperdrive role
+GRANT ALL PRIVILEGES ON DATABASE postgres to hyperdrive;
 
 -- Create a specific user for Hyperdrive to log in as
-CREATE USER 'hyperdrive_user'@'%' IDENTIFIED BY 'sufficientlyRandomPassword';
+CREATE ROLE hyperdrive_user LOGIN PASSWORD 'sufficientlyRandomPassword';
 
--- Grant database privileges to the hyperdrive user
--- Adjust privileges as needed for your use case
-GRANT ALL PRIVILEGES ON your_database_name.* TO 'hyperdrive_user'@'%';
-
--- Apply the privileges
-FLUSH PRIVILEGES;
+-- Grant this new user the hyperdrive role privileges
+GRANT hyperdrive to hyperdrive_user;
 ```
 
 Refer to AWS' [documentation on user roles in PostgreSQL](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Appendix.PostgreSQL.CommonDBATasks.Roles.html) for more details.
 
-With a database user, password, database endpoint (hostname and port) and database name (default: `mysql`), you can now set up Hyperdrive.
+With a database user, password, database endpoint (hostname and port) and database name (default: `postgres`), you can now set up Hyperdrive.
 
 ## 3. Create a database configuration
 
