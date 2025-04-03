@@ -12,13 +12,13 @@ When a Workflow is triggered, it can receive an optional event. This event can i
 
 Events are a powerful part of a Workflow, as you often want a Workflow to act on data. Because a given Workflow instance executes durably, events are a useful way to provide a Workflow with data that should be immutable (not changing) and/or represents data the Workflow needs to operate on at that point in time.
 
-## Pass parameters to a Workflow
+## Pass data to a Workflow
 
 You can pass parameters to a Workflow in three ways:
 
 * As an optional argument to the `create` method on a [Workflow binding](/workers/wrangler/commands/#trigger) when triggering a Workflow from a Worker.
 * Via the `--params` flag when using the `wrangler` CLI to trigger a Workflow.
-* Via the `step.waitForEvent` API, which allows a Workflow instance to wait for an event (and optional data) to be received while it is running.
+* Via the `step.waitForEvent` API, which allows a Workflow instance to wait for an event (and optional data) to be received _while it is running_.
 
 You can pass any JSON-serializable object as a parameter.
 
@@ -67,7 +67,7 @@ npx wrangler@latest workflows trigger workflows-starter '{"some":"data"}'
 
 ### Wait for events
 
-A running Workflow can wait for an event (or events) by calling `step.waitForEvent`.
+A running Workflow can wait for an event (or events) by calling `step.waitForEvent` within the Workflow.
 
 <TypeScriptExample>
 
@@ -83,7 +83,24 @@ export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
 
 </TypeScriptExample>
 
-Visit the [guide on sending data to Workflows] to learn about how to pass event data to a running Workflow, including via HTTP (webhooks) and/or Workers bindings.
+### Sending events to running workflows
+
+TODO
+
+<TypeScriptExample>
+
+```ts
+export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
+	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
+		// TODO
+		//
+		// TODO
+	}
+}
+```
+
+</TypeScriptExample>
+
 
 ## TypeScript and type parameters
 

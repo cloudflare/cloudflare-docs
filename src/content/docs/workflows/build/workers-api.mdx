@@ -107,6 +107,14 @@ More information about the limits imposed on Workflow can be found in the [Workf
 
 :::
 
+* <code>step.waitForEvent(name: string, options: ): Promise&lt;void&gt;</code>
+
+  * `name` - the name of the step.
+  * `options` - an object with properties for `type`, which determines which event type this `waitForEvent` call will match on when calling `instance.sendEvent`, and an optional `timeout` property, which defines how long the `waitForEvent` call will block for before throwing a timeout exception. The default timeout is 24 hours.
+
+Review the documentation on [events and parameters](/workflows/build/events-and-parameters/) to learn how to send events to a running Workflow instance.
+
+
 ## WorkflowStepConfig
 
 ```ts
