@@ -1,0 +1,31 @@
+---
+title: REST API GA release, Playwright Support, and Free Tier 
+description: Browser Rendering updates - free tier, REST API GA with new endpoints, and Playwright support
+products:
+  - browser-rendering
+date: 2025-04-07T6:00:00Z
+---
+
+Today, we’re excited to announce Browser Rendering is now available on the [Workers Free plan](https://www.cloudflare.com/plans/developer-platform/), making it even easier to experiment with your use cases. See [limits here](/browser-rendering/platform/limits/).
+
+Additionally, our **[REST API](/browser-rendering/rest-api/) is now Generally Available** - and it’s better than ever! We’ve added three new endpoints to help automate more browser tasks: 
+
+- **Extract structured data** – Use `/json` to retrieve structured data from a webpage.
+- **Retrieve links** – Use `/links` to pull all links from a webpage.
+- **Convert to Markdown** – Use `/markdown` to convert webpage content into Markdown format.
+
+For example, to fetch the Markdown representation of a webpage:
+
+```bash title="Markdown example"
+curl -X 'POST' 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/markdown' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer <apiToken>' \
+  -d '{
+    "url": "https://example.com"
+  }'
+
+```
+
+For the full list of endpoints, check out our [REST API documentation](/browser-rendering/rest-api/).
+
+Finally, you can now leverage [Playwright](/browser-rendering/platform/playwright/) for browser automation, in addition to [Puppeteer](/browser-rendering/platform/puppeteer/), giving you more flexibility to test across different browser environments.
