@@ -18,8 +18,7 @@ In this tutorial, you will learn how to create a Cloudflare Workers application 
 
 :::note[Note]
 
-We recommend using [Hyperdrive](/hyperdrive/) to connect to your MySQL database. Hyperdrive provides optimal performance
-and will ensure secure connectivity between your Worker and your MySQL database.
+We recommend using [Hyperdrive](/hyperdrive/) to connect to your MySQL database. Hyperdrive provides optimal performance and will ensure secure connectivity between your Worker and your MySQL database.
 
 When connecting directly to your MySQL database (without Hyperdrive), the MySQL drivers rely on unsupported Node.js APIs to create secure connections, which prevents connections.
 :::
@@ -63,7 +62,7 @@ Now, move into the newly created directory:
 cd mysql-tutorial
 ```
 
-### Enable Node.js compatibility
+## 2. Enable Node.js compatibility
 
 [Node.js compatibility](/workers/runtime-apis/nodejs/) is required for database drivers, including mysql2, and needs to be configured for your Workers project.
 

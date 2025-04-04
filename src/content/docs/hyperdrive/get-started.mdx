@@ -84,9 +84,9 @@ This will create a new `hyperdrive-tutorial` directory. Your new `hyperdrive-tut
 
 ## 3. Connect Hyperdrive to a database
 
-Hyperdrive works by connecting to your database, pooling database connections globally and speeding up your database access through Cloudflare's network.
+Hyperdrive works by connecting to your database, pooling database connections globally, and speeding up your database access through Cloudflare's network.
 
-It will provide a secure connection string that is only accessible from your Worker, that you can use to connect to your database through Hyperdrive.
+It will provide a secure connection string that is only accessible from your Worker which you can use to connect to your database through Hyperdrive.
 This means that you can use the Hyperdrive connection string with your existing drivers or ORM libraries without needing significant changes to your code.
 
 To create your first Hyperdrive database configuration, change into the directory you just created for your Workers project:
@@ -112,7 +112,7 @@ Hyperdrive accepts the combination of these parameters in the common connection 
 
     	```
 
-    		Most database providers will provide a connection string you can directly copy-and-paste directly into Hyperdrive.
+    		Most database providers will provide a connection string you can copy-and-paste directly into Hyperdrive.
 
 To create a Hyperdrive connection, run the `wrangler` command, replacing the placeholder values passed to the `--connection-string` flag with the values of your existing database:
 
@@ -128,7 +128,7 @@ npx wrangler hyperdrive create <YOUR_CONFIG_NAME> --connection-string="postgres:
 
     	```
 
-    		Most database providers will provide a connection string you can directly copy-and-paste directly into Hyperdrive.
+    		Most database providers will provide a connection string you can copy-and-paste directly into Hyperdrive.
 
     		To create a Hyperdrive connection, run the `wrangler` command, replacing the placeholder values passed to the `--connection-string` flag with the values of your existing database:
 
