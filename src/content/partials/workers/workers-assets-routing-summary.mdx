@@ -2,6 +2,6 @@
 {}
 ---
 
-By default, Cloudflare first tries to serve a static asset, and failing that, invokes a Worker if one is present. If there is no Worker, or the Worker uses the asset binding (e.g. `env.ASSETS.fetch(request)`), then Cloudflare will fallback to the behaviour set by [`not_found_handling`](/workers/static-assets/routing/#not_found_handling).
+By default, Cloudflare first tries to match a request path against a static asset path, which is based on the file structure of the uploaded asset directory. This is either the directory specified by `assets.directory` in your Wrangler config, or the output directory of a build tool like Vite with the [Cloudflare Vite plugin](/workers/vite-plugin/). Failing that, we invoke a Worker if one is present. If there is no Worker, or the Worker then uses the asset binding, Cloudflare will fallback to the behaviour set by [`not_found_handling`](/workers/static-assets/routing/#not_found_handling).
 
 Refer to the [routing documentation](/workers/static-assets/routing/#routing-configuration) for more information on how to routing works with Workers Assets, and how to customize this behavior.
