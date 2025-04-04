@@ -52,7 +52,7 @@ jobs:
           gh pr create \
             --title "[Docs Site] Update pinned api-schemas commit" \
             --body "This PR updates the api-schemas commit reference to the latest version ($NEW_COMMIT)." \
-            --base main \
+            --base production \
             --head $BRANCH_NAME
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
