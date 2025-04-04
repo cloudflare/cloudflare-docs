@@ -15,9 +15,7 @@ Cloudflare Workers can connect to and query your data in both SQL and NoSQL data
 
 ### D1 SQL database
 
-D1 is Cloudflare's own SQL-based, serverless database. It is optimized for global access from Workers, and can
-scale out with multiple, smaller (10GB) databases, such as per-user, per-tenant or per-entity databases. Similar to some serverless databases,
-D1 pricing is based on query and storage costs.
+D1 is Cloudflare's own SQL-based, serverless database. It is optimized for global access from Workers, and can scale out with multiple, smaller (10GB) databases, such as per-user, per-tenant or per-entity databases. Similar to some serverless databases, D1 pricing is based on query and storage costs.
 
 | Database   | Library or Driver                                                                                                                          | Connection Method                                                                                       |
 | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------- |
@@ -48,6 +46,7 @@ Since a connection must be re-established on every Worker invocation, this adds 
 ### Serverless databases
 
 Serverless databases provide HTTP-based proxies and drivers, also known as serverless drivers. These address the lack of connection reuse between Worker invocation similarly to [Hyperdrive](/hyperdrive/) for traditional SQL databases.
+
 By providing a way to query your database with HTTP, these serverless databases and drivers eliminate several roundtrips needed to establish a secure connection.
 
 | Database                                                                                                  | Integration                                                | Library or Driver                                                                  | Connection Method          |
@@ -63,8 +62,7 @@ By providing a way to query your database with HTTP, these serverless databases 
 
 :::note[Easier setup with database integrations]
 
-[Database Integrations](/workers/databases/native-integrations/) simplify the authentication for serverless database drivers
-by managing credentials on your behalf and includes support for PlanetScale, Neon and Supabase.
+[Database Integrations](/workers/databases/native-integrations/) simplify the authentication for serverless database drivers by managing credentials on your behalf and includes support for PlanetScale, Neon and Supabase.
 
 If you do not see an integration listed or have an integration to add, complete and submit the [Cloudflare Developer Platform Integration form](https://forms.gle/iaUqLWE8aezSEhgd6).
 
