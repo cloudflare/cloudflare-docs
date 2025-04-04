@@ -1,9 +1,9 @@
-name: Update API Schemas Commit
+name: Update api-schemas pinned commit
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # Run daily at midnight UTC
-  workflow_dispatch:  # Allow manual triggering
+    - cron: "0 0 * * *"
+  workflow_dispatch:
 
 jobs:
   check-and-update:
@@ -38,19 +38,19 @@ jobs:
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           BRANCH_NAME="update-api-schemas-$(date +%Y%m%d-%H%M%S)"
           git checkout -b $BRANCH_NAME
-          
+
           # Update the commit reference
           NEW_COMMIT="${{ steps.get-commit.outputs.latest_commit }}"
           sed -i "s/const COMMIT = \".*\"/const COMMIT = \"$NEW_COMMIT\"/" src/util/api.ts
-          
+
           # Commit and push changes
           git add src/util/api.ts
-          git commit -m "chore: update api-schemas commit to $NEW_COMMIT"
+          git commit -m "[Docs Site] Update pinned api-schemas commit to $NEW_COMMIT"
           git push origin $BRANCH_NAME
-          
+
           # Create pull request
           gh pr create \
-            --title "chore: update api-schemas commit reference" \
+            --title "[Docs Site] Update pinned api-schemas commit" \
             --body "This PR updates the api-schemas commit reference to the latest version ($NEW_COMMIT)." \
             --base main \
             --head $BRANCH_NAME
