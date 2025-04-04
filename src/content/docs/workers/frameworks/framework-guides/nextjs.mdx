@@ -30,9 +30,9 @@ This is a simple getting started guide. For detailed documentation on how the to
 
 [Next.js](https://nextjs.org/) is a [React](https://react.dev/) framework for building full stack applications.
 
-Next.js uses hybrid rendering to allow different parts of the your application to be rendered either on the server or on the client. For instance, critical pages needing fast initial loads and strong SEO might be server-rendered for faster load while highly interactive sections might leverage client-side rendering for dynamic updates without requiring full page reloads.
+Next.js supports Server-side and Client-side rendering, as well as Partial Prerendering which lets you combine static and dynamic components in the same route.
 
-Next supports Partial Prerendering to combine static and dynamic components in the same route.
+You can deploy your Next.js app to Cloudflare Workers using the OpenNext adaptor.
 
 ## Deploy a new Next.js project on Workers
 
@@ -58,10 +58,13 @@ Next supports Partial Prerendering to combine static and dynamic components in t
 
 3.  **Test and preview your site with the Cloudflare adapter.**
 
-	The command used in the previous step uses the Next.js development server to offer a great developer experience.
-	However your application will run on Cloudflare Workers so you want to run your integration tests and verify that your application works correctly in this environment.
-
 	<PackageManagers type="run" args="preview" />
+
+	<Detail title="What's the difference between dev and preview?">
+		The command used in the previous step uses the Next.js development server, which runs in Node.js.
+		However, your deployed application will run on Cloudflare Workers, which uses the `workerd` runtime. Therefore when running integration tests and previewing your application, you should use the preview command, which is more accurate to production, as it executes your application in the `workerd` runtime using `wrangler dev`.
+	</Detail>
+
 
 4.  **Deploy your project.**
 
