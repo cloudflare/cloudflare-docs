@@ -210,11 +210,11 @@ const authResult = async (): Promise<NextAuthResult> => {
 	return NextAuth({
 		providers: [
 			Resend({
-				apiKey: (await getCloudflareContext()).env.AUTH_RESEND_KEY,
-				from: (await getCloudflareContext()).env.AUTH_EMAIL_FROM,
+				apiKey: (await getCloudflareContext({ async: true })).env.AUTH_RESEND_KEY,
+				from: (await getCloudflareContext({ async: true })).env.AUTH_EMAIL_FROM,
 			}),
 		],
-		adapter: D1Adapter((await getCloudflareContext()).env.DB),
+		adapter: D1Adapter((await getCloudflareContext({ async: true })).env.DB),
 	});
 };
 
