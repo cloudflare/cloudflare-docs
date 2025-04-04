@@ -61,7 +61,7 @@ You can deploy your Next.js app to Cloudflare Workers using the OpenNext adaptor
 
 	<PackageManagers type="run" args="preview" />
 
-	<Details title="What's the difference between dev and preview?">
+	<Details header="What's the difference between dev and preview?">
 		The command used in the previous step uses the Next.js development server, which runs in Node.js.
 		However, your deployed application will run on Cloudflare Workers, which uses the `workerd` runtime. Therefore when running integration tests and previewing your application, you should use the preview command, which is more accurate to production, as it executes your application in the `workerd` runtime using `wrangler dev`.
 	</Details>
