@@ -15,7 +15,8 @@ Durable Objects are a special kind of Worker, so [Workers Limits](/workers/platf
 | Feature                                  | Limit |
 | ---------------------------------------- | ----------------------------------------------------------- |
 | Number of Objects                        | Unlimited (within an account or of a given class) |
-| Maximum Durable Object namespaces        | 500 (identical to the [script limit](/workers/platform/limits/)) |
+| Maximum Durable Object classes           | 500 (identical to the [script limit](/workers/platform/limits/)) |
+| Storage per account                      | Unlimited              |
 | Storage per class                        | Unlimited |
 | Storage per Durable Object               | 10 GB [^1] |
 | Key size                                 | Key and value combined cannot exceed 2 MB |
@@ -50,7 +51,7 @@ For Durable Object classes with [SQLite storage](/durable-objects/api/storage-ap
 | Feature                                  | Limit for class with key-value storage backend                   |
 | ---------------------------------------- | ---------------------------------------------------------------- |
 | Number of Objects                        | Unlimited (within an account or of a given class)                |
-| Maximum Durable Object namespaces        | 500 (identical to the [script limit](/workers/platform/limits/)) |
+| Maximum Durable Object classes           | 500 (identical to the [script limit](/workers/platform/limits/)) |
 | Storage per account                      | 50 GB (can be raised by contacting Cloudflare) [^1]              |
 | Storage per class                        | Unlimited                                                        |
 | Storage per Durable Object               | Unlimited                                                        |

@@ -16,12 +16,12 @@ import {
 
 The Durable Object Storage API allows <GlossaryTooltip term="Durable Object">Durable Objects</GlossaryTooltip> to access transactional and strongly consistent storage. A Durable Object's attached storage is private to its unique instance and cannot be accessed by other objects.
 
-The Durable Object Storage API comes with several methods, including SQL, point-in-time-recovery (PITR), key-value (KV), and alarm APIs. Available API methods depend on the storage backend for a Durable Objects class, either [SQLite](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class) or [KV](/durable-objects/reference/durable-objects-migrations/#create-durable-object-class-with-key-value-storage). 
+The Durable Object Storage API comes with several methods, including SQL, point-in-time recovery (PITR), key-value (KV), and alarm APIs. Available API methods depend on the storage backend for a Durable Objects class, either [SQLite](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class) or [KV](/durable-objects/reference/durable-objects-migrations/#create-durable-object-class-with-key-value-storage). 
 
 :::note[Recommended SQLite-backed Durable Objects]
-We recommend all new Durable Object classes use the [SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class).
+Cloudflare recommends all new Durable Object classes use the [SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class).
 
-The KV storage backend remains for backwards compatibility, and a migration path from KV storage to SQLite storage for existing Durable Object classes will be available in the future.
+The [key-value storage backend](/durable-objects/reference/durable-objects-migrations/#create-durable-object-class-with-key-value-storage) remains for backwards compatibility, and a migration path from KV storage to SQLite storage for existing Durable Object classes will be available in the future.
 :::
 
 <Render file="do-sqlite-storage-no-bill-note"/>
@@ -43,7 +43,7 @@ The KV storage backend remains for backwards compatibility, and a migration path
 
 </Details>
 
-## Access Storage
+## Access storage
 
 Durable Objects gain access to Storage API via the `DurableObjectStorage` interface and accessed by the `DurableObjectState::storage` property. This is frequently accessed via `this.ctx.storage` with the `ctx` parameter passed to the Durable Object constructor.
 
@@ -169,18 +169,6 @@ The current SQLite database size in bytes.
 ```ts
 let size = ctx.storage.sql.databaseSize;
 ```
-
-### `transactionSync`
-
-- `transactionSync(callback)`: <Type text='any' />
-
-  - Only available when using SQLite-backed Durable Objects.
-
-  - Invokes `callback()` wrapped in a transaction, and returns its result.
-
-  - If `callback()` throws an exception, the transaction will be rolled back.
-
-  * The callback must complete synchronously, that is, it should not be declared `async` nor otherwise return a Promise. Only synchronous storage operations can be part of the transaction. This is intended for use with SQL queries using [`ctx.storage.sql.exec()`](/durable-objects/api/storage-api/#exec), which complete sychronously.
 
 ## PITR (Point In Time Recovery) API
 
@@ -377,6 +365,18 @@ The `put()` method returns a `Promise`, but most applications can discard this p
   - For Durable Objects with a key-value storage backend, an in-progress `deleteAll()` operation can fail, which may leave a subset of data undeleted. Durable Objects with a SQLite storage backend do not have a partial `deleteAll()` issue because `deleteAll()` operations are atomic (all or nothing).
   - `deleteAll()` does not proactively delete [alarms](/durable-objects/api/alarms/). Use [`deleteAlarm()`](/durable-objects/api/alarms/#deletealarm) to delete an alarm.
 
+### `transactionSync`
+
+- `transactionSync(callback)`: <Type text='any' />
+
+  - Only available when using SQLite-backed Durable Objects.
+
+  - Invokes `callback()` wrapped in a transaction, and returns its result.
+
+  - If `callback()` throws an exception, the transaction will be rolled back.
+
+  * The callback must complete synchronously, that is, it should not be declared `async` nor otherwise return a Promise. Only synchronous storage operations can be part of the transaction. This is intended for use with SQL queries using [`ctx.storage.sql.exec()`](/durable-objects/api/storage-api/#exec), which complete sychronously.
+
 ### `transaction`
 
 - `transaction(closureFunction(txn))`: <Type text='Promise' />
@@ -408,5 +408,6 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 ## Related resources
 
 - [Durable Objects: Easy, Fast, Correct – Choose Three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/)
+- [Zero-latency SQLite storage in every Durable Object blog](https://blog.cloudflare.com/sqlite-in-durable-objects/)
 - [WebSockets API](/durable-objects/best-practices/websockets/)
 

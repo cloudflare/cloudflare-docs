@@ -8,10 +8,6 @@ import {Render, Markdown, GlossaryTooltip, Details, AnchorHeading } from "~/comp
 { props.product === "durable-objects" && <><AnchorHeading title="Compute billing" depth={2}/></> }
 { props.product === "workers" && <><AnchorHeading title="Compute billing" depth={3}/></> }
 
-On Workers Free plan:
-- If you exceed any one of these limits, further operations of that type will fail with an error.
-- Daily free limits reset at 00:00 UTC.
-
 Durable Objects are billed only while the Durable Object is active (includes the <GlossaryTooltip term="request context"> request context</GlossaryTooltip>).
 
 |                      | Free plan                           | Paid plan                                                                                                                               |
@@ -45,10 +41,10 @@ await durableObjectStub.cat(); // billed as a request
 { props.product === "durable-objects" && <><AnchorHeading title="Storage billing" depth={2}/></> }
 { props.product === "workers" && <><AnchorHeading title="Storage billing" depth={3}/></> }
 
-The [Durable Objects Storage API](/durable-objects/api/storage-api/) is only accessible from within Durable Objects. Pricing depends on the type of storage your Durable Objects use.
+The [Durable Objects Storage API](/durable-objects/api/storage-api/) is only accessible from within Durable Objects. Pricing depends on the storage backend of your Durable Objects.
 
-- **SQLite-backed Durable Objects (recommended)**: This is the recommended storage for new Durable Object classes. Workers Free plan can only create and access SQLite-backed Durable Objects.
-- **Key-value storage backed Durable Objects**: This is only available on the Workers Paid plan.
+- **SQLite-backed Durable Objects (recommended)**: [SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class) is recommended for all new Durable Object classes. Workers Free plan can only create and access SQLite-backed Durable Objects.
+- **Key-value backed Durable Objects**: [Key-value storage backend](/durable-objects/reference/durable-objects-migrations/#create-durable-object-class-with-key-value-storage) is only available on the Workers Paid plan.
 
 { props.product === "durable-objects" && <><AnchorHeading title="SQLite storage backend" depth={3}/></> }
 { props.product === "workers" && <><AnchorHeading title="SQLite storage backend" depth={4}/></> }
