@@ -40,6 +40,8 @@ The KV storage backend remains for backwards compatibility, and a migration path
 
 <sup>3</sup> KV methods which were previously asynchronous with KV storage (for example, [`get`](/durable-objects/api/storage-api/#get), [`put`](/durable-objects/api/storage-api/#put), [`delete`](/durable-objects/api/storage-api/#delete), [`deleteAll`](/durable-objects/api/storage-api/#deleteall), [`list`](/durable-objects/api/storage-api/#list)) are synchronous, even though they return promises. These methods will have completed their operations before they return the promise.
 
+</Details>
+
 ## Access Storage
 
 Durable Objects gain access to Storage API via the `DurableObjectStorage` interface and accessed by the `DurableObjectState::storage` property. This is frequently accessed via `this.ctx.storage` with the `ctx` parameter passed to the Durable Object constructor.
