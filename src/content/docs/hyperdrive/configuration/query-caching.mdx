@@ -19,13 +19,19 @@ For example, a read query that populates the front page of a news site would be 
 
 <Tabs>
 	<TabItem label="PostgreSQL">
-		```sql -- Cacheable SELECT * FROM articles WHERE DATE(published_time) =
-		CURRENT_DATE() ORDER BY published_time DESC LIMIT 50 ```
-	</TabItem>
-	<TabItem label="MySQL">
-		```sql -- Cacheable SELECT * FROM articles WHERE DATE(published_time) =
-		CURDATE() ORDER BY published_time DESC LIMIT 50 ```
-	</TabItem>
+```sql
+-- Cacheable
+SELECT * FROM articles WHERE DATE(published_time) =
+CURRENT_DATE() ORDER BY published_time DESC LIMIT 50
+```
+</TabItem>
+<TabItem label="MySQL">
+```sql
+-- Cacheable
+SELECT * FROM articles WHERE DATE(published_time) =
+CURDATE() ORDER BY published_time DESC LIMIT 50
+```
+</TabItem>
 </Tabs>
 
 Mutating queries (including `INSERT`, `UPSERT`, or `CREATE TABLE`) and queries that use [functions designated as `volatile` by PostgreSQL](https://www.postgresql.org/docs/current/xfunc-volatility.html) are not cached:
@@ -80,38 +86,16 @@ You can also configure multiple Hyperdrive connections from a single application
 For example, using database drivers:
 
 <Tabs>
-  <TabItem label="PostgreSQL">
-		<Tabs>
-		<TabItem label="index.ts">
-    ```ts
+<TabItem label="PostgreSQL">
+```ts title="index.ts"
 const client = postgres(env.HYPERDRIVE.connectionString);
 // ...
 const clientNoCache = postgres(env.HYPERDRIVE_CACHE_DISABLED.connectionString);
-    ```
-		</TabItem>
-    <TabItem label="wrangler.jsonc">
-		```jsonc
-		{
-			// Rest of file
-			"hyperdrive": [
-				{
-					"binding": "HYPERDRIVE",
-					"id": "<YOUR_HYPERDRIVE_CACHE_ENABLED_CONFIGURATION_ID>"
-				},
-				{
-					"binding": "HYPERDRIVE_CACHE_DISABLED",
-					"id": "<YOUR_HYPERDRIVE_CACHE_DISABLED_CONFIGURATION_ID>"
-				}
-			]
-		}
-		```
-		</TabItem>
-		</Tabs>
-  </TabItem>
-  <TabItem label="MySQL">
-		<Tabs>
-		<TabItem label="index.ts">
-    ```ts
+```
+</TabItem>
+
+<TabItem label="MySQL">
+```ts title="index.ts"
 const connection = createConnection({
 		host: env.HYPERDRIVE.host,
 		user: env.HYPERDRIVE.user,
@@ -127,10 +111,13 @@ const connectionNoCache = createConnection({
 		database: env.HYPERDRIVE_CACHE_DISABLED.database,
 		port: env.HYPERDRIVE_CACHE_DISABLED.port
 });
-	  ```
-		</TabItem>
-    <TabItem label="wrangler.jsonc">
-		```jsonc
+```
+  </TabItem>
+</Tabs>
+
+The Wrangler configuration remains the same both for PostgreSQL and MySQL.
+
+```jsonc title="wrangler.jsonc"
 		{
 			// Rest of file
 			"hyperdrive": [
@@ -145,10 +132,6 @@ const connectionNoCache = createConnection({
 			]
 		}
 		```
-		</TabItem>
-		</Tabs>
-  </TabItem>
-</Tabs>
 
 ## Next steps
 
