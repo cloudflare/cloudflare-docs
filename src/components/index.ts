@@ -63,6 +63,7 @@ export { default as WorkersArchitectureDiagram } from "./WorkersArchitectureDiag
 export { default as WorkersIsolateDiagram } from "./WorkersIsolateDiagram.astro";
 export { default as WorkerStarter } from "./WorkerStarter.astro";
 export { default as YouTube } from "./YouTube.astro";
+export { default as YouTubeVideos } from "./YouTubeVideos.astro";
 
 // Taken from Astro
 export { default as ListCard } from "./astro/ListCard.astro";

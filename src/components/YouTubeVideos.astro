@@ -1,0 +1,16 @@
+---
+import { getCollection } from "astro:content";
+import { ShowcaseYouTube } from "starlight-showcases";
+
+const videos = await getCollection("videos", (entry) => {
+	return entry.data.link.startsWith("https://youtu");
+});
+
+const entries = videos.map((video) => ({
+	href: video.data.link,
+	title: video.data.id,
+	description: video.data.description,
+}));
+---
+
+<ShowcaseYouTube entries={entries} />
