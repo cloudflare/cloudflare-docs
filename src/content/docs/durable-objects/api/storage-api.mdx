@@ -67,11 +67,11 @@ export class Counter extends DurableObject {
 ```
 </TypeScriptExample>
 
-JavaScript is a single-threaded and event-driven programming language. This means that JavaScript runtimes, by default, allow requests to interleave with each other which can lead to concurrency bugs. The Durable Objects runtime uses a combination of <GlossaryTooltip term="input gate">input gates</GlossaryTooltip> and <GlossaryTooltip term="output gate">output gates</GlossaryTooltip> to avoid this type of concurrency bug when performing storage operations. Learn more with our [blog post](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/)
+JavaScript is a single-threaded and event-driven programming language. This means that JavaScript runtimes, by default, allow requests to interleave with each other which can lead to concurrency bugs. The Durable Objects runtime uses a combination of <GlossaryTooltip term="input gate">input gates</GlossaryTooltip> and <GlossaryTooltip term="output gate">output gates</GlossaryTooltip> to avoid this type of concurrency bug when performing storage operations. Learn more in our [blog post](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/).
 
 ## SQL API
 
-The `SqlStorage` interface encapsulates methods that modify the SQLite database embedded within a Durable Object. The `SqlStorage` interface is accessible via the [`sql` property](/durable-objects/api/storage-api/#) of `DurableObjectStorage` class.
+The `SqlStorage` interface encapsulates methods that modify the SQLite database embedded within a Durable Object. The `SqlStorage` interface is accessible via the [`sql` property](/durable-objects/api/storage-api/#sql) of `DurableObjectStorage` class.
 
 For example, using `sql.exec()`, a user can create a table, then insert rows into the table.
 
@@ -141,7 +141,7 @@ if (!rawResult.done) {
 console.log(cursor.toArray()); // prints [{ artistid: 456, artistname: 'Bob' },{ artistid: 789, artistname: 'Charlie' }]
 ```
 
-`SqlStorageCursor` had the following properties:
+`SqlStorageCursor` has the following properties:
 
 * `columnNames`: <Type text='string[]' />
   * The column names of the query in the order they appear in each row array returned by the `raw` iterator.
@@ -186,7 +186,7 @@ let size = ctx.storage.sql.databaseSize;
 
 For [SQLite-backed Durable Objects](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class), the following point-in-time-recovery (PITR) API methods are available to restore a Durable Object's embedded SQLite database to any point in time in the past 30 days. These methods apply to the entire SQLite database contents, including both the object's stored SQL data and stored key-value data using the key-value `put()` API. The PITR API is not supported in local development because a durable log of data changes is not stored locally.
 
-The PITR API represents points in times using 'bookmarks'. A bookmark is a mostly alphanumeric string like `0000007b-0000b26e-00001538-0c3e87bb37b3db5cc52eedb93cd3b96b`. Bookmarks are designed to be lexically comparable: a bookmark representing an earlier point in time compares less than one representing a later point, using regular string comparison.
+The PITR API represents points in time using 'bookmarks'. A bookmark is a mostly alphanumeric string like `0000007b-0000b26e-00001538-0c3e87bb37b3db5cc52eedb93cd3b96b`. Bookmarks are designed to be lexically comparable: a bookmark representing an earlier point in time compares less than one representing a later point, using regular string comparison.
 
 ### `getCurrentBookmark`
 
@@ -377,7 +377,7 @@ The `put()` method returns a `Promise`, but most applications can discard this p
   - For Durable Objects with a key-value storage backend, an in-progress `deleteAll()` operation can fail, which may leave a subset of data undeleted. Durable Objects with a SQLite storage backend do not have a partial `deleteAll()` issue because `deleteAll()` operations are atomic (all or nothing).
   - `deleteAll()` does not proactively delete [alarms](/durable-objects/api/alarms/). Use [`deleteAlarm()`](/durable-objects/api/alarms/#deletealarm) to delete an alarm.
 
-  ### `transaction`
+### `transaction`
 
 - `transaction(closureFunction(txn))`: <Type text='Promise' />
 
@@ -389,7 +389,7 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
   - Provides access to the `put()`, `get()`, `delete()` and `list()` methods documented above to run in the current transaction context. In order to get transactional behavior within a transaction closure, you must call the methods on the `txn` Object instead of on the top-level `ctx.storage` Object.<br/><br/>Also supports a `rollback()` function that ensures any changes made during the transaction will be rolled back rather than committed. After `rollback()` is called, any subsequent operations on the `txn` Object will fail with an exception. `rollback()` takes no parameters and returns nothing to the caller.
 
-  * When using [the SQLite-backed storage engine](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend), the `txn` object is obsolete. Any storage operations performed directly on the `ctx.storage` object, including SQL queries using [`ctx.storage.sql.exec()`](/durable-objects/api/storage-api/#exec), will be considered part of the transaction.
+  - When using [the SQLite-backed storage engine](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend), the `txn` object is obsolete. Any storage operations performed directly on the `ctx.storage` object, including SQL queries using [`ctx.storage.sql.exec()`](/durable-objects/api/storage-api/#exec), will be considered part of the transaction.
 
 ### `sync`
 

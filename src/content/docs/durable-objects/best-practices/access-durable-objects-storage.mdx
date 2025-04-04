@@ -118,10 +118,10 @@ type User = {
 }
 ```
 
-This type can then be passed as the type parameter to a `sql.exec` call:
+This type can then be passed as the type parameter to a `sql.exec()` call:
 
 ```ts
-// The type parameter is passed between the "pointy brackets" before the function argument:
+// The type parameter is passed between angle brackets before the function argument:
 const result = this.ctx.storage.sql.exec<User>("SELECT id, name, email_address, version FROM users WHERE id = ?", user_id).one()
 // result will now have a type of "User"
 
@@ -147,7 +147,8 @@ for (let row of cursor) {
 }
 ```
 
-You can represent the shape of any result type you wish, including more complex types. If you are performing a JOIN across multiple tables, you can compose a type that reflects the results of your queries.
+You can represent the shape of any result type you wish, including more complex types. If you are performing a 
+`JOIN` across multiple tables, you can compose a type that reflects the results of your queries.
 
 ## Indexes in SQLite
 
