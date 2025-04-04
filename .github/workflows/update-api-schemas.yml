@@ -33,14 +33,23 @@ jobs:
       - name: Create PR if needed
         if: steps.get-commit.outputs.latest_commit != steps.check-current.outputs.current_commit
         run: |
-          # Create a new branch
+          # Set up git config
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          BRANCH_NAME="update-api-schemas-$(date +%Y%m%d-%H%M%S)"
+          NEW_COMMIT="${{ steps.get-commit.outputs.latest_commit }}"
+          BRANCH_NAME="update-api-schemas-$NEW_COMMIT"
+
+          # Check if PR already exists
+          EXISTING_PR=$(gh pr list --head "$BRANCH_NAME" --json number --jq '.[0].number')
+          if [ -n "$EXISTING_PR" ]; then
+            echo "PR already exists for branch $BRANCH_NAME. Skipping PR creation."
+            exit 0
+          fi
+
+          # Create a new branch
           git checkout -b $BRANCH_NAME
 
           # Update the commit reference
-          NEW_COMMIT="${{ steps.get-commit.outputs.latest_commit }}"
           sed -i "s/const COMMIT = \".*\"/const COMMIT = \"$NEW_COMMIT\"/" src/util/api.ts
 
           # Commit and push changes
