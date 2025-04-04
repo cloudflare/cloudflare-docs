@@ -1,0 +1,29 @@
+import { createConnection } from "mysql2/promise";
+
+export interface Env {
+	HYPERDRIVE: Hyperdrive;
+}
+
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		const connection = await createConnection({
+			host: env.HYPERDRIVE.host,
+			user: env.HYPERDRIVE.user,
+			password: env.HYPERDRIVE.password,
+			database: env.HYPERDRIVE.database,
+			port: env.HYPERDRIVE.port,
+			disableEval: true, // Required for Workers compatibility
+		});
+
+    const [results, fields] = await connection.query("SHOW tables;");
+
+    ctx.waitUntil(connection.end());
+
+    return new Response(JSON.stringify({ results, fields }), {
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    });
+
+}} satisfies ExportedHandler<Env>;
