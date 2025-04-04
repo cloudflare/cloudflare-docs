@@ -39,6 +39,7 @@ You can deploy your Next.js app to Cloudflare Workers using the OpenNext adaptor
 <Steps>
 
 1. **Create a new project with the create-cloudflare CLI (C3).**
+
 	<PackageManagers
 		type="create"
 		pkg="cloudflare@latest my-next-app"
@@ -121,8 +122,8 @@ You can convert an existing Next.js application to run on Cloudflare
 	You can add the following scripts to your `package.json`:
 
 	```json
-	"preview": "opennextjs-cloudflare && wrangler dev",
-	"deploy": "opennextjs-cloudflare && wrangler deploy",
+	"preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+	"deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
 	"cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
 	```
 
