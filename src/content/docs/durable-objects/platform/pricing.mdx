@@ -20,7 +20,7 @@ These examples exclude the costs for the Workers calling the Durable Objects. Wh
 * Inactive objects receiving no requests do not incur any duration charges.
 * The [WebSocket Hibernation API](/durable-objects/best-practices/websockets#websocket-hibernation-api) can dramatically reduce duration-related charges for Durable Objects communicating with clients over the WebSocket protocol, especially if messages are only transmitted occasionally at sparse intervals.
 
-#### Example 1
+### Example 1
 
 This example represents a simple Durable Object used as a co-ordination service invoked via HTTP.
 
@@ -40,7 +40,7 @@ In this scenario, the estimated monthly cost would be calculated as:
 
 **Estimated total**: \~$0.075 (requests) + $0.00 (compute duration) + minimum $5/mo usage = $5.08 per month
 
-#### Example 2
+### Example 2
 
 This example represents a moderately trafficked Durable Objects based application using WebSockets to broadcast game, chat or real-time user state across connected clients:
 
@@ -64,7 +64,7 @@ In this scenario, the estimated monthly cost would be calculated as:
 
 **Estimated total**: $0.41 (requests) + $133.24 (compute duration) + minimum $5/mo usage = $138.65 per month.
 
-#### Example 3
+### Example 3
 
 This example represents a horizontally scaled Durable Objects based application using WebSockets to communicate user-specific state to a single client connected to each Durable Object.
 
@@ -88,7 +88,7 @@ In this scenario, the estimated monthly cost would be calculated as:
 
 **Estimated total**: $1.79 (requests) + $409.72 (compute duration) + minimum $5/mo usage = $416.51 per month
 
-#### Example 4
+### Example 4
 
 This example represents a moderately trafficked Durable Objects based application using WebSocket Hibernation to broadcast game, chat or real-time user state across connected clients:
 

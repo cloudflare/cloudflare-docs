@@ -1,5 +1,6 @@
 ---
-{}
+params:
+  - product
 ---
 
 import {Render, Markdown, GlossaryTooltip, Details, AnchorHeading } from "~/components";
@@ -66,7 +67,7 @@ The [Durable Objects Storage API](/durable-objects/api/storage-api) is only acce
 
 <sup>2</sup> Key-value methods like `get()`, `put()`, `delete()`, or `list()` store and query data in a hidden SQLite table and are billed as rows read and rows written.
 
-<sup>3</sup>  Each `setAlarm` is billed as a single row written.
+<sup>3</sup>  Each `setAlarm()` is billed as a single row written.
 
 <sup>4</sup>  Deletes are counted as rows_written.
 
