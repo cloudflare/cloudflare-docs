@@ -1,0 +1,49 @@
+---
+pcx_content_type: concept
+title: What is RAG
+sidebar:
+  order: 1
+---
+
+Retrieval-Augmented Generation (RAG) is a method used to enable a large language model (LLM) to answer questions using your own data, and not just what it was trained on. It works by retrieving relevant content from a provided data source and passing it to the model to generate a grounded response.
+
+## How RAG works
+
+Here’s a simplified overview of the RAG pipeline:
+
+1. **Indexing:** Your content (e.g. docs, wikis, product data) is ingested and split into smaller chunks and transformed into vectors using an embedding model. These vectors are stored in a vector index.
+2. **Retrieval:** When a user asks a question, it’s also embedded and used to find the most relevant chunks from the vector database.
+3. **Generation:** The retrieved content and the user’s original question are combined into a single prompt via a system prompt. A text-generation model generates a response based on this context.
+
+![What is RAG](~/assets/images/autorag/RAG.png)
+
+:::note[How does AutoRAG work]
+To understand how the AutoRAG pipeline works, reference [How AutoRAG works](/autorag/concepts/how-autorag-works/) for details.
+:::
+
+### Key concepts
+
+- **Embedding:** Turning text into a vector so it can be searched by meaning, not keywords.
+- **Vector index:** A database that lets you search embeddings by similarity (e.g. Vectorize).
+- **Chunking:** Splitting large text into smaller pieces for better indexing and retrieval.
+- **System prompt:** A template that controls how the generation model uses the retrieved data and query to form a response.
+
+## Why use RAG?
+
+RAG can be used to:
+
+- Provide accurate and up-to-date answers without fine-tuning a model.
+- Control the source of truth by using your own data.
+- Reduce hallucinations by grounding responses in real content.
+
+RAG is ideal for building AI-powered apps like:
+
+- AI assistants for your internal knowledge base
+- Search experiences for your documents
+
+## When is a RAG not needed?
+
+RAG is powerful, but not always necessary. You might not need RAG if:
+
+- Your queries are fact-based and can be answered by the model’s built-in knowledge.
+- You don’t have dynamic or proprietary data to ground on.

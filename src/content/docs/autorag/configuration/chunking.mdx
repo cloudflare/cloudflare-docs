@@ -5,7 +5,16 @@ sidebar:
   order: 6
 ---
 
-Chunking is the process of splitting large data into smaller segments before embedding them for search. AutoRAG performs **fixed size chunking** during indexing to make your content retrievable at the right level of granularity.
+Chunking is the process of splitting large data into smaller segments before embedding them for search. AutoRAG uses **recursive chunking**, which breaks your content at natural boundaries (like paragraphs or sentences), and then further splits it if the chunks are too large.
+
+## What is recurisve chunking
+
+Recursive chunking tries to keep chunks meaningful by:
+
+- **Splitting at natural boundaries:** like paragraphs, then sentences.
+- **Checking the size:** if a chunk is too long (based on token count), it’s split again into smaller parts.
+
+This way, chunks are easy to embed and retrieve, without cutting off thoughts mid-sentence.
 
 ## Chunking controls
 
@@ -20,19 +29,9 @@ AutoRAG exposes two parameters to help you control chunking behavior:
 
 These settings apply during the indexing step, before your data is embedded and stored in Vectorize.
 
-## Example
-
-Let’s say your document is tokenized as: `[The, quick, brown, fox, jumps, over, the, lazy, dog, ...]`
-
-With **chunk size = 5** and **chunk_overlap = 40%** (i.e 2 tokens), your chunks will look like:
-
-- Chunk 1: `[The, quick, brown, fox, jumps]`
-- Chunk 2: `[fox, jumps, over, the, lazy]`
-- Chunk 3: `[the, lazy, dog, ...]`
-
 ## Choosing chunk size and overlap
 
-Chunking affects both how your content is retrieved and how much context is passed into the generation model.
+Chunking affects both how your content is retrieved and how much context is passed into the generation model. Try out this external [chunk visualizer tool](https://huggingface.co/spaces/m-ric/chunk_visualizer) to help understand how different chunk settings could look.
 
 For chunk size, consider how:
 
