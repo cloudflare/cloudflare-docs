@@ -55,35 +55,45 @@ Let's look at some examples of how to use Playwright:
 Using browser automation to take screenshots of web pages is a common use case. This script tells the browser to navigate to https://demo.playwright.dev/todomvc, create some items, take a screenshot of the page, and return the image in the response.
 
 ```ts
+import type { Fetcher } from '@cloudflare/workers-types';
 import { launch } from '@cloudflare/playwright';
 
-const todos = searchParams.getAll('todo');
-
-const browser = await launch(env.MYBROWSER);
-const page = await browser.newPage();
-
-await page.goto('https://demo.playwright.dev/todomvc');
-
-const TODO_ITEMS = todos.length > 0 ? todos : [
-    'buy some cheese',
-    'feed the cat',
-    'book a doctors appointment'
-];
-
-const newTodo = page.getByPlaceholder('What needs to be done?');
-for (const item of TODO_ITEMS) {
-    await newTodo.fill(item);
-    await newTodo.press('Enter');
+interface Env {
+  MYBROWSER: Fetcher;
 }
 
-const img = await page.screenshot();
-await browser.close();
+export default {
+  async fetch(request: Request, env: Env) {
 
-return new Response(img, {
-    headers: {
+    const todos = searchParams.getAll('todo');
+
+    const browser = await launch(env.MYBROWSER);
+    const page = await browser.newPage();
+
+    await page.goto('https://demo.playwright.dev/todomvc');
+
+    const TODO_ITEMS = todos.length > 0 ? todos : [
+      'buy some cheese',
+      'feed the cat',
+      'book a doctors appointment'
+    ];
+
+    const newTodo = page.getByPlaceholder('What needs to be done?');
+    for (const item of TODO_ITEMS) {
+      await newTodo.fill(item);
+      await newTodo.press('Enter');
+    }
+
+    const img = await page.screenshot();
+    await browser.close();
+
+    return new Response(img, {
+      headers: {
         'Content-Type': 'image/png',
-    },
-});
+      },
+    });
+	},
+}
 ```
 
 ### Trace
@@ -162,31 +172,41 @@ export default {
 One of the most common use cases for using Playwright is software testing. Playwright includes test assertion features in its APIs; see [this page](https://playwright.dev/docs/test-assertions) for detailed documentation. Here's an example of a Worker doing `expect()` test assertions of the [todomvc](https://demo.playwright.dev/todomvc) demo page:
 
 ```ts
+import type { Fetcher } from '@cloudflare/workers-types';
 import { launch } from '@cloudflare/playwright';
 import { expect } from '@cloudflare/playwright/test';
 
-const browser = await launch(env.MYBROWSER);
-const page = await browser.newPage();
-
-await page.goto('https://demo.playwright.dev/todomvc');
-
-const TODO_ITEMS = todos.length > 0 ? todos : [
-    'buy some cheese',
-    'feed the cat',
-    'book a doctors appointment'
-];
-
-const newTodo = page.getByPlaceholder('What needs to be done?');
-for (const item of TODO_ITEMS) {
-    await newTodo.fill(item);
-    await newTodo.press('Enter');
+interface Env {
+  MYBROWSER: Fetcher;
 }
 
-await expect(page.getByTestId('todo-title')).toHaveCount(TODO_ITEMS.length);
+export default {
+  async fetch(request: Request, env: Env) {
 
-await Promise.all(TODO_ITEMS.map(
-    (value, index) => expect(page.getByTestId('todo-title').nth(index)).toHaveText(value)
-));
+    const browser = await launch(env.MYBROWSER);
+    const page = await browser.newPage();
+
+    await page.goto('https://demo.playwright.dev/todomvc');
+
+    const TODO_ITEMS = todos.length > 0 ? todos : [
+        'buy some cheese',
+        'feed the cat',
+        'book a doctors appointment'
+    ];
+
+    const newTodo = page.getByPlaceholder('What needs to be done?');
+    for (const item of TODO_ITEMS) {
+        await newTodo.fill(item);
+        await newTodo.press('Enter');
+    }
+
+    await expect(page.getByTestId('todo-title')).toHaveCount(TODO_ITEMS.length);
+
+    await Promise.all(TODO_ITEMS.map(
+        (value, index) => expect(page.getByTestId('todo-title').nth(index)).toHaveText(value)
+    ));
+	},
+};
 ```
 
 ### Keep Alive
@@ -194,7 +214,7 @@ await Promise.all(TODO_ITEMS.map(
 If users omit the `browser.close()` statement, the browser instance will stay open, ready to be connected to again and [re-used](/browser-rendering/workers-binding-api/reuse-sessions/) but it will, by default, close automatically after 1 minute of inactivity. Users can optionally extend this idle time up to 10 minutes, by using the `keep_alive` option, set in milliseconds:
 
 ```js
-const browser = await puppeteer.launch(env.MYBROWSER, { keep_alive: 600000 });
+const browser = await playwright.launch(env.MYBROWSER, { keep_alive: 600000 });
 ```
 
 Using the above, the browser will stay open for up to 10 minutes, even if inactive.
@@ -257,13 +277,13 @@ You should also be able to access this information in the dashboard, albeit with
 
 ```json
 {
-	"activeSessions": [
-		"478f4d7d-e943-40f6-a414-837d3736a1dc",
-		"565e05fb-4d2a-402b-869b-5b65b1381db7"
-	],
-	"allowedBrowserAcquisitions": 1,
-	"maxConcurrentSessions": 2,
-	"timeUntilNextAllowedBrowserAcquisition": 0
+  "activeSessions": [
+    { "id": "478f4d7d-e943-40f6-a414-837d3736a1dc" },
+    { "id": "565e05fb-4d2a-402b-869b-5b65b1381db7" }
+  ],
+  "allowedBrowserAcquisitions": 1,
+  "maxConcurrentSessions": 2,
+  "timeUntilNextAllowedBrowserAcquisition": 0
 }
 ```
 
