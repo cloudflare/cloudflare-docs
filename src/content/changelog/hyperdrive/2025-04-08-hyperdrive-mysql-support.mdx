@@ -14,8 +14,36 @@ Hyperdrive makes your regional, MySQL databases fast when connecting from Cloudf
 
 Best of all, you can connect using your existing drivers, ORMs, and query builders with Hyperdrive's secure credentials, no code changes required.
 
-import mysqlRaw from "~/content/partials/hyperdrive/mysql-snippet-slim.mdx?raw";
+```ts
+import { createConnection } from "mysql2/promise";
 
-<Code code={mysqlRaw} lang="typescript" />
+export interface Env {
+	HYPERDRIVE: Hyperdrive;
+}
+
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		const connection = await createConnection({
+			host: env.HYPERDRIVE.host,
+			user: env.HYPERDRIVE.user,
+			password: env.HYPERDRIVE.password,
+			database: env.HYPERDRIVE.database,
+			port: env.HYPERDRIVE.port,
+			disableEval: true, // Required for Workers compatibility
+		});
+
+		const [results, fields] = await connection.query("SHOW tables;");
+
+		ctx.waitUntil(connection.end());
+
+		return new Response(JSON.stringify({ results, fields }), {
+			headers: {
+				"Content-Type": "application/json",
+				"Access-Control-Allow-Origin": "*",
+			},
+		});
+	},
+} satisfies ExportedHandler<Env>;
+```
 
 Learn more about [how Hyperdrive works](/hyperdrive/configuration/how-hyperdrive-works/) and [get started building Workers that connect to MySQL with Hyperdrive](/hyperdrive/get-started/).
