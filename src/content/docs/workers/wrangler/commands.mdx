@@ -424,6 +424,7 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
   - Skip Wrangler's build steps. Particularly useful when using custom builds. Refer to [Bundling](https://developers.cloudflare.com/workers/wrangler/bundling/) for more information.
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
+    <Render file="vite-environments" />
 - `--compatibility-date` <Type text="string" /> <MetaInfo text="optional" />
   - A date in the form yyyy-mm-dd, which will be used to determine which version of the Workers runtime is used.
 - `--compatibility-flags`, `--compatibility-flag` <Type text="string[]" /> <MetaInfo text="optional" />
@@ -515,6 +516,7 @@ None of the options for this command are required. Also, many can be set in your
   - Skip Wrangler's build steps. Particularly useful when using custom builds. Refer to [Bundling](https://developers.cloudflare.com/workers/wrangler/bundling/) for more information.
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
+    <Render file="vite-environments" />
 - `--outdir` <Type text="string" /> <MetaInfo text="optional" />
   - Path to directory where Wrangler will write the bundled Worker files.
 - `--compatibility-date` <Type text="string" /> <MetaInfo text="optional" />
@@ -1415,6 +1417,9 @@ wrangler versions upload [OPTIONS]
   - Add a version message. Accepts empty string.
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific Worker rather than inheriting from the [Wrangler configuration file](/workers/wrangler/configuration/).
+- `--env` <Type text="string" /> <MetaInfo text="optional" />
+  - Perform on a specific environment.
+    <Render file="vite-environments" />
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
