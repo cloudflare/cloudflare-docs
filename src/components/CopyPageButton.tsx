@@ -13,10 +13,15 @@ import {
 	PiMarkdownLogo,
 	PiClipboardTextLight,
 	PiArrowSquareOutLight,
+	PiCheckCircleLight,
+	PiXCircleLight,
 } from "react-icons/pi";
+
+type CopyState = "idle" | "success" | "error";
 
 export default function CopyPageButton() {
 	const [isOpen, setIsOpen] = useState(false);
+	const [copyState, setCopyState] = useState<CopyState>("idle");
 
 	const { refs, floatingStyles, context } = useFloating({
 		open: isOpen,
@@ -42,10 +47,25 @@ export default function CopyPageButton() {
 		const markdownUrl = new URL("index.md", window.location.href).toString();
 		try {
 			const response = await fetch(markdownUrl);
+
+			if (!response.ok) {
+				throw new Error(`Received ${response.status} on ${response.url}`);
+			}
+
 			const markdown = await response.text();
 			await navigator.clipboard.writeText(markdown);
+
+			setCopyState("success");
+			setTimeout(() => {
+				setCopyState("idle");
+			}, 1500);
 		} catch (error) {
 			console.error("Failed to copy Markdown:", error);
+
+			setCopyState("error");
+			setTimeout(() => {
+				setCopyState("idle");
+			}, 1500);
 		}
 	};
 
@@ -64,15 +84,41 @@ export default function CopyPageButton() {
 		},
 	];
 
+	const getButtonContent = () => {
+		if (copyState === "success") {
+			return (
+				<>
+					<PiCheckCircleLight className="h-4 w-4 text-green-600" />
+					<span>Copied!</span>
+				</>
+			);
+		}
+
+		if (copyState === "error") {
+			return (
+				<>
+					<PiXCircleLight className="h-4 w-4 text-red-600" />
+					<span>Failed to copy</span>
+				</>
+			);
+		}
+
+		return (
+			<>
+				<PiMarkdownLogo />
+				<span>Copy Page</span>
+			</>
+		);
+	};
+
 	return (
 		<>
 			<button
 				ref={refs.setReference}
 				{...getReferenceProps()}
-				className="inline-flex h-8 items-center justify-center gap-2 rounded border border-[--sl-color-hairline] bg-transparent px-3 text-sm text-black"
+				className="inline-flex h-8 cursor-pointer items-center justify-center gap-2 rounded border border-[--sl-color-hairline] bg-transparent px-3 text-sm text-black hover:bg-[--sl-color-bg-nav]"
 			>
-				Copy Page
-				<PiMarkdownLogo />
+				{getButtonContent()}
 			</button>
 			{isOpen && (
 				<FloatingPortal>
@@ -86,7 +132,7 @@ export default function CopyPageButton() {
 							<li key={label}>
 								<button
 									onClick={onClick}
-									className="block w-full bg-transparent px-3 py-2 text-left text-black no-underline hover:bg-[--sl-color-bg-nav]"
+									className="relative block w-full cursor-pointer bg-transparent px-3 py-2 text-left text-black no-underline hover:bg-[--sl-color-bg-nav]"
 								>
 									<div className="flex items-center gap-2 text-sm">
 										<Icon className="h-4 w-4" />
