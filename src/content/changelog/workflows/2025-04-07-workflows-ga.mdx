@@ -12,7 +12,7 @@ import { Render, PackageManagers, TypeScriptExample } from "~/components"
 [Workflows](/workflows/) is now _Generally Available_ (or "GA"): in short, it's ready for production workloads. Alongside marking Workflows as GA, we've introduced a number of changes during the beta period, including:
 
 * A new `waitForEvent` API that allows a Workflow to wait for an event to occur before continuing execution.
-* Increased concurrency: you can [run up to 4,500 Workflow instances](/changelog/2025-02-25-workflows-concurrency-increased/) concurrently (and this will continue to grow)
+* Increased concurrency: you can [run up to 4,500 Workflow instances](/changelog/2025-02-25-workflows-concurrency-increased/) concurrently — and this will continue to grow.
 * Improved observability, including new CPU time metrics that allow you to better understand which Workflow instances are consuming the most resources and/or contributing to your bill.
 * Support for `vitest` for testing Workflows locally and in CI/CD pipelines.
 
@@ -31,7 +31,37 @@ For example, if you wanted to implement a human-in-the-loop approval process, yo
 ```ts
 import { Workflow, WorkflowEvent } from "cloudflare:workflows";
 
+export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
+	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
+		// Other steps in your Workflow
+		let event = await step.waitForEvent<IncomingStripeWebhook>("receive invoice paid webhook from Stripe", { type: "stripe-webhook", timeout: "1 hour" })
+		// Rest of your Workflow
+	}
+}
+```
 
+</TypeScriptExample>
+
+You can then send a Workflow an event from an external service via HTTP or from within a Worker using the [Workers API](/workflows/build/workers-api/) for Workflows:
+
+<TypeScriptExample>
+
+```ts
+export default {
+  async fetch(req: Request, env: Env) {
+    const instanceId = new URL(req.url).searchParams.get("instanceId")
+    const webhookPayload = await req.json<Payload>()
+
+    let instance = await env.MY_WORKFLOW.get(instanceId);
+    // Send our event, with `type` matching the event type defined in
+    // our step.waitForEvent call
+    await instance.sendEvent({type: "stripe-webhook", payload: webhookPayload})
+
+    return Response.json({
+      status: await instance.status(),
+    });
+  },
+};
 ```
 
 </TypeScriptExample>
