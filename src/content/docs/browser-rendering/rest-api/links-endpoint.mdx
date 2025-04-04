@@ -1,0 +1,194 @@
+---
+pcx_content_type: how-to
+title: Retrieve links from a webpage
+sidebar:
+  order: 10
+---
+
+The `/links` endpoint retrieves all links from a webpage. It can be used to extract all links from a page, including those that are hidden.
+
+## Basic usage
+
+This example grabs all links from the Cloudflare Developers homepage.
+The response will be a JSON array containing the links found on the page.
+
+```bash
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/links' \
+  -H 'Authorization: Bearer <apiToken>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "url": "https://developers.cloudflare.com/"
+  }'
+```
+
+```json output collapse={12-80}
+{
+	"success": true,
+	"result": [
+		"https://developers.cloudflare.com/",
+		"https://developers.cloudflare.com/products/",
+		"https://developers.cloudflare.com/api/",
+		"https://developers.cloudflare.com/fundamentals/api/reference/sdks/",
+		"https://dash.cloudflare.com/",
+		"https://developers.cloudflare.com/fundamentals/subscriptions-and-billing/",
+		"https://developers.cloudflare.com/api/",
+		"https://developers.cloudflare.com/changelog/",
+		"https://developers.cloudflare.com/glossary/",
+		"https://developers.cloudflare.com/reference-architecture/",
+		"https://developers.cloudflare.com/web-analytics/",
+		"https://developers.cloudflare.com/support/troubleshooting/cloudflare-errors/",
+		"https://developers.cloudflare.com/registrar/",
+		"https://developers.cloudflare.com/1.1.1.1/setup/",
+		"https://developers.cloudflare.com/learning-paths/get-started/concepts/",
+		"https://developers.cloudflare.com/workers/",
+		"https://developers.cloudflare.com/pages/",
+		"https://developers.cloudflare.com/r2/",
+		"https://developers.cloudflare.com/images/",
+		"https://developers.cloudflare.com/stream/",
+		"https://developers.cloudflare.com/products/?product-group=Developer+platform",
+		"https://developers.cloudflare.com/workers-ai/tutorials/build-a-retrieval-augmented-generation-ai/",
+		"https://developers.cloudflare.com/workers-ai/",
+		"https://developers.cloudflare.com/vectorize/",
+		"https://developers.cloudflare.com/ai-gateway/",
+		"https://playground.ai.cloudflare.com/",
+		"https://developers.cloudflare.com/products/?product-group=AI",
+		"https://developers.cloudflare.com/cloudflare-one/policies/access/",
+		"https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/",
+		"https://developers.cloudflare.com/cloudflare-one/policies/gateway/",
+		"https://developers.cloudflare.com/cloudflare-one/policies/browser-isolation/",
+		"https://developers.cloudflare.com/learning-paths/replace-vpn/concepts/",
+		"https://developers.cloudflare.com/products/?product-group=Cloudflare+One",
+		"https://workers.cloudflare.com/playground#LYVwNgLglgDghgJwgegGYHsHALQBM4RwDcABAEbogB2+CAngLzbPYZb6HbW5QDGU2AAwAmAIyiAzMIAsATlmi5ALhYs2wDnC40+AkeKlyFcgLAAoAMLoqEAKY3sAESgBnGOhdRo1pSXV4CYhIqOGBbBgAiKBpbAA8AOgArFwjSVCgwe1DwqJiE5IjzKxt7CGwAFToYW184GBgwPgIoa2REuAA3OBdeBFgIAGpgdFxwW3NzOPckElxbVDhwCBIAbzMSEm66Kl4-WwheAAsACgRbAEcQWxcIAEpV9Y2SXmsbkkOIYDASBhIAAwAPABCRwAeQs5QAmgAFACi70+YAAfI8NgCKLg6Cink8AYdREiABK2MBgdAkADqmDAuAByHx2JxJABMCR5UOrhIwEQAGsQDASAB3bokADm9lsCAItlw5DomxIFjJIFwqDAiFslMwPMl8TprNRzOQGKxfyIZkNZwgIAQVGCtkFJAAStd3FQXLZjh8vgAaB5M962OBzBAuXxrAMbCIvEoOCBVWwRXwROyxFDesBEI6ID0QBgAVXKADFsAAOCI+w0bAC+lZx1du5prlerRHMqmY6k02h4-CEYkkMnkilkRWsdgczjcHi8LSovn8mlIITCkTChE0qT8GSyq4iZDJZEKlnHpQqCdq9UavGarWS1gmZhWEW50QA+sNRpkk7k5vkUtW7Ydl2gQ9ro-YGEOxiyMwQA",
+		"https://workers.cloudflare.com/playground#LYVwNgLglgDghgJwgegGYHsHALQBM4RwDcABAEbogB2+CAngLzbPYZb6HbW5QDGU2AAwB2AMwAWAKyCAjMICc8meIBcLFm2Ac4XGnwEiJ0uYuUBYAFABhdFQgBTO9gAiUAM4x0bqNFsqSmngExCRUcMD2DABEUDT2AB4AdABWblGkqFBgjuGRMXFJqVGWNnaOENgAKnQw9v5wMDBgfARQtsjJcABucG68CLAQANTA6Ljg9paWCZ5IJLj2qHDgECQA3hYkJL10VLwB9hC8ABYAFAj2AI4g9m4QAJTrm1skvLZ388EkDE8vL8f2MBgdD+KIAd0wYFwUQANM8tgBfIgWeEkC4QEAIKgkABKt08VDc9hSblsp2092RiLhSMs6mYmm0uh4-CEYiksgUSnEJVsDicrg8Xh8bSo-kC2lIYQi0QihG06QCWRyMqiZGBZGK1j55SqNTq20azV4rXaqVsUwsayiwDgsQA+qNxtkoip8gtCmkEXT6Yzgsz9GyjJzTOJmEA",
+		"https://workers.cloudflare.com/playground#LYVwNgLglgDghgJwgegGYHsHALQBM4RwDcABAEbogB2+CAngLzbPYZb6HbW5QDGU2AAwBWABwBGAOyjRANgDMAFgCcygFwsWbYBzhcafASInS5S1QFgAUAGF0VCAFMH2ACJQAzjHQeo0e2ok2ngExCRUcMCODABEUDSOAB4AdABWHjGkqFBgzpHRcQkp6THWdg7OENgAKnQwjoFwMDBgfARQ9sipcABucB68CLAQANTA6LjgjtbWSd5IJLiOqHDgECQA3lYkJP10VLxBjhC8ABYAFAiOAI4gjh4QAJSb2zskyABUH69vHyQASo4WnBeI4SAADK7jJzgkgAdz8pxIEFOYNOPnWdEo8M8SIg6BIHmcuBIV1u9wgHmR6B+Ow+yFpvHsD1JjmhYIYJBipwgEBgHjUyGQSUiLUcySZwEyVlpVwgIAQVF2cLgfiOJwuUPQTgANKzyQ9HkRXgBfHVWE1EayaZjaXT6Hj8IRiKQyBQqZRlexOFzuLw+PwdKiBYK6UgRKKxKKEXSZII5PKRmJkMDoMilWzeyo1OoNXbNVq8dqddL2GZWDYxYCqqgAfXGk1yMTUhSWxQyJutNrtoQdhmdJjd5mUzCAA",
+		"https://workers.cloudflare.com/playground#LYVwNgLglgDghgJwgegGYHsHALQBM4RwDcABAEbogB2+CAngLzbPYZb6HbW5QDGU2AAwBmACyiAnBMFSAbIICMALhYs2wDnC40+AkeKkyJ8hQFgAUAGF0VCAFNb2ACJQAzjHSuo0G0pLq8AmISKjhgOwYAIigaOwAPADoAK1dI0lQoMAcwiOjYxJTIi2tbBwhsABU6GDs-OBgYMD4CKBtkJLgANzhXXgRYCABqYHRccDsLC3iPJBJcO1Q4cAgSAG9zEhIeuipefzsIXgALAAoEOwBHEDtXCABKNY3Nkl4bW7mb6FCfKgBVACUADIkBgkSJHCAQGCuJTIZDxMKNOwJV7ANJPTavKjvW4EECuazzEEkYSKIgYkjnCAgBBUEj-G4ebHI848c68CAnea3GItGwAwEAGhIuOpBNGdju5M2AF9BeYZUQLKpmOpNNoePwhGJJNI5IpijZ7I4XO5PN5WlQ-AFNKRQuEouFCJo0v5MtkHZEyGB0GQilYjWVKtValsGk1eHyqO1XDZJuZVpFgHAYgB9EZjLKRJR5eYFVIy5UqtVBDW6bUGPXGRTMIA",
+		"https://workers.cloudflare.com/playground#LYVwNgLglgDghgJwgegGYHsHALQBM4RwDcABAEbogB2+CAngLzbPYZb6HbW5QDGU2AAwAOAJwBmAIyiATKMkB2AKwyAXCxZtgHOFxp8BIidLmKVAWABQAYXRUIAU3vYAIlADOMdO6jQ7qki08AmISKjhgBwYAIigaBwAPADoAK3do0lQoMCcIqNj45LToq1t7JwhsABU6GAcAuBgYMD4CKDtkFLgANzh3XgRYCABqYHRccAcrK0SvJBJcB1Q4cAgSAG9LEhI+uipeQIcIXgALAAoEBwBHEAd3CABKDa3tnfc9g9RqXj8qEgBZI4ncYAOXQEAAgmAwOgAO4OXAXa63e5PTavV6XCAgBB-KgOWEkABKdy8VHcDjOAANARBgbgSAASdaXG53CBJSJ08YAXzC4J20LhCKSVIANM8MRj7gQQO4AgAWQRKMUvKUkE4OOCLBDyyXq15QmGwgLRADiAFEqtFVQaSDzbVKeQ8iGr7W7kMgSAB5KhgOgkS1VEislEQdwkWGYADWkd8JxIdI8JBgCHQCToSTdUFQJCRbPunKB4xIAEIGAwSOardEnlicX9afSwZChfDEaH2S63fXcYdjucqScIBAYPLPYkIs0HEleOhgFTu9sHZYeUQrBpmFodHoePwhGIpLJ5MoZKU7I5nG5PN5fO0qAEgjpSOFIjEudqQhlAtlcm-omQMJkCUNgXhU1S1PUOxNC0vBtB0aR2NMljrNEwBwHEAD6YwTDk0SqAUixFOkPIbpu24hLuBgHsYx5mDIzBAA",
+		"https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/",
+		"https://developers.cloudflare.com/ssl/origin-configuration/origin-ca/",
+		"https://developers.cloudflare.com/dns/zone-setups/full-setup/setup/",
+		"https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes/",
+		"https://developers.cloudflare.com/waf/custom-rules/use-cases/allow-traffic-from-specific-countries/",
+		"https://discord.cloudflare.com/",
+		"https://x.com/CloudflareDev",
+		"https://community.cloudflare.com/",
+		"https://github.com/cloudflare",
+		"https://developers.cloudflare.com/sponsorships/",
+		"https://developers.cloudflare.com/style-guide/",
+		"https://blog.cloudflare.com/",
+		"https://developers.cloudflare.com/fundamentals/",
+		"https://support.cloudflare.com/",
+		"https://www.cloudflarestatus.com/",
+		"https://www.cloudflare.com/trust-hub/compliance-resources/",
+		"https://www.cloudflare.com/trust-hub/gdpr/",
+		"https://www.cloudflare.com/",
+		"https://www.cloudflare.com/people/",
+		"https://www.cloudflare.com/careers/",
+		"https://radar.cloudflare.com/",
+		"https://speed.cloudflare.com/",
+		"https://isbgpsafeyet.com/",
+		"https://rpki.cloudflare.com/",
+		"https://ct.cloudflare.com/",
+		"https://x.com/cloudflare",
+		"http://discord.cloudflare.com/",
+		"https://www.youtube.com/cloudflare",
+		"https://github.com/cloudflare/cloudflare-docs",
+		"https://www.cloudflare.com/privacypolicy/",
+		"https://www.cloudflare.com/website-terms/",
+		"https://www.cloudflare.com/disclosure/",
+		"https://www.cloudflare.com/trademark/"
+	]
+}
+```
+
+## Advanced usage
+
+In this example we can pass a `visibleLinksOnly` parameter to only return links that are visible on the page.
+
+```bash
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/links' \
+  -H 'Authorization: Bearer <apiToken>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "url": "https://developers.cloudflare.com/",
+    "visibleLinksOnly": true
+  }'
+```
+
+```json output collapse={12-80}
+{
+	"success": true,
+	"result": [
+		"https://developers.cloudflare.com/",
+		"https://developers.cloudflare.com/products/",
+		"https://developers.cloudflare.com/api/",
+		"https://developers.cloudflare.com/fundamentals/api/reference/sdks/",
+		"https://dash.cloudflare.com/",
+		"https://developers.cloudflare.com/fundamentals/subscriptions-and-billing/",
+		"https://developers.cloudflare.com/api/",
+		"https://developers.cloudflare.com/changelog/",
+		"https://developers.cloudflare.com/glossary/",
+		"https://developers.cloudflare.com/reference-architecture/",
+		"https://developers.cloudflare.com/web-analytics/",
+		"https://developers.cloudflare.com/support/troubleshooting/cloudflare-errors/",
+		"https://developers.cloudflare.com/registrar/",
+		"https://developers.cloudflare.com/1.1.1.1/setup/",
+		"https://developers.cloudflare.com/learning-paths/get-started/concepts/",
+		"https://developers.cloudflare.com/workers/",
+		"https://developers.cloudflare.com/pages/",
+		"https://developers.cloudflare.com/r2/",
+		"https://developers.cloudflare.com/images/",
+		"https://developers.cloudflare.com/stream/",
+		"https://developers.cloudflare.com/products/?product-group=Developer+platform",
+		"https://developers.cloudflare.com/workers-ai/tutorials/build-a-retrieval-augmented-generation-ai/",
+		"https://developers.cloudflare.com/workers-ai/",
+		"https://developers.cloudflare.com/vectorize/",
+		"https://developers.cloudflare.com/ai-gateway/",
+		"https://playground.ai.cloudflare.com/",
+		"https://developers.cloudflare.com/products/?product-group=AI",
+		"https://developers.cloudflare.com/cloudflare-one/policies/access/",
+		"https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/",
+		"https://developers.cloudflare.com/cloudflare-one/policies/gateway/",
+		"https://developers.cloudflare.com/cloudflare-one/policies/browser-isolation/",
+		"https://developers.cloudflare.com/learning-paths/replace-vpn/concepts/",
+		"https://developers.cloudflare.com/products/?product-group=Cloudflare+One",
+		"https://workers.cloudflare.com/playground#LYVwNgLglgDghgJwgegGYHsHALQBM4RwDcABAEbogB2+CAngLzbPYZb6HbW5QDGU2AAwAmAIyiAzMIAsATlmi5ALhYs2wDnC40+AkeKlyFcgLAAoAMLoqEAKY3sAESgBnGOhdRo1pSXV4CYhIqOGBbBgAiKBpbAA8AOgArFwjSVCgwe1DwqJiE5IjzKxt7CGwAFToYW184GBgwPgIoa2REuAA3OBdeBFgIAGpgdFxwW3NzOPckElxbVDhwCBIAbzMSEm66Kl4-WwheAAsACgRbAEcQWxcIAEpV9Y2SXmsbkkOIYDASBhIAAwAPABCRwAeQs5QAmgAFACi70+YAAfI8NgCKLg6Cink8AYdREiABK2MBgdAkADqmDAuAByHx2JxJABMCR5UOrhIwEQAGsQDASAB3bokADm9lsCAItlw5DomxIFjJIFwqDAiFslMwPMl8TprNRzOQGKxfyIZkNZwgIAQVGCtkFJAAStd3FQXLZjh8vgAaB5M962OBzBAuXxrAMbCIvEoOCBVWwRXwROyxFDesBEI6ID0QBgAVXKADFsAAOCI+w0bAC+lZx1du5prlerRHMqmY6k02h4-CEYkkMnkilkRWsdgczjcHi8LSovn8mlIITCkTChE0qT8GSyq4iZDJZEKlnHpQqCdq9UavGarWS1gmZhWEW50QA+sNRpkk7k5vkUtW7Ydl2gQ9ro-YGEOxiyMwQA",
+		"https://workers.cloudflare.com/playground#LYVwNgLglgDghgJwgegGYHsHALQBM4RwDcABAEbogB2+CAngLzbPYZb6HbW5QDGU2AAwB2AMwAWAKyCAjMICc8meIBcLFm2Ac4XGnwEiJ0uYuUBYAFABhdFQgBTO9gAiUAM4x0bqNFsqSmngExCRUcMD2DABEUDT2AB4AdABWblGkqFBgjuGRMXFJqVGWNnaOENgAKnQw9v5wMDBgfARQtsjJcABucG68CLAQANTA6Ljg9paWCZ5IJLj2qHDgECQA3hYkJL10VLwB9hC8ABYAFAj2AI4g9m4QAJTrm1skvLZ388EkDE8vL8f2MBgdD+KIAd0wYFwUQANM8tgBfIgWeEkC4QEAIKgkABKt08VDc9hSblsp2092RiLhSMs6mYmm0uh4-CEYiksgUSnEJVsDicrg8Xh8bSo-kC2lIYQi0QihG06QCWRyMqiZGBZGK1j55SqNTq20azV4rXaqVsUwsayiwDgsQA+qNxtkoip8gtCmkEXT6Yzgsz9GyjJzTOJmEA",
+		"https://workers.cloudflare.com/playground#LYVwNgLglgDghgJwgegGYHsHALQBM4RwDcABAEbogB2+CAngLzbPYZb6HbW5QDGU2AAwBWABwBGAOyjRANgDMAFgCcygFwsWbYBzhcafASInS5S1QFgAUAGF0VCAFMH2ACJQAzjHQeo0e2ok2ngExCRUcMCODABEUDSOAB4AdABWHjGkqFBgzpHRcQkp6THWdg7OENgAKnQwjoFwMDBgfARQ9sipcABucB68CLAQANTA6LjgjtbWSd5IJLiOqHDgECQA3lYkJP10VLxBjhC8ABYAFAiOAI4gjh4QAJSb2zskyABUH69vHyQASo4WnBeI4SAADK7jJzgkgAdz8pxIEFOYNOPnWdEo8M8SIg6BIHmcuBIV1u9wgHmR6B+Ow+yFpvHsD1JjmhYIYJBipwgEBgHjUyGQSUiLUcySZwEyVlpVwgIAQVF2cLgfiOJwuUPQTgANKzyQ9HkRXgBfHVWE1EayaZjaXT6Hj8IRiKQyBQqZRlexOFzuLw+PwdKiBYK6UgRKKxKKEXSZII5PKRmJkMDoMilWzeyo1OoNXbNVq8dqddL2GZWDYxYCqqgAfXGk1yMTUhSWxQyJutNrtoQdhmdJjd5mUzCAA",
+		"https://workers.cloudflare.com/playground#LYVwNgLglgDghgJwgegGYHsHALQBM4RwDcABAEbogB2+CAngLzbPYZb6HbW5QDGU2AAwBmACyiAnBMFSAbIICMALhYs2wDnC40+AkeKkyJ8hQFgAUAGF0VCAFNb2ACJQAzjHSuo0G0pLq8AmISKjhgOwYAIigaOwAPADoAK1dI0lQoMAcwiOjYxJTIi2tbBwhsABU6GDs-OBgYMD4CKBtkJLgANzhXXgRYCABqYHRccDsLC3iPJBJcO1Q4cAgSAG9zEhIeuipefzsIXgALAAoEOwBHEDtXCABKNY3Nkl4bW7mb6FCfKgBVACUADIkBgkSJHCAQGCuJTIZDxMKNOwJV7ANJPTavKjvW4EECuazzEEkYSKIgYkjnCAgBBUEj-G4ebHI848c68CAnea3GItGwAwEAGhIuOpBNGdju5M2AF9BeYZUQLKpmOpNNoePwhGJJNI5IpijZ7I4XO5PN5WlQ-AFNKRQuEouFCJo0v5MtkHZEyGB0GQilYjWVKtValsGk1eHyqO1XDZJuZVpFgHAYgB9EZjLKRJR5eYFVIy5UqtVBDW6bUGPXGRTMIA",
+		"https://workers.cloudflare.com/playground#LYVwNgLglgDghgJwgegGYHsHALQBM4RwDcABAEbogB2+CAngLzbPYZb6HbW5QDGU2AAwAOAJwBmAIyiATKMkB2AKwyAXCxZtgHOFxp8BIidLmKVAWABQAYXRUIAU3vYAIlADOMdO6jQ7qki08AmISKjhgBwYAIigaBwAPADoAK3do0lQoMCcIqNj45LToq1t7JwhsABU6GAcAuBgYMD4CKDtkFLgANzh3XgRYCABqYHRccAcrK0SvJBJcB1Q4cAgSAG9LEhI+uipeQIcIXgALAAoEBwBHEAd3CABKDa3tnfc9g9RqXj8qEgBZI4ncYAOXQEAAgmAwOgAO4OXAXa63e5PTavV6XCAgBB-KgOWEkABKdy8VHcDjOAANARBgbgSAASdaXG53CBJSJ08YAXzC4J20LhCKSVIANM8MRj7gQQO4AgAWQRKMUvKUkE4OOCLBDyyXq15QmGwgLRADiAFEqtFVQaSDzbVKeQ8iGr7W7kMgSAB5KhgOgkS1VEislEQdwkWGYADWkd8JxIdI8JBgCHQCToSTdUFQJCRbPunKB4xIAEIGAwSOardEnlicX9afSwZChfDEaH2S63fXcYdjucqScIBAYPLPYkIs0HEleOhgFTu9sHZYeUQrBpmFodHoePwhGIpLJ5MoZKU7I5nG5PN5fO0qAEgjpSOFIjEudqQhlAtlcm-omQMJkCUNgXhU1S1PUOxNC0vBtB0aR2NMljrNEwBwHEAD6YwTDk0SqAUixFOkPIbpu24hLuBgHsYx5mDIzBAA",
+		"https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/",
+		"https://developers.cloudflare.com/ssl/origin-configuration/origin-ca/",
+		"https://developers.cloudflare.com/dns/zone-setups/full-setup/setup/",
+		"https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes/",
+		"https://developers.cloudflare.com/waf/custom-rules/use-cases/allow-traffic-from-specific-countries/",
+		"https://discord.cloudflare.com/",
+		"https://x.com/CloudflareDev",
+		"https://community.cloudflare.com/",
+		"https://github.com/cloudflare",
+		"https://developers.cloudflare.com/sponsorships/",
+		"https://developers.cloudflare.com/style-guide/",
+		"https://blog.cloudflare.com/",
+		"https://developers.cloudflare.com/fundamentals/",
+		"https://support.cloudflare.com/",
+		"https://www.cloudflarestatus.com/",
+		"https://www.cloudflare.com/trust-hub/compliance-resources/",
+		"https://www.cloudflare.com/trust-hub/gdpr/",
+		"https://www.cloudflare.com/",
+		"https://www.cloudflare.com/people/",
+		"https://www.cloudflare.com/careers/",
+		"https://radar.cloudflare.com/",
+		"https://speed.cloudflare.com/",
+		"https://isbgpsafeyet.com/",
+		"https://rpki.cloudflare.com/",
+		"https://ct.cloudflare.com/",
+		"https://x.com/cloudflare",
+		"http://discord.cloudflare.com/",
+		"https://www.youtube.com/cloudflare",
+		"https://github.com/cloudflare/cloudflare-docs",
+		"https://www.cloudflare.com/privacypolicy/",
+		"https://www.cloudflare.com/website-terms/",
+		"https://www.cloudflare.com/disclosure/",
+		"https://www.cloudflare.com/trademark/"
+	]
+}
+```

@@ -16,25 +16,15 @@ import { GitHubCode } from "~/components";
 
 ## Usage
 
-<GitHubCode
-    repo="cloudflare/workflows-starter"
-    file="src/index.ts"
-    commit="a844e629ec80968118d4b116d4b26f5dcb107137"
-    lang="ts"
-    code={{
-    	collapse: "3-6"
-    }}
-/>
+```mdx live
+import { GitHubCode } from "~/components";
 
-```mdx
 <GitHubCode
     repo="cloudflare/workflows-starter"
     file="src/index.ts"
     commit="a844e629ec80968118d4b116d4b26f5dcb107137"
     lang="ts"
-    code={{
-    	collapse: "2-3"
-    }}
+    useTypeScriptExample={true}
 />
 ```
 
@@ -122,7 +112,12 @@ The long (40-characters) Git commit hash to pull from, for example `ab3951b5c953
 
 The language to use for the code block, for example `rs`.
 
-If the `lang` is `ts`, the [`TypeScriptExample`](/style-guide/components/typescript-example/) component will be used to provide a JavaScript tab as well.
+### `useTypeScriptExample`
+
+**type:** `boolean`
+
+
+If the `lang` is `"ts"` and `useTypeScriptExample` is `true`, the [`TypeScriptExample`](/style-guide/components/typescript-example/) component will be used to provide a JavaScript tab as well.
 
 ### `lines`
 

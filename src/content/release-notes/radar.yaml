@@ -5,6 +5,15 @@ productLink: "/radar/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-03-20"
+    title: Endpoint deprecations and new BGP real-time routes endpoint
+    description: |-
+      * Deprecated endpoints for improved consistency (switch to the following):
+        * `/attacks/layer3/top/industry` → [`/attacks/layer3/summary/industry`](/api/resources/radar/subresources/attacks/subresources/layer3/subresources/summary/methods/industry/)
+        * `/attacks/layer3/top/vertical` → [`/attacks/layer3/summary/vertical`](/api/resources/radar/subresources/attacks/subresources/layer3/subresources/summary/methods/vertical/)
+        * `/attacks/layer7/top/industry` → [`/attacks/layer7/summary/industry`](/api/resources/radar/subresources/attacks/subresources/layer7/subresources/summary/methods/industry/)
+        * `/attacks/layer7/top/vertical` → [`/attacks/layer7/summary/vertical`](/api/resources/radar/subresources/attacks/subresources/layer7/subresources/summary/methods/vertical/)
+      * Added the [BGP real-time routes endpoint](/api/resources/radar/subresources/bgp/subresources/routes/methods/realtime/).
   - publish_date: "2025-03-18"
     title: Add leaked credential checks endpoints
     description: |-

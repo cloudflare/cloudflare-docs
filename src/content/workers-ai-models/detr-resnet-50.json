@@ -8,6 +8,7 @@
         "name": "Object Detection",
         "description": "Object detection models can detect instances of objects like persons, faces, license plates, or others in an image. This task takes an image as input and returns a list of detected objects, each one containing a label, a probability score, and its surrounding box coordinates."
     },
+    "created_at": "2024-02-27 17:43:51.922",
     "tags": [],
     "properties": [
         {

@@ -3,8 +3,9 @@ pcx_content_type: reference
 title: Tunnel run parameters
 sidebar:
   order: 4
-
 ---
+
+import { Render } from "~/components";
 
 This page lists general-purpose configuration options that you can [add](/cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/#update-tunnel-run-parameters) to the `cloudflared tunnel run` command.
 
@@ -49,7 +50,7 @@ The IP version of `edge-bind-address` will override [`edge-ip-version`](#edge-ip
 
 | Syntax                                                              | Default | Environment Variable     |
 | ------------------------------------------------------------------- | ------- | ------------------------ |
-| `cloudflared tunnel --edge-ip-version <VERSION> run <UUID or NAME>` | `4`  | `TUNNEL_EDGE_IP_VERSION` |
+| `cloudflared tunnel --edge-ip-version <VERSION> run <UUID or NAME>` | `4`     | `TUNNEL_EDGE_IP_VERSION` |
 
 Specifies the IP address version (IPv4 or IPv6) used to establish a connection between `cloudflared` and the Cloudflare global network. Available values are `auto`, `4`, and `6`.
 
@@ -81,13 +82,19 @@ Specifies the verbosity of logging for the local `cloudflared` instance. Availab
 
 ## `metrics`
 
-| Syntax                                                      | Default      | Environment Variable |
-| ----------------------------------------------------------- | ------------ | -------------------- |
-| `cloudflared tunnel --metrics <IP:PORT> run <UUID or NAME>` | Refer to [Tunnel metrics](/cloudflare-one/connections/connect-networks/monitor-tunnels/metrics/)| `TUNNEL_METRICS`     |
+| Syntax                                                      | Default                                                                                          | Environment Variable |
+| ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------ | -------------------- |
+| `cloudflared tunnel --metrics <IP:PORT> run <UUID or NAME>` | Refer to [Tunnel metrics](/cloudflare-one/connections/connect-networks/monitor-tunnels/metrics/) | `TUNNEL_METRICS`     |
 
 Exposes a Prometheus endpoint on the specified IP address and port, which you can then query for [usage metrics](/cloudflare-one/connections/connect-networks/monitor-tunnels/metrics/).
 
 ## `no-autoupdate`
+
+:::note
+
+Does not apply if you installed `cloudflared` using a package manager. <Render file="tunnel/package-manager" product="cloudflare-one" />
+
+:::
 
 | Syntax                                                  | Environment Variable |
 | ------------------------------------------------------- | -------------------- |

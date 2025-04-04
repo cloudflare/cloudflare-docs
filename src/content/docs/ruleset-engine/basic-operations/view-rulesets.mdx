@@ -6,7 +6,7 @@ sidebar:
   order: 2
 ---
 
-import { Details } from "~/components";
+import { Details, APIRequest } from "~/components";
 
 ## View available rulesets
 
@@ -20,10 +20,7 @@ The response to the `GET` request will include the following rulesets:
 - Zone-level phase entry points, if configured, indicated by `"kind": "zone"`.
 - Custom rulesets, if configured, indicated by `"kind": "custom"`.
 
-```bash title="Request"
-curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets \
---header "Authorization: Bearer <API_TOKEN>"
-```
+<APIRequest path="/zones/{zone_id}/rulesets" method="GET" />
 
 ```json output
 {
@@ -72,10 +69,7 @@ The response will include the following rulesets:
 - Account-level phase entry points, if configured, indicated by `"kind": "root"`.
 - Custom rulesets, if configured, indicated by `"kind": "custom"`.
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
---header "Authorization: Bearer <API_TOKEN>"
-```
+<APIRequest path="/accounts/{account_id}/rulesets" method="GET" />
 
 ```json output
 {
@@ -133,10 +127,14 @@ You can view all versions of phase entry points (at the account and zone levels)
 
 The following example lists the rules in version `2` of the `http_request_firewall_managed` phase entry point ruleset at the zone level.
 
-```bash
-curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint/versions/2 \
---header "Authorization: Bearer <API_TOKEN>"
-```
+<APIRequest
+	path="/zones/{zone_id}/rulesets/phases/{ruleset_phase}/entrypoint/versions/{ruleset_version}"
+	method="GET"
+	parameters={{
+		ruleset_phase: "http_request_firewall_managed",
+		ruleset_version: "2",
+	}}
+/>
 
 ```json output
 {
@@ -175,10 +173,14 @@ The following example lists the rules in version `2` of a managed ruleset (the m
 
 Each rule in a managed ruleset can have associated tags or categories, listed in the `categories` field.
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{managed_ruleset_id}/versions/2 \
---header "Authorization: Bearer <API_TOKEN>"
-```
+<APIRequest
+	path="/accounts/{account_id}/rulesets/{ruleset_id}/versions/{ruleset_version}"
+	method="GET"
+	parameters={{
+		ruleset_id: "$MANAGED_RULESET_ID",
+		ruleset_version: "2",
+	}}
+/>
 
 ```json output
 {

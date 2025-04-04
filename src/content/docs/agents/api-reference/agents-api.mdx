@@ -14,6 +14,13 @@ The Agents SDK exposes two main APIs:
 * The server-side `Agent` class. An Agent encapsulates all of the logic for an Agent, including how clients can connect to it, how it stores state, the methods it exposes, how to call AI models, and any error handling.
 * The client-side `AgentClient` class, which allows you to connect to an Agent instance from a client-side application. The client APIs also include React hooks, including `useAgent` and `useAgentChat`, and allow you to automatically synchronize state between each unique Agent (running server-side) and your client applications.
 
+:::note
+
+Agents require [Cloudflare Durable Objects](/durable-objects/), see [Configuration](/agents/getting-started/testing-your-agent/#add-the-agent-configuration) to learn how to add the required bindings to your project. 
+
+:::
+
+
 You can also find more specific usage examples for each API in the [Agents API Reference](/agents/api-reference/).
 
 <TypeScriptExample>

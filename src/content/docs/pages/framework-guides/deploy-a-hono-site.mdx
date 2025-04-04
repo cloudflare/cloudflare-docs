@@ -28,81 +28,16 @@ To use `create-cloudflare` to create a new Hono project, run the following comma
 <PackageManagers
 	type="create"
 	pkg="cloudflare@latest"
-	args="my-hono-app --framework=hono"
+	args="my-hono-app --framework=hono --platform=pages"
 />
 
-Open your project and create a `src/server.js` file (or `src/server.ts` if you are using TypeScript). Add the following content to your file:
-
-```javascript
-import { Hono } from "hono";
-const app = new Hono();
-
-app.get("/", (ctx) => ctx.text("Hello world, this is Hono!!"));
-
-export default app;
-```
-
-To serve static files like CSS, image or JavaScript files, add the following to your `src/server.js/ts` file:
-
-```javascript
-app.get("/public/*", async (ctx) => {
-	return await ctx.env.ASSETS.fetch(ctx.req.raw);
-});
-```
-
-This will cause all the files in the `public` folder within `dist` to be served in your application.
-
-:::note
-
-The `dist` directory is created and used during the bundling process. You will need to create a `public` directory in the `dist` directory. Having `public` inside `dist` is not generally wanted as `dist` is not a directory to commit to your repository whilst `public` is.
-
-There are different alternatives to fix this issue. For example, you can configure your `.gitignore` file to include the `dist` directory, but ignore all its context except the `public` directory. Alternatively, you can create a `public` directory somewhere else and copy it inside `dist` as part of the bundling process.
-
-:::
-
-Open your `package.json` file and update the `scripts` section:
-
-<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
-
-```json
-    "scripts": {
-        "dev": "run-p dev:*",
-        "dev:wrangler": "wrangler pages dev dist --live-reload",
-        "dev:esbuild": "esbuild --bundle src/server.js --format=esm --watch --outfile=dist/_worker.js",
-        "build": "esbuild --bundle src/server.js --format=esm --outfile=dist/_worker.js",
-        "deploy": "wrangler pages deploy dist"
-    },
-```
-
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-
-```json
-    "scripts": {
-        "dev": "run-p dev:*",
-        "dev:wrangler": "wrangler pages dev dist --live-reload",
-        "dev:esbuild": "esbuild --bundle src/server.ts --format=esm --watch --outfile=dist/_worker.js",
-        "build": "esbuild --bundle src/server.ts --format=esm --outfile=dist/_worker.js",
-        "deploy": "wrangler pages deploy dist"
-    },
-```
-
-</TabItem> </Tabs>
-
-Then, run the following command.
-
-```sh
-npm install npm-run-all --save-dev
-```
-
-Installing `npm-run-all` enables you to use a single command (`npm run dev`) to run `npm run dev:wrangler` and `npm run dev:esbuild` simultaneously in watch mode.
+In your new Hono project, you will find a `public/static` directory for your static files, and a `src/index.ts` file which is the entrypoint for your server-side code.
 
 ## Run in local dev
 
-Start your dev workflow by running:
+Develop your app locally by running:
 
-```sh
-npm run dev
-```
+<PackageManagers type="run" args={"dev"} />
 
 You should be able to review your generated web application at `http://localhost:8788`.
 

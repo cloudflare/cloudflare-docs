@@ -9,7 +9,7 @@ head:
     content: Create an HTTP request header modification rule via API
 ---
 
-import { Details, Render } from "~/components";
+import { Details, Render, APIRequest } from "~/components";
 
 Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create HTTP request header modification rules via API. Refer to the [Rules examples gallery](/rules/transform/examples/?operation=Request+modification) for common use cases.
 
@@ -37,31 +37,29 @@ Make sure your API token has the [required permissions](#required-api-token-perm
 
 <Details header="Example: Add an HTTP request header with a static value">
 
-The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single HTTP request header modification rule — adding an HTTP request header with a static value — using the [Update a zone ruleset](/api/resources/rulesets/methods/update/) operation. The response will contain the complete definition of the ruleset you updated.
+The following example sets the rules of an existing phase ruleset (`$RULESET_ID`) to a single HTTP request header modification rule — adding an HTTP request header with a static value — using the [Update a zone ruleset](/api/resources/rulesets/methods/update/) operation. The response will contain the complete definition of the ruleset you updated.
 
-```bash
-curl --request PUT \
-https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "rules": [
-    {
-      "expression": "(starts_with(http.request.uri.path, \"/en/\"))",
-      "description": "My first HTTP request header modification rule",
-      "action": "rewrite",
-      "action_parameters": {
-        "headers": {
-          "X-Source": {
-            "operation": "set",
-            "value": "Cloudflare"
-          }
-        }
-      }
-    }
-  ]
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/rulesets/{ruleset_id}"
+	method="PUT"
+	json={{
+		rules: [
+			{
+				expression: '(starts_with(http.request.uri.path, "/en/"))',
+				description: "My first HTTP request header modification rule",
+				action: "rewrite",
+				action_parameters: {
+					headers: {
+						"X-Source": {
+							operation: "set",
+							value: "Cloudflare",
+						},
+					},
+				},
+			},
+		],
+	}}
+/>
 
 ```json output
 {
@@ -103,31 +101,29 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 
 <Details header="Example: Add an HTTP request header with a dynamic value">
 
-The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single HTTP request header modification rule — adding an HTTP request header with a dynamic value — using the [Update a zone ruleset](/api/resources/rulesets/methods/update/) operation. The response will contain the complete definition of the ruleset you updated.
+The following example sets the rules of an existing phase ruleset (`$RULESET_ID`) to a single HTTP request header modification rule — adding an HTTP request header with a dynamic value — using the [Update a zone ruleset](/api/resources/rulesets/methods/update/) operation. The response will contain the complete definition of the ruleset you updated.
 
-```bash
-curl --request PUT \
-https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "rules": [
-    {
-      "expression": "(starts_with(http.request.uri.path, \"/en/\"))",
-      "description": "My first HTTP request header modification rule",
-      "action": "rewrite",
-      "action_parameters": {
-        "headers": {
-          "X-Bot-Score": {
-            "operation": "set",
-            "expression": "to_string(cf.bot_management.score)"
-          }
-        }
-      }
-    }
-  ]
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/rulesets/{ruleset_id}"
+	method="PUT"
+	json={{
+		rules: [
+			{
+				expression: '(starts_with(http.request.uri.path, "/en/"))',
+				description: "My first HTTP request header modification rule",
+				action: "rewrite",
+				action_parameters: {
+					headers: {
+						"X-Bot-Score": {
+							operation: "set",
+							expression: "to_string(cf.bot_management.score)",
+						},
+					},
+				},
+			},
+		],
+	}}
+/>
 
 ```json output
 {
@@ -169,30 +165,28 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 
 <Details header="Example: Remove an HTTP request header">
 
-The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single HTTP request header modification rule — removing an HTTP request header — using the [Update a zone ruleset](/api/resources/rulesets/methods/update/). The response will contain the complete definition of the ruleset you updated.
+The following example sets the rules of an existing phase ruleset (`$RULESET_ID`) to a single HTTP request header modification rule — removing an HTTP request header — using the [Update a zone ruleset](/api/resources/rulesets/methods/update/). The response will contain the complete definition of the ruleset you updated.
 
-```bash
-curl --request PUT \
-https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "rules": [
-    {
-      "expression": "(starts_with(http.request.uri.path, \"/en/\"))",
-      "description": "My first HTTP request header modification rule",
-      "action": "rewrite",
-      "action_parameters": {
-        "headers": {
-          "cf-connecting-ip": {
-            "operation": "remove"
-          }
-        }
-      }
-    }
-  ]
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/rulesets/{ruleset_id}"
+	method="PUT"
+	json={{
+		rules: [
+			{
+				expression: '(starts_with(http.request.uri.path, "/en/"))',
+				description: "My first HTTP request header modification rule",
+				action: "rewrite",
+				action_parameters: {
+					headers: {
+						"cf-connecting-ip": {
+							operation: "remove",
+						},
+					},
+				},
+			},
+		],
+	}}
+/>
 
 ```json output
 {

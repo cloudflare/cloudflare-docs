@@ -58,7 +58,7 @@ export default {
 
 ```py
 from http.cookies import SimpleCookie
-from js import Response
+from workers import Response
 
 async def on_fetch(request):
     # Name of the cookie
@@ -68,9 +68,9 @@ async def on_fetch(request):
 
     if cookie_name in cookies:
         # Respond with cookie value
-        return Response.new(cookies[cookie_name].value)
+        return Response(cookies[cookie_name].value)
 
-    return Response.new("No cookie with name: " + cookie_name)
+    return Response("No cookie with name: " + cookie_name)
 ```
 
 </TabItem> </Tabs>

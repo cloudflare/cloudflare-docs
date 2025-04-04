@@ -123,7 +123,7 @@ export default {
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py
-from js import Response, Headers, fetch
+from workers import Response, fetch
 
 async def on_fetch(request):
     endpoint = "https://api.waqi.info/feed/geo:"
@@ -140,11 +140,11 @@ async def on_fetch(request):
 
     html_content += "<p>This is a demo using Workers geolocation data. </p>"
     html_content += f"You are located at: {latitude},{longitude}.</p>"
-    html_content += f"<p>Based off sensor data from <a href='{content.data.city.url}'>{content.data.city.name}</a>:</p>"
-    html_content += f"<p>The AQI level is: {content.data.aqi}.</p>"
-    html_content += f"<p>The N02 level is: {content.data.iaqi.no2.v}.</p>"
-    html_content += f"<p>The O3 level is: {content.data.iaqi.o3.v}.</p>"
-    html_content += f"<p>The temperature is: {content.data.iaqi.t.v}°C.</p>"
+    html_content += f"<p>Based off sensor data from <a href='{content['data']['city']['url']}'>{content['data']['city']['name']}</a>:</p>"
+    html_content += f"<p>The AQI level is: {content['data']['aqi']}.</p>"
+    html_content += f"<p>The N02 level is: {content['data']['iaqi']['no2']['v']}.</p>"
+    html_content += f"<p>The O3 level is: {content['data']['iaqi']['o3']['v']}.</p>"
+    html_content += f"<p>The temperature is: {content['data']['iaqi']['t']['v']}°C.</p>"
 
     html = f"""
     <!DOCTYPE html>
@@ -159,8 +159,8 @@ async def on_fetch(request):
       </body>
     """
 
-    headers = Headers.new({"content-type": "text/html;charset=UTF-8"}.items())
-    return Response.new(html, headers=headers)
+    headers = {"content-type": "text/html;charset=UTF-8"}
+    return Response(html, headers=headers)
 ```
 
 </TabItem> </Tabs>

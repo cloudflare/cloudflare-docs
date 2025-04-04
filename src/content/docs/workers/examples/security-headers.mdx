@@ -201,7 +201,7 @@ export default {
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py
-from js import Response, fetch, Headers
+from workers import Response, fetch
 
 async def on_fetch(request):
     default_security_headers = {
@@ -232,23 +232,23 @@ async def on_fetch(request):
     blocked_headers = ["Public-Key-Pins", "X-Powered-By" ,"X-AspNet-Version"]
 
     res = await fetch(request)
-    new_headers = Headers.new(res.headers)
+    new_headers = res.headers
 
     # This sets the headers for HTML responses
     if "text/html" in new_headers["Content-Type"]:
-        return Response.new(res.body, status=res.status, statusText=res.statusText, headers=new_headers)
+        return Response(res.body, status=res.status, statusText=res.statusText, headers=new_headers)
 
     for name in default_security_headers:
-        new_headers.set(name, default_security_headers[name])
+        new_headers[name] = default_security_headers[name]
 
     for name in blocked_headers:
-        new_headers.delete(name)
+        del new_headers["name"]
 
     tls = request.cf.tlsVersion
 
     if not tls in ("TLSv1.2", "TLSv1.3"):
-        return Response.new("You need to use TLS version 1.2 or higher.", status=400)
-    return Response.new(res.body, status=res.status, statusText=res.statusText, headers=new_headers)
+        return Response("You need to use TLS version 1.2 or higher.", status=400)
+    return Response(res.body, status=res.status, statusText=res.statusText, headers=new_headers)
 ```
 
 </TabItem> <TabItem label="Rust" icon="seti:rust">

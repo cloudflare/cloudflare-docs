@@ -6,7 +6,7 @@ const DEFAULT_OG_IMAGE = "/cf-twitter-card.png";
 const CHANGELOG_OG_IMAGE = "/changelog-preview.png";
 
 const PRODUCT_AREA_OG_IMAGES: Record<string, string> = {
-	"cloudflare essentials": "/core-services-preview.png",
+	"core platform": "/core-services-preview.png",
 	"cloudflare one": "/zt-preview.png",
 	"developer platform": "/dev-products-preview.png",
 	"network security": "/core-services-preview.png",

@@ -78,7 +78,7 @@ You may not see any traffic matching the adaptive rules. This can be because the
 
 If you do see traffic that was _Logged_ by the adaptive rules, use the dashboard to determine if the traffic matches the characteristics of legitimate users or that of attack traffic. As each Internet property is unique, understanding if the traffic is legitimate requires your understanding of how your legitimate traffic looks. For example, the user agent, source country, headers, query string for HTTP requests, and protocols and ports for L3/4 traffic. 
 
-- In cases where you are certain that the rule is only flagging attack traffic, you should consider creating an override and enabling that rule with a [Managed Challenge](/waf/reference/cloudflare-challenges/#managed-challenge-recommended) or `Block` action.
+- In cases where you are certain that the rule is only flagging attack traffic, you should consider creating an override and enabling that rule with a [Managed Challenge](/fundamentals/security/cloudflare-challenges/#managed-challenge-recommended) or `Block` action.
 - In cases where you see legitimate traffic being flagged, you should lower the sensitivity level of the rule and observe the flagged traffic. You can continue reducing the sensitivity level until you reach a point where legitimate traffic is not flagged. Then, you should create an override to enable the rule with a mitigation action.
 - If the rule is still flagging legitimate traffic you can consider using the expression filters to condition the rules to exclude certain types of traffic.
 

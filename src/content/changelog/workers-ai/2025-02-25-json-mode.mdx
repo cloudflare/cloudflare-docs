@@ -6,7 +6,7 @@ date: 2025-02-25T15:00:00Z
 
 import { TypeScriptExample } from "~/components";
 
-Workers AI now supports structured JSON outputs with [JSON mode](/workers-ai/json-mode/), which allows you to request a structured output response when interacting with AI models.
+Workers AI now supports structured JSON outputs with [JSON mode](/workers-ai/features/json-mode/), which allows you to request a structured output response when interacting with AI models.
 
 This makes it much easier to retrieve structured data from your AI models, and avoids the (error prone!) need to parse large unstructured text responses to extract your data.
 
@@ -23,13 +23,13 @@ interface Env {
 
 // Define your JSON schema for a calendar event
 const CalendarEventSchema = {
-  type: 'object',
-  properties: {
-    name: { type: 'string' },
-    date: { type: 'string' },
-    participants: { type: 'array', items: { type: 'string' } },
-  },
-  required: ['name', 'date', 'participants']
+	type: "object",
+	properties: {
+		name: { type: "string" },
+		date: { type: "string" },
+		participants: { type: "array", items: { type: "string" } },
+	},
+	required: ["name", "date", "participants"],
 };
 
 export default {
@@ -42,29 +42,32 @@ export default {
 		});
 
 		const response = await client.chat.completions.create({
-	    model: 'gpt-4o-2024-08-06',
-	    messages: [
-	      { role: 'system', content: 'Extract the event information.' },
-	      { role: 'user', content: 'Alice and Bob are going to a science fair on Friday.' },
-	    ],
+			model: "gpt-4o-2024-08-06",
+			messages: [
+				{ role: "system", content: "Extract the event information." },
+				{
+					role: "user",
+					content: "Alice and Bob are going to a science fair on Friday.",
+				},
+			],
 			// Use the `response_format` option to request a structured JSON output
-	    response_format: {
+			response_format: {
 				// Set json_schema and provide ra schema, or json_object and parse it yourself
-	      type: 'json_schema',
-	      schema: CalendarEventSchema, // provide a schema
-	    },
-	  });
+				type: "json_schema",
+				schema: CalendarEventSchema, // provide a schema
+			},
+		});
 
 		// This will be of type CalendarEventSchema
 		const event = response.choices[0].message.parsed;
 
 		return Response.json({
-			"calendar_event": event,
-		})
-	}
-}
+			calendar_event: event,
+		});
+	},
+};
 ```
 
 </TypeScriptExample>
 
-To learn more about JSON mode and structured outputs, visit the [Workers AI documentation](/workers-ai/json-mode/).
+To learn more about JSON mode and structured outputs, visit the [Workers AI documentation](/workers-ai/features/json-mode/).

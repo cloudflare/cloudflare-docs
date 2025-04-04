@@ -1,0 +1,25 @@
+---
+pcx_content_type: reference
+title: SharePoint (FedRAMP)
+rss: file
+sidebar:
+  order: 8
+---
+
+import { Render } from "~/components";
+
+<Render
+	file="casb/fedramp-availability"
+	params={{
+		integrationName: "SharePoint (FedRAMP)",
+	}}
+/>
+
+<Render
+	file="casb/microsoft/integrations/sharepoint"
+	params={{
+		integrationName: "SharePoint (FedRAMP)",
+		environmentName: "Microsoft 365 account",
+		slugifiedName: "microsoft-365/sharepoint-fedramp",
+	}}
+/>

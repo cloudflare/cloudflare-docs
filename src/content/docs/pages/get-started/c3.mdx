@@ -95,7 +95,7 @@ pnpm create cloudflare@latest [--] [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]
 
   - The directory where the application should be created. The name of the application is taken from the directory name.
 
-- `NESTED ARGS..` string\[] optional
+- `NESTED ARGS..` <Type text="string[]" /> <MetaInfo text="optional" />
 
   - CLI arguments to pass to eventual third party CLIs C3 might invoke (in the case of full-stack applications).
 
@@ -169,11 +169,11 @@ pnpm create cloudflare@latest [--] [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]
 
     See the [templates folder](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare/templates) of this repo for more examples.
 
-- `--deploy` boolean (default: true) optional
+- `--deploy` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
 
   - Deploy your application after it has been created.
 
-- `--lang`string (default: ts) optional
+- `--lang` <Type text="string" /> <MetaInfo text="(default: ts) optional" />
 
   - The programming language of the template.
 
@@ -183,15 +183,15 @@ pnpm create cloudflare@latest [--] [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]
     - `js`
     - `python`
 
-- `--ts`boolean (default: true) optional
+- `--ts` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
 
-  - Use TypeScript in your application. Deprecated. Please use `--lang=ts` instead.
+  - Use TypeScript in your application. Deprecated. Uuse `--lang=ts` instead.
 
-- `--git` boolean (default: true) optional
+- `--git` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
 
   - Initialize a local git repository for your application.
 
-- `--open` boolean (default: true) optional
+- `--open` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
 
   - Open with your browser the deployed application (this option is ignored if the application is not deployed).
 
@@ -205,7 +205,7 @@ pnpm create cloudflare@latest [--] [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]
 
   - Use all the default C3 options each can also be overridden by specifying it.
 
-- `--auto-update` boolean (default: true) optional
+- `--auto-update` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
 
   - Automatically uses the latest version of C3.
 

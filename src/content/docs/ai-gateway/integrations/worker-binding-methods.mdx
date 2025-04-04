@@ -1,7 +1,7 @@
 ---
 title: AI Gateway Binding Methods
 pcx_content_type: tutorial
-updated: 2025-01-28
+updated: 2025-04-01
 ---
 
 import { Render, PackageManagers } from "~/components";
@@ -87,7 +87,57 @@ const log = await gateway.getLog("my-log-id");
 - **Returns**: `Promise<AiGatewayLog>`
 - **Example Use Case**: Retrieve log information for debugging or analytics.
 
-### 3.3. `run`: Universal Requests
+### 3.3. `getUrl`: Get Gateway URLs
+
+The `getUrl` method allows you to retrieve the base URL for your AI Gateway, optionally specifying a provider to get the provider-specific endpoint.
+
+```typescript
+// Get the base gateway URL
+const baseUrl = await gateway.getUrl();
+// Output: https://gateway.ai.cloudflare.com/v1/my-account-id/my-gateway/
+
+// Get a provider-specific URL
+const openaiUrl = await gateway.getUrl('openai');
+// Output: https://gateway.ai.cloudflare.com/v1/my-account-id/my-gateway/openai
+```
+
+- **Parameters**: Optional `provider` (string or `AIGatewayProviders` enum)
+- **Returns**: `Promise<string>`
+- **Example Use Case**: Dynamically construct URLs for direct API calls or debugging configurations.
+
+#### SDK Integration Examples
+
+The `getUrl` method is particularly useful for integrating with popular AI SDKs:
+
+**OpenAI SDK:**
+```typescript
+import OpenAI from "openai";
+
+const openai = new OpenAI({
+  apiKey: "my api key", // defaults to process.env["OPENAI_API_KEY"]
+  baseURL: await env.AI.gateway('my-gateway').getUrl('openai'),
+});
+```
+
+**Vercel AI SDK with OpenAI:**
+```typescript
+import { createOpenAI } from "@ai-sdk/openai";
+
+const openai = createOpenAI({
+  baseURL: await env.AI.gateway('my-gateway').getUrl('openai'),
+});
+```
+
+**Vercel AI SDK with Anthropic:**
+```typescript
+import { createAnthropic } from "@ai-sdk/anthropic";
+
+const anthropic = createAnthropic({
+  baseURL: await env.AI.gateway('my-gateway').getUrl('anthropic'),
+});
+```
+
+### 3.4. `run`: Universal Requests
 
 The `run` method allows you to execute universal requests. Users can pass either a single universal request object or an array of them. This method supports all AI Gateway providers.
 
@@ -111,11 +161,11 @@ const resp = await gateway.run({
 
 ## Conclusion
 
-With the new AI Gateway binding methods, you can now:
+With these AI Gateway binding methods, you can now:
 
 - Send feedback and update metadata with `patchLog`.
 - Retrieve detailed log information using `getLog`.
+- Get gateway URLs for direct API access with `getUrl`, making it easy to integrate with popular AI SDKs.
 - Execute universal requests to any AI Gateway provider with `run`.
 
 These methods offer greater flexibility and control over your AI integrations, empowering you to build more sophisticated applications on the Cloudflare Workers platform.
-

@@ -1,0 +1,69 @@
+---
+pcx_content_type: how-to
+title: Hono
+head: []
+description: Create a Hono application and deploy it to Cloudflare Workers with Workers Assets.
+---
+
+import {
+	Badge,
+	Description,
+	InlineBadge,
+	Render,
+	PackageManagers,
+} from "~/components";
+
+In this guide, you will create a new [Hono](https://hono.dev/) application and deploy to Cloudflare Workers (with the new [<InlineBadge preset="beta" /> Workers Assets](/workers/static-assets/)).
+
+## 1. Set up a new project
+
+Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up a new project. C3 will create a new project directory, use code from the official Hono template, and provide the option to deploy instantly.
+
+To use `create-cloudflare` to create a new Hono project with <InlineBadge preset="beta" /> Workers Assets, run the following command:
+
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest my-hono-app"
+	args={"--framework=hono --platform=workers"}
+/>
+
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		category: "web-framework",
+		framework: "Hono",
+	}}
+/>
+
+After setting up your project, change your directory by running the following command:
+
+```sh
+cd my-hono-app
+```
+
+## 2. Develop locally
+
+After you have created your project, run the following command in the project directory to start a local server. This will allow you to preview your project locally during development.
+
+<PackageManagers type="run" args={"dev"} />
+
+## 3. Deploy your project
+
+Your project can be deployed to a `*.workers.dev` subdomain or a [Custom Domain](/workers/configuration/routing/custom-domains/), from your own machine or from any CI/CD system, including [Cloudflare's own](/workers/ci-cd/builds/).
+
+The following command will build and deploy your project. If you are using CI, ensure you update your ["deploy command"](/workers/ci-cd/builds/configuration/#build-settings) configuration appropriately.
+
+<PackageManagers type="run" args={"deploy"} />
+
+---
+
+## Bindings
+
+Your Hono application can be fully integrated with the Cloudflare Developer Platform, in both local development and in production, by using product bindings. The [Hono documentation](https://hono.dev/docs/getting-started/cloudflare-workers#bindings) provides information about configuring bindings and how you can access them.
+
+## Static assets
+
+You can serve static assets in your Hono application by [placing them in the `./public/` directory](https://hono.dev/docs/getting-started/cloudflare-workers#serve-static-files). This can be useful for resource files such as images, stylesheets, fonts, and manifests.
+
+<Render file="workers-assets-routing-summary" />

@@ -1,0 +1,122 @@
+---
+pcx_content_type: concept
+title: McpAgent — API Reference
+sidebar:
+  order: 6
+---
+
+import { Render, TypeScriptExample } from "~/components";
+
+When you build MCP Servers on Cloudflare, you extend the [`McpAgent` class](https://github.com/cloudflare/agents/blob/5881c5d23a7f4580600029f69307cfc94743e6b8/packages/agents/src/mcp.ts), from the Agents SDK, like this:
+
+<TypeScriptExample>
+
+```ts title="src/index.ts"
+import { McpAgent } from "agents/mcp";
+import { DurableMCP } from "@cloudflare/model-context-protocol";
+
+export class MyMCP extends McpAgent {
+	server = new McpServer({ name: "Demo", version: "1.0.0" });
+
+	async init() {
+		this.server.tool(
+			"add",
+			{ a: z.number(), b: z.number() },
+			async ({ a, b }) => ({
+				content: [{ type: "text", text: String(a + b) }],
+			}),
+		);
+	}
+}
+```
+
+</TypeScriptExample>
+
+This means that each instance of your MCP server has its own durable state, backed by a [Durable Object](/durable-objects/), with its own [SQL database](/agents/api-reference/store-and-sync-state).
+
+Your MCP server doesn't necessarily have to be an Agent. You can build MCP servers that are stateless, and just add [tools](/agents/model-context-protocol/tools) to your MCP server using the `@modelcontextprotocol/typescript-sdk` package.
+
+But if you want your MCP server to:
+
+- remember previous tool calls, and responses it provided
+- provide a game to the MCP client, remembering the state of the game board, previous moves, and the score
+- cache the state of a previous external API call, so that subsequent tool calls can reuse it
+- do anything that an Agent can do, but allow MCP clients to communicate with it
+
+You can use the following APIs in order to do so.
+
+### State synchronization APIs
+
+The `McpAgent` class makes the following subset of methods from the [Agents SDK](/agents/api-reference/agents-api/) available:
+
+- [`state`](/agents/api-reference/store-and-sync-state/)
+- [`initialState`](/agents/api-reference/store-and-sync-state/#set-the-initial-state-for-an-agent)
+- [`setState`](/agents/api-reference/store-and-sync-state/)
+- [`onStateUpdate`](/agents/api-reference/store-and-sync-state/#synchronizing-state)
+- [`sql`](/agents/api-reference/agents-api/#sql-api)
+
+:::note[State resets after the session ends]
+Currently, each client session is backed by an instance of the `McpAgent` class. This is handled automatically for you, as shown in the [getting started guide](/agents/guides/remote-mcp-server). This means that when the same client reconnects, they will start a new session, and the state will be reset.
+:::
+
+For example, the following code implements an MCP server that remembers a counter value, and updates the counter when the `add` tool is called:
+
+<TypeScriptExample>
+
+```ts title="src/index.ts"
+import { McpAgent } from "agents/mcp";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { z } from "zod";
+
+type State = { counter: number };
+
+export class MyMCP extends McpAgent<Env, State, {}> {
+	server = new McpServer({
+		name: "Demo",
+		version: "1.0.0",
+	});
+
+	initialState: State = {
+		counter: 1,
+	};
+
+	async init() {
+		this.server.resource(`counter`, `mcp://resource/counter`, (uri) => {
+			return {
+				contents: [{ uri: uri.href, text: String(this.state.counter) }],
+			};
+		});
+
+		this.server.tool(
+			"add",
+			"Add to the counter, stored in the MCP",
+			{ a: z.number() },
+			async ({ a }) => {
+				this.setState({ ...this.state, counter: this.state.counter + a });
+
+				return {
+					content: [
+						{
+							type: "text",
+							text: String(`Added ${a}, total is now ${this.state.counter}`),
+						},
+					],
+				};
+			},
+		);
+	}
+
+	onStateUpdate(state: State) {
+		console.log({ stateUpdate: state });
+	}
+}
+```
+
+</TypeScriptExample>
+
+### Not yet supported APIs
+
+The following APIs from the Agents SDK are not yet available on `McpAgent`:
+
+- [WebSocket APIs](/agents/api-reference/websockets/) (`onMessage`, `onError`, `onClose`, `onConnect`)
+- [Scheduling APIs](/agents/api-reference/schedule-tasks/) `this.schedule`

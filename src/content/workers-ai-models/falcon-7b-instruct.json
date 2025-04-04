@@ -8,6 +8,7 @@
         "name": "Text Generation",
         "description": "Family of generative text models, such as large language models (LLM), that can be adapted for a variety of natural language tasks."
     },
+    "created_at": "2024-02-27 18:21:15.796",
     "tags": [],
     "properties": [
         {
@@ -382,7 +383,6 @@
             "oneOf": [
                 {
                     "type": "object",
-                    "contentType": "application/json",
                     "properties": {
                         "response": {
                             "type": "string",
@@ -433,7 +433,6 @@
                 },
                 {
                     "type": "string",
-                    "contentType": "text/event-stream",
                     "format": "binary"
                 }
             ]

@@ -1,9 +1,12 @@
+// @ts-check
 import { definePlugin } from "@expressive-code/core";
-import { h } from "@expressive-code/core/hast";
 
 import lzstring from "lz-string";
 
-export function serialiseWorker(code) {
+/**
+ * @param {string} code
+ */
+function serialiseWorker(code) {
 	const formData = new FormData();
 
 	const metadata = {
@@ -26,7 +29,10 @@ export function serialiseWorker(code) {
 	return formData;
 }
 
-export async function compressWorker(worker) {
+/**
+ * @param {FormData} worker
+ */
+async function compressWorker(worker) {
 	const serialisedWorker = new Response(worker);
 	return lzstring.compressToEncodedURIComponent(
 		`${serialisedWorker.headers.get(
@@ -39,23 +45,27 @@ export default () => {
 	return definePlugin({
 		name: "Adds 'Run Worker' button to JS codeblocks",
 		baseStyles: `
-        .run {
-            display: flex;
-            gap: 0.25rem;
-            flex-direction: row;
-            position: absolute;
-            inset-block-start: calc(var(--ec-brdWd) + var(--button-spacing));
-            inset-inline-end: calc(var(--ec-brdWd) + var(--ec-uiPadInl) * 3);
-            direction: ltr;
-            unicode-bidi: isolate;
+		.wrapper {
+			box-shadow: var(--ec-frm-frameBoxShdCssVal);
+			border-radius: calc(var(--ec-brdRad) + var(--ec-brdWd));
+			margin-top: 0 !important;
+		}
 
-            text-decoration-color: var(--sl-color-accent);
-            span {
-                color: var(--sl-color-white);
-                font-family: var(--sl-font-system);
-            }
-        }
-        `,
+		.expressive-code:has(.playground-frame) .frame {
+		  box-shadow: unset;
+
+			& > pre {
+				border-bottom-left-radius: 0;
+				border-bottom-right-radius: 0;
+			}
+		}
+
+		.playground-frame {
+			border: var(--ec-brdWd) solid var(--ec-brdCol);
+			border-top: unset;
+			border-bottom-left-radius: calc(var(--ec-brdRad) + var(--ec-brdWd));
+			border-bottom-right-radius: calc(var(--ec-brdRad) + var(--ec-brdWd));
+		}`,
 		hooks: {
 			postprocessRenderedBlock: async (context) => {
 				if (!context.codeBlock.meta.includes("playground")) return;
@@ -64,16 +74,51 @@ export default () => {
 					serialiseWorker(context.codeBlock.code),
 				);
 
-				const url = `https://workers.cloudflare.com/playground#${serialised}`;
-
-				const runButton = h("a.run", { href: url, target: "__blank" }, [
-					h("span", "Run Worker in Playground"),
-				]);
-
-				const ast = context.renderData.blockAst;
-				ast.children.push(runButton);
-
-				context.renderData.blockAst = ast;
+				context.renderData.blockAst = {
+					type: "element",
+					tagName: "div",
+					properties: {
+						className: ["wrapper"],
+					},
+					children: [
+						context.renderData.blockAst,
+						{
+							type: "element",
+							tagName: "div",
+							properties: {
+								className: [
+									"playground-frame",
+									"!flex",
+									"!p-4",
+									"!justify-end",
+									"!items-center",
+								],
+							},
+							children: [
+								{
+									type: "element",
+									tagName: "a",
+									properties: {
+										className: [
+											"!bg-cl1-brand-orange",
+											"!rounded",
+											"!px-6",
+											"!py-2",
+											"!text-cl1-black",
+											"!font-medium",
+											"!no-underline",
+										],
+										href: `https://workers.cloudflare.com/playground#${serialised}`,
+										target: "_blank",
+									},
+									children: [
+										{ type: "text", value: "Run Worker in Playground" },
+									],
+								},
+							],
+						},
+					],
+				};
 			},
 		},
 	});

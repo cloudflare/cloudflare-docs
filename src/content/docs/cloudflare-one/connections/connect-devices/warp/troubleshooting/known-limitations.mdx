@@ -84,9 +84,9 @@ The [Windows Teredo](https://learn.microsoft.com/en-us/windows/win32/teredo/abou
 
 ## Docker on Linux with bridged networking
 
-Currently [Docker](https://www.docker.com/products/container-runtime/) on Linux does not perform the underlying network tunnel MTU changes required by WARP. This can cause connectivity issues inside of a Docker container when WARP is enabled on the host machine. For example, `curl -v https://cloudflare.com > /dev/null` will fail if run from a Docker container that is using the default bridge network driver.
+[Docker](https://www.docker.com/products/container-runtime/) on Linux does not perform the underlying network tunnel MTU changes required by WARP. This can cause connectivity issues inside of a Docker container when WARP is enabled on the host machine. For example, `curl -v https://cloudflare.com > /dev/null` will fail if run from a Docker container that is using the default bridge network driver.
 
-Until Docker changes this behaviour, WARP + Docker users on Linux can manually reconfigure the MTU on Docker's network interface. You can either modify `/etc/docker/daemon.json` to include:
+To work around this issue, users of WARP with Docker on Linux can manually reconfigure the MTU on Docker's network interface. You can either modify `/etc/docker/daemon.json` to include:
 
 ```json
 {
@@ -100,7 +100,7 @@ or create a Docker network with a working MTU value:
 docker network create -o "com.docker.network.driver.mtu=1420" my-docker-network
 ```
 
-The MTU value should be set to the MTU of your host's default interface minus 80 bytes for the WARP protocol overhead. Most MTUs are 1500, therefore 1420 should work for most people.
+The MTU value should be set to the MTU of your host's default interface minus 80 bytes for the WARP protocol overhead. Most MTUs are 1500, so 1420 should work for most users.
 
 ## Windows 10 in Microsoft 365 Cloud PC is not supported
 

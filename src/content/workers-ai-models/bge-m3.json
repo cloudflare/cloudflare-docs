@@ -8,34 +8,88 @@
         "name": "Text Embeddings",
         "description": "Feature extraction models transform raw data into numerical features that can be processed while preserving the information in the original dataset. These models are ideal as part of building vector search applications or Retrieval Augmented Generation workflows with Large Language Models (LLM)."
     },
+    "created_at": "2024-05-22 19:27:09.781",
     "tags": [],
-    "properties": [],
+    "properties": [
+        {
+            "property_id": "price",
+            "value": [
+                {
+                    "unit": "per M input tokens",
+                    "price": 0.012,
+                    "currency": "USD"
+                }
+            ]
+        }
+    ],
     "schema": {
         "input": {
             "type": "object",
-            "properties": {
-                "query": {
-                    "type": "string",
-                    "minLength": 1,
-                    "description": "A query you wish to perform against the provided contexts. If no query is provided the model with respond with embeddings for contexts"
-                },
-                "contexts": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "text": {
-                                "type": "string",
-                                "minLength": 1,
-                                "description": "One of the provided context content"
-                            }
+            "oneOf": [
+                {
+                    "title": "BGE M3 Input Query and Contexts",
+                    "properties": {
+                        "query": {
+                            "type": "string",
+                            "minLength": 1,
+                            "description": "A query you wish to perform against the provided contexts. If no query is provided the model with respond with embeddings for contexts"
+                        },
+                        "contexts": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "text": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "description": "One of the provided context content"
+                                    }
+                                }
+                            },
+                            "description": "List of provided contexts. Note that the index in this array is important, as the response will refer to it."
+                        },
+                        "truncate_inputs": {
+                            "type": "boolean",
+                            "default": false,
+                            "description": "When provided with too long context should the model error out or truncate the context to fit?"
                         }
                     },
-                    "description": "List of provided contexts. Note that the index in this array is important, as the response will refer to it."
+                    "required": [
+                        "contexts"
+                    ]
+                },
+                {
+                    "title": "BGE M3 Input Embedding",
+                    "properties": {
+                        "text": {
+                            "oneOf": [
+                                {
+                                    "type": "string",
+                                    "description": "The text to embed",
+                                    "minLength": 1
+                                },
+                                {
+                                    "type": "array",
+                                    "description": "Batch of text values to embed",
+                                    "items": {
+                                        "type": "string",
+                                        "description": "The text to embed",
+                                        "minLength": 1
+                                    },
+                                    "maxItems": 100
+                                }
+                            ]
+                        },
+                        "truncate_inputs": {
+                            "type": "boolean",
+                            "default": false,
+                            "description": "When provided with too long context should the model error out or truncate the context to fit?"
+                        }
+                    },
+                    "required": [
+                        "text"
+                    ]
                 }
-            },
-            "required": [
-                "contexts"
             ]
         },
         "output": {
@@ -43,7 +97,7 @@
             "contentType": "application/json",
             "oneOf": [
                 {
-                    "title": "Query",
+                    "title": "BGE M3 Ouput Query",
                     "properties": {
                         "response": {
                             "type": "array",
@@ -64,7 +118,7 @@
                     }
                 },
                 {
-                    "title": "Embedding",
+                    "title": "BGE M3 Output Embedding for Contexts",
                     "properties": {
                         "response": {
                             "type": "array",
@@ -74,6 +128,50 @@
                                     "type": "number"
                                 }
                             }
+                        },
+                        "shape": {
+                            "type": "array",
+                            "items": {
+                                "type": "number"
+                            }
+                        },
+                        "pooling": {
+                            "type": "string",
+                            "enum": [
+                                "mean",
+                                "cls"
+                            ],
+                            "description": "The pooling method used in the embedding process."
+                        }
+                    }
+                },
+                {
+                    "title": "BGE M3 Ouput Embedding",
+                    "properties": {
+                        "shape": {
+                            "type": "array",
+                            "items": {
+                                "type": "number"
+                            }
+                        },
+                        "data": {
+                            "type": "array",
+                            "description": "Embeddings of the requested text values",
+                            "items": {
+                                "type": "array",
+                                "description": "Floating point embedding representation shaped by the embedding model",
+                                "items": {
+                                    "type": "number"
+                                }
+                            }
+                        },
+                        "pooling": {
+                            "type": "string",
+                            "enum": [
+                                "mean",
+                                "cls"
+                            ],
+                            "description": "The pooling method used in the embedding process."
                         }
                     }
                 }

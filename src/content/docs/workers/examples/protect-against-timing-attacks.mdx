@@ -68,29 +68,30 @@ export default {
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py
-from js import Response, TextEncoder, crypto
+from workers import Response
+from js import TextEncoder, crypto
 
 async def on_fetch(request, env):
     auth_token = request.headers["Authorization"] or ""
     secret = env.MY_SECRET_VALUE
 
     if secret is None:
-        return Response.new("Missing secret binding", status=500)
+        return Response("Missing secret binding", status=500)
 
     if len(auth_token) != len(secret):
-        return Response.new("Unauthorized", status=401)
+        return Response("Unauthorized", status=401)
 
     if a.byteLength != b.byteLength:
-        return Response.new("Unauthorized", status=401)
+        return Response("Unauthorized", status=401)
 
     encoder = TextEncoder.new()
     a = encoder.encode(auth_token)
     b = encoder.encode(secret)
 
     if not crypto.subtle.timingSafeEqual(a, b):
-        return Response.new("Unauthorized", status=401)
+        return Response("Unauthorized", status=401)
 
-    return Response.new("Welcome!")
+    return Response("Welcome!")
 ```
 
 </TabItem> </Tabs>

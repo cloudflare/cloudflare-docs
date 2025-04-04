@@ -48,6 +48,7 @@ export { default as PublicStats } from "./PublicStats.astro";
 export { default as RelatedProduct } from "./RelatedProduct.astro";
 export { default as Render } from "./Render.astro";
 export { default as ResourcesBySelector } from "./ResourcesBySelector.astro";
+export { default as RSSButton } from "./RSSButton.astro";
 export { default as RuleID } from "./RuleID.astro";
 export { default as SpotlightAuthorDetails } from "./SpotlightAuthorDetails.astro";
 export { default as Stream } from "./Stream.astro";

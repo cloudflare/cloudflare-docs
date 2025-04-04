@@ -1,0 +1,86 @@
+---
+pcx_content_type: reference
+title: API
+sidebar:
+  order: 3
+description: Vite plugin API
+---
+
+import { Type, MetaInfo } from "~/components";
+
+## `cloudflare()`
+
+The `cloudflare` plugin should be included in the Vite `plugins` array:
+
+```ts {2, 5} title="vite.config.ts"
+import { defineConfig } from "vite";
+import { cloudflare } from "@cloudflare/vite-plugin";
+
+export default defineConfig({
+	plugins: [cloudflare()],
+});
+```
+
+It accepts an optional `PluginConfig` parameter.
+
+## `interface PluginConfig`
+
+- `configPath` <Type text='string' /> <MetaInfo text='optional' />
+
+  An optional path to your Worker config file.
+  By default, a `wrangler.jsonc`, `wrangler.json`, or `wrangler.toml` file in the root of your application will be used as the Worker config.
+
+  For more information about the Worker configuration, see [Configuration](/workers/wrangler/configuration/).
+
+- `viteEnvironment` <Type text='{ name?: string }' /> <MetaInfo text='optional' />
+
+  Optional Vite environment options.
+  By default, the environment name is the Worker name with `-` characters replaced with `_`.
+  Setting the name here will override this.
+  A typical use case is setting `viteEnvironment: { name: "ssr" }` to apply the Worker to the SSR environment.
+
+  See [Vite Environments](/workers/vite-plugin/reference/vite-environments/) for more information.
+
+- `persistState` <Type text='boolean | { path: string }' /> <MetaInfo text='optional' />
+
+  An optional override for state persistence.
+  By default, state is persisted to `.wrangler/state`.
+  A custom `path` can be provided or, alternatively, persistence can be disabled by setting the value to `false`.
+
+- `inspectorPort` <Type text='number | false' /> <MetaInfo text='optional' />
+
+  An optional override for debugging your Workers.
+  By default, the debugging inspector is enabled and listens on port `9229`.
+  A custom port can be provided or, alternatively, setting this to `false` will disable the debugging inspector.
+
+  See [Debugging](/workers/vite-plugin/reference/debugging/) for more information.
+
+- `auxiliaryWorkers` <Type text='Array<AuxiliaryWorkerConfig>' /> <MetaInfo text='optional' />
+
+  An optional array of auxiliary Workers.
+  Auxiliary Workers are additional Workers that are used as part of your application.
+  You can use [service bindings](/workers/runtime-apis/bindings/service-bindings/) to call auxiliary Workers from your main (entry) Worker.
+  All requests are routed through your entry Worker.
+  During the build, each Worker is output to a separate subdirectory of `dist`.
+
+:::note
+When running `wrangler deploy`, only your main (entry) Worker will be deployed.
+If using multiple Workers, each auxiliary Worker must be deployed individually.
+You can inspect the `dist` directory and then run `wrangler deploy -c dist/<auxiliary-worker>/wrangler.json` for each.
+:::
+
+## `interface AuxiliaryWorkerConfig`
+
+- `configPath` <Type text='string' />
+
+  A required path to your Worker config file.
+
+  For more information about the Worker configuration, see [Configuration](/workers/wrangler/configuration/).
+
+- `viteEnvironment` <Type text='{ name?: string }' /> <MetaInfo text='optional' />
+
+  Optional Vite environment options.
+  By default, the environment name is the Worker name with `-` characters replaced with `_`.
+  Setting the name here will override this.
+
+  See [Vite Environments](/workers/vite-plugin/reference/vite-environments/) for more information.

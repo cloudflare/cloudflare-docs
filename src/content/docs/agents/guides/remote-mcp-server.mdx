@@ -1,6 +1,6 @@
 ---
 pcx_content_type: concept
-title: Build a remote MCP server
+title: Build a Remote MCP server
 sidebar:
   order: 4
 ---
@@ -13,7 +13,7 @@ This guide will walk you through how to deploy an [example MCP server](https://g
 
 The link below will guide you through everything you need to do to deploy this [example MCP server](https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-server) to your Cloudflare account:
 
-[![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://dash.cloudflare.com/?to=/:account/workers-and-pages/create/deploy-to-workers&repository=https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-server)
+[![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-server)
 
 At the end of this process, you will have a new git repository on your GitHub or GitLab account for your MCP server, configured to automatically deploy Cloudflare each time you push a change or merge a pull request to the main branch of the repository. You can then clone this repository, [develop locally](/agents/guides/remote-mcp-server/#local-development), and start writing code and building.
 
@@ -41,7 +41,7 @@ npm start
 
 Your MCP server is now running on `http://localhost:8787/sse`.
 
-In a new terminal, run the [MCP inspector](https://github.com/modelcontextprotocol/mcp-inspector). The MCP inspector is an interactive MCP client that allows you to connect to your MCP server and invoke tools from a web browser.
+In a new terminal, run the [MCP inspector](https://github.com/modelcontextprotocol/inspector). The MCP inspector is an interactive MCP client that allows you to connect to your MCP server and invoke tools from a web browser.
 
 ```sh
 npx @modelcontextprotocol/inspector@latest
@@ -57,7 +57,9 @@ In the inspector, enter the URL of your MCP server, `http://localhost:8787/sse`,
 
 ![MCP inspector — where to enter the URL of your MCP server](~/assets/images/agents/mcp-inspector-enter-url.png)
 
-You will be redirected to an example OAuth login page. Enter any username and password and click "Log in and approve" to continue. (you can add your own authentication and/or authorization provider to replace this. Refer to the [authorization](/agents/model-context-protocol/authorization/) section for details on how to do this.)
+You will be redirected to an example OAuth login page. Enter any username and password and click "Log in and approve" to continue. 
+
+Note: You can add your own authentication and/or authorization provider to replace this. Refer to the [authorization](/agents/model-context-protocol/authorization/) section for details on how to do this.
 
 ![MCP OAuth Login Page](~/assets/images/agents/mcp-demo-oauth-flow.png)
 
@@ -77,7 +79,7 @@ If you have already [connected a git repository](/workers/ci-cd/builds/) to the 
 
 After deploying, take the URL of your deployed MCP server, and enter it in the MCP inspector running on `http://localhost:5173`. You now have a remote MCP server, deployed to Cloudflare, that MCP clients can connect to.
 
-### Connect your remote MCP server to Claude and other MCP Clients via a local proxy
+### Connect your Remote MCP server to Claude and other MCP Clients via a local proxy
 
 Now that your MCP server is running with OAuth authentication, you can use the [`mcp-remote` local proxy](https://www.npmjs.com/package/mcp-remote) to connect Claude Desktop or other MCP clients to it — even though these tools aren't yet _remote_ MCP clients, and don't support remote transport or authorization on the client side. This lets you to test what an interaction with your OAuth-enabled MCP server will be like with a real MCP client.
 
@@ -105,9 +107,7 @@ Learn more about other ways of using remote MCP servers with MCP clients here in
 
 The example MCP server you just deployed above acts as an OAuth provider to MCP clients, handling authorization, but has a placeholder authentication flow. It lets you enter any username and password to log in, and doesn't actually authenticate you against any user database.
 
-In the next section, you will add a real authentication provider to your MCP server. Even if you already have an authentication provider in place, following these steps will show you more clearly how to integrate it with your MCP server.
-
-We'll use GitHub as the authentication provider here, but you can use any OAuth provider that supports the OAuth 2.0 specification, including Google, Slack, Stytch, Auth0, and more.
+In the next section, you will add a real authentication provider to your MCP server. Following these steps will show you more clearly how to integrate it with your MCP server. We'll use GitHub in this example, but you can use any OAuth provider that supports the OAuth 2.0 specification, including Google, Slack, Stytch, Auth0, and more.
 
 ### Step 1 — Create and deploy a new MCP server
 
@@ -117,7 +117,7 @@ Run the following command to create a new MCP server:
 	type="create"
 	pkg="cloudflare@latest"
 	args={
-		"my-mcp-server-github-auth --template=cloudflare/ai/demos/remote-mcp-server-github"
+		"my-mcp-server-github-auth --template=cloudflare/ai/demos/remote-mcp-github-oauth"
 	}
 />
 
@@ -181,7 +181,7 @@ npm start
 
 Your MCP server is now running on `http://localhost:8787/sse`.
 
-In a new terminal, run the [MCP inspector](https://github.com/modelcontextprotocol/mcp-inspector). The MCP inspector is an interactive MCP client that allows you to connect to your MCP server and invoke tools from a web browser.
+In a new terminal, run the [MCP inspector](https://github.com/modelcontextprotocol/inspector). The MCP inspector is an interactive MCP client that allows you to connect to your MCP server and invoke tools from a web browser.
 
 ```sh
 npx @modelcontextprotocol/inspector@latest

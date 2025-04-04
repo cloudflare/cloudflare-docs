@@ -7,13 +7,11 @@ sidebar:
 
 To enable Gmail BCC integration:
 
-1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
-2. Select **Zero Trust** > **Settings**.
-3. Select **SaaS Integrations**.
-4. Select **Add integration** > **Google Workspace**.
-5. Select **Select Integration**.
-
-## Create an integration
+1. Log in to [Zero Trust](https://one.dash.cloudflare.com/), select **Email Security**, then select **Settings**.
+2. Go to **Integrated domains** and select **View**.
+3. Select **Connect a domain**.
+4. Select **BCC/Journaling**.
+5. Choose **Integrate with Google**, and select **Authorize**.
 
 Name your integration, then select **Next**.
 
@@ -23,22 +21,10 @@ Name your integration, then select **Next**.
 2. On the [Google Cloud Console](https://console.cloud.google.com/welcome/new), go to the sidebar, select **APIs & Services**, then select **Credentials**.
 3. Select **CREATE CREDENTIALS** > **Service account**.
 4. Fill in the details to create a service account:
-    - **Service account name**: Enter `Message Retraction Service Account`.
-    - **Service account ID**: Enter `message-retraction-service-acc`.
-    - **Service account description**: Enter `Email Security Message Retraction`.
+    - **Service account name**: Enter `Cloudflare Google Integration`.
+    - **Service account ID**: Enter `cloudflare-google-integration`.
+    - **Service account description**: Enter `Cloudflare Google Integration`.
     - Select **CREATE AND CONTINUE**.
-5. In **Grant this service account access to project**, select **Select a role** > Choose **Owner**. Select **CONTINUE**, then select **DONE**.
-6. Go back to **Credentials** on the sidebar, and select your service account under **Service Accounts**. In **Details**, take note of the **Unique ID**.
-7. Select **Advanced settings** > **VIEW GOOGLE WORKSPACE ADMIN CONSOLE**, then enter your password. This will redirect you to the Google admin portal.
-8. On the sidebar, select **Security** > **Access and data control** > **API controls** > Select **MANAGE DOMAIN WIDE DELEGATION**.
-9. Select **Add new** > Add a new client ID:
-    - **Client ID**: Enter the **Unique ID** you took note of in step 5.
-    - **OAuth scopes**: Enter the following URLs:
-    
-        ```txt
-        https://www.googleapis.com/auth/admin.directory.user.readonly, https://www.googleapis.com/auth/admin.directory.group.readonly, https://www.googleapis.com/auth/admin.directory.user.alias.readonly, https://www.googleapis.com/auth/gmail.labels, https://mail.google.com/
-        ```
-    - Select **AUTHORIZE**.
 
 ### 2. Create a JSON Key for your Service Account
 
@@ -81,6 +67,21 @@ Enter the email associated with the Google Workspace Administrator account. Your
 1. Select **Create integration**.
 2. Once you created your integration, you will be redirected to the **Review details** page, where you will be able to review **Integration details**. 
 3. Review your details, then select **Complete Email Security set up** > **Continue to Email Security**.
+
+## Verify integration
+
+To verify that the integration has been successful:
+
+1. Go to **Settings** (the gear icon) > **SaaS integrations**.
+2. Go to your integration, and ensure that the integration displays **CASB+EMAIL** under **Type**.
+
+:::note
+If you do not reach the step to complete Email Security set up:
+
+1. Go to **Settings** (the gear icon) > **SaaS Integrations**.
+2. Delete the integration, if present. Locate your integration, select **Configure**, then select **Delete**.
+3. Follow the steps from the beginning to enable Gmail BCC integration.
+:::
 
 ## Next steps
 

@@ -1,0 +1,88 @@
+---
+pcx_content_type: get-started
+title: Get started
+sidebar:
+  order: 1
+description: Get started with the Vite plugin
+---
+
+import { PackageManagers, WranglerConfig } from "~/components";
+
+:::note
+This guide demonstrates creating a standalone Worker from scratch.
+{/* Add link to React Router framework guide */}If you would instead like to create a new application from a ready-to-go template, refer to the [React](/workers/frameworks/framework-guides/react/) or [Vue](/workers/frameworks/framework-guides/vue/) framework guides.
+:::
+
+## Start with a basic `package.json`
+
+```json title="package.json"
+{
+	"name": "cloudflare-vite-get-started",
+	"private": true,
+	"version": "0.0.0",
+	"type": "module",
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"preview": "npm run build && vite preview",
+		"deploy": "npm run build && wrangler deploy"
+	}
+}
+```
+
+:::note
+Ensure that you include `"type": "module"` in order to use ES modules by default.
+:::
+
+## Install the dependencies
+
+<PackageManagers type="add" pkg="vite @cloudflare/vite-plugin wrangler" dev />
+
+## Create your Vite config file and include the Cloudflare plugin
+
+```ts title="vite.config.ts"
+import { defineConfig } from "vite";
+import { cloudflare } from "@cloudflare/vite-plugin";
+
+export default defineConfig({
+	plugins: [cloudflare()],
+});
+```
+
+The Cloudflare Vite plugin doesn't require any configuration by default and will look for a `wrangler.jsonc`, `wrangler.json` or `wrangler.toml` in the root of your application.
+
+Refer to the [API reference](/workers/vite-plugin/reference/api/) for configuration options.
+
+## Create your Worker config file
+
+<WranglerConfig>
+
+```toml
+name = "cloudflare-vite-get-started"
+compatibility_date = "2025-04-03"
+main = "./src/index.ts"
+```
+
+</WranglerConfig>
+
+The `name` field specifies the name of your Worker.
+By default, this is also used as the name of the Worker's Vite Environment (see [Vite Environments](/workers/vite-plugin/reference/vite-environments/) for more information).
+The `main` field specifies the entry file for your Worker code.
+
+For more information about the Worker configuration, see [Configuration](/workers/wrangler/configuration/).
+
+## Create your Worker entry file
+
+```ts title="src/index.ts"
+export default {
+	fetch() {
+		return new Response(`Running in ${navigator.userAgent}!`);
+	},
+};
+```
+
+A request to this Worker will return 'Running in Cloudflare-Workers!', demonstrating that the code is running inside the Workers runtime.
+
+## Dev, build, preview and deploy
+
+You can now start the Vite development server (`npm run dev`), build the application (`npm run build`), preview the built application (`npm run preview`), and deploy to Cloudflare (`npm run deploy`).

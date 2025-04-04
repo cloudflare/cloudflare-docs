@@ -64,8 +64,8 @@ Alarms can be used to build distributed primitives, like queues or batching of w
     - `retryCount` <Type text="number"/>: The number of times this alarm event has been retried.
     - `isRetry` <Type text="boolean"/>: A boolean value to indicate if the alarm has been retried. This value is `true` if this alarm event is a retry.
 
-
-  - The `alarm()` handler has guaranteed at-least-once execution and will be retried upon failure using exponential backoff, starting at 2 second delays for up to 6 retries. Retries will be performed if the method fails with an uncaught exception.
+  - Only one instance of `alarm()` will ever run at a given time per Durable Object instance.
+  - The `alarm()` handler has guaranteed at-least-once execution and will be retried upon failure using exponential backoff, starting at 2 second delays for up to 6 retries. This only applies to the most recent `setAlarm()` call. Retries will be performed if the method fails with an uncaught exception.
 
   - This method can be `async`.
 

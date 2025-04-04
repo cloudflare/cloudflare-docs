@@ -56,9 +56,9 @@ if (currentSection) {
 		}
 
 		if (product.data.product.title) {
-			["pcx_product", "algolia_product_filter"].map((property) => {
+			["pcx_product", "algolia_product_filter"].map((name) => {
 				metaTags.push({
-					property,
+					name,
 					content: product.data.product.title,
 				});
 			});
@@ -148,6 +148,16 @@ const ogImageUrl = new URL(ogImagePath, Astro.url.origin).toString();
 		property,
 		content: ogImageUrl,
 	});
+});
+
+head.push({
+	tag: "link",
+	attrs: {
+		rel: "alternate",
+		type: "text/markdown",
+		href: Astro.url.pathname + "index.md",
+	},
+	content: "",
 });
 
 metaTags.map((attrs) => {

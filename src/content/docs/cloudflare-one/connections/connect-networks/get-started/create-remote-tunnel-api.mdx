@@ -13,14 +13,14 @@ Follow this guide to set up a Cloudflare Tunnel using the API.
 
 [Create an API token](/fundamentals/api/get-started/create-token/) with the following permissions:
 
-| Type    | Item             | Permission |
-| ------- | ---------------- | ---------- |
-| Account | Cloudflare Tunnel | Edit  |
-| Zone    | DNS | Edit |
+| Type    | Item              | Permission |
+| ------- | ----------------- | ---------- |
+| Account | Cloudflare Tunnel | Edit       |
+| Zone    | DNS               | Edit       |
 
 ## 2. Create a tunnel
 
-Make a `POST` request to the [Cloudflare Tunnel](/api/resources/zero_trust/subresources/access/subresources/applications/methods/create/) endpoint:
+Make a `POST` request to the [Cloudflare Tunnel](/api/resources/zero_trust/subresources/tunnels/subresources/cloudflared/methods/create/) endpoint:
 
 ```sh
 curl 'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/cfd_tunnel' \
@@ -76,47 +76,48 @@ Follow these steps to connect an application through your tunnel. If you are loo
 
 1. Make a [`PUT` request](/api/resources/zero_trust/subresources/tunnels/subresources/cloudflared/subresources/configurations/methods/update/) to route your local service URL to a public hostname. For example,
 
-	```sh
-	curl --request PUT \
-	'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/cfd_tunnel/c1744f8b-faa1-48a4-9e5c-02ac921467fa/configurations' \
-	--header 'Content-Type: application/json' \
-	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-	--data '{
-		"config": {
-			"ingress": [
-				{
-					"hostname": "app.example.com",
-					"service": "http://localhost:8001",
-					"originRequest": {}
-				},
-				{
-					"service": "http_status:404"
-				}
-			]
-		}
-	}'
-	```
+   ```sh
+   curl --request PUT \
+   'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/cfd_tunnel/c1744f8b-faa1-48a4-9e5c-02ac921467fa/configurations' \
+   --header 'Content-Type: application/json' \
+   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+   --data '{
+   	"config": {
+   		"ingress": [
+   			{
+   				"hostname": "app.example.com",
+   				"service": "http://localhost:8001",
+   				"originRequest": {}
+   			},
+   			{
+   				"service": "http_status:404"
+   			}
+   		]
+   	}
+   }'
+   ```
 
-	:::note
-	If you add a multi-level subdomain (more than one level of subdomain), you must [order an Advanced Certificate for the hostname](/cloudflare-one/faq/troubleshooting/#i-see-this-site-cant-provide-a-secure-connection).
-	:::
+   :::note
+   If you add a multi-level subdomain (more than one level of subdomain), you must [order an Advanced Certificate for the hostname](/cloudflare-one/faq/troubleshooting/#i-see-this-site-cant-provide-a-secure-connection).
+   :::
 
-	Your ingress rules must include a catch-all rule at the end. In this example, `cloudflared` will respond with a 404 status code when the request does not match any of the previous hostnames.
+   Your ingress rules must include a catch-all rule at the end. In this example, `cloudflared` will respond with a 404 status code when the request does not match any of the previous hostnames.
 
 2. [Create a DNS record](/api/resources/dns/subresources/records/methods/create/) for your application:
-	```sh
-	curl https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records \
-	--header 'Content-Type: application/json' \
-	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-	--data '{
-		"type": "CNAME",
-		"proxied": true,
-		"name": "app.example.com",
-		"content": "c1744f8b-faa1-48a4-9e5c-02ac921467fa.cfargotunnel.com"
-	}'
-	```
 
-	This DNS record allows Cloudflare to proxy `app.example.com` traffic to your Cloudflare Tunnel (`<tunnel-id>.cfargotunnel.com`).
+   ```sh
+   curl https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records \
+   --header 'Content-Type: application/json' \
+   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+   --data '{
+   	"type": "CNAME",
+   	"proxied": true,
+   	"name": "app.example.com",
+   	"content": "c1744f8b-faa1-48a4-9e5c-02ac921467fa.cfargotunnel.com"
+   }'
+   ```
+
+   This DNS record allows Cloudflare to proxy `app.example.com` traffic to your Cloudflare Tunnel (`<tunnel-id>.cfargotunnel.com`).
 
 This application will be publicly available on the Internet once you [run the tunnel](#4-install-and-run-the-tunnel). To allow or block specific users, [create an Access application](/cloudflare-one/applications/configure-apps/self-hosted-public-app/).
 
@@ -143,45 +144,46 @@ Install `cloudflared` on your server and run the tunnel using the `token` value 
 
 <Tabs> <TabItem label="Windows">
 
-1. [Download and install](/cloudflare-one/connections/connect-networks/downloads/#windows) `cloudflared`.
+1.  [Download and install](/cloudflare-one/connections/connect-networks/downloads/#windows) `cloudflared`.
 
-2. Open Command Prompt as administrator.
+2.  Open Command Prompt as administrator.
 
-3. Run the following command:
+3.  Run the following command:
 
-		```txt
-		cloudflared.exe service install <tunnel-token>
-		```
+        ```txt
+        cloudflared.exe service install <tunnel-token>
+        ```
 
 </TabItem> <TabItem label="macOS">
 
-1. [Download and install](/cloudflare-one/connections/connect-networks/downloads/#macos) `cloudflared`.
+1.  [Download and install](/cloudflare-one/connections/connect-networks/downloads/#macos) `cloudflared`.
 
-2. Run the following command:
+2.  Run the following command:
 
-		```sh
-		sudo cloudflared service install <tunnel-token>
-		```
+        ```sh
+        sudo cloudflared service install <tunnel-token>
+        ```
 
 </TabItem> <TabItem label="Linux">
 
-1. [Download and install](https://pkg.cloudflare.com/index.html) `cloudflared`.
+1.  [Download and install](https://pkg.cloudflare.com/index.html) `cloudflared`.
 
-2. Run the following command:
+2.  Run the following command:
 
-		```sh
-		sudo cloudflared service install <tunnel-token>
-		```
+        ```sh
+        sudo cloudflared service install <tunnel-token>
+        ```
 
 </TabItem> <TabItem label="Docker">
 
-1. Open a terminal window.
+1.  Open a terminal window.
 
-2. Run the following command:
+2.  Run the following command:
 
-		```sh
-		docker run cloudflare/cloudflared:latest tunnel --no-autoupdate run --token <tunnel-token>
-		```
+        	```sh
+        	docker run cloudflare/cloudflared:latest tunnel --no-autoupdate run --token <tunnel-token>
+        	```
+
 </TabItem>  </Tabs>
 
 ## 5. Verify tunnel status

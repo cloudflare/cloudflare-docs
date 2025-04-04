@@ -26,14 +26,14 @@ WARP settings define the WARP client modes and permissions available to end user
 <Render file="warp/all-systems-modes-plans" />
 
 :::note
-
-To use **Admin override**, you must first have enabled the [**Lock WARP switch**](#lock-warp-switch). **Admin override** is only needed and used when the WARP lock switch is turned on.
-
+To use **Admin override**, you must first have enabled [**Lock WARP switch**](#lock-warp-switch).
 :::
 
-When the [**Lock WARP switch**](#lock-warp-switch) is enabled, users cannot toggle the WARP client on and off on their device. Enabling **Admin override** gives users the ability to temporarily turn off the WARP client using an override code provided by an admin. **Admin override** is only needed in a configuration where the **lock WARP switch** is enabled.
+When [**Lock WARP switch**](#lock-warp-switch) is enabled, users cannot toggle the WARP client on and off on their device. Enabling **Admin override** gives users the ability to temporarily turn on or off the WARP client using an override code provided by an admin. **Admin override** is only needed in a configuration where **Lock WARP switch** is enabled.
 
-**Admin override** allows end users to momentarily turn off WARP with an override code to work around a temporary network issue (for example, an incompatible public Wi-Fi, or a firewall at a customer site blocking the connection).
+Example use cases for **Admin override** include:
+- Allowing users to momentarily turn off WARP to work around a temporary network issue such as an incompatible public Wi-Fi, or a firewall at a customer site blocking the connection.
+- Allowing test users to turn on WARP when [Global WARP override](#global-warp-override) is in effect.
 
 As admin, you can set a **Timeout** to define how long a user can toggle the WARP switch on or off after entering the override code. Cloudflare generates a new override code every hour that an admin can send to end users. The override code's validity adheres to fixed-hour time blocks and aims to be generous to the end user.
 
@@ -53,20 +53,19 @@ To retrieve the one-time code for a user:
 2. Go to **My Team** > **Devices**.
 3. Select **View** for a connected device.
 4. Scroll down to **User details** and copy the 7-digit **Override code**.
-5. Share this code with the end user for them to enter on their device.
+5. Share this code with the user for them to enter on their device.
 
 The user will have an unlimited amount of time to activate their code.
 
 #### Enter the override code
 
-To turn off the WARP client on a user device:
+To activate the override code on a user device:
 
 1. In the WARP client, go to **Settings** > **Preferences** > **Advanced**.
 2. Select **Enter code**.
-3. Enter the override code. The WARP client will display a pop-up window showing when the override expires.
-4. Turn off the WARP switch.
+3. Enter the override code.
 
-The client will automatically reconnect after the [Auto connect period](#auto-connect), but the user can continue to turn off WARP until the override expires.
+The user can now toggle the WARP switch or use the `warp-cli connect` command. The client will automatically reconnect after the [Auto connect period](#auto-connect), but the user can continue to turn on or off WARP until the override expires.
 
 ### Install CA to system certificate store
 
@@ -110,6 +109,35 @@ This setting is primarily used as a prerequisite for [WARP Connector](/cloudflar
 - `Enabled`: Sets the local interface IP on each device to its <GlossaryTooltip term="CGNAT IP">CGNAT IP</GlossaryTooltip>. The change takes effect within 24 hours.
 
 The CGNAT IP assigned to a WARP device is permanent until the device unregisters from your Zero Trust organization. Disconnects and reconnects do not change the IP address assignment.
+
+### Global WARP override
+
+<Details header="Feature availability">
+
+| [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| All modes                                                             | All plans                                                     |
+
+| System   | Availability | Minimum WARP version |
+| -------- | ------------ | -------------------- |
+| Windows  | ✅           | 2025.2.600.0        |
+| macOS    | ✅           |  2025.2.600.0                    |
+| Linux    | ✅           |   2025.2.600.0                |
+| iOS      | ❌           |                      |
+| Android  | ❌           |                      |
+| ChromeOS | ❌           |                      |
+
+</Details>
+
+:::note
+Requires the [Super Administrator](/cloudflare-one/roles-permissions/) role.
+:::
+
+Global WARP override allows administrators to fail open WARP in case of an incident or outage. When you turn on **Global WARP override**, Cloudflare will disconnect all Windows, macOS, and Linux WARP clients that are connected to your Zero Trust organization. This includes end user devices, [WARP Connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/) hosts, and [WARP-to-WARP](/cloudflare-one/connections/connect-networks/private-net/warp-to-warp/) devices. End users will receive a notification on their device and the WARP client will display `The administrator for your account has disconnected WARP`.
+
+[Auto connect](#auto-connect) and [Lock WARP switch](#lock-warp-switch) will not apply while the global override is on. Additionally, the global override will clear any existing [Admin override](#admin-override) codes. The only way for users to reconnect during a global override is by using a new [Admin override](#admin-override) code. For example, you may want to provide IT staff with a code so that they can test resolution of the incident that led to the global disconnect.
+
+To resume normal operations, turn off **Global WARP override**. If you configured an [Auto connect](#auto-connect) value, the WARP client will automatically reconnect. Otherwise WARP will remain disconnected until the user manually reconnects.
 
 ## Device settings
 
