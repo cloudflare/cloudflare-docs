@@ -11,7 +11,7 @@ export { default as AvailableNotifications } from "./AvailableNotifications.astr
 export { default as CompatibilityFlag } from "./CompatibilityFlag.astro";
 export { default as CompatibilityFlags } from "./CompatibilityFlags.astro";
 export { default as ComponentsUsage } from "./ComponentsUsage.astro";
-export { default as CopyPageButton } from "./CopyPageButton";
+export { default as CopyPageButton } from "./CopyPageButton.tsx";
 export { default as CURL } from "./CURL.astro";
 export { default as Description } from "./Description.astro";
 export { default as Details } from "./Details.astro";
