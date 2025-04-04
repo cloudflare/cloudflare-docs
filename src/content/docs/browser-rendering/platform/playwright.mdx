@@ -13,7 +13,7 @@ import { Render, WranglerConfig, TabItem, Tabs } from "~/components";
 
 The Workers team forked a [version of Playwright](https://github.com/cloudflare/playwright) that was modified to be compatible with [Cloudflare Workers](https://developers.cloudflare.com/workers/) and [Browser Rendering](https://developers.cloudflare.com/browser-rendering/).
 
-Our version is open sourced and can be found in [Cloudflare's fork of Playwright](https://github.com/cloudflare/playwright). The npm can be installed from [npmjs](https://www.npmjs.com/) as [@cloudflare/playwright](https://www.npmjs.com/package/@cloudflare/playwright):
+Our version is open sourced and can be found in [Cloudflare's fork of Playwright](https://github.com/cloudflare/playwright). The npm package can be installed from [npmjs](https://www.npmjs.com/) as [@cloudflare/playwright](https://www.npmjs.com/package/@cloudflare/playwright):
 
 ```bash
 npm install @cloudflare/playwright --save-dev
@@ -169,7 +169,7 @@ export default {
 
 ### Assertions
 
-One of the most common use cases for using Playwright is software testing. Playwright includes test assertion features in its APIs; see [this page](https://playwright.dev/docs/test-assertions) for detailed documentation. Here's an example of a Worker doing `expect()` test assertions of the [todomvc](https://demo.playwright.dev/todomvc) demo page:
+One of the most common use cases for using Playwright is software testing. Playwright includes test assertion features in its APIs; refer to [Assertions](https://playwright.dev/docs/test-assertions) in the Playwright documentation for details. Here's an example of a Worker doing `expect()` test assertions of the [todomvc](https://demo.playwright.dev/todomvc) demo page:
 
 ```ts
 import type { Fetcher } from '@cloudflare/workers-types';
