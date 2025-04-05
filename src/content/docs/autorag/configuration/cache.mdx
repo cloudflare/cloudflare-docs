@@ -20,20 +20,21 @@ To see if a response came from the cache, check the `cf-aig-cache-status` header
 ## What to consider when using similarity cache
 
 Consider these behaviors when using similarity caching:
+
 - **Volatile Cache**: If two similar requests hit at the same time, the first might not cache in time for the second to use it, resulting in a `MISS`.
 - **30-Day Cache**: Cached responses last 30 days, then expire automatically. No custom durations for now.
 - **Data Dependency**: Cached responses are tied to specific document chunks. If those chunks change or get deleted, the cache clears to keep answers fresh.
 
 ## How similarity matching works
 
-Similarity caching in AutoRAG uses **MinHash with Locality-Sensitive Hashing (LSH)** to detect prompts that are lexically similar.
+AutoRAG’s similarity cache uses **MinHash and Locality-Sensitive Hashing (LSH)** to find and reuse responses for prompts that are worded similarly.
 
-When a new prompt is received:
+Here’s how it works when a new prompt comes in:
 
-1. The prompt is broken into overlapping token sequences (called _shingles_), typically 2–3 words each.
-2. These shingles are hashed into a compact fingerprint using the MinHash algorithm. Prompts with more overlapping shingles will have more similar fingerprints.
-3. Fingerprints are grouped into LSH buckets, which allow AutoRAG to quickly find past prompts that are likely to be similar without scanning every cached prompt.
-4. If a prompt in the same bucket meets the configured similarity threshold, its cached response is reused.
+1. The prompt is split into small overlapping chunks of words (called shingles), like “what’s the” or “the weather.”
+2. These shingles are turned into a “fingerprint” using MinHash. The more overlap two prompts have, the more similar their fingerprints will be.
+3. Fingerprints are placed into LSH buckets, which help AutoRAG quickly find similar prompts without comparing every single one.
+4. If a past prompt in the same bucket is similar enough (based on your configured threshold), AutoRAG reuses its cached response.
 
 ## Choosing a threshold
 
