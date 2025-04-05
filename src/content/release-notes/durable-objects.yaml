@@ -5,6 +5,18 @@ productLink: "/durable-objects/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-04-07"
+    title: Durable Objects on Workers Free plan
+    description: |-
+      SQLite-backed Durable Objects are now available on the Workers Free plan with these [limits](/durable-objects/platform/pricing/).
+
+  - publish_date: "2025-04-07"
+    title: SQLite in Durable Objects GA
+    description: |-
+      [SQLite-backed Durable Objects](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class) and corresponding [Storage API](/durable-objects/api/storage-api/) methods like `sql.exec` have moved from beta to general availability. New Durable Object classes should use wrangler configuration for SQLite storage over key-value storage.
+
+      SQLite storage per Durable Object has increased to 10GB for all existing and new objects.
+
   - publish_date: "2025-02-19"
     description: |-
       SQLite-backed Durable Objects now support `PRAGMA optimize` command, which can improve database query performance. It is recommended to run this command after a schema change (for example, after creating an index). Refer to [`PRAGMA optimize`](/d1/sql-api/sql-statements/#pragma-optimize) for more information.
