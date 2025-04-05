@@ -34,7 +34,7 @@ binding = "AI" # i.e. available in your Worker on env.AI
 This method searches for relevant results from your data source and generates a response using your default model and the retrieved context, for an AutoRAG named `my-autorag`:
 
 ```js
-const answer = await env.AI.AutoRAG("my-autorag").aiSearch({
+const answer = await env.AI.autorag("my-autorag").aiSearch({
 	query: "How do I train a llama to deliver coffee?",
 	model: "@cf/meta/llama-3.3-70b-instruct-sd",
 	rewrite_query: true,
@@ -61,7 +61,7 @@ This is the response structure without `stream` enabled.
 This method searches for results from your corpus and returns the relevant results, for the AutoRAG instance named `my-autorag`:
 
 ```js
-const answer = await env.AI.AutoRAG("my-autorag").search({
+const answer = await env.AI.autorag("my-autorag").search({
 	query: "How do I train a llama to deliver coffee?",
 	rewrite_query: true,
 	max_num_results: 2,
