@@ -8,7 +8,7 @@ entries:
   - publish_date: "2025-04-07"
     title: Durable Objects on Workers Free plan
     description: |-
-      SQLite-backed Durable Objects are now available on the Workers Free plan with these [limits](/durable-objects/platform/pricing/).
+      [SQLite-backed Durable Objects](/durable-objects/get-started/) are now available on the Workers Free plan with these [limits](/durable-objects/platform/pricing/).
 
   - publish_date: "2025-04-07"
     title: SQLite in Durable Objects GA

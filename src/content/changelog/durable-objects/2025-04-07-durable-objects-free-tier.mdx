@@ -19,7 +19,6 @@ import { DurableObject } from "cloudflare:workers";
 // Durable Object
 export class MyDurableObject extends DurableObject {
   ...
-
 	async sayHello(name) {
 		return `Hello, ${name}!`;
 	}
