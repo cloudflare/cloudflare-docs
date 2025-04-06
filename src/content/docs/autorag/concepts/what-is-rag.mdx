@@ -5,38 +5,37 @@ sidebar:
   order: 1
 ---
 
-Retrieval-Augmented Generation (RAG) is a method used to enable a large language model (LLM) to answer questions using your own data, and not just what it was trained on. It works by retrieving relevant content from a provided data source and passing it to the model to generate a grounded response.
+Retrieval-Augmented Generation (RAG) is a way to use your own data with a large language model (LLM). Instead of relying only on what the model was trained on, RAG searches for relevant information from your data source and uses it to help answer questions.
 
 ## How RAG works
 
 Here’s a simplified overview of the RAG pipeline:
 
-1. **Indexing:** Your content (e.g. docs, wikis, product data) is ingested and split into smaller chunks and transformed into vectors using an embedding model. These vectors are stored in a vector index.
-2. **Retrieval:** When a user asks a question, it’s also embedded and used to find the most relevant chunks from the vector database.
-3. **Generation:** The retrieved content and the user’s original question are combined into a single prompt via a system prompt. A text-generation model generates a response based on this context.
+1. **Indexing:** Your content (e.g. docs, wikis, product information) is split into smaller chunks and converted into vectors using an embedding model. These vectors are stored in a vector database.
+2. **Retrieval:** When a user asks a question, it’s also embedded into a vector and used to find the most relevant chunks from the vector database.
+3. **Generation:** The retrieved content and the user’s original question are combined into a single prompt. An LLM uses that prompt to generate a response.
+
+The resulting response should be accurate, relevant, and based on your own data.
 
 ![What is RAG](~/assets/images/autorag/RAG.png)
 
 :::note[How does AutoRAG work]
-To understand how the AutoRAG pipeline works, reference [How AutoRAG works](/autorag/concepts/how-autorag-works/) for details.
+To learn more details about how AutoRAG uses RAG under the hood, reference [How AutoRAG works](/autorag/concepts/how-autorag-works/).
 :::
-
-### Key concepts
-
-- **Embedding:** Turning text into a vector so it can be searched by meaning, not keywords.
-- **Vector index:** A database that lets you search embeddings by similarity (e.g. Vectorize).
-- **Chunking:** Splitting large text into smaller pieces for better indexing and retrieval.
-- **System prompt:** A template that controls how the generation model uses the retrieved data and query to form a response.
 
 ## Why use RAG?
 
-RAG can be used to:
+RAG lets you bring your own data into LLM generation without retraining or fine-tuning a model. It improves both accuracy and trust by retrieving relevant content at query time and using that as the basis for a response.
 
-- Provide accurate and up-to-date answers without fine-tuning a model.
-- Control the source of truth by using your own data.
-- Reduce hallucinations by grounding responses in real content.
+Benefits of using RAG:
+
+- **Accurate and current answers:** Responses are based on your latest content, not outdated training data.
+- **Control over information sources:** You define the knowledge base so answers come from content you trust.
+- **Fewer hallucinations:** Responses are grounded in real, retrieved data, reducing made-up or misleading answers.
+- **No model training required:** You can get high-quality results without building or fine-tuning your own LLM which can be time consuming and costly.
 
 RAG is ideal for building AI-powered apps like:
 
-- AI assistants for your internal knowledge base
-- Search experiences for your documents
+- AI assistants for internal knowledge
+- Support chatbots connected to your latest content
+- Enterprise search across documentation and files
