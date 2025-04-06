@@ -301,7 +301,7 @@ This is useful when you are scheduling multiple instances at once. A call to `cr
 
   * `batch` - list of Options to pass when creating an instance, including a user-provided ID and payload parameters.
 
-Each element of the `batch` list is expected to the
+Each element of the `batch` list is expected to include both `id` and `params` properties:
 
 ```ts
 // Create a new batch of 3 Workflow instances, each with its own ID and pass params to the Workflow instances
