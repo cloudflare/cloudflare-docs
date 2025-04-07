@@ -162,12 +162,12 @@ Then, update your configuration file's `main` field to point to the location of 
 
 ##### Pages Functions with a `functions/` folder
 
-If you use **Pages Functions with a [folder of `functions/`](/pages/functions/)**, you must first compile these functions into a single Worker script with the `wrangler pages functions build` command.
+If you use **Pages Functions with a [folder of `functions/`](/pages/functions/)**, you must first compile these functions into a single Worker script with the [`wrangler pages functions build`](/workers/wrangler/commands/#functions-build) command.
 
 <PackageManagers
 	type="exec"
 	pkg="wrangler"
-	args={"pages functions build --ourdir=./dist/worker/"}
+	args={"pages functions build --outdir=./dist/worker/"}
 />
 
 Although this command will remain available to you to run at any time, we do recommend considering using another framework if you wish to continue to use file-based routing. [HonoX](https://github.com/honojs/honox) is one popular option.
