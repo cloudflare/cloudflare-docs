@@ -7,14 +7,6 @@ sidebar:
 
 The `/json` endpoint extracts structured data from a webpage. You can specify the expected output using either a `prompt` or a `response_format` parameter which accepts a JSON schema. The endpoint returns the extracted data in JSON format.
 
-## Parameters
-
-| Parameter       | Mandatory | Note                                                                         |
-| --------------- | --------- | ---------------------------------------------------------------------------- |
-| URL             | yes       | The URL of the webpage to extract data from.                                 |
-| prompt          | no        | Must supply one of `prompt` or `response_format`.                            |
-| response_format | no        | Must supply one of `prompt` or `response_format`. May include a JSON schema. |
-
 :::note[Note]
 
 The `/json` endpoint leverages [Workers AI](/workers-ai/) for data extraction. Using this endpoint incurs usage on Workers AI, which you can monitor usage through the Workers AI Dashboard.
