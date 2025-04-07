@@ -4,7 +4,7 @@ params:
 ---
 
 import { Code } from "@astrojs/starlight/components";
-import { Markdown, Render, Aside } from "~/components";
+import { Markdown, Render, Aside, Type, MetaInfo } from "~/components";
 
 To apply custom redirects on {props.product === 'workers' ? 'a Worker with static assets' : 'Cloudflare Pages'}, declare your redirects in a plain text file called `_redirects` without a file extension, in the static asset directory of your project. This file will not itself be served as a static asset, but will instead be parsed by {props.product === 'workers' ? 'Workers' : 'Cloudflare Pages'} and its rules will be applied to static asset responses.
 
@@ -30,18 +30,18 @@ Only one redirect can be defined per line and must follow this format, otherwise
 [source] [destination] [code?]
 ```
 
-- `source` required
+- `source` <Type text="string" /> <MetaInfo text="required" />
 
   - A file path.
   - Can include [wildcards (`*`)](#splats) and [placeholders](#placeholders).
   - Because fragments are evaluated by your browser and not Cloudflare's network, any fragments in the source are not evaluated.
 
-- `destination` required
+- `destination` <Type text="string" /> <MetaInfo text="required" />
 
   - A file path or external link.
   - Can include fragments, query strings, [splats](#splats), and [placeholders](#placeholders).
 
-- `code` default: `302`
+- `code` <Type text="number" /> <MetaInfo text="(default: 302) optional" />
 
   - Optional parameter
 
