@@ -181,9 +181,7 @@ Do not deploy the on-ramp using both Cloudflare and Terraform. If you plan to de
 2. Select **Magic WAN** > **Cloud on-ramps**.
 3. Select the on-ramp you want to delete.
 4. Select **Edit** in the side panel.
-5. Choose **Detach** or **Destroy** to proceed:
-   - **Detach**: Cloudflare will stop managing the cloud resources that were created to build this on-ramp, but will leave them in place. On-ramp connectivity will not be impacted.
-   - **Destroy**: Cloudflare will delete the resources that were created to build this on-ramp in the cloud provider, if possible. Resources cannot be deleted if other resources depend upon them. For example, if an AWS Customer Gateway was created for this on-ramp, but was subsequently used in a second on-ramp, destroying this on-ramp will not destroy the AWS Customer Gateway.
+5. Choose **Detach** to proceed. Cloudflare will stop managing the cloud resources that were created to build this on-ramp, but will leave them in place. On-ramp connectivity will not be impacted.
 
 ## Magic WAN Address Space
 
