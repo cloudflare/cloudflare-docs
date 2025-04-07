@@ -16,6 +16,7 @@ import {
 	PiCheckCircleLight,
 	PiXCircleLight,
 } from "react-icons/pi";
+import { track } from "~/util/zaraz";
 
 type CopyState = "idle" | "success" | "error";
 
@@ -40,6 +41,9 @@ export default function CopyPageButton() {
 
 	const handleViewMarkdown = () => {
 		const markdownUrl = new URL("index.md", window.location.href).toString();
+		track("clicked copy page button", {
+			value: "view markdown",
+		});
 		window.open(markdownUrl, "_blank");
 	};
 
@@ -54,6 +58,9 @@ export default function CopyPageButton() {
 
 			const markdown = await response.text();
 			await navigator.clipboard.writeText(markdown);
+			track("clicked copy page button", {
+				value: "copy markdown",
+			});
 
 			setCopyState("success");
 			setTimeout(() => {
