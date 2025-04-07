@@ -2,7 +2,7 @@
 title: Dynamic threshold rule
 pcx_content_type: how-to
 sidebar:
-  order: 1
+  order: 2
   badge:
     text: Beta
 ---
@@ -24,7 +24,7 @@ A dynamic threshold rule can only be configured via [Cloudflare's Magic Network 
 | **Target** | Can be defined in either bits per second or packets per second. |
 | **Sensitivity** | Z-Score sensitivity has three values: low, medium, and high. |
 | **Auto-advertisement** | If you are a [Magic Transit On Demand](/magic-transit/on-demand) customer, you can enable this feature to automatically enable Magic Transit if the rule's dynamic threshold is triggered. To learn more and see an example, view the [Auto-Advertisement section](/magic-network-monitoring/rules/rule-notifications/#TO-DO). |
-| **Rule IP prefix** | The IP prefix associated with the rule for monitoring traffic volume. Must be a CIDR range such as `160.168.0.1/24`. The maximum is 5,000 unique CIDR entries. To learn more and see an example, view the Rule IP prefixes section. |
+| **Rule IP prefix** | The IP prefix associated with the rule for monitoring traffic volume. Must be a CIDR range such as `160.168.0.1/24`. The maximum is 5,000 unique CIDR entries. To learn more and see an example, view the [Rule IP prefixes](/magic-network-monitoring/rules/#rule-ip-prefixes). |
 
 ## API documentation
 
@@ -34,8 +34,12 @@ You can visit [developers.cloudflare.com/api](/api), navigate to [Magic Network 
 
 Dynamic thresholds for this rule type are calculated using a statistical measure called Z-Score. The dynamic threshold for this rule will automatically adjust based on your traffic history as this rule uses statistical analysis to detect traffic anomalies. Z-Score is calculated by comparing short-term traffic patterns (five-minute time window) against long-term baselines (four-hour time window) .
 
-Z-Score is calculated by using the following formula: Z \= (X \- μ) / σ
+Z-Score is calculated by using the following formula:
 
-* X \= Current traffic value
-* μ \= Mean traffic value over the long window
-* σ \= Standard deviation over the long window
+```txt
+Z = (X - μ) / σ
+```
+
+- `X` = Current traffic value.
+- `μ` = Mean traffic value over the long window.
+- `σ` = Standard deviation over the long window.
