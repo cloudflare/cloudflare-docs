@@ -13,16 +13,20 @@ external services using [TLS](https://developer.mozilla.org/en-US/docs/Web/Secur
 ```js
 import { connect } from "node:tls";
 
-const connectionOptions = { key: env.KEY, cert: env.CERT };
-
 // ... in a request handler ...
+const connectionOptions = { key: env.KEY, cert: env.CERT };
 const socket = connect(url, connectionOptions, () => {
-	console.log(
-		"client connected",
-		socket.authorized ? "authorized" : "unauthorized",
-	);
-	stdin.pipe(socket);
-	stdin.resume();
+	if (socket.authorized) {
+		console.log("Connection authorized");
+	}
+});
+
+socket.on("data", (data) => {
+	console.log(data);
+});
+
+socket.on("end", () => {
+	console.log("server ends connection");
 });
 ```
 

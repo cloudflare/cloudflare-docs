@@ -4,7 +4,7 @@ description: Node.js APIs from the node:crypto and node:tls modules are now avai
 products:
   - workers
 date: 2025-04-08T14:00:00Z
-hidden: true
+# hidden: true
 ---
 
 import { Render, PackageManagers, TypeScriptExample } from "~/components";
@@ -24,10 +24,10 @@ The full [`node:crypto`](https://nodejs.org/api/crypto.html) API is now availabl
 You can use it to verify and sign data:
 
 ```js
-import { sign, verify } from 'node:crypto';
+import { sign, verify } from "node:crypto";
 
-const signature = sign('sha256', 'some data to sign', env.PRIVATE_KEY);
-console.log(verify('sha256', 'some data to sign', env.PUBLIC_KEY, signature);
+const signature = sign("sha256", "-data to sign-", env.PRIVATE_KEY);
+const verified = verify("sha256", "-data to sign-", env.PUBLIC_KEY, signature);
 ```
 
 Or, to encrypt and decrypt data:
@@ -58,12 +58,17 @@ import { connect } from "node:tls";
 // ... in a request handler ...
 const connectionOptions = { key: env.KEY, cert: env.CERT };
 const socket = connect(url, connectionOptions, () => {
-	console.log(
-		"client connected",
-		socket.authorized ? "authorized" : "unauthorized",
-	);
-	stdin.pipe(socket);
-	stdin.resume();
+	if (socket.authorized) {
+		console.log("Connection authorized");
+	}
+});
+
+socket.on("data", (data) => {
+	console.log(data);
+});
+
+socket.on("end", () => {
+	console.log("server ends connection");
 });
 ```
 
