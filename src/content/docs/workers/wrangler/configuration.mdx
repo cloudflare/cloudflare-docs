@@ -200,7 +200,7 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
 - `define` <Type text="Record<string, string>" /> <MetaInfo text="optional" />
 
   - A map of values to substitute when deploying your Worker.
-  - If you're using the [Cloudflare Vite plugin](/workers/vite-plugin/), this is replaced by Vite's [`define`](https://vite.dev/config/shared-options.html#define).
+  - If you're using the [Cloudflare Vite plugin](/workers/vite-plugin/), `define` is replaced by Vite's [`define`](https://vite.dev/config/shared-options.html#define).
 
 - `vars` <Type text="object" /> <MetaInfo text="optional" />
 
@@ -1306,7 +1306,7 @@ This section describes a feature that can be implemented by frameworks and other
 
 It is unlikely that an application developer will need to use this feature, but it is documented here to help you understand when Wrangler is using a generated configuration rather than the original, user's configuration.
 
-For example, when you are using the [Cloudflare Vite plugin](/workers/vite-plugin/), it will generate a Wrangler configuration file when you run `vite build`, which is then used for preview and deployment.
+For example, when using the [Cloudflare Vite plugin](/workers/vite-plugin/), an output Worker configuration file is generated as part of the build. This is then used for preview and deployment.
 
 :::
 
