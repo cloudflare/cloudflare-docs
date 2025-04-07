@@ -79,11 +79,20 @@ end
 
 If you have NAT traversal (NAT-T) on your network you need to enable this feature and initiate IKE communications on port `4500`.
 
+To set the IKE port add the following to your system settings:
+
 ```txt
 config system settings
     set ike-port 4500
-		set nattraversal enable
 end
+```
+
+To enable NAT-T add `set nattraversal enable` to the IPsec tunnels you are configuring.
+
+```txt
+fortigate # config vpn ipsec phase1-interface
+    edit "<NAME_OF_YOUR_TUNNEL>"
+        set nattraversal enable
 ```
 
 ### Disable anti-replay protection
