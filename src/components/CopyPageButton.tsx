@@ -88,8 +88,8 @@ export default function CopyPageButton() {
 		if (copyState === "success") {
 			return (
 				<>
-					<PiCheckCircleLight className="h-4 w-4 text-green-600" />
 					<span>Copied!</span>
+					<PiCheckCircleLight className="text-green-600" />
 				</>
 			);
 		}
@@ -97,16 +97,16 @@ export default function CopyPageButton() {
 		if (copyState === "error") {
 			return (
 				<>
-					<PiXCircleLight className="h-4 w-4 text-red-600" />
-					<span>Failed to copy</span>
+					<span>Failed</span>
+					<PiXCircleLight className="text-red-600" />
 				</>
 			);
 		}
 
 		return (
 			<>
-				<PiMarkdownLogo />
 				<span>Copy Page</span>
+				<PiMarkdownLogo />
 			</>
 		);
 	};
@@ -116,7 +116,7 @@ export default function CopyPageButton() {
 			<button
 				ref={refs.setReference}
 				{...getReferenceProps()}
-				className="inline-flex h-8 cursor-pointer items-center justify-center gap-2 rounded border border-[--sl-color-hairline] bg-transparent px-3 text-sm text-black hover:bg-[--sl-color-bg-nav]"
+				className="inline-flex h-8 min-w-32 cursor-pointer items-center justify-center gap-2 rounded border border-[--sl-color-hairline] bg-transparent px-3 text-sm text-black hover:bg-[--sl-color-bg-nav]"
 			>
 				{getButtonContent()}
 			</button>
@@ -126,7 +126,7 @@ export default function CopyPageButton() {
 						ref={refs.setFloating}
 						style={floatingStyles}
 						{...getFloatingProps()}
-						className="min-w-[240px] list-none rounded border border-[--sl-color-hairline] bg-[--sl-color-bg] pl-0 shadow-md"
+						className="list-none rounded border border-[--sl-color-hairline] bg-[--sl-color-bg] pl-0 shadow-md"
 					>
 						{options.map(({ label, description, icon: Icon, onClick }) => (
 							<li key={label}>
@@ -135,7 +135,7 @@ export default function CopyPageButton() {
 									className="relative block w-full cursor-pointer bg-transparent px-3 py-2 text-left text-black no-underline hover:bg-[--sl-color-bg-nav]"
 								>
 									<div className="flex items-center gap-2 text-sm">
-										<Icon className="h-4 w-4" />
+										<Icon />
 										{label}
 									</div>
 									<div className="ml-6 mt-0.5 text-xs text-[--sl-color-gray-3]">

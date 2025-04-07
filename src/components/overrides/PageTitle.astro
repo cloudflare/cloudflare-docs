@@ -114,9 +114,11 @@ const hideBreadcrumbs = Astro.locals.starlightRoute.hideBreadcrumbs;
 
 {component && <Aside>To see a list of pages this component is used on, please visit the <a href={`/style-guide/components/usage/#${component.toLowerCase()}`}>usage page</a>.</Aside>}
 
-<div class="flex justify-end items-center">
-	<CopyPageButton client:idle />
-</div>
+{frontmatter.template !== "splash" && (
+	<div class="flex justify-end items-center">
+		<CopyPageButton client:idle />
+	</div>
+)}
 
 <style>
 	:root {
