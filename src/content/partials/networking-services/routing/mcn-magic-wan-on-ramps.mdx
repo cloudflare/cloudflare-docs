@@ -189,6 +189,8 @@ After setting up your on-ramps you need to update your security network groups i
 4. Select **Edit** in the side panel.
 5. Choose **Detach** to proceed. Cloudflare will stop managing the cloud resources that were created to build this on-ramp, but will leave them in place. On-ramp connectivity will not be impacted.
 
+---
+
 ## Magic WAN Address Space
 
 By default, Cloudflare installs the following summarized routes in your cloud route tables to direct traffic to Magic WAN:
@@ -209,6 +211,8 @@ To override the defaults with custom prefixes:
 5. When you are finished, select **Save changes**.
 
 To install a default route to send all traffic to Magic WAN, enter `0.0.0.0/0` (on Azure, enter `0.0.0.0/1` and `128.0.0.0/1`).
+
+---
 
 ## Cost estimates
 
