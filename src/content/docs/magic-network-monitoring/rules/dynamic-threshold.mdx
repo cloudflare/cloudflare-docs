@@ -30,9 +30,9 @@ A dynamic threshold rule can only be configured via [Cloudflare's Magic Network 
 
 You can visit [developers.cloudflare.com/api](/api), navigate to [Magic Network Monitoring](/api/resources/magic_network_monitoring/), and expand the [Rules](/api/resources/magic_network_monitoring/subresources/rules/) section to see an example API configuration call using CURL and the expected output for a successful response.
 
-# How the dynamic rule threshold is calculated
+## How the dynamic rule threshold is calculated
 
-Dynamic thresholds for this rule type are calculated using a statistical measure called Z-Socre. The dynamic threshold for this rule will automatically adjust based on your traffic history as this rule uses statistical analysis to detect traffic anomalies. Z-Score is calculated by comparing short-term traffic patterns (five-minute time window) against long-term baselines (four-hour time window) .
+Dynamic thresholds for this rule type are calculated using a statistical measure called Z-Score. The dynamic threshold for this rule will automatically adjust based on your traffic history as this rule uses statistical analysis to detect traffic anomalies. Z-Score is calculated by comparing short-term traffic patterns (five-minute time window) against long-term baselines (four-hour time window) .
 
 Z-Score is calculated by using the following formula: Z \= (X \- μ) / σ
 
