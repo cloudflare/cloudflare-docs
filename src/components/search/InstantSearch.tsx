@@ -1,5 +1,5 @@
 import { liteClient as algoliasearch } from "algoliasearch/lite";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
 	InstantSearch,
 	Highlight,
@@ -8,7 +8,19 @@ import {
 	type UseSearchBoxProps,
 	useInfiniteHits,
 	type UseInfiniteHitsProps,
+	useRefinementList,
 } from "react-instantsearch";
+import {
+	useFloating,
+	useInteractions,
+	useClick,
+	useDismiss,
+	shift,
+	offset,
+	autoUpdate,
+	FloatingPortal,
+} from "@floating-ui/react";
+import { PiCaretDownBold } from "react-icons/pi";
 
 function SearchBox(props: UseSearchBoxProps) {
 	const { query, refine } = useSearchBox(props);
@@ -75,6 +87,102 @@ function InfiniteHits(props: UseInfiniteHitsProps) {
 	);
 }
 
+function FilterDropdown({
+	attribute,
+	label,
+}: {
+	attribute: string;
+	label: string;
+}) {
+	const [isOpen, setIsOpen] = useState(false);
+	const { items, refine } = useRefinementList({ attribute });
+
+	useEffect(() => {
+		const params = new URLSearchParams(window.location.search);
+		const values = params.get(attribute)?.split(",");
+
+		if (values && values.length !== 0) {
+			for (const value of values) {
+				refine(value);
+			}
+		}
+	}, []);
+
+	useEffect(() => {
+		const refined = items
+			.filter((item) => item.isRefined)
+			.map((item) => item.value);
+		if (refined.length === 0) return;
+
+		history.pushState(
+			null,
+			"",
+			`${window.location.pathname}?${attribute}=${refined.join(",")}`,
+		);
+	}, [items]);
+
+	const { refs, floatingStyles, context } = useFloating({
+		open: isOpen,
+		onOpenChange: setIsOpen,
+		middleware: [shift(), offset(5)],
+		whileElementsMounted: autoUpdate,
+	});
+
+	const click = useClick(context);
+	const dismiss = useDismiss(context);
+
+	const { getReferenceProps, getFloatingProps } = useInteractions([
+		click,
+		dismiss,
+	]);
+
+	const selectedItems = items.filter((item) => item.isRefined);
+
+	return (
+		<>
+			<button
+				ref={refs.setReference}
+				{...getReferenceProps()}
+				className="flex cursor-pointer items-center justify-center gap-2 rounded border border-cl1-gray-8 bg-transparent p-2 dark:border-cl1-gray-2"
+			>
+				<span>
+					{label}
+					{selectedItems.length > 0 && ` (${selectedItems.length})`}
+				</span>
+				<PiCaretDownBold />
+			</button>
+			{isOpen && (
+				<FloatingPortal>
+					<div
+						ref={refs.setFloating}
+						style={floatingStyles}
+						{...getFloatingProps()}
+						className="rounded border border-cl1-gray-8 bg-cl1-white p-4 shadow-md dark:border-cl1-gray-1 dark:bg-cl1-gray-0"
+					>
+						<div className="max-h-60 space-y-2 overflow-y-auto">
+							{items.map((item) => (
+								<label
+									key={item.value}
+									className="flex items-center gap-2 text-sm"
+								>
+									<input
+										type="checkbox"
+										checked={item.isRefined}
+										onChange={() => refine(item.value)}
+									/>
+									<span>
+										{item.label} ({item.count})
+									</span>
+								</label>
+							))}
+						</div>
+					</div>
+				</FloatingPortal>
+			)}
+		</>
+	);
+}
+
 export default function InstantSearchComponent() {
 	return (
 		<InstantSearch
@@ -87,9 +195,14 @@ export default function InstantSearchComponent() {
 				preserveSharedStateOnUnmount: true,
 			}}
 		>
-			<Configure facetFilters={["type:content"]} />
-			<SearchBox />
-			<InfiniteHits />
+			<Configure filters="type:content" />
+			<div className="space-y-4">
+				<SearchBox />
+				<div className="flex gap-2">
+					<FilterDropdown attribute="product" label="Products" />
+				</div>
+				<InfiniteHits />
+			</div>
 		</InstantSearch>
 	);
 }
