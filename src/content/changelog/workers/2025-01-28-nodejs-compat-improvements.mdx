@@ -36,12 +36,14 @@ export default {
     socket.end();
 
     return new Response("Wrote to server", { status: 200 });
-  },
+
+},
 } satisfies ExportedHandler;
+
 ````
 </TypeScriptExample>
 
-Additionally, you can now use other APIs incliding [`net.BlockList`](https://nodejs.org/api/net.html#class-netblocklist) and
+Additionally, you can now use other APIs including [`net.BlockList`](https://nodejs.org/api/net.html#class-netblocklist) and
 [`net.SocketAddress`](https://nodejs.org/api/net.html#class-netsocketaddress).
 
 Note that [`net.Server`](https://nodejs.org/api/net.html#class-netserver) is not supported.
@@ -76,11 +78,13 @@ import timers from "node:timers";
 
 console.log("first");
 timers.setTimeout(() => {
-  console.log("last");
+console.log("last");
 }, 10);
 
 timers.setTimeout(() => {
-  console.log("next");
+console.log("next");
 });
+
 ```
 </TypeScriptExample>
+```
