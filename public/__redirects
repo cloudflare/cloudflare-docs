@@ -794,6 +794,9 @@
 # magic-network-monitoring
 /magic-network-monitoring/routers/ /magic-network-monitoring/routers/supported-routers/ 301
 /magic-network-monitoring/tutorials/ /magic-network-monitoring/tutorials/graphql-analytics/ 301
+/magic-network-monitoring/rules/recommended-rule-configuration/ /magic-network-monitoring/rules/static-threshold/ 301
+/magic-network-monitoring/rules/sflow-ddos-alerts/ /rules/configure-rule-notifications/ 301
+/magic-network-monitoring/notifications/ /rules/rule-notifications/ 301
 
 # magic-transit
 /magic-transit/magic-firewall/ /magic-firewall/ 301
@@ -1420,6 +1423,7 @@
 /workers/tutorials/build-a-serverless-function/ /workers/tutorials/build-a-qr-code-generator/ 301
 /workers/tutorials/build-a-todo-list/ /workers/tutorials/build-a-jamstack-app/ 301
 /workers/tutorials/deploy-a-react-app/ /pages/framework-guides/deploy-a-react-site/ 301
+/workers/tutorials/deploy-button/ /workers/platform/deploy-buttons/ 301
 /workers/tutorials/hosting-static-wordpress-sites/ /pages/how-to/deploy-a-wordpress-site/ 301
 /workers/tutorials/configure-your-cdn/ /workers/tutorials/upload-assets-with-r2/ 301
 /workers/tutorials/create-a-chatgpt-powered-search-plugin/ /workers/tutorials/ 301
@@ -1524,6 +1528,7 @@
 /workers/tutorials/custom-access-control-for-files-in-r2-using-d1-and-workers/ /developer-spotlight/tutorials/custom-access-control-for-files/ 301
 /workers/tutorials/generate-dynamic-og-images-using-workers/ /workers/tutorials/ 302
 /workers/static-assets/compatibility-matrix/ /workers/static-assets/migrate-from-pages/ 301
+/workers/frameworks/framework-guides/remix/ /workers/frameworks/framework-guides/react-router/ 301
 
 # workers ai
 /workers-ai/models/llm/ /workers-ai/models/#text-generation 301

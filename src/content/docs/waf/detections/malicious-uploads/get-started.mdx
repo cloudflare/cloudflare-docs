@@ -8,7 +8,7 @@ head:
     content: Get started with malicious uploads detection
 ---
 
-import { Details, TabItem, Tabs } from "~/components";
+import { Details, TabItem, Tabs, APIRequest } from "~/components";
 
 :::note
 WAF content scanning is available to customers on an Enterprise plan with a paid add-on.
@@ -24,14 +24,9 @@ WAF content scanning is available to customers on an Enterprise plan with a paid
 
 </TabItem> <TabItem label="API">
 
-Enable the feature using a `POST` request similar to the following:
+Use a `POST` request similar to the following:
 
-```bash
-curl --request POST \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/content-upload-scan/enable" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>"
-```
+<APIRequest path="/zones/{zone_id}/content-upload-scan/enable" method="POST" />
 
 </TabItem> <TabItem label="Terraform">
 
@@ -134,17 +129,15 @@ To check uploaded content in a way that is not covered by the default configurat
 
 Use a `POST` request similar to the following:
 
-```bash
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/content-upload-scan/payloads" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '[
-  {
-    "payload": "lookup_json_string(http.request.body.raw, \"file\")"
-  }
-]'
-```
+<APIRequest
+	path="/zones/{zone_id}/content-upload-scan/payloads"
+	method="POST"
+	json={[
+		{
+			payload: 'lookup_json_string(http.request.body.raw, "file")',
+		},
+	]}
+/>
 
 The above request will add the following expression to the current list of custom scan expressions:
 

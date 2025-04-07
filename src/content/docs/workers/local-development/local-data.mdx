@@ -1,0 +1,153 @@
+---
+pcx_content_type: navigation
+title: Local data
+sidebar:
+  order: 2
+head: []
+description: Working with data during local development
+---
+
+import {
+	Details,
+	LinkCard,
+	Render,
+	PackageManagers,
+	FileTree,
+	Aside,
+} from "~/components";
+
+Whether you are using Wrangler or the [Cloudflare Vite plugin](https://developers.cloudflare.com/workers/vite-plugin/), your workflow for **accessing** data during local development remains the same. However, you can only [populate local resources with data](/workers/local-development/local-data/#populating-local-resources-with-data) via the Wrangler CLI.
+
+### How it works
+
+When you run either `wrangler dev` or [`vite`](https://vite.dev/guide/cli#dev-server), [Miniflare](/workers/testing/miniflare/) automatically creates **local versions** of your resources (like [KV](/kv), [D1](/d1/), or [R2](/r2)). This means you **don’t** need to manually set up separate local instances for each service. However, newly created local resources **won’t** contain any data — you'll need to use Wrangler commands with the `--local` flag to populate them. Changes made to local resources won’t affect production data.
+
+## Populating local resources with data
+
+When you first start developing, your local resources will be empty. You'll need to populate them with data using the Wrangler CLI.
+
+### KV namespaces
+
+<Aside type="caution" title="Syntax note">
+
+Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax. Learn more in the [Wrangler commands for KV page](/kv/reference/kv-commands/).
+
+</Aside>
+
+#### [Add a single key-value pair](/workers/wrangler/commands/#kv-key)
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="kv key put <KEY> <VALUE> --binding=<BINDING> --local "
+/>
+
+#### [Buld upload](/workers/wrangler/commands/#kv-bulk)
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="kv bulk put <FILENAME.json> --binding=<BINDING> --local"
+/>
+
+### R2 buckets
+
+#### [Upload a file](/workers/wrangler/commands/#r2-object)
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="r2 object put <BUCKET>/<KEY> --file=<PATH_TO_FILE> --local"
+/>
+
+You may also include [other metadata](/workers/wrangler/commands/#r2-object-put).
+
+### D1 databases
+
+#### [Execute a SQL statement](/workers/wrangler/commands/#d1-execute)
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args='d1 execute <DATABASE_NAME> --command="<SQL_QUERY>" --local'
+/>
+
+#### [Execute a SQL file](/workers/wrangler/commands/#d1-execute)
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="wrangler d1 execute <DATABASE_NAME> --file=./schema.sql --local"
+/>
+
+### Durable Objects
+
+For Durable Objects, unlike KV, D1, and R2, there are no CLI commands to populate them with local data. To add data to Durable Objects during local development, you must write application code that creates Durable Object instances and [calls methods on them that store state](/durable-objects/best-practices/access-durable-objects-storage/). This typically involves creating development endpoints or test routes that initialize your Durable Objects with the desired data.
+
+## Where local data gets stored
+
+By default, both Wrangler and the Vite plugin store local binding data in the same location: the `.wrangler/state` folder in your project directory. This folder stores data in subdirectories for all local bindings: KV namespaces, R2 buckets, D1 databases, Durable Objects, etc.
+
+### Clearing local storage
+
+You can delete the `.wrangler/state` folder at any time to reset your local environment, and Miniflare will recreate it the next time you run your `dev` command. You can also delete specific sub-folders within `.wrangler/state` for more targeted clean-up.
+
+### Changing the local data directory
+
+If you prefer to specify a different directory for local storage, you can do so through the Wranlger CLI or in the Vite plugin's configuration.
+
+#### Using Wrangler
+
+Use the [`--persist-to`](/workers/wrangler/commands/#dev) flag with `wrangler dev`. You need to specify this flag every time you run the `dev` command:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="dev --persist-to <DIRECTORY>"
+/>
+
+:::note
+The local persistence folder (like `.wrangler/state` or any custom folder you set) should be added to your `.gitignore` to avoid committing local development data to version control.
+:::
+
+<Details header="Using `--local` with `--persist-to`">
+If you run `wrangler dev --persist-to <DIRECTORY>` to specify a custom location for local data, you must also include the same `--persist-to <DIRECTORY>` when running other Wrangler commands that modify local data (and be sure to include the `--local` flag).
+
+For example, to create a KV key named `test` with a value of `12345` in a local KV namespace, run:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="kv key put test 12345 --binding MY_KV_NAMESPACE --local --persist-to worker-local"
+/>
+
+This command:
+
+- Sets the KV key `test` to `12345` in the binding `MY_KV_NAMESPACE` (defined in your [Wrangler configuration file](/workers/wrangler/configuration/)).
+- Uses `--persist-to worker-local` to ensure the data is created in the **worker-local** directory instead of the default `.wrangler/state`.
+- Adds the `--local` flag, indicating you want to modify local data.
+
+If `--persist-to` is not specified, Wrangler defaults to using `.wrangler/state` for local data.
+
+</Details>
+
+#### Using the Cloudflare Vite plugin
+
+To customize where the Vite plugin stores local data, configure the [`persistState` option](/workers/vite-plugin/reference/api/#interface-pluginconfig) in your Vite config file:
+
+```js title="vite.config.js"
+import { defineConfig } from "vite";
+import { cloudflare } from "@cloudflare/vite-plugin";
+
+export default defineConfig({
+	plugins: [
+		cloudflare({
+			persistState: "./my-custom-directory",
+		}),
+	],
+});
+```
+
+#### Sharing state between tools
+
+If you want Wrangler and the Vite plugin to share the same state, configure them to use the same persistence path.

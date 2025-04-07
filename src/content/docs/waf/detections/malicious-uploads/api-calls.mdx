@@ -8,14 +8,7 @@ head:
     content: Common API calls for content scanning
 ---
 
-## Required API token permissions
-
-The API token used in API requests to manage WAF content scanning and custom scan expressions must have one of the following [permissions](/fundamentals/api/reference/permissions/):
-
-- Zone WAF Edit
-- Account WAF Edit
-
----
+import { APIRequest } from "~/components";
 
 ## General operations
 
@@ -25,30 +18,19 @@ The following API examples cover basic operations such as enabling and disabling
 
 To enable content scanning, use a `POST` request similar to the following:
 
-```bash
-curl --request POST \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/content-upload-scan/enable" \
---header "Authorization: Bearer <API_TOKEN>"
-```
+<APIRequest path="/zones/{zone_id}/content-upload-scan/enable" method="POST" />
 
 ### Disable WAF content scanning
 
 To disable content scanning, use a `POST` request similar to the following:
 
-```bash
-curl --request POST \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/content-upload-scan/disable" \
---header "Authorization: Bearer <API_TOKEN>"
-```
+<APIRequest path="/zones/{zone_id}/content-upload-scan/disable" method="POST" />
 
 ### Get WAF content scanning status
 
 To obtain the current status of the content scanning feature, use a `GET` request similar to the following:
 
-```bash
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/content-upload-scan/settings" \
---header "Authorization: Bearer <API_TOKEN>"
-```
+<APIRequest path="/zones/{zone_id}/content-upload-scan/settings" method="GET" />
 
 ## Custom expression operations
 
@@ -58,10 +40,7 @@ The following API examples cover operations on custom scan expressions for conte
 
 To get a list of existing custom scan expressions, use a `GET` request similar to the following:
 
-```bash
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/content-upload-scan/payloads" \
---header "Authorization: Bearer <API_TOKEN>"
-```
+<APIRequest path="/zones/{zone_id}/content-upload-scan/payloads" method="GET" />
 
 ```json output
 {
@@ -81,23 +60,21 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/content-upload-scan/p
 
 Use a `POST` request similar to the following:
 
-```bash
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/content-upload-scan/payloads" \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '[
-  {
-    "payload": "lookup_json_string(http.request.body.raw, \"file\")"
-  }
-]'
-```
+<APIRequest
+	path="/zones/{zone_id}/content-upload-scan/payloads"
+	method="POST"
+	json={[
+		{
+			payload: 'lookup_json_string(http.request.body.raw, "file")',
+		},
+	]}
+/>
 
 ### Delete a custom scan expression
 
 Use a `DELETE` request similar to the following:
 
-```bash
-curl --request DELETE \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/content-upload-scan/payloads/{expression_id}" \
---header "Authorization: Bearer <API_TOKEN>"
-```
+<APIRequest
+	path="/zones/{zone_id}/content-upload-scan/payloads/{expression_id}"
+	method="DELETE"
+/>

@@ -61,6 +61,8 @@ The majority of keys are inheritable, meaning that top-level configuration can b
 
 Further, there are a few keys that can _only_ appear at the top-level.
 
+<Render file="vite-environments" />
+
 ## Top-level only keys
 
 Top-level keys apply to the Worker as a whole (and therefore all environments). They cannot be defined within named environments.
@@ -80,6 +82,7 @@ Top-level keys apply to the Worker as a whole (and therefore all environments). 
 - `site` <Type text="object" /> <MetaInfo text="optional deprecated" />
 
   - See the [Workers Sites](#workers-sites) section below for more information. Cloudflare Pages and Workers Assets is preferred over this approach.
+  - This is not supported by the [Cloudflare Vite plugin](/workers/vite-plugin/).
 
 ## Inheritable keys
 
@@ -129,6 +132,7 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
 - `tsconfig` <Type text="string" /> <MetaInfo text="optional" />
 
   - Path to a custom `tsconfig`.
+  - Not applicable if you're using the [Cloudflare Vite plugin](/workers/vite-plugin/).
 
 - `triggers` <Type text="object" /> <MetaInfo text="optional" />
 
@@ -137,14 +141,17 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
 - `rules` <Type text="Rule" /> <MetaInfo text="optional" />
 
   - An ordered list of rules that define which modules to import, and what type to import them as. You will need to specify rules to use `Text`, `Data` and `CompiledWasm` modules, or when you wish to have a `.js` file be treated as an `ESModule` instead of `CommonJS`.
+  - Not applicable if you're using the [Cloudflare Vite plugin](/workers/vite-plugin/).
 
 - `build` <Type text="Build" /> <MetaInfo text="optional" />
 
   - Configures a custom build step to be run by Wrangler when building your Worker. Refer to [Custom builds](#custom-builds).
+  - Not applicable if you're using the [Cloudflare Vite plugin](/workers/vite-plugin/).
 
 - `no_bundle` <Type text="boolean" /> <MetaInfo text="optional" />
 
   - Skip internal build steps and directly deploy your Worker script. You must have a plain JavaScript Worker with no dependencies.
+  - Not applicable if you're using the [Cloudflare Vite plugin](/workers/vite-plugin/).
 
 - `find_additional_modules` <Type text="boolean" /> <MetaInfo text="optional" />
 
@@ -152,20 +159,24 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
     Any files that match `rules` will be included in the deployed Worker.
     Defaults to true if `no_bundle` is true, otherwise false.
     Can only be used with Module format Workers (not Service Worker format).
+  - Not applicable if you're using the [Cloudflare Vite plugin](/workers/vite-plugin/).
 
 - `base_dir` <Type text="string" /> <MetaInfo text="optional" />
 
   - The directory in which module "rules" should be evaluated when including additional files (via `find_additional_modules`) into a Worker deployment. Defaults to the directory containing the `main` entry point of the Worker if not specified.
+  - Not applicable if you're using the [Cloudflare Vite plugin](/workers/vite-plugin/).
 
 - `preserve_file_names` <Type text="boolean" /> <MetaInfo text="optional" />
 
   - Determines whether Wrangler will preserve the file names of additional modules bundled with the Worker.
     The default is to prepend filenames with a content hash.
     For example, `34de60b44167af5c5a709e62a4e20c4f18c9e3b6-favicon.ico`.
+  - Not applicable if you're using the [Cloudflare Vite plugin](/workers/vite-plugin/).
 
 - `minify` <Type text="boolean" /> <MetaInfo text="optional" />
 
   - Minify the Worker script before uploading.
+  - If you're using the [Cloudflare Vite plugin](/workers/vite-plugin/), `minify` is replaced by Vite's [`build.minify`](https://vite.dev/config/build-options.html#build-minify).
 
 - `logpush` <Type text="boolean" /> <MetaInfo text="optional" />
 
@@ -192,6 +203,7 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
 - `define` <Type text="Record<string, string>" /> <MetaInfo text="optional" />
 
   - A map of values to substitute when deploying your Worker.
+  - If you're using the [Cloudflare Vite plugin](/workers/vite-plugin/), `define` is replaced by Vite's [`define`](https://vite.dev/config/shared-options.html#define).
 
 - `vars` <Type text="object" /> <MetaInfo text="optional" />
 
@@ -371,6 +383,10 @@ head_sampling_rate = 0.1 # 10% of requests are logged
 </WranglerConfig>
 
 ## Custom builds
+
+:::note
+Not applicable if you're using the [Cloudflare Vite plugin](/workers/vite-plugin/).
+:::
 
 You can configure a custom build step that will be run before your Worker is deployed. Refer to [Custom builds](/workers/wrangler/custom-builds/).
 
@@ -988,9 +1004,10 @@ You can only configure one collection of assets per Worker.
 
 The following options are available under the `assets` key.
 
-- `directory` <Type text="string" /> <MetaInfo text="required" />
+- `directory` <Type text="string" /> <MetaInfo text="optional" />
 
   - Folder of static assets to be served.
+  - Not required if you're using the [Cloudflare Vite plugin](/workers/vite-plugin/), which will automatically point to the client build output.
 
 - `binding` <Type text="string" /> <MetaInfo text="optional" />
 
@@ -1019,6 +1036,10 @@ assets = { directory = "./public", binding = "ASSETS", html_handling = "force-tr
 </WranglerConfig>
 
 ## Bundling
+
+:::note
+Wrangler bundling is not applicable if you're using the [Cloudflare Vite plugin](/workers/vite-plugin/).
+:::
 
 Wrangler can operate in two modes: the default bundling mode and `--no-bundle` mode.
 In bundling mode, Wrangler will traverse all the imports of your code and generate a single JavaScript "entry-point" file.
@@ -1077,6 +1098,10 @@ See https://developers.cloudflare.com/workers/wrangler/bundling/ for more detail
 
 ## Local development settings
 
+:::note
+If you're using the [Cloudflare Vite plugin](/workers/vite-plugin/), you should use Vite's [server options]](https://vite.dev/config/server-options.html) instead.
+:::
+
 You can configure various aspects of local development, such as the local protocol or port.
 
 - `ip` <Type text="string" /> <MetaInfo text="optional" />
@@ -1119,6 +1144,10 @@ local_protocol = "http"
 <Render file="secrets-in-dev" />
 
 ## Module Aliasing
+
+:::note
+If you're using the [Cloudflare Vite plugin](/workers/vite-plugin/), `alias` is replaced Vite's [`resolve.alias`](https://vite.dev/config/shared-options.html#resolve-alias).
+:::
 
 You can configure Wrangler to replace all calls to import a particular package with a module of your choice, by configuring the `alias` field:
 
@@ -1279,6 +1308,8 @@ Wrangler will not delete your secrets (encrypted environment variables) unless y
 This section describes a feature that can be implemented by frameworks and other build tools that are integrating with Wrangler.
 
 It is unlikely that an application developer will need to use this feature, but it is documented here to help you understand when Wrangler is using a generated configuration rather than the original, user's configuration.
+
+For example, when using the [Cloudflare Vite plugin](/workers/vite-plugin/), an output Worker configuration file is generated as part of the build. This is then used for preview and deployment.
 
 :::
 

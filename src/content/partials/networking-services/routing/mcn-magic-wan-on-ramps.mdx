@@ -126,7 +126,7 @@ You have successfully created your Magic WAN on-ramp. However, on-ramp creation 
 
 You have successfully created your Magic WAN on-ramp. However, on-ramp creation can take up to an hour before you can use it.
 
-## Set up with Terraform
+### Set up with Terraform
 
 You can download a Terraform configuration for a cloud on-ramp.
 
@@ -143,7 +143,7 @@ If you intend to plan and apply the downloaded configuration using Terraform, yo
 Do not deploy the on-ramp using both Cloudflare and Terraform. If you plan to deploy your on-ramp with Cloudflare (meaning you are both planning to create an on-ramp and applying an on-ramp), Cloudflare creates resources that will result in conflicts when you run Terraform (and vice versa). The Cloudflare dashboard will warn you if it detects you might encounter a conflict.
 :::
 
-### Download Terraform configuration for a new on-ramp
+#### Download Terraform configuration for a new on-ramp
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
 2. Select **Magic WAN** > **Cloud on-ramps**.
@@ -153,11 +153,17 @@ Do not deploy the on-ramp using both Cloudflare and Terraform. If you plan to de
    1. Choose **Download file and continue** to download the Terraform configuration, review the configuration, and then continue deploying the on-ramp with Cloudflare.
    2. Choose **Download file and exit** to download the Terraform configuration that you will apply yourself.
 
-### Download Terraform configuration for an existing on-ramp
+#### Download Terraform configuration for an existing on-ramp
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
 2. Select **Magic WAN** > **Cloud on-ramps**.
 3. Select the three dots for the on-ramp you want to download > **Download as Terraform**.
+
+## Update security groups
+
+After setting up your on-ramps, you need to update your network security groups in your cloud provider to allow traffic to/from Magic WAN. Refer to the [Cloud on-ramps](/magic-cloud-networking/reference/) reference page for more information.
+
+---
 
 ## Edit on-ramps
 
@@ -181,9 +187,9 @@ Do not deploy the on-ramp using both Cloudflare and Terraform. If you plan to de
 2. Select **Magic WAN** > **Cloud on-ramps**.
 3. Select the on-ramp you want to delete.
 4. Select **Edit** in the side panel.
-5. Choose **Detach** or **Destroy** to proceed:
-   - **Detach**: Cloudflare will stop managing the cloud resources that were created to build this on-ramp, but will leave them in place. On-ramp connectivity will not be impacted.
-   - **Destroy**: Cloudflare will delete the resources that were created to build this on-ramp in the cloud provider, if possible. Resources cannot be deleted if other resources depend upon them. For example, if an AWS Customer Gateway was created for this on-ramp, but was subsequently used in a second on-ramp, destroying this on-ramp will not destroy the AWS Customer Gateway.
+5. Choose **Detach** to proceed. Cloudflare will stop managing the cloud resources that were created to build this on-ramp, but will leave them in place. On-ramp connectivity will not be impacted.
+
+---
 
 ## Magic WAN Address Space
 
@@ -205,6 +211,8 @@ To override the defaults with custom prefixes:
 5. When you are finished, select **Save changes**.
 
 To install a default route to send all traffic to Magic WAN, enter `0.0.0.0/0` (on Azure, enter `0.0.0.0/1` and `128.0.0.0/1`).
+
+---
 
 ## Cost estimates
 

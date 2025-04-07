@@ -209,8 +209,6 @@ If you are a Cloudflare Access user, as of March 2022 you have to manually add t
 
 ## Limitations
 
-* You can configure up to 40 custom fields across all field types (HTTP request headers, HTTP response headers, and cookies) per zone.
-* The maximum length of custom field data for HTTP request headers, Cookies, and HTTP response headers combined is 8 KB. Any data over this limit will be truncated.
 * For headers which may be included multiple times (for example, the `set-cookie` response header), a custom field will only log the first instance of the header. Subsequent headers of the same type will be ignored.
 * Currently, Cloudflare only logs original request/response headers. Headers that were modified earlier in the request lifecycle with [Transform Rules](/rules/transform/) will not be logged.
 * The request header `Range` is currently not supported by Custom Fields.

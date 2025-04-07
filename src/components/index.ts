@@ -11,6 +11,7 @@ export { default as AvailableNotifications } from "./AvailableNotifications.astr
 export { default as CompatibilityFlag } from "./CompatibilityFlag.astro";
 export { default as CompatibilityFlags } from "./CompatibilityFlags.astro";
 export { default as ComponentsUsage } from "./ComponentsUsage.astro";
+export { default as CopyPageButton } from "./CopyPageButton.tsx";
 export { default as CURL } from "./CURL.astro";
 export { default as Description } from "./Description.astro";
 export { default as Details } from "./Details.astro";
@@ -59,10 +60,12 @@ export { default as Type } from "./Type.astro";
 export { default as TypeScriptExample } from "./TypeScriptExample.astro";
 export { default as WranglerConfig } from "./WranglerConfig.astro";
 export { default as WARPReleases } from "./WARPReleases.astro";
+export { default as Width } from "./Width.astro";
 export { default as WorkersArchitectureDiagram } from "./WorkersArchitectureDiagram.astro";
 export { default as WorkersIsolateDiagram } from "./WorkersIsolateDiagram.astro";
 export { default as WorkerStarter } from "./WorkerStarter.astro";
 export { default as YouTube } from "./YouTube.astro";
+export { default as YouTubeVideos } from "./YouTubeVideos.astro";
 
 // Taken from Astro
 export { default as ListCard } from "./astro/ListCard.astro";

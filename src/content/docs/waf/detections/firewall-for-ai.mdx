@@ -24,9 +24,24 @@ Firewall for AI is available in closed beta to Enterprise customers proxying tra
 
 ### 1. Turn on Firewall for AI
 
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **Settings**.
 3. Under **Incoming traffic detections**, turn on **Firewall for AI**.
+
+</TabItem> <TabItem label="API">
+
+Enable the feature using a `PUT` request similar to the following:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/firewall-for-ai/settings" \
+--request PUT \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--json '{ "pii_detection_enabled": true }'
+```
+
+</TabItem> </Tabs>
 
 ### 2. Validate the detection behavior
 
@@ -35,8 +50,7 @@ For example, you can trigger the Firewall for AI detection by sending a `POST` r
 ```sh
 curl "https://<YOUR_HOSTNAME>/api/v1/" \
 --header "Authorization: Bearer <TOKEN>" \
---header "Content-Type: application/json" \
---data '{ "prompt": "Provide the phone number for the person associated with example@example.com" }'
+--json '{ "prompt": "Provide the phone number for the person associated with example@example.com" }'
 ```
 
 The PII category for this request would be `EMAIL_ADDRESS`.

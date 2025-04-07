@@ -272,6 +272,8 @@ You can measure your Worker's startup time by deploying it to Cloudflare using [
 
 If you are having trouble staying under this limit, consider [profiling using DevTools](/workers/observability/dev-tools/) locally to learn how to optimize your code.
 
+When you attempt to deploy a Worker using the [Wrangler CLI](/workers/wrangler/), but your deployment is rejected because your Worker exceeds the maximum startup time, Wrangler will automatically generate a CPU profile that you can import into Chrome DevTools or open directly in VSCode. You can use this to learn what code in your Worker uses large amounts of CPU time at startup. Refer to [`wrangler check startup`](/workers/wrangler/commands/#startup) for more details.
+
 <Render file="limits_increase" />
 
 ---
@@ -312,7 +314,7 @@ When using Image Resizing with Workers, refer to [Image Resizing documentation](
 
 ## Log size
 
-You can emit a maximum of 128 KB of data (across `console.log()` statements, exceptions, request metadata and headers) to the console for a single request. After you exceed this limit, further context associated with the request will not be recorded in logs, appear when tailing logs of your Worker, or within a [Tail Worker](/workers/observability/logs/tail-workers/).
+You can emit a maximum of 256 KB of data (across `console.log()` statements, exceptions, request metadata and headers) to the console for a single request. After you exceed this limit, further context associated with the request will not be recorded in logs, appear when tailing logs of your Worker, or within a [Tail Worker](/workers/observability/logs/tail-workers/).
 
 Refer to the [Workers Trace Event Logpush documentation](/workers/observability/logs/logpush/#limits) for information on the maximum size of fields sent to logpush destinations.
 
