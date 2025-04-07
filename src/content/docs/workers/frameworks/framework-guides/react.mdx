@@ -16,7 +16,7 @@ import {
 	Steps,
 } from "~/components";
 
-**Start from CLI** - scaffold a full-stack app with a React SPA, Cloudflare Workers API, and the Cloudflare Vite plugin for lightning-fast development.
+**Start from CLI** - scaffold a full-stack app with a React SPA, Cloudflare Workers API, and the [Cloudflare Vite plugin](/workers/vite-plugin/) for lightning-fast development.
 
 <PackageManagers
 	type="create"
@@ -62,18 +62,19 @@ import {
         					- `assets.not_found_handling` is set to `single-page-application`, which means that routes that are handled by your React SPA do not go to the Worker, and are thus free.
         					- If you want to add bindings to resources on Cloudflare's developer platform, you configure them here. Read more about [bindings](/workers/runtime-apis/bindings/).
 
-    						`vite.config.ts` is set up to use the Cloudflare Vite plugin. This runs your Worker in the Cloudflare Workers runtime, ensuring your local development environment is as close to production as possible.
+    						`vite.config.ts` is set up to use the [Cloudflare Vite plugin](/workers/vite-plugin/). This runs your Worker in the Cloudflare Workers runtime, ensuring your local development environment is as close to production as possible.
 
     						`worker/index.ts` is your backend API, which contains a single endpoint, `/api/`, that returns a text response.
     						At `src/App.tsx`, your React app calls this endpoint to get a message back and displays this.
         		</Details>
 
-2.  **Develop locally with the Cloudflare Vite plugin**
+2.  **Develop locally with the [Cloudflare Vite plugin](/workers/vite-plugin/)**
 
         After creating your project, run the following command in your project directory to start a local development server.
         <PackageManagers type="run" args="dev" />
         		<Details header="What's happening in local development?">
         			This project uses Vite for local development and build, and thus comes with all of Vite's features, including hot module replacement (HMR).
+
         			In addition, `vite.config.ts` is set up to use the Cloudflare Vite plugin. This runs your application in the Cloudflare Workers runtime, just like in production, and enables access to local emulations of bindings.
         		</Details>
 
