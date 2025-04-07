@@ -9,12 +9,12 @@ sidebar:
 
 The following table shows which database engines and/or specific database providers are supported.
 
-| Database Engine | Supported                | Known supported versions | Details                                                                                  |
-| --------------- | ------------------------ | ------------------------ | ---------------------------------------------------------------------------------------- |
-| PostgreSQL      | ✅                       | `9.0` to `16.x`          | Both self-hosted and managed (AWS, Azure, Google Cloud, Oracle) instances are supported. |
-| MySQL           | ✅                       | `5.7` to `8.x`           | Both self-hosted and managed (AWS, Azure, Google Cloud, Oracle) instances are supported. |
-| SQL Server      | Not currently supported. |                          |                                                                                          |
-| MongoDB         | Not currently supported. |                          |                                                                                          |
+| Database Engine | Supported                | Known supported versions | Details                                                                                                             |
+| --------------- | ------------------------ | ------------------------ | ------------------------------------------------------------------------------------------------------------------- |
+| PostgreSQL      | ✅                       | `9.0` to `16.x`          | Both self-hosted and managed (AWS, Azure, Google Cloud, Oracle) instances are supported.                            |
+| MySQL           | ✅                       | `5.7` to `8.x`           | Both self-hosted and managed (AWS, Azure, Google Cloud, Oracle) instances are supported. MariaDB is also supported. |
+| SQL Server      | Not currently supported. |                          |                                                                                                                     |
+| MongoDB         | Not currently supported. |                          |                                                                                                                     |
 
 ## Supported database providers
 
@@ -24,16 +24,11 @@ The following is a non-exhaustive list of database providers:
 | --------------- | --------- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
 | Neon            | ✅        | All                      | Neon currently runs Postgres 15.x                                                                                        |
 | Supabase        | ✅        | All                      | Supabase currently runs Postgres 15.x                                                                                    |
-| Timescale       | ✅        | All                      | See the [Timescale guide](/hyperdrive/examples/connect-to-postgres/timescale/) to connect.                                                   |
-| Materialize     | ✅        | All                      | Postgres-compatible. Refer to the [Materialize guide](/hyperdrive/examples/connect-to-postgres/materialize/) to connect.                     |
+| Timescale       | ✅        | All                      | See the [Timescale guide](/hyperdrive/examples/connect-to-postgres/timescale/) to connect.                               |
+| Materialize     | ✅        | All                      | Postgres-compatible. Refer to the [Materialize guide](/hyperdrive/examples/connect-to-postgres/materialize/) to connect. |
 | CockroachDB     | ✅        | All                      | Postgres-compatible. Refer to the [CockroachDB](/hyperdrive/examples/connect-to-postgres/cockroachdb/) guide to connect. |
 | Planetscale     | ✅        | All                      | Planetscale currently runs MySQL 8.x                                                                                     |
-
-:::note[Support for MySQL-compatible providers]
-
-Support for AWS Aurora MySQL and MariaDB databases is coming soon. Join our early preview support by reaching out to us in the [Hyperdrive Discord channel](https://discord.cloudflare.com/).
-
-:::
+| MariaDB         | ✅        | All                      | MySQL-compatible.                                                                                                        |
 
 ## Supported PostgreSQL authentication modes
 
