@@ -26,6 +26,7 @@ export default {
 	async fetch(request, env, ctx) {
 		try {
 			const value = await env.NAMESPACE.get("first-key");
+			test;
 
 			if (value === null) {
 				return new Response("Value not found", { status: 404 });
@@ -46,7 +47,9 @@ export default {
 		try {
 			const value = await env.NAMESPACE.get(["first-key", "second-key"]);
 
-			return new Response("values: " + value.get("second-key") + " " + value.get("second-key"));
+			return new Response(
+				"values: " + value.get("second-key") + " " + value.get("second-key"),
+			);
 		} catch (e) {
 			return new Response(e.message, { status: 500 });
 		}
@@ -65,8 +68,8 @@ The following methods are provided to read from KV:
 
 Use the `get()` method to get a single value, or multiple values if given multiple keys:
 
-* Read single keys with [get(key)](#request-a-single-key)
-* Read multiple keys with [get([keys])](#request-multiple-keys)
+- Read single keys with [get(key)](#request-a-single-key)
+- Read multiple keys with [get([keys])](#request-multiple-keys)
 
 #### Request a single key
 
@@ -261,7 +264,9 @@ export default {
 		try {
 			const response = await env.NAMESPACE.getWithMetadata(["first-key"]);
 			const firstValue = response.get("first-key");
-			return new Response("value: " + firstValue?.value + " metadata: " + firstValue?.metadata);
+			return new Response(
+				"value: " + firstValue?.value + " metadata: " + firstValue?.metadata,
+			);
 		} catch (e) {
 			return new Response(e.message, { status: 500 });
 		}
@@ -297,4 +302,3 @@ The effective `cacheTtl` of an already cached item can be reduced by getting it 
 ## Other methods to access KV
 
 You can [read key-value pairs from the command line with Wrangler](/kv/reference/kv-commands/#kv-key-get) and [from the REST API](/api/resources/kv/subresources/namespaces/subresources/values/methods/get/).
-
