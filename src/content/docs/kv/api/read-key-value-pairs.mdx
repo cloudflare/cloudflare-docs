@@ -120,6 +120,12 @@ env.NAMESPACE.get(keys, options?);
 }`
   - Optional. Object containing the optional `cacheTtl` and `type` properties. The `cacheTtl` property defines the length of time in seconds that a KV result is cached in the global network location it is accessed from (minimum: 60). The `type` property defines the type of the value to be returned.
 
+:::note
+
+The `.get()` function to read multiple keys does not support `arrayBuffer` or `stream` return types. If you need to read multiple keys of `arrayBuffer` or `stream` types, consider using the `.get()` function to read individual keys in parallel.
+
+:::
+
 ##### Response
 
 - `response`: `Promise<Map<string, string | Object | null>`
