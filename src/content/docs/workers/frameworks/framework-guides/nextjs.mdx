@@ -83,8 +83,8 @@ You configure your Worker and define what resources it can access via [bindings]
 Add the following to the scripts field of your `package.json` file:
 
 ```json
-"preview": "opennextjs-cloudflare && wrangler dev",
-"deploy": "opennextjs-cloudflare && wrangler deploy",
+"preview": "opennextjs-cloudflare build && wrangler dev",
+"deploy": "opennextjs-cloudflare build && wrangler deploy",
 "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
 ```
 
