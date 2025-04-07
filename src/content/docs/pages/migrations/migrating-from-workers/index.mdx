@@ -3,7 +3,8 @@ updated: 2020-08-13
 difficulty: Beginner
 pcx_content_type: tutorial
 title: Migrating from Workers Sites to Pages
-
+sidebar:
+  hidden: true
 ---
 
 In this tutorial, you will learn how to migrate an existing [Cloudflare Workers Sites](/workers/configuration/sites/) application to Cloudflare Pages.
@@ -16,9 +17,7 @@ You may already have a reasonably complex Worker and/or it would be tedious to s
 
 :::note
 
-
 When using a `_worker.js` file, the entire `/functions` directory is ignored - this includes its routing and middleware characteristics. Instead, the `_worker.js` file is deployed as is and must be written using the [Module Worker syntax](/workers/reference/migrate-to-module-workers/).
-
 
 :::
 
@@ -40,11 +39,9 @@ You can migrate your redirects to Pages, by creating a `_redirects` file in your
 
 :::note
 
-
 A project is limited to 2,000 static redirects and 100 dynamic redirects, for a combined total of 2,100 redirects. Each redirect declaration has a 1,000-character limit. Malformed definitions are ignored. If there are multiple redirects for the same source path, the topmost redirect is applied.
 
 Make sure that static redirects are before dynamic redirects in your `_redirects` file.
-
 
 :::
 
@@ -62,9 +59,7 @@ If you choose to use a custom domain for your Pages project, you can set it to t
 
 :::note
 
-
 Before you deploy, you will need to delete your old Workers routes to start sending requests to Cloudflare Pages.
-
 
 :::
 

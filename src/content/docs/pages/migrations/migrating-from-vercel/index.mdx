@@ -3,16 +3,15 @@ updated: 2020-09-23
 difficulty: Beginner
 pcx_content_type: tutorial
 title: Migrating from Vercel to Pages
-
+sidebar:
+  hidden: true
 ---
 
 In this tutorial, you will learn how to deploy your Vercel application to Cloudflare Pages.
 
 :::note
 
-
 You should already have an existing project deployed on Vercel that you would like to host on Cloudflare Pages. Features such as Vercel's serverless functions are currently not supported in Cloudflare Pages.
-
 
 :::
 
@@ -44,11 +43,9 @@ To use a custom domain for your Pages project, [add a custom domain](/pages/conf
 
 :::note
 
-
 Cloudflare does not provide IP addresses for your Pages project because we do not require `A` or `AAAA` records to link your domain to your project. Instead, Cloudflare uses `CNAME` records.
 
 For more details, refer to [Custom domains](/pages/configuration/custom-domains/).
-
 
 :::
 

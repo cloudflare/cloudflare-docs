@@ -1159,6 +1159,27 @@ wrangler pages secret bulk [<FILENAME>] [OPTIONS]
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
+### `functions build`
+
+Compile a folder of Pages Functions into a single Worker.
+
+```txt
+wrangler pages functions build [<DIRECTORY>] [OPTIONS]
+```
+
+- `DIRECTORY` <Type text="string" /> <MetaInfo text="optional (default: `functions`)" />
+  - The directory of Pages Functions.
+- `--outdir` <Type text="string" /> <MetaInfo text="optional" />
+  - Output directory for the bundled Worker.
+- `--fallback-service` <Type text="string" /> <MetaInfo text="optional (default: `ASSETS`)" />
+  - The service to fallback to at the end of the `next` chain. Setting to `''` will fallback to the global `fetch`.
+- `--compatibility-date` <Type text="string" /> <MetaInfo text="optional" />
+  - Date to use for compatibility checks.
+- `--compatibility-flags` <Type text="string[]" /> <MetaInfo text="optional" />
+  - Flags to use for compatibility checks.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ---
 
 ## `queues`
