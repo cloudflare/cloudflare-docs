@@ -14,7 +14,7 @@ Customers that send NetFlow and / or sFlow data to Cloudflare can configure stat
 | Field | Description |
 | :---- | :---- |
 | **Rule name** | Must be unique and cannot contain spaces. Supports characters `A-Z`, `a-z`, `0-9`, underscore (`_`), dash (`-`), period (`.`), and tilde (`~`). Maximum of 256 characters. |
-| **Rule type** | Threshold |
+| **Rule type** | threshold |
 | **Rule threshold type** | Can be defined in either bits per second or packets per second. |
 | **Rule threshold** | The number of bits per second or packets per second for the rule alert. When this value is exceeded for the rule duration, an alert notification is sent. Minimum of `1` and no maximum. |
 | **Rule duration** | The amount of time in minutes the rule threshold must exceed to send an alert notification. Choose from the following values: `1`, `5`, `10`, `15`, `20`, `30`, `45`, or `60` minutes. |
