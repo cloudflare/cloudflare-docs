@@ -74,7 +74,7 @@ It combines with the [Cloudflare Vite plugin](/workers/vite-plugin/) to provide 
         			In this file:
         					- `main` points to `./workers/app.ts`.
     									This is the entry file for your Worker.
-    										The default export includes a `fetch` handler, which delegates the request to React Router.
+    										The default export includes a [`fetch` handler](/workers/runtime-apis/fetch/), which delegates the request to React Router.
         					- If you want to add [bindings](/workers/runtime-apis/bindings/) to resources on Cloudflare's developer platform, you configure them here.
         		</Details>
 
