@@ -12,8 +12,10 @@ env.NAMESPACE.get(key);
 ```
 
 The `get()` method returns a promise you can `await` on to get the value.
+
 If you request a single key as a string, you will get a single response in the promise. If the key is not found, the promise will resolve with the literal value `null`.
-Instead of a single key, you can also request an array of keys. In this case the response is a map with the key-value pairs.
+
+Instead of a single key, you can also request an array of keys. In this case, the response is a map with the key-value pairs.
 
 #### Example
 
@@ -61,9 +63,9 @@ The following methods are provided to read from KV:
 
 ### `get()` method
 
-The `get()` method can be used to get a single value, or multiple values, if given multiple keys
+Use the `get()` method to get a single value, or multiple values if given multiple keys.
 
-#### Requesting a single key
+#### Request a single key
 
 To get the value for a single key, call the `get()` method on any KV namespace you have bound to your Worker code with:
 
@@ -96,7 +98,7 @@ env.NAMESPACE.get(key, options?);
 
 The `get()` method may return stale values. If a given key has recently been read in a given location, writes or updates to the key made in other locations may take up to 60 seconds (or the duration of the `cacheTtl`) to display.
 
-#### Requesting multiple keys
+#### Request multiple keys
 
 To get the values for multiple keys, call the `get()` method on any KV namespace you have bound to your Worker code with:
 
@@ -125,17 +127,17 @@ env.NAMESPACE.get(keys, options?);
     - `text`: A `string` (default).
     - `json`: An object decoded from a JSON string.
 
-When requesting multiple keys, the promise will never resolve to a null value. It may, however, resolve to a map that contains a key that corresponds to a null value, similarly to what happens for a single get.
+When requesting multiple keys, the promise will never resolve to a null value. It may, however, resolve to a map that contains a key that corresponds to a null value, similar to what happens for a single get.
 
-You cannot request over 25MB of data. If you do, the request will fail with a `413` Error.
+You cannot request over 25 MB of data. If you do, the request will fail with a `413` Error.
 
 The `get()` method may return stale values. If a given key has recently been read in a given location, writes or updates to the key made in other locations may take up to 60 seconds (or the duration of the `cacheTtl`) to display.
 
 ### `getWithMetadata()` method
 
-The `getWithMetadata()` method can be used to get a single value or multiple values, if given multiple keys.
+Use the `getWithMetadata()` method to get a single value, or multiple values if given multiple keys.
 
-#### Requesting a single key
+#### Request a single key
 
 To get the value for a given key along with its metadata, call the `getWithMetadata()` method on any KV namespace you have bound to your Worker code:
 
@@ -198,7 +200,7 @@ export default {
 };
 ```
 
-#### Requesting multiple keys
+#### Request multiple keys
 
 To get the values for a given set of keys along with their metadata, call the `getWithMetadata()` method on any KV namespace you have bound to your Worker code with:
 
@@ -235,6 +237,7 @@ metadata: string | Object | null
 If there is no metadata associated with the requested key-value pair, `null` will be returned for metadata.
 
 You cannot request over 25MB of data. If you do, the request will fail with a `413` Error .
+
 ##### Example
 
 An example of reading a key with metadata from within a Worker:
