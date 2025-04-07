@@ -124,7 +124,119 @@ Read the docs for the [Workers oAuth Provider Library](https://github.com/cloudf
 
 ### (3) Bring your own OAuth Provider
 
-If your application already implements an Oauth Provider itself, or you use Stytch, Auth0, or authorization-as-a-service provider, you can use this in the same way that you would use a third-party OAuth provider, described above in (2).
+If your application already implements an Oauth Provider itself, or you use [Stytch](https://stytch.com/), [Auth0](https://auth0.com/), [WorkOS](https://workos.com/), or authorization-as-a-service provider, you can use this in the same way that you would use a third-party OAuth provider, described above in (2).
+
+You can use the auth provider to: 
+- Allow users to authenticate to your MCP server through email, social logins, SSO (single sign-on), and MFA (multi-factor authentication).
+- Define scopes and permissions that directly map to your MCP tools.
+- Present users with a consent page corresponding with the requested permissions.
+- Enforce the permissions so that agents can only invoke permitted tools.  
+
+#### Stytch
+Get started with a [remote MCP server that uses Stytch](https://stytch.com/docs/guides/connected-apps/mcp-servers) to allow users to sign in with email, Google login or enterprise SSO and authorize their AI agent to view and manage their company’s OKRs on their behalf. Stytch will handle restricting the scopes granted to the AI agent based on the user’s role and permissions within their organization. When authorizing the MCP Client, each user will see a consent page that outlines the permissions that the agent is requesting that they are able to grant based on their role.
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/ai/tree/main/demos/mcp-stytch-b2b-okr-manager)
+
+For more consumer use cases, deploy a remote MCP server for a To Do app that uses Stytch for authentication and MCP client authorization. Users can sign in with email and immediately access the To Do lists associated with their account, and grant access to any AI assistant to help them manage their tasks.
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/ai/tree/main/demos/mcp-stytch-consumer-todo-list)
+
+#### Auth0
+Get started with a remote MCP server that uses Auth0 to authenticate users through email, social logins, or enterprise SSO to interact with their todos and personal data through AI agents. The MCP server securely connects to API endpoints on behalf of users, showing exactly which resources the agent will be able to access once it gets consent from the user. In this implementation, access tokens are automatically refreshed during long running interactions.
+
+To set it up, first deploy the protected API endpoint: 
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-auth0/packages/todos-api)
+
+Then, deploy the MCP server that handles authentication through Auth0 and securely connects AI agents to your API endpoint. 
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-auth0/packages/mcp-auth0-oidc)
+
+#### WorkOS
+
+Get started with a remote MCP server that uses WorkOS's AuthKit to authenticate users and manage the permissions granted to AI agents. In this example, the MCP server dynamically exposes tools based on the user's role and access rights. All authenticated users get access to the `add` tool, but only users who have been assigned the `image_generation` permission in WorkOS can grant the AI agent access to the image generation tool. This showcases how MCP servers can conditionally expose capabilities to AI agents based on the authenticated user's role and permission.
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-authkit)
+
+## Using Authentication Context in Your MCP Server
+
+When a user authenticates to your MCP server through Cloudflare's OAuth Provider, their identity information and tokens are made available through the `props` parameter.
+
+```js
+export class MyMCP extends McpAgent<Env, unknown, AuthContext> {
+  async init() {
+    this.server.tool("userInfo", "Get user information", {}, async () => ({
+      content: [{ type: "text", text: `Hello, ${this.props.claims.name || "user"}!` }],
+    }));
+  }
+}
+```
+
+The authentication context can be used for:
+
+- Accessing user-specific data by using the user ID (this.props.claims.sub) as a key
+- Checking user permissions before performing operations
+- Customizing responses based on user preferences or attributes
+- Using authentication tokens to make requests to external services on behalf of the user
+- Ensuring consistency when users interact with your application through different interfaces (dashboard, API, MCP server)
+
+## Implementing Permission-Based Access for MCP Tools
+
+You can implement fine-grained authorization controls for your MCP tools based on user permissions. This allows you to restrict access to certain tools based on the user's role or specific permissions.
+
+```js
+// Create a wrapper function to check permissions
+function requirePermission(permission, handler) {
+  return async (request, context) => {
+    // Check if user has the required permission
+    const userPermissions = context.props.permissions || [];
+    
+    if (!userPermissions.includes(permission)) {
+      return {
+        content: [{ type: "text", text: `Permission denied: requires ${permission}` }],
+        status: 403
+      };
+    }
+    
+    // If permission check passes, execute the handler
+    return handler(request, context);
+  };
+}
+
+// Use the wrapper with your MCP tools
+async init() {
+  // Basic tools available to all authenticated users
+  this.server.tool("basicTool", "Available to all users", {}, async () => {
+    // Implementation for all users
+  });
+  
+  // Protected tool using the permission wrapper
+  this.server.tool(
+    "adminAction",
+    "Administrative action requiring special permission",
+    { /* parameters */ },
+    requirePermission("admin", async (req) => {
+      // Only executes if user has "admin" permission
+      return {
+        content: [{ type: "text", text: "Admin action completed" }]
+      };
+    })
+  );
+  
+  // Conditionally register tools based on user permissions
+  if (this.props.permissions?.includes("special_feature")) {
+    this.server.tool("specialTool", "Special feature", {}, async () => {
+      // This tool only appears for users with the special_feature permission
+    });
+  }
+}
+```
+
+Benefits: 
+- Authorization check at the tool level ensures proper access control
+- Allows you to define permission checks once and reuse them across tools
+- Provides clear feedback to users when permission is denied
+- Can choose to only present tools that the agent is able to call
 
 ## Next steps
 
