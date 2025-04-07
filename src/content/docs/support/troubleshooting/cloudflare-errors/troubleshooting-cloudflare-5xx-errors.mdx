@@ -114,7 +114,7 @@ If you need further assistance from our Support team, provide the following deta
 
 ## Error 503: service temporarily unavailable
 
-HTTP error 503 occurs when your origin web server is overloaded. 
+HTTP error 503 occurs when your origin web server is overloaded.
 
 ### Common causes
 
@@ -154,7 +154,7 @@ This error is often triggered by:
 - Headers exceeding 16 KB (often due to excessive cookies).
 - Empty or malformed responses lacking an HTTP status code or response body.
 - Missing response headers or origin web server not returning [proper HTTP error responses](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml).
-- Incorrect HTTP/2 configuration at the origin server. 
+- Incorrect HTTP/2 configuration at the origin server.
 
 :::note
 
@@ -202,12 +202,12 @@ Contact your hosting provider or site administrator and share the necessary [err
 - Review origin web server error logs to identify web server application crashes or outages.
 - Confirm [Cloudflare IP addresses](https://www.cloudflare.com/ips) are not blocked or rate limited.
 - Allow all [Cloudflare IP ranges](https://www.cloudflare.com/ips) in your origin web server's firewall or other security software.
-- Confirm that — if you have your **SSL/TLS mode** set to **Full** or **Full (Strict**) — you have installed a [Cloudflare Origin Certificate](/ssl/origin-configuration/origin-ca) or a certificate matching the [requirements for these modes](/ssl/origin-configuration/ssl-modes/#custom-ssltls).
+- Confirm that — if you have your **SSL/TLS mode** set to **Full** or **Full (Strict**) — your origin supports HTTPS and/or you have installed a [Cloudflare Origin Certificate](/ssl/origin-configuration/origin-ca) or a certificate matching the [requirements for these modes](/ssl/origin-configuration/ssl-modes/#custom-ssltls).
 - Find additional troubleshooting information on the [Cloudflare Community](https://community.cloudflare.com/t/community-tip-fixing-error-521-web-server-is-down/42461).
 
 ## Error 522: connection timed out
 
-Error `522` occurs when Cloudflare times out contacting the origin web server. 
+Error `522` occurs when Cloudflare times out contacting the origin web server.
 
 ### Common causes
 
@@ -256,7 +256,7 @@ If none of the above leads to a resolution, request the following information fr
 
 ## Error 524: a timeout occurred
 
-Error `524` usually indicates that Cloudflare successfully connected to the origin web server, but the origin did not provide an HTTP response before the default 100 seconds [Proxy Read Timeout](/fundamentals/reference/connection-limits/). 
+Error `524` usually indicates that Cloudflare successfully connected to the origin web server, but the origin did not provide an HTTP response before the default 100 seconds [Proxy Read Timeout](/fundamentals/reference/connection-limits/).
 
 ### Common causes
 
@@ -301,7 +301,7 @@ As a workaround, you can simply set the timeout to one second more (121 seconds 
 
 ## Error 525: SSL handshake failed
 
-This error indicates that the SSL handshake between Cloudflare and the origin web server failed. 
+This error indicates that the SSL handshake between Cloudflare and the origin web server failed.
 
 ### Common causes
 

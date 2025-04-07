@@ -8,6 +8,7 @@
         "name": "Text-to-Image",
         "description": "Generates images from input text. These models can be used to generate and modify images based on text prompts."
     },
+    "created_at": "2023-11-10 10:54:43.694",
     "tags": [],
     "properties": [
         {

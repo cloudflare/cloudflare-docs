@@ -25,24 +25,24 @@ There are three main DDoS mitigation systems:
 3. [Advanced TCP Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-tcp-protection/)
 4. [Advanced DNS Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-dns-protection/)
 
-The DDoS Managed Ruleset includes many individual rules. Each rule provides the heuristics that instructs the system how to identify attack traffic. When the DDoS Managed Ruleset identifies an attack, it will generate a real-time fingerprint to match against the attack traffic, and install an ephemeral mitigation rule to mitigate the attack. 
+The DDoS Managed Ruleset includes many individual rules. Each rule provides the heuristics that instructs the system how to identify DDoS attack traffic. When the DDoS Managed Ruleset identifies an attack, it will generate a real-time fingerprint to match against the attack traffic, and install an ephemeral mitigation rule to mitigate the attack using that fingerprint. 
 
-The start time of the attack is when the mitigation rule is installed. The attack ends when there is no more traffic matching the rule. This is a single DDoS attack. 
+The start time of the attack is when the mitigation rule is installed. The attack ends when there is no more traffic matching the rule. This is a single DDoS attack event. 
 
 A DDoS attack therefore has a start time, end time, and additional attack metadata such as:
 
 1. Attack ID
 2. Attack vector
 3. Mitigating rule
-4. Total bytes
-5. Total packets
-6. Attack target
+4. Total bytes and packets
+5. Attack target
+6. Mitigation action
 
 This information is used to populate the [Executive Summary](/analytics/network-analytics/understand/main-dashboard/#executive-summary) section in the [Network Analytics](/analytics/network-analytics/) dashboard.
 
 It can also be retrieved via GraphQL API using the `dosdAttackAnalyticsGroups` node.
 
-Currently, the concept of a DDoS attack only exists for the Network-layer DDoS Managed Ruleset. There is no such grouping of individual packets, queries, or HTTP requests for the other systems, although we plan to implement it.
+Currently, the concept of a DDoS attack event only exists for the Network-layer DDoS Managed Ruleset. There is no such grouping of individual packets, queries, or HTTP requests for the other systems, although we plan to implement it.
 
 ---
 
@@ -84,9 +84,11 @@ Yes. Using our anycast network, along with Traffic Manager, Unimog, and Plurimog
 
 ---
 
-## Where can I see DDoS trends?
+## Where can I see latest DDoS trends?
 
-Refer to [Reports](/ddos-protection/reference/reports/) or [Radar](/radar/) for more information on viewing DDoS trends.
+Cloudflare publishes quarterly DDoS reports and coverage of signficant DDoS attacks. The publications are available on our [blog website](https://blog.cloudflare.com/tag/ddos-reports/) and as interactive reports on the [Cloudflare Radar Reports website](https://radar.cloudflare.com/reports?q=DDoS). 
+
+You can also view [Cloudflare Radar](https://radar.cloudflare.com/) for near real-time insights and trends.
 
 ---
 
@@ -106,6 +108,17 @@ These tools and attacks exploit different aspects of network protocols and behav
 
 ---
 
-## Can I exclude a user agent from DDoS protection?
+## Can I exclude a specific user agent from the HTTP DDoS protection?
 
-You can override a user agent using a low sensitivity level or `Log` if you want visibility.
+Yes, you can create an [override](/ddos-protection/managed-rulesets/http/override-expressions/) and use the expression fields to match against HTTP requests with the user agent. There are a variety of [fields](/ddos-protection/managed-rulesets/http/override-expressions/#available-expression-fields) that you can use.
+
+You can then adjust the [sensitivity level](/ddos-protection/managed-rulesets/http/override-parameters/#sensitivity-level) or [mitigation action](/ddos-protection/managed-rulesets/http/override-parameters/#action).
+
+Refer to the guide on how to [create an override](/ddos-protection/managed-rulesets/http/configure-dashboard/#create-a-ddos-override).
+
+The use of expression fields is subject to [availability](#availability). 
+
+## Does Cloudflare charge for DDoS attack traffic?
+
+No. Since 2017, Cloudflare offers [free, unmetered, and unlimited DDoS protection](https://blog.cloudflare.com/unmetered-mitigation/). There is no limit to the number of DDoS attacks, their duration, or their size. Cloudflare's billing systems automatically exclude DDoS attack traffic from your usage. 
+

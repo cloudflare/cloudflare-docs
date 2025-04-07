@@ -8,11 +8,23 @@
         "name": "Translation",
         "description": "Translation models convert a sequence of text from one language to another."
     },
+    "created_at": "2023-09-25 19:21:11.898",
     "tags": [],
     "properties": [
         {
-            "property_id": "beta",
-            "value": "false"
+            "property_id": "price",
+            "value": [
+                {
+                    "unit": "per M input tokens",
+                    "price": 0.34,
+                    "currency": "USD"
+                },
+                {
+                    "unit": "per M output tokens",
+                    "price": 0.34,
+                    "currency": "USD"
+                }
+            ]
         },
         {
             "property_id": "info",

@@ -12,14 +12,15 @@ import {
 	Render,
 	PackageManagers,
 	Stream,
-	WranglerConfig
+	WranglerConfig,
 } from "~/components";
 
 In this guide, you will create a new [Next.js](https://nextjs.org/) application and deploy to Cloudflare Workers (with the new [<InlineBadge preset="beta" /> Workers Assets](/workers/static-assets/)) using the [`@opennextjs/cloudflare`](https://opennext.js.org/cloudflare) package.
 
 :::note
-If your Next.js app currently runs on Vercel, you can easily migrate your Next.js app to Cloudflare by using [Diverce](https://github.com/ygwyg/diverce), which will automatically add OpenNext to your project and create a pull request that makes it deployable to Cloudflare. 
+If your Next.js app currently runs on Vercel, you can easily migrate your Next.js app to Cloudflare by using [Diverce](https://github.com/ygwyg/diverce), which will automatically add OpenNext to your project and create a pull request that makes it deployable to Cloudflare.
 :::
+
 ## New apps
 
 To create a new Next.js app, pre-configured to run on Cloudflare using [`@opennextjs/cloudflare`](https://opennext.js.org/cloudflare), run:
@@ -27,7 +28,7 @@ To create a new Next.js app, pre-configured to run on Cloudflare using [`@openne
 <PackageManagers
 	type="create"
 	pkg="cloudflare@latest my-next-app"
-	args={"--framework=next --experimental"}
+	args={"--framework=next --platform=workers"}
 />
 
 <Render

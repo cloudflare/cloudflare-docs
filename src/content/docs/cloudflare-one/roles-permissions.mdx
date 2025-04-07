@@ -42,10 +42,11 @@ The Cloudflare Zero Trust PII role does not apply to Access audit logs. PII is a
 
 For more information on Email Security roles, refer to [Account-scoped roles](/fundamentals/setup/manage-members/roles/#account-scoped-roles).
 
-|                           | Write access | Read access |
-| ------------------------- | ------------ | ----------- |
-| Email Configuration Admin | ✅           | ❌          |
-| Email Integration Admin   | ✅           | ❌          |
-| Email Security Analyst    | ✅           | ❌          |
-| Email Security Read Only  | ❌           | ✅          |
-| Email Security Reporting  | ❌           | ✅          |
+- **Cloudflare Zero Trust**: Super Admin access for all Zero Trust products, Email Security included.
+- **Cloudflare Zero Trust PII**: Can read PII in Zero Trust. This includes Email Security.
+- **Email Security Analyst** and **Email Security Config Admin**: Has full access to all admin features in Email Security.
+- **Email Security Integration Admin**: Can read and set up integrations only.
+- **Email Security Config Admin**: Has administrator access. Cannot take actions on emails, or read emails.
+- **Email Security Analyst**: Has analyst access. Can take action on emails and read emails.
+- **Email Security Reporting**: Can read metrics.
+- **Email Security Read Only**: Can read all information, but cannot take action on anything.

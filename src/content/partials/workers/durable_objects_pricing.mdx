@@ -24,7 +24,7 @@ await durableObjectStub.cat(); // billed as a request
 
 <sup>2</sup> A request is needed to create a WebSocket connection. There is no charge for outgoing WebSocket messages, nor for incoming [WebSocket protocol pings](https://www.rfc-editor.org/rfc/rfc6455#section-5.5.2). For compute requests billing-only, a 20:1 ratio is applied to incoming WebSocket messages to factor in smaller messages for real-time communication. For example, 100 WebSocket incoming messages would be charged as 5 requests for billing purposes. The 20:1 ratio does not affect Durable Object metrics and analytics, which reflect actual usage.
 
-<sup>3</sup> Application level auto-response messages handled by [`state.setWebSocketAutoResponse()`](/durable-objects/best-practices/websockets/) will not incur additional wall-clock time, and so they will not be charged.
+<sup>3</sup> Application-level auto-response messages handled by [`state.setWebSocketAutoResponse()`](/durable-objects/api/state/#setwebsocketautoresponse) will not incur additional wall-clock time, and so they will not be charged.
 
 <sup>4</sup> Duration is billed in wall-clock time as long as the Object is active, but is shared across all requests active on an Object at once. Calling `accept()` on a WebSocket in an Object will incur duration charges for the entire time the WebSocket is connected. Note that the request context for a Durable Object extends at least 60 seconds after the last client disconnects. If you prefer, use the [WebSocket hibernation API](/durable-objects/best-practices/websockets/#websocket-hibernation-api) to avoid incurring duration charges once all event handlers finish running.
 

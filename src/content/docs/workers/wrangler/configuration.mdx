@@ -658,9 +658,12 @@ To bind Images to your Worker, assign an array of the below object to the `image
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
-[[images]]
-binding = "IMAGES" # i.e. available in your Worker on env.IMAGES
+```jsonc
+{
+	"images": {
+		"binding": "IMAGES", // i.e. available in your Worker on env.IMAGES
+	},
+}
 ```
 
 </WranglerConfig>

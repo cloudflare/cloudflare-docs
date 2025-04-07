@@ -12,11 +12,12 @@ export const workersAiModelsSchema = z.object({
 		name: z.string(),
 		description: z.string(),
 	}),
+	created_at: z.string().optional(),
 	tags: z.string().array().optional(),
 	properties: z
 		.object({
 			property_id: z.string(),
-			value: z.string(),
+			value: z.string().or(z.array(z.object({}).passthrough())),
 		})
 		.array(),
 	schema: z.object({
