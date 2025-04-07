@@ -77,9 +77,9 @@ end
 
 ### Configure NAT-T (optional)
 
-If you have NAT traversal (NAT-T) on your network you need to enable this feature and initiate IKE communications on port `4500`.
+If you have NAT traversal (NAT-T) on your network, you need to enable this feature and initiate IKE communications on port `4500`.
 
-To set the IKE port add the following to your system settings:
+To set the IKE port, add the following to your system settings:
 
 ```txt
 config system settings
@@ -87,7 +87,7 @@ config system settings
 end
 ```
 
-To enable NAT-T add `set nattraversal enable` to the IPsec tunnels you are configuring.
+To enable NAT-T, add `set nattraversal enable` to the IPsec tunnels you are configuring.
 
 ```txt
 fortigate # config vpn ipsec phase1-interface
