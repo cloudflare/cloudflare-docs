@@ -1,0 +1,33 @@
+---
+title: Configure rule notifications
+pcx_content_type: how-to
+sidebar:
+  order: 4
+---
+
+After configuring one or multiple rule types in Magic Network Monitoring, customers can also choose to receive notifications via email, webhook, or PagerDuty when a rule is triggered.
+
+Customers can configure multiple rule types and alerts together to create layers of DDoS protection based on their network environment and their security needs.
+
+You can read [Cloudflare’s Notifications documentation](https://developers.cloudflare.com/notifications/) for more information on our notification platform including:
+
+* [Configure Cloudflare notifications](https://developers.cloudflare.com/notifications/get-started/)
+* [Configure PagerDuty](https://developers.cloudflare.com/notifications/get-started/configure-pagerduty/)
+* [Configure webhooks](https://developers.cloudflare.com/notifications/get-started/configure-webhooks/)
+* [Test a notification](https://developers.cloudflare.com/notifications/get-started/#test-a-notification)
+* [Notification History](https://developers.cloudflare.com/notifications/notification-history/)
+
+# MNM notification configuration fields
+
+| Field | Description |
+| :---- | :---- |
+| **Notification name** | The name of the Magic Network Monitoring notification for the rule type that was selected. |
+| **Description (optional)** | The description of the Magic Network Monitoring notification. |
+| **Webhooks** | The webhook(s) that will receive the Magic Network Monitoring notification. |
+| **Notification email** | The email(s) that will receive the Magic Network Monitoring notification. |
+
+# Rule Auto-Advertisement notifications
+
+Webhook, PagerDuty, and email notifications are sent following an auto-advertisement attempt for all prefixes inside the flagged rule.
+
+You will receive the status of the advertisement for each prefix with the following available statuses:
