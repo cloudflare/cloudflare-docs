@@ -15,9 +15,9 @@ There are three different types of rules that can be configured within Magic Net
 
 | Rule Type | Rule Description | Rule Availability |
 | :---- | :---- | :---- |
-| Dynamic threshold (recommended) | A dynamic threshold rule will analyze a network's traffic patterns over time and automatically adjust the rule's DDoS threshold, in terms of bits or packets, based on traffic history. | API configuration only |
-| Static threshold | A static threshold rule allows you to define a constant numeric threshold, in terms of bits or packets, for DDoS traffic monitoring. | API configuration and dashboard configuration |
-| sFlow DDoS attack | Magic Network Monitoring customers that send sFlow data to Cloudflare can receive alerts when a specific type of distributed denial-of-service (DDoS) attack is detected within their network traffic. | API configuration only Only applicable to sFlow data sets |
+| [Dynamic threshold](/magic-network-monitoring/rules/dynamic-threshold/) (recommended) | A dynamic threshold rule will analyze a network's traffic patterns over time and automatically adjust the rule's DDoS threshold, in terms of bits or packets, based on traffic history. | API configuration only |
+| [Static threshold](/magic-network-monitoring/rules/static-threshold/) | A static threshold rule allows you to define a constant numeric threshold, in terms of bits or packets, for DDoS traffic monitoring. | API configuration and dashboard configuration |
+| [sFlow DDoS attack](/magic-network-monitoring/rules/s-flow-ddos-attack/) | Magic Network Monitoring customers that send sFlow data to Cloudflare can receive alerts when a specific type of distributed denial-of-service (DDoS) attack is detected within their network traffic. | API configuration only. Only applicable to sFlow data sets |
 
 ## Create rules in the dashboard
 
@@ -47,7 +47,7 @@ To create a new rule:
 2. Go to **Analytics & Logs** > **Magic Monitoring**.
 3. Select **Configure Magic Network Monitoring**.
 4. Find the static threshold rule you want to edit, and select **Edit**.
-5. Edit the appropriate fields. Refer to [Rule fields](/magic-network-monitoring/rules/#rule-fields) for more information on what each field does.
+5. Edit the appropriate fields. Refer to [Rule configuration fields](/magic-network-monitoring/rules/static-threshold/#rule-configuration-fields) for more information on what each field does.
 6. Select **Save** when you are finished.
 
 ## Delete rules in the dashboard
