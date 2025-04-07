@@ -5,9 +5,10 @@ type Props = z.infer<typeof props>;
 
 const props = z.object({
 	size: z.enum(["large", "medium", "small"]),
+	center: z.boolean().default(false),
 });
 
-const { size } = props.parse(Astro.props);
+const { size, center } = props.parse(Astro.props);
 
 const widthClasses = {
 	large: "w-3/4",
@@ -16,6 +17,6 @@ const widthClasses = {
 };
 ---
 
-<div class={widthClasses[size]}>
+<div class:list={[widthClasses[size], center ? "mx-auto" : ""]}>
 	<slot />
 </div>
