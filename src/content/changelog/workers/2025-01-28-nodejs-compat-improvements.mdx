@@ -36,10 +36,8 @@ export default {
     socket.end();
 
     return new Response("Wrote to server", { status: 200 });
-
-},
+  },
 } satisfies ExportedHandler;
-
 ````
 </TypeScriptExample>
 
@@ -78,13 +76,11 @@ import timers from "node:timers";
 
 console.log("first");
 timers.setTimeout(() => {
-console.log("last");
+  console.log("last");
 }, 10);
 
 timers.setTimeout(() => {
-console.log("next");
+  console.log("next");
 });
-
 ```
 </TypeScriptExample>
-```
