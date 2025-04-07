@@ -122,7 +122,7 @@ env.NAMESPACE.get(keys, options?);
 
 :::note
 
-The `.get()` function to read multiple keys does not support `arrayBuffer` or `stream` return types. If you need to read multiple keys of `arrayBuffer` or `stream` types, consider using the `.get()` function to read individual keys in parallel.
+The `.get()` function to read multiple keys does not support `arrayBuffer` or `stream` return types. If you need to read multiple keys of `arrayBuffer` or `stream` types, consider using the `.get()` function to read individual keys in parallel with `Promise.all()`.
 
 :::
 
