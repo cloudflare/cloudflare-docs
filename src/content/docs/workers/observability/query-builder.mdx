@@ -41,7 +41,7 @@ The Query Builder is available to all developers and requires no enablement. Que
 2. In Account Home, go to **Workers & Pages**.
 3. Select **Observability** in the left-hand navigation panel, and then the **Investigate** tab.
 4. Select a **Visualization**.
-5. Optional: Add fields to Filter, Group By, Order By, and Limit. For more information, see what [composes a query](/workers/observability/investigate/query-builder/#query-composition).
+5. Optional: Add fields to Filter, Group By, Order By, and Limit. For more information, see what [composes a query](/workers/observability/query-builder/#query-composition).
 6. Optional: Select the appropriate time range.
 7. Select **Run**. The query will automatically run whenever changes are made.
 </Steps>
@@ -135,19 +135,19 @@ There are three views for queries: Visualizations, Invocations, and Events.
 
 The **Visualizations** tab shows graphs and a summary table for the query.
 
-![Visualization Overview](~/assets/images/workers-observability/qb-visualization-overview.png)
+![Visualization Overview](~/assets/images/workers-observability/query-builder-visualization.png)
 
 ### Invocations tab
 
 The **Invocations** tab shows all logs, grouped by by the invocation, and ordered by timestamp. Only invocations matching the query criteria are returned.
 
-![Invocations Overview](~/assets/images/workers-observability/qb-invocations-overview.png)
+![Invocations Overview](~/assets/images/workers-observability/query-builder-invocations-overview.png)
 
 ### Events tab
 
 The **Events** tab shows all logs, ordered by timestamp. Only events matching the query criteria are returned. The Events tab can be customized to add additional fields in the view.
 
-![Overview](~/assets/images/workers-observability/qb-events-overview.png)
+![Overview](~/assets/images/workers-observability/query-builder-events-overview.png)
 
 ## Save queries
 
@@ -173,9 +173,9 @@ Saved queries are assigned a unique URL and can be shared with any user in the a
 
 ## Example: Composing a query
 
-In this example, we will construct a query to find and debug all paths that respond with 500 errors. First, we create a base query. In this base query, we want to visualize by
-the raw event count. We can add a filter for `$workers.event.response.status` that is greater than 300 so we can identify all paths that may be experiencing
-unexpected behavior. Then, we group by `$workers.event.request.path` and `$workers.event.response.status` to identify the number of requests that were
+In this example, we will construct a query to find and debug all paths that respond with 5xx errors. First, we create a base query. In this base query, we want to visualize by
+the raw event count. We can add a filter for `$workers.event.response.status` that is greater than 500.
+Then, we group by `$workers.event.request.path` and `$workers.event.response.status` to identify the number of requests that were
 affected by this behavior.
 
 ![Constructing a query](~/assets/images/workers-observability/query-builder-ex1-query.png)
