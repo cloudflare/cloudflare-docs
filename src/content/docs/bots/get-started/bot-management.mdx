@@ -61,7 +61,7 @@ Enabling [JavaScript Detections](/bots/additional-configurations/javascript-dete
 
 Cloudflare has [default templates](https://dash.cloudflare.com/?to=/:account/:zone/security/security-rules?template=bot_traffic) for definite bots, which we are very confident are automated (bot score 1) and likely bots that have many bot tells (bot score 2-29). In our templates, we recommend to allow verified bots like Google SEO crawler and access to static resources, which should be cached anyway.
 
-* [Definite Bots Template](https://dash.cloudflare.com/?to=/:account/:zone:/security/security-rules/custom-rules/create?template=Definitely%20Bots) - Targets malicious bot traffic while ignoring verified bots and routes delivering static content.
+- [Definite Bots template](https://dash.cloudflare.com/?to=/:account/:zone:/security/security-rules/custom-rules/create?template=Definitely%20Bots): Targets malicious bot traffic while ignoring verified bots and routes delivering static content.
 
     `(cf.bot_management.score eq 1 and not cf.bot_management.verified_bot and not cf.bot_management.static_resource)`
 
