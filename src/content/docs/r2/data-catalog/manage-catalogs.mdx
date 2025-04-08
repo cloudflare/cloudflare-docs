@@ -68,20 +68,20 @@ npx wrangler r2 bucket catalog disable <BUCKET_NAME>
 
 ## Authenticate your Iceberg engine
 
-To connect your Iceberg engine to R2 Data Catalog, you will need a Cloudflare API token with both [R2 and R2 Data Catalog permissions](/r2/api/tokens/#permissions). Iceberg engines that support the REST catalog let you supply this token to authenticate with R2 Data Catalog.
+To connect your Iceberg engine to R2 Data Catalog, you must provide a Cloudflare API token with **both** R2 Data Catalog permissions and R2 storage permissions. Iceberg engines interact with R2 Data Catalog to perform table operations. The catalog also provides engines with SigV4 credentials, which are required to access the underlying data files stored in R2.
 
-<Steps>
-1. Create an [R2 API token](/r2/api/tokens/#permissions) with **Admin Read & Write** or **Admin Read only** permission.
-2. Copy the **Token value** from your new API token.
-3. In your engine configuration, provide this token as a bearer token.
-   Internally, this token will be sent as:
+### Create API token in the dashboard
 
-	 ```
-	 Authorization: Bearer <TOKEN_VALUE>
-	 ```
+Create an [R2 API token](/r2/api/tokens/#permissions) with **Admin Read & Write** or **Admin Read only** permissions. These permissions include both:
 
-   in HTTP requests to your bucket's data catalog.
-</Steps>
+- Access to R2 Data Catalog (read-only or read/write, depending on chosen permission)
+- Access to R2 storage (read-only or read/write, depending on chosen permission)
+
+Providing the resulting token value to your Iceberg engine gives it the ability to manage catalog metadata and handle data operations (reads or writes to R2).
+
+### Create API token via API
+
+To learn how to create API tokens for R2 Data Catalog using the API, including required permission groups and usage examples, refer to the [Create API tokens via API documentation](/r2/api/tokens/#create-api-tokens-via-api).
 
 ## Learn more
 
