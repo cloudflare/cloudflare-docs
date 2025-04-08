@@ -63,11 +63,15 @@ It accepts an optional `PluginConfig` parameter.
   All requests are routed through your entry Worker.
   During the build, each Worker is output to a separate subdirectory of `dist`.
 
-:::note
-When running `wrangler deploy`, only your main (entry) Worker will be deployed.
-If using multiple Workers, each auxiliary Worker must be deployed individually.
-You can inspect the `dist` directory and then run `wrangler deploy -c dist/<auxiliary-worker>/wrangler.json` for each.
-:::
+  :::note
+  Auxiliary Workers are not currently supported when using [React Router](https://reactrouter.com/) as a framework.
+  :::
+
+  :::note
+  When running `wrangler deploy`, only your main (entry) Worker will be deployed.
+  If using multiple Workers, each auxiliary Worker must be deployed individually.
+  You can inspect the `dist` directory and then run `wrangler deploy -c dist/<auxiliary-worker>/wrangler.json` for each.
+  :::
 
 ## `interface AuxiliaryWorkerConfig`
 
