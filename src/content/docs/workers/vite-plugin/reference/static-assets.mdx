@@ -32,7 +32,13 @@ assets = { not_found_handling = "single-page-application" }
 
 </WranglerConfig>
 
-{/* Add docs for _headers and _redirects */}
+## Headers and redirects
+
+Custom [headers](/workers/static-assets/headers/) and [redirects](/workers/static-assets/redirects/) are supported at build, preview and deploy time by adding `_headers` and `_redirects` files to your [`public` directory](https://vite.dev/guide/assets#the-public-directory).
+The paths in these files should reflect the structure of your client build output.
+For example, generated assets are typically located in an [assets subdirectory](https://vite.dev/config/build-options#build-assetsdir).
+
+<br />
 
 :::note
 The Cloudflare Vite plugin does not support [run_worker_first](/workers/static-assets/binding/#run_worker_first).
