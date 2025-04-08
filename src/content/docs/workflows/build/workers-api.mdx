@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { MetaInfo, Render, Type, WranglerConfig } from "~/components";
+import { MetaInfo, Render, Type, TypeScriptExample, WranglerConfig } from "~/components";
 
 This guide details the Workflows API within Cloudflare Workers, including methods, types, and usage examples.
 
@@ -84,7 +84,7 @@ When returning state from a `step`, ensure that the object you return is _serial
 
 Primitive types like `string`, `number`, and `boolean`, along with composite structures such as `Array` and `Object` (provided they only contain serializable values), can be serialized.
 
-Objects that include `Function` or `Symbol` types, and objects with circular references, cannot be serialized and the Workflow instance will throw an error if objects with those types is returned. 
+Objects that include `Function` or `Symbol` types, and objects with circular references, cannot be serialized and the Workflow instance will throw an error if objects with those types is returned.
 
 :::
 
@@ -106,6 +106,27 @@ Objects that include `Function` or `Symbol` types, and objects with circular ref
 More information about the limits imposed on Workflow can be found in the [Workflows limits documentation](/workflows/reference/limits/).
 
 :::
+
+* <code>step.waitForEvent(name: string, options: ): Promise&lt;void&gt;</code>
+
+  * `name` - the name of the step.
+  * `options` - an object with properties for `type`, which determines which event type this `waitForEvent` call will match on when calling `instance.sendEvent`, and an optional `timeout` property, which defines how long the `waitForEvent` call will block for before throwing a timeout exception. The default timeout is 24 hours.
+
+<TypeScriptExample>
+
+```ts
+export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
+	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
+		// Other steps in your Workflow
+		let event = await step.waitForEvent<IncomingStripeWebhook>("receive invoice paid webhook from Stripe", { type: "stripe-webhook", timeout: "1 hour" })
+		// Rest of your Workflow
+	}
+}
+```
+
+</TypeScriptExample>
+
+Review the documentation on [events and parameters](/workflows/build/events-and-parameters/) to learn how to send events to a running Workflow instance.
 
 ## WorkflowStepConfig
 
@@ -132,12 +153,6 @@ Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-
   * Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-and-retrying/) to learn more about how how Workflows are retried.
 
 ## Call Workflows from Workers
-
-:::note[Workflows beta]
-
-Workflows currently requires you to bind to a Workflow via the [Wrangler configuration file](/workers/wrangler/configuration/), and does not yet support bindings via the Workers dashboard.
-
-:::
 
 Workflows exposes an API directly to your Workers scripts via the [bindings](/workers/runtime-apis/bindings/#what-is-a-binding) concept. Bindings allow you to securely call a Workflow without having to manage API keys or clients.
 
@@ -286,7 +301,7 @@ This is useful when you are scheduling multiple instances at once. A call to `cr
 
   * `batch` - list of Options to pass when creating an instance, including a user-provided ID and payload parameters.
 
-Each element of the `batch` list is expected to the 
+Each element of the `batch` list is expected to include both `id` and `params` properties:
 
 ```ts
 // Create a new batch of 3 Workflow instances, each with its own ID and pass params to the Workflow instances
@@ -409,6 +424,42 @@ Restart a Workflow instance.
 Terminate a Workflow instance.
 
 * <code>terminate(): Promise&lt;void&gt;</code>
+
+### sendEvent
+
+[Send an event](/workflows/build/events-and-parameters/) to a running Workflow instance.
+
+* <code>sendEvent(): Promise&lt;void&gt;</code>
+
+  * `options` - the event `type` and `payload` to send to the Workflow instance. The `type` must match the `type` in the corresponding `waitForEvent` call in your Workflow.
+
+Return `void` on success; throws an exception if the Workflow is not running or is an errored state.
+
+<TypeScriptExample>
+
+```ts
+export default {
+  async fetch(req: Request, env: Env) {
+    const instanceId = new URL(req.url).searchParams.get("instanceId")
+    const webhookPayload = await req.json<Payload>()
+
+    let instance = await env.MY_WORKFLOW.get(instanceId);
+    // Send our event, with `type` matching the event type defined in
+    // our step.waitForEvent call
+    await instance.sendEvent({type: "stripe-webhook", payload: webhookPayload})
+
+    return Response.json({
+      status: await instance.status(),
+    });
+  },
+};
+```
+
+</TypeScriptExample>
+
+You can call `sendEvent` multiple times, setting the value of the `type` property to match the specific `waitForEvent` calls in your Workflow.
+
+This allows you to wait for multiple events at once, or use `Promise.race` to wait for multiple events and allow the first event to progress the Workflow.
 
 ### InstanceStatus
 

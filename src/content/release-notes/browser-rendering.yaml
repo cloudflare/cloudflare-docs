@@ -5,6 +5,16 @@ productLink: "/browser-rendering/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-04-07"
+    title: New free tier and REST API GA with additional endpoints
+    description: |-
+      * Browser Rendering now has a new free tier.
+      * The [REST API](/browser-rendering/rest-api/) is Generally Available.
+      * Released new endpoints [`/json`](/browser-rendering/rest-api/json-endpoint/), [`/links`]((/browser-rendering/rest-api/links-endpoint/), and [`/markdown`](/browser-rendering/rest-api/markdown-endpoint/).
+  - publish_date: "2025-04-04"
+    title: Playwright support
+    description: |-
+      * You can now use [Playwright's](/browser-rendering/platform/playwright/) browser automation capabilities from Cloudflare Workers.
   - publish_date: "2025-02-27"
     title: New Browser Rendering REST API
     description: |-

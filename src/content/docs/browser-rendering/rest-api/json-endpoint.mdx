@@ -1,0 +1,223 @@
+---
+pcx_content_type: how-to
+title: Capture structured data
+sidebar:
+  order: 9
+---
+
+The `/json` endpoint extracts structured data from a webpage. You can specify the expected output using either a `prompt` or a `response_format` parameter which accepts a JSON schema. The endpoint returns the extracted data in JSON format.
+
+:::note[Note]
+
+The `/json` endpoint leverages [Workers AI](/workers-ai/) for data extraction. Using this endpoint incurs usage on Workers AI, which you can monitor usage through the Workers AI Dashboard.
+
+:::
+
+## Basic Usage
+
+### With a Prompt and JSON schema
+
+This example captures webpage data by providing both a prompt and a JSON schema. The prompt guides the extraction process, while the JSON schema defines the expected structure of the output.
+
+```bash
+curl --request POST 'https://api.cloudflare.com/client/v4/accounts/CF_ACCOUNT_ID/browser-rendering/json' \
+  --header 'authorization: Bearer CF_API_TOKEN' \
+  --header 'content-type: application/json' \
+  --data '{
+  "url": "https://developers.cloudflare.com/",
+  "prompt": "Get me the list of AI products",
+  "response_format": {
+    "type": "json_schema",
+    "json_schema": {
+        "type": "object",
+        "properties": {
+          "products": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "link": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name"
+              ]
+            }
+          }
+        }
+      }
+  }
+}'
+```
+
+
+```json output collapse={15-48}
+{
+	"success": true,
+	"result": {
+		"products": [
+			{
+				"name": "Build a RAG app",
+				"link": "https://developers.cloudflare.com/workers-ai/tutorials/build-a-retrieval-augmented-generation-ai/"
+			},
+			{
+				"name": "Workers AI",
+				"link": "https://developers.cloudflare.com/workers-ai/"
+			},
+			{
+				"name": "Vectorize",
+				"link": "https://developers.cloudflare.com/vectorize/"
+			},
+			{
+				"name": "AI Gateway",
+				"link": "https://developers.cloudflare.com/ai-gateway/"
+			},
+			{
+				"name": "AI Playground",
+				"link": "https://playground.ai.cloudflare.com/"
+			}
+		]
+	}
+}
+```
+
+### With only a prompt
+
+In this example, only a prompt is provided. The endpoint will use the prompt to extract the data, but the response will not be structured according to a JSON schema.
+This is useful for simple extractions where you don't need a specific format.
+
+```bash
+curl --request POST 'https://api.cloudflare.com/client/v4/accounts/CF_ACCOUNT_ID/browser-rendering/json' \
+  --header 'authorization: Bearer CF_API_TOKEN' \
+  --header 'content-type: application/json' \
+  --data '{
+    "url": "https://developers.cloudflare.com/",
+    "prompt": "get me the list of AI products"
+  }'
+```
+
+
+```json output
+
+	"success": true,
+	"result": {
+		"AI Products": [
+			"Build a RAG app",
+			"Workers AI",
+			"Vectorize",
+			"AI Gateway",
+			"AI Playground"
+		]
+	}
+}
+```
+
+### With only a JSON schema (no prompt)
+
+In this case, you supply a JSON schema via the `response_format` parameter. The schema defines the structure of the extracted data.
+
+```bash
+curl --request POST 'https://api.cloudflare.com/client/v4/accounts/CF_ACCOUNT_ID/browser-rendering/json' \
+  --header 'authorization: Bearer CF_API_TOKEN' \
+  --header 'content-type: application/json' \
+  --data '"response_format": {
+    "type": "json_schema",
+    "json_schema": {
+        "type": "object",
+        "properties": {
+          "products": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "link": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name"
+              ]
+            }
+          }
+        }
+      }
+  }'
+```
+
+
+```json output collapse={13-68}
+{
+	"success": true,
+	"result": {
+		"products": [
+			{
+				"name": "Workers",
+				"link": "https://developers.cloudflare.com/workers/"
+			},
+			{
+				"name": "Pages",
+				"link": "https://developers.cloudflare.com/pages/"
+			},
+			{
+				"name": "R2",
+				"link": "https://developers.cloudflare.com/r2/"
+			},
+			{
+				"name": "Images",
+				"link": "https://developers.cloudflare.com/images/"
+			},
+			{
+				"name": "Stream",
+				"link": "https://developers.cloudflare.com/stream/"
+			},
+			{
+				"name": "Build a RAG app",
+				"link": "https://developers.cloudflare.com/workers-ai/tutorials/build-a-retrieval-augmented-generation-ai/"
+			},
+			{
+				"name": "Workers AI",
+				"link": "https://developers.cloudflare.com/workers-ai/"
+			},
+			{
+				"name": "Vectorize",
+				"link": "https://developers.cloudflare.com/vectorize/"
+			},
+			{
+				"name": "AI Gateway",
+				"link": "https://developers.cloudflare.com/ai-gateway/"
+			},
+			{
+				"name": "AI Playground",
+				"link": "https://playground.ai.cloudflare.com/"
+			},
+			{
+				"name": "Access",
+				"link": "https://developers.cloudflare.com/cloudflare-one/policies/access/"
+			},
+			{
+				"name": "Tunnel",
+				"link": "https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/"
+			},
+			{
+				"name": "Gateway",
+				"link": "https://developers.cloudflare.com/cloudflare-one/policies/gateway/"
+			},
+			{
+				"name": "Browser Isolation",
+				"link": "https://developers.cloudflare.com/cloudflare-one/policies/browser-isolation/"
+			},
+			{
+				"name": "Replace your VPN",
+				"link": "https://developers.cloudflare.com/learning-paths/replace-vpn/concepts/"
+			}
+		]
+	}
+}
+```

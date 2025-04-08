@@ -23,8 +23,8 @@ To use `create-cloudflare` to create a new Remix project, run the following comm
 
 <PackageManagers
 	type="create"
-	pkg="cloudflare@latest"
-	args="my-remix-app --framework=remix"
+	pkg="cloudflare@latest my-remix-app"
+	args="--framework=remix --platform=pages"
 />
 
 `create-cloudflare` will install additional dependencies, including the [Wrangler](/workers/wrangler/install-and-update/#check-your-wrangler-version) CLI and any necessary adapters, and ask you setup questions.

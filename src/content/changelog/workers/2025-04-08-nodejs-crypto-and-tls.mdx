@@ -1,0 +1,74 @@
+---
+title: Improved support for Node.js Crypto and TLS APIs in Workers
+description: Node.js APIs from the node:crypto and node:tls modules are now available when using nodejs_compat.
+products:
+  - workers
+date: 2025-04-08T14:00:00Z
+---
+
+import { Render, PackageManagers, TypeScriptExample } from "~/components";
+
+When using a Worker with the [`nodejs_compat`](/workers/runtime-apis/nodejs/) compatibility flag enabled,
+the following Node.js APIs are now available:
+
+- [`node:crypto`](/workers/runtime-apis/nodejs/crypto/)
+- [`node:tls`](/workers/runtime-apis/nodejs/tls/)
+
+This make it easier to reuse existing Node.js code in Workers or use npm packages that depend on these APIs.
+
+#### node:crypto
+
+The full [`node:crypto`](https://nodejs.org/api/crypto.html) API is now available in Workers.
+
+You can use it to verify and sign data:
+
+```js
+import { sign, verify } from "node:crypto";
+
+const signature = sign("sha256", "-data to sign-", env.PRIVATE_KEY);
+const verified = verify("sha256", "-data to sign-", env.PUBLIC_KEY, signature);
+```
+
+Or, to encrypt and decrypt data:
+
+```js
+import { publicEncrypt, privateDecrypt } from "node:crypto";
+
+const encrypted = publicEncrypt(env.PUBLIC_KEY, "some data");
+const plaintext = privateDecrypt(env.PRIVATE_KEY, encrypted);
+```
+
+See the [`node:crypto` documentation](/workers/runtime-apis/nodejs/crypto/) for more information.
+
+#### node:tls
+
+The following APIs from `node:tls` are now available:
+
+- [`connect`](https://nodejs.org/api/tls.html#tlsconnectoptions-callback)
+- [`TLSSocket`](https://nodejs.org/api/tls.html#class-tlstlssocket)
+- [`checkServerIdentity`](https://nodejs.org/api/tls.html#tlscheckserveridentityhostname-cert)
+- [`createSecureContext`](https://nodejs.org/api/tls.html#tlscreatesecurecontextoptions)
+
+This enables secure connections over TLS (Transport Layer Security) to external services.
+
+```js
+import { connect } from "node:tls";
+
+// ... in a request handler ...
+const connectionOptions = { key: env.KEY, cert: env.CERT };
+const socket = connect(url, connectionOptions, () => {
+	if (socket.authorized) {
+		console.log("Connection authorized");
+	}
+});
+
+socket.on("data", (data) => {
+	console.log(data);
+});
+
+socket.on("end", () => {
+	console.log("server ends connection");
+});
+```
+
+See the [`node:tls` documentation](/workers/runtime-apis/nodejs/tls/) for more information.

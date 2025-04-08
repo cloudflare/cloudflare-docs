@@ -8,7 +8,9 @@ description: Prioritized traffic allows you to define which applications are
 
 import { Render } from "~/components";
 
-<Render file="connector/app-aware-policies/breakout-prioritized" params={{
+<Render file="mconn/app-aware-policies/breakout-prioritized"
+	product="networking-services"
+	params={{
 	magicWord: "prioritized",
 	featureName: "Prioritized traffic",
 	whatHappensApp: "is now processed first by Connector",

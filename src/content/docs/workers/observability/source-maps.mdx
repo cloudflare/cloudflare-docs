@@ -11,14 +11,6 @@ import { FileTree } from "@astrojs/starlight/components";
 
 <Render file="source-maps" product="workers" />
 
-:::caution
-
-
-Support for uploading source maps is available now in open beta. Minimum required Wrangler version: 3.46.0.
-
-
-:::
-
 ## Source Maps
 
 To enable source maps, add the following to your Worker's [Wrangler configuration](/workers/wrangler/configuration/):
@@ -58,6 +50,11 @@ The source map is retrieved after your Worker invocation completes — it's an a
 When Cloudflare attempts to remap a stack trace to the Worker's source map, it does so line-by-line, remapping as much as possible. If a line of the stack trace cannot be remapped for any reason, Cloudflare will leave that line of the stack trace unchanged, and continue to the next line of the stack trace.
 
 ## Limits
+
+:::note[Wrangler version]
+Minimum required Wrangler version for source maps: 3.46.0. Check your version by running `wrangler --version`.
+:::
+
 
 | Description                    | Limit         |
 | ------------------------------ | ------------- |

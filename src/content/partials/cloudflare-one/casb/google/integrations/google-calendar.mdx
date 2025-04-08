@@ -1,0 +1,44 @@
+---
+params:
+  - integrationName
+  - environmentName
+  - slugifiedName
+---
+
+import { Render } from "~/components";
+
+<Render
+	file="casb/integration-description"
+	params={{
+		integrationName: props.integrationName,
+		integrationAccountType: props.environmentName,
+	}}
+/>
+
+## Integration prerequisites
+
+<Render file="casb/google/google-prereqs" />
+
+## Integration permissions
+
+<Render
+	file="casb/integration-perms"
+	params={{
+		parentIntegration: "Google Workspace",
+		parentSlug: "google-workspace",
+	}}
+/>
+
+## Security findings
+
+<Render
+	file="casb/security-findings"
+	params={{
+		integrationName: props.integrationName,
+		slugRelativePath: props.slugifiedName,
+	}}
+/>
+
+### Calendar sharing
+
+<Render file="casb/google/calendar-sharing" />

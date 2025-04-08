@@ -9,7 +9,7 @@ head:
     content: Create a rate limiting rule via API
 ---
 
-import { Render } from "~/components";
+import { Render, APIRequest } from "~/components";
 
 Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create a rate limiting rule via API.
 
@@ -32,129 +32,121 @@ Rate limiting rules must appear at the end of the rules list.
 
 ### Example A - Rate limiting based on request properties
 
-This example adds a rate limiting rule to the `http_ratelimit` phase entry point ruleset for the zone with ID `{zone_id}`. The phase entry point ruleset already exists, with ID `{ruleset_id}`.
+This example adds a rate limiting rule to the `http_ratelimit` phase entry point ruleset for the zone with ID `$ZONE_ID`. The phase entry point ruleset already exists, with ID `$RULESET_ID`.
 
-```bash
-curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "description": "My rate limiting rule",
-  "expression": "(http.request.uri.path matches \"^/api/\")",
-  "action": "block",
-  "ratelimit": {
-    "characteristics": [
-      "cf.colo.id",
-      "ip.src",
-      "http.request.headers[\"x-api-key\"]"
-    ],
-    "period": 60,
-    "requests_per_period": 100,
-    "mitigation_timeout": 600
-  }
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/rulesets/{ruleset_id}/rules"
+	method="POST"
+	json={{
+		description: "My rate limiting rule",
+		expression: '(http.request.uri.path matches "^/api/")',
+		action: "block",
+		ratelimit: {
+			characteristics: [
+				"cf.colo.id",
+				"ip.src",
+				'http.request.headers["x-api-key"]',
+			],
+			period: 60,
+			requests_per_period: 100,
+			mitigation_timeout: 600,
+		},
+	}}
+/>
 
 <Render file="api-create-ruleset-with-rule" />
 
 ### Example B - Rate limiting with a custom response
 
-This example adds a rate limiting rule to the `http_ratelimit` phase entry point ruleset for the zone with ID `{zone_id}`. The phase entry point ruleset already exists, with ID `{ruleset_id}`.
+This example adds a rate limiting rule to the `http_ratelimit` phase entry point ruleset for the zone with ID `$ZONE_ID`. The phase entry point ruleset already exists, with ID `$RULESET_ID`.
 
 The new rule defines a [custom response](/waf/rate-limiting-rules/create-zone-dashboard/#configure-a-custom-response-for-blocked-requests) for requests blocked due to rate limiting.
 
-```bash null {9-13}
-curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "description": "My rate limiting rule",
-  "expression": "(http.request.uri.path matches \"^/api/\")",
-  "action": "block",
-  "action_parameters": {
-    "response": {
-      "status_code": 403,
-      "content": "You have been rate limited.",
-      "content_type": "text/plain"
-    }
-  },
-  "ratelimit": {
-    "characteristics": [
-      "cf.colo.id",
-      "ip.src",
-      "http.request.headers[\"x-api-key\"]"
-    ],
-    "period": 60,
-    "requests_per_period": 100,
-    "mitigation_timeout": 600
-  }
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/rulesets/{ruleset_id}/rules"
+	method="POST"
+	json={{
+		description: "My rate limiting rule",
+		expression: '(http.request.uri.path matches "^/api/")',
+		action: "block",
+		action_parameters: {
+			response: {
+				status_code: 403,
+				content: "You have been rate limited.",
+				content_type: "text/plain",
+			},
+		},
+		ratelimit: {
+			characteristics: [
+				"cf.colo.id",
+				"ip.src",
+				'http.request.headers["x-api-key"]',
+			],
+			period: 60,
+			requests_per_period: 100,
+			mitigation_timeout: 600,
+		},
+	}}
+/>
 
 <Render file="api-create-ruleset-with-rule" />
 
 ### Example C - Rate limiting ignoring cached assets
 
-This example adds a rate limiting rule to the `http_ratelimit` phase entry point ruleset for the zone with ID `{zone_id}`. The phase entry point ruleset already exists, with ID `{ruleset_id}`.
+This example adds a rate limiting rule to the `http_ratelimit` phase entry point ruleset for the zone with ID `$ZONE_ID`. The phase entry point ruleset already exists, with ID `$RULESET_ID`.
 
-The new rule does not consider requests for cached assets when calculating the rate.
+The new rule does not consider requests for cached assets when calculating the rate (`"requests_to_origin": true`).
 
-```bash null {17}
-curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "description": "My rate limiting rule",
-  "expression": "(http.request.uri.path matches \"^/api/\")",
-  "action": "block",
-  "ratelimit": {
-    "characteristics": [
-      "cf.colo.id",
-      "ip.src",
-      "http.request.headers[\"x-api-key\"]"
-    ],
-    "period": 60,
-    "requests_per_period": 100,
-    "mitigation_timeout": 600,
-    "requests_to_origin": true
-  }
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/rulesets/{ruleset_id}/rules"
+	method="POST"
+	json={{
+		description: "My rate limiting rule",
+		expression: '(http.request.uri.path matches "^/api/")',
+		action: "block",
+		ratelimit: {
+			characteristics: [
+				"cf.colo.id",
+				"ip.src",
+				'http.request.headers["x-api-key"]',
+			],
+			period: 60,
+			requests_per_period: 100,
+			mitigation_timeout: 600,
+			requests_to_origin: true,
+		},
+	}}
+/>
 
 <Render file="api-create-ruleset-with-rule" />
 
 ### Example D - Complexity-based rate limiting rule
 
 :::note
-
 [Complexity-based rate limiting](/waf/rate-limiting-rules/request-rate/#complexity-based-rate-limiting) is available in beta and can only be configured via API.
 :::
 
-This example adds a rate limiting rule to the `http_ratelimit` phase entry point ruleset for the zone with ID `{zone_id}`. The phase entry point ruleset already exists, with ID `{ruleset_id}`.
+This example adds a rate limiting rule to the `http_ratelimit` phase entry point ruleset for the zone with ID `$ZONE_ID`. The phase entry point ruleset already exists, with ID `$RULESET_ID`.
 
-The new rule is a complexity-based rate limiting rule that takes the `my-score` HTTP response header into account to calculate a total complexity score for the client. The counter with the total score is updated when there is a match for the rate limiting rule's counting expression (in this case, the same as the rule expression). When this total score becomes larger than `400` during a 60-second period, any later client requests will be blocked for a period of 600 seconds (10 minutes).
+The new rule is a complexity-based rate limiting rule that takes the `my-score` HTTP response header into account to calculate a total complexity score for the client. The counter with the total score is updated when there is a match for the rate limiting rule's counting expression (in this case, the same as the rule expression since `counting_expression` is an empty string). When this total score becomes larger than `400` during a period of `60` seconds, any later client requests will be blocked for a period of `600` seconds (10 minutes).
 
-```bash null {14-15}
-curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "description": "My complexity-based rate limiting rule",
-  "expression": "http.request.uri.path matches \"^/graphql/\"",
-  "action": "block",
-  "ratelimit": {
-    "characteristics": [
-      "cf.colo.id",
-      "http.request.headers[\"x-api-key\"]"
-    ],
-    "period": 60,
-    "score_per_period": 400,
-    "score_response_header_name": "my-score",
-    "mitigation_timeout": 600,
-    "counting_expression": ""
-  }
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/rulesets/{ruleset_id}/rules"
+	method="POST"
+	json={{
+		description: "My complexity-based rate limiting rule",
+		expression: 'http.request.uri.path matches "^/graphql/"',
+		action: "block",
+		ratelimit: {
+			characteristics: ["cf.colo.id", 'http.request.headers["x-api-key"]'],
+			score_response_header_name: "my-score",
+			score_per_period: 400,
+			period: 60,
+			mitigation_timeout: 600,
+			counting_expression: "",
+		},
+	}}
+/>
 
 <Render file="api-create-ruleset-with-rule" />
 

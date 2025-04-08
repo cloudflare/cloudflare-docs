@@ -39,6 +39,21 @@ import { APIRequest } from "~/components";
 		metadata: '{"key":"value"}'
 	}}
 />
+
+<APIRequest
+	path="/zones/{zone_id}/cloud_connector/rules"
+	method="PUT"
+	json={[
+		{
+			expression: 'http.request.uri.path wildcard "/images/*"',
+			provider: "cloudflare_r2",
+			description: "Connect to R2 bucket containing images",
+			parameters: {
+				host: "mybucketcustomdomain.example.com",
+			},
+		},
+	]}
+/>
 ```
 
 ## `<APIRequest>` Props
@@ -71,7 +86,7 @@ If not provided, the component will default to an environment variable. For exam
 
 ### `json`
 
-**type:** `Record<string, any>`
+**type:** `Record<string, any> | Record<string, any>[]`
 
 The JSON payload to send.
 

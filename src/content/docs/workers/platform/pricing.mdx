@@ -9,9 +9,9 @@ description: Workers plans and pricing information.
 
 import { GlossaryTooltip, Render } from "~/components";
 
-By default, users have access to the Workers Free plan. The Workers Free plan includes limited usage of Workers, Pages Functions and Workers KV. Read more about the [Free plan limits](/workers/platform/limits/#worker-limits).
+By default, users have access to the Workers Free plan. The Workers Free plan includes limited usage of Workers, Pages Functions, Workers KV and Hyperdrive. Read more about the [Free plan limits](/workers/platform/limits/#worker-limits).
 
-The Workers Paid plan includes Workers, Pages Functions, Workers KV, and Durable Objects usage for a minimum charge of $5 USD per month for an account. The plan includes increased initial usage allotments, with clear charges for usage that exceeds the base plan.
+The Workers Paid plan includes Workers, Pages Functions, Workers KV, Hyperdrive, and Durable Objects usage for a minimum charge of $5 USD per month for an account. The plan includes increased initial usage allotments, with clear charges for usage that exceeds the base plan.
 
 All included usage is on a monthly basis.
 
@@ -150,6 +150,16 @@ To learn more about KV, refer to the [KV documentation](/kv/).
 
 :::
 
+## Hyperdrive
+
+<Render file="hyperdrive_pricing" />
+
+:::note[Hyperdrive documentation]
+
+To learn more about Hyperdrive, refer to the [Hyperdrive documentation](/hyperdrive/).
+
+:::
+
 ## Queues
 
 <Render file="queues_pricing" />
@@ -162,7 +172,7 @@ To learn more about Queues pricing and review billing examples, refer to [Queues
 
 ## D1
 
-D1 is available on both the [Workers Free](#workers) and [Workers Paid](#workers) plans.
+D1 is available on both the Workers Free and Workers Paid plans.
 
 <Render file="d1-pricing" />
 
@@ -174,17 +184,15 @@ Refer to [D1 Pricing](/d1/platform/pricing/) to learn more about how D1 is bille
 
 ## Durable Objects
 
-<Render file="durable_objects_pricing" />
+<Render file="do-plans-note" product="durable-objects"/>
+
+<Render file="durable-objects-pricing" product="durable-objects" params={{product:"workers"}} />
 
 :::note[Durable Objects billing examples]
 
-For more information and [examples of Durable Objects billing](/durable-objects/platform/pricing/#durable-objects-billing-examples), refer to [Durable Objects Pricing](/durable-objects/platform/pricing/).
+For more information and [examples of Durable Objects billing](/durable-objects/platform/pricing#compute-billing-examples), refer to [Durable Objects Pricing](/durable-objects/platform/pricing/).
 
 :::
-
-## Durable Objects Storage API
-
-<Render file="storage_api_pricing" />
 
 ## Vectorize
 

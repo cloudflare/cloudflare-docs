@@ -16,9 +16,9 @@ For example, the following code from [this example MCP server](https://github.co
 <TypeScriptExample>
 ```ts title="src/index.ts"
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp";
-import { DurableMCP } from "@cloudflare/model-context-protocol";
+import { McpAgent } from "agents/mcp";
 
-export class MyMCP extends DurableMCP {
+export class MyMCP extends McpAgent {
 	server = new McpServer({ name: "Demo", version: "1.0.0" });
 	async init() {
 		this.server.tool(

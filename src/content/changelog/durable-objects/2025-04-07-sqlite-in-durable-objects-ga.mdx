@@ -1,0 +1,33 @@
+---
+title: SQLite in Durable Objects GA with 10GB storage per object
+description: SQLite-backed Durable Objects are generally available.
+products:
+  - durable-objects
+  - workers 
+date: 2025-04-07T06:00:00Z
+---
+
+SQLite in Durable Objects is now generally available (GA) with 10GB SQLite database per Durable Object. Since the [public beta](https://blog.cloudflare.com/sqlite-in-durable-objects/) in September 2024, we've added feature parity and robustness for the SQLite storage backend compared to the preexisting key-value (KV) storage backend for Durable Objects. 
+
+SQLite-backed Durable Objects are recommended for all new Durable Object classes, using `new_sqlite_classes` [Wrangler configuration](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class). Only SQLite-backed Durable Objects have access to Storage API's [SQL](/durable-objects/api/storage-api/#sql-api) and [point-in-time recovery](/durable-objects/api/storage-api/#pitr-point-in-time-recovery-api) methods, which provide relational data modeling, SQL querying, and better data management.
+
+```js
+export class MyDurableObject extends DurableObject {
+  sql: SqlStorage
+  constructor(ctx: DurableObjectState, env: Env) {
+    super(ctx, env);
+    this.sql = ctx.storage.sql;
+  }
+
+  async sayHello() {
+    let result = this.sql
+      .exec("SELECT 'Hello, World!' AS greeting")
+      .one();
+    return result.greeting;
+  }
+}
+```
+
+KV-backed Durable Objects remain for backwards compatibility, and a migration path from key-value storage to SQL storage for existing Durable Object classes will be offered in the future.
+
+For more details on SQLite storage, checkout [Zero-latency SQLite storage in every Durable Object blog](https://blog.cloudflare.com/sqlite-in-durable-objects/).

@@ -19,7 +19,7 @@ You may also want to exclude the `/.well-known/*` URL path used by several valid
 
 ## Interaction between Cloudflare challenges and Rules features
 
-If you are issuing a [challenge](/waf/reference/cloudflare-challenges/) for a given URI path that has one or more Rules features enabled, you should exclude URI paths starting with `/cdn-cgi/challenge-platform/` in your rule expressions to avoid challenge loops.
+If you are issuing a [challenge](/fundamentals/security/cloudflare-challenges/) for a given URI path that has one or more Rules features enabled, you should exclude URI paths starting with `/cdn-cgi/challenge-platform/` in your rule expressions to avoid challenge loops.
 
 For example, define a compound expression for your rule using the `and` operator and the [`starts_with()`](/ruleset-engine/rules-language/functions/#starts_with) function:
 

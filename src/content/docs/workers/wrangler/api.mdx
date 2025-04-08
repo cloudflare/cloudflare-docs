@@ -8,7 +8,15 @@ description: A set of programmatic APIs that can be integrated with local
   Cloudflare Workers-related workflows.
 ---
 
-import { Render, TabItem, Tabs, Type, MetaInfo, WranglerConfig } from "~/components";
+import {
+	Render,
+	TabItem,
+	Tabs,
+	Type,
+	MetaInfo,
+	WranglerConfig,
+	PackageManagers,
+} from "~/components";
 
 Wrangler offers APIs to programmatically interact with your Cloudflare Workers.
 
@@ -360,27 +368,6 @@ The bindings supported by `getPlatformProxy` are:
 
 - [KV namespace bindings](/kv/api/)
 
-- [Durable Object bindings](/durable-objects/api/)
-
-  - To use a Durable Object binding with `getPlatformProxy`, always [specify a `script_name`](/workers/wrangler/configuration/#durable-objects) and have the target Worker run in a separate terminal via [`wrangler dev`](/workers/wrangler/commands/#dev).
-
-    For example, you might have the following file read by `getPlatformProxy`.
-
-    <WranglerConfig>
-
-    ```toml
-    [[durable_objects.bindings]]
-    name = "MyDurableObject"
-    class_name = "MyDurableObject"
-    script_name = "my-worker"
-    ```
-
-    </WranglerConfig>
-
-    In order for this binding to be successfully proxied by `getPlatformProxy`, a worker named `my-worker`
-    with a Durable Object declaration using the same `class_name` of `"MyDurableObject"` must be run
-    separately via `wrangler dev`.
-
 - [R2 bucket bindings](/r2/api/workers/workers-api-reference/)
 
 - [Queue bindings](/queues/configuration/javascript-apis/)
@@ -399,3 +386,56 @@ The bindings supported by `getPlatformProxy` are:
 - [Workers AI bindings](/workers-ai/get-started/workers-wrangler/#2-connect-your-worker-to-workers-ai)
 
   <Render file="ai-local-usage-charges" product="workers" />
+
+- [Durable Object bindings](/durable-objects/api/)
+
+  - To use a Durable Object binding with `getPlatformProxy`, always specify a [`script_name`](/workers/wrangler/configuration/#durable-objects).
+
+    For example, you might have the following binding in a Wrangler configuration file read by `getPlatformProxy`.
+
+    <WranglerConfig>
+
+    ```toml
+    [[durable_objects.bindings]]
+    name = "MyDurableObject"
+    class_name = "MyDurableObject"
+    script_name = "external-do-worker"
+    ```
+
+    </WranglerConfig>
+
+    You will need to declare your Durable Object `"MyDurableObject"` in another Worker, called `external-do-worker` in this example.
+
+        ```ts title="./external-do-worker/src/index.ts"
+        export class MyDurableObject extends DurableObject {
+        	// Your DO code goes here
+        }
+
+        export default {
+        	fetch() {
+        			// Doesn't have to do anything, but a DO cannot be the default export
+        			return new Response("Hello, world!");
+        	},
+        };
+        ```
+        That Worker also needs a Wrangler configuration file that looks like this:
+
+        <WranglerConfig>
+        ```json
+        {
+        	"name": "external-do-worker",
+        	"main": "src/index.ts",
+        	"compatibility_date": "XXXX-XX-XX"
+        }
+        ```
+        </WranglerConfig>
+
+        If you are not using RPC with your Durable Object, you can run a separate Wrangler dev session alongside your framework development server.
+
+        Otherwise, you can build your application and run both Workers in the same Wrangler dev session.
+
+        If you are using Pages run:
+        <PackageManagers type="exec" pkg="wrangler" args="pages dev -c path/to/pages/wrangler.jsonc -c path/to/external-do-worker/wrangler.jsonc" />
+
+        If you are using Workers with Assets run:
+        <PackageManagers type="exec" pkg="wrangler" args="dev -c path/to/workers-assets/wrangler.jsonc -c path/to/external-do-worker/wrangler.jsonc" />

@@ -3,7 +3,6 @@ title: Vector databases
 pcx_content_type: concept
 sidebar:
   order: 2
-
 ---
 
 Vector databases are a key part of building scalable AI-powered applications. Vector databases provide long term memory, on top of an existing machine learning model.
@@ -14,10 +13,14 @@ Without a vector database, you would need to train your model (or models) or re-
 
 A vector database determines what other data (represented as vectors) is near your input query. This allows you to build different use-cases on top of a vector database, including:
 
-* Semantic search, used to return results similar to the input of the query.
-* Classification, used to return the grouping (or groupings) closest to the input query.
-* Recommendation engines, used to return content similar to the input based on different criteria (for example previous product sales, or user history).
-* Anomaly detection, used to identify whether specific data points are similar to existing data, or different.
+- Semantic search, used to return results similar to the input of the query.
+- Classification, used to return the grouping (or groupings) closest to the input query.
+- Recommendation engines, used to return content similar to the input based on different criteria (for example previous product sales, or user history).
+- Anomaly detection, used to identify whether specific data points are similar to existing data, or different.
+- Semantic search, used to return results similar to the input of the query.
+- Classification, used to return the grouping (or groupings) closest to the input query.
+- Recommendation engines, used to return content similar to the input based on different criteria (for example previous product sales, or user history).
+- Anomaly detection, used to identify whether specific data points are similar to existing data, or different.
 
 Vector databases can also power [Retrieval Augmented Generation](https://arxiv.org/abs/2005.11401) (RAG) tasks, which allow you to bring additional context to LLMs (Large Language Models) by using the context from a vector search to augment the user prompt.
 
@@ -44,16 +47,20 @@ Instead of passing the prompt directly to the LLM, in the RAG approach you:
 1. Generate vector embeddings from an existing dataset or corpus (for example, the dataset you want to use to add additional context to the LLMs response). An existing dataset or corpus could be a product documentation, research data, technical specifications, or your product catalog and descriptions.
 2. Store the output embeddings in a Vectorize database index.
 
-When a user initiates a prompt, instead of passing it (without additional context) to the LLM, you *augment* it with additional context:
+When a user initiates a prompt, instead of passing it (without additional context) to the LLM, you _augment_ it with additional context:
+When a user initiates a prompt, instead of passing it (without additional context) to the LLM, you _augment_ it with additional context:
 
 1. The user prompt is passed into the same ML model used for your dataset, returning a vector embedding representation of the query.
 2. This embedding is used as the query (semantic search) against the vector database, which returns similar vectors.
 3. These vectors are used to look up the content they relate to (if not embedded directly alongside the vectors as metadata).
 4. This content is provided as context alongside the original user prompt, providing additional context to the LLM and allowing it to return an answer that is likely to be far more contextual than the standalone prompt.
 
-Refer to the [RAG using Workers AI tutorial](/workers-ai/tutorials/build-a-retrieval-augmented-generation-ai/) to learn how to combine Workers AI and Vectorize for generative AI use-cases.
+Create a RAG today with [AutoRAG](/autorag) to deploy a fully managed RAG pipeline in just a few clicks. AutoRAG automatically sets up Vectorize, handles continuous indexing, and serves responses through a single API.
 
-<sup>1</sup> You can learn more about the theory behind RAG by reading the [RAG paper](https://arxiv.org/abs/2005.11401).
+<sup>1</sup> You can learn more about the theory behind RAG by reading the [RAG
+paper](https://arxiv.org/abs/2005.11401).
+<sup>1</sup> You can learn more about the theory behind RAG by reading the [RAG
+paper](https://arxiv.org/abs/2005.11401).
 
 ## Terminology
 
@@ -85,9 +92,13 @@ Refer to the [dimensions](/vectorize/best-practices/create-indexes/#dimensions) 
 
 The distance metric is an index used for vector search. It defines how it determines how close your query vector is to other vectors within the index.
 
-* Distance metrics determine how the vector search engine assesses similarity between vectors.
-* Cosine, Euclidean (L2), and Dot Product are the most commonly used distance metrics in vector search.
-* The machine learning model and type of embedding you use will determine which distance metric is best suited for your use-case.
-* Different metrics determine different scoring characteristics. For example, the `cosine` distance metric is well suited to text, sentence similarity and/or document search use-cases. `euclidean` can be better suited for image or speech recognition use-cases.
+- Distance metrics determine how the vector search engine assesses similarity between vectors.
+- Cosine, Euclidean (L2), and Dot Product are the most commonly used distance metrics in vector search.
+- The machine learning model and type of embedding you use will determine which distance metric is best suited for your use-case.
+- Different metrics determine different scoring characteristics. For example, the `cosine` distance metric is well suited to text, sentence similarity and/or document search use-cases. `euclidean` can be better suited for image or speech recognition use-cases.
+- Distance metrics determine how the vector search engine assesses similarity between vectors.
+- Cosine, Euclidean (L2), and Dot Product are the most commonly used distance metrics in vector search.
+- The machine learning model and type of embedding you use will determine which distance metric is best suited for your use-case.
+- Different metrics determine different scoring characteristics. For example, the `cosine` distance metric is well suited to text, sentence similarity and/or document search use-cases. `euclidean` can be better suited for image or speech recognition use-cases.
 
 Refer to the [distance metrics](/vectorize/best-practices/create-indexes/#distance-metrics) documentation to learn how to configure a distance metric when creating a Vectorize index.

@@ -40,7 +40,7 @@ entries:
     description: |-
       When connecting to a database that requires secure clear-text password authentication over TLS, Hyperdrive will now support this authentication method.
 
-      Refer to the documentation to see [all PostgreSQL authentication modes supported by Hyperdrive](/hyperdrive/reference/supported-databases#supported-postgresql-authentication-modes).
+      Refer to the documentation to see [all PostgreSQL authentication modes supported by Hyperdrive](/hyperdrive/reference/supported-databases-and-features#supported-postgresql-authentication-modes).
   - publish_date: "2024-10-30"
     title: New Hyperdrive configurations to private databases using Tunnels are validated before creation
     description: |-
@@ -52,7 +52,7 @@ entries:
     description: |-
       The popular `pg` ([node-postgres](https://github.com/brianc/node-postgres) driver no longer requires the legacy `node_compat` mode, and can now be used in both Workers and Pages for connecting to Hyperdrive. This uses the new (improved) Node.js compatibility in Workers and Pages.
 
-      You can set [`compatibility_flags = ["nodejs_compat_v2"]`](/workers/runtime-apis/nodejs/) in your `wrangler.toml` or via the Pages dashboard to benefit from this change. Visit the [Hyperdrive documentation on supported drivers](/hyperdrive/configuration/connect-to-postgres/#supported-drivers) to learn more about the driver versions supported by Hyperdrive.
+      You can set [`compatibility_flags = ["nodejs_compat_v2"]`](/workers/runtime-apis/nodejs/) in your `wrangler.toml` or via the Pages dashboard to benefit from this change. Visit the [Hyperdrive documentation on supported drivers](/hyperdrive/examples/connect-to-postgres/#supported-drivers) to learn more about the driver versions supported by Hyperdrive.
   - publish_date: "2024-08-19"
     title: Improved caching for Postgres.js
     description: |-
@@ -74,7 +74,7 @@ entries:
 
       Developers who had previously set `prepare: false` can remove this configuration when establishing a new Postgres.js client instance.
 
-      Read the [documentation on supported drivers](/hyperdrive/configuration/connect-to-postgres/#supported-drivers) to learn more about database driver interoperability with Hyperdrive.
+      Read the [documentation on supported drivers](/hyperdrive/examples/connect-to-postgres/#supported-drivers) to learn more about database driver interoperability with Hyperdrive.
   - publish_date: "2024-04-01"
     title: Hyperdrive is now Generally Available
     description: |-
@@ -90,6 +90,6 @@ entries:
   - publish_date: "2023-09-28"
     title: Hyperdrive now available
     description: |-
-      Hyperdrive is now available in public beta to any developer with a Workers paid plan.
+      Hyperdrive is now available in public beta to any developer with a Workers Paid plan.
 
       To start using Hyperdrive, visit the [get started](/hyperdrive/get-started/) guide or read the [announcement blog](https://blog.cloudflare.com/hyperdrive-making-regional-databases-feel-distributed/) to learn more.

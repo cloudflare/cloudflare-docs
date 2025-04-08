@@ -5,7 +5,7 @@ product:
   title: Version Management
   url: /version-management/
   wrap: true
-  group: Cloudflare essentials
+  group: Core platform
 
 meta:
   title: Cloudflare Version Management docs

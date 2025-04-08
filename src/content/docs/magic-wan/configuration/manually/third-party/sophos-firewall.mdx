@@ -185,7 +185,8 @@ system gre route add net <IP_ADDRESS> tunnelname <TUNNEL_NAME>
 ## Verify tunnel status on Cloudflare dashboard
 
 <Render
-	file="tunnel-healthchecks-dash"
+	file="tunnel-health/check-tunnel-healthchecks-dash"
+	product="networking-services"
 	params={{
 		dashInfo:
 			"The dashboard shows the view of tunnel health as measured from each Cloudflare location where your traffic is likely to land.",

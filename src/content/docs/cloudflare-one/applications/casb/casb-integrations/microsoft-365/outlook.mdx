@@ -3,42 +3,16 @@ pcx_content_type: reference
 title: Outlook
 rss: file
 sidebar:
-  order: 4
+  order: 3
 ---
 
 import { Render } from "~/components";
 
 <Render
-  file="casb/integration-description"
-  params={{ integrationName: "Outlook", integrationAccountType: "Microsoft 365 account" }}
+	file="casb/microsoft/integrations/outlook"
+	params={{
+		integrationName: "Outlook",
+		environmentName: "Microsoft 365 account",
+		slugifiedName: "microsoft-365/outlook",
+	}}
 />
-
-## Integration prerequisites
-
-<Render file="casb/microsoft/m365-prereqs" />
-
-## Integration permissions
-
-<Render
-  file="casb/integration-perms"
-  params={{ parentIntegration: "Microsoft 365", parentSlug: "microsoft-365" }}
-/>
-
-## Security findings
-
-<Render
-  file="casb/security-findings"
-  params={{ integrationName: "Outlook", slugRelativePath: "microsoft-365/outlook" }}
-/>
-
-### Calendar sharing
-
-<Render file="casb/microsoft/calendar-sharing" />
-
-### Email administrator settings
-
-<Render file="casb/microsoft/email-admin-settings" />
-
-### Email forwarding
-
-<Render file="casb/microsoft/email-forwarding" />

@@ -40,7 +40,7 @@ When implementing Turnstile with WebViews, the user agent must stay consistent a
 
 ## Use clearance cookies
 
-When using [clearance cookies](/turnstile/concepts/pre-clearance-support/) with Turnstile, make sure that it is executed in the same environment where the challenges will occur, including the same browser and device configuration. The `cf_clearance` cookie will be only accepted in the same configured domain for Turnstile widget with the corresponding zone. Domains configured with the Turnstile widget must match the Cloudflare zone that issues challenges via the [WAF](/waf/reference/cloudflare-challenges/).
+When using [clearance cookies](/turnstile/concepts/pre-clearance-support/) with Turnstile, make sure that it is executed in the same environment where the challenges will occur, including the same browser and device configuration. The `cf_clearance` cookie will be only accepted in the same configured domain for Turnstile widget with the corresponding zone. Domains configured with the Turnstile widget must match the Cloudflare zone that issues [challenges](/fundamentals/security/cloudflare-challenges/).
 
 If pre-clearance is done in a different environment, the clearance cookie may become invalid and lead to more issued challenges.
 

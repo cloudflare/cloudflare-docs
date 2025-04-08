@@ -28,6 +28,10 @@ For example, if you are only using Cloudflare to globally distribute traffic acr
 
 Cloudflare [Private Network Load Balancing](/load-balancing/private-network/) solution and [endpoint steering](/load-balancing/understand-basics/traffic-steering/origin-level-steering/) capabilities enable you to also load balance traffic between your servers within a data center. In this use case, each pool would represent a data center and contain several endpoints that represent your servers.
 
+:::note[Smart Tiered Cache interaction]
+While Smart Tiered Cache selects one Upper Tier per origin, when using Load Balancing, Smart Tiered Cache will select the single best Upper Tier for the entire Load Balancing Pool.
+:::
+
 ## Endpoints
 
 <GlossaryDefinition term="endpoint" prepend="Endpoints refer to " />

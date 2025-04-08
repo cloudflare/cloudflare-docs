@@ -7,41 +7,42 @@ head: []
 description: Write unit tests against Workers.
 ---
 
-import { TabItem, Tabs } from "~/components";
+import {
+	TabItem,
+	Tabs,
+	TypeScriptExample,
+	PackageManagers,
+	Details,
+} from "~/components";
 
-This guide will instruct you through installing and setting up the `@cloudflare/vitest-pool-workers` package. This will help you get started writing tests against your Workers using Vitest. The `@cloudflare/vitest-pool-workers` package works by running code inside a Cloudflare Worker that Vitest would usually run inside a [Node.js worker thread](https://nodejs.org/api/worker_threads.html). For examples of tests using `@cloudflare/vitest-pool-workers`, refer to [Recipes](/workers/testing/vitest-integration/recipes/).
+This guide will instruct you through getting started with the `@cloudflare/vitest-pool-workers` package. For more complex examples of testing using `@cloudflare/vitest-pool-workers`, refer to [Recipes](/workers/testing/vitest-integration/recipes/).
 
 ## Prerequisites
 
-- Open the root directory of your Worker or [create a new Worker](/workers/get-started/guide/#1-create-a-new-worker-project).
+First, make sure that:
 
-- Make sure that your Worker is developed using the ES modules format. To migrate from the service worker format to the ES modules format, refer to the [Migrate to the ES modules format](/workers/reference/migrate-to-module-workers/) guide.
+- Your [compatibility date](/workers/configuration/compatibility-dates/) is set to `2022-10-31` or later.
+- Your Worker using the ES modules format (if not, refer to the [migrate to the ES modules format](/workers/reference/migrate-to-module-workers/) guide).
+- Vitest and `@cloudflare/vitest-pool-workers` are installed in your project as dev dependencies
 
-- In your project's [Wrangler configuration file](/workers/wrangler/configuration/), define a [compatibility date](/workers/configuration/compatibility-dates/) of `2022-10-31` or higher, and include `nodejs_compat` in your [compatibility flags](/workers/configuration/compatibility-flags).
+  <PackageManagers
+  	pkg="vitest@~3.0.0 @cloudflare/vitest-pool-workers"
+  	dev="true"
+  />
 
-## Install Vitest and `@cloudflare/vitest-pool-workers`
+  :::note
 
-Open a terminal window and make sure you are in your project's root directory. Once you have confirmed that, run:
+  Currently, the `@cloudflare/vitest-pool-workers` package _only_ works with Vitest 2.0.x - 3.0.x.
 
-```sh
-npm install vitest@~3.0.0 --save-dev --save-exact
-npm install @cloudflare/vitest-pool-workers --save-dev
-```
-
-The above commands will add the packages to your `package.json` file and install them as dev dependencies.
-
-:::note
-
-Currently, the `@cloudflare/vitest-pool-workers` package _only_ works with Vitest 2.0.x - 3.0.x.
-
-:::
+  :::
 
 ## Define Vitest configuration
 
-If you do not already have a `vitest.config.js` or `vitest.config.ts` file, you will need to create one and define the following configuration.
-You can reference a Wrangler file to leverage its `main` entry point, [compatibility settings](/workers/configuration/compatibility-dates/), and [bindings](/workers/runtime-apis/bindings/).
+In your `vitest.config.ts` file, use `defineWorkersConfig` to configure the Workers Vitest integration.
 
-```js
+You can use your Worker configuration from your [Wrangler config file](/workers/wrangler/configuration/) by specifying it with `wrangler.configPath`.
+
+```ts title = vitest.config.ts
 import { defineWorkersConfig } from "@cloudflare/vitest-pool-workers/config";
 
 export default defineWorkersConfig({
@@ -55,215 +56,144 @@ export default defineWorkersConfig({
 });
 ```
 
-:::note
+You can also override or define additional configuration using the `miniflare` key. This takes precedence over values set in via your Wrangler config.
+
+For example, this configuration would add a KV namespace `TEST_NAMESPACE` that was only accessed and modified in tests.
+
+        ```js null {6-8}
+        export default defineWorkersConfig({
+        	test: {
+        		poolOptions: {
+        			workers: {
+        				wrangler: { configPath: "./wrangler.toml" },
+        				miniflare: {
+        					kvNamespaces: ["TEST_NAMESPACE"],
+        				},
+        			},
+        		},
+        	},
+        });
+        ```
+
+    For a full list of available Miniflare options, refer to the [Miniflare `WorkersOptions` API documentation](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare#interface-workeroptions).
 
 For a full list of available configuration options, refer to [Configuration](/workers/testing/vitest-integration/configuration/).
 
-:::
-
-### Add configuration options via Miniflare
-
-Under the hood, the Workers Vitest integration uses [Miniflare](https://miniflare.dev), the same simulator that powers [`wrangler dev`'s](/workers/wrangler/commands/#dev) local mode. Options can be passed directly to Miniflare for advanced configuration.
-
-For example, to add bindings that will be used in tests, you can add `miniflare` to `defineWorkersConfig`:
-
-```js null {6-8}
-export default defineWorkersConfig({
-	test: {
-		poolOptions: {
-			workers: {
-				main: "./src/index.ts",
-				miniflare: {
-					kvNamespaces: ["TEST_NAMESPACE"],
-				},
-			},
-		},
-	},
-});
-```
-
-This configuration would add a KV namespace `TEST_NAMESPACE` that was only accessible in tests. Using this method, you can add or override existing bindings like Durable Objects or service bindings.
-
-:::note
-
-For a full list of available Miniflare options, refer to the [Miniflare `WorkersOptions` API documentation](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare#interface-workeroptions).
-
-:::
-
 ## Define types
 
-If you are using TypeScript, you will need to define types for Cloudflare Workers and `cloudflare:test` to make sure they are detected appropriately. Add a `tsconfig.json` in the same folder as your tests (that is, `test`) and add the following:
+If you are not using Typescript, you can skip this section.
 
-```js
-{
-  "extends": "../tsconfig.json",
-  "compilerOptions": {
-    "moduleResolution": "bundler",
-    "types": [
-      "@cloudflare/workers-types/experimental",
-      "@cloudflare/vitest-pool-workers"
-    ]
-  },
-  "include": ["./**/*.ts", "../src/env.d.ts"]
+First make sure you have run [`wrangler types`](/workers/wrangler/commands/), which generates [types for the Cloudflare Workers runtime](/workers/languages/typescript/) and an `Env` type based on your Worker's bindings.
+
+Then add a `tsconfig.json` in your tests folder and add `"@cloudflare/vitest-pool-workers"` to your types array to define types for `cloudflare:test`.
+You should also add the output of `wrangler types` to the `include` array so that the types for the Cloudflare Workers runtime are available.
+
+<Details header="Example test/tsconfig.json">
+	```jsonc title="test/tsconfig.json"
+	{
+		"extends": "../tsconfig.json",
+		"compilerOptions": {
+			"moduleResolution": "bundler",
+			"types": [
+				"@cloudflare/vitest-pool-workers", // provides `cloudflare:test` types
+			],
+		},
+		"include": [
+			"./**/*.ts",
+			"../src/worker-configuration.d.ts", // output of `wrangler types`
+		],
+	}
+	```
+</Details>
+
+You also need to define the type of the `env` object that is provided to your tests. Create an `env.d.ts` file in your tests folder, and declare the `ProvidedEnv` interface by extending the `Env` interface that is generated by `wrangler types`.
+
+```ts title="test/env.d.ts"
+declare module "cloudflare:test" {
+	// ProvidedEnv controls the type of `import("cloudflare:test").env`
+	interface ProvidedEnv extends Env {}
 }
 ```
 
-Save this file, and you are ready to write your first test.
+If your test bindings differ from the bindings in your Wrangler config, you should type them here in `ProvidedEnv`.
 
-## Write tests
+## Writing tests
 
-If you created a basic Worker via the guide listed above, you should have the following fetch handler in the `src` folder:
+We will use this simple Worker as an example. It returns a 404 response for the `/404` path and `"Hello World!"` for all other paths.
 
-<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
-
-```js
-export default {
-	async fetch(request, env, ctx) {
-		return new Response("Hello World!");
-	},
-};
-```
-
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-
+<TypeScriptExample filename="src/index.ts">
 ```ts
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
+		if (pathname === "/404") {
+			return new Response("Not found", { status: 404 });
+		}
 		return new Response("Hello World!");
 	},
 } satisfies ExportedHandler<Env>;
 ```
 
-</TabItem> </Tabs>
+</TypeScriptExample>
 
-This Worker receives a request, and returns a response of `"Hello World!"`. In order to test this, create a `test` folder with the following test file:
+### Unit tests
 
-<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+By importing the Worker we can write a unit test for its `fetch` handler.
 
-```js
-import {
-	env,
-	createExecutionContext,
-	waitOnExecutionContext,
-} from "cloudflare:test";
-import { describe, it, expect } from "vitest";
-// Could import any other source file/function here
-import worker from "../src";
+<TypeScriptExample filename="test/unit.spec.ts">
+	```ts
+	import {
+		env,
+		createExecutionContext,
+		waitOnExecutionContext,
+	} from "cloudflare:test";
+	import { describe, it, expect } from "vitest";
+	// Import your worker so you can unit test it
+	import worker from "../src";
 
-describe("Hello World worker", () => {
-	it("responds with Hello World!", async () => {
-		const request = new Request("http://example.com");
-		// Create an empty context to pass to `worker.fetch()`
-		const ctx = createExecutionContext();
-		const response = await worker.fetch(request, env, ctx);
-		// Wait for all `Promise`s passed to `ctx.waitUntil()` to settle before running test assertions
-		await waitOnExecutionContext(ctx);
-		expect(await response.text()).toBe("Hello World!");
-	});
-});
-```
+    // For now, you'll need to do something like this to get a correctly-typed
+    // `Request` to pass to `worker.fetch()`.
+    const IncomingRequest = Request<unknown, IncomingRequestCfProperties>;
 
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+    describe("Hello World worker", () => {
+    	it("responds with Hello World!", async () => {
+    		const request = new IncomingRequest("http://example.com/404");
+    		// Create an empty context to pass to `worker.fetch()`
+    		const ctx = createExecutionContext();
+    		const response = await worker.fetch(request, env, ctx);
+    		// Wait for all `Promise`s passed to `ctx.waitUntil()` to settle before running test assertions
+    		await waitOnExecutionContext(ctx);
+    		expect(await response.status).toBe(404);
+    		expect(await response.text()).toBe("Not found");
+    	});
+    });
 
-```ts
-import {
-	env,
-	createExecutionContext,
-	waitOnExecutionContext,
-} from "cloudflare:test";
-import { describe, it, expect } from "vitest";
-// Could import any other source file/function here
-import worker from "../src";
+    ```
 
-// For now, you'll need to do something like this to get a correctly-typed
-// `Request` to pass to `worker.fetch()`.
-const IncomingRequest = Request<unknown, IncomingRequestCfProperties>;
+</TypeScriptExample>
 
-describe("Hello World worker", () => {
-	it("responds with Hello World!", async () => {
-		const request = new IncomingRequest("http://example.com");
-		// Create an empty context to pass to `worker.fetch()`
-		const ctx = createExecutionContext();
-		const response = await worker.fetch(request, env, ctx);
-		// Wait for all `Promise`s passed to `ctx.waitUntil()` to settle before running test assertions
-		await waitOnExecutionContext(ctx);
-		expect(await response.text()).toBe("Hello World!");
-	});
-});
-```
+### Integration tests
 
-</TabItem> </Tabs>
+You can use the SELF fetcher provided by the `cloudflare:test` to write an integration test. This is a service binding to the default export defined in the main Worker. The main Worker runs in the same isolate/context as tests so any global mocks will apply to it too.
 
-Add functionality to handle a `404` path on the Worker. This functionality will return the text `Not found` as well as the status code `404`.
+<TypeScriptExample filename="test/integration.spec.ts">
+	```ts
+	import { SELF } from "cloudflare:test";
+	import { describe, it, expect } from "vitest";
 
-<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+    describe("Hello World worker", () => {
+    	it("responds with not found and proper status for /404", async () => {
+    		const response = await SELF.fetch("http://example.com/404");
+    		expect(await response.status).toBe(404);
+    		expect(await response.text()).toBe("Not found");
+    	});
+    });
 
-```js
-export default {
-	async fetch(request, env, ctx) {
-		const { pathname } = new URL(request.url);
+    ```
 
-		if (pathname === "/404") {
-			return new Response("Not found", { status: 404 });
-		}
-
-		return new Response("Hello World!");
-	},
-};
-```
-
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-
-```ts
-export default {
-	async fetch(request, env, ctx): Promise<Response> {
-		const { pathname } = new URL(request.url);
-
-		if (pathname === "/404") {
-			return new Response("Not found", { status: 404 });
-		}
-
-		return new Response("Hello World!");
-	},
-} satisfies ExportedHandler<Env>;
-```
-
-</TabItem> </Tabs>
-
-To test this, add the following to your test file:
-
-<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
-
-```js
-it("responds with not found and proper status for /404", async () => {
-	const request = new Request("http://example.com/404");
-	// Create an empty context to pass to `worker.fetch()`
-	const ctx = createExecutionContext();
-	const response = await worker.fetch(request, env, ctx);
-	// Wait for all `Promise`s passed to `ctx.waitUntil()` to settle before running test assertions
-	await waitOnExecutionContext(ctx);
-	expect(await response.status).toBe(404);
-	expect(await response.text()).toBe("Not found");
-});
-```
-
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-
-```ts
-it("responds with not found and proper status for /404", async () => {
-	const request = new IncomingRequest("http://example.com/404");
-	// Create an empty context to pass to `worker.fetch()`
-	const ctx = createExecutionContext();
-	const response = await worker.fetch(request, env, ctx);
-	// Wait for all `Promise`s passed to `ctx.waitUntil()` to settle before running test assertions
-	await waitOnExecutionContext(ctx);
-	expect(await response.status).toBe(404);
-	expect(await response.text()).toBe("Not found");
-});
-```
-
-</TabItem> </Tabs>
+</TypeScriptExample>
 
 ## Related resources
 
-- [`@cloudflare/vitest-pool-workers` GitHub repository](https://github.com/cloudflare/workers-sdk/tree/main/fixtures/vitest-pool-workers-examples) - Examples of tests using the `@cloudflare/vitest-pool-workers` package.
+- For more complex examples of testing using `@cloudflare/vitest-pool-workers`, refer to [Recipes](/workers/testing/vitest-integration/recipes/).
+- [Configuration API reference](/workers/testing/vitest-integration/configuration/)
+- [Test APIs reference](/workers/testing/vitest-integration/test-apis/)

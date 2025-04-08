@@ -18,7 +18,7 @@ With Cloudflare Zero Trust, users can connect to an RDP server without installin
 
 There are two ways for users to [reach the RDP server in their browser](#4-connect-as-a-user):
 - **App Launcher**: Users can log in to the [Access App Launcher](/cloudflare-one/applications/app-launcher/) with their Cloudflare Access credentials and then initiate an RDP connection within the browser to their Windows machine. Users will authenticate to the Windows machine using their pre-configured Windows username and password. Cloudflare does not manage any credentials on the Windows server.
-- **Direct URL**: A user may also navigate directly to the Windows server using a public URL. The authentication flow is the same as for the App Launcher; first users must log in to Cloudflare Access and then use their Windows credentials to authenticate to the Windows machine.
+- **Direct URL**: A user may also navigate directly to the Windows server at `https://<app-domain>/rdp/<vnet-id>/<target-ip>/<port>`. The authentication flow is the same as for the App Launcher; first users must log in to Cloudflare Access and then use their Windows credentials to authenticate to the Windows machine.
 
 Browser-based RDP can be used in conjunction with [routing over WARP](/cloudflare-one/connections/connect-networks/use-cases/rdp/rdp-warp-to-tunnel/) so that there are multiple ways to connect to the server. You can reuse the same Cloudflare Tunnel when configuring each connection method.
 
@@ -90,11 +90,11 @@ Ensure that only **Allow** or **Block** policies are present. **Bypass** and **S
 
 In the [Cloudflare dashboard](https://dash.cloudflare.com/login), go to **DNS** > **Records** and verify that a [DNS record](/dns/manage-dns-records/how-to/create-dns-records/) exists for your domain. The DNS record allows Cloudflare to proxy browser-based RDP traffic to your private network. Any arbitrary DNS record will work.
 
-If you do not already have a DNS record, [create a new DNS record](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records). For example, you could create a `CNAME` record that points your Access application public hostname (`app.example.com`) to your Cloudflare Tunnel (`<tunnel-id>.cfargotunnel.com`):
+If you do not already have a DNS record, [create a new DNS record](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records). For example, you could create an `AAAA` record that points your Access application public hostname (`app.example.com`) to the IPv6 [discard address range](https://www.rfc-editor.org/rfc/rfc6666.html):
 
-- **Type**: _CNAME_
+- **Type**: _AAAA_
 - **Name**: `app`
-- **Target**: `c1744f8b-faa1-48a4-9e5c-02ac921467fa.cfargotunnel.com`
+- **IPv6 address**: `100::`
 - **Proxy status**: On
 
 ## 5. Connect as a user

@@ -9,9 +9,9 @@ import { TabItem, Tabs, Render } from "~/components";
 
 Updates will cause `cloudflared` to restart which will impact traffic currently being served. You can perform zero-downtime upgrades by using Cloudflare's [Load Balancer product](/cloudflare-one/connections/connect-networks/downloads/update-cloudflared/#update-with-cloudflare-load-balancer) or by using [multiple `cloudflared` instances](/cloudflare-one/connections/connect-networks/downloads/update-cloudflared/#update-with-multiple-cloudflared-instances).
 
-## Remotely-managed tunnels
+## Update the `cloudflared` service
 
-To update `cloudflared` for a tunnel [created through the dashboard](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/):
+Refer to the following commands to update `cloudflared` for a [remotely-managed tunnel](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/) created through the dashboard or a [locally-managed tunnel](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/). Locally-managed tunnels must be set up to [run as a service](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/as-a-service/) for the following commands to execute successfully.
 
 <Tabs> <TabItem label="Windows">
 
@@ -92,12 +92,36 @@ sudo systemctl restart cloudflared.service
 
 </TabItem> <TabItem label="Docker">
 
-1. In Zero Trust, go to **Networks** > **Tunnels**.
+**If you created a remotely-managed tunnel using the [dashboard](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/):**
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Networks** > **Tunnels**.
 2. Select your tunnel and select **Configure**.
-3. Select **Docker** and copy the installation command shown in the dashboard.
+3. Select **Docker** and copy the installation command shown in the dashboard. The copied command will contain your token.
 4. Paste this command into a terminal window.
 
-This creates a new container from the latest `cloudflared` image. You can now delete the old container.
+This command creates a new container from the latest `cloudflared` image. You can now delete the old container.
+
+:::caution
+
+Cloudflare recommends creating remotely-managed tunnels when working with Docker.
+
+:::
+
+**If you created a remotely or locally-managed tunnel using the [API](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel-api/), run the following command:**
+
+```sh
+docker run --pull always cloudflare/cloudflared:latest tunnel --no-autoupdate run --token <TOKEN>
+```
+
+**If you created a locally-managed tunnel using the [CLI](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/create-local-tunnel/#2-authenticate-cloudflared):**
+
+1. Mount your local `.cloudflared` [directory](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/local-tunnel-terms/#default-cloudflared-directory) into the Docker container using a volume.
+
+2. Run the following command to update `cloudflared`:
+
+    ```sh
+    docker run --pull always -v <PATH-TO-YOUR-LOCAL-CLOUDFLARED>:/home/nonroot/.cloudflared cloudflare/cloudflared:latest tunnel --no-autoupdate run <TUNNEL-ID>
+    ```
 
 </TabItem> <TabItem label="Other">
 

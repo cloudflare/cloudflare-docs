@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-You can configure custom fields — selected from the list of HTTP request headers, HTTP response headers, and cookies — to include in Logpush log entries of a zone. Once configured, these custom fields will be enabled for all the Logpush jobs in the zone that use the HTTP requests dataset and include the request headers, response headers, or cookie fields.
+You can configure custom fields — selected from the list of HTTP request headers, HTTP response headers, and cookies — to include in Logpush log entries of a zone. Custom fields are only available for the [HTTP requests dataset](/logs/reference/log-fields/zone/http_requests/). Once configured, these custom fields will be enabled for all the Logpush jobs in the zone that use the HTTP requests dataset and include the request headers, response headers, or cookie fields.
 
 Custom fields can be enabled via API or the Cloudflare dashboard.
 
@@ -202,15 +202,13 @@ If you are a Cloudflare Access user, as of March 2022 you have to manually add t
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select the domain you want to use.
 2. Go to **Analytics & Logs** > **Logpush**.
-3. In the **Custom Fields** section, select **Edit Custom Fields**.
+3. In the **Custom log fields** section, select **Edit Custom Fields**.
 4. Select **Set new Custom Field**.
 5. From the **Field Type** dropdown, select *Request Header*, *Response Header* or *Cookies* and type the **Field Name**.
 6. When you are done, select **Save**.
 
 ## Limitations
 
-* You can configure up to 40 custom fields across all field types (HTTP request headers, HTTP response headers, and cookies) per zone.
-* The maximum length of custom field data for HTTP request headers, Cookies, and HTTP response headers combined is 8 KB. Any data over this limit will be truncated.
 * For headers which may be included multiple times (for example, the `set-cookie` response header), a custom field will only log the first instance of the header. Subsequent headers of the same type will be ignored.
 * Currently, Cloudflare only logs original request/response headers. Headers that were modified earlier in the request lifecycle with [Transform Rules](/rules/transform/) will not be logged.
 * The request header `Range` is currently not supported by Custom Fields.

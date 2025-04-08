@@ -437,10 +437,52 @@
 				},
 				"options": {
 					"title": "Purge options",
-					"free": "URL",
-					"pro": "URL",
-					"biz": "URL",
-					"ent": "URL, Hostname, Tag, or Prefix"
+					"free": "URL, Hostname, Tag, Prefix, and Purge Everything",
+                    "pro": "URL, Hostname, Tag, Prefix, and Purge Everything",
+                    "biz": "URL, Hostname, Tag, Prefix, and Purge Everything",
+                    "ent": "URL, Hostname, Tag, Prefix, and Purge Everything"
+				}
+			}
+		},
+		"purge_limits": {
+			"title": "Purge limits for hostname, tag, prefix URL, and purge everything.",
+			"link": "/cache/how-to/purge-cache/",
+			"properties": {
+				"availability": {
+					"title": "Requests",
+					"summary": "Available on all plans",
+					"free": "5 requests per minute",
+					"pro": "5 requests per second",
+					"biz": "10 requests per second",
+					"ent": "50 requests per second"
+				},
+                "limits_bucket": {
+                    "title": "Bucket size",
+                    "free": "25",
+                    "pro": "25",
+                    "biz": "50",
+                    "ent": "500"
+                },
+                "limits_operations": {
+                    "title": "Max operations per request",
+                    "free": "100",
+                    "pro": "100",
+                    "biz": "100",
+                    "ent": "100"
+				}
+			}
+		},
+		"single_file_purge": {
+			"title": "Single file purge",
+			"link": "/cache/how-to/purge-cache/purge-by-single-file/",
+			"properties": {
+				"availability": {
+					"title": "URLs",
+					"summary": "Available on all plans",
+					"free": "800 URLs per second",
+					"pro": "1500 URLs per second",
+					"biz": "1500 URLs per second",
+					"ent": "3000 URLs per second"
 				}
 			}
 		},
@@ -2052,16 +2094,34 @@
 			"title": "Turnstile",
 			"link": "/turnstile/",
 			"properties": {
+				"pricing": {
+					"title": "Pricing",
+					"link": "https://www.cloudflare.com/application-services/products/turnstile/#Page-Pricing-AS",
+					"free": "Free",
+					"ent": "Contact sales"
+				},
 				"widgets": {
 					"title": "Number of widgets",
 					"link": "/turnstile/concepts/widget/",
-					"free": "20 widgets",
+					"free": "Up to 20 widgets",
 					"ent": "Unlimited"
 				},
-				"offlabel": {
-					"title": "Offlabel (remove Cloudflare branding)",
+				"hostname_management": {
+					"title": "Hostname management",
+					"link": "/turnstile/concepts/hostname-management/",
+					"free": "15 hostnames per widget",
+					"ent": "Maximum of 100 hostnames per widget"
+				},
+				"anyhostname": {
+					"title": "Any hostname widget (no preconfigured hostnames)",
 					"free": "No",
 					"ent": "Yes"
+				},
+				"graphql_analytics": {
+					"title": "Analytics lookback",
+					"link": "/turnstile/turnstile-analytics/",
+					"free": "7 days maximum",
+					"ent": "30 days maximum"
 				},
 				"preclearance": {
 					"title": "Pre-clearance support",
@@ -2069,21 +2129,14 @@
 					"free": "Yes",
 					"ent": "Yes"
 				},
-				"hostname_validation": {
-					"title": "Hostname validation",
-					"link": "/turnstile/concepts/hostname-management/",
-					"free": "15 hostnames per widget",
-					"ent": "Maximum of 200 hostnames per widget. <br> The `any hostname` entitlement removes hostname as a requirement and allows you to use the widget anywhere."
-				},
-				"graphql_analytics": {
-					"title": "Analytics time window",
-					"link": "/turnstile/turnstile-analytics/",
-					"free": "7 days maximum",
-					"ent": "30 days maximum"
-				},
 				"ephemeral_ids": {
 					"title": "Ephemeral IDs",
 					"link": "/turnstile/concepts/ephemeral-id/",
+					"free": "No",
+					"ent": "Yes"
+				},
+				"offlabel": {
+					"title": "Offlabel (remove Cloudflare branding)",
 					"free": "No",
 					"ent": "Yes"
 				}

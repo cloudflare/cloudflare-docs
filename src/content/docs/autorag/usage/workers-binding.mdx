@@ -1,0 +1,84 @@
+---
+pcx_content_type: concept
+title: Workers Binding
+sidebar:
+  order: 3
+---
+
+import {
+	Badge,
+	Description,
+	Render,
+	TabItem,
+	Tabs,
+	WranglerConfig,
+	MetaInfo,
+	Type,
+} from "~/components";
+
+Cloudflare’s serverless platform allows you to run code at the edge to build full-stack applications with [Workers](/workers/). A [binding](/workers/runtime-apis/bindings/) enables your Worker or Pages Function to interact with resources on the Cloudflare Developer Platform.
+
+To use your AutoRAG with Workers or Pages, create an AI binding either in the Cloudflare dashboard (refer to [AI bindings](/pages/functions/bindings/#workers-ai) for instructions), or you can update your [Wrangler file](/workers/wrangler/configuration/). To bind AutoRAG to your Worker, add the following to your Wrangler file:
+
+<WranglerConfig>
+
+```toml
+[ai]
+binding = "AI" # i.e. available in your Worker on env.AI
+```
+
+</WranglerConfig>
+
+## `aiSearch()`
+
+This method searches for relevant results from your data source and generates a response using your default model and the retrieved context, for an AutoRAG named `my-autorag`:
+
+```js
+const answer = await env.AI.autorag("my-autorag").aiSearch({
+	query: "How do I train a llama to deliver coffee?",
+	model: "@cf/meta/llama-3.3-70b-instruct-sd",
+	rewrite_query: true,
+	max_num_results: 2,
+	ranking_options: {
+		score_threshold: 0.7,
+	},
+	stream: false,
+});
+```
+
+### Parameters
+
+<Render file="ai-search-api-params" product="autorag" />
+
+### Response
+
+This is the response structure without `stream` enabled.
+
+<Render file="ai-search-response" product="autorag" />
+
+## `search()`
+
+This method searches for results from your corpus and returns the relevant results, for the AutoRAG instance named `my-autorag`:
+
+```js
+const answer = await env.AI.autorag("my-autorag").search({
+	query: "How do I train a llama to deliver coffee?",
+	rewrite_query: true,
+	max_num_results: 2,
+	ranking_options: {
+		score_threshold: 0.7,
+	},
+});
+```
+
+### Parameters
+
+<Render file="search-api-params" product="autorag" />
+
+### Response
+
+<Render file="search-response" product="autorag" />
+
+## Local development
+
+Local development is supported by proxying requests to your deployed AutoRAG instance. When running in local mode, your application forwards queries to the configured remote AutoRAG instance and returns the generated responses as if they were served locally.

@@ -28,6 +28,7 @@
 /src/content/release-notes/workers-ai.yaml @kathayl @G4brym @mchenco @daisyfaithauma @cloudflare/pcx-technical-writing
 /src/content/release-notes/ai-gateway.yaml @kathayl @G4brym @mchenco @daisyfaithauma @cloudflare/pcx-technical-writing
 /src/content/release-notes/vectorize.yaml @elithrar @mchenco @sejoker @cloudflare/pcx-technical-writing
+/src/content/docs/autorag/ @rita3ko @irvinebroque @aninibread @ToriLindsay @cloudflare/pcx-technical-writing
 
 # Analytics & Logs
 
@@ -44,7 +45,7 @@
 
 # Browser Rendering API
 
-/src/content/docs/browser-rendering/ @mchenco @cloudflare/pcx-technical-writing @celso @meddulla @danielgek
+/src/content/docs/browser-rendering/ @mchenco @cloudflare/pcx-technical-writing @celso @meddulla @danielgek @kathayl
 
 # Changelogs
 

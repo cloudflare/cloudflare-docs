@@ -8,11 +8,18 @@
         "name": "Text Classification",
         "description": "Sentiment analysis or text classification is a common NLP task that classifies a text input into labels or classes."
     },
+    "created_at": "2023-09-25 19:21:11.898",
     "tags": [],
     "properties": [
         {
-            "property_id": "beta",
-            "value": "false"
+            "property_id": "price",
+            "value": [
+                {
+                    "unit": "per M input tokens",
+                    "price": 0.026,
+                    "currency": "USD"
+                }
+            ]
         },
         {
             "property_id": "info",

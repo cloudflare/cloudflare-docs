@@ -25,14 +25,14 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`hyperdrive`](#hyperdrive) - Manage your Hyperdrives.
 - [`deploy`](#deploy) - Deploy your Worker to Cloudflare.
 - [`dev`](#dev) - Start a local server for developing your Worker.
-- [`delete`](#delete-2) - Delete your Worker from Cloudflare.
+- [`delete`](#delete-1) - Delete your Worker from Cloudflare.
 - [`kv namespace`](#kv-namespace) - Manage Workers KV namespaces.
 - [`kv key`](#kv-key) - Manage key-value pairs within a Workers KV namespace.
 - [`kv bulk`](#kv-bulk) - Manage multiple key-value pairs within a Workers KV namespace in batches.
 - [`r2 bucket`](#r2-bucket) - Manage Workers R2 buckets.
 - [`r2 object`](#r2-object) - Manage Workers R2 objects.
 - [`secret`](#secret) - Manage the secret variables for a Worker.
-- [`secret bulk`](#secretbulk) - Manage multiple secret variables for a Worker.
+- [`secret bulk`](#secret-bulk) - Manage multiple secret variables for a Worker.
 - [`workflows`](#workflows) - Manage and configure Workflows.
 - [`tail`](#tail) - Start a session to livestream logs from a deployed Worker.
 - [`pages`](#pages) - Configure Cloudflare Pages.
@@ -48,6 +48,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`cert`](#cert) - Manage certificates used for mTLS and Certificate Authority (CA) chain connections.
 - [`types`](#types) - Generate types from bindings and module rules in configuration.
 - [`telemetry`](#telemetry) - Configure whether Wrangler can collect anonymous usage data.
+- [`check`](#check) - Validate your Worker.
 
 :::note
 
@@ -515,6 +516,7 @@ None of the options for this command are required. Also, many can be set in your
   - Skip Wrangler's build steps. Particularly useful when using custom builds. Refer to [Bundling](https://developers.cloudflare.com/workers/wrangler/bundling/) for more information.
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
+    <Render file="vite-environments" />
 - `--outdir` <Type text="string" /> <MetaInfo text="optional" />
   - Path to directory where Wrangler will write the bundled Worker files.
 - `--compatibility-date` <Type text="string" /> <MetaInfo text="optional" />
@@ -1159,6 +1161,27 @@ wrangler pages secret bulk [<FILENAME>] [OPTIONS]
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
+### `functions build`
+
+Compile a folder of Pages Functions into a single Worker.
+
+```txt
+wrangler pages functions build [<DIRECTORY>] [OPTIONS]
+```
+
+- `DIRECTORY` <Type text="string" /> <MetaInfo text="optional (default: `functions`)" />
+  - The directory of Pages Functions.
+- `--outdir` <Type text="string" /> <MetaInfo text="optional" />
+  - Output directory for the bundled Worker.
+- `--fallback-service` <Type text="string" /> <MetaInfo text="optional (default: `ASSETS`)" />
+  - The service to fallback to at the end of the `next` chain. Setting to `''` will fallback to the global `fetch`.
+- `--compatibility-date` <Type text="string" /> <MetaInfo text="optional" />
+  - Date to use for compatibility checks.
+- `--compatibility-flags` <Type text="string[]" /> <MetaInfo text="optional" />
+  - Flags to use for compatibility checks.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ---
 
 ## `queues`
@@ -1284,6 +1307,7 @@ Permanently delete all messages in a queue.
 ```txt
 wrangler queues purge <queue-name>
 ```
+
 - `queue-name` <Type text="string" /> <MetaInfo text="required" />
   - The name of the queue from which messages should be deleted.
 
@@ -1294,15 +1318,18 @@ Pause message delivery from a Queue to consumers (including push consumers, and 
 ```txt
 wrangler queues pause-delivery <queue-name>
 ```
+
 - `queue-name` <Type text="string" /> <MetaInfo text="required" />
   - The name of the queue which delivery should be paused.
 
 ### `resume-delivery`
 
 Resume delivery from a Queue to consumers (including push consumers, and HTTP pull consumers)
+
 ```txt
 wrangler queues resume-delivery <queue-name>
 ```
+
 - `queue-name` <Type text="string" /> <MetaInfo text="required" />
   - The name of the queue from which delivery should be resumed.
 
@@ -1411,6 +1438,9 @@ wrangler versions upload [OPTIONS]
   - Add a version message. Accepts empty string.
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific Worker rather than inheriting from the [Wrangler configuration file](/workers/wrangler/configuration/).
+- `--env` <Type text="string" /> <MetaInfo text="optional" />
+  - Perform on a specific environment.
+    <Render file="vite-environments" />
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
@@ -1958,3 +1988,28 @@ This will resolve the global status set by `wrangler telemetry disable / enable`
 ```txt
 wrangler telemetry status
 ```
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+---
+
+## `check`
+
+### `startup`
+
+Generate a CPU profile of your Worker's startup phase.
+
+After you run `wrangler check startup`, you can import the profile into Chrome DevTools or open it directly in VSCode to view a flamegraph of your Worker's startup phase. Additionally, when a Worker deployment fails with a startup time error Wrangler will automatically generate a CPU profile for easy investigation.
+
+```sh
+wrangler check startup
+```
+
+- `--args` <Type text="string" /> <MetaInfo text="optional" />
+  - To customise the way `wrangler check startup` builds your Worker for analysis, provide the exact arguments you use when deploying your Worker with `wrangler deploy`, or your Pages project with `wrangler pages functions build`. For instance, if you deploy your Worker with `wrangler deploy --no-bundle`, you should use `wrangler check startup --args="--no-bundle"` to profile the startup phase.
+- `--worker` <Type text="string" /> <MetaInfo text="optional" />
+  - If you don't use Wrangler to deploy your Worker, you can use this argument to provide a Worker bundle to analyse. This should be a file path to a serialized multipart upload, with the exact same format as [the API expects](/api/resources/workers/subresources/scripts/methods/update/).
+- `--pages` <Type text="boolean" /> <MetaInfo text="optional" />
+  - If you don't use a Wrangler config file with your Pages project (i.e. a Wrangler config file containing `pages_build_output_dir`), use this flag to force `wrangler check startup` to treat your project as a Pages project.
+
+<Render file="wrangler-commands/global-flags" product="workers" />

@@ -4,7 +4,7 @@ logo: <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M24.3
 product:
   title: Network
   url: /network/
-  group: Cloudflare essentials
+  group: Core platform
 
 meta:
   title: Cloudflare Network settings docs

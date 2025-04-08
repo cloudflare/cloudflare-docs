@@ -1,0 +1,53 @@
+---
+pcx_content_type: navigation
+title: Remote data
+sidebar:
+  order: 3
+head: []
+description: Working with data during remote development
+---
+
+import {
+	Details,
+	LinkCard,
+	Render,
+	PackageManagers,
+	FileTree,
+} from "~/components";
+
+When developing Workers applications, you can use Wrangler's remote development mode (via [`wrangler dev --remote`](/workers/wrangler/commands/#dev)) to test your code on Cloudflare's global network before
+deploying to production. Remote development is [**not** supported in the Vite plugin](/workers/local-development/#choosing-between-wrangler-or-vite).
+
+<PackageManagers type="exec" pkg="wrangler" args="dev --remote" />
+
+### How It Works
+
+The `wrangler dev --remote` command creates a temporary preview deployment on Cloudflare's infrastructure, allowing you to test your Worker in an environment that closely mirrors production.
+
+When you run `wrangler dev --remote`:
+
+- Your code is uploaded to a temporary preview environment on Cloudflare's infrastructure.
+- Changes to your code are automatically uploaded as you save.
+- All requests and execution happen on Cloudflare's global network
+- The preview automatically terminates when you exit the command
+
+## When to Use Remote Development
+
+- You need to develop using [bindings that don't work locally](/workers/local-development/bindings-per-env/) (such as [Browser Rendering](/browser-rendering/)).
+- You need to verify behavior specifically on Cloudflare's infrastructure.
+- You want to work with preview resources that mirror production.
+
+## Isolating from Production
+
+To protect production data, you can specify preview resources in your [Wrangler configuration](/workers/wrangler/configuration/), such as:
+
+- [Preview namespaces for KV stores](/workers/wrangler/configuration/#kv-namespaces):`preview_id`.
+  - This option is **required** when using `wrangler dev --remote`.
+- [Preview buckets for R2 storage](/workers/wrangler/configuration/#r2-buckets): `preview_bucket_name`.
+- [Preview database IDs for D1](/workers/wrangler/configuration/#d1-databases): `preview_database_id`
+
+This separation ensures your development activities don't impact production data while still providing a realistic testing environment.
+
+## Limitations
+
+- When you run a remote development session using the `--remote` flag, a limit of 50 [routes](/workers/configuration/routing/routes/) per zone is enforced. Learn more in[ Workers platform limits](/workers/platform/limits/#number-of-routes-per-zone-when-using-wrangler-dev---remote).

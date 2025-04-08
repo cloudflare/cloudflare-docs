@@ -9,7 +9,7 @@ head:
     content: Create a configuration rule via API
 ---
 
-import { Details, Render } from "~/components";
+import { Details, Render, APIRequest } from "~/components";
 
 Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create configuration rules via API.
 
@@ -39,25 +39,24 @@ Make sure your API token has the [required permissions](#required-api-token-perm
 
 The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single configuration rule — enabling Email Obfuscation and Browser Integrity Check for the contacts page — using the [Update a zone ruleset](/api/resources/rulesets/methods/update/) operation:
 
-```bash title="Request"
-curl --request PUT \
-https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "rules": [
-    {
-      "expression": "starts_with(http.request.uri.path, \"/contact-us/\")",
-      "description": "Obfuscates email addresses and enables BIC in contacts page",
-      "action": "set_config",
-      "action_parameters": {
-        "email_obfuscation": true,
-        "bic": true
-      }
-    }
-  ]
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/rulesets/{ruleset_id}"
+	method="PUT"
+	json={{
+		rules: [
+			{
+				expression: 'starts_with(http.request.uri.path, "/contact-us/")',
+				description:
+					"Obfuscates email addresses and enables BIC in contacts page",
+				action: "set_config",
+				action_parameters: {
+					email_obfuscation: true,
+					bic: true,
+				},
+			},
+		],
+	}}
+/>
 
 </Details>
 
@@ -65,24 +64,22 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
 
 The following example sets the rules of an existing phase ruleset (`{ruleset_id}`) to a single configuration rule — turning on Under Attack mode for the administration area — using the [Update a zone ruleset](/api/resources/rulesets/methods/update/) operation:
 
-```bash title="Request"
-curl --request PUT \
-https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "rules": [
-    {
-      "expression": "http.host eq \"admin.example.com\"",
-      "description": "Turn on I'\''m Under Attack mode for admin area",
-      "action": "set_config",
-      "action_parameters": {
-        "security_level": "under_attack"
-      }
-    }
-  ]
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/rulesets/{ruleset_id}"
+	method="PUT"
+	json={{
+		rules: [
+			{
+				expression: 'http.host eq "admin.example.com"',
+				description: "Turn on Under Attack mode for admin area",
+				action: "set_config",
+				action_parameters: {
+					security_level: "under_attack",
+				},
+			},
+		],
+	}}
+/>
 
 </Details>
 

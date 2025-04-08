@@ -73,7 +73,7 @@ An object containing properties that you want to apply to the request.
 
 * `method` <Type text="string" /> <MetaInfo text="optional" />
 
-  * The HTTP request method. The default is `GET`. In Workers, all [HTTP request methods](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) are supported, except for [`CONNECT`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/CONNECT).
+  * The HTTP request method. The default is `GET`. In Workers, all [HTTP request methods](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Methods) are supported, except for [`CONNECT`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Methods/CONNECT).
 
 * `headers` Headers optional
 
@@ -118,7 +118,7 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 * `cacheTags` Array\<string> optional
 
-  * This option appends additional [**Cache-Tag**](/cache/how-to/purge-cache/purge-by-tags/) headers to the response from the origin server. This allows for purges of cached content based on tags provided by the Worker, without modifications to the origin server. This is performed using the [**Purge by Tag**](/cache/how-to/purge-cache/purge-by-tags/#purge-using-cache-tags) feature, which is currently only available to Enterprise zones. If this option is used in a non-Enterprise zone, the additional headers will not be appended.
+  * This option appends additional [**Cache-Tag**](/cache/how-to/purge-cache/purge-by-tags/) headers to the response from the origin server. This allows for purges of cached content based on tags provided by the Worker, without modifications to the origin server. This is performed using the [**Purge by Tag**](/cache/how-to/purge-cache/purge-by-tags/#purge-using-cache-tags) feature.
 
 * `cacheTtl` <Type text="number" /> <MetaInfo text="optional" />
 
@@ -251,6 +251,18 @@ All plans have access to:
 * `tlsClientAuth` Object | null
 
   * Only set when using Cloudflare Access or API Shield (mTLS). Object with the following properties: `certFingerprintSHA1`, `certFingerprintSHA256`, `certIssuerDN`, `certIssuerDNLegacy`, `certIssuerDNRFC2253`, `certIssuerSKI`, `certIssuerSerial`, `certNotAfter`, `certNotBefore`, `certPresented`, `certRevoked`, `certSKI`, `certSerial`, `certSubjectDN`, `certSubjectDNLegacy`, `certSubjectDNRFC2253`, `certVerified`.
+
+* `tlsClientCiphersSha1` string
+
+  * The SHA-1 hash (Base64-encoded) of the cipher suite sent by the client during the TLS handshake, encoded in big-endian format. For example, `"GXSPDLP4G3X+prK73a4wBuOaHRc="`.
+
+* `tlsClientExtensionsSha1` string
+
+  * The SHA-1 hash (Base64-encoded) of the TLS client extensions sent during the handshake, encoded in big-endian format. For example, `"OWFiM2I5ZDc0YWI0YWYzZmFkMGU0ZjhlYjhiYmVkMjgxNTU5YTU2Mg=="`.
+
+* `tlsClientExtensionsSha1Le` string
+
+  * The SHA-1 hash (Base64-encoded) of the TLS client extensions sent during the handshake, encoded in little-endian format. For example, `"7zIpdDU5pvFPPBI2/PCzqbaXnRA="`.
 
 * `tlsClientHelloLength` string
 
