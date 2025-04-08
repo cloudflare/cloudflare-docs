@@ -13,7 +13,7 @@ When you build MCP Servers on Cloudflare, you extend the [`McpAgent` class](http
 
 ```ts title="src/index.ts"
 import { McpAgent } from "agents/mcp";
-import { DurableMCP } from "@cloudflare/model-context-protocol";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 
 export class MyMCP extends McpAgent {
 	server = new McpServer({ name: "Demo", version: "1.0.0" });
@@ -28,6 +28,9 @@ export class MyMCP extends McpAgent {
 		);
 	}
 }
+
+export default MyMCP.mount("/mcp", { binding: "MyMCP" });
+
 ```
 
 </TypeScriptExample>
