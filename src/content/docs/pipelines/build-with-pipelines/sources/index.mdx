@@ -13,7 +13,7 @@ Pipelines let you ingest data from the following sources:
 
 Multiple sources can be active on a single pipeline simultaneously. For example, you can create a pipeline which accepts data from Workers and via HTTP. There is no limit to the number of source clients. Multiple Workers can be configured to send data to the same pipeline.
 
-Each pipeline can ingest up to 100 MB/s of data, or accept up to 100,000 requests per second, across all sources.
+Each pipeline can ingest up to 100 MB/s of data or accept up to 100,000 requests per second, aggregated across all sources.
 
 ## Configuring allowed sources
 By default, ingestion via HTTP and from Workers is turned on. You can configure the allowed sources by using the `--source` flag while creating or updating a pipeline.
