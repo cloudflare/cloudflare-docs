@@ -25,6 +25,15 @@ Hyperdrive will also issue an empty test query, a `;` in PostgreSQL, to validate
 | `2015`     | Generic error.                                                                                   | Hyperdrive failed to connect and could not determine a reason. Open a support ticket so Cloudflare can investigate.                                            |
 | `2016`     | Test query failed.                                                                               | Confirm that the user Hyperdrive is connecting as has permissions to issue read and write queries to the given database.                                       |
 
+### Failure to connect
+
+Hyperdrive may also emit `Failed to connect to the provided database` when it fails to connect to the database when attempting to create a Hyperdrive configuration. This is possible when the TLS (SSL) certificates are misconfigured. Here is a non-exhaustive table of potential failure to connect errors:
+
+| Error message | Details               | Recommended fixes |
+| ---------- | -------------------- | --------------------- |
+| Server return error and closed connection. | This message occurs when you attempt to connect to a database that has client certificate verification enabled. | Ensure you are configuring your Hyperdrive with [client certificates](/hyperdrive/configuration/tls-ssl-certificates-for-hyperdrive/) if your database requires them. |
+| TLS handshake failed: cert validation failed. | This message occurs when Hyperdrive has been configured with server CA certificates and is indicating that the certificate provided by the server has not been signed by the expected CA certificate. | Ensure you are using the expected the correct CA certificate for Hyperdrive, or ensure you are connecting to the right database. |
+
 ## Connection errors
 
 Hyperdrive may also return errors at runtime. This can happen during initial connection setup, or in response to a query or other wire-protocol command sent by your driver.
@@ -33,6 +42,8 @@ These errors are returned as `ErrorResponse` wire protocol messages, which are h
 Hyperdrive errors that do not map 1:1 with an error message code [documented by PostgreSQL](https://www.postgresql.org/docs/current/errcodes-appendix.html) use the `58000` error code.
 
 Hyperdrive may also encounter `ErrorResponse` wire protocol messages sent by your database. Hyperdrive will pass these errors through unchanged when possible.
+
+
 
 ### Hyperdrive specific errors
 

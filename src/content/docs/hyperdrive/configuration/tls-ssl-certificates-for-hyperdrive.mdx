@@ -57,6 +57,12 @@ ID: <YOUR_ID_FOR_THE_CA_CERTIFICATE>
 ...
 ```
 
+:::note
+
+You must use the CA certificate bundle that is for your specific region. You can not use a CA certificate bundle that contains more than one CA certificate, such as a global bundle of CA certificates containing each region's certificate.
+
+:::
+
 ### Step 2: Create your Hyperdrive configuration using the CA certificate and the SSL mode
 
 Once your CA certificate has been created, you can create a Hyperdrive configuration with the newly created
