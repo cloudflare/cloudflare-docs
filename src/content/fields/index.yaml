@@ -1608,7 +1608,7 @@ entries:
     data_type: Array<String>
     categories: [Request, Headers]
     keywords: [request, client, visitor]
-    summary: List of language tags provided in the [`Accept-Language`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language) HTTP request header.
+    summary: List of language tags provided in the [`Accept-Language`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Accept-Language) HTTP request header.
     description: |-
       Language tags are sorted by weight (`;q=<weight>`, with a default weight of `1`) in descending order.
 

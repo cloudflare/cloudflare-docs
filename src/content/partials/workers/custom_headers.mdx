@@ -136,15 +136,15 @@ If you are server-side rendering (SSR) or using {props.product === 'workers' ? '
 
 :::
 
-You can prevent click-jacking by informing browsers not to embed your application inside another (for example, with an `<iframe>`) with a [`X-Frame-Options`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options) header.
+You can prevent click-jacking by informing browsers not to embed your application inside another (for example, with an `<iframe>`) with a [`X-Frame-Options`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Frame-Options) header.
 
-[`X-Content-Type-Options: nosniff`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options) prevents browsers from interpreting a response as any other content-type than what is defined with the `Content-Type` header.
+[`X-Content-Type-Options: nosniff`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Content-Type-Options) prevents browsers from interpreting a response as any other content-type than what is defined with the `Content-Type` header.
 
-[`Referrer-Policy`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy) allows you to customize how much information visitors give about where they are coming from when they navigate away from your page.
+[`Referrer-Policy`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Referrer-Policy) allows you to customize how much information visitors give about where they are coming from when they navigate away from your page.
 
-Browser features can be disabled to varying degrees with the [`Permissions-Policy`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy) header (recently renamed from `Feature-Policy`).
+Browser features can be disabled to varying degrees with the [`Permissions-Policy`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Feature-Policy) header (recently renamed from `Feature-Policy`).
 
-If you need fine-grained control over your application's content, the [`Content-Security-Policy`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy) header allows you to configure a number of security settings, including similar controls to the `X-Frame-Options` header.
+If you need fine-grained control over your application's content, the [`Content-Security-Policy`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy) header allows you to configure a number of security settings, including similar controls to the `X-Frame-Options` header.
 
 ```txt
 /app/*
