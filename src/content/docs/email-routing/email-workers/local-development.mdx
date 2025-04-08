@@ -32,11 +32,11 @@ If you want to deploy your script you need to [enable Email Routing](/email-rout
 
 :::
 
-You can now test receiving, replying and sending emails in your local environment.
+You can now test receiving, replying, and sending emails in your local environment.
 
-## Receiving an email
+## Receive an email
 
-Consider this example Email Worker script that uses the opensource [postal-mime](https://www.npmjs.com/package/postal-mime) email parser:
+Consider this example Email Worker script that uses the open source [`postal-mime`](https://www.npmjs.com/package/postal-mime) email parser:
 
 ```ts
 import * as PostalMime from 'postal-mime';
@@ -54,7 +54,7 @@ export default {
 Now when you run `npx wrangler dev`, wrangler will expose a local `/cdn-cgi/handler/email` endpoint that you can `POST` email messages to and trigger your Worker's `email()` handler:
 
 ```bash
-curl -X POST 'http://localhost:8787/cdn-cgi/handler/email' \
+curl --request POST 'http://localhost:8787/cdn-cgi/handler/email' \
   --url-query 'from=sender@example.com' \
   --url-query 'to=recipient@example.com' \
   --header 'Content-Type: application/json' \
@@ -105,9 +105,9 @@ This is what you get in the console:
 }
 ```
 
-## Sending an email
+## Send an email
 
-Wrangler can also simulate sending emails locally. Consider this example Email Worker script that uses the [mimetext](https://www.npmjs.com/package/mimetext) npm package:
+Wrangler can also simulate sending emails locally. Consider this example Email Worker script that uses the [`mimetext`](https://www.npmjs.com/package/mimetext) npm package:
 
 ```ts
 import { EmailMessage } from "cloudflare:email";
@@ -133,7 +133,7 @@ export default {
 
 Now when you run `npx wrangler dev`, go to http://localhost:8787/ to trigger the `fetch()` handler and send the email. You will see the follow message in your terminal:
 
-```bash
+```txt
 ⎔ Starting local server...
 [wrangler:inf] Ready on http://localhost:8787
 [wrangler:inf] GET / 200 OK (19ms)
@@ -156,7 +156,7 @@ Content-Transfer-Encoding: 7bit
 Congratulations, you just sent an email from a worker.
 ```
 
-## Replying to and forwarding messages
+## Reply to and forward messages
 
 Likewise, [`EmailMessage`](/email-routing/email-workers/runtime-api/#emailmessage-definition)'s `forward()` and `reply()` methods are also simulated locally. Consider this Worker that receives an email, parses it, replies to the sender, and forwards the original message to one your verified recipient addresses:
 
@@ -194,9 +194,9 @@ export default {
 };
 ```
 
-Run `npx wrangler dev` and use curl to POST the same message from the [Receiving an email](#receiving-an-email) example. Your terminal will show you where to find the replied message in your local disk and to whom the email was forwarded:
+Run `npx wrangler dev` and use curl to `POST` the same message from the [Receive an email](#receive-an-email) example. Your terminal will show you where to find the replied message in your local disk and to whom the email was forwarded:
 
-```bash
+```txt
 ⎔ Starting local server...
 [wrangler:inf] Ready on http://localhost:8787
 [wrangler:inf] Email handler replied to sender with the following message:
