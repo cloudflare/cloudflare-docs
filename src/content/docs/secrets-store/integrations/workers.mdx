@@ -105,7 +105,7 @@ To bind an account secret to your Worker, you must have one of the following [ro
 
 ```toml
 main = "./src/index.js"
-secrets_store_secret = [
+secrets_store_secrets = [
   { binding = "MY_SECRETS_STORE_SECRET", store_id= '<STORE_ID>', secret_name = "<MY_SECRET_NAME>" }
 ]
 ```
