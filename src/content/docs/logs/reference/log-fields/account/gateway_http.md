@@ -213,11 +213,23 @@ Type: `bool`
 
 If the request content was quarantined.
 
+## RedirectTargetURI
+
+Type: `string`
+
+Custom URI to which the user was redirected, if any.
+
 ## Referer
 
 Type: `string`
 
 Contents of the referer header in the HTTP request.
+
+## RegistrationID
+
+Type: `string`
+
+The UUID of the device registration from which the HTTP request originated.
 
 ## RequestID
 

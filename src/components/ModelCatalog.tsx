@@ -21,6 +21,7 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 
 	// List of model names to pin at the top
 	const pinnedModelNames = [
+		"@cf/meta/llama-4-scout-17b-16e-instruct",
 		"@cf/meta/llama-3.3-70b-instruct-fp8-fast",
 		"@cf/meta/llama-3.1-8b-instruct-fast",
 	];

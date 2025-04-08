@@ -6,7 +6,7 @@ sidebar:
   order: 4
 ---
 
-import { FeatureTable, TabItem, Tabs } from "~/components";
+import { FeatureTable, TabItem, Tabs, APIRequest } from "~/components";
 
 Zone Lockdown specifies a list of one or more IP addresses, CIDR ranges, or networks that are the only IPs allowed to access a domain, subdomain, or URL. You can configure multiple destinations, including IPv4/IPv6 addresses, in a single Zone Lockdown rule.
 
@@ -52,37 +52,31 @@ Cloudflare Zone Lockdown is available on paid plans. The number of available Zon
 
 </TabItem> <TabItem label="API">
 
-Issue a `POST` request for the [Create a Zone Lockdown rule](/api/resources/firewall/subresources/lockdowns/methods/create/) operation.
+Issue a `POST` request for the [Create a Zone Lockdown rule](/api/resources/firewall/subresources/lockdowns/methods/create/) operation similar to the following:
 
-For example:
-
-```bash
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/firewall/lockdowns" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "description": "Block all traffic to staging and wiki unless it comes from HQ or branch offices",
-  "urls": [
-    "staging.example.com/*",
-    "example.com/wiki/*"
-  ],
-  "configurations": [
-    {
-      "target": "ip_range",
-      "value": "192.0.2.0/24"
-    },
-    {
-      "target": "ip_range",
-      "value": "2001:DB8::/64"
-    },
-    {
-      "target": "ip",
-      "value": "203.0.133.1"
-    }
-  ]
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/firewall/lockdowns"
+	method="POST"
+	json={{
+		description:
+			"Block all traffic to staging and wiki unless it comes from HQ or branch offices",
+		urls: ["staging.example.com/*", "example.com/wiki/*"],
+		configurations: [
+			{
+				target: "ip_range",
+				value: "192.0.2.0/24",
+			},
+			{
+				target: "ip_range",
+				value: "2001:DB8::/64",
+			},
+			{
+				target: "ip",
+				value: "203.0.133.1",
+			},
+		],
+	}}
+/>
 
 </TabItem> </Tabs>
 

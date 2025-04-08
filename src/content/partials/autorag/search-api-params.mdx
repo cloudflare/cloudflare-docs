@@ -1,0 +1,24 @@
+---
+{}
+---
+
+import { MetaInfo, Type } from "~/components";
+
+`query` <Type text="string" /> <MetaInfo text="required" />
+
+The input query.
+
+`rewrite_query` <Type text="boolean" /> <MetaInfo text="optional" />
+
+Rewrites the original query into a search optimized query to improve retrieval accuracy. Defaults to `false`.
+
+`max_num_results` <Type text="number" /> <MetaInfo text="optional" />
+
+The maximum number of results that can be returned from the Vectorize database. Defaults to `10`. Must be between `1` and `50`.
+
+`ranking_options` <Type text="object" /> <MetaInfo text="optional" />
+
+Configurations for customizing result ranking. Defaults to `{}`.
+
+- `score_threshold` <Type text="number" /> <MetaInfo text="optional" />
+  - The minimum match score required for a result to be considered a match. Defaults to `0`. Must be between `0` and `1`.

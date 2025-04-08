@@ -441,20 +441,48 @@
                     "pro": "URL, Hostname, Tag, Prefix, and Purge Everything",
                     "biz": "URL, Hostname, Tag, Prefix, and Purge Everything",
                     "ent": "URL, Hostname, Tag, Prefix, and Purge Everything"
+				}
+			}
+		},
+		"purge_limits": {
+			"title": "Purge limits for hostname, tag, prefix URL, and purge everything.",
+			"link": "/cache/how-to/purge-cache/",
+			"properties": {
+				"availability": {
+					"title": "Requests",
+					"summary": "Available on all plans",
+					"free": "5 requests per minute",
+					"pro": "5 requests per second",
+					"biz": "10 requests per second",
+					"ent": "50 requests per second"
+				},
+                "limits_bucket": {
+                    "title": "Bucket size",
+                    "free": "25",
+                    "pro": "25",
+                    "biz": "50",
+                    "ent": "500"
                 },
-                "limits": {
-                    "title": "Purge limits (tags, prefix URL, hostname, and purge everything). The limits are per account.",
-                    "free": "5 requests per minute with a bucket size of 25, supporting up to 100 operations per request.",
-                    "pro": "5 requests per second with a bucket size of 25, supporting up to 100 operations per request",
-                    "biz": "10 requests per second with a bucket size of 50, supporting up to 100 operations per request",
-                    "ent": "50 requests per second with a bucket size of 500, supporting up to 100 operations per request"
-                },
-                "limits_single_file": {
-                    "title": "Purge limits (single file purge). The limits are per account.",
-                    "free": "800 URLs per second",
-                    "pro": "1500 URLs per second",
-                    "biz": "1500 URLs per second",
-                    "ent": "3000 URLs per second"
+                "limits_operations": {
+                    "title": "Max operations per request",
+                    "free": "100",
+                    "pro": "100",
+                    "biz": "100",
+                    "ent": "100"
+				}
+			}
+		},
+		"single_file_purge": {
+			"title": "Single file purge",
+			"link": "/cache/how-to/purge-cache/purge-by-single-file/",
+			"properties": {
+				"availability": {
+					"title": "URLs",
+					"summary": "Available on all plans",
+					"free": "800 URLs per second",
+					"pro": "1500 URLs per second",
+					"biz": "1500 URLs per second",
+					"ent": "3000 URLs per second"
 				}
 			}
 		},

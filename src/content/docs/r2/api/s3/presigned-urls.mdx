@@ -1,7 +1,6 @@
 ---
 title: Presigned URLs
 pcx_content_type: concept
-
 ---
 
 Presigned URLs are an [S3 concept](https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-presigned-url.html) for sharing direct access to your bucket without revealing your token secret. A presigned URL authorizes anyone with the URL to perform an action to the S3 compatibility endpoint for an R2 bucket. By default, the S3 endpoint requires an `AUTHORIZATION` header signed by your token. Every presigned URL has S3 parameters and search parameters containing the signature information that would be present in an `AUTHORIZATION` header. The performable action is restricted to a specific resource, an [operation](/r2/api/s3/api/), and has an associated timeout.
@@ -24,7 +23,7 @@ Presigned URLs are generated with no communication with R2 and must be generated
 
 There are three ways to grant an application access to R2:
 
-1. The application has its own copy of an [R2 API token](/r2/api/s3/tokens/).
+1. The application has its own copy of an [R2 API token](/r2/api/tokens/).
 2. The application requests a copy of an R2 API token from a vault application and promises to not permanently store that token locally.
 3. The application requests a central application to give it a presigned URL it can use to perform an action.
 
@@ -44,10 +43,10 @@ Another potential use case for presigned URLs is debugging. For example, if you 
 
 R2 currently supports the following methods when generating a presigned URL:
 
-* `GET`: allows a user to fetch an object from a bucket
-* `HEAD`: allows a user to fetch an object's metadata from a bucket
-* `PUT`: allows a user to upload an object to a bucket
-* `DELETE`: allows a user to delete an object from a bucket
+- `GET`: allows a user to fetch an object from a bucket
+- `HEAD`: allows a user to fetch an object's metadata from a bucket
+- `PUT`: allows a user to upload an object to a bucket
+- `DELETE`: allows a user to delete an object from a bucket
 
 `POST`, which performs uploads via native HTML forms, is not currently supported.
 
@@ -55,11 +54,11 @@ R2 currently supports the following methods when generating a presigned URL:
 
 Generate a presigned URL by referring to the following examples:
 
-* [AWS SDK for Go](/r2/examples/aws/aws-sdk-go/#generate-presigned-urls)
-* [AWS SDK for JS v3](/r2/examples/aws/aws-sdk-js-v3/#generate-presigned-urls)
-* [AWS SDK for JS](/r2/examples/aws/aws-sdk-js/#generate-presigned-urls)
-* [AWS SDK for PHP](/r2/examples/aws/aws-sdk-php/#generate-presigned-urls)
-* [AWS CLI](/r2/examples/aws/aws-cli/#generate-presigned-urls)
+- [AWS SDK for Go](/r2/examples/aws/aws-sdk-go/#generate-presigned-urls)
+- [AWS SDK for JS v3](/r2/examples/aws/aws-sdk-js-v3/#generate-presigned-urls)
+- [AWS SDK for JS](/r2/examples/aws/aws-sdk-js/#generate-presigned-urls)
+- [AWS SDK for PHP](/r2/examples/aws/aws-sdk-php/#generate-presigned-urls)
+- [AWS CLI](/r2/examples/aws/aws-cli/#generate-presigned-urls)
 
 ## Presigned URL alternative with Workers
 
@@ -67,11 +66,9 @@ A valid alternative design to presigned URLs is to use a Worker with a [binding]
 
 :::note[Bindings]
 
-
 A binding is how your Worker interacts with external resources such as [KV Namespaces](/kv/concepts/kv-namespaces/), [Durable Objects](/durable-objects/), or [R2 Buckets](/r2/buckets/). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your Wrangler file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker. Refer to [Environment Variables](/workers/configuration/environment-variables/) for more information.
 
 A binding is defined in the Wrangler file of your Worker project's directory.
-
 
 :::
 
@@ -83,51 +80,51 @@ If the Worker received a request for `https://example.com/uploads/dog.png`, it w
 import { AwsClient } from "aws4fetch";
 
 const r2 = new AwsClient({
-  accessKeyId: "",
-  secretAccessKey: "",
+	accessKeyId: "",
+	secretAccessKey: "",
 });
 
 export default {
-  async fetch(req): Promise<Response> {
-    // This is just an example to demonstrating using aws4fetch to generate a presigned URL.
-    // This Worker should not be used as-is as it does not authenticate the request, meaning
-    // that anyone can upload to your bucket.
-    //
-    // Consider implementing authorization, such as a preshared secret in a request header.
-    const requestPath = new URL(req.url).pathname;
+	async fetch(req): Promise<Response> {
+		// This is just an example to demonstrating using aws4fetch to generate a presigned URL.
+		// This Worker should not be used as-is as it does not authenticate the request, meaning
+		// that anyone can upload to your bucket.
+		//
+		// Consider implementing authorization, such as a preshared secret in a request header.
+		const requestPath = new URL(req.url).pathname;
 
-    // Cannot upload to the root of a bucket
-    if (requestPath === "/") {
-      return new Response("Missing a filepath", { status: 400 });
-    }
+		// Cannot upload to the root of a bucket
+		if (requestPath === "/") {
+			return new Response("Missing a filepath", { status: 400 });
+		}
 
-    const bucketName = "";
-    const accountId = "";
+		const bucketName = "";
+		const accountId = "";
 
-    const url = new URL(
-      `https://${bucketName}.${accountId}.r2.cloudflarestorage.com`
-    );
+		const url = new URL(
+			`https://${bucketName}.${accountId}.r2.cloudflarestorage.com`,
+		);
 
-    // preserve the original path
-    url.pathname = requestPath;
+		// preserve the original path
+		url.pathname = requestPath;
 
-    // Specify a custom expiry for the presigned URL, in seconds
-    url.searchParams.set("X-Amz-Expires", "3600");
+		// Specify a custom expiry for the presigned URL, in seconds
+		url.searchParams.set("X-Amz-Expires", "3600");
 
-    const signed = await r2.sign(
-      new Request(url, {
-        method: "PUT",
-      }),
-      {
-        aws: { signQuery: true },
-      }
-    );
+		const signed = await r2.sign(
+			new Request(url, {
+				method: "PUT",
+			}),
+			{
+				aws: { signQuery: true },
+			},
+		);
 
-    // Caller can now use this URL to upload to that object.
-    return new Response(signed.url, { status: 200 });
-  },
+		// Caller can now use this URL to upload to that object.
+		return new Response(signed.url, { status: 200 });
+	},
 
-  // ... handle other kinds of requests
+	// ... handle other kinds of requests
 } satisfies ExportedHandler;
 ```
 
@@ -137,15 +134,15 @@ In some cases, Workers lets you implement certain functionality more easily. For
 
 ```ts
 const signed = await r2.sign(
-  new Request(url, {
-    method: "PUT",
-  }),
-  {
-    aws: { signQuery: true },
-    headers: {
-      "If-Unmodified-Since": "Tue, 28 Sep 2021 16:00:00 GMT",
-    },
-  }
+	new Request(url, {
+		method: "PUT",
+	}),
+	{
+		aws: { signQuery: true },
+		headers: {
+			"If-Unmodified-Since": "Tue, 28 Sep 2021 16:00:00 GMT",
+		},
+	},
 );
 ```
 
@@ -163,18 +160,18 @@ const existingObject = await env.DROP_BOX_BUCKET.put(
 			// is the initial R2 announcement.
 			uploadedBefore: new Date(1632844800000),
 		},
-	}
+	},
 );
-if (existingObject?.etag !== request.headers.get('etag')) {
-	return new Response('attempt to overwrite object', { status: 400 });
+if (existingObject?.etag !== request.headers.get("etag")) {
+	return new Response("attempt to overwrite object", { status: 400 });
 }
 ```
 
 Cloudflare Workers currently have some limitations that you may need to consider:
 
-* You cannot upload more than 100 MiB (200 MiB for Business customers) to a Worker.
-* Enterprise customers can upload 500 MiB by default and can ask their account team to raise this limit.
-* Detecting [precondition failures](/r2/api/s3/extensions/#conditional-operations-in-putobject) is currently easier with presigned URLs as compared with R2 bindings.
+- You cannot upload more than 100 MiB (200 MiB for Business customers) to a Worker.
+- Enterprise customers can upload 500 MiB by default and can ask their account team to raise this limit.
+- Detecting [precondition failures](/r2/api/s3/extensions/#conditional-operations-in-putobject) is currently easier with presigned URLs as compared with R2 bindings.
 
 Note that these limitations depends on R2's extension for conditional uploads. Amazon's S3 service does not offer such functionality at this time.
 
@@ -194,5 +191,5 @@ Presigned URLs can only be used with the `<accountid>.r2.cloudflarestorage.com` 
 
 ## Related resources
 
-* [Create a public bucket](/r2/buckets/public-buckets/)
-* [Storing user generated content](/reference-architecture/diagrams/storage/storing-user-generated-content/)
+- [Create a public bucket](/r2/buckets/public-buckets/)
+- [Storing user generated content](/reference-architecture/diagrams/storage/storing-user-generated-content/)

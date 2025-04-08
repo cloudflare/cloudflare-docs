@@ -59,6 +59,10 @@ The **assets directory** specified in your [Wrangler configuration file](/worker
 
 </WranglerConfig>
 
+:::note
+If you are using the [Cloudflare Vite plugin](/workers/vite-plugin/), you do not need to specify `assets.directory`. For more information about using static assets with the Vite plugin, refer to the [plugin documentation](/workers/vite-plugin/reference/static-assets/).
+:::
+
 By adding an [**assets binding**](/workers/static-assets/binding/#binding), you can directly fetch and serve assets within your Worker code.
 
 ```js {13}

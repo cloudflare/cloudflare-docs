@@ -178,16 +178,27 @@
 /api-shield/security/sequential-abuse-detection/ /api-shield/security/sequence-analytics/ 301
 
 # bots
-/bots/about/javascript-detections/ /bots/reference/javascript-detections/ 301
 /bots/about/plans/ /bots/plans/ 301
 /bots/about/plans/biz-and-ent/ /bots/plans/biz-and-ent/ 301
 /bots/about/plans/bm-subscription/ /bots/plans/bm-subscription/ 301
 /support/firewall/tools/cloudflare-bot-products-faqs/ /bots/troubleshooting/ 301
 /support/other-languages/deutsch/cloudflare-bot/ /bots/troubleshooting/ 301
-/bots/concepts/ja3-fingerprint/ /bots/concepts/ja3-ja4-fingerprint/ 301
 /bots/reference/verified-bot-categories/ /bots/concepts/bot/verified-bots/categories/ 301
 /bots/reference/verified-bot-policy/ /bots/concepts/bot/verified-bots/policy/ 301
 /bots/concepts/challenge-solve-rate/ /fundamentals/security/cloudflare-challenges/challenge-solve-rate/ 301
+/bots/concepts/detection-ids/ /bots/additional-configurations/detection-ids/ 301
+/bots/concepts/ja3-ja4-fingerprint/ /bots/additional-configurations/ja3-ja4-fingerprint/ 301
+/bots/concepts/signals-intelligence/ /bots/additional-configurations/ja3-ja4-fingerprint/signals-intelligence/ 301
+/bots/reference/javascript-detections/ /bots/additional-configurations/javascript-detections/ 301
+/bots/concepts/sequence-rules/ /bots/additional-configurations/sequence-rules/ 301
+/bots/reference/static-resources/ /bots/additional-configurations/static-resources/ 301
+/bots/bot-analytics/biz-and-ent/ /bots/bot-analytics/ 301
+/bots/bot-analytics/bm-subscription/ /bots/bot-analytics/ 301
+/bots/concepts/cloudflare-bot-tags/ /bots/concepts/bot-tags/ 301
+/bots/get-started/biz-and-ent/ /bots/get-started/super-bot-fight-mode/ 301
+/bots/get-started/free/ /bots/get-started/bot-fight-mode/ 301
+/bots/get-started/bm-subscription/ /bots/get-started/bot-management/ 301
+/bots/get-started/pro/ /bots/get-started/super-bot-fight-mode/ 301
 
 #browser-rendering
 /browser-rendering/get-started/browser-rendering-with-do/ /browser-rendering/workers-binding-api/browser-rendering-with-do/ 301
@@ -388,6 +399,7 @@
 /durable-objects/api/hibernatable-websockets-api/ /durable-objects/best-practices/websockets/ 301
 /durable-objects/api/alarms-in-durable-objects/ /durable-objects/api/alarms/ 301
 /durable-objects/api/websockets/ /durable-objects/best-practices/websockets/ 301
+/durable-objects/api/sql-storage/ /durable-objects/api/storage-api/ 301
 /durable-objects/platform/data-location/ /durable-objects/reference/data-location/ 301
 /durable-objects/platform/environments/ /durable-objects/reference/environments/ 301
 /durable-objects/platform/troubleshooting/ /durable-objects/observability/troubleshooting/ 301
@@ -406,7 +418,9 @@
 /durable-objects/platform/changelog/ /durable-objects/release-notes/ 301
 /durable-objects/changelog/ /durable-objects/release-notes/ 301
 /durable-objects/glossary/ /durable-objects/reference/glossary/ 301
-/durable-objects/get-started/walkthrough/ /durable-objects/get-started/tutorial/ 301
+/durable-objects/get-started/walkthrough/ /durable-objects/get-started/ 301
+/durable-objects/get-started/tutorial/ /durable-objects/get-started/ 301
+/durable-objects/get-started/tutorial-with-sql-api/ /durable-objects/get-started/ 301
 /durable-objects/get-started/video-series/intro/ /durable-objects/video-tutorials/ 301
 /durable-objects/get-started/video-series/app-frontend/ /durable-objects/video-tutorials/ 301
 /durable-objects/get-started/video-series/deploy-app/ /durable-objects/video-tutorials/ 301
@@ -780,6 +794,9 @@
 # magic-network-monitoring
 /magic-network-monitoring/routers/ /magic-network-monitoring/routers/supported-routers/ 301
 /magic-network-monitoring/tutorials/ /magic-network-monitoring/tutorials/graphql-analytics/ 301
+/magic-network-monitoring/rules/recommended-rule-configuration/ /magic-network-monitoring/rules/static-threshold/ 301
+/magic-network-monitoring/rules/sflow-ddos-alerts/ /rules/configure-rule-notifications/ 301
+/magic-network-monitoring/notifications/ /rules/rule-notifications/ 301
 
 # magic-transit
 /magic-transit/magic-firewall/ /magic-firewall/ 301
@@ -1187,7 +1204,8 @@
 
 # r2
 /r2/platform/s3-compatibility/api/ /r2/api/s3/api/ 301
-/r2/platform/s3-compatibility/tokens/ /r2/api/s3/tokens/ 301
+/r2/platform/s3-compatibility/tokens/ /r2/api/tokens/ 301
+/r2/api/s3/tokens/ /r2/api/tokens/ 301
 /r2/runtime-apis/ /r2/api/workers/workers-api-reference/ 301
 /r2/data-access/ /r2/api/ 301
 /r2/data-access/public-buckets/ /r2/buckets/public-buckets/ 301
@@ -1405,6 +1423,7 @@
 /workers/tutorials/build-a-serverless-function/ /workers/tutorials/build-a-qr-code-generator/ 301
 /workers/tutorials/build-a-todo-list/ /workers/tutorials/build-a-jamstack-app/ 301
 /workers/tutorials/deploy-a-react-app/ /pages/framework-guides/deploy-a-react-site/ 301
+/workers/tutorials/deploy-button/ /workers/platform/deploy-buttons/ 301
 /workers/tutorials/hosting-static-wordpress-sites/ /pages/how-to/deploy-a-wordpress-site/ 301
 /workers/tutorials/configure-your-cdn/ /workers/tutorials/upload-assets-with-r2/ 301
 /workers/tutorials/create-a-chatgpt-powered-search-plugin/ /workers/tutorials/ 301
@@ -1508,6 +1527,8 @@
 /workers/tutorials/create-sitemap-from-sanity-cms/ /developer-spotlight/tutorials/create-sitemap-from-sanity-cms/ 301
 /workers/tutorials/custom-access-control-for-files-in-r2-using-d1-and-workers/ /developer-spotlight/tutorials/custom-access-control-for-files/ 301
 /workers/tutorials/generate-dynamic-og-images-using-workers/ /workers/tutorials/ 302
+/workers/static-assets/compatibility-matrix/ /workers/static-assets/migrate-from-pages/ 301
+/workers/frameworks/framework-guides/remix/ /workers/frameworks/framework-guides/react-router/ 301
 
 # workers ai
 /workers-ai/models/llm/ /workers-ai/models/#text-generation 301
@@ -1527,6 +1548,38 @@
 /workers-ai/tutorials/creating-a-recommendation-api/ /developer-spotlight/tutorials/creating-a-recommendation-api/ 301
 /workers/observability/baselime-integration/ /workers/observability/integrations/baselime-integration/ 301
 /workers-ai/tutorials/image-generator-flux/ /workers-ai/tutorials/image-generation-playground/ 301
+
+# Workers AI reorganization redirects
+# Function calling
+/workers-ai/function-calling/ /workers-ai/features/function-calling/ 301
+/workers-ai/function-calling/embedded/ /workers-ai/features/function-calling/embedded/ 301
+/workers-ai/function-calling/embedded/get-started/ /workers-ai/features/function-calling/embedded/get-started/ 301
+/workers-ai/function-calling/embedded/api-reference/ /workers-ai/features/function-calling/embedded/api-reference/ 301
+/workers-ai/function-calling/embedded/examples/ /workers-ai/features/function-calling/embedded/examples/ 301
+/workers-ai/function-calling/embedded/examples/kv/ /workers-ai/features/function-calling/embedded/examples/kv/ 301
+/workers-ai/function-calling/embedded/examples/openapi/ /workers-ai/features/function-calling/embedded/examples/openapi/ 301
+/workers-ai/function-calling/embedded/examples/fetch/ /workers-ai/features/function-calling/embedded/examples/fetch/ 301
+/workers-ai/function-calling/embedded/examples/troubleshooting/ /workers-ai/features/function-calling/embedded/examples/troubleshooting/ 301
+/workers-ai/function-calling/traditional/ /workers-ai/features/function-calling/traditional/ 301
+
+# JSON Mode
+/workers-ai/json-mode/ /workers-ai/features/json-mode/ 301
+
+# Fine-tunes
+/workers-ai/fine-tunes/ /workers-ai/features/fine-tunes/ 301
+/workers-ai/fine-tunes/public-loras/ /workers-ai/features/fine-tunes/public-loras/ 301
+/workers-ai/fine-tunes/loras/ /workers-ai/features/fine-tunes/loras/ 301
+
+# Prompting
+/workers-ai/guides/prompting/ /workers-ai/features/prompting/ 301
+
+# Platform section
+/workers-ai/privacy/ /workers-ai/platform/privacy/ 301
+/workers-ai/glossary/ /workers-ai/platform/glossary/ 301
+/workers-ai/workers-ai-errors/ /workers-ai/platform/errors/ 301
+
+# Guides section
+/workers-ai/demos/ /workers-ai/guides/demos-architectures/ 301
 
 # workflows
 
@@ -1565,7 +1618,7 @@
 # hyperdrive
 
 /hyperdrive/learning/how-hyperdrive-works/ /hyperdrive/configuration/how-hyperdrive-works/ 301
-/hyperdrive/learning/connect-to-postgres/ /hyperdrive/configuration/connect-to-postgres/ 301
+/hyperdrive/learning/connect-to-postgres/ /hyperdrive/examples/connect-to-postgres/ 301
 /hyperdrive/learning/query-caching/ /hyperdrive/configuration/query-caching/ 301
 /hyperdrive/learning/troubleshooting/ /hyperdrive/reference/troubleshooting/ 301
 /hyperdrive/changelog/ /hyperdrive/platform/release-notes/ 301
@@ -1573,6 +1626,24 @@
 /hyperdrive/learning/ /hyperdrive/configuration/ 301
 /hyperdrive/reference/metrics/ /hyperdrive/observability/metrics/ 301
 /hyperdrive/reference/troubleshooting/ /hyperdrive/observability/troubleshooting/ 301
+/hyperdrive/examples/aws-rds-aurora/ /hyperdrive/examples/connect-to-postgres/aws-rds-aurora/ 301
+/hyperdrive/examples/azure/ /hyperdrive/examples/connect-to-postgres/azure/ 301
+/hyperdrive/examples/cockroachdb/ /hyperdrive/examples/connect-to-postgres/cockroachdb/ 301
+/hyperdrive/examples/digital-ocean/ /hyperdrive/examples/connect-to-postgres/digital-ocean/ 301
+/hyperdrive/examples/google-cloud-sql/ /hyperdrive/examples/connect-to-postgres/google-cloud-sql/ 301
+/hyperdrive/examples/materialize/ /hyperdrive/examples/connect-to-postgres/materialize/ 301
+/hyperdrive/examples/neon/ /hyperdrive/examples/connect-to-postgres/neon/ 301
+/hyperdrive/examples/nile/ /hyperdrive/examples/connect-to-postgres/nile/ 301
+/hyperdrive/examples/pgedge/ /hyperdrive/examples/connect-to-postgres/pgedge/ 301
+/hyperdrive/examples/supabase/ /hyperdrive/examples/connect-to-postgres/supabase/ 301
+/hyperdrive/examples/timescale/ /hyperdrive/examples/connect-to-postgres/timescale/ 301
+/hyperdrive/examples/xata/ /hyperdrive/examples/connect-to-postgres/xata/ 301
+/hyperdrive/examples/fly/ /hyperdrive/examples/connect-to-postgres/fly/ 301
+
+
+/hyperdrive/reference/supported-databases/ /hyperdrive/reference/supported-databases-and-features/ 301
+/hyperdrive/configuration/connect-to-postgres/ /hyperdrive/examples/connect-to-postgres/ 301
+
 
 # zaraz
 
@@ -1866,6 +1937,11 @@
 /workers/reference/apis/* /workers/runtime-apis/:splat 301
 /workers/templates/pages/* /workers/examples/:splat 301
 /workers/observability/logging/* /workers/observability/logs/:splat 301
+
+# Workers AI
+/workers-ai/demos/* /workers-ai/guides/demos-architectures/:splat 301
+/workers-ai/tutorials/* /workers-ai/guides/tutorials/:splat 301
+
 
 # Others
 /logs/analytics-integrations/* /fundamentals/data-products/analytics-integrations/:splat 301

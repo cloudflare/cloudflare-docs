@@ -27,15 +27,6 @@ To use `create-cloudflare` to create a new Docusaurus project with <InlineBadge 
 	args={"--framework=docusaurus --platform=workers"}
 />
 
-<Render
-	file="c3-post-run-steps"
-	product="workers"
-	params={{
-		category: "web-framework",
-		framework: "Docusaurus",
-	}}
-/>
-
 After setting up your project, change your directory by running the following command:
 
 ```sh
@@ -55,9 +46,3 @@ Your project can be deployed to a `*.workers.dev` subdomain or a [Custom Domain]
 The following command will build and deploy your project. If you're using CI, ensure you update your ["deploy command"](/workers/ci-cd/builds/configuration/#build-settings) configuration appropriately.
 
 <PackageManagers type="run" args={"deploy"} />
-
----
-
-## Static assets
-
-You can serve static assets your Docusaurus application by placing them in [the `./static/` directory](https://docusaurus.io/docs/static-assets). This can be useful for resource files such as images, stylesheets, fonts, and manifests.

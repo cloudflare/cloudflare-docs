@@ -1,0 +1,33 @@
+---
+pcx_content_type: concept
+title: Limits & pricing
+sidebar:
+  order: 4
+---
+
+## Pricing
+
+During the open beta, AutoRAG is **free to enable**. Compute operations for indexing, retrieval, and augmentation incur no additional cost during this phase.
+
+When you create an AutoRAG instance, it provisions and runs on top of Cloudflare services provisioned within your own account. You retain full visibility and control over these resources, and they are billed as part of your existing Cloudflare usage. These services include:
+
+| Service                                          | Description                                                                               |
+| ------------------------------------------------ | ----------------------------------------------------------------------------------------- |
+| [**R2**](/r2/pricing/)                           | Stores your source data                                                                   |
+| [**Vectorize**](/vectorize/platform/pricing/)    | Stores vector embeddings and powers semantic search                                       |
+| [**Workers AI**](/workers-ai/platform/pricing/)  | Handles image-to-Markdown conversion, embedding, query rewriting, and response generation |
+| [**AI Gateway**](/ai-gateway/reference/pricing/) | Monitors and controls model usage                                                         |
+
+For more information about how each resource is used within AutoRAG, reference [How AutoRAG works](/autorag/concepts/how-autorag-works/).
+
+## Limits
+
+The following limits currently apply to AutoRAG during the open beta:
+
+| Limit                             | Value                                                   |
+| --------------------------------- | ------------------------------------------------------- |
+| Max AutoRAG instances per account | 10                                                      |
+| Max files per AutoRAG             | 100,000                                                 |
+| Max file size                     | 4 MB (plain text or Markdown) / 1 MB (other file types) |
+
+These limits are subject to change as AutoRAG evolves beyond open beta.

@@ -8,7 +8,7 @@ head:
     content: Configure exposed credentials checks via API
 ---
 
-import { Render } from "~/components";
+import { Render, APIRequest } from "~/components";
 
 Configure exposed credentials checks using the [Rulesets API](/ruleset-engine/rulesets-api/). You can do the following:
 
@@ -49,28 +49,31 @@ To create and deploy a custom ruleset, follow the workflow described in [Work wi
 
 This `POST` request example creates a new custom ruleset with a rule that checks for exposed credentials. The rule has a match if both the rule expression and the `exposed_credential_check` result are `true`. When there is a match, the rule will log the request with exposed credentials in the Cloudflare logs.
 
-```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets" \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "name": "Custom Ruleset A",
-  "kind": "custom",
-  "description": "This ruleset includes a rule checking for exposed credentials.",
-  "rules": [
-    {
-      "action": "log",
-      "description": "Exposed credentials check on login.php page",
-      "expression": "http.request.method == \"POST\" && http.request.uri == \"/login.php\"",
-      "exposed_credential_check": {
-        "username_expression": "url_decode(http.request.body.form[\"username\"][0])",
-        "password_expression": "url_decode(http.request.body.form[\"password\"][0])"
-      }
-    }
-  ],
-  "phase": "http_request_firewall_custom"
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/rulesets"
+	method="POST"
+	json={{
+		name: "Custom Ruleset A",
+		kind: "custom",
+		description:
+			"This ruleset includes a rule checking for exposed credentials.",
+		rules: [
+			{
+				action: "log",
+				description: "Exposed credentials check on login.php page",
+				expression:
+					'http.request.method == "POST" && http.request.uri == "/login.php"',
+				exposed_credential_check: {
+					username_expression:
+						'url_decode(http.request.body.form["username"][0])',
+					password_expression:
+						'url_decode(http.request.body.form["password"][0])',
+				},
+			},
+		],
+		phase: "http_request_firewall_custom",
+	}}
+/>
 
 The response returns the created ruleset. Note the presence of the `exposed_credential_check` object on the rule definition.
 
@@ -115,36 +118,40 @@ After creating a custom ruleset, deploy it to a phase so that it executes. Refer
 
 This `POST` request example creates a new custom ruleset with a rule that checks for exposed credentials in JSON responses. The rule has a match if both the rule expression and the `exposed_credential_check` result are `true`. When there is a match, the rule will add an `Exposed-Credential-Check` HTTP header to the request with value `1`.
 
-```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets" \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "name": "Custom Ruleset B",
-  "kind": "custom",
-  "description": "This ruleset includes a rule checking for exposed credentials.",
-  "rules": [
-    {
-      "action": "rewrite",
-      "action_parameters": {
-        "headers": {
-          "Exposed-Credential-Check": {
-            "operation": "set",
-            "value": "1"
-          }
-        }
-      },
-      "description": "Exposed credentials check on login endpoint with JSON body",
-      "expression": "http.request.method == \"POST\" && http.request.uri == \"/login.php\" && any(http.request.headers[\"content-type\"][*] == \"application/json\")",
-      "exposed_credential_check": {
-        "username_expression": "lookup_json_string(http.request.body.raw, \"username\")",
-        "password_expression": "lookup_json_string(http.request.body.raw, \"password\")"
-      }
-    }
-  ],
-  "phase": "http_request_firewall_custom"
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/rulesets"
+	method="POST"
+	json={{
+		name: "Custom Ruleset B",
+		kind: "custom",
+		description:
+			"This ruleset includes a rule checking for exposed credentials.",
+		rules: [
+			{
+				action: "rewrite",
+				action_parameters: {
+					headers: {
+						"Exposed-Credential-Check": {
+							operation: "set",
+							value: "1",
+						},
+					},
+				},
+				description:
+					"Exposed credentials check on login endpoint with JSON body",
+				expression:
+					'http.request.method == "POST" && http.request.uri == "/login.php" && any(http.request.headers["content-type"][*] == "application/json")',
+				exposed_credential_check: {
+					username_expression:
+						'lookup_json_string(http.request.body.raw, "username")',
+					password_expression:
+						'lookup_json_string(http.request.body.raw, "password")',
+				},
+			},
+		],
+		phase: "http_request_firewall_custom",
+	}}
+/>
 
 The response returns the created ruleset. Note the presence of the following elements in the rule definition:
 

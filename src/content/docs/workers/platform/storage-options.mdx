@@ -196,7 +196,7 @@ Vectorize is a globally distributed vector database that enables you to build fu
 Vectorize allows you to:
 
 - Store embeddings from any vector embeddings model (Bring Your Own embeddings) for semantic search and classification tasks.
-- Add context to Large Language Model (LLM) queries by using vector search as part of a [Retrieval Augmented Generation](/workers-ai/tutorials/build-a-retrieval-augmented-generation-ai/) (RAG) workflow.
+- Add context to Large Language Model (LLM) queries by using vector search as part of a [Retrieval Augmented Generation](/workers-ai/guides/tutorials/build-a-retrieval-augmented-generation-ai/) (RAG) workflow.
 - [Filter on vector metadata](/vectorize/reference/metadata-filtering/) to reduce the search space and return more relevant results.
 
 To get started with Vectorize:
@@ -206,12 +206,6 @@ To get started with Vectorize:
 - Learn more about [how vector databases work](/vectorize/reference/what-is-a-vector-database/).
 
 <Render file="durable-objects-vs-d1" product="durable-objects" />
-
-:::note[SQLite in Durable Objects Beta]
-
-The new beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. When deploying a new Durable Object class, users can opt-in to using SQL storage in order to access [Storage SQL API methods](/durable-objects/api/sql-storage/#exec). Otherwise, a Durable Object class has the standard, private key-value storage.
-
-:::
 
 <Render file="kv-vs-d1" product="kv" />
 

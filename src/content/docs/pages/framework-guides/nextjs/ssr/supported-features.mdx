@@ -4,10 +4,9 @@ title: Supported features
 head:
   - tag: title
     content: Supported features
-
 ---
 
-import { Details } from "~/components"
+import { Details } from "~/components";
 
 ## Supported Next.js versions
 
@@ -23,17 +22,17 @@ The [`@opennextjs/cloudflare` adapter](https://opennext.js.org/cloudflare), whic
 
 `@opennextjs/cloudflare` is pre 1.0, and still in active development. As it approaches 1.0, it will become the clearly better choice for most Next.js apps, since Next.js has been engineered to only support its Node.js "runtime" for many newly introduced features.
 
-Refer to the [OpenNext docs](https://opennext.js.org/cloudflare) and the [Workers vs. Pages compatibility matrix](/workers/static-assets/compatibility-matrix/) for more information to help you decide which to use.
+Refer to the [OpenNext docs](https://opennext.js.org/cloudflare) and the [Workers vs. Pages compatibility matrix](/workers/static-assets/migrate-from-pages/#compatibility-matrix) for more information to help you decide which to use.
 
 #### Supported Node.js APIs when using `@cloudflare/next-on-pages`
 
 When you use `@cloudflare/next-on-pages`, your Next.js app must use the "edge" runtime from Next.js. The Workers runtime [supports a broad set of Node.js APIs](/workers/runtime-apis/nodejs/) — but [the Next.js Edge Runtime code intentionally constrains this](https://github.com/vercel/next.js/blob/canary/packages/next/src/build/webpack/plugins/middleware-plugin.ts#L820). As a result, only the following Node.js APIs will work in your Next.js app:
 
-* `buffer`
-* `events`
-* `assert`
-* `util`
-* `async_hooks`
+- `buffer`
+- `events`
+- `assert`
+- `util`
+- `async_hooks`
 
 If you need to use other APIs from Node.js, you should use [`@opennextjs/cloudflare`](https://opennext.js.org/cloudflare) instead.
 
@@ -49,41 +48,41 @@ Cloudflare also supports the older [Pages](https://nextjs.org/docs/pages) router
 
 [`next.config.js` — app router](https://nextjs.org/docs/app/api-reference/next-config-js) and [\`next.config.js - pages router](https://nextjs.org/docs/pages/api-reference/next-config-js)
 
-| Option                              | Next Docs                                                                                                                                                                                    | Support     |
-| ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| Option                              | Next Docs                                                                                                                                                                                    | Support      |
+| ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ |
 | appDir                              | [app](https://nextjs.org/docs/app/api-reference/next-config-js/appDir)                                                                                                                       | ✅           |
-| assetPrefix                         | [pages](https://nextjs.org/docs/pages/api-reference/next-config-js/assetPrefix), [app](https://nextjs.org/docs/app/api-reference/next-config-js/assetPrefix)                                 | 🔄          |
+| assetPrefix                         | [pages](https://nextjs.org/docs/pages/api-reference/next-config-js/assetPrefix), [app](https://nextjs.org/docs/app/api-reference/next-config-js/assetPrefix)                                 | 🔄           |
 | basePath                            | [pages](https://nextjs.org/docs/pages/api-reference/next-config-js/basePath), [app](https://nextjs.org/docs/app/api-reference/next-config-js/basePath)                                       | ✅           |
-| compress                            | [pages](https://nextjs.org/docs/pages/api-reference/next-config-js/compress), [app](https://nextjs.org/docs/app/api-reference/next-config-js/compress)                                       | `N/A`[^1]   |
-| devIndicators                       | [pages](https://nextjs.org/docs/pages/api-reference/next-config-js/devIndicators), [app](https://nextjs.org/docs/app/api-reference/next-config-js/devIndicators)                             | `N/A`[^2]   |
-| distDir                             | [pages](https://nextjs.org/docs/pages/api-reference/next-config-js/distDir), [app](https://nextjs.org/docs/app/api-reference/next-config-js/distDir)                                         | `N/A`[^3]   |
+| compress                            | [pages](https://nextjs.org/docs/pages/api-reference/next-config-js/compress), [app](https://nextjs.org/docs/app/api-reference/next-config-js/compress)                                       | `N/A`[^1]    |
+| devIndicators                       | [pages](https://nextjs.org/docs/pages/api-reference/next-config-js/devIndicators), [app](https://nextjs.org/docs/app/api-reference/next-config-js/devIndicators)                             | `N/A`[^2]    |
+| distDir                             | [pages](https://nextjs.org/docs/pages/api-reference/next-config-js/distDir), [app](https://nextjs.org/docs/app/api-reference/next-config-js/distDir)                                         | `N/A`[^3]    |
 | env                                 | [pages](https://nextjs.org/docs/pages/api-reference/next-config-js/env), [app](https://nextjs.org/docs/app/api-reference/next-config-js/env)                                                 | ✅           |
 | eslint                              | [pages](https://nextjs.org/docs/pages/api-reference/next-config-js/eslint), [app](https://nextjs.org/docs/app/api-reference/next-config-js/eslint)                                           | ✅           |
-| exportPathMap                       | [pages](https://nextjs.org/docs/pages/api-reference/next-config-js/exportPathMap), [app](https://nextjs.org/docs/app/api-reference/next-config-js/exportPathMap)                             | `N/A`[^4]   |
+| exportPathMap                       | [pages](https://nextjs.org/docs/pages/api-reference/next-config-js/exportPathMap), [app](https://nextjs.org/docs/app/api-reference/next-config-js/exportPathMap)                             | `N/A`[^4]    |
 | generateBuildId                     | [pages](https://nextjs.org/docs/pages/api-reference/next-config-js/generateBuildId), [app](https://nextjs.org/docs/app/api-reference/next-config-js/generateBuildId)                         | ✅           |
-| generateEtags                       | [pages](https://nextjs.org/docs/pages/api-reference/next-config-js/generateEtags), [app](https://nextjs.org/docs/app/api-reference/next-config-js/generateEtags)                             | 🔄          |
+| generateEtags                       | [pages](https://nextjs.org/docs/pages/api-reference/next-config-js/generateEtags), [app](https://nextjs.org/docs/app/api-reference/next-config-js/generateEtags)                             | 🔄           |
 | headers                             | [pages](https://nextjs.org/docs/pages/api-reference/next-config-js/headers), [app](https://nextjs.org/docs/app/api-reference/next-config-js/headers)                                         | ✅           |
-| httpAgentOptions                    | [pages](https://nextjs.org/docs/pages/api-reference/next-config-js/httpAgentOptions), [app](https://nextjs.org/docs/app/api-reference/next-config-js/httpAgentOptions)                       | `N/A`       |
+| httpAgentOptions                    | [pages](https://nextjs.org/docs/pages/api-reference/next-config-js/httpAgentOptions), [app](https://nextjs.org/docs/app/api-reference/next-config-js/httpAgentOptions)                       | `N/A`        |
 | images                              | [pages](https://nextjs.org/docs/pages/api-reference/next-config-js/images), [app](https://nextjs.org/docs/app/api-reference/next-config-js/images)                                           | ✅           |
-| incrementalCacheHandlerPath         | [app](https://nextjs.org/docs/app/api-reference/next-config-js/incrementalCacheHandlerPath)                                                                                                  | 🔄          |
-| logging                             | [app](https://nextjs.org/docs/app/api-reference/next-config-js/logging)                                                                                                                      | `N/A`[^5]   |
+| incrementalCacheHandlerPath         | [app](https://nextjs.org/docs/app/api-reference/next-config-js/incrementalCacheHandlerPath)                                                                                                  | 🔄           |
+| logging                             | [app](https://nextjs.org/docs/app/api-reference/next-config-js/logging)                                                                                                                      | `N/A`[^5]    |
 | mdxRs                               | [app](https://nextjs.org/docs/app/api-reference/next-config-js/mdxRs)                                                                                                                        | ✅           |
-| onDemandEntries                     | [pages](https://nextjs.org/docs/pages/api-reference/next-config-js/onDemandEntries), [app](https://nextjs.org/docs/app/api-reference/next-config-js/onDemandEntries)                         | `N/A`[^6]   |
+| onDemandEntries                     | [pages](https://nextjs.org/docs/pages/api-reference/next-config-js/onDemandEntries), [app](https://nextjs.org/docs/app/api-reference/next-config-js/onDemandEntries)                         | `N/A`[^6]    |
 | optimizePackageImports              | [app](https://nextjs.org/docs/app/api-reference/next-config-js/optimizePackageImports)                                                                                                       | ✅/`N/A`[^7] |
-| output                              | [pages](https://nextjs.org/docs/pages/api-reference/next-config-js/output), [app](https://nextjs.org/docs/app/api-reference/next-config-js/output)                                           | `N/A`[^8]   |
+| output                              | [pages](https://nextjs.org/docs/pages/api-reference/next-config-js/output), [app](https://nextjs.org/docs/app/api-reference/next-config-js/output)                                           | `N/A`[^8]    |
 | pageExtensions                      | [pages](https://nextjs.org/docs/pages/api-reference/next-config-js/pageExtensions), [app](https://nextjs.org/docs/app/api-reference/next-config-js/pageExtensions)                           | ✅           |
 | Partial Prerendering (experimental) | [app](https://nextjs.org/docs/app/api-reference/next-config-js/partial-prerendering)                                                                                                         | ❌[^9]       |
-| poweredByHeader                     | [pages](https://nextjs.org/docs/pages/api-reference/next-config-js/poweredByHeader), [app](https://nextjs.org/docs/app/api-reference/next-config-js/poweredByHeader)                         | 🔄          |
-| productionBrowserSourceMaps         | [pages](https://nextjs.org/docs/pages/api-reference/next-config-js/productionBrowserSourceMaps), [app](https://nextjs.org/docs/app/api-reference/next-config-js/productionBrowserSourceMaps) | 🔄[^10]     |
+| poweredByHeader                     | [pages](https://nextjs.org/docs/pages/api-reference/next-config-js/poweredByHeader), [app](https://nextjs.org/docs/app/api-reference/next-config-js/poweredByHeader)                         | 🔄           |
+| productionBrowserSourceMaps         | [pages](https://nextjs.org/docs/pages/api-reference/next-config-js/productionBrowserSourceMaps), [app](https://nextjs.org/docs/app/api-reference/next-config-js/productionBrowserSourceMaps) | 🔄[^10]      |
 | reactStrictMode                     | [pages](https://nextjs.org/docs/pages/api-reference/next-config-js/reactStrictMode), [app](https://nextjs.org/docs/app/api-reference/next-config-js/reactStrictMode)                         | ❌[^11]      |
 | redirects                           | [pages](https://nextjs.org/docs/pages/api-reference/next-config-js/redirects), [app](https://nextjs.org/docs/app/api-reference/next-config-js/redirects)                                     | ✅           |
 | rewrites                            | [pages](https://nextjs.org/docs/pages/api-reference/next-config-js/rewrites), [app](https://nextjs.org/docs/app/api-reference/next-config-js/rewrites)                                       | ✅           |
 | Runtime Config                      | [pages](https://nextjs.org/docs/pages/api-reference/next-config-js/runtime-configuration), [app](https://nextjs.org/docs/app/api-reference/next-config-js/runtime-configuration)             | ❌[^12]      |
 | serverActions                       | [app](https://nextjs.org/docs/app/api-reference/next-config-js/serverActions)                                                                                                                | ✅           |
-| serverComponentsExternalPackages    | [app](https://nextjs.org/docs/app/api-reference/next-config-js/serverComponentsExternalPackages)                                                                                             | `N/A`[^13]  |
+| serverComponentsExternalPackages    | [app](https://nextjs.org/docs/app/api-reference/next-config-js/serverComponentsExternalPackages)                                                                                             | `N/A`[^13]   |
 | trailingSlash                       | [pages](https://nextjs.org/docs/pages/api-reference/next-config-js/trailingSlash), [app](https://nextjs.org/docs/app/api-reference/next-config-js/trailingSlash)                             | ✅           |
 | transpilePackages                   | [pages](https://nextjs.org/docs/pages/api-reference/next-config-js/transpilePackages), [app](https://nextjs.org/docs/app/api-reference/next-config-js/transpilePackages)                     | ✅           |
-| turbo                               | [pages](https://nextjs.org/docs/pages/api-reference/next-config-js/turbo), [app](https://nextjs.org/docs/app/api-reference/next-config-js/turbo)                                             | 🔄          |
+| turbo                               | [pages](https://nextjs.org/docs/pages/api-reference/next-config-js/turbo), [app](https://nextjs.org/docs/app/api-reference/next-config-js/turbo)                                             | 🔄           |
 | typedRoutes                         | [app](https://nextjs.org/docs/app/api-reference/next-config-js/typedRoutes)                                                                                                                  | ✅           |
 | typescript                          | [pages](https://nextjs.org/docs/pages/api-reference/next-config-js/typescript), [app](https://nextjs.org/docs/app/api-reference/next-config-js/typescript)                                   | ✅           |
 | urlImports                          | [pages](https://nextjs.org/docs/pages/api-reference/next-config-js/urlImports), [app](https://nextjs.org/docs/app/api-reference/next-config-js/urlImports)                                   | ✅           |
@@ -135,13 +134,11 @@ If you use Incremental Static Regeneration (ISR)[^14], `@cloudflare/next-on-page
 
 This means that your application will still correctly serve your ISR/prerendered pages (but without the regeneration aspect). If this causes issues for your application, change your pages to use server side rendering (SSR) instead.
 
-
 <Details header="Background">
 
 ISR pages are built by the Vercel CLI to generate Vercel [Prerender Functions](https://vercel.com/docs/build-output-api/v3/primitives#prerender-functions). These are Node.js serverless functions that can be called in the background while serving the page from the cache.
 
 It is not possible to use these with Cloudflare Pages and they are not compatible with the [edge runtime](https://nextjs.org/docs/app/api-reference/edge) currently.
-
 
 </Details>
 
@@ -155,8 +152,8 @@ It does not support dynamic Node.js-based on-demand handling of such routes.
 
 For more details see:
 
-* [troubleshooting `generateStaticParams`](/pages/framework-guides/nextjs/ssr/troubleshooting/#generatestaticparams)
-* [troubleshooting `getStaticPaths` ](/pages/framework-guides/nextjs/ssr/troubleshooting/#getstaticpaths)
+- [troubleshooting `generateStaticParams`](/pages/framework-guides/nextjs/ssr/troubleshooting/#generatestaticparams)
+- [troubleshooting `getStaticPaths` ](/pages/framework-guides/nextjs/ssr/troubleshooting/#getstaticpaths)
 
 #### Caching and Data Revalidation
 

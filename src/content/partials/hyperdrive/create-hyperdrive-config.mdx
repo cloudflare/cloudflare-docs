@@ -2,7 +2,7 @@
 {}
 ---
 
-import { WranglerConfig } from "~/components";
+import { WranglerConfig, Render } from "~/components";
 
 To configure Hyperdrive, you will need:
 
@@ -49,56 +49,9 @@ id = "<ID OF THE CREATED HYPERDRIVE CONFIGURATION>"
 
 </WranglerConfig>
 
-Install the driver:
+## 3. Use Hyperdrive from your Worker
 
-```sh
-npm install postgres
-```
-
-Copy the below Worker code, which passes the connection string generated from `env.HYPERDRIVE.connectionString` directly to the driver.
-
-```ts
-import postgres from "postgres";
-
-export interface Env {
-	// If you set another name in the Wrangler config file as the value for 'binding',
-	// replace "HYPERDRIVE" with the variable name you defined.
-	HYPERDRIVE: Hyperdrive;
-}
-
-export default {
-	async fetch(request, env, ctx): Promise<Response> {
-		// Create a database client that connects to our database via Hyperdrive
-		// Hyperdrive generates a unique connection string you can pass to
-		// supported drivers, including node-postgres, Postgres.js, and the many
-		// ORMs and query builders that use these drivers.
-		const sql = postgres(
-            env.HYPERDRIVE.connectionString,
-            {
-                // Workers limit the number of concurrent external connections, so be sure to limit
-                // the size of the local connection pool that postgres.js may establish.
-                max: 5,
-
-                // If you are using array types in your Postgres schema, it is necessary to fetch
-                // type information to correctly de/serialize them. However, if you are not using
-                // those, disabling this will save you an extra round-trip every time you connect.
-                fetch_types: false,
-            },
-        );
-
-		try {
-			// Test query
-			const result = await sql`SELECT * FROM pg_tables;`;
-
-			// Returns result rows as JSON
-			return Response.json({ result: result });
-		} catch (e: any) {
-			console.log(e);
-			return Response.json({ error: e.message }, { status: 500 });
-		}
-	},
-} satisfies ExportedHandler<Env>;
-```
+<Render file="use-postgresjs-to-make-query" />
 
 ## Next steps
 

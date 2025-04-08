@@ -2,10 +2,9 @@
 title: Protect an R2 Bucket with Cloudflare Access
 pcx_content_type: tutorial
 updated: 2024-04-16
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 You can secure access to R2 buckets using [Cloudflare Access](/cloudflare-one/applications/configure-apps/).
 
@@ -13,17 +12,15 @@ Access allows you to only allow specific users, groups or applications within yo
 
 :::note
 
-
 For providing secure access to bucket objects for anonymous users, we recommend using [pre-signed URLs](/r2/api/s3/presigned-urls/) instead.
 
 Pre-signed URLs do not require users to be a member of your organization and enable programmatic application directly.
-
 
 :::
 
 ## 1. Create a bucket
 
-*If you have an existing R2 bucket, you can skip this step.*
+_If you have an existing R2 bucket, you can skip this step._
 
 You will need to create an R2 bucket. Follow the [R2 get started guide](/r2/get-started/) to create a bucket before returning to this guide.
 
@@ -33,7 +30,7 @@ Within the **Zero Trust** section of the Cloudflare Dashboard, you will need to 
 
 If you have not configured Cloudflare Access before, we recommend:
 
-* Configuring an [identity provider](/cloudflare-one/identity/) first to enable Access to use your organization's single-sign on (SSO) provider as an authentication method.
+- Configuring an [identity provider](/cloudflare-one/identity/) first to enable Access to use your organization's single-sign on (SSO) provider as an authentication method.
 
 To create an Access application for your R2 bucket:
 
@@ -43,9 +40,9 @@ To create an Access application for your R2 bucket:
 4. Select **Add a public hostname** and enter the application domain. The **Domain** must be a domain hosted on Cloudflare, and the **Subdomain** part of the custom domain you will connect to your R2 bucket. For example, if you want to serve files from `behind-access.example.com` and `example.com` is a domain within your Cloudflare account, then enter `behind-access` in the subdomain field and select `example.com` from the **Domain** list.
 5. Add [Access policies](/cloudflare-one/policies/access/) to control who can connect to your application. This should be an **Allow** policy so that users can access objects within the bucket behind this Access application.
 
-	:::note
-	Ensure that your policies only allow the users within your organization that need access to this R2 bucket.
-	:::
+   :::note
+   Ensure that your policies only allow the users within your organization that need access to this R2 bucket.
+   :::
 
 6. Follow the remaining [self-hosted application creation steps](/cloudflare-one/applications/configure-apps/self-hosted-public-app/) to publish the application.
 
@@ -53,9 +50,7 @@ To create an Access application for your R2 bucket:
 
 :::caution
 
-
 You should create an Access application before connecting a custom domain to your bucket, as connecting a custom domain will otherwise make your bucket public by default.
-
 
 :::
 
@@ -73,6 +68,6 @@ If you cannot authenticate or receive a block page after authenticating, check t
 
 ## Next steps
 
-* Learn more about [Access applications](/cloudflare-one/applications/configure-apps/) and how to configure them.
-* Understand how to use [pre-signed URLs](/r2/api/s3/presigned-urls/) to issue time-limited and prefix-restricted access to objects for users not within your organization.
-* Review the [documentation on using API tokens to authenticate](/r2/api/s3/tokens/) against R2 buckets.
+- Learn more about [Access applications](/cloudflare-one/applications/configure-apps/) and how to configure them.
+- Understand how to use [pre-signed URLs](/r2/api/s3/presigned-urls/) to issue time-limited and prefix-restricted access to objects for users not within your organization.
+- Review the [documentation on using API tokens to authenticate](/r2/api/tokens/) against R2 buckets.

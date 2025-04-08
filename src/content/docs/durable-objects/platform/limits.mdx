@@ -6,41 +6,71 @@ sidebar:
 
 ---
 
-import { Render, GlossaryTooltip, WranglerConfig } from "~/components";
+import { Render, GlossaryTooltip, Details, WranglerConfig } from "~/components";
 
-Durable Objects are only available on the [Workers Paid plan](/workers/platform/pricing/#workers). Durable Objects limits are the same as [Workers Limits](/workers/platform/limits/), as well as the following limits that are specific to Durable Objects:
+Durable Objects are a special kind of Worker, so [Workers Limits](/workers/platform/limits/) apply according to your Workers plan. In addition, Durable Objects have specific limits as listed in this page.
 
-| Feature                                  | Limit for class with key-value storage backend                   | Limit for class with SQLite storage backend [^1] |
-| ---------------------------------        | ---------------------------------------------------------------- | ----------------------------------------------- |
-| Number of Objects                        | Unlimited (within an account or of a given class)                | Unlimited (within an account or of a given class)                |
-| Maximum Durable Object namespaces        | 500 (identical to the [script limit](/workers/platform/limits/)) | 500 (identical to the [script limit](/workers/platform/limits/)) |
-| Storage per account                      | 50 GB (can be raised by contacting Cloudflare) [^2]              | 50 GB (can be raised by contacting Cloudflare) [^2]              |
-| Storage per class                        | Unlimited                                                        | Unlimited                                                        |
-| Storage per Durable Object               | Unlimited                                                        | 1 GB [^3]                                                        |
-| Key size                                 | 2 KiB (2048 bytes)                                               | Key and value combined cannot exceed 2 MB                        |
-| Value size                               | 128 KiB (131072 bytes)                                           | Key and value combined cannot exceed 2 MB                        |
-| WebSocket message size                   | 1 MiB (only for received messages)                               | 1 MiB (only for received messages)                               |
-| CPU per request                          | 30s (including WebSocket messages) [^4]                          | 30 seconds (default) / configurable to 5 minutes of [active CPU time](/workers/platform/limits/#cpu-time) [^4] |
+## SQLite-backed Durable Objects general limits
 
-[^1]: The new beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. When creating a Durable Object class, users can [opt-in to using SQL storage](/durable-objects/reference/durable-objects-migrations/#enable-sqlite-storage-backend-on-new-durable-object-class-migration).
+| Feature                                  | Limit |
+| ---------------------------------------- | ----------------------------------------------------------- |
+| Number of Objects                        | Unlimited (within an account or of a given class)           |
+| Maximum Durable Object classes           | 500 (Workers Paid) / 100 (Free) [^1]                        |
+| Storage per account                      | Unlimited (Workers Paid) / 5GB (Free) [^2]                  |
+| Storage per class                        | Unlimited [^3]                                              |
+| Storage per Durable Object               | 10 GB [^3]                                                  |
+| Key size                                 | Key and value combined cannot exceed 2 MB                   |
+| Value size                               | Key and value combined cannot exceed 2 MB                   |
+| WebSocket message size                   | 1 MiB (only for received messages)                          |
+| CPU per request                          | 30 seconds (default) / configurable to 5 minutes of [active CPU time](/workers/platform/limits/#cpu-time) [^4] |
 
-[^2]: Durable Objects both bills and measures storage based on a gigabyte <br/> (1 GB = 1,000,000,000 bytes) and not a gibibyte (GiB). <br/>
+<Details header="Footnotes" open={true}>
+1: Identical to the Workers [script limit](/workers/platform/limits/)
 
-[^3]: Will be raised to 10 GB for general availability.
+2: Durable Objects both bills and measures storage based on a gigabyte <br/> (1 GB = 1,000,000,000 bytes) and not a gibibyte (GiB). <br/>
 
-[^4]: Each incoming HTTP request or WebSocket *message* resets the remaining available CPU time to 30 seconds. This allows the Durable Object to consume up to 30 seconds of compute after each incoming network request, with each new network request resetting the timer. If you consume more than 30 seconds of compute between incoming network requests, there is a heightened chance that the individual Durable Object is evicted and reset. 
+3: Accounts on the Workers Free plan are limited to 5GB total Durable Objects storage.
 
-For Durable Object classes with [SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend) these SQL limits apply:
+4: Each incoming HTTP request or WebSocket *message* resets the remaining available CPU time to 30 seconds. This allows the Durable Object to consume up to 30 seconds of compute after each incoming network request, with each new network request resetting the timer. If you consume more than 30 seconds of compute between incoming network requests, there is a heightened chance that the individual Durable Object is evicted and reset. CPU time per request invocation [can be increased](/durable-objects/platform/limits/#increasing-durable-object-cpu-limits).
+</Details>
 
-| SQL                                                      | Limit |
-| -------------------------------------------------------- | ----- |
-| Maximum number of columns per table                      | 100 |
+### SQL storage limits
+
+For Durable Object classes with [SQLite storage](/durable-objects/api/storage-api/#sql-storage) these SQL limits apply:
+
+| SQL                                                      | Limit                                           |
+| -------------------------------------------------------- | ----------------------------------------------- |
+| Maximum number of columns per table                      | 100                                             |
 | Maximum number of rows per table                         | Unlimited (excluding per-object storage limits) |
-| Maximum string, `BLOB` or table row size                 | 2 MB |
-| Maximum SQL statement length                             | 100 KB  |
-| Maximum bound parameters per query                       | 100 |
-| Maximum arguments per SQL function                       | 32 |
-| Maximum characters (bytes) in a `LIKE` or `GLOB` pattern | 50 bytes |
+| Maximum string, `BLOB` or table row size                 | 2 MB                                            |
+| Maximum SQL statement length                             | 100 KB                                          |
+| Maximum bound parameters per query                       | 100                                             |
+| Maximum arguments per SQL function                       | 32                                              |
+| Maximum characters (bytes) in a `LIKE` or `GLOB` pattern | 50 bytes                                        |
+
+## Key-value backed Durable Objects general limits
+
+<Render file="do-plans-note"/>
+
+| Feature                                  | Limit for class with key-value storage backend                   |
+| ---------------------------------------- | ---------------------------------------------------------------- |
+| Number of Objects                        | Unlimited (within an account or of a given class)                |
+| Maximum Durable Object classes           | 500 (Workers Paid) / 100 (Free) [^1]                             |
+| Storage per account                      | 50 GB (can be raised by contacting Cloudflare) [^2]              |
+| Storage per class                        | Unlimited                                                        |
+| Storage per Durable Object               | Unlimited                                                        |
+| Key size                                 | 2 KiB (2048 bytes)                                               |
+| Value size                               | 128 KiB (131072 bytes)                                           |
+| WebSocket message size                   | 1 MiB (only for received messages)                               |
+| CPU per request                          | 30s (including WebSocket messages) [^3]                          |
+
+<Details header="Footnotes">
+1: Identical to the Workers [script limit](/workers/platform/limits/)
+
+2: Durable Objects both bills and measures storage based on a gigabyte <br/> (1 GB = 1,000,000,000 bytes) and not a gibibyte (GiB). <br/>
+
+3: Each incoming HTTP request or WebSocket *message* resets the remaining available CPU time to 30 seconds. This allows the Durable Object to consume up to 30 seconds of compute after each incoming network request, with each new network request resetting the timer. If you consume more than 30 seconds of compute between incoming network requests, there is a heightened chance that the individual Durable Object is evicted and reset. CPU time per request invocation [can be increased](/durable-objects/platform/limits/#increasing-durable-object-cpu-limits).
+</Details>
 
 <Render file="limits_increase" product="workers" />
 

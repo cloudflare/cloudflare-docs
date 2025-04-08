@@ -2,7 +2,7 @@
 title: Local development
 pcx_content_type: concept
 sidebar:
-  order: 5
+  order: 14
 head: []
 description: Develop your Workers locally via Wrangler.
 ---
@@ -40,9 +40,9 @@ npx wrangler dev
 | Analytics Engine                    | ✅                  | ✅                   |
 | Browser Rendering                   | ❌                  | ✅                   |
 | D1                                  | ✅                  | ✅                   |
-| Durable Objects                     | ✅                  | ✅                   |
+| Durable Objects                     | ✅                  | ✅ [^2]              |
 | Email Bindings                      | ❌                  | ✅                   |
-| Hyperdrive                          | ✅[^2]              | ✅                   |
+| Hyperdrive                          | ✅[^3]              | ✅                   |
 | Images                              | ✅                  | ✅                   |
 | KV                                  | ✅                  | ✅                   |
 | mTLS                                | ❌                  | ✅                   |
@@ -50,16 +50,18 @@ npx wrangler dev
 | R2                                  | ✅                  | ✅                   |
 | Rate Limiting                       | ✅                  | ✅                   |
 | Service Bindings (multiple workers) | ✅                  | ✅                   |
-| Vectorize                           | ✅[^3]              | ✅                   |
+| Vectorize                           | ✅[^4]              | ✅                   |
 | Workflows                           | ✅                  | ❌                   |
 
 With any bindings that are not supported locally, you will need to use the [`--remote` command](#develop-using-remote-resources-and-bindings) in wrangler, such as `wrangler dev --remote`.
 
 [^1]: Using Workers AI always accesses your Cloudflare account in order to run AI models and will incur usage charges even in local development.
 
-[^2]: Using Hyperdrive with local development allows you to connect to a local database (running on `localhost`) but you cannot connect to a remote database. To connect to a remote database, use remote development.
+[^2]: For KV-backed Durable Objects only. SQLite-backed Durable Objects do not support remote development.
 
-[^3]: Using Vectorize always accesses your Cloudflare account to run queries, and will incur usage charges even in local development.
+[^3]: Using Hyperdrive with local development allows you to connect to a local database (running on `localhost`) but you cannot connect to a remote database. To connect to a remote database, use remote development.
+
+[^4]: Using Vectorize always accesses your Cloudflare account to run queries, and will incur usage charges even in local development.
 
 ## Work with local data
 

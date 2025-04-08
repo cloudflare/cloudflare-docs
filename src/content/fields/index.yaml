@@ -504,7 +504,7 @@ entries:
     plan_info_label: Enterprise add-on
     summary: Indicates whether static resources should be included when you create a rule using [`cf.bot_management.score`](/ruleset-engine/rules-language/fields/reference/cf.bot_management.score/).
     description: |-
-      For more details, refer to [Static resource protection](/bots/reference/static-resources/).
+      For more details, refer to [Static resource protection](/bots/additional-configurations/static-resources/).
 
       Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
 
@@ -515,7 +515,7 @@ entries:
     plan_info_label: Enterprise add-on
     summary: Provides an SSL/TLS fingerprint to help you identify potential bot requests.
     description: |-
-      For more details, refer to [JA3/JA4 Fingerprint](/bots/concepts/ja3-ja4-fingerprint/).
+      For more details, refer to [JA3/JA4 Fingerprint](/bots/additional-configurations/ja3-ja4-fingerprint/).
 
       Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
 
@@ -526,7 +526,7 @@ entries:
     plan_info_label: Enterprise add-on
     summary: Provides an SSL/TLS fingerprint to help you identify potential bot requests.
     description: |-
-      For more details, refer to [JA3/JA4 Fingerprint](/bots/concepts/ja3-ja4-fingerprint/).
+      For more details, refer to [JA3/JA4 Fingerprint](/bots/additional-configurations/ja3-ja4-fingerprint/).
 
       Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
 
@@ -537,7 +537,7 @@ entries:
     plan_info_label: Enterprise add-on
     summary: Indicates whether the visitor has previously passed a JS Detection.
     description: |-
-      For more details, refer to [JavaScript detections](/bots/reference/javascript-detections/).
+      For more details, refer to [JavaScript detections](/bots/additional-configurations/javascript-detections/).
 
       Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
 
@@ -786,9 +786,27 @@ entries:
     data_type: String
     categories: [Request, SSL/TLS]
     keywords: [request, ssl, tls, client, visitor]
-    summary: The SHA-1 fingerprint of TLS client extensions, encoded in Base64.
+    summary: The SHA-1 fingerprint of TLS client extensions, encoded in Base64 using big-endian format.
+    description: For the little-endian version of this field, refer to [`cf.tls_client_extensions_sha1_le`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_extensions_sha1_le/).
     example_value: |-
       "OWFiM2I5ZDc0YWI0YWYzZmFkMGU0ZjhlYjhiYmVkMjgxNTU5YTU2Mg=="
+
+  - name: cf.tls_client_extensions_sha1_le
+    data_type: String
+    categories: [Request, SSL/TLS]
+    keywords: [request, ssl, tls, client, visitor]
+    summary: The SHA-1 fingerprint of TLS client extensions, encoded in Base64 using little-endian format.
+    description: For the big-endian version of this field, refer to [`cf.tls_client_extensions_sha1`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_extensions_sha1/).
+    example_value: |-
+      "7zIpdDU5pvFPPBI2/PCzqbaXnRA="
+
+  - name: cf.tls_ciphers_sha1
+    data_type: String
+    categories: [Request, SSL/TLS]
+    keywords: [request, ssl, tls, client, visitor]
+    summary: The SHA-1 fingerprint of the client TLS cipher list in received order, encoded in Base64 using big-endian format.
+    example_value: |-
+      "GXSPDLP4G3X+prK73a4wBuOaHRc="
 
   - name: cf.tls_client_hello_length
     data_type: Number
@@ -1517,6 +1535,8 @@ entries:
       - **Decoding**: No decoding performed
       - **Whitespace**: Preserved
       - **Non-ASCII**: Preserved
+
+      When the HTTP request contains too many headers, this field may not contain all of the headers sent in the HTTP request. In this situation, the [`http.request.headers.truncated`](/ruleset-engine/rules-language/fields/reference/http.request.headers.truncated/) field will be set to `true`.
     example_value: |-
       {"content-type": ["application/json"]}
     example_block: |-
@@ -1537,6 +1557,8 @@ entries:
       - **Decoding**: No decoding performed
       - **Whitespace**: Preserved
       - **Non-ASCII**: Preserved
+
+      When the HTTP request contains too many headers, this field may not contain the names of all of the headers sent in the HTTP request. In this situation, the [`http.request.headers.truncated`](/ruleset-engine/rules-language/fields/reference/http.request.headers.truncated/) field will be set to `true`.
 
       **Note**: In HTTP/2, the names of HTTP headers are always in lowercase. Recent versions of the `curl` tool [enable HTTP/2 by default](https://curl.se/docs/manpage.html#--http2) for HTTPS connections.
     example_value: |-
@@ -1560,6 +1582,8 @@ entries:
       - **Whitespace**: Preserved
       - **Non-ASCII**: Preserved
 
+      When the HTTP request contains too many headers, this field may not contain the values of all of the headers sent in the HTTP request. In this situation, the [`http.request.headers.truncated`](/ruleset-engine/rules-language/fields/reference/http.request.headers.truncated/) field will be set to `true`.
+
       **Note**: In HTTP/2, the names of HTTP headers are always in lowercase. Recent versions of the `curl` tool [enable HTTP/2 by default](https://curl.se/docs/manpage.html#--http2) for HTTPS connections.
     example_value: |-
       Example 1: ["application/json"]
@@ -1578,7 +1602,7 @@ entries:
     keywords: [request, client, visitor]
     summary: Indicates whether the HTTP request contains too many headers.
     description: |-
-      When `true`, [`http.request.headers`](/ruleset-engine/rules-language/fields/reference/http.request.headers), [`http.request.headers.names`](/ruleset-engine/rules-language/fields/reference/http.request.headers.names), and [`http.request.headers.values`](/ruleset-engine/rules-language/fields/reference/http.request.headers.values) may not contain all of the headers sent in the HTTP request.
+      When `true`, [`http.request.headers`](/ruleset-engine/rules-language/fields/reference/http.request.headers/), [`http.request.headers.names`](/ruleset-engine/rules-language/fields/reference/http.request.headers.names/), and [`http.request.headers.values`](/ruleset-engine/rules-language/fields/reference/http.request.headers.values/) may not contain all of the headers sent in the HTTP request.
 
   - name: http.request.accepted_languages
     data_type: Array<String>

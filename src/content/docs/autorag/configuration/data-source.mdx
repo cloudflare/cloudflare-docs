@@ -1,0 +1,27 @@
+---
+title: Data source
+pcx_content_type: how-to
+sidebar:
+  order: 2
+---
+
+import { Render } from "~/components";
+
+AutoRAG currently supports Cloudflare R2 as the data source for storing your knowledge base. To get started, [configure an R2 bucket](/r2/get-started/) containing your data.
+
+AutoRAG will automatically scan and process supported files stored in that bucket. Files that are unsupported or exceed the size limit will be skipped during indexing and logged as errors.
+
+## File limits
+
+AutoRAG has different file size limits depending on the file type:
+
+- Up to **4 MB** for files that are already in plain text or Markdown.
+- Up to **1 MB** for files that need to be converted into Markdown (like PDFs or other rich formats).
+
+Files that exceed these limits will not be indexed and will show up in the error logs.
+
+## File types
+
+AutoRAG is powered by and accepts the same file types as [Markdown Conversion](/workers-ai/markdown-conversion/). The following table lists the supported formats:
+
+<Render file="markdown-conversion-support" product="workers-ai" />

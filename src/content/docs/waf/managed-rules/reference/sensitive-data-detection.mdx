@@ -5,7 +5,7 @@ sidebar:
   order: 5
 ---
 
-import { Render, RuleID } from "~/components";
+import { Render, RuleID, APIRequest } from "~/components";
 
 :::note
 This feature requires an Enterprise plan with a paid add-on.
@@ -46,17 +46,20 @@ To enable Cloudflare Sensitive Data Detection for a given zone using the API, cr
 
 ### Example
 
-This example deploys the Cloudflare Sensitive Data Detection managed ruleset to the `http_response_firewall_managed` phase of a given zone (`{zone_id}`) by creating a rule that executes the managed ruleset. The rules in the managed ruleset are executed for all incoming requests.
+This example deploys the Cloudflare Sensitive Data Detection managed ruleset to the `http_response_firewall_managed` phase of a given zone (`$ZONE_ID`) by creating a rule that executes the managed ruleset. The rules in the managed ruleset are executed for all incoming requests.
 
 1.  <Render
     	file="rulesets/api-zone/step1-get-entrypoint"
     	params={{ phaseName: "http_response_firewall_managed" }}
     />
 
-    ```bash
-    curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_response_firewall_managed/entrypoint" \
-    --header "Authorization: Bearer <API_TOKEN>"
-    ```
+    <APIRequest
+    	path="/zones/{zone_id}/rulesets/phases/{ruleset_phase}/entrypoint"
+    	method="GET"
+    	parameters={{
+    		ruleset_phase: "http_response_firewall_managed",
+    	}}
+    />
 
     ```json output {4}
     {
@@ -87,19 +90,19 @@ This example deploys the Cloudflare Sensitive Data Detection managed ruleset to 
     	}}
     />
 
-    ```bash
-    curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules" \
-    --header "Authorization: Bearer <API_TOKEN>" \
-    --header "Content-Type: application/json" \
-    --data '{
-    	"action": "execute",
-    	"action_parameters": {
-    		"id": "e22d83c647c64a3eae91b71b499d988e"
-    	},
-    	"expression": "true",
-    	"description": "Execute the Cloudflare Sensitive Data Detection managed ruleset"
-    }'
-    ```
+    <APIRequest
+    	path="/zones/{zone_id}/rulesets/{ruleset_id}/rules"
+    	method="POST"
+    	json={{
+    		action: "execute",
+    		action_parameters: {
+    			id: "e22d83c647c64a3eae91b71b499d988e",
+    		},
+    		expression: "true",
+    		description:
+    			"Execute the Cloudflare Sensitive Data Detection managed ruleset",
+    	}}
+    />
 
     ```json output
     {
@@ -144,27 +147,27 @@ This example deploys the Cloudflare Sensitive Data Detection managed ruleset to 
     	}}
     />
 
-    ```bash
-    curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets" \
-    --header "Authorization: Bearer <API_TOKEN>" \
-    --header "Content-Type: application/json" \
-    --data '{
-      "name": "My ruleset",
-      "description": "Entry point ruleset for WAF managed rulesets (response)",
-      "kind": "zone",
-      "phase": "http_response_firewall_managed",
-      "rules": [
-        {
-    			"action": "execute",
-    			"action_parameters": {
-    				"id": "e22d83c647c64a3eae91b71b499d988e"
+    <APIRequest
+    	path="/zones/{zone_id}/rulesets"
+    	method="POST"
+    	json={{
+    		name: "My ruleset",
+    		description: "Entry point ruleset for WAF managed rulesets (response)",
+    		kind: "zone",
+    		phase: "http_response_firewall_managed",
+    		rules: [
+    			{
+    				action: "execute",
+    				action_parameters: {
+    					id: "e22d83c647c64a3eae91b71b499d988e",
+    				},
+    				expression: "true",
+    				description:
+    					"Execute the Cloudflare Sensitive Data Detection managed ruleset",
     			},
-    			"expression": "true",
-    			"description": "Execute the Cloudflare Sensitive Data Detection managed ruleset"
-    		}
-      ]
-    }'
-    ```
+    		],
+    	}}
+    />
 
 <Render
 	file="managed-rulesets/api-next-steps"

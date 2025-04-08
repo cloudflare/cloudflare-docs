@@ -43,7 +43,10 @@ But if you want your MCP server to:
 - cache the state of a previous external API call, so that subsequent tool calls can reuse it
 - do anything that an Agent can do, but allow MCP clients to communicate with it
 
-You can use the following APIs in order to do so.
+You can use the APIs below in order to do so.
+
+#### Hibernation Support
+`McpAgent` instances automatically support [WebSockets Hibernation](https://developers.cloudflare.com/durable-objects/best-practices/websockets/#websocket-hibernation-api), allowing stateful MCP servers to sleep during inactive periods while preserving their state. This means your agents only consume compute resources when actively processing requests, optimizing costs while maintaining the full context and conversation history.
 
 ### State synchronization APIs
 

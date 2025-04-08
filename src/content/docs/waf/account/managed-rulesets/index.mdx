@@ -5,7 +5,7 @@ sidebar:
   order: 4
 ---
 
-import { Render, Tabs, TabItem, Details } from "~/components";
+import { Render, Tabs, TabItem, Details, APIRequest } from "~/components";
 
 :::note
 This feature requires an Enterprise plan with a paid add-on.
@@ -52,57 +52,57 @@ Once you finish your configuration, the **Deployed managed rulesets** list will 
 
 The following `POST` request for the [Create an account ruleset](/api/resources/rulesets/methods/create/) operation creates an [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) for the `http_request_firewall_managed` phase at the account level. The ruleset includes two rules deploying the Cloudflare OWASP Core Ruleset twice with different configurations.
 
-```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets" \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "name": "My ruleset",
-  "description": "Entry point ruleset for WAF managed rulesets (account)",
-  "kind": "root",
-  "phase": "http_request_firewall_managed",
-  "rules": [
-    {
-      "action": "execute",
-      "action_parameters": {
-        "id": "4814384a9e5d4991b9815dcfc25d2f1f",
-        "overrides": {
-          "categories": [
-            {
-              "category": "paranoia-level-4",
-              "enabled": false
-            }
-          ],
-          "rules": [
-            {
-              "id": "6179ae15870a4bb7b2d480d4843b323c",
-              "action": "managed_challenge"
-            }
-          ]
-        }
-      },
-      "expression": "cf.zone.plan eq \"ENT\"",
-      "description": "Execute OWASP ruleset at PL3 with Managed Challenge action"
-    },
-    {
-      "action": "execute",
-      "action_parameters": {
-        "id": "4814384a9e5d4991b9815dcfc25d2f1f",
-        "overrides": {
-          "rules": [
-            {
-              "id": "6179ae15870a4bb7b2d480d4843b323c",
-              "action": "log"
-            }
-          ]
-        }
-      },
-      "expression": "cf.zone.plan eq \"ENT\"",
-      "description": "Execute OWASP ruleset at PL4 with Log action"
-    }
-  ]
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/rulesets"
+	method="POST"
+	json={{
+		name: "My ruleset",
+		description: "Entry point ruleset for WAF managed rulesets (account)",
+		kind: "root",
+		phase: "http_request_firewall_managed",
+		rules: [
+			{
+				action: "execute",
+				action_parameters: {
+					id: "4814384a9e5d4991b9815dcfc25d2f1f",
+					overrides: {
+						categories: [
+							{
+								category: "paranoia-level-4",
+								enabled: false,
+							},
+						],
+						rules: [
+							{
+								id: "6179ae15870a4bb7b2d480d4843b323c",
+								action: "managed_challenge",
+							},
+						],
+					},
+				},
+				expression: 'cf.zone.plan eq "ENT"',
+				description:
+					"Execute OWASP ruleset at PL3 with Managed Challenge action",
+			},
+			{
+				action: "execute",
+				action_parameters: {
+					id: "4814384a9e5d4991b9815dcfc25d2f1f",
+					overrides: {
+						rules: [
+							{
+								id: "6179ae15870a4bb7b2d480d4843b323c",
+								action: "log",
+							},
+						],
+					},
+				},
+				expression: 'cf.zone.plan eq "ENT"',
+				description: "Execute OWASP ruleset at PL4 with Log action",
+			},
+		],
+	}}
+/>
 
 </TabItem> </Tabs>
 

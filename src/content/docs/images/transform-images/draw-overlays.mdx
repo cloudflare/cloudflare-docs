@@ -78,13 +78,13 @@ The accepted options for the overlaid image are `opacity`, `repeat`, `top`, `lef
 // Fetch image and watermark
 const img = await fetch('https://example.com/image.png');
 const watermark = await fetch('https://example.com/watermark.png');
- 
+
 const response = await env.IMAGES.input(img.body)
   .transform({ width: 1024 })
   .draw(watermark.body, { "opacity": 0.25, "repeat": true })
   .output({ format: "image/avif" })
   .response();
-  
+
 return response;
 ```
 

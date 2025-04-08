@@ -1,0 +1,45 @@
+---
+title: Dynamic threshold rule
+pcx_content_type: how-to
+sidebar:
+  order: 2
+  badge:
+    text: Beta
+---
+
+A dynamic threshold rule (beta) will analyze a network's traffic patterns over time and automatically adjust the rule's DDoS threshold, in terms of bits or packets, based on traffic history. The total traffic across all IP prefixes and IP addresses in the rule is compared to the current value of the dynamic threshold. If the total traffic exceeds the dynamic threshold, then an alert is sent.
+
+Dynamic thresholds are calculated using a statistical measure called [Z-score](https://en.wikipedia.org/wiki/Standard_score) (also referred to as standard score). Review [How the dynamic rule threshold is calculated](#how-the-dynamic-rule-threshold-is-calculated) to learn more.
+
+Customers that send NetFlow and/or sFlow data to Cloudflare can configure dynamic threshold rules.
+
+A dynamic threshold rule can only be configured via [Cloudflare's Magic Network Monitoring Rules API](/api/resources/magic_network_monitoring/subresources/rules/). Today, customers are unable to configure dynamic threshold rules in the Cloudflare dashboard.
+
+## Rule configuration fields
+
+| Field | Description |
+| :---- | :---- |
+| **Rule name** | Must be unique and cannot contain spaces. Supports characters `A-Z`, `a-z`, `0-9`, underscore (`_`), dash (`-`), period (`.`), and tilde (`~`). Maximum of 256 characters. |
+| **Rule type** | zscore |
+| **Target** | Can be defined in either bits per second or packets per second. |
+| **Sensitivity** | Z-Score sensitivity has three values: low, medium, and high. |
+| **Auto-advertisement** | If you are a [Magic Transit On Demand](/magic-transit/on-demand) customer, you can enable this feature to automatically enable Magic Transit if the rule's dynamic threshold is triggered. To learn more and see an example, view the [Auto-Advertisement section](/magic-network-monitoring/rules/rule-notifications/#rule-auto-advertisement-notifications). |
+| **Rule IP prefix** | The IP prefix associated with the rule for monitoring traffic volume. Must be a CIDR range such as `160.168.0.1/24`. The maximum is 5,000 unique CIDR entries. To learn more and review an example, refer to the [Rule IP prefixes](/magic-network-monitoring/rules/#rule-ip-prefixes). |
+
+## API documentation
+
+to review an example API configuration call using CURL and the expected output for a successful response, go to [Magic Network Monitoring](/api/resources/magic_network_monitoring/) in [developers.cloudflare.com/api/](/api/) and expand the [Rules](/api/resources/magic_network_monitoring/subresources/rules/) section.
+
+## How the dynamic rule threshold is calculated
+
+Dynamic thresholds for this rule type are calculated using a statistical measure called Z-Score. The dynamic threshold for this rule will automatically adjust based on your traffic history as this rule uses statistical analysis to detect traffic anomalies. Z-Score is calculated by comparing short-term traffic patterns (five-minute time window) against long-term baselines (four-hour time window) .
+
+Z-Score is calculated by using the following formula:
+
+```txt
+Z = (X - μ) / σ
+```
+
+- `X` = Current traffic value.
+- `μ` = Mean traffic value over the long window.
+- `σ` = Standard deviation over the long window.

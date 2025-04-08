@@ -1,0 +1,63 @@
+---
+title: Build MCP servers with the Agents SDK
+description: The Agents SDK now includes built-in support for building remote MCP servers directly as part of your Agent.
+products:
+  - agents
+  - workers
+date: 2025-04-07T13:00:00Z
+---
+
+import { Render, PackageManagers, TypeScriptExample } from "~/components";
+
+The Agents SDK now includes built-in support for building remote MCP (Model Context Protocol) servers directly as part of your Agent. This allows you to easily create and manage MCP servers, without the need for additional infrastructure or configuration.
+
+The SDK includes a new `MCPAgent` class that extends the `Agent` class and allows you to expose resources and tools over the MCP protocol, as well as authorization and authentication to enable remote MCP servers.
+
+<TypeScriptExample>
+
+```ts
+export class MyMCP extends McpAgent<Env> {
+	server = new McpServer({
+		name: "Demo",
+		version: "1.0.0",
+	});
+
+	async init() {
+		this.server.resource(`counter`, `mcp://resource/counter`, (uri) => {
+			// ...
+		});
+
+		this.server.tool(
+			"add",
+			"Add two numbers together",
+			{ a: z.number(), b: z.number() },
+			async ({ a, b }) => {
+				// ...
+			},
+		);
+	}
+}
+```
+
+</TypeScriptExample>
+
+See [the example](https://github.com/cloudflare/agents/tree/main/examples/mcp) for the full code and as the basis for building your own MCP servers, and the [client example](https://github.com/cloudflare/agents/tree/main/examples/mcp-client) for how to build an Agent that acts as an MCP client.
+
+To learn more, review the [announcement blog](https://blog.cloudflare.com/building-ai-agents-with-mcp-authn-authz-and-durable-objects) as part of Developer Week 2025.
+
+### Agents SDK updates
+
+We've made a number of improvements to the [Agents SDK](/agents/), including:
+
+- Support for building MCP servers with the new `MCPAgent` class.
+- The ability to export the current agent, request and WebSocket connection context using `import { context } from "agents"`, allowing you to minimize or avoid direct dependency injection when calling tools.
+- Fixed a bug that prevented query parameters from being sent to the Agent server from the `useAgent` React hook.
+- Automatically converting the `agent` name in `useAgent` or `useAgentChat` to kebab-case to ensure it matches the naming convention expected by [`routeAgentRequest`](/agents/api-reference/calling-agents/#calling-your-agent).
+
+To install or update the Agents SDK, run `npm i agents@latest` in an existing project, or explore the `agents-starter` project:
+
+```sh
+npm create cloudflare@latest -- --template cloudflare/agents-starter
+```
+
+See the full release notes and changelog [on the Agents SDK repository](https://github.com/cloudflare/agents/blob/main/packages/agents/CHANGELOG.md) and

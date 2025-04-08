@@ -2,7 +2,7 @@
 pcx_content_type: concept
 title: Billing and Limitations
 sidebar:
-  order: 12
+  order: 8
 head: []
 description: Billing, troubleshooting, and limitations for Static assets on Workers
 ---
@@ -21,6 +21,14 @@ The following limitations apply for Workers with static assets:
 
 - There is a 20,000 file count limit per [Worker version](/workers/configuration/versions-and-deployments/), and a 25 MiB individual file size limit. This matches the [limits in Cloudflare Pages](/pages/platform/limits/) today.
 - In local development, you cannot make [Service Binding RPC calls](/workers/runtime-apis/bindings/service-bindings/rpc/) to a Worker with static assets. This is a temporary limitation, we are working to remove it.
+
+### Headers
+
+A `_headers` file may contain up to 100 rules and each line may contain up to 2,000 characters. The entire line, including spacing, header name, and value, counts towards this limit.
+
+### Redirects
+
+A `_redirects` file may contain up to 2,000 static redirects and 100 dynamic redirects, for a combined total of 2,100 redirects. Each redirect declaration has a 1,000-character limit.
 
 ## Troubleshooting
 

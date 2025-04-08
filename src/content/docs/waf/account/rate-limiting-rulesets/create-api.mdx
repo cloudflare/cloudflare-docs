@@ -9,7 +9,7 @@ head:
     content: Create a rate limiting ruleset via API
 ---
 
-import { Render } from "~/components";
+import { Render, APIRequest } from "~/components";
 
 To deploy rate limiting rules at the account level, you must create a rate limiting ruleset with one or more rules. Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create and deploy rate limiting rulesets via API.
 
@@ -23,46 +23,46 @@ Each rate limiting rule contains a `ratelimit` object with the rate limiting con
 
 To deploy a rate limiting ruleset in your account, follow these general steps:
 
-1. Create a rate limiting ruleset (that is, a custom ruleset in the `http_ratelimit` phase ) with one or more rate limiting rules.
+1. Create a rate limiting ruleset (that is, a custom ruleset in the `http_ratelimit` phase) with one or more rate limiting rules.
 2. Deploy the ruleset to the [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) of the `http_ratelimit` phase at the account level.
 
 ### 1. Create a rate limiting ruleset
 
 The following example creates a rate limiting ruleset with a single rate limiting rule in the `rules` array.
 
-```bash
-curl "https://api.cloudflare.com/api/v4/accounts/{account_id}/rulesets" \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "description": "",
-  "kind": "custom",
-  "name": "My rate limiting ruleset",
-  "rules": [
-    {
-      "description": "Rate limit API requests",
-      "expression": "(starts_with(http.request.uri.path, \"/my-api/\"))",
-      "ratelimit": {
-        "characteristics": ["ip.src", "cf.colo.id"],
-        "requests_to_origin": false,
-        "requests_per_period": 30,
-        "period": 60,
-        "mitigation_timeout": 120
-      },
-      "action": "block",
-      "action_parameters": {
-        "response": {
-          "status_code": 429,
-          "content_type": "application/json",
-          "content": "{ \"error\": \"Your API requests have been rate limited. Wait a couple of minutes and try again.\" }"
-        }
-      },
-      "enabled": true
-    }
-  ],
-  "phase": "http_ratelimit"
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/rulesets"
+	method="POST"
+	json={{
+		description: "",
+		kind: "custom",
+		name: "My rate limiting ruleset",
+		rules: [
+			{
+				description: "Rate limit API requests",
+				expression: '(starts_with(http.request.uri.path, "/my-api/"))',
+				ratelimit: {
+					characteristics: ["ip.src", "cf.colo.id"],
+					requests_to_origin: false,
+					requests_per_period: 30,
+					period: 60,
+					mitigation_timeout: 120,
+				},
+				action: "block",
+				action_parameters: {
+					response: {
+						status_code: 429,
+						content_type: "application/json",
+						content:
+							'{ "error": "Your API requests have been rate limited. Wait a couple of minutes and try again." }',
+					},
+				},
+				enabled: true,
+			},
+		],
+		phase: "http_ratelimit",
+	}}
+/>
 
 The available characteristics depend on your Cloudflare plan and product subscriptions. Refer to [Availability](/waf/rate-limiting-rules/#availability) for more information.
 
@@ -77,10 +77,13 @@ To deploy the rate limiting ruleset, add a rule with `"action": "execute"` to th
     	params={{ phaseName: "http_ratelimit" }}
     />
 
-    ```bash
-    curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/phases/http_ratelimit/entrypoint" \
-    --header "Authorization: Bearer <API_TOKEN>"
-    ```
+    <APIRequest
+    	path="/accounts/{account_id}/rulesets/phases/{ruleset_phase}/entrypoint"
+    	method="GET"
+    	parameters={{
+    		ruleset_phase: "http_ratelimit",
+    	}}
+    />
 
     ```json output {4}
     {
@@ -112,20 +115,19 @@ To deploy the rate limiting ruleset, add a rule with `"action": "execute"` to th
 
     The following request creates a rule that executes the rate limiting ruleset with ID `<RATE_LIMITING_RULESET_ID>` for all Enterprise zones in the account:
 
-    ```bash
-    curl "https://dash.cloudflare.com/api/v4/accounts/{account_id}/rulesets/{ruleset_id}/rules" \
-    --header "Authorization: Bearer <API_TOKEN>" \
-    --header "Content-Type: application/json" \
-    --data '{
-      "description": "Execute rate limiting ruleset",
-      "expression": "(cf.zone.plan eq \"ENT\")",
-      "action": "execute",
-      "action_parameters": {
-        "id": "<RATE_LIMITING_RULESET_ID>"
-      },
-      "enabled": true
-    }'
-    ```
+    <APIRequest
+    	path="/accounts/{account_id}/rulesets/{ruleset_id}/rules"
+    	method="POST"
+    	json={{
+    		description: "Execute rate limiting ruleset",
+    		expression: '(cf.zone.plan eq "ENT")',
+    		action: "execute",
+    		action_parameters: {
+    			id: "<RATE_LIMITING_RULESET_ID>",
+    		},
+    		enabled: true,
+    	}}
+    />
 
     <Render file="account-enterprise-zones-only-api" />
 
@@ -137,26 +139,25 @@ To deploy the rate limiting ruleset, add a rule with `"action": "execute"` to th
     	}}
     />
 
-    ```bash
-    curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets" \
-    --header "Authorization: Bearer <API_TOKEN>" \
-    --header "Content-Type: application/json" \
-    --data '{
-      "description": "",
-      "kind": "root",
-      "name": "Account-level phase entry point",
-      "rules": [
-        {
-          "action": "execute",
-          "expression": "(cf.zone.plan eq \"ENT\")",
-          "action_parameters": {
-            "id": "<RATE_LIMITING_RULESET_ID>"
-          }
-        }
-      ],
-      "phase": "http_ratelimit"
-    }'
-    ```
+    <APIRequest
+    	path="/accounts/{account_id}/rulesets"
+    	method="POST"
+    	json={{
+    		description: "",
+    		kind: "root",
+    		name: "Account-level phase entry point",
+    		rules: [
+    			{
+    				action: "execute",
+    				expression: '(cf.zone.plan eq "ENT")',
+    				action_parameters: {
+    					id: "<RATE_LIMITING_RULESET_ID>",
+    				},
+    			},
+    		],
+    		phase: "http_ratelimit",
+    	}}
+    />
 
 For examples of rate limiting rule definitions for the API, refer to the [zone-level API documentation](/waf/rate-limiting-rules/create-api/).
 

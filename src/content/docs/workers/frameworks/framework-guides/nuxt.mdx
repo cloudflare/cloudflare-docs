@@ -27,15 +27,6 @@ To use `create-cloudflare` to create a new Nuxt project with <InlineBadge preset
 	args={"--framework=nuxt --platform=workers"}
 />
 
-<Render
-	file="c3-post-run-steps"
-	product="workers"
-	params={{
-		category: "web-framework",
-		framework: "Nuxt",
-	}}
-/>
-
 After setting up your project, change your directory by running the following command:
 
 ```sh
@@ -62,8 +53,4 @@ The following command will build and deploy your project. If you're using CI, en
 
 Your Nuxt application can be fully integrated with the Cloudflare Developer Platform, in both local development and in production, by using product bindings. The [Nuxt documentation](https://nitro.unjs.io/deploy/providers/cloudflare#direct-access-to-cloudflare-bindings) provides information about configuring bindings and how you can access them in your Nuxt event handlers.
 
-## Static assets
-
-You can serve static assets your Nuxt application by placing them in [the `./public/` directory](https://nuxt.com/docs/guide/directory-structure/public). This can be useful for resource files such as images, stylesheets, fonts, and manifests.
-
-<Render file="workers-assets-routing-summary" />
+<Render file="frameworks-bindings" />

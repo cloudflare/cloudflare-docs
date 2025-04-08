@@ -1,20 +1,18 @@
 ---
 title: Terraform (AWS)
 pcx_content_type: example
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="keys" /><br/>
+<Render file="keys" />
+<br />
 
 This example shows how to configure R2 with Terraform using the [AWS provider](https://github.com/hashicorp/terraform-provider-aws).
 
 :::note[Note for using AWS provider]
 
-
 For using only the Cloudflare provider, see [Terraform](/r2/examples/terraform/).
-
 
 :::
 
@@ -22,7 +20,7 @@ With [`terraform`](https://developer.hashicorp.com/terraform/downloads) installe
 
 1. Create `main.tf` file, or edit your existing Terraform configuration
 2. Populate the endpoint URL at `endpoints.s3` with your [Cloudflare account ID](/fundamentals/setup/find-account-and-zone-ids/)
-3. Populate `access_key` and `secret_key` with the corresponding [R2 API credentials](/r2/api/s3/tokens/).
+3. Populate `access_key` and `secret_key` with the corresponding [R2 API credentials](/r2/api/tokens/).
 4. Ensure that `skip_region_validation = true`, `skip_requesting_account_id = true`, and `skip_credentials_validation = true` are set in the provider configuration.
 
 ```hcl

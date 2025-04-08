@@ -11,6 +11,9 @@ import {
 	InlineBadge,
 	Render,
 	PackageManagers,
+	Steps,
+	Details,
+	FileTree,
 } from "~/components";
 
 In this guide, you will create a new [Vue](https://vuejs.org/) application and deploy to Cloudflare Workers (with the new [<InlineBadge preset="beta" /> Workers Assets](/workers/static-assets/)).
@@ -27,26 +30,44 @@ To use `create-cloudflare` to create a new Vue project with <InlineBadge preset=
 	args={"--framework=vue --platform=workers"}
 />
 
-<Render
-	file="c3-post-run-steps"
-	product="workers"
-	params={{
-		category: "web-framework",
-		framework: "Vue",
-	}}
-/>
+    		 <Details header="How is this project set up?">
+        			Below is a simplified file tree of the project.
+        			<FileTree>
+    						- my-vue-app
+    							- src/
+    									- App.vue
+    							- server/
+    								- index.ts
+    							- index.html
+    							- vite.config.ts
+    							- wrangler.jsonc
+        			</FileTree>
 
-After setting up your project, change your directory by running the following command:
+        			`wrangler.jsonc` is your [Wrangler configuration file](/workers/wrangler/configuration/).
+        			In this file:
+        					- `main` points to `server/index.ts`. This is your Worker, which is going to act as your backend API.
+        					- `assets.not_found_handling` is set to `single-page-application`, which means that routes that are handled by your Vue SPA do not go to the Worker, and are thus free.
+        					- If you want to add bindings to resources on Cloudflare's developer platform, you configure them here. Read more about [bindings](/workers/runtime-apis/bindings/).
 
-```sh
-cd my-vue-app
-```
+    						`vite.config.ts` is set up to use the [Cloudflare Vite plugin](/workers/vite-plugin/). This runs your Worker in the Cloudflare Workers runtime, ensuring your local development environment is as close to production as possible.
 
-## 2. Develop locally
+    						`server/index.ts` is your backend API, which contains a single endpoint, `/api/`, that returns a text response.
+    						At `src/App.vue`, your Vue app calls this endpoint to get a message back and displays this.
+        		</Details>
+
+## **Develop locally with the [Cloudflare Vite plugin](/workers/vite-plugin/)**
 
 After you have created your project, run the following command in the project directory to start a local server. This will allow you to preview your project locally during development.
 
 <PackageManagers type="run" args={"dev"} />
+<Details header="What's happening in local development?">
+	This project uses Vite for local development and build, and thus comes with
+	all of Vite's features, including hot module replacement (HMR). In addition,
+	`vite.config.ts` is set up to use the [Cloudflare Vite
+	plugin](/workers/vite-plugin/). This runs your application in the Cloudflare
+	Workers runtime, just like in production, and enables access to local
+	emulations of bindings.
+</Details>
 
 ## 3. Deploy your project
 
@@ -58,12 +79,14 @@ The following command will build and deploy your project. If you are using CI, e
 
 ---
 
-## Static assets
+## Asset Routing
 
-You can serve static assets in your Vue application by [placing them in the `./public/` directory](https://vite.dev/guide/assets#the-public-directory). This can be useful for resource files such as images, stylesheets, fonts, and manifests.
+If you're using Vue as a SPA, you will want to set `not_found_handling = "single_page_application"` in your Wrangler configuration file.
 
 <Render file="workers-assets-routing-summary" />
 
 ## Use bindings with Vue
 
-Your new project also contains a Worker at `./server/index.ts`, which you can use as a backend API for your Vue application. While your Vue application cannot directly access Workers bindings, it can interact with them through this Worker. You can make [`fetch()` requests](/workers/runtime-apis/fetch/) from your Vue application to the Worker, which can then handle the request and use bindings. Learn how to [configure Workers bindings](/workers/runtime-apis/bindings/).
+Your new project also contains a Worker at `./server/index.ts`, which you can use as a backend API for your Vue application. While your Vue application cannot directly access Workers bindings, it can interact with them through this Worker. You can make [`fetch()` requests](/workers/runtime-apis/fetch/) from your Vue application to the Worker, which can then handle the request and use bindings.
+
+<Render file="frameworks-bindings" />

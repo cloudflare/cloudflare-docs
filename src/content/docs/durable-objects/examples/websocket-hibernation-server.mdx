@@ -188,7 +188,7 @@ export class WebSocketHibernationServer extends DurableObject {
 
 </TabItem> </Tabs>
 
-Finally, configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/tutorial/#5-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the namespace and class name chosen previously.
+Finally, configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/#4-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the namespace and class name chosen previously.
 
 <WranglerConfig>
 
@@ -201,7 +201,7 @@ class_name = "WebSocketHibernationServer"
 
 [[migrations]]
 tag = "v1"
-new_classes = ["WebSocketHibernationServer"]
+new_sqlite_classes = ["WebSocketHibernationServer"]
 ```
 
 </WranglerConfig>

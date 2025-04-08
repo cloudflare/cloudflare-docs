@@ -9,39 +9,66 @@ description: Learn about the different kinds of database integrations Cloudflare
 
 Cloudflare Workers can connect to and query your data in both SQL and NoSQL databases, including:
 
-- Traditional hosted relational databases, including Postgres and MySQL.
-- Serverless databases: Supabase, MongoDB Atlas, PlanetScale, FaunaDB, and Prisma.
 - Cloudflare's own [D1](/d1/), a serverless SQL-based database.
+- Traditional hosted relational databases, including Postgres and MySQL, using [Hyperdrive](/hyperdrive/) (recommended) to significantly speed up access.
+- Serverless databases, including Supabase, MongoDB Atlas, PlanetScale, FaunaDB, and Prisma.
 
-| Database                                                                                                  | Integration                                                | Library or Driver                                                                  | Connection Method                                                  |
-| --------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
-| [Postgres](/workers/tutorials/postgres/)                                                                  | -                                                          | [Postgres.js](https://github.com/porsager/postgres),[node-postgres](https://node-postgres.com/)                                        | [Hyperdrive](/hyperdrive/)                                         |
-| [Postgres](/workers/tutorials/postgres/)                                                                  | -                                                          | [deno-postgres](https://github.com/cloudflare/worker-template-postgres)            | [TCP Socket](/workers/runtime-apis/tcp-sockets/) via database driver |
-| [MySQL](/workers/tutorials/postgres/)                                                                     | -                                                          | [deno-mysql](https://github.com/cloudflare/worker-template-mysql)                  | [TCP Socket](/workers/runtime-apis/tcp-sockets/) via database driver |
-| [Fauna](https://docs.fauna.com/fauna/current/build/integration/cloudflare/)                               | [Yes](/workers/databases/native-integrations/fauna/)       | [fauna](https://github.com/fauna/fauna-js)                                         | API through client library                                         |
-| [PlanetScale](https://planetscale.com/blog/introducing-the-planetscale-serverless-driver-for-javascript)  | [Yes](/workers/databases/native-integrations/planetscale/) | [@planetscale/database](https://github.com/planetscale/database-js)                | API via client library                                             |
-| [Supabase](https://github.com/supabase/supabase/tree/master/examples/with-cloudflare-workers)             | [Yes](/workers/databases/native-integrations/supabase/)    | [@supabase/supabase-js](https://github.com/supabase/supabase-js)                   | API via client library                                             |
-| [Prisma](https://www.prisma.io/docs/guides/deployment/deployment-guides/deploying-to-cloudflare-workers)  | No                                                         | [prisma](https://github.com/prisma/prisma)                                         | API via client library                                             |
-| [Neon](https://blog.cloudflare.com/neon-postgres-database-from-workers/)                                  | [Yes](/workers/databases/native-integrations/neon/)        | [@neondatabase/serverless](https://neon.tech/blog/serverless-driver-for-postgres/) | API via client library                                             |
-| [Hasura](https://hasura.io/blog/building-applications-with-cloudflare-workers-and-hasura-graphql-engine/) | No                                                         | API                                                                                | GraphQL API via fetch()                                            |
-| [Upstash Redis](https://blog.cloudflare.com/cloudflare-workers-database-integration-with-upstash/)        | [Yes](/workers/databases/native-integrations/upstash/)     | [@upstash/redis](https://github.com/upstash/upstash-redis)                         | API via client library                                             |
-| [TiDB Cloud](https://docs.pingcap.com/tidbcloud/integrate-tidbcloud-with-cloudflare)                      | No                                                         | [@tidbcloud/serverless](https://github.com/tidbcloud/serverless-js)                | API via client library                                             |
+### D1 SQL database
 
-:::note
+D1 is Cloudflare's own SQL-based, serverless database. It is optimized for global access from Workers, and can scale out with multiple, smaller (10GB) databases, such as per-user, per-tenant or per-entity databases. Similar to some serverless databases, D1 pricing is based on query and storage costs.
+
+| Database   | Library or Driver                                                                                                                          | Connection Method                                                                                       |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------- |
+| [D1](/d1/) | [Workers binding](/d1/worker-api/), integrates with [Prisma](https://www.prisma.io/), [Drizzle](https://orm.drizzle.team/), and other ORMs | [Workers binding](/d1/worker-api/), [REST API](/api/resources/d1/subresources/database/methods/create/) |
+
+### Traditional SQL databases
+
+Traditional databases use SQL drivers that use [TCP sockets](/workers/runtime-apis/tcp-sockets/) to connect to the database. TCP is the de-facto standard protocol that many databases, such as PostgreSQL and MySQL, use for client connectivity.
+These drivers are also widely compatible with your preferred ORM libraries and query builders.
+
+This also includes serverless databases that are PostgreSQL or MySQL-compatible like [Supabase](/hyperdrive/examples/connect-to-postgres/neon/), [Neon](/hyperdrive/examples/connect-to-postgres/neon/) or [PlanetScale](/hyperdrive/examples/connect-to-mysql/planetscale/),
+which can be connected to using both native [TCP sockets and Hyperdrive](/hyperdrive/) or [serverless HTTP-based drivers](/workers/databases/connecting-to-databases/#serverless-databases) (detailed below).
+
+| Database                                 | Integration       | Library or Driver                                                                               | Connection Method                                                                                                                                      |
+| ---------------------------------------- | ----------------- | ----------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [Postgres](/workers/tutorials/postgres/) | Direct connection | [Postgres.js](https://github.com/porsager/postgres),[node-postgres](https://node-postgres.com/) | [TCP Socket](/workers/runtime-apis/tcp-sockets/) via database driver, using [Hyperdrive](/hyperdrive/) for optimal performance (optional, recommended) |
+| [MySQL](/workers/tutorials/mysql/)       | Direct connection | [mysql2](https://github.com/sidorares/node-mysql2), [mysql](https://github.com/mysqljs/mysql)   | [TCP Socket](/workers/runtime-apis/tcp-sockets/) via database driver, using [Hyperdrive](/hyperdrive/) for optimal performance (optional, recommended) |
+
+:::note[Speed up database connectivity with Hyperdrive]
+
+Connecting to SQL databases with TCP sockets requires multiple roundtrips to establish a secure connection before a query to the database is made.
+Since a connection must be re-established on every Worker invocation, this adds unnecessary latency.
+
+[Hyperdrive](/hyperdrive/) solves this by pooling database connections globally to eliminate unnecessary roundtrips and speed up your database access. Learn more about [how Hyperdrive works](/hyperdrive/configuration/how-hyperdrive-works/).
+
+:::
+
+### Serverless databases
+
+Serverless databases provide HTTP-based proxies and drivers, also known as serverless drivers. These address the lack of connection reuse between Worker invocation similarly to [Hyperdrive](/hyperdrive/) for traditional SQL databases.
+
+By providing a way to query your database with HTTP, these serverless databases and drivers eliminate several roundtrips needed to establish a secure connection.
+
+| Database                                                                                                  | Integration                                                | Library or Driver                                                                  | Connection Method          |
+| --------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- | ---------------------------------------------------------------------------------- | -------------------------- |
+| [Fauna](https://docs.fauna.com/fauna/current/build/integration/cloudflare/)                               | [Yes](/workers/databases/native-integrations/fauna/)       | [fauna](https://github.com/fauna/fauna-js)                                         | API through client library |
+| [PlanetScale](https://planetscale.com/blog/introducing-the-planetscale-serverless-driver-for-javascript)  | [Yes](/workers/databases/native-integrations/planetscale/) | [@planetscale/database](https://github.com/planetscale/database-js)                | API via client library     |
+| [Supabase](https://github.com/supabase/supabase/tree/master/examples/with-cloudflare-workers)             | [Yes](/workers/databases/native-integrations/supabase/)    | [@supabase/supabase-js](https://github.com/supabase/supabase-js)                   | API via client library     |
+| [Prisma](https://www.prisma.io/docs/guides/deployment/deployment-guides/deploying-to-cloudflare-workers)  | No                                                         | [prisma](https://github.com/prisma/prisma)                                         | API via client library     |
+| [Neon](https://blog.cloudflare.com/neon-postgres-database-from-workers/)                                  | [Yes](/workers/databases/native-integrations/neon/)        | [@neondatabase/serverless](https://neon.tech/blog/serverless-driver-for-postgres/) | API via client library     |
+| [Hasura](https://hasura.io/blog/building-applications-with-cloudflare-workers-and-hasura-graphql-engine/) | No                                                         | API                                                                                | GraphQL API via fetch()    |
+| [Upstash Redis](https://blog.cloudflare.com/cloudflare-workers-database-integration-with-upstash/)        | [Yes](/workers/databases/native-integrations/upstash/)     | [@upstash/redis](https://github.com/upstash/upstash-redis)                         | API via client library     |
+| [TiDB Cloud](https://docs.pingcap.com/tidbcloud/integrate-tidbcloud-with-cloudflare)                      | No                                                         | [@tidbcloud/serverless](https://github.com/tidbcloud/serverless-js)                | API via client library     |
+
+:::note[Easier setup with database integrations]
+
+[Database Integrations](/workers/databases/native-integrations/) simplify the authentication for serverless database drivers by managing credentials on your behalf and includes support for PlanetScale, Neon and Supabase.
 
 If you do not see an integration listed or have an integration to add, complete and submit the [Cloudflare Developer Platform Integration form](https://forms.gle/iaUqLWE8aezSEhgd6).
+
 :::
 
 Once you have installed the necessary packages, use the APIs provided by these packages to connect to your database and perform operations on it. Refer to detailed links for service-specific instructions.
-
-## Connect to a database from a Worker
-
-There are four ways to connect to a database from a Worker:
-
-1. With [Hyperdrive](/hyperdrive/) (recommended), which dramatically speeds up accessing traditional databases. Hyperdrive currently supports PostgreSQL and PostgreSQL-compatible database providers.
-2. [Database Integrations](/workers/databases/native-integrations/): Simplifies authentication by managing credentials on your behalf and includes support for PlanetScale, Neon and Supabase.
-3. [TCP Socket API](/workers/runtime-apis/tcp-sockets): A direct TCP connection to a database. TCP is the de-facto standard protocol that many databases, such as PostgreSQL and MySQL, use for client connectivity.
-4. HTTP- or WebSocket-based serverless drivers: Many hosted databases support a HTTP or WebSocket API to enable either clients to connect from environments that do not support TCP, or as their preferred connection protocol.
 
 ## Authentication
 

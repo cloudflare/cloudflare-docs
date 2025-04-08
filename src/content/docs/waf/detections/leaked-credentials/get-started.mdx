@@ -8,7 +8,7 @@ head:
     content: Get started with leaked credentials detection
 ---
 
-import { Render, TabItem, Tabs, Details } from "~/components";
+import { Render, TabItem, Tabs, Details, APIRequest } from "~/components";
 
 ## 1. Turn on the detection
 
@@ -107,21 +107,19 @@ To check for leaked credentials in a way that is not covered by the default conf
 
 Use a `POST` request similar to the following:
 
-```bash
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/leaked-credential-checks/detections" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "username": "lookup_json_string(http.request.body.raw, \"user\")",
-  "password": "lookup_json_string(http.request.body.raw, \"secret\")"
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/leaked-credential-checks/detections"
+	method="POST"
+	json={{
+		username: 'lookup_json_string(http.request.body.raw, "user")',
+		password: 'lookup_json_string(http.request.body.raw, "secret")',
+	}}
+/>
 
 This pair of lookup expressions (for username and password) will scan incoming HTTP requests containing a JSON body with a structure similar to the following:
 
 ```js
-{"user": "<username>", "secret": "<password>"}
+{"user": "<USERNAME>", "secret": "<PASSWORD>"}
 ```
 
 Refer to the [`lookup_json_string()`](/ruleset-engine/rules-language/functions/#lookup_json_string) documentation for more information on this function.
