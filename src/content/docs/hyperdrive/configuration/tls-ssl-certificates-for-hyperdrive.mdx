@@ -18,7 +18,7 @@ Hyperdrive can be configured to use only server certificates, only client certif
 
 :::note
 
-Support for server certificates and client certificates is not available for MySQL (beta).
+Support for server certificates and client certificates is not available for MySQL (beta). Support for server certificates and client certificates is only available for local development using `npx wrangler dev --remote` which runs your Workers and Hyperdrive in Cloudflare's network with local debugging.
 
 :::
 
@@ -46,6 +46,7 @@ has been used to sign the certificate of your database.
 Using Wrangler, you can upload your root certificate authority (CA) certificate:
 
 ```bash
+# requires Wrangler 4.7.0 or greater
 npx wrangler cert upload certificate-authority --ca-cert \<ROUTE_TO_CA_PEM_FILE\>.pem --name \<CUSTOM_NAME_FOR_CA_CERT\>
 
 ---
@@ -110,6 +111,7 @@ file (`client-cert.pem`) and a private key with which the certificate was genera
 Upload your client certificates to be used by Hyperdrive using Wrangler:
 
 ```bash
+# requires Wrangler 4.7.0 or greater
 npx wrangler cert upload mtls-certificate --cert client-cert.pem --key client-key.pem --name <CUSTOM_NAME_FOR_CLIENT_CERTIFICATE>
 
 ---
