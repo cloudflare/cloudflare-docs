@@ -1,15 +1,15 @@
 ---
 pcx_content_type: concept
-title: Customize shard count
+title: Increase pipeline throughput
 sidebar:
   order: 11
 ---
 
 import { Render, PackageManagers } from "~/components";
 
-Shards affect a pipeline's throughput. Increasing the shard count for a pipeline increases the maximum throughput. By default, each pipeline is configured with two shards.
+A pipeline's maximum throughput can be increased by increasing the shard count. A single shard can handle approximately 7,000 requests per second, or can ingest 7 MB/s of data.
 
-To set the shard count, use the `--shard-count` flag while creating or updating a pipeline:
+By default, each pipeline is configured with two shards. To set the shard count, use the `--shard-count` flag while creating or updating a pipeline:
 ```sh
 $ npx wrangler pipelines update [PIPELINE-NAME] --shard-count 10
 ```
