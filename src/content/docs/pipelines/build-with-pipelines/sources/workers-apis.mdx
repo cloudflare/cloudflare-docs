@@ -11,7 +11,7 @@ head:
 
 import { Render, PackageManagers, WranglerConfig } from "~/components";
 
-Pipelines exposes an API directly to your [Workers](/workers) scripts via the [bindings](/workers/runtime-apis/bindings/#what-is-a-binding) concept. Bindings allow you to securely send data to a Pipeline without having to manage API keys or clients. Sending data via a Worker is enabled by default.
+Pipelines exposes an API directly to your [Workers](/workers) scripts via the [bindings](/workers/runtime-apis/bindings/#what-is-a-binding) concept. Bindings allow you to securely send data to a pipeline without having to manage API keys or clients. Sending data via a Worker is enabled by default.
 
 ## Send data from a Worker
 ### Setup a binding
@@ -27,7 +27,7 @@ compatibility_date = "2025-04-01"
 
 [[pipelines]]
 pipeline = "<MY-PIPELINE-NAME>" # The name of your Pipeline
-binding = "MY_PIPELINE" # The binding name, accessed using env.MY_PIPELINE
+binding = "PIPELINE" # The binding name, accessed using env.MY_PIPELINE
 ```
 
 </WranglerConfig>
@@ -35,7 +35,7 @@ binding = "MY_PIPELINE" # The binding name, accessed using env.MY_PIPELINE
 You can bind multiple pipelines to a Worker.
 
 ### Send data
-The pipelines binding exposes a `send()` method. For example, to log inbound HTTP requests to your Worker:
+The Pipelines binding exposes a `send()` method. For example, to log inbound HTTP requests to your Worker:
 
 ```ts
 export default {
@@ -51,12 +51,9 @@ export default {
 } satisfies ExportedHandler<Env>;
 ```
 
-## Accepted data formats
-Pipelines accept arrays of valid JSON objects. You can send multiple objects in a single request, provided the total data volume is within the [documented limits](/pipelines/platform/limits). Sending data in a different format will result in an error.
-
 ## Workers API
 ### `Pipeline`
-A binding which allows a Worker to send messages to a Pipeline.
+A binding which allows a Worker to send messages to a pipeline.
 
 ```ts
 interface Pipeline<PipelineRecord> {
@@ -66,9 +63,9 @@ interface Pipeline<PipelineRecord> {
 
 * `send(records)`: `Promise<void>`
 
-  * Sends a record to the Pipeline. The body must be an array of objects which are JSON serializable.
-  * When the promise resolves, the message is confirmed to be stored by the pipeline.
+  * Sends records to the pipeline. The body must be an array of objects which are JSON serializable.
+  * When the promise resolves, the records are confirmed to be ingested.
 
 :::note
-When running your Worker locally, Pipelines are partially simulated. Worker code which sends data to a pipeline will execute successfully. However, the full pipeline, including batching & writing to R2, will not be executed locally.
+When running your Worker locally, pipelines are partially simulated. Worker code which sends data to a pipeline will execute successfully. However, the full pipeline, including batching & writing to R2, will not be executed locally.
 :::

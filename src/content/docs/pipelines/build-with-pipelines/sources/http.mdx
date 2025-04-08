@@ -44,18 +44,6 @@ Send data to your pipeline's HTTP endpoint:
 curl "https://0e00c5ff09b34d018152af98d06f5a1xvc.pipelines.cloudflare.com/" -d '[{ ...JSON_DATA... }]'
 ```
 
-## Accepted data formats
-Pipelines accept arrays of valid JSON objects. You can send multiple objects in a single request, provided the total data volume is within the [documented limits](/pipelines/platform/limits). Sending data in a different format will result in an error.
-
-For example, you can send data to your pipeline using a curl command like this:
-```sh
-curl -X POST https://<PIPELINE-ID>.pipelines.cloudflare.com \
-  -H "Content-Type: application/json" \
-  -d '[{"foo":"bar"}, {"foo":"bar"}, {"foo":"bar"}]'
-
-{"success":true,"result":{"committed":3}}
-```
-
 ## Authentication
 You can secure your HTTP ingestion endpoint using Cloudflare API tokens. By default, authentication is turned off. To configure authentication, use the `--require-http-auth` flag while creating or updating a pipeline.
 
