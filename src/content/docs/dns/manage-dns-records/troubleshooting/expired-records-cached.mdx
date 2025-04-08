@@ -20,6 +20,8 @@ In the event that an upstream DNS server takes too long to respond, or the upstr
 
 ## Solutions
 
--
+- If possible, temporarily replace the proxied CNAME with a proxied A record. This may not always be possible, especially if the upstream target is a load balancer or if it returns dynamic responses.
+
+- Report the issues to the zone owner or DNS provider for the upstream target that is unresponsive. If it is a DNS operator that is serving the zone, you can try to reach out through DNS OARC ([Mattermost chat](https://www.dns-oarc.net/oarc/services/chat) or [email list](https://www.dns-oarc.net/oarc/lists)).
 
 [^1]: A hostname that is not using Cloudflare as its [authoritative DNS provider](/dns/concepts/#authoritative-dns).
