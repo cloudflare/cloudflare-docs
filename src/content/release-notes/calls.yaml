@@ -8,7 +8,7 @@ entries:
   - publish_date: "2024-09-25"
     title: TURN service is generally available (GA)
     description: |-
-      Cloudflare Realtime TURN service is generally available and helps address common challenges with real-time communication. For more information, refer to the [blog post](https://blog.cloudflare.com/webrtc-turn-using-anycast/) or [TURN documentation](/realtime/turn/).
+      Cloudflare Realtime TURN service is generally available and helps address common challenges with real-time communication. For more information, refer to the [blog post](https://blog.cloudflare.com/webrtc-turn-using-anycast/) or [TURN documentati(/realtime/ltime/turn/).
   - publish_date: "2024-04-04"
     title: Orange Meets availability
     description: |-

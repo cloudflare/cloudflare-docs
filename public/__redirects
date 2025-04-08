@@ -1948,3 +1948,6 @@
 /fundamentals/notifications/* /notifications/:splat 301
 /support/other-languages/* /support/ 301
 /support/speed/* /speed/ 301
+
+# Calls
+/calls/* /realtime/:splat 301
