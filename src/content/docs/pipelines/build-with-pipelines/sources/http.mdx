@@ -1,16 +1,16 @@
 ---
-title: Configure HTTP Endpoint
+title: Configure HTTP endpoint
 pcx_content_type: concept
 sidebar:
   order: 1
 head:
   - tag: title
-    content: Configure HTTP Endpoint
+    content: Configure HTTP endpoint
 ---
 
 import { Render, PackageManagers } from "~/components";
 
-Pipelines support data ingestion over HTTP. When you create a new pipeline, you will receive a globally scalable ingestion endpoint. To ingest data, make HTTP POST requests to the endpoint.
+Pipelines support data ingestion over HTTP. When you create a new pipeline using the default settings you will receive a globally scalable ingestion endpoint. To ingest data, make HTTP POST requests to the endpoint.
 
 ```sh
 $ npx wrangler@latest pipelines create my-clickstream-pipeline --r2-bucket my-bucket
@@ -55,15 +55,6 @@ curl -X POST https://<PIPELINE-ID>.pipelines.cloudflare.com \
 
 {"success":true,"result":{"committed":3}}
 ```
-
-## Turning HTTP ingestion off
-By default, ingestion via HTTP is turned on. You can turn it off by excluding it from the list of sources by using `--sources` when creating or updating a pipeline.
-
-```sh
-$ npx wrangler pipelines create [PIPELINE-NAME] --r2-bucket [R2-BUCKET-NAME] --sources worker
-```
-
-Ingestion URLs are tied to your pipeline ID. Turning HTTP off, and then turning it back on, will not change the URL.
 
 ## Authentication
 You can secure your HTTP ingestion endpoint using Cloudflare API tokens. By default, authentication is turned off. To configure authentication, use the `--require-http-auth` flag while creating or updating a pipeline.

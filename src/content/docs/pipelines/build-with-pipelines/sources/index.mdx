@@ -1,0 +1,26 @@
+---
+title: Sources
+pcx_content_type: concept
+sidebar:
+  order: 1
+  group:
+    hideIndex: false
+---
+
+Pipelines supports the following sources:
+* [HTTP Clients](/pipelines/build-with-pipelines/sources/http), with optional authentication and CORS settings
+* [Cloudflare Workers](/workers/), using the [Pipelines Workers API](/pipelines/build-with-pipelines/sources/workers-apis)
+
+Multiple sources can be active on a single pipeline simultaneously. For example, you can create a pipeline which accepts data from Workers and via HTTP. There is no limit to the number of source clients. Multiple workers can be configured to send data to the same pipeline.
+
+## Configuring allowed sources
+By default, ingestion via HTTP and from Workers is turned on. You can configure the allowed sources by using the `--source` flag while creating or updating a pipeline.
+
+For example, to create a pipeline which only accepts data via a Worker, you can run this command:
+```sh
+$ npx wrangler pipelines create [PIPELINE-NAME] --r2-bucket [R2-BUCKET-NAME] --source worker
+```
+
+:::note
+HTTP ingestion URLs are tied to your pipeline ID. Turning HTTP off, and then turning it back on, will not change the URL.
+:::

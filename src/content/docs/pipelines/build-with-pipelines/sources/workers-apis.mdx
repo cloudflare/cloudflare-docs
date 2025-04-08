@@ -54,13 +54,6 @@ export default {
 ## Accepted data formats
 Pipelines accept arrays of valid JSON objects. You can send multiple objects in a single request, provided the total data volume is within the [documented limits](/pipelines/platform/limits). Sending data in a different format will result in an error.
 
-## Turning ingestion via a Worker off
-By default, ingestion via a Worker is turned on. You can turn it off by excluding it from the list of sources, by using `--sources` when creating or updating a pipeline.
-
-```sh
-$ npx wrangler pipelines create [PIPELINE-NAME] --r2-bucket [R2-BUCKET-NAME] --sources http
-```
-
 ## Workers API
 ### `Pipeline`
 A binding which allows a Worker to send messages to a Pipeline.
