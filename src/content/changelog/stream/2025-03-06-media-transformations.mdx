@@ -1,0 +1,49 @@
+---
+title: Introducing Media Transformations from Cloudflare Stream
+description: >
+  Dynamically optimize, clip, and resize video from any origin, no storage
+  migration needed.
+date: 2025-03-06T12:00:00Z
+---
+
+Today, we are thrilled to announce Media Transformations, a new service that
+brings the magic of [Image Transformations](/images/transform-images/) to
+_short-form video files,_ wherever they are stored!
+
+For customers with a huge volume of short video — generative AI output,
+e-commerce product videos, social media clips, or short marketing content —
+uploading those assets to Stream is not always practical. Sometimes, the
+greatest friction to getting started was the thought of all that migrating.
+Customers want a simpler solution that retains their current storage strategy to
+deliver small, optimized MP4 files. Now you can do that with Media
+Transformations.
+
+To transform a video or image,
+[enable transformations](/stream/transform-videos/#getting-started) for your
+zone, then make a simple request with a specially formatted URL. The result is
+an MP4 that can be used in an HTML video element without a player library.
+If your zone already has Image Transformations enabled, then it is ready to
+optimize videos with Media Transformations, too.
+
+``` text title="URL format"
+https://example.com/cdn-cgi/media/<OPTIONS>/<SOURCE-VIDEO>
+```
+
+For example, we have a short video of the mobile in Austin's office. The
+original is nearly 30 megabytes and wider than necessary for this layout.
+Consider a simple width adjustment:
+
+<video controls>
+  <source src="https://developers.cloudflare.com/cdn-cgi/media/width=640/https://pub-d9fcbc1abcd244c1821f38b99017347f.r2.dev/aus-mobile.mp4" />
+</video>
+
+``` text title="Example URL"
+https://example.com/cdn-cgi/media/width=640/<SOURCE-VIDEO>
+https://developers.cloudflare.com/cdn-cgi/media/width=640/https://pub-d9fcbc1abcd244c1821f38b99017347f.r2.dev/aus-mobile.mp4
+```
+
+The result is less than 3 megabytes, properly sized, and delivered dynamically
+so that customers do not have to manage the creation and storage of these
+transformed assets.
+
+For more information, learn about [Transforming Videos](/stream/transform-videos/).

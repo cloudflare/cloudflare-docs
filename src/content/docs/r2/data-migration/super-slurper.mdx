@@ -6,18 +6,17 @@ learning_center:
   link: https://www.cloudflare.com/learning/cloud/what-is-data-migration/
 sidebar:
   order: 1
-
 ---
 
-import { InlineBadge, Render } from "~/components"
+import { InlineBadge, Render } from "~/components";
 
 Super Slurper allows you to quickly and easily copy objects from other cloud providers to an R2 bucket of your choice.
 
 Migration jobs:
 
-* Preserve custom object metadata from source bucket by copying them on the migrated objects on R2.
-* Do not delete any objects from source bucket.
-* Use TLS encryption over HTTPS connections for safe and private object transfers.
+- Preserve custom object metadata from source bucket by copying them on the migrated objects on R2.
+- Do not delete any objects from source bucket.
+- Use TLS encryption over HTTPS connections for safe and private object transfers.
 
 ## When to use Super Slurper
 
@@ -52,9 +51,27 @@ This setting determines what happens when an object being copied from the source
 
 Cloudflare currently supports copying data from the following cloud object storage providers to R2:
 
-* Amazon S3
-* Cloudflare R2
-* Google Cloud Storage (GCS)
+- Amazon S3
+- Cloudflare R2
+- Google Cloud Storage (GCS)
+- All S3-compatible storage providers
+
+### Tested S3-compatible storage providers
+
+The following S3-compatible storage providers have been tested and verified to work with Super Slurper:
+
+- Backblaze B2
+- DigitalOcean Spaces
+- Scaleway Object Storage
+- Wasabi Cloud Object Storage
+
+Super Slurper should support transfers from all S3-compatible storage providers, but the ones listed have been explicitly tested.
+
+:::note
+
+Have you tested and verified another S3-compatible provider? [Open a pull request](https://github.com/cloudflare/cloudflare-docs/edit/production/src/content/docs/r2/data-migration/super-slurper.mdx) or [create a GitHub issue](https://github.com/cloudflare/cloudflare-docs/issues/new).
+
+:::
 
 ## Create credentials for storage providers
 
@@ -69,20 +86,14 @@ To create credentials with the correct permissions:
 
 ```json
 {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": [
-                "s3:Get*",
-                "s3:List*"
-            ],
-            "Resource": [
-                "arn:aws:s3:::<BUCKET_NAME>",
-                "arn:aws:s3:::<BUCKET_NAME>/*"
-            ]
-        }
-    ]
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Effect": "Allow",
+			"Action": ["s3:Get*", "s3:List*"],
+			"Resource": ["arn:aws:s3:::<BUCKET_NAME>", "arn:aws:s3:::<BUCKET_NAME>/*"]
+		}
+	]
 }
 ```
 
@@ -123,5 +134,5 @@ You can now use this JSON key file when enabling Super Slurper.
 
 Objects stored using AWS S3 [archival storage classes](https://aws.amazon.com/s3/storage-classes/#Archive) will be skipped and need to be copied separately. Specifically:
 
-* Files stored using S3 Glacier tiers (not including Glacier Instant Retrieval) will be skipped and logged in the migration log.
-* Files stored using S3 Intelligent Tiering and placed in Deep Archive tier will be skipped and logged in the migration log.
+- Files stored using S3 Glacier tiers (not including Glacier Instant Retrieval) will be skipped and logged in the migration log.
+- Files stored using S3 Intelligent Tiering and placed in Deep Archive tier will be skipped and logged in the migration log.

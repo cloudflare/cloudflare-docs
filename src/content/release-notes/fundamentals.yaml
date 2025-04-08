@@ -21,10 +21,10 @@ entries:
       Refer to [Account owned tokens documentation](/fundamentals/api/get-started/account-owned-tokens/) for more details.
   - publish_date: "2024-12-16"
     title: Cloudflare API docs are now automatically generated
-    description: |- 
+    description: |-
       Cloudflare's API documentation is now being automatically generated based on OpenAPI Schemas, and we have retired our old documentation. The move to OpenAPI Schemas allows us to ensure greater consistency and quality across our API documentation. The documentation now also includes examples of how to call the API using curl or our SDKs. 
 
-      Refer to the [Cloudflare API documentation](/api/), or the [blog post on our transition to OpenAPI](https://blog.cloudflare.com/open-api-transition/) for more information. 
+      Refer to the [Cloudflare API documentation](/api/), or the [blog post on our transition to OpenAPI](https://blog.cloudflare.com/open-api-transition/) for more information.
   - publish_date: "2024-12-06"
     title: Dashboard SCIM is now fully self-serve
     description: |-

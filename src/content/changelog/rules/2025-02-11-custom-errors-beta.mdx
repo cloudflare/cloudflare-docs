@@ -6,14 +6,16 @@ products:
 date: 2025-02-11T11:00:00Z
 ---
 
-Cloudflare introduces [Custom Errors](/rules/custom-errors/) (beta), building on Custom Error Responses with new asset storage capabilities. This update allows users to store externally hosted error pages at Cloudflare edge and reference them in custom error rules, eliminating the need to supply inline content.
+We're introducing [Custom Errors](/rules/custom-errors/) (beta), which builds on our existing Custom Error Responses feature with new asset storage capabilities.
 
-New capabilities:
+This update allows you to store externally hosted error pages on Cloudflare and reference them in custom error rules, eliminating the need to supply inline content.
+
+This brings the following new capabilities:
 
 - **Custom error assets** – Fetch and store external error pages at the edge for use in error responses.
 - **Account-Level custom errors** – Define error handling rules and assets at the account level for consistency across multiple zones. Zone-level rules take precedence over account-level ones, and assets are not shared between levels.
 
-To store an external error page on the Cloudflare global network, submit a `POST` request to create an asset:
+You can use Cloudflare API to upload your existing assets for use with Custom Errors:
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_pages/assets" \
@@ -26,7 +28,7 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_pages/assets" 
 }'
 ```
 
-Then, reference the stored asset in a custom error rule:
+You can then reference the stored asset in a Custom Error rule:
 
 ```bash
 curl --request PUT \

@@ -7,7 +7,7 @@ sidebar:
     text: Beta
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, Render } from "~/components";
 
 Log Explorer enables you to store and explore your Cloudflare logs directly within the Cloudflare Dashboard or API. Giving you visibility into your logs without the need to forward them to third parties. Logs are stored on Cloudflare's global network using the R2 object storage platform and can be queried via the Dashboard or SQL API.
 
@@ -26,12 +26,7 @@ Log Explorer is available at the account and zone level. At the zone level, data
 
 At the account level, the datasets available are:
 
-- [Access requests](/logs/reference/log-fields/account/access_requests/) (`FROM access_requests`)
-- [CASB Findings](/logs/reference/log-fields/account/casb_findings/) (`FROM casb_findings`)
-- [Device posture results](/logs/reference/log-fields/account/device_posture_results/) (`FROM device_posture_results`)
-- [Gateway DNS](/logs/reference/log-fields/account/gateway_dns/) (`FROM gateway_dns`)
-- [Gateway HTTP](/logs/reference/log-fields/account/gateway_http/) (`FROM gateway_http`)
-- [Gateway Network](/logs/reference/log-fields/account/gateway_network/) (`FROM gateway_network`)
+<Render file="log-explorer-account-datasets" product="logs" />
 
 ## Authentication
 
@@ -44,7 +39,7 @@ Note that these permissions exist at the account and zone level and you need the
 
 Authentication with the API can be done via an authentication header or API token. Append your API call with either of the following additional parameters.
 
-- **Authentication header** 
+- **Authentication header**
 
   - `X-Auth-Email` - the Cloudflare account email address associated with the domain
   - `X-Auth-Key` - the Cloudflare API key
@@ -53,11 +48,9 @@ Authentication with the API can be done via an authentication header or API toke
 
   - `Authorization: Bearer <API_TOKEN>` To create an appropriately scoped API token, refer to [Create API token](/fundamentals/api/get-started/create-token/) documentation. Copy and paste the token into the authorization parameter for your API call.
 
-    
-
 ## Enable Log Explorer
 
-In order for Log Explorer to begin storing logs, you need to enable the desired datasets. You can do this via the dashboard or the API. 
+In order for Log Explorer to begin storing logs, you need to enable the desired datasets. You can do this via the dashboard or the API.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -149,18 +142,18 @@ Which returns the following HTTP request details:
 
 ```json
 {
-  "result": [
-    {
-      "clientrequestscheme": "https",
-      "clientrequesthost": "example.com",
-      "clientrequestmethod": "GET",
-      "clientrequestuseragent": "curl/7.88.1",
-      "edgeresponsestatus": 200
-    }
-  ],
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": [
+		{
+			"clientrequestscheme": "https",
+			"clientrequesthost": "example.com",
+			"clientrequestmethod": "GET",
+			"clientrequestuseragent": "curl/7.88.1",
+			"edgeresponsestatus": 200
+		}
+	],
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -176,23 +169,23 @@ Which returns the following request details:
 
 ```json
 {
-  "result": [
-    {
-      "createdat": "2025-01-14T18:17:55Z",
-      "appdomain": "example.com",
-      "appuuid": "a66b4ab0-ccdf-4d60-a6d0-54a59a827d92",
-      "action": "login",
-      "allowed": true,
-      "country": "us",
-      "rayid": "90fbb07c0b316957",
-      "email": "user@example.com",
-      "ipaddress": "1.2.3.4",
-      "useruid": "52859e81-711e-4de0-8b31-283336060e79"
-    }
-  ],
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": [
+		{
+			"createdat": "2025-01-14T18:17:55Z",
+			"appdomain": "example.com",
+			"appuuid": "a66b4ab0-ccdf-4d60-a6d0-54a59a827d92",
+			"action": "login",
+			"allowed": true,
+			"country": "us",
+			"rayid": "90fbb07c0b316957",
+			"email": "user@example.com",
+			"ipaddress": "1.2.3.4",
+			"useruid": "52859e81-711e-4de0-8b31-283336060e79"
+		}
+	],
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 

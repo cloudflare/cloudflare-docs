@@ -56,8 +56,8 @@ Worker A that declares a Service binding to Worker B can call Worker B in two di
 
 ## Example — build your first Service binding using RPC
 
+This example [extends the `WorkerEntrypoint` class](/workers/runtime-apis/bindings/service-bindings/rpc/#the-workerentrypoint-class) to support RPC-based Service bindings.
 First, create the Worker that you want to communicate with. Let's call this "Worker B". Worker B exposes the public method, `add(a, b)`:
-
 
 
 <WranglerConfig>

@@ -55,17 +55,21 @@ For example, this configuration blocks every request to the application, except 
 
 :::caution[Warning]
 
-Bypass does not enforce any Access security controls and requests are not logged. This should be tested before deploying to production. Consider using Service Auth if you would like to enforce policies and maintain logging without requiring user authentication.
+Bypass does not enforce any Access security controls and requests are not logged. Bypass policies should be tested before deploying to production. Consider using [Service Auth](/cloudflare-one/policies/access/#service-auth) if you would like to enforce policies and maintain logging without requiring user authentication.
+
+As Bypass does not enforce Access security controls, Bypass policies do not support identity-based [rule types](/cloudflare-one/policies/access/#rule-types). When making Bypass policies, you will not be able to apply certain identity-based [selectors](/cloudflare-one/policies/access/#selectors) (such as email, or IP).
 
 :::
 
-The Bypass action disables any Access enforcement for traffic that meets the defined rule criteria. Bypass is typically used to enable applications that require specific endpoints to be public. For example, some applications have an endpoint under the `/admin` route that must be publicly routable. In this situation, you could create an Access application for the domain `test.example.com/admin/<your-url>` and add the following Bypass policy:
+The Bypass action disables any Access enforcement for traffic that meets the defined rule criteria. Bypass is typically used to enable applications that require specific endpoints to be public.
+
+For example, some applications have an endpoint under the `/admin` route that must be publicly routable. In this situation, you could create an Access application for the domain `test.example.com/admin/<your-url>` and add the following Bypass policy:
 
 | Action | Rule type | Selector | Value      |
 | ------ | --------- | -------- | ---------- |
 | Bypass | Include   | Everyone | `Everyone` |
 
-As part of implementing a Zero Trust security model, we do not recommend using Bypass to grant direct permanent access to your internal applications. To enable seamless and secure access for on-network employees, use Cloudflare Tunnel to [connect your private network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/) and have users connect through WARP.
+As part of implementing a Zero Trust security model, Cloudflare does not recommend using Bypass to grant direct permanent access to your internal applications. To enable seamless and secure access for on-network employees, use Cloudflare Tunnel to [connect your private network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/) and have users connect through WARP.
 
 :::note
 
@@ -110,18 +114,18 @@ the policy will only grant access to people reaching the application from both t
 
 To require only one country and one email ending:
 
-1. [Create a rule group](/cloudflare-one/policies/access/groups/) that includes users in Portugal OR in the United States:
+1.  [Create a rule group](/cloudflare-one/policies/access/groups/) that includes users in Portugal OR in the United States:
 
-		| Rule type | Selector | Value                       |
-		| --------- | -------- | --------------------------- |
-		| Include   | Country  | `United States`, `Portugal` |
+        | Rule type | Selector | Value                       |
+        | --------- | -------- | --------------------------- |
+        | Include   | Country  | `United States`, `Portugal` |
 
-2. Create a policy that requires the rule group, and that also includes users with emails ending in either `@cloudflare.com` OR `@contractors.com`:
+2.  Create a policy that requires the rule group, and that also includes users with emails ending in either `@cloudflare.com` OR `@contractors.com`:
 
-		| Action | Rule type | Selector          | Value                                 |
-		| ------ | --------- | ----------------- | ------------------------------------- |
-		| Allow  | Require   | Rule group         | `Country requirements`                    |
-		|        | Include   | Emails ending in  | `@cloudflare.com`, `@contractors.com` |
+        | Action | Rule type | Selector          | Value                                 |
+        | ------ | --------- | ----------------- | ------------------------------------- |
+        | Allow  | Require   | Rule group         | `Country requirements`                    |
+        |        | Include   | Emails ending in  | `@cloudflare.com`, `@contractors.com` |
 
 ## Selectors
 
@@ -129,26 +133,26 @@ When you add a rule to your policy, you will be asked to specify the criteria/at
 
 Identity-based attributes are only checked when a user authenticates to Access, whereas non-identity attributes are polled continuously for changes during the [user session](/cloudflare-one/identity/users/session-management/). If you have configured [SCIM provisioning](/cloudflare-one/identity/users/scim/), you can force a user to re-attest all attributes with Access whenever you revoke the user in the IdP or update their IdP group membership.
 
-| Selector                 | Description                                                                                                                                                                   | Checked at login | Checked continuously<sup>1</sup> |
-| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- | -------------------------------- |
-| Emails                   | `you@company.com`                                                                                                                                                             | ✅               | ❌                               |
-| Emails ending in         | `@company.com`                                                                                                                                                                | ✅               | ❌                               |
-| External Evaluation      | Allows or denies access based on [custom logic](/cloudflare-one/policies/access/external-evaluation/) in an external API.                                                     | ✅               | ❌                               |
-| IP ranges                | `192.168.100.1/24` (supports IPv4/IPv6 addresses and CIDR ranges)                                                                                                             | ✅               | ✅                               |
-| Country                  | Uses the IP address to determine country.                                                                                                                                     | ✅               | ✅                               |
-| Everyone                 | Allows, denies, or bypasses access to everyone.                                                                                                                               | ✅               | ❌                               |
-| Common Name              | The request will need to present a valid certificate with an expected common name.                                                                                            | ✅               | ✅                               |
-| Valid Certificate        | The request will need to present any valid client certificate.                                                                                                                | ✅               | ✅                               |
-| Service Token            | The request will need to present the correct service token headers configured for the specific application.                                                                   | ✅               | ✅                               |
-| Any Access Service Token | The request will need to present the headers for any [service token](/cloudflare-one/identity/service-tokens/) created for this account.                                      | ✅               | ✅                               |
-| Login Methods            | Checks the identity provider used at the time of login.                                                                                                                       | ✅               | ❌                               |
-| Authentication Method    | Checks the [multifactor authentication](/cloudflare-one/policies/access/mfa-requirements/) method used by the user, if supported by the identity provider.                    | ✅               | ❌                               |
-| Identity provider group  | Checks the user groups configured with your identity provider (IdP). This selector only displays if you use Microsoft Entra ID, GitHub, Google, Okta, or an IdP that provisions groups with [SCIM](/cloudflare-one/identity/users/scim/).      | ✅               | ❌                               |
-| SAML Group               | Checks a SAML attribute name / value pair. This selector only displays if you use a [generic SAML](/cloudflare-one/identity/idp-integration/generic-saml/) identity provider. | ✅               | ❌                               |
-| OIDC Claim               | Checks an OIDC claim name / value pair. This selector only displays if you use a [generic OIDC](/cloudflare-one/identity/idp-integration/generic-oidc/) identity provider.    | ✅               | ❌                               |
-| Device posture           | Checks [device posture signals](/cloudflare-one/identity/devices/) from the WARP client or a third-party service provider.                                                    | ✅               | ✅                               |
-| Warp                     | Checks that the device is connected to WARP, including the consumer version.                                                                                                  | ✅               | ✅                               |
-| Gateway                  | Checks that the device is connected to your Zero Trust instance through the [WARP client](/cloudflare-one/connections/connect-devices/warp/).                                 | ✅               | ✅                               |
+| Selector                 | Description                                                                                                                                                                                                                               | Checked at login | Checked continuously<sup>1</sup> |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- | -------------------------------- |
+| Emails                   | `you@company.com`                                                                                                                                                                                                                         | ✅               | ❌                               |
+| Emails ending in         | `@company.com`                                                                                                                                                                                                                            | ✅               | ❌                               |
+| External Evaluation      | Allows or denies access based on [custom logic](/cloudflare-one/policies/access/external-evaluation/) in an external API.                                                                                                                 | ✅               | ❌                               |
+| IP ranges                | `192.168.100.1/24` (supports IPv4/IPv6 addresses and CIDR ranges)                                                                                                                                                                         | ✅               | ✅                               |
+| Country                  | Uses the IP address to determine country.                                                                                                                                                                                                 | ✅               | ✅                               |
+| Everyone                 | Allows, denies, or bypasses access to everyone.                                                                                                                                                                                           | ✅               | ❌                               |
+| Common Name              | The request will need to present a valid certificate with an expected common name.                                                                                                                                                        | ✅               | ✅                               |
+| Valid Certificate        | The request will need to present any valid client certificate.                                                                                                                                                                            | ✅               | ✅                               |
+| Service Token            | The request will need to present the correct service token headers configured for the specific application.                                                                                                                               | ✅               | ✅                               |
+| Any Access Service Token | The request will need to present the headers for any [service token](/cloudflare-one/identity/service-tokens/) created for this account.                                                                                                  | ✅               | ✅                               |
+| Login Methods            | Checks the identity provider used at the time of login.                                                                                                                                                                                   | ✅               | ❌                               |
+| Authentication Method    | Checks the [multifactor authentication](/cloudflare-one/policies/access/mfa-requirements/) method used by the user, if supported by the identity provider.                                                                                | ✅               | ❌                               |
+| Identity provider group  | Checks the user groups configured with your identity provider (IdP). This selector only displays if you use Microsoft Entra ID, GitHub, Google, Okta, or an IdP that provisions groups with [SCIM](/cloudflare-one/identity/users/scim/). | ✅               | ❌                               |
+| SAML Group               | Checks a SAML attribute name / value pair. This selector only displays if you use a [generic SAML](/cloudflare-one/identity/idp-integration/generic-saml/) identity provider.                                                             | ✅               | ❌                               |
+| OIDC Claim               | Checks an OIDC claim name / value pair. This selector only displays if you use a [generic OIDC](/cloudflare-one/identity/idp-integration/generic-oidc/) identity provider.                                                                | ✅               | ❌                               |
+| Device posture           | Checks [device posture signals](/cloudflare-one/identity/devices/) from the WARP client or a third-party service provider.                                                                                                                | ✅               | ✅                               |
+| Warp                     | Checks that the device is connected to WARP, including the consumer version.                                                                                                                                                              | ✅               | ✅                               |
+| Gateway                  | Checks that the device is connected to your Zero Trust instance through the [WARP client](/cloudflare-one/connections/connect-devices/warp/).                                                                                             | ✅               | ✅                               |
 
 <sup>1</sup> For SaaS applications, Access can only enforce policies at the time
 of initial sign on and when reissuing the SaaS session. Once the user has

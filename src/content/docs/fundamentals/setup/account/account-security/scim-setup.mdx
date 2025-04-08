@@ -5,7 +5,7 @@ updated: 2024-12-04
 
 ---
 
-Cloudflare supports bulk provisioning of users into the Cloudflare dashboard by using the System for Cross-domain Identity Management (SCIM) protocol. This allows you to connect your external identity provider (IdP) to Cloudflare and quickly onboard and manage users and their permissions. Cloudflare supports SCIM onboarding with Okta and Microsoft Entra. 
+Cloudflare supports bulk provisioning of users into the Cloudflare dashboard by using the System for Cross-domain Identity Management (SCIM) protocol. This allows you to connect your external identity provider (IdP) to Cloudflare and quickly onboard and manage users and their permissions. Cloudflare supports SCIM onboarding with Okta and Microsoft Entra.
 
 :::note
 Cloudflare Zero Trust also supports SCIM for onboarding users to Cloudflare Access. [Learn more](/cloudflare-one/identity/users/scim/)
@@ -14,7 +14,7 @@ Cloudflare Zero Trust also supports SCIM for onboarding users to Cloudflare Acce
 ## Limitations
 
 - If a user is the only Super Administrator on an Enterprise account, they will not be deprovisioned.
-- Cloudflare currently only supports [Account-scoped Roles](/fundamentals/setup/manage-members/roles/#account-scoped-roles) and does not support Domain-scoped Roles provisioning via SCIM. 
+- Cloudflare currently only supports [Account-scoped Roles](/fundamentals/setup/manage-members/roles/#account-scoped-roles) and does not support Domain-scoped Roles provisioning via SCIM.
 - Cloudflare does not allow custom user groups.
 
 ## Prerequisites
@@ -31,7 +31,7 @@ Accounts provisioned with SCIM need to verify their email addresses.
 ---
 ## Gather the required data
 
-To start, you will need to collect a couple of pieces of data from Cloudflare and set these aside for later use. 
+To start, you will need to collect a couple of pieces of data from Cloudflare and set these aside for later use.
 
 ### Get your Account ID
 
@@ -91,26 +91,26 @@ To start, you will need to collect a couple of pieces of data from Cloudflare an
 1. In **Provisioning to App**, select **Edit**.
 2. Enable **Create Users** and **Deactivate Users**. Select **Save**.
 3. In the integration page, go to **Assignments** > **Assign** > **Assign to Groups**.
-4. Choose the group(s) that you want to provision to Cloudflare. 
+4. Choose the group(s) that you want to provision to Cloudflare.
 5. Select **Done**.
 
 This will provision all of the users in the group(s) affected to your Cloudflare account with "minimal account access."
 
-### Configure user permissions 
+### Configure user permissions
 
 There are two options for managing user permissions:
 
-* Manage your user permissions on a per-user basis in the Cloudflare dashboard, API, or using Terraform. 
-* Map your IdP groups to a Cloudflare built-in [Role](/fundamentals/setup/manage-members/roles/). Groups may only be linked to one role. 
+* Manage your user permissions on a per-user basis in the Cloudflare dashboard, API, or using Terraform.
+* Map your IdP groups to a Cloudflare built-in [Role](/fundamentals/setup/manage-members/roles/). Groups may only be linked to one role.
 
 1. Go to your SCIM application in the App Integration Catalog, then select **Provisioning**.
 2. Under **To App*, select **Edit**.
 3. Enable **Create Users** and **Deactivate Users**. Select **Save**.
 4. Go to **Push Groups**.
 5. Select **+ Push Groups**, then **Find groups by name**.
-6. Enter the name of the group(s) that you want to sync to Cloudflare. 
+6. Enter the name of the group(s) that you want to sync to Cloudflare.
 7. Choose **Link Group**.
-8. Cloudflare provisioned user groups are named in the pattern `CF-<accountID> - <Role Name>`. Choose the appropriate group that maps to your target role. 
+8. Cloudflare provisioned user groups are named in the pattern `CF-<accountID> - <Role Name>`. Choose the appropriate group that maps to your target role.
 9. Disable **Rename groups**. Select **Save**.
 10. Within the **Push Groups** tab, select **Push Groups**.
 11. Add the groups you created.
@@ -153,5 +153,17 @@ Refer to the list of [Roles](/fundamentals/setup/manage-members/roles/) for more
 7. Select **Start provisioning** to view the new users and groups populated on the Cloudflare dashboard.
 
 :::note
-To successfully provision with Microsoft Entra ID, the `user principal name` and `email` fields must match. These values are case-sensitive. 
+To successfully provision with Microsoft Entra ID, the `user principal name` and `email` fields must match. These values are case-sensitive.
 :::
+
+## Expected behaviors
+
+Expectations for user lifecycle management with SCIM:
+
+| Expected Cloudflare dash behavior              | Identity provider action                                                                                                                                        |
+| ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| User is added to account as member             | Assign the user to a SCIM application. They will be assigned the Minimal Account Access role so that their dash experience is not broken.                       |
+| User is removed from account as member         | Unassign the user from the SCIM application.                                                                                                                    |
+| Add role to user                               | Add the user to a group in the IdP which is pushed via SCIM. They must also be assigned to the SCIM application and exist as an account member.                 |
+| Remove role from user                          | Remove the user from the corresponding group in the IdP.                                                                                                        |
+| Retain user in account but with no permissions | Remove the user from all role groups but leave them assigned to the SCIM application. They will be an account member with only the role Minimal Account Access. |

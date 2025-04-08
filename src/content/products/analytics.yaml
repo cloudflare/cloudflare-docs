@@ -3,7 +3,7 @@ name: Analytics
 product:
   title: Analytics
   url: /analytics/
-  group: Cloudflare essentials
+  group: Core platform
   additional_groups: [Analytics]
 
 meta:
@@ -14,7 +14,3 @@ meta:
     exactly what you need, from one metric for a domain to multiple metrics
     aggregated for your account.
   author: "@cloudflare"
-
-externals:
-  - title: Cloudflare homepage
-    url: https://cloudflare.com

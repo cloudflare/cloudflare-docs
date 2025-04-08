@@ -1,29 +1,29 @@
 ---
-title: Configure JWT Validation
+title: Configure JWT validation
 pcx_content_type: how-to
 type: overview
 sidebar:
   order: 1
 head:
   - tag: title
-    content: Configure JWT Validation
+    content: Configure JWT validation
 
 ---
 
 import { GlossaryTooltip } from "~/components"
 
-Use the Cloudflare API to configure [JWT Validation](/api-shield/security/jwt-validation/), which requires Token Configurations and Token Validation Rules.
+Use the Cloudflare API to configure [JWT validation](/api-shield/security/jwt-validation/), which requires token configurations and token validation rules.
 
-## Token Configurations
+## Token configurations
 
-A Token Configuration defines a JSON Web Key Set (JWKs), which is used to validate JSON Web Tokens (JWTs) sent by clients and information on where these JWTs are sent in the request.
+A token configuration defines a JSON Web Key Set (JWKs), which is used to validate JSON Web Tokens (JWTs) sent by clients and information on where these JWTs are sent in the request.
 
 :::note
 
-A zone may have up to four Token Configurations. 
+A zone may have up to four token configurations. 
 :::
 
-Token Configurations require the following information:
+Token configurations require the following information:
 
 | <div style="width:120px">Field name</div> | Description                                                                                                                                                   | Example                                                                                                             | Notes                                             |
 | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
@@ -53,9 +53,9 @@ Cloudflare will remove any fields that are unnecessary from each key and will dr
 
 It is highly recommended to validate the output of the API call to check that the resulting keys appear as intended.
 
-## Token Configuration JSON object
+## Token configuration JSON object
 
-The example below shows a JSON object with all of the information necessary to create a Token Configuration using the Cloudflare API. If you would like to create JWKs for testing, refer to [mkjwk JSON Web Key Generator](https://mkjwk.org/).
+The example below shows a JSON object with all of the information necessary to create a token configuration using the Cloudflare API. If you would like to create JWKs for testing, refer to [mkjwk JSON Web Key Generator](https://mkjwk.org/).
 
 ```json title="Example"
 {
@@ -82,9 +82,9 @@ The example below shows a JSON object with all of the information necessary to c
 }
 ```
 
-## Create a Token Configuration using the Cloudflare API
+## Create a token configuration using the Cloudflare API
 
-Use cURL or any other API client tool to send the new configuration to Cloudflare’s API to enable JWT Validation. Make sure to replace `{zone_id}` with the relevant zone ID and add your [authentication credentials](/fundamentals/api/get-started/create-token/) header.
+Use cURL or any other API client tool to send the new configuration to Cloudflare’s API to enable JWT validation. Make sure to replace `{zone_id}` with the relevant zone ID and add your [authentication credentials](/fundamentals/api/get-started/create-token/) header.
 
 ```bash title="Example using cURL"
 curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/token_validation" \
@@ -113,7 +113,7 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/token_val
 }'
 ```
 
-The response will be in a Cloudflare `v4` response envelope and the result contains the created configuration. Note the returned ID, as it will be used to reference the Token Configuration when creating Token Validation rules using the API.
+The response will be in a Cloudflare `v4` response envelope and the result contains the created configuration. Note the returned ID, as it will be used to reference the token configuration when creating token validation rules using the API.
 
 ```json title="Example response"
 {
@@ -147,15 +147,15 @@ The response will be in a Cloudflare `v4` response envelope and the result conta
 }
 ```
 
-## Token Validation Rules
+## Token validation rules
 
-Token Validation Rules allow you to enforce a security policy using existing Token Configurations.
+Token validation rules allow you to enforce a security policy using existing token configurations.
 
-Token Validation Rules can be configured using the Cloudflare API or [dashboard](/api-shield/security/jwt-validation/#add-a-jwt-validation-rule).
+Token validation rules can be configured using the Cloudflare API or [dashboard](/api-shield/security/jwt-validation/#add-a-jwt-validation-rule).
 
 | <div style="width:120px">Field name</div> | Description                                                                                 | Example                                                 | Notes                                                                                                                                                                                                   |
 | ----------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `title`                                   | A human-readable name allowing you to quickly identify it.                                  | JWT Validation on `v1` and `v2.example.com`             | Limited to 50 characters.                                                                                                                                                                               |
+| `title`                                   | A human-readable name allowing you to quickly identify it.                                  | JWT validation on `v1` and `v2.example.com`             | Limited to 50 characters.                                                                                                                                                                               |
 | `description`                             | A human-readable description that gives more details than `title` and helps to document it. | Log requests without a valid `authorization` header.    | Limited to 500 characters.                                                                                                                                                                              |
 | `action`                                  | The Firewall Action taken on requests that do not meet `expression`.                        | `log`                                                   | Possible: `log` or `block`                                                                                                                                                                              |
 | `enabled`                                 | Enable or disable the rule.                                                                 | `true`                                                  | Possible: `true` or `false`                                                                                                                                                                             |
@@ -166,7 +166,7 @@ Token Validation Rules can be configured using the Cloudflare API or [dashboard]
 
 Selectors control the scope of your token validation rule.
 
-If you only need JWT Validation on specific hostnames or subdomains of your apex domain, use the hostname in a selector to include it in the JWT Validation rule.
+If you only need JWT validation on specific hostnames or subdomains of your apex domain, use the hostname in a selector to include it in the JWT validation rule.
 
 If you need to exclude endpoints from JWT validation that never have valid JWTs used with them (by design), such as a path and method used to establish a valid JWT in the first place, you must use the endpoint’s operation ID to exclude the endpoint in a selector.
 
@@ -181,14 +181,14 @@ A request must also match an operation covered by this rule to trigger an action
 Refer to [Apply a rule to operations](/api-shield/security/jwt-validation/configure/#apply-a-rule-to-operations) for more information. 
 :::
 
-A Token Validation rule's expression defines a security policy that a request must meet.
+A token validation rule's expression defines a security policy that a request must meet.
 
 For example, the expression `is_jwt_valid("51231d16-01f1-48e3-93f8-91c99e81288e") or is_jwt_valid("51231d16-01f1-48e3-93f8-91c99e81288e")` will trigger if an incoming request does not have at least one valid authentication token.
 
 These expressions are similar to [expressions used in Ruleset Engine](/ruleset-engine/rules-language/), with a few key differences:
 
-- The Token Validation rule actions trigger if the expression evaluates `false`, as opposed to Ruleset expressions.
-- The Token Validation rules can use dedicated functions that reference Token Configurations.
+- The token validation rule actions trigger if the expression evaluates `false`, as opposed to Ruleset expressions.
+- The token validation rules can use dedicated functions that reference token configurations.
 
 Operators such as `or`, `and`, `eq`, and more are usable in expressions in the same way as in expressions used in Ruleset Engine.
 
@@ -196,8 +196,8 @@ The following functions can be used to interact with JWT Tokens on a request:
 
 | <div style="width:150px">Function</div>              | Description                                                                                                        | Notes                                                                                                                                          |
 | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| `is_jwt_valid(token_configuration_id String) bool`   | `True` if the request has a valid token according to the Token Configuration with the ID `token_configuration_id`. | `token_configuration_id` must be the ID of an existing Token Configuration. This will return `false` if the token is missing from the request. |
-| `is_jwt_present(token_configuration_id String) bool` | `True` if the request has a token as configured in the Token Configuration with the ID `token_configuration_id`.   | `token_configuration_id` must be the ID of an existing Token Configuration.                                                                    |
+| `is_jwt_valid(token_configuration_id String) bool`   | `True` if the request has a valid token according to the token configuration with the ID `token_configuration_id`. | `token_configuration_id` must be the ID of an existing token configuration. This will return `false` if the token is missing from the request. |
+| `is_jwt_present(token_configuration_id String) bool` | `True` if the request has a token as configured in the token configuration with the ID `token_configuration_id`.   | `token_configuration_id` must be the ID of an existing token configuration.                                                                    |
 
 ### Common use cases
 
@@ -207,13 +207,13 @@ Refer to the following example use cases to understand which security policy to 
 
 The `is_jwt_present("51231d16-01f1-48e3-93f8-91c99e81288e")` expression will trigger an action if a request is missing a JWT.
 
-It can be combined with a `log` action in the Token Validation rule to log requests that are missing an authentication header.
+It can be combined with a `log` action in the token validation rule to log requests that are missing an authentication header.
 
 #### Require a valid token
 
 The `is_jwt_valid("51231d16-01f1-48e3-93f8-91c99e81288e")` expression will trigger an action if a request does not have a valid JWT.
 
-It can be combined with a `block` action in the Token Validation rule to block requests with no or invalid credentials.
+It can be combined with a `block` action in the token validation rule to block requests with no or invalid credentials.
 
 #### Require at least one of two possible tokens
 
@@ -227,13 +227,13 @@ The `is_jwt_valid("51231d16-01f1-48e3-93f8-91c99e81288e") or not is_jwt_valid("5
 
 ## Apply a rule to operations
 
-Only one Token Validation rule can apply to an operation. If an operation is covered by multiple rules, then the rule with highest precedence will take effect.
+Only one token validation rule can apply to an operation. If an operation is covered by multiple rules, then the rule with highest precedence will take effect.
 
-You can configure which operations JWT Validation is enforced on using the `selector` field.
+You can configure which operations JWT validation is enforced on using the `selector` field.
 
 :::note
 
-Selectors will also apply to new operations. New operations that match an existing selector will automatically be covered by that Token Validation rule. 
+Selectors will also apply to new operations. New operations that match an existing selector will automatically be covered by that token validation rule. 
 :::
 
 For example, the following selector will apply a rule to all operations in `v1.example.com` and `v2.example.com`, except for two operations on these hosts:
@@ -379,7 +379,7 @@ The `state` field can be `ignored`, `excluded`, or `included`. Included operatio
 }
 ```
 
-Operations with a `included` state will be covered by the Token Validation Rule. The response also shows the hostnames of included operations in `result.selected_hosts` and shows all hostnames used by all zone operations in `result.available_hosts`.
+Operations with a `included` state will be covered by the token validation rule. The response also shows the hostnames of included operations in `result.selected_hosts` and shows all hostnames used by all zone operations in `result.available_hosts`.
 
 You can also send an empty object in the request body:
 
@@ -392,11 +392,11 @@ curl --request PUT \
 
 The response will show all zone operations and all possible hosts, which you can use to build your own selector.
 
-## Token Validation Rule JSON object
+## Token validation rule JSON object
 
-The example below shows a JSON object with all the necessary information to create a Token Validation Rule using the Cloudflare API.
+The example below shows a JSON object with all the necessary information to create a token validation rule using the Cloudflare API.
 
-Replace any Token Configurations IDs and operation IDs with the IDs that exist in your zone.
+Replace any token configurations IDs and operation IDs with the IDs that exist in your zone.
 
 ```json title="Token Validation Rule JSON example"
 [
@@ -428,11 +428,11 @@ Replace any Token Configurations IDs and operation IDs with the IDs that exist i
 ]
 ```
 
-## Create a Token Validation Rule using the Cloudflare API
+## Create a token Validation rule using the Cloudflare API
 
-Use cURL or any other API client tool to send the new configuration to Cloudflare’s API to enable JWT Validation. Make sure to replace `{zone_id}` with the relevant zone ID and add your [authentication credentials](/fundamentals/api/get-started/create-token/) header.
+Use cURL or any other API client tool to send the new configuration to Cloudflare’s API to enable JWT validation. Make sure to replace `{zone_id}` with the relevant zone ID and add your [authentication credentials](/fundamentals/api/get-started/create-token/) header.
 
-Replace any Token Configurations IDs and operation IDs with the IDs that exist in your zone.
+Replace any token configurations IDs and operation IDs with the IDs that exist in your zone.
 
 A single request can create multiple rules. To do so, pass multiple rule objects in the JSON array of the request body.
 
@@ -511,7 +511,7 @@ The response will be in a Cloudflare `v4` response envelope and the result conta
 
 ## Maintenance
 
-### Update Token Configuration
+### Update token configuration
 
 It is best practice to rotate keys after some time. To support updating the keys, Cloudflare allows up to four keys per configuration. This allows you to add a second, new key to an already existing key. You can start issuing JWTs with the new key only and remove the old key after some time. Additionally, this feature allows the deployment of testing or development keys next to production keys.
 
@@ -554,9 +554,9 @@ curl --request PUT \
 
 Make sure to replace `{zone_id}` with the relevant zone ID and add your [authentication credentials](/fundamentals/api/get-started/create-token/) header.
 
-### Update Token Validation Rules
+### Update token validation rules
 
-Token Validation rules can be updated with a `PATCH` request. A single `PATCH` request can update multiple rules.
+Token validation rules can be updated with a `PATCH` request. A single `PATCH` request can update multiple rules.
 
 A `PATCH` request is specified as a JSON array in the request body. Each item in that array contains updates to a single rule, defined by `id`.
 
@@ -613,9 +613,9 @@ curl --request PATCH \
 ]'
 ```
 
-## Perform JWT Validation
+## Perform JWT validation
 
-Here is an overview of how JWT Validation processes incoming requests:
+Here is an overview of how JWT validation processes incoming requests:
 
 1. We extract the JWT in accordance with the configuration from the incoming request.
 2. We decode the JWT and look for the JWTs header KID claim.

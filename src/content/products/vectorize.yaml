@@ -8,18 +8,10 @@ product:
   tags: [AI]
 
 meta:
-  title: Vectorize
+  title: Cloudflare Vectorize docs
   description: Documentation for Vectorize, Cloudflare's vector database
   author: "@cloudflare"
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/workers
   discord: https://discord.com/invite/cloudflaredev
-
-externals:
-  - title: AI - Use cases
-    url: /use-cases/ai/
-  - title: Workers home
-    url: https://workers.cloudflare.com
-  - title: Discord
-    url: https://discord.cloudflare.com

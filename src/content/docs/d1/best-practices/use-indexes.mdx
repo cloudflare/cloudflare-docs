@@ -6,6 +6,8 @@ sidebar:
 
 ---
 
+import { GlossaryTooltip } from "~/components";
+
 Indexes enable D1 to improve query performance over the indexed columns for common (popular) queries by reducing the amount of data (number of rows) the database has to scan when running a query.
 
 ## When is an index useful?
@@ -61,6 +63,14 @@ SELECT * FROM orders WHERE order_date = '2023-05-01'
 ```
 
 In more complex cases, you can confirm whether an index was used by D1 by [analyzing a query](#test-an-index) directly.
+
+### Run `PRAGMA optimize`
+
+After creating an index, run the `PRAGMA optimize` command to improve your database performance.
+
+`PRAGMA optimize` runs `ANALYZE` command on each table in the database, which collects statistics on the tables and indices. These statistics allows the <GlossaryTooltip term="query planner">query planner</GlossaryTooltip> to generate the most efficient query plan when executing the user query.
+
+For more information, refer to [`PRAGMA optimize`](/d1/sql-api/sql-statements/#pragma-optimize).
 
 ## List indexes
 

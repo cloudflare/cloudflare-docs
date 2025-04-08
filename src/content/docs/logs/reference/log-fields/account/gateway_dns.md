@@ -61,13 +61,13 @@ Resolved intermediate cname domains in reverse (for example, ['com.example.alias
 
 Type: `string`
 
-The name of the colo that received the DNS query (for example, 'SJC', 'MIA', 'IAD').
+The name of the data center that received the DNS query (for example, 'SJC', 'MIA', 'IAD').
 
 ## ColoID
 
 Type: `int`
 
-The ID of the colo that received the DNS query (for example, 46, 72, 397).
+The ID of the data center that received the DNS query (for example, 46, 72, 397).
 
 ## CustomResolveDurationMs
 
@@ -164,6 +164,12 @@ ID or IDs of category that the queried domains belongs to (for example, [7,12,28
 Type: `array[string]`
 
 Name or names of category that the queried domains belongs to (for example, ['Photography', 'Weather']).
+
+## InitialResolvedIPs
+
+Type: `array[string]`
+
+The IPs used to correlate existing FQDN matching policy between Gateway DNS and Gateway proxy.
 
 ## InternalDNSFallbackStrategy
 
@@ -326,6 +332,30 @@ The return code sent back by the DNS resolver.
 Type: `array[object]`
 
 The rdata objects (for example, [{"type":"5","data":"dns-packet-placeholder..."}]).
+
+## RedirectTargetURI
+
+Type: `string`
+
+Custom URI to which the user was redirected, if any.
+
+## RegistrationID
+
+Type: `string`
+
+The UUID of the device registration from which the HTTP request originated (for example, 'dad71818-0429-11ec-a0dc-000000000000').
+
+## RequestContextCategoryIDs
+
+Type: `array[int]`
+
+ID or IDs of the category that was sent to gateway in the EDNS request for filtering (for example, [7,12,28,122,129,163]).
+
+## RequestContextCategoryNames
+
+Type: `array[string]`
+
+Name or names of the category that was sent to gateway in the EDNS request for filtering (for example, ['Photography', 'Weather']).
 
 ## ResolvedIPCategoryIDs
 

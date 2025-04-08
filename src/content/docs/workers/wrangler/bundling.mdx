@@ -7,6 +7,13 @@ description: Review Wrangler's default bundling.
 
 By default, Wrangler bundles your Worker code using [`esbuild`](https://esbuild.github.io/). This means that Wrangler has built-in support for importing modules from [npm](https://www.npmjs.com/) defined in your `package.json`. To review the exact code that Wrangler will upload to Cloudflare, run `npx wrangler deploy --dry-run --outdir dist`, which will show your Worker code after Wrangler's bundling.
 
+<details>
+<summary>`esbuild` version</summary>
+
+Wrangler uses `esbuild`. We periodically update the `esbuild` version included with Wrangler, and since `esbuild` is a pre-1.0.0 tool, this may sometimes include breaking changes to how bundling works. In particular, we may bump the `esbuild` version in a Wrangler minor version.
+
+</details>
+
 :::note
 
 Wrangler's inbuilt bundling usually provides the best experience, but we understand there are cases where you will need more flexibility.

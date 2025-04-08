@@ -10,29 +10,27 @@ import { GlossaryTooltip, TabItem, Tabs } from "~/components";
 4. Select **Manage**.
 5. You can exclude or include routes based on either their IP address or domain. When possible we recommend adding an IP address instead of a domain. To learn about the consequences of adding a domain, refer to [Domain-based Split Tunnels](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#domain-based-split-tunnels).
 
-<Tabs> <TabItem label="Add an IP">
+		<Tabs> <TabItem label="Add an IP">
 
-To add an IP address to Split Tunnels:
+		To add an IP address to Split Tunnels:
 
-1. Select _IP Address_.
-2. Enter the IP address or <GlossaryTooltip term="CIDR">CIDR</GlossaryTooltip> you want to exclude or include.
-3. Select **Save destination**.
+		1. Select _IP Address_.
+		2. Enter the IP address or <GlossaryTooltip term="CIDR">CIDR</GlossaryTooltip> you want to exclude or include.
+		3. Select **Save destination**.
 
-Traffic to this IP address is now excluded or included from the WARP tunnel.
+		Traffic to this IP address is now excluded or included from the WARP tunnel.
 
-</TabItem> <TabItem label="Add a domain">
+		</TabItem> <TabItem label="Add a domain">
 
-To add a domain to Split Tunnels:
+		To add a domain to Split Tunnels:
 
-1. Select _Domain_.
-2. Enter a [valid domain](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#valid-domains) to exclude or include.
-3. Select **Save destination**.
-4. (Optional) If your domain does not have a public DNS record, create a [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) entry to allow a private DNS server to handle domain resolution.
+		1. Select _Domain_.
+		2. Enter a [valid domain](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#valid-domains) to exclude or include.
+		3. Select **Save destination**.
+		4. (Optional) If your domain does not have a public DNS record, create a [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) entry to allow a private DNS server to handle domain resolution.
 
-When a user goes to the domain, the domain gets resolved according to your Local Domain Fallback configuration (either by Gateway or by your private DNS server). WARP Split Tunnels will then dynamically include or exclude the IP address returned in the DNS lookup.
+		When a user goes to the domain, the domain gets resolved according to your Local Domain Fallback configuration (either by Gateway or by your private DNS server). WARP Split Tunnels will then dynamically include or exclude the IP address returned in the DNS lookup.
 
-</TabItem> </Tabs>
+		</TabItem> </Tabs>
 
-You can add up to 1,000 combined Split Tunnel and [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) entries to a given device profile.
-
-We recommend keeping the Split Tunnels list short, as each entry takes time for the client to parse. In particular, domains are slower to action than IP addresses because they require on-the-fly IP lookups and routing table / local firewall changes. A shorter list will also make it easier to understand and debug your configuration.
+We recommend keeping the Split Tunnels list short, as each entry takes time for the client to parse. In particular, domains are slower to action than IP addresses because they require on-the-fly IP lookups and routing table / local firewall changes. A shorter list will also make it easier to understand and debug your configuration. For information on device profile limits, refer to [Account limits](/cloudflare-one/account-limits/#warp).

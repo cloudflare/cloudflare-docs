@@ -8,7 +8,7 @@ sidebar:
 To create a new interconnect, make sure you are logged in with Admin or higher-level account permissions. This is required for the wizard to successfully request and provision a new Direct CNI connection.
 
 1. Log in to the [Cloudflare dashboard](https://developers.cloudflare.com/), and select your account.
-2. Select **Interconnects** > **Create New**.
+2. Select **Interconnects**.
 3. In **Direct CNI**, select **Create new**.
 4. From the list, choose a location that suits you with **Select location**, or search for a location in the search box.
    :::note
@@ -26,8 +26,8 @@ To create a new interconnect, make sure you are logged in with Admin or higher-l
 
 The Cloudflare dashboard shows a list of all previously created interconnects, as well as useful information such as IP addresses, speed, type of interconnect, and status.
 
-Direct CNI connections are LACP (Link Aggregation Control Protocol) enabled and use LACP packets to negotiate with other ports. The [Status column](https://dash.cloudflare.com/?to=/:account/interconnects/all) in the dashboard shows three different status:
+The [Status column](https://dash.cloudflare.com/?to=/:account/interconnects/all) in the dashboard shows three different status:
 
-- **Pending**: Pending shows up in new interconnects that are not yet active. This is expected and can occur for several reasons: the customer has not received a cross-connect, the device is unresponsive, or physical adjustments may be required, such as swapping RX/TX fibers. The `Pending` status will go away after the customer completes the cross-connect.
-- **Active**: The interconnect port on the Customer Connectivity Router (CCR) has established a LACP session with the connected port on the customer device.
-- **Unhealthy**: The interconnect port on the CCR has lost a previously established LACP session with the connected port on the customer device. You can take general troubleshooting steps to solve the issue (such as checking cables and status lights for connectivity issues). If you are unable to solve the issue in this way, contact your account team.
+- **Active**: The link operational state at the interconnect port on the Customer Connectivity Router (CCR) is up. This means that the CCR port sees sufficient light levels and has negotiated an Ethernet link.
+- **Unhealthy**: The link operational state at interconnect port is down. This might mean the CCR does not see light, cannot negotiate an Ethernet signal, or the light levels are below -20 dBm. You can take general troubleshooting steps to solve the issue (such as checking cables and status lights for connectivity issues). If you are unable to solve the issue in this way, contact your account team.
+- **Pending**: The link is not yet active. This is expected and can occur for several reasons: the customer has not received a cross-connect, the device is unresponsive, or physical adjustments may be required, such as swapping RX/TX fibers. The `Pending` status will disappear after the customer completes the cross-connect and status moves to `Active`.

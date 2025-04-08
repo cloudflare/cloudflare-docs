@@ -2,7 +2,7 @@
 pcx_content_type: concept
 title: Direct Uploads
 sidebar:
-  order: 11
+  order: 6
 head: []
 description: Upload assets through the Workers API.
 ---
@@ -145,6 +145,8 @@ If all assets have been previously uploaded, `buckets` will be empty, and `jwt` 
 ## Upload Static Assets
 
 The [file upload API](/api/resources/workers/subresources/assets/subresources/upload/methods/create/) requires files be uploaded using `multipart/form-data`. The contents of each file must be base64 encoded, and the `base64` query parameter in the URL must be set to `true`.
+
+The provided `Content-Type` header of each file part will be attached when eventually serving the file. If you wish to avoid sending a `Content-Type` header in your deployment, `application/null` may be sent at upload time.
 
 The `Authorization` header must be provided as a bearer token, using the JWT (upload token) from the aforementioned manifest upload call.
 

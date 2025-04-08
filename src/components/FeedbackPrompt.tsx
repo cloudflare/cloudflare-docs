@@ -37,7 +37,7 @@ function Buttons({
 				}}
 				className="cursor-pointer bg-transparent"
 			>
-				<MdOutlineThumbUp className="text-sl text-2xl hover:text-accent" />
+				<MdOutlineThumbUp className="text-2xl text-sl hover:text-accent" />
 			</button>
 			<button
 				onClick={() => {
@@ -46,7 +46,7 @@ function Buttons({
 				}}
 				className="cursor-pointer bg-transparent"
 			>
-				<MdOutlineThumbDown className="text-sl text-2xl hover:text-accent" />
+				<MdOutlineThumbDown className="text-2xl text-sl hover:text-accent" />
 			</button>
 		</>
 	);

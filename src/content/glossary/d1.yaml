@@ -1,0 +1,6 @@
+---
+productName: D1
+entries:
+  - term: "query planner"
+    general_definition: |-
+      A component in a database management system which takes a user query and generates the most efficient plan of executing that query (the query plan). For example, the query planner decides which indices to use, or which table to access first.

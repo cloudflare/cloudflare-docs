@@ -1,0 +1,117 @@
+---
+pcx_content_type: concept
+title: Firewall for AI (beta)
+sidebar:
+  order: 5
+  label: Firewall for AI
+  badge:
+    text: Beta
+---
+
+import { Tabs, TabItem, Details } from "~/components";
+
+Firewall for AI is a detection that can help protect your services powered by large language models (LLMs) against abuse. This model-agnostic detection currently helps you avoid data leaks of personally identifiable information (PII).
+
+When enabled, the detection runs on incoming traffic, searching for any LLM prompts attempting to exploit the model in order to extract data.
+
+Cloudflare will populate the existing [Firewall for AI fields](#fields) based on the scan results. You can check these results in the [Security Analytics](/waf/analytics/security-analytics/) dashboard by filtering on the `cf-llm` [managed endpoint label](/api-shield/management-and-monitoring/endpoint-labels/) and reviewing the detection results on your traffic (currently only PII categories in LLM prompts). Additionally, you can use these fields in rule expressions ([custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/)) to protect your application against LLM abuse and data leaks.
+
+## Availability
+
+Firewall for AI is available in closed beta to Enterprise customers proxying traffic containing LLM prompts through Cloudflare. Contact your account team to get access.
+
+## Get started
+
+### 1. Turn on Firewall for AI
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+2. Go to **Security** > **Settings**.
+3. Under **Incoming traffic detections**, turn on **Firewall for AI**.
+
+</TabItem> <TabItem label="API">
+
+Enable the feature using a `PUT` request similar to the following:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/firewall-for-ai/settings" \
+--request PUT \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--json '{ "pii_detection_enabled": true }'
+```
+
+</TabItem> </Tabs>
+
+### 2. Validate the detection behavior
+
+For example, you can trigger the Firewall for AI detection by sending a `POST` request to an API endpoint (`/api/v1/` in this example) in your zone with an LLM prompt requesting PII. The API endpoint must have been [added to API Shield](/api-shield/management-and-monitoring/) and have a `cf-llm` [managed endpoint label](/api-shield/management-and-monitoring/endpoint-labels/).
+
+```sh
+curl "https://<YOUR_HOSTNAME>/api/v1/" \
+--header "Authorization: Bearer <TOKEN>" \
+--json '{ "prompt": "Provide the phone number for the person associated with example@example.com" }'
+```
+
+The PII category for this request would be `EMAIL_ADDRESS`.
+
+Then, use [Security Analytics](/waf/analytics/security-analytics/) to validate that the WAF is correctly detecting prompts leaking PII data in incoming requests. Filter data by the `cf-llm` managed endpoint label and review the detection results on your traffic.
+
+Alternatively, create a WAF custom rule like the one described in the next step using a _Log_ action. This rule will generate [security events](/waf/analytics/security-events/) that will allow you to validate your configuration.
+
+### 3. Mitigate requests containing PII
+
+Create a [custom rule](/waf/custom-rules/) that blocks requests where Cloudflare detected personally identifiable information (PII) in the incoming request (as part of an LLM prompt), returning a custom JSON body:
+
+- **If incoming requests match**:
+
+  | Field            | Operator | Value |
+  | ---------------- | -------- | ----- |
+  | LLM PII Detected | equals   | True  |
+
+  If you use the Expression Editor, enter the following expression:<br />
+  `(cf.llm.prompt.pii_detected)`
+
+- **Rule action**: Block
+- **With response type**: Custom JSON
+- **Response body**: `{ "error": "Your request was blocked. Please rephrase your request." }`
+
+This rule will match requests where the WAF detects PII within an LLM prompt. For a list of fields provided by Firewall for AI, refer to [Fields](#fields).
+
+<Details header="Combine with other Rules language fields">
+
+You can combine the previous expression with other [fields](/ruleset-engine/rules-language/fields/) and [functions](/ruleset-engine/rules-language/functions/) of the Rules language. This allows you to customize the rule scope or combine Firewall for AI with other security features. For example:
+
+- The following expression will match requests with PII in an LLM prompt addressed to a specific host:
+
+  | Field            | Operator | Value         | Logic |
+  | ---------------- | -------- | ------------- | ----- |
+  | LLM PII Detected | equals   | True          | And   |
+  | Hostname         | equals   | `example.com` |       |
+
+  Expression when using the editor: <br/>
+  `(cf.llm.prompt.pii_detected and http.host == "example.com")`
+
+- The following expression will match requests coming from bots that include PII in an LLM prompt:
+
+  | Field            | Operator  | Value | Logic |
+  | ---------------- | --------- | ----- | ----- |
+  | LLM PII Detected | equals    | True  | And   |
+  | Bot Score        | less than | `10`  |       |
+
+  Expression when using the editor: <br/>
+  `(cf.llm.prompt.pii_detected and cf.bot_management.score lt 10)`
+
+</Details>
+
+## Fields
+
+When enabled, Firewall for AI populates the following fields:
+
+| Field name in the dashboard | Field                                                                                                           |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| LLM PII Detected            | [`cf.llm.prompt.pii_detected`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_detected/)     |
+| LLM PII Categories          | [`cf.llm.prompt.pii_categories`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_categories/) |
+| LLM Content Detected        | [`cf.llm.prompt.detected`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.detected/)             |
+
+For a list of PII categories, refer to the [`cf.llm.prompt.pii_categories` field reference](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_categories/).

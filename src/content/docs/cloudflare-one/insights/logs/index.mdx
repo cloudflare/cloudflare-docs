@@ -8,7 +8,7 @@ head:
     content: Zero Trust logs
 ---
 
-import { DirectoryListing } from "~/components";
+import { DirectoryListing, Badge, Render } from "~/components";
 
 Review detailed logs for your Zero Trust organization.
 
@@ -18,19 +18,25 @@ Review detailed logs for your Zero Trust organization.
 
 Cloudflare Zero Trust logs are stored for a varying period of time based on the service used and plan type:
 
-| | Free | Standard | Access | Gateway | Enterprise |
-| ----| ------ | ------ | ------ | ------ | -------- |
-| **Admin logs** | 18 months | 18 months | 18 months | 18 months | 18 months | 18 months |
-| **Access logs** | 24 hours | 30 days | 30 days | 24 hours | 180 days |
-| **DNS logs** | 24 hours | 30 days | 24 hours | 30 days | 180 days<sup><a href="#footnote-1">1</a></sup> |
-| **Network logs** | 24 hours | 30 days | 24 hours | 30 days | 30 days |
-| **HTTP logs** | 24 hours | 30 days | 24 hours | 30 days | 30 days |
-| **DEX logs** | 7 days | 7 days | 7 days | 7 days | 7 days |
-| **Device posture logs** | 30 days | 30 days | 30 days | 30 days | 30 days |
+|                         | Free      | Standard  | Access    | Gateway   | Enterprise   |
+| ----------------------- | --------- | --------- | --------- | --------- | ------------ |
+| **Admin logs**          | 18 months | 18 months | 18 months | 18 months | 18 months    |
+| **Access logs**         | 24 hours  | 30 days   | 30 days   | 24 hours  | 180 days     |
+| **DNS logs**            | 24 hours  | 30 days   | 24 hours  | 30 days   | 180 days[^1] |
+| **Network logs**        | 24 hours  | 30 days   | 24 hours  | 30 days   | 30 days      |
+| **HTTP logs**           | 24 hours  | 30 days   | 24 hours  | 30 days   | 30 days      |
+| **DEX logs**            | 7 days    | 7 days    | 7 days    | 7 days    | 7 days       |
+| **Device posture logs** | 30 days   | 30 days   | 30 days   | 30 days   | 30 days      |
 
-<a name="footnote-1"><sup>1</sup></a> Enterprise users on per query plans cannot store DNS logs via Cloudflare.
-You can still export logs via [Logpush](/cloudflare-one/insights/logs/logpush/).
-For more information, contact your account team.
+[^1]: Enterprise users on per query plans cannot store DNS logs via Cloudflare. You can still export logs via [Logpush](/cloudflare-one/insights/logs/logpush/). For more information, contact your account team.
+
+## Log Explorer <Badge text="Beta" variant="caution" size="small" />
+
+Log Explorer users can store Zero Trust logs directly within Cloudflare in an [R2 bucket](/r2/) and access them with the dashboard or API. Log Explorer supports the following Zero Trust datasets:
+
+<Render file="log-explorer-account-datasets" product="logs" />
+
+For more information, refer to [Log Explorer](/logs/log-explorer/).
 
 ## Customer Metadata Boundary
 

@@ -6,35 +6,13 @@ sidebar:
   order: 1
 ---
 
-import { GlossaryTooltip, Render } from "~/components";
+import { Render } from "~/components";
 
 <Render
-  file="casb/integration-description"
-  params={{ one: "Admin Center", two: "Microsoft 365 account" }}
+	file="casb/microsoft/integrations/admin-center"
+	params={{
+		integrationName: "Admin Center",
+		environmentName: "Microsoft 365 account",
+		slugifiedName: "microsoft-365/admin-center",
+	}}
 />
-
-## Integration prerequisites
-
-<Render file="casb/microsoft/m365-prereqs" />
-
-## Integration permissions
-
-<Render
-  file="casb/integration-perms"
-  params={{ one: "Microsoft 365", two: "microsoft-365" }}
-/>
-
-## Security findings
-
-<Render
-  file="casb/security-findings"
-  params={{ one: "Admin Center", two: "microsoft-365/admin-center" }}
-/>
-
-### User account settings
-
-<Render file="casb/microsoft/user-account-settings" />
-
-### Third-party apps
-
-<Render file="casb/microsoft/third-party-apps" />

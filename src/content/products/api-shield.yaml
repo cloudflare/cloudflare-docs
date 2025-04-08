@@ -14,7 +14,3 @@ meta:
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/security/api-shield
-
-externals:
-  - title: Cloudflare homepage
-    url: https://cloudflare.com

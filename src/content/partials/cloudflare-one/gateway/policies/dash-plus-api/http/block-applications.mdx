@@ -18,8 +18,9 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
 --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
-  "name": "Block content categories",
-  "description": "Block access to unauthorized AI applications",
+  "name": "All-HTTP-Application-Blocklist",
+  "description": "Limit access to shadow IT by blocking web-based tools and applications",
+  "precedence": 60,
   "enabled": true,
   "action": "block",
   "filters": [
@@ -29,6 +30,24 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
   "identity": "",
   "device_posture": ""
 }'
+```
+
+</TabItem>
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "all_http_application_blocklist" {
+  account_id     = var.cloudflare_account_id
+  name           = "All-HTTP-Application-Blocklist"
+  description    = "Limit access to shadow IT by blocking web-based tools and applications"
+  precedence     = 60
+  enabled        = true
+  action         = "block"
+  filters        = ["http"]
+  traffic        = "any(app.type.ids[*] in {25})"
+  identity       = ""
+  device_posture = ""
+}
 ```
 
 </TabItem>

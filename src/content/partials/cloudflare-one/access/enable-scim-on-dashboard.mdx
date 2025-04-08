@@ -1,8 +1,7 @@
 ---
 params:
   - idp
-  - and
-  - supportgroups
+  - supportgroups?
 ---
 
 import { Markdown } from "~/components"
@@ -11,7 +10,7 @@ import { Markdown } from "~/components"
 
 2. Find the {props.idp} integration and select **Edit**.
 
-3. Turn on **Enable SCIM**{props.and}**{props.supportgroups}**.
+3. Turn on **Enable SCIM** {props.supportgroups && <span> and <strong>{props.supportgroups}</strong>.</span>}
 
 4. (Optional) Configure the following settings:
 

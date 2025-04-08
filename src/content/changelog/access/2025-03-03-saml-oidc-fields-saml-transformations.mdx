@@ -1,0 +1,28 @@
+---
+title: New SAML and OIDC Fields and SAML transforms for Access for SaaS
+description: Access for SaaS new SAML and OIDC Fields and SAML transforms
+date: 2025-03-03T6:00:00Z
+---
+
+[Access for SaaS applications](/cloudflare-one/applications/configure-apps/saas-apps/) now include more configuration options to support a wider array of SaaS applications.
+
+### SAML and OIDC Field Additions
+
+OIDC apps now include:
+
+- Group Filtering via RegEx
+- OIDC Claim mapping from an IdP
+- OIDC token lifetime control
+- Advanced OIDC auth flows including hybrid and implicit flows
+
+![OIDC field additions](~/assets/images/changelog/access/oidc-claims.png)
+
+SAML apps now include improved SAML attribute mapping from an IdP.
+
+![SAML field additions](~/assets/images/changelog/access/saml-attribute-statements.png)
+
+### SAML transformations
+
+SAML identities sent to Access applications can be fully customized using JSONata expressions. This allows admins to configure the precise identity SAML statement sent to a SaaS application.
+
+![Configured SAML statement sent to application](~/assets/images/changelog/access/transformation-box.png)

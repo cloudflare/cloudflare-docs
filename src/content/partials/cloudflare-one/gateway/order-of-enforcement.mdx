@@ -73,7 +73,8 @@ Gateway applies your policies in the following order:
 2. DNS policies with selectors evaluated after resolution
 3. HTTP policies
 4. Network policies
-5. Egress policies (if applicable)
+5. Resolver policies (if applicable)
+6. Egress policies (if applicable)
 
 DNS policies are standalone. For example, if you block a site with a DNS policy but do not create a corresponding HTTP policy, users can still access the site if they know its IP address.
 
@@ -129,6 +130,10 @@ Next, Gateway checks decrypted traffic against your Isolate policies. When a use
 
 Lastly, Gateway evaluates all Allow, Block, and Do Not Scan policies. These policies apply to both isolated and non-isolated traffic. For example, if `example.com` is isolated and `example.com/subpage` is blocked, Gateway will block the subpage inside of the remote browser.
 
+### Resolver policies
+
+When [resolver policies](/cloudflare-one/policies/gateway/resolver-policies/) are present, Gateway first evaluates any DNS policies with pre-resolution selectors, then routes any DNS queries according to the [order of precedence](#order-of-precedence) of your resolver policies, and lastly evaluates any DNS policies with post-resolution selectors.
+
 ### Order of precedence
 
 <Render
@@ -137,10 +142,7 @@ Lastly, Gateway evaluates all Allow, Block, and Do Not Scan policies. These poli
 	params={{ one: "DNS, network, or HTTP" }}
 />
 
-:::caution[Terraform precedence limitation]
-
-To avoid conflicts, Terraform applies a hash calculation to precedences. For example, a precedence of `1000` may become `1000901`. This can cause errors when reordering policies. To avoid this issue, manually set the precedence of your policies via the [Cloudflare API](/api/resources/zero_trust/subresources/gateway/subresources/rules/methods/update/).
-:::
+<Render file="gateway/terraform-precedence-warning" product="cloudflare-one" />
 
 ## Example
 
@@ -148,16 +150,19 @@ Suppose you have a list of policies arranged in the following order of precedenc
 
 - DNS policies: <Render file="gateway/order-of-precedence-dns" product="cloudflare-one" />
 - HTTP policies:
-  | Precedence | Selector | Operator | Value | Action |
+
+  | Precedence | Selector | Operator | Value               | Action         |
   | ---------- | -------- | -------- | ------------------- | -------------- |
-  | 1 | Host | is | `example.com` | Block |
-  | 2 | Host | is | `test2.example.com` | Do Not Inspect |
+  | 1          | Host     | is       | `example.com`       | Block          |
+  | 2          | Host     | is       | `test2.example.com` | Do Not Inspect |
+
 - Network policies:
-  | Precedence | Selector | Operator | Value | Action |
+
+  | Precedence | Selector         | Operator | Value              | Action |
   | ---------- | ---------------- | -------- | ------------------ | ------ |
-  | 1 | Destination Port | is | `80` | Block |
-  | 2 | Destination port | is | `443` | Allow |
-  | 3 | SNI Domain | is | `test.example.com` | Block |
+  | 1          | Destination Port | is       | `80`               | Block  |
+  | 2          | Destination port | is       | `443`              | Allow  |
+  | 3          | SNI Domain       | is       | `test.example.com` | Block  |
 
 When a user goes to `https://test.example.com`, Gateway performs the following operations:
 

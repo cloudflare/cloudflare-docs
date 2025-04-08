@@ -49,7 +49,7 @@ In-memory state is reset when the Durable Object hibernates after being idle for
 
 The [Durable Object Storage API](/durable-objects/api/storage-api/) allows Durable Objects to access fast, transactional, and strongly consistent storage. A Durable Object's attached storage is private to its unique instance and cannot be accessed by other objects.
 
-There are two flavors of the storage API, a [key-value (KV) API](/durable-objects/api/storage-api/#methods) and an [SQL API](/durable-objects/api/sql-storage/).
+There are two flavors of the storage API, a [key-value (KV) API](/durable-objects/api/storage-api/#kv-api) and an [SQL API](/durable-objects/api/storage-api/#sql-api).
 
 When using the [new SQLite in Durable Objects storage backend](/durable-objects/reference/durable-objects-migrations/#enable-sqlite-storage-backend-on-new-durable-object-class-migration), you have access to both the APIs. However, if you use the previous storage backend you only have access to the key-value API.
 
@@ -108,6 +108,6 @@ Finally, the following blog posts may help you learn some of the technical imple
 
 ## Get started
 
-Get started now by following the ["Tutorial with SQL API"](/durable-objects/get-started/tutorial-with-sql-api/) to create your first application using Durable Objects.
+Get started now by following the ["Get started" guide](/durable-objects/get-started/) to create your first application using Durable Objects.
 
 [^1]: Storage per Durable Object with SQLite is currently 1 GB. This will be raised to 10 GB for general availability.

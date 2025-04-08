@@ -23,7 +23,11 @@ import { Tabs, TabItem, Details } from '~/components';
    This is the only time Cloudflare Access will display the Client Secret. If you lose the Client Secret, you must generate a new service token.
    :::
 
-</TabItem> <TabItem label="Terraform">
+</TabItem> <TabItem label="Terraform (v4)">
+
+:::note[Provider versions]
+The following example requires Cloudflare provider version `>=4.40.0`.
+:::
 
 1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.40.0/docs/resources/api_token):
 	- `Access: Service Tokens Write`

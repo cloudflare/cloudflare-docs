@@ -5,6 +5,20 @@ productLink: "/stream/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-03-12"
+    title: Stream Live WebRTC WHIP/WHEP Upgrades
+    description: |-
+      Stream Live WHIP/WHEP will be progressively migrated to a new implementation powered by Cloudflare Realtime (Calls) starting Thursday 2025-03-13. No API or integration changes will be required as part of this upgrade. Customers can expect an improved playback experience. Otherwise, this should be a transparent change, although some error handling cases and status reporting may have changed.
+
+      For more information review the [Stream Live WebRTC beta](/stream/webrtc-beta/) documentation.
+  - publish_date: "2025-02-10"
+    title: Stream Player ad support adjustments for Google Ad Exchange Verification
+    description: |-
+      Adjustments have been made to the Stream player UI when playing advertisements called by a customer-provided VAST or VMAP `ad-url` argument:
+
+      A small progress bar has been added along the bottom of the player, and the shadow behind player controls has been reduced. These changes have been approved for use with Google Ad Exchange.
+
+      This only impacts customers using the built-in Stream player and calling their own advertisements; Stream never shows ads by default. For more information, refer to [Using the Stream Player](https://developers.cloudflare.com/stream/viewing-videos/using-the-stream-player/#basic-options).
   - publish_date: "2025-01-30"
     title: Expanded Language Support for Generated Captions
     description: |-

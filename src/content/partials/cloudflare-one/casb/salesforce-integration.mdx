@@ -9,7 +9,7 @@ import { Render } from "~/components";
 
 <Render
 	file="casb/integration-description"
-	params={{ one: props.integrationName, two: props.environmentName }}
+	params={{ integrationName: props.integrationName, integrationAccountType: props.environmentName }}
 />
 
 ## Integration prerequisites
@@ -34,7 +34,7 @@ These permissions follow the principle of least privilege to ensure that only th
 
 <Render
 	file="casb/security-findings"
-	params={{ one: props.integrationName, two: props.slugifiedName }}
+	params={{ integrationName: props.integrationName, slugRelativePath: props.slugifiedName }}
 />
 
 ### File sharing

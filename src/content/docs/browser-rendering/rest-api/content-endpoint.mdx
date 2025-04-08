@@ -1,0 +1,37 @@
+---
+pcx_content_type: how-to
+title: Fetch HTML
+sidebar:
+  order: 2
+---
+
+The `/content` endpoint instructs the browser to navigate to a website and capture the fully rendered HTML of a page, including the `head` section, after JavaScript execution. This is ideal for capturing content from JavaScript-heavy or interactive websites.
+
+## Basic usage
+
+Go to `https://example.com` and return the rendered HTML.
+
+```bash
+curl -X 'POST' 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/content' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer <apiToken>' \
+  -d '{"url": "https://example.com"}'
+```
+
+## Advanced usage
+
+Navigate to `https://cloudflare.com/` but block images and stylesheets from loading. Undesired requests can be blocked by resource type (`rejectResourceTypes`) or by using a regex pattern (`rejectRequestPattern`). The opposite can also be done, only allow requests that match `allowRequestPattern` or `allowResourceTypes`.
+
+```bash
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/content' \
+  -H 'Authorization: Bearer <apiToken>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+      "url": "https://cloudflare.com/",
+      "rejectResourceTypes": ["image"],
+      "rejectRequestPattern": ["/^.*\\.(css)"]
+		}'
+
+```
+
+Many more options exist, like setting HTTP headers using `setExtraHTTPHeaders`, setting `cookies`, and using `gotoOptions` to control page load behaviour - check the endpoint [reference](/api/resources/browser_rendering/subresources/content/methods/create/) for all available parameters.

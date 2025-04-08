@@ -1,0 +1,132 @@
+---
+pcx_content_type: concept
+title: Transform videos
+sidebar:
+  order: 5
+  badge:
+    text: Beta
+---
+
+Media Transformations let you optimize and manipulate videos stored _outside_ of the Cloudflare Stream. Transformed videos and images are served from one of your zones on Cloudflare.
+
+To transform a video or image, you must [enable transformations](/stream/transform-videos/#getting-started) for your zone. If your zone already has Image Transformations enabled, you can also optimize videos with Media Transformations.
+
+## Getting started
+
+You can dynamically optimize and generate still images from videos that are stored _outside_ of Cloudflare Stream with Media Transformations.
+
+Cloudflare will automatically cache every transformed video or image on our global network so that you store only the original image at your origin.
+
+To enable transformations on your zone:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
+2. Go to **Stream** > **Transformations**.
+3. Locate the specific zone where you want to enable transformations.
+4. Select **Enable** for zone.
+
+## Transform a video by URL
+
+You can convert and resize videos by requesting them via a specially-formatted URL, without writing any code. The URL format is:
+
+```
+https://example.com/cdn-cgi/media/<OPTIONS>/<SOURCE-VIDEO>
+```
+
+- `example.com`: Your website or zone on Cloudflare, with Transformations enabled.
+- `/cdn-cgi/media/`: A prefix that identifies a special path handled by Cloudflare's built-in media transformation service.
+- `<OPTIONS>`: A comma-separated list of options. Refer to the available options below.
+- `<SOURCE-VIDEO>`: A full URL (starting with `https://` or `http://`) of the original asset to resize.
+
+For example, this URL will source an HD video from an R2 bucket, shorten it, crop and resize it as a square, and remove the audio.
+
+```
+https://example.com/cdn-cgi/media/mode=video,time=5s,duration=5s,width=500,height=500,fit=crop,audio=false/https://pub-8613b7f94d6146408add8fefb52c52e8.r2.dev/aus-mobile-demo.mp4
+```
+
+The result is an MP4 that can be used in an HTML video element without a player library.
+
+## Options
+
+### `mode`
+
+Specifies the kind of output to generate.
+
+- `video`: Outputs an H.264/AAC optimized MP4 file.
+- `frame`: Outputs a still image.
+- `spritesheet`: Outputs a JPEG with multiple frames.
+
+### `time`
+
+Specifies when to start extracting the output in the input file. Depends on `mode`:
+
+- When `mode` is `spritesheet` or `video`, specifies the timestamp where the output will start.
+- When `mode` is `frame`, specifies the timestamp from which to extract the still image.
+- Formats as a time string, for example: 5s, 2m
+- Acceptable range: 0 – 30s
+- Default: 0
+
+### `duration`
+
+The duration of the output video or spritesheet. Depends on `mode`:
+
+- When `mode` is `video`, specifies the duration of the output.
+- When `mode` is `spritesheet`, specifies the time range from which to select frames.
+
+### `fit`
+
+In combination with `width` and `height`, specifies how to resize and crop the output. If the output is resized, it will always resize proportionally so content is not stretched.
+
+- `contain`: Respecting aspect ratio, scales a video up or down to be entirely contained within output dimensions.
+- `scale-down`: Same as contain, but downscales to fit only. Do not upscale.
+- `cover`: Respecting aspect ratio, scales a video up or down to entirely cover the output dimensions, with a center-weighted crop of the remainder.
+
+### `height`
+
+Specifies maximum height of the output in pixels. Exact behavior depends on `fit`.
+
+- Acceptable range: 10-2000 pixels
+
+### `width`
+
+Specifies the maximum width of the image in pixels. Exact behavior depends on `fit`.
+
+- Acceptable range: 10-2000 pixels
+
+### `audio`
+
+When `mode` is `video`, specifies whether or not to include the source audio in the output.
+
+- `true`: Includes source audio.
+- `false`: Output will be silent.
+- Default: `true`
+
+### `format`
+
+If `mode` is `frame`, specifies the image output format.
+
+- Acceptable options: `jpg`, `png`
+
+## Source video requirements
+
+Input video must be less than 40MB. Contact Stream if the input limitation is unacceptable.
+
+Input video should be an MP4 with H.264 encoded video and AAC or MP3 encoded audio. Other formats may work but are untested.
+
+## Limitations
+
+Media Transformations are currently in beta. During this period:
+
+- Transformations are available for all enabled zones free-of-charge.
+- Restricting allowed origins for transformations are coming soon.
+- Outputs from Media Transformations will be cached, but if they must be regenerated, the origin fetch is not cached and may result in subsequent requests to the origin asset.
+
+## Pricing
+
+Media Transformations will be free for all customers while in beta.
+
+After that, Media Transforamtions and Image Transformations will use the same subscriptions and usage metrics.
+
+- Generating a still frame (single image) from a video counts as 1 transformation.
+- Generating an optimized video counts as 1 transformation _per second of the output_ video.
+- Each unique transformation is only billed once per month.
+- All Media and Image Transformations cost $0.50 per 1,000 monthly unique transformation operations, with a free monthly allocation of 5,000.

@@ -1,0 +1,168 @@
+---
+pcx_content_type: how-to
+title: Tunnel permissions
+sidebar:
+  order: 10
+---
+
+import { TabItem, Tabs, Render } from "~/components";
+
+A remotely-managed tunnel only requires the tunnel token to run. Anyone with access to the token will be able to run the tunnel.
+
+## View the tunnel token
+
+To get the token for a remotely-managed tunnel:
+
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Dashboard">
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Networks** > **Tunnels**.
+2. Select a `cloudflared` tunnel and select **Edit**.
+3. Copy `cloudflared` installation command.
+4. Paste the installation command into any text editor. The token value is of the form `eyJhIjoiNWFiNGU5Z...`
+
+</TabItem>
+<TabItem label="API">
+
+Make a `GET` request to the [Cloudflare Tunnel token](/api/resources/zero_trust/subresources/tunnels/subresources/token/methods/get/) endpoint. The token value can be found in the `result`:
+
+```sh output
+{
+  "success": true,
+  "errors": [],
+  "messages": [],
+  "result": "eyJhIjoiNWFiNGU5Z..."
+}
+```
+
+</TabItem>
+</Tabs>
+
+## Rotate a token without service disruption
+
+Cloudflare recommends rotating the tunnel token at a regular cadence to reduce the risk of token compromise. You can rotate a token with minimal disruption to users as long as the tunnel is served by at least two [`cloudflared` replicas](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/). To ensure service availability, we recommend performing token rotations outside of working hours or in a maintenance window.
+
+To rotate a tunnel token:
+
+1. Refresh the token on Cloudflare:
+
+	<Tabs syncKey="dashPlusAPI">
+	<TabItem label="Dashboard">
+	1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Networks** > **Tunnels**.
+	2. Select a `cloudflared` tunnel and select **Edit**.
+	3. Select **Refresh token**.
+	4. Copy the `cloudflared` installation command for your operating system. This command contains the new token.
+
+	</TabItem>
+	<TabItem label="API">
+
+	1. Generate a random base64 string (minimum size 32 bytes) to use as a tunnel secret:
+
+		```sh
+		openssl rand -base64 32
+		```
+
+		```sh output
+		AQIDBAUGBwgBAgMEBQYHCAECAwQFBgcIAQIDBAUGBwg=
+		```
+
+	2. Make a `PATCH` request to the [Cloudflare Tunnel](/api/resources/zero_trust/subresources/tunnels/methods/edit/) endpoint:
+		```sh
+		curl --request PATCH \
+		https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/cfd_tunnel/$TUNNEL_ID \
+		--header 'Content-Type: application/json' \
+		--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+		--data '{
+			"name": "Example tunnel",
+			"tunnel_secret": "AQIDBAUGBwgBAgMEBQYHCAECAwQFBgcIAQIDBAUGBwg="
+		}'
+		```
+
+		```sh output {18}
+		{
+			"success": true,
+			"errors": [],
+			"messages": [],
+			"result": {
+				"id": "f70ff985-a4ef-4643-bbbc-4a0ed4fc8415",
+				"account_tag": "699d98642c564d2e855e9661899b7252",
+				"created_at": "2024-12-04T22:03:26.291225Z",
+				"deleted_at": null,
+				"name": "Example tunnel",
+				"connections": [],
+				"conns_active_at": null,
+				"conns_inactive_at": "2024-12-04T22:03:26.291225Z",
+				"tun_type": "cfd_tunnel",
+				"metadata": {},
+				"status": "inactive",
+				"remote_config": true,
+				"token": "eyJhIjoiNWFiNGU5Z..."
+			}
+		}
+		```
+	3. Copy the `token` value shown in the output.
+
+	</TabItem>
+	</Tabs>
+
+	After refreshing the token, `cloudflared` can no longer establish new connections to Cloudflare using the old token. However, existing connectors will remain active and the tunnel will continue serving traffic.
+
+2. On half of your `cloudflared` replicas, update `cloudflared` to use the new token. For example, on a Linux host:
+
+	```sh
+	sudo cloudflared service install <TOKEN>
+	```
+
+3. Restart `cloudflared`:
+
+	```sh
+	sudo systemctl restart cloudflared.service
+	```
+
+4. Confirm that the service started correctly:
+	```sh
+	sudo systemctl status cloudflared
+	```
+
+	While these replicas are connecting to Cloudflare with the new token, traffic will automatically route through the other replicas.
+
+5. Wait 10 minutes for traffic to route through the new connectors.
+
+6. Repeat steps 2, 3, and 4 for the second half of the replicas.
+
+The tunnel token is now fully rotated. The old token is no longer in use.
+
+## Rotate a compromised token
+
+If your tunnel token is compromised, we recommend taking the following steps:
+
+1. Refresh the token using the dashboard or API. Refer to Step 1 of [Rotate a token without service disruption](#rotate-a-token-without-service-disruption).
+2. [Delete all connections](/api/resources/zero_trust/subresources/tunnels/subresources/connections/methods/delete/) between `cloudflared` and Cloudflare:
+	```sh
+	curl --request DELETE \
+	https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/cfd_tunnel/$TUNNEL_ID/connections \
+	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+	```
+
+	This will clean up any unauthorized connections and prevent users from connecting to your network.
+
+3. On each `cloudflared` replica, update `cloudflared` to use the new token. For example, on a Linux host:
+
+	```sh
+	sudo cloudflared service install <TOKEN>
+	```
+4. Restart `cloudflared`:
+
+	```sh
+	sudo systemctl restart cloudflared.service
+	```
+
+5. Confirm that the service started correctly:
+	```sh
+	sudo systemctl status cloudflared
+	```
+
+The tunnel token is now fully rotated. The old token is no longer in use.
+
+## Account-scoped roles
+
+<Render file="tunnel/account-scoped-roles" />

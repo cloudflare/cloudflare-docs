@@ -1,0 +1,62 @@
+---
+title: Markdown conversion in Workers AI
+description: You can now convert documents in multiple formats to Markdown using the toMarkdown utility method in Workers AI.
+date: 2025-03-20T18:00:00Z
+---
+
+Document conversion plays an important role when designing and developing AI applications and agents. Workers AI now provides the `toMarkdown` utility method that developers can use to for quick, easy, and convenient conversion and summary of documents in multiple formats to Markdown language.
+
+You can call this new tool using a binding by calling `env.AI.toMarkdown()` or the using the [REST API](/api/resources/ai/) endpoint.
+
+In this example, we fetch a PDF document and an image from R2 and feed them both to `env.AI.toMarkdown()`. The result is a list of converted documents. Workers AI models are used automatically to detect and summarize the image.
+
+```typescript
+import { Env } from "./env";
+
+export default {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext) {
+
+    // https://pub-979cb28270cc461d94bc8a169d8f389d.r2.dev/somatosensory.pdf
+    const pdf = await env.R2.get('somatosensory.pdf');
+
+    // https://pub-979cb28270cc461d94bc8a169d8f389d.r2.dev/cat.jpeg
+    const cat = await env.R2.get('cat.jpeg');
+
+    return Response.json(
+      await env.AI.toMarkdown([
+        {
+          name: "somatosensory.pdf",
+          blob: new Blob([await pdf.arrayBuffer()], { type: "application/octet-stream" }),
+        },
+        {
+          name: "cat.jpeg",
+          blob: new Blob([await cat.arrayBuffer()], { type: "application/octet-stream" }),
+        },
+      ]),
+    );
+  },
+};
+```
+
+This is the result:
+
+```json
+[
+	{
+		"name": "somatosensory.pdf",
+		"mimeType": "application/pdf",
+		"format": "markdown",
+		"tokens": 0,
+		"data": "# somatosensory.pdf\n## Metadata\n- PDFFormatVersion=1.4\n- IsLinearized=false\n- IsAcroFormPresent=false\n- IsXFAPresent=false\n- IsCollectionPresent=false\n- IsSignaturesPresent=false\n- Producer=Prince 20150210 (www.princexml.com)\n- Title=Anatomy of the Somatosensory System\n\n## Contents\n### Page 1\nThis is a sample document to showcase..."
+	},
+	{
+		"name": "cat.jpeg",
+		"mimeType": "image/jpeg",
+		"format": "markdown",
+		"tokens": 0,
+		"data": "The image is a close-up photograph of Grumpy Cat, a cat with a distinctive grumpy expression and piercing blue eyes. The cat has a brown face with a white stripe down its nose, and its ears are pointed upright. Its fur is light brown and darker around the face, with a pink nose and mouth. The cat's eyes are blue and slanted downward, giving it a perpetually grumpy appearance. The background is blurred, but it appears to be a dark brown color. Overall, the image is a humorous and iconic representation of the popular internet meme character, Grumpy Cat. The cat's facial expression and posture convey a sense of displeasure or annoyance, making it a relatable and entertaining image for many people."
+	}
+]
+```
+
+See [Markdown Conversion](/workers-ai/markdown-conversion/) for more information on supported formats, REST API and pricing.

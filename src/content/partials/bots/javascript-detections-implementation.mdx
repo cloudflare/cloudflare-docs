@@ -9,12 +9,12 @@ When adding this field to WAF custom rules, use it:
 
 * On endpoints expecting browser traffic (avoiding native mobile applications or websocket endpoints).
 * After a user's first request to your application (Cloudflare needs at least one HTML request before injecting JavaScript detection).
-* With the [Managed Challenge action](/waf/reference/cloudflare-challenges/#managed-challenge-recommended), because there are legitimate reasons a user might not have passed a JavaScript detection challenge (network issues, ad blockers, disabled JavaScript in browser, native mobile apps).
+* With the [Managed Challenge action](/fundamentals/security/cloudflare-challenges/#managed-challenge-recommended), because there are legitimate reasons a user might not have passed a JavaScript detection challenge (network issues, ad blockers, disabled JavaScript in browser, native mobile apps).
 
 ### Prerequisites
 
 * You must have JavaScript detections enabled on your zone.
-* You must have [updated your Content Security Policy headers](/bots/reference/javascript-detections/#if-you-have-a-content-security-policy-csp) for JavaScript detections.
+* You must have [updated your Content Security Policy headers](/bots/additional-configurations/javascript-detections/#if-you-have-a-content-security-policy-csp) for JavaScript detections.
 * You must not run this field on websocket endpoints.
 * You must use the field in a custom rules expression that expects only browser traffic.
 * The action should always be a managed challenge in case a legitimate user has not received the challenge for network or browser reasons.

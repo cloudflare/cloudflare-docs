@@ -22,7 +22,11 @@ Device posture checks are not supported in device enrollment policies. WARP can 
 4. In the **Authentication** tab, select the [identity providers](/cloudflare-one/identity/idp-integration/) users can authenticate with. If you have not integrated an identity provider, you can use the [one-time PIN](/cloudflare-one/identity/one-time-pin/).
 5. Select **Save**.
 
-</TabItem> <TabItem label="Terraform">
+</TabItem> <TabItem label="Terraform (v4)">
+
+:::note[Provider versions]
+The following example requires Cloudflare provider version `>=4.40.0`.
+:::
 
 1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.40.0/docs/resources/api_token):
 	- `Access: Apps and Policies Write`

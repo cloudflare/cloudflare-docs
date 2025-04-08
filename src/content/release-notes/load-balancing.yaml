@@ -1,10 +1,18 @@
 ---
 link: "/load-balancing/changelog/"
-productName: Load Balancing 
+productName: Load Balancing
 productLink: "/load-balancing/"
 productArea: Application performance
 productAreaLink: /fundamentals/reference/changelog/performance/
 entries:
+  - publish_date: "2025-03-13"
+    title: Update to Load Balancing analytics
+    description: |-
+      Load Balancing request rates in analytics may decrease for some customers as an improvement is made to our infrastructure. This decrease in Load Balancing analytics does not indicate a decrease in HTTP requests received.
+  - publish_date: "2025-02-20"
+    title: Zone name added to Load Balancing API responses
+    description: |-
+      Load Balancing API responses for Load Balancers now include a `zone_name` property, which provides the name of the zone in the response data.
   - publish_date: "2025-02-10"
     title: Fix for Cloudflare Tunnel Consistency
     description: |-
@@ -20,4 +28,4 @@ entries:
   - publish_date: "2024-12-20"
     title: Load Balancing with the China Network
     description: |-
-      You can now enable load balancers to be deployed to the [China Network](/china-network/). Refer to the [documentation](/load-balancing/additional-options/load-balancing-china/) for more details. 
+      You can now enable load balancers to be deployed to the [China Network](/china-network/). Refer to the [documentation](/load-balancing/additional-options/load-balancing-china/) for more details.

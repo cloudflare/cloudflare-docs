@@ -3,10 +3,10 @@ updated: 2021-07-27
 difficulty: Beginner
 pcx_content_type: tutorial
 title: Migrating a Jekyll-based site from GitHub Pages
-tags:
-  - Jekyll
 languages:
   - Ruby
+sidebar:
+  hidden: true
 ---
 
 In this tutorial, you will learn how to migrate an existing [GitHub Pages site using Jekyll](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/about-github-pages-and-jekyll) to Cloudflare Pages. Jekyll is one of the most popular static site generators used with GitHub Pages, and migrating your GitHub Pages site to Cloudflare Pages will take a few short steps.
@@ -49,7 +49,7 @@ Your existing Jekyll-based repository must specify a `Gemfile` (Ruby's dependenc
 
 Specifically, you will need to create a `Gemfile` and install the `github-pages` gem, which includes all of the dependencies that the GitHub Pages environment assumes.
 
-[Version 2 of the Pages build environment](/pages/configuration/build-image/#languages-and-runtime) will use Ruby 3.2.2 for the default Jekyll build.  Please make sure your local development environment is compatible.
+[Version 2 of the Pages build environment](/pages/configuration/build-image/#languages-and-runtime) will use Ruby 3.2.2 for the default Jekyll build. Please make sure your local development environment is compatible.
 
 ```sh title="Set Ruby Version"
 brew install ruby@3.2

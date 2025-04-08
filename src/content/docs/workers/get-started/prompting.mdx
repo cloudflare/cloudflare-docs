@@ -1,0 +1,126 @@
+---
+title: Prompting
+pcx_content_type: concept
+sidebar:
+  order: 3
+---
+
+import { Tabs, TabItem, GlossaryTooltip, Type, Badge, TypeScriptExample } from "~/components";
+import { Code } from "@astrojs/starlight/components";
+import BasePrompt from '~/content/partials/prompts/base-prompt.txt?raw';
+
+One of the fastest ways to build an application is by using AI to assist with writing the boiler plate code. When building, iterating on or debugging applications using AI tools and Large Language Models (LLMs), a well-structured and extensive prompt helps provide the model with clearer guidelines & examples that can dramatically improve output.
+
+Below is an extensive example prompt that can help you build applications using Cloudflare Workers and your preferred AI model.
+
+### Getting started with Workers using a prompt <Badge text="Beta" variant="caution" size="small" />
+
+To use the prompt:
+1. Use the click-to-copy button at the top right of the code block below to copy the full prompt to your clipboard
+2. Paste into your AI tool of choice (for example OpenAI's ChatGPT or Anthropic's Claude)
+3. Make sure to enter your part of the prompt at the end between the `<user_prompt>` and `</user_prompt>` tags.
+
+Base prompt:
+<Code code={BasePrompt} collapse={"30-10000"} lang="md" />
+
+The prompt above adopts several best practices, including:
+
+* Using `<xml>` tags to structure the prompt
+* API and usage examples for products and use-cases
+* Guidance on how to generate configuration (e.g. `wrangler.jsonc`) as part of the models response.
+* Recommendations on Cloudflare products to use for specific storage or state needs
+
+### Additional uses
+
+You can use the prompt in several ways:
+
+* Within the user context window, with your own user prompt inserted between the `<user_prompt>` tags (**easiest**)
+* As the `system` prompt for models that support system prompts
+* Adding it to the prompt library and/or file context within your preferred IDE:
+	* Cursor: add the prompt to [your Project Rules](https://docs.cursor.com/context/rules-for-ai)
+	* Zed: use [the `/file` command](https://zed.dev/docs/assistant/assistant-panel) to add the prompt to the Assistant context.
+	* Windsurf: use [the `@-mention` command](https://docs.codeium.com/chat/overview) to include a file containing the prompt to your Chat.
+  * GitHub Copilot: create the [`.github/copilot-instructions.md`](https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot) file at the root of your project and add the prompt.
+
+:::note
+
+The prompt(s) here are examples and should be adapted to your specific use case. We'll continue to build out the prompts available here, including additional prompts for specific products.
+
+Depending on the model and user prompt, it may generate invalid code, configuration or other errors, and we recommend reviewing and testing the generated code before deploying it.
+
+:::
+
+### Passing a system prompt
+
+If you are building an AI application that will itself generate code, you can additionally use the prompt above as a "system prompt", which will give the LLM additional information on how to structure the output code. For example:
+
+<TypeScriptExample filename="index.ts">
+
+```ts
+import workersPrompt from "./workersPrompt.md"
+
+// Llama 3.3 from Workers AI
+const PREFERRED_MODEL = "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
+
+export default {
+	async fetch(req: Request, env: Env, ctx: ExecutionContext) {
+		const openai = new OpenAI({
+			apiKey: env.WORKERS_AI_API_KEY
+		});
+
+		const stream = await openai.chat.completions.create({
+			messages: [
+				{
+					role: "system",
+					content: workersPrompt,
+				},
+				{
+					role: "user",
+					// Imagine something big!
+					content: "Build an AI Agent using Workflows. The Workflow should be triggered by a GitHub webhook on a pull request, and ..."
+				}
+			],
+			model: PREFERRED_MODEL,
+			stream: true,
+		});
+
+		// Stream the response so we're not buffering the entire response in memory,
+		// since it could be very large.
+		const transformStream = new TransformStream();
+		const writer = transformStream.writable.getWriter();
+		const encoder = new TextEncoder();
+
+		(async () => {
+			try {
+				for await (const chunk of stream) {
+					const content = chunk.choices[0]?.delta?.content || '';
+					await writer.write(encoder.encode(content));
+				}
+			} finally {
+				await writer.close();
+			}
+		})();
+
+		return new Response(transformStream.readable, {
+			headers: {
+				'Content-Type': 'text/plain; charset=utf-8',
+				'Transfer-Encoding': 'chunked'
+			}
+		});
+	}
+}
+
+```
+
+</TypeScriptExample>
+
+
+## Additional resources
+
+To get the most out of AI models and tools, we recommend reading the following guides on prompt engineering and structure:
+
+* OpenAI's [prompt engineering](https://platform.openai.com/docs/guides/prompt-engineering) guide and [best practices](https://platform.openai.com/docs/guides/reasoning-best-practices) for using reasoning models.
+* The [prompt engineering](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview) guide from Anthropic
+* Google's [quick start guide](https://services.google.com/fh/files/misc/gemini-for-google-workspace-prompting-guide-101.pdf) for writing effective prompts
+* Meta's [prompting documentation](https://www.llama.com/docs/how-to-guides/prompting/) for their Llama model family.
+* GitHub's guide for [prompt engineering](https://docs.github.com/en/copilot/using-github-copilot/copilot-chat/prompt-engineering-for-copilot-chat) when using Copilot Chat.

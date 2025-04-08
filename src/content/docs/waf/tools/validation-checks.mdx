@@ -1,0 +1,32 @@
+---
+pcx_content_type: reference
+title: Validation checks
+---
+
+import { GlossaryTooltip } from "~/components";
+
+Cloudflare performs a validation check for every request. The Validation component executes prior to all other WAF features like custom rules or WAF Managed Rules. The validation check blocks malformed requests like Shellshock attacks and requests with certain attack patterns in their HTTP headers before any <GlossaryTooltip term="allowlist">allowlist</GlossaryTooltip> logic occurs.
+
+:::note
+Currently, you cannot disable validation checks. They run early in Cloudflare's infrastructure before the configuration for domains has been loaded.
+:::
+
+## Event logs for validation checks
+
+Actions performed by the Validation component appear in [Sampled logs](/waf/analytics/security-events/#sampled-logs) in Security Events, associated with the `Validation` service and without a rule ID. Event logs downloaded from the API show source as `Validation` and action as `drop` when this behavior occurs.
+
+The following example shows a request blocked by the Validation component due to a malformed `User-Agent` HTTP request header:
+
+![Sampled logs displaying an example of a validation check event](~/assets/images/waf/validation-service.png)
+
+In the downloaded JSON file for the event, the `ruleId` value indicates the detected issue — in this case, it was a Shellshock attack.
+
+```json null {3}
+{
+	"action": "drop",
+	"ruleId": "sanity-shellshock",
+	"source": "sanitycheck",
+	"userAgent": "() { :;}; printf \\\\\"detection[%s]string\\\\\" \\\\\"TjcLLwVzBtLzvbN\\\\"
+	//...
+}
+```

@@ -1,0 +1,25 @@
+---
+pcx_content_type: reference
+title: Admin Center (FedRAMP)
+rss: file
+sidebar:
+  order: 5
+---
+
+import { Render } from "~/components";
+
+<Render
+	file="casb/fedramp-availability"
+	params={{
+		integrationName: "Admin Center (FedRAMP)",
+	}}
+/>
+
+<Render
+	file="casb/microsoft/integrations/admin-center"
+	params={{
+		integrationName: "Admin Center (FedRAMP)",
+		environmentName: "Microsoft 365 account",
+		slugifiedName: "microsoft-365/admin-center-fedramp",
+	}}
+/>

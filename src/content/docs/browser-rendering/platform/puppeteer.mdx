@@ -1,6 +1,7 @@
 ---
 pcx_content_type: concept
 title: Puppeteer
+description: Learn how to use Puppeteer with Cloudflare Workers for browser automation. Access Puppeteer API, manage sessions, and optimize browser rendering.
 sidebar:
   order: 10
 ---
@@ -11,7 +12,7 @@ import { TabItem, Tabs } from "~/components";
 
 Puppeteer typically connects to a local Chrome or Chromium browser using the DevTools port. Refer to the [Puppeteer API documentation on the `Puppeteer.connect()` method](https://pptr.dev/api/puppeteer.puppeteer.connect) for more information.
 
-The Workers team forked a version of Puppeteer and patched it to connect to the Workers Browser Rendering API instead. The [changes between Workers Puppeteer fork and the Puppeteer core](https://github.com/cloudflare/puppeteer/blob/main/src/puppeteer-core.ts) are minimal. After connecting, the developers can then use the full [Puppeteer API](https://github.com/cloudflare/puppeteer/blob/main/docs/api/index.md) as they would on a standard setup.
+The Workers team forked a version of Puppeteer and patched it to connect to the Workers Browser Rendering API instead. After connecting, the developers can then use the full [Puppeteer API](https://github.com/cloudflare/puppeteer/blob/main/docs/api/index.md) as they would on a standard setup.
 
 Our version is open sourced and can be found in [Cloudflare's fork of Puppeteer](https://github.com/cloudflare/puppeteer). The npm can be installed from [npmjs](https://www.npmjs.com/) as [@cloudflare/puppeteer](https://www.npmjs.com/package/@cloudflare/puppeteer):
 
@@ -67,7 +68,7 @@ This script [launches](https://pptr.dev/api/puppeteer.puppeteernode.launch) the 
 
 ### Keep Alive
 
-If users omit the `browser.close()` statement, it will stay open, ready to be connected to again and [re-used](/browser-rendering/get-started/reuse-sessions/) but it will, by default, close automatically after 1 minute of inactivity. Users can optionally extend this idle time up to 10 minutes, by using the `keep_alive` option, set in milliseconds:
+If users omit the `browser.close()` statement, it will stay open, ready to be connected to again and [re-used](/browser-rendering/workers-binding-api/reuse-sessions/) but it will, by default, close automatically after 1 minute of inactivity. Users can optionally extend this idle time up to 10 minutes, by using the `keep_alive` option, set in milliseconds:
 
 ```js
 const browser = await puppeteer.launch(env.MYBROWSER, { keep_alive: 600000 });

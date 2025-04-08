@@ -2,8 +2,7 @@
 pcx_content_type: reference
 title: Global policies
 sidebar:
-  order: 7
-
+  order: 8
 ---
 
 Cloudflare Zero Trust applies a set of global policies to all accounts.
@@ -14,8 +13,6 @@ The following policies are sorted by [order of precedence](/cloudflare-one/polic
 
 ## Network proxy policies
 
-
-
 | Name                              | ID                                     | Criteria | Value                                                                                                                                                                                             | Action | Description                                                                                              |
 | --------------------------------- | -------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ | -------------------------------------------------------------------------------------------------------- |
 | Allow CF Network Error Logging L4 | `00000001-e4af-4b82-8f8c-c79c1d5d212e` | Hostname | `*.nel.cloudflare.com`                                                                                                                                                                            | allow  | Allows SNI domains for WARP registration.                                                                |
@@ -24,11 +21,7 @@ The following policies are sorted by [order of precedence](/cloudflare-one/polic
 | Allow Zero Trust Services         | `00000001-e1e8-421b-a0fe-895397489f28` | Hostname | `dash.teams.cloudflare.com`, `help.teams.cloudflare.com`, `blocked.teams.cloudflare.com`, `api.cloudflare.com`, `cloudflarestatus.com`, `www.cloudflarestatus.com`, and `one.dash.cloudflare.com` | allow  | Allows Cloudflare Zero Trust services.                                                                   |
 | Allow Access Apps L4              | `00000001-daa2-41e2-8a88-698af4066951` | Hostname | `*.cloudflareaccess.com`                                                                                                                                                                          | allow  | Allows [Cloudflare Access](/cloudflare-one/policies/access/) applications.                               |
 
-
-
 ## HTTP inspection policies
-
-
 
 | Name                                   | ID                                     | Criteria         | Value                                                              | Action    | Description                                                                                                                                    |
 | -------------------------------------- | -------------------------------------- | ---------------- | ------------------------------------------------------------------ | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -49,4 +42,3 @@ The following policies are sorted by [order of precedence](/cloudflare-one/polic
 | Always Blocked Categories              | `00000001-bed5-462e-b0f1-2e2c3555e9f7` | Content Category | Child Abuse                                                        | block     | Blocks child abuse materials.                                                                                                                  |
 | Don't Isolate RBI Help Pages           | `00000001-1a18-431f-9c9d-bce431f1002a` | Hostname         | `developers.cloudflare.com` and `help.cloudflarebrowser.com`       | noisolate | Prevents browser isolation of Cloudflare developer docs and help pages to help users troubleshoot configuration issues.                        |
 | Don't AV Scan CF Speed                 | `00000001-c194-408f-87dd-9a366ce76e12` | Hostname         | `speed.cloudflare.com`                                             | noscan    | Allows files transferred by the Cloudflare speed test.                                                                                         |
-

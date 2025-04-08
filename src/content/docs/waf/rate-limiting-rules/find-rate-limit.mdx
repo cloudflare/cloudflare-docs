@@ -6,14 +6,13 @@ sidebar:
 head:
   - tag: title
     content: Find an appropriate rate limit
-
 ---
 
 The **Rate limit analysis** tab in [Security Analytics](/waf/analytics/security-analytics/) displays data on the request rate for traffic matching the selected filters and time period. Use this tab to determine the most appropriate rate limit for incoming traffic matching the applied filters.
 
 :::note
 
-The **Rate limit analysis** tab is only available to Enterprise customers. 
+The **Rate limit analysis** tab is only available to Enterprise customers.
 :::
 
 ## User interface overview
@@ -24,16 +23,17 @@ The **Rate limit analysis** tab is available at the zone level in **Security** >
 
 The main chart displays the distribution of request rates for the top 50 unique clients observed during the selected time interval (for example, `1 minute`) in descending order. You can group the request rates by the following unique request properties:
 
-* **IP address**
-* [**JA3 fingerprint**](/bots/concepts/ja3-ja4-fingerprint/) (only available to customers with Bot Management)
-* **IP address and JA3 fingerprint** (only available to customers with Bot Management)
+- **IP address**
+- [**JA3 fingerprint**](/bots/additional-configurations/ja3-ja4-fingerprint/) (only available to customers with Bot Management)
+- **IP & JA3** (only available to customers with Bot Management)
+- [**JA4 fingerprint**](/bots/additional-configurations/ja3-ja4-fingerprint/) (only available to customers with Bot Management)
 
 :::note
 
-For more information on how Cloudflare calculates the request rate of incoming traffic, refer to [How Cloudflare determines the request rate](/waf/rate-limiting-rules/request-rate/). 
+For more information on how Cloudflare calculates the request rate of incoming traffic, refer to [How Cloudflare determines the request rate](/waf/rate-limiting-rules/request-rate/).
 :::
 
-***
+---
 
 ## Determine an appropriate rate limit
 
@@ -45,8 +45,8 @@ For more information on how Cloudflare calculates the request rate of incoming t
 
 3. In the **Traffic analysis** tab, select a specific time period:
 
-   * To look at the regular rate distribution, specify a period with non-peak traffic.
-   * To analyze the rate of offending visitors/bots, select a period corresponding to an attack.
+   - To look at the regular rate distribution, specify a period with non-peak traffic.
+   - To analyze the rate of offending visitors/bots, select a period corresponding to an attack.
 
 4. Apply filters to analyze a particular situation in your application where you want to apply rate limiting (for example, filter by `/login` URL path).
 
@@ -54,9 +54,11 @@ For more information on how Cloudflare calculates the request rate of incoming t
 
 ### 2. Find the rate
 
-1. Choose the request properties (JA3, IP, or both) and the duration (1 min, 5 mins, or 1 hour) for your rate limit rule. The request properties you select will be used as [rate limiting rule characteristics](/waf/rate-limiting-rules/parameters/#with-the-same-characteristics).
+1. Switch to the **Rate limit analysis** tab.
 
-2. Use the slider in the chart to move the horizontal line defining the rate limit. While you move the slider up and down, check the impact of defining a rate limiting rule with the selected limit on the displayed traffic.
+2. Choose the request properties (JA3, IP, IP and JA3, or JA4) and the duration (1 min, 5 mins, or 1 hour) for your rate limit rule. The request properties you select will be used as [rate limiting rule characteristics](/waf/rate-limiting-rules/parameters/#with-the-same-characteristics).
+
+3. Use the slider in the chart to move the horizontal line defining the rate limit. While you move the slider up and down, check the impact of defining a rate limiting rule with the selected limit on the displayed traffic.
 
    ![User adjusting the rate limit in the Rate limit analysis chart to check the impact on recent traffic](/images/waf/rate-limit-adjust.gif)
 
@@ -64,9 +66,10 @@ For more information on how Cloudflare calculates the request rate of incoming t
 
 Answering the following questions during your adjustments can help you with your analysis:
 
-* "How many clients would have been caught by the rule and rate limited?"
-* "Can I visually identify abusers with above-average rate vs. the long tail of average users?" 
-  :::
+- "How many clients would have been caught by the rule and rate limited?"
+- "Can I visually identify abusers with above-average rate vs. the long tail of average users?"
+
+:::
 
 ### 3. Validate your rate
 
@@ -80,6 +83,6 @@ Answering the following questions during your adjustments can help you with your
 
 2. Select the rule action. Depending on your needs, you can set the rule to log, challenge, or block requests exceeding the selected threshold.
 
-   It is recommended that you first deploy the rule with the *Log* action to validate the threshold, and change the action later to block or challenge incoming requests when you are confident about the rule behavior.
+   It is recommended that you first deploy the rule with the _Log_ action to validate the threshold, and change the action later to block or challenge incoming requests when you are confident about the rule behavior.
 
 3. To save and deploy your rate limiting rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.

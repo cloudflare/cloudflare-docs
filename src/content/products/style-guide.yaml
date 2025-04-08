@@ -9,7 +9,3 @@ meta:
   title: Cloudflare Style Guide
   description: Style guide to follow for contributing to Cloudflare docs.
   author: "@cloudflare"
-
-externals:
-  - title: Cloudflare homepage
-    url: https://cloudflare.com

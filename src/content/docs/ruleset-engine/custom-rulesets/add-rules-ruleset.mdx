@@ -5,6 +5,8 @@ sidebar:
   order: 3
 ---
 
+import { APIRequest } from "~/components";
+
 To add rules to an existing custom ruleset, use the [Update an account ruleset](/api/resources/rulesets/methods/update/) operation and pass the rules in an array. Each rule has an expression and an action.
 
 :::note[Choosing the appropriate API method]
@@ -20,32 +22,31 @@ You can use other API operations depending on the type of operation:
 
 ## Add rules
 
-The following request adds two rules to a custom ruleset. These will be the only two rules in the ruleset.
+The following request adds two rules to a custom ruleset with ID `$RULESET_ID`. These will be the only two rules in the ruleset.
 
 The response will include the rule ID of the new rules in the `id` field.
 
-```bash
-curl --request PUT \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{custom_ruleset_id} \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "rules": [
-    {
-      "expression": "(ip.src.country eq \"GB\" or ip.src.country eq \"FR\") or cf.threat_score > 0",
-      "action": "challenge",
-      "description": "challenge GB and FR or based on IP Reputation"
-    },
-    {
-      "expression": "not http.request.uri.path matches \"^/api/.*$\"",
-      "action": "challenge",
-      "description": "challenge not /api"
-    }
-  ]
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/rulesets/{ruleset_id}"
+	method="PUT"
+	json={{
+		rules: [
+			{
+				expression:
+					'(ip.src.country eq "GB" or ip.src.country eq "FR") or cf.threat_score > 0',
+				action: "challenge",
+				description: "challenge GB and FR or based on IP Reputation",
+			},
+			{
+				expression: 'not http.request.uri.path matches "^/api/.*$"',
+				action: "challenge",
+				description: "challenge not /api",
+			},
+		],
+	}}
+/>
 
-```json output
+```json output {9,19}
 {
 	"result": {
 		"id": "<CUSTOM_RULESET_ID>",
@@ -87,29 +88,27 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{custom_rule
 
 To update one or more rules in a custom ruleset, use the [Update an account ruleset](/api/resources/rulesets/methods/update/) operation. Include the ID of the rules you want to modify in the rules array and add the fields you wish to update. The request replaces the entire ruleset with a new version. Therefore, you must include the ID of all the rules you wish to keep.
 
-The following request edits one rule in a custom ruleset and updates the execution order of the rules.
+The following `PUT` request edits one rule in a custom ruleset and updates the execution order of the rules.
 
 The response will include the modified custom ruleset. Note that the updated rule and ruleset version number increment.
 
-```bash
-curl --request PUT \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{ruleset_id} \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "rules": [
-    {
-      "id": "<CUSTOM_RULE_ID_2>",
-      "expression": "not http.request.uri.path matches \"^/api/.*$\"",
-      "action": "js_challenge",
-      "description": "js_challenge when not /api"
-    },
-    {
-      "id": "<CUSTOM_RULE_ID_1>"
-    }
-  ]
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/rulesets/{ruleset_id}"
+	method="PUT"
+	json={{
+		rules: [
+			{
+				id: "<CUSTOM_RULE_ID_2>",
+				expression: 'not http.request.uri.path matches "^/api/.*$"',
+				action: "js_challenge",
+				description: "js_challenge when not /api",
+			},
+			{
+				id: "<CUSTOM_RULE_ID_1>",
+			},
+		],
+	}}
+/>
 
 ```json output
 {

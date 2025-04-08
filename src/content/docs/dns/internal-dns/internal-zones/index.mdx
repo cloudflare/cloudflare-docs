@@ -1,0 +1,20 @@
+---
+pcx_content_type: concept
+title: Internal zones
+sidebar:
+  order: 2
+  group:
+    label: Internal zones
+---
+
+import { Example, Render, DirectoryListing } from "~/components";
+
+Internal DNS zones are groupings of internal DNS records. While [public DNS records](/dns/manage-dns-records/) contain information about resources that you want to make available to the public Internet, [internal DNS records](/dns/internal-dns/internal-zones/internal-dns-records/) allow you to manage resources that should only be available within your private network.
+
+Refer to [Manage internal zones](/dns/internal-dns/internal-zones/setup/) for a full list of configuration conditions and step-by-step instructions.
+
+Internal DNS zones do not get assigned Cloudflare nameservers and can only be queried via [Cloudflare Gateway](/cloudflare-one/policies/gateway/resolver-policies/) when linked to a [DNS view](/dns/internal-dns/dns-views/). The Gateway configuration must exist within the same Cloudflare account where the internal zone exists.
+
+## Resources
+
+<DirectoryListing />

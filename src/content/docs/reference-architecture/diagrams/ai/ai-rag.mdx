@@ -4,6 +4,7 @@ pcx_content_type: reference-architecture-diagram
 tags:
   - AI
 products:
+  - AutoRAG
   - Workers AI
   - Workers
   - Queues
@@ -25,6 +26,10 @@ Examples for application of these technique includes for instance customer servi
 
 In the context of Retrieval-Augmented Generation (RAG), knowledge seeding involves incorporating external information from pre-existing sources into the generative process, while querying refers to the mechanism of retrieving relevant knowledge from these sources to inform the generation of coherent and contextually accurate text. Both are shown below.
 
+:::note[Looking for a managed option?]
+[AutoRAG](/autorag) offers a fully managed way to build RAG pipelines on Cloudflare, handling ingestion, indexing, and querying out of the box. [Get started with AutoRAG](/autorag/get-started/).
+:::
+
 ## Knowledge Seeding
 
 ![Figure 1: Knowledge seeding](~/assets/images/reference-architecture/rag-ref-architecture-diagrams/rag-architecture-seeding.svg "Figure 1: Knowledge seeding")
@@ -45,10 +50,11 @@ In the context of Retrieval-Augmented Generation (RAG), knowledge seeding involv
 2. **Embedding generation**: Generate embedding vectors by calling [Workers AI](/workers-ai/) [text embedding models](/workers-ai/models/) for the incoming query.
 3. **Vector search**: Query [Vectorize](/vectorize/) using the vector representation of the query to retrieve related vectors.
 4. **Document lookup**: Retrieve related documents from [D1](/d1/) based on search results from [Vectorize](/vectorize/).
-5. **Text generation**: Pass both the original query and the retrieved documents as context to [Workers AI](/workers-ai/) [text generation models](/workers-ai/models/#text-generation) to generate a response.
+5. **Text generation**: Pass both the original query and the retrieved documents as context to [Workers AI](/workers-ai/) [text generation models](/workers-ai/models/) to generate a response.
 
 ## Related resources
 
-- [Tutorial: Build a RAG AI](/workers-ai/tutorials/build-a-retrieval-augmented-generation-ai/)
+- [Tutorial: Build a RAG AI](/workers-ai/guides/tutorials/build-a-retrieval-augmented-generation-ai/)
+- [Get started with AutoRAG](/autorag/get-started/)
 - [Workers AI: Text embedding models](/workers-ai/models/)
-- [Workers AI: Text generation models](/workers-ai/models/#text-generation)
+- [Workers AI: Text generation models](/workers-ai/models/)

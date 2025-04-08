@@ -27,7 +27,7 @@ Context is exposed via the following places:
 
 If you are using `waitUntil()` to emit logs or exceptions, we recommend using [Tail Workers](/workers/observability/logs/tail-workers/) instead. Even if your Worker throws an uncaught exception, the Tail Worker will execute, ensuring that you can emit logs or exceptions regardless of the Worker's invocation status.
 
-[Cloudflare Queues](/queues/) is purpose-built for performing work out-of-band, without blocking returning a response back to the client Worker. 
+[Cloudflare Queues](/queues/) is purpose-built for performing work out-of-band, without blocking returning a response back to the client Worker.
 :::
 
 You can call `waitUntil()` multiple times. Similar to `Promise.allSettled`, even if a promise passed to one `waitUntil` call is rejected, promises passed to other `waitUntil()` calls will still continue to execute.
@@ -60,7 +60,7 @@ export default {
 
 The Workers Runtime uses streaming for request and response bodies. It does not buffer the body. Hence, if an exception occurs after the body has been consumed, `passThroughOnException()` cannot send the body again.
 
-If this causes issues, we recommend cloning the request body and handling exceptions in code. This will protect against uncaught code exceptions. However some exception times such as exceed CPU or memory limits will not be mitigated. 
+If this causes issues, we recommend cloning the request body and handling exceptions in code. This will protect against uncaught code exceptions. However some exception times such as exceed CPU or memory limits will not be mitigated.
 :::
 
 The `passThroughOnException` method allows a Worker to [fail open](https://community.microfocus.com/cyberres/b/sws-22/posts/security-fundamentals-part-1-fail-open-vs-fail-closed), and pass a request through to an origin server when a Worker throws an unhandled exception. This can be useful when using Workers as a layer in front of an existing service, allowing the service behind the Worker to handle any unexpected error cases that arise in your Worker.

@@ -1,0 +1,18 @@
+---
+pcx_content_type: navigation
+title: Locally-managed tunnels
+sidebar:
+  order: 2
+
+---
+
+import { DirectoryListing } from "~/components"
+
+
+A loocally-managed tunnel is a Cloudflare Tunnel created by running `cloudflared tunnel create <NAME>` on the command line. Tunnel configuration is stored in your local [cloudflared directory](#default-cloudflared-directory).
+
+:::note
+Cloudflare recommends setting up a [remotely-managed tunnel](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/). Remotely-managed configurations are stored on Cloudflare, which allows you to manage the tunnel from any machine using the dashboard, API, or Terraform.
+:::
+
+<DirectoryListing />

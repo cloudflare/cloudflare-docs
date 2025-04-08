@@ -23,7 +23,7 @@ Ensure that **Split Tunnels** are configured to [include traffic to private IPs 
 
 :::
 
-5. Finally, ensure that your tunnel uses QUIC as the default [transport protocol](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#protocol). This will enable `cloudflared` to proxy UDP-based traffic which is required in most cases to resolve DNS queries.
+5. Finally, ensure that your tunnel uses QUIC as the default [transport protocol](/cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/run-parameters/#protocol). This will enable `cloudflared` to proxy UDP-based traffic which is required in most cases to resolve DNS queries.
 
 The WARP client will now resolve requests through the internal DNS server you set up in your private network.
 

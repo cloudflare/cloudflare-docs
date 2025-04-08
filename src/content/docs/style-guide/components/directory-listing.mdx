@@ -1,13 +1,58 @@
 ---
 title: Directory listing
+styleGuide:
+  component: DirectoryListing
 ---
 
-Use `<DirectoryListing />` to display the directory of a specific folder, which appears as a list of links.
+import { Render } from "~/components";
 
-We also have an optional `descriptions` parameter which - if present - adds in the text from the [front matter `description`](/style-guide/frontmatter/) field.
+<Render file="directory-listing-definition" />
+
+## Usage
 
 ```mdx live
 import { DirectoryListing } from "~/components";
 
+<p>
+	<strong>Default</strong>
+</p>
+<DirectoryListing folder="workers/wrangler" />
+
+<br />
+
+<p>
+	<strong>maxDepth</strong>
+</p>
+<DirectoryListing folder="workers/wrangler" maxDepth={2} />
+
+<p>
+	<strong>Descriptions</strong>
+</p>
 <DirectoryListing folder="workers/wrangler" descriptions />
 ```
+
+## Props
+
+### `folder`
+
+**type:** `string`
+
+The folder path to list contents from. If not provided, defaults to the current page's path.
+
+### `descriptions`
+
+**type:** `boolean`
+**default:** `false`
+
+When enabled, shows the [frontmatter `description`](/style-guide/frontmatter/) field for each page in the listing.
+
+### `maxDepth`
+
+**type:** `number`
+**default:** `1`
+
+Controls how many levels of nested pages to display. A value of `1` shows only direct children, while higher values will show deeper nesting levels.
+
+## Associated content types
+
+- [Navigation](/style-guide/documentation-content-strategy/content-types/navigation/)

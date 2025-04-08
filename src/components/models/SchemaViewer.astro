@@ -53,7 +53,7 @@ const jsonSchemaTree = new SchemaTree(schema, {
 jsonSchemaTree.populate();
 ---
 
-<ul class="list-none m-0 p-0">
+<ul class="m-0 list-none p-0">
 	{
 		(jsonSchemaTree.root.children[0] as RegularNode).children?.map(
 			(node: SchemaNode) => <SchemaRow node={node} root />,

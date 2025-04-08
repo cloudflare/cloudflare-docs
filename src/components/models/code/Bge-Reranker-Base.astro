@@ -1,0 +1,79 @@
+---
+import { z } from "astro:schema";
+import { Code } from "@astrojs/starlight/components";
+import Details from "~/components/Details.astro";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	name: z.string(),
+});
+
+const { name } = props.parse(Astro.props);
+
+const worker = `
+export interface Env {
+	AI: Ai;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		const query = 'Which one is cooler?'
+		const contexts = [
+			{
+				text: 'a cyberpunk lizzard'
+			},
+			{
+				text: 'a cyberpunk cat'
+			}
+		];
+
+		const response = await env.AI.run('${name}', { query, contexts });
+
+		return Response.json(response);
+	},
+} satisfies ExportedHandler<Env>;
+
+`;
+
+const python = `
+import os
+import requests
+
+ACCOUNT_ID = "your-account-id"
+AUTH_TOKEN = os.environ.get("CLOUDFLARE_AUTH_TOKEN")
+
+response = requests.post(
+  f"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/${name}",
+    headers={"Authorization": f"Bearer {AUTH_TOKEN}"},
+    json={
+	  "query": "Which one is better?"
+      "context": [
+        {"text": "a cyberpunk lizzard"},
+		{"text": "a cyberpunk car"},
+      ]
+    }
+)
+result = response.json()
+print(result)
+`;
+
+const curl = `
+curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/${name} \\
+  -X POST \\
+  -H "Authorization: Bearer $CLOUDFLARE_AUTH_TOKEN" \\
+  -d '{ "query": "Which one is better?", "contexts": [{ "text": "a cyberpunk lizzard" }, {"text": "a cyberpunk cat"}]}'
+`;
+---
+
+<Details header="Worker">
+	<Code code={worker} lang="ts" />
+</Details>
+
+<Details header="Python">
+	<Code code={python} lang="py" />
+</Details>
+
+<Details header="curl">
+	<Code code={curl} lang="sh" />
+</Details>

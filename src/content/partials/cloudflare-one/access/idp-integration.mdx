@@ -2,16 +2,35 @@
 {}
 ---
 
+import {Render, Tabs, TabItem} from "~/components"
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
 
 2. In the **Login methods** card, select **Add new**.
 
 3. Select the identity provider you want to add.
 
-   If you do not see your identity provider listed, these providers can typically still be enabled. If they support OIDC or OAuth, select the generic OIDC option. If they support SAML, select the generic SAML option. Cloudflare supports all SAML and OIDC providers and can integrate with the majority of OAuth providers. If your provider supports both SAML and OIDC, we recommend OIDC for ease of configuration.
+		<Render file="access/idp-integration-note" product="cloudflare-one" params={{verb: "select" }}/>
 
 4. Fill in the necessary fields to set up your identity provider.
 
-   Each identity provider will have different required fields for you to fill in. Step-by-step instructions are shown in the dashboard side panel.
+   Each identity provider will have different required fields for you to fill in. Step-by-step instructions are shown in the dashboard side panel. Alternatively, refer to the [IdP-specific documentation](/cloudflare-one/identity/idp-integration/).
 
 5. Once you have filled in the necessary fields, select **Save**.
+
+</TabItem> <TabItem label="Terraform">
+
+1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
+	- `Access: Organizations, Identity Providers, and Groups Write`
+
+2. Add an identity provider to Zero Trust using the [`cloudflare_zero_trust_access_identity_provider`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_identity_provider) resource.  For example, to add a Microsoft Entra ID integration:
+
+		<Render file="access/entra-id-terraform" product="cloudflare-one" />
+
+		Each identity provider integration has different required attributes. You will need to obtain these attribute values from your identity provider. For more information, refer to the [IdP-specific documentation](/cloudflare-one/identity/idp-integration/).
+
+		<Render file="access/idp-integration-note" product="cloudflare-one" params={{verb: "use" }} />
+
+</TabItem> </Tabs>

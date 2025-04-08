@@ -48,4 +48,3 @@ wrangler r2 bucket delete BUCKET_TO_DELETE
 
 - Bucket names and buckets are not public by default. To allow public access to a bucket, [visit the public bucket documentation](/r2/buckets/public-buckets/).
 - Invalid (unauthorized) access attempts to private buckets do not incur R2 operations charges against that bucket. Refer to the [R2 pricing FAQ](/r2/pricing/#frequently-asked-questions) to understand what operations are billed vs. not billed.
-- The TLS (SSL) certificate created for each R2 bucket uses a wildcard certificate of the form `*.r2.cloudflarestorage.com`, which prevents account IDs and names from showing up in Certificate Transparency logs.

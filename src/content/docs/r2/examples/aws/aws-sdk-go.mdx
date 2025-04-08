@@ -1,14 +1,26 @@
 ---
 title: aws-sdk-go
 pcx_content_type: example
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="keys" /><br/>
+<Render file="keys" />
+<br />
 
 This example uses version 2 of the [aws-sdk-go](https://github.com/aws/aws-sdk-go-v2) package. You must pass in the R2 configuration credentials when instantiating your `S3` service client:
+
+:::note[Compatibility]
+Client version `1.73.0` introduced a modification to the default checksum behavior from the client that is currently incompatible with R2 APIs.
+
+To mitigate, users can use `1.72.3` or add the following to their config:
+
+```go
+config.WithRequestChecksumCalculation(0)
+config.WithResponseChecksumValidation(0)
+```
+
+:::
 
 ```go
 package main

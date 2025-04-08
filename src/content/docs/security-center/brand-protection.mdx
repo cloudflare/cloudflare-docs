@@ -11,7 +11,7 @@ sidebar:
 import { AvailableNotifications, Render } from "~/components"
 
 :::note[User permission]
-While the Brand Protection tool is in beta, you will need to request access by filling in the [sign-up form](http://cloudflare.com/lp/brandprotection). Only Super Admin and users with a Brand Protection role can access Brand Protection. 
+While the Brand Protection tool is in beta, all Cloudflare Enterprise customers have automatic access to Brand Protection, including five saved queries. Only Admin, Super Admin and users with a Brand Protection role can access Brand Protection 
 :::
 
 <Render file="brand-protection-definition" />
@@ -38,6 +38,19 @@ To start searching for new domains that might be trying to impersonate your bran
 6. To export all matches from a saved query, select your **Query name** > select the three dots > **Export matches**.
 
 In the section **Monitor Strings**, you can check all the string queries that you selected to monitor. You can delete, clone, or create notifications for a string query. Refer to [Brand Protection Alerts](#brand-protection-alerts) to set up notifications.
+
+### Report abuse
+
+:::note[Submit abuse report]
+You can only submit an abuse report if your domain is with [Cloudflare Registrar](https://www.cloudflare.com/products/registrar/), or if the IP used by the domain is hosted by Cloudflare.
+:::
+
+To submit abuse reports directly from the dashboard:
+
+1. Go to the **Query name** you want to report.
+2. Select **Report to Cloudflare**.
+3. Fill in the details to submit an abuse report.
+4. Select **Submit**.
 
 ## Logo queries
 

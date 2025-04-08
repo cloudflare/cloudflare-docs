@@ -48,9 +48,8 @@ To customize the default settings:
 
 ```bash
 curl --request PATCH \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/devices/policy \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/devices/policy \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --header "Content-Type: application/json" \
 --data '{
   "allow_mode_switch": false,
@@ -72,9 +71,8 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/devices/policy \
 
 ```bash
 curl --request PUT \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/devices/settings \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/devices/settings \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --header "Content-Type: application/json" \
 --data '{
   "disable_for_time": 3600,

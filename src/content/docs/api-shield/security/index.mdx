@@ -21,27 +21,27 @@ The following table provides examples of how you might match Cloudflare products
 
 | OWASP issue                                     | Example Cloudflare solution                                                                                                                            |
 | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Broken Object Level Authorization               | [Sequence Mitigation], [Schema Validation], [JWT Validation], [Rate Limiting]                                                                          |
-| Broken Authentication                           | [mTLS](/api-shield/security/mtls/), [JWT Validation], [Exposed Credential Checks](/waf/managed-rules/check-for-exposed-credentials/), [Bot Management] |
-| Broken Object Property Level Authorization      | [Schema Validation], [JWT Validation]                                                                                                                  |
+| Broken Object Level Authorization               | [Sequence Mitigation], [Schema validation], [JWT validation], [Rate Limiting]                                                                          |
+| Broken Authentication                           | [mTLS](/api-shield/security/mtls/), [JWT validation], [Exposed Credential Checks](/waf/managed-rules/check-for-exposed-credentials/), [Bot Management](/bots/), [Authentication Posture](/api-shield/security/authentication-posture/) |
+| Broken Object Property Level Authorization      | [Schema validation], [JWT validation]                                                                                                                  |
 | Unrestricted Resource Consumption               | [Rate Limiting], [Sequence Mitigation], [Bot Management], [GraphQL Query Protection]                                                                   |
-| Broken Function Level Authorization             | [Schema Validation], [JWT Validation]                                                                                                                  |
+| Broken Function Level Authorization             | [Schema validation], [JWT validation]                                                                                                                  |
 | Unrestricted Access to Sensitive Business Flows | [Sequence Mitigation], [Bot Management], [GraphQL Query Protection]                                                                                    |
-| Server Side Request Forgery                     | [Schema Validation], [WAF Managed Rules], [WAF Custom Rules](/waf/custom-rules/)                                                                       |
-| Security Misconfiguration                       | [Sequence Mitigation], [Schema Validation], [WAF Managed Rules], [GraphQL Query Protection]                                                            |
+| Server Side Request Forgery                     | [Schema validation], [WAF managed rules], [WAF custom rules](/waf/custom-rules/)                                                                       |
+| Security Misconfiguration                       | [Sequence Mitigation], [Schema validation], [WAF managed rules], [GraphQL Query Protection]                                                            |
 | Improper Inventory Management                   | [Discovery](/api-shield/security/api-discovery/), [Schema Learning](/api-shield/management-and-monitoring/#endpoint-schema-learning)                   |
-| Unsafe Consumption of APIs                      | [JWT Validation], [WAF Managed Rules]                                                                                                                  |
+| Unsafe Consumption of APIs                      | [JWT validation], [WAF managed rules]                                                                                                                  |
 
-[Schema Validation]: /api-shield/security/schema-validation/
+[Schema validation]: /api-shield/security/schema-validation/
 
 [Sequence Mitigation]: /api-shield/security/sequence-mitigation/
 
-[JWT Validation]: /api-shield/security/jwt-validation/
+[JWT validation]: /api-shield/security/jwt-validation/
 
 [GraphQL Query Protection]: /api-shield/security/graphql-protection/
 
-[Bot Management]: /bots/
+[Bot management]: /bots/
 
-[Rate Limiting]: /waf/rate-limiting-rules/
+[Rate limiting]: /waf/rate-limiting-rules/
 
-[WAF Managed Rules]: /waf/managed-rules/
+[WAF managed rules]: /waf/managed-rules/

@@ -32,6 +32,7 @@ The table below provides a summary of the Data Localization Suite product's beha
 | Tiered Caching         | ✅              | 🚧 [^2]            | 🚧 [^30]                 |
 | Trace                  | ✘               | ✘                  | ✘                        |
 | Waiting Room           | ⚫️              | ✅                 | ✅                       |
+| Web Analytics / Real User Monitoring (RUM) | ⚫️               | ⚫️          | ✘ [^43]    |
 | Zaraz                  | ✅              | ✅                 | ✅                       |
 
 ***
@@ -126,10 +127,10 @@ The table below provides a summary of the Data Localization Suite product's beha
 [^12]: Logpull not available when using Customer Metadata Boundary outside US region. Logs may be stored and retrieved with [Logs Engine](https://blog.cloudflare.com/announcing-logs-engine/) which is adding region support in 2025.
 [^13]: Logpush available with Customer Metadata Boundary for [these datasets](/data-localization/metadata-boundary/logpush-datasets/). Contact your account team if you need another dataset.
 [^14]: Access App SSL keys can use Geo Key Manager. [Access JWT](/cloudflare-one/identity/authorization-cookie/validating-json/) is not yet localized.
-[^15]: Can be localized to US FedRAMP region only. More regions coming in 2024.
+[^15]: Can be localized to US FedRAMP Moderate Domestic region only.
 [^16]: Customer Metadata Boundary can be used to limit data transfer outside region, but Access User Logs will not be available outside US region.
 [^17]: Currently may only be used with US FedRAMP region.
-[^18]: The only connectivity option is [US FedRAMP region](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#region). Regional Services only applies when using [Public Hostnames](/cloudflare-one/connections/connect-networks/routing-to-tunnel/) set to a region.
+[^18]: The only connectivity option is [US FedRAMP Moderate Domestic region](/cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/run-parameters/#region). Regional Services only applies when using [Public Hostnames](/cloudflare-one/connections/connect-networks/routing-to-tunnel/) set to a region.
 [^19]: Uses Gateway HTTP and CASB.
 [^20]: You can [bring your own certificate](https://blog.cloudflare.com/bring-your-certificates-cloudflare-gateway/) to Gateway but these cannot yet be restricted to a specific region.
 [^21]: Gateway HTTP supports Regional Services. Gateway DNS does not yet support regionalization. <br/> ICMP proxy and WARP-to-WARP proxy are not available to Regional Services users.
@@ -151,3 +152,4 @@ The table below provides a summary of the Data Localization Suite product's beha
 [^40]: Jurisdictional Restrictions ([data location](/d1/configuration/data-location/) / storage) options are not supported today.
 [^41]: Logs / Analytics not available outside US region when using Customer Metadata Boundary. Use Logpush instead.
 [^42]: Only applies to HTTP/S Spectrum applications.
+[^43]: Web Analytics collects the [minimum amount of information](/web-analytics/data-metrics/data-origin-and-collection/). Alternatively, you can [exclude EU Visitors from RUM](/speed/speed-test/rum-beacon/#rum-excluding-eeaeu).

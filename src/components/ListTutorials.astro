@@ -20,6 +20,8 @@ if (!currentProduct) {
 }
 
 const productTitle = currentProduct.data.product.title;
+const videoText = "🎥 Video"
+const tutorialText = "📝 Tutorial"
 
 const docs = await getCollection("docs", (entry) => {
 	return (
@@ -82,7 +84,7 @@ const timeAgo = (date?: Date) => {
 							<Fragment set:html={anchor} />
 						</td>
 						<td>{timeAgo(tutorial.data.updated)}</td>
-						<td>{tutorial.data.content_type}</td>
+						<td>{tutorial.collection === "docs" ? tutorialText : videoText}</td>
 						<td>{tutorial.data.difficulty}</td>
 					</tr>
 				);

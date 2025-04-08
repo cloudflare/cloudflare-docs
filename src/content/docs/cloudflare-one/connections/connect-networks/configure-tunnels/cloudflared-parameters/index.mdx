@@ -1,0 +1,150 @@
+---
+pcx_content_type: how-to
+title: Configure cloudflared parameters
+sidebar:
+  order: 1
+---
+
+import { TabItem, Tabs, Render } from "~/components";
+
+Remotely-managed tunnels run as a service on your OS. You can modify the Cloudflare Tunnel service with one or more [general-purpose tunnel parameters](/cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/run-parameters/).
+
+:::note
+For instructions on configuring a locally-managed tunnel, refer to the [configuration file documentation](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/configuration-file/).
+:::
+
+## Update tunnel run parameters
+
+<Tabs> <TabItem label="Linux">
+
+On Linux, Cloudflare Tunnel installs itself as a system service using `systemctl`. By default, the service will be named `cloudflared.service`. To configure your tunnel on Linux:
+
+1. Open `cloudflared.service`.
+
+   ```sh
+   sudo systemctl edit --full cloudflared.service
+   ```
+
+2. Modify the `cloudflared tunnel run` command with the desired configuration flag. For example,
+
+   ```txt null {8}
+   [Unit]
+   Description=Cloudflare Tunnel
+   After=network.target
+
+   [Service]
+   TimeoutStartSec=0
+   Type=notify
+   ExecStart=/usr/local/bin/cloudflared tunnel --loglevel debug --logfile /var/log/cloudflared/cloudflared.log run --token <TOKEN VALUE>
+   Restart=on-failure
+   RestartSec=5s
+
+   [Install]
+   WantedBy=multi-user.target
+   ```
+
+3. Restart `cloudflared.service`:
+
+   ```sh
+   sudo systemctl restart cloudflared
+   ```
+
+4. To verify the new configuration, check the service status:
+
+	```sh
+	sudo systemctl status cloudflared
+	```
+	```sh output
+	● cloudflared.service - cloudflared
+     Loaded: loaded (/etc/systemd/system/cloudflared.service; enabled; preset: enabled)
+     Active: active (running) since Wed 2024-10-09 20:02:59 UTC; 2s ago
+   Main PID: 2157 (cloudflared)
+      Tasks: 8 (limit: 1136)
+     Memory: 16.3M
+        CPU: 136ms
+     CGroup: /system.slice/cloudflared.service
+             └─2157 /usr/bin/cloudflared tunnel --loglevel debug --logfile /var/log/cloudflared/cloudflared.log run --token eyJhIjoi...
+	```
+
+</TabItem> <TabItem label="macOS">
+
+On macOS, Cloudflare Tunnel installs itself as a launch agent using `launchctl`. By default, the agent will be called `com.cloudflare.cloudflared`. To configure your tunnel on macOS:
+
+1. Stop the `cloudflared` service.
+
+   ```sh
+   sudo launchctl stop com.cloudflare.cloudflared
+   ```
+
+2. Unload the configuration file.
+
+   ```sh
+   sudo launchctl unload /Library/LaunchDaemons/com.cloudflare.cloudflared.plist
+   ```
+
+3. Open `/Library/LaunchDaemons/com.cloudflare.cloudflared.plist` in a text editor.
+
+4. Modify the `ProgramArguments` key with the desired configuration flag. For example,
+
+   ```txt
+   <plist version="1.0">
+       <dict>
+           <key>Label</key>
+           <string>com.cloudflare.cloudflared</string>
+           <key>ProgramArguments</key>
+           <array>
+               <string>/opt/homebrew/bin/cloudflared</string>
+               <string>tunnel</string>
+               <string>--logfile</string>
+               <string><PATH></string>
+               <string>--loglevel</string>
+               <string>debug</string>
+               <string>run</string>
+               <string>--token</string>
+               <string><TOKEN VALUE> </string>
+           </array>
+   ```
+
+5. Load the updated configuration file.
+
+   ```sh
+   sudo launchctl load /Library/LaunchDaemons/com.cloudflare.cloudflared.plist
+   ```
+
+6. Start the `cloudflared` service.
+
+   ```sh
+   sudo launchctl start com.cloudflare.cloudflared
+   ```
+
+</TabItem> <TabItem label="Windows">
+
+On Windows, Cloudflare Tunnel installs itself as a system service using the Registry Editor. By default, the service will be named `cloudflared`. To configure your tunnel on Windows:
+
+1. Open the Registry Editor.
+
+2. Go to **HKEY_LOCAL_MACHINE** > **SYSTEM** > **CurrentControlSet** > **Services** > **cloudflared**.
+
+3. Double-click **ImagePath**.
+
+4. Modify **Value data** with the desired configuration flag. For example,
+
+   ```txt
+   C:\Program Files (x86)\cloudflared\.\cloudflared.exe tunnel --loglevel debug --logfile <PATH> run --token <TOKEN VALUE>
+   ```
+
+![Modify cloudflared service in the Registry Editor](~/assets/images/cloudflare-one/connections/connect-apps/remote-management-windows.png)
+
+</TabItem> </Tabs>
+
+
+## Update origin configuration
+
+To configure how `cloudflared` sends requests to your [public hostname](/cloudflare-one/connections/connect-networks/routing-to-tunnel/) services:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Networks** > **Tunnels**.
+2. Choose a tunnel and select **Configure**.
+3. Select the **Public Hostname** tab.
+4. Choose a route and select **Edit**.
+5. Under **Additional application settings**, modify one or more [origin configuration parameters](/cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/origin-parameters/).
+6. Select **Save hostname**.

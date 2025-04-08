@@ -3,16 +3,21 @@ pcx_content_type: concept
 title: Pricing
 sidebar:
   order: 1
-
 ---
 
 import { Render } from "~/components"
 
-## Billing metrics
+Durable Objects can incur two types of billing: compute and storage.
 
-<Render file="durable_objects_pricing" product="workers" />
+<Render file="do-plans-note"/>
 
-## Durable Objects billing examples
+On Workers Free plan:
+- If you exceed any one of the free tier limits, further operations of that type will fail with an error.
+- Daily free limits reset at 00:00 UTC.
+
+<Render file="durable-objects-pricing" product="durable-objects" params={{product:"durable-objects"}}/>
+
+## Compute billing examples
 
 These examples exclude the costs for the Workers calling the Durable Objects. When modelling the costs of a Durable Object, note that:
 
@@ -115,6 +120,14 @@ In this scenario, the estimated monthly cost would be calculated as:
 
 <sup>2</sup> The example uses 1 second because each Durable Object is active for 1 second per minute. This can also be thought of as 432 million requests that each take 10 ms to execute (4,320,000 seconds).
 
-## Storage API billing
+## Frequently Asked Questions
 
-<Render file="storage_api_pricing" product="workers" />
+### Does an empty table / SQLite database contribute to my storage?
+
+Yes, although minimal. Empty tables can consume at least a few kilobytes, based on the number of columns (table width) in the table. An empty SQLite database consumes approximately 12 KB of storage.
+
+### Does metadata stored in Durable Objects count towards my storage?
+
+All writes to a SQLite-backed Durable Object stores nominal amounts of metadata in internal tables in the Durable Object, which counts towards your billable storage.
+
+The metadata remains in the Durable Object until you call [`deleteAll()`](/durable-objects/api/storage-api/#deleteall).

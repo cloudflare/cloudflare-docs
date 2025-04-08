@@ -8,20 +8,39 @@ sidebar:
 
 Workers Builds uses a build image with support for a variety of languages and tools such as Node.js, Python, PHP, Ruby, and Go.
 
-## Supported Languages and Tools
+## Supported Tooling
 
-In the following table, review the preinstalled versions for languages and tools included in the Cloudflare Workers' build image, and the environment variables and/or files available for [overriding the preinstalled version](/workers/ci-cd/builds/build-image/#overriding-default-versions):
+Workers Builds supports a variety of runtimes, languages, and tools. Builds will use the default versions listed below unless a custom version is detected or specified. You can [override the default versions](/workers/ci-cd/builds/build-image/#overriding-default-versions) using environment variables or version files. All versions are available for override.
 
-| Tool        | Default version  | Environment variable | File                         |
-| ----------- | ---------------- | -------------------- | ---------------------------- |
-| **Go**      | 1.23.0           | `GO_VERSION`         |                              |
-| **Node.js** | 22               | `NODE_VERSION`       | .nvmrc, .node-version        |
-| **Python**  | 3.12.5           | `PYTHON_VERSION`     | .python-version, runtime.txt |
-| **Ruby**    | 3.3.5            | `RUBY_VERSION`       | .ruby-version                |
-| **Bun**     | 1.1.28           | `BUN_VERSION`        |                              |
-| **Hugo**    | extended_0.134.3 | `HUGO_VERSION`       |                              |
-
+:::note[Default version updates]
 The default versions will be updated regularly to the latest minor version. No major version updates will be made without notice. If you need a specific minor version, please specify it by overriding the default version.
+:::
+
+### Runtime
+
+| Tool        | Default version | Environment variable | File                         |
+| ----------- | --------------- | -------------------- | ---------------------------- |
+| **Go**      | 1.23.0          | `GO_VERSION`         |                              |
+| **Node.js** | 22.9.0          | `NODE_VERSION`       | .nvmrc, .node-version        |
+| **Python**  | 3.12.5          | `PYTHON_VERSION`     | .python-version, runtime.txt |
+| **Ruby**    | 3.3.5           | `RUBY_VERSION`       | .ruby-version                |
+
+### Tools and langauges
+
+| Tool        | Default version  | Environment variable |
+| ----------- | ---------------- | -------------------- |
+| **Bun**     | 1.1.33           | `BUN_VERSION`        |
+| **Hugo**    | extended_0.134.3 | `HUGO_VERSION`       |
+| **npm**     | 10.8.3           |                      |
+| **yarn**    | 4.5.0            | `YARN_VERSION`       |
+| **pnpm**    | 9.10.0           | `PNPM_VERSION`       |
+| **pip**     | 24.2             |                      |
+| **gem**     | 3.5.19           |                      |
+| **poetry**  | 1.8.3            |                      |
+| **pipx**    | 1.7.1            |                      |
+| **bundler** | 2.4.10           |                      |
+
+## Advanced Settings
 
 ### Overriding Default Versions
 
@@ -36,6 +55,14 @@ Or, to set the version by adding a file to your project, you can:
 
 1. Find the filename for the language or tool (e.g. `.nvmrc`)
 2. Add the specified file name to the root directory and set the desired version number as the file's content. For example, if the version number is 22, the file should contain '22'.
+
+### Skip dependency install
+
+You can add the following build variable to disable automatic dependency installation and run a custom install command instead.
+
+| Build variable            | Value         |
+| ------------------------- | ------------- |
+| `SKIP_DEPENDENCY_INSTALL` | `1` or `true` |
 
 ## Pre-installed Packages
 

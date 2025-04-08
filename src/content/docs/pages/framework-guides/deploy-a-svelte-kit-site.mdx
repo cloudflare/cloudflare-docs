@@ -18,8 +18,8 @@ To use `create-cloudflare` to create a new Svelte project, run the following com
 
 <PackageManagers
 	type="create"
-	pkg="cloudflare@latest"
-	args="my-svelte-app --framework=svelte"
+	pkg="cloudflare@latest my-svelte-app"
+	args="--framework=svelte --platform=pages"
 />
 
 SvelteKit will prompt you for customization choices. For the template option, choose one of the application/project options. The remaining answers will not affect the rest of this guide. Choose the options that suit your project.
@@ -119,12 +119,10 @@ If you are using any adapter different from the default SvelteKit adapter, remem
 
 ### Deploy via the Cloudflare dashboard
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
-
-You will be asked to authorize access to your GitHub account if you have not already done so. Cloudflare needs this authorization to deploy your projects from your GitHub account. You may narrow Cloudflare's access to specific repositories. However, you will have to manually update this list [within your GitHub settings](https://github.com/settings/installations) when you want to add more repositories to Cloudflare Pages.
-
-Select the new GitHub repository that you created and, in **Set up builds and deployments**, provide the following information:
+<Render
+	file="deploy-to-pages-steps-with-preset"
+	params={{ name: "SveltKit" }}
+/>
 
 <div>
 

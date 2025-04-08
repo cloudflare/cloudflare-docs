@@ -1,0 +1,226 @@
+---
+pcx_content_type: tutorial
+title: Deploy a Browser Rendering Worker with Durable Objects
+products:
+  - Workers
+  - Durable Objects
+  - R2
+difficulty: Beginner
+updated: 2023-09-28
+languages:
+  - JavaScript
+sidebar:
+  order: 2
+---
+
+import { Render, PackageManagers, WranglerConfig } from "~/components";
+
+By following this guide, you will create a Worker that uses the Browser Rendering API along with [Durable Objects](/durable-objects/) to take screenshots from web pages and store them in [R2](/r2/).
+
+Using Durable Objects to persist browser sessions improves performance by eliminating the time that it takes to spin up a new browser session. Since Durable Objects re-uses sessions, it reduces the number of concurrent sessions needed.
+
+<Render file="prereqs" product="workers" />
+
+## 1. Create a Worker project
+
+[Cloudflare Workers](/workers/) provides a serverless execution environment that allows you to create new applications or augment existing ones without configuring or maintaining infrastructure. Your Worker application is a container to interact with a headless browser to do actions, such as taking screenshots.
+
+Create a new Worker project named `browser-worker` by running:
+
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"browser-worker"}
+/>
+
+## 2. Install Puppeteer
+
+In your `browser-worker` directory, install Cloudflare’s [fork of Puppeteer](/browser-rendering/platform/puppeteer/):
+
+```sh
+npm install @cloudflare/puppeteer --save-dev
+```
+
+## 3. Create a R2 bucket
+
+Create two R2 buckets, one for production, and one for development.
+
+Note that bucket names must be lowercase and can only contain dashes.
+
+```sh
+wrangler r2 bucket create screenshots
+wrangler r2 bucket create screenshots-test
+```
+
+To check that your buckets were created, run:
+
+```sh
+wrangler r2 bucket list
+```
+
+After running the `list` command, you will see all bucket names, including the ones you have just created.
+
+## 4. Configure your Wrangler configuration file
+
+Configure your `browser-worker` project's [Wrangler configuration file](/workers/wrangler/configuration/) by adding a browser [binding](/workers/runtime-apis/bindings/) and a [Node.js compatibility flag](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag). Browser bindings allow for communication between a Worker and a headless browser which allows you to do actions such as taking a screenshot, generating a PDF and more.
+
+Update your Wrangler configuration file with the Browser Rendering API binding, the R2 bucket you created and a Durable Object:
+
+<WranglerConfig>
+
+```toml
+name = "rendering-api-demo"
+main = "src/index.js"
+compatibility_date = "2023-09-04"
+compatibility_flags = [ "nodejs_compat"]
+account_id = "<ACCOUNT_ID>"
+
+
+# Browser Rendering API binding
+browser = { binding = "MYBROWSER" }
+
+# Bind an R2 Bucket
+[[r2_buckets]]
+binding = "BUCKET"
+bucket_name = "screenshots"
+preview_bucket_name = "screenshots-test"
+
+# Binding to a Durable Object
+[[durable_objects.bindings]]
+name = "BROWSER"
+class_name = "Browser"
+
+[[migrations]]
+tag = "v1" # Should be unique for each entry
+new_sqlite_classes = ["Browser"] # Array of new classes
+
+```
+
+</WranglerConfig>
+
+## 5. Code
+
+The code below uses Durable Object to instantiate a browser using Puppeteer. It then opens a series of web pages with different resolutions, takes a screenshot of each, and uploads it to R2.
+
+The Durable Object keeps a browser session open for 60 seconds after last use. If a browser session is open, any requests will re-use the existing session rather than creating a new one. Update your Worker code by copy and pasting the following:
+
+```js
+import puppeteer from "@cloudflare/puppeteer";
+
+export default {
+	async fetch(request, env) {
+		let id = env.BROWSER.idFromName("browser");
+		let obj = env.BROWSER.get(id);
+
+		// Send a request to the Durable Object, then await its response.
+		let resp = await obj.fetch(request.url);
+
+		return resp;
+	},
+};
+
+const KEEP_BROWSER_ALIVE_IN_SECONDS = 60;
+
+export class Browser {
+	constructor(state, env) {
+		this.state = state;
+		this.env = env;
+		this.keptAliveInSeconds = 0;
+		this.storage = this.state.storage;
+	}
+
+	async fetch(request) {
+		// screen resolutions to test out
+		const width = [1920, 1366, 1536, 360, 414];
+		const height = [1080, 768, 864, 640, 896];
+
+		// use the current date and time to create a folder structure for R2
+		const nowDate = new Date();
+		var coeff = 1000 * 60 * 5;
+		var roundedDate = new Date(
+			Math.round(nowDate.getTime() / coeff) * coeff,
+		).toString();
+		var folder = roundedDate.split(" GMT")[0];
+
+		//if there's a browser session open, re-use it
+		if (!this.browser || !this.browser.isConnected()) {
+			console.log(`Browser DO: Starting new instance`);
+			try {
+				this.browser = await puppeteer.launch(this.env.MYBROWSER);
+			} catch (e) {
+				console.log(
+					`Browser DO: Could not start browser instance. Error: ${e}`,
+				);
+			}
+		}
+
+		// Reset keptAlive after each call to the DO
+		this.keptAliveInSeconds = 0;
+
+		const page = await this.browser.newPage();
+
+		// take screenshots of each screen size
+		for (let i = 0; i < width.length; i++) {
+			await page.setViewport({ width: width[i], height: height[i] });
+			await page.goto("https://workers.cloudflare.com/");
+			const fileName = "screenshot_" + width[i] + "x" + height[i];
+			const sc = await page.screenshot();
+
+			await this.env.BUCKET.put(folder + "/" + fileName + ".jpg", sc);
+		}
+
+		// Close tab when there is no more work to be done on the page
+		await page.close();
+
+		// Reset keptAlive after performing tasks to the DO.
+		this.keptAliveInSeconds = 0;
+
+		// set the first alarm to keep DO alive
+		let currentAlarm = await this.storage.getAlarm();
+		if (currentAlarm == null) {
+			console.log(`Browser DO: setting alarm`);
+			const TEN_SECONDS = 10 * 1000;
+			await this.storage.setAlarm(Date.now() + TEN_SECONDS);
+		}
+
+		return new Response("success");
+	}
+
+	async alarm() {
+		this.keptAliveInSeconds += 10;
+
+		// Extend browser DO life
+		if (this.keptAliveInSeconds < KEEP_BROWSER_ALIVE_IN_SECONDS) {
+			console.log(
+				`Browser DO: has been kept alive for ${this.keptAliveInSeconds} seconds. Extending lifespan.`,
+			);
+			await this.storage.setAlarm(Date.now() + 10 * 1000);
+			// You could ensure the ws connection is kept alive by requesting something
+			// or just let it close automatically when there  is no work to be done
+			// for example, `await this.browser.version()`
+		} else {
+			console.log(
+				`Browser DO: exceeded life of ${KEEP_BROWSER_ALIVE_IN_SECONDS}s.`,
+			);
+			if (this.browser) {
+				console.log(`Closing browser.`);
+				await this.browser.close();
+			}
+		}
+	}
+}
+```
+
+## 6. Test
+
+Run [`npx wrangler dev --remote`](/workers/wrangler/commands/#dev) to test your Worker remotely before deploying to Cloudflare's global network. Local mode support does not exist for Browser Rendering so `--remote` is required.
+
+## 7. Deploy
+
+Run [`npx wrangler deploy`](/workers/wrangler/commands/#deploy) to deploy your Worker to the Cloudflare global network.
+
+## Related resources
+
+- Other [Puppeteer examples](https://github.com/cloudflare/puppeteer/tree/main/examples)
+- Get started with [Durable Objects](/durable-objects/get-started/)
+- [Using R2 from Workers](/r2/api/workers/workers-api-usage/)

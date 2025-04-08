@@ -1,0 +1,13 @@
+---
+pcx_content_type: configuration
+title: Block requests by attack score
+---
+
+import { GlossaryDefinition } from "~/components";
+
+The [attack score](/waf/detections/attack-score/) helps identify variations of known attacks and their malicious payloads.
+
+This example blocks requests based on country code ([ISO 3166-1 Alpha 2](https://www.iso.org/obp/ui/#search/code/) format), from requests with an attack score lower than 20. For more information, refer to [WAF attack score](/waf/detections/attack-score/).
+
+- **Expression**: `(ip.src.country in {"CN" "TW" "US" "GB"} and cf.waf.score lt 20)`
+- **Action**: _Block_

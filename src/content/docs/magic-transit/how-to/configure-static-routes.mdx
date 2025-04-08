@@ -13,16 +13,15 @@ description: Magic Transit uses a static configuration to route your traffic
 import { Render } from "~/components"
 
 <Render
-	file="static-routes"
+	file="routing/static-routes"
+	product="networking-services"
 	params={{
 		magicProduct: "Magic Transit",
 		productName: "Magic Transit",
 		BGPpath: "/magic-transit/how-to/bgp-peering/",
 		anycastURL: "/magic-transit/reference/tunnels/",
 		trafficSteering: "/magic-transit/reference/traffic-steering/",
-		magicWANecmp: " ",
 		createPath: "Magic Transit > Configuration",
-		tunnelEndpoints: "/magic-transit/how-to/configure-tunnels/",
-		ipRanges: " "
+		tunnelEndpoints: "/magic-transit/how-to/configure-tunnels/"
 	}}
 />

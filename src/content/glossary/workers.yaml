@@ -131,4 +131,4 @@ entries:
 
   - term: wrangler.toml / wrangler.json / wrangler.jsonc
     general_definition: |-
-      The [configuration](/workers/wrangler/configuration/) used to customize the development and deployment setup for a Worker or a Pages Function. 
+      The [configuration](/workers/wrangler/configuration/) used to customize the development and deployment setup for a Worker or a Pages Function.

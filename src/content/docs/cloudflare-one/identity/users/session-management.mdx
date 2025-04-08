@@ -47,9 +47,13 @@ You can set an application session duration for self-hosted and private Access a
 
 The application token will expire after this period of time (unless you have set a [policy session duration](#set-policy-session-duration)).
 
-#### SaaS application sessions
+#### SaaS applications
 
-Access session durations only control the front door to a SaaS app; Access does not control how long the user can stay in the SaaS app itself. For example, if the user logs out of the SaaS app and then comes back to it, a valid Access application token allows them to re-authenticate without another login. The SaaS app issues its own authorization cookie that manages the user's session within the app.
+<Render file="access/saas-apps/saas-sessions" params={{ session: "Application session durations", token: "Access application token"}} />
+
+#### SSH, RDP, and VNC
+
+<Render file="access/self-hosted-app/ssh-sessions" />
 
 ### Set policy session duration
 

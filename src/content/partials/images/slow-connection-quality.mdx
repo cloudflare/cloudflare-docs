@@ -1,0 +1,43 @@
+---
+{}
+---
+import { Tabs, TabItem } from "~/components"
+
+:::note[Note]
+At the moment, this setting only works directly with [image transformations](/images/transform-images/).
+:::
+
+Allows overriding `quality` value whenever a slow connection is detected.
+
+Available options are same as [quality](/images/transform-images/transform-via-url/#quality).
+
+<Tabs>
+  <TabItem label="URL format">
+    ```js
+    slow-connection-quality=50
+    ```
+  </TabItem>
+  <TabItem label="URL format alias">
+  ```js
+  scq=50
+  ```
+  </TabItem>
+</Tabs>
+
+Detecting slow connections is currently only supported on Chromium-based browsers such as Chrome, Edge, and Opera.
+
+You can enable any of the following client hints via HTTP in a header
+
+```txt
+accept-ch: rtt, save-data, ect, downlink
+```
+
+slow-connection-quality applies whenever any of the following is true and the client hint is present:
+
+- [rtt](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/RTT): Greater than 150ms.
+
+- [save-data](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Save-Data): Value is "on".
+
+- [ect](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ECT): Value is one of `slow-2g|2g|3g`.
+
+- [downlink](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Downlink): Less than 5Mbps.

@@ -1,0 +1,114 @@
+---
+title: Security settings
+pcx_content_type: concept
+sidebar:
+  order: 6
+  label: Settings
+description: Configure different Cloudflare security features that protect your web applications, APIs, and resources.
+---
+
+This page describes the settings available in **Security** > **Settings** for a given domain.
+
+## Security modules
+
+### Web application exploits module
+
+In the **Web application exploits** security module you can enable and configure the following managed rulesets and detections:
+
+- [Cloudflare Managed Ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/)
+- [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/)
+- [Leaked credentials detection](/waf/detections/leaked-credentials/)
+- [Malicious upload detection](/waf/detections/malicious-uploads/)
+- [Sensitive data detection ruleset](/waf/managed-rules/reference/sensitive-data-detection/)
+- [Firewall for AI](/waf/detections/firewall-for-ai/)
+
+Refer to each linked page for details.
+
+:::note
+The web application exploits module includes features and settings from the [Cloudflare WAF](/waf/) in the previous dashboard navigation structure.
+:::
+
+### DDoS attacks module
+
+The **DDoS protection** security module shows the multiple DDoS mitigation services provided by Cloudflare. You can create rules to override these mitigation tools. DDoS attack protection overrides are only available to Enterprise customers with the Advanced DDoS Protection subscription.
+
+To learn more about DDoS protection overrides, refer to the following resources:
+
+- [HTTP DDoS attack protection overrides](/ddos-protection/managed-rulesets/http/override-expressions/)
+- [Network-layer DDoS attack protection overrides](/ddos-protection/managed-rulesets/network/override-expressions/)
+
+:::note
+You define overrides for the Network-layer DDoS attack protection managed ruleset at the account level in Account Home > **L3/4 DDoS** > **Network-layer DDoS Protection**.
+:::
+
+### Bot traffic module
+
+In the **Bot traffic** security module you can perform the following tasks:
+
+- Enable [Bot fight mode](/bots/get-started/bot-fight-mode/) (depending on your Cloudflare plan).
+- Enable [Super Bot fight mode](/bots/get-started/super-bot-fight-mode/) (depending on your Cloudflare plan).
+- Review information about [Bot Management](/bots/get-started/bot-management/) (always enabled if included in your Enterprise subscriptions).
+- Turn on [Block AI Bots](/bots/concepts/bot/#ai-bots).
+- Turn on [AI Labyrinth](/bots/get-started/bot-fight-mode/#enable-ai-labyrinth).
+
+:::note
+The bot traffic module includes features and settings from [Bots](/bots/) in the previous dashboard navigation structure.
+:::
+
+### API abuse module
+
+In the **API abuse** security module you can perform the following tasks:
+
+- Review information about [Endpoint Discovery](/api-shield/security/api-discovery/) (always enabled if included in your Enterprise subscriptions).
+- Enable [Sequence Discovery](/api-shield/security/sequence-analytics/) (requires that you configure a session identifier).
+- Enable [Schema Validation](/api-shield/security/schema-validation/) (requires that you upload a schema or apply a learned schema).
+- Enable [JWT Validation](/api-shield/security/jwt-validation/) (requires that you add a [JWT configuration](/api-shield/security/jwt-validation/configure/#token-configurations)).
+
+:::note
+The API abuse module includes features and settings from [API Shield](/api-shield/) in the previous dashboard navigation structure.
+:::
+
+### Client-side abuse module
+
+In the **Client-side abuse** security module you can perform the following tasks:
+
+- Turn [continuous script monitoring](/page-shield/how-it-works/) on or off (previously you turned [Page Shield](/page-shield/) on or off).
+- Create a [client-side resource alert](/page-shield/reference/alerts/) (also known as a Page Shield alert).
+- Set the [reporting endpoint](/page-shield/reference/settings/#reporting-endpoint) to use your hostname instead of a Cloudflare-owned endpoint (only for Enterprise customers with a paid add-on).
+- Adjust the [data logged in client-side abuse reports](/page-shield/reference/settings/#connection-target-details) (only the hostname or the full URI).
+
+:::note
+The client-side abuse module includes features and settings from [Page Shield](/page-shield/) in the previous dashboard navigation structure.
+:::
+
+## All settings
+
+This section allows you to configure multiple security-related settings. The following table links to additional information about each setting:
+
+| Setting                                                                                                                 | Location in previous dashboard navigation                                                                           |
+| ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| [Endpoint labels](/api-shield/management-and-monitoring/endpoint-labels/)                                               | **Security** > **Settings** > **Labels**                                                                            |
+| [Session identifiers](/api-shield/management-and-monitoring/session-identifiers/#rule-form)                             | **Security** > **API Shield** > **Settings**                                                                        |
+| [Schemas default action](/api-shield/security/schema-validation/#change-the-global-default-action-of-schema-validation) | **Security** > **API Shield** > **Schema Validation**                                                               |
+| [Uploaded schemas](/api-shield/security/schema-validation/)                                                             | **Security** > **API Shield** > **Schema Validation**                                                               |
+| [Learned schemas](/api-shield/security/schema-validation/)                                                              | **Security** > **API Shield** > **Schema Validation**                                                               |
+| [Token configuration](/api-shield/security/jwt-validation/#add-a-token-validation-configuration)                        | **Security** > **API Shield** > **Settings**                                                                        |
+| [Client-side resource alerts](/page-shield/detection/configure-alerts/#rule-form)                                       | **Security** > **Page Shield** > **Settings**<br/>Account Home > **Notifications**                                  |
+| [Reporting endpoint](/page-shield/reference/settings/#reporting-endpoint)                                               | **Security** > **Page Shield** > **Settings**                                                                       |
+| [Data processing](/page-shield/reference/settings/#connection-target-details)                                           | **Security** > **Page Shield** > **Settings**                                                                       |
+| [IP lists](/waf/tools/lists/custom-lists/#lists-with-ip-addresses-ip-lists)                                             | Account Home > **Manage Account** > **Configurations**                                                              |
+| [Custom username and password location](/waf/detections/leaked-credentials/#custom-detection-locations)                 | **Security** > **Settings**                                                                                         |
+| [Custom content location](/waf/detections/malicious-uploads/#custom-scan-expressions)                                   | **Security** > **Settings**                                                                                         |
+| [Custom sensitive data deployment](/waf/managed-rules/reference/sensitive-data-detection/#configure-in-the-dashboard)   | **Security** > **Sensitive Data**                                                                                   |
+| [Block definitely automated traffic](/bots/get-started/super-bot-fight-mode/#bot-settings)                                       | **Security** > **Bots** > **Configure Super Bot Fight Mode<br/>Security** > **Bots** > **Configure Bot Management** |
+| [Block likely bots](/bots/get-started/super-bot-fight-mode/#bot-settings)                                                        | **Security** > **Bots** > **Configure Super Bot Fight Mode<br/>Security** > **Bots** > **Configure Bot Management** |
+| [Allow verified bots](/bots/get-started/super-bot-fight-mode/#bot-settings)                                                      | **Security** > **Bots** > **Configure Super Bot Fight Mode<br/>Security** > **Bots** > **Configure Bot Management** |
+| [Static resource protection](/bots/additional-configurations/static-resources/)                                                         | **Security** > **Bots** > **Configure Super Bot Fight Mode<br/>Security** > **Bots** > **Configure Bot Management** |
+| [Optimize for WordPress](/bots/troubleshooting/wordpress-loopback-issue/)                                                     | **Security** > **Bots** > **Configure Super Bot Fight Mode<br/>Security** > **Bots** > **Configure Bot Management** |
+| [JavaScript detections](/bots/additional-configurations/javascript-detections/)                                                         | **Security** > **Bots** > **Configure Super Bot Fight Mode<br/>Security** > **Bots** > **Configure Bot Management** |
+| [Auto-update machine learning model](/bots/reference/machine-learning-models/)                                          | **Security** > **Bots** > **Configure Bot Management**                                                              |
+| [Enable Security.txt](/security-center/infrastructure/security-file/)                                                   | **Security** > **Settings**                                                                                         |
+| [Challenge Passage](/fundamentals/security/cloudflare-challenges/challenge-passage/)                                                                      | **Security** > **Settings**                                                                                         |
+| [Browser Integrity Check](/waf/tools/browser-integrity-check/)                                                          | **Security** > **Settings**                                                                                         |
+| [Replace insecure JavaScript libraries](/waf/tools/replace-insecure-js-libraries/)                                      | **Security** > **Settings**                                                                                         |
+| [Security Level](/waf/tools/security-level/)                                                                            | **Security** > **Settings**                                                                                         |

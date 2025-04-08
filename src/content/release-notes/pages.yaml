@@ -5,6 +5,10 @@ productLink: "/pages/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-02-26"
+    title: Support for pnpm 10 in build system
+    description: |-
+      - Pages build system now supports building projects that use **pnpm 10** as the package manager. If your build previously failed due to this unsupported version, retry your build. No config changes needed.
   - publish_date: "2024-12-19"
     title: Cloudflare GitHub App Permissions Update
     description: |-

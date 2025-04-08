@@ -16,6 +16,8 @@ With X25519, the [ClientHello](https://www.cloudflare.com/learning/ssl/what-happ
 
 This poses a question of how the origin servers - as well as other middleboxes (routers, load balancers, etc) - will handle this change in behavior. Although allowed by the TLS 1.3 standard ([RFC 8446](https://www.rfc-editor.org/rfc/rfc8446.html)), a split ClientHello risks not being handled well due to [protocol ossification](https://en.wikipedia.org/wiki/Protocol_ossification) and implementation bugs. Refer to our [blog post](https://blog.cloudflare.com/post-quantum-to-origins/) for details.
 
+Customers can also configure connections to origin servers via [PQ Cloudflare Tunnel](/ssl/post-quantum-cryptography/pqc-and-zero-trust/).
+
 ## ClientHello from Cloudflare
 
 To reduce the risk of any issues when connecting to servers that are not ready for hybrid key agreements, Cloudflare leverages HelloRetryRequest. This means that, instead of sending [X25519MLKEM768](/ssl/post-quantum-cryptography/#hybrid-key-agreement) immediately as a keyshare [^1], Cloudflare will by default only advertise support for it.

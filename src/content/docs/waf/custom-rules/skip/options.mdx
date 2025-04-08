@@ -20,7 +20,7 @@ The available skip options in custom rules are the following:
 
   - API action parameter: `phases`.
 
-  - Skips the execution of one or more phases. Based on the phases you can skip, this option effectively allows you to skip [rate limiting rules](/waf/rate-limiting-rules/), [Super Bot Fight Mode rules](/bots/get-started/pro/), and/or [WAF Managed Rules](/waf/managed-rules/). When skipping a phase, both the account and zone-level entry point rulesets of the phase will be skipped.
+  - Skips the execution of one or more phases. Based on the phases you can skip, this option effectively allows you to skip [rate limiting rules](/waf/rate-limiting-rules/), [Super Bot Fight Mode rules](/bots/get-started/super-bot-fight-mode/), and/or [WAF Managed Rules](/waf/managed-rules/). When skipping a phase, both the account and zone-level entry point rulesets of the phase will be skipped.
 
   - The phases you can skip are the following:
 
@@ -46,10 +46,12 @@ The available skip options in custom rules are the following:
     | [Rate Limiting (previous version)](/waf/reference/legacy/old-rate-limiting/)         | `rateLimit`     |
     | [WAF managed rules (previous version)](/waf/reference/legacy/old-waf-managed-rules/) | `waf`           |
 
-  - The API values are case sensitive.
+  - The API values are case-sensitive.
+
+  - Currently, you cannot skip [Bot Fight Mode](/bots/get-started/bot-fight-mode/), only Super Bot Fight Mode (refer to Skip phases above).
 
 :::note
-Currently, you cannot skip [Bot Fight Mode](/bots/get-started/free/), only Super Bot Fight Mode (refer to Skip phases above).
+If you configure a skip rule at the account level it will only affect other rules/phases configured at the account level, not at the zone level. To skip rules/phases at the zone level you must configure a skip rule at the zone level.
 :::
 
 ## Logging

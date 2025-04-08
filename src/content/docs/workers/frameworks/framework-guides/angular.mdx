@@ -13,27 +13,18 @@ import {
 	PackageManagers,
 } from "~/components";
 
-In this guide, you will create a new [Angular](https://angular.dev/) application and deploy to Cloudflare Workers (with the new [<InlineBadge preset="beta" /> Workers Assets](/workers/static-assets/)).
+In this guide, you will create a new [Angular](https://angular.dev/) application and deploy to Cloudflare Workers (with the new [Workers Assets](/workers/static-assets/)).
 
 ## 1. Set up a new project
 
 Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up a new project. C3 will create a new project directory, initiate Angular's official setup tool, and provide the option to deploy instantly.
 
-To use `create-cloudflare` to create a new Angular project with <InlineBadge preset="beta" /> Workers Assets, run the following command:
+To use `create-cloudflare` to create a new Angular project with Workers Assets, run the following command:
 
 <PackageManagers
 	type="create"
 	pkg="cloudflare@latest my-angular-app"
-	args={"--framework=angular --experimental"}
-/>
-
-<Render
-	file="c3-post-run-steps"
-	product="workers"
-	params={{
-		category: "web-framework",
-		framework: "Angular",
-	}}
+	args={"--framework=angular --platform=workers"}
 />
 
 After setting up your project, change your directory by running the following command:
@@ -59,7 +50,5 @@ The following command will build and deploy your project. If you're using CI, en
 ---
 
 ## Static assets
-
-You can serve static assets your Angular application by placing them in [the `./public/` directory](https://angular.dev/reference/configs/file-structure#workspace-configuration-files). This can be useful for resource files such as images, stylesheets, fonts, and manifests.
 
 <Render file="workers-assets-routing-summary" />

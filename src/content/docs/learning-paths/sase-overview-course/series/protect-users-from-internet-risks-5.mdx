@@ -1,0 +1,49 @@
+---
+pcx_content_type: navigation
+title: Protect your users from Internet risks
+sidebar:
+  order: 6
+prev: true
+next: false
+tableOfContents: false
+---
+
+import { Render, Tabs, TabItem, Stream, Card } from "~/components";
+
+<Tabs>
+  <TabItem label="Watch this episode">
+
+    The Internet has become part of your corporate network, however browsing the web comes with hidden risks including malware, phishing attacks, and malicious websites. In this video, we will explore how Cloudflare's Secure Web Gateway (SWG) helps keep users safe by filtering and inspecting Internet traffic in real time. Whether you are protecting a remote workforce or securing an entire organization, Cloudflare ensures that users can access the web securely — without sacrificing speed or productivity.
+
+    <Card>
+        <Stream
+        id="48a3b49b7cdfaef0b3044d1530c82c19"
+        title="Protect your users from Internet risks"
+        thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/Protect-your-users-from-Internet-risks.jpg"
+        showMoreVideos={false}
+        chapters={{
+          "Introduction to Cloudflare's SASE and the Importance of Secure Corporate Networking" : "0s",
+          "Using Secure Web Gateway to Inspect and Control Internet Traffic" : "1m6s",
+          "Protecting Users with DNS Filtering and Threat Intelligence" : "2m4s",
+          "Implementing Network-Level Security Policies for Private and Public Traffic" : "3m37s",
+          "Advanced HTTP Filtering and Data Loss Prevention with Cloudflare" : "4m23s",
+          "Isolating Risky Websites and Preventing Data Leaks with Browser Isolation" : "5m48s"
+        }}
+      />
+
+      **Related content**
+
+      If you want to dive into detail about modernizing your corporate network with Cloudflare, refer to the following pages:
+
+        - [Evolving to a SASE architecture with Cloudflare](/reference-architecture/architectures/sase/)
+        - [Network-focused migration from VPN concentrators to Zero Trust Network Access](/reference-architecture/design-guides/network-vpn-migration/)
+        - [Using a Zero Trust framework to secure SaaS applications](/reference-architecture/design-guides/zero-trust-for-saas/)
+        - [Building Zero Trust architecture into your startup](/reference-architecture/design-guides/zero-trust-for-startups/)
+
+    </Card>
+  </TabItem>
+
+  <TabItem label="Series overview">
+    <Render file="sase-series-navigation" />
+  </TabItem>
+</Tabs>

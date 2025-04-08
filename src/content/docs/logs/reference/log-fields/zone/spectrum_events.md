@@ -43,7 +43,7 @@ Client IP address.
 
 Type: `string`
 
-Whether the connection matched any IP Firewall rules. UNKNOWN = No match or Firewall not enabled for spectrum; <em>UNKNOWN</em> \| <em>ALLOW</em> \| <em>BLOCK_ERROR</em> \| <em>BLOCK_IP</em> \| <em>BLOCK_COUNTRY</em> \| <em>BLOCK_ASN</em> \| <em>WHITELIST_IP</em> \| <em>WHITELIST_COUNTRY</em> \| <em>WHITELIST_ASN</em>.
+Whether the connection matched any IP Firewall rules. UNKNOWN = No match or Firewall not enabled for Spectrum; <em>UNKNOWN</em> \| <em>ALLOW</em> \| <em>BLOCK_ERROR</em> \| <em>BLOCK_IP</em> \| <em>BLOCK_COUNTRY</em> \| <em>BLOCK_ASN</em> \| <em>WHITELIST_IP</em> \| <em>WHITELIST_COUNTRY</em> \| <em>WHITELIST_ASN</em>.
 
 ## ClientPort
 
@@ -91,7 +91,7 @@ Indicates state of TLS session from the client to Spectrum; <em>UNKNOWN</em> \| 
 
 Type: `string`
 
-IATA airport code of data center that received the request.
+IATA airport code of the data center that received the request.
 
 ## ConnectTimestamp
 

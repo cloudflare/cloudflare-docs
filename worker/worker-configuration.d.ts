@@ -3,7 +3,7 @@
 interface Env {
 	ASSETS: Fetcher;
 }
-declare module "*/_redirects" {
+declare module "*/__redirects" {
 	const value: string;
 	export default value;
 }

@@ -13,13 +13,13 @@ You can forward information from a [JSON Web Token (JWT)](/api-shield/security/j
 
 Claims are available through the `http.request.jwt.claims` firewall fields.
 
-For example, the following expression will extract the user claim from a token processed by the Token Configuration with `TOKEN_CONFIGURATION_ID`:
+For example, the following expression will extract the user claim from a token processed by the token configuration with `TOKEN_CONFIGURATION_ID`:
 
 ```txt
 lookup_json_string(http.request.jwt.claims["<TOKEN_CONFIGURATION_ID>"][0], "claim_name")
 ```
 
-Refer to [Configure JWT Validation](/api-shield/security/jwt-validation/configure/) for more information about creating a Token Configuration.
+Refer to [Configure JWT validation](/api-shield/security/jwt-validation/configure/) for more information about creating a token configuration.
 
 ## Create a Transform Rule
 
@@ -31,4 +31,4 @@ As an example, to send the `x-send-jwt-claim-user` request header to the origin,
 4. Enter a rule name and a filter expression, if applicable.
 5. Choose **Set dynamic**.
 6. Set the header name to `x-send-jwt-claim-user`.
-7. Set the value to `lookup_json_string(http.request.jwt.claims["<TOKEN_CONFIGURATION_ID>"][0], "claim_name")`, where `<TOKEN_CONFIGURATION_ID>` is your token configuration ID found in JWT Validation and `claim_name` is the JWT claim you want to add to the header.
+7. Set the value to `lookup_json_string(http.request.jwt.claims["<TOKEN_CONFIGURATION_ID>"][0], "claim_name")`, where `<TOKEN_CONFIGURATION_ID>` is your token configuration ID found in JWT validation and `claim_name` is the JWT claim you want to add to the header.

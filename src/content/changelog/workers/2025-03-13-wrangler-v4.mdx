@@ -1,0 +1,21 @@
+---
+title: Use the latest JavaScript features with Wrangler CLI v4
+description: Wrangler v4 is available!
+products:
+  - workers
+date: 2025-03-13T09:00:00Z
+---
+
+import { PackageManagers } from "~/components";
+
+We've released the next major version of [Wrangler](/workers/wrangler/), the CLI for Cloudflare Workers — `wrangler@4.0.0`. Wrangler v4 is a major release focused on updates to underlying systems and dependencies, along with improvements to keep Wrangler commands consistent and clear.
+
+You can run the following command to install it in your projects:
+
+<PackageManagers pkg="wrangler@latest" />
+
+Unlike previous major versions of Wrangler, which were [foundational rewrites](https://blog.cloudflare.com/wrangler-v2-beta/) and [rearchitectures](https://blog.cloudflare.com/wrangler3/) — Version 4 of Wrangler includes a much smaller set of changes. If you use Wrangler today, your workflow is very unlikely to change.
+
+A [detailed migration guide](/workers/wrangler/migration/update-v3-to-v4) is available and if you find a bug or hit a roadblock when upgrading to Wrangler v4, [open an issue on the `cloudflare/workers-sdk` repository on GitHub](https://github.com/cloudflare/workers-sdk/issues/new?template=bug-template.yaml).
+
+Going forward, we'll continue supporting Wrangler v3 with bug fixes and security updates until Q1 2026, and with critical security updates until Q1 2027, at which point it will be out of support.

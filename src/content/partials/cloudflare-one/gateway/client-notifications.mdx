@@ -2,7 +2,7 @@
 {}
 ---
 
-import { Details } from "~/components";
+import { Details, Render } from "~/components";
 
 <Details header="Feature availability">
 
@@ -25,4 +25,4 @@ Turn on **Display block notification for WARP client** to display notifications 
 
 Upon selecting the notification, WARP will direct your users to a block page. Optionally, you can direct users to a custom URL, such as an internal support form.
 
-Your device may not display block notifications if focus, do not disturb, or screen sharing settings are turned on. To turn on client notifications on macOS devices running DisplayLink software, you may have to allow system notifications when mirroring your display. For more information, refer to the [macOS documentation](https://support.apple.com/guide/mac-help/change-notifications-settings-mh40583/mac).
+<Render file="gateway/client-notifications-os" product="cloudflare-one" />

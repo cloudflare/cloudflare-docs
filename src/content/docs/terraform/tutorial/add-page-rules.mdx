@@ -236,7 +236,7 @@ cloudflare_page_rule.increase-security-on-expensive-page: Creation complete afte
 Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
 ```
 
-With the Page Rules in place, try that call again, along with a test for the I'm Under Attack mode:
+With the Page Rules in place, try that call again, along with a test for the Under Attack mode:
 
 ```sh
 curl -vso /dev/null https://www.example.com/old-location.php 2>&1 | grep "< HTTP\|Location"
@@ -255,4 +255,4 @@ curl -vso /dev/null https://www.example.com/expensive-db-call 2>&1 | grep "< HTT
 < HTTP/1.1 503 Service Temporarily Unavailable
 ```
 
-The call works as expected. In the first case, the Cloudflare global network responds with a `301` redirecting the browser to the new location. In the second case, the Cloudflare global network initially responds with a `503`, which is consistent with the I'm Under Attack mode.
+The call works as expected. In the first case, the Cloudflare global network responds with a `301` redirecting the browser to the new location. In the second case, the Cloudflare global network initially responds with a `503`, which is consistent with the Under Attack mode.

@@ -14,8 +14,8 @@ To change URI Path and Host Header on incoming requests simultaneously:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Create a URL rewrite:
-   - Navigate to **Rules** > **Overview**.
-   - Next to **URL Rewrite Rules**, select **Create rule** .
+   - Go to **Rules** > **Overview**.
+   - Select **Create rule** > **URL Rewrite Rule**.
    - Configure the rule to modify the path. For instance, to remove `/uploads` from the path:
 
 <Example>
@@ -37,8 +37,8 @@ regex_replace(raw.http.request.uri.path, "^/uploads/", "/")
 The `regex_replace()` [function](/ruleset-engine/rules-language/functions/#regex_replace) replaces the `/uploads/` part of the path with `/`, changing `/uploads/example.jpg` to `/example.jpg`.
 
 3. Create an **Origin Rule**:
-   - If routing traffic to an object storage bucket, use [Cloud Connector](/rules/cloud-connector/). Otherwise, navigate to **Rules** > **Overview**.
-   - Next to **Origin Rules**, select **Create rule**, and then select **Host Header** > **Rewrite to**.
+   - If routing traffic to an object storage bucket, use [Cloud Connector](/rules/cloud-connector/). Otherwise, go to **Rules** > **Overview**.
+   - Select **Create rule** > **Origin Rule**, and then select **Host Header** > **Rewrite to**.
    - Configure the rule to modify the Host header to desired hostname:
 
 <Example>

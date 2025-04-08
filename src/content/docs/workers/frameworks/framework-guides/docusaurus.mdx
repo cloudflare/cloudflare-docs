@@ -13,27 +13,18 @@ import {
 	PackageManagers,
 } from "~/components";
 
-In this guide, you will create a new [Docusaurus](https://docusaurus.io/) application and deploy to Cloudflare Workers (with the new [<InlineBadge preset="beta" /> Workers Assets](/workers/static-assets/)).
+In this guide, you will create a new [Docusaurus](https://docusaurus.io/) application and deploy to Cloudflare Workers (with the new [Workers Assets](/workers/static-assets/)).
 
 ## 1. Set up a new project
 
 Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up a new project. C3 will create a new project directory, initiate Docusaurus' official setup tool, and provide the option to deploy instantly.
 
-To use `create-cloudflare` to create a new Docusaurus project with <InlineBadge preset="beta" /> Workers Assets, run the following command:
+To use `create-cloudflare` to create a new Docusaurus project with Workers Assets, run the following command:
 
 <PackageManagers
 	type="create"
 	pkg="cloudflare@latest my-docusaurus-app"
-	args={"--framework=docusaurus --experimental"}
-/>
-
-<Render
-	file="c3-post-run-steps"
-	product="workers"
-	params={{
-		category: "web-framework",
-		framework: "Docusaurus",
-	}}
+	args={"--framework=docusaurus --platform=workers"}
 />
 
 After setting up your project, change your directory by running the following command:
@@ -55,9 +46,3 @@ Your project can be deployed to a `*.workers.dev` subdomain or a [Custom Domain]
 The following command will build and deploy your project. If you're using CI, ensure you update your ["deploy command"](/workers/ci-cd/builds/configuration/#build-settings) configuration appropriately.
 
 <PackageManagers type="run" args={"deploy"} />
-
----
-
-## Static assets
-
-You can serve static assets your Docusaurus application by placing them in [the `./static/` directory](https://docusaurus.io/docs/static-assets). This can be useful for resource files such as images, stylesheets, fonts, and manifests.

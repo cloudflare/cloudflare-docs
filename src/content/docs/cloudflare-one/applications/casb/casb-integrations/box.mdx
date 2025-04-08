@@ -8,7 +8,7 @@ import { Render } from "~/components";
 
 <Render
   file="casb/integration-description"
-  params={{ one: "Box", two: "Box account" }}
+  params={{ integrationName: "Box", integrationAccountType: "Box account" }}
 />
 
 ## Integration prerequisites
@@ -27,7 +27,7 @@ These permissions follow the principle of least privilege to ensure that only th
 
 ## Security findings
 
-<Render file="casb/security-findings" params={{ one: "Box", two: "box" }} />
+<Render file="casb/security-findings" params={{ integrationName: "Box", slugRelativePath: "box" }} />
 
 ### File sharing
 

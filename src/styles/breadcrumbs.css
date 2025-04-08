@@ -1,0 +1,27 @@
+.c-breadcrumbs {
+	--spacing-vertical-separator-breadcrumbs: 0.625rem;
+
+	padding: 0.5rem 0;
+
+	.c-breadcrumbs__link {
+		font-size: 0.75rem;
+		line-height: 1.25rem;
+		font-weight: 600;
+	}
+
+	.c-breadcrumbs__separator {
+		color: theme("colors.cl1.brand.orange");
+	}
+
+	.c-breadcrumbs__truncated-button {
+		color: theme("colors.cl1.brand.orange");
+	}
+}
+
+:root[data-theme="dark"] {
+	--color-link-breadcrumbs: theme("colors.cl1.gray.7");
+}
+
+:root[data-theme="light"] {
+	--color-link-breadcrumbs: theme("colors.cl1.gray.4");
+}

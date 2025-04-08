@@ -1,0 +1,51 @@
+---
+title: Security rules
+pcx_content_type: concept
+sidebar:
+  order: 5
+description: Security rules perform security actions on incoming requests that match specified filters.
+---
+
+Security rules perform security-related actions on incoming requests that match specified filters. Rules are evaluated and executed in order, from first to last.
+
+## Security rules
+
+The **Security rules** tab includes a list of different types of rules configured in your domain / zone to protect your applications and resources.
+
+To create a security rule:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+2. Go to **Security** > **Security rules**.
+3. (Optional) Select **Templates**, and then select a template from the list. You can customize the default configuration of the template before deploying the new rule. Refer to the resources listed in the next step.
+4. Select **Create rule** > select the type of rule you want to create. Refer to the following resources about each rule type:
+   - [Custom rules](/waf/custom-rules/create-dashboard/#rule-form)
+   - [Rate limiting rules](/waf/rate-limiting-rules/create-zone-dashboard/#rule-form)
+   - [API sequence rules](/api-shield/security/sequence-mitigation/#rule-form)
+   - [API JWT validation rules](/api-shield/security/jwt-validation/#rule-form) (requires a [token configuration](/security/settings/#all-settings))
+   - [Managed rules exceptions](/waf/managed-rules/waf-exceptions/define-dashboard/#2-define-basic-exception-parameters)
+   - [Content security rules](/page-shield/policies/create-dashboard/#rule-form) (previously known as Page Shield policies)
+
+:::note[Notes]
+
+The **Security rules** tab includes functionality available in different products in the previous dashboard navigation structure, such as the [WAF](/waf/), [API Shield](/api-shield/), and [Page Shield](/page-shield/).
+
+The tab may show additional rule types if you have configured at least one of the following:
+
+- [IP access rules](/waf/tools/ip-access-rules/)
+- [User agent blocking rules](/waf/tools/user-agent-blocking/)
+- [Zone lockdown rules](/waf/tools/zone-lockdown/)
+
+:::
+
+## DDoS protection
+
+The **DDoS Protection** tab shows the multiple DDoS mitigation services provided by Cloudflare. You can create rules to override these mitigation tools. DDoS attack protection overrides are only available to Enterprise customers with the Advanced DDoS Protection subscription.
+
+To learn more about DDoS protection overrides, refer to the following resources:
+
+- [HTTP DDoS attack protection overrides](/ddos-protection/managed-rulesets/http/override-expressions/)
+- [Network-layer DDoS attack protection overrides](/ddos-protection/managed-rulesets/network/override-expressions/)
+
+:::note
+You define overrides for the Network-layer DDoS attack protection managed ruleset at the account level in Account Home > **L3/4 DDoS** > **Network-layer DDoS Protection**.
+:::

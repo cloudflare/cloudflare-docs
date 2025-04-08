@@ -7,12 +7,12 @@ head:
   - tag: title
     content: DNS concepts
 
+description: Understand key DNS concepts with Cloudflare's technical documentation. Learn about nameservers, DNS records, DNSSEC, and more.
 ---
 
 import { Details, Example, GlossaryTooltip } from "~/components";
 
 This page defines and articulates key concepts that are relevant to the Cloudflare DNS service and are used in this documentation. For more concepts and broader descriptions, refer to the [Cloudflare Learning Center](https://www.cloudflare.com/learning/dns/what-is-dns/).
-
 ## Domain
 
 Also known as domain name, a domain is the string of text that identifies a specific website, such as `google.com` or `facebook.com`. Every time you access a website from your web browser, a DNS query takes place and the DNS service maps the domain to the actual IP address where the website is [hosted](/fundamentals/setup/manage-domains/).
@@ -45,7 +45,7 @@ In this context, you can have a primary DNS setup, when you use Cloudflare to ma
 
 When you have a primary DNS setup, you can either use only Cloudflare (also known as [Full setup](/dns/zone-setups/full-setup/)), or you can use Cloudflare and another provider, where the other provider is the one to receive [outgoing zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-primary/) from Cloudflare.
 
-Finally, as Cloudflare also works as a [reverse proxy](/fundamentals/concepts/how-cloudflare-works/#how-cloudflare-works-as-a-reverse-proxy), [partial (CNAME) setups](/dns/zone-setups/partial-setup/) can be used when you do not want Cloudflare to be [authoritative](#authoritative-dns) for your domain but you still want to proxy individual subdomains through Cloudflare.
+Finally, as Cloudflare also works as a [reverse proxy](/fundamentals/concepts/how-cloudflare-works/#cloudflare-as-a-reverse-proxy), [partial (CNAME) setups](/dns/zone-setups/partial-setup/) can be used when you do not want Cloudflare to be [authoritative](#authoritative-dns) for your domain but you still want to proxy individual subdomains through Cloudflare.
 
 ## DNS records
 

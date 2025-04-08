@@ -1,0 +1,17 @@
+---
+title: Block files that are password-protected, compressed, or otherwise unscannable.
+description: Unscannable files for Download and Upload File Types selectors
+date: 2025-02-03T11:00:00Z
+products:
+  - dlp
+---
+
+import { Render } from "~/components";
+
+Gateway HTTP policies can now block files that are password-protected, compressed, or otherwise unscannable.
+
+These unscannable files are now matched with the [Download and Upload File Types traffic selectors](/cloudflare-one/policies/gateway/http-policies/#download-and-upload-file-types) for HTTP policies:
+
+<Render file="gateway/policies/unscannable-files" product="cloudflare-one" />
+
+To get started inspecting and modifying behavior based on these and other rules, refer to [HTTP filtering](/cloudflare-one/policies/gateway/initial-setup/http/).

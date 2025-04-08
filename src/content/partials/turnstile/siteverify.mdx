@@ -1,0 +1,10 @@
+---
+{}
+
+---
+
+It is important to [call the siteverify API](/turnstile/get-started/server-side-validation/). Without calling siteverify API to validate the tokens, your website or application is not protected. Skipping token validation means you cannot confirm the visitor's legitimacy.
+
+- Tokens can only be redeemed once. Even valid tokens will return `success:false` if they are reused, preventing token theft and replay attacks.
+- Tokens expire after five minutes. Validation must occur within this window to be effective.
+- Tokens can be invalid. Bots might complete challenges, but Cloudflare can detect bot-like signals and mark the token as invalid.

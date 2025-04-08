@@ -10,7 +10,7 @@ head:
     content: Create a custom rule via API
 ---
 
-import { GlossaryTooltip, Render } from "~/components";
+import { GlossaryTooltip, Render, APIRequest } from "~/components";
 
 Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create a custom rule via API.
 
@@ -29,46 +29,46 @@ You must deploy custom rules to the `http_request_firewall_custom` [phase entry 
 
 ### Example A
 
-This example request adds a rule to the `http_request_firewall_custom` phase entry point ruleset for the zone with ID `{zone_id}`. The entry point ruleset already exists, with ID `{ruleset_id}`.
+This example request adds a rule to the `http_request_firewall_custom` phase entry point ruleset for the zone with ID `$ZONE_ID`. The entry point ruleset already exists, with ID `$RULESET_ID`.
 
-The new rule, which will be the last rule in the ruleset, will challenge requests from the United Kingdom or France with a <GlossaryTooltip term="threat score">threat score</GlossaryTooltip> greater than `10`:
+The new rule, which will be the last rule in the ruleset, will challenge requests from the United Kingdom or France with an <GlossaryTooltip term="attack score">attack score</GlossaryTooltip> lower than `20`.
 
-```bash
-curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "description": "My custom rule",
-  "expression": "(ip.src.country eq \"GB\" or ip.src.country eq \"FR\") and cf.threat_score > 10",
-  "action": "challenge"
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/rulesets/{ruleset_id}/rules"
+	method="POST"
+	json={{
+		description: "My custom rule",
+		expression:
+			'(ip.src.country eq "GB" or ip.src.country eq "FR") and cf.waf.score lt 20',
+		action: "challenge",
+	}}
+/>
 
 <Render file="api-create-ruleset-with-rule" />
 
 ### Example B
 
-This example request adds a rule to the `http_request_firewall_custom` phase entry point ruleset for the zone with ID `{zone_id}`. The entry point ruleset already exists, with ID `{ruleset_id}`.
+This example request adds a rule to the `http_request_firewall_custom` phase entry point ruleset for the zone with ID `$ZONE_ID`. The entry point ruleset already exists, with ID `$RULESET_ID`.
 
-The new rule, which will be the last rule in the ruleset, includes the definition of a [custom response](/waf/custom-rules/create-dashboard/#configure-a-custom-response-for-blocked-requests) for blocked requests:
+The new rule, which will be the last rule in the ruleset, includes the definition of a [custom response](/waf/custom-rules/create-dashboard/#configure-a-custom-response-for-blocked-requests) for blocked requests.
 
-```bash null {9-13}
-curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "description": "My custom rule with plain text response",
-  "expression": "(ip.src.country eq \"GB\" or ip.src.country eq \"FR\") and cf.threat_score > 50",
-  "action": "block",
-  "action_parameters": {
-    "response": {
-      "status_code": 403,
-      "content": "Your request was blocked.",
-      "content_type": "text/plain"
-    }
-  }
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/rulesets/{ruleset_id}/rules"
+	method="POST"
+	json={{
+		description: "My custom rule with plain text response",
+		expression:
+			'(ip.src.country eq "GB" or ip.src.country eq "FR") and cf.waf.score lt 20',
+		action: "block",
+		action_parameters: {
+			response: {
+				status_code: 403,
+				content: "Your request was blocked.",
+				content_type: "text/plain",
+			},
+		},
+	}}
+/>
 
 <Render file="api-create-ruleset-with-rule" />
 

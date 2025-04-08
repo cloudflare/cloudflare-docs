@@ -301,3 +301,17 @@ A third-party security product on the device or network is performing TLS decryp
 ### Resolution
 
 In the third-party security product, disable HTTPS inspection and TLS decryption for the [WARP IP addresses](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/).
+
+## Admin directed disconnect
+
+### Symptoms
+
+* Unable to connect WARP
+
+### Cause
+
+The account administrator has disconnected WARP for all devices registered to the account.
+
+### Resolution
+
+The account administrator must turn the [Global WARP override](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#global-warp-override) feature off.

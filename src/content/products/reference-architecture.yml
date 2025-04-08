@@ -5,13 +5,9 @@ product:
   title: Reference Architecture
   url: /reference-architecture/
   wrap: true
-  group: Cloudflare essentials
+  group: Core platform
 
 meta:
   title: Cloudflare Reference Architecture docs
   description: Review best practices and diagrams explaining how to address common Internet security and performance challenges using Cloudflare products.
   author: "@cloudflare"
-
-externals:
-  - title: Cloudflare homepage
-    url: https://cloudflare.com

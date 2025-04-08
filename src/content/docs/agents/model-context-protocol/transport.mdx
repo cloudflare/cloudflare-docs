@@ -1,0 +1,21 @@
+---
+pcx_content_type: concept
+title: Transport
+sidebar:
+  order: 5
+---
+
+import { Render } from "~/components";
+
+The Model Context Protocol (MCP) specification defines [two standard transport mechanisms](https://spec.modelcontextprotocol.io/specification/draft/basic/transports/):
+
+1. **stdio, communication over standard in and standard out** — designed for local MCP connections
+2. **HTTP with Server-Sent Events (SSE)** — designed for remote MCP connections
+
+MCP Servers deployed to Cloudflare support remote MCP connections, using HTTP with Server-Sent Events (SSE) as transport. SSE requires a persistent HTTP connection, which is supported by Cloudflare [Durable Objects](/durable-objects/) and the [Agents SDK](/agents). Transport is configured and handled automatically by the [`McpAgent` class](https://github.com/cloudflare/agents/blob/2f82f51784f4e27292249747b5fbeeef94305552/packages/agents/src/mcp.ts). You don't need to configure anything — it just works.
+
+:::note
+Even if the MCP client you are using only supports local MCP connections, you can still connect it to a remote MCP server.
+
+Follow [this guide](/agents/guides/test-remote-mcp-server/) for instructions on how to connect to your remote MCP server from Claude Desktop, Cursor, Windsurf, and other local MCP clients, using the [`mcp-remote` local proxy](https://www.npmjs.com/package/mcp-remote).
+:::

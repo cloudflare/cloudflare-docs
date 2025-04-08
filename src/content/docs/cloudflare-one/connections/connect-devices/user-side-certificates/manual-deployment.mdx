@@ -6,8 +6,6 @@ sidebar:
 head: []
 description: Manually add a Cloudflare certificate to mobile devices and
   individual applications.
-banner:
-  content: The default global Cloudflare root certificate expired on 2025-02-02. If you installed the default Cloudflare certificate before 2024-10-17, you must <a href="/cloudflare-one/connections/connect-devices/user-side-certificates/#generate-a-cloudflare-root-certificate">generate a new certificate</a> and activate it for your Zero Trust organization to avoid inspection errors.
 ---
 
 import { Details, Render, TabItem, Tabs } from "~/components";
@@ -176,6 +174,10 @@ Windows offers two locations to install the certificate, each impacting which us
 8. Select **OK**, then select **Finish**.
 
 The root certificate is now installed and ready to be used.
+
+:::caution
+If your certificate is installed in the **Local Machine Store**, the [device posture check](/cloudflare-one/identity/devices/warp-client-checks/) looking for a certificate will fail. Install the certificate in the **Current User Store** to ensure a successful posture device check.
+:::
 
 ### Linux
 
@@ -710,7 +712,11 @@ The file at `~/ca.pem` needs to remain in place in order for the `gcloud` utilit
 
 If you use Kaniko with Google Cloud SDK, you must install a Cloudflare certificate in the [Kaniko CA store](https://docs.gitlab.com/ee/ci/docker/using_kaniko.html#using-a-registry-with-a-custom-certificate). For more information, refer to the [`gcloud` documentation](https://cloud.google.com/sdk/gcloud/reference/builds/submit).
 
-#### Google Drive for desktop
+#### Google Apps Manager (GAM)
+
+Google Apps Manager (GAM) uses its own certificate store. To add a Cloudflare certificate to GAM, refer to the [GAM documentation](https://github.com/GAM-team/GAM/wiki/#using-gam-with-ssl--tls-mitm-inspection).
+
+### Google Drive
 
 To trust a Cloudflare root certificate in the Google Drive desktop application, follow the procedure for your operating system. These steps require you to [download a `.pem` certificate](#download-the-cloudflare-root-certificate).
 
@@ -773,10 +779,6 @@ Get-ItemProperty -Path "HKLM:\SOFTWARE\Google\DriveFS" | Select-Object TrustedRo
 </Tabs>
 
 For more information, refer to the [Google documentation](https://support.google.com/a/answer/7644837) for the `TrustedRootCertsFile` setting.
-
-#### Google Apps Manager (GAM)
-
-Google Apps Manager (GAM) uses its own certificate store. To add a Cloudflare certificate to GAM, refer to the [GAM documentation](https://github.com/GAM-team/GAM/wiki/#using-gam-with-ssl--tls-mitm-inspection).
 
 ### AWS CLI
 

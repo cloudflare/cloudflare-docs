@@ -3,25 +3,33 @@ pcx_content_type: concept
 title: Static assets
 description: Host static assets on Cloudflare's global network and deliver faster load times worldwide with Workers for Platforms.
 ---
+
+import { Aside } from "@astrojs/starlight/components";
+
 Workers for Platforms lets you deploy front-end applications at scale. By hosting static assets on Cloudflare's global network, you can deliver faster load times worldwide and eliminate the need for external infrastructure. You can also combine these static assets with dynamic logic in Cloudflare Workers, providing a full-stack experience for your customers.
 
 ### What you can build
 
 #### Static sites
+
 Host and serve HTML, CSS, JavaScript, and media files directly from Cloudflare's network, ensuring fast loading times worldwide. This is ideal for blogs, landing pages, and documentation sites.
 
 #### Full-stack applications
+
 Combine asset hosting with Cloudflare Workers to power dynamic, interactive applications. Store and retrieve data using Cloudflare KV, D1, and R2 Storage, allowing you to serve both front-end assets and backend logic from a single Worker.
 
 ### Benefits
 
 #### Global caching for faster performance
+
 Cloudflare automatically caches static assets at data centers worldwide, reducing latency and improving load times by up to 2x for users everywhere.
 
 #### Scalability without infrastructure management
+
 Your applications scale automatically to handle high traffic without requiring you to provision or manage infrastructure. Cloudflare dynamically adjusts to demand in real time.
 
 #### Unified deployment for static and dynamic content
+
 Deploy front-end assets alongside server-side logic, all within Cloudflare Workers. This eliminates the need for a separate hosting provider and ensures a streamlined deployment process.
 
 ---
@@ -45,22 +53,29 @@ After these steps are completed, the User Worker's static assets will be live on
 
 Before sending any file data, you need to tell Cloudflare which files you intend to upload. That list of files is called a manifest. Each item in the manifest includes:
 
-* A file path (for example, `"/index.html"` or `"/assets/logo.png"`)
-* A hash (32-hex characters) representing the file contents
-* The file size in bytes
+- A file path (for example, `"/index.html"` or `"/assets/logo.png"`)
+- A hash (32-hex characters) representing the file contents
+- The file size in bytes
+
+<Aside type="note" title="Asset Isolation Considerations">
+Static assets uploaded to Workers for Platforms are associated with the namespace rather than with individual User Worker. If multiple User Workers exist under the same namespace, assets with identical hashes may be shared across them. **JWTs should therefore only be shared with trusted platform services and should never be distributed to end-users.**
+
+If strict isolation of assets is required, we recommend either salting with a random value each time, or incorporating an end-user identifier (e.g. account ID or Worker script ID) within the hashing process, to ensure uniqueness. For example, `hash = slice(sha256(accountID + fileContents), 32)`.
+
+</Aside>
 
 #### Example manifest (JSON)
 
 ```json
 {
-  "/index.html": {
-    "hash": "08f1dfda4574284ab3c21666d1ee8c7d4",
-    "size": 1234
-  },
-  "/styles.css": {
-    "hash": "36b8be012ee77df5f269b11b975611d3",
-    "size": 5678
-  }
+	"/index.html": {
+		"hash": "08f1dfda4574284ab3c21666d1ee8c7d4",
+		"size": 1234
+	},
+	"/styles.css": {
+		"hash": "36b8be012ee77df5f269b11b975611d3",
+		"size": 5678
+	}
 }
 ```
 
@@ -71,8 +86,9 @@ POST /accounts/{account_id}/workers/dispatch/namespaces/{namespace}/scripts/{scr
 ```
 
 Path Parameters:
-* `namespace`: Name of the Workers for Platforms dispatch namespace
-* `script_name`: Name of the User Worker
+
+- `namespace`: Name of the Workers for Platforms dispatch namespace
+- `script_name`: Name of the User Worker
 
 In the request body, include a JSON object listing each file path along with its hash and size. This helps Cloudflare identify which files you intend to upload and allows Cloudflare to check if any of them are already stored.
 
@@ -105,8 +121,8 @@ You can compute a SHA-256 digest of the file contents, then truncate or otherwis
 
 If all the files are already stored on Cloudflare, the response will only return the JWT token. If new or updated files are needed, the response will return:
 
-* `jwt`: An upload token (valid for 1 hour) which will be used in the API request to upload the file contents (Step 2).
-* `buckets`: An array of file-hash groups indicating which files to upload together. Files that have been recently uploaded won't appear in buckets, since Cloudflare already has them.
+- `jwt`: An upload token (valid for 1 hour) which will be used in the API request to upload the file contents (Step 2).
+- `buckets`: An array of file-hash groups indicating which files to upload together. Files that have been recently uploaded won't appear in buckets, since Cloudflare already has them.
 
 :::note
 This step alone does not store files on Cloudflare. You must upload the actual file data in the next step.
@@ -117,6 +133,10 @@ This step alone does not store files on Cloudflare. You must upload the actual f
 If the response to the Upload Session API returns `buckets`, that means you have new or changed files that need to be uploaded to Cloudflare.
 
 Use the [Workers Assets Upload API](https://developers.cloudflare.com/api/resources/workers/subresources/assets/subresources/upload/) to transmit the raw file bytes in base64-encoded format for any missing or changed files. Once uploaded, Cloudflare will store these files so they can then be attached to a User Worker.
+
+<Aside type="caution">
+	Asset uniqueness is determined by the provided hash and are associated globally to their namespace rather than with each specific User Worker. If an asset has already been uploaded for that namespace earlier, Cloudflare will automatically omit sending this asset hash back in the `buckets` response to save you from re-uploading the same thing twice. This means that an asset can be shared between multiple User Workers if it shares the same hash unless you **explicitly make the hash unique**. If you require full isolation between assets across User Workers, incorporate a unique identifier within your asset hashing process (either salting it with something entirely random each time, or by including the end-user account ID or their Worker name to retain per-customer re-use).
+</Aside>
 
 #### API Request Authentication
 
@@ -131,10 +151,11 @@ Authorization: Bearer <upload-session-token>
 This token is valid for one hour and must be supplied for each upload request to the Workers Assets Upload API.
 
 #### File fields (multipart/form-data)
+
 You must send the files as multipart/form-data with base64-encoded content:
 
-* Field name: The file hash (for example, `36b8be012ee77df5f269b11b975611d3`)
-* Field value: A Base64-encoded string of the file's raw bytes
+- Field name: The file hash (for example, `36b8be012ee77df5f269b11b975611d3`)
+- Field value: A Base64-encoded string of the file's raw bytes
 
 #### Example: Uploading multiple files within a single bucket
 
@@ -159,9 +180,9 @@ curl -X POST \
   -F "36b8be012ee77df5f269b11b975611d3=<BASE64_OF_STYLES_CSS>"
 ```
 
-* `<upload-session-token>` is the token from step 1's assets-upload-session response
-* `<BASE64_OF_INDEX_HTML>` is the Base64-encoded content of index.html
-* `<BASE64_OF_STYLES_CSS>` is the Base64-encoded content of styles.css
+- `<upload-session-token>` is the token from step 1's assets-upload-session response
+- `<BASE64_OF_INDEX_HTML>` is the Base64-encoded content of index.html
+- `<BASE64_OF_STYLES_CSS>` is the Base64-encoded content of styles.css
 
 If you have multiple buckets (for example, `[["hashA"], ["hashB"], ["hashC"]]`), you might need to repeat this process for each bucket, making one request per bucket group.
 
@@ -169,12 +190,12 @@ Once every file in the manifest has been uploaded, a status code of `201` will b
 
 ```json
 {
-  "success": true,
-  "errors": [],
-  "messages": [],
-  "result": {
-    "jwt": "<completion-token>"
-  }
+	"success": true,
+	"errors": [],
+	"messages": [],
+	"result": {
+		"jwt": "<completion-token>"
+	}
 }
 ```
 
@@ -206,9 +227,9 @@ curl -X PUT \
   -F 'index.js=@/path/to/index.js;type=application/javascript'
 ```
 
-* The `"jwt": "<completion-token>"` links the newly uploaded files to the Worker
-* Including "html_handling" (or other fields under "config") is optional and can customize how static files are served
-* If the user's Worker code has not changed, you can omit the code file or re-upload the same index.js
+- The `"jwt": "<completion-token>"` links the newly uploaded files to the Worker
+- Including "html_handling" (or other fields under "config") is optional and can customize how static files are served
+- If the user's Worker code has not changed, you can omit the code file or re-upload the same index.js
 
 Once this PUT request succeeds, the files are served on the User Worker. Requests routed to that Worker will serve the new or updated static assets.
 
@@ -236,8 +257,8 @@ binding = "ASSETS"
 
 </WranglerConfig>
 
-* `directory`: The local folder containing your static files (for example, `./public`).
-* `binding`: The binding name used to reference these assets within your Worker code.
+- `directory`: The local folder containing your static files (for example, `./public`).
+- `binding`: The binding name used to reference these assets within your Worker code.
 
 ### 1. Organize your files
 
@@ -247,11 +268,12 @@ If you need to reference these files in your Worker script to serve them dynamic
 
 ```js
 export default {
-  async fetch(request, env, ctx) {
-    return env.ASSETS.fetch(request);
-  },
+	async fetch(request, env, ctx) {
+		return env.ASSETS.fetch(request);
+	},
 };
 ```
+
 ### 2. Deploy the User Worker with the static assets
 
 Run Wrangler to publish both your Worker code and the static assets:

@@ -10,7 +10,3 @@ meta:
   title: Cloudflare Magic Cloud Networking docs
   description: Documentation for Cloudflare Magic Cloud Networking, a way to automate resource discovery, and reduce management burden when connecting to your public cloud.
   author: "@cloudflare"
-
-externals:
-  - title: Cloudflare homepage
-    url: https://cloudflare.com

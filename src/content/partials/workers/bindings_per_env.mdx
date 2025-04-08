@@ -1,0 +1,45 @@
+---
+{}
+---
+
+**Local Development:** Includes [`wrangler dev`](/workers/wrangler/commands/#dev) (without the `--remote` flag) and the [Cloudflare Vite plugin](/workers/vite-plugin/). This mode simulates the Cloudflare Workers environment locally.
+
+**Remote Development:** Uses [`wrangler dev --remote`](/workers/wrangler/commands/#dev)), deploying your code to Cloudflare’s infrastructure during development. This ensures all bindings and resources match production conditions. There is **no Vite plugin equivalent** for testing remote resources.
+
+| Binding                                 | Local (Wrangler & Vite) | Remote (Wrangler only) |
+| --------------------------------------- | :---------------------: | :--------------------: |
+| **AI**                                  |         ✅[^1]          |           ✅           |
+| **Assets**                              |           ✅            |           ✅           |
+| **Analytics Engine**                    |           ✅[^4]         |           ✅           |
+| **Browser Rendering**                   |           ❌            |           ✅           |
+| **D1**                                  |           ✅            |           ✅           |
+| **Durable Objects**                     |           ✅            |           ✅           |
+| **Email Bindings**                      |           ❌            |           ✅           |
+| **Hyperdrive**                          |         ✅[^2]          |           ✅           |
+| **Images**                              |           ✅            |           ✅           |
+| **KV**                                  |           ✅            |           ✅           |
+| **mTLS**                                |           ❌            |           ✅           |
+| **Queues**                              |           ✅            |           ❌           |
+| **R2**                                  |           ✅            |           ✅           |
+| **Rate Limiting**                       |           ✅            |           ✅           |
+| **Service Bindings (multiple Workers)** |           ✅            |           ✅           |
+| **Vectorize**                           |         ✅[^3]          |           ✅           |
+| **Workflows**                           |           ✅            |           ❌           |
+
+[^1]: Using Workers AI always accesses your Cloudflare account in order to run AI models and will incur usage charges, even in local development.
+
+[^2]: Using Hyperdrive with local development allows you to connect to a local database (running on `localhost`) but you cannot connect to a remote database. To connect to a remote database, use `wrangler dev --remote`.
+
+[^3]: Using Vectorize always accesses your Cloudflare account to run queries, and will incur usage charges even in local development.
+
+[^4]: Analytics Engine is supported in local development with Wrangler but is not currently supported in the Vite plugin.
+
+> **Tip:** If you need to use any bindings marked with ❌ under local development, run:
+>
+> ```bash
+> wrangler dev --remote
+> ```
+>
+> This command allows you to develop against remote resources and data stored on Cloudflare's network.
+
+---

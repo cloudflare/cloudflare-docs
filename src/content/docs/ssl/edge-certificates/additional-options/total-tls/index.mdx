@@ -11,7 +11,7 @@ import { DirectoryListing, Render } from "~/components"
 Total TLS allows Cloudflare to issue individual certificates for your proxied hostnames. These certificates will protect proxied hostnames not covered by [Universal certificates](/ssl/edge-certificates/universal-ssl/).
 
 :::caution
- <Render file="total-tls-character-limitation" /> 
+ <Render file="total-tls-character-limitation" />
 :::
 
 When issued, these certificates will have a type of **Advanced - Total TLS**, and their default validity period is 90 days.
@@ -32,6 +32,7 @@ Total TLS does not issue certificates for any hostnames used with:
 
 * [Cloudflare Load Balancing](/load-balancing/)
 * [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/routing-to-tunnel/)
+* [Cloudflare Spectrum](/spectrum/)
 
 You can use other types of certificates or manually [order advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/#create-a-certificate) for these hostnames.
 

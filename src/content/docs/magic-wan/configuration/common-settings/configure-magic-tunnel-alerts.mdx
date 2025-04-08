@@ -5,109 +5,14 @@ head: []
 description: Use the API to set up and configure Magic Tunnel health alerts
 ---
 
-import { Render, Tabs, TabItem } from "~/components";
+import { Render } from "~/components";
 
 <Render
-	file="magic-tunnel-health-alerts/magic-tunnel-health-alerts"
+	file="tunnel-health/magic-tunnel-health-alerts"
+	product="networking-services"
 	params={{
+		magicWord: "Magic WAN",
 		productName: "Magic WAN",
-		backgroundInfoPath: "/magic-wan/reference/magic-tunnels/",
-	}}
-/>
-
-## Set up Magic Tunnel health alerts
-
-<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
-
-<Render
-	file="magic-tunnel-health-alerts/setup-magic-tunnels-dash"
-	params={{
-		productName: "Magic WAN",
-	}}
-/>
-
-</TabItem> <TabItem label="API">
-
-:::note
-Refer to the [documentation for Notifications](/notifications/get-started/) to learn about specific permissions you need to access the service via the API.
-:::
-
-Send a [`POST` request](/api/resources/alerting/subresources/policies/methods/create/) to create a Magic WAN tunnel health alert. You can set tunnel health alerts with any SLO value between `0` and `99.99`.
-
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/account_id/alerting/v3/policies \
---header 'Authorization: Bearer <YOUR_TOKEN>' \
---header 'Content-Type: application/json' \
---data '{
-  "alert_type": "magic_wan_tunnel_health",
-  "description": "<DESCRIBE_POLICY>",
-  "enabled": true,
-  "filters": {
-    "slo": [
-      "99.9"
-    ]
-  },
-  "mechanisms": {
-    "email": [
-      {
-        "id": "EMAIL_ADDRESS"
-      }
-    ],
-  "name": "<DESCRIBE_ALERT>"
-}'
-```
-
-```json output
-{
-	"result": [
-		{
-			"id": "f174e90a-fafe-4643-bbbc-4a0ed4fc8415",
-			"name": "<POLICY_NAME>",
-			"description": "<POLICY_DESCRIPTION>",
-			"enabled": true,
-			"alert_type": "magic_wan_tunnel_health",
-			"mechanisms": {
-				"email": [
-					{
-						"id": "<YOUR_EMAIL>"
-					}
-				]
-			},
-			"created": "2024-09-11T14:13:29.585658Z",
-			"modified": "2024-09-11T14:13:29.585658Z",
-			"conditions": {
-				"and": [
-					{
-						"or": [
-							{
-								"<=": [
-									{
-										"var": "slo"
-									},
-									"99.9"
-								]
-							}
-						]
-					}
-				]
-			},
-			"filters": {
-				"slo": ["99.9"]
-			}
-		}
-	],
-	"success": true,
-	"errors": [],
-	"messages": []
-}
-```
-
-</TabItem> </Tabs>
-
-<Render
-	file="magic-tunnel-health-alerts/recommended-slo"
-	product="magic-wan"
-	params={{
 		backgroundInfoPath: "/magic-wan/reference/magic-tunnels/",
 		networkAnalyticsPath: "/magic-wan/analytics/network-analytics/",
 		healthChecks: "/magic-wan/reference/tunnel-health-checks/",

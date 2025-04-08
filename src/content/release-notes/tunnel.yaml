@@ -16,7 +16,7 @@ entries:
   - publish_date: "2024-10-10"
     title: Bugfix for --grace-period
     description: |-
-      The new `cloudflared` build [2024.10.0](https://github.com/cloudflare/cloudflared/releases/tag/2024.10.0) has a bugfix related to the [--grace-period](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-run-parameters/#grace-period) tunnel run parameter. `cloudflared` connectors will now abide by the specified waiting period before forcefully closing connections to Cloudflare's network.
+      The new `cloudflared` build [2024.10.0](https://github.com/cloudflare/cloudflared/releases/tag/2024.10.0) has a bugfix related to the [--grace-period](/cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/run-parameters/#grace-period) tunnel run parameter. `cloudflared` connectors will now abide by the specified waiting period before forcefully closing connections to Cloudflare's network.
   - publish_date: "2024-08-06"
     title: cloudflared builds available in GitHub for Apple silicon
     description: |-

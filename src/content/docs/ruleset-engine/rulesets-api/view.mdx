@@ -6,6 +6,8 @@ sidebar:
   order: 4
 ---
 
+import { APIRequest } from "~/components";
+
 - [List existing rulesets](#list-existing-rulesets)
 - [View a specific ruleset](#view-a-specific-ruleset)
 - [List all versions of a ruleset](#list-all-versions-of-a-ruleset)
@@ -38,10 +40,7 @@ The result does not include the list of rules in the ruleset. Refer to [View a s
 
 ### Example
 
-```bash
-curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets \
---header "Authorization: Bearer <API_TOKEN>"
-```
+<APIRequest path="/zones/{zone_id}/rulesets" method="GET" />
 
 ```json output
 {
@@ -52,7 +51,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets \
 			"description": "",
 			"kind": "zone",
 			"version": "5",
-			"last_updated": "2023-03-18T18:30:08.122758Z",
+			"last_updated": "2025-03-18T18:30:08.122758Z",
 			"phase": "http_request_firewall_managed"
 		}
 	],
@@ -91,10 +90,7 @@ The API returns a `404 Not Found` HTTP status code under these conditions:
 
 ### Example
 
-```bash
-curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} \
---header "Authorization: Bearer <API_TOKEN>"
-```
+<APIRequest path="/zones/{zone_id}/rulesets/{ruleset_id}" method="GET" />
 
 ```json output
 {
@@ -113,10 +109,10 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id} 
 				"action_parameters": {
 					"id": "<MANAGED_RULESET_ID>"
 				},
-				"last_updated": "2023-03-17T15:42:37.917815Z"
+				"last_updated": "2025-03-17T15:42:37.917815Z"
 			}
 		],
-		"last_updated": "2023-03-17T15:42:37.917815Z",
+		"last_updated": "2025-03-17T15:42:37.917815Z",
 		"phase": "http_request_firewall_managed"
 	},
 	"success": true,
@@ -149,10 +145,10 @@ When the specified phase entry point ruleset does not exist, this API method ret
 
 ### Example
 
-```bash
-curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/versions \
---header "Authorization: Bearer <API_TOKEN>"
-```
+<APIRequest
+	path="/zones/{zone_id}/rulesets/{ruleset_id}/versions"
+	method="GET"
+/>
 
 ```json output
 {
@@ -204,10 +200,10 @@ When the specified phase entry point ruleset does not exist, this API method ret
 
 ### Example
 
-```bash
-curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/versions/{version_number} \
---header "Authorization: Bearer <API_TOKEN>"
-```
+<APIRequest
+	path="/zones/{zone_id}/rulesets/{ruleset_id}/versions/{ruleset_version}"
+	method="GET"
+/>
 
 ```json output
 {
@@ -216,7 +212,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/
 		"name": "Zone-level phase entry point",
 		"description": "Executes a managed ruleset.",
 		"kind": "zone",
-		"version": "3",
+		"version": "<RULESET_VERSION>",
 		"rules": [
 			{
 				"id": "<RULE_ID>",
@@ -226,10 +222,10 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/
 				"action_parameters": {
 					"id": "<MANAGED_RULESET_ID>"
 				},
-				"last_updated": "2023-03-17T15:42:37.917815Z"
+				"last_updated": "2025-03-17T15:42:37.917815Z"
 			}
 		],
-		"last_updated": "2023-03-17T15:42:37.917815Z",
+		"last_updated": "2025-03-17T15:42:37.917815Z",
 		"phase": "http_request_firewall_managed"
 	},
 	"success": true,
@@ -252,10 +248,14 @@ Returns a list of all the rules in a managed ruleset with a specific tag.
 
 ### Example
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{ruleset_id}/versions/2/by_tag/wordpress \
---header "Authorization: Bearer <API_TOKEN>"
-```
+<APIRequest
+	path="/accounts/{account_id}/rulesets/{ruleset_id}/versions/{ruleset_version}/by_tag/{rule_tag}"
+	method="GET"
+	parameters={{
+		ruleset_version: "2",
+		rule_tag: "wordpress",
+	}}
+/>
 
 ```json output
 {
@@ -264,11 +264,11 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{rulese
 		"name": "Cloudflare Managed Ruleset",
 		"description": "Managed ruleset created by Cloudflare",
 		"kind": "managed",
-		"version": "4",
+		"version": "2",
 		"rules": [
 			{
 				"id": "<RULE_ID_1>",
-				"version": "3",
+				"version": "2",
 				"action": "log",
 				"categories": [
 					"cve-2014-5265",
@@ -279,23 +279,23 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{rulese
 					"wordpress"
 				],
 				"description": "Drupal, WordPress - DoS - XMLRPC - CVE:CVE-2014-5265, CVE:CVE-2014-5266, CVE:CVE-2014-5267",
-				"last_updated": "2023-03-19T16:54:32.942986Z",
+				"last_updated": "2025-03-19T16:54:32.942986Z",
 				"ref": "<RULE_REF_1>",
 				"enabled": true
 			},
 			{
 				"id": "<RULE_ID_2>",
-				"version": "3",
+				"version": "2",
 				"action": "block",
 				"categories": ["broken-access-control", "cve-2018-12895", "wordpress"],
 				"description": "WordPress - Broken Access Control - CVE:CVE-2018-12895",
-				"last_updated": "2023-03-19T16:54:32.942986Z",
+				"last_updated": "2025-03-19T16:54:32.942986Z",
 				"ref": "<RULE_REF_2>",
 				"enabled": true
 			}
 			// (...)
 		],
-		"last_updated": "2023-03-19T16:54:32.942986Z",
+		"last_updated": "2025-03-19T16:54:32.942986Z",
 		"phase": "http_request_firewall_managed"
 	},
 	"success": true,

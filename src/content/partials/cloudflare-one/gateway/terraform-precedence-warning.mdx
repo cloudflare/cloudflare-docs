@@ -1,0 +1,7 @@
+---
+{}
+---
+
+:::caution[Terraform precedence limitation]
+To avoid conflicts, Terraform applies a hash calculation to policy precedence. For example, a precedence of `1000` may become `1000901`. This can cause errors when reordering policies. To avoid this issue, manually set the precedence of policies created with Terraform using the [Update a Zero Trust Gateway rule](/api/resources/zero_trust/subresources/gateway/subresources/rules/methods/update/) endpoint.
+:::

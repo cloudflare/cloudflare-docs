@@ -1,0 +1,55 @@
+---
+title: Playwright for Browser Rendering now available
+description: Developers can now use the Playwright library for browser automation with Browser Rendering
+products:
+  - browser-rendering
+date: 2025-04-04T14:00:00Z
+---
+
+We're excited to share that you can now use Playwright's browser automation [capabilities](https://playwright.dev/docs/api/class-playwright) from Cloudflare [Workers](/workers/).
+
+[Playwright](https://playwright.dev/) is an open-source package developed by Microsoft that can do browser automation tasks; it's commonly used to write software tests, debug applications, create screenshots, and crawl pages. Like [Puppeteer](/browser-rendering/platform/puppeteer/), we [forked](https://github.com/cloudflare/playwright) Playwright and modified it to be compatible with Cloudflare Workers and [Browser Rendering](https://developers.cloudflare.com/browser-rendering/).
+
+Below is an example of how to use Playwright with Browser Rendering to test a TODO application using assertions:
+
+```ts title="Assertion example"
+import type { Fetcher } from '@cloudflare/workers-types';
+import { launch } from '@cloudflare/playwright';
+import { expect } from '@cloudflare/playwright/test';
+
+interface Env {
+  MYBROWSER: Fetcher;
+}
+
+export default {
+  async fetch(request: Request, env: Env) {
+
+    const browser = await launch(env.MYBROWSER);
+    const page = await browser.newPage();
+
+    await page.goto('https://demo.playwright.dev/todomvc');
+
+    const TODO_ITEMS = todos.length > 0 ? todos : [
+        'buy some cheese',
+        'feed the cat',
+        'book a doctors appointment'
+    ];
+
+    const newTodo = page.getByPlaceholder('What needs to be done?');
+    for (const item of TODO_ITEMS) {
+        await newTodo.fill(item);
+        await newTodo.press('Enter');
+    }
+
+    await expect(page.getByTestId('todo-title')).toHaveCount(TODO_ITEMS.length);
+
+    await Promise.all(TODO_ITEMS.map(
+        (value, index) => expect(page.getByTestId('todo-title').nth(index)).toHaveText(value)
+    ));
+	},
+};
+```
+
+Playwright is available as an npm package at [`@cloudflare/playwright`](https://www.npmjs.com/package/@cloudflare/playwright) and the code is at [GitHub](https://github.com/cloudflare/playwright).
+
+Learn more in our [documentation](/browser-rendering/platform/playwright/).

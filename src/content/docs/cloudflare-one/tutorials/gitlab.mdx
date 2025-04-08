@@ -310,3 +310,13 @@ Cloudflare Tunnel will continue to run outbound-only connections and I can avoid
 ## View logs
 
 You can also view logs of the events that are allowed and blocked. Open the `Access` page of the `Logs` section in Zero Trust.
+
+## Troubleshooting
+
+If you are using Git Large File Storage (LFS), note that Git LFS is not automatically supported by `cloudflared`. To access repositories protected by Cloudflare Access, you need to authenticate manually by running:
+
+```sh
+cloudflared access login <your-git-access-url>
+```
+
+Replace `<your-git-access-url>` with the Cloudflare Access-protected URL.

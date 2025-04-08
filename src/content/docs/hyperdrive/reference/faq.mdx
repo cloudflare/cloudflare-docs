@@ -3,10 +3,29 @@ pcx_content_type: concept
 title: FAQ
 sidebar:
   order: 10
-
 ---
 
 Below you will find answers to our most commonly asked questions regarding Hyperdrive.
+
+## Connectivity
+
+### Does Hyperdrive use specific IP addresses to connect to my database?
+
+Hyperdrive connects to your database using [Cloudflare's IP address ranges](https://www.cloudflare.com/ips/). These are shared by all Hyperdrive configurations and other Cloudflare products.
+
+You can use this to configure restrictions in your database firewall to restrict the IP addresses that can access your database.
+
+### Does Hyperdrive support connecting to D1 databases?
+
+Hyperdrive does not support [D1](/d1) because D1 provides fast connectivity from Workers by design.
+
+Hyperdrive is designed to speed up connectivity to traditional, regional SQL databases such as PostgreSQL. These databases are typically accessed using database drivers that communicate over TCP/IP.
+Unlike D1, creating a secure database connection to a traditional SQL database
+involves multiple round trips between the client (your Worker) and your database server.
+See [How Hyperdrive works](/hyperdrive/configuration/how-hyperdrive-works/) for more detail on why round trips are needed
+and how Hyperdrive solves this.
+
+D1 does not require round trips to create database connections. D1 is designed to be performant for access from Workers by default, without needing Hyperdrive.
 
 ## Pricing
 
@@ -27,4 +46,3 @@ Hyperdrive itself does not charge for compute (CPU) or processing (wall clock) t
 ### Are there any limits to Hyperdrive?
 
 Refer to the published [limits](/hyperdrive/platform/limits/) documentation.
-

@@ -53,20 +53,19 @@ While TLS 1.3 is the most recent and secure version, it is not supported by some
 
 ## Cipher suites
 
-For security and regulatory reasons, you may want to only allow connections from certain cipher suites. Cloudflare provides recommended values and full cipher suite reference in our [Cipher suites documentation](/ssl/edge-certificates/additional-options/cipher-suites/).
+For security and regulatory reasons, you may want to only allow connections from certain cipher suites. Cloudflare provides recommended values and full cipher suite reference in our [Cipher suites documentation](/ssl/edge-certificates/additional-options/cipher-suites/#resources).
 
 
-<Details header="Restrict cipher suites for zone">
+<Details header="Restrict cipher suites for your zone">
 
-Refer to [Edit zone setting](/api/resources/zones/subresources/settings/methods/edit/) and use `ciphers` as the setting name in the URI path.
-
+Refer to [Customize cipher suites - SSL/TLS](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/).
 
 </Details>
 
 
 <Details header="Restrict cipher suites for custom hostname">
 
-Refer to [SSL properties of a custom hostname](/api/resources/custom_hostnames/methods/edit/).
+In the API documentation, refer to [SSL properties of a custom hostname](/api/resources/custom_hostnames/methods/edit/).
 
 <Render file="edit-custom-hostname-api" params={{ one: "When making the request," }} />
 

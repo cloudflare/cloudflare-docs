@@ -14,10 +14,11 @@ This guide will show you how to migrate your Workers from the [Service Worker](h
 
 There are several reasons to migrate your Workers to the ES modules format:
 
-1. [Durable Objects](/durable-objects/), [D1](/d1/), [Workers AI](/workers-ai/), [Vectorize](/vectorize/) and other bindings can only be used from Workers that use ES modules.
-2. Your Worker will run faster. With service workers, bindings are exposed as globals. This means that for every request, the Workers runtime must create a new JavaScript execution context, which adds overhead and time. Workers written using ES modules can reuse the same execution context across multiple requests.
-3. You can [gradually deploy changes to your Worker](/workers/configuration/versions-and-deployments/gradual-deployments/) when you use the ES modules format.
-4. You can easily publish Workers using ES modules to `npm`, allowing you to import and reuse Workers within your codebase.
+1. Your Worker will run faster. With service workers, bindings are exposed as globals. This means that for every request, the Workers runtime must create a new JavaScript execution context, which adds overhead and time. Workers written using ES modules can reuse the same execution context across multiple requests.
+2. Implementing [Durable Objects](/durable-objects/) requires Workers that use ES modules.
+3. Bindings for [D1](/d1/), [Workers AI](/workers-ai/), [Vectorize](/vectorize/), [Workflows](/workflows/), and [Images](/images/transform-images/bindings/) can only be used from Workers that use ES modules.
+4. You can [gradually deploy changes to your Worker](/workers/configuration/versions-and-deployments/gradual-deployments/) when you use the ES modules format.
+5. You can easily publish Workers using ES modules to `npm`, allowing you to import and reuse Workers within your codebase.
 
 ## Migrate a Worker
 

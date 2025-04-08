@@ -8,7 +8,7 @@ head:
     content: Use category overrides to enable Joomla rules
 ---
 
-import { Details } from "~/components";
+import { Details, APIRequest } from "~/components";
 
 Use the [Rulesets API](/ruleset-engine/rulesets-api/) to configure the execution of a managed ruleset and override its behavior. By default, enabled rules perform the actions defined by the managed ruleset issuer. This example uses overrides to ensure that only rules with a specific tag are enabled.
 
@@ -22,39 +22,40 @@ Tag overrides take precedence over ruleset overrides. Only the rules with the sp
 
 ## Example 1
 
-This example uses the [Update a zone entry point ruleset](/ruleset-engine/rulesets-api/update/) operation to deploy the Cloudflare Managed Ruleset to a phase with only Joomla rules enabled. The `name`, `kind`, and `phase` fields are omitted from the request because they are immutable.
+This example deploys the Cloudflare Managed Ruleset to a phase with only Joomla rules enabled. The `name`, `kind`, and `phase` fields are omitted from the request because they are immutable.
 
 <Details header="Example: Enable only Joomla rules using category overrides at the zone level">
 
-```bash
-curl --request PUT \
-https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "rules": [
-    {
-      "action": "execute",
-      "expression": "true",
-      "action_parameters": {
-        "id": "<MANAGED_RULESET_ID>",
-        "overrides": {
-          "enabled": false,
-          "categories": [
-            {
-              "category": "joomla",
-              "action": "block",
-              "enabled": true
-            }
-          ]
-        }
-      }
-    }
-  ]
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/rulesets/phases/{ruleset_phase}/entrypoint"
+	method="PUT"
+	parameters={{
+		ruleset_phase: "http_request_firewall_managed",
+	}}
+	json={{
+		rules: [
+			{
+				action: "execute",
+				expression: "true",
+				action_parameters: {
+					id: "<MANAGED_RULESET_ID>",
+					overrides: {
+						enabled: false,
+						categories: [
+							{
+								category: "joomla",
+								action: "block",
+								enabled: true,
+							},
+						],
+					},
+				},
+			},
+		],
+	}}
+/>
 
-- `"id": "<MANAGED_RULESET_ID>"` adds a rule to the ruleset of a phase that will apply the Cloudflare Managed Ruleset to requests for the specified zone (`{zone_id}`).
+- `"id": "<MANAGED_RULESET_ID>"` adds a rule to the ruleset of a phase that will apply the Cloudflare Managed Ruleset to requests for the specified zone (`$ZONE_ID`).
 - `"enabled": false` defines an override at the ruleset level that disables all rules in the managed ruleset.
 - `"categories": [{"category": "joomla", "action": "block", "enabled": true}]` defines an override at the tag level that enables the Joomla rules and sets their action to `block`.
 
@@ -62,33 +63,34 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_reques
 
 <Details header="Example: Enable only Joomla rules using category overrides at the account level">
 
-```bash
-curl --request PUT \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/phases/http_request_firewall_managed/entrypoint \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "rules": [
-    {
-      "action": "execute",
-      "expression": "cf.zone.name eq \"example.com\" and cf.zone.plan eq \"ENT\"",
-      "action_parameters": {
-        "id": "<MANAGED_RULESET_ID>",
-        "overrides": {
-          "enabled": false,
-          "categories": [
-            {
-              "category": "joomla",
-              "action": "block",
-              "enabled": true
-            }
-          ]
-        }
-      }
-    }
-  ]
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/rulesets/phases/{ruleset_phase}/entrypoint"
+	method="PUT"
+	parameters={{
+		ruleset_phase: "http_request_firewall_managed",
+	}}
+	json={{
+		rules: [
+			{
+				action: "execute",
+				expression: 'cf.zone.name eq "example.com" and cf.zone.plan eq "ENT"',
+				action_parameters: {
+					id: "<MANAGED_RULESET_ID>",
+					overrides: {
+						enabled: false,
+						categories: [
+							{
+								category: "joomla",
+								action: "block",
+								enabled: true,
+							},
+						],
+					},
+				},
+			},
+		],
+	}}
+/>
 
 - `"id": "<MANAGED_RULESET_ID>"` adds a rule to the ruleset of a phase that will apply the Cloudflare Managed Ruleset to requests for `example.com`.
 - `"enabled": false` defines an override at the ruleset level that disables all rules in the managed ruleset.
@@ -100,83 +102,85 @@ You can add more than one category override to a rule.
 
 ## Example 2
 
-This example uses a `PUT` request to add two overrides to the rule that executes a managed ruleset (`<MANAGED_RULESET_ID>`) in the `http_request_firewall_managed` phase. Note that the `name`, `kind`, and `phase` fields are omitted from the request because they are immutable.
+This example adds two overrides to the rule that executes a managed ruleset (`<MANAGED_RULESET_ID>`) in the `http_request_firewall_managed` phase. Note that the `name`, `kind`, and `phase` fields are omitted from the request because they are immutable.
 
 <Details header="Example: Add more than one category override at the zone level">
 
-```bash
-curl --request PUT \
-https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "rules": [
-    {
-      "action": "execute",
-      "expression": "true",
-      "action_parameters": {
-        "id": "<MANAGED_RULESET_ID>",
-        "overrides": {
-          "enabled": false,
-          "categories": [
-            {
-              "category": "joomla",
-              "action": "log",
-              "enabled": true
-            },
-            {
-              "category": "wordpress",
-              "enabled": false
-            }
-          ]
-        }
-      }
-    }
-  ]
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/rulesets/phases/{ruleset_phase}/entrypoint"
+	method="PUT"
+	parameters={{
+		ruleset_phase: "http_request_firewall_managed",
+	}}
+	json={{
+		rules: [
+			{
+				action: "execute",
+				expression: "true",
+				action_parameters: {
+					id: "<MANAGED_RULESET_ID>",
+					overrides: {
+						enabled: false,
+						categories: [
+							{
+								category: "joomla",
+								action: "log",
+								enabled: true,
+							},
+							{
+								category: "wordpress",
+								enabled: false,
+							},
+						],
+					},
+				},
+			},
+		],
+	}}
+/>
 
 </Details>
 
 <Details header="Example: Add more than one category override at the account level">
 
-```bash
-curl --request PUT \
-https://api.cloudflare.com/client/v4/account/{account_id}/rulesets/phases/http_request_firewall_managed/entrypoint \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "rules": [
-    {
-      "action": "execute",
-      "expression": "cf.zone.name eq \"example.com\" and cf.zone.plan eq \"ENT\"",
-      "action_parameters": {
-        "id": "<MANAGED_RULESET_ID>",
-        "overrides": {
-          "enabled": false,
-          "categories": [
-            {
-              "category": "joomla",
-              "action": "log",
-              "enabled": true
-            },
-            {
-              "category": "wordpress",
-              "enabled": false
-            }
-          ]
-        }
-      }
-    }
-  ]
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/rulesets/phases/{ruleset_phase}/entrypoint"
+	method="PUT"
+	parameters={{
+		ruleset_phase: "http_request_firewall_managed",
+	}}
+	json={{
+		rules: [
+			{
+				action: "execute",
+				expression: 'cf.zone.name eq "example.com" and cf.zone.plan eq "ENT"',
+				action_parameters: {
+					id: "<MANAGED_RULESET_ID>",
+					overrides: {
+						enabled: false,
+						categories: [
+							{
+								category: "joomla",
+								action: "log",
+								enabled: true,
+							},
+							{
+								category: "wordpress",
+								enabled: false,
+							},
+						],
+					},
+				},
+			},
+		],
+	}}
+/>
 
 </Details>
 
-The order of the overrides in the root ruleset affects whether rules in the deployed managed ruleset are enabled or disabled. Overrides placed later in the list take precedence over earlier overrides. Consider four rules from the managed ruleset in the code above that have different combinations of `category` tags.
+The order of the overrides in the ruleset determines if rules in the deployed managed ruleset are enabled or disabled. Overrides placed later in the list take precedence over earlier overrides.
 
-The following table shows the status of the rules after the overrides.
+Consider four rules from the managed ruleset in the code above that have different combinations of `category` tags. The following table shows the status of the rules after the overrides.
 
 | Rule in managed ruleset | Tags                         | Rule status after overrides |
 | ----------------------- | ---------------------------- | --------------------------- |

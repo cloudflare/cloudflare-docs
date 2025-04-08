@@ -45,11 +45,11 @@ export default {
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py
-from js import Response
+from workers import Response
 
 async def on_fetch(request):
     print(dict(request.headers))
-    return Response.new('Hello world')
+    return Response('Hello world')
 ```
 
 </TabItem> <TabItem label="Rust" icon="seti:rust">

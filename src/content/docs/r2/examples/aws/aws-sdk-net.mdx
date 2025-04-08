@@ -1,18 +1,30 @@
 ---
 title: aws-sdk-net
 pcx_content_type: example
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="keys" /><br/>
+<Render file="keys" />
+<br />
 
 This example uses version 3 of the [aws-sdk-net](https://www.nuget.org/packages/AWSSDK.S3) package. You must pass in the R2 configuration credentials when instantiating your `S3` service client:
 
 ## Client setup
 
 In this example, you will pass credentials explicitly to the `IAmazonS3` initialization. If you wish, use a shared AWS credentials file or the SDK store in-line with other AWS SDKs. Refer to [Configure AWS credentials](https://docs.aws.amazon.com/sdk-for-net/v3/developer-guide/net-dg-config-creds.html) for more details.
+
+:::note[Compatibility]
+Client version `3.7.963.0` introduced a modification to the default checksum behavior from the client that is currently incompatible with R2 APIs.
+
+To mitigate, users can use `3.7.962.0` or add the following to their AmazonS3Config:
+
+```csharp
+RequestChecksumCalculation = "WHEN_REQUIRED",
+ResponseChecksumValidation = "WHEN_REQUIRED"
+```
+
+:::
 
 ```csharp
 private static IAmazonS3 s3Client;
@@ -72,9 +84,7 @@ The [PutObjectAsync](https://docs.aws.amazon.com/sdkfornet/v3/apidocs/items/S3/M
 
 :::caution
 
-
 `DisablePayloadSigning = true` must be passed as Cloudflare R2 does not currently support the Streaming SigV4 implementation used by AWSSDK.S3.
-
 
 :::
 

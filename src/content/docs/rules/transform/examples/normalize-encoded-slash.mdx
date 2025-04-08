@@ -1,0 +1,38 @@
+---
+pcx_content_type: example  
+summary: Create a rewrite URL rule (part of Transform Rules) to normalize encoded forward slashes (`%2F`) in the request path to standard slashes (`/`).  
+products:  
+  - Transform Rules  
+operation:  
+  - Rewrite URL  
+title: Normalize encoded slashes in URL path  
+description: Create a rewrite URL rule (part of Transform Rules) to normalize encoded forward slashes (`%2F`) in the request path to standard slashes (`/`).  
+---
+
+import { Example } from "~/components";
+
+Different web servers and applications handle encoded forward slashes (`%2F`) in URLs differently. Cloudflare follows [RFC 3986](https://datatracker.ietf.org/doc/html/rfc3986), which specifies that `%2F` **should not** be automatically normalized to `/` because `/` is a reserved character in URLs, and decoding it might change the intended meaning of the path.
+
+However, many origin servers **do** automatically decode `%2F` into `/` when processing requests. If your origin server behaves this way, you may want to apply the same normalization at Cloudflare’s edge to ensure consistency in request handling, rule evaluation, and logging.
+
+## How to normalize `%2F`
+
+To normalize encoded forward slashes (`%2F`) to standard slashes (`/`) in the request path before [subsequent](/ruleset-engine/reference/phases-list/) rule evaluation, create a new rewrite URL rule and define a dynamic URL path rewrite using [`url_decode()`](/ruleset-engine/rules-language/functions/#url_decode) function:
+
+<Example>
+
+Text in **Expression Editor**:
+
+```txt
+(lower(raw.http.request.full_uri) wildcard "*%2f*")
+```
+
+Text after **Path** > **Rewrite to...** > _Dynamic_:
+
+```txt
+url_decode(http.request.uri.path)
+```
+
+</Example>
+
+This transformation ensures that `%2F` is always treated as `/` in the request path. This is particularly useful when setting up rules that depend on URL path matching, as it prevents discrepancies caused by differing normalization behaviors.

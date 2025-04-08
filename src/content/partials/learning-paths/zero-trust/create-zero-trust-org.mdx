@@ -3,8 +3,56 @@
 
 ---
 
-import { Render } from "~/components"
+import { Render, Tabs, TabItem} from "~/components"
 
-To set up a Zero Trust organization:
+To start using Zero Trust features, create a Zero Trust organization in your Cloudflare account.
+
+## Sign up for Zero Trust
+
+To create a Zero Trust organization:
 
 <Render file="choose-team-name" product="cloudflare-one" />
+
+## (Optional) Manage Zero Trust in Terraform
+
+You can use the [Cloudflare Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest) to manage your Zero Trust organization alongside your other IT infrastructure. To get started with Terraform, refer to our [Terraform tutorial series](/terraform/tutorial/).
+
+Zero Trust organizations cannot be created through Terraform. You must [sign up for Zero Trust](#sign-up-for-zero-trust) on the Cloudflare dashboard and then import the resource into your [Terraform configuration](/terraform/).
+
+To import your Zero Trust organization:
+
+<Tabs> <TabItem label="Terraform (v4)">
+
+:::note[Provider versions]
+The following example requires Cloudflare provider version `>=4.40.0`.
+:::
+
+1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.40.0/docs/resources/api_token):
+	- `Access: Organizations, Identity Providers, and Groups Write`
+
+2. Add the [`cloudflare_zero_trust_access_organization`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.40.0/docs/resources/zero_trust_access_organization) resource:
+
+	```terraform
+	resource "cloudflare_zero_trust_access_organization" "<your-team-name>" {
+		account_id                         = var.cloudflare_account_id
+		name                               = "Acme Corporation"
+		auth_domain                        = "<your-team-name>.cloudflareaccess.com"
+	}
+	```
+	Replace `<your-team-name` with the Zero Trust organization name selected during [onboarding](#sign-up-for-zero-trust). You can also view your team name on [Zero Trust](https://one.dash.cloudflare.com) under **Settings** > **Custom Pages**.
+
+3. In a terminal, run:
+
+	```sh
+	terraform import cloudflare_zero_trust_access_organization.<your-team-name> <cloudflare_account_id>`
+	```
+
+</TabItem>
+
+</Tabs>
+
+You can now update the Zero Trust organization using Terraform.
+
+:::tip
+If you plan to manage all Zero Trust settings in Terraform, set the dashboard to [API/Terraform read-only mode](/cloudflare-one/api-terraform/#set-dashboard-to-read-only).
+:::

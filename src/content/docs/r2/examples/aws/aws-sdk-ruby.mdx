@@ -1,14 +1,26 @@
 ---
 title: aws-sdk-ruby
 pcx_content_type: example
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="keys" /><br/>
+<Render file="keys" />
+<br />
 
 Many Ruby projects also store these credentials in environment variables instead.
+
+:::note[Compatibility]
+Client version `1.178.0` introduced a modification to the default checksum behavior from the client that is currently incompatible with R2 APIs.
+
+To mitigate, users can use `1.177.0` or add the following to their s3 client instantiation:
+
+```ruby
+request_checksum_calculation: "when_required",
+response_checksum_validation: "when_required"
+```
+
+:::
 
 Add the following dependency to your `Gemfile`:
 

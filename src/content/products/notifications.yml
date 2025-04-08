@@ -3,7 +3,7 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 
 
 product:
   title: Notifications
-  group: Cloudflare essentials
+  group: Core platform
   url: /notifications/
 
 meta:
@@ -13,7 +13,3 @@ meta:
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/notifications
-
-externals:
-  - title: Cloudflare homepage
-    url: https://cloudflare.com

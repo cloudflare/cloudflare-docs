@@ -2,46 +2,60 @@
 import { z } from "astro:schema";
 import { getCollection } from "astro:content";
 import { sortBySidebarOrder } from "~/util/sidebar";
-import { marked } from "marked";
+import DirectoryListingItem from "./DirectoryListingItem.astro";
+
+interface PageNode {
+	page: (typeof allPages)[0];
+	children: PageNode[];
+}
 
 type Props = z.infer<typeof props>;
 
 const props = z.object({
 	descriptions: z.boolean().default(false),
 	folder: z.string().optional(),
+	maxDepth: z.number().default(1),
 });
 
-let { descriptions, folder } = props.parse(Astro.props);
+let { descriptions, folder, maxDepth } = props.parse(Astro.props);
 
 if (!folder) folder = Astro.params.slug!;
 
-const depth = folder.split("/").length + 1;
+const baseDepth = folder.split("/").length;
 
-let pages = await getCollection("docs", (page) => {
-	return (
-		page.id.startsWith(`${folder}/`) && page.id.split("/").length === depth
-	);
+let allPages = await getCollection("docs", (page) => {
+	const pageDepth = page.id.split("/").length;
+	return page.id.startsWith(`${folder}/`) && pageDepth <= baseDepth + maxDepth;
 });
 
-pages.sort(sortBySidebarOrder);
+allPages.sort(sortBySidebarOrder);
+
+function getChildren(parentPath: string, depth: number) {
+	return allPages.filter((page) => {
+		const pagePath = page.id;
+		const pageDepth = pagePath.split("/").length;
+		return pageDepth === depth && pagePath.startsWith(parentPath);
+	});
+}
+
+function buildPageTree(parentPath: string, currentDepth: number): PageNode[] {
+	const children = getChildren(parentPath, currentDepth);
+	return children.map((page) => ({
+		page,
+		children:
+			currentDepth < baseDepth + maxDepth
+				? buildPageTree(page.id, currentDepth + 1)
+				: [],
+	}));
+}
+
+const pageTree = buildPageTree(folder, baseDepth + 1);
 ---
 
 <ul>
 	{
-		pages.map((page) => {
-			const description = descriptions && page.data.description;
-			const href = page.data.external_link ?? "/" + page.id + "/";
-			return (
-				<li>
-					<a href={href}>{page.data.title}</a>
-					{description && (
-						<>
-							<span>: </span>
-							<Fragment set:html={marked.parseInline(description)} />
-						</>
-					)}
-				</li>
-			);
-		})
+		pageTree.map((node) => (
+			<DirectoryListingItem node={node} descriptions={descriptions} />
+		))
 	}
 </ul>

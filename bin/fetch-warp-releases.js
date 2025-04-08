@@ -2,7 +2,14 @@ import fs from "fs";
 import YAML from "yaml";
 import { marked } from "marked";
 
-const tracks = ["windows/ga", "windows/beta", "macos/ga", "macos/beta"];
+const tracks = [
+	"windows/ga",
+	"windows/beta",
+	"macos/ga",
+	"macos/beta",
+	"noble-intel/ga",
+	"noble-intel/beta",
+];
 
 const linesToRemove = [
 	"For related Cloudflare for Teams documentation please see: https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp",
@@ -11,12 +18,29 @@ const linesToRemove = [
 	"For Consumer documentation please see: https://developers.cloudflare.com/warp-client/",
 ];
 
-for (const track of tracks) {
+for (let track of tracks) {
 	fetch(`https://downloads.cloudflareclient.com/v1/update/json/${track}`)
 		.then((res) => res.json())
 		.then((data) => {
+			if (!data.items) {
+				console.warn(
+					`${track} has no releases: ${JSON.stringify(data, null, 2)}`,
+				);
+
+				return;
+			}
+
 			data.items.forEach((item) => {
-				const path = `./src/content/warp-releases/${track}/${item.version}.yaml`;
+				if (track.startsWith("noble-intel")) {
+					track = track.replace("noble-intel", "linux");
+				}
+
+				const folder = `./src/content/warp-releases/${track}`;
+				const path = `${folder}/${item.version}.yaml`;
+
+				if (!fs.existsSync(folder)) {
+					fs.mkdirSync(folder, { recursive: true });
+				}
 
 				if (fs.existsSync(path)) {
 					console.log(`${track} ${item.version} already exists.`);
@@ -47,13 +71,16 @@ for (const track of tracks) {
 				});
 
 				const releaseNotes = tokens.reduce((s, t) => s + t.raw, "");
+				const platformName = data.platformName.startsWith("noble-")
+					? "Linux"
+					: data.platformName;
 
 				fs.writeFileSync(
 					`./src/content/warp-releases/${track}/${item.version}.yaml`,
 					YAML.stringify({
 						...item,
 						releaseNotes,
-						platformName: data.platformName,
+						platformName,
 					}),
 					"utf-8",
 				);

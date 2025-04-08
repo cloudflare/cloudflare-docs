@@ -12,6 +12,9 @@ import {
 	LinkTitleCard,
 	Plan,
 	RelatedProduct,
+	Tabs,
+	TabItem,
+	LinkButton,
 } from "~/components";
 
 <Description>
@@ -23,6 +26,128 @@ Create a global, low-latency, key-value data storage.
 <Plan type="workers-all" />
 
 Workers KV is a data storage that allows you to store and retrieve data globally. With Workers KV, you can build dynamic and performant APIs and websites that support high read volumes with low latency.
+
+For example, you can use Workers KV for:
+
+- Caching API responses.
+- Storing user configurations / preferences.
+- Storing user authentication details.
+
+Access your Workers KV namespace from Cloudflare Workers using [Workers Bindings](/workers/runtime-apis/bindings/) or from your external application using the REST API:
+
+<Tabs>
+<TabItem label="Workers Binding API">
+	<Tabs>
+	<TabItem label="index.ts">
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		// write a key-value pair
+		await env.KV_BINDING.put('KEY', 'VALUE');
+
+    	// read a key-value pair
+    	const value = await env.KV_BINDING.get('KEY');
+
+    	// list all key-value pairs
+    	const allKeys = await env.KV_BINDING.list();
+
+    	// delete a key-value pair
+    	await env.KV_BINDING.delete('KEY');
+
+    	// return a Workers response
+    	return new Response(
+    		JSON.stringify({
+    			value: value,
+    			allKeys: allKeys,
+    		}),
+    	);
+    },
+
+} satisfies ExportedHandler<{ KV_BINDING: KVNamespace }>;
+
+    ```
+    </TabItem>
+    <TabItem label="wrangler.jsonc">
+
+```json
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "<ENTER_WORKER_NAME>",
+	"main": "src/index.ts",
+	"compatibility_date": "2025-02-04",
+	"observability": {
+		"enabled": true
+	},
+
+	"kv_namespaces": [
+		{
+			"binding": "KV_BINDING",
+			"id": "<YOUR_BINDING_ID>"
+		}
+	]
+}
+```
+
+    </TabItem>
+    </Tabs>
+
+See the full [Workers KV binding API reference](/kv/api/read-key-value-pairs/).
+
+</TabItem>
+<TabItem label="REST API">
+
+    <Tabs>
+    	<TabItem label="cURL">
+    	```
+    	curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/storage/kv/namespaces/$NAMESPACE_ID/values/$KEY_NAME \
+    			-X PUT \
+    			-H 'Content-Type: multipart/form-data' \
+    			-H "X-Auth-Email: $CLOUDFLARE_EMAIL" \
+    			-H "X-Auth-Key: $CLOUDFLARE_API_KEY" \
+    			-d '{
+    				"value": "Some Value"
+    			}'
+
+    	curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/storage/kv/namespaces/$NAMESPACE_ID/values/$KEY_NAME \
+    			-H "X-Auth-Email: $CLOUDFLARE_EMAIL" \
+    			-H "X-Auth-Key: $CLOUDFLARE_API_KEY"
+    	```
+    	</TabItem>
+    	<TabItem label="TypeScript">
+    		```ts
+    		const client = new Cloudflare({
+    			apiEmail: process.env['CLOUDFLARE_EMAIL'], // This is the default and can be omitted
+    			apiKey: process.env['CLOUDFLARE_API_KEY'], // This is the default and can be omitted
+    		});
+
+    		const value = await client.kv.namespaces.values.update('<KV_NAMESPACE_ID>', 'KEY', {
+    			account_id: '<ACCOUNT_ID>',
+    			value: 'VALUE',
+    		});
+
+    		const value = await client.kv.namespaces.values.get('<KV_NAMESPACE_ID>', 'KEY', {
+    			account_id: '<ACCOUNT_ID>',
+    		});
+
+    		const value = await client.kv.namespaces.values.delete('<KV_NAMESPACE_ID>', 'KEY', {
+    			account_id: '<ACCOUNT_ID>',
+    		});
+
+    		// Automatically fetches more pages as needed.
+    		for await (const namespace of client.kv.namespaces.list({ account_id: '<ACCOUNT_ID>' })) {
+    			console.log(namespace.id);
+    		}
+
+    		```
+    	</TabItem>
+    </Tabs>
+
+See the full Workers KV [REST API and SDK reference](/api/resources/kv/subresources/namespaces/methods/list/) for details on using REST API from external applications, with pre-generated SDK's for external TypeScript, Python, or Go applications.
+
+</TabItem>
+</Tabs>
+
+<LinkButton href="/kv/get-started/">Get started</LinkButton>
 
 ---
 

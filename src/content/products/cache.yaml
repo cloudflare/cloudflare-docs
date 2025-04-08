@@ -18,9 +18,3 @@ resources:
   community: https://community.cloudflare.com/tag/caching
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/caching
   learning_center: https://www.cloudflare.com/learning/cdn/what-is-a-cdn/
-
-externals:
-  - title: Cloudflare CDN
-    url: https://www.cloudflare.com/cdn/
-  - title: Cloudflare homepage
-    url: https://cloudflare.com

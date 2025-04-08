@@ -1,0 +1,31 @@
+---
+title: Workflows
+pcx_content_type: concept
+sidebar:
+  order: 3
+---
+
+import { Render } from "~/components";
+
+## What are workflows?
+
+A workflow is the orchestration layer that coordinates how an agent's components work together. It defines the structured paths through which tasks are processed, tools are called, and results are managed. While agents make dynamic decisions about what to do, workflows provide the underlying framework that governs how those decisions are executed.
+
+### Understanding workflows in agent systems
+
+Think of a workflow like the operating procedures of a company. The company (agent) can make various decisions, but how those decisions get implemented follows established processes (workflows). For example, when you book a flight through a travel agent, they might make different decisions about which flights to recommend, but the process of actually booking the flight follows a fixed sequence of steps.
+
+Let's examine a basic agent workflow:
+
+### Core components of a workflow
+
+A workflow typically consists of several key elements:
+
+1. **Input Processing**
+The workflow defines how inputs are received and validated before being processed by the agent. This includes standardizing formats, checking permissions, and ensuring all required information is present.
+2. **Tool Integration**
+Workflows manage how external tools and services are accessed. They handle authentication, rate limiting, error recovery, and ensuring tools are used in the correct sequence.
+3. **State Management**
+The workflow maintains the state of ongoing processes, tracking progress through multiple steps and ensuring consistency across operations.
+4. **Output Handling**
+Results from the agent's actions are processed according to defined rules, whether that means storing data, triggering notifications, or formatting responses.

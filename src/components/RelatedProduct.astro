@@ -13,10 +13,10 @@ const props = z.object({
 const { header, href, product } = props.parse(Astro.props);
 ---
 
-<div class="grid grid-cols-[32px_auto] gap-x-2 items-start">
+<div class="grid grid-cols-[32px_auto] items-start gap-x-2">
 	<AstroIcon
 		name={product}
-		class="text-[color:var(--orange-accent-200)] text-7xl"
+		class="text-7xl text-[color:var(--orange-accent-200)]"
 	/>
 	<div class="!mt-0">
 		<strong>

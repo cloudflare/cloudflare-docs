@@ -1,0 +1,24 @@
+---
+title: Token validation
+pcx_content_type: concept
+sidebar:
+  order: 3
+---
+
+import { Render } from "~/components"
+
+After a visitor successfully completes a Turnstile challenge, a token is generated and validated via the siteverify API. Token validation data provides crucial insights into your security posture.
+
+For example, the token validation values in your analytics may look like this: 
+
+![Token validation example values](~/assets/images/turnstile/token-validation.png "Token validation example")
+
+## Metrics
+
+- **Siteverify requests**: The total number of requests made to the siteverify API in the given timeframe.
+- **Valid tokens**: The number of siteverify requests with `success:true` responses.
+- **Invalid tokens**: The number of siteverify requests with `success:false` responses.
+
+### Call siteverify
+
+<Render file="siteverify" />

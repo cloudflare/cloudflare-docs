@@ -13,27 +13,18 @@ import {
 	PackageManagers,
 } from "~/components";
 
-In this guide, you will create a new [Svelte](https://svelte.dev/) application and deploy to Cloudflare Workers (with the new [<InlineBadge preset="beta" /> Workers Assets](/workers/static-assets/)).
+In this guide, you will create a new [Svelte](https://svelte.dev/) application and deploy to Cloudflare Workers (with the new [Workers Assets](/workers/static-assets/)).
 
 ## 1. Set up a new project
 
 Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up a new project. C3 will create a new project directory, initiate Svelte's official setup tool, and provide the option to deploy instantly.
 
-To use `create-cloudflare` to create a new Svelte project with <InlineBadge preset="beta" /> Workers Assets, run the following command:
+To use `create-cloudflare` to create a new Svelte project with Workers Assets, run the following command:
 
 <PackageManagers
 	type="create"
 	pkg="cloudflare@latest my-svelte-app"
-	args={"--framework=svelte --experimental"}
-/>
-
-<Render
-	file="c3-post-run-steps"
-	product="workers"
-	params={{
-		category: "web-framework",
-		framework: "Svelte",
-	}}
+	args={"--framework=svelte --platform=workers"}
 />
 
 After setting up your project, change your directory by running the following command:
@@ -62,8 +53,4 @@ The following command will build and deploy your project. If you're using CI, en
 
 Your Svelte application can be fully integrated with the Cloudflare Developer Platform, in both local development and in production, by using product bindings. The [Svelte documentation](https://kit.svelte.dev/docs/adapter-cloudflare#runtime-apis) provides information about configuring bindings and how you can access them in your Svelte hooks and endpoints.
 
-## Static assets
-
-You can serve static assets your Svelte application by placing them in [the `./static/` directory](https://kit.svelte.dev/docs/project-structure#project-files-static). This can be useful for resource files such as images, stylesheets, fonts, and manifests.
-
-<Render file="workers-assets-routing-summary" />
+<Render file="frameworks-bindings" />

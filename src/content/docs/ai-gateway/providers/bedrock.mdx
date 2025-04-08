@@ -56,19 +56,6 @@ export default {
 		const accessKey = env.accessKey;
 		const secretKey = env.secretAccessKey;
 
-		const requestData = {
-			inputText: "What does ethereal mean?",
-		};
-
-		const headers = {
-			"Content-Type": "application/json",
-		};
-
-		// sign the original request
-		const stockUrl = new URL(
-			"https://bedrock-runtime.us-east-1.amazonaws.com/model/amazon.titan-embed-text-v1/invoke",
-		);
-
 		const awsClient = new AwsClient({
 			accessKeyId: accessKey,
 			secretAccessKey: secretKey,
@@ -76,21 +63,33 @@ export default {
 			service: "bedrock",
 		});
 
+		const requestBodyString = JSON.stringify({
+			inputText: "What does ethereal mean?",
+		});
+
+		const stockUrl = new URL(
+			`https://bedrock-runtime.${region}.amazonaws.com/model/amazon.titan-embed-text-v1/invoke`,
+		);
+
+		const headers = {
+			"Content-Type": "application/json",
+		};
+
+		// sign the original request
 		const presignedRequest = await awsClient.sign(stockUrl.toString(), {
 			method: "POST",
 			headers: headers,
+			body: requestBodyString,
 		});
 
-		// change the signed request's host to AI Gateway
-		const stockUrlSigned = new URL(presignedRequest.url);
-		stockUrlSigned.host = "gateway.ai.cloudflare.com";
-		stockUrlSigned.pathname = `/v1/${cfAccountId}/${gatewayName}/aws-bedrock/bedrock-runtime/${region}/model/amazon.titan-embed-text-v1/invoke`;
+		// Gateway Url
+    const gatewayUrl = new URL(`https://gateway.ai.cloudflare.com/v1/${cfAccountId}/${gatewayName}/aws-bedrock/bedrock-runtime/${region}/model/amazon.titan-embed-text-v1/invoke`);
 
-		// make request
-		const response = await fetch(stockUrlSigned, {
+		// make the request through the gateway url
+		const response = await fetch(gatewayUrl, {
 			method: "POST",
 			headers: presignedRequest.headers,
-			body: JSON.stringify(requestData),
+			body: requestBodyString,
 		});
 
 		if (
@@ -99,9 +98,9 @@ export default {
 		) {
 			const data = await response.json();
 			return new Response(JSON.stringify(data));
-		} else {
-			return new Response("Invalid response", { status: 500 });
 		}
+
+		return new Response("Invalid response", { status: 500 });
 	},
 };
 ```

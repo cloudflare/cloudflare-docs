@@ -44,6 +44,10 @@ To enable **Hotlink Protection** with the API, send a [`PATCH`](/api/resources/z
 
 <Render file="configuration-rule-promotion" product="rules" />
 
+### SaaS providers using Cloudflare
+
+If you are a SaaS provider using [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/), note that, by default, Hotlink Protection will only allow requests with your zone as referer. To avoid blocking requests from your customers (custom hostnames), consider using [Configuration Rules](/rules/configuration-rules/settings/#hotlink-protection) or [WAF custom rules](/waf/custom-rules/use-cases/exempt-partners-hotlink-protection/).
+
 ---
 
 ## Allow hotlinking to specific images

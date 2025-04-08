@@ -13,18 +13,18 @@ import {
 	PackageManagers,
 } from "~/components";
 
-In this guide, you will create a new [Astro](https://astro.build/) application and deploy to Cloudflare Workers (with the new [<InlineBadge preset="beta" /> Workers Assets](/workers/static-assets/)).
+In this guide, you will create a new [Astro](https://astro.build/) application and deploy to Cloudflare Workers (with the new [Workers Assets](/workers/static-assets/)).
 
 ## 1. Set up a new project
 
 Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up a new project. C3 will create a new project directory, initiate Astro's official setup tool, and provide the option to deploy instantly.
 
-To use `create-cloudflare` to create a new Astro project with <InlineBadge preset="beta" /> Workers Assets, run the following command:
+To use `create-cloudflare` to create a new Astro project with Workers Assets, run the following command:
 
 <PackageManagers
 	type="create"
 	pkg="cloudflare@latest my-astro-app"
-	args={"--framework=astro --experimental"}
+	args={"--framework=astro --platform=workers"}
 />
 
 <Render

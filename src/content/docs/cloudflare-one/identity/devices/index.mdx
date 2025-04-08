@@ -55,6 +55,14 @@ C --5 min--> E[Cache] --> F[Gateway policy]
 A --> G[Service provider] --interval--> C
 ```
 
+:::caution
+
+Gateway does not terminate an [active session](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/#configure-warp-sessions-in-gateway) even if a subsequent posture check fails during that session. Gateway only evaluates posture checks at the beginning of a session, and ongoing sessions will remain uninterrupted.
+
+For example, if you establish an SSH session based on a successful posture check, but a posture requirement fails after the session has started, the session will remain active.
+
+:::
+
 ### Expiration
 
 By default, the posture result on Cloudflare remains valid until it is overwritten by new data. You can specify an `expiration` time using our [API](/api/resources/zero_trust/subresources/devices/subresources/posture/methods/update/). We recommend setting the expiration to be longer than the [polling frequency](#polling-frequency).

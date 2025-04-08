@@ -1,0 +1,76 @@
+---
+pcx_content_type: reference
+title: Rules
+sidebar:
+  order: 4
+---
+
+DEX rules allow you to create and manage testing policies for targeted user groups within your [fleet](/cloudflare-one/insights/dex/tests/). After creating a rule, you can use it to define the scope of a [test](/cloudflare-one/insights/dex/tests/) to specific groups such as departments (like finance or sales), devices, and/or users. You can apply and reuse rules on your desired tests.
+
+DEX rules are ideal for admins who want to define the scope of a test to a specific group within their fleet to allow for more precise problem detection and resolution.
+
+## Create a rule
+
+To create a rule:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **DEX** > **Rules**.
+2. Select **Add a rule**.
+3. Give your rule a name and build your desired expressions.
+4. Select **Create rule** to finalize your rule.
+
+### Selectors
+
+Selectors are required categories in a DEX rule expression that define a group within a fleet. The selector(s) you have defined in a rule will determine which group a test will impact.
+
+Review the available selectors and their scope in the following list.
+
+| Selector                     | Description                                                                                                                       |
+| ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| **User email**               | For specifying [user emails](/cloudflare-one/policies/gateway/identity-selectors/#user-email).                                    |
+| **User group emails**        | For specifying [group emails](/cloudflare-one/policies/gateway/identity-selectors/#user-group-email).                             |
+| **User group IDs**           | For specifying [group IDs](/cloudflare-one/policies/gateway/identity-selectors/#user-group-ids).                                  |
+| **User group names**         | For specifying a [group name](/cloudflare-one/policies/gateway/identity-selectors/#user-group-names).                             |
+| **Operating systems**        | For specifying operating systems.                                                                                                 |
+| **Operating system version** | For specifying an operating system version (use Operator `in`) or versions (use Operator `is`).                                   |
+| **Managed network**          | For specifying users accessing the network from the office (managed network) compared to those accessing remotely.                |
+| **SAML attributes**          | For specifying a value from the [SAML Attribute Assertion](/cloudflare-one/policies/gateway/identity-selectors/#saml-attributes). |
+| **Colos**                    | For specifying a Cloudflare data center location users are connected to.                                                          |
+
+## Add a rule to a test
+
+After you have created a rule, you can add it to a test. If you do not add a rule to a test, the test will run on your entire device fleet.
+
+To add a rule to a test:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **DEX** > **Tests**.
+2. Choose an existing test and select **Edit**, or select **Add a test** to make a new test.
+3. Under **Select DEX rules**, select the rule you would like to apply.
+4. Select **Save test** for an existing rule or **Add rule** for the new test.
+
+:::note
+When applying or removing rules from an existing test, your change can take up to 24 hours to propagate.
+:::
+
+To view which tests a rule is being applied to:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **DEX** > **Rules**.
+2. Select a rule > **Edit**.
+3. Select the **DEX tests** tab and review the list of tests that include your selected rule.
+
+## Create a test using a rule
+
+You can create a new test from the [DEX test dashboard as described above](/cloudflare-one/insights/dex/rules/#add-a-rule-to-a-test) or directly from the DEX rules dashboard.
+
+To create a new test using a rule from DEX rules:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **DEX** > **Rules**.
+2. Select a rule > **Edit**.
+3. Select the **DEX tests** tab.
+4. You will be able to review all the tests that currently include this rule. To create a new test, select **Create a test using this rule**.
+5. Enter all required information, making sure that the box next to your rule name is checked.
+6. Select **Add test**.
+
+## Related resources
+
+- [DEX HTTP test](/cloudflare-one/insights/dex/tests/http/) - Assess the accessibility of a web application.
+- [DEX Traceroute test](/cloudflare-one/insights/dex/tests/traceroute/) - Measure the network path of an IP packet from an end-user device to a server.

@@ -1,0 +1,73 @@
+---
+title: Configure rule notifications
+pcx_content_type: how-to
+sidebar:
+  order: 4
+---
+
+After configuring one or multiple rule types in Magic Network Monitoring, customers can also choose to receive notifications via email, webhook, or PagerDuty when a rule is triggered.
+
+Customers can configure multiple rule types and alerts together to create layers of DDoS protection based on their network environment and their security needs.
+
+You can read [Cloudflare's Notifications documentation](/notifications/) for more information on our notification platform including:
+
+- [Configure Cloudflare notifications](/notifications/get-started/)
+- [Configure PagerDuty](/notifications/get-started/configure-pagerduty/)
+- [Configure webhooks](/notifications/get-started/configure-webhooks/)
+- [Test a notification](/notifications/get-started/#test-a-notification)
+- [Notification History](/notifications/notification-history/)
+
+## Magic Network Monitoring notification configuration fields
+
+| Field | Description |
+| :---- | :---- |
+| **Notification name** | The name of the Magic Network Monitoring notification (MNM) for the rule type that was selected. |
+| **Description (optional)** | The description of the MNM notification. |
+| **Webhooks** | The webhook(s) that will receive the MNM notification. |
+| **Notification email** | The email(s) that will receive the MNM notification. |
+
+## Rule Auto-Advertisement notifications
+
+Webhook, PagerDuty, and email notifications are sent following an auto-advertisement attempt for all prefixes inside the flagged rule.
+
+You will receive the status of the advertisement for each prefix with the following available statuses:
+
+- **Advertised**: The prefix was successfully advertised.
+- **Already Advertised**: The prefix was advertised prior to the auto advertisement attempt.
+- **Delayed**: The prefix cannot currently be advertised but will attempt advertisement. After the prefix can be advertised, a new notification is sent with the updated status.
+- **Locked**: The prefix is locked and cannot be advertised.
+- **Could not Advertise**: Cloudflare was unable to advertise the prefix. This status can occur for multiple reasons, but usually occurs when you are not allowed to advertise a prefix.
+- **Error**: A general error occurred during prefix advertisement.
+
+## Configure static threshold notifications
+
+To configure static threshold notifications:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+2. Go to **Notifications** > **Add**.
+3. Select **Magic Transit** from the product dropdown menu.
+4. Find the **Magic Network Monitoring: Volumetric Attack** alert, and select **Select**.
+5. Fill in the notification configuration details.
+6. Select **Save**.
+
+## Configure dynamic threshold notifications
+
+To configure dynamic threshold notifications:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+2. Go to **Notifications** > **Add**.
+3. Select **Magic Transit** from the product dropdown menu.
+4. Find the **Magic Network Monitoring: Volumetric Attack** alert, and select **Select**.
+5. Fill in the notification configuration details.
+6. Select **Save**.
+
+## Configure sFlow DDoS attack notifications
+
+To configure sFlow DDoS attack notifications:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+2. Go to **Notifications** > **Add**.
+3. Select **Magic Transit** from the product dropdown menu.
+4. Find the **Magic Network Monitoring: DDoS Attack** alert, and select **Select**.
+5. Fill in the notification configuration details.
+6. Select **Save**.

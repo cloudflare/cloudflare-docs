@@ -7,26 +7,28 @@ sidebar:
 
 import { Render, LinkButton } from "~/components";
 
-The Workers platform has a variety of ways to test your applications, depending on your requirements. We recommend using the [Vitest integration](/workers/testing/vitest-integration), which allows for unit testing individual functions within your Worker. However, if you don't use Vitest, both [Miniflare's API](/workers/testing/miniflare/writing-tests) and the [`unstable_startWorker()`](/workers/wrangler/api/#unstable_startworker) API provide options for testing your Worker in any testing framework.
+The Workers platform has a variety of ways to test your applications, depending on your requirements. We recommend using the [Vitest integration](/workers/testing/vitest-integration), which allows you to run tests to _inside_ the Workers runtime, and unit test individual functions within your Worker.
 
 <LinkButton href="/workers/testing/vitest-integration/get-started/write-your-first-test/">
-	Write your first test
+	Get started with Vitest
 </LinkButton>
 
 ## Testing comparison matrix
 
-| Feature                               | [Vitest integration](/workers/testing/vitest-integration) | [`unstable_startWorker()`](/workers/wrangler/api/#unstable_startworker) | [Miniflare's API](/workers/testing/miniflare) |
-| ------------------------------------- | --------------------------------------------------------- | ----------------------------------------------------------------------- | --------------------------------------------- |
-| Unit testing                          | ✅                                                        | ❌                                                                      | ❌                                            |
-| Integration testing                   | ✅                                                        | ✅                                                                      | ✅                                            |
-| Loading [Wrangler configuration files](/workers/wrangler/configuration/)  | ✅                                                        | ✅                                                                      | ❌                                            |
-| Use bindings directly in tests        | ✅                                                        | ❌                                                                      | ✅                                            |
-| Isolated per-test storage             | ✅                                                        | ❌                                                                      | ❌                                            |
-| Outbound request mocking              | ✅                                                        | ❌                                                                      | ✅                                            |
-| Multiple Worker support               | ✅                                                        | ✅                                                                      | ✅                                            |
-| Direct access to Durable Objects      | ✅                                                        | ❌                                                                      | ❌                                            |
-| Run Durable Object alarms immediately | ✅                                                        | ❌                                                                      | ❌                                            |
-| List Durable Objects                  | ✅                                                        | ❌                                                                      | ❌                                            |
-| Testing service Workers               | ❌                                                        | ✅                                                                      | ✅                                            |
+However, if you don't use Vitest, both [Miniflare's API](/workers/testing/miniflare/writing-tests) and the [`unstable_startWorker()`](/workers/wrangler/api/#unstable_startworker) API provide options for testing your Worker in any testing framework.
+
+| Feature                                                                  | [Vitest integration](/workers/testing/vitest-integration) | [`unstable_startWorker()`](/workers/wrangler/api/#unstable_startworker) | [Miniflare's API](/workers/testing/miniflare) |
+| ------------------------------------------------------------------------ | --------------------------------------------------------- | ----------------------------------------------------------------------- | --------------------------------------------- |
+| Unit testing                                                             | ✅                                                        | ❌                                                                      | ❌                                            |
+| Integration testing                                                      | ✅                                                        | ✅                                                                      | ✅                                            |
+| Loading [Wrangler configuration files](/workers/wrangler/configuration/) | ✅                                                        | ✅                                                                      | ❌                                            |
+| Use bindings directly in tests                                           | ✅                                                        | ❌                                                                      | ✅                                            |
+| Isolated per-test storage                                                | ✅                                                        | ❌                                                                      | ❌                                            |
+| Outbound request mocking                                                 | ✅                                                        | ❌                                                                      | ✅                                            |
+| Multiple Worker support                                                  | ✅                                                        | ✅                                                                      | ✅                                            |
+| Direct access to Durable Objects                                         | ✅                                                        | ❌                                                                      | ❌                                            |
+| Run Durable Object alarms immediately                                    | ✅                                                        | ❌                                                                      | ❌                                            |
+| List Durable Objects                                                     | ✅                                                        | ❌                                                                      | ❌                                            |
+| Testing service Workers                                                  | ❌                                                        | ✅                                                                      | ✅                                            |
 
 <Render file="testing-pages-functions" product="workers" />

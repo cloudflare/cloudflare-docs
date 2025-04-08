@@ -6,15 +6,23 @@ sidebar:
 
 ---
 
-To get started with Magic Cloud Networking you need to give Cloudflare permission to interact with cloud providers on your behalf. You might have multiple provider accounts for the same cloud provider - for example, you might want Cloudflare to manage virtual private clouds (VPCs) belonging to two different AWS accounts.
+To get started with Magic Cloud Networking (beta) you need to give Cloudflare permission to interact with cloud providers on your behalf. You might have multiple provider accounts for the same cloud provider — for example, you might want Cloudflare to manage virtual private clouds (VPCs) belonging to two different AWS accounts.
 
-Once Cloudflare has the credentials required to access your cloud environments, Magic Cloud Networking will automatically begin discovering your cloud resources - like routing tables and virtual private networks. Discovered resources appear in your [Cloud resource catalog](/magic-cloud-networking/manage-resources/#cloud-resource-catalog).
+Once Cloudflare has the credentials required to access your cloud environments, Magic Cloud Networking will automatically begin discovering your cloud resources — like routing tables and virtual private networks. Discovered resources appear in your [Cloud resource catalog](/magic-cloud-networking/manage-resources/#cloud-resource-catalog).
 
-## 1. Set up cloud credentials
+## Set up Amazon AWS
 
-Before you can connect Magic Cloud Networking to your cloud provider, you first need to create credentials with the correct permissions in your cloud provider.
+### 1. Create integration
 
-### Amazon AWS
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
+2. Select **Manage Account** > **Cloud integrations**.
+3. Go to **Integrations** and select **Connect integration**.
+4. Select **AWS integration**.
+5. Give a descriptive name to your integration. Optionally, you can also add a description for it.
+6. Select **Create integration**.
+7. Select **Authorize access** to start the process of connecting your Cloudflare account to Amazon AWS.
+
+### 2. Create IAM policy
 
 1. Create a [custom access policy](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_create-console.html) in your AWS account, and take note of the name you entered. Then, paste the following [JSON code](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_version.html) in the JSON tab:
 
@@ -46,43 +54,88 @@ Before you can connect Magic Cloud Networking to your cloud provider, you first 
 }
 ```
 
-2. Follow the [instructions on AWS](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html) to create an IAM user up until step 4 - do not check the **Provide users access to the AWS Management Console** option.
+### 3. Authorize access to your AWS account
 
-3. **In Give users permissions to manage their own security credentials** (step 7 of the AWS instructions) select **Attach policies directly**, and add the following policies:
-   - `AmazonEC2ReadOnlyAccess`
-   - `IAMReadOnlyAccess`
-   - `NetworkAdministrator`
-   - `<THE_NAME_OF_YOUR_CUSTOM_POLICY>` (from step 1).
+1. Create a [custom access policy](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_create-console.html) in your AWS account, and take note of the name you entered.
+2. Create an [AWS role](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-custom.html) with the following settings:
+   - **Trusted entity type**: Select **Custom trust policy**, and paste the custom trust policy returned by the Cloudflare dashboard.
+   - **Permissions**: Add the IAM policy created in step 1, along with these AWS-managed policies:
+      - `NetworkAdministrator`
+      - `AmazonEC2ReadOnlyAccess`
+      - `AmazonVPCReadOnlyAccess`
+      - `IAMReadOnlyAccess`
+   - **ARN**: Copy the ARN for your newly created user.
 
-4. [Add an Access Key](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html) to the new user. Take note of the access key as you cannot retrieve this information later. Cloudflare will ask for this value when you make an AWS Cloud Integration.
+   :::note
+	 The trust policy may take several minutes to propagate to all regions. It usually takes less than four minutes, but can sometimes take longer. You may have to retry the **Authorize** button while the propagation takes effect.
+	 :::
 
-### Microsoft Azure
+3. Select **I authorize Cloudflare to access my AWS account.**
+4. Select **Authorize**.
 
-1. [Register an application](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app#register-an-application) and skip the optional **Redirect URL** step.
-2. [Add a client secret](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app#add-a-client-secret) to the app registration. Take note of the secret value as you cannot retrieve this information later. Cloudflare will ask for this value when you make an Azure Cloud Integration.
-3. [Add a role assignment](https://learn.microsoft.com/en-us/azure/role-based-access-control/role-assignments-portal). The purpose of this step is to give the app that you registered in step 1 permission to access your Azure Subscription.
-   1. In step 3 of the linked document, select the **Contributor** role from the **Privileged administrator roles** tab.
-   2. In step 4 of the linked document, search for the app registration from step 1 when selecting members.
+The first discovery of resources may not succeed in all regions, while the IAM policy is propagating. If you do not see all resources after creating your cloud integration, please try re-discovering.
 
-### Google Cloud Platform
+## Set up Microsoft Azure
 
-1. Enable the [Compute Engine API](https://cloud.google.com/apis/docs/getting-started#enabling_apis).
-2. [Create](https://cloud.google.com/iam/docs/service-accounts-create) a service account.
-3. Grant the new service account the **Compute Network Admin** role.
-4. [Create](https://cloud.google.com/iam/docs/keys-create-delete) a service account key. Use the JSON key type.
-
-## 2. Set up Cloud Integrations
+### 1. Create integration
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
 2. Select **Manage Account** > **Cloud integrations**.
-3. Go to **Cloud integrations** and select **Add**.
-4. Select your cloud provider to start the cloud integration wizard.
-5. Enter a descriptive name, and optionally a description, for your cloud integration.
-6. Select **Continue**.
-7. Enter the credentials that you have created in [Set up cloud credentials](#1-set-up-cloud-credentials). These allow Magic Cloud Networking to access the resources in your cloud provider.
+3. Go to **Integrations** and select **Connect integration**.
+4. Select **Azure integration**.
+5. Give a descriptive name to your integration. Optionally, you can also add a description for it.
+6. Select **Create integration**.
+7. Select **Authorize access** to start the process of connecting your Cloudflare account to Microsoft Azure.
+
+### 2. Authorize access to your Azure account
+
+1. Select **Create service principal**. You will be redirected to Microsoft's login page.
+2. Enter your Azure credentials. If your account does not have administrator privileges, you may need to pass this link to an account that has administrator privileges.
+3. The next screen lists Cloudflare required permissions to access your account. Select **Accept**.
+4. [Add a role assignment](https://learn.microsoft.com/en-us/azure/role-based-access-control/role-assignments-portal). The purpose of this step is to give the app that you registered in step 1 permission to access your Azure Subscription.
+   - In step 3 of the linked document, select the **Contributor** role from the **Privileged administrator roles** tab.
+   - In step 4 of the linked document, search for  `mcn-provider-integrations-bot-prod` when selecting members.
+5. In **Provide account information**, enter the **Tenant ID** and **Subscription ID** you copied from step 4.
+6. In **Verify account ownership**, [add the tags displayed in the Cloudflare dashboard](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/tag-resources-portal).
+
+   :::note
+	 The tags may take several minutes to propagate and become readable to Cloudflare. It usually takes less than four minutes, but can sometimes take longer. You may have to retry the **Authorize** button while the propagation takes effect.
+	 :::
+
+7. Select **I authorize Cloudflare to access my AWS account.** If your account does not have administrator privileges, you may need to pass this link to an account that has administrator privileges.
+8. Select **Authorize**.
+
+The first discovery of resources may not succeed in all regions, while the IAM policy is propagating. If you do not see all resources after creating your cloud integration, please try re-discovering.
+
+## Set up Google Cloud
+
+### 1. Create integration
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
+2. Select **Manage Account** > **Cloud integrations**.
+3. Go to **Integrations** and select **Connect integration**.
+4. Select **Google  integration**.
+5. Give a descriptive name to your integration. Optionally, you can also add a description for it.
+6. Select **Create integration**.
+7. Select **Authorize access** to start the process of connecting your Cloudflare account to Google Cloud.
+
+### 2. Authorize access to your Google account
+
+1. Create a new [GCP service account](https://cloud.google.com/iam/docs/service-accounts-create) in your **Google account** > **GCP Console** > **IAM & Admin** > **Service Accounts**.
+2. Grant the new service account these roles:
+	- `Compute Network Admin`
+	- `Compute Viewer`
+3. Grant the **Service Account Token Creator** role to our bot account to allow it to impersonate this service account. Learn how to grant a specific role [in Google's documentation](https://cloud.google.com/iam/docs/manage-access-service-accounts#grant-single-role):
+   - `mcn-integrations-bot-prod@mcn-gcp-01.iam.gserviceaccount.com`
+4. In the **service account email field**, enter the email account that you used to create the GCP service account.
+5. In the **Project ID field**, enter the [project ID](https://support.google.com/googleapi/answer/7014113?hl=en) associated with your project.
+6. [Add the label](https://cloud.google.com/resource-manager/docs/creating-managing-labels#create-labels) displayed on the dash to your project.
+7. Select **I authorize Cloudflare to access my GCP account.** If your account does not have administrator privileges, you may need to pass this link to an account that has administrator privileges.
 8. Select **Authorize**.
 
 You have successfully connected your cloud provider to Magic Cloud Networking. Cloud resources found by Magic Cloud Networking are available in the [Cloud resource catalog](/magic-cloud-networking/manage-resources/#cloud-resource-catalog).
+
+The first discovery of resources may not succeed in all regions, while the IAM policy is propagating. If you do not see all resources after creating your cloud integration, please try re-discovering.
 
 ## Next steps
 

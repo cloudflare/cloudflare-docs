@@ -7,13 +7,12 @@ sidebar:
 
 KV is a global, low-latency, key-value data store. It stores data in a small number of centralized data centers, then caches that data in Cloudflare's data centers after access.
 
-KV supports exceptionally high read volumes with low latency, making it possible to build highly dynamic APIs.
-
-While reads are periodically revalidated in the background, requests which are not in cache and need to hit the centralized back end can experience high latencies.
+KV supports exceptionally high read volumes with low latency, making it possible to build dynamic APIs that scale thanks to KV's built-in caching and global distribution.
+Requests which are not in cache and need to access the central stores can experience higher latencies.
 
 ## Write data to KV and read data from KV
 
-When you write to KV, your data is written to central data stores. Your data is not sent automatically to every location’s cache.
+When you write to KV, your data is written to central data stores. Your data is not sent automatically to every location's cache.
 
 ![Your data is written to central data stores when you write to KV.](~/assets/images/kv/kv-write.svg)
 
@@ -26,7 +25,7 @@ A hot read means that the data is cached on Cloudflare's edge network using the 
 
 ![Initial reads will miss the cache and go to the nearest central data store first.](~/assets/images/kv/kv-slow-read.svg)
 
-Frequent reads from the same location return the cached value without reading from anywhere else, resulting in the fastest response times. KV operates diligently to keep the latest value in the cache by refreshing from upper tiers and the central data stores in the background.
+Frequent reads from the same location return the cached value without reading from anywhere else, resulting in the fastest response times. KV operates diligently to update the cached values by refreshing from upper tier caches and central data stores before cache expires in the background.
 
 Refreshing from upper tiers and the central data stores in the background is done carefully so that assets that are being accessed continue to be kept served from the cache without any stalls.
 
@@ -44,8 +43,6 @@ Changes are usually immediately visible in the Cloudflare global network locatio
 
 Negative lookups indicating that the key does not exist are also cached, so the same delay exists noticing a value is created as when a value is changed.
 
-KV does not perform like an in-memory datastore, such as [Redis](https://redis.io). Accessing KV values, even when locally cached, has significantly more latency than reading a value from memory within a Worker script.
-
 ## Consistency
 
 KV achieves high performance by being eventually-consistent. At the Cloudflare global network location at which changes are made, these changes are usually immediately visible. However, this is not guaranteed and therefore it is not advised to rely on this behaviour. In other global network locations changes may take up to 60 seconds or more to be visible as their cached versions of the data time-out.
@@ -59,6 +56,22 @@ If you need stronger consistency guarantees, consider using [Durable Objects](/d
 :::
 
 An approach to achieve write-after-write consistency is to send all of your writes for a given KV key through a corresponding instance of a Durable Object, and then read that value from KV in other Workers. This is useful if you need more control over writes, but are satisfied with KV's read characteristics described above.
+
+## Guidance
+
+Workers KV is an eventually-consistent edge key-value store. That makes it ideal for **read-heavy**, highly cacheable workloads such as:
+
+- Serving static assets
+- Storing application configuration
+- Storing user preferences
+- Implementing allow-lists/deny-lists
+- Caching
+
+In these scenarios, Workers are invoked in a data center closest to the user and Workers KV data will be cached in that region for subsequent requests to minimize latency.
+
+If you have a **write-heavy** [Redis](https://redis.io)-type workload where you are updating the same key tens or hundreds of times per second, KV will not be an ideal fit.
+If you can revisit how your application writes to single key-value pairs and spread your writes across several discrete keys, Workers KV can suit your needs.
+Alternatively, [Durable Objects](/durable-objects/) provides a key-value API with higher writes per key rate limits.
 
 ## Security
 

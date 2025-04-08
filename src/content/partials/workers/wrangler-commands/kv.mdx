@@ -192,8 +192,10 @@ This command requires a `--binding` or `--namespace-id` flag.
   - The timestamp, in UNIX seconds, indicating when the key-value pair should expire.
 - `--metadata` <Type text="string" /> <MetaInfo text="optional" />
   - Any (escaped) JSON serialized arbitrary object to a maximum of 1024 bytes.
-- `--local` <Type text="boolean" /> <MetaInfo text="optional" />
+- `--local` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
   - Interact with locally persisted data.
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Interact with remote storage.
 - `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory for locally persisted data.
 
@@ -262,8 +264,10 @@ This command requires `--binding` or `--namespace-id`.
   - Interact with a preview namespace instead of production.
 - `--prefix` <Type text="string" /> <MetaInfo text="optional" />
   - Only list keys that begin with the given prefix.
-- `--local` <Type text="boolean" /> <MetaInfo text="optional" />
+- `--local` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
   - Interact with locally persisted data.
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Interact with remote storage.
 - `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory for locally persisted data.
 
@@ -312,8 +316,10 @@ Exactly one of `--binding` or `--namespace-id` is required.
   - Interact with a preview namespace instead of production.
 - `--text` <Type text="boolean" /> <MetaInfo text="optional" />
   - Decode the returned value as a UTF-8 string.
-- `--local` <Type text="boolean" /> <MetaInfo text="optional" />
+- `--local` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
   - Interact with locally persisted data.
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Interact with remote storage.
 - `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory for locally persisted data.
 
@@ -352,8 +358,10 @@ Exactly one of `--binding` or `--namespace-id` is required.
   - Perform on a specific environment.
 - `--preview` <Type text="boolean" /> <MetaInfo text="optional" />
   - Interact with a preview namespace instead of production.
-- `--local` <Type text="boolean" /> <MetaInfo text="optional" />
+- `--local` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
   - Interact with locally persisted data.
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Interact with remote storage.
 - `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory for locally persisted data.
 
@@ -406,8 +414,10 @@ This command requires `--binding` or `--namespace-id`.
   - Perform on a specific environment.
 - `--preview` <Type text="boolean" /> <MetaInfo text="optional" />
   - Interact with a preview namespace instead of production.
-- `--local` <Type text="boolean" /> <MetaInfo text="optional" />
+- `--local` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
   - Interact with locally persisted data.
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Interact with remote storage.
 - `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory for locally persisted data.
 
@@ -490,8 +500,10 @@ This command requires `--binding` or `--namespace-id`.
   - Perform on a specific environment.
 - `--preview` <Type text="boolean" /> <MetaInfo text="optional" />
   - Interact with a preview namespace instead of production.
-- `--local` <Type text="boolean" /> <MetaInfo text="optional" />
+- `--local` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
   - Interact with locally persisted data.
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Interact with remote storage.
 - `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory for locally persisted data.
 

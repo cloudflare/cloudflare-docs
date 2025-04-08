@@ -3,23 +3,22 @@ pcx_content_type: get-started
 title: Connection API
 sidebar:
   order: 5
-
 ---
 
 Cloudflare Calls simplifies the management of peer connections and media tracks through HTTPS API endpoints. These endpoints allow developers to efficiently manage sessions, add or remove tracks, and gather session information.
 
 ## API Endpoints
 
-* **Create a New Session**: Initiates a new session on Cloudflare Calls, which can be modified with other endpoints below.
-  * `POST /apps/{appId}/sessions/new`
-* **Add a New Track**: Adds a media track (audio or video) to an existing session.
-  * `POST /apps/{appId}/sessions/{sessionId}/tracks/new`
-* **Renegotiate a Session**: Updates the session's negotiation state to accommodate new tracks or changes in the existing ones.
-  * `PUT /apps/{appId}/sessions/{sessionId}/renegotiate`
-* **Close a Track**: Removes a specified track from the session.
-  * `PUT /apps/{appId}/sessions/{sessionId}/tracks/close`
-* **Retrieve Session Information**: Fetches detailed information about a specific session.
-  * `GET /apps/{appId}/sessions/{sessionId}`
+- **Create a New Session**: Initiates a new session on Cloudflare Calls, which can be modified with other endpoints below.
+  - `POST /apps/{appId}/sessions/new`
+- **Add a New Track**: Adds a media track (audio or video) to an existing session.
+  - `POST /apps/{appId}/sessions/{sessionId}/tracks/new`
+- **Renegotiate a Session**: Updates the session's negotiation state to accommodate new tracks or changes in the existing ones.
+  - `PUT /apps/{appId}/sessions/{sessionId}/renegotiate`
+- **Close a Track**: Removes a specified track from the session.
+  - `PUT /apps/{appId}/sessions/{sessionId}/tracks/close`
+- **Retrieve Session Information**: Fetches detailed information about a specific session.
+  - `GET /apps/{appId}/sessions/{sessionId}`
 
 [View full API and schema (OpenAPI format)](/calls/static/calls-api-2024-05-21.yaml)
 
@@ -31,7 +30,7 @@ It is vital to manage App ID and its secret securely. While track and session ID
 
 Cloudflare Calls is designed to operate efficiently without the need for TURN servers in most scenarios, as Cloudflare exposes a publicly routable IP address for Calls. However, integrating a STUN server can be necessary for facilitating peer discovery and connectivity.
 
-* **Cloudflare STUN Server**: `stun.cloudflare.com:3478`
+- **Cloudflare STUN Server**: `stun.cloudflare.com:3478`
 
 Utilizing Cloudflare's STUN server can help the connection process for Calls applications.
 
@@ -39,16 +38,54 @@ Utilizing Cloudflare's STUN server can help the connection process for Calls app
 
 This section provides an overview of the typical lifecycle of a simple session, focusing on audio-only applications. It illustrates how clients are notified by the backend server as new remote clients join or leave, incorporating video would introduce additional tracks and considerations into the session.
 
-<div class="full-img">
+```mermaid
+sequenceDiagram
+    participant WA as WebRTC Agent
+    participant BS as Backend Server
+    participant CA as Calls API
 
-![Example Lifecycle](~/assets/images/calls/lifecycle-of-a-session.png)
+    Note over BS: Client Joins
 
-</div>
+    WA->>BS: Request
+    BS->>CA: POST /sessions/new
+    CA->>BS: newSessionResponse
+    BS->>WA: Response
 
-There is also a previously used, but now deprecated way to use the API illustrated below. If you are using this style please consider upgrading to the newer version illustrated above.
+    WA->>BS: Request
+    BS->>CA: POST /sessions/<ID>/tracks/new (Offer)
+    CA->>BS: newTracksResponse (Answer)
+    BS->>WA: Response
 
-<div class="full-img">
+    WA-->>CA: ICE Connectivity Check
+    Note over WA: iceconnectionstatechange (connected)
+    WA-->>CA: DTLS Handshake
+    Note over WA: connectionstatechange (connected)
 
-![Deprecated Lifecycle](~/assets/images/calls/deprecated-lifecycle-of-a-session.png)
+    WA<<->>CA: *Media Flow*
 
-</div>
+    Note over BS: Remote Client Joins
+
+    WA->>BS: Request
+    BS->>CA: POST /sessions/<ID>/tracks/new
+    CA->>BS: newTracksResponse (Offer)
+    BS->>WA: Response
+
+    WA->>BS: Request
+    BS->>CA: PUT /sessions/<ID>/renegotiate (Answer)
+    CA->>BS: OK
+    BS->>WA: Response
+
+    Note over BS: Remote Client Leaves
+
+    WA->>BS: Request
+    BS->>CA: PUT /sessions/<ID>/tracks/close
+    CA->>BS: closeTracksResponse
+    BS->>WA: Response
+
+    Note over BS: Client Leaves
+
+    WA->>BS: Request
+    BS->>CA: PUT /sessions/<ID>/tracks/close
+    CA->>BS: closeTracksResponse
+    BS->>WA: Response
+```

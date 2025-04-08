@@ -13,7 +13,7 @@ The descriptions below detail the fields available for `dns_logs`.
 
 Type: `string`
 
-IATA airport code of data center that received the request.
+IATA airport code of the data center that received the request.
 
 ## EDNSSubnet
 

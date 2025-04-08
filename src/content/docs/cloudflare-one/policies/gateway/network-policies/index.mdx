@@ -23,8 +23,10 @@ A network policy consists of an **Action** as well as a logical expression that 
 
 <Render
 	file="gateway/response"
-	params={{ one: "query", two: "Source IP", three: "Resolved IP" }}
+	params={{ type: "query", example: "Source IP", example2: "Resolved IP" }}
 />
+
+<Render file="gateway/terraform-precedence-warning" product="cloudflare-one" />
 
 ## Actions
 
@@ -38,8 +40,8 @@ API value: `allow`
 
 **Traffic**
 
-- [All Access Private Apps](#all-access-private-apps)
-- [All Access App Targets](#all-access-app-targets)
+- [Access Infrastructure Target](#access-infrastructure-target)
+- [Access Private App](#access-private-app)
 - [Application](#application)
 - [Content Categories](#content-categories)
 - [Destination Continent IP Geolocation](#destination-continent)
@@ -135,6 +137,8 @@ API value: `block`
 
 **Traffic**
 
+- [Access Infrastructure Target](#access-infrastructure-target)
+- [Access Private App](#access-private-app)
 - [Application](#application)
 - [Content Categories](#content-categories)
 - [Destination Continent IP Geolocation](#destination-continent)
@@ -177,7 +181,7 @@ Policies with Block actions block network traffic from reaching certain IPs or p
 
 #### WARP client block notifications
 
-<Render file="gateway/client-notifications" />
+<Render file="gateway/client-notifications-os" product="cloudflare-one" />
 
 ### Network Override
 
@@ -230,13 +234,13 @@ Gateway will only log successful override connections in your [network logs](/cl
 
 Gateway matches network traffic against the following selectors, or criteria.
 
-### All Access Private App Destinations
-
-<Render file="gateway/selectors/all-access-private-app-destinations" />
-
-### All Access App Targets
+### Access Infrastructure Target
 
 <Render file="gateway/selectors/all-access-app-targets" />
+
+### Access Private App
+
+<Render file="gateway/selectors/all-access-private-app-destinations" />
 
 ### Application
 

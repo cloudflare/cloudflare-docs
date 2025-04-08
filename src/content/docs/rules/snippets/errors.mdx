@@ -1,16 +1,16 @@
 ---
-title: Common errors
+title: Snippets troubleshooting
 pcx_content_type: troubleshooting
 sidebar:
   order: 8
+  label: Troubleshooting
 head:
   - tag: title
-    content: Common errors
+    content: Snippets troubleshooting
 ---
 
 import { GlossaryTooltip } from "~/components";
 
-Cloudflare Snippets may encounter specific errors during execution. Here are the common errors:
 
 ## Error 1201: Snippet tried to continue to origin multiple times
 
@@ -27,3 +27,11 @@ This error occurs when the number of <GlossaryTooltip term="Snippets subrequest"
 ### Resolution
 
 Review your Snippet to ensure your code is within the <GlossaryTooltip term="Snippets subrequest" prepend="A subrequest is ">subrequest</GlossaryTooltip> [limits](/rules/snippets/#availability) for your plan. Each subrequest counts against your limit, including any redirects within a subrequest chain.
+
+## Snippets cannot be renamed
+
+The name you define when creating a Snippet will be used as the Snippet ID and cannot be edited afterwards.
+
+### Resolution
+
+To change the name of your Snippet, create a new Snippet and delete the old one.

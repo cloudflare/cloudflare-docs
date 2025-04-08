@@ -1,0 +1,25 @@
+---
+pcx_content_type: how-to
+title: Analytics and logs
+sidebar:
+  order: 10
+---
+
+Internal DNS leverages [Gateway analytics](/cloudflare-one/insights/analytics/gateway/). Below you can find information about specific fields and different methods you can use to access this data.
+
+## GraphQL
+
+For detailed metrics, use the [GraphQL API](/analytics/graphql-api/). Refer to the GraphQL Analytics API documentation for guidance on how to [get started](/analytics/graphql-api/getting-started/).
+
+The [fields](/analytics/graphql-api/getting-started/querying-basics/) added to cover Internal DNS are the following:
+
+- `InternalDNSFallbackStrategy`: The fallback strategy applied to the internal DNS response. Empty if no fallback strategy was applied.
+- `InternalDNSRCode`: The response code sent back by the internal DNS service.
+- `InternalDNSViewID`: The view identifier that was sent to the internal DNS service.
+- `InternalDNSZoneID`: The internal zone identifier returned by the internal DNS service.
+
+## Logs
+
+Leverage Logpush jobs for [Gateway DNS](/logs/reference/log-fields/account/gateway_dns/#internaldnsfallbackstrategy). For help setting up Logpush, refer to [Get started with Logs](/logs/get-started/).
+
+You can also set up [Logpush filters](/logs/reference/filters/) to only push logs related to a specific [internal zone](/dns/internal-dns/internal-zones/) or [view](/dns/internal-dns/dns-views/) ID.

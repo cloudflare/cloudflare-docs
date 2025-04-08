@@ -43,6 +43,10 @@ Lists can contain a single type of data each. Supported data types include:
 
 Your lists can include up to 1,000 entries for Standard plans and 5,000 for Enterprise plans. An uploaded CSV file must be smaller than 2 MB.
 
+### Wildcard entries
+
+Hostname lists do not support wildcard entries. You will need to add domains as exact matches. Adding a wildcard to lists comprised of hostnames will return an error when you save.
+
 ### Duplicate entries
 
 Lists cannot have duplicate entries. Because hostnames are converted to [Punycode](https://www.rfc-editor.org/rfc/rfc3492.txt), multiple list entries that convert to the same string will count as duplicates. For example, `éxàmple.com` converts to `xn—xmple-rqa5d.com`, so including both `éxàmple.com` and `xn—xmple-rqa5d.com` in a list will result in a duplicate error.
