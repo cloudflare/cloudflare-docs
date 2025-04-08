@@ -48,8 +48,8 @@ npx wrangler cert upload certificate-authority --ca-cert \<ROUTE_TO_CA_PEM_FILE\
 ---
 
 Uploading CA Certificate tmp-cert...
-Success! Uploaded CA Certificate \<CUSTOM_NAME_FOR_CA_CERT\>
-ID: \<YOUR_ID_FOR_THE_CA_CERTIFICATE\>
+Success! Uploaded CA Certificate <CUSTOM_NAME_FOR_CA_CERT>
+ID: <YOUR_ID_FOR_THE_CA_CERTIFICATE>
 ...
 ```
 
@@ -60,10 +60,8 @@ certificates using either the dashboard or Wrangler. You must also specify the S
 
 Using Wrangler, enter the following command in your terminal:
 
-UPDATE WRANGLER
-
 ```bash
-npx wrangler hyperdrive create \<NAME_OF_HYPERDRIVE_CONFIG\> --connection-string="postgres://user:password@HOSTNAME_OR_IP_ADDRESS:PORT/database_name" --certificate-authority-id \<YOUR_CA_CERT_ID\>
+npx wrangler hyperdrive create <NAME_OF_HYPERDRIVE_CONFIG> --connection-string="postgres://user:password@HOSTNAME_OR_IP_ADDRESS:PORT/database_name" --ca-certificate-id <YOUR_CA_CERT_ID>  --sslmode verify-full
 ```
 
 When creating the Hyperdrive configuration, Hyperdrive will attempt to connect to the database with the
@@ -105,5 +103,9 @@ You can now create a Hyperdrive configuration using the newly created client cer
 Using Wrangler, run the following command:
 
 ```bash
-npx wrangler hyperdrive create <NAME_OF_HYPERDRIVE_CONFIG> --connection-string="postgres://user:password@HOSTNAME_OR_IP_ADDRESS:PORT/database_name" --certificate-authority-id <YOUR_CA_CERT_ID> --mtls-certificate-uuid <YOUR_CLIENT_CERT_PAIR_ID>
+npx wrangler hyperdrive create <NAME_OF_HYPERDRIVE_CONFIG> --connection-string="postgres://user:password@HOSTNAME_OR_IP_ADDRESS:PORT/database_name" --mtls-certificate-id <YOUR_CLIENT_CERT_PAIR_ID>
 ```
+
+When Hyperdrive will connect to your database, it will provide a client certificate signed with the private key to the database server. This will allow the database server to confirm that the
+client, in this case Hyperdrive, has both the private key and the client certificate. By using client certificates, you can add an additional authentication layer for your database that ensures
+that only Hyperdrive can connect to it.
