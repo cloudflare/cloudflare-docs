@@ -1,14 +1,14 @@
-name: Calls
+name: Realtime
 
 product:
-  title: Calls
-  url: /calls/
+  title: Realtime
+  url: /Realtime/
   group: Developer platform
   additional_groups: [Media]
 
 meta:
-  title: Cloudflare Calls docs
-  description: Documentation for Cloudflare Calls.
+  title: Cloudflare Realtime docs
+  description: Documentation for Cloudflare Realtime.
   author: "@cloudflare"
 
 resources:

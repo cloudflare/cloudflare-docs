@@ -1,11 +1,11 @@
-name: Calls TURN Service
+name: Realtime TURN Service
 logo: <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M22.0417 41.9585C26.3639 46.2808 31.3811 50.0021 35.6015 52.7889C40.2832 55.8803 46.3916 55.5496 51.2298 52.2959L57.9374 47.785L44.9823 37.8675L38.4307 44.3721L35.6074 44.367L19.6332 28.3928L19.6281 25.5695L26.1327 19.0179L16.2153 6.06282L11.7043 12.7704C8.4506 17.6086 8.11991 23.717 11.2113 28.3987C13.9982 32.6191 17.7194 37.6363 22.0417 41.9585ZM33.3974 56.1268C29.0506 53.2566 23.7942 49.368 19.2132 44.787C14.6322 40.206 10.7437 34.9496 7.87338 30.6028C3.77422 24.395 4.35662 16.5285 8.38511 10.5382L14.4505 1.51915L17.6982 1.41953L30.37 17.9725L30.2012 20.5973L23.8708 26.9735L37.0267 40.1294L43.4029 33.799L46.0277 33.6303L62.5807 46.302L62.4811 49.5497L53.462 55.6151C47.4717 59.6436 39.6053 60.226 33.3974 56.1268Z" fill="#0055DC"/></svg>
 
 product:
   title: TURN Service
   group: Developer platform
   additional_groups: [Media]
-  url: /calls/turn/
+  url: /realtime/turn/
 
 meta:
-  description: Separately from Cloudflare Calls' SFU, Calls offers a managed TURN service.
+  description: Separately from Cloudflare Realtime's SFU, Realtime offers a managed TURN service.

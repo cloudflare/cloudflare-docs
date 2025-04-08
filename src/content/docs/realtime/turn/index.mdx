@@ -5,9 +5,9 @@ sidebar:
   order: 10
 ---
 
-Separately from the SFU, Calls offers a managed TURN service. TURN acts as a relay point for traffic between WebRTC clients like the browser and SFUs, particularly in scenarios where direct communication is obstructed by NATs or firewalls. TURN maintains an allocation of public IP addresses and ports for each session, ensuring connectivity even in restrictive network environments.
+Separately from the SFU, Realtime offers a managed TURN service. TURN acts as a relay point for traffic between WebRTC clients like the browser and SFUs, particularly in scenarios where direct communication is obstructed by NATs or firewalls. TURN maintains an allocation of public IP addresses and ports for each session, ensuring connectivity even in restrictive network environments.
 
-Using Cloudflare Calls TURN service is available free of charge when used together with the Calls SFU. Otherwise, it costs $0.05/real-time GB outbound from Cloudflare to the TURN client.
+Using Cloudflare Realtime TURN service is available free of charge when used together with the Realtime SFU. Otherwise, it costs $0.05/real-time GB outbound from Cloudflare to the TURN client.
 
 ## Service address and ports
 
@@ -24,11 +24,11 @@ Use of alternate port 53 only by itself is not reccomended. Port 53 is blocked b
 
 ## Regions
 
-Calls TURN service is available in every Cloudflare data center.
+Realtime TURN service is available in every Cloudflare data center.
 
 When a client tries to connect to `turn.cloudflare.com`, it _automatically_ connects to the Cloudflare location closest to them. We achieve this using anycast routing.
 
-To learn more about the architecture that makes this possible, read this [technical deep-dive about Calls](https://blog.cloudflare.com/cloudflare-calls-anycast-webrtc).
+To learn more about the architecture that makes this possible, read this [technical deep-dive about Realtime](https://blog.cloudflare.com/cloudflare-calls-anycast-webrtc).
 
 ## Protocols and Ciphers for TURN over TLS
 
@@ -48,11 +48,11 @@ TLS versions supported include TLS 1.1, TLS 1.2, and TLS 1.3.
 
 ## MTU
 
-There is no specific MTU limit for Cloudflare Calls TURN service.
+There is no specific MTU limit for Cloudflare Realtime TURN service.
 
 ## Limits
 
-Cloudflare Calls TURN service places limits on:
+Cloudflare Realtime TURN service places limits on:
 
 - Unique IP address you can communicate with per relay allocation (>5 new IP/sec)
 - Packet rate outbound and inbound to the relay allocation (>5-10 kpps)

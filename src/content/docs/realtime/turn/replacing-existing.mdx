@@ -6,11 +6,11 @@ sidebar:
 
 ---
 
-If you are a existing TURN provider but would like to switch to providing Cloudflare Calls TURN for your customers, there is a few considerations.
+If you are a existing TURN provider but would like to switch to providing Cloudflare Realtime TURN for your customers, there is a few considerations.
 
 ## Benefits
 
-Cloudflare Calls TURN service can reduce tangible and untangible costs associated with TURN servers:
+Cloudflare Realtime TURN service can reduce tangible and untangible costs associated with TURN servers:
 
 * Server costs (AWS EC2 etc)
 * Bandwidth costs (Egress, load balancing etc)
@@ -23,13 +23,13 @@ Cloudflare Calls TURN service can reduce tangible and untangible costs associate
 
 ### Separate environments with TURN keys
 
-When using Cloudflare Calls TURN service at scale, consider separating environments such as "testing", "staging" or "production" with TURN keys. You can create up to 1,000 TURN keys in your account, which can be used to generate end user credentials.
+When using Cloudflare Realtime TURN service at scale, consider separating environments such as "testing", "staging" or "production" with TURN keys. You can create up to 1,000 TURN keys in your account, which can be used to generate end user credentials.
 
 There is no limit to how many end-user credentials you can create with a particular TURN key.
 
 ### Tag users with custom identifiers
 
-Cloudflare Calls TURN service lets you tag each credential with a custom identifier as you generate a credential like below:
+Cloudflare Realtime TURN service lets you tag each credential with a custom identifier as you generate a credential like below:
 
 ```bash null {4}
 curl https://rtc.live.cloudflare.com/v1/turn/keys/$TURN_KEY_ID/credentials/generate \
@@ -42,11 +42,11 @@ Use this field to aggregate usage for a specific user or group of users and coll
 
 ### Monitor usage
 
-You can monitor account wide usage with the [GraphQL analytics API](/calls/turn/analytics/). This is useful for keeping track of overall usage for billing purposes, watching for unexpected changes. You can get timeseries data from TURN analytics with various filters in place.
+You can monitor account wide usage with the [GraphQL analytics API](/realtime/turn/analytics/). This is useful for keeping track of overall usage for billing purposes, watching for unexpected changes. You can get timeseries data from TURN analytics with various filters in place.
 
 ### Monitor for credential abuse
 
-If you share TURN credentials with end users, credential abuse is possible. You can monitor for abuse by tagging each credential with custom identifiers and monitoring for top custom identifiers in your application via the [GraphQL analytics API](/calls/turn/analytics/).
+If you share TURN credentials with end users, credential abuse is possible. You can monitor for abuse by tagging each credential with custom identifiers and monitoring for top custom identifiers in your application via the [GraphQL analytics API](/realtime/turn/analytics/).
 
 ## How to bill end users for their TURN usage
 
@@ -64,7 +64,7 @@ By following these guidelines and understanding how TURN analytics handles sampl
 :::note
 
 
-Cloudflare Calls only bills for traffic from Cloudflare's servers to your client, called `egressBytes`.
+Cloudflare Realtime only bills for traffic from Cloudflare's servers to your client, called `egressBytes`.
 
 
 :::
