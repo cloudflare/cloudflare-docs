@@ -65,6 +65,17 @@ a=rid:h send
 a=rid:q send
 ```
 
+You can include these by specifying `sendEncodings` when creating the transceiver:
+
+```js
+const transceiver = peerConnection.addTransceiver(track, {
+  direction: "sendonly",
+  sendEncodings: [
+    { scaleResolutionDownBy: 1, rid: "a" },
+    { scaleResolutionDownBy: 2, rid: "b" },
+    { scaleResolutionDownBy: 4, rid: "c" }
+  ]
+});
 ## Example
 
 Here's an example of how to use simulcast with Cloudflare Calls:
