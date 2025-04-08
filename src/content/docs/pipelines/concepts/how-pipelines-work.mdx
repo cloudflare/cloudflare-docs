@@ -36,7 +36,7 @@ Transient failures, such as network connectivity issues, are automatically retri
 However, if the [R2 API credentials associated with a pipeline](/r2/api/tokens/) expire or are revoked, data delivery will fail. In this scenario, some data might continue to accumulate in the buffers, but the pipeline will eventually start rejecting requests once the buffers are full.
 
 ## Updating a pipeline
-Pipelines update without dropping records. Updating an existing pipeline effectively creates a new instance of the pipeline. Requests are gracefully re-routed to the new instance. The old instance continues to write data into your configured sink. Once the old instance is fully drained, it is spun down.
+Pipelines update without dropping records. Updating an existing pipeline creates a new instance of the pipeline. Requests are gracefully re-routed to the new instance. The old instance continues to write data into the configured sink. Once the old instance is fully drained, it is spun down.
 
 This means that updates might take a few minutes to go into effect. For example, if you update a pipeline's sink, previously ingested data might continue to be delivered into the old sink.
 
