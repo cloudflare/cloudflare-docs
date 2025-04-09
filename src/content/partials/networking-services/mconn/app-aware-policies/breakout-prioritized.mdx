@@ -40,7 +40,7 @@ import { APIRequest, Aside, AnchorHeading, CURL, Markdown, Render, TabItem, Tabs
 			`}
 		</pre>
 		<p><em>In the graph above, Applications 1 and 2 are configured to bypass Cloudflare's security filtering, and go straight to the Internet</em></p>
-		<Aside type="note" header="A note on security">
+		<Aside type="note" title="A note on security">
 		<Markdown
 		text={`
 		We recommend [routing](https://www.cloudflare.com/learning/network-layer/what-is-routing/) all traffic through our global network for comprehensive security filtering and access controls. However, there may be specific cases where you want a subset of traffic to bypass Cloudflare's security filtering and route it directly to the Internet. You can scope this breakout traffic to specific applications from the Cloudflare dashboard.
