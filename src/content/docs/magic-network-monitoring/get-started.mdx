@@ -5,12 +5,12 @@ sidebar:
   order: 2
 ---
 
-import { GlossaryTooltip } from "~/components";
+import { Badge, GlossaryTooltip } from "~/components";
 
 To begin using Magic Network Monitoring for network and/or cloud traffic visibility, complete the list of tasks below.
 
 - [NetFlow and sFlow guide](#netflow-and-sflow-guide)
-- [VPC flow log guide](#vpc-flow-log-guide)
+- [VPC flow log guide](#vpc-flow-log-guide) <Badge text="Beta" variant="caution" />
 
 If you are an Enterprise customer, Cloudflare can significantly accelerate the onboarding timeline during active-attack scenarios. Enterprise customers that would like to use Magic Network Monitoring and Magic Transit On Demand together can begin by [configuring Magic Transit](/magic-transit/get-started/).
 
@@ -63,7 +63,7 @@ This will only be visible during the onboarding process. When you are finished o
 
 Create rules to analyze data for a specific set of destinations or to implement thresholds. Refer to [Rules](/magic-network-monitoring/rules/) for more information.
 
-## VPC flow log guide
+## VPC flow log guide <Badge text="Beta" variant="caution" />
 
 ### 1. Verify cloud flow log capabilities
 
