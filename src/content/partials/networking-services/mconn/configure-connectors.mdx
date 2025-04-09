@@ -569,14 +569,15 @@ When you are ready to connect your Magic WAN Connector to the Cloudflare network
 
 
 		<AnchorHeading title="1. Access Magic WAN Connector's serial port" depth={3} />
-		<ol>
-			<li>Using the Phillips screwdriver, loosen the screw covering the serial console panel on the back of the Magic WAN Connector and turn the panel out of the way.
-				<ol>
-						<li>Pictures and more instructions can be found on <a href="https://www.dell.com/support/kbdoc/en-us/000134440/how-to-access-console-port-of-dell-emc-networking-virtual-edge-platform-1405-series" target="_blank" rel="noopener noreferrer">Dell's Technical Documents</a>.</li>
-				</ol>
-			</li>
-			<li>Connect your computer to the Magic WAN Connector using the USB cable.</li>
-		</ol>
+
+		<Markdown
+		text={`
+		1. Using the Phillips screwdriver, loosen the screw covering the serial console panel on the back of the Magic WAN Connector and turn the panel out of the way.
+			- Pictures and more instructions can be found on [Dell's Technical Documents](https://www.dell.com/support/kbdoc/en-us/000134440/how-to-access-console-port-of-dell-emc-networking-virtual-edge-platform-1405-series).
+		2. Connect your computer to the Magic WAN Connector using the USB cable.
+		`}
+		inline={false}
+		/>
 
 		<AnchorHeading title="Default password to access Connector" depth={4} />
 		<p>Your Connector's default password is the serial number (also known as a Service Tag for Dell devices), all uppercase followed by an "!" (for example, <code>A1B2C3D!</code>)</p>
