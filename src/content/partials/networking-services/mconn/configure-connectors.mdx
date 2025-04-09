@@ -605,17 +605,20 @@ When you are ready to connect your Magic WAN Connector to the Cloudflare network
 		inline={false}
 		/>
 
-
-
 		<AnchorHeading title="macOS" depth={4} />
-		<p>Cloudflare recommends installing Screen for macOS. You can install Screen via <code>brew install screen</code>. If you do not have <code>brew</code> installed, follow the instructions on <a href="https://brew.sh/" target="_blank" rel="noopener noreferrer">Brew's Official Website</a> to install it.</p>
-		<ol>
-			<li>Open the macOS Terminal.</li>
-			<li>Run <code>ls /dev/cu.*</code> to list the connected serial devices.</li>
-			<li>The command should return an output similar to <code>/dev/cu.usbserial-0001</code>. Copy this output to the clipboard or note this down somewhere else.</li>
-			<li>Run <code>sudo screen -adRUS mconn {`<`}PATH_FROM_STEP_3{`>`} 115200</code>.</li>
-			<li>The screen may need to be manually refreshed when a new device is connected. You can do that by pressing <code>CMD + C</code>.</li>
-		</ol>
+
+		<Markdown
+		text={`
+		Cloudflare recommends installing Screen for macOS. You can install Screen via <code>brew install screen</code>. If you do not have <code>brew</code> installed, follow the instructions on [Brew's Official Website](https://brew.sh/) to install it.
+
+		1. Open the macOS Terminal.
+		2. Run <code>ls /dev/cu.*</code> to list the connected serial devices.
+		3. The command should return an output similar to <code>/dev/cu.usbserial-0001</code>. Copy this output to the clipboard or note this down somewhere else.
+		4. Run \`sudo screen -adRUS mconn <PATH_FROM_STEP_3> 115200\`.
+		5. The screen may need to be manually refreshed when a new device is connected. You can do that by pressing <code>CMD + C</code>.
+		`}
+		inline={false}
+		/>
 
 		<AnchorHeading title="Linux" depth={4} />
 		<p>Cloudflare recommends installing Screen for Linux. You can install Screen via your package manager of choice. For example, for Debian/Ubuntu, install by running <code>sudo apt update && sudo apt install screen</code></p>
