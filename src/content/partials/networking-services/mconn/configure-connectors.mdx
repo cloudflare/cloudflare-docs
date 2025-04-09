@@ -586,22 +586,26 @@ When you are ready to connect your Magic WAN Connector to the Cloudflare network
 		<p>To access Magic WAN Connector's environment you need a serial terminal client. Follow the instructions below to install one, based on your operating system.</p>
 
 		<AnchorHeading title="Windows" depth={4} />
-		<p>Cloudflare recommends using PuTTY for Windows. Download PuTTY from the <a href="https://www.putty.org/" target="_blank" rel="noopener noreferrer">official website</a> and then install it.</p>
-		<ol>
-			<li>Check the COM port of the USB to UART device in the Windows Device Manager. It should show up as something similar to <code>Silicon Labs CP210x USB to UART Bridge (COMX)</code>.</li>
-			<li>Take note of the value in the parentheses (COMX).
-				<ol>
-						<li>Refer to the <a href="https://infohub.delltechnologies.com/l/virtual-edge-platform-vep-1405-series-diag-os-and-tools-release-notes/bios-installation-and-configuration" target="_blank" rel="noopener noreferrer">Dell Documentation Page</a> for more details on creating a serial console connection.</li>
-				</ol>
-			</li>
-			<li>Launch PuTTY.</li>
-			<li>Under <strong>Category</strong>, make sure that <strong>Session</strong> (the first item) is selected.</li>
-			<li>Under <strong>Connection type</strong>, select <strong>Serial</strong>.</li>
-			<li>In the <strong>Serial Line</strong>, type in the COM port found in step 2 (for example, <code>COM1</code>).</li>
-			<li>In the <strong>Speed</strong>, enter <code>115200</code>.</li>
-			<li>Select <strong>Open</strong> on the bottom of the dialog box. A terminal window should pop up.</li>
-			<li>The screen may need to be manually refreshed when a new device is connected. You can do that by pressing <code>CTRL + C</code>.</li>
-		</ol>
+
+		<Markdown
+		text={`
+		Cloudflare recommends using PuTTY for Windows. Download PuTTY from the [official website](https://www.putty.org/) and then install it.
+
+		1. Check the COM port of the USB to UART device in the Windows Device Manager. It should show up as something similar to <code>Silicon Labs CP210x USB to UART Bridge (COMX)</code>.
+		2. Take note of the value in the parentheses (COMX).
+			- Refer to the [Dell Documentation Page](https://infohub.delltechnologies.com/l/virtual-edge-platform-vep-1405-series-diag-os-and-tools-release-notes/bios-installation-and-configuration) for more details on creating a serial console connection.
+		3. Launch PuTTY.
+		4. Under **Category**, make sure that **Session** (the first item) is selected.
+		5. Under **Connection type**, select **Serial**.
+		6. In the **Serial Line**, type in the COM port found in step 2 (for example, <code>COM1</code>).
+		7. In the **Speed**, enter <code>115200</code>.
+		8. Select Open on the bottom of the dialog box. A terminal window should pop up.
+		9. The screen may need to be manually refreshed when a new device is connected. You can do that by pressing <code>CTRL + C</code>.
+		`}
+		inline={false}
+		/>
+
+
 
 		<AnchorHeading title="macOS" depth={4} />
 		<p>Cloudflare recommends installing Screen for macOS. You can install Screen via <code>brew install screen</code>. If you do not have <code>brew</code> installed, follow the instructions on <a href="https://brew.sh/" target="_blank" rel="noopener noreferrer">Brew's Official Website</a> to install it.</p>
