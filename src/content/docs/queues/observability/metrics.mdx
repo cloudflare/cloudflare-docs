@@ -33,12 +33,12 @@ Queues export the below metrics within the `queueConsumerMetricsAdaptiveGroups` 
 | ----------------------   	| ------------------------- | --------------------------------------------------------------- |
 | Avg. Consumer Concurrency | `concurrency`        			| Average number of concurrent consumers over the period					|
 
-The `queuesBacklogAdaptiveGroups` dataset provides the following dimensions for filtering and grouping queries:
+The `queueConsumerMetricsAdaptiveGroups` dataset provides the following dimensions for filtering and grouping queries:
 * `queueID` - ID of the queue
-* `datetime` - Timestamp for when the message was sent
-* `date` - Timestamp for when the message was sent, truncated to the start of a day
-* `datetimeHour` - Timestamp for when the message was sent, truncated to the start of an hour
-* `datetimeMinute` - Timestamp for when the message was sent, truncated to the start of a minute
+* `datetime` - Timestamp for the consumer metrics
+* `date` - Timestamp for the consumer metrics, truncated to the start of a day
+* `datetimeHour` - Timestamp for the consumer metrics, truncated to the start of an hour
+* `datetimeMinute` - Timestamp for the consumer metrics, truncated to the start of a minute
 
 ### Message operations
 Queues export the below metrics within the `queueMessageOperationsAdaptiveGroups` dataset.
@@ -51,7 +51,7 @@ Queues export the below metrics within the `queueMessageOperationsAdaptiveGroups
 | Retries 									| `retryCount`      				| Average number of retries per message 									|
 | Message Size 							| `messageSize`      				| Maximum message size over the specified period 									|
 
-The `queuesBacklogAdaptiveGroups` dataset provides the following dimensions for filtering and grouping queries:
+The `queueMessageOperationsAdaptiveGroups` dataset provides the following dimensions for filtering and grouping queries:
 * `queueID` - ID of the queue
 * `actionType` - The type of message operation. Can be `WriteMessage`, `ReadMessage` or `DeleteMessage`
 * `consumerType` - The queue consumer type. Can be `worker` or `http`. Only applicable for `ReadMessage` and `DeleteMessage` action types
@@ -60,7 +60,6 @@ The `queuesBacklogAdaptiveGroups` dataset provides the following dimensions for 
 * `date` - Timestamp for the message operation, truncated to the start of a day
 * `datetimeHour` - Timestamp for the message operation, truncated to the start of an hour
 * `datetimeMinute` - Timestamp for the message operation, truncated to the start of a minute
-
 
 ## Example GraphQL Queries
 
