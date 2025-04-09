@@ -45,9 +45,9 @@ Batching can:
 
 There are three ways to define how ingested data is batched:
 
-1. `batch-max-mb`: The maximum amount of data that will be batched in megabytes. Default is `10 MB`, maximum is `100 MB`.
+1. `batch-max-mb`: The maximum amount of data that will be batched in megabytes. Default, and maximum, is `100 MB`.
 2. `batch-max-rows`: The maximum number of rows or events in a batch before data is written. Default, and maximum, is `10,000` rows.
-3. `batch-max-seconds`: The maximum duration of a batch before data is written in seconds. Default is `15 seconds`, maximum is `300 seconds`.
+3. `batch-max-seconds`: The maximum duration of a batch before data is written in seconds. Default, and maximum, is `300 seconds`.
 
 Batch definitions are hints. A pipeline will follow these hints closely, but batches might not be exact.
 
@@ -68,11 +68,11 @@ npx wrangler pipelines update [PIPELINE-NAME] --batch-max-mb 100 --batch-max-row
 
 ### Batch size limits
 
-| Setting                                   | Default     | Minimum   | Maximum     |
-| ----------------------------------------- | ----------- | --------- | ----------- |
-| Maximum Batch Size `batch-max-mb`         | 10 MB       | 1 MB  		| 100 MB      |
-| Maximum Batch Timeout `batch-max-seconds` | 15 seconds  | 1 second 	| 300 seconds |
-| Maximum Batch Rows `batch-max-rows`       | 10,000 rows | 1 row     | 10,000,000 rows |
+| Setting                                   | Default     		| Minimum   | Maximum     |
+| ----------------------------------------- | ----------------| --------- | ----------- |
+| Maximum Batch Size `batch-max-mb`         | 100 MB       		| 1 MB  		| 100 MB      |
+| Maximum Batch Timeout `batch-max-seconds` | 300 seconds  		| 1 second 	| 300 seconds |
+| Maximum Batch Rows `batch-max-rows`       | 10,000,000 rows | 1 row     | 10,000,000 rows |
 
 
 ## Deliver partitioned data
