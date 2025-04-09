@@ -135,8 +135,14 @@ You cannot enable high availability for an existing Connector on-ramp. To add hi
 { props.magicWord === "hardware" && (
   <>
 		<AnchorHeading title="Port speeds" depth={2} />
-    <p>The hardware version of the Magic WAN connector includes two <a href="https://en.wikipedia.org/wiki/Small_Form-factor_Pluggable" target="_blank" rel="noopener noreferrer">SFP+ ports</a> that support 10G throughput, as well as six RJ45 ports that support 1G throughput.</p>
-		<p>Refer to <a href="/magic-wan/configuration/connector/configure-hardware-connector/sfp-port-information/">SFP+ port information</a> for details on this topic.</p>
+		<Markdown
+		text={`
+		The hardware version of the Magic WAN connector includes two [SFP+ ports](https://en.wikipedia.org/wiki/Small_Form-factor_Pluggable) that support 10G throughput, as well as six RJ45 ports that support 1G throughput.
+
+		Refer to [SFP+ port information](/magic-wan/configuration/connector/configure-hardware-connector/sfp-port-information/) for details on this topic.</p>
+		`}
+		inline={false}
+		/>
   </>
   )
 }
