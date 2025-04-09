@@ -46,8 +46,8 @@ Queues export the below metrics within the `queueMessageOperationsAdaptiveGroups
 | Metric                 		| GraphQL Field Name        | Description 																										|
 | ----------------------   	| ------------------------- | --------------------------------------------------------------- |
 | Total billable operations | `billableOperations`      | Sum of billable operations (writes, reads, and deletes) over the time period									|
-| Total Bytes 							| `bytes`      							| SUm of bytes read, written, and deleted from the queue									|
-| Lag 											| `lagTime`      						| Average lag time in milliseconds between when the message was written, and the operation to consume the message.									|
+| Total Bytes 							| `bytes`      							| Sum of bytes read, written, and deleted from the queue									|
+| Lag 											| `lagTime`      						| Average lag time in milliseconds between when the message was written and the operation to consume the message.									|
 | Retries 									| `retryCount`      				| Average number of retries per message 									|
 | Message Size 							| `messageSize`      				| Maximum message size over the specified period 									|
 
