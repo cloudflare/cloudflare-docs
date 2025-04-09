@@ -117,11 +117,15 @@ You cannot enable high availability for an existing Connector on-ramp. To add hi
 { props.magicWord === "virtual" && (
   <>
     <p>Virtual Connector uses a DHCP connection at first boot to download your settings and go through the activation process. However, if you need to use a static IP in your Virtual Connector, and this is a fresh install:</p>
-		<ol>
-    	<li>Connect the machine with your Virtual Connector VM to a DHCP port with access to the Internet.</li>
-    	<li>Go through the <a href="#set-up-cloudflare-dashboard">setup flow</a> below and activate your Connector.</li>
-    	<li>Refer to <a href="#wan-with-a-static-ip-address">WAN with a static IP address</a>.</li>
-		</ol>
+
+		<Markdown
+		text={`
+    1. Connect the machine with your Virtual Connector VM to a DHCP port with access to the Internet.
+		2. Go through the [setup flow](#set-up-cloudflare-dashboard) below and activate your Connector.
+		3. Refer to [WAN with a static IP address](#wan-with-a-static-ip-address).
+		`}
+		inline={false}
+		/>
   </>
   )
 }
