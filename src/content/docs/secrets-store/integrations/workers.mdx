@@ -22,7 +22,7 @@ If [using the Dashboard](#via-dashboard), make sure you already have a Workers a
 
 You should also have a store created under the Secrets Store tab on the Dashboard. The default store in your account is automatically created when a user with [Super Administrator or Secrets Store Admin role](/secrets-store/access-control/) interacts with it.
 
-You can also use the [Wrangler command](/workers/wrangler/commands/#secrets-store-store) `secrets-store store create <name>` to create your default store 
+You can also use the [Wrangler command](/workers/wrangler/commands/#secrets-store-store) `secrets-store store create <name>` to create your default store. 
 
 ## 1. Set up account secrets in Secrets Store
 
@@ -59,7 +59,7 @@ npx wrangler secrets-store secret create <STORE_ID> --name MY_SECRETS_STORE_SECR
 
 </TabItem> <TabItem label="API">
 
-You can find and copy the store ID from the [Secrets Store tab](https://dash.cloudflare.com/?to=/:account/secrets-store/) on the dashboard. Also, make sure your secret `name` does not contain spaces.
+You can find and copy the store ID from the [Secrets Store tab](https://dash.cloudflare.com/?to=/:account/secrets-store/) on the dashboard or use the [Wrangler command](/workers/wrangler/commands/#secrets-store-store). Also, make sure your secret `name` does not contain spaces.
 
 Refer to [Secrets Store API](/api/resources/secrets_store/) for the full API documentation.
 
