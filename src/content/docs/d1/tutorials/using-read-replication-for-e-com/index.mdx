@@ -1,5 +1,5 @@
 ---
-updated: 2025-03-27
+updated: 2025-04-09
 difficulty: Beginner
 content_type: Tutorial
 pcx_content_type: tutorial
@@ -20,9 +20,9 @@ import {
 	Details,
 } from "~/components";
 
-[D1 Read Replication](/d1/best-practices/read-replication/) is a feature that allows you to replicate your D1 database to multiple regions. This is useful for your e-commerce website, as it reduces read latencies and improves availability. In this tutorial, you will learn how to use D1 read replication for your e-commerce website.
+[D1 Read Replication](/d1/best-practices/read-replication/) is a feature that allows you to replicate your D1 database to multiple regions. This is useful for your e-commerce website, as it reduces read latencies and improves read throughput. In this tutorial, you will learn how to use D1 read replication for your e-commerce website.
 
-While this tutorial uses a fictional e-commerce website, the principles can be applied to any use-case that requires high availability and low read latencies, such as a news website, a social media platform, or a marketing website.
+While this tutorial uses a fictional e-commerce website, the principles can be applied to any use-case that requires low read latencies and scaling reads, such as a news website, a social media platform, or a marketing website.
 
 ## Quick start
 
@@ -493,21 +493,9 @@ Run the following command to update the `Env` interface in the `worker-congifura
 npm run cf-typegen
 ```
 
-Next, enable read replication for the D1 database by running the following command. You will need to replace `<accountid>` with your Cloudflare account ID, `<databaseId>` with the ID of the D1 database, and `$TOKEN` with your Cloudflare API token. You can learn more about it in the [Read replication documentation](/d1/best-practices/read-replication/#enable-read-replication).
-
-:::note
-Read replication is only used when the application has been [deployed](/d1/tutorials/using-read-replication-for-e-com/#step-8-deploy-the-application). D1 does not create read replicas when you develop locally. To test it locally, you can start the development server with the `--remote` flag.
-:::
-
-```sh
-curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<accountid>/d1/database/<databaseId>" \
-     -H "Authorization: Bearer $TOKEN" \
-     -H "Content-Type:application/json" --data '{ "read_replication": { "mode": "auto" } }'
-```
+Next, enable read replication for the D1 database. Navigate to [**Workers & Pages** > **D1**](https://dash.cloudflare.com/?to=/:account/workers/d1), then select an existing database > **Settings** > **Enable Read Replication**.
 
 ## Step 4: Create the API routes
-
-
 
 Update the `src/index.ts` file to import the Hono library and create the API routes.
 
@@ -544,7 +532,7 @@ The above code creates three API routes:
 
 However, the API routes are not connected to the D1 database yet. In the next steps, you will create a products table in the D1 database, and update the API routes to connect to the D1 database.
 
-## Step 5: Create the D1 database schema
+## Step 5: Create local D1 database schema
 
 Create a products table in the D1 database by running the following command:
 
@@ -648,7 +636,7 @@ In the above code:
 
 Since you want to start the session with the latest data, you use the `first-primary` constraint. Even if you use the `first-unconstrained` constraint or pass a bookmark, the write request will always be routed to the primary database.
 
-The bookmark set in the cookie can be used to get the data from the database for a new session from that instance.
+The bookmark set in the cookie can be used to guarantee that a new session reads a database version that is at least as up-to-date as the provided bookmark.
 
 If you are using an external platform to manage your products, you can connect this API to the external platform, such that, when a product is created or updated in the external platform, the D1 database automatically updates the product details.
 
@@ -768,9 +756,7 @@ curl -X POST http://localhost:8787/api/product \
 ```
 
 :::note
-
-Since you have been developing the application locally, the data is not replicated to other regions. To see the data in other regions, you need to deploy the application to Cloudflare.
-
+Read replication is only used when the application has been [deployed](/d1/tutorials/using-read-replication-for-e-com/#step-8-deploy-the-application). D1 does not create read replicas when you develop locally. To test it locally, you can start the development server with the `--remote` flag.
 :::
 
 ## Step 8: Deploy the application
@@ -779,6 +765,12 @@ Since the database you used in the previous steps is local, you need to create t
 
 ```sh
 npx wrangler d1 execute fast-commerce --remote --command "CREATE TABLE IF NOT EXISTS products (id INTEGER PRIMARY KEY, name TEXT NOT NULL, description TEXT, price DECIMAL(10, 2) NOT NULL, inventory INTEGER NOT NULL DEFAULT 0, category TEXT NOT NULL, created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, last_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP)"
+```
+
+Next, create an index on the products table by running the following command:
+
+```sh
+npx wrangler d1 execute fast-commerce --remote --command "CREATE INDEX IF NOT EXISTS idx_products_id ON products (id)"
 ```
 
 Optionally, you can insert the products into the remote database by running the following command:
@@ -801,7 +793,7 @@ In this tutorial, you learned how to use D1 Read Replication for your e-commerce
 
 You then created the products table in the remote database and deployed the application.
 
-You can use the same approach for your existing read heavy application to reduce read latencies and improve availability. If you are using an external platform to manage the content, you can connect the external platform to the D1 database, so that the content is automatically updated in the database.
+You can use the same approach for your existing read heavy application to reduce read latencies and improve read throughput. If you are using an external platform to manage the content, you can connect the external platform to the D1 database, so that the content is automatically updated in the database.
 
 You can find the complete code for this tutorial in the [GitHub repository](https://github.com/harshil1712/e-com-d1-hono).
 

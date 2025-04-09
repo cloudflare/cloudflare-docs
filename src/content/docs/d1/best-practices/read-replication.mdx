@@ -3,8 +3,6 @@ title: Global read replication
 pcx_content_type: concept
 sidebar:
   order: 90
-  hidden: true
-noindex: true
 ---
 
 import { GlossaryTooltip, Details, GitHubCode, APIRequest, Tabs, TabItem, TypeScriptExample } from "~/components"
@@ -18,9 +16,7 @@ To checkout D1 read replication, deploy the following Worker code using Sessions
    [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/d1-starter-sessions-api-template)
 
 :::note[Tip: Place your database further away for the read replication demo]
-To simulate how read replication can improve a worst case latency scenario, select your primary database location to be in a farther away region (one of the deployment steps).
-
-You can find this in the **Database location hint** dropdown.
+To simulate how read replication can improve a worst case latency scenario, set your D1 database location hint to be in a farther away region.
 :::
 
 <GitHubCode
@@ -59,8 +55,8 @@ All write queries are still forwarded to the primary database instance. Read rep
 
 A system with multiple read replicas located around the world improves the performance of databases:
 
-- The read throughput increases by distributing load across multiple replicas. Since multiple database instances are able to serve read-only requests, your application can serve a larger number of queries at any given time.
 - The query latency decreases for users located close to the read replicas. By shortening the physical distance between a the database instance and the user, read query latency decreases, resulting in a faster application.
+- The read throughput increases by distributing load across multiple replicas. Since multiple database instances are able to serve read-only requests, your application can serve a larger number of queries at any given time.
 
 ## Use Sessions API
 
@@ -324,7 +320,7 @@ With the REST API, set `read_replication.mode: disabled` to disable read replica
 For this REST endpoint, you need to have an API token with `D1:Edit` permission. If you do not have an API token, follow the guide: [Create API token](/fundamentals/api/get-started/create-token/).
 
 :::note
-Disabling read replication takes up to 24 hours until replicas to stop processing requests. Sessions API works with databases that do not have read replication enabled, so it is safe to run code with Sessions API even after disabling read replication.
+Disabling read replication takes up to 24 hours for replicas to stop processing requests. Sessions API works with databases that do not have read replication enabled, so it is safe to run code with Sessions API even after disabling read replication.
 :::
 
 <Tabs>
@@ -355,7 +351,9 @@ await fetch ("/v4/accounts/{account_id}/d1/database/{database_id}", {
 
 ### Check if read replication is enabled
 
-`GET` D1 database REST endpoint returns if read replication is enabled or disabled.
+On the Cloudflare dashboard, check **Settings** for your D1 database to view if read replication is enabled.
+
+Alternatively, `GET` D1 database REST endpoint returns if read replication is enabled or disabled.
 
 For this REST endpoint, you need to have an API token with `D1:Read` permission. If you do not have an API token, follow the guide: [Create API token](/fundamentals/api/get-started/create-token/).
 
