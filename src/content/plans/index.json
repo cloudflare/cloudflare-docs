@@ -1318,7 +1318,7 @@
 			}
 		},
 		"snippets": {
-			"title": "Snippets (beta)",
+			"title": "Snippets",
 			"link": "/rules/snippets/",
 			"properties": {
 				"availability": {
