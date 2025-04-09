@@ -483,6 +483,13 @@
 					"pro": "1500 URLs per second",
 					"biz": "1500 URLs per second",
 					"ent": "3000 URLs per second"
+				},
+                "limits_operations": {
+                    "title": "Max operations per request",
+                    "free": "100",
+                    "pro": "100",
+                    "biz": "100",
+                    "ent": "500"
 				}
 			}
 		},
