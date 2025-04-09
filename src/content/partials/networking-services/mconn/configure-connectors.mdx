@@ -552,15 +552,21 @@ When you are ready to connect your Magic WAN Connector to the Cloudflare network
 		<Aside type="note">The <code>reset device</code> option in your Connector clears most of the configuration that is locally cached, resets the password to the default, and reboots.</Aside>
 
 		<AnchorHeading title="Equipment required" depth={3} />
-		<p>To access the serial port on Magic WAN Connector you will need the following equipment:</p>
-		<ul>
-			<li>The Magic WAN Connector appliance</li>
-			<li>A Phillips-head screwdriver</li>
-			<li>A micro-USB to USB-A cable (there should be one included in the packaging of your Connector)</li>
-			<li>A computer with an available USB port</li>
-			<li>A serial terminal client</li>
-			<li>Optional: if needed, a USB-A to USB-C converter dongle if your computer requires it</li>
-		</ul>
+
+		<Markdown
+		text={`
+		To access the serial port on Magic WAN Connector you will need the following equipment:
+
+		- The Magic WAN Connector appliance
+		- A Phillips-head screwdriver
+		- A micro-USB to USB-A cable (there should be one included in the packaging of your Connector)
+		- A computer with an available USB port
+		- A serial terminal client
+		- Optional: if needed, a USB-A to USB-C converter dongle if your computer requires it
+		`}
+		inline={false}
+		/>
+
 
 		<AnchorHeading title="1. Access Magic WAN Connector's serial port" depth={3} />
 		<ol>
