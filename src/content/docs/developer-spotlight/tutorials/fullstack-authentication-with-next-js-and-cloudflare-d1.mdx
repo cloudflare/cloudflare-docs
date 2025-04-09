@@ -60,7 +60,7 @@ From within the repository or directory where you want to create your project ru
 
 This will create a new Next.js project using [OpenNext](https://opennext.js.org/cloudflare) that will run in a Worker using [Workers Static Assets](/workers/frameworks/framework-guides/nextjs/#static-assets).
 
-Before we get started, open your project's `tsconfig.json` file and add the following to the `compilerOptions` object to allow for top level await needed to let our application get the Cloudflare context:
+Before we get started, open your project's `tsconfig.json` file and modify the following to the `compilerOptions` object to allow for top level await needed to let our application get the Cloudflare context:
 
 ```json title="tsconfig.json"
 {
@@ -101,6 +101,8 @@ Now, deviating from the standard Auth.js setup, locate your generated secret (li
 npx wrangler secret put AUTH_SECRET
 ```
 
+If you have not deployed yet that's fine. Allow wrangler to create the worker for you.
+
 After adding the secret, update your `.dev.vars` file to include an `AUTH_SECRET` value (this secret should be different from the one you generated earlier for security purposes):
 
 ```sh title=".dev.vars"
@@ -109,9 +111,9 @@ AUTH_SECRET = "<replace-me>"
 # ...
 ```
 
-Next, go into the newly generated `env.d.ts` file and add the following to the <Type text="CloudflareEnv" /> interface:
+Next, go into `cloudflare-env.d.ts` file and add the following to the <Type text="CloudflareEnv" /> interface:
 
-```ts title="env.d.ts"
+```ts title="cloudflare-env.d.ts"
 interface CloudflareEnv {
 	AUTH_SECRET: string;
 }
@@ -144,9 +146,9 @@ database_id = "<unique-ID-for-your-database>"
 
 </WranglerConfig>
 
-Now, within your `env.d.ts`, add your D1 binding, like:
+Now, within your `cloudflare-env.d.ts`, add your D1 binding, like:
 
-```ts title="env.d.ts"
+```ts title="cloudflare-env.d.ts"
 interface CloudflareEnv {
 	DB: D1Database;
 	AUTH_SECRET: string;
@@ -185,9 +187,9 @@ AUTH_RESEND_KEY = "<replace-me>"
 # ...
 ```
 
-After adding both of those Secrets, your `env.d.ts` should now include the following:
+After adding both of those Secrets, your `cloudflare-env.d.ts` should now include the following:
 
-```ts title="env.d.ts"
+```ts title="cloudflare-env.d.ts"
 interface CloudflareEnv {
 	DB: D1Database;
 	AUTH_SECRET: string;
@@ -234,7 +236,7 @@ export const { GET, POST } = handlers;
 ```
 </TypeScriptExample>
 
-Now, within the `src/` directory, create a `middleware.ts` file to persist session data containing the following:
+Now, within the `src/` directory, create a `middleware.ts` file. If you do not have a `src/` directory, create a `middleware.ts` file in the root of your project. This will persist session data.
 
 <TypeScriptExample filename="src/middleware.ts">
 ```ts
@@ -248,15 +250,17 @@ The D1 adapter requires that tables be created within your database. It [recomme
 
 <TypeScriptExample filename="src/app/api/setup/route.ts">
 ```ts
-import type { NextRequest } from 'next/server';
 import { up } from "@auth/d1-adapter";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 
-export async function GET(request: NextRequest) {
+export async function GET() {
     try {
         await up((await getCloudflareContext()).env.DB)
-    } catch (e: any) {
-        console.log(e.cause.message, e.message)
+    } catch (e: unknown) {
+        if (e instanceof Error) {
+            const causeMessage = e.cause instanceof Error ? e.cause.message : String(e.cause);
+            console.log(causeMessage, e.message)
+        }
     }
     return new Response('Migration completed');
 }
@@ -283,7 +287,7 @@ Before we go further, make sure you've created all of the necessary files:
     - auth.ts
     - page.ts
   - middleware.ts
-- env.d.ts
+- cloudflare-env.d.ts
 - wrangler.toml
 </FileTree>
 
