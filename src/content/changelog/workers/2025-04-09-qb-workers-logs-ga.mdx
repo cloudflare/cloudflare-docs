@@ -25,8 +25,18 @@ The **Investigate** tab presents a Query Builder, which helps you write structur
 
 The Query Builder can use any field that you store in your logs as a key to visualize, filter, and group by. Use the Query Builder to quickly access your data, build visualizations, save queries, and share them with your team. 
 
+### Workers Logs is now Generally Available
 
-Visit the [docs](/workers/observability/query-builder) to learn more about the capabilities and methods exposed by the Query Builder, and start using the Query Builder today by enabling observability for your Workers:
+[Workers Logs](/workers/observability/logs/workers-logs) is now Generally Available. With a [small change](/workers/observability/logs/workers-logs/#enable-workers-logs) to your Wrangler configuration, Workers Logs ingests, indexes, and stores all logs emitted from your Workers for up to 7 days.
+
+We've introduced a number of changes during our beta period, including:
+- Dashboard enhancements with customizable fields as columns in the Logs view and support for invocation-based grouping
+- Performance improvements to ensure no adverse impact
+- Public [API endpoints](https://developers.cloudflare.com/api/resources/workers/subresources/observability/) for broader consumption
+
+The API documents three endpoints: list the keys in the telemetry dataset, run a query, and list the unique values for a key. For more, visit our [REST API documentation](https://developers.cloudflare.com/api/resources/workers/subresources/observability/).
+
+Visit the [docs](/workers/observability/query-builder) to learn more about the capabilities and methods exposed by the Query Builder. Start using Workers Logs and the Query Builder today by enabling observability for your Workers:
 
 <WranglerConfig>
 	```toml
@@ -38,4 +48,3 @@ Visit the [docs](/workers/observability/query-builder) to learn more about the c
 	head_sampling_rate = 1 # optional. default = 1.
 	```
 </WranglerConfig>
-
