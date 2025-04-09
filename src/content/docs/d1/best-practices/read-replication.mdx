@@ -16,6 +16,12 @@ To checkout D1 read replication, deploy the following Worker code using Sessions
 
    [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/d1-starter-sessions-api-template)
 
+:::note[Tip: Place your database further away for the read replication demo]
+To simulate how read replication can improve a worst case latency scenario, select your primary database location to be in a farther away region (one of the deployment steps).
+
+You can find this in the **Database location hint** dropdown.
+:::
+
 <GitHubCode
 repo="cloudflare/templates"
 file="d1-starter-sessions-api/src/index.ts"
