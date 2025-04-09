@@ -33,6 +33,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`r2 object`](#r2-object) - Manage Workers R2 objects.
 - [`secret`](#secret) - Manage the secret variables for a Worker.
 - [`secret bulk`](#secret-bulk) - Manage multiple secret variables for a Worker.
+- [`secrets-store secret`](#secrets-store-secret) - Manage account secrets within a secrets store.
 - [`workflows`](#workflows) - Manage and configure Workflows.
 - [`tail`](#tail) - Start a session to livestream logs from a deployed Worker.
 - [`pages`](#pages) - Configure Cloudflare Pages.
@@ -728,6 +729,156 @@ Finished processing secrets JSON file:
 ✨ 1 secrets successfully uploaded
 🚨 1 secrets failed to upload
 ```
+
+## `secrets-store secret`
+
+With the release of [Secrets Store](/secrets-store/) in open beta, you can use the following commands to manage your account secrets.
+
+:::note[`--remote` option]
+In order to interact with Secrets Store in production, you should append `--remote` to your command. Without it, your command will default to [local development mode](/workers/local-development/).
+:::
+
+### `create`
+
+Create a secret within a store.
+
+```txt
+wrangler secrets-store secret create <STORE_ID> [OPTIONS]
+```
+
+- `STORE_ID` <Type text="string" /> <MetaInfo text="required" />
+  - The secret store public ID. You can find it and copy from the [Secrets Store tab](https://dash.cloudflare.com/?to=/:account/secrets-store/) on the dashboard.
+- `--name` <Type text="string" /> <MetaInfo text="required" />
+  - A descriptive name for the account-level secret. Cannot contain spaces.
+- `--value` <Type text="string" /> <MetaInfo text="test only" />
+  - Value of the secret.
+	:::caution[Only use for testing]
+	This will leave the secret value in plain-text in terminal history. For real secret values, use the automatic prompt instead. Find an example below.
+	:::
+- `--scopes` <Type text="string" /> <MetaInfo text="required" />
+  - Which services will have access to the account-level secret. Currently, only `workers` is available.
+- `--comment` <Type text="string" /> <MetaInfo text="optional" />
+  - Additional information about the account-level secret.
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Execute the command against the remote Secrets Store. To interact with account-level secrets in production, make sure to append `--remote` to your commands.
+
+The following is an example of using the `create` command to create an account-level secret.
+
+```sh
+npx wrangler secrets-store secret create 8f7a1cdced6342c18d223ece462fd88d --name MY_SECRETS_STORE_SECRET --scopes workers --remote
+```
+
+```sh output
+✓ Enter a secret value: › ***
+
+🔐 Creating secret... (Name: MY_SECRETS_STORE_SECRET, Value: REDACTED, Scopes: workers, Comment: undefined)
+✓ Select an account: › My account
+✅ Created secret! (ID: 13bc7498c6374a4e9d13be091c3c65f1)
+```
+
+### `update`
+
+Update a secret within a store.
+
+```txt
+wrangler secrets-store secret update <STORE_ID> [OPTIONS]
+```
+
+- `STORE_ID` <Type text="string" /> <MetaInfo text="required" />
+  - The ID of the secrets store that contains the secret you are updating.
+- `--secret-id` <Type text="string" /> <MetaInfo text="required" />
+  - The ID of the secret to update.
+- `--value` <Type text="string" /> <MetaInfo text="test only" />
+  - Updated value of the secret.
+	:::caution[Only use for testing]
+	This will leave the secret value in plain-text in terminal history. For real secret values, use the automatic prompt instead.
+	:::
+- `--scopes` <Type text="string" /> <MetaInfo text="required" />
+  - Which services will have access to the account-level secret. Currently, only `workers` is available.
+- `--comment` <Type text="string" /> <MetaInfo text="optional" />
+  - Updated comment for the account-level secret.
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Execute the command against the remote Secrets Store. To interact with account-level secrets in production, make sure to append `--remote` to your commands.
+
+### `duplicate`
+
+Duplicate a secret within a store. Use this command to create a new secret that holds the same secret value as an existing secret.
+
+```txt
+wrangler secrets-store secret duplicate <STORE_ID> [OPTIONS]
+```
+
+- `STORE_ID` <Type text="string" /> <MetaInfo text="required" />
+  - The ID of the secrets store that contains the secret you are duplicating.
+- `--secret-id` <Type text="string" /> <MetaInfo text="required" />
+  - The ID of the secret you are duplicating.
+- `--name` <Type text="string" /> <MetaInfo text="required" />
+  - A name for the new secret. Cannot contain spaces.
+- `--scopes` <Type text="string" /> <MetaInfo text="required" />
+  - Which services will have access to the new account-level secret. Currently, only `workers` is available.
+- `--comment` <Type text="string" /> <MetaInfo text="optional" />
+  - Additional information about the new account-level secret.
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Execute the command against the remote Secrets Store. To interact with account-level secrets in production, make sure to append `--remote` to your commands.
+
+### `get`
+
+Get information on a secret within a store.
+
+```txt
+wrangler secrets-store secret get <STORE_ID> [OPTIONS]
+```
+
+- `STORE_ID` <Type text="string" /> <MetaInfo text="required" />
+  - The ID of the secrets store that contains the secret you want to get.
+- `--secret-id` <Type text="string" /> <MetaInfo text="required" />
+  - The ID of the secret you want to get.
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Execute the command against the remote Secrets Store. To interact with account-level secrets in production, make sure to append `--remote` to your commands.
+
+The following is an example with the expected output:
+
+```sh
+npx wrangler secrets-store secret get 8f7a1cdced6342c18d223ece462fd88d --secret-id 13bc7498c6374a4e9d13be091c3c65f1 --remote
+```
+
+```sh output
+🔐 Getting secret... (ID: 13bc7498c6374a4e9d13be091c3c65f1)
+✓ Select an account: › My account
+| Name                        | ID                                  | StoreID                             | Comment | Scopes  | Status  | Created                | Modified               |
+|-----------------------------|-------------------------------------|-------------------------------------|---------|---------|---------|------------------------|------------------------|
+| MY_SECRETS_STORE_SECRET     | 13bc7498c6374a4e9d13be091c3c65f1    | 8f7a1cdced6342c18d223ece462fd88d    |         | workers | active  | 4/9/2025, 10:06:01 PM  | 4/15/2025, 09:13:05 AM |
+```
+
+### `delete`
+
+Delete a secret within a store.
+
+:::caution
+Before deleting a secret, make sure it is not deployed in any Workers application.
+:::
+
+```txt
+wrangler secrets-store secret delete <STORE_ID> [OPTIONS]
+```
+
+- `STORE_ID` <Type text="string" /> <MetaInfo text="required" />
+  - The ID of the secrets store that contains the secret you are deleting.
+- `--secret-id` <Type text="string" /> <MetaInfo text="required" />
+  - The ID of the secret you are deleting.
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Execute the command against the remote Secrets Store. To interact with account-level secrets in production, make sure to append `--remote` to your commands.
+
+### `list`
+
+List secrets within a store.
+
+```txt
+wrangler secrets-store secret list <STORE_ID>
+```
+
+- `STORE_ID` <Type text="string" /> <MetaInfo text="required" />
+  - The secret store public ID. You can find it and copy from the [Secrets Store tab](https://dash.cloudflare.com/?to=/:account/secrets-store/) on the dashboard.
 
 ## `workflows`
 

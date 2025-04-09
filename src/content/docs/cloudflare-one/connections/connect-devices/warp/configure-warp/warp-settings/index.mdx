@@ -134,11 +134,11 @@ The CGNAT IP assigned to a WARP device is permanent until the device unregisters
 Requires the [Super Administrator](/cloudflare-one/roles-permissions/) role.
 :::
 
-Global WARP override allows administrators to fail open WARP in case of an incident or outage. When you turn on **Global WARP override**, Cloudflare will disconnect all Windows, macOS, and Linux WARP clients that are connected to your Zero Trust organization. This includes end user devices, [WARP Connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/) hosts, and [WARP-to-WARP](/cloudflare-one/connections/connect-networks/private-net/warp-to-warp/) devices. End users will receive a notification on their device and the WARP client will display `The administrator for your account has disconnected WARP`.
+Global WARP override allows administrators to fail open WARP in case of an incident or outage. When you turn on **Global WARP override**, Cloudflare will disconnect all Windows, macOS, and Linux WARP clients that are connected to your Zero Trust organization. This includes end user devices, [WARP Connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/) hosts, and [WARP-to-WARP](/cloudflare-one/connections/connect-networks/private-net/warp-to-warp/) devices. End users will receive a notification on their device and the WARP client will display [`Admin directed disconnect`](/cloudflare-one/connections/connect-devices/warp/troubleshooting/client-errors/#admin-directed-disconnect).
 
 [Auto connect](#auto-connect) and [Lock WARP switch](#lock-warp-switch) will not apply while the global override is on. Additionally, the global override will clear any existing [Admin override](#admin-override) codes. The only way for users to reconnect during a global override is by using a new [Admin override](#admin-override) code. For example, you may want to provide IT staff with a code so that they can test resolution of the incident that led to the global disconnect.
 
-To resume normal operations, turn off **Global WARP override**. If you configured an [Auto connect](#auto-connect) value, the WARP client will automatically reconnect. Otherwise WARP will remain disconnected until the user manually reconnects.
+To resume normal operations, turn off **Global WARP override**. The WARP client will automatically reconnect.
 
 ## Device settings
 

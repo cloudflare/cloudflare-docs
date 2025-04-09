@@ -30,6 +30,25 @@ The following is a non-exhaustive list of database providers:
 | Planetscale     | ✅        | All                      | Planetscale currently runs MySQL 8.x                                                                                     |
 | MariaDB         | ✅        | All                      | MySQL-compatible.                                                                                                        |
 
+## Supported TLS (SSL) modes
+
+Hyperdrive supports the following [PostgreSQL TLS (SSL)](https://www.postgresql.org/docs/current/libpq-ssl.html) connection modes when connecting to your origin database:
+
+| Mode          | Supported          | Details                                                                                                                                   |
+| ------------- | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `none`        | No                 | Hyperdrive does not support insecure plain text connections.                                                                              |
+| `prefer`      | No (use `require`) | Hyperdrive will always use TLS.                                                                                                           |
+| `require`     | Yes (default)      | TLS is required, and server certificates are validated (based on WebPKI).                                                                 |
+| `verify-ca`   | Yes                | Verifies the server's TLS certificate is signed by a root CA on the client. This ensures the server has a certificate the client trusts.  |
+| `verify-full` | Yes                | Identical to `verify-ca`, but also requires the database hostname must match a Subject Alternative Name (SAN) present on the certificate. |
+
+Refer to [SSL/TLS certificates](/hyperdrive/configuration/tls-ssl-certificates-for-hyperdrive/) documentation for details on how to configure `verify-ca` or `verify-full` TLS (SSL) modes for Hyperdrive.
+:::note
+
+Hyperdrive support for `verify-ca` and `verify-full` is not available for MySQL (beta).
+
+:::
+
 ## Supported PostgreSQL authentication modes
 
 Hyperdrive supports the following [authentication modes](https://www.postgresql.org/docs/current/auth-methods.html) for connecting to PostgreSQL databases:

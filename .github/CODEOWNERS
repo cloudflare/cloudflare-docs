@@ -203,6 +203,7 @@
 /src/content/docs/dmarc-management/ @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 /src/content/docs/firewall/ @pedrosousa @cloudflare/firewall @cloudflare/pcx-technical-writing
 /src/content/docs/page-shield/ @pedrosousa @cloudflare/pcx-technical-writing
+/src/content/docs/secrets-store/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
 /src/content/docs/security-center/ @jason-cf @cloudflare/pcx-technical-writing
 /src/content/docs/ssl/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
 /src/content/docs/waf/ @pedrosousa @cloudflare/firewall @cloudflare/pcx-technical-writing

@@ -264,7 +264,7 @@
 /cache/how-to/edge-browser-cache-ttl/create-page-rules/ /cache/how-to/cache-rules/ 301
 
 # Cloudflare Calls
-/calls/turn/overview/ /calls/turn/ 301
+/calls/turn/overview/ /realtime/turn/ 301
 
 # china network
 /support/about-cloudflare/enterprise-documentation/understanding-and-configuring-an-icp-number/ /china-network/concepts/icp/ 301
@@ -1948,3 +1948,6 @@
 /fundamentals/notifications/* /notifications/:splat 301
 /support/other-languages/* /support/ 301
 /support/speed/* /speed/ 301
+
+# Calls
+/calls/* /realtime/:splat 301

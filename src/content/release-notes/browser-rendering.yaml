@@ -10,7 +10,7 @@ entries:
     description: |-
       * Browser Rendering now has a new free tier.
       * The [REST API](/browser-rendering/rest-api/) is Generally Available.
-      * Released new endpoints [`/json`](/browser-rendering/rest-api/json-endpoint/), [`/links`]((/browser-rendering/rest-api/links-endpoint/), and [`/markdown`](/browser-rendering/rest-api/markdown-endpoint/).
+      * Released new endpoints [`/json`](/browser-rendering/rest-api/json-endpoint/), [`/links`](/browser-rendering/rest-api/links-endpoint/), and [`/markdown`](/browser-rendering/rest-api/markdown-endpoint/).
   - publish_date: "2025-04-04"
     title: Playwright support
     description: |-

@@ -1,0 +1,36 @@
+---
+title: Hyperdrive now supports custom TLS/SSL certificates
+description: You can now configure custom certificates for secure database connections with Hyperdrive, including both server certificate verification and client certificates
+products:
+  - hyperdrive
+date: 2025-04-09T17:00:00Z
+---
+
+import { Code } from "~/components";
+
+Hyperdrive now supports more SSL/TLS security options for your database connections:
+
+- Configure Hyperdrive to verify server certificates with `verify-ca` or `verify-full` SSL modes and protect against man-in-the-middle attacks
+- Configure Hyperdrive to provide client certificates to the database server to authenticate itself (mTLS) for stronger security beyond username and password
+
+Use the new `wrangler cert` commands to create certificate authority (CA) certificate bundles or client certificate pairs:
+
+```bash
+# Create CA certificate bundle
+npx wrangler cert upload certificate-authority --ca-cert your-ca-cert.pem --name your-custom-ca-name
+
+# Create client certificate pair
+npx wrangler cert upload mtls-certificate --cert client-cert.pem --key client-key.pem --name your-client-cert-name
+```
+
+Then create a Hyperdrive configuration with the certificates and desired SSL mode:
+
+```bash
+npx wrangler hyperdrive create your-hyperdrive-config \
+  --connection-string="postgres://user:password@hostname:port/database" \
+  --ca-certificate-id <CA_CERT_ID> \
+  --mtls-certificate-id <CLIENT_CERT_ID>
+  --sslmode verify-full
+```
+
+Learn more about [configuring SSL/TLS certificates for Hyperdrive](/hyperdrive/configuration/tls-ssl-certificates-for-hyperdrive/) to enhance your database security posture.

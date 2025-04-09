@@ -421,7 +421,7 @@ As this plugin was created by an outside party, we can't provide technical suppo
 
 If you use the hosting control panel VestaCP, you have both Nginx and Apache running on your server. Requests are proxied through Nginx before going to Apache.
 
-Because of this Nginx proxy, you actually need to the instructions to configure Nginx to return the real visitor IP address. [mod_remoteip](https://httpd.apache.org/docs/2.4/mod/mod_remoteip.html) for Apache is not needed unless you disable the Nginx server for some requests. Adding [mod_remoteip](https://support.cloudflare.com/hc/articles/200170786#C5XWe97z77b3XZV) to Apache will not conflict with the Nginx server configuration.
+Because of this Nginx proxy, you actually need to follow the instructions to configure Nginx to return the real visitor IP address. [mod_remoteip](https://httpd.apache.org/docs/2.4/mod/mod_remoteip.html) for Apache is not needed unless you disable the Nginx server for some requests. Adding [mod_remoteip](https://httpd.apache.org/docs/2.4/mod/mod_remoteip.html) to Apache will not conflict with the Nginx server configuration.
 
 ### node.js
 
