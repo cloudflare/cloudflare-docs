@@ -38,7 +38,7 @@ if (json) {
 	const jsonLines = JSON.stringify(json, null, "\t\t").split("\n");
 	jsonLines[jsonLines.length - 1] = "\t" + jsonLines[jsonLines.length - 1];
 
-	lines.push(`\t--json '${jsonLines.join("\n")}'`);
+	lines.push(`\t--json '${jsonLines.join("\n").replaceAll("'", "'\\''")}'`);
 }
 
 if (form) {
