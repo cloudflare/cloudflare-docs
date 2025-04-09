@@ -1,5 +1,5 @@
 ---
-updated: 2025-02-24
+updated: 2025-04-09
 difficulty: Intermediate
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
@@ -15,11 +15,9 @@ languages:
 
 import { Render, PackageManagers, Details, WranglerConfig } from "~/components";
 
-In this tutorial, you will learn how to ingest clickstream data from your website, using Pipelines. We'll also use Pipelines to load this data into an [R2 bucket](/r2/). You will also learn how to connect the bucket to MotherDuck. You will then query the data using MotherDuck.
+In this tutorial, you will learn how to ingest clickstream data to a [R2 bucket](/r2) using Pipelines. You will use the Pipeline binding to send the clickstream data to the R2 bucket from your Worker. You will also learn how to connect the bucket to MotherDuck. You will then query the data using MotherDuck.
 
 For this tutorial, you will build a landing page of an e-commerce website. A user can click on the view button to view the product details or click on the add to cart button to add the product to their cart.
-
-We will use a pipeline to ingest these click events, and load into an R2 bucket. We'll then use MotherDuck to query the events.
 
 ## Prerequisites
 
@@ -50,7 +48,7 @@ Create a new Worker project by running the following commands:
     	product="workers"
     	params={{
     	category: "hello-world",
-    	type: "Worker only",
+    	type: "Worker + Assets",
     	lang: "TypeScript",
     	}}
     />
@@ -61,20 +59,9 @@ Navigate to the `e-commerce-pipelines` directory:
 cd e-commerce-pipelines
 ```
 
-## 2. Create the frontend
+## 2. Update the frontend
 
-Using Static Assets, you can serve the frontend of your application from your Worker. To use Static Assets, you need to add the required bindings to your `wrangler.toml` file.
-
-<WranglerConfig>
-
-```toml
-[assets]
-directory = "public"
-```
-
-</WranglerConfig>
-
-Next, create a `public` directory in the root of your project. Add an `index.html` file to the `public` directory. The `index.html` file should contain the following HTML code:
+Using Static Assets, you can serve the frontend of your application from your Worker. The above step creates a new Worker project with a default `public/index.html` file. Update the `public/index.html` file with the following HTML code:
 
 <details>
 	<summary>Select to view the HTML code</summary>
@@ -308,33 +295,64 @@ The `handleClick` function does the following:
 - Logs any errors that occur.
 
 ## 4. Create an R2 bucket
-We'll create a new R2 bucket to use as the sink for our pipeline. Create a new r2 bucket `clickstream-data` using the [Wrangler CLI](/workers/wrangler/):
+
+You will create a new R2 bucket to use as the sink for our pipeline. Create a new r2 bucket `clickstream-data` using the [Wrangler CLI](/workers/wrangler/):
 
 ```sh
 npx wrangler r2 bucket create clickstream-data
 ```
 
 ## 5. Create a pipeline
-You need to create a new pipeline and connect it to the R2 bucket we created in the previous step.
+You need to create a new pipeline and connect it to the R2 bucket you created in the previous step.
 
 Create a new pipeline `clickstream-pipeline` using the [Wrangler CLI](/workers/wrangler/):
 
 ```sh
-npx wrangler pipelines create clickstream-pipeline --r2-bucket clickstream-data
+npx wrangler pipelines create clickstream-pipeline --r2-bucket clickstream-data --compression none --batch-max-seconds 5
 ```
 
 When you run the command, you will be prompted to authorize Cloudflare Workers Pipelines to create R2 API tokens on your behalf. These tokens are required by your Pipeline. Your Pipeline uses these tokens when loading data into your bucket. You can approve the request through the browser link which will open automatically.
 
+:::note
+The above command creates a pipeline using two optional flags: `--compression none`, and `--batch-max-seconds 5`.
+
+With these flags, your pipeline will deliver an uncompressed file of data to your R2 bucket every 5 seconds.
+
+These flags are useful for testing, but we recommend keeping the default settings in a production environment.
+:::
+
 ```output
-🌀 Authorizing R2 bucket clickstream-data
-🌀 Creating pipeline named "clickstream-pipeline"
-✅ Successfully created pipeline "clickstream-pipeline" with id <PIPELINES_ID>
+✅ Successfully created Pipeline "clickstream-pipeline" with ID <PIPELINE_ID>
+
+Id:    <PIPELINE_ID>
+Name:  clickstream-pipeline
+Sources:
+  HTTP:
+    Endpoint:        https://<PIPELINE_ID>.pipelines.cloudflare.com
+    Authentication:  off
+    Format:          JSON
+  Worker:
+    Format:  JSON
+Destination:
+  Type:         R2
+  Bucket:       clickstream-data
+  Format:       newline-delimited JSON
+  Compression:  NONE
+  Batch hints:
+    Max bytes:     100 MB
+    Max duration:  300 seconds
+    Max records:   10,000,000
+
+🎉 You can now send data to your Pipeline!
+
+Send data to your Pipeline's HTTP endpoint:
+
+curl "https://<PIPELINE_ID>.pipelines.cloudflare.com" -d '[{"foo": "bar"}]'
 ```
 
 ## 5. Send clickstream data to your pipeline
-We've setup the frontend of our application to make a call to the `/api/clickstream` route, everytime the user clicks on one of the
 
-The front-end of the application makes a call to the `/api/clickstream` endpoint to send the clickstream data to your pipeline. The `/api/clickstream` endpoint is handled by a Worker in the `src/index.ts` file.
+You have setup the frontend of your application to make a call to the `/api/clickstream` route, everytime the user clicks on one of the buttons. The application makes a call to the `/api/clickstream` endpoint to send the clickstream data to your pipeline. The `/api/clickstream` endpoint is handled by a Worker in the `src/index.ts` file.
 
 You will use the pipelines binding to send the clickstream data to your pipeline. In your `wrangler` file, add the following bindings:
 
@@ -342,7 +360,7 @@ You will use the pipelines binding to send the clickstream data to your pipeline
 
 ```toml
 [[pipelines]]
-binding = "MY_PIPELINE"
+binding = "PIPELINE"
 pipeline = "clickstream-pipeline"
 ```
 
@@ -352,7 +370,7 @@ Next, update the type in the `worker-configuration.d.ts` file. Add the following
 
 ```ts title="worker-configuration.d.ts"
 interface Env {
-	MY_PIPELINE: Pipeline;
+	PIPELINE: Pipeline;
 }
 ```
 
@@ -366,7 +384,7 @@ export default {
 		if (pathname === "/api/clickstream" && method === "POST") {
 			const body = (await request.json()) as { data: any };
 			try {
-				await env.MY_PIPELINE.send([body.data]);
+				await env.PIPELINE.send([body.data]);
 				return new Response("OK", { status: 200 });
 			} catch (error) {
 				console.error(error);
@@ -472,4 +490,4 @@ This project serves as a foundation for building scalable, data-driven applicati
 
 For your next steps, consider exploring more advanced querying techniques with MotherDuck, implementing real-time analytics, or integrating additional Cloudflare services to further optimize your application's performance and security.
 
-You can find the source code of the application in the [GitHub repository](https://github.com/harshil1712/e-commerce-clickstream).
+You can find the source code of the application in the [GitHub repository](https://github.com/harshil1712/cf-pipelines-bindings-demo).

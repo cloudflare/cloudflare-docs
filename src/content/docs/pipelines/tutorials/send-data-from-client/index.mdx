@@ -1,5 +1,5 @@
 ---
-updated: 2025-04-06
+updated: 2025-04-09
 difficulty: Intermediate
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
@@ -49,7 +49,7 @@ Create a new Worker project by running the following commands:
     	product="workers"
     	params={{
     	category: "hello-world",
-    	type: "Worker only",
+    	type: "Worker + Assets",
     	lang: "TypeScript",
     	}}
     />
@@ -60,20 +60,9 @@ Navigate to the `e-commerce-pipelines-client-side` directory:
 cd e-commerce-pipelines-client-side
 ```
 
-## 2. Create the website frontend
+## 2. Update the website frontend
 
-Using [Workers Static Assets](/workers/static-assets/), you can serve the frontend of your application from your Worker. To use Static Assets, you need to add the required bindings to your `wrangler.toml` file.
-
-<WranglerConfig>
-
-```toml
-[assets]
-directory = "public"
-```
-
-</WranglerConfig>
-
-Next, create a `public` directory and add an `index.html` file. The `index.html` file should contain the following HTML code:
+Using Static Assets, you can serve the frontend of your application from your Worker. The above step creates a new Worker project with a default `public/index.html` file. Update the `public/index.html` file with the following HTML code:
 
 <details>
 	<summary>Select to view the HTML code</summary>
@@ -237,7 +226,7 @@ Sources:
     Format:  JSON
 Destination:
   Type:         R2
-  Bucket:       apr-6
+  Bucket:       clickstream-bucket
   Format:       newline-delimited JSON
   Compression:  NONE
   Batch hints:
@@ -436,8 +425,6 @@ Once you have collected the raw events in R2, you might want to query the events
 You can connect the bucket to MotherDuck in several ways, which you can learn about from the [MotherDuck documentation](https://motherduck.com/docs/integrations/cloud-storage/cloudflare-r2/). In this tutorial, you will connect the bucket to MotherDuck using the MotherDuck dashboard.
 
 ### Connect your bucket to MotherDuck
-
-Before connecting the bucket to MotherDuck, you need to obtain the Access Key ID and Secret Access Key for the R2 bucket. You can find the instructions to obtain the keys in the [R2 API documentation](/r2/api/tokens/).
 
 Before connecting the bucket to MotherDuck, you need to obtain the Access Key ID and Secret Access Key for the R2 bucket. You can find the instructions to obtain the keys in the [R2 API documentation](/r2/api/tokens/).
 
