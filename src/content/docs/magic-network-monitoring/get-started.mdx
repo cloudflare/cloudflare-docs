@@ -77,14 +77,14 @@ AWS VPC flow logs can only be configured via the Cloudflare API for Magic Networ
 
 1. Create an authorization token via [Cloudflare's API for Magic Network Monitoring](/api/resources/magic_network_monitoring/subresources/vpc_flows/subresources/tokens/methods/create/). This authorization token allows Cloudflare to identify and verify the account sending VPC flow logs to our endpoint.
 
-<APIRequest
-  path="/accounts/{account_id}/mnm/vpc-flows/token"
-  method="POST"
-/>
+	<APIRequest
+		path="/accounts/{account_id}/mnm/vpc-flows/token"
+		method="POST"
+	/>
 
 2. Set the `HTTP Headers - X-Amz-Firehose-Access-Key` in the stream configuration for the authorization token generated in the previous step.
 
-3. Send your AWS Firehose VPC flow log stream towards `https://aws-flow-logs.cloudflare.com/`
+3. Send your AWS Firehose VPC flow log stream towards `https://aws-flow-logs.cloudflare.com/`.
 
 4. Select all of the AWS VPC flow log data fields that you want to send to Cloudflare. You should select the highest number AWS VPC flow log version that supports all the fields they want to export to Cloudflare (refer to [AWS flow log documentation](https://docs.aws.amazon.com/vpc/latest/userguide/flow-log-records.html) for more information). For example, if you need a version 8 field like `reject-reason`, you must export all fields from versions 1 through 8. Cloudflare supports all seven templates for AWS VPC Flow logs.
 
