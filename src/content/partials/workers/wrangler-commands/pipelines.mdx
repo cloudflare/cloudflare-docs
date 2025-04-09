@@ -27,7 +27,7 @@ wrangler pipelines create <name> --r2 <r2-bucket-name> [OPTIONS]
 - `--cors-origins` <Type text="array" /> <MetaInfo text="optional" />
 	- CORS Origin allowlist for HTTP endpoint. Allows `*`. Defaults to an empty array.
 - `--batch-max-mb` <Type text="number" /> <MetaInfo text="optional" />
-	- The maximum size a batch before data is written in megabytes. Defaults to `100`. Must be between `1` and `100`.
+	- The maximum size of a batch in megabytes before data is written. Defaults to `100`. Must be between `1` and `100`.
 - `--batch-max-rows` <Type text="number" /> <MetaInfo text="optional" />
 	- The maximum number of rows in a batch before data is written. Defaults to `10000000`. Must be between `1` and `10000000`.
 - `--batch-max-seconds` <Type text="number" /> <MetaInfo text="optional" />
@@ -62,7 +62,7 @@ wrangler pipelines update <name> [OPTIONS]
 - `--cors-origins` <Type text="array" /> <MetaInfo text="optional" />
 	- CORS Origin allowlist for HTTP endpoint. Allows `*`. Defaults to an empty array.
 - `--batch-max-mb` <Type text="number" /> <MetaInfo text="optional" />
-	- The maximum size a batch before data is written in megabytes. Defaults to `100`. Must be between `1` and `100`.
+	- The maximum size of a batch in megabytes before data is written. Defaults to `100`. Must be between `1` and `100`.
 - `--batch-max-rows` <Type text="number" /> <MetaInfo text="optional" />
 	- The maximum number of rows in a batch before data is written. Defaults to `10000000`. Must be between `1` and `10000000`.
 - `--batch-max-seconds` <Type text="number" /> <MetaInfo text="optional" />
