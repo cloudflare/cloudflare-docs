@@ -23,26 +23,38 @@ import { AnchorHeading, Aside, Card, Code, GlossaryTooltip, Markdown, Render, Ta
 
 { props.magicWord === "hardware" && (
   <>
-    <p>You need to purchase <a href="https://www.cloudflare.com/magic-wan/">Magic WAN</a> before you can purchase and use the Magic WAN Connector. The Magic WAN Connector can function as your primary edge device for your network, or be deployed in-line with existing network gear.</p>
-		<p>You also need to purchase a Magic WAN Connector before you can start configuring your settings in the Cloudflare dashboard. After buying a Magic WAN Connector, the device will be registered with your Cloudflare account and show up in your Cloudflare dashboard.</p>
-		<p>Contact your account representative to learn more about purchasing options for the Magic WAN Connector device.</p>
+		<Markdown
+		text={`
+		You need to purchase [Magic WAN](https://www.cloudflare.com/magic-wan/) before you can purchase and use the Magic WAN Connector. The Magic WAN Connector can function as your primary edge device for your network, or be deployed in-line with existing network gear.
+
+		You also need to purchase a Magic WAN Connector before you can start configuring your settings in the Cloudflare dashboard. After buying a Magic WAN Connector, the device will be registered with your Cloudflare account and show up in your Cloudflare dashboard.
+
+		Contact your account representative to learn more about purchasing options for the Magic WAN Connector device.
+		`}
+		inline={false}
+		/>
   </>
   )
 }
 
 { props.magicWord === "virtual" && (
   <>
-    <p>Before you can install Virtual Connector, you need an Enterprise account with Magic WAN enabled. Additionally, you need to have a VMware host with sufficient compute, memory, and storage to run the virtual machine with Virtual Connector. This includes:</p>
-		<ul>
-    	<li>Intel x86 CPU architecture</li>
-    	<li>ESXi hypervisor 7.0U1 or higher</li>
-    	<li>4 virtual CPUs per virtual connector (We recommend deployment with a 1:1 virtual CPU to physical core allocation to avoid CPU over contention which will cause packet loss.)</li>
-    	<li>8 GB of RAM per virtual connector</li>
-    	<li>8 GB of disk per virtual connector</li>
-    	<li>One vSwitch port group or VLAN with access to the Internet (for example, through a WAN)</li>
-    	<li>One or more vSwitch port group or VLAN that will be the internal LAN</li>
-		</ul>
-		<p>Refer to <a href="https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.esxi.install.doc/GUID-B2F01BF5-078A-4C7E-B505-5DFFED0B8C38.html" target="_blank" rel="noopener noreferrer">VMware's documentation</a> for more information on how to install ESXi and configure a virtual machine.</p>
+		<Markdown
+		text={`
+		Before you can install Virtual Connector, you need an Enterprise account with Magic WAN enabled. Additionally, you need to have a VMware host with sufficient compute, memory, and storage to run the virtual machine with Virtual Connector. This includes:
+    - Intel x86 CPU architecture
+    - ESXi hypervisor 7.0U1 or higher
+    - 4 virtual CPUs per virtual connector (We recommend deployment with a 1:1 virtual CPU to physical core allocation to avoid CPU over contention which will cause packet loss.)
+    -	8 GB of RAM per virtual connector
+    -	8 GB of disk per virtual connector
+    - One vSwitch port group or VLAN with access to the Internet (for example, through a WAN)
+    -	One or more vSwitch port group or VLAN that will be the internal LAN
+
+		Refer to [VMware's documentation](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.esxi.install.doc/GUID-B2F01BF5-078A-4C7E-B505-5DFFED0B8C38.html) for more information on how to install ESXi and configure a virtual machine.
+		`}
+		inline={false}
+		/>
+
   </>
   )
 }
