@@ -28,18 +28,13 @@ Hyperdrive supports 3 common encryption [TLS/SSL modes](https://www.postgresql.o
 
 - `require` (default): TLS is required for encrypted connectivity and server certificates are validated (based on WebPKI).
 - `verify-ca`: Hyperdrive will verify that the database server is trustworthy by verifying that the certificates of the server have been signed by the expected root certificate authority or intermediate certificate authority.
-- `verify-full`: Identical to `verify-ca`, but Hyperdrive also requires the database hostname must match a Subject Alternative Name (SAN) present on the certificate.
+- `verify-full`: Identical to `verify-ca`, but Hyperdrive also requires the database hostname to match a Subject Alternative Name (SAN) present on the certificate.
 
-By default, all Hyperdrive configurations are encrypted with SSL/TLS (`require`). This requires
-that your database is configured to accept encrypted connections (with SSL/TLS).
+By default, all Hyperdrive configurations are encrypted with SSL/TLS (`require`). This requires your database to be configured to accept encrypted connections (with SSL/TLS).
 
-You can configure Hyperdrive to use
-`verify-ca` and `verify-full` for a more stringent security configuration, which
-provide additional verification checks of the server's certificates. This
-helps guard against man-in-the-middle attacks.
+You can configure Hyperdrive to use `verify-ca` and `verify-full` for a more stringent security configuration, which provide additional verification checks of the server's certificates. This helps guard against man-in-the-middle attacks.
 
-To configure Hyperdrive to verify the certificates of the server, you must provide Hyperdrive with the certificate of the root certificate authority (CA) or an intermediate certificate which
-has been used to sign the certificate of your database.
+To configure Hyperdrive to verify the certificates of the server, you must provide Hyperdrive with the certificate of the root certificate authority (CA) or an intermediate certificate which has been used to sign the certificate of your database.
 
 ### Step 1: Upload your the root certificate authority (CA) certificate
 
@@ -65,8 +60,7 @@ You must use the CA certificate bundle that is for your specific region. You can
 
 ### Step 2: Create your Hyperdrive configuration using the CA certificate and the SSL mode
 
-Once your CA certificate has been created, you can create a Hyperdrive configuration with the newly created
-certificates using either the dashboard or Wrangler. You must also specify the SSL mode of `verify-ca` or `verify-full` to use.
+Once your CA certificate has been created, you can create a Hyperdrive configuration with the newly created certificates using either the dashboard or Wrangler. You must also specify the SSL mode of `verify-ca` or `verify-full` to use.
 
 <Tabs>
 
@@ -86,7 +80,7 @@ From the dashboard, follow these steps to create a Hyperdrive configuration with
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/hyperdrive), navigate to **Storage & Databases > Hyperdrive** and click **Create configuration**.
 2. Select **Server certificates**.
 3. Specify a SSL mode of **Verify CA** or **Verify full**
-4. Select the SSL certificate of the certificate authority (CA) of your database that you've previously uploaded with Wrangler.
+4. Select the SSL certificate of the certificate authority (CA) of your database that you have previously uploaded with Wrangler.
 
 </TabItem>
 
@@ -94,9 +88,7 @@ From the dashboard, follow these steps to create a Hyperdrive configuration with
 
 
 
-When creating the Hyperdrive configuration, Hyperdrive will attempt to connect to the database with the
-provided credentials. If the command provides successful results, you have properly configured your Hyperdrive
-configuration to verify the certificates provided by your database server.
+When creating the Hyperdrive configuration, Hyperdrive will attempt to connect to the database with the provided credentials. If the command provides successful results, you have properly configured your Hyperdrive configuration to verify the certificates provided by your database server.
 
 :::note
 
@@ -106,11 +98,9 @@ Hyperdrive will attempt to connect to your database with the provided credential
 
 ## Client certificates
 
-Your database can be configured to [verify a certificate provided by the client](https://www.postgresql.org/docs/current/libpq-ssl.html#LIBPQ-SSL-CLIENTCERT), in this case, Hyperdrive. This serves
-as an additional factor to authenticate clients (in addition to the username and password).
+Your database can be configured to [verify a certificate provided by the client](https://www.postgresql.org/docs/current/libpq-ssl.html#LIBPQ-SSL-CLIENTCERT), in this case, Hyperdrive. This serves as an additional factor to authenticate clients (in addition to the username and password).
 
-For the database server to be able to verify the client certificates, Hyperdrive must be configured to provide a certificate
-file (`client-cert.pem`) and a private key with which the certificate was generated (`private-key.pem`).
+For the database server to be able to verify the client certificates, Hyperdrive must be configured to provide a certificate file (`client-cert.pem`) and a private key with which the certificate was generated (`private-key.pem`).
 
 ### Step 1: Upload your client certificates (mTLS certificates)
 
@@ -157,9 +147,7 @@ From the dashboard, follow these steps to create a Hyperdrive configuration with
 </Tabs>
 
 
-When Hyperdrive will connect to your database, it will provide a client certificate signed with the private key to the database server. This will allow the database server to confirm that the
-client, in this case Hyperdrive, has both the private key and the client certificate. By using client certificates, you can add an additional authentication layer for your database that ensures
-that only Hyperdrive can connect to it.
+When Hyperdrive connects to your database, it will provide a client certificate signed with the private key to the database server. This allows the database server to confirm that the client, in this case Hyperdrive, has both the private key and the client certificate. By using client certificates, you can add an additional authentication layer for your database to ensures that only Hyperdrive can connect to it.
 
 :::note
 
