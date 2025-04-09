@@ -67,11 +67,7 @@ Create rules to analyze data for a specific set of destinations or to implement 
 
 ### 1. Verify cloud flow log capabilities
 
-Verify that your AWS account is capable of exporting AWS VPC flow logs via AWS Firehose.
-
-:::note
-Magic Network Monitoring only supports VPC flow log ingestion for AWS.
-:::
+Verify that your AWS account is capable of exporting AWS VPC flow logs via AWS Firehose. Today, Magic Network Monitoring only supports VPC flow log ingestion for AWS.
 
 ### 2. Setup AWS Firehose to export VPC flow logs to Cloudflare
 
@@ -96,6 +92,6 @@ cloudflared access curl https://fbm-config.cfdata.org/accounts/<account?id>/vpc-
 After setting up AWS Firehose to send VPC flow logs to Magic Network Monitoring, you can confirm that Cloudflare is receiving the logs as expected by searching for your cloud traffic data in the analytics page of the Magic Network Monitoring dashboard.
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account
-2. Go to** Analytics & Logs** > **Magic Monitoring**.
+2. Go to **Analytics & Logs** > **Magic Monitoring**.
 
 The default view will be the analytics dashboard for Magic Network Monitoring.
