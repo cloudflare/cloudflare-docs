@@ -731,6 +731,58 @@ Finished processing secrets JSON file:
 🚨 1 secrets failed to upload
 ```
 
+## `secrets-store store`
+
+With the release of [Secrets Store](/secrets-store/) in open beta, you can use the following commands to manage your store.
+
+:::note[store limitation]
+Each account only supports one store in beta.
+:::
+
+### create
+
+Create a store within Secrets Store.
+
+```txt
+wrangler secerets-store store create <name>
+```
+
+- `name` <Type text="string" /> <MetaInfo text="required" />
+  - A descriptive name for the account-level secret. Cannot contain spaces.
+
+The following is an example of using the `create` command to create a store.
+
+```txt
+wrangler secrets-store store create default --remote
+```
+
+```sh output
+🔐 Creating store... (Name: default)
+✅ Created store! (Name: default, ID: 2e2a82d317134506b58defbe16982d54)
+```
+
+### delete 
+
+Delete a store within Secrets Store.
+
+```txt
+wrangler secerets-store store delete <STORE_ID>
+```
+
+- `STORE_ID` <Type text="string" /> <MetaInfo text="required" />
+  - The secret store public ID. You can find it and copy from the [Secrets Store tab](https://dash.cloudflare.com/?to=/:account/secrets-store/) on the dashboard.
+
+The following is an example of using the `create` command to create a store.
+
+```sh
+npx wrangler secrets-store store delete d2dafaeac9434de2b6d08b292ce08211
+```
+
+```sh output
+🔐 Deleting store... (Name: d2dafaeac9434de2b6d08b292ce08211)
+✅ Deleted store! (ID: d2dafaeac9434de2b6d08b292ce08211)
+```
+
 ## `secrets-store secret`
 
 With the release of [Secrets Store](/secrets-store/) in open beta, you can use the following commands to manage your account secrets.
