@@ -81,7 +81,34 @@ Providing the resulting token value to your Iceberg engine gives it the ability 
 
 ### Create API token via API
 
-To learn how to create API tokens for R2 Data Catalog using the API, including required permission groups and usage examples, refer to the [Create API tokens via API documentation](/r2/api/tokens/#create-api-tokens-via-api).
+To create an API token programmatically for use with R2 Data Catalog, you'll need to specify both R2 Data Catalog and R2 storage permission groups in your [Access Policy](/r2/api/tokens/#access-policy).
+
+#### Example Access Policy
+
+```json
+[
+	{
+		"id": "f267e341f3dd4697bd3b9f71dd96247f",
+		"effect": "allow",
+		"resources": {
+			"com.cloudflare.edge.r2.bucket.4793d734c0b8e484dfc37ec392b5fa8a_default_my-bucket": "*",
+			"com.cloudflare.edge.r2.bucket.4793d734c0b8e484dfc37ec392b5fa8a_eu_my-eu-bucket": "*"
+		},
+		"permission_groups": [
+			{
+				"id": "d229766a2f7f4d299f20eaa8c9b1fde9",
+				"name": "Workers R2 Data Catalog Write"
+			},
+			{
+				"id": "2efd5506f9c8494dacb1fa10a3e7d5b6",
+				"name": "Workers R2 Storage Bucket Item Write"
+			}
+		]
+	}
+]
+```
+
+To learn more about how to create API tokens for R2 Data Catalog using the API, including required permission groups and usage examples, refer to the [Create API tokens via API documentation](/r2/api/tokens/#create-api-tokens-via-api).
 
 ## Learn more
 
