@@ -716,7 +716,10 @@
 /learning-paths/cybersafe/concepts/what-is-area1/ /learning-paths/cybersafe/concepts/what-is-email-security/ 301
 /learning-paths/cybersafe/area1-onboarding/ /learning-paths/cybersafe/email-security-onboarding/ 301
 
-
+## zero-trust-web access / clientless-access
+/learning-paths/zero-trust-web-access/concepts/reverse-proxy-server/ https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/ 301
+/zero-trust-web-access/concepts/zero-trust/ https://www.cloudflare.com/learning/security/glossary/what-is-zero-trust/ 301
+/learning-paths/zero-trust-web-access/concepts/zero-trust-web-access/ /learning-paths/zero-trust-web-access/concepts/clientless-access/ 301
 
 ## dns-filtering / secure-internet-traffic
 /learning-paths/dns-filtering/ /learning-paths/secure-internet-traffic/ 301
