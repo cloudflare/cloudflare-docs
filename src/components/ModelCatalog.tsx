@@ -80,6 +80,10 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 						return "Function calling";
 					}
 
+					if (property_id === "async_queue" && value === "true") {
+						return "Batch";
+					}
+
 					return [];
 				})
 				.filter((p) => Boolean(p)),
@@ -100,6 +104,10 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 
 						if (property_id === "function_calling" && value === "true") {
 							return "Function calling";
+						}
+
+						if (property_id === "async_queue" && value === "true") {
+							return "Batch";
 						}
 
 						return [];
