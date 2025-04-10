@@ -13,7 +13,7 @@ This guide will walk you through the concepts behind asynchronous batch processi
 
 Asynchronous batch processing lets you send a collection (batch) of inference requests in a single call. Instead of expecting immediate responses for every request, the system queues them for processing and returns the results later.
 
-When you send a batch request, the API immediately acknowledges receipt with a status like `"queued"` and provides a unique `request_id`. This ID is later used to poll for the final responses once the processing is complete.
+When you send a batch request, the API immediately acknowledges receipt with a status like `queued` and provides a unique `request_id`. This ID is later used to poll for the final responses once the processing is complete.
 
 ## 2. Prerequisites and setup
 
