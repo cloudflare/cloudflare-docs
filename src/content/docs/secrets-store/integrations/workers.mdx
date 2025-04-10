@@ -20,13 +20,13 @@ This is different from Workers [Variables and Secrets](/workers/configuration/se
 
 If [using the Dashboard](#via-dashboard), make sure you already have a Workers application. Refer to the [Workers get started](/workers/get-started/dashboard/) for guidance.
 
-You should also have a store created under the Secrets Store tab on the Dashboard. The default store in your account is automatically created when a user with [Super Administrator or Secrets Store Admin role](/secrets-store/access-control/) interacts with it.
+You should also have a store created under the Secrets Store tab on the Dashboard. The first store in your account is created automatically when a user with [Super Administrator or Secrets Store Admin role](/secrets-store/access-control/) interacts with it.
 
-You can also use the [Wrangler command](/workers/wrangler/commands/#secrets-store-store) `secrets-store store create <name>` to create your default store. 
+You can also use the [Wrangler command](/workers/wrangler/commands/#secrets-store-store) `secrets-store store create <name>` to create your first store.
 
 ## 1. Set up account secrets in Secrets Store
 
-If there are no account secrets yet, follow the steps below. You must have a [Super Administrator or a Secrets Store Admin role](/secrets-store/access-control/) within your Cloudflare account.
+If there are no secrets in the store yet, follow the steps below. You must have a [Super Administrator or a Secrets Store Admin role](/secrets-store/access-control/) within your Cloudflare account.
 
 :::note
 You may also add account secrets directly from the Workers settings on the dashboard. You can skip to [step 2](#via-dashboard) to do that.
@@ -38,13 +38,13 @@ Use the [Wrangler command](/workers/wrangler/commands/#secrets-store-secret) `se
 To use the following example, replace the store ID and secret name by your actual data. You can find and copy the store ID from the [Secrets Store tab](https://dash.cloudflare.com/?to=/:account/secrets-store/) on the dashboard. A secret name cannot contain spaces.
 
 ```sh
-npx wrangler secrets-store secret create <STORE_ID> --name MY_SECRETS_STORE_SECRET --scopes workers --remote
+npx wrangler secrets-store secret create <STORE_ID> --name MY_SECRET_NAME --scopes workers --remote
 ```
 
 ```sh output
 ✓ Enter a secret value: › ***
 
-🔐 Creating secret... (Name: MY_SECRETS_STORE_SECRET, Value: REDACTED, Scopes: workers, Comment: undefined)
+🔐 Creating secret... (Name: MY_SECRET_NAME, Value: REDACTED, Scopes: workers, Comment: undefined)
 ✓ Select an account: › My account
 ✅ Created secret! (ID: 13bc7498c6374a4e9d13be091c3c65f1)
 ```
@@ -93,7 +93,6 @@ Refer to [manage account secrets](/secrets-store/manage-secrets/) for further op
 
 To bind an account secret to your Worker, you must have one of the following [roles within your Cloudflare account](/secrets-store/access-control/):
 - Super Administrator
-- Secrets Store Admin
 - Secrets Store Deployer
 
 ### Via Wrangler
@@ -108,7 +107,7 @@ To bind an account secret to your Worker, you must have one of the following [ro
 ```toml
 main = "./src/index.js"
 secrets_store_secrets = [
-  { binding = "MY_SECRETS_STORE_SECRET", store_id= '<STORE_ID>', secret_name = "<MY_SECRET_NAME>" }
+  { binding = "MY_SECRETS_STORE_SECRET", store_id= "<STORE_ID>", secret_name = "<MY_SECRET_NAME>" }
 ]
 ```
 
@@ -131,39 +130,26 @@ secrets_store_secrets = [
 
 ## 3. Access the secret on the `env` object
 
-[Bindings](/workers/runtime-apis/bindings/) are located on the `env` object, which can be accessed in several ways. Two examples are presented below. For further options, refer to the [Workers documentation](/workers/runtime-apis/bindings/#how-to-access-env).
+[Bindings](/workers/runtime-apis/bindings/) are located on the `env` object. To access the secret you first need an asynchronous call.
 
-### Import `env` from `cloudflare:workers`
 
-```js
-import { env } from "cloudflare:workers";
-import ApiClient from "example-api-client";
-
-// MY_SECRETS_STORE_SECRET is now usable in top-level scope
-let apiClient = ApiClient.new({ apiKey: env.MY_SECRETS_STORE_SECRET });
-
-export default {
-	fetch(req) {
-		// you can use apiClient configured before any request is handled
-	},
-};
-```
-
-### Pass `env` as an argument to `fetch`
+### Call `get()` on the binding variable
 
 ```js
 export default {
   async fetch(request, env) {
     // Example of using the secret safely in an API request
-    let response = await fetch("https://api.example.com/data", {
-      headers: { "Authorization": `Bearer ${env.MY_SECRETS_STORE_SECRET}` },
+		const APIkey = await env.MY_SECRETS_STORE_SECRET.get()
+
+    const response = await fetch("https://api.example.com/data", {
+      headers: { "Authorization": `Bearer ${APIKey}` },
     });
 
     if (!response.ok) {
       return new Response("Failed to fetch data", { status: response.status });
     }
 
-    let data = await response.json();
+    const data = await response.json();
     return new Response(JSON.stringify(data), {
       headers: { "Content-Type": "application/json" },
     });
