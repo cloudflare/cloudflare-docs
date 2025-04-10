@@ -22,7 +22,7 @@ If [using the Dashboard](#via-dashboard), make sure you already have a Workers a
 
 You should also have a store created under the Secrets Store tab on the Dashboard. The default store in your account is automatically created when a user with [Super Administrator or Secrets Store Admin role](/secrets-store/access-control/) interacts with it.
 
-You can also use the [Wrangler command](/workers/wrangler/commands/#secrets-store-store) `secrets-store store create <name>` to create your default store. 
+You can also use the [Wrangler command](/workers/wrangler/commands/#secrets-store-store) `secrets-store store create <name>` to create your default store.
 
 ## 1. Set up account secrets in Secrets Store
 
@@ -155,15 +155,17 @@ export default {
 export default {
   async fetch(request, env) {
     // Example of using the secret safely in an API request
-    let response = await fetch("https://api.example.com/data", {
-      headers: { "Authorization": `Bearer ${env.MY_SECRETS_STORE_SECRET}` },
+		const APIkey = await env.MY_SECRET_NAME.get()
+
+    const response = await fetch("https://api.example.com/data", {
+      headers: { "Authorization": `Bearer ${env.APIKey}` },
     });
 
     if (!response.ok) {
       return new Response("Failed to fetch data", { status: response.status });
     }
 
-    let data = await response.json();
+    const data = await response.json();
     return new Response(JSON.stringify(data), {
       headers: { "Content-Type": "application/json" },
     });
