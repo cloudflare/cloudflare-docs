@@ -3,10 +3,11 @@ pcx_content_type: configuration
 title: Asynchronous Batch API
 sidebar:
   order: 1
+  group:
+    badge: Beta
 ---
 
 import { Render, PackageManagers, WranglerConfig, CURL } from "~/components";
-
 
 Asynchronous batch processing lets you send a collection (batch) of inference requests in a single call. Instead of expecting immediate responses for every request, the system queues them for processing and returns the results later.
 
