@@ -18,7 +18,7 @@ For most users, Cloudflare recommends using the Workers Vitest integration. If y
 `unstable_startWorker()` is an experimental API subject to breaking changes.
 :::
 
-If you do not want to use Vitest, consider using [Wrangler's `unstable_startWorker()` API](/workers/wrangler/api/#unstable_startworker). This API exposes the internals of Wrangler's dev server, and allows you to customise how it runs. Compared to using [Miniflare directly](/workers/testing/miniflare/writing-tests/) for testing, you can pass in a Wrangler configuration file, and it will automatically load the configuration for you.
+If you do not want to use Vitest, consider using [Wrangler's `unstable_startWorker()` API](/workers/wrangler/api/#unstable_startworker). This API exposes the internals of Wrangler's dev server, and allows you to customise how it runs. Compared to using [Miniflare directly for testing](/workers/testing/miniflare/writing-tests/), you can pass in a Wrangler configuration file, and it will automatically load the configuration for you.
 
 This example uses `node:test`, but should apply to any testing framework:
 
