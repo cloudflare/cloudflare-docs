@@ -38,13 +38,13 @@ Use the [Wrangler command](/workers/wrangler/commands/#secrets-store-secret) `se
 To use the following example, replace the store ID and secret name by your actual data. You can find and copy the store ID from the [Secrets Store tab](https://dash.cloudflare.com/?to=/:account/secrets-store/) on the dashboard. A secret name cannot contain spaces.
 
 ```sh
-npx wrangler secrets-store secret create <STORE_ID> --name MY_SECRETS_STORE_SECRET --scopes workers --remote
+npx wrangler secrets-store secret create <STORE_ID> --name MY_SECRET_NAME --scopes workers --remote
 ```
 
 ```sh output
 ✓ Enter a secret value: › ***
 
-🔐 Creating secret... (Name: MY_SECRETS_STORE_SECRET, Value: REDACTED, Scopes: workers, Comment: undefined)
+🔐 Creating secret... (Name: MY_SECRET_NAME, Value: REDACTED, Scopes: workers, Comment: undefined)
 ✓ Select an account: › My account
 ✅ Created secret! (ID: 13bc7498c6374a4e9d13be091c3c65f1)
 ```
