@@ -194,7 +194,7 @@ When the inference is complete, the API returns a final HTTP status code of `200
 
 Below is a sample TypeScript Worker that receives a batch of inference requests, sends them to a batch-enabled AI model, and returns the results.
 
-```ts title="src/index.js"
+```ts title="src/index.ts"
 export interface Env {
 	AI: {
 		run: (model: string, payload: any, options: any) => Promise<any>;
