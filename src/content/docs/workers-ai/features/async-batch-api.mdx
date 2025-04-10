@@ -77,8 +77,13 @@ Ensure that the total payload is under 10 MB.
 
 :::
 
-```javascript title=Example code
-// Input: JSON with an array of individual request JSONs
+```typescript title="src/index.js"
+interface AIRequest {
+	prompt: string;
+	temperature: number;
+	max_tokens: number;
+}
+
 const resp = env.AI.run(
 	"@cf/meta/ray-llama-3.3-70b-instruct-fp8-fast",
 	{
@@ -98,7 +103,7 @@ const resp = env.AI.run(
 				temperature: 0.7,
 				max_tokens: 102,
 			},
-		],
+		] as AIRequest[],
 	},
 	{ queueRequest: true },
 );
@@ -131,9 +136,7 @@ const status = env.AI.run("@cf/meta/ray-llama-3.3-70b-instruct-fp8-fast", {
 });
 ```
 
-#### Expected polling response (while queued)
-
-```json
+```json output
 {
 	"status": "queued",
 	"request_id": "000-000-000"
@@ -275,12 +278,9 @@ Make a POST request to the following endpoint:
 		Authorization: "<token>",
 		"Content-Type": "application/json",
 	}}
-	code={{ mark: "value" }}
 />
 
-#### Request Payload Example
-
-```json
+```json output
 {
 	"requests": [
 		{
@@ -299,15 +299,16 @@ Make a POST request to the following endpoint:
 
 After receiving a `request_id` from your initial POST, you can poll for or retrieve the results with another POST request:
 
-```bash
-POST https://api.cloudflare.com/client/v4/accounts/<account-id>/ai/run/@cf/meta/ray-llama-3.3-70b-instruct-fp8-fast
-Authorization: <token>
-Content-Type: application/json
-```
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/<account-id>/ai/run/@cf/meta/ray-llama-3.3-70b-instruct-fp8-fast"
+	method="POST"
+	headers={{
+		Authorization: "<token>",
+		"Content-Type": "application/json",
+	}}
+/>
 
-#### Request Payload for Retrieving Results
-
-```json
+```json output
 {
 	"request_id": "<uuid>"
 }
