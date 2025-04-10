@@ -11,7 +11,7 @@ If you want to skip the steps and get started quickly, click the button below:
 
 [![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/craigsdennis/batch-please-workers-ai)
 
-This will create a repository in your GitHub account and deploy a ready-to-use Worker that demonstrates how to use Cloudflare's Async Batch API. The template includes preconfigured AI bindings, and examples for sending and retrieving batch requests with and without external references. Once deployed, you can visit the live Worker and start experimenting with the Batch API immediately.
+This will create a repository in your GitHub account and deploy a ready-to-use Worker that demonstrates how to use Cloudflare's Asynchronous Batch API. The template includes preconfigured AI bindings, and examples for sending and retrieving batch requests with and without external references. Once deployed, you can visit the live Worker and start experimenting with the Batch API immediately.
 
 ## 1. Prerequisites and setup
 
@@ -65,7 +65,7 @@ Your binding is [available in your Worker code](/workers/reference/migrate-to-mo
 
 ## 4. How to use the Batch API
 
-### 1. Sending a Batch request
+### Sending a Batch request
 
 Send your initial batch inference request by composing a JSON payload containing an array of individual inference requests.
 
@@ -107,11 +107,9 @@ const resp = env.AI.run(
 );
 ```
 
-#### Expected Response
-
 After sending your batch request, you will receive a response similar to:
 
-```json
+```json output
 {
 	"status": "queued",
 	"request_id": "000-000-000",
@@ -123,11 +121,11 @@ After sending your batch request, you will receive a response similar to:
 - **`request_id`**: A unique identifier for the batch request.
 - **`model`**: The model used for the batch inference.
 
-### 2. Polling the Batch Request Status
+### Polling the Batch Request Status
 
 Once your batch request is queued, use the `request_id` to poll for its status. During processing, the API returns a status "queued" or "running" indicating that the request is still in the queue or being processed.
 
-```javascript title=example
+```typescript title=example
 // Polling the status of the batch request using the request_id
 const status = env.AI.run("@cf/meta/ray-llama-3.3-70b-instruct-fp8-fast", {
 	request_id: "000-000-000",
@@ -141,7 +139,7 @@ const status = env.AI.run("@cf/meta/ray-llama-3.3-70b-instruct-fp8-fast", {
 }
 ```
 
-### 3. Retrieving the Batch Inference results
+### Retrieving the Batch Inference results
 
 When the inference is complete, the API returns a final HTTP status code of `200` along with an array of responses. Each response object corresponds to an individual input prompt, identified by an `id` that maps to the index of the prompt in your original request.
 
@@ -190,7 +188,7 @@ When the inference is complete, the API returns a final HTTP status code of `200
   - **`success`**: A Boolean flag indicating if the request was processed successfully.
 - **`usage`**: Contains token usage details for the batch request.
 
-## 6. Implementing the Batch API in your Worker
+## 5. Implementing the Batch API in your Worker
 
 Below is a sample TypeScript Worker that receives a batch of inference requests, sends them to a batch-enabled AI model, and returns the results.
 
@@ -250,7 +248,6 @@ export default {
 };
 ```
 
-
 - **Receiving the Batch request:**
   The Worker expects a `POST` request with a `JSON` payload containing an array called `requests`. Each prompt is an individual inference request.
 
@@ -260,7 +257,7 @@ export default {
 - **Returning the results:**
   Once processed, the AI API returns the batch responses. These responses include an array where each object has an `id` (matching the prompt index) and the corresponding inference result.
 
-## 7. Deployment
+## 6. Deployment
 
 After completing your changes, deploy your Worker with the following command:
 

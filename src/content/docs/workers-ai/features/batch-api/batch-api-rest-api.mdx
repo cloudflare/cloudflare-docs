@@ -7,51 +7,51 @@ sidebar:
 
 import { Render, PackageManagers, WranglerConfig, CURL } from "~/components";
 
-If you prefer to work directly with the REST API instead of a Cloudflare Worker, below are the steps on how to do it:
+If you prefer to work directly with the REST API instead of a [Cloudflare Worker](/workers-ai/features/batch-api/get-started/), below are the steps on how to do it:
 
 ## 1. Sending a Batch Request
 
 Make a POST request to the following endpoint:
 
 <CURL
-	url="https://api.cloudflare.com/client/v4/accounts/<account-id>/ai/run/@cf/meta/ray-llama-3.3-70b-instruct-fp8-fast?queueRequest=true"
+	url="https://api.cloudflare.com/client/v4/accounts/&lt;account-id&gt;/ai/run/@cf/meta/ray-llama-3.3-70b-instruct-fp8-fast?queueRequest=true"
 	method="POST"
 	headers={{
 		Authorization: "<token>",
 		"Content-Type": "application/json",
 	}}
+	json={{
+		requests: [
+			{
+				prompt: "Tell me a story",
+				external_reference: "reference2",
+			},
+			{
+				prompt: "Tell me a joke",
+				external_reference: "reference1",
+			},
+		],
+	}}
+	code={{
+		mark: "external_reference",
+	}}
 />
-
-```json output
-{
-	"requests": [
-		{
-			"prompt": "Tell me a story",
-			"external_reference": "reference2"
-		},
-		{
-			"prompt": "Tell me a joke",
-			"external_reference": "reference1"
-		}
-	]
-}
-```
 
 ## 2. Retrieving the Batch Response
 
 After receiving a `request_id` from your initial POST, you can poll for or retrieve the results with another POST request:
 
 <CURL
-	url="https://api.cloudflare.com/client/v4/accounts/<account-id>/ai/run/@cf/meta/ray-llama-3.3-70b-instruct-fp8-fast"
+	url="https://api.cloudflare.com/client/v4/accounts/&lt;account-id&gt;/ai/run/@cf/meta/ray-llama-3.3-70b-instruct-fp8-fast?queueRequest=true"
 	method="POST"
 	headers={{
 		Authorization: "<token>",
 		"Content-Type": "application/json",
 	}}
+	json={{
+		request_id: "<uuid>",
+	}}
+	code={{
+		mark: "request_id",
+	}}
 />
-
-```json output
-{
-	"request_id": "<uuid>"
-}
-```
