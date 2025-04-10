@@ -26,7 +26,7 @@ You can also use the [Wrangler command](/workers/wrangler/commands/#secrets-stor
 
 ## 1. Set up account secrets in Secrets Store
 
-If there are no account secrets yet, follow the steps below. You must have a [Super Administrator or a Secrets Store Admin role](/secrets-store/access-control/) within your Cloudflare account.
+If there are no secrets in the store yet, follow the steps below. You must have a [Super Administrator or a Secrets Store Admin role](/secrets-store/access-control/) within your Cloudflare account.
 
 :::note
 You may also add account secrets directly from the Workers settings on the dashboard. You can skip to [step 2](#via-dashboard) to do that.
@@ -93,7 +93,6 @@ Refer to [manage account secrets](/secrets-store/manage-secrets/) for further op
 
 To bind an account secret to your Worker, you must have one of the following [roles within your Cloudflare account](/secrets-store/access-control/):
 - Super Administrator
-- Secrets Store Admin
 - Secrets Store Deployer
 
 ### Via Wrangler
@@ -108,7 +107,7 @@ To bind an account secret to your Worker, you must have one of the following [ro
 ```toml
 main = "./src/index.js"
 secrets_store_secrets = [
-  { binding = "MY_SECRETS_STORE_SECRET", store_id= '<STORE_ID>', secret_name = "<MY_SECRET_NAME>" }
+  { binding = "MY_SECRETS_STORE_SECRET", store_id= "<STORE_ID>", secret_name = "<MY_SECRET_NAME>" }
 ]
 ```
 
@@ -134,7 +133,7 @@ secrets_store_secrets = [
 [Bindings](/workers/runtime-apis/bindings/) are located on the `env` object. To access the secret you first need an asynchronous call.
 
 
-### Pass `env` as an argument to `fetch`
+### Call `get()` on the binding name/variable
 
 ```js
 export default {
