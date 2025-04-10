@@ -17,10 +17,11 @@ const props = z
 		parameters: z.record(z.string(), z.any()).optional(),
 		json: z.union([Record, z.array(Record)]).optional(),
 		form: Record.optional(),
+		query: z.record(z.string(), z.string()).optional(),
 	})
 	.strict();
 
-let { path, method, parameters, json, form } = props.parse(Astro.props);
+let { path, method, parameters, json, form, query } = props.parse(Astro.props);
 
 if (json && form) {
 	throw new Error(`[APIRequest] Cannot use both "json" and "form" properties.`);
@@ -67,12 +68,11 @@ if (extraneousParameters.length > 0) {
 }
 
 for (const parameter of endpointParameters) {
-	if (parameter.in === "path") {
+	if (parameter.in === "path" && parameters?.[parameter.name]) {
 		const encoded = encodeURIComponent(`{${parameter.name}}`);
-
-		if (parameters?.[parameter.name]) {
-			url.pathname = url.pathname.replace(encoded, parameters[parameter.name]);
-		}
+		url.pathname = url.pathname.replace(encoded, parameters[parameter.name]);
+	} else if (parameter.in === "query" && parameters?.[parameter.name]) {
+		url.searchParams.set(parameter.name, parameters[parameter.name]);
 	}
 }
 
@@ -163,6 +163,7 @@ const tokenGroups = operation["x-api-token-group"];
 	headers={headers}
 	json={json}
 	form={form}
+	query={query}
 	code={{
 		title: operation.summary,
 	}}
