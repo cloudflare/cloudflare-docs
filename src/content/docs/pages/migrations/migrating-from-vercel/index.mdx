@@ -1,5 +1,5 @@
 ---
-updated: 2020-09-23
+updated: 2025-04-10
 difficulty: Beginner
 pcx_content_type: tutorial
 title: Migrating from Vercel to Pages
@@ -7,15 +7,13 @@ sidebar:
   hidden: true
 ---
 
-In this tutorial, you will learn how to deploy your Vercel application to Cloudflare Pages.
+import { Render } from "~/components";
 
-:::note
+In this tutorial, you will learn how to deploy your Vercel application to Cloudflare Pages.
 
 You should already have an existing project deployed on Vercel that you would like to host on Cloudflare Pages. Features such as Vercel's serverless functions are currently not supported in Cloudflare Pages.
 
-:::
-
-## Finding your build command and build directory
+## Find your build command and build directory
 
 To move your application to Cloudflare Pages, you will need to find your build command and build directory. Cloudflare Pages will use this information to build your application and deploy it.
 
@@ -31,26 +29,39 @@ Find the **Build & Development settings** panel, which will have the **Build Com
 
 ![Finding the Build Command and Output Directory fields](~/assets/images/pages/migrations/vercel-deploy-3.png)
 
-## Creating a new Pages project
+## Create a new Pages project
 
 After you have found your build directory and build command, you can move your project to Cloudflare Pages.
 
 The [Get started guide](/pages/get-started/) will instruct you how to add your GitHub project to Cloudflare Pages.
 
-## Adding a custom domain
+## Add a custom domain
 
-To use a custom domain for your Pages project, [add a custom domain](/pages/configuration/custom-domains/) that is the same custom domain as your currently deployed Vercel application. When Pages finishes the initial deploy of your site, you will need to delete the Vercel application to start sending requests to Cloudflare Pages.
+Next, connect a [custom domain](/pages/configuration/custom-domains/) to your Pages project. This domain should be the same one as your currently deployed Vercel application.
 
-:::note
+### Change domain nameservers
+
+In most cases, you will want to [add your domain to Cloudflare](/dns/zone-setups/full-setup/setup/).
+
+This does involve changing your domain nameservers, but simplifies your Pages setup and allows you to use an apex domain for your project (like `example.com`).
+
+If you want to take a different approach, read more about [custom domains](/pages/configuration/custom-domains/).
+
+### Set up custom domain
+
+<Render file="custom-domain-steps" />
+
+The next steps vary based on if you [added your domain to Cloudflare](#change-domain-nameservers):
+
+- **Added to Cloudflare**: Cloudflare will set everything up for you automatically and your domain will move to an `Active` status.
+- **Not added to Cloudflare**: You need to [update some DNS records](/pages/configuration/custom-domains/#add-a-custom-subdomain) at your DNS provider to finish your setup.
+
+## Delete your Vercel app
+
+Once your custom domain is set up and sending requests to Cloudflare Pages, you can safely delete your Vercel application.
+
+## Troubleshooting
 
 Cloudflare does not provide IP addresses for your Pages project because we do not require `A` or `AAAA` records to link your domain to your project. Instead, Cloudflare uses `CNAME` records.
 
 For more details, refer to [Custom domains](/pages/configuration/custom-domains/).
-
-:::
-
-## Cleaning up your old application and assigning the domain
-
-In your DNS settings for your domain, make sure that you have updated the CNAME record for your domain from Vercel to Cloudflare Pages. With your DNS record updated, requests will go to your Pages application.
-
-By completing this guide, you have successfully migrated your Vercel project to Cloudflare Pages.

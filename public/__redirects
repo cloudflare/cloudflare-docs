@@ -716,7 +716,10 @@
 /learning-paths/cybersafe/concepts/what-is-area1/ /learning-paths/cybersafe/concepts/what-is-email-security/ 301
 /learning-paths/cybersafe/area1-onboarding/ /learning-paths/cybersafe/email-security-onboarding/ 301
 
-
+## zero-trust-web access / clientless-access
+/learning-paths/zero-trust-web-access/concepts/reverse-proxy-server/ https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/ 301
+/zero-trust-web-access/concepts/zero-trust/ https://www.cloudflare.com/learning/security/glossary/what-is-zero-trust/ 301
+/learning-paths/zero-trust-web-access/concepts/zero-trust-web-access/ /learning-paths/clientless-access/concepts/what-is-clientless-access/ 301
 
 ## dns-filtering / secure-internet-traffic
 /learning-paths/dns-filtering/ /learning-paths/secure-internet-traffic/ 301
@@ -743,7 +746,7 @@
 /learning-paths/secure-internet-traffic/ /learning-paths/secure-internet-traffic/concepts/ 301
 /learning-paths/secure-o365-email/ /learning-paths/secure-o365-email/concepts/ 301
 /learning-paths/workers/ /learning-paths/workers/concepts/ 301
-/learning-paths/zero-trust-web-access/ /learning-paths/zero-trust-web-access/concepts/ 301
+/learning-paths/clientless-access/ /learning-paths/clientless-access/concepts/ 301
 /learning-paths/application-security/default-traffic-security/security-level/ /learning-paths/application-security/default-traffic-security/browser-integrity/ 301
 
 # more redirects in the /dynamic/ section
@@ -1916,6 +1919,8 @@
 /learning-paths/dns-filtering/create-policy/* /learning-paths/secure-internet-traffic/build-dns-policies/:splat 301
 ## Secure your Internet Traffic
 /learning-paths/secure-internet-traffic/connect-devices/* /learning-paths/secure-internet-traffic/connect-devices-networks/:splat 301
+## Zero Trust Web Access --> Clientless Access
+/learning-paths/zero-trust-web-access/* /learning-paths/clientless-access/:splat 301
 
 # Cloudflare for SaaS
 /ssl/ssl-for-saas/common-tasks/* /cloudflare-for-platforms/cloudflare-for-saas/ 301

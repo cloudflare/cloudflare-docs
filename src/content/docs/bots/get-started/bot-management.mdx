@@ -47,28 +47,30 @@ Cloudflare recommends that you deploy the following basic settings and customize
 You can view blocked AI bot traffic via [Security Analytics](/waf/analytics/security-analytics/).
 :::
 
-### Enable AI Labyrinth
+### Enable Javascript detections
 
-<Render file="ai-labyrinth-enable" params={{ one: "Bot Management" }} />
-
-### Enable Javascript Detections
-
-Enabling [JavaScript Detections](/bots/additional-configurations/javascript-detections/) validates that the browser can run JavaScript, and is stored in the `cf.bot_management.js_detection.passed` variable.
+Enabling [JavaScript detections](/bots/additional-configurations/javascript-detections/) validates that the browser can run JavaScript, and is stored in the `cf.bot_management.js_detection.passed` variable.
 
 <Render file="javascript-detections-enable" params={{ one: "Bot Management" }} />
 
 ### Deploy default templates
 
-Cloudflare has [default templates](https://dash.cloudflare.com/?to=/:account/:zone/security/security-rules?template=bot_traffic) for definite bots, which we are very confident are automated (bot score 1) and likely bots that have many bot tells (bot score 2-29). In our templates, we recommend to allow verified bots like Google SEO crawler and access to static resources, which should be cached anyway.
+Cloudflare has [default templates](https://dash.cloudflare.com/?to=/:account/:zone/security/security-rules?template=bot_traffic) for definite bots, which have a [bot score](/bots/concepts/bot-score/) of 1, and likely bots which have a bot score of 2 to 29. In our templates, Cloudflare recommends to allow verified bots such as Google SEO Crawler and access to cached static resources.
 
 - [Definite Bots template](https://dash.cloudflare.com/?to=/:account/:zone:/security/security-rules/custom-rules/create?template=Definitely%20Bots): Targets malicious bot traffic while ignoring verified bots and routes delivering static content.
 
-    `(cf.bot_management.score eq 1 and not cf.bot_management.verified_bot and not cf.bot_management.static_resource)`
+    ```txt wrap
+    (cf.bot_management.score eq 1 and not cf.bot_management.verified_bot and not cf.bot_management.static_resource)
+    ```
 
 - [Likely Bots template](https://dash.cloudflare.com/?to=/:account/:zone/security/security-rules/custom-rules/create?template=Likely%20Bots): Targets traffic likely to be malicious bots while ignoring verified bots and routes with static content. It may contain a small amount of non-bot traffic.
 
-    `(cf.bot_management.score ge 2 and cf.bot_management.score le 29 and not cf.bot_management.verified_bot and not cf.bot_management.static_resource)`
+    ```txt wrap
+    (cf.bot_management.score ge 2 and cf.bot_management.score le 29 and not cf.bot_management.verified_bot and not cf.bot_management.static_resource)
+    ```
 
 - (Optional) [JavaScript detections template](https://dash.cloudflare.com/?to=/:account/:zone/security/security-rules/custom-rules/create?template=JavaScript%20Verified%20URLs): If you enabled JavaScript detections, then set up a [managed challenge](/fundamentals/security/cloudflare-challenges/#managed-challenge-recommended), make sure to add a method and URI path. JavaScript detections improves security for URLs that should only expect JavaScript-enabled clients.
 
-    `(not cf.bot_management.js_detection.passed and http.request.method eq "" and http.request.uri.path in {""})`
+    ```txt wrap
+    (not cf.bot_management.js_detection.passed and http.request.method eq "" and http.request.uri.path in {""})
+    ```
