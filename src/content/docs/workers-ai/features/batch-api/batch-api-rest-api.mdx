@@ -14,7 +14,7 @@ If you prefer to work directly with the REST API instead of a [Cloudflare Worker
 Make a POST request to the following endpoint:
 
 <CURL
-	url="https://api.cloudflare.com/client/v4/accounts/&lt;account-id&gt;/ai/run/@cf/meta/ray-llama-3.3-70b-instruct-fp8-fast?queueRequest=true"
+	url="https://api.cloudflare.com/client/v4/accounts/&lt;account-id&gt;/ai/run/@cf/meta/llama-3.3-70b-instruct-fp8-fast?queueRequest=true"
 	method="POST"
 	headers={{
 		Authorization: "<token>",
@@ -37,12 +37,14 @@ Make a POST request to the following endpoint:
 	}}
 />
 
+You can pass `external_reference` as a unique ID per-prompt that will be returned in the response.
+
 ## 2. Retrieving the Batch Response
 
 After receiving a `request_id` from your initial POST, you can poll for or retrieve the results with another POST request:
 
 <CURL
-	url="https://api.cloudflare.com/client/v4/accounts/&lt;account-id&gt;/ai/run/@cf/meta/ray-llama-3.3-70b-instruct-fp8-fast?queueRequest=true"
+	url="https://api.cloudflare.com/client/v4/accounts/&lt;account-id&gt;/ai/run/@cf/meta/llama-3.3-70b-instruct-fp8-fast?queueRequest=true"
 	method="POST"
 	headers={{
 		Authorization: "<token>",
