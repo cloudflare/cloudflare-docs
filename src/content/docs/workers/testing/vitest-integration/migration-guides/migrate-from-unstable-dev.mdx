@@ -11,7 +11,7 @@ description: Migrate from the
 
 The [`unstable_dev`](/workers/wrangler/api/#unstable_dev) API has been a recommended approach to run integration tests. The `@cloudflare/vitest-pool-workers` package integrates directly with Vitest for fast re-runs, supports both unit and integration tests, all whilst providing isolated per-test storage.
 
-This guide demonstrates key differences between tests written with the `unstable_dev` API and the Workers Vitest integration. For more information on writing tests with the Workers Vitest integration, refer to [Write your first test](/workers/testing/vitest-integration/get-started/write-your-first-test/).
+This guide demonstrates key differences between tests written with the `unstable_dev` API and the Workers Vitest integration. For more information on writing tests with the Workers Vitest integration, refer to [Write your first test](/workers/testing/vitest-integration/write-your-first-test/).
 
 ## Reference a Worker for integration testing
 
@@ -76,7 +76,7 @@ Unlike the `unstable_dev` API, the Workers Vitest integration does not support t
 
 ## Define types
 
-You can remove `UnstableDevWorker` imports from your code. Instead, follow the [Write your first test guide](/workers/testing/vitest-integration/get-started/write-your-first-test/#define-types) to define types for all of your tests.
+You can remove `UnstableDevWorker` imports from your code. Instead, follow the [Write your first test guide](/workers/testing/vitest-integration/write-your-first-test/#define-types) to define types for all of your tests.
 
 ```diff
 - import { unstable_dev } from "wrangler";
