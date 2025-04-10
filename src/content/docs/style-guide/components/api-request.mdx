@@ -54,6 +54,14 @@ import { APIRequest } from "~/components";
 		},
 	]}
 />
+
+<APIRequest
+	path="/zones/{zone_id}/page_shield/scripts"
+	method="GET"
+	parameters={{
+		direction: "asc"
+	}}
+/>
 ```
 
 ## `<APIRequest>` Props
@@ -80,7 +88,16 @@ The HTTP method to use.
 
 **type:** `Record<string, any>`
 
-The path parameters to substitute.
+The parameters to substitute - either in the URL path or as query parameters.
+
+For example, `/zones/{zone_id}/page_shield/scripts` can be transformed into `/zones/123/page_shield/scripts?direction=asc` with the following:
+
+```mdx
+parameters={{
+	zone_id: "123",
+	direction: "asc"
+}}
+```
 
 If not provided, the component will default to an environment variable. For example, `{setting_id}` will be replaced with `$SETTING_ID`.
 
@@ -99,9 +116,3 @@ If required properties are missing, the component will throw an error.
 The FormData payload to send.
 
 This field is not currently validated against the schema.
-
-### `query`
-
-**type:** `Record<string, string>`
-
-URL query parameters to append to the request URL.
