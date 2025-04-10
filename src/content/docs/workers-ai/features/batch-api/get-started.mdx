@@ -112,8 +112,8 @@ After sending your batch request, you will receive a response similar to:
 ```json output
 {
 	"status": "queued",
-	"request_id": "000-000-000",
-	"model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
+	"model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+	"request_id": "000-000-000"
 }
 ```
 
@@ -125,7 +125,7 @@ After sending your batch request, you will receive a response similar to:
 
 Once your batch request is queued, use the `request_id` to poll for its status. During processing, the API returns a status "queued" or "running" indicating that the request is still in the queue or being processed.
 
-```typescript title=example
+```typescript title=src/index.ts
 // Polling the status of the batch request using the request_id
 const status = env.AI.run("@cf/meta/llama-3.3-70b-instruct-fp8-fast", {
 	request_id: "000-000-000",
