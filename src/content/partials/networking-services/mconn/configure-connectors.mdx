@@ -637,25 +637,29 @@ When you are ready to connect your Magic WAN Connector to the Cloudflare network
 
 		<AnchorHeading title="3. Configure a static IP on Magic WAN Connector" depth={3} />
 		<p>The <code>reset device</code> option in your Connector clears most of the configuration that is locally cached, resets the password to the default, and reboots.</p>
-		<ol>
-			<li>Log into the Connector.
-				<ol>
-						<li>You will be prompted to change your password if you attempt to log in with the default password.</li>
-				</ol>
-			</li>
-			<li>From the menu, go to <strong>Bootstrap</strong> with the arrow keys and select it with the Enter key.</li>
-			<li>Select the Jack (physical port) you want to configure for the initialization of the connector.</li>
-			<li>Enter the VLAN tag (if applicable) of the network. Leave it blank if untagged.</li>
-			<li>Select the <code>static</code> option as your network type.</li>
 
-			<Aside>The main reason to use the bootstrapper is if every network the Connector is plugged into is either static, behind a VLAN, or both. If you find yourself here and configuring a network with DHCP and no VLAN, you are probably not in the right place. See the section on configuring your Connector <a href="#set-up-cloudflare-dashboard">via the dashboard</a>.</Aside>
+		<Markdown
+		text={`
+		1. Log into the Connector. You will be prompted to change your password if you attempt to log in with the default password.
+		2. From the menu, go to **Bootstrap** with the arrow keys and select it with the Enter key.
+		3. Select the jack (physical port) you want to configure for the initialization of the connector.
+		4. Enter the VLAN tag (if applicable) of the network. Leave it blank if untagged.
+		5. Select the <code>static</code> option as your network type.
+		`}
+		inline={false}
+		/>
 
+		<Aside>The main reason to use the bootstrapper is if every network the Connector is plugged into is either static, behind a VLAN, or both. If you find yourself here and configuring a network with DHCP and no VLAN, you are probably not in the right place. See the section on configuring your Connector <a href="#set-up-cloudflare-dashboard">via the dashboard</a>.</Aside>
 
-			<li>Enter the IP address you would like the connector to have in CIDR form (for example, <code>10.0.0.2/24</code>).</li>
-			<li>Enter the IP address of the Internet gateway (this must be in the same subnet as the previous IP address you entered and must not be the same address).</li>
-			<li>Select <strong>Save</strong> and confirm that you want to use the new settings.</li>
-			<li>The Connector will download the rest of the settings from Cloudflare. The last heartbeat of the Connector should update once it has made contact with Cloudflare.</li>
-		</ol>
+		<Markdown
+		text={`
+		6. Enter the IP address you would like the connector to have in CIDR form (for example, <code>10.0.0.2/24</code>).
+		7. Enter the IP address of the Internet gateway (this must be in the same subnet as the previous IP address you entered and must not be the same address).
+		8. Select **Save** and confirm that you want to use the new settings.
+		9. The Connector will download the rest of the settings from Cloudflare. The last heartbeat of the Connector should update once it has made contact with Cloudflare.
+		`}
+		inline={false}
+		/>
   </>
   )
 }
