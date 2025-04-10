@@ -131,24 +131,8 @@ secrets_store_secrets = [
 
 ## 3. Access the secret on the `env` object
 
-[Bindings](/workers/runtime-apis/bindings/) are located on the `env` object, which can be accessed in several ways. Two examples are presented below. For further options, refer to the [Workers documentation](/workers/runtime-apis/bindings/#how-to-access-env).
+[Bindings](/workers/runtime-apis/bindings/) are located on the `env` object. To access the secret you first need an asynchronous call.
 
-### Import `env` from `cloudflare:workers`
-
-```js
-import { env } from "cloudflare:workers";
-import ApiClient from "example-api-client";
-
-// MY_SECRETS_STORE_SECRET is now usable in top-level scope
-const APIkey = await env.MY_SECRETS_STORE_SECRET.get()
-const apiClient = ApiClient.new({ apiKey: APIKey });
-
-export default {
-	fetch(req) {
-		// you can use apiClient configured before any request is handled
-	},
-};
-```
 
 ### Pass `env` as an argument to `fetch`
 
