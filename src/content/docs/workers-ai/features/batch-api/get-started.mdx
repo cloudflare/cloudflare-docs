@@ -127,7 +127,7 @@ Once your batch request is queued, use the `request_id` to poll for its status. 
 
 ```typescript title=example
 // Polling the status of the batch request using the request_id
-const status = env.AI.run("@cf/meta/ray-llama-3.3-70b-instruct-fp8-fast", {
+const status = env.AI.run("@cf/meta/llama-3.3-70b-instruct-fp8-fast", {
 	request_id: "000-000-000",
 });
 ```
