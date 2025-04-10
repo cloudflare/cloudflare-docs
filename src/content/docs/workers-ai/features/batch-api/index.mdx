@@ -1,0 +1,31 @@
+---
+pcx_content_type: configuration
+title: Asynchronous Batch API
+sidebar:
+  order: 1
+---
+
+import { Render, PackageManagers, WranglerConfig, CURL } from "~/components";
+
+This guide will walk you through the concepts behind asynchronous batch processing, explain why it matters, and show you how to create and deploy a Cloudflare Worker that leverages the [Batch API with the AI binding](/workers-ai/features/batch-api/get-started/), working with [REST API](/workers-ai/features/batch-api/batch-api-rest-api/) instead of a Cloudflare Worker and through the a template.
+
+## What is Asynchronous Batch?
+
+Asynchronous batch processing lets you send a collection (batch) of inference requests in a single call. Instead of expecting immediate responses for every request, the system queues them for processing and returns the results later.
+
+When you send a batch request, the API immediately acknowledges receipt with a status like `queued` and provides a unique `request_id`. This ID is later used to poll for the final responses once the processing is complete.
+
+:::note[Note]
+
+Ensure that the total payload is under 10 MB.
+
+:::
+
+## Supported Models
+
+- [@cf/meta/llama-3.3-70b-instruct-fp8-fast](/workers-ai/models/llama-3.3-70b-instruct-fp8-fast/)
+- [@cf/baai/bge-small-en-v1.5](/workers-ai/models/bge-small-en-v1.5/)
+- [@cf/baai/bge-base-en-v1.5](/workers-ai/models/bge-base-en-v1.5/)
+- [@cf/baai/bge-large-en-v1.5](/workers-ai/models/bge-large-en-v1.5/)
+- [@cf/baai/bge-m3](/workers-ai/models/bge-m3/)
+- [@cf/meta/m2m100-1.2b](/workers-ai/models/m2m100-1.2b/)

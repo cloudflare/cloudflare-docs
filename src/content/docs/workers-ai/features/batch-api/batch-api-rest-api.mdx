@@ -1,0 +1,57 @@
+---
+pcx_content_type: get-started
+title: Using the Batch API via the REST API
+sidebar:
+  order: 4
+---
+
+import { Render, PackageManagers, WranglerConfig, CURL } from "~/components";
+
+If you prefer to work directly with the REST API instead of a Cloudflare Worker, below are the steps on how to do it:
+
+## 1. Sending a Batch Request
+
+Make a POST request to the following endpoint:
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/<account-id>/ai/run/@cf/meta/ray-llama-3.3-70b-instruct-fp8-fast?queueRequest=true"
+	method="POST"
+	headers={{
+		Authorization: "<token>",
+		"Content-Type": "application/json",
+	}}
+/>
+
+```json output
+{
+	"requests": [
+		{
+			"prompt": "Tell me a story",
+			"external_reference": "reference2"
+		},
+		{
+			"prompt": "Tell me a joke",
+			"external_reference": "reference1"
+		}
+	]
+}
+```
+
+## 2. Retrieving the Batch Response
+
+After receiving a `request_id` from your initial POST, you can poll for or retrieve the results with another POST request:
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/<account-id>/ai/run/@cf/meta/ray-llama-3.3-70b-instruct-fp8-fast"
+	method="POST"
+	headers={{
+		Authorization: "<token>",
+		"Content-Type": "application/json",
+	}}
+/>
+
+```json output
+{
+	"request_id": "<uuid>"
+}
+```
