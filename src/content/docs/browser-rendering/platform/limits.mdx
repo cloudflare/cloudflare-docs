@@ -34,7 +34,7 @@ import { Render, Plan } from "~/components";
 
 [^2]: By default, a browser instance gets killed if it does not get any [devtools](https://chromedevtools.github.io/devtools-protocol/) command for 60 seconds, freeing one instance. Users can optionally increase this by using the `keep_alive` [option](/browser-rendering/platform/puppeteer/#keep-alive). `browser.close()` releases the browser instance.
 
-## Note on Concurrency
+## Note on concurrency
 
 While the limits above define the maximum number of concurrent browser sessions per account, in practice you may not need to hit these limits. Browser sessions close automatically—by default, after 60 seconds of inactivity or upon task completion—so if each session finishes its work before a new request comes in, the effective concurrency is lower. This means that most workflows do not require very high concurrent browser limits.
 
