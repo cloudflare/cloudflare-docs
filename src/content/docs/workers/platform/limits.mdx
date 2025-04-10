@@ -80,7 +80,7 @@ CPU time is the amount of time the CPU actually spends doing work during a given
 If a Worker's request makes a sub-request and waits for that request to come back before
 doing additional work, this time spent waiting **is not** counted towards CPU time.
 
-**Most Workers requests consume less than 1-2 milliseconds of CPU time**, but you can increase the maximum CPU time from the default 30 seconds to 5 minutes (300,000 milliseconds) if you have CPU bound tasks, such as large JSON payloads that need to be serialized, cryptographic key generation, or other data processing tasks.
+**Most Workers requests consume less than 1-2 milliseconds of CPU time**, but you can increase the maximum CPU time from the default 30 seconds to 5 minutes (300,000 milliseconds) if you have CPU-bound tasks, such as large JSON payloads that need to be serialized, cryptographic key generation, or other data processing tasks.
 
 <Render file="isolate-cpu-flexibility" />
 
