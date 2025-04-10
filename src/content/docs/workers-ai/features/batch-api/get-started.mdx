@@ -67,7 +67,7 @@ Your binding is [available in your Worker code](/workers/reference/migrate-to-mo
 
 ### Sending a Batch request
 
-Send your initial batch inference request by composing a JSON payload containing an array of individual inference requests.
+Send your initial batch inference request by composing a JSON payload containing an array of individual inference requests and the `queueRequest: true` property (which is what controlls queueing behavior).
 
 :::note[Note]
 
@@ -75,7 +75,7 @@ Ensure that the total payload is under 10 MB.
 
 :::
 
-```typescript title="src/index.js"
+```typescript title="src/index.js" {28}
 interface AIRequest {
 	prompt: string;
 	temperature: number;
