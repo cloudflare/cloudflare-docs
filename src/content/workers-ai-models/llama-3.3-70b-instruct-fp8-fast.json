@@ -12,6 +12,10 @@
     "tags": [],
     "properties": [
         {
+            "property_id": "context_window",
+            "value": "24000"
+        },
+        {
             "property_id": "price",
             "value": [
                 {
@@ -25,10 +29,6 @@
                     "currency": "USD"
                 }
             ]
-        },
-        {
-            "property_id": "context_window",
-            "value": "24000"
         },
         {
             "property_id": "function_calling",

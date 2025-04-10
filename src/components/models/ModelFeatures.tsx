@@ -110,6 +110,12 @@ const ModelFeatures = ({ model }: { model: WorkersAIModelsSchema }) => {
 									<td>Yes</td>
 								</tr>
 							)}
+							{properties.async_queue && (
+								<tr>
+									<td>Batch</td>
+									<td>Yes</td>
+								</tr>
+							)}
 							{properties.price && properties.price.length > 0 && (
 								<tr>
 									<td>Unit Pricing</td>

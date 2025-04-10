@@ -12,6 +12,10 @@
     "tags": [],
     "properties": [
         {
+            "property_id": "context_window",
+            "value": "80000"
+        },
+        {
             "property_id": "price",
             "value": [
                 {
@@ -25,6 +29,10 @@
                     "currency": "USD"
                 }
             ]
+        },
+        {
+            "property_id": "lora",
+            "value": "true"
         },
         {
             "property_id": "terms",
