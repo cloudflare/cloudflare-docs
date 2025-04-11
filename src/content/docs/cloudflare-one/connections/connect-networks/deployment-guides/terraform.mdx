@@ -10,7 +10,7 @@ description: Learn how to deploy a Cloudflare Tunnel using Terraform and our
   lightweight server-side daemon, cloudflared.
 ---
 
-import { Render } from "~/components";
+import { Tabs, TabItem, Render } from "~/components";
 
 [Terraform](https://www.terraform.io/) is an infrastructure as code software tool that allows you to deploy services from different providers using a standardized configuration syntax. When creating a Terraform configuration file, you define the final state of the configuration rather than the step-by-step procedure. This allows you to easily deploy, modify, and manage your Tunnels alongside your other infrastructure.
 
@@ -45,7 +45,7 @@ Refer to the [Terraform installation guide](https://developer.hashicorp.com/terr
 
 [Create an API token](/fundamentals/api/get-started/create-token/) so that Terraform can interact with your Cloudflare account. At minimum, your token should include the following permissions:
 
-| Permission type | Permission                | Access level |
+| Type            | Item                | Permission |
 | --------------- | ------------------------- | ------------ |
 | Account         | Cloudflare Tunnel         | Edit         |
 | Account         | Access: Apps and Policies | Edit         |
@@ -77,33 +77,70 @@ You will need to declare the [providers](https://registry.terraform.io/browse/pr
 
 2. Add the following providers to `providers.tf`. The `random` provider is used to generate a tunnel secret.
 
-   ```txt
-   terraform {
-     required_providers {
-       cloudflare = {
-         source = "cloudflare/cloudflare"
-         version = ">= 4.40.0"
-       }
-       google = {
-         source = "hashicorp/google"
-       }
-       random = {
-         source = "hashicorp/random"
-       }
-     }
-     required_version = ">= 1.2"
-   }
+		<Tabs syncKey="dashPlusAPI">
+		<TabItem label="Terraform (v5)">
 
-   # Providers
-   provider "cloudflare" {
-     api_token    = var.cloudflare_token
-   }
-   provider "google" {
-     project    = var.gcp_project_id
-   }
-   provider "random" {
-   }
-   ```
+		```txt
+		terraform {
+			required_providers {
+				cloudflare = {
+					source = "cloudflare/cloudflare"
+					version = ">= 5.3.0"
+				}
+				google = {
+					source = "hashicorp/google"
+				}
+				random = {
+					source = "hashicorp/random"
+				}
+			}
+			required_version = ">= 1.2"
+		}
+
+		# Providers
+		provider "cloudflare" {
+			api_token    = var.cloudflare_token
+		}
+		provider "google" {
+			project    = var.gcp_project_id
+		}
+		provider "random" {
+		}
+		```
+
+		</TabItem>
+		<TabItem label="Terraform (v4)">
+
+		```txt
+		terraform {
+			required_providers {
+				cloudflare = {
+					source = "cloudflare/cloudflare"
+					version = ">= 4.40.0, < 5.0.0"
+				}
+				google = {
+					source = "hashicorp/google"
+				}
+				random = {
+					source = "hashicorp/random"
+				}
+			}
+			required_version = ">= 1.2"
+		}
+
+		# Providers
+		provider "cloudflare" {
+			api_token    = var.cloudflare_token
+		}
+		provider "google" {
+			project    = var.gcp_project_id
+		}
+		provider "random" {
+		}
+		```
+
+		</TabItem>
+		</Tabs>
 
 ### Configure Cloudflare resources
 
