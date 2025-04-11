@@ -1,14 +1,14 @@
 {
-    "id": "02c16efa-29f5-4304-8e6c-3d188889f875",
+    "id": "7a143886-c9bb-4a1c-be95-377b1973bc3b",
     "source": 1,
-    "name": "@cf/qwen/qwq-32b",
-    "description": "QwQ is the reasoning model of the Qwen series. Compared with conventional instruction-tuned models, QwQ, which is capable of thinking and reasoning, can achieve significantly enhanced performance in downstream tasks, especially hard problems. QwQ-32B is the medium-sized reasoning model, which is capable of achieving competitive performance against state-of-the-art reasoning models, e.g., DeepSeek-R1, o1-mini.",
+    "name": "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+    "description": "Llama 3.3 70B quantized to fp8 precision, optimized to be faster.",
     "task": {
         "id": "c329a1f9-323d-4e91-b2aa-582dd4188d34",
         "name": "Text Generation",
         "description": "Family of generative text models, such as large language models (LLM), that can be adapted for a variety of natural language tasks."
     },
-    "created_at": "2025-03-05 21:52:40.974",
+    "created_at": "2024-12-06 17:09:18.338",
     "tags": [],
     "properties": [
         {
@@ -20,19 +20,19 @@
             "value": [
                 {
                     "unit": "per M input tokens",
-                    "price": 0.66,
+                    "price": 0.29,
                     "currency": "USD"
                 },
                 {
                     "unit": "per M output tokens",
-                    "price": 1,
+                    "price": 2.25,
                     "currency": "USD"
                 }
             ]
         },
         {
-            "property_id": "lora",
-            "value": "true"
+            "property_id": "terms",
+            "value": "https://github.com/meta-llama/llama-models/blob/main/models/llama3_3/LICENSE"
         }
     ],
     "schema": {
@@ -47,9 +47,23 @@
                             "minLength": 1,
                             "description": "The input text prompt for the model to generate a response."
                         },
-                        "guided_json": {
+                        "lora": {
+                            "type": "string",
+                            "description": "Name of the LoRA (Low-Rank Adaptation) model to fine-tune the base model."
+                        },
+                        "response_format": {
+                            "title": "JSON Mode",
                             "type": "object",
-                            "description": "JSON schema that should be fulfilled for the response."
+                            "properties": {
+                                "type": {
+                                    "type": "string",
+                                    "enum": [
+                                        "json_object",
+                                        "json_schema"
+                                    ]
+                                },
+                                "json_schema": {}
+                            }
                         },
                         "raw": {
                             "type": "boolean",
@@ -68,7 +82,7 @@
                         },
                         "temperature": {
                             "type": "number",
-                            "default": 0.15,
+                            "default": 0.6,
                             "minimum": 0,
                             "maximum": 5,
                             "description": "Controls the randomness of the output; higher values produce more random results."
@@ -127,67 +141,15 @@
                                         "type": "string",
                                         "description": "The role of the message sender (e.g., 'user', 'assistant', 'system', 'tool')."
                                     },
-                                    "tool_call_id": {
-                                        "type": "string",
-                                        "description": "The tool call id. Must be supplied for tool calls for Mistral-3. If you don't know what to put here you can fall back to 000000001",
-                                        "pattern": "[a-zA-Z0-9]{9}"
-                                    },
                                     "content": {
-                                        "oneOf": [
-                                            {
-                                                "type": "string",
-                                                "description": "The content of the message as a string."
-                                            },
-                                            {
-                                                "type": "array",
-                                                "items": {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "type": {
-                                                            "type": "string",
-                                                            "description": "Type of the content provided"
-                                                        },
-                                                        "text": {
-                                                            "type": "string"
-                                                        },
-                                                        "image_url": {
-                                                            "type": "object",
-                                                            "properties": {
-                                                                "url": {
-                                                                    "type": "string",
-                                                                    "pattern": "^data:*",
-                                                                    "description": "image uri with data (e.g. data:image/jpeg;base64,/9j/...). HTTP URL will not be accepted"
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            },
-                                            {
-                                                "type": "object",
-                                                "properties": {
-                                                    "type": {
-                                                        "type": "string",
-                                                        "description": "Type of the content provided"
-                                                    },
-                                                    "text": {
-                                                        "type": "string"
-                                                    },
-                                                    "image_url": {
-                                                        "type": "object",
-                                                        "properties": {
-                                                            "url": {
-                                                                "type": "string",
-                                                                "pattern": "^data:*",
-                                                                "description": "image uri with data (e.g. data:image/jpeg;base64,/9j/...). HTTP URL will not be accepted"
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        ]
+                                        "type": "string",
+                                        "description": "The content of the message as a string."
                                     }
-                                }
+                                },
+                                "required": [
+                                    "role",
+                                    "content"
+                                ]
                             }
                         },
                         "functions": {
@@ -349,9 +311,19 @@
                                 ]
                             }
                         },
-                        "guided_json": {
+                        "response_format": {
+                            "title": "JSON Mode",
                             "type": "object",
-                            "description": "JSON schema that should be fufilled for the response."
+                            "properties": {
+                                "type": {
+                                    "type": "string",
+                                    "enum": [
+                                        "json_object",
+                                        "json_schema"
+                                    ]
+                                },
+                                "json_schema": {}
+                            }
                         },
                         "raw": {
                             "type": "boolean",
@@ -370,7 +342,7 @@
                         },
                         "temperature": {
                             "type": "number",
-                            "default": 0.15,
+                            "default": 0.6,
                             "minimum": 0,
                             "maximum": 5,
                             "description": "Controls the randomness of the output; higher values produce more random results."
@@ -422,7 +394,6 @@
             "oneOf": [
                 {
                     "type": "object",
-                    "contentType": "application/json",
                     "properties": {
                         "response": {
                             "type": "string",
@@ -473,7 +444,6 @@
                 },
                 {
                     "type": "string",
-                    "contentType": "text/event-stream",
                     "format": "binary"
                 }
             ]
