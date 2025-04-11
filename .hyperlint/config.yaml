@@ -12,5 +12,9 @@ reviewer:
   vale_style_guide:
     check_status_upon_review_failure: neutral
     enabled: true
+  custom_style_guide:
+    enabled: true
+    path_to_style_guide_dir: ".github/styles/plain-text-style-checks/"
+    check_status_upon_review_failure: neutral
   limit_num_reviews: 2
   limit_num_comments: 5
