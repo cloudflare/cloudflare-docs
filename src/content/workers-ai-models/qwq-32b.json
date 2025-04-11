@@ -1,0 +1,39 @@
+{
+    "id": "02c16efa-29f5-4304-8e6c-3d188889f875",
+    "source": 1,
+    "name": "@cf/qwen/qwq-32b",
+    "description": "QwQ is the reasoning model of the Qwen series. Compared with conventional instruction-tuned models, QwQ, which is capable of thinking and reasoning, can achieve significantly enhanced performance in downstream tasks, especially hard problems. QwQ-32B is the medium-sized reasoning model, which is capable of achieving competitive performance against state-of-the-art reasoning models, e.g., DeepSeek-R1, o1-mini.",
+    "task": {
+        "id": "c329a1f9-323d-4e91-b2aa-582dd4188d34",
+        "name": "Text Generation",
+        "description": "Family of generative text models, such as large language models (LLM), that can be adapted for a variety of natural language tasks."
+    },
+    "created_at": "2025-03-05 21:52:40.974",
+    "tags": [],
+    "properties": [
+        {
+            "property_id": "context_window",
+            "value": "24000"
+        },
+        {
+            "property_id": "price",
+            "value": [
+                {
+                    "unit": "per M input tokens",
+                    "price": 0.66,
+                    "currency": "USD"
+                },
+                {
+                    "unit": "per M output tokens",
+                    "price": 1,
+                    "currency": "USD"
+                }
+            ]
+        },
+        {
+            "property_id": "lora",
+            "value": "true"
+        }
+    ],
+    "schema": {}
+}

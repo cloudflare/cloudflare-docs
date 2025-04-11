@@ -1,38 +1,38 @@
 {
-    "id": "06455e78-19f7-487b-93cd-c05a3dd07813",
+    "id": "31690291-ebdc-4f98-bcfc-a44844e215b7",
     "source": 1,
-    "name": "@cf/meta/llama-4-scout-17b-16e-instruct",
-    "description": "Meta's Llama 4 Scout is a 17 billion parameter model with 16 experts that is natively multimodal. These models leverage a mixture-of-experts architecture to offer industry-leading performance in text and image understanding.",
+    "name": "@cf/mistralai/mistral-small-3.1-24b-instruct",
+    "description": "Building upon Mistral Small 3 (2501), Mistral Small 3.1 (2503) adds state-of-the-art vision understanding and enhances long context capabilities up to 128k tokens without compromising text performance. With 24 billion parameters, this model achieves top-tier capabilities in both text and vision tasks.",
     "task": {
         "id": "c329a1f9-323d-4e91-b2aa-582dd4188d34",
         "name": "Text Generation",
         "description": "Family of generative text models, such as large language models (LLM), that can be adapted for a variety of natural language tasks."
     },
-    "created_at": "2025-04-05 20:25:56.137",
+    "created_at": "2025-03-18 03:28:37.890",
     "tags": [],
     "properties": [
         {
             "property_id": "context_window",
-            "value": "131000"
+            "value": "128000"
         },
         {
             "property_id": "price",
             "value": [
                 {
                     "unit": "per M input tokens",
-                    "price": 0,
+                    "price": 0.35,
                     "currency": "USD"
                 },
                 {
                     "unit": "per M output tokens",
-                    "price": 0,
+                    "price": 0.56,
                     "currency": "USD"
                 }
             ]
         },
         {
-            "property_id": "terms",
-            "value": "https://github.com/meta-llama/llama-models/blob/main/models/llama4/LICENSE"
+            "property_id": "lora",
+            "value": "true"
         }
     ],
     "schema": {
@@ -40,7 +40,7 @@
             "type": "object",
             "oneOf": [
                 {
-                    "title": "Ai_Cf_Meta_Llama_4_Prompt",
+                    "title": "Prompt",
                     "properties": {
                         "prompt": {
                             "type": "string",
@@ -50,20 +50,6 @@
                         "guided_json": {
                             "type": "object",
                             "description": "JSON schema that should be fulfilled for the response."
-                        },
-                        "response_format": {
-                            "title": "JSON Mode",
-                            "type": "object",
-                            "properties": {
-                                "type": {
-                                    "type": "string",
-                                    "enum": [
-                                        "json_object",
-                                        "json_schema"
-                                    ]
-                                },
-                                "json_schema": {}
-                            }
                         },
                         "raw": {
                             "type": "boolean",
@@ -129,7 +115,7 @@
                     ]
                 },
                 {
-                    "title": "Ai_Cf_Meta_Llama_4_Messages",
+                    "title": "Messages",
                     "properties": {
                         "messages": {
                             "type": "array",
@@ -361,20 +347,6 @@
                                         ]
                                     }
                                 ]
-                            }
-                        },
-                        "response_format": {
-                            "title": "JSON Mode",
-                            "type": "object",
-                            "properties": {
-                                "type": {
-                                    "type": "string",
-                                    "enum": [
-                                        "json_object",
-                                        "json_schema"
-                                    ]
-                                },
-                                "json_schema": {}
                             }
                         },
                         "guided_json": {
