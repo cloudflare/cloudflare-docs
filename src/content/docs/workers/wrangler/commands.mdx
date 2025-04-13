@@ -762,7 +762,7 @@ wrangler secrets-store store create default --remote
 ✅ Created store! (Name: default, ID: 2e2a82d317134506b58defbe16982d54)
 ```
 
-### delete 
+### delete
 
 Delete a store within Secrets Store.
 
@@ -1243,6 +1243,21 @@ wrangler pages project delete <PROJECT_NAME> [OPTIONS]
   - The name of the Pages project to delete.
 - `--yes` <Type text="boolean" /> <MetaInfo text="optional" />
   - Answer `"yes"` to confirmation prompt.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+### `delete`
+
+Delete a deployment in your Cloudflare Pages project.
+
+```txt
+wrangler pages delete <DEPLOYMENT_ID> [--project-name <PROJECT_NAME>]
+```
+
+- `DEPLOYMENT_ID` <Type text="string" /> <MetaInfo text="required" />
+  - The ID of the Pages deployment to delete.
+- `--project-name` <Type text="string" /> <MetaInfo text="optional" />
+  - The name of the project you would like to delete a deployment for.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
