@@ -337,7 +337,6 @@ Contact [Cloudflare Support](/support/contacting-cloudflare-support/) with the f
 - A screenshot of the 1018 error including the **RayID** mentioned in the error message.
 - A [HAR file](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/) captured while duplicating the error.
 
-
 ## Error 1019: Compute server error
 
 This error indicates a compute server error related to a Cloudflare Worker.
@@ -488,7 +487,7 @@ This error indicates that an attempt was made to modify a restricted HTTP header
 
 ### Common cause
 
-You are trying to modify an HTTP header that HTTP Request Header Modification Rules cannot change.
+You are trying to modify an HTTP header that Request Header Transform Rules cannot change.
 
 ### Resolution
 
@@ -549,7 +548,7 @@ This error indicates that the number of requests queued on Cloudflare's edge exc
 
 ### Common cause
 
-There are too many requests queued on Cloudflare's edge that are awaiting process by your origin web server.  This limit protects Cloudflare's systems.
+There are too many requests queued on Cloudflare's edge that are awaiting process by your origin web server. This limit protects Cloudflare's systems.
 
 ### Resolution
 

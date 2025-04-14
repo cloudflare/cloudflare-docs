@@ -1,21 +1,21 @@
 ---
 pcx_content_type: example
-summary: Create a response header modification rule (part of Transform Rules) to
-  add a `set-cookie` HTTP header to the response with a static value
+summary:
+  Create a response header transform rule to add a `set-cookie` HTTP header to the response with a static value
   (`cookiename=value`).
 products:
   - Transform Rules
 operation:
   - Response modification
 title: Add a response header with a static value
-description: Create a response header modification rule (part of Transform
-  Rules) to add a `set-cookie` HTTP header to the response with a static value
+description:
+  Create a response header transform rule to add a `set-cookie` HTTP header to the response with a static value
   (`cookiename=value`).
 ---
 
 import { Example } from "~/components";
 
-The following HTTP response header modification rule adds a header named `set-cookie` with a static value (`cookiename=value`) to the response:
+The following response header transform rule adds a header named `set-cookie` with a static value (`cookiename=value`) to the HTTP response:
 
 <Example>
 
@@ -33,4 +33,4 @@ Selected operation under **Modify response header**: _Add_
 
 </Example>
 
-This rule would keep any existing `set-cookie` headers already present in the response.
+This rule would keep any existing `set-cookie` headers already present in the HTTP response.

@@ -1,12 +1,12 @@
 ---
 pcx_content_type: example
-summary: Create a rewrite URL rule (part of Transform Rules) to normalize encoded forward slashes (`%2F`) in the request path to standard slashes (`/`).
+summary: Create a URL rewrite rule (part of Transform Rules) to normalize encoded forward slashes (`%2F`) in the request path to standard slashes (`/`).
 products:
   - Transform Rules
 operation:
   - Rewrite URL
 title: Normalize encoded slashes in URL path
-description: Create a rewrite URL rule (part of Transform Rules) to normalize encoded forward slashes (`%2F`) in the request path to standard slashes (`/`).
+description: Create a URL rewrite rule (part of Transform Rules) to normalize encoded forward slashes (`%2F`) in the request path to standard slashes (`/`).
 ---
 
 import { Example } from "~/components";
@@ -17,7 +17,7 @@ However, many origin servers **do** automatically decode `%2F` into `/` when pro
 
 ## How to normalize `%2F`
 
-To normalize encoded forward slashes (`%2F`) to standard slashes (`/`) in the request path before [subsequent](/ruleset-engine/reference/phases-list/) rule evaluation, create a new rewrite URL rule and define a dynamic URL path rewrite using [`url_decode()`](/ruleset-engine/rules-language/functions/#url_decode) function:
+To normalize encoded forward slashes (`%2F`) to standard slashes (`/`) in the request path before [subsequent](/ruleset-engine/reference/phases-list/) rule evaluation, create a new URL rewrite rule and define a dynamic URL path rewrite using [`url_decode()`](/ruleset-engine/rules-language/functions/#url_decode) function:
 
 <Example>
 
@@ -27,7 +27,7 @@ Text in **Expression Editor**:
 (lower(raw.http.request.full_uri) wildcard "*%2f*")
 ```
 
-Text after **Path** > **Rewrite to...** > _Dynamic_:
+Text after **Path** > **Rewrite to** > _Dynamic_:
 
 ```txt
 url_decode(http.request.uri.path)
