@@ -8,7 +8,7 @@ entries:
   - publish_date: "2025-04-14"
     title: "Zero Trust Devices"
     description: |-
-      End of life date: November 25, 2026
+      End of life date: November 25, 2025
 
       We are changing the definition of Devices. Devices are going to represent the real-world machines while
       the relation between Users and Devices will be represented by a new concept - Registrations.
