@@ -41,7 +41,7 @@ For Rust Workers, add the following to your `Cargo.toml` to preserve [DWARF](htt
 dwarf-debug-info = true
 ```
 
-And update `wrangler.toml` to configure wasm-pack (via worker-build) to use the `dev` [profile](https://rustwasm.github.io/docs/wasm-pack/commands/build.html#profile) to preserve debug symbols:
+Then, update your `wrangler.toml` to configure wasm-pack (via worker-build) to use the `dev` [profile](https://rustwasm.github.io/docs/wasm-pack/commands/build.html#profile) to preserve debug symbols.
 
 ```toml title="Cargo.toml"
 [build]
