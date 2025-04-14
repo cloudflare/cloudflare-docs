@@ -5,11 +5,9 @@ productLink: "/fundamentals/"
 productArea: Core platform
 productAreaLink: /fundamentals/reference/changelog/platform/
 entries:
-  - publish_date: "2025-04-14"
+  - publish_date: "2025-11-11"
     title: "Zero Trust Devices"
     description: |-
-      Deprecation date: April 14, 2025
-
       End of life date: November 11, 2025
 
       We are changing the definition of Devices. Devices are going to represent the real-world machines while
