@@ -20,7 +20,7 @@ const props = z
 	})
 	.strict();
 
-let { path, method, parameters, json, form, query } = props.parse(Astro.props);
+let { path, method, parameters, json, form } = props.parse(Astro.props);
 
 if (json && form) {
 	throw new Error(`[APIRequest] Cannot use both "json" and "form" properties.`);
