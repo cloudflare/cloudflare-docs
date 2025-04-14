@@ -31,6 +31,7 @@ entries:
         * `GET /accounts/{account_id}/devices/physical-devices/{device_id}`
         * `GET /accounts/{account_id}/devices/registrations`
         * `GET /accounts/{account_id}/devices/registrations/{registration_id}`
+        * `GET /accounts/{account_id}/devices/registrations/{registration_id}/override_codes`
         * `POST /accounts/{account_id}/devices/registrations/revoke`
         * `POST /accounts/{account_id}/devices/registrations/unrevoke`
 
