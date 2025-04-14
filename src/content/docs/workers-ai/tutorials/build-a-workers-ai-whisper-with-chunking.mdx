@@ -23,7 +23,11 @@ You will create a new Worker project using the `create-cloudflare` CLI (C3). [C3
 
 Create a new project named `whisper-tutorial` by running:
 
-<PackageManagers type="create" pkg="cloudflare@latest" args={"whisper-tutorial"} />
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"whisper-tutorial"}
+/>
 
 Running `npm create cloudflare@latest` will prompt you to install the [`create-cloudflare` package](https://www.npmjs.com/package/create-cloudflare), and lead you through setup. C3 will also install [Wrangler](/workers/wrangler/), the Cloudflare Developer Platform CLI.
 
@@ -82,21 +86,24 @@ compatibility_date = "2024-09-23"
 
 Replace the contents of your `src/index.ts` file with the following integrated code. This sample demonstrates how to:
 
-- Extract an audio file URL from the query parameters.
-- Fetch the audio file while explicitly following redirects.
-- Split the audio file into smaller chunks (such as, 1MB chunks).
-- Transcribe each chunk using the Whisper-large-v3-turbo model via the Cloudflare AI binding.
-- Return the aggregated transcription as plain text.
+(1) Extract an audio file URL from the query parameters.
+
+(2) Fetch the audio file while explicitly following redirects.
+
+(3) Split the audio file into smaller chunks (such as, 1MB chunks).
+
+(4) Transcribe each chunk using the Whisper-large-v3-turbo model via the Cloudflare AI binding.
+
+(5) Return the aggregated transcription as plain text.
 
 ```ts
-
 import { Buffer } from "node:buffer";
 import type { Ai } from "workers-ai";
 
 export interface Env {
-  AI: Ai;
-  // If needed, add your KV namespace for storing transcripts.
-  // MY_KV_NAMESPACE: KVNamespace;
+	AI: Ai;
+	// If needed, add your KV namespace for storing transcripts.
+	// MY_KV_NAMESPACE: KVNamespace;
 }
 
 /**
@@ -107,20 +114,20 @@ export interface Env {
  * @returns An array of ArrayBuffers, each representing a chunk of the audio.
  */
 async function getAudioChunks(audioUrl: string): Promise<ArrayBuffer[]> {
-  const response = await fetch(audioUrl, { redirect: "follow" });
-  if (!response.ok) {
-    throw new Error(`Failed to fetch audio: ${response.status}`);
-  }
-  const arrayBuffer = await response.arrayBuffer();
+	const response = await fetch(audioUrl, { redirect: "follow" });
+	if (!response.ok) {
+		throw new Error(`Failed to fetch audio: ${response.status}`);
+	}
+	const arrayBuffer = await response.arrayBuffer();
 
-  // Example: Split the audio into 1MB chunks.
-  const chunkSize = 1024 * 1024; // 1MB
-  const chunks: ArrayBuffer[] = [];
-  for (let i = 0; i < arrayBuffer.byteLength; i += chunkSize) {
-    const chunk = arrayBuffer.slice(i, i + chunkSize);
-    chunks.push(chunk);
-  }
-  return chunks;
+	// Example: Split the audio into 1MB chunks.
+	const chunkSize = 1024 * 1024; // 1MB
+	const chunks: ArrayBuffer[] = [];
+	for (let i = 0; i < arrayBuffer.byteLength; i += chunkSize) {
+		const chunk = arrayBuffer.slice(i, i + chunkSize);
+		chunks.push(chunk);
+	}
+	return chunks;
 }
 
 /**
@@ -132,18 +139,21 @@ async function getAudioChunks(audioUrl: string): Promise<ArrayBuffer[]> {
  * @param env - The Cloudflare Worker environment, including the AI binding.
  * @returns The transcription text from the model.
  */
-async function transcribeChunk(chunkBuffer: ArrayBuffer, env: Env): Promise<string> {
-  const base64 = Buffer.from(chunkBuffer, "binary").toString("base64");
-  const res = await env.AI.run("@cf/openai/whisper-large-v3-turbo", {
-    audio: base64,
-    // Optional parameters (uncomment and set if needed):
-    // task: "transcribe",   // or "translate"
-    // language: "en",
-    // vad_filter: "false",
-    // initial_prompt: "Provide context if needed.",
-    // prefix: "Transcription:",
-  });
-  return res.text; // Assumes the transcription result includes a "text" property.
+async function transcribeChunk(
+	chunkBuffer: ArrayBuffer,
+	env: Env,
+): Promise<string> {
+	const base64 = Buffer.from(chunkBuffer, "binary").toString("base64");
+	const res = await env.AI.run("@cf/openai/whisper-large-v3-turbo", {
+		audio: base64,
+		// Optional parameters (uncomment and set if needed):
+		// task: "transcribe",   // or "translate"
+		// language: "en",
+		// vad_filter: "false",
+		// initial_prompt: "Provide context if needed.",
+		// prefix: "Transcription:",
+	});
+	return res.text; // Assumes the transcription result includes a "text" property.
 }
 
 /**
@@ -151,37 +161,41 @@ async function transcribeChunk(chunkBuffer: ArrayBuffer, env: Env): Promise<stri
  * processes it in chunks, and returns the full transcription.
  */
 export default {
-  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-    // Extract the audio URL from the query parameters.
-    const { searchParams } = new URL(request.url);
-    const audioUrl = searchParams.get("url");
+	async fetch(
+		request: Request,
+		env: Env,
+		ctx: ExecutionContext,
+	): Promise<Response> {
+		// Extract the audio URL from the query parameters.
+		const { searchParams } = new URL(request.url);
+		const audioUrl = searchParams.get("url");
 
-    if (!audioUrl) {
-      return new Response("Missing 'url' query parameter", { status: 400 });
-    }
+		if (!audioUrl) {
+			return new Response("Missing 'url' query parameter", { status: 400 });
+		}
 
-    // Get the audio chunks.
-    const audioChunks: ArrayBuffer[] = await getAudioChunks(audioUrl);
-    let fullTranscript = "";
+		// Get the audio chunks.
+		const audioChunks: ArrayBuffer[] = await getAudioChunks(audioUrl);
+		let fullTranscript = "";
 
-    // Process each chunk and build the full transcript.
-    for (const chunk of audioChunks) {
-      try {
-        const transcript = await transcribeChunk(chunk, env);
-        fullTranscript += transcript + "\n";
-      } catch (error) {
-        fullTranscript += "[Error transcribing chunk]\n";
-      }
-    }
+		// Process each chunk and build the full transcript.
+		for (const chunk of audioChunks) {
+			try {
+				const transcript = await transcribeChunk(chunk, env);
+				fullTranscript += transcript + "\n";
+			} catch (error) {
+				fullTranscript += "[Error transcribing chunk]\n";
+			}
+		}
 
-    return new Response(fullTranscript, {
-      headers: { "Content-Type": "text/plain" },
-    });
-  },
+		return new Response(fullTranscript, {
+			headers: { "Content-Type": "text/plain" },
+		});
+	},
 } satisfies ExportedHandler<Env>;
 ```
 
-## 5. Develop, test, and deploy
+## 5. Deploy your Worker
 
 1. **Run the Worker locally:**
 
@@ -191,15 +205,13 @@ export default {
 npx wrangler dev --remote
 ```
 
-   Open your browser and go to [http://localhost:8787](http://localhost:8787), or use curl:
+Open your browser and go to [http://localhost:8787](http://localhost:8787), or use curl:
 
 ```sh
 curl "http://localhost:8787?url=https://raw.githubusercontent.com/your-username/your-repo/main/your-audio-file.mp3"
 ```
 
-   Replace the URL query parameter with the direct link to your audio file. (For GitHub-hosted files, ensure you use the raw file URL.)
-
-
+Replace the URL query parameter with the direct link to your audio file. (For GitHub-hosted files, ensure you use the raw file URL.)
 
 2. **Deploy the Worker:**
 
@@ -217,7 +229,7 @@ npx wrangler deploy
 curl "https://<your-worker-subdomain>.workers.dev?url=https://raw.githubusercontent.com/your-username/your-repo/main/your-audio-file.mp3"
 ```
 
-   Make sure to replace `<your-worker-subdomain>`, `your-username`, `your-repo`, and `your-audio-file.mp3` with your actual details.
+Make sure to replace `<your-worker-subdomain>`, `your-username`, `your-repo`, and `your-audio-file.mp3` with your actual details.
 
 If successful, the Worker will return a transcript of the audio file:
 
