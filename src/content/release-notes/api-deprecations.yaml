@@ -5,6 +5,35 @@ productLink: "/fundamentals/"
 productArea: Core platform
 productAreaLink: /fundamentals/reference/changelog/platform/
 entries:
+  - publish_date: "2025-04-14"
+    title: "Zero Trust Devices"
+    description: |-
+      End of life date: November 25, 2026
+
+      We are changing the definition of Devices. Devices are going to represent the real-world machines while
+      the relation between Users and Devices will be represented by a new concept - Registrations.
+
+      As a result multiple fields are moving from Device to Registration and we're deprecating the endpoints listed below.
+
+      The deprecated endpoints are not supported on accounts with [multi-user mode](https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/windows-multiuser/#enable-multi-user-mode) enabled.
+
+      Deprecated API:
+
+        * `GET /accounts/{account_id}/devices`
+        * `GET /accounts/{account_id}/devices/{device_id}`
+        * `GET /accounts/{account_id}/devices/{device_id}/override_codes`
+        * `POST /accounts/{account_id}/devices/revoke`
+        * `POST /accounts/{account_id}/devices/unrevoke`
+
+      Replacement:
+
+        * `GET /accounts/{account_id}/devices/physical-devices`
+        * `GET /accounts/{account_id}/devices/physical-devices/{device_id}`
+        * `GET /accounts/{account_id}/devices/registrations`
+        * `GET /accounts/{account_id}/devices/registrations/{registration_id}`
+        * `POST /accounts/{account_id}/devices/registrations/revoke`
+        * `POST /accounts/{account_id}/devices/registrations/unrevoke`
+
   - publish_date: "2025-03-20"
     title: "Cloudflare Radar: Attack top industry and vertical endpoints"
     description: |-
