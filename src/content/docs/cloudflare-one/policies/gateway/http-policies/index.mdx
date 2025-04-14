@@ -38,48 +38,7 @@ API value: `allow`
 
 <Details header="Available selectors">
 
-**Traffic**
-
-- [Access Infrastructure Target](#access-infrastructure-target)
-- [Access Private App](#access-private-app)
-- [Application](#application)
-- [Content Categories](#content-categories)
-- [Destination Continent IP Geolocation](#destination-continent)
-- [Destination Country IP Geolocation](#destination-country)
-- [Destination IP](#destination-ip)
-- [DLP Profile](#dlp-profile)
-- [Domain](#domain)
-- [Download File Types](#download-and-upload-file-types)
-- [Download Mime Type](#download-and-upload-mime-type)
-- [Host](#host)
-- [HTTP Method](#http-method)
-- [HTTP Response](#http-response)
-- [Proxy Endpoint](#proxy-endpoint)
-- [Security Risks](#security-risks)
-- [Source Continent IP Geolocation](#source-continent)
-- [Source Country IP Geolocation](#source-country)
-- [Source Internal IP](#source-internal-ip)
-- [Source IP](#source-ip)
-- [Upload File Types](#download-and-upload-file-types)
-- [Upload Mime Type](#download-and-upload-mime-type)
-- [URL](#url)
-- [URL Path](#url-path)
-- [URL Path & Query](#url-path-and-query)
-- [URL Query](#url-query)
-- [Virtual Network](#virtual-network)
-
-**Identity**
-
-- [SAML Attributes](#users)
-- [User Email](#users)
-- [User Group Emails](#users)
-- [User Group IDs](#users)
-- [User Group Names](#users)
-- [User Name](#users)
-
-**Device Posture**
-
-- [Passed Device Posture Checks](#device-posture)
+<Render file="gateway/http-allow-block-selectors" />
 
 </Details>
 
@@ -105,30 +64,48 @@ API value: `block`
 
 <Details header="Available selectors">
 
+<Render file="gateway/http-allow-block-selectors" />
+
+</Details>
+
+The Block action blocks outbound traffic from reaching destinations you specify within the [Selectors](#selectors) and [Value](#value) fields. For example, the following configuration blocks users from being able to upload any file type to Google Drive:
+
+| Selector         | Operator      | Value          | Logic | Action |
+| ---------------- | ------------- | -------------- | ----- | ------ |
+| Application      | in            | `Google Drive` | And   | Block  |
+| Upload Mime Type | matches regex | `.*`           |       |        |
+
+#### WARP client block notifications
+
+<Render
+	file="gateway/client-notifications"
+	product="cloudflare-one"
+	params={{ toggleName: "**Display block notification for WARP Client**" }}
+/>
+
+### Redirect
+
+API value: `redirect`
+
+<Details header="Available selectors">
+
 **Traffic**
 
 - [Access Infrastructure Target](#access-infrastructure-target)
-- [Access Private App](#access-private-app)
 - [Application](#application)
 - [Content Categories](#content-categories)
 - [Destination Continent IP Geolocation](#destination-continent)
 - [Destination Country IP Geolocation](#destination-country)
 - [Destination IP](#destination-ip)
-- [DLP Profile](#dlp-profile)
 - [Domain](#domain)
-- [Download File Types](#download-and-upload-file-types)
-- [Download Mime Type](#download-and-upload-mime-type)
 - [Host](#host)
 - [HTTP Method](#http-method)
-- [HTTP Response](#http-response)
 - [Proxy Endpoint](#proxy-endpoint)
 - [Security Risks](#security-risks)
 - [Source Continent IP Geolocation](#source-continent)
 - [Source Country IP Geolocation](#source-country)
 - [Source Internal IP](#source-internal-ip)
 - [Source IP](#source-ip)
-- [Upload File Types](#download-and-upload-file-types)
-- [Upload Mime Type](#download-and-upload-mime-type)
 - [URL](#url)
 - [URL Path](#url-path)
 - [URL Path & Query](#url-path-and-query)
@@ -150,16 +127,27 @@ API value: `block`
 
 </Details>
 
-The Block action blocks outbound traffic from reaching destinations you specify within the [Selectors](#selectors) and [Value](#value) fields. For example, the following configuration blocks users from being able to upload any file type to Google Drive:
+The Redirect action allows you to redirect matched HTTP requests to a different URL you specify. For example, if your users browse to the public web page of a SaaS app, you can redirect them to your own self-hosted instance, a single sign-on page, or an internal policy page.
 
-| Selector         | Operator      | Value          | Logic | Action |
-| ---------------- | ------------- | -------------- | ----- | ------ |
-| Application      | in            | `Google Drive` | And   | Block  |
-| Upload Mime Type | matches regex | `.*`           |       |        |
+To redirect URLs with a Block action and the block page, refer to [Redirect to a block page](/cloudflare-one/policies/gateway/block-page/#redirect-to-a-block-page).
 
-#### WARP client block notifications
+#### Policy settings
 
-<Render file="gateway/client-notifications-os" product="cloudflare-one" />
+In **Policy URL redirect**, you can define what URL to redirect matched requests to. The redirect URL can contain paths and queries. For example, you can redirect `example.com` to `cloudflare.com/path/to/page?querystring=x`.
+
+<Render file="gateway/policy-context" />
+
+When you turn on **Preserve original path and query string**, Gateway will append the original path and query string to the redirected URL. Paths and queries in the redirect URL take precedence over the original URL. For example, if the original URL is `example.com/path/to/page?querystring=X` and the redirect URL is `cloudflare.com/redirect-path?querystring=Y`, Gateway will redirect requests to:
+
+```txt "cloudflare.com/redirect-path" "?querystring=Y"
+cloudflare.com/redirect-path/path/to/page?querystring=Y
+```
+
+When you turn on both options, Gateway will preserve the original path and query string, then append context policy to the end of the redirect URL. For example, if the original URL is `example.com/path/to/page?querystring=X&k=1` and the redirect URL is `cloudflare.com/redirect-path?querystring=Y`, Gateway will redirect requests to:
+
+```txt "cloudflare.com/redirect-path" "?querystring=Y" ins="&user_email=user@example.com"
+cloudflare.com/redirect-path/path/to/page?querystring=Y&k=1&user_email=user@example.com
+```
 
 ### Isolate
 
@@ -198,44 +186,6 @@ API value: `isolate`
 </Details>
 
 The Isolate action serves matched traffic to users via [Cloudflare Browser Isolation](/cloudflare-one/policies/browser-isolation/). For more information on this action, refer to [Isolation policies](/cloudflare-one/policies/browser-isolation/isolation-policies/#isolate).
-
-### Do Not Isolate
-
-API value: `noisolate`
-
-<Details header="Available selectors">
-
-**Traffic**
-
-- [Application](#application)
-- [Content Categories](#content-categories)
-- [Domain](#domain)
-- [Host](#host)
-- [HTTP Method](#http-method)
-- [Security Risks](#security-risks)
-- [Source Continent IP Geolocation](#source-continent)
-- [Source Country IP Geolocation](#source-country)
-- [URL](#url)
-- [URL Path](#url-path)
-- [URL Path & Query](#url-path-and-query)
-- [URL Query](#url-query)
-
-**Identity**
-
-- [SAML Attributes](#users)
-- [User Email](#users)
-- [User Group Emails](#users)
-- [User Group IDs](#users)
-- [User Group Names](#users)
-- [User Name](#users)
-
-**Device Posture**
-
-- [Passed Device Posture Checks](#device-posture)
-
-</Details>
-
-The Do Not Isolate action turns off browser isolation for matched traffic. For more information on this action, refer to [Isolation policies](/cloudflare-one/policies/browser-isolation/isolation-policies/#do-not-isolate).
 
 ### Do Not Inspect
 
@@ -286,6 +236,44 @@ Information contained within HTTPS encryption, such as the full requested URL, w
 Do Not Inspect lets you bypass certain elements from inspection. To prevent Gateway from decrypting and inspecting HTTPS traffic, your policy must match against the Server Name Indicator (SNI) in the TLS header. When accessing a Do Not Inspect site in the browser, your browser may display a **Your connection is not private** warning, which you can proceed through to connect. For more information about applications which may require a Do Not Inspect policy, refer to [TLS decryption limitations](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#inspection-limitations).
 
 All Do Not Inspect rules are evaluated first, before any Allow or Block rules, to determine if inspection should occur. For more information, refer to [Order of enforcement](/cloudflare-one/policies/gateway/order-of-enforcement/#http-policies).
+
+### Do Not Isolate
+
+API value: `noisolate`
+
+<Details header="Available selectors">
+
+**Traffic**
+
+- [Application](#application)
+- [Content Categories](#content-categories)
+- [Domain](#domain)
+- [Host](#host)
+- [HTTP Method](#http-method)
+- [Security Risks](#security-risks)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [URL](#url)
+- [URL Path](#url-path)
+- [URL Path & Query](#url-path-and-query)
+- [URL Query](#url-query)
+
+**Identity**
+
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
+
+**Device Posture**
+
+- [Passed Device Posture Checks](#device-posture)
+
+</Details>
+
+The Do Not Isolate action turns off browser isolation for matched traffic. For more information on this action, refer to [Isolation policies](/cloudflare-one/policies/browser-isolation/isolation-policies/#do-not-isolate).
 
 ### Do Not Scan
 
@@ -637,9 +625,9 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 ### URL Query
 
-| UI name   | API example                    |
-| --------- | ------------------------------ |
-| URL Query | `not(http.request.uri in $%s)` |
+| UI name   | API example                          |
+| --------- | ------------------------------------ |
+| URL Query | `not(http.request.uri.query in $%s)` |
 
 ### Users
 

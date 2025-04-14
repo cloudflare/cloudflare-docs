@@ -46,7 +46,7 @@ Batching can:
 There are three ways to define how ingested data is batched:
 
 1. `batch-max-mb`: The maximum amount of data that will be batched in megabytes. Default, and maximum, is `100 MB`.
-2. `batch-max-rows`: The maximum number of rows or events in a batch before data is written. Default, and maximum, is `10,000` rows.
+2. `batch-max-rows`: The maximum number of rows or events in a batch before data is written. Default, and maximum, is `10,000,000` rows.
 3. `batch-max-seconds`: The maximum duration of a batch before data is written in seconds. Default, and maximum, is `300 seconds`.
 
 Batch definitions are hints. A pipeline will follow these hints closely, but batches might not be exact.
