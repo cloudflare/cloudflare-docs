@@ -341,8 +341,8 @@ let url = req.url()?;
  * @see https://tools.ietf.org/html/rfc7617
  */
 
-import { Hono } from 'hono';
-import { auth } from 'hono/basic-auth';
+import { Hono } from "hono";
+import { basicAuth } from "hono/basic-auth";
 
 // Define environment interface
 interface Env {
@@ -355,7 +355,7 @@ interface Env {
 const app = new Hono<Env>();
 
 // Public homepage - accessible to everyone
-app.get('/', (c) => {
+app.get("/", (c) => {
   return c.text("Anyone can access the homepage.");
 });
 
@@ -375,7 +375,7 @@ app.get(
 			"Cache-Control": "no-store",
 		});
 	}
-
+);
 
 export default app;
 ````
