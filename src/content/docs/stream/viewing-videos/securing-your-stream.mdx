@@ -47,7 +47,7 @@ Response:
 
 You can program your app to generate token in two ways:
 
-- **Low-volume or testing: Use the `/token` endpoint to generate a short-lived signed token.** This is recommended for testing purposes or if you are generating less than 1,000 tokens per day. It requires making an API call to Cloudflare for each token, the default result is valid for 1 hour.
+- **Low-volume or testing: Use the `/token` endpoint to generate a short-lived signed token.** This is recommended for testing purposes or if you are generating less than 1,000 tokens per day. It requires making an API call to Cloudflare for each token. The default result is valid for 1 hour.
 
 - **Recommended: Use a signing key to create tokens.** If you have thousands of daily users or need to generate a high volume of tokens, you can create tokens yourself using a signing key. This way, you do not need to call a Stream API each time you need to generate a token.
 
