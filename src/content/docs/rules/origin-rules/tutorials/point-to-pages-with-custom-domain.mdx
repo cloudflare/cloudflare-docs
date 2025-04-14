@@ -64,25 +64,31 @@ If using the Expression Editor, enter the following expression:
 
 In this example, the URL that website visitors will access starts with `/blog`. However, the Pages deployment does not have this initial URL segment.
 
-Use a URL rewrite to remove the `/blog` segment from the URL path. Cloudflare provides a rule template in the dashboard called **Rewrite Path for Object Storage Bucket** that you can use to configure the required rewrite.
+Use a URL rewrite to remove the `/blog` segment from the URL path.
 
 1. Go to **Rules** > **Overview**.
 2. Select **Create rule** > **URL Rewrite Rule**.
-3. Locate the **Rewrite Path for Object Storage Bucket** rule template, and select **Create a rule**.
-4. Update the rule name.
-5. Change the value in **Request URL** to:
+3. Enter a descriptive name for the rule in **Rule name**.
+4. In **If incoming requests match**, select **Wildcard pattern**.
+5. Enter the following value in **Request URL**:
 
    ```txt
    https://<YOUR_HOSTNAME>/blog/*
    ```
 
-6. Change the value in **Target path** to:
+   In the current example, the value would be `https://mycustomerexample.com/blog/*`.
+
+6. In **Then rewrite the path and/or query**, enter the following values under **Path**:
 
    | Target path | Rewrite to |
    | ----------- | ---------- |
    | `blog/*`    | `${1}`     |
 
 7. Select **Deploy**.
+
+:::note
+Cloudflare provides a rule template in the dashboard called **Rewrite Path for Object Storage Bucket** that you can use and adapt to configure the URL rewrite rule.
+:::
 
 ## More resources
 

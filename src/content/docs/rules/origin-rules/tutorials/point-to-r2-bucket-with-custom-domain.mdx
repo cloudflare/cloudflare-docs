@@ -71,15 +71,17 @@ Use a URL rewrite to remove the `/images` segment from the URL path. Cloudflare 
 
 1. Go to **Rules** > **Overview**.
 2. Select **Create rule** > **URL Rewrite Rule**.
-3. Locate the **Rewrite Path for Object Storage Bucket** rule template, and select **Create a rule**.
-4. Update the rule name.
-5. Change the value in **Request URL** to:
+3. Enter a descriptive name for the rule in **Rule name**.
+4. In **If incoming requests match**, select **Wildcard pattern**.
+5. Enter the following value in **Request URL**:
 
    ```txt
    https://<YOUR_HOSTNAME>/images/*
    ```
 
-6. Change the values under **Path** to:
+   In the current example, the value would be `https://mycustomerexample.com/images/*`.
+
+6. In **Then rewrite the path and/or query**, enter the following values under **Path**:
 
    | Target path | Rewrite to |
    | ----------- | ---------- |
@@ -87,8 +89,12 @@ Use a URL rewrite to remove the `/images` segment from the URL path. Cloudflare 
 
 7. Select **Deploy**.
 
+:::note
+Cloudflare provides a rule template in the dashboard called **Rewrite Path for Object Storage Bucket** that you can use and adapt to configure the URL rewrite rule.
+:::
+
 ## More resources
 
 - [Tutorial: Change URI Path and Host Header](/rules/origin-rules/tutorials/change-uri-path-and-host-header/)
-- [Cloudflare R2: Public buckets](https://developers.cloudflare.com/r2/buckets/public-buckets/)
+- [Cloudflare R2: Public buckets](/r2/buckets/public-buckets/)
 - [DNS records](/dns/manage-dns-records/)
