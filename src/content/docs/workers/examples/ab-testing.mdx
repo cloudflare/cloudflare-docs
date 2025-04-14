@@ -147,24 +147,23 @@ const app = new Hono();
 
 const NAME = "myExampleWorkersABTest";
 
+// Enable passthrough to allow direct access to control and test routes
+app.all("/control/*", (c) => fetch(c.req.raw));
+app.all("/test/*", (c) => fetch(c.req.raw));
+
 // Middleware to handle A/B testing logic
 app.use("*", async (c) => {
-	// Enable Passthrough to allow direct access to control and test routes
-	if (c.req.path.startsWith("/control") || c.req.path.startsWith("/test")) {
-		return fetch(c.req.raw);
-	}
+	const url = new URL(c.req.url);
 
 	// Determine which group this requester is in
 	const abTestCookie = getCookie(c, NAME);
 
 	if (abTestCookie === "control") {
 		// User is in control group
-		c.req.path = "/control" + c.req.path;
-		return fetch(url);
+		url.pathname = "/control" + c.req.path;
 	} else if (abTestCookie === "test") {
 		// User is in test group
-		url.pathname = "/test" + url.pathname;
-		return fetch(c.req.url);
+		url.pathname = "/test" + c.req.path;
 	} else {
 		// If there is no cookie, this is a new client
 		// Choose a group and set the cookie (50/50 split)
@@ -172,34 +171,20 @@ app.use("*", async (c) => {
 
 		// Update URL path based on assigned group
 		if (group === "control") {
-			c.req.path = "/control" + c.req.path;
+			url.pathname = "/control" + c.req.path;
 		} else {
-			c.req.path = "/test" + c.req.path;
+			url.pathname = "/test" + c.req.path;
 		}
-
-		// Fetch from origin with modified path
-		const res = await fetch(c.req.url);
-
-		// Create a new response to avoid immutability issues
-		const newResponse = new Response(res.body, res);
 
 		// Set cookie to enable persistent A/B sessions
 		setCookie(c, NAME, group, {
 			path: "/",
-			// Add additional cookie options as needed:
-			// secure: true,
-			// httpOnly: true,
-			// sameSite: 'strict',
 		});
-
-		// Copy the Set-Cookie header to the response
-		newResponse.headers.set(
-			"Set-Cookie",
-			c.res.headers.get("Set-Cookie") || "",
-		);
-
-		return newResponse;
 	}
+
+	const res = await fetch(url);
+
+	return c.body(res.body, res);
 });
 
 export default app;

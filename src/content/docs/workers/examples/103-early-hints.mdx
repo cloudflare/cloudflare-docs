@@ -139,7 +139,7 @@ def on_fetch(request):
 </TabItem> <TabItem label="Hono" icon="seti:typescript">
 
 ```ts
-import { Hono } from 'hono';
+import { Hono } from "hono";
 
 const app = new Hono();
 
@@ -159,22 +159,21 @@ const HTML = `
 `;
 
 // Serve CSS file
-app.get('/test.css', (c) => {
-  return c.body(CSS, {
-    headers: {
-      "content-type": "text/css",
-    },
-  });
+app.get("/test.css", (c) => {
+	return c.body(CSS, {
+		headers: {
+			"content-type": "text/css",
+		},
+	});
 });
 
 // Serve HTML with early hints
-app.get('*', (c) => {
-  return c.body(HTML, {
-    headers: {
-      "content-type": "text/html",
-      "link": "</test.css>; rel=preload; as=style",
-    },
-  });
+app.get("*", (c) => {
+	return c.html(HTML, {
+		headers: {
+			link: "</test.css>; rel=preload; as=style",
+		},
+	});
 });
 
 export default app;

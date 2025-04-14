@@ -101,7 +101,7 @@ app.all("*", async (c) => {
 	}
 
 	// Otherwise, process request as normal
-	return fetch(c.req.raw);
+	return proxy(c.req.raw);
 });
 
 export default app;

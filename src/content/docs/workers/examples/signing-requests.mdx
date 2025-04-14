@@ -307,7 +307,7 @@ app.get("/generate/*", async (c) => {
 // Handle verification for all other requests
 app.all("*", async (c) => {
 	const env = c.env;
-	const url = c.req.url)
+	const url = c.req.url;
 
 	// You will need some secret data to use as a symmetric key
 	const secretKeyData = encoder.encode(

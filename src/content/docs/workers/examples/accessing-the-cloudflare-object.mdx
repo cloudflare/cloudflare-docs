@@ -61,9 +61,7 @@ export default {
 ```ts
 import { Hono } from "hono";
 
-type Bindings = {};
-
-const app = new Hono<{ Bindings: Bindings }>();
+const app = new Hono();
 
 app.get("*", async (c) => {
 	// Access the raw request to get the cf object

@@ -166,7 +166,7 @@ const app = new Hono();
 
 app.get("*", (c) => {
 	// Cast the raw request to include Cloudflare-specific properties
-	const request = c.req.raw as RequestWithCf;
+	const request = c.req.raw;
 
 	// Define styles
 	const html_style =

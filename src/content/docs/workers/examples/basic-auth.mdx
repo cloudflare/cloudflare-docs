@@ -347,6 +347,7 @@ import { auth } from 'hono/basic-auth';
 // Define environment interface
 interface Env {
   Bindings: {
+		USERNAME: string;
     PASSWORD: string;
   };
 }
@@ -358,20 +359,23 @@ app.get('/', (c) => {
   return c.text("Anyone can access the homepage.");
 });
 
-// Logout route
-app.get('/logout', (c) => {
-  return c.text("Logged out.", 401);
-});
-
 // Admin route - protected with Basic Auth
-app.get('/admin', async (c, next) => {
-	return basicAuth({ username: c.env.USERNAME, password: c.env.PASSWORD })(c, next);
-});
+app.get(
+	"/admin",
+	async (c, next) => {
+		const auth = basicAuth({
+			username: c.env.USERNAME,
+			password: c.env.PASSWORD
+		})
 
-// Handle 404 for any other routes
-app.notFound((c) => {
-  return c.text("Not Found.", 404);
-});
+		return await auth(c, next);
+	},
+	(c) => {
+		return c.text("🎉 You have private access!", 200, {
+			"Cache-Control": "no-store",
+		});
+	}
+
 
 export default app;
 ````

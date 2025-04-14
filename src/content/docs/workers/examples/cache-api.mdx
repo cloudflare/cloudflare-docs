@@ -136,12 +136,7 @@ async def on_fetch(request, _env, ctx):
 
 ```ts
 import { Hono } from "hono";
-import type { Context } from "hono";
 import { cache } from "hono/cache";
-
-type Env = {
-	// Cloudflare Worker environment
-};
 
 const app = new Hono();
 
