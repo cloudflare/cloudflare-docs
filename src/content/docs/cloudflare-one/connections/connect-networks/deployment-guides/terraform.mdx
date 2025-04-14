@@ -187,7 +187,7 @@ The following configuration will modify settings in your Cloudflare account.
 			proxied = true
 		}
 
-		# Configures tunnel with a public hostname route (for clientless access).
+		# Configures tunnel with a public hostname route for clientless access.
 		resource "cloudflare_zero_trust_tunnel_cloudflared_config" "gcp_tunnel_config" {
 			tunnel_id  = cloudflare_zero_trust_tunnel_cloudflared.gcp_tunnel.id
 			account_id = var.cloudflare_account_id
@@ -204,7 +204,7 @@ The following configuration will modify settings in your Cloudflare account.
 			}
 		}
 
-		# Routes internal IP of GCP instance through the tunnel (for private network access using WARP).
+		# (Optional) Routes internal IP of GCP instance through the tunnel for private network access using WARP.
 		resource "cloudflare_zero_trust_tunnel_cloudflared_route" "example_tunnel_route" {
 		account_id         = var.cloudflare_account_id
 		tunnel_id          = cloudflare_zero_trust_tunnel_cloudflared.gcp_tunnel.id
@@ -270,7 +270,7 @@ The following configuration will modify settings in your Cloudflare account.
 			proxied = true
 		}
 
-		# Configures tunnel with a public hostname route (for clientless access).
+		# Configures tunnel with a public hostname route for clientless access.
 			resource "cloudflare_zero_trust_tunnel_cloudflared_config" "gcp_tunnel_config" {
 				tunnel_id = cloudflare_zero_trust_tunnel_cloudflared.gcp_tunnel.id
 				account_id = var.cloudflare_account_id
@@ -285,7 +285,7 @@ The following configuration will modify settings in your Cloudflare account.
 				}
 			}
 
-		# Route internal IP of GCP instance through the tunnel (for private network access using WARP).
+		# (Optional) Route internal IP of GCP instance through the tunnel for private network access using WARP.
 		resource "cloudflare_zero_trust_tunnel_route" "example_tunnel_route" {
 		account_id         = var.cloudflare_account_id
 		tunnel_id          = cloudflare_zero_trust_tunnel_cloudflared.gcp_tunnel.id
@@ -418,6 +418,10 @@ The following configuration defines the specifications for the GCP virtual machi
 ### Create a startup script
 
 The following script will install `cloudflared` and run the tunnel as a service. This example also installs a lightweight HTTP application that you can use to test connectivity.
+
+:::note
+If you would prefer to manually install the tunnel, refer to [Install and run the tunnel](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel-api/#4-install-and-run-the-tunnel).
+:::
 
 1. In your configuration directory, create a Terraform template file:
 
