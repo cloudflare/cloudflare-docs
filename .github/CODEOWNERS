@@ -28,6 +28,7 @@
 /src/content/release-notes/workers-ai.yaml @kathayl @G4brym @mchenco @daisyfaithauma @cloudflare/pcx-technical-writing
 /src/content/release-notes/ai-gateway.yaml @kathayl @G4brym @mchenco @daisyfaithauma @cloudflare/pcx-technical-writing
 /src/content/release-notes/vectorize.yaml @elithrar @mchenco @sejoker @cloudflare/pcx-technical-writing
+/src/content/docs/autorag/ @rita3ko @irvinebroque @aninibread @ToriLindsay @cloudflare/pcx-technical-writing
 
 # Analytics & Logs
 
@@ -202,6 +203,7 @@
 /src/content/docs/dmarc-management/ @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 /src/content/docs/firewall/ @pedrosousa @cloudflare/firewall @cloudflare/pcx-technical-writing
 /src/content/docs/page-shield/ @pedrosousa @cloudflare/pcx-technical-writing
+/src/content/docs/secrets-store/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
 /src/content/docs/security-center/ @jason-cf @cloudflare/pcx-technical-writing
 /src/content/docs/ssl/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
 /src/content/docs/waf/ @pedrosousa @cloudflare/firewall @cloudflare/pcx-technical-writing

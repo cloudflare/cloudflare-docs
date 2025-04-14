@@ -9,6 +9,7 @@ import { Aside } from "@astrojs/starlight/components";
 import Description from "~/components/Description.astro";
 import SpotlightAuthorDetails from "~/components/SpotlightAuthorDetails.astro";
 import LastReviewed from "~/components/LastReviewed.astro";
+import CopyPageButton from "~/components/CopyPageButton.tsx";
 
 import { getEntry } from "astro:content";
 
@@ -112,6 +113,12 @@ const hideBreadcrumbs = Astro.locals.starlightRoute.hideBreadcrumbs;
 {summary && <Description set:html={marked.parse(summary)} />}
 
 {component && <Aside>To see a list of pages this component is used on, please visit the <a href={`/style-guide/components/usage/#${component.toLowerCase()}`}>usage page</a>.</Aside>}
+
+{frontmatter.template !== "splash" && (
+	<div class="flex justify-end items-center">
+		<CopyPageButton client:idle />
+	</div>
+)}
 
 <style>
 	:root {

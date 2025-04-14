@@ -1,0 +1,102 @@
+---
+pcx_content_type: concept
+title: REST API
+sidebar:
+  order: 4
+---
+
+import {
+	Badge,
+	Description,
+	Render,
+	TabItem,
+	Tabs,
+	WranglerConfig,
+	MetaInfo,
+	Type,
+} from "~/components";
+
+This guide will instruct you through how to use the AutoRAG REST API to make a query to your AutoRAG.
+
+## Prerequisite: Get AutoRAG API token
+
+You need an API token with the `AutoRAG - Read` and `AutoRAG Edit` permissions to use the REST API. To create a new token:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Go to **AI** > **AutoRAG** and select your AutoRAG.
+3. Select **Use AutoRAG** then select **API**.
+4. Select **Create an API Token**.
+5. Review the prefilled information then select **Create API Token**.
+6. Select **Copy API Token** and save that value for future use.
+
+## AI Search
+
+This REST API searches for relevant results from your data source and generates a response using the model and the retrieved relevant context:
+
+```bash
+
+curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/autorag/rags/{AUTORAG_NAME}/ai-search \
+-H 'Content-Type: application/json' \
+-H "Authorization: Bearer {API_TOKEN}" \
+-d '{
+	"query": "How do I train a llama to deliver coffee?",
+	"model": @cf/meta/llama-3.3-70b-instruct-sd,
+	"rewrite_query": true,
+	"max_num_results": 10,
+	"ranking_options": {
+		"score_threshold": 0.6
+	},
+	"stream": true,
+}'
+
+```
+
+:::note
+
+You can get your `ACCOUNT_ID` by navigating to [Workers & Pages on the dashboard](/fundamentals/setup/find-account-and-zone-ids/#find-account-id-workers-and-pages).
+
+:::
+
+### Parameters
+
+<Render file="ai-search-api-params" product="autorag" />
+
+### Response
+
+This is the response structure without `stream` enabled.
+
+<Render file="ai-search-response" product="autorag" />
+
+## Search
+
+This REST API searches for results from your data source and returns the relevant results:
+
+```bash
+
+curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/autorag/rags/{AUTORAG_NAME}/search \
+-H 'Content-Type: application/json' \
+-H "Authorization: Bearer {API_TOKEN}" \
+-d '{
+	"query": "How do I train a llama to deliver coffee?",
+	"rewrite_query": true,
+	"max_num_results": 10,
+	"ranking_options": {
+		"score_threshold": 0.6
+	},
+}'
+
+```
+
+:::note
+
+You can get your `ACCOUNT_ID` by navigating to Workers & Pages on the dashboard, and copying the Account ID under Account Details.
+
+:::
+
+### Parameters
+
+<Render file="search-api-params" product="autorag" />
+
+### Response
+
+<Render file="search-response" product="autorag" />

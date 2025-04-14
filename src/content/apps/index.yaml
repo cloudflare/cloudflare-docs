@@ -229,33 +229,33 @@
   updated: 2023-03-22
 - link: https://github.com/cloudflare/orange
   id: Orange Meets
-  description: Orange Meets is a demo WebRTC application built using Cloudflare Calls.
+  description: Orange Meets is a demo WebRTC application built using Cloudflare Realtime.
   tags: []
-  products: [Calls]
+  products: [Realtime]
   languages: [TypeScript]
   cloudflare: true
   updated: 2024-07-05
 - link: https://github.com/cloudflare/calls-examples/tree/main/whip-whep-server
   id: WHIP-WHEP Server
-  description: WHIP and WHEP server implemented on top of Calls API.
+  description: WHIP and WHEP server implemented on top of Realtime API.
   tags: []
-  products: [Calls]
+  products: [Realtime]
   languages: [TypeScript]
   cloudflare: true
   updated: 2022-06-12
 - link: https://github.com/cloudflare/calls-examples/tree/main/echo
-  id: Calls Echo Demo
+  id: Realtime Echo Demo
   description: Demonstrates a local stream alongside a remote echo stream.
   tags: []
-  products: [Calls]
+  products: [Realtime]
   languages: [JavaScript]
   cloudflare: true
   updated: 2025-05-10
 - link: https://github.com/cloudflare/calls-examples/tree/main/echo-datachannels
-  id: Calls DataChannel Test
+  id: Realtime DataChannel Test
   description: This example establishes two datachannels, one publishes data and the other one subscribes, the test measures how fast a message travels to and from the server.
   tags: []
-  products: [Calls]
+  products: [Realtime]
   languages: [JavaScript]
   cloudflare: true
   updated: 2022-06-04
@@ -340,3 +340,18 @@
   languages: [TypeScript]
   cloudflare: false
   updated: 2024-10-07
+- link: https://github.com/harshil1712/e-com-d1
+  id: E-commerce Store
+  description: An application to showcase D1 read replication in the context of an online store.
+  tags: []
+  products: [Workers, D1]
+  languages: [TypeScript]
+  cloudflare: true
+  updated: 2025-02-27
+- link: https://github.com/cloudflare/templates/tree/main/d1-starter-sessions-api-template
+  id: Starter code for D1 Sessions API
+  description: An introduction to D1 Sessions API. This demo simulates purchase orders administration.
+  products: [Workers, D1]
+  languages: [TypeScript]
+  cloudflare: true
+  updated: 2025-03-31

@@ -37,7 +37,7 @@ Detection engine responsible for generating the Bot Score. <br />Possible values
 
 Type: `array[string]`
 
-Type of bot traffic (if available). Refer to [Bot Tags](/bots/concepts/cloudflare-bot-tags/) for the list of potential values. Available only for Bot Management customers. To enable this feature, contact your account team.
+Type of bot traffic (if available). Refer to [Bot Tags](/bots/concepts/bot-tags/) for the list of potential values. Available only for Bot Management customers. To enable this feature, contact your account team.
 
 ## CacheCacheStatus
 

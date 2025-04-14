@@ -1,0 +1,45 @@
+---
+title: Configure text add-ons
+pcx_content_type: how-to
+sidebar:
+  order: 7
+---
+
+You can create custom labels to be used as the subject or body prefix for emails with specific dispositions.
+
+To configure text add-ons:
+
+1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
+2. Select **Email Security**.
+3. Select **Settings**, then go to **Detection settings** > **Text add-ons** > **View**.
+4. Select **Configure**.
+
+You can configure a **subject prefix** and/or a **body prefix**.
+
+## Subject prefix
+
+A subject prefix is a custom label to be used as the subject prefix for emails with specific dispositions.
+
+Populate each disposition with a subject prefix, and turn on the **Status** to enable the subject prefix for a specific disposition.
+
+Additionally, you can turn on **Add "labels" variable**. This option allows you to add a dynamic value that for a label that lists dispositions and allows for additional text. To turn on this option:
+
+1. Go to **Advanced settings** > **Add "labels" variable**.
+2. Choose between **Use default**, or **Use custom "labels" variable**. If you choose **Use custom "labels" variable**, enter the custom label in the text box.
+
+## Body prefix
+
+A body prefix is a custom label added to the top of the email body for emails with specific dispositions.
+
+Populate each disposition with a body prefix, and turn on the **Status** to enable the body prefix for a specific disposition.
+
+With body prefix, you can turn on advanced settings. Go to **Advanced settings**:
+
+- **Add "labels" variable**: This option allows you to add a dynamic value that for a label that lists dispositions and allows for additional text. Choose between:
+    - **Use default**.
+    - **Use custom "labels" variable**: Enter the custom label in the text box.
+- **Add "threat types" variable**: Choose between:
+    - **Use default**.
+    - **Use custom "threat types" variable**: Enter the custom threat type in the text box.
+
+Once you have configured a subject prefix or a body prefix, select **Save**.

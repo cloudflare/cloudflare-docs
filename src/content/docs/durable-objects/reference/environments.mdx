@@ -8,6 +8,10 @@ sidebar:
 
 import { WranglerConfig } from "~/components";
 
+Environments provide isolated spaces where your code runs with specific dependencies and configurations. This can be useful for a number of reasons, such as compatibility testing or version management. Using different environments can help with code consistency, testing, and production segregation, which reduces the risk of errors when deploying code.
+
+## Wrangler environments
+
 [Wrangler](/workers/wrangler/install-and-update/) allows you to deploy the same Worker application with different configuration for each [environment](/workers/wrangler/environments/).
 
 If you are using Wrangler environments, you must specify any [Durable Object bindings](/workers/runtime-apis/bindings/) you wish to use on a per-environment basis.
@@ -56,3 +60,25 @@ durable_objects.bindings = [
 ```
 
 </WranglerConfig>
+
+## Local development
+
+Local development sessions create a standalone, local-only environment that mirrors the production environment, so that you can test your Worker and Durable Objects before you deploy to production.
+
+An existing Durable Object binding of `DB` would be available to your Worker when running locally.
+
+Refer to Workers [Local development](/workers/local-development/#supported-resource-bindings-in-different-environments).
+
+## Remote development
+
+KV-backed Durable Objects support remote development using the dashboard playground. The dashboard playground uses a browser version of Visual Studio Code, allowing you to rapidly iterate on your Worker entirely in your browser.
+
+To start remote development:
+
+1. Log in to your Cloudflare dashboard, and go to [**Workers & Pages** > **Overview**](https://dash.cloudflare.com/?to=/:account/workers-and-pages).
+2. Select an existing Worker.
+3. Select the **Edit code** icon located on the upper-right of the screen.
+
+:::caution
+Remote development is only available for KV-backed Durable Objects. SQLite-backed Durable Objects do not support remote development.
+:::

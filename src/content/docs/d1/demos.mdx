@@ -2,13 +2,25 @@
 pcx_content_type: navigation
 title: Demos and architectures
 sidebar:
-  order: 12
+  order: 13
 
 ---
 
 import { ExternalResources, GlossaryTooltip, ResourcesBySelector } from "~/components"
 
 Learn how you can use D1 within your existing application and architecture.
+
+## Featured Demos
+
+- [Starter code for D1 Sessions API](https://github.com/cloudflare/templates/tree/main/d1-starter-sessions-api-template): An introduction to D1 Sessions API. This demo simulates purchase orders administration.
+
+  [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/d1-starter-sessions-api-template)
+
+:::note[Tip: Place your database further away for the read replication demo]
+To simulate how read replication can improve a worst case latency scenario, select your primary database location to be in a farther away region (one of the deployment steps).
+
+You can find this in the **Database location hint** dropdown.
+:::
 
 ## Demos
 

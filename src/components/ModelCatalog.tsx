@@ -21,6 +21,7 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 
 	// List of model names to pin at the top
 	const pinnedModelNames = [
+		"@cf/meta/llama-4-scout-17b-16e-instruct",
 		"@cf/meta/llama-3.3-70b-instruct-fp8-fast",
 		"@cf/meta/llama-3.1-8b-instruct-fast",
 	];
@@ -79,6 +80,10 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 						return "Function calling";
 					}
 
+					if (property_id === "async_queue" && value === "true") {
+						return "Batch";
+					}
+
 					return [];
 				})
 				.filter((p) => Boolean(p)),
@@ -99,6 +104,10 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 
 						if (property_id === "function_calling" && value === "true") {
 							return "Function calling";
+						}
+
+						if (property_id === "async_queue" && value === "true") {
+							return "Batch";
 						}
 
 						return [];

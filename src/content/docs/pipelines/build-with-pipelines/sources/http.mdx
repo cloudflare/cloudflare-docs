@@ -1,0 +1,88 @@
+---
+title: Configure HTTP endpoint
+pcx_content_type: concept
+sidebar:
+  order: 1
+head:
+  - tag: title
+    content: Configure HTTP endpoint
+---
+
+import { Render, PackageManagers } from "~/components";
+
+Pipelines support data ingestion over HTTP. When you create a new pipeline using the default settings you will receive a globally scalable ingestion endpoint. To ingest data, make HTTP POST requests to the endpoint.
+
+```sh
+$ npx wrangler@latest pipelines create my-clickstream-pipeline --r2-bucket my-bucket
+
+🌀 Authorizing R2 bucket "my-bucket"
+🌀 Creating pipeline named "my-clickstream-pipeline"
+✅ Successfully created pipeline my-clickstream-pipeline
+
+Id:    0e00c5ff09b34d018152af98d06f5a1xvc
+Name:  my-clickstream-pipeline
+Sources:
+  HTTP:
+    Endpoint:        https://0e00c5ff09b34d018152af98d06f5a1xvc.pipelines.cloudflare.com/
+    Authentication:  off
+    Format:          JSON
+  Worker:
+    Format:  JSON
+Destination:
+  Type:         R2
+  Bucket:       my-bucket
+  Format:       newline-delimited JSON
+  Compression:  GZIP
+Batch hints:
+  Max bytes:     100 MB
+  Max duration:  300 seconds
+  Max records:   100,000
+
+🎉 You can now send data to your pipeline!
+
+Send data to your pipeline's HTTP endpoint:
+curl "https://0e00c5ff09b34d018152af98d06f5a1xvc.pipelines.cloudflare.com/" -d '[{ ...JSON_DATA... }]'
+```
+
+## Authentication
+You can secure your HTTP ingestion endpoint using Cloudflare API tokens. By default, authentication is turned off. To configure authentication, use the `--require-http-auth` flag while creating or updating a pipeline.
+
+```sh
+$ npx wrangler pipelines create [PIPELINE-NAME] --r2-bucket [R2-BUCKET-NAME] --require-http-auth true
+```
+
+Once authentication is turned on, you will need to include a Cloudflare API token in your request headers.
+
+### Get API token
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Navigate to your [API Keys](https://dash.cloudflare.com/profile/api-tokens).
+3. Select **Create Token**.
+4. Choose the template for Workers Pipelines. Select **Continue to summary** > **Create token**. Make sure to copy the API token and save it securely.
+
+### Making authenticated requests
+Include the API token you created in the previous step in the headers for your request:
+
+```sh
+curl https://<PIPELINE-ID>.pipelines.cloudflare.com
+	-H "Content-Type: application/json" \
+	-H "Authorization: Bearer ${API_TOKEN}" \
+	-d '[{"foo":"bar"}, {"foo":"bar"}, {"foo":"bar"}]'
+```
+
+## Specifying CORS Settings
+If you want to use your pipeline to ingest client side data, such as website clicks, you will need to configure your [Cross-Origin Resource Sharing (CORS) settings](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS).
+
+Without setting your CORS settings, browsers will restrict requests made to your pipeline endpoint. For example, if your website domain is `https://my-website.com`, and you want to post client side data to your pipeline at `https://<PIPELINE-ID>.pipelines.cloudflare.com`, without CORS settings, the request will fail.
+
+To fix this, you need to configure your pipeline to accept requests from `https://my-website.com`. You can do so while creating or updating a pipeline, using the flag `--cors-origins`. You can specify multiple domains separated by a space.
+
+```sh
+$ npx wrangler pipelines update [PIPELINE-NAME] --cors-origins https://mydomain.com http://localhost:8787
+```
+
+You can specify that all cross origin requests are accepted. We recommend only using this option in development, and not for production use cases.
+```sh
+$ npx wrangler pipelines update [PIPELINE-NAME] --cors-origins "*"
+```
+
+After the `--cors-origins` have been set on your pipeline, your pipeline will respond to preflight requests and `POST` requests with the appropriate `Access-Control-Allow-Origin` headers set.

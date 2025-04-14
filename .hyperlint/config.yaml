@@ -13,4 +13,4 @@ reviewer:
     check_status_upon_review_failure: neutral
     enabled: true
   limit_num_reviews: 2
-  limit_num_comments: 7
+  limit_num_comments: 5

@@ -1,7 +1,6 @@
 ---
 import { marked } from "marked";
 import { getGlossaryEntries } from "~/util/glossary";
-import { LinkButton } from "@astrojs/starlight/components";
 
 interface Props {
 	product?: string;
@@ -44,9 +43,14 @@ const INITIAL_VISIBLE_ROWS = 20;
 
 {
 	terms.length > INITIAL_VISIBLE_ROWS && (
-		<LinkButton id="glossary-button" href="" class="justify-center">
-			View more terms
-		</LinkButton>
+		<div class="flex items-center justify-center">
+			<button
+				id="glossary-button"
+				class="h-12 cursor-pointer rounded bg-cl1-brand-orange px-6 font-medium text-cl1-black"
+			>
+				View more terms
+			</button>
+		</div>
 	)
 }
 

@@ -5,7 +5,6 @@ productLink: "/fundamentals/"
 productArea: Core platform
 productAreaLink: /fundamentals/reference/changelog/platform/
 entries:
-
   - publish_date: "2025-03-20"
     title: "Cloudflare Radar: Attack top industry and vertical endpoints"
     description: |-

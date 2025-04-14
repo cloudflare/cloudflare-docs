@@ -9,13 +9,13 @@ Learn how the location of data stored in D1 is determined, including where the l
 
 ## Automatic (recommended)
 
-By default, D1 will automatically create your database in a location close to where you issued the request to create a database. In most cases this allows D1 to choose the optimal location for your database on your behalf.
+By default, D1 will automatically create your primary database instance in a location close to where you issued the request to create a database. In most cases this allows D1 to choose the optimal location for your database on your behalf.
 
 ## Provide a location hint
 
-Location hint is an optional parameter you can provide to indicate your desired geographical location for your database.
+Location hint is an optional parameter you can provide to indicate your desired geographical location for your primary database instance.
 
-You may want to explicitly provide a location hint in cases where the majority of your writes to a specific database come from a different location than where you are creating the database from. location hints can be useful when:
+You may want to explicitly provide a location hint in cases where the majority of your writes to a specific database come from a different location than where you are creating the database from. Location hints can be useful when:
 
 - Working in a distributed team.
 - Creating databases specific to users in specific locations.
@@ -33,9 +33,7 @@ Providing a location hint does not guarantee that D1 runs in your preferred loca
 ### Use Wrangler
 
 :::note
-
 To install Wrangler, the command-line interface for D1 and Workers, refer to [Install and Update Wrangler](/workers/wrangler/install-and-update/).
-
 :::
 
 To provide a location hint when creating a new database, pass the `--location` flag with a valid location hint:
@@ -70,3 +68,11 @@ D1 supports the following location hints:
 :::caution
 D1 location hints are not currently supported for South America (`sam`), Africa (`afr`), and the Middle East (`me`). D1 databases do not run in these locations.
 :::
+
+## Read replica locations
+
+With read replication enabled, D1 creates and distributes read-only copies of the primary database instance around the world. This reduces the query latency for users located far away from the primary database instance.
+
+When using D1 read replication, D1 automatically creates a read replica in [every available region](/d1/configuration/data-location#available-location-hints), including the region where the primary database instance is located.
+
+Refer to [D1 read replication](/d1/best-practices/read-replication/) for more information.

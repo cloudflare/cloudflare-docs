@@ -1,0 +1,31 @@
+---
+import { z } from "astro:schema";
+import { getCollection } from "astro:content";
+import { ShowcaseYouTube } from "starlight-showcases";
+
+const props = z.object({
+	products: z.string().array().default([]),
+});
+
+const { products } = props.parse(Astro.props);
+
+if (products.length === 0) {
+	const [currentSection] = Astro.url.pathname.split("/").filter(Boolean);
+	products.push(currentSection);
+}
+
+const videos = await getCollection("videos", (entry) => {
+	return (
+		entry.data.link.startsWith("https://youtu") &&
+		entry.data.products?.some((v: string) => products.includes(v))
+	);
+});
+
+const entries = videos.map((video) => ({
+	href: video.data.link,
+	title: video.data.id,
+	description: video.data.description,
+}));
+---
+
+<ShowcaseYouTube entries={entries} />

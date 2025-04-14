@@ -46,7 +46,7 @@ export default class extends WorkerEntrypoint<Env> {
 					rehypeParse,
 					rehypeBaseUrl,
 					rehypeFilterElements,
-					remarkGfm,
+					[remarkGfm, { tablePipeAlign: false }],
 					rehypeRemark,
 					remarkStringify,
 				]);

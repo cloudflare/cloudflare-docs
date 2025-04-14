@@ -8,14 +8,7 @@ head:
     content: Common API calls | Leaked credentials detection
 ---
 
-## Required API token permissions
-
-The API token used in API requests to manage the leaked credentials detection and custom detection locations must have one of the following [permissions](/fundamentals/api/reference/permissions/):
-
-- Zone WAF Edit
-- Account WAF Edit
-
----
+import { APIRequest } from "~/components";
 
 ## General operations
 
@@ -25,35 +18,27 @@ The following API examples cover basic operations such as enabling and disabling
 
 To turn on leaked credentials detection, use a `POST` request similar to the following:
 
-```bash
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/leaked-credential-checks" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{ "enabled": true }'
-```
+<APIRequest
+	path="/zones/{zone_id}/leaked-credential-checks"
+	method="POST"
+	json={{ enabled: true }}
+/>
 
 ### Turn off leaked credentials detection
 
 To turn off leaked credentials detection, use a `POST` request similar to the following:
 
-```bash
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/leaked-credential-checks" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{ "enabled": false }'
-```
+<APIRequest
+	path="/zones/{zone_id}/leaked-credential-checks"
+	method="POST"
+	json={{ enabled: false }}
+/>
 
 ### Get status of leaked credentials detection
 
 To obtain the current status of the leaked credentials detection, use a `GET` request similar to the following:
 
-```bash
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/leaked-credential-checks" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>"
-```
+<APIRequest path="/zones/{zone_id}/leaked-credential-checks" method="GET" />
 
 ```json output
 {
@@ -74,32 +59,29 @@ The following API examples cover operations on custom detection locations for le
 
 Use a `POST` request similar to the following:
 
-```bash
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/leaked-credential-checks/detections" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "username": "lookup_json_string(http.request.body.raw, \"user\")",
-  "password": "lookup_json_string(http.request.body.raw, \"secret\")"
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/leaked-credential-checks/detections"
+	method="POST"
+	json={{
+		username: 'lookup_json_string(http.request.body.raw, "user")',
+		password: 'lookup_json_string(http.request.body.raw, "secret")',
+	}}
+/>
 
 ### Get existing custom detection locations
 
 To get a list of existing custom detection locations, use a `GET` request similar to the following:
 
-```bash
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/leaked-credential-checks/detections" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>"
-```
+<APIRequest
+	path="/zones/{zone_id}/leaked-credential-checks/detections"
+	method="GET"
+/>
 
 ```json output
 {
 	"result": [
 		{
-			"id": "<ITEM_ID>",
+			"id": "<DETECTION_ID>",
 			"username": "lookup_json_string(http.request.body.raw, \"user\")",
 			"password": "lookup_json_string(http.request.body.raw, \"secret\")"
 		}
@@ -115,9 +97,7 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/leaked-credential-che
 
 Use a `DELETE` request similar to the following:
 
-```bash
-curl --request DELETE \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/leaked-credential-checks/detections/{item_id}" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>"
-```
+<APIRequest
+	path="/zones/{zone_id}/leaked-credential-checks/detections/{detection_id}"
+	method="DELETE"
+/>

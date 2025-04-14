@@ -38,7 +38,7 @@ Before getting started, you will need:
 
 - An existing R2 bucket. If you don't already have one, refer to [Create buckets](/r2/buckets/create-buckets/).
 - [API credentials](/r2/data-migration/sippy/#create-credentials-for-storage-providers) for your source object storage bucket.
-- (Wrangler only) Cloudflare R2 Access Key ID and Secret Access Key with read and write permissions. For more information, refer to [Authentication](/r2/api/s3/tokens/).
+- (Wrangler only) Cloudflare R2 Access Key ID and Secret Access Key with read and write permissions. For more information, refer to [Authentication](/r2/api/tokens/).
 
 ### Enable Sippy via the Dashboard
 
@@ -180,10 +180,13 @@ When Sippy is enabled, it changes the behavior of certain actions on your R2 buc
 						Remaining metadata will be omitted.
 					</li>
 					<li>
-						For larger objects (greater than 199 MiB), multiple GET requests may be required to fully copy the object to R2.
+						For larger objects (greater than 199 MiB), multiple GET requests may
+						be required to fully copy the object to R2.
 					</li>
 					<li>
-						If there are multiple simultaneous GET requests for an object which has not yet been fully copied to R2, Sippy may fetch the object from the source storage bucket multiple times to serve those requests.
+						If there are multiple simultaneous GET requests for an object which
+						has not yet been fully copied to R2, Sippy may fetch the object from
+						the source storage bucket multiple times to serve those requests.
 					</li>
 				</ul>
 			</td>

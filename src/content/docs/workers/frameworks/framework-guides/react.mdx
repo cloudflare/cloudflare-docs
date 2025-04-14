@@ -11,59 +11,93 @@ import {
 	InlineBadge,
 	Render,
 	PackageManagers,
+	Details,
+	FileTree,
+	Steps,
 } from "~/components";
 
-In this guide, you will create a new [React](https://react.dev/) application and deploy to Cloudflare Workers (with the new [<InlineBadge preset="beta" /> Workers Assets](/workers/static-assets/)).
-
-## 1. Set up a new project
-
-Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up a new project. C3 will create a new project directory, use code from the official React template, and provide the option to deploy instantly.
-
-To use `create-cloudflare` to create a new React project with <InlineBadge preset="beta" /> Workers Assets, run the following command:
+**Start from CLI** - scaffold a full-stack app with a React SPA, Cloudflare Workers API, and the [Cloudflare Vite plugin](/workers/vite-plugin/) for lightning-fast development.
 
 <PackageManagers
 	type="create"
 	pkg="cloudflare@latest my-react-app"
-	args={"--framework=react --platform=workers"}
+	args="--framework=react --platform=workers"
 />
+---
 
-<Render
-	file="c3-post-run-steps"
-	product="workers"
-	params={{
-		category: "web-framework",
-		framework: "React",
-	}}
-/>
+**Or just deploy** - create a full-stack app using React, Hono API And Vite, with CI/CD and previews all set up for you.
 
-After setting up your project, change your directory by running the following command:
+[![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://dash.cloudflare.com/?to=/:account/workers-and-pages/create/deploy-to-workers&repository=https://github.com/cloudflare/templates/tree/staging/vite-react-template)
 
-```sh
-cd my-react-app
-```
+## What is React?
 
-## 2. Develop locally
+[React](https://react.dev/) is a framework for building user interfaces. It allows you to create reusable UI components and manage the state of your application efficiently. You can use React to build a single-page application (SPA), and combine it with a backend API running on Cloudflare Workers to create a full-stack application.
 
-After you have created your project, run the following command in the project directory to start a local server. This will allow you to preview your project locally during development.
+## Creating a full-stack app with React
 
-<PackageManagers type="run" args={"dev"} />
+<Steps>
+1. **Create a new project with the create-cloudflare CLI (C3)**
 
-## 3. Deploy your project
+    	<PackageManagers
+    		type="create"
+    		pkg="cloudflare@latest my-react-app"
+    		args="--framework=react --platform=workers"
+    	/>
+    		 <Details header="How is this project set up?">
+        			Below is a simplified file tree of the project.
+        			<FileTree>
+    							- my-react-app
+    								- src/
+    										- App.tsx
+    								- worker/
+    									- index.ts
+    								- index.html
+    								- vite.config.ts
+    								- wrangler.jsonc
+        			</FileTree>
 
-Your project can be deployed to a `*.workers.dev` subdomain or a [Custom Domain](/workers/configuration/routing/custom-domains/), from your own machine or from any CI/CD system, including [Cloudflare's own](/workers/ci-cd/builds/).
+        			`wrangler.jsonc` is your [Wrangler configuration file](/workers/wrangler/configuration/).
+        			In this file:
+        					- `main` points to `worker/index.ts`. This is your Worker, which is going to act as your backend API.
+        					- `assets.not_found_handling` is set to `single-page-application`, which means that routes that are handled by your React SPA do not go to the Worker, and are thus free.
+        					- If you want to add bindings to resources on Cloudflare's developer platform, you configure them here. Read more about [bindings](/workers/runtime-apis/bindings/).
 
-The following command will build and deploy your project. If you are using CI, ensure you update your ["deploy command"](/workers/ci-cd/builds/configuration/#build-settings) configuration appropriately.
+    						`vite.config.ts` is set up to use the [Cloudflare Vite plugin](/workers/vite-plugin/). This runs your Worker in the Cloudflare Workers runtime, ensuring your local development environment is as close to production as possible.
 
-<PackageManagers type="run" args={"deploy"} />
+    						`worker/index.ts` is your backend API, which contains a single endpoint, `/api/`, that returns a text response.
+    						At `src/App.tsx`, your React app calls this endpoint to get a message back and displays this.
+        		</Details>
+
+2.  **Develop locally with the [Cloudflare Vite plugin](/workers/vite-plugin/)**
+
+        After creating your project, run the following command in your project directory to start a local development server.
+        <PackageManagers type="run" args="dev" />
+        		<Details header="What's happening in local development?">
+        			This project uses Vite for local development and build, and thus comes with all of Vite's features, including hot module replacement (HMR).
+
+        			In addition, `vite.config.ts` is set up to use the Cloudflare Vite plugin. This runs your application in the Cloudflare Workers runtime, just like in production, and enables access to local emulations of bindings.
+        		</Details>
+
+3.  **Deploy your project**
+
+        	Your project can be deployed to a `*.workers.dev` subdomain or a [Custom Domain](/workers/configuration/routing/custom-domains/), from your own machine or from any CI/CD system, including Cloudflare's own [Workers Builds](/workers/ci-cd/builds/).
+
+        	The following command will build and deploy your project. If you are using CI, ensure you update your ["deploy command"](/workers/ci-cd/builds/configuration/#build-settings) configuration appropriately.
+
+        	<PackageManagers type="run" args={"deploy"} />
+
+</Steps>
 
 ---
 
-## Static assets
+## Asset Routing
 
-You can serve static assets in your React application by [placing them in the `./public/` directory](https://vite.dev/guide/assets#the-public-directory). This can be useful for resource files such as images, stylesheets, fonts, and manifests.
+If you're using React as a SPA, you will want to set `not_found_handling = "single_page_application"` in your Wrangler configuration file.
 
 <Render file="workers-assets-routing-summary" />
 
 ## Use bindings with React
 
-Your new project also contains a Worker at `./api/index.ts`, which you can use as a backend API for your React application. While your React application cannot directly access Workers bindings, it can interact with them through this Worker. You can make [`fetch()` requests](/workers/runtime-apis/fetch/) from your React application to the Worker, which can then handle the request and use bindings. Learn how to [configure Workers bindings](/workers/runtime-apis/bindings/).
+Your new project also contains a Worker at `./worker/index.ts`, which you can use as a backend API for your React application. While your React application cannot directly access Workers bindings, it can interact with them through this Worker. You can make [`fetch()` requests](/workers/runtime-apis/fetch/) from your React application to the Worker, which can then handle the request and use bindings. Learn how to [configure Workers bindings](/workers/runtime-apis/bindings/).
+
+<Render file="frameworks-bindings" />

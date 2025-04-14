@@ -32,7 +32,7 @@ export default {
 			if (contentType.includes("application/json")) {
 				return { contentType, result: JSON.stringify(await response.json()) };
 			}
-			return { contentType, result: response.text() };
+			return { contentType, result: await response.text() };
 		}
 
 		const response = await fetch(url);
@@ -59,7 +59,7 @@ export default {
 			if (contentType.includes("application/json")) {
 				return { contentType, result: JSON.stringify(await response.json()) };
 			}
-			return { contentType, result: response.text() };
+			return { contentType, result: await response.text() };
 		}
 
 		const response = await fetch(url);

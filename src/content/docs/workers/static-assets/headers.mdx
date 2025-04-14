@@ -1,0 +1,28 @@
+---
+pcx_content_type: concept
+title: Headers
+sidebar:
+  order: 4
+---
+
+import { Render } from "~/components";
+
+## Default headers
+
+When serving static assets, Workers will attach some headers to the response by default. These are:
+
+- **`Content-Type`**
+
+  A `Content-Type` header is attached to the response if one is provided during [the asset upload process](/workers/static-assets/direct-upload/). [Wrangler](/workers/wrangler/commands/#deploy) automatically determines the MIME type of the file, based on its extension.
+
+- **`Cache-Control: public, max-age=0, must-revalidate`**
+
+  Sent when the request does not have an `Authorization` or `Range` header, this response header tells the browser that the asset can be cached, but that the browser should revalidate the freshness of the content every time before using it. This default behavior ensures good website performance for static pages, while still guaranteeing that stale content will never be served.
+
+- **`ETag`**
+
+  This header complements the default `Cache-Control` header. Its value is a hash of the static asset file, and browsers can use this in subsequent requests with an `If-None-Match` header to check for freshness, without needing to re-download the entire file in the case of a match.
+
+Cloudflare reserves the right to attach new headers to static asset responses at any time in order to improve performance or harden the security of your Worker application.
+
+<Render file="custom_headers" params={{ product: "workers" }} />

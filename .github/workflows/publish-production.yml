@@ -22,7 +22,7 @@ jobs:
       - uses: actions/cache/restore@v4
         with:
           path: |
-            node_modules/.astro
+            node_modules/.astro/assets
           key: static
       - run: npm run build
         name: Build
@@ -36,5 +36,5 @@ jobs:
         if: always()
         with:
           path: |
-            node_modules/.astro
+            node_modules/.astro/assets
           key: static

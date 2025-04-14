@@ -1,0 +1,308 @@
+---
+pcx_content_type: concept
+title: Playwright
+description: Learn how to use Playwright with Cloudflare Workers for browser automation. Access Playwright API, manage sessions, and optimize browser rendering.
+sidebar:
+  order: 5
+  badge: Beta
+---
+
+import { Render, WranglerConfig, TabItem, Tabs } from "~/components";
+
+[Playwright](https://playwright.dev/) is an open-source package developed by Microsoft that can do browser automation tasks; it's commonly used to write frontend tests, create screenshots, or crawl pages.
+
+The Workers team forked a [version of Playwright](https://github.com/cloudflare/playwright) that was modified to be compatible with [Cloudflare Workers](https://developers.cloudflare.com/workers/) and [Browser Rendering](https://developers.cloudflare.com/browser-rendering/).
+
+Our version is open sourced and can be found in [Cloudflare's fork of Playwright](https://github.com/cloudflare/playwright). The npm package can be installed from [npmjs](https://www.npmjs.com/) as [@cloudflare/playwright](https://www.npmjs.com/package/@cloudflare/playwright):
+
+```bash
+npm install @cloudflare/playwright --save-dev
+```
+
+## Use Playwright in a Worker
+
+Make sure you have the [browser binding](/browser-rendering/platform/wrangler/#bindings) configured in your `wrangler.toml` file:
+
+<WranglerConfig>
+
+```toml
+name = "cloudflare-playwright-example"
+main = "src/index.ts"
+workers_dev = true
+compatibility_flags = ["nodejs_compat_v2"]
+compatibility_date = "2025-03-05"
+upload_source_maps = true
+
+[dev]
+port = 9000
+
+[browser]
+binding = "MYBROWSER"
+```
+
+</WranglerConfig>
+
+Install the npm package:
+
+```bash
+npm install --save-dev @cloudflare/playwright
+```
+
+Let's look at some examples of how to use Playwright:
+
+### Take a screenshot
+
+Using browser automation to take screenshots of web pages is a common use case. This script tells the browser to navigate to https://demo.playwright.dev/todomvc, create some items, take a screenshot of the page, and return the image in the response.
+
+```ts
+import type { Fetcher } from '@cloudflare/workers-types';
+import { launch } from '@cloudflare/playwright';
+
+interface Env {
+  MYBROWSER: Fetcher;
+}
+
+export default {
+  async fetch(request: Request, env: Env) {
+
+    const todos = searchParams.getAll('todo');
+
+    const browser = await launch(env.MYBROWSER);
+    const page = await browser.newPage();
+
+    await page.goto('https://demo.playwright.dev/todomvc');
+
+    const TODO_ITEMS = todos.length > 0 ? todos : [
+      'buy some cheese',
+      'feed the cat',
+      'book a doctors appointment'
+    ];
+
+    const newTodo = page.getByPlaceholder('What needs to be done?');
+    for (const item of TODO_ITEMS) {
+      await newTodo.fill(item);
+      await newTodo.press('Enter');
+    }
+
+    const img = await page.screenshot();
+    await browser.close();
+
+    return new Response(img, {
+      headers: {
+        'Content-Type': 'image/png',
+      },
+    });
+	},
+}
+```
+
+### Trace
+
+A Playwright trace is a detailed log of your workflow execution that captures information like user clicks and navigation actions, screenshots of the page, and any console messages generated and used for debugging. Developers can take a `trace.zip` file and either open it [locally](https://playwright.dev/docs/trace-viewer#opening-the-trace) or upload it to the [Playwright Trace Viewer](https://trace.playwright.dev/), a GUI tool that helps you explore the data.
+
+Here's an example of a worker generating a trace file:
+
+```ts
+import type { Fetcher } from '@cloudflare/workers-types';
+import { launch, fs } from "@cloudflare/playwright";
+import fs from '@cloudflare/playwright/fs';
+
+interface Env {
+  MYBROWSER: Fetcher;
+}
+
+export default {
+  async fetch(request: Request, env: Env) {
+    const { searchParams } = new URL(request.url);
+    const todos = searchParams.getAll('todo');
+    const trace = searchParams.has('trace');
+
+    const browser = await launch(env.MYBROWSER);
+    const page = await browser.newPage();
+
+    if (trace) await page.context().tracing.start({ screenshots: true, snapshots: true });
+
+    await page.goto('https://demo.playwright.dev/todomvc');
+
+    const TODO_ITEMS = todos.length > 0 ? todos : [
+      'buy some cheese',
+      'feed the cat',
+      'book a doctors appointment'
+    ];
+
+    const newTodo = page.getByPlaceholder('What needs to be done?');
+    for (const item of TODO_ITEMS) {
+      await newTodo.fill(item);
+      await newTodo.press('Enter');
+    }
+
+    await expect(page.getByTestId('todo-title')).toHaveCount(TODO_ITEMS.length);
+
+    await Promise.all(TODO_ITEMS.map(
+      (value, index) => expect(page.getByTestId('todo-title').nth(index)).toHaveText(value)
+    ));
+
+    if (trace) {
+      await page.context().tracing.stop({ path: 'trace.zip' });
+      await browser.close();
+      const file = await fs.promises.readFile('trace.zip');
+
+      return new Response(file, {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/zip',
+        },
+      });
+    } else {
+      const img = await page.screenshot();
+      await browser.close();
+
+      return new Response(img, {
+        headers: {
+          'Content-Type': 'image/png',
+        },
+      });
+    }
+  },
+};
+```
+
+### Assertions
+
+One of the most common use cases for using Playwright is software testing. Playwright includes test assertion features in its APIs; refer to [Assertions](https://playwright.dev/docs/test-assertions) in the Playwright documentation for details. Here's an example of a Worker doing `expect()` test assertions of the [todomvc](https://demo.playwright.dev/todomvc) demo page:
+
+```ts
+import type { Fetcher } from '@cloudflare/workers-types';
+import { launch } from '@cloudflare/playwright';
+import { expect } from '@cloudflare/playwright/test';
+
+interface Env {
+  MYBROWSER: Fetcher;
+}
+
+export default {
+  async fetch(request: Request, env: Env) {
+
+    const browser = await launch(env.MYBROWSER);
+    const page = await browser.newPage();
+
+    await page.goto('https://demo.playwright.dev/todomvc');
+
+    const TODO_ITEMS = todos.length > 0 ? todos : [
+        'buy some cheese',
+        'feed the cat',
+        'book a doctors appointment'
+    ];
+
+    const newTodo = page.getByPlaceholder('What needs to be done?');
+    for (const item of TODO_ITEMS) {
+        await newTodo.fill(item);
+        await newTodo.press('Enter');
+    }
+
+    await expect(page.getByTestId('todo-title')).toHaveCount(TODO_ITEMS.length);
+
+    await Promise.all(TODO_ITEMS.map(
+        (value, index) => expect(page.getByTestId('todo-title').nth(index)).toHaveText(value)
+    ));
+	},
+};
+```
+
+### Keep Alive
+
+If users omit the `browser.close()` statement, the browser instance will stay open, ready to be connected to again and [re-used](/browser-rendering/workers-binding-api/reuse-sessions/) but it will, by default, close automatically after 1 minute of inactivity. Users can optionally extend this idle time up to 10 minutes, by using the `keep_alive` option, set in milliseconds:
+
+```js
+const browser = await playwright.launch(env.MYBROWSER, { keep_alive: 600000 });
+```
+
+Using the above, the browser will stay open for up to 10 minutes, even if inactive.
+
+## Session management
+
+In order to facilitate browser session management, we've extended the Playwright API with new methods:
+
+### List open sessions
+
+`playwright.sessions()` lists the current running sessions. It will return an output similar to this:
+
+```json
+[
+	{
+		"connectionId": "2a2246fa-e234-4dc1-8433-87e6cee80145",
+		"connectionStartTime": 1711621704607,
+		"sessionId": "478f4d7d-e943-40f6-a414-837d3736a1dc",
+		"startTime": 1711621703708
+	},
+	{
+		"sessionId": "565e05fb-4d2a-402b-869b-5b65b1381db7",
+		"startTime": 1711621703808
+	}
+]
+```
+
+Notice that the session `478f4d7d-e943-40f6-a414-837d3736a1dc` has an active worker connection (`connectionId=2a2246fa-e234-4dc1-8433-87e6cee80145`), while session `565e05fb-4d2a-402b-869b-5b65b1381db7` is free. While a connection is active, no other workers may connect to that session.
+
+### List recent sessions
+
+`playwright.history()` lists recent sessions, both open and closed. It's useful to get a sense of your current usage.
+
+```json
+[
+	{
+		"closeReason": 2,
+		"closeReasonText": "BrowserIdle",
+		"endTime": 1711621769485,
+		"sessionId": "478f4d7d-e943-40f6-a414-837d3736a1dc",
+		"startTime": 1711621703708
+	},
+	{
+		"closeReason": 1,
+		"closeReasonText": "NormalClosure",
+		"endTime": 1711123501771,
+		"sessionId": "2be00a21-9fb6-4bb2-9861-8cd48e40e771",
+		"startTime": 1711123430918
+	}
+]
+```
+
+Session `2be00a21-9fb6-4bb2-9861-8cd48e40e771` was closed explicitly with `browser.close()` by the client, while session `478f4d7d-e943-40f6-a414-837d3736a1dc` was closed due to reaching the maximum idle time (check [limits](/browser-rendering/platform/limits/)).
+
+You should also be able to access this information in the dashboard, albeit with a slight delay.
+
+### Active limits
+
+`playwright.limits()` lists your active limits:
+
+```json
+{
+  "activeSessions": [
+    { "id": "478f4d7d-e943-40f6-a414-837d3736a1dc" },
+    { "id": "565e05fb-4d2a-402b-869b-5b65b1381db7" }
+  ],
+  "allowedBrowserAcquisitions": 1,
+  "maxConcurrentSessions": 2,
+  "timeUntilNextAllowedBrowserAcquisition": 0
+}
+```
+
+- `activeSessions` lists the IDs of the current open sessions
+- `maxConcurrentSessions` defines how many browsers can be open at the same time
+- `allowedBrowserAcquisitions` specifies if a new browser session can be opened according to the rate [limits](/browser-rendering/platform/limits/) in place
+- `timeUntilNextAllowedBrowserAcquisition` defines the waiting period before a new browser can be launched.
+
+## Playwright API
+
+The full Playwright API can be found [here](https://playwright.dev/docs/api/class-playwright).
+
+Note that `@cloudflare/playwright` is in beta. The following capabilities are not yet fully supported, but we’re actively working on them:
+
+- [API Testing](https://playwright.dev/docs/api-testing)
+- [Playwright Test](https://playwright.dev/docs/test-configuration) except [Assertions](https://playwright.dev/docs/test-assertions)
+- [Components](https://playwright.dev/docs/test-components)
+- [Firefox](https://playwright.dev/docs/api/class-playwright#playwright-firefox), [Android](https://playwright.dev/docs/api/class-android) and [Electron](https://playwright.dev/docs/api/class-electron), as well as different versions of Chrome
+- [Network](https://playwright.dev/docs/next/network#network)
+- [Videos](https://playwright.dev/docs/next/videos)
+
+This is **not an exhaustive list** — expect rapid changes as we work toward broader parity with the original feature set. You can also check [latest test results](https://playwright-full-test-report.pages.dev/) for a granular up to date list of the features that are fully supported.

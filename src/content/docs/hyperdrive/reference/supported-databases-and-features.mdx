@@ -1,0 +1,81 @@
+---
+pcx_content_type: concept
+title: Supported databases and features
+sidebar:
+  order: 2
+---
+
+## Database support
+
+The following table shows which database engines and/or specific database providers are supported.
+
+| Database Engine | Supported                | Known supported versions | Details                                                                                                             |
+| --------------- | ------------------------ | ------------------------ | ------------------------------------------------------------------------------------------------------------------- |
+| PostgreSQL      | ✅                       | `9.0` to `16.x`          | Both self-hosted and managed (AWS, Azure, Google Cloud, Oracle) instances are supported.                            |
+| MySQL           | ✅                       | `5.7` to `8.x`           | Both self-hosted and managed (AWS, Azure, Google Cloud, Oracle) instances are supported. MariaDB is also supported. |
+| SQL Server      | Not currently supported. |                          |                                                                                                                     |
+| MongoDB         | Not currently supported. |                          |                                                                                                                     |
+
+## Supported database providers
+
+The following is a non-exhaustive list of database providers:
+
+| Database Engine | Supported | Known supported versions | Details                                                                                                                  |
+| --------------- | --------- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| Neon            | ✅        | All                      | Neon currently runs Postgres 15.x                                                                                        |
+| Supabase        | ✅        | All                      | Supabase currently runs Postgres 15.x                                                                                    |
+| Timescale       | ✅        | All                      | See the [Timescale guide](/hyperdrive/examples/connect-to-postgres/timescale/) to connect.                               |
+| Materialize     | ✅        | All                      | Postgres-compatible. Refer to the [Materialize guide](/hyperdrive/examples/connect-to-postgres/materialize/) to connect. |
+| CockroachDB     | ✅        | All                      | Postgres-compatible. Refer to the [CockroachDB](/hyperdrive/examples/connect-to-postgres/cockroachdb/) guide to connect. |
+| Planetscale     | ✅        | All                      | Planetscale currently runs MySQL 8.x                                                                                     |
+| MariaDB         | ✅        | All                      | MySQL-compatible.                                                                                                        |
+
+## Supported TLS (SSL) modes
+
+Hyperdrive supports the following [PostgreSQL TLS (SSL)](https://www.postgresql.org/docs/current/libpq-ssl.html) connection modes when connecting to your origin database:
+
+| Mode          | Supported          | Details                                                                                                                                   |
+| ------------- | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `none`        | No                 | Hyperdrive does not support insecure plain text connections.                                                                              |
+| `prefer`      | No (use `require`) | Hyperdrive will always use TLS.                                                                                                           |
+| `require`     | Yes (default)      | TLS is required, and server certificates are validated (based on WebPKI).                                                                 |
+| `verify-ca`   | Yes                | Verifies the server's TLS certificate is signed by a root CA on the client. This ensures the server has a certificate the client trusts.  |
+| `verify-full` | Yes                | Identical to `verify-ca`, but also requires the database hostname must match a Subject Alternative Name (SAN) present on the certificate. |
+
+Refer to [SSL/TLS certificates](/hyperdrive/configuration/tls-ssl-certificates-for-hyperdrive/) documentation for details on how to configure `verify-ca` or `verify-full` TLS (SSL) modes for Hyperdrive.
+:::note
+
+Hyperdrive support for `verify-ca` and `verify-full` is not available for MySQL (beta).
+
+:::
+
+## Supported PostgreSQL authentication modes
+
+Hyperdrive supports the following [authentication modes](https://www.postgresql.org/docs/current/auth-methods.html) for connecting to PostgreSQL databases:
+
+- Password Authentication (`md5`)
+- Password Authentication (`password`) (clear-text password)
+- SASL Authentication (`SCRAM-SHA-256`)
+
+## Unsupported PostgreSQL features:
+
+Hyperdrive does not support the following PostgreSQL features:
+
+- SQL-level management of prepared statements, such as using `PREPARE`, `DISCARD`, `DEALLOCATE`, or `EXECUTE`.
+- Advisory locks ([PostgreSQL documentation](https://www.postgresql.org/docs/current/explicit-locking.html#ADVISORY-LOCKS)).
+- `LISTEN` and `NOTIFY`.
+- `PREPARE` and `DEALLOCATE`.
+- Any modification to per-session state not explicitly documented as supported elsewhere.
+
+## Unsupported MySQL features:
+
+Hyperdrive does not support the following MySQL features:
+
+- Non-UTF8 characters in queries
+- `USE` statements
+- Multi-statement queries
+- Prepared statement queries via SQL (using `PREPARE` and `EXECUTE` statements) and [protocol-level prepared statements](https://sidorares.github.io/node-mysql2/docs/documentation/prepared-statements).
+- `COM_INIT_DB` messages
+- [Authentication plugins](https://dev.mysql.com/doc/refman/8.4/en/authentication-plugins.html) other than `caching_sha2_password` or `mysql_native_password`
+
+In cases where you need to issue these unsupported statements from your application, the Hyperdrive team recommends setting up a second, direct client without Hyperdrive.

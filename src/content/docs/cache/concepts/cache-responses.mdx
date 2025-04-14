@@ -43,11 +43,11 @@ The resource was found in Cloudflare's cache but was expired and served from the
 
 ## STALE
 
-The resource was served from Cloudflare's cache but was expired. Cloudflare could not contact the origin to retrieve an updated resource.
+The resource was served from Cloudflare's cache but was expired. Cloudflare could not contact the origin web server to retrieve an updated resource.
 
 ## BYPASS
 
-The origin server instructed Cloudflare to bypass cache via a `Cache-Control` header set to `no-cache`, `private`, or `max-age=0` even though Cloudflare originally preferred to cache the asset. BYPASS is returned when enabling [Origin Cache-Control](/cache/concepts/cache-control/). Cloudflare also sets BYPASS when your origin web server sends cookies in the response header. If the Request to your origin includes an `Authorization` header, in some cases the response will also be BYPASS. Refer to [Conditions](/cache/concepts/cache-control/#conditions) in the Origin Cache-Control behavior section for more details.
+The origin web server instructed Cloudflare to bypass cache via a `Cache-Control` header set to `no-cache`, `private`, or `max-age=0` even though Cloudflare originally preferred to cache the asset. BYPASS is returned when enabling [Origin Cache-Control](/cache/concepts/cache-control/). Cloudflare also sets BYPASS when your origin web server sends cookies in the response header. If the Request to your origin web server includes an `Authorization` header, in some cases the response will also be BYPASS. Refer to [Conditions](/cache/concepts/cache-control/#conditions) in the Origin Cache-Control behavior section for more details.
 
 ## REVALIDATED
 

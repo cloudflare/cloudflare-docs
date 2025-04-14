@@ -1,0 +1,30 @@
+---
+title: Secrets Store access control
+pcx_content_type: concept
+sidebar:
+  order: 2
+  label: Access control
+description: Learn about role-based access control with Cloudflare Secrets Store
+---
+
+Secrets Store allows security administrators to have more control by implementing role-based access. For details about roles at Cloudflare, refer to [Fundamentals](/fundamentals/setup/manage-members/).
+
+:::note[Availability]
+While all Cloudflare accounts will have access to the Secrets Store section on the dashboard, only users with the necessary permissions will be able to interact with it, as described below.
+:::
+
+## Relevant roles for Secrets Store
+
+Refer to the list below for default role definitions.
+
+- **Super Administrator**: Can create, edit, duplicate, delete, and view secrets metadata.
+- **Secrets Store Admin**: Can create, edit, duplicate, delete, and view secrets metadata.
+- **Secrets Store Deployer**: Can view secrets metadata but cannot create, edit, duplicate, nor delete secrets. Can also [add a Secrets Store binding to a Worker](/secrets-store/integrations/workers/).
+- **Secrets Store Reporter**: Can view secrets metadata. Cannot perform any actions (create, edit, duplicate, delete secrets), nor add a Secrets Store binding to a Worker.
+
+## API token permissions
+
+The following API token permissions can also be used to grant access to Secrets Store resources.
+
+- **Account Secrets Store Edit**: Allows a user to create, edit, duplicate, or delete secrets.
+- **Account Secrets Store Read**: Allows a user to view secrets metadata.

@@ -1,0 +1,148 @@
+---
+title: How to
+pcx_content_type: how-to
+sidebar:
+  order: 2
+---
+
+import { Tabs, TabItem } from "~/components";
+
+Refer to the sections below to learn about common actions you might want to take when managing your data in Secrets Store.
+
+You must have a [Super Administrator or Secrets Store Admin role](/secrets-store/access-control/) within your Cloudflare account.
+
+## Manage via Wrangler
+
+For Wrangler commands, refer to [Cloudflare Workers](/workers/wrangler/commands/#secrets-store-secret) documentation.
+
+## Create a secret
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Secrets Store** and select **Create secret**.
+3. Fill in the required fields. Note that, once the secret is saved, the secret value will no longer be available for viewing.
+4. (Optional) Select **Add additional secret** to create more than one secret at a time.
+5. Select **Save** to confirm.
+
+</TabItem> <TabItem label="API">
+
+:::note
+A secret `name` cannot contain spaces. Refer to [Secrets Store API](/api/resources/secrets_store/) for the full API documentation.
+:::
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/secrets_store/stores/$STORE_ID/secrets \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--header "Content-Type: application/json" \
+--data '[
+  {
+    "name":"<MY_SECRET_NAME>",
+    "value":"<SECRET_VALUE>",
+    "scopes":["workers"],
+    "comment":""
+  },
+  {
+    "name":"<MY_SECRET_NAME_2>",
+    "value":"<SECRET_VALUE>",
+    "scopes":["workers"],
+    "comment":""
+  }
+]'
+```
+
+</TabItem> </Tabs>
+
+## Duplicate a secret
+
+Duplicate a secret to keep the same secret value but change name, scope, or comments.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Secrets Store**.
+3. Search for the secret you would like to duplicate within the existing secrets list.
+4. Select the three dots next to the secret and choose **Duplicate**.
+5. Edit the **Secret name**, **Permission scope**, or **Comment**, according to your needs.
+6. Select **Save** to confirm.
+
+</TabItem> <TabItem label="API">
+
+:::note
+A secret `name` cannot contain spaces. Refer to [Secrets Store API](/api/resources/secrets_store/) for the full API documentation.
+:::
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/secrets_store/stores/$STORE_ID/secrets/$SECRET_ID/duplicate \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--header "Content-Type: application/json" \
+--data '{
+    "name":"<NEW_DUPLICATE_NAME>",
+    "scopes":["workers"],
+    "comment":""
+}'
+```
+
+</TabItem> </Tabs>
+
+## Edit a secret
+
+Edit a secret to replace an existing value with a new one.
+
+:::caution
+This action will cause the replacement in all services using the secret.
+:::
+
+You can also edit the secret **Permission scope** and **Comment**.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Secrets Store**.
+3. Search for the secret you would like to edit within the existing secrets list.
+4. Select the three dots next to the secret and choose **Edit**.
+5. Edit the available fields according to your needs and select **Save** to confirm.
+
+</TabItem> <TabItem label="API">
+
+Refer to [Secrets Store API](/api/resources/secrets_store/) for the full API documentation.
+
+```bash
+curl --request PATCH \
+https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/secrets_store/stores/$STORE_ID/secrets/$SECRET_ID \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--header "Content-Type: application/json" \
+--data '{
+    "comment":"<NEW_COMMENT>",
+    "value":"<NEW_SECRET_VALUE>",
+    "scopes":["workers"]
+}'
+```
+
+</TabItem> </Tabs>
+
+## Delete a secret
+
+:::caution
+Before deleting a secret, make sure it is not deployed. Secrets Store secrets in use are listed in the respective [Workers application](https://dash.cloudflare.com/?to=/:account/workers-and-pages/) under **Settings** > **Bindings**.
+:::
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Secrets Store**.
+3. Search for the secret you would like to delete within the existing secrets list.
+4. Select the three dots next to the secret and choose **Delete**.
+5. Type in the secret name and select **Delete** to confirm.
+
+</TabItem> <TabItem label="API">
+
+Refer to [Secrets Store API](/api/resources/secrets_store/) for the full API documentation.
+
+```bash
+curl --request DELETE \
+https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/secrets_store/stores/$STORE_ID/secrets/$SECRET_ID \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
+
+</TabItem> </Tabs>

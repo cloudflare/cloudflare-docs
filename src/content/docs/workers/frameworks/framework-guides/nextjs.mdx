@@ -3,27 +3,24 @@ pcx_content_type: how-to
 title: Next.js
 head: []
 description: Create an Next.js application and deploy it to Cloudflare Workers with Workers Assets.
+sidebar:
+  badge: Beta
 ---
 
 import {
-	Badge,
 	Description,
-	InlineBadge,
+	Details,
 	Render,
 	PackageManagers,
-	Stream,
+	Steps,
 	WranglerConfig,
 } from "~/components";
 
-In this guide, you will create a new [Next.js](https://nextjs.org/) application and deploy to Cloudflare Workers (with the new [<InlineBadge preset="beta" /> Workers Assets](/workers/static-assets/)) using the [`@opennextjs/cloudflare`](https://opennext.js.org/cloudflare) package.
-
 :::note
-If your Next.js app currently runs on Vercel, you can easily migrate your Next.js app to Cloudflare by using [Diverce](https://github.com/ygwyg/diverce), which will automatically add OpenNext to your project and create a pull request that makes it deployable to Cloudflare.
+The OpenNext adapter is in currently in beta.
 :::
 
-## New apps
-
-To create a new Next.js app, pre-configured to run on Cloudflare using [`@opennextjs/cloudflare`](https://opennext.js.org/cloudflare), run:
+**Start from CLI** - scaffold a Next.js project on Workers.
 
 <PackageManagers
 	type="create"
@@ -31,103 +28,144 @@ To create a new Next.js app, pre-configured to run on Cloudflare using [`@openne
 	args={"--framework=next --platform=workers"}
 />
 
-<Render
-	file="c3-post-run-steps"
-	product="workers"
-	params={{
-		category: "web-framework",
-		framework: "Next.js",
-	}}
-/>
+This is a simple getting started guide. For detailed documentation on how the to use the Cloudflare OpenNext adapter, visit the [OpenNext website](https://opennext.js.org/cloudflare).
 
-## Existing Next.js apps
+## What is Next.js?
 
-:::note[Minimum required Wrangler version: 3.99.0.]
+[Next.js](https://nextjs.org/) is a [React](https://react.dev/) framework for building full stack applications.
 
-Check your version by running `wrangler --version`. To update Wrangler, refer to [Install/Update Wrangler](/workers/wrangler/install-and-update/).
+Next.js supports Server-side and Client-side rendering, as well as Partial Prerendering which lets you combine static and dynamic components in the same route.
 
-:::
+You can deploy your Next.js app to Cloudflare Workers using the OpenNext adaptor.
 
-### 1. Install @opennextjs/cloudflare
+## Deploy a new Next.js project on Workers
 
-First, install [@opennextjs/cloudflare](https://www.npmjs.com/package/@opennextjs/cloudflare):
+<Steps>
 
-```sh
-npm install --save-dev @opennextjs/cloudflare
-```
+1. **Create a new project with the create-cloudflare CLI (C3).**
 
-### 2. Add a Wrangler configuration file
+   <PackageManagers
+   	type="create"
+   	pkg="cloudflare@latest my-next-app"
+   	args={"--framework=next --platform=workers"}
+   />
 
-Then, add a [Wrangler configuration file](/workers/wrangler/configuration/) to the root directory of your Next.js app:
+   <Details header="What's happening behind the scenes?">
+   	When you run this command, C3 creates a new project directory, initiates
+   	[Next.js's official setup
+   	tool](https://nextjs.org/docs/app/api-reference/cli/create-next-app), and
+   	configures the project for Cloudflare. It then offers the option to
+   	instantly deploy your application to Cloudflare.
+   </Details>
 
-<WranglerConfig>
+2. **Develop locally.**
 
-```toml
-main = ".open-next/worker.js"
-name = "my-app"
-compatibility_date = "2024-09-23"
-compatibility_flags = ["nodejs_compat"]
-assets = { directory = ".open-next/assets", binding = "ASSETS" }
-```
+   After creating your project, run the following command in your project directory to start a local development server.
+   The command uses the Next.js development server. It offers the best developer experience by quickly reloading your app every time the source code is updated.
 
-</WranglerConfig>
+   <PackageManagers type="run" args="dev" />
 
-:::note
-As shown above, you must enable the [`nodejs_compat` compatibility flag](/workers/runtime-apis/nodejs/) _and_ set your [compatibility date](/workers/configuration/compatibility-dates/) to `2024-09-23` or later for your Next.js app to work with @opennextjs/cloudflare.
-:::
+3. **Test and preview your site with the Cloudflare adapter.**
 
-You configure your Worker and define what resources it can access via [bindings](/workers/runtime-apis/bindings/) in the [Wrangler configuration file](/workers/wrangler/configuration/).
+   <PackageManagers type="run" args="preview" />
 
-### 3. Update `package.json`
+   <Details header="What's the difference between dev and preview?">
+   	The command used in the previous step uses the Next.js development server,
+   	which runs in Node.js. However, your deployed application will run on
+   	Cloudflare Workers, which uses the `workerd` runtime. Therefore when
+   	running integration tests and previewing your application, you should use
+   	the preview command, which is more accurate to production, as it executes
+   	your application in the `workerd` runtime using `wrangler dev`.
+   </Details>
 
-Add the following to the scripts field of your `package.json` file:
+4. **Deploy your project.**
 
-```json
-"preview": "opennextjs-cloudflare && wrangler dev",
-"deploy": "opennextjs-cloudflare && wrangler deploy",
-"cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
-```
+   You can deploy your project to a [`*.workers.dev` subdomain](/workers/configuration/routing/workers-dev/) or a [custom domain](/workers/configuration/routing/custom-domains/) from your local machine or any CI/CD system (including [Workers Builds](/workers/ci-cd/#workers-builds)). Use the following command to build and deploy. If you're using a CI service, be sure to update your "deploy command" accordingly.
 
-- `preview`: Builds your app and serves it locally, allowing you to quickly preview your app running locally in the Workers runtime, via a single command.
-- `deploy`: Builds your app, and then deploys it to Cloudflare
-- `cf-typegen`: Generates a `cloudflare-env.d.ts` file at the root of your project containing the types for the env.
+   <PackageManagers type="run" args="deploy" />
 
-### 4. Optionally add caching
+</Steps>
 
-Caching is actively being worked on. It is fully functional for development and we are working on an optimized implementation suitable for production.
+## Deploy an existing Next.js project on Workers
 
-For more details check the relevant [official Open Next documentation](https://opennext.js.org/cloudflare/caching).
+You can convert an existing Next.js application to run on Cloudflare
 
-### 5. Develop locally
+<Steps>
 
-You can continue to run `next dev` when developing locally.
+1.  **Install [`@opennextjs/cloudflare`](https://www.npmjs.com/package/@opennextjs/cloudflare)**
 
-### 6. Preview locally your application and create an OpenNext config file
+    <PackageManagers type="install" pkg="@opennextjs/cloudflare@latest" />
 
-In step 3, we also added the `npm run preview` script, which allows you to quickly preview your app running locally in the Workers runtime, rather than in Node.js.
-This allows you to test changes in the same runtime that your app runs in, when deployed to Cloudflare:
+2.  **Add a Wrangler configuration file**
 
-```sh
-npm run preview
-```
+    In your project root, create a [Wrangler configuration file](/workers/wrangler/configuration/) with the following content:
 
-This command will build your OpenNext application, also creating, if not already present, an `open-next.configs.ts` file for you.
-This is necessary if you want to deploy your application with a GibHub/GitLab integration as presented in the next step.
+        		<WranglerConfig>
+        		```toml
+        			main = ".open-next/worker.js"
+        			name = "my-app"
+        			compatibility_date = "2025-03-25"
+        			compatibility_flags = ["nodejs_compat"]
+        			[assets]
+        			directory = ".open-next/assets"
+        			binding = "ASSETS"
+        		```
+        	</WranglerConfig>
 
-### 7. Deploy to Cloudflare Workers
+    :::note
+    As shown above, you must enable the [`nodejs_compat` compatibility flag](/workers/runtime-apis/nodejs/) _and_ set your [compatibility date](/workers/configuration/compatibility-dates/) to `2024-09-23` or later for your Next.js app to work with @opennextjs/cloudflare.
+    :::
 
-Either deploy via the command line:
+3.  **Add a configuration file for OpenNext**
 
-```sh
-npm run deploy
-```
+    In your project root, create an OpenNext configuration file named `open-next.config.ts` with the following content:
 
-Or [connect a GitHub or GitLab repository](/workers/ci-cd/), and Cloudflare will automatically build and deploy each pull request you merge to your production branch.
+    ```ts
+    import { defineCloudflareConfig } from "@opennextjs/cloudflare";
 
----
+    export default defineCloudflareConfig();
+    ```
 
-## Static assets
+    :::note
+    `open-next.config.ts` is where you can configure the caching, see the [adapter documentation](https://opennext.js.org/cloudflare/caching) for more information
+    :::
 
-You can serve static assets your Next.js application by placing them in the `./public/` directory. This can be useful for resource files such as images, stylesheets, fonts, and manifests.
+4.  **Update `package.json`**
 
-<Render file="workers-assets-routing-summary" />
+    You can add the following scripts to your `package.json`:
+
+    ```json
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
+    ```
+
+    <Details header="Usage">
+    	- `preview`: Builds your app and serves it locally, allowing you to
+    	quickly preview your app running locally in the Workers runtime, via a
+    	single command. - `deploy`: Builds your app, and then deploys it to
+    	Cloudflare - `cf-typegen`: Generates a `cloudflare-env.d.ts` file at the
+    	root of your project containing the types for the env.
+    </Details>
+
+5.  **Develop locally.**
+
+    After creating your project, run the following command in your project directory to start a local development server.
+    The command uses the Next.js development server. It offers the best developer experience by quickly reloading your app after your source code is updated.
+
+    <PackageManagers type="run" args="dev" />
+
+6.  **Test your site with the Cloudflare adapter.**
+
+    The command used in the previous step uses the Next.js development server to offer a great developer experience.
+    However your application will run on Cloudflare Workers so you want to run your integration tests and verify that your application workers correctly in this environment.
+
+    <PackageManagers type="run" args="preview" />
+
+7.  **Deploy your project.**
+
+    You can deploy your project to a [`*.workers.dev` subdomain](/workers/configuration/routing/workers-dev/) or a [custom domain](/workers/configuration/routing/custom-domains/) from your local machine or any CI/CD system (including [Workers Builds](/workers/ci-cd/#workers-builds)). Use the following command to build and deploy. If you're using a CI service, be sure to update your "deploy command" accordingly.
+
+    <PackageManagers type="run" args="deploy" />
+
+</Steps>
