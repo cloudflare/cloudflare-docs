@@ -10,6 +10,7 @@ import ProductPills from "~/components/changelog/ProductPills.astro";
 import { Steps } from "~/components";
 import { format } from "date-fns";
 import { getChangelogs } from "~/util/changelog";
+import { productsByGroup } from "~/util/products";
 
 const notes = await getChangelogs({
 	filter: (entry) => !entry.data.hidden,
@@ -32,16 +33,27 @@ const props = {
 		notes.map(async (entry, idx) => {
 			const date = format(entry.data.date, "MMM dd, yyyy");
 
-			const productIds = JSON.stringify(
-				entry.data.products.map((product) => product.id),
-			);
+			const productIds = entry.data.products.map((product) => product.id);
+
+			const productGroups = productsByGroup
+				.filter((group) =>
+					group[1]?.find((product) => productIds.includes(product.id)),
+				)
+				.map((group) => group[0])
+				.sort();
 
 			const { Content } = await render(entry);
 
 			return (
 				<div
 					class="!mt-0 sm:flex"
-					data-products={productIds}
+					data-products={JSON.stringify(
+						productIds.concat(
+							productGroups.map((group) =>
+								group.replaceAll(" ", "-").toLowerCase(),
+							),
+						),
+					)}
 					style={`display: ${idx >= 10 ? "none" : ""}`}
 				>
 					<time
