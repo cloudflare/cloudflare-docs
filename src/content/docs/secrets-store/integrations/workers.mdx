@@ -11,18 +11,21 @@ import { WranglerConfig, Tabs, TabItem } from "~/components";
 [Cloudflare Secrets Store](/secrets-store/) is a secure, centralized location in which account-level secrets are stored and managed. The secrets are securely encrypted and stored across all Cloudflare data centers.
 
 Consider the steps below to learn how to use values from your account secrets store with [Cloudflare Workers](/workers/).
-
 :::note
 This is different from Workers [Variables and Secrets](/workers/configuration/secrets/), where you define and manage your secrets on a per-Worker level.
 :::
 
 ## Before you begin
 
-If [using the Dashboard](#via-dashboard), make sure you already have a Workers application. Refer to the [Workers get started](/workers/get-started/dashboard/) for guidance.
+- If [using the Dashboard](#via-dashboard), make sure you already have a Workers application. Refer to the [Workers get started](/workers/get-started/dashboard/) for guidance.
 
-You should also have a store created under the Secrets Store tab on the Dashboard. The first store in your account is created automatically when a user with [Super Administrator or Secrets Store Admin role](/secrets-store/access-control/) interacts with it.
+- You should also have a store created under the Secrets Store tab on the Dashboard.
+    - The first store in your account is created automatically when a user with [Super Administrator or Secrets Store Admin role](/secrets-store/access-control/) interacts with it.
+    - You can also use the [Wrangler command](/workers/wrangler/commands/#secrets-store-store) `secrets-store store create <name> --remote` to create your first store.
 
-You can also use the [Wrangler command](/workers/wrangler/commands/#secrets-store-store) `secrets-store store create <name>` to create your first store.
+:::caution[Local development mode]
+This guide assumes you are working in production. To use Secrets Store locally, you must use `secrets-store` [Wrangler commands](/workers/wrangler/commands/) without the `--remote` flag.
+:::
 
 ## 1. Set up account secrets in Secrets Store
 
@@ -35,7 +38,9 @@ You may also add account secrets directly from the Workers settings on the dashb
 
 Use the [Wrangler command](/workers/wrangler/commands/#secrets-store-secret) `secrets-store secret create`.
 
-To use the following example, replace the store ID and secret name by your actual data. You can find and copy the store ID from the [Secrets Store tab](https://dash.cloudflare.com/?to=/:account/secrets-store/) on the dashboard. A secret name cannot contain spaces.
+To use the following example, replace the store ID and secret name by your actual data. You can find and copy the store ID from the [Secrets Store tab](https://dash.cloudflare.com/?to=/:account/secrets-store/) on the dashboard or use `wrangler secrets-store store list`.
+
+Note that a secret name cannot contain spaces.
 
 ```sh
 npx wrangler secrets-store secret create <STORE_ID> --name MY_SECRET_NAME --scopes workers --remote
@@ -132,8 +137,11 @@ secrets_store_secrets = [
 
 [Bindings](/workers/runtime-apis/bindings/) are located on the `env` object. To access the secret you first need an asynchronous call.
 
-
 ### Call `get()` on the binding variable
+
+:::caution[Local development mode]
+You cannot access production secrets (created on the dashboard, via API, or with the `--remote` flag) from your local development setup. To use Secrets Store locally, you must use [secrets-store Wrangler commands](/workers/wrangler/commands/) without the `--remote` flag.
+:::
 
 ```js
 export default {
