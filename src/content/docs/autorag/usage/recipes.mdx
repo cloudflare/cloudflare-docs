@@ -20,7 +20,7 @@ This section provides practical examples and recipes for common use cases. These
 
 ## Bring your own model
 
-This scenario allows you to leverage AutoRAG for chunk search, while asking a different model to answer the user question.
+You can use AutoRAG for search while leveraging a model outside of Workers AI to generate responses. Here is an example of how you can use an OpenAI model to generate your responses.
 
 ```ts
 import {openai} from '@ai-sdk/openai';
