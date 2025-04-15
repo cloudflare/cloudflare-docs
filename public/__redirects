@@ -1287,6 +1287,7 @@
 /turnstile/migration/migrating-from-hcaptcha/ /turnstile/migration/hcaptcha/ 301
 /turnstile/concepts/widget-types/ /turnstile/concepts/widget/ 301
 /turnstile/concepts/domain-management/ /turnstile/concepts/hostname-management/ 301
+/turnstile/troubleshooting/challenge-solve-issues/ /fundamentals/security/cloudflare-challenges/challenge-solve-issues/ 301
 
 # waf
 /waf/about/ /waf/concepts/ 301
