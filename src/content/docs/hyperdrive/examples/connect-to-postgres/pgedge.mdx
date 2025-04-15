@@ -1,0 +1,28 @@
+---
+type: example
+summary: Connect Hyperdrive to a pgEdge Postgres database.
+pcx_content_type: example
+title: pgEdge Cloud
+sidebar:
+  order: 10
+description: Connect Hyperdrive to a pgEdge Postgres database.
+---
+
+import { Render } from "~/components";
+
+This example shows you how to connect Hyperdrive to a [pgEdge](https://pgedge.com/) Postgres database. pgEdge Cloud provides easy deployment of fully-managed, fully-distributed, and secure Postgres.
+
+## 1. Allow Hyperdrive access
+
+You can connect Hyperdrive to any existing pgEdge database with the default user and password provided by pgEdge.
+
+### pgEdge dashboard
+
+To retrieve your connection string from the pgEdge dashboard:
+
+1. Go to the [**pgEdge dashboard**](https://app.pgedge.com) and select the database you wish to connect to.
+2. From the **Connect to your database** section, note down the connection string (starting with `postgres://app@...`) from the **Connection String** text box.
+
+## 2. Create a database configuration
+
+<Render file="create-hyperdrive-config" />

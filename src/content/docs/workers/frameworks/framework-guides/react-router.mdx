@@ -1,0 +1,105 @@
+---
+pcx_content_type: how-to
+title: React Router (formerly Remix)
+description: Create a React Router application and deploy it to Cloudflare Workers
+---
+
+import {
+	Render,
+	PackageManagers,
+	Steps,
+	Details,
+	FileTree,
+} from "~/components";
+
+**Start from CLI**: Scaffold a full-stack app with [React Router v7](https://reactrouter.com/) and the [Cloudflare Vite plugin](/workers/vite-plugin/) for lightning-fast development.
+
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest my-react-router-app"
+	args="--framework=react-router"
+/>
+
+**Or just deploy**: Create a full-stack app using React Router v7, with CI/CD and previews all set up for you.
+
+[![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/react-router-starter-template)
+
+## What is React Router?
+
+[React Router v7](https://reactrouter.com/) is a full-stack React framework for building web applications.
+It combines with the [Cloudflare Vite plugin](/workers/vite-plugin/) to provide a first-class experience for developing, building and deploying your apps on Cloudflare.
+
+## Creating a full-stack React Router app
+
+<Steps>
+1. **Create a new project with the create-cloudflare CLI (C3)**
+
+    	<PackageManagers
+    	type="create"
+    	pkg="cloudflare@latest my-react-router-app"
+    	args="--framework=react-router"
+    	/>
+    		 <Details header="How is this project set up?">
+        			Below is a simplified file tree of the project.
+        			<FileTree>
+        			- my-react-router-app
+    							- app
+    									- routes
+    											- ...
+    									- entry.server.ts
+    									- root.tsx
+    									- routes.ts
+        				- workers
+    								- app.ts
+        				- react-router.config.ts
+        				- vite.config.ts
+        				- wrangler.jsonc
+        			</FileTree>
+
+    					`react-router.config.ts` is your [React Router config file](https://reactrouter.com/explanation/special-files#react-routerconfigts).
+    					In this file:
+    						- `ssr` is set to `true`, meaning that your application will use server-side rendering.
+    						- `future.unstable_viteEnvironmentApi` is set to `true` to enable compatibility with the [Cloudflare Vite plugin](/workers/vite-plugin/).
+
+    					:::note
+    					SPA mode and prerendering are not currently supported when using the [Cloudflare Vite plugin](/workers/vite-plugin/).
+    					If you wish to use React Router in an SPA then we recommend starting with the [React template](/workers/frameworks/framework-guides/react/) and using React Router [as a library](https://reactrouter.com/start/data/installation).
+    					:::
+
+    					`vite.config.ts` is your [Vite config file](https://vite.dev/config/).
+    					The React Router and Cloudflare plugins are included in the `plugins` array.
+    					The [Cloudflare Vite plugin](/workers/vite-plugin/) runs your server code in the Workers runtime, ensuring your local development environment is as close to production as possible.
+
+        			`wrangler.jsonc` is your [Worker config file](/workers/wrangler/configuration/).
+        			In this file:
+        					- `main` points to `./workers/app.ts`.
+    									This is the entry file for your Worker.
+    										The default export includes a [`fetch` handler](/workers/runtime-apis/fetch/), which delegates the request to React Router.
+        					- If you want to add [bindings](/workers/runtime-apis/bindings/) to resources on Cloudflare's developer platform, you configure them here.
+        		</Details>
+
+2.  **Develop locally**
+
+        After creating your project, run the following command in your project directory to start a local development server.
+        <PackageManagers type="run" args="dev" />
+        		<Details header="What's happening in local development?">
+        				This project uses React Router in combination with the [Cloudflare Vite plugin](/workers/vite-plugin/).
+        				This means that your application runs in the Cloudflare Workers runtime, just like in production, and enables access to local emulations of bindings.
+        		</Details>
+
+3.  **Deploy your project**
+
+        	Your project can be deployed to a `*.workers.dev` subdomain or a [Custom Domain](/workers/configuration/routing/custom-domains/) from your own machine or from any CI/CD system, including Cloudflare's own [Workers Builds](/workers/ci-cd/builds/).
+
+        	The following command will build and deploy your project. If you are using CI, ensure you update your ["deploy command"](/workers/ci-cd/builds/configuration/#build-settings) configuration appropriately.
+
+        	<PackageManagers type="run" args={"deploy"} />
+
+</Steps>
+
+## Use bindings with React Router
+
+With bindings, your application can be fully integrated with the Cloudflare Developer Platform, giving you access to compute, storage, AI and more.
+As you have direct access to your Worker entry file (`workers/app.ts`), you can also add additional exports such as [Durable Objects](/durable-objects/) and [Workflows](/workflows/).
+
+<Render file="frameworks-bindings" />

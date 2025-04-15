@@ -73,10 +73,38 @@ async def on_fetch(request):
     return Response("No cookie with name: " + cookie_name)
 ```
 
+</TabItem> <TabItem label="Hono" icon="seti:typescript">
+
+```ts
+import { Hono } from 'hono';
+import { getCookie } from 'hono/cookie';
+
+const app = new Hono();
+
+app.get('*', (c) => {
+  // The name of the cookie
+  const COOKIE_NAME = "__uid";
+  
+  // Get the specific cookie value using Hono's cookie helper
+  const cookieValue = getCookie(c, COOKIE_NAME);
+  
+  if (cookieValue) {
+    // Respond with the cookie value
+    return c.text(cookieValue);
+  }
+  
+  return c.text("No cookie with name: " + COOKIE_NAME);
+});
+
+export default app;
+```
+
 </TabItem> </Tabs>
 
 :::note[External dependencies]
 
 This example requires the npm package [`cookie`](https://www.npmjs.com/package/cookie) to be installed in your JavaScript project.
+
+The Hono example uses the built-in cookie utilities provided by Hono, so no external dependencies are needed for that implementation.
 
 :::

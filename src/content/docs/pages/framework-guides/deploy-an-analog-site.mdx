@@ -23,8 +23,8 @@ The easiest way to create a new Analog project and deploy to Cloudflare Pages is
 
 <PackageManagers
 	type="create"
-	pkg="cloudflare@latest"
-	args="my-analog-app --framework=analog"
+	pkg="cloudflare@latest my-analog-app"
+	args="--framework=analog --platform=pages"
 />
 
 C3 will walk you through the setup process and create a new project using `create-analog`, the official Analog creation tool. It will also install the necessary adapters along with the [Wrangler CLI](/workers/wrangler/install-and-update/#check-your-wrangler-version).

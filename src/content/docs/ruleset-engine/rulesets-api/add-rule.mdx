@@ -6,7 +6,7 @@ sidebar:
   order: 7
 ---
 
-import { Render } from "~/components";
+import { Render, APIRequest } from "~/components";
 
 Adds a single rule to an existing ruleset. Use this endpoint to add a rule without having to include all the existing ruleset rules in the request.
 
@@ -28,20 +28,20 @@ Invoking this method creates a new version of the ruleset.
 
 ## Example
 
-The following example adds a rule to ruleset `{ruleset_id}` of zone `{zone_id}`. The ruleset ID was previously obtained using the [List zone rulesets](/api/resources/rulesets/methods/list/) operation, and corresponds to the entry point ruleset for the `http_request_firewall_custom` phase.
+The following `POST` request adds a rule to ruleset `$RULESET_ID` of zone `$ZONE_ID`. The ruleset ID was previously obtained using the [List zone rulesets](/api/resources/rulesets/methods/list/) operation, and corresponds to the entry point ruleset for the `http_request_firewall_custom` phase.
 
 The response will include the complete ruleset after adding the rule.
 
-```bash
-curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "action": "js_challenge",
-  "expression": "(ip.src.country eq \"GB\" or ip.src.country eq \"FR\") or cf.threat_score > 0",
-  "description": "challenge GB and FR or based on IP Reputation"
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/rulesets/{ruleset_id}/rules"
+	method="POST"
+	json={{
+		action: "js_challenge",
+		expression:
+			'(ip.src.country eq "GB" or ip.src.country eq "FR") or cf.threat_score > 0',
+		description: "challenge GB and FR or based on IP Reputation",
+	}}
+/>
 
 ```json output
 {
@@ -57,7 +57,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/
 				"version": "1",
 				"action": "challenge",
 				"expression": "not http.request.uri.path matches \"^/api/.*$\"",
-				"last_updated": "2020-11-23T11:36:24.192361Z",
+				"last_updated": "2023-11-23T11:36:24.192361Z",
 				"ref": "<RULE_REF_1>",
 				"enabled": true
 			},
@@ -67,12 +67,12 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/
 				"action": "js_challenge",
 				"expression": "(ip.src.country eq \"GB\" or ip.src.country eq \"FR\") or cf.threat_score > 0",
 				"description": "challenge GB and FR or based on IP Reputation",
-				"last_updated": "2021-06-22T12:35:58.144683Z",
+				"last_updated": "2024-06-22T12:35:58.144683Z",
 				"ref": "<NEW_RULE_REF>",
 				"enabled": true
 			}
 		],
-		"last_updated": "2021-06-22T12:35:58.144683Z",
+		"last_updated": "2024-06-22T12:35:58.144683Z",
 		"phase": "http_request_firewall_custom"
 	},
 	"success": true,

@@ -134,10 +134,10 @@ Configure scoping for your traffic in the **Region code** section when adding or
     <AnchorHeading title="Allowed IP ranges" depth={2} />
 		<Markdown
     text={`
-Allowed IP ranges for static routes are:
+		Allowed IP ranges for static routes are:
 
-- Cloudflare leased IPs assigned to your account
-- BYOIP prefixes. For BYOIP, you have the option to use them as-is, or to create a summary route to cover all your onboarded prefixes.
+		- Cloudflare leased IPs assigned to your account
+		- BYOIP prefixes. For BYOIP, you have the option to use them as-is, or to create a summary route to cover all your onboarded prefixes.
 			`}
 				inline={false}
   />
@@ -150,21 +150,20 @@ Allowed IP ranges for static routes are:
     <AnchorHeading title="Allowed IP ranges" depth={2} />
 		<Markdown
     text={`
-By default, you can only add static routes with RFC 1918 IP prefixes like:
-- \`10.0.0.0/8\`
-- \`172.16.0.0/12\`
-- \`192.168.0.0/16\`
+		By default, you can only add static routes with RFC 1918 IP prefixes like:
+		- \`10.0.0.0/8\`
+		- \`172.16.0.0/12\`
+		- \`192.168.0.0/16\`
 
-When using Magic WAN and Cloudflare Tunnel together, remember to consider the IP ranges utilized in the static routes of Cloudflare Tunnel when selecting static routes for Magic WAN. For more information, refer to [Cloudflare Tunnel](/magic-wan/zero-trust/cloudflare-tunnel/).
+		When using Magic WAN and Cloudflare Tunnel together, remember to consider the IP ranges utilized in the static routes of Cloudflare Tunnel when selecting static routes for Magic WAN. For more information, refer to [Cloudflare Tunnel](/magic-wan/zero-trust/cloudflare-tunnel/).
 
-For prefixes outside RFC 1918 contact your Cloudflare customer service manager.
+		For prefixes outside RFC 1918 contact your Cloudflare customer service manager.
 			`}
 				inline={false}
-  />
+  	/>
   </>
   )
 }
-
 
 ## Create a static route
 

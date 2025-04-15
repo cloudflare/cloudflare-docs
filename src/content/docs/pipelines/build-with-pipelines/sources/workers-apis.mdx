@@ -1,0 +1,71 @@
+---
+title: Workers API
+pcx_content_type: concept
+sidebar:
+  order: 2
+head:
+  - tag: title
+    content: Workers API
+
+---
+
+import { Render, PackageManagers, WranglerConfig } from "~/components";
+
+Pipelines exposes an API directly to your [Workers](/workers) scripts via the [bindings](/workers/runtime-apis/bindings/#what-is-a-binding) concept. Bindings allow you to securely send data to a pipeline without having to manage API keys or clients. Sending data via a Worker is enabled by default.
+
+## Send data from a Worker
+### Setup a binding
+Bind to a pipeline by defining a `pipelines` binding within your Wrangler configuration. For example:
+
+<WranglerConfig>
+
+```toml title="wrangler.toml"
+#:schema node_modules/wrangler/config-schema.json
+name = "pipeline-starter"
+main = "src/index.ts"
+compatibility_date = "2025-04-01"
+
+[[pipelines]]
+pipeline = "<MY-PIPELINE-NAME>" # The name of your Pipeline
+binding = "PIPELINE" # The binding name, accessed using env.MY_PIPELINE
+```
+
+</WranglerConfig>
+
+You can bind multiple pipelines to a Worker.
+
+### Send data
+The Pipelines binding exposes a `send()` method. For example, to log inbound HTTP requests to your Worker:
+
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		let log = {
+			url: request.url,
+			method: request.method,
+			headers: Object.fromEntries(request.headers),
+		  };
+		await env.PIPELINE.send([log]);
+		return new Response('Hello World!');
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+## Workers API
+### `Pipeline`
+A binding which allows a Worker to send messages to a pipeline.
+
+```ts
+interface Pipeline<PipelineRecord> {
+  send(records: PipelineRecord[]): Promise<void>;
+}
+```
+
+* `send(records)`: `Promise<void>`
+
+  * Sends records to the pipeline. The body must be an array of objects which are JSON serializable.
+  * When the promise resolves, the records are confirmed to be ingested.
+
+:::note
+When running your Worker locally, pipelines are partially simulated. Worker code which sends data to a pipeline will execute successfully. However, the full pipeline, including batching & writing to R2, will not be executed locally.
+:::

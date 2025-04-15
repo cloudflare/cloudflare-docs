@@ -9,7 +9,7 @@ head:
     content: Create a WAF custom ruleset using the API
 ---
 
-import { Render } from "~/components";
+import { Render, APIRequest } from "~/components";
 
 :::note
 This feature requires an Enterprise plan with a paid add-on.
@@ -30,24 +30,23 @@ Currently, you can only deploy WAF custom rulesets at the account level.
 
 The following example creates a custom ruleset with a single rule in the `rules` array.
 
-```bash
-curl "https://api.cloudflare.com/api/v4/accounts/{account_id}/rulesets" \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "description": "",
-  "kind": "custom",
-  "name": "My custom ruleset",
-  "rules": [
-    {
-      "description": "Challenge web traffic (not /api)",
-      "expression": "not starts_with(http.request.uri.path, \"/api/\")",
-      "action": "managed_challenge"
-    }
-  ],
-  "phase": "http_request_firewall_custom"
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/rulesets"
+	method="POST"
+	json={{
+		description: "",
+		kind: "custom",
+		name: "My custom ruleset",
+		rules: [
+			{
+				description: "Challenge web traffic (not /api)",
+				expression: 'not starts_with(http.request.uri.path, "/api/")',
+				action: "managed_challenge",
+			},
+		],
+		phase: "http_request_firewall_custom",
+	}}
+/>
 
 Save the ruleset ID in the response for the next step.
 
@@ -60,10 +59,13 @@ To deploy the custom ruleset, add a rule with `"action": "execute"` to the `http
     	params={{ phaseName: "http_request_firewall_custom" }}
     />
 
-    ```bash
-    curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/phases/http_request_firewall_custom/entrypoint" \
-    --header "Authorization: Bearer <API_TOKEN>"
-    ```
+    <APIRequest
+    	path="/accounts/{account_id}/rulesets/phases/{ruleset_phase}/entrypoint"
+    	method="GET"
+    	parameters={{
+    		ruleset_phase: "http_request_firewall_custom",
+    	}}
+    />
 
     ```json output {4}
     {
@@ -94,20 +96,19 @@ To deploy the custom ruleset, add a rule with `"action": "execute"` to the `http
 
     The following request creates a rule that executes the custom ruleset with ID `<CUSTOM_RULESET_ID>` for all Enterprise zones in the account:
 
-    ```bash
-    curl "https://dash.cloudflare.com/api/v4/accounts/{account_id}/rulesets/{ruleset_id}/rules" \
-    --header "Authorization: Bearer <API_TOKEN>" \
-    --header "Content-Type: application/json" \
-    --data '{
-      "description": "Execute custom ruleset",
-      "expression": "(cf.zone.plan eq \"ENT\")",
-      "action": "execute",
-      "action_parameters": {
-        "id": "<CUSTOM_RULESET_ID>"
-      },
-      "enabled": true
-    }'
-    ```
+    <APIRequest
+    	path="/accounts/{account_id}/rulesets/{ruleset_id}/rules"
+    	method="POST"
+    	json={{
+    		description: "Execute custom ruleset",
+    		expression: '(cf.zone.plan eq "ENT")',
+    		action: "execute",
+    		action_parameters: {
+    			id: "<CUSTOM_RULESET_ID>",
+    		},
+    		enabled: true,
+    	}}
+    />
 
     :::caution
     You can only apply custom rulesets to incoming traffic of zones on an Enterprise plan. To enforce this requirement, you must include `cf.zone.plan eq "ENT"` in the expression of the `execute` rule deploying the custom ruleset.
@@ -121,26 +122,25 @@ To deploy the custom ruleset, add a rule with `"action": "execute"` to the `http
     	}}
     />
 
-    ```bash
-    curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets" \
-    --header "Authorization: Bearer <API_TOKEN>" \
-    --header "Content-Type: application/json" \
-    --data '{
-      "description": "",
-      "kind": "root",
-      "name": "Account-level phase entry point",
-      "rules": [
-        {
-          "action": "execute",
-          "expression": "(cf.zone.plan eq \"ENT\")",
-          "action_parameters": {
-            "id": "<CUSTOM_RULESET_ID>"
-          }
-        }
-      ],
-      "phase": "http_request_firewall_custom"
-    }'
-    ```
+    <APIRequest
+    	path="/accounts/{account_id}/rulesets"
+    	method="POST"
+    	json={{
+    		description: "",
+    		kind: "root",
+    		name: "Account-level phase entry point",
+    		rules: [
+    			{
+    				action: "execute",
+    				expression: '(cf.zone.plan eq "ENT")',
+    				action_parameters: {
+    					id: "<CUSTOM_RULESET_ID>",
+    				},
+    			},
+    		],
+    		phase: "http_request_firewall_custom",
+    	}}
+    />
 
 ## Next steps
 

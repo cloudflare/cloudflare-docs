@@ -1,0 +1,711 @@
+openapi: 3.0.0
+info:
+  title: Cloudflare Realtime API
+  version: "1.0"
+externalDocs:
+  description: Find out more about Cloudflare Realtime
+  url: https://developers.cloudflare.com/realtime/
+servers:
+  - url: https://rtc.live.cloudflare.com/v1
+paths:
+  /apps/{appId}/sessions/new:
+    post:
+      tags:
+        - New Session
+      summary: Create a new PeerConnection
+      security:
+        - secret: []
+      parameters:
+        - in: path
+          name: appId
+          schema:
+            type: string
+          required: true
+          description: WebRTC application ID
+        - in: query
+          name: thirdparty
+          schema:
+            type: boolean
+          description: Session is intended to connect to an ICE-lite peer like a third party SFU/server
+        - in: query
+          name: correlationId
+          schema:
+            type: string
+          description: Associate session to an user-provided correlation id
+      responses:
+        "201":
+          description: Created
+          headers:
+            vary:
+              schema:
+                type: string
+                example: Origin
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/NewSessionResponse"
+                  - example:
+                      sessionId: e017a2629c754fedc1f7d8587e06d126
+  /apps/{appId}/sessions/{sessionId}/tracks/new:
+    post:
+      tags:
+        - Add a track
+      summary: Solve the given track object(s) and add the track(s) to the WebRTC session
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TracksRequest"
+            examples:
+              local_tracks:
+                description: Share a track to be played by remote peers
+                value:
+                  sessionDescription:
+                    sdp: |
+                      v=0
+                      o=- 0 0 IN IP4 127.0.0.1
+                      s=-
+                      c=IN IP4 127.0.0.1
+                      t=0 0
+                      m=audio 4000 RTP/AVP 111
+                      a=rtpmap:111 OPUS/48000/2
+                      m=video 4002 RTP/AVP 96
+                      a=rtpmap:96 VP8/90000
+                      ...
+                    type: offer
+                  tracks:
+                    - location: local
+                      mid: "4"
+                      trackName: 1a037563-c35c-4bf6-a9ee-2b474cbb9a51
+              remote_tracks:
+                description: Play a track from a remote peer
+                value:
+                  tracks:
+                    - location: remote
+                      sessionId: 2a45361d5fd7cc14eface0587c276c94
+                      trackName: 2e037563-a35d-4bf6-a9ee-2d474cbb9a58
+              push_track_with_bidirectional_stream:
+                description: Share a track through a bidirectional transceiver
+                value:
+                  sessionDescription:
+                    sdp: |
+                      v=0
+                      o=- 0 0 IN IP4 127.0.0.1
+                      s=-
+                      c=IN IP4 127.0.0.1
+                      t=0 0
+                      m=audio 4000 RTP/AVP 111
+                      a=rtpmap:111 OPUS/48000/2
+                      m=video 4002 RTP/AVP 96
+                      a=rtpmap:96 VP8/90000
+                      ...
+                    type: offer
+                  tracks:
+                    - location: local
+                      mid: "0"
+                      trackName: mic-1
+                      bidirectionalMediaStream: true
+                      kind: "audio"
+              push_track_without_an_offer:
+                description: SFU can generate an offer to push a local track
+                value:
+                  tracks:
+                    - location: local
+                      trackName: mic-1
+                      kind: "audio"
+              push_tracks_with_autodiscover:
+                description: SFU detects any new track in the offered SDP
+                value:
+                  autoDiscover: true
+                  sessionDescription:
+                    sdp: |
+                      v=0
+                      o=- 0 0 IN IP4 127.0.0.1
+                      s=-
+                      c=IN IP4 127.0.0.1
+                      t=0 0
+                      m=audio 4000 RTP/AVP 111
+                      a=rtpmap:111 OPUS/48000/2
+                      m=video 4002 RTP/AVP 96
+                      a=rtpmap:96 VP8/90000
+                      ...
+                    type: offer
+              pull_track_with_bidirectional_stream:
+                description: Pull a track through an existing bidirectional transceiver identified by a mid
+                value:
+                  tracks:
+                    - location: remote
+                      mid: "#mic-1"
+                      sessionId: 2a45361d5fd7cc14eface0587c276c94
+                      trackName: generated-audio
+                      kind: "audio"
+              remote_track_with_simulcast:
+                description: Pull a remote track with simulcast preferences
+                value:
+                  tracks:
+                    - location: remote
+                      sessionId: 2a45361d5fd7cc14eface0587c276c94
+                      trackName: simulcast-video-track
+                      simulcast:
+                        preferredRid: "h"
+                        priorityOrdering: "asciibetical"
+                        ridUnavailableStrategy: "nextPriority"
+      security:
+        - secret: []
+      parameters:
+        - in: path
+          name: appId
+          schema:
+            type: string
+          required: true
+          description: WebRTC application ID
+        - in: path
+          name: sessionId
+          schema:
+            type: string
+          required: true
+          description: Current PeerConnection session ID
+      responses:
+        "200":
+          description: OK
+          headers:
+            vary:
+              schema:
+                type: string
+                example: Origin
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TracksResponse"
+              examples:
+                local_tracks:
+                  value:
+                    requiresImmediateRenegotiation: false
+                    tracks:
+                      - trackName: 1a037563-c35c-4bf6-a9ee-2b474cbb9a51
+                        mid: "4"
+                    sessionDescription:
+                      sdp: |
+                        v=0
+                        o=- 0 0 IN IP4 127.0.0.1
+                        s=-
+                        c=IN IP4 127.0.0.1
+                        t=0 0
+                        m=audio 4000 RTP/AVP 111
+                        a=rtpmap:111 OPUS/48000/2
+                        m=video 4002 RTP/AVP 96
+                        a=rtpmap:96 VP8/90000
+                        ...
+                      type: answer
+                remote_tracks:
+                  value:
+                    requiresImmediateRenegotiation: true
+                    tracks:
+                      - sessionId: 2a45361d5fd7cc14eface0587c276c94
+                        trackName: 2e037563-a35d-4bf6-a9ee-2d474cbb9a58
+                        mid: "7"
+                    sessionDescription:
+                      sdp: |
+                        v=0
+                        o=- 0 0 IN IP4 127.0.0.1
+                        s=-
+                        c=IN IP4 127.0.0.1
+                        t=0 0
+                        m=audio 4000 RTP/AVP 111
+                        a=rtpmap:111 OPUS/48000/2
+                        m=video 4002 RTP/AVP 96
+                        a=rtpmap:96 VP8/90000
+                        ...
+                      type: offer
+                remote_tracks_with_simulcast:
+                  value:
+                    requiresImmediateRenegotiation: true
+                    tracks:
+                      - sessionId: 2a45361d5fd7cc14eface0587c276c94
+                        trackName: simulcast-video-track
+                        mid: "5"
+                        simulcast:
+                          preferredRid: "h"
+                          priorityOrdering: "asciibetical"
+                          ridUnavailableStrategy: "nextPriority"
+                    sessionDescription:
+                      sdp: |
+                        v=0
+                        o=- 0 0 IN IP4 127.0.0.1
+                        s=-
+                        c=IN IP4 127.0.0.1
+                        t=0 0
+                        m=video 4002 RTP/AVP 96
+                        a=rtpmap:96 VP8/90000
+                        a=simulcast:recv f;h;q
+                        a=rid:f recv
+                        a=rid:h recv
+                        a=rid:q recv
+                        ...
+                      type: offer
+  /apps/{appId}/sessions/{sessionId}/renegotiate:
+    put:
+      tags:
+        - Renegotiate WebRTC session
+      summary: When a previous response has requiresImmediateRenegotiation, you must renegotiate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RenegotiateRequest"
+            example:
+              sessionDescription:
+                sdp: |
+                  v=0
+                  o=- 0 0 IN IP4 127.0.0.1
+                  s=-
+                  c=IN IP4 127.0.0.1
+                  t=0 0
+                  m=audio 4000 RTP/AVP 111
+                  a=rtpmap:111 OPUS/48000/2
+                  m=video 4002 RTP/AVP 96
+                  a=rtpmap:96 VP8/90000
+                  ...
+                  type: answer
+      security:
+        - secret: []
+      parameters:
+        - in: path
+          name: appId
+          schema:
+            type: string
+          required: true
+          description: WebRTC application ID
+        - in: path
+          name: sessionId
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: OK
+          headers:
+            vary:
+              schema:
+                type: string
+                example: Origin
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RenegotiateResponse"
+              example: {}
+  /apps/{appId}/sessions/{sessionId}/tracks/close:
+    put:
+      tags:
+        - Close a track
+      summary: Close a local or remote track
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/CloseTracksRequest"
+                - example:
+                    tracks:
+                      - mid: "7"
+                    sessionDescription:
+                      sdp: |
+                        v=0
+                        o=- 0 0 IN IP4 127.0.0.1
+                        s=-
+                        c=IN IP4 127.0.0.1
+                        t=0 0
+                        m=audio 4000 RTP/AVP 111
+                        a=rtpmap:111 OPUS/48000/2
+                        m=video 4002 RTP/AVP 96
+                        a=rtpmap:96 VP8/90000
+                        ...
+                      type: offer
+                    force: false
+      security:
+        - secret: []
+      parameters:
+        - in: path
+          name: appId
+          schema:
+            type: string
+          required: true
+          description: WebRTC application ID
+        - in: path
+          name: sessionId
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: OK
+          headers:
+            vary:
+              schema:
+                type: string
+                example: Origin
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CloseTracksResponse"
+              example:
+                sessionDescription:
+                  sdp: |
+                    v=0
+                    o=- 0 0 IN IP4 127.0.0.1
+                    s=-
+                    c=IN IP4 127.0.0.1
+                    t=0 0
+                    m=audio 4000 RTP/AVP 111
+                    a=rtpmap:111 OPUS/48000/2
+                    m=video 4002 RTP/AVP 96
+                    a=rtpmap:96 VP8/90000
+                    ...
+                  type: answer
+                requiresImmediateRenegotiation: false
+                tracks:
+                  - mid: "7"
+  /apps/{appId}/sessions/{sessionId}/tracks/update:
+    put:
+      tags:
+        - Change tracks
+      summary: Change tracks by reusing existing transceivers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateTracksRequest"
+            examples:
+              reuse_transceiver:
+                description: Reuse an existing transceiver for a new track
+                value:
+                  tracks:
+                    - location: "remote"
+                      sessionId: "2a45361d5fd7cc14eface0587c276c94"
+                      trackName: "other-track-name"
+                      mid: "7"
+              reuse_with_simulcast:
+                description: Reuse an existing transceiver with new simulcast preferences
+                value:
+                  tracks:
+                    - location: "remote"
+                      sessionId: "2a45361d5fd7cc14eface0587c276c94"
+                      trackName: "simulcast-track"
+                      mid: "8"
+                      simulcast:
+                        preferredRid: "h"
+                        priorityOrdering: "asciibetical"
+                        ridUnavailableStrategy: "nextPriority"
+      security:
+        - secret: []
+      parameters:
+        - in: path
+          name: appId
+          schema:
+            type: string
+          required: true
+          description: WebRTC application ID
+        - in: path
+          name: sessionId
+          schema:
+            type: string
+          required: true
+          description: Current PeerConnection session ID
+      responses:
+        "200":
+          description: OK
+          headers:
+            vary:
+              schema:
+                type: string
+                example: Origin
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateTracksResponse"
+              examples:
+                success:
+                  value:
+                    requiresImmediateRenegotiation: false
+                    tracks:
+                      - mid: "7"
+                        sessionId: "2a45361d5fd7cc14eface0587c276c94"
+                        trackName: "new-track-name"
+
+  /apps/{appId}/sessions/{sessionId}:
+    get:
+      tags:
+        - Get session state
+      summary: Return the list of tracks associated to the session
+      security:
+        - secret: []
+      parameters:
+        - in: path
+          name: appId
+          schema:
+            type: string
+          required: true
+          description: WebRTC application ID
+        - in: path
+          name: sessionId
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: OK
+          headers:
+            vary:
+              schema:
+                type: string
+                example: Origin
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetSessionStateResponse"
+              example:
+                tracks:
+                  - location: local
+                    mid: "2"
+                    trackName: 1a037563-c35c-4bf6-a9ee-2b474cbb9a51
+                    status: active
+                  - location: remote
+                    mid: "7"
+                    sessionId: 2a45361d5fd7cc14eface0587c276c94
+                    trackName: 2e037563-a35d-4bf6-a9ee-2d474cbb9a58
+                    status: active
+
+components:
+  securitySchemes:
+    secret:
+      type: http
+      scheme: bearer
+  schemas:
+    SessionDescription:
+      type: object
+      properties:
+        sdp:
+          type: string
+        type:
+          type: string
+          enum:
+            - answer
+            - offer
+    TrackObject:
+      type: object
+      properties:
+        location:
+          type: string
+          enum:
+            - local
+            - remote
+          description: If you want to share a track, it should be local. If you want to play a track shared by a remote agent, it should be remote
+        mid:
+          type: string
+          description: mid associated to track's transceiver. It also can be prefixed with \# to reference an existing transceiver by its trackName
+        sessionId:
+          type: string
+          description: Session ID of the track owner. It should be set for remote tracks only
+        trackName:
+          type: string
+          description: Given name for the track
+        bidirectionalMediaStream:
+          type: boolean
+          description: Make the associated transceiver bidirectional. This option works only when the SFU generates the offer
+        kind:
+          type: string
+          description: Give a hint to the SFU about the transceiver kind. This is required when the SFU generates the offer
+        simulcast:
+          type: object
+          description: Simulcast configuration for the track
+          properties:
+            preferredRid:
+              type: string
+              description: Preferred RID for simulcast streams
+            priorityOrdering:
+              type: string
+              enum:
+                - none
+                - asciibetical
+              default: none
+              description: Controls what happens if there is not enough network resources available to send the preferredRid. 'none' means keep sending even if not enough bandwidth, 'asciibetical' uses a-z order to determine priority where a is most desirable and z is least desirable.
+            ridUnavailableStrategy:
+              type: string
+              enum:
+                - none
+                - nextPriority
+              default: none
+              description: Controls what happens when the rid currently being used or preferredRid is no longer being sent by the publisher. 'none' means do nothing, 'nextPriority' uses the next on the priorityOrdering.
+    CloseTrackObject:
+      type: object
+      properties:
+        mid:
+          type: string
+          description: mid associated to the track's transceiver to close
+    TracksRequest:
+      type: object
+      properties:
+        sessionDescription:
+          $ref: "#/components/schemas/SessionDescription"
+        tracks:
+          type: array
+          items:
+            $ref: "#/components/schemas/TrackObject"
+        autoDiscover:
+          type: boolean
+          description: Assign a random track name to any new track in the offered SDP
+    TracksResponse:
+      type: object
+      properties:
+        errorCode:
+          type: string
+        errorDescription:
+          type: string
+        requiresImmediateRenegotiation:
+          type: boolean
+        sessionDescription:
+          $ref: "#/components/schemas/SessionDescription"
+        tracks:
+          type: array
+          items:
+            allOf:
+              - $ref: "#/components/schemas/TrackObject"
+              - properties:
+                  errorCode:
+                    type: string
+                  errorDescription:
+                    type: string
+    NewSessionRequest:
+      type: object
+      properties:
+        sessionDescription:
+          $ref: "#/components/schemas/SessionDescription"
+    NewSessionResponse:
+      required:
+        - sessionId
+      type: object
+      properties:
+        errorCode:
+          type: string
+        errorDescription:
+          type: string
+        sessionDescription:
+          type: object
+          properties:
+            sdp:
+              type: string
+            type:
+              type: string
+              enum:
+                - answer
+                - offer
+        sessionId:
+          type: string
+    CloseTracksRequest:
+      type: object
+      properties:
+        sessionDescription:
+          $ref: "#/components/schemas/SessionDescription"
+        tracks:
+          type: array
+          items:
+            $ref: "#/components/schemas/CloseTrackObject"
+        force:
+          type: boolean
+          description: True if you want to stop just the data flow for the tracks, no WebRTC renegotiation
+    CloseTracksResponse:
+      type: object
+      properties:
+        errorCode:
+          type: string
+        errorDescription:
+          type: string
+        sessionDescription:
+          $ref: "#/components/schemas/SessionDescription"
+        tracks:
+          type: array
+          items:
+            allOf:
+              - $ref: "#/components/schemas/CloseTrackObject"
+              - properties:
+                  errorCode:
+                    type: string
+                  errorDescription:
+                    type: string
+        requiresImmediateRenegotiation:
+          type: boolean
+    GetSessionStateResponse:
+      type: object
+      properties:
+        errorCode:
+          type: string
+        errorDescription:
+          type: string
+        tracks:
+          type: array
+          items:
+            allOf:
+              - $ref: "#/components/schemas/TrackObject"
+              - properties:
+                  status:
+                    type: string
+                    enum:
+                      - active
+                      - inactive
+                      - waiting
+    RenegotiateRequest:
+      type: object
+      properties:
+        sessionDescription:
+          $ref: "#/components/schemas/SessionDescription"
+    RenegotiateResponse:
+      type: object
+      properties:
+        errorCode:
+          type: string
+        errorDescription:
+          type: string
+        sessionDescription:
+          $ref: "#/components/schemas/SessionDescription"
+    ChangeTracksRequest:
+      type: object
+      properties:
+        tracks:
+          type: object
+          additionalProperties:
+            allOf:
+              - $ref: "#/components/schemas/TrackObject"
+          description: Map of track IDs to track objects for changing tracks
+        sessionDescription:
+          $ref: "#/components/schemas/SessionDescription"
+    UpdateTracksRequest:
+      type: object
+      properties:
+        tracks:
+          type: array
+          items:
+            $ref: "#/components/schemas/TrackObject"
+          description: Array of track objects for updating tracks
+        sessionDescription:
+          $ref: "#/components/schemas/SessionDescription"
+    UpdateTracksResponse:
+      type: object
+      properties:
+        errorCode:
+          type: string
+        errorDescription:
+          type: string
+        requiresImmediateRenegotiation:
+          type: boolean
+        tracks:
+          type: array
+          items:
+            allOf:
+              - $ref: "#/components/schemas/TrackObject"
+              - properties:
+                  errorCode:
+                    type: string
+                  errorDescription:
+                    type: string
+          description: Array of track objects with results

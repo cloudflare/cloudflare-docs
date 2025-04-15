@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { Render, Details } from "~/components";
+import { Render, Details, APIRequest } from "~/components";
 
 To customize the behavior of a managed ruleset, override the ruleset at deployment. When you override a ruleset you specify changes to be executed on top of the default configuration. These changes take precedence over the ruleset's default behavior.
 
@@ -27,8 +27,8 @@ Specific overrides take precedence over more general ones, and rule overrides ta
 
 To apply an override for a managed ruleset:
 
-- Call the [Update ruleset](/ruleset-engine/rulesets-api/update/) operation on your account-level phase entry point.
-- Specify the `overrides` in the `action_parameters` of the rule that executes your managed ruleset.
+1. Use one of the [update ruleset operations](/ruleset-engine/rulesets-api/update/) to update your phase entry point ruleset.
+2. Specify the `overrides` in the `action_parameters` of the rule that executes your managed ruleset.
 
 ```json
 "action_parameters": {
@@ -74,58 +74,62 @@ It is **not recommended** that you enable all the rules in a managed ruleset at 
 
 The following `PUT` request adds a rule that executes a managed ruleset in the `http_request_firewall_managed` phase at the zone level, and defines a rule override to enable rule `<RULE_ID>` and set its action to `log`.
 
-```bash
-curl --request PUT \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint" \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "description": "Deploy managed ruleset, enabling a specific rule with log action",
-  "rules": [
-    {
-      "action": "execute",
-      "expression": "true",
-      "action_parameters": {
-        "id": "<MANAGED_RULESET_ID>",
-        "overrides": {
-          "rules": [
-            {
-              "id": "<RULE_ID>",
-              "enabled": true,
-              "action": "log"
-            }
-          ]
-        }
-      }
-    }
-  ]
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/rulesets/phases/{ruleset_phase}/entrypoint"
+	method="PUT"
+	parameters={{
+		ruleset_phase: "http_request_firewall_managed",
+	}}
+	json={{
+		description:
+			"Deploy managed ruleset, enabling a specific rule with log action",
+		rules: [
+			{
+				action: "execute",
+				expression: "true",
+				action_parameters: {
+					id: "<MANAGED_RULESET_ID>",
+					overrides: {
+						rules: [
+							{
+								id: "<RULE_ID>",
+								enabled: true,
+								action: "log",
+							},
+						],
+					},
+				},
+			},
+		],
+	}}
+/>
 
 ### Ruleset override example
 
 The following `PUT` request adds a rule that executes a managed ruleset in the `http_request_firewall_managed` phase at the account level, and defines a ruleset override that sets the action to `log` for all (enabled) rules.
 
-```bash
-curl --request PUT \
-"https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/phases/http_request_firewall_managed/entrypoint" \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "description": "Deploy managed ruleset for example.com, overriding the rules action to log",
-  "rules": [
-    {
-      "action": "execute",
-      "expression": "(cf.zone.name eq \"example.com\") and cf.zone.plan eq \"ENT\"",
-      "action_parameters": {
-        "id": "<MANAGED_RULESET_ID>",
-        "overrides": {
-          "action": "log"
-        }
-      }
-    }
-  ]
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/rulesets/phases/{ruleset_phase}/entrypoint"
+	method="PUT"
+	parameters={{
+		ruleset_phase: "http_request_firewall_managed",
+	}}
+	json={{
+		description:
+			"Deploy managed ruleset for example.com, overriding the rules action to log",
+		rules: [
+			{
+				action: "execute",
+				expression: '(cf.zone.name eq "example.com") and cf.zone.plan eq "ENT"',
+				action_parameters: {
+					id: "<MANAGED_RULESET_ID>",
+					overrides: {
+						action: "log",
+					},
+				},
+			},
+		],
+	}}
+/>
 
 For additional examples of configuring overrides, refer to [Managed ruleset override examples](/ruleset-engine/managed-rulesets/override-examples/).

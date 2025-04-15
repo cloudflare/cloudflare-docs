@@ -127,6 +127,12 @@ EOF
 
 You can optionally [create Gateway network policies](/cloudflare-one/connections/connect-networks/private-net/cloudflared/#4-recommended-filter-network-traffic-with-gateway) to control who can access the instance via its private IP.
 
+:::caution
+
+<Render file="aws-resolver" product="cloudflare-one" />
+
+:::
+
 ## Firewall configuration
 
 To secure your AWS instance, you can configure your [Security Group rules](https://docs.aws.amazon.com/vpc/latest/userguide/security-group-rules.html) to deny all inbound traffic and allow only outbound traffic to the [Cloudflare Tunnel IP addresses](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-with-firewall/#required-for-tunnel-operation). All Security Group rules are Allow rules; traffic that does not match a rule is blocked. Therefore, you can delete all inbound rules and leave only the relevant outbound rules.

@@ -1,0 +1,126 @@
+---
+title: Overview
+type: overview
+pcx_content_type: overview
+sidebar:
+  order: 1
+  badge:
+    text: Beta
+head:
+  - tag: title
+    content: Pipelines
+---
+
+import { CardGrid, Description, Feature, LinkTitleCard, Plan, RelatedProduct } from "~/components";
+
+<Description>
+
+Ingest real time data streams and load into R2, using Cloudflare Pipelines.
+
+</Description>
+
+<Plan type="paid" />
+
+Cloudflare Pipelines lets you ingest high volumes of real time data, without managing any infrastructure. A single pipeline can ingest up to 100 MB of data per second. Ingested data is automatically batched, written to output files, and delivered to an [R2 bucket](/r2/) in your account. You can use Pipelines to build a data lake of clickstream data, or to store events from a Worker.
+
+## Create your first pipeline
+You can setup a pipeline to ingest data via HTTP, and deliver output to R2, with a single command:
+
+```sh
+$ npx wrangler@latest pipelines create my-clickstream-pipeline --r2-bucket my-bucket
+
+🌀 Authorizing R2 bucket "my-bucket"
+🌀 Creating pipeline named "my-clickstream-pipeline"
+✅ Successfully created pipeline my-clickstream-pipeline
+
+Id:    0e00c5ff09b34d018152af98d06f5a1xvc
+Name:  my-clickstream-pipeline
+Sources:
+  HTTP:
+    Endpoint:        https://0e00c5ff09b34d018152af98d06f5a1xvc.pipelines.cloudflare.com/
+    Authentication:  off
+    Format:          JSON
+  Worker:
+    Format:  JSON
+Destination:
+  Type:         R2
+  Bucket:       my-bucket
+  Format:       newline-delimited JSON
+  Compression:  GZIP
+Batch hints:
+  Max bytes:     100 MB
+  Max duration:  300 seconds
+  Max records:   100,000
+
+🎉 You can now send data to your pipeline!
+
+Send data to your pipeline's HTTP endpoint:
+curl "https://0e00c5ff09b34d018152af98d06f5a1xvc.pipelines.cloudflare.com/" -d '[{ ...JSON_DATA... }]'
+
+To send data to your pipeline from a Worker, add the following configuration to your config file:
+{
+  "pipelines": [
+    {
+      "pipeline": "my-clickstream-pipeline",
+      "binding": "PIPELINE"
+    }
+  ]
+}
+```
+
+Refer to the [getting started guide](/pipelines/getting-started) to start building with pipelines.
+
+:::note
+While in beta, you will not be billed for Pipelines usage. You will be billed only for [R2 usage](/r2/pricing/).
+:::
+
+***
+## Features
+
+<Feature header="HTTP as a source" href="/pipelines/build-with-pipelines/sources/http">
+Each pipeline generates a globally scalable HTTP endpoint, which supports authentication and CORS settings.
+</Feature>
+
+<Feature header="Workers API" href="/pipelines/build-with-pipelines/sources/workers-apis/">
+Send data to a pipeline directly from a Cloudflare Worker.
+</Feature>
+
+<Feature header="Customize output settings" href="/pipelines/build-with-pipelines/output-settings">
+Define batch sizes and enable compression to generate output files that are efficient to query.
+</Feature>
+
+***
+
+## Related products
+
+<RelatedProduct header="R2" href="/r2/" product="r2">
+
+Cloudflare R2 Object Storage allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
+
+</RelatedProduct>
+
+<RelatedProduct header="Workers" href="/workers/" product="workers">
+
+Cloudflare Workers allows developers to build serverless applications and deploy instantly across the globe for exceptional performance, reliability, and scale.
+
+</RelatedProduct>
+
+***
+
+## More resources
+
+<CardGrid>
+
+<LinkTitleCard title="Limits" href="/pipelines/platform/limits/" icon="document">
+Learn about pipelines limits.
+</LinkTitleCard>
+
+<LinkTitleCard title="@CloudflareDev" href="https://x.com/cloudflaredev" icon="x.com">
+Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Workers.
+</LinkTitleCard>
+
+<LinkTitleCard title="Developer Discord" href="https://discord.cloudflare.com" icon="discord">
+Connect with the Workers community on Discord to ask questions, show what you are building, and discuss the platform with other developers.
+</LinkTitleCard>
+
+</CardGrid>

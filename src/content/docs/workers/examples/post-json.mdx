@@ -163,4 +163,64 @@ async def on_fetch(_request):
     return Response.new(result, headers=headers)
 ```
 
+</TabItem> <TabItem label="Hono" icon="seti:typescript">
+
+```ts
+import { Hono } from 'hono';
+
+const app = new Hono();
+
+app.get('*', async (c) => {
+  /**
+   * Example someHost is set up to take in a JSON request
+   * Replace url with the host you wish to send requests to
+   */
+  const someHost = "https://examples.cloudflareworkers.com/demos";
+  const url = someHost + "/requests/json";
+  const body = {
+    results: ["default data to send"],
+    errors: null,
+    msg: "I sent this to the fetch",
+  };
+
+  /**
+   * gatherResponse awaits and returns a response body as a string.
+   * Use await gatherResponse(..) in an async function to get the response body
+   */
+  async function gatherResponse(response: Response) {
+    const { headers } = response;
+    const contentType = headers.get("content-type") || "";
+    
+    if (contentType.includes("application/json")) {
+      return { contentType, result: JSON.stringify(await response.json()) };
+    } else if (contentType.includes("application/text")) {
+      return { contentType, result: await response.text() };
+    } else if (contentType.includes("text/html")) {
+      return { contentType, result: await response.text() };
+    } else {
+      return { contentType, result: await response.text() };
+    }
+  }
+
+  const init = {
+    body: JSON.stringify(body),
+    method: "POST",
+    headers: {
+      "content-type": "application/json;charset=UTF-8",
+    },
+  };
+  
+  const response = await fetch(url, init);
+  const { contentType, result } = await gatherResponse(response);
+  
+  return new Response(result, {
+    headers: {
+      "content-type": contentType,
+    },
+  });
+});
+
+export default app;
+```
+
 </TabItem> </Tabs>

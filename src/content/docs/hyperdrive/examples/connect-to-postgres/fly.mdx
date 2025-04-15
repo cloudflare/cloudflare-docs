@@ -1,0 +1,64 @@
+---
+type: example
+summary: Connect Hyperdrive to a Fly Postgres database instance.
+pcx_content_type: example
+title: Fly
+sidebar:
+  order: 1
+description: Connect Hyperdrive to a Fly Postgres database instance.
+---
+
+import { Render, Steps } from "~/components";
+
+This example shows you how to connect Hyperdrive to a Fly Postgres database instance.
+
+## 1. Allow Hyperdrive access
+
+You can connect Hyperdrive to any existing Fly database by:
+
+1. Allocating a public IP address to your Fly database instance
+2. Configuring an external service
+3. Deploying the configuration
+4. Obtain the connection string, which is used to connect the database to Hyperdrive.
+
+<Steps>
+1. Run the following command to [allocate a public IP address](https://fly.io/docs/postgres/connecting/connecting-external/#allocate-an-ip-address).
+
+    ```txt
+    fly ips allocate-v6 --app <pg-app-name>
+    ```
+
+    :::note
+    Cloudflare recommends using IPv6, but some Internet service providers may not support IPv6. In this case, [you can allocate an IPv4 address](https://fly.io/docs/postgres/connecting/connecting-with-flyctl/).
+    :::
+
+2.  [Configure an external service](https://fly.io/docs/postgres/connecting/connecting-external/#configure-an-external-service) by modifying the contents of your `fly.toml` file. Run the following command to download the `fly.toml` file.
+
+    ```txt
+    fly config save --app <pg-app-name>
+    ```
+
+    Then, replace the `services` and `services.ports` section of the file with the following `toml` snippet:
+
+    ```toml
+    [[services]]
+    	internal_port = 5432 # Postgres instance
+    	protocol = "tcp"
+
+    [[services.ports]]
+    	handlers = ["pg_tls"]
+    	port = 5432
+    ```
+
+3.  [Deploy the new configuration](https://fly.io/docs/postgres/connecting/connecting-external/#deploy-with-the-new-configuration).
+4.  [Obtain the connection string](https://fly.io/docs/postgres/connecting/connecting-external/#adapting-the-connection-string), which is in the form of:
+
+        ```txt
+        postgres://{username}:{password}@{public-hostname}:{port}/{database}?options
+        ```
+
+</Steps>
+
+## 2. Create a database configuration
+
+<Render file="create-hyperdrive-config" />

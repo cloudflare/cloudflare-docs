@@ -5,6 +5,8 @@ sidebar:
   order: 2
 ---
 
+import { APIRequest } from "~/components";
+
 Use the [Create an account ruleset](/api/resources/rulesets/methods/create/) operation to create a custom ruleset, making sure that you:
 
 - Set the `kind` field to `custom`.
@@ -14,19 +16,18 @@ Use the [Create an account ruleset](/api/resources/rulesets/methods/create/) ope
 
 The following request creates a new custom ruleset. The response will include the ID of the new custom ruleset in the `id` field.
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "name": "Custom Ruleset 1",
-  "description": "My First Custom Ruleset",
-  "kind": "custom",
-  "phase": "http_request_firewall_custom"
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/rulesets"
+	method="POST"
+	json={{
+		name: "Custom Ruleset 1",
+		description: "My First Custom Ruleset",
+		kind: "custom",
+		phase: "http_request_firewall_custom",
+	}}
+/>
 
-```json output
+```json output {3}
 {
 	"result": {
 		"id": "f82ccda3d21f4a02825d3fe45b5e1c10",

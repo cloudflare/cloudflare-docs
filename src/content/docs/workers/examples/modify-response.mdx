@@ -153,4 +153,58 @@ async def on_fetch(request):
     return response
 ```
 
+</TabItem> <TabItem label="Hono" icon="seti:typescript">
+
+```ts
+import { Hono } from 'hono';
+
+const app = new Hono();
+
+app.get('*', async (c) => {
+  /**
+   * Header configuration
+   */
+  const headerNameSrc = "foo"; // Header to get the new value from
+  const headerNameDst = "Last-Modified"; // Header to set based off of value in src
+
+  /**
+   * Response properties are immutable. With Hono, we can modify the response
+   * by creating custom response objects.
+   */
+  const originalResponse = await fetch(c.req.raw);
+
+  // Get the JSON body from the original response
+  const originalBody = await originalResponse.json();
+  
+  // Modify the body by adding a new property
+  const modifiedBody = { 
+    foo: "bar", 
+    ...originalBody 
+  };
+
+  // Create a new custom response with modified status, headers, and body
+  const response = new Response(JSON.stringify(modifiedBody), {
+    status: 500,
+    statusText: "some message",
+    headers: originalResponse.headers,
+  });
+
+  // Add a header using set method
+  response.headers.set("foo", "bar");
+
+  // Set destination header to the value of the source header
+  const src = response.headers.get(headerNameSrc);
+  if (src != null) {
+    response.headers.set(headerNameDst, src);
+    console.log(
+      `Response header "${headerNameDst}" was set to "${response.headers.get(headerNameDst)}"`
+    );
+  }
+
+  return response;
+});
+
+export default app;
+```
+
 </TabItem> </Tabs>

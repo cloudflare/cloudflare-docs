@@ -29,6 +29,16 @@ Our Network Vector Rendering (NVR) technology allows us to deliver a secure remo
 | Other Chromium-based browsers (Opera, Brave) | ✅            |
 | Internet Explorer 11 and below               | ❌            |
 
+### Brave
+
+Brave’s WebRTC IP Handling Policy can impact how Cloudflare RBI loads and functions. If the WebRTC IP Handling Policy is configured to **Disable Non-Proxied UDP**, RBI may fail to load correctly.
+
+To ensure RBI loads correctly, go to `brave://settings/privacy` in your Brave browser window, find **WebRTC IP Handling Policy**, and change the setting from **Disable Non-Proxied UDP** to one of the following:
+
+- **Default**
+- **Default Public and Private Interfaces**
+- **Default Public Interface Only**
+
 ## Virtual machines
 
 Browser Isolation is not supported in virtualized environments (VMs).

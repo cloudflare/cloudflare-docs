@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Render, PackageManagers } from "~/components";
+import { Render, PackageManagers, Tabs, TabItem } from "~/components";
 
 Hyperdrive accelerates access to your existing databases from Cloudflare Workers, making even single-region databases feel globally distributed.
 
@@ -19,19 +19,21 @@ This guide will instruct you through:
 - Creating a [Cloudflare Worker](/workers/) and binding it to your Hyperdrive configuration.
 - Establishing a database connection from your Worker to a public database.
 
-## Prerequisites
+:::note
 
-:::note[Workers Paid plan required]
+Hyperdrive currently works with PostgreSQL, MySQL and many compatible databases. This includes CockroachDB and Materialize (which are PostgreSQL-compatible), and Planetscale.
 
-Hyperdrive is available to all users on the [Workers Paid plan](/workers/platform/pricing/#workers).
+Learn more about the [databases that Hyperdrive supports](/hyperdrive/reference/supported-databases-and-features).
 
 :::
 
-To continue:
+## Prerequisites
+
+Before you begin, ensure you have completed the following:
 
 1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) if you have not already.
-2. Install [`Node.js`](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.17.0` or later.
-3. Have **a publicly accessible PostgreSQL (or PostgreSQL compatible) database**. Cloudflare recommends [Neon](https://neon.tech/) if you do not have an existing database. Read the [Neon documentation](https://neon.tech/docs/introduction) to create your first database.
+2. Install [`Node.js`](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm). Use a Node version manager like [nvm](https://github.com/nvm-sh/nvm) or [Volta](https://volta.sh/) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.17.0` or later.
+3. Have **a publicly accessible** PostgreSQL/MySQL (or compatible) database.
 
 ## 1. Log in
 
@@ -76,21 +78,16 @@ This will create a new `hyperdrive-tutorial` directory. Your new `hyperdrive-tut
 
 ### Enable Node.js compatibility
 
-[Node.js compatibility](/workers/runtime-apis/nodejs/) is required for database drivers, including Postgres.js, and needs to be configured for your Workers project.
+[Node.js compatibility](/workers/runtime-apis/nodejs/) is required for database drivers, and needs to be configured for your Workers project.
 
 <Render file="nodejs_compat" product="workers" />
 
 ## 3. Connect Hyperdrive to a database
 
-:::note
+Hyperdrive works by connecting to your database, pooling database connections globally, and speeding up your database access through Cloudflare's network.
 
-Hyperdrive currently works with PostgreSQL and PostgreSQL compatible databases, including CockroachDB and Materialize.
-
-Support for other database engines, including MySQL, is on the roadmap.
-
-:::
-
-Hyperdrive works by connecting to your database.
+It will provide a secure connection string that is only accessible from your Worker which you can use to connect to your database through Hyperdrive.
+This means that you can use the Hyperdrive connection string with your existing drivers or ORM libraries without needing significant changes to your code.
 
 To create your first Hyperdrive database configuration, change into the directory you just created for your Workers project:
 
@@ -98,26 +95,24 @@ To create your first Hyperdrive database configuration, change into the director
 cd hyperdrive-tutorial
 ```
 
-:::note
-
-Support for the new `hyperdrive` commands in the wrangler CLI requires a wrangler version of `3.10.0` or later. You can use `npx wrangler@latest` to always ensure you are using the latest version of Wrangler.
-
-:::
-
 To create your first Hyperdrive, you will need:
 
 - The IP address (or hostname) and port of your database.
 - The database username (for example, `hyperdrive-demo`).
 - The password associated with that username.
-- The name of the database you want Hyperdrive to connect to. For example, `postgres`.
+- The name of the database you want Hyperdrive to connect to. For example, `postgres` or `mysql`.
 
 Hyperdrive accepts the combination of these parameters in the common connection string format used by database drivers:
 
-```txt
-postgres://USERNAME:PASSWORD@HOSTNAME_OR_IP_ADDRESS:PORT/database_name
-```
+<Tabs>
+	<TabItem label="PostgreSQL">
+		```txt
+		
+		postgres://USERNAME:PASSWORD@HOSTNAME_OR_IP_ADDRESS:PORT/database_name
 
-Most database providers will provide a connection string you can directly copy-and-paste directly into Hyperdrive.
+    	```
+
+    		Most database providers will provide a connection string you can copy-and-paste directly into Hyperdrive.
 
 To create a Hyperdrive connection, run the `wrangler` command, replacing the placeholder values passed to the `--connection-string` flag with the values of your existing database:
 
@@ -125,8 +120,28 @@ To create a Hyperdrive connection, run the `wrangler` command, replacing the pla
 npx wrangler hyperdrive create <YOUR_CONFIG_NAME> --connection-string="postgres://user:password@HOSTNAME_OR_IP_ADDRESS:PORT/database_name"
 ```
 
+    </TabItem>
+    <TabItem label="MySQL">
+    	```txt
+
+    	mysql://USERNAME:PASSWORD@HOSTNAME_OR_IP_ADDRESS:PORT/database_name
+
+    	```
+
+    		Most database providers will provide a connection string you can copy-and-paste directly into Hyperdrive.
+
+    		To create a Hyperdrive connection, run the `wrangler` command, replacing the placeholder values passed to the `--connection-string` flag with the values of your existing database:
+
+```sh
+npx wrangler hyperdrive create <YOUR_CONFIG_NAME> --connection-string="mysql://user:password@HOSTNAME_OR_IP_ADDRESS:PORT/database_name"
+```
+
+    </TabItem>
+
+</Tabs>
+
 :::note[Manage caching]
-If you wish to disable caching, pass the flag `--caching-disabled`.
+By default, Hyperdrive will cache query results. If you wish to disable caching, pass the flag `--caching-disabled`.
 
 Alternatively, you can use the `--max-age` flag to specify the maximum duration (in seconds) for which items should persist in the cache, before they are evicted. Default value is 60 seconds.
 
@@ -137,14 +152,13 @@ If successful, the command will output your new Hyperdrive configuration:
 
 ```json
 {
-  "hyperdrive": [
-    {
-      "binding": "HYPERDRIVE",
+	"hyperdrive": [
+		{
+			"binding": "HYPERDRIVE",
 			"id": "<example id: 57b7076f58be42419276f058a8968187>"
-    }
-  ]
+		}
+	]
 }
-
 ```
 
 Copy the `id` field: you will use this in the next step to make Hyperdrive accessible from your Worker script.
@@ -155,14 +169,18 @@ Hyperdrive will attempt to connect to your database with the provided credential
 
 :::
 
-
 ## 4. Bind your Worker to Hyperdrive
 
 <Render file="create-hyperdrive-binding" product="hyperdrive" />
 
 ## 5. Run a query against your database
 
+Once you have created a Hyperdrive configuration and bound it to your Worker, you can run a query against your database.
+
 ### Install a database driver
+
+<Tabs>
+<TabItem label="PostgreSQL">
 
 To connect to your database, you will need a database driver which allows you to authenticate and query your database. For this tutorial, you will use [Postgres.js](https://github.com/porsager/postgres), one of the most widely used PostgreSQL drivers.
 
@@ -172,8 +190,24 @@ To install `postgres`, ensure you are in the `hyperdrive-tutorial` directory. Op
 
 With the driver installed, you can now create a Worker script that queries your database.
 
+</TabItem>
+<TabItem label="MySQL">
+
+To connect to your database, you will need a database driver which allows you to authenticate and query your database. For this tutorial, you will use [mysql2](https://github.com/sidorares/node-mysql2), one of the most widely used MySQL drivers.
+
+To install `mysql2`, ensure you are in the `hyperdrive-tutorial` directory. Open your terminal and run the following command:
+
+<PackageManagers pkg="mysql2" comment="This should install v3.13.0 or later" />
+
+With the driver installed, you can now create a Worker script that queries your database.
+
+</TabItem>
+</Tabs>
+
 ### Write a Worker
 
+<Tabs>
+<TabItem label="PostgreSQL">
 After you have set up your database, you will run a SQL query from within your Worker.
 
 Go to your `hyperdrive-tutorial` Worker and open the `index.ts` file.
@@ -194,32 +228,23 @@ export interface Env {
 
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
-		console.log(JSON.stringify(env));
-		// Create a database client that connects to your database via Hyperdrive.
-		//
-		// Hyperdrive generates a unique connection string you can pass to
-		// supported drivers, including node-postgres, Postgres.js, and the many
-		// ORMs and query builders that use these drivers.
-		const sql = postgres(
-            env.HYPERDRIVE.connectionString,
-            {
-                // Workers limit the number of concurrent external connections, so be sure to limit
-                // the size of the local connection pool that postgres.js may establish.
-                max: 5,
+		// Create a connection using the Postgres.js driver (or any supported driver, ORM or query builder)
+		// with the Hyperdrive credentials. These credentials are only accessible from your Worker.
+		const sql = postgres(env.HYPERDRIVE.connectionString, {
+			// Workers limit the number of concurrent external connections, so be sure to limit
+			// the size of the local connection pool that postgres.js may establish.
+			max: 5,
 
-                // If you are using array types in your Postgres schema, it is necessary to fetch
-                // type information to correctly de/serialize them. However, if you are not using
-                // those, disabling this will save you an extra round-trip every time you connect.
-                fetch_types: false,
-            },
-        );
+			// If you are not using array types in your Postgres schema,
+			// disabling this will save you an extra round-trip every time you connect.
+			fetch_types: false,
+		});
 
 		try {
-			// Test query
+			// Sample query
 			const results = await sql`SELECT * FROM pg_tables`;
 
-			// Clean up the client, ensuring we don't kill the worker before that is
-			// completed.
+			// Clean up the client after the response is returned, before the Worker is killed
 			ctx.waitUntil(sql.end());
 
 			// Return result rows as JSON
@@ -240,6 +265,83 @@ Upon receiving a request, the code above does the following:
 1. Creates a new database client configured to connect to your database via Hyperdrive, using the Hyperdrive connection string.
 2. Initiates a query via `await sql` that outputs all tables (user and system created) in the database (as an example query).
 3. Returns the response as JSON to the client.
+
+</TabItem>
+<TabItem label="MySQL">
+After you have set up your database, you will run a SQL query from within your Worker.
+
+Go to your `hyperdrive-tutorial` Worker and open the `index.ts` file.
+
+The `index.ts` file is where you configure your Worker's interactions with Hyperdrive.
+
+Populate your `index.ts` file with the following code:
+
+```typescript
+// mysql2 v3.13.0 or later is required
+import { createConnection  } from 'mysql2/promise';
+
+export interface Env {
+  // If you set another name in the Wrangler config file as the value for 'binding',
+  // replace "HYPERDRIVE" with the variable name you defined.
+  HYPERDRIVE: Hyperdrive;
+}
+
+export default {
+ async fetch(request, env, ctx): Promise<Response> {
+
+		// Create a connection using the mysql2 driver (or any support driver, ORM or query builder)
+		// with the Hyperdrive credentials. These credentials are only accessible from your Worker.
+		const connection = await createConnection({
+			host: env.DB_HOST,
+			user: env.DB_USER,
+			password: env.DB_PASSWORD,
+			database: env.DB_NAME,
+			port: env.DB_PORT
+
+			// The following line is needed for mysql2 compatibility with Workers
+			// mysql2 uses eval() to optimize result parsing for rows with > 100 columns
+			// Configure mysql2 to use static parsing instead of eval() parsing with disableEval
+			disableEval: true
+		});
+
+		try{
+			// Sample query
+			const [results, fields] = await connection.query(
+				'SHOW tables;'
+			);
+
+			// Clean up the client after the response is returned, before the Worker is killed
+			ctx.waitUntil(connection.end());
+
+			// Return result rows as JSON
+			return new Response(JSON.stringify({ results, fields }), {
+				headers: {
+					'Content-Type': 'application/json',
+					'Access-Control-Allow-Origin': '*',
+				},
+			});
+		}
+		catch(e){
+			console.error(e);
+			return Response.json(
+				{ error: e instanceof Error ? e.message : e },
+				{ status: 500 },
+			);
+		}
+
+ },
+} satisfies ExportedHandler<Env>;
+
+```
+
+Upon receiving a request, the code above does the following:
+
+1. Creates a new database client configured to connect to your database via Hyperdrive, using the Hyperdrive connection string.
+2. Initiates a query via `await connection.query` that outputs all tables (user and system created) in the database (as an example query).
+3. Returns the response as JSON to the client.
+
+</TabItem>
+</Tabs>
 
 ## 6. Deploy your Worker
 

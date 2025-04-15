@@ -1,0 +1,11 @@
+---
+link: "/autorag/platform/release-note/"
+productName: AutoRAG
+productLink: "/autorag/"
+productArea: Developer platform
+productAreaLink: /workers/platform/changelog/platform/
+entries:
+  - publish_date: "2025-04-07"
+    title: AutoRAG is now in open beta!
+    description: |-
+      AutoRAG allows developers to create fully-managed retrieval-augmented generation (RAG) pipelines powered by Cloudflare allowing developers to integrate context-aware AI into their applications without managing infrastructure. Get started today on the [Cloudflare Dashboard](https://dash.cloudflare.com/?to=/:account/ai/autorag).

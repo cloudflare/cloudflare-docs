@@ -1,0 +1,83 @@
+---
+pcx_content_type: how-to
+title: Extract Markdown from a webpage
+sidebar:
+  order: 10
+---
+
+The `/markdown` endpoint retrieves a webpage's content and converts it into Markdown format. You can specify a URL and optional parameters to refine the extraction process.
+
+## Basic usage
+
+### Using a URL
+
+This example fetches the Markdown representation of a webpage.
+
+```bash
+curl -X 'POST' 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/markdown' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer <apiToken>' \
+  -d '{
+    "url": "https://example.com"
+  }'
+```
+
+### JSON response
+
+```json title="json response"
+{
+	"success": true,
+	"result": "# Example Domain\n\nThis domain is for use in illustrative examples in documents. You may use this domain in literature without prior coordination or asking for permission.\n\n[More information...](https://www.iana.org/domains/example)"
+}
+```
+
+### Use raw HTML
+
+Instead of fetching the content by specifying the URL, you can provide raw HTML content directly.
+
+```bash
+curl -X 'POST' 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/markdown' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer <apiToken>' \
+  -d '{
+    "html": "<div>Hello World</div>"
+  }'
+```
+
+### JSON response
+
+```json title="json response"
+{
+	"success": true,
+	"result": "Hello World"
+}
+```
+
+## Advanced usage
+
+You can refine the Markdown extraction by using the `rejectRequestPattern` parameter. In this example, requests matching the given regex pattern (such as CSS files) are excluded.
+
+```bash
+curl -X 'POST' 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/markdown' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer <apiToken>' \
+  -d '{
+    "url": "https://example.com",
+    "rejectRequestPattern": ["/^.*\\.(css)/"]
+  }'
+```
+
+### JSON response
+
+```json title="json response"
+{
+	"success": true,
+	"result": "# Example Domain\n\nThis domain is for use in illustrative examples in documents. You may use this domain in literature without prior coordination or asking for permission.\n\n[More information...](https://www.iana.org/domains/example)"
+}
+```
+
+## Potential use-cases
+
+1. **Content extraction:** Convert a blog post or article into Markdown format for storage or further processing.
+2. **Static site generation:** Retrieve structured Markdown content for use in static site generators like Jekyll or Hugo.
+3. **Automated summarization:** Extract key content from web pages while ignoring CSS, scripts, or unnecessary elements.

@@ -5,6 +5,10 @@ productLink: "/ai-gateway/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-04-02"
+    title: Cache Key Calculation Changes
+    description: |-
+      We’ve updated how [cache](/ai-gateway/configuration/caching/) keys are calculated. As a result, new cache entries will be created, and you may experience more cache misses than usual during this transition. Please monitor your traffic and performance, and let us know if you encounter any issues.
   - publish_date: "2025-03-18"
     title: WebSockets
     description: |-

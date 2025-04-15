@@ -144,7 +144,7 @@ that will be made available to the Next.js Worker using a [`WorkerEntrypoint`](/
 
 	[[migrations]]
 	tag = "v1"
-	new_classes = ["CursorSessions"]
+	new_sqlite_classes = ["CursorSessions"]
 	```
 2. Initialize the main methods for the Durable Object and define types for WebSocket messages and cursor sessions in your `worker/src/index.ts`
 	to support type-safe interaction:

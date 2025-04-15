@@ -3,12 +3,27 @@ pcx_content_type: concept
 title: Pricing
 sidebar:
   order: 1
-
 ---
 
-**Hyperdrive is free and included in every [Workers Paid](/workers/platform/pricing/#workers) plan**.
+import { Render } from "~/components";
 
-Hyperdrive is automatically enabled when subscribed to a Workers Paid plan, and does not require you to pay any additional fees to use. Hyperdrive's [connection pooling and query caching](/hyperdrive/configuration/how-hyperdrive-works/) do not incur any additional charges, and there are no hidden limits other than those [published](/hyperdrive/platform/limits/).
+<Render file="hyperdrive_pricing" product="workers" />
+
+Hyperdrive limits are automatically adjusted when subscribed to a Workers Paid plan. Hyperdrive's [connection pooling and query caching](/hyperdrive/configuration/how-hyperdrive-works/) are included in Workers Paid plan, so do not incur any additional charges.
+
+## Pricing FAQ
+
+### Does connection pooling or query caching incur additional charges?
+
+No. Hyperdrive's built-in cache and connection pooling are included within the stated plans above. There are no hidden limits other than those [published](/hyperdrive/platform/limits/).
+
+### Are cached queries counted the same as uncached queries?
+
+Yes, any query made through Hyperdrive, whether cached or uncached, whether query or mutation, is counted according to the limits above.
+
+### Does Hyperdrive charge for data transfer / egress?
+
+No.
 
 :::note
 

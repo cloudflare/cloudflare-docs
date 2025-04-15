@@ -1,0 +1,80 @@
+---
+pcx_content_type: navigation
+title: Environment variables and secrets
+sidebar:
+  order: 1
+head: []
+description: Configuring environment variables and secrets for local development
+---
+
+import { Aside, PackageManagers, Steps } from "~/components";
+
+During local development, you may need to configure **environment variables** (such as API URLs, feature flags) and **secrets** (API tokens, private keys). You can use a `.dev.vars` file in the root of your project to override environment variables for local development, and both [Wrangler](/workers/configuration/environment-variables/#compare-secrets-and-environment-variables) and the [Vite plugin](/workers/vite-plugin/reference/secrets/) will respect this override.
+
+<Aside type="caution">
+	Be sure to add `.dev.vars` to your `.gitignore` so it never gets committed.
+</Aside>
+
+### Why use a `.dev.vars` file?
+
+Use `.dev.vars` to set local overrides for environment variables that should not be checked into your repository.
+
+If you want to manage environment-based configuration that you **want checked into your repository** (for example, non-sensitive or shared environment defaults), you can define [environment variables as `[vars]`](/workers/wrangler/environments/#_top) in your Wrangler configuration. Using a `.dev.vars` file is specifically for local-only secrets or configuration that you do not want in version control and only want to inject in local dev sessions.
+
+## Basic setup
+
+<Steps>
+
+1.  Create a `.dev.vars` file in your project root.
+
+2.  Add key-value pairs:
+
+    ```ini title=".dev.vars"
+    API_HOST="localhost:3000"
+    DEBUG="true"
+    SECRET_TOKEN="my-local-secret-token"
+    ```
+
+3.  Run your `dev` command
+
+        **Wrangler**
+        <PackageManagers type="exec" pkg="wrangler" args="dev" />
+
+
+        **Vite plugin**
+         <PackageManagers type="exec" pkg="vite" args="dev" />
+
+</Steps>
+
+## Multiple local environments with `.dev.vars`
+
+To simulate different local environments, you can:
+
+<Steps>
+
+1.  Create a file named `.dev.vars.<environment-name>` . For example, we'll use `.dev.vars.staging`.
+
+2.  Add key-value pairs:
+    ```ini title=".dev.vars.staging"
+    API_HOST="staging.localhost:3000"
+    DEBUG="false"
+    SECRET_TOKEN="staging-token"
+    ```
+3.  Specify the environment when running the `dev` command:
+
+        **Wrangler**
+
+        <PackageManagers type="exec" pkg="wrangler" args="dev --env staging" />
+
+        **Vite plugin**
+
+        <PackageManagers type="exec" pkg="vite" args="dev" prefix="CLOUDFLARE_ENV=staging" />
+
+        Only the values from `.dev.vars.staging` will be applied instead of `.dev.vars`.
+
+</Steps>
+
+## Learn more
+
+- To learn how to configure multiple environments in Wrangler configuration, [read the documenation](/workers/wrangler/environments/#_top).
+- To learn how to use Wrangler environments and Vite environments together, [read the Vite plugin documentation](/workers/vite-plugin/reference/cloudflare-environments/)

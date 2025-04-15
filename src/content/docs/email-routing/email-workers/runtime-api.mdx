@@ -17,8 +17,8 @@ An `EmailEvent` is the event type to programmatically process your emails with a
 `EmailEvent` can be handled in Workers functions written using the Service Worker syntax by attaching to the `email` event with `addEventListener`:
 
 ```js
-addEventListener("email", (event) => {
-  event.message.forward("<YOUR_EMAIL>");
+addEventListener("email", async (event) => {
+  await event.message.forward("<YOUR_EMAIL>");
 });
 ```
 
@@ -41,7 +41,7 @@ addEventListener("email", (event) => {
 ```js
 export default {
   async email(message, env, ctx) {
-    message.forward("<YOUR_EMAIL>");
+    await message.forward("<YOUR_EMAIL>");
   },
 };
 ```
@@ -118,4 +118,3 @@ export default {
 
   * Reply to the sender of this email message with a new EmailMessage object.
   * When the promise resolves, the message is confirmed to be replied.
-

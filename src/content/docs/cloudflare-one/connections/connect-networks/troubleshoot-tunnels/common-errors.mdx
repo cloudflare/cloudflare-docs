@@ -57,7 +57,7 @@ An error 1033 indicates your tunnel is not connected to Cloudflare's edge. First
 1. Make sure you correctly routed traffic to your tunnel (step 5 in the [Tunnel guide](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/create-local-tunnel/#5-start-routing-traffic)) by assigning a CNAME record to point traffic to your tunnel. Alternatively, check [this guide](/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb/) to route traffic to your tunnel using load balancers.
 2. Make sure you run your tunnel (step 6 in the [Tunnel guide](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/create-local-tunnel/#6-run-the-tunnel)).
 
-For more information, here is a [comprehensive list](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/) of Cloudflare 1xxx errors.
+For more information, here is a [comprehensive list](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/) of Cloudflare 1xxx errors.
 
 ## I see `ERR_TOO_MANY_REDIRECTS` when attempting to connect to an Access self-hosted app.
 
@@ -88,7 +88,7 @@ There are a few different possible root causes behind the `websocket: bad handsh
   1. On the Cloudflare dashboard for your zone, go to **SSL/TLS** > **Overview**.
   2. Ensure that your SSL/TLS encryption mode is set to either **Flexible**, **Full** or **Full (strict)**.
 
-- Your requests are blocked by [Super Bot Fight Mode](/bots/get-started/pro/). To resolve, make sure you set **Definitely automated** to _Allow_ in the bot fight mode settings.
+- Your requests are blocked by [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/). To resolve, make sure you set **Definitely automated** to _Allow_ in the bot fight mode settings.
 
 - Your SSH or RDP Access application has the [Binding Cookie](/cloudflare-one/identity/authorization-cookie/#binding-cookie) enabled. To disable the cookie, go to **Access** > **Applications** and edit the application settings.
 

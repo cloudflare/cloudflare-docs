@@ -20,24 +20,43 @@ Follow this guide to create a Workers application using [the Cloudflare dashboar
 
 ## Setup
 
-To create a Workers application:
+To get started with a new Workers application:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to **Workers & Pages**.
-3. Select **Create**.
-4. Select a template or **Create Worker**.
-5. Review the provided code and select **Deploy**.
-6. Preview your Worker at its provided [`workers.dev`](/workers/configuration/routing/workers-dev/) subdomain.
+2. Go to the **Workers & Pages** section of the dashboard.
+2. Select [Create](https://dash.cloudflare.com/?to=/:account/workers-and-pages/create). From here, you can: 
+    * You can select from the gallery of production-ready templates
+    * Import an existing Git repository on your own account
+    * Let Cloudflare clone and bootstrap a public repository containing a Workers application. 
+3. Once you've connected to your chosen [Git provider](/workers/ci-cd/builds/git-integration/github-integration/), configure your project and click `Deploy`. 
+4. Cloudflare will kick off a new build and deployment. Once deployed, preview your Worker at its provided `workers.dev` subdomain. 
 
-## Development
+## Continue development
+Applications started in the dashboard are set up with Git to help kickstart your development workflow. To continue developing on your repository, you can run: 
 
-<Render file="dash-creation-next-steps" />
+```bash
+# clone you repository locally
+git clone <git repo URL>
 
-## Next steps
+# be sure you are in the root directory 
+cd <directory>
+```
+
+Now, you can preview and test your changes by [running Wrangler in your local development environment](/workers/local-development/). Once you are ready to deploy you can run: 
+
+```bash
+# adds the files to git tracking
+git add . 
+
+# commits the changes 
+git commit -m "your message"
+
+# push the changes to your Git provider 
+git push origin main 
+```
+
 
 To do more:
-
-- Push your project to a GitHub or GitLab respoitory then [connect to builds](/workers/ci-cd/builds/#get-started) to enable automatic builds and deployments.
 - Review our [Examples](/workers/examples/) and [Tutorials](/workers/tutorials/) for inspiration.
 - Set up [bindings](/workers/runtime-apis/bindings/) to allow your Worker to interact with other resources and unlock new functionality.
 - Learn how to [test and debug](/workers/testing/) your Workers.

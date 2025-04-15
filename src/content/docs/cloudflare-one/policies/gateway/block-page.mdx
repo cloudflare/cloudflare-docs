@@ -5,47 +5,67 @@ sidebar:
   order: 14
 ---
 
-import { Render } from "~/components";
+import { Render, Tabs, TabItem } from "~/components";
 
-Gateway responds to any domain blocked at the DNS level with `0.0.0.0` for IPv4 queries or `::` for IPv6 queries, and does not return that blocked domain's IP address. As a result, the browser will show a browser default error page, and users will not be able to reach that website. This may cause confusion and lead some users to think that their Internet connection is not working.
-
-Configuring a custom block page in Zero Trust helps avoid this confusion. Your block page will display information such as the rule ID of the policy blocking the website, a policy-specific block message, your organization's name, and a global message you may want to show — for example, a message explaining that the website has been blocked by Gateway and providing any points of contact for support within the organization.
-
-Gateway supports custom block pages for DNS and HTTP policies.
-
-:::caution[Default Cloudflare certificate expiring]
-The default Cloudflare root certificate expires on 2025-02-02.
-
-If your organization is still using the default Cloudflare certificate, you will need to use a new certificate to display the block page. For more information, refer to [User-side certificates](/cloudflare-one/connections/connect-devices/user-side-certificates/) or [Troubleshooting](/cloudflare-one/faq/troubleshooting/#as-of-february-2-2025-my-end-user-devices-browser-is-returning-a-your-connection-is-not-private-warning).
-:::
+When Gateway blocks traffic with a [DNS](/cloudflare-one/policies/gateway/dns-policies/#block) or [HTTP Block policy](/cloudflare-one/policies/gateway/http-policies/#block), you can configure a block page to display in your users' browsers. You can provide a descriptive reason for blocking traffic and contact information, or you can redirect your users' browsers to another page. You can apply these customizations globally for every Block policy, or override the settings on a per-policy basis.
 
 ## Prerequisites
 
-In order to display the block page as the URL of the blocked domain, your devices must have a [Cloudflare certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/manual-deployment/) installed. Enterprise users can also [deploy their own root CA certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/custom-certificate/). If you do not install a certificate, the block page [will not display correctly](#certificate-error).
+In order to display the block page as the URL of the blocked domain, your organization's devices must have a [Cloudflare certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/manual-deployment/) installed. Enterprise users can also [deploy their own root CA certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/custom-certificate/). If you do not install a certificate, the block page [will not display correctly](#certificate-error).
 
-## Turn on the block page
+## Configure the block page
 
-For all HTTP Block policies, Gateway automatically displays a generic Cloudflare block page. For DNS Block policies, you will need to turn on the block page on a per-policy basis.
+Gateway will display a global block page in the browser of any user whose traffic is blocked. By default, Gateway will display the block page for any DNS Block policies you turn it on for and all HTTP Block policies. You can [turn on or override the global setting](#configure-policy-block-behavior) on a per-policy basis.
 
-To turn on the block page and specify a custom block message:
+To configure the global block page:
 
-<Render
-	file="gateway/add-block-page"
-	params={{
-		firewallPolicyPath:
-			"**Gateway** > **Firewall policies** > **DNS** or **Gateway** > **Firewall policies** > **HTTP**",
-	}}
-/>
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Custom Pages**.
+2. Under **Account Gateway block page**, Gateway will display the current block page setting. Select **Customize**.
+3. Choose whether to use the [default Gateway block page](#use-the-default-block-page), a [URL redirect](#redirect-to-a-block-page), or a [custom Gateway block page](#customize-the-block-page).
+4. Select **Save**.
 
-## Customize the block page
+### Use the default block page
+
+When you choose **Default Gateway block page**, Gateway will display a [block page hosted by Cloudflare](https://blocked.teams.cloudflare.com/). This is the default option for all traffic blocked by Gateway.
+
+### Redirect to a block page
+
+Instead of displaying the Cloudflare block page, you can configure Gateway to return a `307` (Temporary Redirect) HTTP response code and redirect to a custom URL.
+
+To redirect users to a non-Cloudflare block page:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Custom Pages**.
+2. Under **Account Gateway block page**, select **Customize**.
+3. Choose **URL redirect**
+4. Enter the URL you want to redirect blocked traffic to.
+5. (Optional) Turn on **Send policy context** to send [additional policy context](#policy-context) to the redirected URL.
+6. Select **Save**.
+
+Gateway will now redirect users to a custom page when user traffic matches a Block policy with the block page configured.
+
+To create an HTTP policy to redirect URLs, refer to the [Redirect action](/cloudflare-one/policies/gateway/http-policies/#redirect).
+
+#### Policy context
+
+<Render file="gateway/policy-context" />
+
+#### Redirect precedence
+
+Paths and queries in the redirect URL take precedence over the original URL. When you turn on **Send policy context**, Gateway will append context to the end of the redirected URL. For example, if the original URL is `example.com/path/to/page?querystring=X&k=1` and the redirect URL is `cloudflare.com/redirect-path?querystring=Y`, Gateway will redirect requests to:
+
+```txt ins="&user_email=user@example.com"
+cloudflare.com/redirect-path?querystring=Y&user_email=user@example.com
+```
+
+### Customize the block page
 
 <Render file="gateway/customize-block-page" />
 
-### Add a logo image
+#### Add a logo image
 
 <Render file="gateway/add-logo-image" />
 
-### Allow users to email an administrator
+#### Allow users to email an administrator
 
 You can add a Mailto link to your custom block page, which allows users to directly email you about the blocked site. When users select **Contact your Administrator** on your block page, an email template opens with the email address and subject line you configure, as well as the following diagnostic information:
 
@@ -58,6 +78,39 @@ You can add a Mailto link to your custom block page, which allows users to direc
 | User ID      | The ID of the user who visited the page. Currently, User IDs are not surfaced in the dashboard and can only be viewed by calling the [API](/api/resources/zero_trust/subresources/access/subresources/users/methods/list/). |
 | Device ID    | The ID of the device that visited the page. This is generated by the WARP client.                                                                                                                                           |
 | Block Reason | Your policy-specific block message.                                                                                                                                                                                         |
+
+## Configure policy block behavior
+
+For DNS Block policies, you will need to turn on the block page for each policy you want to display it. For HTTP Block policies, Gateway automatically displays your global block page setting by default. You can override your global block page setting for both policy types within each policy's settings.
+
+To turn on the block page or override your global block page setting for an individual policy:
+
+<Tabs>
+
+<TabItem label="DNS policy">
+
+<Render
+	file="gateway/add-block-page"
+	params={{
+		firewallPolicyPath: "**Gateway** > **Firewall policies** > **DNS**",
+		blockBehaviorAction: "turn on",
+	}}
+/>
+
+</TabItem>
+<TabItem label="HTTP policy">
+
+<Render
+	file="gateway/add-block-page"
+	params={{
+		firewallPolicyPath: "**Gateway** > **Firewall policies** > **HTTP**",
+		blockBehaviorAction: "go to",
+	}}
+/>
+
+</TabItem>
+
+</Tabs>
 
 ## Limitations
 

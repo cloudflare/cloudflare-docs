@@ -1,0 +1,25 @@
+---
+title: Manage account secrets
+pcx_content_type: concept
+sidebar:
+  order: 4
+  group:
+    label: Management
+description: Learn about different operations to manage your secrets in Cloudflare Secrets Store.
+---
+
+Secrets can be API tokens, public/private keys, authorization keys, passwords, or even code variables. The only limitation is that a secret must be a string that does not exceed 1024 bytes.
+
+Once a secret is added to the Secrets Store, it can no longer be decrypted or accessed via API or on the dashboard. Only the service associated with a given secret will be able to access it.
+
+## Limits
+
+Customers who create a secrets store in the open beta can have up to 20 secrets per account.
+
+## Resources
+
+- [Manage via Wrangler](/workers/wrangler/commands/#secrets-store-secret)
+- [Create a secret](/secrets-store/manage-secrets/how-to/#create-a-secret)
+- [Duplicate a secret](/secrets-store/manage-secrets/how-to/#duplicate-a-secret)
+- [Edit a secret](/secrets-store/manage-secrets/how-to/#edit-a-secret)
+- [Delete a secret](/secrets-store/manage-secrets/how-to/#delete-a-secret)

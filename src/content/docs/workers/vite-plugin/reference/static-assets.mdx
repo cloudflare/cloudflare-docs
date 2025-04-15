@@ -1,0 +1,45 @@
+---
+pcx_content_type: reference
+title: Static Assets
+sidebar:
+  order: 4
+description: Static assets and the Vite plugin
+---
+
+import { WranglerConfig } from "~/components";
+
+The Vite plugin does not require that you provide the `assets` field in order to enable assets and instead determines whether assets should be included based on whether the `client` environment has been built.
+By default, the `client` environment is built if there is an `index.html` file in the root of your project or if `build.rollupOptions.input` is specified in the Vite config.
+
+:::note
+When using the Cloudflare Vite plugin, the `client` environment is deployed as your static assets.
+This typically includes files such as static HTML, front-end JavaScript, CSS, images and fonts.
+For more information about using static assets in Vite, refer to [Static Asset Handling](https://vite.dev/guide/assets).
+:::
+
+On running `vite build`, an output `wrangler.json` configuration file is generated as part of the build output.
+The `assets.directory` field in this file is automatically populated with the path to your `client` build output.
+It is therefore not necessary to provide the `assets.directory` field in your input Worker configuration.
+
+The `assets` configuration should be used, however, if you wish to set [routing configuration](/workers/static-assets/routing/#routing-configuration) or enable the [assets binding](/workers/static-assets/binding/#binding).
+The following example configures the `not_found_handling` for a single-page application so that the fallback will always be the root `index.html` file.
+
+<WranglerConfig>
+
+```toml
+assets = { not_found_handling = "single-page-application" }
+```
+
+</WranglerConfig>
+
+## Headers and redirects
+
+Custom [headers](/workers/static-assets/headers/) and [redirects](/workers/static-assets/redirects/) are supported at build, preview and deploy time by adding `_headers` and `_redirects` files to your [`public` directory](https://vite.dev/guide/assets#the-public-directory).
+The paths in these files should reflect the structure of your client build output.
+For example, generated assets are typically located in an [assets subdirectory](https://vite.dev/config/build-options#build-assetsdir).
+
+<br />
+
+:::note
+The Cloudflare Vite plugin does not support [run_worker_first](/workers/static-assets/binding/#run_worker_first).
+:::

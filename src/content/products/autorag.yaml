@@ -1,0 +1,16 @@
+name: AutoRAG
+
+product:
+  title: AutoRAG
+  url: /autorag/
+  group: Developer platform
+  additional_groups: [AI]
+  tags: [AI]
+
+meta:
+  title: AutoRAG
+  description: Create fully managed RAG pipelines for your AI applications.
+  author: '@cloudflare'
+
+resources:
+    discord: https://discord.gg/cloudflaredev
