@@ -8,11 +8,7 @@ entries:
   - publish_date: "2025-04-17"
     title: Improved rate limits for HTTP Pull Consumers
     description: |-
-      Pull consumers can now consume messages over HTTP at the maximum per-queue throughput of 5,000 messages per second.
-
-      This means includes the API requests to [pull messages](/api/resources/queues/subresources/messages/methods/pull/), and [acknowledge / retry messages](/api/resources/queues/subresources/messages/methods/ack/).
-
-      Previously, pull consumers were subject to the [global rate limit of 1200 requests / 5 minutes](/fundamentals/api/reference/limits/#api-token-limits).
+      [Queues Pull Consumers](/queues/configuration/pull-consumers/) can now consume 5,000 messages per second per queue. Previously, pull consumers were limited to 1200 requests / 5 minutes, aggregated across all queues.
 
       Refer to the [documentation on pull consumers](/queues/configuration/pull-consumers/) to learn how to setup a pull consumer, acknowledge / retry messages, and setup multiple consumers.
   - publish_date: "2025-03-27"
