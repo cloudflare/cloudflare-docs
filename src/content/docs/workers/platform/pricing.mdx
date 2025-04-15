@@ -99,21 +99,29 @@ If you had a Worker on the Bundled usage model prior to the migration to Standar
 
 :::
 
+### How to switch usage models
+
 :::note
 
 Some Workers Enterprise customers maintain the ability to change usage models.
 
-Usage models may be changed at the individual Worker level:
+:::
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. In Account Home, select **Workers & Pages**.
-3. In **Overview**, select your Worker > **Settings** > **Usage Model**.
+Users on the Workers Paid plan have access to the Standard usage model. However, some users may still have a legacy usage model configured.
+Legacy usage models include Workers Unbound and Workers Bundled. Users are advised to move to the Workers Standard usage model.
+Changing the usage model only affects billable usage, and has no technical implications.
 
 To change your default account-wide usage model:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers-and-pages) and select your account.
 2. In Account Home, select **Workers & Pages**.
 3. Find **Usage Model** on the right-side menu > **Change**.
+
+Usage models may be changed at the individual Worker level:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/services/view/:worker/production/settings) and select your account.
+2. In Account Home, select **Workers & Pages**.
+3. In **Overview**, select your Worker > **Settings** > **Usage Model**.
 
 Existing Workers will not be impacted when changing the default usage model. You may change the usage model for individual Workers without affecting your account-wide default usage model.
 

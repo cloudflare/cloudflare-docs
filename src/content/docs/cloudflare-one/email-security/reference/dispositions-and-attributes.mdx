@@ -22,3 +22,27 @@ You can use disposition values when [setting up auto-moves](/cloudflare-one/emai
 ### Available values
 
 <Render file="email-security/dispositions-and-attributes" />
+
+## Attributes 
+
+Traffic that flows through Email Security can also receive one or more Attributes, which indicate that a specific condition has been met.
+
+### Available values
+
+| Attribute                               | Notes                                                                                                                                                                                                                               |
+| --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `CUSTOM_BLOCK_LIST`                     | This message matches a value you have defined in your custom block list.                                                                                                                                                            |
+| `NEW_DOMAIN_SENDER=<REGISTRATION_DATE>` | Alerts to mail from a newly registered domain. Formatted as yyyy-MM-dd HH:mm:ss ZZZ.                                                                                                                                                |
+| `NEW_DOMAIN_LINK=<REGISTRATION_DATE>`   | Alerts to mail with links pointing out to a newly registered domain. Formatted as yyyy-MM-dd HH:mm:ss ZZZ.                                                                                                                          |
+| `ENCRYPTED`                             | Email message is encrypted.                                                                                                                                                                                                         |
+| `EXECUTABLE`                            | Email message contains an executable file.                                                                                                                                                                                          |
+| `BEC`                                   | Indicates that an email address was contained in your [impersonation registry](/cloudflare-one/email-security/detection-settings/impersonation-registry/) list. Associated with `MALICIOUS` or `SPOOF` dispositions. |
+
+### Header structure
+
+When Email Security adds a disposition header to an email message, that header matches the following format:
+
+```txt
+X-CFEmailSecurity-Attribute: [Value]
+X-CFEmailSecurity-Attribute: [Value2]
+```

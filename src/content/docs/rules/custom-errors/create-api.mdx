@@ -196,7 +196,7 @@ The provided examples use the following fields in their rule expressions:
 
 - [`http.response.code`](/ruleset-engine/rules-language/fields/reference/http.response.code/): Represents the HTTP status code returned to the client, either set by a Cloudflare product or returned by the origin server. Use this field to customize the response for error codes returned by the origin server or by a Cloudflare product such as a Worker.
 
-- [`cf.response.1xxx_code`](/ruleset-engine/rules-language/fields/reference/cf.response.1xxx_code/): Contains the specific error code for Cloudflare-generated errors. This field will only work for Cloudflare-generated errors such as [52X](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/) and [1XXX](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/).
+- [`cf.response.1xxx_code`](/ruleset-engine/rules-language/fields/reference/cf.response.1xxx_code/): Contains the specific error code for Cloudflare-generated errors. This field will only work for Cloudflare-generated errors such as [52X](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/) and [1XXX](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/).
 
 ### General procedure
 
@@ -268,7 +268,7 @@ This `PUT` request, corresponding to the [Update a zone entry point ruleset](/ap
 
 ### Custom HTML response for Cloudflare 1020 errors
 
-This example configures a custom HTML error response for [Cloudflare error 1020](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/#error-1020-access-denied) (Access Denied).
+This example configures a custom HTML error response for [Cloudflare error 1020](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/#error-1020-access-denied) (Access Denied).
 
 <APIRequest
 	path="/zones/{zone_id}/rulesets/phases/{ruleset_phase}/entrypoint"
