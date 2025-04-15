@@ -1,5 +1,5 @@
 ---
-title: Improved limits for Queues HTTP pull consumers
+title: Increased limits for Queues HTTP pull consumers
 description: Each queue now supports consuming 5,000 messages per second over HTTP.
 products:
   - queues
@@ -25,8 +25,8 @@ curl "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/queues/${QU
 --data '{ "visibility_timeout": 10000, "batch_size": 2 }'
 ```
 
-The updated limits let you pull, acknowledge, and retry up to 5,000 messages per second per queue. To learn more about how to acknowledge / retry messages, pull batches, and setup multiple consumers, refer to the [pull consumer documentation](/queues/configuration/pull-consumers).
+The increased limits let you pull, acknowledge, and retry up to 5,000 messages per second per queue. To learn more about how to acknowledge / retry messages, pull batches at once, and setup multiple consumers, refer to the [pull consumer documentation](/queues/configuration/pull-consumers).
 
 As always, Queues doesn't charge for data egress. Pull operations are billed at the [existing rate](/queues/platform/pricing), of $0.40 / million operations.
 
-The updated limits are available today, on all new and existing queues. And if you're new to Queues, [get started with the Cloudflare Queues guide](/queues/get-started).
+The increased limits are available now, on all new and existing queues. And if you're new to Queues, [get started with the Cloudflare Queues guide](/queues/get-started).
