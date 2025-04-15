@@ -8,7 +8,7 @@ date: 2025-04-17 12:00:00 UTC
 
 [Queues Pull Consumers](/queues/configuration/pull-consumers/) now support consuming messages over HTTP at the maximum per-queue throughput of 5,000 messages per second. Previously, pull consumers were subject to a global rate limit of 1200 requests / 5 minutes.
 
-Pull consumers allow you to consume messages from a queue over HTTP, from outside [Cloudflare Workers](/workers). The increased limits mean that messages can be consumed over HTTP at the same rate at which they are produced to the queue. And as always, Queues doesn't charge for data egress.
+Pull consumers allow you to consume messages from a queue over HTTP, from outside [Cloudflare Workers](/workers). As always, Queues doesn't charge for data egress. The increased limits mean that messages can be consumed over HTTP at the same rate at which they are produced to the queue.
 
 To create a new queue, and use a pull consumer, run the following commands using Wrangler:
 ```bash title="Create a queue with a pull based consumer"
