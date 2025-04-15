@@ -8,7 +8,7 @@ entries:
   - publish_date: "2025-04-15"
     title: Introducing Support for Orange-Clouded Origin Resolution
     description: |-
-      Newly created Cloudflare Load Balancers will resolve orange-clouded origin addresses, provided the origins belong to the same account and zone as the Load Balancer. Existing Load Balancers will continue using the current resolution method. If ownership validation fails, the new system falls back to the existing behavior and defaults to a gray-clouded (DNS-only) lookup, typically resolving to anycast addresses. Contact customer support if you notice any unexpected behavior.
+      Newly created Cloudflare Load Balancers will resolve orange-clouded origin addresses, provided the origins belong to the same account and zone as the Load Balancer. Existing Load Balancers will continue using the current resolution method. If ownership validation fails, the new system falls back to the existing behavior and defaults to a gray-clouded (DNS-only) lookup, typically resolving to anycast addresses.
   - publish_date: "2025-03-13"
     title: Update to Load Balancing analytics
     description: |-
