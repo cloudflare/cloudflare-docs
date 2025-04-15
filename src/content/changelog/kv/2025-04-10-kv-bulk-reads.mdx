@@ -3,13 +3,23 @@ title: Read multiple keys from Workers KV with bulk reads
 description: You can now retrieve up to 100 keys in a single bulk read request to Workers KV.
 products:
   - kv
-date: 2025-01-28T14:00:00Z
+date: 2025-04-17T14:00:00Z
 ---
 
 You can now retrieve up to 100 keys in a single bulk read request made to Workers KV.
 
-This makes it easier to
+This makes it easier to request multiple KV pairs within a single Worker invocation. Retrieving many key-value pairs using the bulk read operation is more performant than making individual requests since bulk read operations are not affected by [Workers simultaneous connection limits](/workers/platform/limits/#simultaneous-open-connections).
+```js
+// Read single key
+const key = "key-a";
+const value = await env.NAMESPACE.get(keys);
 
-Workers KV namespace limits were increased from 200 to 1000 for all accounts. Higher limits for Workers KV namespaces enable better organization of key-value data, such as by category, tenant, or environment.
+// Read multiple keys
+const keys = ["key-a", "key-b", "key-c", ...] // up to 100 keys
+const values : Map<string, string?> = await env.NAMESPACE.get(keys);
 
-Consult the [Workers KV limits documentation](/kv/platform/limits/) for the rest of the limits. This increased limit is available for both the Free and Paid [Workers plans](/workers/platform/pricing/).
+// Print the value of "key-a" to the console.
+console.log(`The first key is ${values.get("key-a")}.`)
+```
+
+Consult the [Workers KV Read key-value pairs API](/kv/api/read-key-value-pairs/) for full details on Workers KV's new bulk reads support.
