@@ -137,7 +137,7 @@ The reason the Cloudflare network exists is to provide services to customers to 
       2. [Web Application Firewall (WAF)](#web-application-firewall-waf)
       3. [Rate limiting](#rate-limiting)
       4. [L7 DDoS](#l7-ddos)
-      5. [API Gateway](#api-gateway)
+      5. [API Shield](#api-shield)
       6. [Bot Management](#bot-management)
       7. [Page Shield](#page-shield)
       8. [SSL/TLS](#ssltls)
@@ -194,7 +194,7 @@ Cloudflare security products that can be used for L3 and L4 security include Clo
 
 - Layer 7, referred to as the “application layer,” is the top layer of the data processing that occurs just below the surface or behind the scenes of the software applications that users interact with. HTTP and API requests/responses are layer 7 events.
 
-Cloudflare has a suite of application security products that includes [Web Application Firewall](/waf/) (WAF), [Rate Limiting](/waf/rate-limiting-rules/), [L7 DDoS](/ddos-protection/managed-rulesets/http/), [API Gateway](/api-shield/api-gateway/), [Bot Management](/bots/), and [Page Shield](/page-shield/).
+Cloudflare has a suite of application security products that includes [Web Application Firewall](/waf/) (WAF), [Rate Limiting](/waf/rate-limiting-rules/), [L7 DDoS](/ddos-protection/managed-rulesets/http/), [API Shield](/api-shield/), [Bot Management](/bots/), and [Page Shield](/page-shield/).
 
 Note that SaaS applications could be considered both public and private. For example, Salesforce has direct Internet-facing access but contains very private information and is usually only accessible by employee accounts that are provisioned by IT. For the purpose of this document, we will consider SaaS applications as private resources.
 
@@ -256,7 +256,7 @@ Products: [WAF - Cloudflare Managed Rules](/waf/managed-rules/)
 
 Unauthorized access can result from broken authentication or broken access control due to vulnerabilities in authentication, weak passwords, or easily bypassed authorization. Cloudflare mTLS (mutual TLS) and JWT (JSON Web Tokens) validation can be used to bolster authentication. Clients or API requests that don’t have a valid certificate or JWT can be denied access via security policy. Customers can create and manage mTLS certificates from the Cloudflare dashboard or an API. Cloudflare’s WAF and [Exposed Credentials Check](/waf/managed-rules/check-for-exposed-credentials/) managed ruleset can be used to detect compromised credentials being used in authentication requests. WAF policies can also be used to restrict access to applications/paths based on different request criteria.
 
-Products: [SSL/TLS - mTLS](/ssl/client-certificates/enable-mtls/), [API Gateway (JWT Validation)](/api-shield/security/jwt-validation/), [WAF](/waf/)
+Products: [SSL/TLS - mTLS](/ssl/client-certificates/enable-mtls/), [API Shield (JWT Validation)](/api-shield/security/jwt-validation/), [WAF](/waf/)
 
 ##### Client-side attacks
 
@@ -279,7 +279,7 @@ Products: [Page Shield](/page-shield/)
 
 ##### Data exfiltration
 
-Data exfiltration is the process of acquiring sensitive data through malicious tactics or through misconfigured services. Cloudflare Sensitive Data Detection addresses common data loss threats. Within the WAF, these rules monitor the download of specific sensitive data — for example, financial and personally identifiable information. Specific patterns of sensitive data are matched upon and logged. Sensitive data detection is also integrated with API Gateway so customers are alerted on any API responses returning sensitive data matches.
+Data exfiltration is the process of acquiring sensitive data through malicious tactics or through misconfigured services. Cloudflare Sensitive Data Detection addresses common data loss threats. Within the WAF, these rules monitor the download of specific sensitive data — for example, financial and personally identifiable information. Specific patterns of sensitive data are matched upon and logged. Sensitive data detection is also integrated with API Shield so customers are alerted on any API responses returning sensitive data matches.
 
 Products: [WAF - Sensitive Data Detection](/waf/managed-rules/)
 
@@ -315,9 +315,9 @@ Products: [Bot management](/bots/), [WAF](/waf/)
 
 [Fuzzing](https://owasp.org/www-community/Fuzzing) is an automated testing method used by malicious actors that uses various combinations of data and patterns to inject invalid, malformed, or unexpected inputs into a system. The malicious user hopes to find defects and vulnerabilities that can then be exploited. Cloudflare WAF leverages machine learning to detect fuzzing based attempts to bypass security policies. The WAF attack score complements managed rules and highlights the likeliness of an attack.
 
-Bot Management can detect potentially malicious bots by automating vulnerability scanning. With API Gateway, customers can employ schema validation and sequence mitigation to prevent the automated scanning and fuzzing techniques with APIs.
+Bot Management can detect potentially malicious bots by automating vulnerability scanning. With API Shield, customers can employ schema validation and sequence mitigation to prevent the automated scanning and fuzzing techniques with APIs.
 
-Products: [WAF](/waf/), [Bot Management](/bots/), [API Gateway](/api-shield/api-gateway/)
+Products: [WAF](/waf/), [Bot Management](/bots/), [API Shield](/api-shield/)
 
 ##### Cross-Site Scripting (XSS) attacks
 
@@ -390,9 +390,9 @@ Customers can also configure which request criteria is used as a counter for det
 
 The Cloudflare [HTTP DDoS Attack Protection](/ddos-protection/managed-rulesets/http/) managed ruleset is a set of pre-configured rules used to match known DDoS attack vectors at layer 7 (application layer) on the Cloudflare global network. The rules match known attack patterns and tools, suspicious patterns, protocol violations, requests causing large amounts of origin errors, excessive traffic hitting the origin/cache, and additional attack vectors at the application layer. Cloudflare updates the list of rules in the managed ruleset on a regular basis.
 
-##### API Gateway
+##### API Shield
 
-[API Gateway](/api-shield/api-gateway/) is Cloudflare’s API management and security product. API Gateway delivers visibility via API discovery and analytics, provides endpoint management, implements a positive security model, and prevents API abuse.
+[API Shield](/api-shield/) is Cloudflare’s API management and security product. API Shield delivers visibility via API discovery and analytics, provides endpoint management, implements a positive security model, and prevents API abuse.
 
 ![All security detection can be seen from a single dashboard.](~/assets/images/reference-architecture/security/security-ref-arch-10.svg)
 
@@ -400,7 +400,7 @@ API Gateway’s API Discovery is used to learn all API endpoints in a customer�
 
 Customers can enable a positive security model using mTLS, JWT validation, and schema validation and protect against additional API abuse with rate limiting and volumetric abuse protection as well as sequence mitigation and GraphQL protections.
 
-![The API gateway has many stages, discovery, review, using a positive security model, abuse protection, data protection and endpoint management/monitoring.](~/assets/images/reference-architecture/security/security-ref-arch-11.svg "Common user workflow for API Gateway")
+![API Shield has many stages, discovery, review, using a positive security model, abuse protection, data protection and endpoint management/monitoring.](~/assets/images/reference-architecture/security/security-ref-arch-11.svg "Common user workflow for API Shield")
 
 ##### Bot Management
 
