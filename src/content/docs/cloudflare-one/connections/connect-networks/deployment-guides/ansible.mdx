@@ -74,32 +74,7 @@ You will need to declare the [providers](https://registry.terraform.io/browse/pr
 
 2. Add the following providers to `providers.tf`. The `random` provider is used to generate a tunnel secret.
 
-   ```txt
-   terraform {
-     required_providers {
-       cloudflare = {
-         source = "cloudflare/cloudflare"
-       }
-       google = {
-         source = "hashicorp/google"
-       }
-       random = {
-         source = "hashicorp/random"
-       }
-     }
-     required_version = ">= 0.13"
-   }
-
-   # Providers
-   provider "cloudflare" {
-     api_token    = var.cloudflare_token
-   }
-   provider "google" {
-     project    = var.gcp_project_id
-   }
-   provider "random" {
-   }
-   ```
+		<Render file="terraform/providers-v5" />
 
 ### Configure Cloudflare resources
 
@@ -113,30 +88,94 @@ The following configuration will modify settings in your Cloudflare account.
 
 2. Add the following resources to `Cloudflare-config.tf`:
 
-   ```txt
-   # Generates a 64-character secret for the tunnel.
-   # Using `random_password` means the result is treated as sensitive and, thus,
-   # not displayed in console output. Refer to: https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password
-   resource "random_password" "tunnel_secret" {
-     length = 64
-   }
 
-   # Creates a new locally-managed tunnel for the GCP VM.
-   resource "cloudflare_tunnel" "auto_tunnel" {
-     account_id = var.cloudflare_account_id
-     name       = "Ansible GCP tunnel"
-     secret     = base64sha256(random_password.tunnel_secret.result)
-   }
+		```tf
+		# Generates a 32-byte secret for the tunnel.
+		resource "random_bytes" "tunnel_secret" {
+			byte_length = 32
+		}
 
-   # Creates the CNAME record that routes ssh_app.${var.cloudflare_zone} to the tunnel.
-   resource "cloudflare_record" "ssh_app" {
-     zone_id = var.cloudflare_zone_id
-     name    = "ssh_app"
-     value   = "${cloudflare_argo_tunnel.auto_tunnel.id}.cfargotunnel.com"
-     type    = "CNAME"
-     proxied = true
-   }
-   ```
+		# Creates a new remotely-managed tunnel for the GCP VM.
+		resource "cloudflare_zero_trust_tunnel_cloudflared" "gcp_tunnel" {
+			account_id    = var.cloudflare_account_id
+			name          = "Example GCP tunnel"
+			tunnel_secret = random_bytes.tunnel_secret.base64
+		}
+
+		# Reads the token used to run the tunnel on the server.
+		data "cloudflare_zero_trust_tunnel_cloudflared_token" "gcp_tunnel_token" {
+			account_id 	= var.cloudflare_account_id
+			tunnel_id 	= cloudflare_zero_trust_tunnel_cloudflared.gcp_tunnel.id
+		}
+
+		# Creates the CNAME record that routes http_app.${var.cloudflare_zone} to the tunnel.
+		resource "cloudflare_dns_record" "http_app" {
+			zone_id = var.cloudflare_zone_id
+			name    = "http_app"
+			content = "${cloudflare_zero_trust_tunnel_cloudflared.gcp_tunnel.id}.cfargotunnel.com"
+			type    = "CNAME"
+			ttl     = 1
+			proxied = true
+		}
+
+		# Configures tunnel with a public hostname route for clientless access.
+		resource "cloudflare_zero_trust_tunnel_cloudflared_config" "gcp_tunnel_config" {
+			tunnel_id  = cloudflare_zero_trust_tunnel_cloudflared.gcp_tunnel.id
+			account_id = var.cloudflare_account_id
+			config     = {
+				ingress 	= [
+					{
+						hostname = "http_app.${var.cloudflare_zone}"
+						service  = "http://localhost:80"
+					},
+					{
+						service  = "http_status:404"
+					}
+				]
+			}
+		}
+
+		# (Optional) Routes internal IP of GCP instance through the tunnel for private network access using WARP.
+		resource "cloudflare_zero_trust_tunnel_cloudflared_route" "example_tunnel_route" {
+		account_id         = var.cloudflare_account_id
+		tunnel_id          = cloudflare_zero_trust_tunnel_cloudflared.gcp_tunnel.id
+		network            = google_compute_instance.http_server.network_interface.0.network_ip
+		comment            = "Example tunnel route"
+		}
+
+		# Creates a reusable Access policy.
+		resource "cloudflare_zero_trust_access_policy" "allow_emails" {
+			account_id   = var.cloudflare_account_id
+			name         = "Allow email addresses"
+			decision     = "allow"
+			include      = [
+				{
+					email = {
+						email = var.cloudflare_email
+					}
+				},
+				{
+					email_domain = {
+						domain = "@example.com"
+					}
+				}
+			]
+		}
+
+		# Creates an Access application to control who can connect to the public hostname.
+		resource "cloudflare_zero_trust_access_application" "http_app" {
+			account_id       = var.cloudflare_account_id
+			type             = "self_hosted"
+			name             = "Access application for http_app.${var.cloudflare_zone}"
+			domain           = "http_app.${var.cloudflare_zone}"
+			policies = [
+				{
+					id = cloudflare_zero_trust_access_policy.allow_emails.id
+					precedence = 1
+				}
+			]
+		}
+		```
 
 ### Configure GCP resources
 
@@ -219,20 +258,20 @@ The following Terraform resource exports the tunnel ID and other variables to `t
 
 2. Copy and paste the following content into `export.tf`:
 
-   ```txt
-   resource "local_file" "tf_ansible_vars_file" {
-     content = <<-DOC
-       # Ansible vars_file containing variable values from Terraform.
-       tunnel_id: ${cloudflare_argo_tunnel.auto_tunnel.id}
-       account: ${var.cloudflare_account_id}
-       tunnel_name: ${cloudflare_argo_tunnel.auto_tunnel.name}
-       secret: ${random_id.tunnel_secret.b64_std}
-       zone: ${var.cloudflare_zone}
-       DOC
+		```tf
+		resource "local_file" "tf_ansible_vars_file" {
+			content = <<-DOC
+				# Ansible vars_file containing variable values from Terraform.
+				tunnel_id: ${cloudflare_zero_trust_tunnel_cloudflared.gcp_tunnel.id}
+				account: ${var.cloudflare_account_id}
+				tunnel_name: ${cloudflare_zero_trust_tunnel_cloudflared.gcp_tunnel.name}
+				tunnel_token: ${data.cloudflare_zero_trust_tunnel_cloudflared_token.gcp_tunnel_token.token}
+				zone: ${var.cloudflare_zone}
+				DOC
 
-     filename = "./tf_ansible_vars_file.yml"
-   }
-   ```
+			filename = "./tf_ansible_vars_file.yml"
+		}
+		```
 
 ## 5. Create the Ansible playbook
 
