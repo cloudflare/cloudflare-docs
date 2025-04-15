@@ -1,0 +1,30 @@
+---
+title: Improved limits for Queues Pull Consumers
+description:
+products:
+  - queues
+date: 2025-04-17 12:00:00 UTC
+---
+
+[Queues Pull Consumers](/queues/configuration/pull-consumers/) now support consuming messages over HTTP at the maximum per-queue throughput of 5,000 messages per second. Previously, pull consumers were subject to a global rate limit of 1200 requests / 5 minutes.
+
+Pull consumers allow you to consume messages from a queue over HTTP, from outside [Cloudflare Workers](/workers). The increased limits mean that messages can be consumed over HTTP at the same rate at which they are produced to the queue. And as always, Queues doesn't charge for data egress.
+
+To create a new queue, and use a pull consumer, run the following commands using Wrangler:
+```bash title="Create a queue with a pull based consumer"
+$ npx wrangler queues create my-queue
+$ npx wrangler queues consumer http add my-queue
+```
+Pull consumers can also be configured using the [Queues REST API](/api/resources/queues/subresources/consumers/methods/create/), or the Queues dashboard.
+
+Once your queue is setup with a pull consumer, you can make call an API call to pull messages:
+```bash title="Pull messages from a queue"
+curl "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/queues/${QUEUE_ID}/messages/pull" \
+--header "Authorization: Bearer ${API_TOKEN}" \
+--header "Content-Type: application/json" \
+--data '{ "visibility_timeout": 10000, "batch_size": 2 }'
+```
+
+Pull operations continue to be billed at the [existing rate](/queues/platform/pricing), of $0.40 / million operations. The updated pull consumer limits are available today, on all new and existing queues.
+
+Head over to the [pull consumer documentation](/queues/configuration/pull-consumers) to learn more. And if you haven't used Cloudflare Queues before, [get started with the Cloudflare Queues guide](/queues/get-started).
