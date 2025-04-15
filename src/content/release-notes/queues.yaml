@@ -5,7 +5,7 @@ productLink: "/queues/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
-  - publish_date: "2025-04-04"
+  - publish_date: "2025-04-17"
     title: Removed API rate limits for HTTP Pull Consumers
     description: |-
       Queues has removed REST API rate limits. This includes the API requests to [pull messages](/api/resources/queues/subresources/messages/methods/pull/), and [acknowledge / retry messages](/api/resources/queues/subresources/messages/methods/ack/).
