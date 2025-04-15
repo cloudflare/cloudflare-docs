@@ -142,7 +142,17 @@ To configure Zero Trust policies and connect as a user, refer to [Connect privat
 
 Install `cloudflared` on your server and run the tunnel using the `token` value obtained in [2. Create a tunnel](#2-create-a-tunnel). You can also get the tunnel token using the [Cloudflare Tunnel token](/api/resources/zero_trust/subresources/tunnels/subresources/cloudflared/subresources/token/methods/get/) endpoint.
 
-<Tabs> <TabItem label="Windows">
+<Tabs> <TabItem label="Linux">
+
+1.  [Download and install](https://pkg.cloudflare.com/index.html) `cloudflared`.
+
+2.  Run the following command:
+
+        ```sh
+        sudo cloudflared service install <tunnel-token>
+        ```
+
+</TabItem> <TabItem label="Windows">
 
 1.  [Download and install](/cloudflare-one/connections/connect-networks/downloads/#windows) `cloudflared`.
 
@@ -157,16 +167,6 @@ Install `cloudflared` on your server and run the tunnel using the `token` value 
 </TabItem> <TabItem label="macOS">
 
 1.  [Download and install](/cloudflare-one/connections/connect-networks/downloads/#macos) `cloudflared`.
-
-2.  Run the following command:
-
-        ```sh
-        sudo cloudflared service install <tunnel-token>
-        ```
-
-</TabItem> <TabItem label="Linux">
-
-1.  [Download and install](https://pkg.cloudflare.com/index.html) `cloudflared`.
 
 2.  Run the following command:
 

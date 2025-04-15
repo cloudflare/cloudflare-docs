@@ -1216,6 +1216,10 @@
 /support/partners/ /support/ 301
 /support/partners/reduce-data-transfer-egress-costs-between-azure-and-cloudflare/ /support/third-party-software/others/reduce-data-transfer-egress-costs-between-azure-and-cloudflare/ 301
 /support/more-dashboard-apps/cloudflare-stream/ /support/more-dashboard-apps/ 301
+/support/troubleshooting/cloudflare-errors/ /support/troubleshooting/http-status-codes/ 301
+/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-10xxx-errors/ /support/troubleshooting/http-status-codes/cloudflare-10xxx-errors/ 301
+/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/ /support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/ 301
+/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/ /support/troubleshooting/http-status-codes/cloudflare-5xx-errors/ 301
 
 # r2
 /r2/platform/s3-compatibility/api/ /r2/api/s3/api/ 301
