@@ -6,13 +6,15 @@ productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
   - publish_date: "2025-04-17"
-    title: Removed API rate limits for HTTP Pull Consumers
+    title: Improved rate limits for HTTP Pull Consumers
     description: |-
-      Queues has removed REST API rate limits. This includes the API requests to [pull messages](/api/resources/queues/subresources/messages/methods/pull/), and [acknowledge / retry messages](/api/resources/queues/subresources/messages/methods/ack/).
+      Pull consumers can now consume messages over HTTP at the maximum per-queue throughput of 5,000 messages per second.
 
-      Previously, requests to the Queues REST API were subject to the [global rate limit of 1200 requests / 5 minutes](/fundamentals/api/reference/limits/#api-token-limits).
+      This means includes the API requests to [pull messages](/api/resources/queues/subresources/messages/methods/pull/), and [acknowledge / retry messages](/api/resources/queues/subresources/messages/methods/ack/).
 
-      The updated limits mean that [HTTP Pull Consumers](/queues/configuration/pull-consumers) can consume messages from a queue at the same rate as the maximum queue throughput, which is [5,000 messages per second](/queues/platform/limits).
+      Previously, pull consumers were subject to the [global rate limit of 1200 requests / 5 minutes](/fundamentals/api/reference/limits/#api-token-limits).
+
+      Refer to the [documentation on pull consumers](/queues/configuration/pull-consumers/) to learn how to setup a pull consumer, acknowledge / retry messages, and setup multiple consumers.
   - publish_date: "2025-03-27"
     title: Pause delivery and purge queues
     description: |-
