@@ -1,6 +1,6 @@
 ---
 params:
-  - createPath
+  - createStaticRoutePath
   - tunnelEndpoints
   - productName
   - productGatewayOrEgress
@@ -23,7 +23,7 @@ Refer to [Traffic Steering](#) for more information about all the technical aspe
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
-2. Go to **{props.createPath}**.
+2. Go to **{props.createStaticRoutePath}**.
 3. From the **Routes** tab, select **Create** to add a new route.
 4. Enter a descriptive name for your route in **Description**.
 5. In **Prefix**, enter your range of IP addresses. For example, `10.10.10.100/24`.
