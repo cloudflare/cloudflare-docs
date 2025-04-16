@@ -36,7 +36,7 @@ For privately routing prefixes outside RFC 1918 contact your Cloudflare customer
 Magic {props.productName} is steered along tunnel routes based on priorities of route entries.
 
 - Lower values have greater priority.
-- When the priority values for prefix entries match, Cloudflare uses [equal-cost multi-path (ECMP)](#) packet forwarding to route traffic. An optional weight value can be applied to static routes to [modify ECMP tunnel distribution](#).
+- When the priority values for prefix entries match, Cloudflare uses [equal-cost multi-path (ECMP)](#equal-cost-multi-path-routing) packet forwarding to route traffic. An optional weight value can be applied to static routes to [modify ECMP tunnel distribution](#set-priority-and-weights-for-static-routes).
 - When BGP and static routes have the same prefix and priority, Cloudflare enforces priority by preferring static routes over BGP routes. This ensures that manually configured static routes take precedence unless explicitly deprioritized.
 
 ### Set priority and weights for static routes
