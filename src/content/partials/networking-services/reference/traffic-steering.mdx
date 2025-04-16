@@ -46,10 +46,10 @@ The priority value for static routes is directly configured as part of the route
 
 | Prefix | NextHop | Priority |
 | ----- | ----- | ----- |
-| 10.10.10.100/24 | TUNNEL_1_IAD | 200 |
-| 10.10.10.100/24 | TUNNEL_2_IAD | 200 |
-| 10.10.10.100/24 | TUNNEL_3_ATL | 100 |
-| 10.10.10.100/24 | TUNNEL_4_ATL | 100 |
+| `10.10.10.100/24` | `TUNNEL_1_IAD` | `200` |
+| `10.10.10.100/24` | `TUNNEL_2_IAD` | `200` |
+| `10.10.10.100/24` | `TUNNEL_3_ATL` | `100` |
+| `10.10.10.100/24` | `TUNNEL_4_ATL` | `100` |
 
 Optionally, you can assign weights to distribute traffic more effectively among multiple tunnels. The weight values determine the proportion of traffic directed to each tunnel, with higher weights resulting in a greater share of traffic. The maximum weight value is `256`.
 
@@ -57,10 +57,10 @@ In the example below, `TUNNEL_2_IAD` is likely to receive twice as much traffic 
 
 | Prefix | NextHop | Priority | Weight |
 | ----- | ----- | ----- | ----- |
-| 10.10.10.100/24 | TUNNEL_1_IAD | 100 | 64 |
-| 10.10.10.100/24 | TUNNEL_2_IAD | 100 | 128 |
-| 10.10.10.100/24 | TUNNEL_3_ATL | 100 | 192 |
-| 10.10.10.100/24 | TUNNEL_4_ATL | 100 | 255 |
+| `10.10.10.100/24` | `TUNNEL_1_IAD` | `100` | `64` |
+| `10.10.10.100/24` | `TUNNEL_2_IAD` | `100` | `128` |
+| `10.10.10.100/24` | `TUNNEL_3_ATL` | `100` | `192` |
+| `10.10.10.100/24` | `TUNNEL_4_ATL` | `100` | `255` |
 
 ### Set priority for BGP routes
 
