@@ -8,7 +8,7 @@ head:
     content: Get started with malicious uploads detection
 ---
 
-import { Details, TabItem, Tabs, APIRequest } from "~/components";
+import { Details, TabItem, Tabs, APIRequest, Render } from "~/components";
 
 :::note
 WAF content scanning is available to customers on an Enterprise plan with a paid add-on.
@@ -142,14 +142,4 @@ lookup_json_string(http.request.body.raw, "file")
 
 </TabItem> </Tabs>
 
-The custom scan expression will scan any string found in an HTTP body with the following JSON string:
-
-```json
-{ "file": "<BASE64_ENCODED_STRING>" }
-```
-
-Refer to the [`lookup_json_string()`](/ruleset-engine/rules-language/functions/#lookup_json_string) documentation for more information and additional examples of looking up fields in nested JSON payloads.
-
-:::note
-The content scanner will automatically decode Base64 strings.
-:::
+For more information, refer to [Custom scan expressions](/waf/detections/malicious-uploads/#custom-scan-expressions).
