@@ -1186,12 +1186,12 @@ You can alias all imports of `node-fetch` to instead point directly to the `fetc
 
 ```toml title="wrangler.toml"
 [alias]
-"node-fetch" = "./fetch-nolyfill"
+"node-fetch" = "./fetch-polyfill"
 ```
 
 </WranglerConfig>
 
-```js title="./fetch-nolyfill"
+```js title="./fetch-polyfill"
 export default fetch;
 ```
 
