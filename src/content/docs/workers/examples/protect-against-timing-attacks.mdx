@@ -16,6 +16,8 @@ description: Protect against timing attacks by safely comparing values using
   `timingSafeEqual`.
 ---
 
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/docs-examples/tree/main/workers/protect-against-timing-attacks)
+
 import { TabItem, Tabs } from "~/components";
 
 The [`crypto.subtle.timingSafeEqual`](/workers/runtime-apis/web-crypto/#timingsafeequal) function compares two values using a constant-time algorithm. The time taken is independent of the contents of the values.
