@@ -2,12 +2,11 @@
 params:
   - magicWord
   - productName
-  - greURL
-  - ipsecURL
-  - regionsURL
+  - greReferenceURL
+  - ipsecReferenceURL
   - createStaticRoute
   - editStaticRoute
-  - setupBGPpeering
+  - setupBgpPeering
 ---
 
 import { GlossaryTooltip, Markdown } from "~/components";
@@ -19,7 +18,7 @@ The Magic networking routing table is a virtual network overlay, private to your
 - Magic Transit delivery for [DoS](/ddos-protection/) and [Magic Firewall](/magic-firewall/) filtered Internet traffic, from the entry data center where the traffic ingressed, to your publicly addressed edge/border network.
 - Magic WAN packet transport between Magic tunnels, interconnects, [Cloudflare Load Balancer](/load-balancing/), and [Zero Trust](/cloudflare-one/) connections such as [WARP Client](/cloudflare-one/connections/connect-devices/warp/), [Remote Browser Isolation](/cloudflare-one/policies/browser-isolation/), [Access](/cloudflare-one/policies/access/), and [Gateway](/cloudflare-one/policies/gateway/).
 
-The Magic routing table supports routing the Magic WAN / Transit traffic via anycast tunnels using <a href={props.greURL}>GRE</a> and <a href={props.ipsecURL}>Internet Protocol Security (IPsec)]</a> or Direct [Cloudflare Network Interconnect (CNI)](/network-interconnect/). Entries can be added to the Magic routing table via static route configuration or via routes learned through BGP peering (only available over Direct CNI).
+The Magic routing table supports routing the {props.productName} traffic via anycast tunnels using <a href={props.greReferenceURL}>GRE</a> and <a href={props.ipsecReferenceURL}>Internet Protocol Security (IPsec)]</a> or Direct [Cloudflare Network Interconnect (CNI)](/network-interconnect/). Entries can be added to the Magic routing table via static route configuration or via routes learned through BGP peering (only available over Direct CNI).
 
 ### Allowed IP ranges
 
@@ -66,7 +65,7 @@ In the example below, `TUNNEL_2_IAD` is likely to receive twice as much traffic 
 
 ### Setting priority for BGP routes
 
-When BGP advertises a route, it is automatically added to the Magic routing table with a default priority of `100` which applies to <a href={props.regionsURL}>all regions</a>. However, if a static route exists with the same prefix and priority, the static route will always take precedence over the BGP route. You will have to set a different priority for static routes, to be more or less than `100`, depending on which you want to prioritize. Lower values have greater priority.
+When BGP advertises a route, it is automatically added to the Magic routing table with a default priority of `100` which applies to [all regions](#scoping-routes-to-specific-regions). However, if a static route exists with the same prefix and priority, the static route will always take precedence over the BGP route. You will have to set a different priority for static routes, to be more or less than `100`, depending on which you want to prioritize. Lower values have greater priority.
 
 Additionally, when multiple BGP routes exist with the same prefix length and priority, traffic is distributed across them using [equal-cost multi-path (ECMP) routing](#).
 
@@ -323,7 +322,7 @@ With this functionality, customers can:
 
 ### BGP peering with the Magic routing table
 
-{props.productName} BGP peering is with the Magic networking routing table (as opposed to peering with the Cloudflare Internet global network). BGP peers configured by following this guide will receive advertisements for all prefixes in the Magic routing table plus any additional prefixes configured in the per-interconnect <a href={props.setupBGPpeering}>Advertised prefix list</a>.
+{props.productName} BGP peering is with the Magic networking routing table (as opposed to peering with the Cloudflare Internet global network). BGP peers configured by following this guide will receive advertisements for all prefixes in the Magic routing table plus any additional prefixes configured in the per-interconnect <a href={props.setupBgpPeering}>Advertised prefix list</a>.
 
 If instead you are seeking to do public peering with the Cloudflare ASN 13335 at one of the Cloudflare data centers, refer to [PNI and peering setup](/network-interconnect/pni-and-peering/). Note that it is not currently possible to share Magic network BGP peering and PNI on the same physical interconnect port.
 
