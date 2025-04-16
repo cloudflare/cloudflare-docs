@@ -394,17 +394,18 @@ To secure the AI agent wrapper to ensure that only trusted users can access it:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
 2. Select **Add an application**.
-3. Select **Self-hosted**.
-4. Enter any name for your AI Agent Wrapper application,.
-5. In Session Duration, choose how often the user's application token should expire.
-6. Select **Add public hostname** and enter the **custom domain** of your AI Agent Wrapper Worker.
-7. Add [Access policies](https://developers.cloudflare.com/cloudflare-one/policies/access/) to control who can connect to your application.
+3. Choose **Self-hosted**.
+4. Enter a name for your AI agent wrapper application.
+5. In **Session Duration**, choose when the user's application token should expire.
+6. Select **Add public hostname** and enter the custom domain you set for your Worker.
+7. [Configure your Access application](/cloudflare-one/applications/configure-apps/self-hosted-public-app/) for your Worker.
+8. Add [Access policies](/cloudflare-one/policies/access/policy-management/) to control who can connect to your application.
 
-Now your AI Wrapper can only be accessed by clients that successfully match your Access policies. Consult our [Zero Trust documentation](https://developers.cloudflare.com/cloudflare-one/applications/configure-apps/self-hosted-public-app/#1-add-your-application-to-access) to know more.
+Now your AI wrapper can only be accessed by your users that successfully match your Access policies.
 
-## Block access to public AI agents using Gateway
+## 5. Block access to public AI agents with Gateway
 
-You can now block access to all unauthorized public AI agents by using the [**Secure Web Gateway[**(https://developers.cloudflare.com/cloudflare-one/policies/gateway/) to create a HTTP policy.
+You can now block access to all unauthorized public AI agents by using the [**Secure Web Gateway[**(/cloudflare-one/policies/gateway/) to create a HTTP policy.
 
 If you use another gateway for web filtering, try to replicate a similar policy.
 
@@ -419,15 +420,15 @@ If you use another gateway for web filtering, try to replicate a similar policy.
 
 This ensures that public AI agents are not accessible using a managed endpoint.
 
-User coaching is also possible, by displaying a [custom block message](https://developers.cloudflare.com/cloudflare-one/policies/gateway/block-page/) or a [user notification](https://developers.cloudflare.com/cloudflare-one/policies/gateway/http-policies/#warp-client-block-notifications) directing users to the AI agent wrapper.
+User coaching is also possible, by displaying a [custom block message](/cloudflare-one/policies/gateway/block-page/) or a [user notification](/cloudflare-one/policies/gateway/http-policies/#warp-client-block-notifications) directing users to the AI agent wrapper.
 
 ## Enforce DLP and agentless RBI
 
-Since you have full control over access to your AI Agent wrapper, you can enforce extra security methods such as [**Data Loss Prevention**](https://developers.cloudflare.com/cloudflare-one/policies/data-loss-prevention/) and [**Remote Browser Isolation**](https://developers.cloudflare.com/cloudflare-one/policies/browser-isolation/).
+Since you have full control over access to your AI Agent wrapper, you can enforce extra security methods such as [**Data Loss Prevention**](/cloudflare-one/policies/data-loss-prevention/) and [**Remote Browser Isolation**](/cloudflare-one/policies/browser-isolation/).
 
 ### Data Loss Prevention
 
-[**Data Loss Prevention**](https://developers.cloudflare.com/cloudflare-one/policies/data-loss-prevention/) can be used to avoid sensitive data to be used in prompts made to the AI agent. You will need to have an adequate HTTP policy in place for DLP to be enforced.
+[**Data Loss Prevention**](/cloudflare-one/policies/data-loss-prevention/) can be used to avoid sensitive data to be used in prompts made to the AI agent. You will need to have an adequate HTTP policy in place for DLP to be enforced.
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **DLP** > **DLP profiles**.
 2. Ensure that the DLP profiles you wish to enforce are properly configured.
@@ -469,12 +470,12 @@ Organizations that adopt Cloudflare to secure access to AI agents as exemplified
 
 ### Visibility
 
-All [access events](https://developers.cloudflare.com/cloudflare-one/insights/logs/audit-logs/) to the AI wrapper and [DLP violations](https://developers.cloudflare.com/cloudflare-one/insights/logs/gateway-logs/#http-logs) will be logged in Cloudflare's dashboard. In addition, AI gateway provides [visibility](https://developers.cloudflare.com/ai-gateway/observability/logging/) into user prompts, model response, token usage and costs.
+All [access events](/cloudflare-one/insights/logs/audit-logs/) to the AI wrapper and [DLP violations](/cloudflare-one/insights/logs/gateway-logs/#http-logs) will be logged in Cloudflare's dashboard. In addition, AI gateway provides [visibility](/ai-gateway/observability/logging/) into user prompts, model response, token usage and costs.
 
-Finally, all the logs can be easily exported to external systems using [Logpush](https://developers.cloudflare.com/logs/).
+Finally, all the logs can be easily exported to external systems using [Logpush](/logs/).
 
 ### Cost control and agility
 
-The worker exemplified in this tutorial could be easily modified to use a [different AI provider](https://developers.cloudflare.com/ai-gateway/providers/) or give the user with the option to choose between multiple AI providers, including [AI models running directly on Cloudflare's global network](https://developers.cloudflare.com/workers-ai/).
+The worker exemplified in this tutorial could be easily modified to use a [different AI provider](/ai-gateway/providers/) or give the user with the option to choose between multiple AI providers, including [AI models running directly on Cloudflare's global network](/workers-ai/).
 
 This enables organizations to better control costs related to AI usage and/or quickly adopt the latest innovations in the field without impacting the frontend users are accessing or the access controls already put in place.
