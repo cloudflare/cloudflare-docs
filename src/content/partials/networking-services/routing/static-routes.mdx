@@ -2,6 +2,9 @@
 params:
   - createPath
   - tunnelEndpoints
+  - productName
+  - productGatewayOrEgress
+  - ecmp
 ---
 
 import { APIRequest, Aside, GlossaryTooltip, Markdown, AnchorHeading, Render, TabItem, Tabs } from "~/components";
@@ -236,3 +239,42 @@ Example:
 
 </TabItem> </Tabs>
 
+
+## Configure BGP routes
+
+### Choose an ASN for BGP peering
+
+The Magic routing table is managed by the customer, who can select both the Cloudflare-side ASN and the ASN for their customer device. The customer device ASN can be 2-byte or 4-byte. [Public ASNs used for Magic Transit](/magic-transit/how-to/advertise-prefixes/#cloudflare-asn-vs-your-own-asn) are verified during the onboarding process.
+
+By default, each BGP peering session will use the same Cloudflare-side ASN to represent peering with the {props.productName} routing table. This ASN is called the **CF Account ASN** and is set to `13335`. This can be configured to a private 2-byte ASN (for example, any values between `64512` and `65534`). To set this ASN:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
+2. Go to **{props.productName}** > **Configuration** > **BGP**.
+3. In **CF Account ASN**, enter Cloudflare's ASN.
+4. Select **Update**.
+
+<Markdown text={props.asnProduct} />
+
+### Set up BGP peering
+
+:::caution
+BGP peering is only available to {props.productName} customers with Direct CNI as an on-ramp. If your network is set up with GRE or IPsec tunnels, you cannot use BGP peering.
+:::
+
+You need to configure two ASNs:
+- The Cloudflare [account-scoped ASN](#how-to-choose-an-asn-for-bgp-peering) named **CF Account ASN**.
+- One ASN for each interconnect you want to configure with BGP.
+
+If you already have set up your Cloudflare account ASN, you can skip steps two and three below.
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+2. Go to **{props.productName}** > **Configuration** > **BGP**.
+3. In **CF Account ASN**, enter Cloudflare's ASN.
+4. Go to **Interconnects**.
+5. Find the Direct CNI interconnect you want to configure with BGP > select the **three dots** next to it > **Configure BGP**.
+6. In **Customer device ASN**, enter the ASN for your network.
+7. In **MD5 key**, you can optionally enter the key for your network. Note that this is meant to prevent accidental misconfigurations, and is not a security mechanism.
+8. (Optional) In **Advertised prefix list**, input the additional prefixes automatically assigned by Cloudflare during the creation of the CNI interconnect, to advertise alongside your existing routes. Leave blank if you do not want to advertise extra routes. <br /> Typical prefixes to configure here include:
+	- A route to `0.0.0.0/0`, the default route — to attract all Internet-bound traffic if using {props.productGatewayOrEgress}.
+	- A route to `100.96.0.0/12`, the portion of CGNAT space [used by default with WARP clients](/cloudflare-one/connections/connect-networks/private-net/warp-connector/user-to-site/#add-route-to-router).
+9. Select **Enable BGP**.
