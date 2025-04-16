@@ -44,7 +44,6 @@ Instead of passing the prompt directly to the LLM, in the RAG approach you:
 2. Store the output embeddings in a Vectorize database index.
 
 When a user initiates a prompt, instead of passing it (without additional context) to the LLM, you _augment_ it with additional context:
-When a user initiates a prompt, instead of passing it (without additional context) to the LLM, you _augment_ it with additional context:
 
 1. The user prompt is passed into the same ML model used for your dataset, returning a vector embedding representation of the query.
 2. This embedding is used as the query (semantic search) against the vector database, which returns similar vectors.
