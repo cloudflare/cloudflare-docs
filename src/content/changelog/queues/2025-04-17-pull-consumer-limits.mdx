@@ -6,7 +6,7 @@ products:
 date: 2025-04-17 12:00:00 UTC
 ---
 
-[Queues Pull Consumers](/queues/configuration/pull-consumers/) can now consume **5,000 messages per second per queue**. Previously, pull consumers were limited to 1200 requests / 5 minutes, aggregated across all queues.
+[Queues Pull Consumers](/queues/configuration/pull-consumers/) can now pull and acknowledge **5,000 messages per second per queue**. Previously, pull consumers were rate limited to 1200 requests / 5 minutes, aggregated across all queues.
 
 Pull consumers allow you to consume messages over HTTP from any environment—including outside of [Cloudflare Workers](/workers). They’re also useful when you need fine-grained control over how quickly messages are consumed.
 
@@ -25,8 +25,6 @@ curl "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/queues/${QU
 --data '{ "visibility_timeout": 10000, "batch_size": 2 }'
 ```
 
-The increased limits let you pull, acknowledge, and retry up to 5,000 messages per second per queue. To learn more about how to acknowledge / retry messages, pull batches at once, and setup multiple consumers, refer to the [pull consumer documentation](/queues/configuration/pull-consumers).
+To learn more about how to acknowledge messages, pull batches at once, and setup multiple consumers, refer to the [pull consumer documentation](/queues/configuration/pull-consumers).
 
-As always, Queues doesn't charge for data egress. Pull operations continue to be billed at the [existing rate](/queues/platform/pricing), of $0.40 / million operations.
-
-The increased limits are available now, on all new and existing queues. And if you're new to Queues, [get started with the Cloudflare Queues guide](/queues/get-started).
+As always, Queues doesn't charge for data egress. Pull operations continue to be billed at the [existing rate](/queues/platform/pricing), of $0.40 / million operations. The increased limits are available now, on all new and existing queues. If you're new to Queues, [get started with the Cloudflare Queues guide](/queues/get-started).
