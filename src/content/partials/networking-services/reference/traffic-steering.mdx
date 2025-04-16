@@ -25,13 +25,35 @@ The Magic routing table supports routing the {props.productName} traffic via any
 
 The following IPv4 address ranges are allowed in the Magic Routing table:
 
-- [RFC 1918](https://datatracker.ietf.org/doc/html/rfc1918) address space, specifically `10.0.0.0/8`, `172.16.0.0/12`, and `192.168.0.0/16`.
-- [BYOIP](/byoip/) public address space which you have onboarded to Cloudflare Magic Transit.
-- Cloudflare [leased IPs](/magic-transit/cloudflare-ips/) assigned to your account.
+{ props.magicWord === "Magic Transit" && (
+  <>
+		<Markdown
+    text={`
+		- [BYOIP](/byoip/) public address space which you have onboarded to Cloudflare Magic Transit.
+		- Cloudflare [leased IPs](/magic-transit/cloudflare-ips/) assigned to your account.
+			`}
+				inline={false}
+  />
+  </>
+  )
+}
 
-When using Magic WAN and Cloudflare Tunnel together, remember to consider the IP ranges utilized in the static routes of Cloudflare Tunnel when selecting static routes for Magic WAN. For more information, refer to [Cloudflare Tunnel](/magic-wan/zero-trust/cloudflare-tunnel/).
+{ props.magicWord === "Magic WAN" && (
+  <>
+		<Markdown
+    text={`
+		- [RFC 1918](https://datatracker.ietf.org/doc/html/rfc1918) address space, specifically \`10.0.0.0/8\`, \`172.16.0.0/12\`, and \`192.168.0.0/16\`.
 
-For privately routing prefixes outside RFC 1918 contact your Cloudflare customer service manager.
+		When using Magic WAN and Cloudflare Tunnel together, remember to consider the IP ranges utilized in the static routes of Cloudflare Tunnel when selecting static routes for Magic WAN. For more information, refer to [Cloudflare Tunnel](/magic-wan/zero-trust/cloudflare-tunnel/).
+
+		For prefixes outside RFC 1918 contact your Cloudflare customer service manager.
+			`}
+				inline={false}
+  	/>
+  </>
+  )
+}
+
 
 ### Route prioritization
 
