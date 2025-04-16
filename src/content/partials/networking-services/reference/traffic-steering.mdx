@@ -66,7 +66,7 @@ In the example below, `TUNNEL_2_IAD` is likely to receive twice as much traffic 
 
 When BGP advertises a route, it is automatically added to the Magic routing table with a default priority of `100` which applies to [all regions](#scoping-routes-to-specific-regions). However, if a static route exists with the same prefix and priority, the static route will always take precedence over the BGP route. You will have to set a different priority for static routes, to be more or less than `100`, depending on which you want to prioritize. Lower values have greater priority.
 
-Additionally, when multiple BGP routes exist with the same prefix length and priority, traffic is distributed across them using [equal-cost multi-path (ECMP) routing](#).
+Additionally, when multiple BGP routes exist with the same prefix length and priority, traffic is distributed across them using [equal-cost multi-path (ECMP) routing](#equal-cost-multi-path-routing).
 
 ### Change route priorities with BGP attributes
 
