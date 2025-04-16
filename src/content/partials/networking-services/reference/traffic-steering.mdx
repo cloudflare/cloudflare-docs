@@ -341,13 +341,13 @@ Cloudflare uses the timers as described below. These are not configurable:
 
 | Setting | Description |
 | ----- | ----- |
-| **Hold timer** | 240 seconds (*To establish a session, Cloudflare will compare our hold timer and the peer's hold timer, and use the smaller of the two values to establish the BGP session.*) |
+| **Hold timer** | 240 seconds <br /> (_To establish a session, Cloudflare will compare our hold timer and the peer's hold timer, and use the smaller of the two values to establish the BGP session._) |
 | **Keepalive timer** | One third of the hold time. |
 | **Graceful restart** | 120 seconds |
 
-* **Hold timer**: Specifies the maximum amount of time that a BGP peer will wait to receive a keepalive, update, or notification message before declaring the BGP session down. Cloudflare will use the smaller of this default hold time and that received from the peer in the open message.
-* **Keepalive timer**: BGP systems exchange keepalive messages to determine whether the peer router is reachable. If keepalive messages are not received within the Hold Timer, the session is assumed to be down, indicating that the peer is no longer reachable at the BGP protocol level.
-* **Graceful restart timer**: Tracks how long a router will wait for a peer to re-establish a BGP session after the peer initiates a graceful restart. If the peer does not reconnect within this time, the router declares the session down and removes stale routes.
+- **Hold timer**: Specifies the maximum amount of time that a BGP peer will wait to receive a keepalive, update, or notification message before declaring the BGP session down. Cloudflare will use the smaller of this default hold time and that received from the peer in the open message.
+- **Keepalive timer**: BGP systems exchange keepalive messages to determine whether the peer router is reachable. If keepalive messages are not received within the Hold Timer, the session is assumed to be down, indicating that the peer is no longer reachable at the BGP protocol level.
+- **Graceful restart timer**: Tracks how long a router will wait for a peer to re-establish a BGP session after the peer initiates a graceful restart. If the peer does not reconnect within this time, the router declares the session down and removes stale routes.
 
 ### BGP Limitations
 
@@ -355,13 +355,28 @@ BGP multipath is supported. If the same prefix is learned on two different inter
 
 BGP support currently has the following limitations:
 
-* The Cloudflare account ASN and the customer device ASN must be different. Only eBGP is supported.
-* Routes are always injected with a priority of 100.
-* Bidirectional Forwarding Detection (BFD) is not supported.
+- The Cloudflare account ASN and the customer device ASN must be different. Only eBGP is supported.
+- Routes are always injected with a priority of `100`.
+- Bidirectional Forwarding Detection (BFD) is not supported.
 
-For Magic Transit customers, BGP with the Magic routing table is separated from the announcement of anycast prefixes at the Cloudflare edge. Anycast withdrawal must be controlled with existing methods documented in [Advertise prefixes](https://developers.cloudflare.com/magic-transit/how-to/advertise-prefixes/).
+{ props.magicProduct === "Magic Transit" && (
+  <>
+    <p>For Magic Transit customers, BGP with the Magic routing table is separated from the announcement of anycast prefixes at the Cloudflare edge. Anycast withdrawal must be controlled with existing methods documented in [Advertise prefixes](https://developers.cloudflare.com/magic-transit/how-to/advertise-prefixes/).</p>
+  </>
+  )
+}
+
+### Tunnel health checks
+
+{props.productName} customers need to enable legacy <a href={props.legacyHCs}>health checks</a> alongside BGP. This is essential to determine if a specific Cloudflare data center is reachable from a customer device or not. <a href={props.tunnelHCsPage}>Tunnel health checks</a> will modify the route's priorities for dynamically learned BGP routes.
 
 
+{ props.magicProduct === "Magic WAN" && (
+  <>
+		<AnchorHeading title="Application-aware policies" depth={2} />
+    <p>By default, Cloudflare balances and steers traffic based on network-layer characteristics (IP, port etc). If you are using the Magic WAN Connector, you can also steer traffic based on well-known applications. Application-aware policies provide easier management and more granularity over traffic flows.
 
-
-
+		For more information, refer to [Applications and app types](https://developers.cloudflare.com/cloudflare-one/policies/gateway/application-app-types/).</p>
+  </>
+  )
+}
