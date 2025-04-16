@@ -305,7 +305,60 @@ Configure scoping for your traffic in the **Region code** section when adding or
   )
 }
 
+## BGP information
 
+When using a Direct CNI connection as an on-ramp, Magic Transit / WAN customers can also use BGP peering between their networks and their Magic routing table.
+
+Using BGP peering with a CNI allows customers to:
+
+- Automate the process of adding or removing networks and subnets.
+- Take advantage of failure detection and session recovery features.
+
+With this functionality, customers can:
+
+- Establish an eBGP session between their devices and the Magic Transit / WAN service when connected via CNI.
+- Secure the session by MD5 authentication to prevent misconfigurations.
+- Exchange routes dynamically between their devices and their Magic routing table.
+
+### BGP peering with the Magic routing table
+
+Magic WAN / Magic Transit BGP peering is with the Magic networking routing table (as opposed to peering with the Cloudflare Internet global network). BGP peers configured by following this guide will receive advertisements for all prefixes in the Magic routing table plus any additional prefixes configured in the per-interconnect [Advertised prefix list](https://developers.cloudflare.com/magic-transit/how-to/bgp-peering/#how-to-set-up-bgp-peering).
+
+If instead you are seeking to do public peering with the Cloudflare ASN 13335 at one of the Cloudflare data centers, refer to [PNI and peering setup](https://developers.cloudflare.com/network-interconnect/pni-and-peering/). Note that it is not currently possible to share Magic network BGP peering and PNI on the same physical interconnect port.
+
+### BGP route distribution and convergence
+
+Routes received from the customer device will be redistributed into the Magic routing table, which is used by both Magic WAN and Magic Transit.
+
+All routes in the Magic routing table are advertised to BGP peers. Each BGP peer will receive each prefix route along with the full AS\_PATH, with the selected Cloudflare side [ASN ↗](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/) prepended. This is so that the peer can accurately perform [loop prevention ↗](https://datatracker.ietf.org/doc/html/rfc4271#section-9.1.2).
+
+BGP peering sessions can advertise reachable prefixes to a peer and withdraw previously advertised prefixes. This should not take more than a few minutes to propagate.
+
+### BGP timers and settings
+
+Cloudflare uses the timers as described below. These are not configurable:
+
+| Setting | Description |
+| ----- | ----- |
+| **Hold timer** | 240 seconds (*To establish a session, Cloudflare will compare our hold timer and the peer's hold timer, and use the smaller of the two values to establish the BGP session.*) |
+| **Keepalive timer** | One third of the hold time. |
+| **Graceful restart** | 120 seconds |
+
+* **Hold timer**: Specifies the maximum amount of time that a BGP peer will wait to receive a keepalive, update, or notification message before declaring the BGP session down. Cloudflare will use the smaller of this default hold time and that received from the peer in the open message.
+* **Keepalive timer**: BGP systems exchange keepalive messages to determine whether the peer router is reachable. If keepalive messages are not received within the Hold Timer, the session is assumed to be down, indicating that the peer is no longer reachable at the BGP protocol level.
+* **Graceful restart timer**: Tracks how long a router will wait for a peer to re-establish a BGP session after the peer initiates a graceful restart. If the peer does not reconnect within this time, the router declares the session down and removes stale routes.
+
+### BGP Limitations
+
+BGP multipath is supported. If the same prefix is learned on two different interconnects then traffic destined for that prefix will be distributed across each interconnect according to the usual ECMP behavior.
+
+BGP support currently has the following limitations:
+
+* The Cloudflare account ASN and the customer device ASN must be different. Only eBGP is supported.
+* Routes are always injected with a priority of 100.
+* Bidirectional Forwarding Detection (BFD) is not supported.
+
+For Magic Transit customers, BGP with the Magic routing table is separated from the announcement of anycast prefixes at the Cloudflare edge. Anycast withdrawal must be controlled with existing methods documented in [Advertise prefixes](https://developers.cloudflare.com/magic-transit/how-to/advertise-prefixes/).
 
 
 
