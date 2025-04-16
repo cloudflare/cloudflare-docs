@@ -17,7 +17,7 @@ The Magic networking routing table is a virtual network overlay, private to your
 - Magic Transit delivery for [DoS](/ddos-protection/) and [Magic Firewall](/magic-firewall/) filtered Internet traffic, from the entry data center where the traffic ingressed, to your publicly addressed edge/border network.
 - Magic WAN packet transport between Magic tunnels, interconnects, [Cloudflare Load Balancer](/load-balancing/), and [Zero Trust](/cloudflare-one/) connections such as [WARP Client](/cloudflare-one/connections/connect-devices/warp/), [Remote Browser Isolation](/cloudflare-one/policies/browser-isolation/), [Access](/cloudflare-one/policies/access/), and [Gateway](/cloudflare-one/policies/gateway/).
 
-The Magic routing table supports routing the {props.productName} traffic via anycast tunnels using <a href={props.greIpsecReferenceURL}>GRE and Internet Protocol Security (IPsec)]</a> or Direct [Cloudflare Network Interconnect (CNI)](/network-interconnect/). Entries can be added to the Magic routing table via static route configuration or via routes learned through BGP peering (only available over Direct CNI).
+The Magic routing table supports routing the {props.productName} traffic via anycast tunnels using <a href={props.greIpsecReferenceURL}>GRE and Internet Protocol Security (IPsec)</a> or [Direct Cloudflare Network Interconnect (CNI)](/network-interconnect/). Entries can be added to the Magic routing table via static route configuration or via routes learned through BGP peering (only available over Direct CNI).
 
 ### Allowed IP ranges
 
