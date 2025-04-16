@@ -476,8 +476,6 @@ For more information on <GlossaryTooltip term="content security policy (CSP)">Co
 For a list of CSP directives and keywords supported by Page Shield policies, refer to [CSP directives supported by policies](/page-shield/policies/csp-directives/).
 :::
 
-TODO. Fix example.
-
 <APIRequest
 	path="/zones/{zone_id}/page_shield/policies"
 	method="POST"
@@ -490,19 +488,6 @@ TODO. Fix example.
 			"script-src myapp.example.com cdnjs.cloudflare.com https://www.google-analytics.com/analytics.js 'self'",
 	}}
 />
-
-```bash
-curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/policies" \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "description": "My first policy in log mode",
-  "action": "log",
-  "expression": "http.host eq myapp.example.com",
-  "enabled": "true",
-  "value": "script-src myapp.example.com cdnjs.cloudflare.com https://www.google-analytics.com/analytics.js '\''self'\''"
-}'
-```
 
 ```json output
 {
