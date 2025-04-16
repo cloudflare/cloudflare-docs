@@ -99,3 +99,7 @@ return Response.json(returnValue);
   "duration": 1
 }
 ```
+
+:::note[Storing large numbers]
+D1 returns numbers as a [JavaScript number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number), which has a 52-bit precision. If you store a very large number (in `int64`) then retrieve the same value, the returned value may be less precise than your original number.
+:::
