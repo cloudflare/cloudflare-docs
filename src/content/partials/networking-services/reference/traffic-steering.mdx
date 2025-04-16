@@ -7,6 +7,7 @@ params:
   - regionsURL
   - createStaticRoute
   - editStaticRoute
+  - setupBGPpeering
 ---
 
 import { GlossaryTooltip, Markdown } from "~/components";
@@ -307,7 +308,7 @@ Configure scoping for your traffic in the **Region code** section when adding or
 
 ## BGP information
 
-When using a Direct CNI connection as an on-ramp, Magic Transit / WAN customers can also use BGP peering between their networks and their Magic routing table.
+When using a Direct CNI connection as an on-ramp, {props.productName} customers can also use BGP peering between their networks and their Magic routing table.
 
 Using BGP peering with a CNI allows customers to:
 
@@ -316,21 +317,21 @@ Using BGP peering with a CNI allows customers to:
 
 With this functionality, customers can:
 
-- Establish an eBGP session between their devices and the Magic Transit / WAN service when connected via CNI.
+- Establish an eBGP session between their devices and the {props.productName} service when connected via CNI.
 - Secure the session by MD5 authentication to prevent misconfigurations.
 - Exchange routes dynamically between their devices and their Magic routing table.
 
 ### BGP peering with the Magic routing table
 
-Magic WAN / Magic Transit BGP peering is with the Magic networking routing table (as opposed to peering with the Cloudflare Internet global network). BGP peers configured by following this guide will receive advertisements for all prefixes in the Magic routing table plus any additional prefixes configured in the per-interconnect [Advertised prefix list](https://developers.cloudflare.com/magic-transit/how-to/bgp-peering/#how-to-set-up-bgp-peering).
+{props.productName} BGP peering is with the Magic networking routing table (as opposed to peering with the Cloudflare Internet global network). BGP peers configured by following this guide will receive advertisements for all prefixes in the Magic routing table plus any additional prefixes configured in the per-interconnect <a href={props.setupBGPpeering}>Advertised prefix list</a>.
 
-If instead you are seeking to do public peering with the Cloudflare ASN 13335 at one of the Cloudflare data centers, refer to [PNI and peering setup](https://developers.cloudflare.com/network-interconnect/pni-and-peering/). Note that it is not currently possible to share Magic network BGP peering and PNI on the same physical interconnect port.
+If instead you are seeking to do public peering with the Cloudflare ASN 13335 at one of the Cloudflare data centers, refer to [PNI and peering setup](/network-interconnect/pni-and-peering/). Note that it is not currently possible to share Magic network BGP peering and PNI on the same physical interconnect port.
 
 ### BGP route distribution and convergence
 
 Routes received from the customer device will be redistributed into the Magic routing table, which is used by both Magic WAN and Magic Transit.
 
-All routes in the Magic routing table are advertised to BGP peers. Each BGP peer will receive each prefix route along with the full AS\_PATH, with the selected Cloudflare side [ASN ↗](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/) prepended. This is so that the peer can accurately perform [loop prevention ↗](https://datatracker.ietf.org/doc/html/rfc4271#section-9.1.2).
+All routes in the Magic routing table are advertised to BGP peers. Each BGP peer will receive each prefix route along with the full `AS_PATH`, with the selected Cloudflare side [ASN](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/) prepended. This is so that the peer can accurately perform [loop prevention](https://datatracker.ietf.org/doc/html/rfc4271#section-9.1.2).
 
 BGP peering sessions can advertise reachable prefixes to a peer and withdraw previously advertised prefixes. This should not take more than a few minutes to propagate.
 
