@@ -33,14 +33,21 @@ export interface Env {
 
 export default {
   async fetch(request, env): Promise<Response> {
+  	// Parse incoming url
 		const url = new URL(request.url)
+
+		// Get the user query or default to a predefined one
 		const userQuery = url.searchParams.get('query') ?? 'How do I train a llama to deliver coffee?'
+
+		// Search for documents in AutoRAG
 		const searchResult =  await env.AI.autorag('my-rag').search({query: userQuery})
 
 		if (searchResult.data.length === 0) {
+			// No matching documents
 			return Response.json({text: `No data found for query "${userQuery}"`})
 		}
 
+		// Join all document chunks into a single string
 		const chunks = searchResult.data.map((item) => {
 			const data = item.content.map((content) => {
 				return content.text
@@ -49,6 +56,7 @@ export default {
 			return `<file name="${item.filename}">${data}</file>`
 		}).join('\n\n')
 
+		// Send the user query + matched documents to openai for answer
 		const generateResult = await generateText({
 			model: openai("gpt-4o-mini"),
 			messages: [
@@ -58,6 +66,7 @@ export default {
 			],
 		});
 
+		// Return the generated answer
 		return Response.json({text: generateResult.text});
   },
 } satisfies ExportedHandler<Env>;
