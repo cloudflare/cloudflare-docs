@@ -114,7 +114,7 @@ The response returns the created ruleset. Note the presence of the `exposed_cred
 
 The example uses the `url_decode()` function because fields in the request body (available in `http.request.body.form`) are URL-encoded when the content type is `application/x-www-form-urlencoded`.
 
-After creating a custom ruleset, deploy it to a phase so that it executes. Refer to [Deploy a custom ruleset](/ruleset-engine/custom-rulesets/deploy-custom-ruleset/) for more information.
+After creating the custom ruleset, deploy it to a phase so that it executes. You will need the ruleset ID to deploy the custom ruleset. For more information, refer to [Deploy a custom ruleset](/ruleset-engine/custom-rulesets/deploy-custom-ruleset/).
 
 ### Example B
 
@@ -202,6 +202,4 @@ The response returns the created ruleset. Note the presence of the following ele
 }
 ```
 
-## Next steps
-
-After creating a custom ruleset, deploy it to the `http_request_firewall_custom` phase at the account level so that it executes. You will need the ruleset ID to deploy the custom ruleset. For more information, refer to [Deploy a custom ruleset](/ruleset-engine/custom-rulesets/deploy-custom-ruleset/).
+After creating the custom ruleset, deploy it to a phase so that it executes. You will need the ruleset ID to deploy the custom ruleset. For more information, refer to [Deploy a custom ruleset](/ruleset-engine/custom-rulesets/deploy-custom-ruleset/).
