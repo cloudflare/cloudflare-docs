@@ -139,11 +139,8 @@ To [test](/cloudflare-one/identity/idp-integration/#test-idps-in-zero-trust) tha
         }'
         ```
 
-</TabItem> <TabItem label="Terraform">
+</TabItem> <TabItem label="Terraform (v5)">
 
-:::note[Provider versions]
-The following example requires Cloudflare provider version `>=4.40.0`.
-:::
 
 1.  Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
 
@@ -151,7 +148,7 @@ The following example requires Cloudflare provider version `>=4.40.0`.
 
 2.  Configure the [`cloudflare_zero_trust_access_identity_provider`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_identity_provider) resource:
 
-        <Render file="access/entra-id-terraform" />
+		<Render file="access/entra-id-terraform" />
 
 </TabItem> </Tabs>
 
