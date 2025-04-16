@@ -1,9 +1,12 @@
 ---
 params:
+  - magicWord
   - productName
   - greURL
   - ipsecURL
   - regionsURL
+  - createStaticRoute
+  - editStaticRoute
 ---
 
 import { GlossaryTooltip, Markdown } from "~/components";
@@ -240,12 +243,10 @@ Scoping routes to specific regions is not supported with BGP peering at this tim
 
 | Prefix | NextHop | Priority | Region code |
 | ----- | ----- | ----- | ----- |
-| 10.10.10.100/24 | TUNNEL\_1\_IAD | 100 | *AFR* |
-| 10.10.10.100/24 | TUNNEL\_2\_IAD | 100 | *EEUR* |
-| 10.10.10.100/24 | TUNNEL\_3\_ATL | 100 | *ENAM* |
-| 10.10.10.100/24 | TUNNEL\_4\_ATL | 100 | *ME* |
-
-####
+| 10.10.10.100/24 | TUNNEL_1_IAD | 100 | _AFR_ |
+| 10.10.10.100/24 | TUNNEL_2_IAD | 100 | _EEUR_ |
+| 10.10.10.100/24 | TUNNEL_3_ATL | 100 | _ENAM_ |
+| 10.10.10.100/24 | TUNNEL_4_ATL | 100 | _ME_ |
 
 ### Region codes and associated regions
 
@@ -253,14 +254,60 @@ Cloudflare has nine geographic regions across the world which are listed below.
 
 | Region code | Region |
 | ----- | ----- |
-| *AFR* | Africa |
-| *APAC* | Asia Pacific |
-| *EEUR* | Eastern Europe |
-| *ENAM* | Eastern North America |
-| *ME* | Middle East |
-| *OC* | Oceania |
-| *SAM* | South America |
-| *WEUR* | Western Europe |
-| *WNAM* | Western North America |
+| _AFR_ | Africa |
+| _APAC_ | Asia Pacific |
+| _EEUR_ | Eastern Europe |
+| _ENAM_ | Eastern North America |
+| _ME_ | Middle East |
+| _OC_ | Oceania |
+| _SAM_ | South America |
+| _WEUR_ | Western Europe |
+| _WNAM_ | Western North America |
 
-Configure scoping for your traffic in the **Region code** section when adding or editing a static route. Refer to [Create a static route](https://developers.cloudflare.com/magic-transit/how-to/configure-static-routes/#create-a-static-route) and [Edit a static route](https://developers.cloudflare.com/magic-transit/how-to/configure-static-routes/#edit-a-static-route) more information.
+Configure scoping for your traffic in the **Region code** section when adding or editing a static route. Refer to <a href={props.createStaticRoute}>Create a static route</a> and <a href={props.editStaticRoute}>Edit a static route</a> more information.
+
+{ props.magicProduct === "Magic Transit" && (
+  <>
+    <AnchorHeading title="Magic Transit prefix mapping" depth={2} />
+    <AnchorHeading title="Map route prefixes smaller than `/24`" depth={3} />
+		<Markdown
+    text={`
+		You must provide your prefixes and the tunnels that should be mapped to for Cloudflare to route your traffic from our global network to your data centers via anycast tunnels. Use the table below as reference.
+
+  | Prefix            | NextHop        |
+  | ----------------- | -------------- |
+  | \`103.21.244.0/29\` | \`TUNNEL_1_IAD\` |
+  | \`103.21.244.8/29\` | \`TUNNEL_2_ATL\` |
+
+		The minimum advertising prefix is \`/24\`, but because Cloudflare uses anycast tunnels as an outer wrapper for your traffic, we can route prefixes within that \`/24\` to different tunnel endpoints. For example, you can send \`x.x.x.0/29\` to Data Center 1 and \`x.x.x.8/29\` to Data Center 2. This is helpful when you operate in an environment with constrained IP resources.
+  `}
+    inline={false}
+  />
+
+		<AnchorHeading title="Map routes prefixes bigger than onboarded prefixes" depth={3} />
+		<Markdown
+    text={`
+		If you have multiple onboarded \`/24\` subnets that belong to a larger contiguous block, you can configure a summary static route for the corresponding supernet (like a \`/23\` or a \`/22\`) instead of adding each \`/24\` individually. This eliminates the need to configure each \`/24\` route individually, as all traffic will be routed through the same GRE tunnels.
+
+		For example, if you have two tunnels:
+
+		- \`192.0.2.0/24\`
+		- \`192.0.3.0/24\`
+
+		You can summarize these into a single \`192.0.2.0/23\`.
+
+		Refer to [Add tunnels](/magic-transit/how-to/configure-tunnels/#add-tunnels) to learn more about configuring GRE tunnels.
+			`}
+				inline={false}
+  />
+	<Aside type="note">These address blocks are a part of <a href="https://datatracker.ietf.org/doc/rfc5737/" target="_blank" rel="noopener noreferrer">RFC 5737</a> and are reserved for use as examples in documentation.</Aside>
+  </>
+  )
+}
+
+
+
+
+
+
+
