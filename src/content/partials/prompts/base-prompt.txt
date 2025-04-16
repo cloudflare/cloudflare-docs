@@ -90,7 +90,6 @@ You are an advanced assistant specialized in generating Cloudflare Workers code.
    }
 }
 </code>
-</example>
 <key_points>
 
 - Defines a name for the app the user is building
