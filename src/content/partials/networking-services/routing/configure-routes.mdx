@@ -1,5 +1,6 @@
 ---
 params:
+  - magicWord
   - trafficSteeringPage
   - createStaticRoutePath
   - tunnelEndpoints
@@ -253,7 +254,38 @@ By default, each BGP peering session will use the same Cloudflare-side ASN to re
 3. In **CF Account ASN**, enter Cloudflare's ASN.
 4. Select **Update**.
 
-<Markdown text={props.asnProduct} />
+{ props.magicWord === "Magic Transit" && (
+  <>
+	<Markdown
+    text={`
+		Magic Transit customers should also be aware of the following:
+
+		- The Cloudflare side ASN will never be exposed in \`AS_PATH\` of anycast announcements from the Cloudflare edge. In those announcements, Cloudflare will always use the Cloudflare ASN of \`13335\` optionally prepended with a bring-your-own ASN as described in [Cloudflare ASN vs. your own ASN](/magic-transit/how-to/advertise-prefixes/#cloudflare-asn-vs-your-own-asn).
+		- The customer device ASN can be a private ASN or the ASN they are using for Magic Transit anycast announcements at the edge: this has no impact on the ASN for the anycast announced prefix at the edge of the Cloudflare global network.
+  `}
+    inline={false}
+  />
+
+
+  </>
+  )
+}
+
+{ props.magicWord === "Magic WAN" && (
+  <>
+	<Markdown
+    text={`
+		Magic WAN customers should also be aware of the following:
+		- The Cloudflare side ASN will be included in the \`AS_PATH\` of announced routes to any BGP enabled interconnect.
+		- The customer chooses their device ASN, which should be different to the Cloudflare-side ASN.
+  `}
+    inline={false}
+  />
+
+
+  </>
+  )
+}
 
 ### Set up BGP peering
 
