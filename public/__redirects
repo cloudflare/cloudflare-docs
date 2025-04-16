@@ -790,18 +790,18 @@
 # Non-slashed version is being used in the Cloudflare dashboard
 /logs/reference/logpush-api-configuration/examples/example-logpush-curl/ /logs/tutorials/examples/example-logpush-curl/ 301
 
-# magic-firewall
+# magic firewall
 /magic-firewall/reference/examples/ /magic-firewall/how-to/add-rules/ 301
 /magic-firewall/how-to/collect-pcaps/ /magic-firewall/packet-captures/collect-pcaps/ 301
 
-# magic-network-monitoring
+# magic network monitoring
 /magic-network-monitoring/routers/ /magic-network-monitoring/routers/supported-routers/ 301
 /magic-network-monitoring/tutorials/ /magic-network-monitoring/tutorials/graphql-analytics/ 301
 /magic-network-monitoring/rules/recommended-rule-configuration/ /magic-network-monitoring/rules/static-threshold/ 301
 /magic-network-monitoring/rules/sflow-ddos-alerts/ /rules/configure-rule-notifications/ 301
 /magic-network-monitoring/notifications/ /rules/rule-notifications/ 301
 
-# magic-transit
+# magic transit
 /magic-transit/magic-firewall/ /magic-firewall/ 301
 /magic-transit/set-up/onboarding/ /magic-transit/get-started/ 301
 /magic-transit/set-up/provide-configuration-data/assign-tunnel-route-priorities/ /magic-transit/how-to/configure-routes/ 301
@@ -817,7 +817,7 @@
 /magic-transit/how-to/configure-static-routes/ /magic-transit/how-to/configure-routes/ 301
 /magic-transit/how-to/bgp-peering/ /magic-transit/how-to/configure-routes/ 301
 
-# magic-wan
+# magic wan
 /magic-wan/tutorials/ipsec/ /magic-wan/reference/tunnels/#ipsec-tunnels 301
 /magic-wan/how-to/configure-tunnels/ /magic-wan/configuration/manually/how-to/configure-tunnels/ 301
 /magic-wan/about/ /magic-wan/reference/ 301
@@ -839,6 +839,8 @@
 /magic-wan/configuration/common-settings/view-analytics/ /magic-wan/analytics/ 301
 /magic-wan/prerequisites/ /magic-wan/get-started/ 301
 /magic-wan/configuration/common-settings/check-tunnel-health-dashboard/ /magic-wan/configuration/common-settings/tunnel-health-checks/ 301
+/magic-wan/configuration/manually/how-to/configure-static-routes/ /magic-wan/configuration/manually/how-to/configure-routes/ 301
+/magic-wan/configuration/manually/how-to/bgp-peering/ /magic-wan/configuration/manually/how-to/configure-routes/ 301
 
 # notifications
 /fundamentals/notifications/ /notifications/ 301
