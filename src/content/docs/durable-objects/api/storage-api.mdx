@@ -149,7 +149,7 @@ console.log(cursor.toArray()); // prints [{ artistid: 456, artistname: 'Bob' },{
   - The number of rows read so far as part of this SQL `query`. This may increase as you iterate the cursor. The final value is used for [SQL billing](/durable-objects/platform/pricing/#sqlite-storage-backend).
 - `rowsWritten`: <Type text='number' />
   - The number of rows written so far as part of this SQL `query`. This may increase as you iterate the cursor. The final value is used for [SQL billing](/durable-objects/platform/pricing/#sqlite-storage-backend).
-- `SqlStorageCursor` returns numbers as a [JavaScript number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number), which has a 52-bit precision. If you store a very large number (in `int64`), then retrieve the same value, the returned value may be less precise than your original number.
+- Any numeric value in a column is affected by the JavaScript's 52-bit precision for numbers. If you store a very large number (in `int64`), then retrieve the same value, the returned value may be less precise than your original number.
 
 :::note[SQL transactions]
 Note that `sql.exec()` cannot execute transaction-related statements like `BEGIN TRANSACTION` or `SAVEPOINT`. Instead, use the [`ctx.storage.transaction()`](/durable-objects/api/storage-api/#transaction) or [`ctx.storage.transactionSync()`](/durable-objects/api/storage-api/#transactionsync) APIs to start a transaction, and then execute SQL queries in your callback.
