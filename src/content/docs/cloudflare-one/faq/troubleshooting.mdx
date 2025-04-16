@@ -340,4 +340,4 @@ To resolve this error, review the following options:
 
 When you put your Google Workspace behind Access, users will not be able to log in using Google or Google Workspace as an identity provider.
 
-This configuration creates an authentication loop. Cloudflare Access tries to verify the user via Google, but Google itself is now behind Cloudflare and requires authentication to be accessed. Since each system depends on the other to complete login first, the user is caught in an infinite redirect cycle and can never successfully authenticate.
+This configuration creates an authentication loop. Cloudflare Access tries to authenticate the user via Google, but Google itself treats Cloudflare as its identity provider and requires authentication from Cloudflare. Since each system depends on the other to complete login first, the user is caught in an infinite redirect cycle and can never successfully authenticate.
