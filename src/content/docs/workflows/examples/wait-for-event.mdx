@@ -16,11 +16,13 @@ import {  GitHubCode, WranglerConfig } from "~/components"
 
 This example demonstrates how to use the `waitForEvent()` API in Cloudflare Workflows to introduce a human-in-the-loop step. The Workflow is triggered by an image upload, during which metadata is stored in a D1 database. The Workflow then waits for user approval, and upon approval, it uses Workers AI to generate image tags, which are stored in the database. An accompanying Next.js frontend application facilitates the image upload and approval process.
 
-Note: The example on this page includes only a subset of the full implementation. For the complete codebase and deployment instructions, please refer to the [GitHub repository](https://github.com/cloudflare/docs-examples/tree/main/workflows/waitForEvent).
+:::note
+The example on this page includes only a subset of the full implementation. For the complete codebase and deployment instructions, please refer to the [GitHub repository](https://github.com/cloudflare/docs-examples/tree/main/workflows/waitForEvent).
+:::
 
 ## Overview of the Workflow
 
-In this Workflow, we simulate a scenario where an uploaded image requires human approval before AI-based processing. An image is uploaded to R2, and then Workflow performs the following steps:
+In this Workflow, we simulate a scenario where an uploaded image requires human approval before AI-based processing. An image is uploaded to R2, then Workflow performs the following steps:
 
 1. Stores image metadata in a D1 database.
 2. Pauses execution using `waitForEvent()` and waits for an external event sent from the Next.js frontend, indicating approval or rejection.
