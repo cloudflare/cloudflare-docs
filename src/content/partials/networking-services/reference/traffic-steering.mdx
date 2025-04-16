@@ -267,7 +267,7 @@ Cloudflare has nine geographic regions across the world which are listed below.
 
 Configure scoping for your traffic in the **Region code** section when adding or editing a static route. Refer to <a href={props.createStaticRoute}>Create a static route</a> and <a href={props.editStaticRoute}>Edit a static route</a> more information.
 
-{ props.magicProduct === "Magic Transit" && (
+{ props.magicWord === "Magic Transit" && (
   <>
     <AnchorHeading title="Magic Transit prefix mapping" depth={2} />
     <AnchorHeading title="Map route prefixes smaller than `/24`" depth={3} />
@@ -371,7 +371,7 @@ BGP support currently has the following limitations:
 {props.productName} customers need to enable legacy <a href={props.legacyHCs}>health checks</a> alongside BGP. This is essential to determine if a specific Cloudflare data center is reachable from a customer device or not. <a href={props.tunnelHCsPage}>Tunnel health checks</a> will modify the route's priorities for dynamically learned BGP routes.
 
 
-{ props.magicProduct === "Magic WAN" && (
+{ props.magicWord === "Magic WAN" && (
   <>
 		<AnchorHeading title="Application-aware policies" depth={2} />
     <p>By default, Cloudflare balances and steers traffic based on network-layer characteristics (IP, port etc). If you are using the Magic WAN Connector, you can also steer traffic based on well-known applications. Application-aware policies provide easier management and more granularity over traffic flows.
