@@ -39,7 +39,26 @@ Magic {props.productName} is steered along tunnel routes based on priorities of 
 
 ### Setting priority for static routes
 
-The priority value for static routes is directly configured as part of the route object in the Cloudflare dashboard or via API.
+The priority value for static routes is directly configured as part of the route object in the Cloudflare dashboard or via API. For example:
+
+
+| Prefix | NextHop | Priority |
+| ----- | ----- | ----- |
+| 10.10.10.100/24 | TUNNEL_1_IAD | 200 |
+| 10.10.10.100/24 | TUNNEL_2_IAD | 200 |
+| 10.10.10.100/24 | TUNNEL_3_ATL | 100 |
+| 10.10.10.100/24 | TUNNEL_4_ATL | 100 |
+
+Optionally, you can assign weights to distribute traffic more effectively among multiple tunnels. The weight values determine the proportion of traffic directed to each tunnel, with higher weights resulting in a greater share of traffic. The maximum weight value is `256`.
+
+In the example below, `TUNNEL_2_IAD` is likely to receive twice as much traffic as `TUNNEL_1_IAD`.
+
+| Prefix | NextHop | Priority | Weight |
+| ----- | ----- | ----- | ----- |
+| 10.10.10.100/24 | TUNNEL_1_IAD | 100 | 64 |
+| 10.10.10.100/24 | TUNNEL_2_IAD | 100 | 128 |
+| 10.10.10.100/24 | TUNNEL_3_ATL | 100 | 192 |
+| 10.10.10.100/24 | TUNNEL_4_ATL | 100 | 255 |
 
 ### Setting priority for BGP routes
 
@@ -198,7 +217,7 @@ Because ECMP is probabilistic, the algorithm routes roughly the same number of f
 For example, consider a scenario with many very low-bandwidth TCP connections and one very high-bandwidth TCP connection. Packets for the high-bandwidth connection have the same hash and thus use the same tunnel. As a result, that tunnel utilizes greater bandwidth than the others.
 
 :::note[Note]
-{props.productName} supports a weight field that you can apply to a route so that a specified percentage of traffic uses a certain tunnel rather than other equal-cost tunnels. Refer to [Route prioritization](#) for more information.
+{props.productName} supports a weight field that you can apply to a route so that a specified percentage of traffic uses a certain tunnel rather than other equal-cost tunnels. Refer to [Route prioritization](#route-prioritization) for more information.
 
 For example, in a scenario where you want to route 70% of your traffic through ISP A and 30% through ISP B, you can use the weight field to help achieve that.
 
@@ -207,22 +226,41 @@ Note that because ECMP balances flows probabilistically, the use of weights is o
 For more on {props.productName} tunnel weights, contact your Cloudflare customer service manager.
 :::
 
-### Edge routing configuration example
+## Scoping routes to specific regions
 
-| Prefix | NextHop | Priority |
-| ----- | ----- | ----- |
-| 10.10.10.100/24 | TUNNEL_1_IAD | 200 |
-| 10.10.10.100/24 | TUNNEL_2_IAD | 200 |
-| 10.10.10.100/24 | TUNNEL_3_ATL | 100 |
-| 10.10.10.100/24 | TUNNEL_4_ATL | 100 |
+If you have multiple connectivity paths to a network segment and you would like to apply different route prioritization based on where the traffic arrives at the Cloudflare network, you can scope routes to specific Cloudflare data center regions. This is useful, for example, if you run your own anycast network and want your end-user traffic to arrive at your network location closest to the user. When a route is scoped to a Cloudflare data center region it will only show up in the Magic routing table in that region, along with all global routes that do not have any region scope. Route prioritization and ECMP logic apply across both region-scoped and global routes.
 
-Optionally, you can assign weights to distribute traffic more effectively among multiple tunnels. The weight values determine the proportion of traffic directed to each tunnel, with higher weights resulting in a greater share of traffic. The maximum weight value is `256`.
+Adding region scoping to routes is only available to statically configured routes at this time.
 
-In the example below, `TUNNEL_2_IAD` is likely to receive twice as much traffic as `TUNNEL_1_IAD`.
+When using region-scoped routes, you should ensure that all prefixes have routes covering all regions. Otherwise, traffic may arrive at a Cloudflare region which is not covered by any route, in which case the traffic will be dropped.
 
-| Prefix | NextHop | Priority | Weight |
+Scoping routes to specific regions is not supported with BGP peering at this time.
+
+### Scoping configuration data example
+
+| Prefix | NextHop | Priority | Region code |
 | ----- | ----- | ----- | ----- |
-| 10.10.10.100/24 | TUNNEL_1_IAD | 100 | 64 |
-| 10.10.10.100/24 | TUNNEL_2_IAD | 100 | 128 |
-| 10.10.10.100/24 | TUNNEL_3_ATL | 100 | 192 |
-| 10.10.10.100/24 | TUNNEL_4_ATL | 100 | 255 |
+| 10.10.10.100/24 | TUNNEL\_1\_IAD | 100 | *AFR* |
+| 10.10.10.100/24 | TUNNEL\_2\_IAD | 100 | *EEUR* |
+| 10.10.10.100/24 | TUNNEL\_3\_ATL | 100 | *ENAM* |
+| 10.10.10.100/24 | TUNNEL\_4\_ATL | 100 | *ME* |
+
+####
+
+### Region codes and associated regions
+
+Cloudflare has nine geographic regions across the world which are listed below.
+
+| Region code | Region |
+| ----- | ----- |
+| *AFR* | Africa |
+| *APAC* | Asia Pacific |
+| *EEUR* | Eastern Europe |
+| *ENAM* | Eastern North America |
+| *ME* | Middle East |
+| *OC* | Oceania |
+| *SAM* | South America |
+| *WEUR* | Western Europe |
+| *WNAM* | Western North America |
+
+Configure scoping for your traffic in the **Region code** section when adding or editing a static route. Refer to [Create a static route](https://developers.cloudflare.com/magic-transit/how-to/configure-static-routes/#create-a-static-route) and [Edit a static route](https://developers.cloudflare.com/magic-transit/how-to/configure-static-routes/#edit-a-static-route) more information.
