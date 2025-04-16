@@ -485,19 +485,19 @@ async function toCSSGradient(hour: number): Promise<string> {
   let css = "linear-gradient(to bottom,";
   const data = grads[hour];
   const len = data.length;
-  
+
   for (let i = 0; i < len; i++) {
     const item = data[i];
     css += ` #${item.color} ${item.position}%`;
     if (i < len - 1) css += ",";
   }
-  
+
   return css + ")";
 }
 
 app.get('*', async (c) => {
   const request = c.req.raw;
-  
+
   // Base HTML style
   let html_style = `
     html{width:100vw; height:100vh;}
@@ -511,26 +511,26 @@ app.get('*', async (c) => {
       color:white;
       font-family:sans-serif;
     }`;
-  
+
   // Get timezone from Cloudflare request
   const timezone = request.cf?.timezone || 'UTC';
   console.log(timezone);
-  
+
   // Get localized time
   let localized_date = new Date(
     new Date().toLocaleString("en-US", { timeZone: timezone })
   );
-  
+
   let hour = localized_date.getHours();
   let minutes = localized_date.getMinutes();
-  
+
   // Generate HTML content
   let html_content = `<h1>${hour}:${minutes}</h1>`;
   html_content += `<p>${timezone}<br/></p>`;
-  
+
   // Add background gradient based on hour
   html_style += `body{background:${await toCSSGradient(hour)};}`;
-  
+
   // Complete HTML document
   let html = `
     <!DOCTYPE html>
@@ -543,7 +543,7 @@ app.get('*', async (c) => {
         ${html_content}
       </div>
     </body>`;
-  
+
   return c.html(html);
 });
 

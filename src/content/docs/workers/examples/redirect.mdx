@@ -175,10 +175,10 @@ app.all('*', (c) => {
   const statusCode = 301;
 
   const { pathname, search } = new URL(c.req.url);
-  
+
   const destinationURL = `${base}${pathname}${search}`;
   console.log(destinationURL);
-  
+
   return c.redirect(destinationURL, statusCode);
 });
 

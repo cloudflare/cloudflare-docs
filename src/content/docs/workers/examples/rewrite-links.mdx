@@ -143,11 +143,11 @@ app.get('*', async (c) => {
 
   class AttributeRewriter {
     attributeName: string;
-    
+
     constructor(attributeName: string) {
       this.attributeName = attributeName;
     }
-    
+
     element(element: Element) {
       const attribute = element.getAttribute(this.attributeName);
       if (attribute) {
@@ -168,7 +168,7 @@ app.get('*', async (c) => {
     const rewriter = new HTMLRewriter()
       .on("a", new AttributeRewriter("href"))
       .on("img", new AttributeRewriter("src"));
-    
+
     return new Response(rewriter.transform(res).body, {
       headers: res.headers
     });

@@ -168,7 +168,7 @@ app.use('*', async (c, next) => {
   try {
     // Process the request with the next handler
     await next();
-    
+
     // After processing, check if the response indicates an error
     if (c.res && (!c.res.ok && !c.res.redirected)) {
       const body = await c.res.clone().text();
@@ -180,28 +180,28 @@ app.use('*', async (c, next) => {
         body.trim().substring(0, 10)
       );
     }
-    
+
   } catch (err) {
     // Without waitUntil, the fetch to the logging service may not complete
     c.executionCtx.waitUntil(
       postLog(err.toString())
     );
-    
+
     // Get the error stack or error itself
     const stack = JSON.stringify(err.stack) || err.toString();
-    
+
     // Create a new response with the error information
-    const response = c.res ? 
+    const response = c.res ?
       new Response(stack, {
         status: c.res.status,
         headers: c.res.headers
-      }) : 
+      }) :
       new Response(stack, { status: 500 });
-    
+
     // Add debug headers
     response.headers.set("X-Debug-stack", stack);
     response.headers.set("X-Debug-err", err.toString());
-    
+
     // Set the modified response
     c.res = response;
   }

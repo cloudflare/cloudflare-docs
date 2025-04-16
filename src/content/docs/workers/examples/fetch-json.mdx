@@ -113,11 +113,11 @@ app.get('*', async (c) => {
   async function gatherResponse(response: Response) {
     const { headers } = response;
     const contentType = headers.get("content-type") || "";
-    
+
     if (contentType.includes("application/json")) {
       return { contentType, result: JSON.stringify(await response.json()) };
     }
-    
+
     return { contentType, result: await response.text() };
   }
 

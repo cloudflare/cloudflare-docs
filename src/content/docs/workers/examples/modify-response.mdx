@@ -175,11 +175,11 @@ app.get('*', async (c) => {
 
   // Get the JSON body from the original response
   const originalBody = await originalResponse.json();
-  
+
   // Modify the body by adding a new property
-  const modifiedBody = { 
-    foo: "bar", 
-    ...originalBody 
+  const modifiedBody = {
+    foo: "bar",
+    ...originalBody
   };
 
   // Create a new custom response with modified status, headers, and body
