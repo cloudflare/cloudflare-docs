@@ -109,6 +109,82 @@ AS_PATH: 65000 65000 65000 65200
 
 Cloudflare adjusts route priority when using AS prepending with communities. For example, if a route is tagged with `13335:60150`, the base priority is set to `150`. If you prepend your ASN twice, Cloudflare adds `10` for each prepend, increasing the route priority to `180`.
 
+## Scoping routes to specific regions
+
+If you have multiple connectivity paths to a network segment and you would like to apply different route prioritization based on where the traffic arrives at the Cloudflare network, you can scope routes to specific Cloudflare data center regions. This is useful, for example, if you run your own anycast network and want your end-user traffic to arrive at your network location closest to the user. When a route is scoped to a Cloudflare data center region it will only show up in the Magic routing table in that region, along with all global routes that do not have any region scope. Route prioritization and ECMP logic apply across both region-scoped and global routes.
+
+Adding region scoping to routes is only available to statically configured routes at this time.
+
+When using region-scoped routes, you should ensure that all prefixes have routes covering all regions. Otherwise, traffic may arrive at a Cloudflare region which is not covered by any route, in which case the traffic will be dropped.
+
+Scoping routes to specific regions is not supported with BGP peering at this time.
+
+### Scoping configuration data example
+
+| Prefix | NextHop | Priority | Region code |
+| ----- | ----- | ----- | ----- |
+| 10.10.10.100/24 | TUNNEL_1_IAD | 100 | _AFR_ |
+| 10.10.10.100/24 | TUNNEL_2_IAD | 100 | _EEUR_ |
+| 10.10.10.100/24 | TUNNEL_3_ATL | 100 | _ENAM_ |
+| 10.10.10.100/24 | TUNNEL_4_ATL | 100 | _ME_ |
+
+### Region codes and associated regions
+
+Cloudflare has nine geographic regions across the world which are listed below.
+
+| Region code | Region |
+| ----- | ----- |
+| _AFR_ | Africa |
+| _APAC_ | Asia Pacific |
+| _EEUR_ | Eastern Europe |
+| _ENAM_ | Eastern North America |
+| _ME_ | Middle East |
+| _OC_ | Oceania |
+| _SAM_ | South America |
+| _WEUR_ | Western Europe |
+| _WNAM_ | Western North America |
+
+Configure scoping for your traffic in the **Region code** section when adding or editing a static route. Refer to <a href={props.createStaticRoute}>Create a static route</a> and <a href={props.editStaticRoute}>Edit a static route</a> more information.
+
+{ props.magicWord === "Magic Transit" && (
+  <>
+    <AnchorHeading title="Magic Transit prefix mapping" depth={2} />
+    <AnchorHeading title="Map route prefixes smaller than `/24`" depth={3} />
+		<Markdown
+    text={`
+		You must provide your prefixes and the tunnels that should be mapped to for Cloudflare to route your traffic from our global network to your data centers via anycast tunnels. Use the table below as reference.
+
+  | Prefix            | NextHop        |
+  | ----------------- | -------------- |
+  | \`103.21.244.0/29\` | \`TUNNEL_1_IAD\` |
+  | \`103.21.244.8/29\` | \`TUNNEL_2_ATL\` |
+
+		The minimum advertising prefix is \`/24\`, but because Cloudflare uses anycast tunnels as an outer wrapper for your traffic, we can route prefixes within that \`/24\` to different tunnel endpoints. For example, you can send \`x.x.x.0/29\` to Data Center 1 and \`x.x.x.8/29\` to Data Center 2. This is helpful when you operate in an environment with constrained IP resources.
+  `}
+    inline={false}
+  />
+
+		<AnchorHeading title="Map routes prefixes bigger than onboarded prefixes" depth={3} />
+		<Markdown
+    text={`
+		If you have multiple onboarded \`/24\` subnets that belong to a larger contiguous block, you can configure a summary static route for the corresponding supernet (like a \`/23\` or a \`/22\`) instead of adding each \`/24\` individually. This eliminates the need to configure each \`/24\` route individually, as all traffic will be routed through the same GRE tunnels.
+
+		For example, if you have two tunnels:
+
+		- \`192.0.2.0/24\`
+		- \`192.0.3.0/24\`
+
+		You can summarize these into a single \`192.0.2.0/23\`.
+
+		Refer to [Add tunnels](/magic-transit/how-to/configure-tunnels/#add-tunnels) to learn more about configuring GRE tunnels.
+			`}
+				inline={false}
+  />
+	<Aside type="note">These address blocks are a part of <a href="https://datatracker.ietf.org/doc/rfc5737/" target="_blank" rel="noopener noreferrer">RFC 5737</a> and are reserved for use as examples in documentation.</Aside>
+  </>
+  )
+}
+
 ## Equal-cost multi-path routing
 
 Equal-cost multi-path routing uses hashes calculated from [packet](/learning/network-layer/what-is-a-packet/) data to determine the route chosen. The hash always uses the source and destination IP addresses. For TCP and UDP packets, the hash includes the source and destination ports as well. The ECMP algorithm divides the hash for each packet by the number of equal-cost next hops. The modulus (remainder) determines the route the packet takes.
@@ -227,82 +303,6 @@ Note that because ECMP balances flows probabilistically, the use of weights is o
 
 For more on {props.productName} tunnel weights, contact your Cloudflare customer service manager.
 :::
-
-## Scoping routes to specific regions
-
-If you have multiple connectivity paths to a network segment and you would like to apply different route prioritization based on where the traffic arrives at the Cloudflare network, you can scope routes to specific Cloudflare data center regions. This is useful, for example, if you run your own anycast network and want your end-user traffic to arrive at your network location closest to the user. When a route is scoped to a Cloudflare data center region it will only show up in the Magic routing table in that region, along with all global routes that do not have any region scope. Route prioritization and ECMP logic apply across both region-scoped and global routes.
-
-Adding region scoping to routes is only available to statically configured routes at this time.
-
-When using region-scoped routes, you should ensure that all prefixes have routes covering all regions. Otherwise, traffic may arrive at a Cloudflare region which is not covered by any route, in which case the traffic will be dropped.
-
-Scoping routes to specific regions is not supported with BGP peering at this time.
-
-### Scoping configuration data example
-
-| Prefix | NextHop | Priority | Region code |
-| ----- | ----- | ----- | ----- |
-| 10.10.10.100/24 | TUNNEL_1_IAD | 100 | _AFR_ |
-| 10.10.10.100/24 | TUNNEL_2_IAD | 100 | _EEUR_ |
-| 10.10.10.100/24 | TUNNEL_3_ATL | 100 | _ENAM_ |
-| 10.10.10.100/24 | TUNNEL_4_ATL | 100 | _ME_ |
-
-### Region codes and associated regions
-
-Cloudflare has nine geographic regions across the world which are listed below.
-
-| Region code | Region |
-| ----- | ----- |
-| _AFR_ | Africa |
-| _APAC_ | Asia Pacific |
-| _EEUR_ | Eastern Europe |
-| _ENAM_ | Eastern North America |
-| _ME_ | Middle East |
-| _OC_ | Oceania |
-| _SAM_ | South America |
-| _WEUR_ | Western Europe |
-| _WNAM_ | Western North America |
-
-Configure scoping for your traffic in the **Region code** section when adding or editing a static route. Refer to <a href={props.createStaticRoute}>Create a static route</a> and <a href={props.editStaticRoute}>Edit a static route</a> more information.
-
-{ props.magicWord === "Magic Transit" && (
-  <>
-    <AnchorHeading title="Magic Transit prefix mapping" depth={2} />
-    <AnchorHeading title="Map route prefixes smaller than `/24`" depth={3} />
-		<Markdown
-    text={`
-		You must provide your prefixes and the tunnels that should be mapped to for Cloudflare to route your traffic from our global network to your data centers via anycast tunnels. Use the table below as reference.
-
-  | Prefix            | NextHop        |
-  | ----------------- | -------------- |
-  | \`103.21.244.0/29\` | \`TUNNEL_1_IAD\` |
-  | \`103.21.244.8/29\` | \`TUNNEL_2_ATL\` |
-
-		The minimum advertising prefix is \`/24\`, but because Cloudflare uses anycast tunnels as an outer wrapper for your traffic, we can route prefixes within that \`/24\` to different tunnel endpoints. For example, you can send \`x.x.x.0/29\` to Data Center 1 and \`x.x.x.8/29\` to Data Center 2. This is helpful when you operate in an environment with constrained IP resources.
-  `}
-    inline={false}
-  />
-
-		<AnchorHeading title="Map routes prefixes bigger than onboarded prefixes" depth={3} />
-		<Markdown
-    text={`
-		If you have multiple onboarded \`/24\` subnets that belong to a larger contiguous block, you can configure a summary static route for the corresponding supernet (like a \`/23\` or a \`/22\`) instead of adding each \`/24\` individually. This eliminates the need to configure each \`/24\` route individually, as all traffic will be routed through the same GRE tunnels.
-
-		For example, if you have two tunnels:
-
-		- \`192.0.2.0/24\`
-		- \`192.0.3.0/24\`
-
-		You can summarize these into a single \`192.0.2.0/23\`.
-
-		Refer to [Add tunnels](/magic-transit/how-to/configure-tunnels/#add-tunnels) to learn more about configuring GRE tunnels.
-			`}
-				inline={false}
-  />
-	<Aside type="note">These address blocks are a part of <a href="https://datatracker.ietf.org/doc/rfc5737/" target="_blank" rel="noopener noreferrer">RFC 5737</a> and are reserved for use as examples in documentation.</Aside>
-  </>
-  )
-}
 
 ## BGP information
 
