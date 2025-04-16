@@ -6,7 +6,7 @@ productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
   - publish_date: "2025-04-17"
-    title: Improved rate limits for HTTP Pull Consumers
+    title: Improved limits for pull consumers
     description: |-
       [Queues Pull Consumers](/queues/configuration/pull-consumers/) can now pull and acknowledge up to 5,000 messages per second per queue. Previously, pull consumers were rate limited to 1200 requests / 5 minutes, aggregated across all queues.
 
