@@ -141,7 +141,7 @@ The following configuration will modify settings in your Cloudflare account.
 		# Creates a new remotely-managed tunnel for the GCP VM.
 		resource "cloudflare_zero_trust_tunnel_cloudflared" "gcp_tunnel" {
 			account_id    = var.cloudflare_account_id
-			name          = "Example GCP tunnel"
+			name          = "Terraform GCP tunnel"
 			tunnel_secret = random_bytes.tunnel_secret.base64
 		}
 
