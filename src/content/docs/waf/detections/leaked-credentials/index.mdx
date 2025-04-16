@@ -72,6 +72,14 @@ You could configure a custom detection location with the following settings:
 
 When specifying a custom detection location, only the location of the username field is required.
 
+The following table includes example detection locations for different request types:
+
+| Request type     | Username location / Password location                                                                           |
+| ---------------- | --------------------------------------------------------------------------------------------------------------- |
+| JSON body        | `lookup_json_string(http.request.body.raw, "user")`<br/>`lookup_json_string(http.request.body.raw, "secret")`   |
+| URL-encoded form | `url_decode(http.request.body.form["user"][0])`<br/>`url_decode(http.request.body.form["secret"][0])`           |
+| Multipart form   | `url_decode(http.request.body.multipart["user"][0])`<br/>`url_decode(http.request.body.multipart["secret"][0])` |
+
 Expressions used to specify custom detection locations can include the following fields and functions:
 
 - Fields:
