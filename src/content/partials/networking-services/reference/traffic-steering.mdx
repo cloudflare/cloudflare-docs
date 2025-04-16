@@ -371,7 +371,7 @@ Cloudflare uses the timers as described below. These are not configurable:
 - **Keepalive timer**: BGP systems exchange keepalive messages to determine whether the peer router is reachable. If keepalive messages are not received within the Hold Timer, the session is assumed to be down, indicating that the peer is no longer reachable at the BGP protocol level.
 - **Graceful restart timer**: Tracks how long a router will wait for a peer to re-establish a BGP session after the peer initiates a graceful restart. If the peer does not reconnect within this time, the router declares the session down and removes stale routes.
 
-### BGP Limitations
+### BGP limitations
 
 BGP multipath is supported. If the same prefix is learned on two different interconnects then traffic destined for that prefix will be distributed across each interconnect according to the usual ECMP behavior.
 
@@ -380,6 +380,7 @@ BGP support currently has the following limitations:
 - The Cloudflare account ASN and the customer device ASN must be different. Only eBGP is supported.
 - Routes are always injected with a priority of `100`.
 - Bidirectional Forwarding Detection (BFD) is not supported.
+- BGP supports only IPv4 routes.
 
 { props.magicWord === "Magic Transit" && (
   <>
