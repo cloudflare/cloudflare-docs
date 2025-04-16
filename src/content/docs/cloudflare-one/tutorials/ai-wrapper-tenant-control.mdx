@@ -7,7 +7,7 @@ title: Create an AI agent wrapper using AI Gateway for Secure Web Gateway filter
 
 import { TabItem, Tabs, Details } from "~/components";
 
-This tutorial explains how to use [Cloudflare AI Gateway](/ai-gateway/) and Zero Trust to create a functional and secure AI agent wrapper. Cloudflare Zero Trust admins can enforce [Gateway](/cloudflare-one/policies/gateway/) controls on how their users interact with AI agents, including executing AI agents in an isolated browser with [Browser Isolation](/cloudflare-one/policies/browser-isolation/), enforcing [Data Loss Prevention](/cloudflare-one/policies/data-loss-prevention/) profiles to prevent sensitive data exfiltration, and scanning content to avoid answers from AI agents that violate internal corporate guidelines. Creating an AI agent wrapper is also an effective way to enforce tenant control if you have an enterprise plan of a specific AI provider, such as ChatGPT Enterprise.
+This tutorial explains how to use [Cloudflare AI Gateway](/ai-gateway/) and Zero Trust to create a functional and secure AI agent wrapper. Cloudflare Zero Trust admins can protect access to the wrapper with [Cloudflare Access](/cloudflare-one/policies/access/). Additionally, you can enforce [Gateway](/cloudflare-one/policies/gateway/) controls on how your users interact with AI agents, including executing AI agents in an isolated browser with [Browser Isolation](/cloudflare-one/policies/browser-isolation/), enforcing [Data Loss Prevention](/cloudflare-one/policies/data-loss-prevention/) profiles to prevent sensitive data exfiltration, and scanning content to avoid answers from AI agents that violate internal corporate guidelines. Creating an AI agent wrapper is also an effective way to enforce tenant control if you have an enterprise plan of a specific AI provider, such as ChatGPT Enterprise.
 
 This tutorial uses ChatGPT as an example AI agent.
 
@@ -26,7 +26,7 @@ First, create an AI gateway to control an AI app.
 5. Select **Create**.
 6. Configure your desired options for the gateway.
 7. [Connect your AI provider](/ai-gateway/get-started/#connect-application) to proxy queries to your AI agent of choice using your AI gateway.
-8. Turn on [Authenticated Gateway](/ai-gateway/configuration/authentication/). The Authenticated Gateway feature ensures your AI gateway can only be called securely by enforcing a token in the form of a request header `cf-aig-authorization`.
+8. (Optional) Turn on [Authenticated Gateway](/ai-gateway/configuration/authentication/). The Authenticated Gateway feature ensures your AI gateway can only be called securely by enforcing a token in the form of a request header `cf-aig-authorization`.
    1. Go to **AI** > **AI Gateway**.
    2. Select your AI gateway, then go to **Settings**.
    3. Turn on **Authenticated Gateway**, then choose **Confirm**.
@@ -35,7 +35,7 @@ First, create an AI gateway to control an AI app.
 
 For more information, refer to [Getting started with AI Gateway](/ai-gateway/get-started/).
 
-### 2. (Optional) Use Guardrails to block unsafe or inappropriate content
+## 2. (Optional) Use Guardrails to block unsafe or inappropriate content
 
 [Guardrails](/ai-gateway/guardrails/) is an built-in AI Gateway security feature that allows Cloudflare to identify unsafe or inappropriate content in prompts and responses based on selected categories.
 
@@ -45,13 +45,15 @@ For more information, refer to [Getting started with AI Gateway](/ai-gateway/get
 4. Turn on Guardrails.
 5. Select **Change** to configure the categories you would like to filter for both prompts and responses.
 
-## 3. Create a Worker to serve a wrapper
+## 3. Build a Worker to serve the wrapper
+
+### 1. Create the Worker
 
 In order to build the Worker, you will need to choose if you want to build it locally using [Wrangler](/workers/wrangler/install-and-update/) or remotely using the [dashboard](https://dash.cloudflare.com/).
 
 <Tabs> <TabItem label="Wrangler">
 
-1. Log in to your Cloudlare account:
+1. In a terminal, log in to your Cloudflare account:
 
    ```bash
    wrangler login
@@ -76,33 +78,34 @@ In order to build the Worker, you will need to choose if you want to build it lo
    # Add any environment variables here
    ```
 
-4. Add your AI provider API Key as a secret:
+4. Add your AI provider's API key as a [secret](/workers/configuration/secrets/):
 
    ```bash
-   wrangler secret put OPENAI_API_KEY
+   wrangler secret put <OPENAI_API_KEY>
    ```
 
-5. The Worker can now be built using the `index.js` file that was created by **Wrangler**.
+You can now build the Worker using the `index.js` file created by Wrangler.
 
 </TabItem> <TabItem label="Dashboard">
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **Workers & Pages** > **Workers & Pages**.
 3. Select **Create**.
-4. Select **Workers** and the **Hello world** template.
-5. Select **Deploy**.
-6. Go to your Worker, select the **Settings** tab.
-7. Within the **Variables and Secrets** section, select **Add**.
-8. Choose **Secret** as the type, give your variable a name such as `OPENAI_API_KEY`, and past the value of your AI provider API key in the **Value** field.
-9. The Worker can now be built by using the online code editor by clicking the **Edit code** icon at the top-right.
+4. In **Workers**, choose the **Hello world** template.
+5. Name your worker, then select **Deploy**.
+6. Select your Worker, then go to the **Settings** tab.
+7. Go to **Variables and Secrets**, then select **Add**.
+8. Choose _Secret_ as the type, name your secret (for example, `OPENAI_API_KEY`), and enter the value of your AI provider's API key in **Value**.
+
+You can now build the Worker using the online code editor by selecting **Edit code** on your Worker page.
 
 </TabItem> </Tabs>
 
-### Build the Worker
+### 2. Build the Worker
 
-The following is an example starter Worker that serves a simple front-end to allow a user to interact with an AI provider behind **AI Gateway**. For this example, OpenAI was used as the provider:
+The following is an example starter Worker that serves a simple front-end to allow a user to interact with an AI provider behind AI Gateway. This example uses OpenAI as its AI provider:
 
-<Details header="Example Worker">
+<Details header="Example AI wrapper Worker">
 
 ```javascript
 export default {
@@ -340,17 +343,15 @@ const HTML = `<!DOCTYPE html>
 
 </Details>
 
-Notice that the **Account ID** and the **Gateway ID** need to be replaced in the AI Gateway endpoint. You can add these as environment variables or Secrets. If you chose to use the **Authenticated Gateway** option when creating your AI Gateway, make sure to also add your token as a Secret and pass its value through to the AI Gateway in the form of the `cf-aig-authorization` header.
+Note that the account ID and gateway ID need to be replaced in the AI Gateway endpoint. You can add these as [environment variables](/workers/configuration/environment-variables/) or [secrets](/workers/configuration/secrets/) in Workers. If you chose to use Authenticated Gateway when creating your AI gateway, make sure to also add your token as a secret and pass its value to the AI gateway in the `cf-aig-authorization` header.
 
-This Worker can serve as a starting point and extra functionality can be built on top.
+### 3. Publish the Worker
 
-### Publish the Worker
-
-Once the Worker is code is completed, it is almost ready to be published. We now need to make the Worker addressable via a hostname that can be controlled by Cloudlare Access.
+Once the Worker code is complete, you need to make the Worker addressable using a hostname controllable by Cloudflare Access.
 
 <Tabs> <TabItem label="Wrangler">
 
-Edit the `wrangler.toml` configuration file and add the following information to ensure that the worker is only accessible via the custom hostname.
+Edit the `wrangler.toml` configuration file and add the following information to ensure that the worker is only accessible using the custom hostname:
 
 ```toml
 name = "ai-agent-wrapper"
@@ -360,14 +361,14 @@ workers_dev = false
 
 # replace with your custom domain
 routes = [
-  { pattern = "<your custom domain>", custom_domain = true }
+  { pattern = "<YOUR_CUSTOM_DOMAIN>", custom_domain = true }
 ]
 
 [vars]
 # Add any environment variables here
 ```
 
-To publish the worker do: `wrangler publish`.
+To publish the worker, run `wrangler publish`.
 
 </TabItem> <TabItem label="Dashboard">
 
@@ -377,19 +378,19 @@ In order to ensure that the worker is only accessible via the custom hostname, d
 
 2. Go to **Workers & Pages** > **Workers & Pages**.
 3. Select your Worker.
-4. Select the **Settings** tab.
-5. Within the **Domains & Routes** section, select **Add**.
-6. Choose **Custom domain (Recommended)** (**Route** is also a viable option).
-7. Add your desired custom domain name.
+4. Go to **Settings**.
+5. Within **Domains & Routes**, select **Add**.
+6. Choose **Custom domain**.
+7. Enter your desired custom domain name.
 8. Select **Add domain**.
 
-The Worker now sits behind an addressable public hostname. Make sure to disable both your **workers.dev** and **Preview URLs** so that the Worker can only be accessed via its **Custom domain**.
+The Worker is now behind an addressable public hostname. Make sure to turn off both **workers.dev** and **Preview URLs** so that the Worker can only be accessed with its custom domain.
 
 </TabItem> </Tabs>
 
-## Secure the AI Agent Wrapper using Access
+## 4. Secure the wrapper with Access
 
-We need to secure our AI Agent Wrapper to ensure that only trusted users can access it. We will use [**Access**](https://developers.cloudflare.com/cloudflare-one/policies/access/) to achieve this.
+To secure the AI agent wrapper to ensure that only trusted users can access it:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
 2. Select **Add an application**.
