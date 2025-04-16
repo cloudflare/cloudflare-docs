@@ -7,11 +7,20 @@ sidebar:
 
 import { Render, Details, APIRequest } from "~/components";
 
-To customize the behavior of a managed ruleset, override the ruleset at deployment. When you override a ruleset you specify changes to be executed on top of the default configuration. These changes take precedence over the ruleset's default behavior.
+To customize the behavior of a managed ruleset via API, override the ruleset at deployment. When you override a ruleset you specify changes to be executed on top of the default configuration. These changes take precedence over the ruleset's default behavior.
 
 For example, to test a managed ruleset before enforcing it, consider executing the ruleset with all rules set to `log` instead of their default actions. To do this, override the configured behavior of the managed ruleset at the ruleset level, so that each rule uses the `log` action.
 
-To define overrides in the Cloudflare dashboard, edit the configuration of the managed ruleset you previously deployed to a zone or to an account.
+If you are using Terraform, refer to the following pages:
+
+- [WAF Managed Rules configuration using Terraform](/terraform/additional-configurations/waf-managed-rulesets/#configure-overrides)
+- [DDoS managed rulesets configuration using Terraform](/terraform/additional-configurations/ddos-managed-rulesets/)
+
+To define overrides in the Cloudflare dashboard, refer to the following resources:
+
+- [Configure a WAF managed ruleset in the dashboard](/waf/managed-rules/deploy-zone-dashboard/#configure-a-managed-ruleset)
+- [Configure HTTP DDoS Attack Protection in the dashboard](/ddos-protection/managed-rulesets/http/configure-dashboard/)
+- [Configure Network-layer DDoS Attack Protection in the dashboard](/ddos-protection/managed-rulesets/network/configure-dashboard/)
 
 ## Working with overrides
 
@@ -132,4 +141,6 @@ The following `PUT` request adds a rule that executes a managed ruleset in the `
 	}}
 />
 
-For additional examples of configuring overrides, refer to [Managed ruleset override examples](/ruleset-engine/managed-rulesets/override-examples/).
+## More resources
+
+For additional examples of configuring overrides via API, refer to [Override examples](/ruleset-engine/managed-rulesets/override-examples/).
