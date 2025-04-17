@@ -64,7 +64,7 @@ interface Env {
 
 export default {
   async fetch(request: Request, env: Env) {
-
+		const { searchParams } = new URL(request.url);
     const todos = searchParams.getAll('todo');
 
     const browser = await launch(env.MYBROWSER);
@@ -182,7 +182,6 @@ interface Env {
 
 export default {
   async fetch(request: Request, env: Env) {
-
     const browser = await launch(env.MYBROWSER);
     const page = await browser.newPage();
 
