@@ -116,14 +116,15 @@ Perform the following steps to create the rule:
          "action_parameters": {
            "request_fields": [
              { "name": "content-type" },
-             { "name": "x-forwarded-for" },
+             { "name": "x-forwarded-for" }
            ],
          "transformed_request_fields": [
              {"name": "host"}
           ],
            "response_fields": [
              { "name": "server" },
-             { "name": "content-type" },
+             { "name": "content-type" }
+					],
          "raw_response_fields": [
              { "name": "allow" }
            ],
