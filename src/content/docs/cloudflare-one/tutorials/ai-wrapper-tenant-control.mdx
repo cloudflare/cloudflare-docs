@@ -405,22 +405,24 @@ Now your AI wrapper can only be accessed by your users that successfully match y
 
 ## 5. Block access to public AI agents with Gateway
 
-You can now block access to all unauthorized public AI agents by using the [**Secure Web Gateway[**(/cloudflare-one/policies/gateway/) to create a HTTP policy.
-
-If you use another gateway for web filtering, try to replicate a similar policy.
+You can now block access to all unauthorized public AI agents with a Gateway [HTTP policy](/cloudflare-one/policies/gateway/http-policies/).
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Firewall policies**.
 2. Select **HTTP**.
 3. Select **Add a policy**.
-4. Under the **Traffic** section, select **Add condition**.
-5. Select **Content Categories**.
-6. Select **Artificial Intelligence**.
-7. Add any other conditions that apply to your environment.
-8. Under **Action**, select **Block**.
+4. Add the following policy:
+
+   | Selector           | Operator | Value                     | Action |
+   | ------------------ | -------- | ------------------------- | ------ |
+   | Content Categories | in       | _Artificial Intelligence_ | Block  |
+
+5. Select **Create policy**.
 
 This ensures that public AI agents are not accessible using a managed endpoint.
 
 User coaching is also possible, by displaying a [custom block message](/cloudflare-one/policies/gateway/block-page/) or a [user notification](/cloudflare-one/policies/gateway/http-policies/#warp-client-block-notifications) directing users to the AI agent wrapper.
+
+If you use another gateway for web filtering, try to replicate a similar policy.
 
 ## Enforce DLP and agentless RBI
 
