@@ -1,0 +1,112 @@
+---
+pcx_content_type: how-to
+title: TanStack
+head: []
+description: Create an TanStack application and deploy it to Cloudflare Workers with Workers Assets.
+---
+
+import { WranglerConfig } from "~/components";
+
+In this guide, you will create a new [TanStack](https://tanstack.com/) application and deploy to Cloudflare Workers (with the new [Workers Assets](/workers/static-assets/)).
+
+## Set up a new project
+
+TanStack provides a start-basic project. We'll use this starter project to create a new TanStack application.
+
+```sh
+npx gitpick TanStack/router/tree/main/examples/react/start-basic start-basic
+cd start-basic
+npm install
+```
+
+## Develop locally
+
+```sh
+npm run dev
+```
+
+## Preparing for Deployment to Cloudflare Workers
+
+### Install `unenv` package
+
+[`unenv`](https://github.com/unjs/unenv) is a package that normalizes runtime environments across Node.js, browsers, and edge runtimes like Cloudflare Workers. It’s essential for TanStack Router because certain Node.js APIs are unavailable in the Workers environment. `unenv` offers compatible replacements for those APIs.
+
+```sh
+npm install unenv
+```
+
+### Modify the `app.config.ts` file
+
+To configure your application for Cloudflare Workers deployment, add the following lines to your `app.config.ts` file:
+
+```ts
+  server: {
+    preset: "cloudflare-module",
+    unenv: cloudflare,
+  },
+```
+
+This will set the correct build format and runtime environment for Cloudflare.
+
+### Add a Wrnagler file
+
+Create a `wrangler.jsonc` or `wrangler.toml` file in the root of your project. This file is used to configure the Cloudflare Workers deployment.
+
+<WranglerConfig>
+```json
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "start-basic",
+  "main": "./.output/server/index.mjs",
+  "compatibility_date": "2025-04-14",
+  "observability": {
+    "enabled": true,
+  },
+  "assets": {
+    "directory": "./.output/public/",
+  },
+  "compatibility_flags": ["nodejs_compat"],
+}
+```
+</WranglerConfig>
+
+### Build the application
+
+You need to build your application before deploying it to Cloudflare Workers.
+
+```sh
+npm run build
+```
+
+### Deploy the application
+
+The below command will deploy your application to Cloudflare Workers and provide you with a deployment URL.
+
+```sh
+npx wrangler deploy
+```
+
+### Update utils file with deployment URL
+
+This step is required for the `/users` page to function properly in the `start-basic` example. Update the `/src/utils/users.tsx` file with the Cloudflare Workers deployment URL.
+
+```ts
+export const DEPLOY_URL = 'YOUR_DEPLOYMENT_URL'
+```
+
+By following the steps above, you will have deployed the `start-basic` TanStack example to Cloudflare Workers.
+
+## GitHub Repository Integration
+
+This step is optional. If you want your application deploy with every new push to your GitHub repository, you can follow the steps below.
+
+1. Go to your Workers project in the Cloudflare dashboard.
+2. Click on the "Settings" tab.
+3. Go to the Build section
+4. In the Git repository section, connect your GitHub repository.
+
+
+
+
+
+
