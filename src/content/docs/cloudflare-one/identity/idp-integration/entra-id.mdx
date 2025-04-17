@@ -29,7 +29,7 @@ To retrieve those values:
 
 5.  Select **Register an application to integrate with Microsoft Entra ID (App you're developing)**. If offered, do not select any of the gallery applications. Select **Create**.
 
-7.  Under **Redirect URI**, select the _Web_ platform and enter the following URL.
+6.  Under **Redirect URI**, select the _Web_ platform and enter the following URL.
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
@@ -39,23 +39,23 @@ To retrieve those values:
 
     ![Registering an application in Azure](~/assets/images/cloudflare-one/identity/azure/name-app.png)
 
-8.  Select **Register**.
+7.  Select **Register**.
 
-9.  Next, return to Microsoft Entra ID and go to **Applications** > **App registrations**.
+8.  Next, return to Microsoft Entra ID and go to **Applications** > **App registrations**.
 
-10. Select **All applications** and select the app you just created. Copy the **Application (client) ID** and **Directory (tenant) ID**. You will need these values when [adding Entra ID as an identity provider in step 3](/cloudflare-one/identity/idp-integration/entra-id/#3-add-entra-id-as-an-identity-provider).
+9. Select **All applications** and select the app you just created. Copy the **Application (client) ID** and **Directory (tenant) ID**. You will need these values when [adding Entra ID as an identity provider in step 3](/cloudflare-one/identity/idp-integration/entra-id/#3-add-entra-id-as-an-identity-provider).
 
     ![Viewing the Application ID and Directory ID in Azure](~/assets/images/cloudflare-one/identity/azure/azure-values.png)
 
-11. Under **Client credentials**, go to **Add a certificate or secret**. Select **New client secret**.
+10. Under **Client credentials**, go to **Add a certificate or secret**. Select **New client secret**.
 
-12. Name the client secret and choose an expiration period.
+11. Name the client secret and choose an expiration period.
 
     :::note
     When the client secret expires, users will be unable to log in through Access. Take note of your expiry date to prevent login errors and renew your client secret when necessary.
     :::
 
-13. After the client secret is created, copy its **Value** field. Store the client secret in a safe place, as it can only be viewed immediately after creation. You will need this client secret value when [adding Entra ID as an identity provider in step 3](/cloudflare-one/identity/idp-integration/entra-id/#3-add-entra-id-as-an-identity-provider).
+12. After the client secret is created, copy its **Value** field. Store the client secret in a safe place, as it can only be viewed immediately after creation. You will need this client secret value when [adding Entra ID as an identity provider in step 3](/cloudflare-one/identity/idp-integration/entra-id/#3-add-entra-id-as-an-identity-provider).
 
     ![Location of client secret in Azure](~/assets/images/cloudflare-one/identity/azure/client-cert-value.png)
 
@@ -140,7 +140,7 @@ More narrow permissions may be used, however this is the set of permissions that
 </TabItem> <TabItem label="Terraform">
 
 :::note[Provider versions]
-The following example requires Cloudflare provider version `>=4.40.0`.
+The following example requires Cloudflare provider version `4.40.0` or greater.
 :::
 
 1.  Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
@@ -226,7 +226,7 @@ To check which users and groups were synchronized, select **Provisioning logs**.
 
 <Render file="access/verify-scim-provisioning" />
 
-To monitor the exchange of identity details between Cloudflare Access and Microsoft Entra ID, go [Zero Trust](https://one.dash.cloudflare.com) > **Logs** > **SCIM provisioning** and view the [SCIM activity logs](/cloudflare-one/insights/logs/scim-logs/).
+To monitor the exchange of identity details between Cloudflare Access and Microsoft Entra ID, go to [Zero Trust](https://one.dash.cloudflare.com) > **Logs** > **SCIM provisioning** and view the [SCIM activity logs](/cloudflare-one/insights/logs/scim-logs/).
 
 ### Provisioning attributes
 
