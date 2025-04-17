@@ -249,13 +249,11 @@ E[Anycast IP] --> G[/"GRE Tunnel 2 / <br> priority 1 / <br> ~50% of flows"/] -->
 E[Anycast IP] --> H[/GRE Tunnel 3 / <br> priority 2 / <br> 0% of flows/] --o K{{Customer <br> data center/ <br> network 3}}
 ```
 
-<br />
-
-When {props.productName} health checks determine that Tunnel 2 is unhealthy, that route is dynamically de-prioritized, leaving Tunnel 1 with the sole top-priority route. As a result, traffic is steered away from Tunnel 2, and all traffic flows to Tunnel 1.
-
 #### Failover traffic flow: Scenario 1
 
-Customer router failure
+**Customer router failure**
+
+When {props.productName} health checks determine that Tunnel 2 is unhealthy, that route is dynamically de-prioritized, leaving Tunnel 1 with the sole top-priority route. As a result, traffic is steered away from Tunnel 2, and all traffic flows to Tunnel 1.
 
 ```mermaid
 flowchart LR
@@ -278,13 +276,11 @@ classDef red fill:#EE4B2B,color: black
 classDef green fill:#00FF00,color: black
 ```
 
-<br />
-
-When {props.productName} determines that Tunnel 1 is unhealthy as well, that route is also de-prioritized, leaving Tunnel 3 with the top priority route. In that case, all traffic flows to Tunnel 3.
-
 #### Failover traffic flow: Scenario 2
 
-Intermediary ISP failure
+**Intermediary ISP failure**
+
+When {props.productName} determines that Tunnel 1 is unhealthy as well, that route is also de-prioritized, leaving Tunnel 3 with the top priority route. In that case, all traffic flows to Tunnel 3.
 
 ```mermaid
 flowchart LR
@@ -307,8 +303,6 @@ classDef red fill:#EE4B2B,color: black
 classDef green fill:#00FF00,color: black
 ```
 
-<br />
-
 When {props.productName} determines that Tunnels 1 and 2 are healthy again, it re-prioritizes those routes, and traffic flow returns to normal.
 
 ### ECMP and bandwidth utilization
@@ -329,7 +323,7 @@ For more on {props.productName} tunnel weights, contact your Cloudflare customer
 
 ## BGP information
 
-When using a Direct CNI connection as an on-ramp, {props.productName} customers can also use BGP peering between their networks and their Magic routing table.
+When using a [Direct CNI](/network-interconnect/express-cni/) connection as an on-ramp, {props.productName} customers can also use BGP peering between their networks and their Magic routing table.
 
 Using BGP peering with a CNI allows customers to:
 
@@ -379,7 +373,7 @@ BGP support currently has the following limitations:
 - The Cloudflare account ASN and the customer device ASN must be different. Only eBGP is supported.
 - Routes are always injected with a priority of `100`.
 - Bidirectional Forwarding Detection (BFD) is not supported.
-- BGP supports only IPv4 routes.
+- Only IPv4 routes are supported.
 
 { props.magicWord === "Magic Transit" && (
   <>
