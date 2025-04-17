@@ -2221,7 +2221,7 @@
 					"ent": "Paid add-on"
 				},
 				"https": {
-					"title": "HTPS",
+					"title": "HTTPS",
 					"link": "spectrum/reference/limitations/#https",
 					"free": "No",
 					"pro": "No",
