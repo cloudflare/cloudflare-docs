@@ -27,6 +27,10 @@ Gateway traffic that does not match an egress policy will egress from the closes
 
 To control whether only IPv4 or IPv6 is used to egress, ensure you are [filtering DNS traffic](/cloudflare-one/policies/gateway/initial-setup/dns/), then create a DNS policy to [block AAAA or A records](/cloudflare-one/policies/gateway/dns-policies/common-policies/#control-ip-version).
 
+## User selectors
+
+To use the Application, Content Categories,
+
 ## Example policies
 
 The following egress policy configures all traffic destined for a third-party network to use a static source IP:
@@ -60,6 +64,13 @@ Gateway matches egress traffic against the following selectors, or criteria:
 <Render
 	file="gateway/selectors/application"
 	params={{ policyType: "egress" }}
+/>
+
+### Content Categories
+
+<Render
+	file="gateway/selectors/net-http-content-categories"
+	params={{ APIendpoint: "net.fqdn.category" }}
 />
 
 ### Destination Continent
