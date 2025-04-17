@@ -54,6 +54,12 @@ If [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryptio
 | -------- | -------- | ------------ | -------------- |
 | Domain   | is       | `mysite.com` | Do Not Inspect |
 
+:::note
+
+TLS decryption is not required to apply HTTP policies to Clientless Web Isolation traffic. However, enabling TLS decryption is necessary if you want to add [Data Loss Prevention (DLP)](/cloudflare-one/policies/data-loss-prevention/) configurations.
+
+:::
+
 ### Connect private networks
 
 With Clientless Web Isolation, users can reach any internal web server you have connected through [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/). For more information, refer to [Connect private networks](/cloudflare-one/connections/connect-networks/private-net/cloudflared/).
