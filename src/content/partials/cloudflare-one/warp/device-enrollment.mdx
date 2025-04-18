@@ -48,7 +48,7 @@ Device posture checks are not supported in device enrollment policies. WARP can 
 
 
 	```tf
-	resource "cloudflare_zero_trust_access_application" "http_app" {
+	resource "cloudflare_zero_trust_access_application" "device_enrollment" {
 		account_id       = var.cloudflare_account_id
 		type             = "warp"
 		name             = "Warp device enrollment"
