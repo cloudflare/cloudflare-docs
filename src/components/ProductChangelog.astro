@@ -46,7 +46,9 @@ const changelogs = await getChangelogs({ filter });
 		const { Content } = await render(entry);
 		return (
 		<AnchorHeading depth={2} title={format(entry.data.date, "yyyy-MM-dd")} />
+		<br/>
 		<strong>{entry.data.title}</strong>
+		<br/>
 		<Content />
 		);
 	})
