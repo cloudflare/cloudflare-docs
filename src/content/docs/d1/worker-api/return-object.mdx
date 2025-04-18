@@ -99,3 +99,7 @@ return Response.json(returnValue);
   "duration": 1
 }
 ```
+
+:::note[Storing large numbers]
+Any numeric value in a column is affected by JavaScript's 52-bit precision for numbers. If you store a very large number (in `int64`), then retrieve the same value, the returned value may be less precise than your original number.
+:::

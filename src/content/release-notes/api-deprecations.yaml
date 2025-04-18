@@ -5,6 +5,58 @@ productLink: "/fundamentals/"
 productArea: Core platform
 productAreaLink: /fundamentals/reference/changelog/platform/
 entries:
+  - publish_date: "2025-11-11"
+    title: "Zero Trust Devices"
+    description: |-
+      End of life date: November 11, 2025
+
+      We are changing the definition of Devices. Devices are going to represent the real-world machines while
+      the relation between Users and Devices will be represented by a new concept - Registrations.
+
+      As a result multiple fields are moving from Devices to Registrations and we are deprecating the endpoints listed below.
+
+      The deprecated endpoints are not supported on accounts with [multi-user mode](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/windows-multiuser/) enabled.
+
+      Deprecated API:
+
+        * `GET /accounts/{account_id}/devices`
+        * `GET /accounts/{account_id}/devices/{device_id}`
+        * `GET /accounts/{account_id}/devices/{device_id}/override_codes`
+        * `POST /accounts/{account_id}/devices/revoke`
+        * `POST /accounts/{account_id}/devices/unrevoke`
+
+      Replacement:
+
+        * `GET /accounts/{account_id}/devices/physical-devices`
+        * `GET /accounts/{account_id}/devices/physical-devices/{device_id}`
+        * `GET /accounts/{account_id}/devices/registrations`
+        * `GET /accounts/{account_id}/devices/registrations/{registration_id}`
+        * `GET /accounts/{account_id}/devices/registrations/{registration_id}/override_codes`
+        * `POST /accounts/{account_id}/devices/registrations/revoke`
+        * `POST /accounts/{account_id}/devices/registrations/unrevoke`
+
+  - publish_date: "2025-06-08"
+    title: "Zone Setting: cname_flattening"
+    description: |-
+      Deprecation date: June 8, 2025
+
+      The Zone Settings API endpoints for managing zone-level CNAME flattening are deprecated. Instead, use the [Show DNS Settings](/api/resources/dns/subresources/settings/methods/get/) and [Update DNS Settings](/api/resources/dns/subresources/settings/methods/edit/) endpoints to manage this setting.
+
+      Changes via the old endpoints will be reflected in the new ones, and vice versa, so there is no need to migrate existing zones. However, future API calls must use DNS Settings instead of the Zone Settings endpoints.
+
+      Note that, with the deprecated zone setting, values `"off"` and `"apex"` have the same behavior. These are represented as `{"flatten_all_cnames": false}` in the new API.
+      The zone setting `"on"` corresponds to `{"flatten_all_cnames": true}` in the new API.
+
+      Affected APIs:
+
+      - `GET /zones/:zone_id/settings`
+      - `PATCH /zones/:zone_id/settings`
+
+      Deprecated APIs:
+
+      - `GET /zones/:zone_id/settings/cname_flattening`
+      - `PATCH /zones/:zone_id/settings/cname_flattening`
+
   - publish_date: "2025-03-20"
     title: "Cloudflare Radar: Attack top industry and vertical endpoints"
     description: |-
@@ -122,29 +174,6 @@ entries:
       - `POST /zones/:zone_id/access/apps`
       - `GET /zones/:zone_id/access/apps/:app_id`
       - `PUT /zones/:zone_id/access/apps/:app_id`
-
-  - publish_date: "2025-03-21"
-    title: "Zone Setting: cname_flattening"
-    description: |-
-      Deprecation date: March 21, 2025
-
-      The Zone Settings API endpoints for managing zone-level CNAME flattening are deprecated.
-      Instead, use the [Show DNS Settings](/api/resources/dns/subresources/settings/methods/get/) and [Update DNS Settings](/api/resources/dns/subresources/settings/methods/edit/) endpoints to manage this setting.
-
-      Changes via the old endpoints will be reflected in the new ones, and vice versa, so there is no need to migrate existing zones. However, future API calls must use DNS Settings instead of the Zone Settings endpoints.
-
-      Note that, with the deprecated zone setting, values `"off"` and `"apex"` have the same behavior. These are represented as `{"flatten_all_cnames": false}` in the new API.
-      The zone setting `"on"` corresponds to `{"flatten_all_cnames": true}` in the new API.
-
-      Affected APIs:
-
-      - `GET /zones/:zone_id/settings`
-      - `PATCH /zones/:zone_id/settings`
-
-      Deprecated APIs:
-
-      - `GET /zones/:zone_id/settings/cname_flattening`
-      - `PATCH /zones/:zone_id/settings/cname_flattening`
 
   - publish_date: "2025-03-14"
     title: "Account Settings: default_nameservers and use_account_custom_ns_by_default"

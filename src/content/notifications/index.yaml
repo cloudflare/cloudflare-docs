@@ -399,7 +399,7 @@ entries:
     associatedProducts: Traffic Monitoring
     nextSteps: |-
       1. Use the link in the notification you received to see which error codes Cloudflare is seeing.
-      2. Depending on the statuses you are alerting on, refer to [Troubleshooting Cloudflare 5XX errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/).
+      2. Depending on the statuses you are alerting on, refer to [Troubleshooting Cloudflare 5XX errors](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/).
     otherFilters: |-
       Available filters include:
 
@@ -419,7 +419,7 @@ entries:
     associatedProducts: Traffic Monitoring
     nextSteps: |-
       1. Use the link in the Notification you received to see which error codes Cloudflare is seeing from your origin.
-      2. Refer to [Troubleshooting Cloudflare 5XX errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/) to learn how to troubleshoot these errors.
+      2. Refer to [Troubleshooting Cloudflare 5XX errors](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/) to learn how to troubleshoot these errors.
     otherFilters: |-
       Multiple filters available:
 
@@ -434,7 +434,7 @@ entries:
     audience: Customers who want to receive a notification when Cloudflare is unable to access their origin. Customers will only receive this notification when their origin is returning a `521` error.
     availability: All Cloudflare plans.
     associatedProducts: Traffic Monitoring
-    nextSteps: Refer to [Troubleshooting Cloudflare 5XX errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/) to learn how to troubleshoot these errors.
+    nextSteps: Refer to [Troubleshooting Cloudflare 5XX errors](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/) to learn how to troubleshoot these errors.
     otherFilters: None.
     limitations: |-
       Traffic Monitoring alerts are not sent for each individual events, but only when a spike in traffic reaches the threshold for an alert to be sent.

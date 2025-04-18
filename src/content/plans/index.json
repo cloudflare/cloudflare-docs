@@ -2213,6 +2213,21 @@
 					"biz": "No",
 					"ent": "Paid add-on"
 				},
+				"http": {
+					"title": "HTTP",
+					"free": "No",
+					"pro": "No",
+					"biz": "No",
+					"ent": "Paid add-on"
+				},
+				"https": {
+					"title": "HTTPS",
+					"link": "spectrum/reference/limitations/#https",
+					"free": "No",
+					"pro": "No",
+					"biz": "No",
+					"ent": "Paid add-on"
+				},
 				"v_minecraft": {
 					"title": "Minecraft (one app allowed)",
 					"link": "/spectrum/reference/limitations/#minecraft",

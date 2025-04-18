@@ -9,168 +9,141 @@ head:
     content: Overview
 ---
 
-import {
-	CardGrid,
-	Description,
-	Feature,
-	LinkButton,
-	LinkTitleCard,
-	Plan,
-	RelatedProduct,
-	Render,
-} from "~/components";
+import { Description, RelatedProduct, LinkButton } from "~/components";
 
 <Description>
-
-Build serverless applications and deploy instantly across the globe for exceptional performance, reliability, and scale.
-
+A serverless platform for building, deploying, and scaling apps across [Cloudflare's global network](https://www.cloudflare.com/network/) with a single command  —  no infrastructure to manage, no complex configuration
 </Description>
 
-<Plan type="all" />
+With Cloudflare Workers, you can expect to:
+- Deliver fast performance with high reliability anywhere in the world
+- Build full-stack apps with your framework of choice, including [React](/workers/frameworks/framework-guides/react-router/), [Vue](/workers/frameworks/framework-guides/vue/), [Svelte](/workers/frameworks/framework-guides/svelte/), [Next](/workers/frameworks/framework-guides/nextjs/), [Astro](/workers/frameworks/framework-guides/astro/), [Remix](/workers/frameworks/framework-guides/react-router/), [and more](/workers/frameworks/)
+- Use your preferred language, including [JavaScript](/workers/languages/javascript/), [TypeScript](/workers/languages/typescript/), [Python](/workers/languages/python/), [Rust](/workers/languages/rust/), [and more](/workers/runtime-apis/webassembly/)
+- Gain deep visibility and insight with built-in [observability](/workers/observability/logs/)
+- Get started for free and grow with flexible [pricing](/workers/platform/pricing/), affordable at any scale
 
-Cloudflare Workers provides a [serverless](https://www.cloudflare.com/learning/serverless/what-is-serverless/) execution environment that allows you to create new applications or augment existing ones without configuring or maintaining infrastructure.
+Get started with your first project:
 
-Cloudflare Workers runs on [Cloudflare’s global network](https://www.cloudflare.com/network/) in hundreds of cities worldwide, offering both [Free and Paid plans](/workers/platform/pricing/).
+<LinkButton href="https://dash.cloudflare.com/?to=/:account/workers-and-pages/templates">Deploy a template</LinkButton>
 
-<LinkButton variant="primary" href="/workers/get-started/guide/">
-	Get started
-</LinkButton> <LinkButton
-	variant="secondary"
-	href="https://dash.cloudflare.com/?to=/:account/workers-and-pages/create"
->
-	Workers dashboard
+
+<LinkButton href="/workers/get-started/guide/" variant="minimal">
+  Deploy with Wrangler CLI
 </LinkButton>
 
 ---
 
-## Features
+## Build with Workers
 
-<Feature header="Wrangler" href="/workers/wrangler/install-and-update/">
+<div>
+#### Front-end applications
 
-The Workers command-line interface, Wrangler, allows you to [create](/workers/wrangler/commands/#init), [test](/workers/wrangler/commands/#dev), and [deploy](/workers/wrangler/commands/#deploy) your Workers projects.
+<span>Deploy [static assets](/workers/static-assets/) to Cloudflare's [CDN & cache](/cache/) for fast rendering</span>
+</div>
 
-</Feature>
+<div>
+#### Back-end applications
 
-<Feature header="Bindings" href="/workers/runtime-apis/bindings/">
+<span>Build APIs and connect to data stores with [Smart Placement](/workers/configuration/smart-placement/) to optimize latency</span>
+</div>
 
-Bindings allow your Workers to interact with resources on the Cloudflare developer platform, including [R2](/r2/), [KV](/kv/concepts/how-kv-works/), [Durable Objects](/durable-objects/), and [D1](/d1/).
+<div>
+#### Serverless AI inference
 
-</Feature>
+<span>Run LLMs, generate images, and more with [Workers AI](/workers-ai/)</span>
+</div>
 
-<Feature header="Playground" href="/workers/playground/" cta="Use the Playground">
+<div>
+#### Background jobs
 
-The Playground is a sandbox which gives you an instant way to preview and test a Worker directly in the browser against any site. No setup required.
-
-</Feature>
+<span>Schedule [cron jobs](/workers/configuration/cron-triggers/), run durable [Workflows](/workflows/), and integrate with [Queues](/queues/)</span>
+</div>
 
 ---
 
-## Related products
+## Integrate with Workers
 
-<RelatedProduct header="Workers AI" href="/workers-ai/" product="workers-ai">
+Connect to external services like databases, APIs, and storage via [Bindings](/workers/runtime-apis/bindings/), enabling functionality with just a few lines of code:
 
-Run machine learning models, powered by serverless GPUs, on Cloudflare’s global network.
+**Storage**
 
-</RelatedProduct>
+<RelatedProduct header="Durable Objects" href="/durable-objects/" product="durable-objects">
 
-<RelatedProduct header="R2" href="/r2/" product="r2">
-
-Store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
+Scalable stateful storage for real-time coordination.
 
 </RelatedProduct>
 
 <RelatedProduct header="D1" href="/d1/" product="d1">
 
-Create new serverless SQL databases to query from your Workers and Pages projects.
-
-</RelatedProduct>
-
-<RelatedProduct header="Durable Objects" href="/durable-objects/" product="durable-objects">
-
-A globally distributed coordination API with strongly consistent storage.
+Serverless SQL database built for fast, global queries.
 
 </RelatedProduct>
 
 <RelatedProduct header="KV" href="/kv/" product="kv">
 
-Create a global, low-latency, key-value data storage.
+Low-latency key-value storage for fast, edge-cached reads.
 
 </RelatedProduct>
 
 <RelatedProduct header="Queues" href="/queues/" product="queues">
 
-Send and receive messages with guaranteed delivery and no charges for egress bandwidth.
+Guaranteed delivery with no charges for egress bandwidth.
 
 </RelatedProduct>
 
 <RelatedProduct header="Hyperdrive" href="/hyperdrive/" product="hyperdrive">
 
-Turn your existing regional database into a globally distributed database.
+Connect to your external database with accelerated queries, cached at the edge.
+
+</RelatedProduct>
+
+**Compute**
+
+<RelatedProduct header="Workers AI" href="/workers-ai/" product="workers-ai">
+
+Machine learning models powered by serverless GPUs.
+
+</RelatedProduct>
+
+<RelatedProduct header="Workflows" href="/workflows/" product="workflows">
+
+Durable, long-running operations with automatic retries.
 
 </RelatedProduct>
 
 <RelatedProduct header="Vectorize" href="/vectorize/" product="vectorize">
 
-Build full-stack AI applications with Vectorize, Cloudflare’s vector database.
+Vector database for AI-powered semantic search.
 
 </RelatedProduct>
 
-<RelatedProduct header="Zaraz" href="/zaraz/" product="zaraz">
+<RelatedProduct header="R2" href="/r2/" product="r2">
 
-Offload third-party tools and services to the cloud and improve the speed and security of your website.
+Zero-egress object storage for cost-efficient data access.
 
 </RelatedProduct>
+
+<RelatedProduct header="Browser Rendering" href="/browser-rendering/" product="browser-rendering">
+
+Programmatic serverless browser instances.
+
+</RelatedProduct>
+
+**Media**
+
+<RelatedProduct header="Cache / CDN" href="/cache/" product="cache">
+
+Global caching for high-performance, low-latency delivery.
+
+</RelatedProduct>
+
+<RelatedProduct header="Images" href="/images/" product="images">
+
+Streamlined image infrastructure from a single API.
+
+</RelatedProduct>
+
 
 ---
 
-## More resources
-
-<CardGrid>
-
-<LinkTitleCard
-	title="Learning Path"
-	href="/learning-paths/workers/concepts/"
-	icon="pen"
->
-	New to Workers? Get started with the Workers Learning Path.
-</LinkTitleCard>
-
-<LinkTitleCard
-	title="Plans"
-	href="/workers/platform/pricing/"
-	icon="seti:shell"
->
-	Learn about Free and Paid plans.
-</LinkTitleCard>
-
-<LinkTitleCard title="Limits" href="/workers/platform/limits/" icon="document">
-	Learn about plan limits (Free plans get 100,000 requests per day).
-</LinkTitleCard>
-
-<LinkTitleCard
-	title="Storage options"
-	href="/workers/platform/storage-options/"
-	icon="open-book"
->
-	Learn which storage option is best for your project.
-</LinkTitleCard>
-
-<LinkTitleCard
-	title="Developer Discord"
-	href="https://discord.cloudflare.com"
-	icon="discord"
->
-	Connect with the Workers community on Discord to ask questions, share what you
-	are building, and discuss the platform with other developers.
-</LinkTitleCard>
-
-<LinkTitleCard
-	title="@CloudflareDev"
-	href="https://x.com/cloudflaredev"
-	icon="x.com"
->
-	Follow @CloudflareDev on Twitter to learn about product announcements, and
-	what is new in Cloudflare Workers.
-</LinkTitleCard>
-
-</CardGrid>
+Want to connect with the Workers community? [Join our Discord](https://discord.cloudflare.com)

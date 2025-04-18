@@ -114,7 +114,7 @@ curl -X POST https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/
 
 The resulting response will contain a JWT, which provides authentication during file upload. The JWT is valid for one hour.
 
-In addition to the JWT, the response instructs users how to optimally batch upload their files. These instructions are encoded in the `buckets` field. Each array in `buckets` contains a list of file hashes which should be uploaded together. Hashes of files that have been recently uploaded may not be returned in the API response; they do not need to be re-uploaded.
+In addition to the JWT, the response instructs users how to optimally batch upload their files. These instructions are encoded in the `buckets` field. Each array in `buckets` contains a list of file hashes which should be uploaded together. Unmodified files will not be returned in the `buckets` field (as they do not need to be re-uploaded) if they have recently been uploaded in previous versions of your Worker.
 
 ```json
 {

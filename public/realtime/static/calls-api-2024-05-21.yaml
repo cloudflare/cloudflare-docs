@@ -150,7 +150,7 @@ paths:
                       simulcast:
                         preferredRid: "h"
                         priorityOrdering: "asciibetical"
-                        ridUnavailableStrategy: "nextPriority"
+                        ridNotAvailabl: "asciibetical"
       security:
         - secret: []
       parameters:
@@ -228,7 +228,7 @@ paths:
                         simulcast:
                           preferredRid: "h"
                           priorityOrdering: "asciibetical"
-                          ridUnavailableStrategy: "nextPriority"
+                          ridNotAvailabl: "asciibetical"
                     sessionDescription:
                       sdp: |
                         v=0
@@ -396,7 +396,7 @@ paths:
                       simulcast:
                         preferredRid: "h"
                         priorityOrdering: "asciibetical"
-                        ridUnavailableStrategy: "nextPriority"
+                        ridNotAavailable: "asciibetical"
       security:
         - secret: []
       parameters:
@@ -530,13 +530,13 @@ components:
                 - asciibetical
               default: none
               description: Controls what happens if there is not enough network resources available to send the preferredRid. 'none' means keep sending even if not enough bandwidth, 'asciibetical' uses a-z order to determine priority where a is most desirable and z is least desirable.
-            ridUnavailableStrategy:
+            ridNotAvailable:
               type: string
               enum:
                 - none
-                - nextPriority
+                - asciibetical
               default: none
-              description: Controls what happens when the rid currently being used or preferredRid is no longer being sent by the publisher. 'none' means do nothing, 'nextPriority' uses the next on the priorityOrdering.
+              description: Controls what happens when the rid currently being used or preferredRid is no longer being sent by the publisher. 'none' means do nothing, 'asciibetical' uses the next available layer after sorting the layers a-z.
     CloseTrackObject:
       type: object
       properties:

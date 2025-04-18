@@ -1,6 +1,6 @@
 ---
 pcx_content_type: troubleshooting
-title: Troubleshooting Cloudflare 5XX errors
+title: Cloudflare 5XX errors
 source: null
 ---
 
@@ -8,8 +8,8 @@ import { GlossaryTooltip } from "~/components";
 
 When troubleshooting most `5XX` errors, the correct course of action is to first contact your hosting provider or site administrator to troubleshoot and gather data. The following sections outline:
 
-- The [information](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#required-error-details-for-hosting-provider) to provide your hosting provider to help resolve the errors
-- The steps to access [error analytics](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-analytics) in the Cloudflare dashboard.
+- The [information](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/#required-error-details-for-hosting-provider) to provide your hosting provider to help resolve the errors
+- The steps to access [error analytics](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/#error-analytics) in the Cloudflare dashboard.
 
 :::note
 
@@ -118,12 +118,11 @@ HTTP error 503 occurs when your origin web server is overloaded.
 
 ### Common causes
 
-There are two possible causes identifiable by the error message:
+There are different causes identifiable by the error message or the location of the error:
 
 - Error does not contain `cloudflare` or `cloudflare-nginx` in the HTML response body. In this case, the issue is likely from your origin server.
 - Error contains `cloudflare` or `cloudflare-nginx` in the HTML response body. In this case, the issue may stem from Cloudflare.
-
-Additionally, `503` status codes in logs or analytics may result from [unsuccessful prefetches from Speed Brain](/speed/optimization/content/speed-brain/#how-speed-brain-works).
+- Error is only visible in logs or analytics.
 
 ### Resolution
 
@@ -140,6 +139,10 @@ If the error contains `cloudflare` or `cloudflare-nginx` in the HTML response bo
 - Your domain name
 - The time and timezone of the `503` error occurrence
 - The output of `www.example.com/cdn-cgi/trace` from the browser where the `503` error was observed (replace `www.example.com` with your actual domain and hostname)
+
+#### 503 Error only visible in logs and analytics
+
+These errors result from [unsuccessful prefetches from Speed Brain](/speed/optimization/content/speed-brain/#how-speed-brain-works) and can be discarded. These errors are not visible to visitors of your website. [Speed Brain](/speed/optimization/content/speed-brain/#enable-and-disable-speed-brain) can be disabled for the zone if needed (this feature cannot be disabled for a specific path).
 
 ## Error 520: web server returns an unknown error
 
@@ -170,7 +173,7 @@ As a temporary workaround, you can set the affected DNS record to [DNS-only](/dn
 
 :::
 
-- Contact your hosting provider or site administrator and share the necessary [error details](#required-error-details-for-hosting-provider) to assist with troubleshooting. Request a review of your origin web server error logs for crashes and check for [common causes](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#common-causes-3) mentioned in the previous section.
+- Contact your hosting provider or site administrator and share the necessary [error details](#required-error-details-for-hosting-provider) to assist with troubleshooting. Request a review of your origin web server error logs for crashes and check for [common causes](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/#common-causes-3) mentioned in the previous section.
 
 - If HTTP/2 is enabled at your origin server, ensure it is correctly set up. Cloudflare connects to servers who announce support of HTTP/2 connections via [ALPN](https://blog.cloudflare.com/introducing-http2). If the origin web server accepts the HTTP/2 connection but then does not respect or support the protocol, an HTTP `520` error will be returned. You can disable the [HTTP/2 to Origin](/speed/optimization/protocol/http2-to-origin/#disable-http2-to-origin) in **Speed** > **Optimization** > **Protocol Optimization** on the Cloudflare dashboard.
 
@@ -396,8 +399,8 @@ This error indicates that Cloudflare is unable to resolve the origin hostname, p
 ### Common causes
 
 An HTTP error `530` is returned when Cloudflare is encountering an issue resolving the origin hostname.
-In this case the body of the response contains an [1XXX error](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors) code.
+In this case the body of the response contains an [1XXX error](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/) code.
 
 ### Resolution
 
-Refer to the specific [1XXX error](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/) for troubleshooting information.
+Refer to the specific [1XXX error](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/) for troubleshooting information.

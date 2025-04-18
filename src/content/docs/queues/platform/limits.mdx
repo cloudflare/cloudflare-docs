@@ -25,8 +25,7 @@ import { Render, WranglerConfig } from "~/components"
 | [Consumer CPU time](/workers/platform/limits/#cpu-time)| 30 seconds (default). [Configurable to 5 minutes](/queues/platform/limits/#increasing-queue-consumer-worker-cpu-limits) 							|
 | `visibilityTimeout` (pull-based queues)       									| 12 hours                                                      |
 | `delaySeconds` (when sending or retrying)     									| 12 hours                                                      |
-| Requests to the Queues API (incl. pulls/acks) 									| [1200 requests / 5 mins](/fundamentals/api/reference/limits/) |
-
+| Requests to the Queues API (excluding pull consumer operations)<sup>6</sup>     | [1200 requests / 5 mins](/fundamentals/api/reference/limits/) |
 
 
 <sup>1</sup> 1 KB is measured as 1000 bytes. Messages can include up to \~100 bytes of internal metadata that counts towards total message limits.
@@ -38,6 +37,8 @@ import { Render, WranglerConfig } from "~/components"
 <sup>4</sup> Individual queues that reach this limit will receive a `Storage Limit Exceeded` error when calling `send()` or `sendBatch()` on the queue.
 
 <sup>5</sup> Refer to [Workers limits](/workers/platform/limits/#cpu-time).
+
+<sup>6</sup> [Pull Consumers](/queues/configuration/pull-consumers) allow you to consume messages from a queue over HTTP. Pulls, acknowledgements, and retries over HTTP are not subject to the API rate limit.
 
 <Render file="limits_increase" product="workers" />
 

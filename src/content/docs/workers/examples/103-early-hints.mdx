@@ -136,4 +136,47 @@ def on_fetch(request):
         return Response(HTML, headers=headers)
 ```
 
+</TabItem> <TabItem label="Hono" icon="seti:typescript">
+
+```ts
+import { Hono } from "hono";
+
+const app = new Hono();
+
+const CSS = "body { color: red; }";
+const HTML = `
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Early Hints test</title>
+    <link rel="stylesheet" href="/test.css">
+</head>
+<body>
+    <h1>Early Hints test page</h1>
+</body>
+</html>
+`;
+
+// Serve CSS file
+app.get("/test.css", (c) => {
+	return c.body(CSS, {
+		headers: {
+			"content-type": "text/css",
+		},
+	});
+});
+
+// Serve HTML with early hints
+app.get("*", (c) => {
+	return c.html(HTML, {
+		headers: {
+			link: "</test.css>; rel=preload; as=style",
+		},
+	});
+});
+
+export default app;
+```
+
 </TabItem> </Tabs>

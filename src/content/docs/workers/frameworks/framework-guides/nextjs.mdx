@@ -96,7 +96,11 @@ You can convert an existing Next.js application to run on Cloudflare
 
     <PackageManagers type="install" pkg="@opennextjs/cloudflare@latest" />
 
-2.  **Add a Wrangler configuration file**
+2.  **Install [`wrangler CLI`](https://developers.cloudflare.com/workers/wrangler) as a devDependency**
+
+    <PackageManagers type="install" pkg="wrangler@latest" dev />
+
+3.  **Add a Wrangler configuration file**
 
     In your project root, create a [Wrangler configuration file](/workers/wrangler/configuration/) with the following content:
 
@@ -116,7 +120,7 @@ You can convert an existing Next.js application to run on Cloudflare
     As shown above, you must enable the [`nodejs_compat` compatibility flag](/workers/runtime-apis/nodejs/) _and_ set your [compatibility date](/workers/configuration/compatibility-dates/) to `2024-09-23` or later for your Next.js app to work with @opennextjs/cloudflare.
     :::
 
-3.  **Add a configuration file for OpenNext**
+4.  **Add a configuration file for OpenNext**
 
     In your project root, create an OpenNext configuration file named `open-next.config.ts` with the following content:
 
@@ -130,7 +134,7 @@ You can convert an existing Next.js application to run on Cloudflare
     `open-next.config.ts` is where you can configure the caching, see the [adapter documentation](https://opennext.js.org/cloudflare/caching) for more information
     :::
 
-4.  **Update `package.json`**
+5.  **Update `package.json`**
 
     You can add the following scripts to your `package.json`:
 
@@ -148,21 +152,21 @@ You can convert an existing Next.js application to run on Cloudflare
     	root of your project containing the types for the env.
     </Details>
 
-5.  **Develop locally.**
+6.  **Develop locally.**
 
     After creating your project, run the following command in your project directory to start a local development server.
     The command uses the Next.js development server. It offers the best developer experience by quickly reloading your app after your source code is updated.
 
     <PackageManagers type="run" args="dev" />
 
-6.  **Test your site with the Cloudflare adapter.**
+7.  **Test your site with the Cloudflare adapter.**
 
     The command used in the previous step uses the Next.js development server to offer a great developer experience.
     However your application will run on Cloudflare Workers so you want to run your integration tests and verify that your application workers correctly in this environment.
 
     <PackageManagers type="run" args="preview" />
 
-7.  **Deploy your project.**
+8.  **Deploy your project.**
 
     You can deploy your project to a [`*.workers.dev` subdomain](/workers/configuration/routing/workers-dev/) or a [custom domain](/workers/configuration/routing/custom-domains/) from your local machine or any CI/CD system (including [Workers Builds](/workers/ci-cd/#workers-builds)). Use the following command to build and deploy. If you're using a CI service, be sure to update your "deploy command" accordingly.
 

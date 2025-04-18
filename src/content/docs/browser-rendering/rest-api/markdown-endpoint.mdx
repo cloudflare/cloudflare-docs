@@ -5,11 +5,15 @@ sidebar:
   order: 10
 ---
 
+import { Tabs, TabItem } from "~/components";
+
 The `/markdown` endpoint retrieves a webpage's content and converts it into Markdown format. You can specify a URL and optional parameters to refine the extraction process.
 
 ## Basic usage
 
 ### Using a URL
+
+<Tabs syncKey="workersExamples"> <TabItem label="curl">
 
 This example fetches the Markdown representation of a webpage.
 
@@ -22,14 +26,31 @@ curl -X 'POST' 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browse
   }'
 ```
 
-### JSON response
+```json output
 
-```json title="json response"
-{
 	"success": true,
 	"result": "# Example Domain\n\nThis domain is for use in illustrative examples in documents. You may use this domain in literature without prior coordination or asking for permission.\n\n[More information...](https://www.iana.org/domains/example)"
 }
 ```
+
+</TabItem> <TabItem label="TypeScript SDK">
+
+```typescript
+import Cloudflare from "cloudflare";
+
+const client = new Cloudflare({
+	apiEmail: process.env["CLOUDFLARE_EMAIL"], // This is the default and can be omitted
+	apiKey: process.env["CLOUDFLARE_API_KEY"], // This is the default and can be omitted
+});
+
+const markdown = await client.browserRendering.markdown.create({
+	account_id: "account_id",
+});
+
+console.log(markdown);
+```
+
+</TabItem> </Tabs>
 
 ### Use raw HTML
 
@@ -44,9 +65,7 @@ curl -X 'POST' 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browse
   }'
 ```
 
-### JSON response
-
-```json title="json response"
+```json output
 {
 	"success": true,
 	"result": "Hello World"
@@ -67,9 +86,7 @@ curl -X 'POST' 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browse
   }'
 ```
 
-### JSON response
-
-```json title="json response"
+```json output
 {
 	"success": true,
 	"result": "# Example Domain\n\nThis domain is for use in illustrative examples in documents. You may use this domain in literature without prior coordination or asking for permission.\n\n[More information...](https://www.iana.org/domains/example)"
