@@ -5,7 +5,7 @@ productLink: "/pages/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
-  - publish_date: "2025-04-17"
+  - publish_date: "2025-04-18"
     title: Action recommended - Node.js 18 end-of-life and impact on Pages Build System V2
     description: |-
       - If you are using [Pages Build System V2](/pages/configuration/build-image/) for a Git-connected Pages project, note that the default Node.js version, **Node.js 18**, will end its LTS support on **April 30, 2025**.
