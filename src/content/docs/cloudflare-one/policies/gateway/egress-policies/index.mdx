@@ -174,9 +174,16 @@ Gateway uses Rust to evaluate regular expressions. The Rust implementation is sl
 
 The [Application](#application), [Content Categories](#content-categories), [Domain](#domain), and [Host](#host) selectors are only available for traffic onboarded to Gateway with [WARP](/cloudflare-one/connections/connect-devices/warp/), [PAC files](/cloudflare-one/connections/connect-devices/agentless/pac-files/), or [Browser Isolation](/cloudflare-one/policies/browser-isolation/). To use these selectors to filter traffic onboarded with WARP, you need to:
 
-1. [Add a Split Tunnel route](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route) to exclude the IP address `100.60.0.0/12`.
-2. Ensure you do not have a Split Tunnel route to exclude `100.60.0.0/10`.
-3. Add and deploy the following key-value pair to your devices' [WARP configuration file](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/) (`mdm.xml` on Windows and Linux or `com.cloudflare.warp.plist` on macOS):
+1. In your WARP Connector device profile, ensure Split Tunnel is set to [**Exclude IPs and domains**](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#change-split-tunnels-mode).
+2. [Remove the route](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#remove-a-route) to the IP address `100.64.0.0/10` from your Split Tunnel list.
+3. [Add routes](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route) to exclude the following IP addresses:
+   - `100.64.0.0/12`
+   - `100.81.0.0/16`
+   - `100.82.0.0/15`
+   - `100.84.0.0/14`
+   - `100.88.0.0/13`
+   - `100.96.0.0/11`
+4. Add and deploy the following key-value pair to your devices' [WARP configuration file](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/) (`mdm.xml` on Windows and Linux or `com.cloudflare.warp.plist` on macOS):
    ```xml
    <key>doh_in_tunnel</key>
    <true/>
