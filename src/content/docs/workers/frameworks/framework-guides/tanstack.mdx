@@ -5,7 +5,7 @@ head: []
 description: Create an TanStack application and deploy it to Cloudflare Workers with Workers Assets.
 ---
 
-import { WranglerConfig } from "~/components";
+import { WranglerConfig, PackageManagers } from "~/components";
 
 In this guide, you will create a new [TanStack](https://tanstack.com/) application and deploy to Cloudflare Workers (with the new [Workers Assets](/workers/static-assets/)).
 
@@ -21,25 +21,25 @@ npm install
 
 ## Develop locally
 
-```sh
-npm run dev
-```
+<PackageManagers type="run" args={"dev"} />
 
 ## Preparing for Deployment to Cloudflare Workers
+
+To prepare your TanStack application for deployment to Cloudflare Workers, follow three main steps: install the `unenv` package, modify the `app.config.ts` file, and add either a `wrangler.jsonc` or `wrangler.toml` file.
 
 ### Install `unenv` package
 
 [`unenv`](https://github.com/unjs/unenv) is a package that normalizes runtime environments across Node.js, browsers, and edge runtimes like Cloudflare Workers. It’s essential for TanStack Router because certain Node.js APIs are unavailable in the Workers environment. `unenv` offers compatible replacements for those APIs.
 
-```sh
-npm install unenv
-```
+<PackageManagers pkg="unenv" type="install" />
 
 ### Modify the `app.config.ts` file
 
 To configure your application for Cloudflare Workers deployment, add the following lines to your `app.config.ts` file:
 
 ```ts
+import { cloudflare } from 'unenv'
+
   server: {
     preset: "cloudflare-module",
     unenv: cloudflare,
@@ -48,7 +48,7 @@ To configure your application for Cloudflare Workers deployment, add the followi
 
 This will set the correct build format and runtime environment for Cloudflare.
 
-### Add a Wrnagler file
+### Add a Wrangler file
 
 Create a `wrangler.jsonc` or `wrangler.toml` file in the root of your project. This file is used to configure the Cloudflare Workers deployment.
 
@@ -74,9 +74,7 @@ Create a `wrangler.jsonc` or `wrangler.toml` file in the root of your project. T
 
 You need to build your application before deploying it to Cloudflare Workers.
 
-```sh
-npm run build
-```
+<PackageManagers type="run" args={"build"} />
 
 ### Deploy the application
 
