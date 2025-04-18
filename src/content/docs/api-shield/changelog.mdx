@@ -1,14 +1,84 @@
 ---
 pcx_content_type: changelog
 title: Changelog
-release_notes_file_name:
-  - api-shield
 sidebar:
   order: 10
 ---
 
-import { ProductReleaseNotes } from "~/components";
+import { ProductChangelog } from "~/components";
 
-{/* <!-- Actual content lives in /src/content/release-notes/api-shield.yaml. Update the file there for new entries to appear here. For more details, refer to https://developers.cloudflare.com/style-guide/documentation-content-strategy/content-types/changelog/#yaml-file --> */}
+{/* <!-- Actual content lives in /src/content/changelog/api-shield/. Update the file there for new entries to appear here. */}
 
-<ProductReleaseNotes />
+<ProductChangelog product="api-shield" />
+
+## 2025-02-17
+
+**New automatically applied risk labels**
+
+API Shield now automatically labels endpoints with risks due to missing schemas and performance anomalies (spikes in error rates, latency, and body response sizes).
+
+## 2025-01-16
+
+**API Authentication Posture**
+
+Customers will see per-endpoint authentication details inside API Shield's [Endpoint Management](/api-shield/management-and-monitoring/) for zones with configured session identifiers.
+
+## 2024-12-19
+
+**Automatically applied endpoint risk labels**
+
+API Shield now automatically labels endpoints with risks due to authentication status and sensitive data detection.
+
+## 2024-11-04
+
+**Endpoint labels**
+
+Customers can now organize their endpoints by use case and custom labels in [Endpoint Management](/api-shield/management-and-monitoring/endpoint-labels/) for easy reference and future machine learning (ML) model training.
+
+## 2024-10-18
+
+**API Shield fields in Custom Rules**
+
+Customers can now use API Shield product feature fields in [custom rules](/waf/custom-rules/), referencing features such as [JWT Validation](/api-shield/security/jwt-validation/), [session identifiers](/api-shield/get-started/#session-identifiers), and [Schema Validation](/api-shield/security/schema-validation/).
+
+## 2024-09-25
+
+**Fallthrough rule for Schema Validation 2.0**
+
+Customers can now enable the [Fallthrough Action](/api-shield/security/schema-validation/#add-validation-by-adding-a-fallthrough-rule) for Schema Validation 2.0 to block or log requests that do not match the endpoints listed in schemas protected by Schema Validation 2.0.
+
+## 2024-08-28
+
+**Increased capacity for Endpoint Management and Schema Validation**
+
+Endpoint Management and Schema Validation now support up to 10,000 saved and validated API endpoints.
+
+## 2024-07-08
+
+**API Discovery's hostname variables**
+
+Customers can now see when [API Discovery](/api-shield/security/api-discovery/) groups similar subdomains with the same methods and paths, making it easy to discover and manage APIs that share many vanity domains or subdomains.
+
+## 2024-07-02
+
+**Route API requests using API Routing**
+
+Customers can now route requests to different back-end services through [API Routing](/api-shield/management-and-monitoring/api-routing/), creating a unified front for their APIs distributed across otherwise disparate systems.
+
+## 2024-05-13
+
+**Use JWT claims in Advanced Rate Limiting, Transform Rules, and as session IDs**
+
+Customers can now use the fields inside [JSON Web Tokens (known as claims)](/api-shield/security/jwt-validation/transform-rules/#enhance-transform-rules-with-jwt-claims) as [session identifiers in API Shield](/api-shield/get-started/#session-identifiers), to count values in [Advanced Rate Limiting](/waf/rate-limiting-rules/), and to send on useful information in [Transform Rules](/rules/transform/#transform-rules).
+
+## 2024-04-30
+
+**Build Sequence Mitigation rules via the Cloudflare dashboard**
+
+Customers can now build [Sequence Mitigation](/api-shield/security/sequence-mitigation/) rules with a new user interface inside the API Shield section of the [Cloudflare dashboard](https://dash.cloudflare.com/).
+
+## 2024-02-23
+
+**Endpoint Management supports hostname variables**
+
+Customers can now save endpoints in [Endpoint Management](/api-shield/management-and-monitoring/) that contain variables in the hostname. Hostname variables are supported across all product features.

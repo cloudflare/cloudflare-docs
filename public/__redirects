@@ -9,6 +9,7 @@
 
 # changelog
 /changelog/rss.xml /changelog/rss/index.xml 301
+/api-shield/changelog/index.xml /changelog/rss/api-shield.xml 301
 /cache/changelog/index.xml /changelog/rss/cache.xml 301
 /dns/changelog/index.xml /changelog/rss/dns.xml 301
 /fundamentals/changelog/index.xml /changelog/rss/fundamentals.xml 301
