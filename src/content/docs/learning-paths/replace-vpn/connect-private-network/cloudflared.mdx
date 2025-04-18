@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { Render, Tabs, TabItem, Details } from "~/components"
+import { Render, Tabs, TabItem } from "~/components"
 
 Cloudflare Tunnel is an outbound-only daemon service that can run on nearly any host machine and proxies local traffic once validated from the Cloudflare network. User traffic initiated from the WARP endpoint client onramps to Cloudflare, passes down your Cloudflare Tunnel connections, and terminates automatically in your local network. Traffic reaching your internal applications or services will carry the local source IP address of the host machine running the `cloudflared` daemon.
 
@@ -61,50 +61,7 @@ To connect your private network:
 		```
 
 5. Get the [token](/cloudflare-one/connections/connect-networks/configure-tunnels/remote-tunnel-permissions/) used to run the tunnel:
-
-		```tf
-		data "cloudflare_zero_trust_tunnel_cloudflared_token" "tunnel_token" {
-			account_id = var.cloudflare_account_id
-			tunnel_id = cloudflare_zero_trust_tunnel_cloudflared.example_tunnel.id
-		}
-		```
-
-		If your host machine is not managed in Terraform or you want to install the tunnel manually, you can output the token value to the CLI.
-	<Details header="Example: Output to CLI" open = {false}>
-  	1. Output the tunnel token to the Terraform state file:
-			```tf
-			output "tunnel_token" {
-				value       = data.cloudflare_zero_trust_tunnel_cloudflared_token.tunnel_token.token
-				sensitive   = true
-			}
-			```
-	2. Apply the configuration:
-			```sh
-			terraform apply
-			```
-	3. Read the tunnel token:
-			```sh
-			terraform output -raw tunnel_token
-			```
-			```sh output
-			eyJhIj...
-			```
-
-	</Details>
-
-		Alternatively, pass `data.cloudflare_zero_trust_tunnel_cloudflared_token.tunnel_token.token` directly into your host's Terraform configuration or store the token in your secret management tool.
-
-	<Details header="Example: Store in HashiCorp Vault" open = {false}>
-			```tf
-			resource "vault_generic_secret" "tunnel_token" {
-				path         = "kv/cloudflare/tunnel_token"
-
-				data_json = jsonencode({
-					"TUNNEL_TOKEN" = data.cloudflare_zero_trust_tunnel_cloudflared_token.tunnel_token.token
-				})
-			}
-			```
-	</Details>
+		<Render file="terraform/get-tunnel-token" product="cloudflare-one" />
 
 6. Install `cloudflared` on a host machine in your private network and run the tunnel:
 
