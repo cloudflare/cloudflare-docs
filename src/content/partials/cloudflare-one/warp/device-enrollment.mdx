@@ -46,7 +46,6 @@ Device posture checks are not supported in device enrollment policies. WARP can 
 
 3. Use the [`cloudflare_zero_trust_access_application`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_application) resource to create an application with type `warp`.
 
-
 	```tf
 	resource "cloudflare_zero_trust_access_application" "device_enrollment" {
 		account_id       = var.cloudflare_account_id
