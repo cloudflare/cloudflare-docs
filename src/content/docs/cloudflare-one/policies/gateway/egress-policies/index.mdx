@@ -5,7 +5,7 @@ sidebar:
   order: 5
 ---
 
-import { Render } from "~/components";
+import { Render, Badge } from "~/components";
 
 :::note
 Only available on Enterprise plans.
@@ -55,7 +55,7 @@ Choose one of the following options for your egress policy:
 
 Gateway matches egress traffic against the following selectors, or criteria:
 
-### Application
+### Application <Badge text="Beta" variant="caution"/>
 
 <Render
 	file="gateway/selectors/application"
@@ -64,7 +64,7 @@ Gateway matches egress traffic against the following selectors, or criteria:
 
 <Render file="gateway/selectors/egress-selector-limitation" />
 
-### Content Categories
+### Content Categories <Badge text="Beta" variant="caution"/>
 
 <Render
 	file="gateway/selectors/net-http-content-categories"
@@ -99,13 +99,13 @@ Gateway matches egress traffic against the following selectors, or criteria:
 
 <Render file="gateway/selectors/device-posture" />
 
-### Domain
+### Domain <Badge text="Beta" variant="caution"/>
 
 <Render file="gateway/selectors/domain" />
 
 <Render file="gateway/selectors/egress-selector-limitation" />
 
-### Host
+### Host <Badge text="Beta" variant="caution"/>
 
 <Render file="gateway/selectors/host" />
 
