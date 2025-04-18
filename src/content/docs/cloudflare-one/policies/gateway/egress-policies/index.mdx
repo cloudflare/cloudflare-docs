@@ -27,18 +27,6 @@ Gateway traffic that does not match an egress policy will egress from the closes
 
 To control whether only IPv4 or IPv6 is used to egress, ensure you are [filtering DNS traffic](/cloudflare-one/policies/gateway/initial-setup/dns/), then create a DNS policy to [block AAAA or A records](/cloudflare-one/policies/gateway/dns-policies/common-policies/#control-ip-version).
 
-## Limited selectors
-
-The [Application](#application), [Content Categories](#content-categories), [Domain](#domain), and [Host](#host) selectors are only available for traffic onboarded to Gateway with [WARP](/cloudflare-one/connections/connect-devices/warp/), [PAC files](/cloudflare-one/connections/connect-devices/agentless/pac-files/), or [Browser Isolation](/cloudflare-one/policies/browser-isolation/). To use these selectors to filter traffic onboarded with WARP, you need to:
-
-1. [Add a Split Tunnel route](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route) to the IP address `100.60.0.0/12`.
-2. Ensure you do not have a Split Tunnel route to `100.60.0.0/10`.
-3. Add the following key-value pair to your devices' [WARP configuration file](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/) (`mdm.xml` on Windows and Linux or `com.cloudflare.warp.plist` on macOS):
-   ```xml
-   <key>doh_in_tunnel</key>
-   <true/>
-   ```
-
 ## Example policies
 
 The following egress policy configures all traffic destined for a third-party network to use a static source IP:
@@ -173,3 +161,15 @@ Gateway uses Rust to evaluate regular expressions. The Rust implementation is sl
 	file="gateway/logical-operators"
 	params={{ one: "**Identity** or **Device Posture**" }}
 />
+
+## Limitations
+
+The [Application](#application), [Content Categories](#content-categories), [Domain](#domain), and [Host](#host) selectors are only available for traffic onboarded to Gateway with [WARP](/cloudflare-one/connections/connect-devices/warp/), [PAC files](/cloudflare-one/connections/connect-devices/agentless/pac-files/), or [Browser Isolation](/cloudflare-one/policies/browser-isolation/). To use these selectors to filter traffic onboarded with WARP, you need to:
+
+1. [Add a Split Tunnel route](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route) to the IP address `100.60.0.0/12`.
+2. Ensure you do not have a Split Tunnel route to `100.60.0.0/10`.
+3. Add the following key-value pair to your devices' [WARP configuration file](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/) (`mdm.xml` on Windows and Linux or `com.cloudflare.warp.plist` on macOS):
+   ```xml
+   <key>doh_in_tunnel</key>
+   <true/>
+   ```
