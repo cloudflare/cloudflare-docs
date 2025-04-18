@@ -43,3 +43,22 @@ Apache cPanel requires that you upload the Cloudflare origin CA root certificate
 Use the following link to download an RSA version of the root certificate and upload it to your origin web server:
 
 * [Cloudflare Origin RSA PEM](/ssl/static/origin_ca_rsa_root.pem)
+
+## Error message `Failed to validate requested hostname <hostname>: This zone is either not part of your account, or you do not have access to it`
+
+### Cause
+This is a known issue where whilst being created on the Cloudflare Dashboard, Origin CA requires API access for the user creating the origin certificate. 
+If  API Access is disabled for the account, this error is returned.
+
+### Solution
+Please make sure that user creating the certificate has access to the API.
+You can check under Account Home > Manage Account > Members: toggle `Enable API Access` to On.
+
+## Origin Server page is showing Origin CA from another zone from the account
+
+### Cause
+This is a known issue where when the Origin Server page is opened for a zone, then for another zone, it shows the certificate from the first zone.
+
+### Solution
+You need refresh to the page in your browser to list the correct Origin CA for the zone.
+
