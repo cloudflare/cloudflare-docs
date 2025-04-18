@@ -1,0 +1,89 @@
+---
+{}
+
+---
+
+```bash
+   curl --request PUT \
+   https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}} \
+   --header "X-Auth-Email: <EMAIL>" \
+   --header "X-Auth-Key: <API_KEY>" \
+   --header "Content-Type: application/json" \
+   --data '{
+     "rules": [
+       {
+         "action": "log_custom_field",
+         "expression": "true",
+         "description": "Set Logpush custom fields for HTTP requests",
+         "action_parameters": {
+           "request_fields": [
+             { "name": "content-type" },
+             { "name": "x-forwarded-for" },
+           ],
+         "transformed_request_fields": [
+             {"name": "host"}
+          ],
+           "response_fields": [
+             { "name": "server" },
+             { "name": "content-type" },
+         "raw_response_fields": [
+             { "name": "allow" }
+           ],
+           "cookie_fields": [
+             { "name": "__ga" },
+             { "name": "accountNumber" },
+             { "name": "__cfruid" }
+           ]
+         }
+       }
+     ]
+   }'
+   ```
+
+   ```json output
+   {
+     "result": {
+       "id": "<RULESET_ID>",
+       "name": "Zone-level phase entry point",
+       "description": "This ruleset configures custom log fields.",
+       "kind": "zone",
+       "version": "2",
+       "rules": [
+         {
+           "id": "<RULE_ID_1>",
+           "version": "1",
+           "action": "log_custom_field",
+           "action_parameters": {
+             "request_fields": [
+               { "name": "content-type" },
+               { "name": "x-forwarded-for" },
+           "transformed_request_fields": [
+               { "name": "host" }
+             ],
+             "response_fields": [
+               { "name": "server" },
+               { "name": "content-type" },
+           "raw_response_fields": [
+               { "name": "allow" }
+             ],
+             "cookie_fields": [
+               { "name": "__ga" },
+               { "name": "accountNumber" },
+               { "name": "__cfruid" }
+             ]
+           },
+           "expression": "true",
+           "description": "Set Logpush custom fields for HTTP requests",
+           "last_updated": "2021-11-21T11:02:08.769537Z",
+           "ref": "<RULE_REF_1>",
+           "enabled": true
+         }
+       ],
+       "last_updated": "2021-11-21T11:02:08.769537Z",
+       "phase": "http_log_custom_fields"
+     },
+     "success": true,
+     "errors": [],
+     "messages": []
+   }
+   ```
