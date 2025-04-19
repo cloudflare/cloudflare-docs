@@ -88,7 +88,7 @@ export default {
         'Content-Type': 'image/png',
       },
     });
-	},
+  },
 }
 ```
 
@@ -111,7 +111,7 @@ export default {
     const browser = await launch(env.MYBROWSER);
     const page = await browser.newPage();
 
-	  // Start tracing before navigating to the page
+    // Start tracing before navigating to the page
     await page.context().tracing.start({ screenshots: true, snapshots: true });
 
     await page.goto('https://demo.playwright.dev/todomvc');
@@ -128,7 +128,7 @@ export default {
       await newTodo.press('Enter');
     }
 
-		// Stop tracing and save the trace to a zip file
+    // Stop tracing and save the trace to a zip file
     await page.context().tracing.stop({ path: 'trace.zip' });
     await browser.close();
     const file = await fs.promises.readFile('trace.zip');
@@ -179,7 +179,7 @@ export default {
     await Promise.all(TODO_ITEMS.map(
         (value, index) => expect(page.getByTestId('todo-title').nth(index)).toHaveText(value)
     ));
-	},
+  },
 };
 ```
 
@@ -203,16 +203,16 @@ In order to facilitate browser session management, we've extended the Playwright
 
 ```json
 [
-	{
-		"connectionId": "2a2246fa-e234-4dc1-8433-87e6cee80145",
-		"connectionStartTime": 1711621704607,
-		"sessionId": "478f4d7d-e943-40f6-a414-837d3736a1dc",
-		"startTime": 1711621703708
-	},
-	{
-		"sessionId": "565e05fb-4d2a-402b-869b-5b65b1381db7",
-		"startTime": 1711621703808
-	}
+  {
+    "connectionId": "2a2246fa-e234-4dc1-8433-87e6cee80145",
+    "connectionStartTime": 1711621704607,
+    "sessionId": "478f4d7d-e943-40f6-a414-837d3736a1dc",
+    "startTime": 1711621703708
+  },
+  {
+    "sessionId": "565e05fb-4d2a-402b-869b-5b65b1381db7",
+    "startTime": 1711621703808
+  }
 ]
 ```
 
@@ -224,20 +224,20 @@ Notice that the session `478f4d7d-e943-40f6-a414-837d3736a1dc` has an active wor
 
 ```json
 [
-	{
-		"closeReason": 2,
-		"closeReasonText": "BrowserIdle",
-		"endTime": 1711621769485,
-		"sessionId": "478f4d7d-e943-40f6-a414-837d3736a1dc",
-		"startTime": 1711621703708
-	},
-	{
-		"closeReason": 1,
-		"closeReasonText": "NormalClosure",
-		"endTime": 1711123501771,
-		"sessionId": "2be00a21-9fb6-4bb2-9861-8cd48e40e771",
-		"startTime": 1711123430918
-	}
+  {
+    "closeReason": 2,
+    "closeReasonText": "BrowserIdle",
+    "endTime": 1711621769485,
+    "sessionId": "478f4d7d-e943-40f6-a414-837d3736a1dc",
+    "startTime": 1711621703708
+  },
+  {
+    "closeReason": 1,
+    "closeReasonText": "NormalClosure",
+    "endTime": 1711123501771,
+    "sessionId": "2be00a21-9fb6-4bb2-9861-8cd48e40e771",
+    "startTime": 1711123430918
+  }
 ]
 ```
 

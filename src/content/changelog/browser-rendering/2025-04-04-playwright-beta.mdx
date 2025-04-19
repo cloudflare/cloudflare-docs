@@ -45,7 +45,7 @@ export default {
     await Promise.all(TODO_ITEMS.map(
         (value, index) => expect(page.getByTestId('todo-title').nth(index)).toHaveText(value)
     ));
-	},
+  },
 };
 ```
 
