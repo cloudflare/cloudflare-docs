@@ -56,9 +56,11 @@ import { APIRequest, Aside, AnchorHeading, CURL, Markdown, Render, TabItem, Tabs
 
 ## Add an application
 
-You need to configure {props.featureName} for each of your existing sites, as it is a per-site configuration.
+Before you can add or remove apps to {props.featureName} your Connector, you need to create a list of the apps that you want to configure. Currently, adding to or modifying this list is only possible through the [`managed_app_id` endpoint](/api/resources/magic_transit/subresources/apps/methods/create/). The instructions below explain how to add or edit an already existing app to Connector.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+You need to configure {props.featureName} for each of your existing sites, as it is a per-site configuration.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Select **Magic WAN** > **Connector on-ramps (beta)**.
