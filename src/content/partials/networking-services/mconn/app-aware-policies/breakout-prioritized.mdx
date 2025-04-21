@@ -54,15 +54,42 @@ import { APIRequest, Aside, AnchorHeading, CURL, Markdown, Render, TabItem, Tabs
 	)
 }
 
-## Add an application
+## Add an application to your account
 
-Before you can add or remove {props.featureName} apps to your Connector, you need to create a list of the apps that you want to configure. Currently, adding to or modifying this list is only possible through the [`managed_app_id`](/api/resources/magic_transit/subresources/apps/methods/create/) endpoint.
+Before you can add or remove {props.featureName} applications to your Connector, you need to create a list of the applications that you want to configure. Currently, adding to or modifying this list is only possible through the [`managed_app_id`](/api/resources/magic_transit/subresources/apps/methods/create/) endpoint.
 
-The instructions below explain how to add or edit an app to Connector that already exists on this list.
+To add applications to your account:
 
-<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+2.  Send a `POST` request to add new apps to the breakout traffic policy.
+
+	<APIRequest
+	path="/accounts/{account_id}/magic/apps"
+	method="POST"
+	json={{
+    "managed_app_id": "<APP_ID>",
+    "name": "<APP_NAME>",
+    "type": "<APP_TYPE>",
+	}}
+	/>
+
+	```json output
+	{
+		"result": {
+			"account_app_id": "eb09v665c0784618a3e4ba9809258fd4",
+			"name": "<APP_NAME>",
+			"type": "<APP_TYPE>",
+		},
+		"success": true,
+		"errors": [],
+		"messages": []
+	}
+	```
+
+### Add an application to your Connector
 
 You need to configure {props.featureName} for each of your existing sites, as it is a per-site configuration.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Select **Magic WAN** > **Connector on-ramps (beta)**.
@@ -129,7 +156,7 @@ The traffic for the application you chose {props.whatHappensApp}.
 
 </TabItem> </Tabs>
 
-## Delete an application
+### Delete an application from Connector
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
