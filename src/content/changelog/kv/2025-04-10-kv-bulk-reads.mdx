@@ -12,7 +12,7 @@ This makes it easier to request multiple KV pairs within a single Worker invocat
 ```js
 // Read single key
 const key = "key-a";
-const value = await env.NAMESPACE.get(keys);
+const value = await env.NAMESPACE.get(key);
 
 // Read multiple keys
 const keys = ["key-a", "key-b", "key-c", ...] // up to 100 keys
