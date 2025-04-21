@@ -89,7 +89,7 @@ You can now add this new app to the {props.featureName} list in your Connector.
 
 ### Add an application to your Connector
 
-You need to configure {props.featureName} applications for each of your existing sites, as it is a per-site configuration.
+You need to configure {props.featureName} applications for each of your existing sites, as this is a per-site configuration.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -173,6 +173,8 @@ The traffic for the application you chose {props.whatHappensApp}.
 </TabItem> <TabItem label="API">
 
 <Render file="account-id-api-key" product="networking-services" />
+
+You need to delete {props.featureName} applications for each of your existing sites, as this is a per-site configuration.
 
 1. Send a [`GET` request](/api/resources/magic_transit/subresources/apps/methods/list/) to list the applications associated with a site.
 
