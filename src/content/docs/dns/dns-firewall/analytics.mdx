@@ -1,16 +1,31 @@
 ---
 pcx_content_type: navigation
-title: Analytics
+title: Analytics and logs
 sidebar:
   order: 3
 
 ---
 
-To access analytics for your DNS Firewall, use the [Cloudflare API](/api/resources/dns_firewall/subresources/analytics/subresources/reports/methods/get/).
+Consider the sections below to learn how to access analytics and logs for your DNS Firewall.
 
-Alternatively, [set up Logpush](/logs/about/) to deliver [DNS Firewall logs](/logs/reference/log-fields/account/dns_firewall_logs/) to a storage service, SIEM, or log management provider.
+## Analytics
 
-## Response reasons
+Use the [GraphQL API](/analytics/graphql-api/) to access DNS Firewall analytics. Refer to the GraphQL Analytics API documentation for guidance on how to [get started](/analytics/graphql-api/getting-started/).
+
+The DNS Firewall analytics has two [schemas](/analytics/graphql-api/getting-started/querying-basics/):
+
+* `dnsFirewallAnalyticsAdaptive`: Retrieve information about individual DNS Firewall queries.
+* `dnsFirewallAnalyticsAdaptiveGroups`: Get reports on aggregate information only.
+
+:::note
+GraphQL replaces the [Cloudflare API endpoint](/api/resources/dns_firewall/subresources/analytics/subresources/reports/methods/get/) for DNS Firewall Analytics.
+:::
+
+## Logs
+
+You can [set up Logpush](/logs/about/) to deliver [DNS Firewall logs](/logs/reference/log-fields/account/dns_firewall_logs/) to a storage service, SIEM, or log management provider.
+
+### Response reasons
 
 When analyzing why Cloudflare DNS Firewall responded in one way or another to a specific query, consider the `responseReason` log field.
 
