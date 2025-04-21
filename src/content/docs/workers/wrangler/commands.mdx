@@ -525,12 +525,12 @@ You can use the following commands to manage your store.
 Each account only supports one store in beta.
 :::
 
-### create
+### `create`
 
 Create a store within Secrets Store.
 
 ```txt
-wrangler secerets-store store create <name>
+wrangler secrets-store store create <name>
 ```
 
 - `name` <Type text="string" /> <MetaInfo text="required" />
@@ -547,12 +547,12 @@ wrangler secrets-store store create default --remote
 ✅ Created store! (Name: default, ID: 2e2a82d317134506b58defbe16982d54)
 ```
 
-### delete
+### `delete`
 
 Delete a store within Secrets Store.
 
 ```txt
-wrangler secerets-store store delete <STORE_ID>
+wrangler secrets-store store delete <STORE_ID>
 ```
 
 - `STORE_ID` <Type text="string" /> <MetaInfo text="required" />
@@ -569,7 +569,7 @@ npx wrangler secrets-store store delete d2dafaeac9434de2b6d08b292ce08211
 ✅ Deleted store! (ID: d2dafaeac9434de2b6d08b292ce08211)
 ```
 
-### list
+### `list`
 
 List the stores within an account.
 
