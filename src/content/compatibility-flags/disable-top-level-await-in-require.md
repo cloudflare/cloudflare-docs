@@ -1,6 +1,6 @@
 ---
 _build:
-	publishResources: false
+publishResources: false
 	render: never
 	list: never
 
