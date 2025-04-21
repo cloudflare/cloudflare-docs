@@ -17,7 +17,7 @@ implementations are expected to uppercase the method. All other method names
 would generally be expected to throw as unrecognized (e.g. `patch` would be
 an error while `PATCH` is accepted). This is a bit restrictive, even if it
 is in the spec. This flag modifies the behavior to uppercase all methods
-prior to parsing to that the method is always recognized if it is a known
+prior to parsing so that the method is always recognized if it is a known
 method.
 
 To restore the standard behavior, use the `no_upper_case_all_http_methods`
