@@ -94,6 +94,16 @@ let matches = await env.TUTORIAL_INDEX.query(queryVector, {
 });
 ```
 
+## Improve Write Throughput
+
+One way to reduce the time to make updates visible in queries is to batch more vectors into fewer requests. This is important for write-heavy workloads. To see how many vectors you can write in a single request, please refer to the [Limits](/vectorize/platform/limits/) page.
+
+Vectorize writes changes immeditely to a write ahead log for durability. To make these writes visible for reads, an asynchronous job needs to read the current index files from R2, create an updated index, write the new index files back to R2, and commit the change. To keep the overhead of writes low and improve write throughput, Vectorize will combine multiple changes together into a single batch. It sets the maximum size of a batch to 200,000 total vectors or to 1,000 individual updates, whichever limit it hits first.
+
+For example, let's say we have 250,000 vectors we would like to insert into our index. We decide to insert them one at a time, calling the insert API 250,000 times. Vectorize will only process 1000 vectors in each job, and will need to work through 250 total jobs. This could take at least an hour to do.
+
+The better approach is to batch our updates. For example, we can split our 250,000 vectors into 100 files, where each file has 2,500 vectors. We would call the insert HTTP API 100 times. Vectorize would update the index in only 2 or 3 jobs. All 250,000 vectors will visible in queries within minutes.
+
 ## Examples
 
 ### Workers API
