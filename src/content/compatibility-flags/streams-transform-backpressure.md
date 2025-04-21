@@ -17,7 +17,7 @@ Unfortunately, the fix can cause existing code written to address the bug to
 fail. Therefore, the `fixup-transform-stream-backpressure` compat flag is
 provided to enable the fix.
 
-The fix is enabled by default for compatibility dates on or after 2024-12-16.
+The fix is enabled by default with compatibility dates of 2024-12-16 or later.
 
 To restore the original buggy backpressure logic, disable the fix using the
 `original-transform-stream-backpressure` flag.
