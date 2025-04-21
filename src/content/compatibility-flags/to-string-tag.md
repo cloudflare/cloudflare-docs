@@ -1,8 +1,8 @@
 ---
 _build:
-	publishResources: false
-	render: never
-	list: never
+publishResources: false
+render: never
+list: never
 
 name: "Automatically set the Symbol.toStringTag for Workers API objects"
 sort_date: "2024-09-26"

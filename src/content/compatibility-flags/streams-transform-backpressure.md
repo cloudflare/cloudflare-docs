@@ -1,8 +1,8 @@
 ---
 _build:
-	publishResources: false
-	render: never
-	list: never
+publishResources: false
+render: never
+list: never
 
 name: "Apply TransformStream backpressure fix"
 sort_date: "2024-12-16"

@@ -1,8 +1,8 @@
 ---
 _build:
-	publishResources: false
-	render: never
-	list: never
+publishResources: false
+render: never
+list: never
 
 name: "Upper-case HTTP methods"
 sort_date: "2024-10-14"

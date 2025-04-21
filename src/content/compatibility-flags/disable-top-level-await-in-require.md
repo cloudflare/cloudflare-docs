@@ -1,8 +1,8 @@
 ---
 _build:
 publishResources: false
-	render: never
-	list: never
+render: never
+list: never
 
 name: "Disable top-level await in require(...)"
 sort_date: "2024-12-02"
