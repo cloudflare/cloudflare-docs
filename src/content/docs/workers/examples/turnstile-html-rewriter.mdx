@@ -95,6 +95,120 @@ export default {
 } satisfies ExportedHandler<Env>;
 ```
 
+</TabItem> <TabItem label="Hono" icon="seti:typescript">
+
+```ts
+import { Hono } from "hono";
+
+interface Env {
+	SITE_KEY: string;
+	SECRET_KEY: string;
+	TURNSTILE_ATTR_NAME?: string;
+}
+
+const app = new Hono<{ Bindings: Env }>();
+
+// Middleware to inject Turnstile widget
+app.use("*", async (c, next) => {
+	const SITE_KEY = c.env.SITE_KEY; // The Turnstile Sitekey from environment
+	const TURNSTILE_ATTR_NAME = c.env.TURNSTILE_ATTR_NAME || "your_id_to_replace"; // The target element ID
+
+	// Process the request through the original endpoint
+	await next();
+
+	// Only process HTML responses
+	const contentType = c.res.headers.get("content-type");
+	if (!contentType || !contentType.includes("text/html")) {
+		return;
+	}
+
+	// Clone the response to make it modifiable
+	const originalResponse = c.res;
+	const responseBody = await originalResponse.text();
+
+	// Create an HTMLRewriter instance to modify the HTML
+	const rewriter = new HTMLRewriter()
+		// Add the Turnstile script to the head
+		.on("head", {
+			element(element) {
+				element.append(
+					`<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>`,
+					{ html: true },
+				);
+			},
+		})
+		// Add the Turnstile widget to the target div
+		.on("div", {
+			element(element) {
+				if (element.getAttribute("id") === TURNSTILE_ATTR_NAME) {
+					element.append(
+						`<div class="cf-turnstile" data-sitekey="${SITE_KEY}" data-theme="light"></div>`,
+						{ html: true },
+					);
+				}
+			},
+		});
+
+	// Create a new response with the same properties as the original
+	const modifiedResponse = new Response(responseBody, {
+		status: originalResponse.status,
+		statusText: originalResponse.statusText,
+		headers: originalResponse.headers,
+	});
+
+	// Transform the response using HTMLRewriter
+	c.res = rewriter.transform(modifiedResponse);
+});
+
+// Handle POST requests for form submission with Turnstile validation
+app.post("*", async (c) => {
+	const formData = await c.req.formData();
+	const token = formData.get("cf-turnstile-response");
+	const ip = c.req.header("CF-Connecting-IP");
+
+	// If no token, return an error
+	if (!token) {
+		return c.text("Missing Turnstile token", 400);
+	}
+
+	// Prepare verification data
+	const verifyFormData = new FormData();
+	verifyFormData.append("secret", c.env.SECRET_KEY || "");
+	verifyFormData.append("response", token.toString());
+	if (ip) verifyFormData.append("remoteip", ip);
+
+	// Verify the token with Turnstile API
+	const verifyResult = await fetch(
+		"https://challenges.cloudflare.com/turnstile/v0/siteverify",
+		{
+			method: "POST",
+			body: verifyFormData,
+		},
+	);
+
+	const outcome = await verifyResult.json<{ success: boolean }>;
+
+	// If verification fails, return an error
+	if (!outcome.success) {
+		return c.text("The provided Turnstile token was not valid!", 401);
+	}
+
+	// If verification succeeds, proceed with the original request
+	// You would typically handle the form submission logic here
+
+	// For this example, we'll just send a success response
+	return c.text("Form submission successful!");
+});
+
+// Default handler for GET requests
+app.get("*", async (c) => {
+	// Fetch the original content (you'd replace this with your actual content source)
+	return await fetch(c.req.raw);
+});
+
+export default app;
+```
+
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py

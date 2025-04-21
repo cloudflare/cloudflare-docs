@@ -9,6 +9,8 @@ head:
     content: Configure Snippets via API
 ---
 
+import { APIRequest } from "~/components";
+
 You can create Snippets using the [Cloudflare API](/fundamentals/api/).
 
 ## Required permissions
@@ -48,15 +50,16 @@ The following table summarizes the available operations.
 
 ### Create/update code snippet
 
-To create or update a Snippet, use the following `PUT` request. The snippet is named `{snippet_name}` and the body contains the JavaScript code.
+To create or update a Snippet, use the following `PUT` request. The snippet is named `$SNIPPET_NAME` and the body contains the JavaScript code.
 
-```bash
-curl --request PUT https://api.cloudflare.com/client/v4/zones/{zone_id}/snippets/{snippet_name} \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: multipart/form-data" \
---form files=@example.js \
---form metadata='{"main_module":"example.js"}'
-```
+<APIRequest
+	path="/zones/{zone_id}/snippets/{snippet_name}"
+	method="PUT"
+	form={{
+		files: "@example.js",
+		metadata: '{"main_module": "example.js"}',
+	}}
+/>
 
 The name of a snippet can only contain the characters `a-z`, `0-9`, and `_` (underscore). The name must be unique in the context of the zone. You cannot change the snippet name after creating the snippet.
 
@@ -90,19 +93,17 @@ When using this endpoint to create a new rule and keep existing rules, you must 
 
 Once you have created a code snippet, you can link it to rules. This is done via the following `PUT` request to the `snippet_rules` endpoint.
 
-```bash
-curl --request PUT \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/snippets/snippet_rules" \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "rules": [
-    {
-      "description": "Trigger snippet on specific cookie",
-      "enabled": true,
-      "expression": "http.cookie eq \"a=b\"",
-      "snippet_name": "snippet_name_01"
-    }
-  ]
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/snippets/snippet_rules"
+	method="PUT"
+	json={{
+		rules: [
+			{
+				description: "Trigger snippet on specific cookie",
+				enabled: true,
+				expression: 'http.cookie eq "a=b"',
+				snippet_name: "snippet_name_01",
+			},
+		],
+	}}
+/>

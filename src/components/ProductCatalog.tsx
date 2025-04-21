@@ -44,13 +44,13 @@ const ProductCatalog = ({ products }: { products: ProductData[] }) => {
 	useEffect(() => {
 		// On component load, check for deep-links to groups in the query param
 		const params = new URLSearchParams(window.location.search);
-		const groups = params.get("product-group");
+		const groups = params.get("product-group")?.split(",");
 
 		if (!groups) return;
 
 		setFilters({
 			...filters,
-			groups: [groups],
+			groups,
 		});
 	}, []);
 

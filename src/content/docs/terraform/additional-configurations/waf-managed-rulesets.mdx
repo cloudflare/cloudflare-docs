@@ -15,7 +15,7 @@ This page provides examples of deploying and configuring [WAF Managed Rules](/wa
 
 - [Deploy managed rulesets at the zone level](#deploy-managed-rulesets-at-the-zone-level)
 - [Deploy managed rulesets at the account level](#deploy-managed-rulesets-at-the-account-level)
-- [Configure skip rules](#configure-skip-rules)
+- [Configure exceptions](#configure-exceptions)
 - [Configure payload logging](#configure-payload-logging)
 - [Configure overrides](#configure-overrides)
 - [Configure the OWASP paranoia level, score threshold, and action](#configure-the-owasp-paranoia-level-score-threshold-and-action)
@@ -121,14 +121,14 @@ resource "cloudflare_ruleset" "account_level_managed_waf" {
 }
 ```
 
-## Configure skip rules
+## Configure exceptions
 
-The following example adds two [skip rules](/waf/managed-rules/waf-exceptions/) (or exceptions) for the Cloudflare Managed Ruleset:
+The following example adds two [exceptions](/waf/managed-rules/waf-exceptions/) for the Cloudflare Managed Ruleset:
 
 - The first rule will skip the execution of the entire Cloudflare Managed Ruleset (with ID <RuleID id="efb7b8c949ac4650a09736fc376e9aee" />) for specific URLs, according to the rule expression.
 - The second rule will skip the execution of two rules belonging to the Cloudflare Managed Ruleset for specific URLs, according to the rule expression.
 
-Add the two skip rules to the `cloudflare_ruleset` resource before the rule that deploys the Cloudflare Managed Ruleset:
+Add the two exceptions to the `cloudflare_ruleset` resource before the rule that deploys the Cloudflare Managed Ruleset:
 
 <Render file="v4-code-snippets" />
 
@@ -178,7 +178,7 @@ resource "cloudflare_ruleset" "zone_level_managed_waf" {
 
 :::caution[Important]
 
-Ensure that you place the skip rules **before** the rule that executes the managed ruleset (or some of its rules) that you wish to skip, as in the previous example.
+Ensure that you place the exceptions **before** the rule that executes the managed ruleset (or some of its rules) that you wish to skip, as in the previous example.
 :::
 
 ## Configure overrides

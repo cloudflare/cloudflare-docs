@@ -8,14 +8,19 @@ params:
   - graphQl
 ---
 
-import { AnchorHeading } from "~/components";
+import { AnchorHeading, Markdown } from "~/components";
 
 {props.productName} customers can follow the troubleshooting steps listed below to gather information at the beginning of a troubleshooting process, then move to more detailed network data collection and analysis to identify the root cause of a problem.
 
 
 { props.magicProduct === "Magic WAN" && (
   <>
-		<ul><li>Overview in <a href="#magic-wan-site-analytics">Magic WAN Site Analytics</a></li></ul>
+	<Markdown
+	text={`
+	- Overview in [Magic WAN Site Analytics](#magic-wan-site-analytics)
+	`}
+	inline={false}
+	/>
   </>
   )
 }
@@ -27,8 +32,14 @@ import { AnchorHeading } from "~/components";
 { props.magicProduct === "Magic WAN" && (
   <>
     <AnchorHeading title="Magic WAN Site Analytics" depth={2} />
-		<p>Magic WAN Site Analytics provides an overview of the connectivity status and traffic analytics of all Magic WAN sites. This is a great place to start if you receive an alert, need to begin the Magic WAN troubleshooting process, or are performing routine monitoring.</p>
-		<p>Refer to <a href="/magic-wan/analytics/site-analytics/">Magic WAN Site Analytics</a> to learn more.</p>
+		<Markdown
+		text={`
+		Magic WAN Site Analytics provides an overview of the connectivity status and traffic analytics of all Magic WAN sites. This is a great place to start if you receive an alert, need to begin the Magic WAN troubleshooting process, or are performing routine monitoring.
+
+		Refer to [Magic WAN Site Analytics](/magic-wan/analytics/site-analytics/) to learn more.
+		`}
+		inline={false}
+		/>
   </>
   )
 }
@@ -55,15 +66,5 @@ Refer to [packet captures](/magic-firewall/packet-captures/) to learn more.
 
 GraphQL Analytics provides customers with a GraphQL API that they can query to receive raw JSON data of their Magic WAN traffic analytics. This data can be ingested into a SIEM or other tool and analyzed further.
 
- <ul>
-    <li>
-      <a href={`${props.graphQl}analytics/query-bandwidth/`}>
-        Querying {props.productName} tunnel bandwidth analytics with GraphQL
-      </a>
-    </li>
-    <li>
-      <a href={`${props.graphQl}analytics/query-tunnel-health/`}>
-        Querying {props.productName} tunnel health check results with GraphQL
-      </a>
-    </li>
-  </ul>
+- <a href={`${props.graphQl}analytics/query-bandwidth/`}>Querying {props.productName} tunnel bandwidth analytics with GraphQL</a>
+- <a href={`${props.graphQl}analytics/query-tunnel-health/`}>Querying {props.productName} tunnel health check results with GraphQL</a>

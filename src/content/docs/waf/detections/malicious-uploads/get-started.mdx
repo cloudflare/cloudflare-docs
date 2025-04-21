@@ -8,7 +8,7 @@ head:
     content: Get started with malicious uploads detection
 ---
 
-import { Details, TabItem, Tabs } from "~/components";
+import { Details, TabItem, Tabs, APIRequest, Render } from "~/components";
 
 :::note
 WAF content scanning is available to customers on an Enterprise plan with a paid add-on.
@@ -24,27 +24,13 @@ WAF content scanning is available to customers on an Enterprise plan with a paid
 
 </TabItem> <TabItem label="API">
 
-Enable the feature using a `POST` request similar to the following:
+Use a `POST` request similar to the following:
 
-```bash
-curl --request POST \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/content-upload-scan/enable" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>"
-```
+<APIRequest path="/zones/{zone_id}/content-upload-scan/enable" method="POST" />
 
 </TabItem> <TabItem label="Terraform">
 
-Use the `cloudflare_content_scanning` resource to enable malicious uploads detection for a zone. For example:
-
-```terraform
-resource "cloudflare_content_scanning" "zone_malicious_uploads_example" {
-	zone_id = "<ZONE_ID>"
-	enabled = true
-}
-```
-
-For more information, refer to the [Terraform Cloudflare provider documentation](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs).
+<Render file="detections/malicious-uploads-enable-terraform" />
 
 </TabItem> </Tabs>
 
@@ -134,17 +120,15 @@ To check uploaded content in a way that is not covered by the default configurat
 
 Use a `POST` request similar to the following:
 
-```bash
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/content-upload-scan/payloads" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '[
-  {
-    "payload": "lookup_json_string(http.request.body.raw, \"file\")"
-  }
-]'
-```
+<APIRequest
+	path="/zones/{zone_id}/content-upload-scan/payloads"
+	method="POST"
+	json={[
+		{
+			payload: 'lookup_json_string(http.request.body.raw, "file")',
+		},
+	]}
+/>
 
 The above request will add the following expression to the current list of custom scan expressions:
 
@@ -154,25 +138,8 @@ lookup_json_string(http.request.body.raw, "file")
 
 </TabItem> <TabItem label="Terraform">
 
-Use the `cloudflare_content_scanning_expression` resource to add a custom scan expression. For example:
-
-```terraform
-resource "cloudflare_content_scanning_expression" "my_custom_scan_expression" {
-  zone_id = <ZONE_ID>
-  payload = "lookup_json_string(http.request.body.raw, \"file\")"
-}
-```
+<Render file="detections/malicious-uploads-configure-expression-terraform" />
 
 </TabItem> </Tabs>
 
-The custom scan expression will scan any string found in an HTTP body with the following JSON string:
-
-```json
-{ "file": "<BASE64_ENCODED_STRING>" }
-```
-
-Refer to the [`lookup_json_string()`](/ruleset-engine/rules-language/functions/#lookup_json_string) documentation for more information and additional examples of looking up fields in nested JSON payloads.
-
-:::note
-The content scanner will automatically decode Base64 strings.
-:::
+For more information, refer to [Custom scan expressions](/waf/detections/malicious-uploads/#custom-scan-expressions).

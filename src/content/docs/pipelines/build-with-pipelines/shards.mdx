@@ -1,0 +1,56 @@
+---
+pcx_content_type: concept
+title: Increase pipeline throughput
+sidebar:
+  order: 11
+---
+
+import { Render, PackageManagers } from "~/components";
+
+A pipeline's maximum throughput can be increased by increasing the shard count. A single shard can handle approximately 7,000 requests per second, or can ingest 7 MB/s of data.
+
+By default, each pipeline is configured with two shards. To set the shard count, use the `--shard-count` flag while creating or updating a pipeline:
+```sh
+$ npx wrangler pipelines update [PIPELINE-NAME] --shard-count 10
+```
+
+:::note
+The default shard count will be set to `auto` in the future, with support for automatic horizontal scaling.
+:::
+
+## How shards work
+![Pipeline shards](~/assets/images/pipelines/shards.png)
+
+Each pipeline is composed of stateless, independent shards. These shards are spun up when a pipeline is created. Each shard is composed of layers of [Durable Objects](/durable-objects). The Durable Objects buffer data, replicate for durability, handle compression, and delivery to R2.
+
+When a record is sent to a pipeline:
+1. The Pipelines [Worker](/workers) receives the record.
+2. The record is routed to to one of the shards.
+3. The record is handled by a set of Durable Objects, which commit the record to storage and replicate for durability.
+4. Records accumulate until the [batch definitions](/pipelines/build-with-pipelines/output-settings/#customize-batch-behavior) are met.
+5. The batch is written to an output file and optionally compressed.
+6. The output file is delivered to the configured R2 bucket.
+
+Increasing the number of shards will increase the maximum throughput of a pipeline, as well as the number of output files created.
+
+### Example
+Your workload might require making 5,000 requests per second to a pipeline. If you create a pipeline with a single shard, all 5,000 requests will be routed to the same shard. If your pipeline has been configured with a maximum batch duration of 1 second, every second, all 5,000 requests will be batched, and a single file will be delivered.
+
+Increasing the shard count to 2 will double the number of output files. The 5,000 requests will be split into 2,500 requests to each shard. Every second, each shard will create a batch of data, and deliver to R2.
+
+## Considerations while increasing the shard count
+Increasing the shard count also increases the number of output files that your pipeline generates. This in turn increases the [cost of writing data to R2](/r2/pricing/#class-a-operations), as each file written to R2 counts as a single class A operation. Additionally, smaller files are slower, and more expensive, to query. Rather than setting the maximum, choose a shard count based on your workload needs.
+
+## Determine the right number of shards
+Choose a shard count based on these factors:
+* The number of requests per second you will make to your pipeline
+* The amount of data per second you will send to your pipeline
+
+Each shard is capable of handling approximately 7,000 requests per second, or ingesting 7 MB/s of data. Either factor might act as the bottleneck, so choose the shard count based on the higher number.
+
+For example, if you estimate that you will ingest 70 MB/s, making 70,000 requests per second, setup a pipeline with 10 shards. However, if you estimate that you will ingest 70 MB/s while making 100,000 requests per second, setup a pipeline with 15 shards.
+
+## Limits
+| Setting                                   | Default     | Minimum   | Maximum     |
+| ----------------------------------------- | ----------- | --------- | ----------- |
+| Shards per pipeline `shard-count`       	| 2       		| 1  				| 15 					|

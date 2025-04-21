@@ -51,6 +51,7 @@ When resizing fails, the response body contains an error message explaining the 
 
 * Maximum image size is 100 megapixels (meaning 10.000×10.000 pixels large). Maximum file size is 100 MB. GIF/WebP animations are limited to 50 megapixels total (sum of sizes of all frames).
 * Image Resizing is not compatible with [Bringing Your Own IPs (BYOIP)](/byoip/).
+* When Polish can't optimize an image the Response Header `Warning: cf-images 299 "original is smaller"` is returned.
 
 ***
 

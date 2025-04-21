@@ -5,6 +5,18 @@ productLink: "/durable-objects/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-04-07"
+    title: Durable Objects on Workers Free plan
+    description: |-
+      [SQLite-backed Durable Objects](/durable-objects/get-started/) are now available on the Workers Free plan with these [limits](/durable-objects/platform/pricing/).
+
+  - publish_date: "2025-04-07"
+    title: SQLite in Durable Objects GA
+    description: |-
+      [SQLite-backed Durable Objects](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class) and corresponding [Storage API](/durable-objects/api/storage-api/) methods like `sql.exec` have moved from beta to general availability. New Durable Object classes should use wrangler configuration for SQLite storage over key-value storage.
+
+      SQLite storage per Durable Object has increased to 10GB for all existing and new objects.
+
   - publish_date: "2025-02-19"
     description: |-
       SQLite-backed Durable Objects now support `PRAGMA optimize` command, which can improve database query performance. It is recommended to run this command after a schema change (for example, after creating an index). Refer to [`PRAGMA optimize`](/d1/sql-api/sql-statements/#pragma-optimize) for more information.
@@ -26,7 +38,7 @@ entries:
   - publish_date: "2024-09-26"
     title: (Beta) SQLite storage backend & SQL API available on new Durable Object classes
     description: |-
-      The new beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. When deploying a new Durable Object class, users can [opt-in to a SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend) in order to access new [SQL API](/durable-objects/api/sql-storage/#exec) and [point-in-time-recovery API](/durable-objects/api/sql-storage/#point-in-time-recovery), part of Durable Objects Storage API.
+      The new beta version of Durable Objects is available where each Durable Object has a private, embedded SQLite database. When deploying a new Durable Object class, users can [opt-in to a SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend) in order to access new [SQL API](/durable-objects/api/storage-api/#sql-api) and [point-in-time-recovery API](/durable-objects/api/storage-api/#pitr-point-in-time-recovery-api), part of Durable Objects Storage API.
 
       You cannot enable a SQLite storage backend on an existing, deployed Durable Object class. Automatic migration of deployed classes from their key-value storage backend to SQLite storage backend will be available in the future.
 

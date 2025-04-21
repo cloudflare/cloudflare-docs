@@ -5,9 +5,13 @@ sidebar:
   order: 7
 ---
 
+import { Tabs, TabItem } from "~/components";
+
 The `/scrape` endpoint extracts structured data from specific elements on a webpage, returning details such as element dimensions and inner HTML.
 
 ## Basic usage
+
+<Tabs syncKey="workersExamples"> <TabItem label="curl">
 
 Go to `https://example.com` and extract metadata from all `h1` and `a` elements in the DOM.
 
@@ -63,6 +67,26 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 	]
 }
 ```
+
+</TabItem> <TabItem label="TypeScript SDK">
+
+```typescript
+import Cloudflare from "cloudflare";
+
+const client = new Cloudflare({
+	apiEmail: process.env["CLOUDFLARE_EMAIL"], // This is the default and can be omitted
+	apiKey: process.env["CLOUDFLARE_API_KEY"], // This is the default and can be omitted
+});
+
+const scrapes = await client.browserRendering.scrape.create({
+	account_id: "account_id",
+	elements: [{ selector: "selector" }],
+});
+
+console.log(scrapes);
+```
+
+</TabItem> </Tabs>
 
 Many more options exist, like setting HTTP credentials using `authenticate`, setting `cookies`, and using `gotoOptions` to control page load behaviour - check the endpoint [reference](/api/resources/browser_rendering/subresources/scrape/methods/create/) for all available parameters.
 

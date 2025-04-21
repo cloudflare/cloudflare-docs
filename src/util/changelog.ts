@@ -23,10 +23,6 @@ export async function getChangelogs({
 }: GetChangelogsOptions): Promise<Array<CollectionEntry<"changelog">>> {
 	let entries = await getCollection("changelog");
 
-	if (filter) {
-		entries = entries.filter((e) => filter(e));
-	}
-
 	entries = await Promise.all(
 		entries.map(async (e) => {
 			const slug = e.id.split("/").slice(1).join("/");
@@ -51,6 +47,10 @@ export async function getChangelogs({
 			};
 		}),
 	);
+
+	if (filter) {
+		entries = entries.filter((e) => filter(e));
+	}
 
 	return entries.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 }

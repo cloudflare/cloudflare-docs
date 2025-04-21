@@ -5,7 +5,8 @@ pcx_content_type: tutorial
 title: Migrating from Netlify to Pages
 languages:
   - JavaScript
-
+sidebar:
+  hidden: true
 ---
 
 In this tutorial, you will learn how to migrate your Netlify application to Cloudflare Pages.
@@ -36,9 +37,7 @@ Your header files can also be moved into a `_headers` folder in your publish dir
 
 :::note
 
-
 Redirects execute before headers. In the case of a request matching rules in both files, the redirect will take precedence.
-
 
 :::
 
@@ -60,19 +59,18 @@ Hello World with Netlify functions:
 
 ```js
 exports.handler = async function (event, context) {
-  return {
-    statusCode: 200,
-    body: JSON.stringify({ message: "Hello World" }),
-  };
-}
-
+	return {
+		statusCode: 200,
+		body: JSON.stringify({ message: "Hello World" }),
+	};
+};
 ```
 
 Hello World with Pages Functions:
 
 ```js
 export async function onRequestPost(request) {
-  return new Response(`Hello world`);
+	return new Response(`Hello world`);
 }
 ```
 

@@ -8,13 +8,15 @@ import Details from "./Details.astro";
 
 type Props = z.input<typeof props>;
 
+const Record = z.record(z.string(), z.any());
+
 const props = z
 	.object({
 		path: z.string(),
 		method: z.enum(["GET", "HEAD", "POST", "PUT", "DELETE", "PATCH"]),
 		parameters: z.record(z.string(), z.any()).optional(),
-		json: z.record(z.string(), z.any()).optional(),
-		form: z.record(z.string(), z.any()).optional(),
+		json: z.union([Record, z.array(Record)]).optional(),
+		form: Record.optional(),
 	})
 	.strict();
 
@@ -109,17 +111,27 @@ const jsonSchema = requestBody?.content?.["application/json"]?.schema as
 	| undefined;
 
 if (jsonSchema?.required) {
-	const providedProperties = Object.keys(json ?? {});
-	const requiredProperties = jsonSchema.required;
+	const checkProperties = (obj?: object) => {
+		const providedProperties = Object.keys(obj ?? {});
+		const requiredProperties = jsonSchema.required!;
 
-	const missingProperties = requiredProperties.filter(
-		(property) => !providedProperties.includes(property),
-	);
-
-	if (missingProperties.length > 0) {
-		throw new Error(
-			`[APIRequest] Missing the following required properties for ${method} ${path}: ${missingProperties.join(", ")}`,
+		const missingProperties = requiredProperties.filter(
+			(property) => !providedProperties.includes(property),
 		);
+
+		if (missingProperties.length > 0) {
+			throw new Error(
+				`[APIRequest] Missing the following required properties for ${method} ${path}: ${missingProperties.join(", ")}`,
+			);
+		}
+	};
+
+	if (Array.isArray(json)) {
+		for (const obj of json) {
+			checkProperties(obj);
+		}
+	} else {
+		checkProperties(json);
 	}
 }
 
@@ -136,7 +148,9 @@ const tokenGroups = operation["x-api-token-group"];
 			</span>
 			<ul>
 				{tokenGroups.map((group) => (
-					<li><code>{group}</code></li>
+					<li>
+						<code>{group}</code>
+					</li>
 				))}
 			</ul>
 		</Details>

@@ -11,12 +11,10 @@ Transform Rules allow you to adjust the URI path, query string, and HTTP headers
 
 There are several types of Transform Rules:
 
-- [**Rewrite URL rules**](/rules/transform/url-rewrite/): Rewrite the URL path and query string of an HTTP request.
-- [**HTTP request header modification rules**](/rules/transform/request-header-modification/): Set the value of an HTTP request header or remove a request header.
-- [**HTTP response header modification rules**](/rules/transform/response-header-modification/): Set the value of an HTTP response header or remove a response header.
+- [**URL Rewrite Rules**](/rules/transform/url-rewrite/): Rewrite the URL path and query string of an HTTP request.
+- [**Request Header Transform Rules**](/rules/transform/request-header-modification/): Set the value of an HTTP request header or remove a request header.
+- [**Response Header Transform Rules**](/rules/transform/response-header-modification/): Set the value of an HTTP response header or remove a response header.
 - [**Managed Transforms**](/rules/transform/managed-transforms/): Perform common adjustments to HTTP request and response headers with the click of a button.
-
-To configure Transform Rules in the dashboard, go to the **Transform Rules** page in Rules.
 
 <Render
 	file="snippets-alternative"
@@ -35,9 +33,9 @@ To configure Transform Rules in the dashboard, go to the **Transform Rules** pag
 
 Alternatively, create a transform rule from scratch in the dashboard or via Cloudflare API. Refer to the following sections for detailed instructions:
 
-- [Rewrite URL rules](/rules/transform/url-rewrite/)
-- [HTTP request header modification rules](/rules/transform/request-header-modification/)
-- [HTTP response header modification rules](/rules/transform/response-header-modification/create-dashboard/)
+- [URL Rewrite Rules](/rules/transform/url-rewrite/)
+- [Request Header Transform Rules](/rules/transform/request-header-modification/)
+- [Response Header Transform Rules](/rules/transform/response-header-modification/)
 - [Managed Transforms](/rules/transform/managed-transforms/)
 
 For Terraform examples, refer to [Transform Rules configuration using Terraform](/terraform/additional-configurations/transform-rules/).
@@ -60,8 +58,8 @@ A Cloudflare user must have the [Firewall role](/fundamentals/setup/manage-membe
 
 Managed Transforms run before other types of Transform Rules that modify HTTP headers:
 
-- Managed Transforms that adjust HTTP request headers run before HTTP request header modification rules.
-- Managed Transforms that adjust HTTP response headers run before HTTP response header modification rules.
+- Managed Transforms that adjust HTTP request headers run before Request Header Transform Rules.
+- Managed Transforms that adjust HTTP response headers run before Response Header Transform Rules.
 
 Transform Rules run in order. Rules that appear later in the list of Transform Rules can overwrite changes done by previous rules. You can define the rule order in the dashboard or via API.
 

@@ -63,4 +63,10 @@ If the widget is embedded on a hostname not listed, it will display an error mes
 
 Customers with Enterprise Bot Management or Enterprise Turnstile can have the optional `any hostname` validation entitlement.
 
-By default, a widget requires at least one hostname to be entered. With this entitlement, you can create and use a widget without entering any hostnames for the widget. Contact your account team to enable this entitlement.
+By default, a widget requires at least one hostname to be entered. With this entitlement, you can create and use a widget without entering any hostnames for the widget.
+
+Contact your account team to enable this entitlement.
+
+:::caution
+Customers enabling [client-side rendering](/turnstile/get-started/client-side-rendering/) must validate their hostnames by looking at the [`hostname`](/turnstile/get-started/server-side-validation/#:~:text=challenge%20was%20solved.-,hostname,-is%20the%20hostname) field in the siteverify response.
+:::

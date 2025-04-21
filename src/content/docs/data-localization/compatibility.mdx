@@ -97,6 +97,7 @@ The table below provides a summary of the Data Localization Suite product's beha
 | ------- | --------------- | ----------------- | -------------------------- |
 | Logpull | ⚫️              | ⚫️               | 🚧 [^12]                   |
 | Logpush | ⚫️              | ✅               | 🚧 [^13]                   |
+| Log Explorer | ⚫️         | ⚫️               | ✘ [^23]                    |
 
 ***
 
@@ -135,6 +136,7 @@ The table below provides a summary of the Data Localization Suite product's beha
 [^20]: You can [bring your own certificate](https://blog.cloudflare.com/bring-your-certificates-cloudflare-gateway/) to Gateway but these cannot yet be restricted to a specific region.
 [^21]: Gateway HTTP supports Regional Services. Gateway DNS does not yet support regionalization. <br/> ICMP proxy and WARP-to-WARP proxy are not available to Regional Services users.
 [^22]: Dashboard Analytics and Logs are empty when using CMB outside the US region. Use Logpush instead.
+[^23]: Currently, customers do not have the ability to choose the location of the Cloudflare-managed R2 bucket for Log Explorer.
 [^26]: Static IP/BYOIP can be used with the legacy Spectrum setup.
 [^27]: Only when using a Custom Domain and a [Custom Certificate](/r2/reference/data-security/#encryption-in-transit) or [Keyless SSL](/ssl/keyless-ssl/).
 [^28]: R2 Dashboard [Metrics and Analytics](/r2/platform/metrics-analytics/) are populated. Additionally, [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions) guarantee objects in a bucket are stored within a specific jurisdiction.

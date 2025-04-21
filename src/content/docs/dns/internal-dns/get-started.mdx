@@ -47,7 +47,7 @@ Although there are some steps that can be achieved on the dashboard, currently t
 
 ### (Optional) Reference a zone from another zone
 
-1. Use the [Update DNS settings](/api/resources/dns/subresources/settings/methods/edit/) endpoint to add a reference from an internal zone to another internal zone. In `--data`, specify the `internal_dns` object with the parameter `reference_zone_id`. For details, refer to [reference zones](/dns/internal-dns/internal-zones/reference-zones/).
+1. Use the [Update DNS settings](/api/resources/dns/subresources/settings/subresources/zone/methods/edit/) endpoint to add a reference from an internal zone to another internal zone. In `--data`, specify the `internal_dns` object with the parameter `reference_zone_id`. For details, refer to [reference zones](/dns/internal-dns/internal-zones/reference-zones/).
 
 <Example>
 <Render file="internal-reference-zone-api"/>
@@ -57,7 +57,7 @@ Although there are some steps that can be achieved on the dashboard, currently t
 
 Since the resolver policy will require a [DNS view](/dns/internal-dns/dns-views/), you must have at least one view to be able to route requests to internal zones.
 
-1. Use the [Create Internal DNS View](/api/resources/dns/subresources/settings/subresources/views/methods/create/) endpoint. For each view you create, list all the internal zones that should be grouped under that view.
+1. Use the [Create Internal DNS View](/api/resources/dns/subresources/settings/subresources/account/subresources/views/methods/create/) endpoint. For each view you create, list all the internal zones that should be grouped under that view.
 
 <Details header="DNS view configuration conditions">
 <Render file="internal-dns-view-conditions" />

@@ -149,10 +149,10 @@ The device failed to present a [valid mTLS certificate](/cloudflare-one/connecti
 A router, firewall, antivirus software, or other third-party security product is blocking UDP on the WARP ports.
 
 ### Resolution
- 
+
 1. Configure the third-party security product to allow the [WARP ingress IPs and ports](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip).
 2. Ensure that your Internet router is working properly and try rebooting the router.
-3. Check that the device is not revoked by going to **My team** > **Devices**. 
+3. Check that the device is not revoked by going to **My team** > **Devices**.
 
 ## CF\_HOST\_UNREACHABLE\_CHECK
 
@@ -301,3 +301,17 @@ A third-party security product on the device or network is performing TLS decryp
 ### Resolution
 
 In the third-party security product, disable HTTPS inspection and TLS decryption for the [WARP IP addresses](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/).
+
+## Admin directed disconnect
+
+### Symptoms
+
+* Unable to connect WARP
+
+### Cause
+
+The account administrator has disconnected WARP for all devices registered to the account.
+
+### Resolution
+
+The account administrator must turn the [Global WARP override](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#global-warp-override) feature off.

@@ -5,9 +5,13 @@ sidebar:
   order: 5
 ---
 
+import { Tabs, TabItem } from "~/components";
+
 The `/pdf` endpoint instructs the browser to render the webpage as a PDF document.
 
 ## Basic usage
+
+<Tabs syncKey="workersExamples"> <TabItem label="curl">
 
 Navigate to `https://example.com/` and inject custom CSS and an external stylesheet. Then return the rendered page as a PDF.
 
@@ -24,6 +28,28 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
   }' \
   --output "output.pdf"
 ```
+
+</TabItem> <TabItem label="TypeScript SDK">
+
+```typescript
+import Cloudflare from "cloudflare";
+
+const client = new Cloudflare({
+	apiEmail: process.env["CLOUDFLARE_EMAIL"], // This is the default and can be omitted
+	apiKey: process.env["CLOUDFLARE_API_KEY"], // This is the default and can be omitted
+});
+
+const pdf = await client.browserRendering.pdf.create({
+	account_id: "account_id",
+});
+
+console.log(pdf);
+
+const content = await pdf.blob();
+console.log(content);
+```
+
+</TabItem> </Tabs>
 
 ## Advanced usage
 

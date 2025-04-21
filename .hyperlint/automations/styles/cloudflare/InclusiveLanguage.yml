@@ -1,0 +1,22 @@
+---
+# Warning: cloudflare.InclusiveLanguage
+#
+# Suggests alternatives for words that are culturally inappropriate.
+#
+# For a list of all options, see https://vale.sh/docs/topics/styles/
+
+extends: substitution
+message: "**Warning**: Use inclusive language. Consider '%s' instead of '%s'."
+level: warning
+ignorecase: true
+swap:
+  blacklist(?:ed|ing|s)?: denylist
+  whitelist(?:ed|ing|s)?: allowlist
+  master: primary, main
+  slave: secondary
+  he: they
+  his: their
+  she: they
+  hers: their
+  sanity (?:check|test): check for completeness
+  dummy: placeholder, sample, fake

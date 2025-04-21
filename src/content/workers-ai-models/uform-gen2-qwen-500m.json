@@ -8,6 +8,7 @@
         "name": "Image-to-Text",
         "description": "Image to text models output a text from a given image. Image captioning or optical character recognition can be considered as the most common applications of image to text."
     },
+    "created_at": "2024-02-27 18:28:52.485",
     "tags": [],
     "properties": [
         {

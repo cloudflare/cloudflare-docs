@@ -32,6 +32,24 @@ To generate a CPU profile:
 
 You now have a CPU profile.
 
+:::note
+
+For Rust Workers, add the following to your `Cargo.toml` to preserve [DWARF](https://dwarfstd.org/) debug symbols (from [this comment](https://github.com/rustwasm/wasm-pack/issues/1351#issuecomment-2100231587)):
+
+```toml title="wrangler.toml"
+[package.metadata.wasm-pack.profile.dev.wasm-bindgen]
+dwarf-debug-info = true
+```
+
+Then, update your `wrangler.toml` to configure wasm-pack (via worker-build) to use the `dev` [profile](https://rustwasm.github.io/docs/wasm-pack/commands/build.html#profile) to preserve debug symbols.
+
+```toml title="Cargo.toml"
+[build]
+command = "cargo install -q worker-build && worker-build --dev"
+```
+
+:::
+
 ## An Example Profile
 
 Let's look at an example to learn how to read a CPU profile. Imagine you have the following Worker:

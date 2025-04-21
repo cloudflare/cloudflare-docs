@@ -184,4 +184,58 @@ async def on_fetch(request):
         return Response.new({"error": str(e)}, status=500)
 ```
 
+</TabItem> <TabItem label="Hono" icon="seti:typescript">
+
+```ts
+import { Hono } from "hono";
+
+const app = new Hono();
+
+app.all("*", async (c) => {
+	/**
+	 * Example someHost is set up to return raw JSON
+	 */
+	const someHost = "example.com";
+	const someUrl = "https://foo.example.com/api.js";
+
+	// Create a URL object to modify the hostname
+	const url = new URL(someUrl);
+	url.hostname = someHost;
+
+	// Create a new request
+	// First create a clone of the original request with the new properties
+	const requestClone = new Request(c.req.raw, {
+		// Change method
+		method: "POST",
+		// Change body
+		body: JSON.stringify({ bar: "foo" }),
+		// Change the redirect mode
+		redirect: "follow" as RequestRedirect,
+		// Change headers, note this method will erase existing headers
+		headers: {
+			"Content-Type": "application/json",
+			"X-Example": "bar",
+		},
+		// Change a Cloudflare feature on the outbound response
+		cf: { apps: false },
+	});
+
+	// Then create a new request with the modified URL
+	const newRequest = new Request(url.toString(), requestClone);
+
+	// Send the modified request
+	const response = await fetch(newRequest);
+
+	// Return the response
+	return response;
+});
+
+// Handle errors
+app.onError((err, c) => {
+	return err.getResponse();
+});
+
+export default app;
+```
+
 </TabItem> </Tabs>

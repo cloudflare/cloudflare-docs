@@ -76,8 +76,15 @@ Refer to [WARP diagnostic logs](/cloudflare-one/connections/connect-devices/warp
 ## Limitations
 
 - Packet captures are subject to the following limits:
-  - **Maximum time limit**: 600 seconds
-  - **Maximum file size**: 50 MB
-  - **Maximum packet size**: 1500 bytes
+
+    | Limit Type     | Maximum Value  |
+    |----------------|----------------|
+    | Time limit     | 600 seconds    |
+    | File size      | 50 MB          |
+    | Packet size    | 1500 bytes     |
+
 - WARP diagnostic logs have no file size limit, but files larger than 100 MB cannot be uploaded to Cloudflare and must be shared directly with the admin.
+
 - Windows devices do not support concurrent remote captures. If you start a remote capture while another is in progress, the second capture will fail immediately.
+
+- PCAPs will fail on Windows if you have another third-party packet capture tool (such as, Packet Monitor `pktmon`) running.

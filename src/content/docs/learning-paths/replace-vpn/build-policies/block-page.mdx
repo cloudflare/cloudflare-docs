@@ -21,7 +21,6 @@ You can display a custom block page in the browser when users are blocked by a G
 The custom block page has a few drawbacks:
 
 - To display the block page, you must install a [user-side certificate](/learning-paths/replace-vpn/configure-device-agent/enable-tls-decryption/#configure-user-side-certificates) on the end user device.
-- You cannot customize the block message for individual DNS policies.
 - The block page does not appear when users are blocked by a Gateway network policy.
 - The custom block page only displays when the user loads a site in a browser. If, for instance, the user is allowed to visit a site but not allowed to upload a file, the file upload would fail silently and the user would not get a block page.
 
@@ -41,7 +40,9 @@ For DNS policies, you will need to enable the block page on a per-policy basis.
 	product="cloudflare-one"
 	params={{
 		firewallPolicyPath: "**Gateway** > **Firewall policies** > **DNS**",
-	}}
+		blockBehaviorAction: "turn on",
+    }}
+
 />
 
 ### Customize the block page

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { excludeCidr, parseCidr } from "cidr-tools";
+import { track } from "~/util/zaraz";
 
 export default function SubtractIPCalculator({
 	defaults,
@@ -16,6 +17,7 @@ export default function SubtractIPCalculator({
 
 	function calculate() {
 		setResult(excludeCidr(base, exclude));
+		track("clicked calculator submit");
 	}
 
 	function disableButton() {

@@ -1,0 +1,38 @@
+---
+title: The Cloudflare Vite plugin is now Generally Available
+description: Cloudflare Vite Plugin 1.0 is out now — with official support for Vite 6, React Router v7, and the full Developer Platform. Now you can run Vite’s dev server locally, while executing your code directly in the Workers runtime!
+products:
+  - workers
+date: 2025-04-08T18:00:00Z
+---
+
+The [Cloudflare Vite plugin](/workers/vite-plugin/) has [reached v1.0](https://blog.cloudflare.com/introducing-the-cloudflare-vite-plugin) and is now Generally Available ("GA").
+
+When you use `@cloudflare/vite-plugin`, you can use Vite's local development server and build tooling, while ensuring that while developing, your code runs in [`workerd`](https://github.com/cloudflare/workerd), the open-source Workers runtime.
+
+This lets you get the best of both worlds for a full-stack app — you can use [Hot Module Replacement](https://vite.dev/guide/features.html#hot-module-replacement) from Vite right alongside [Durable Objects](/durable-objects/) and other runtime APIs and bindings that are unique to Cloudflare Workers.
+
+`@cloudflare/vite-plugin` is made possible by the new [environment API](https://vite.dev/guide/api-environment) in Vite, and was built [in partnership with the Vite team](https://blog.cloudflare.com/introducing-the-cloudflare-vite-plugin).
+
+#### Framework support
+
+You can build any type of application with `@cloudflare/vite-plugin`, using any rendering mode, from single page applications (SPA) and static sites to server-side rendered (SSR) pages and API routes.
+
+[React Router v7 (Remix)](/workers/frameworks/framework-guides/react-router/) is the first full-stack framework to provide full support for Cloudflare Vite plugin, allowing you to use all parts of Cloudflare's developer platform, without additional build steps.
+
+You can also build complete full-stack apps on Workers **without a framework** — ["just use Vite"](https://blog.cloudflare.com/introducing-the-cloudflare-vite-plugin) and React together, and build a back-end API in the same Worker. Follow our [React SPA with an API tutorial](/workers/vite-plugin/tutorial/) to learn how.
+
+#### Configuration
+
+If you're already using [Vite](https://vite.dev/) in your build and development toolchain, you can start using our plugin with minimal changes to your `vite.config.ts`:
+
+```ts title="vite.config.ts"
+import { defineConfig } from "vite";
+import { cloudflare } from "@cloudflare/vite-plugin";
+
+export default defineConfig({
+	plugins: [cloudflare()],
+});
+```
+
+Take a look at the [documentation for our Cloudflare Vite plugin](/workers/vite-plugin/) for more information!

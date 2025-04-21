@@ -7,7 +7,7 @@ sidebar:
 description: Learn how to create Bulk Redirects using the Cloudflare API.
 ---
 
-import { Render } from "~/components";
+import { Render, APIRequest } from "~/components";
 
 To create Bulk Redirects via API, you must:
 
@@ -24,16 +24,15 @@ To create Bulk Redirects via API, you must:
 
 Use the [Create a list](/api/resources/rules/subresources/lists/methods/create/) operation to create a new Bulk Redirect List. The list `kind` must be `redirect`.
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rules/lists \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "name": "my_redirect_list",
-  "description": "My redirect list.",
-  "kind": "redirect"
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/rules/lists"
+	method="POST"
+	json={{
+		name: "my_redirect_list",
+		description: "My redirect list.",
+		kind: "redirect",
+	}}
+/>
 
 ```json output {3}
 {
@@ -61,26 +60,28 @@ For more information on list operations, refer to the [Lists API](/waf/tools/lis
 
 Use the [Create list items](/api/resources/rules/subresources/lists/subresources/items/methods/create/) operation to add URL redirect items to the list. Enter the list ID from the previous step in the endpoint URL:
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rules/lists/f848b6ccb07647749411f504d6f88794/items \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '[
-  {
-    "redirect": {
-      "source_url": "example.com/blog/",
-      "target_url": "https://example.com/blog/latest"
-    }
-  },
-  {
-    "redirect": {
-      "source_url": "example.net/",
-      "target_url": "https://example.net/under-construction.html",
-      "status_code": 307
-    }
-  }
-]'
-```
+<APIRequest
+	path="/accounts/{account_id}/rules/lists/{list_id}/items"
+	method="POST"
+	parameters={{
+		list_id: "f848b6ccb07647749411f504d6f88794",
+	}}
+	json={[
+		{
+			redirect: {
+				source_url: "example.com/blog/",
+				target_url: "https://example.com/blog/latest",
+			},
+		},
+		{
+			redirect: {
+				source_url: "example.net/",
+				target_url: "https://example.net/under-construction.html",
+				status_code: 307,
+			},
+		},
+	]}
+/>
 
 ```json output
 {
@@ -95,10 +96,13 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rules/lists/f848
 
 This is an asynchronous operation. The response will contain an `operation_id` which you will use to check if the operation completed successfully using the [Get bulk operation status](/api/resources/rules/subresources/lists/subresources/bulk_operations/methods/get/) operation:
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rules/lists/bulk_operations/92558f8b296d4dbe9d0419e0e53f6622 \
---header "Authorization: Bearer <API_TOKEN>"
-```
+<APIRequest
+	path="/accounts/{account_identifier}/rules/lists/bulk_operations/{operation_id}"
+	method="GET"
+	parameters={{
+		operation_id: "92558f8b296d4dbe9d0419e0e53f6622",
+	}}
+/>
 
 Once the operation has completed successfully, the response will be similar to the following:
 
@@ -128,29 +132,28 @@ A Bulk Redirect Rule must have:
 
 The following request of the [Create an account ruleset](/api/resources/rulesets/methods/create/) operation creates a phase entry point ruleset for the `http_request_redirect` phase at the account level, and defines a single redirect rule. Use this operation if you have not created a phase entry point ruleset for the `http_request_redirect` phase yet.
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "name": "My redirect ruleset",
-  "kind": "root",
-  "phase": "http_request_redirect",
-  "rules": [
-    {
-      "expression": "http.request.full_uri in $my_redirect_list",
-      "description": "Bulk Redirect rule.",
-      "action": "redirect",
-      "action_parameters": {
-        "from_list": {
-          "name": "my_redirect_list",
-          "key": "http.request.full_uri"
-        }
-      }
-    }
-  ]
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/rulesets"
+	method="POST"
+	json={{
+		name: "My redirect ruleset",
+		kind: "root",
+		phase: "http_request_redirect",
+		rules: [
+			{
+				expression: "http.request.full_uri in $my_redirect_list",
+				description: "Bulk Redirect rule.",
+				action: "redirect",
+				action_parameters: {
+					from_list: {
+						name: "my_redirect_list",
+						key: "http.request.full_uri",
+					},
+				},
+			},
+		],
+	}}
+/>
 
 ```json output
 {
@@ -186,41 +189,39 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
 
 If there is already a phase entry point ruleset for the `http_request_redirect` phase, use the [Update an account ruleset](/api/resources/rulesets/methods/update/) operation instead, like in the following example:
 
-```bash
-curl --request PUT \
-"https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/{ruleset_id}" \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "name": "My redirect ruleset",
-  "kind": "root",
-  "phase": "http_request_redirect",
-  "rules": [
-    {
-      "expression": "http.request.full_uri in $my_redirect_list_2",
-      "description": "Bulk Redirect rule 1",
-      "action": "redirect",
-      "action_parameters": {
-        "from_list": {
-          "name": "my_redirect_list_1",
-          "key": "http.request.full_uri"
-        }
-      }
-    },
-    {
-      "expression": "http.request.full_uri in $my_redirect_list_2",
-      "description": "Bulk Redirect rule 2",
-      "action": "redirect",
-      "action_parameters": {
-        "from_list": {
-          "name": "my_redirect_list_2",
-          "key": "http.request.full_uri"
-        }
-      }
-    }
-  ]
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/rulesets/{ruleset_id}"
+	method="PUT"
+	json={{
+		name: "My redirect ruleset",
+		kind: "root",
+		phase: "http_request_redirect",
+		rules: [
+			{
+				expression: "http.request.full_uri in $my_redirect_list_2",
+				description: "Bulk Redirect rule 1",
+				action: "redirect",
+				action_parameters: {
+					from_list: {
+						name: "my_redirect_list_1",
+						key: "http.request.full_uri",
+					},
+				},
+			},
+			{
+				expression: "http.request.full_uri in $my_redirect_list_2",
+				description: "Bulk Redirect rule 2",
+				action: "redirect",
+				action_parameters: {
+					from_list: {
+						name: "my_redirect_list_2",
+						key: "http.request.full_uri",
+					},
+				},
+			},
+		],
+	}}
+/>
 
 ```json output
 {

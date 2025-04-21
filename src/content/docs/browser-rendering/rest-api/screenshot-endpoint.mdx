@@ -5,9 +5,13 @@ sidebar:
   order: 3
 ---
 
+import { Tabs, TabItem } from "~/components";
+
 The `/screenshot` endpoint renders the webpage by processing its HTML and JavaScript, then captures a screenshot of the fully rendered page.
 
 ## Basic usage
+
+<Tabs syncKey="workersExamples"> <TabItem label="curl">
 
 Sets the HTML content of the page to `Hello World!` and then takes a screenshot. The option `omitBackground` hides the default white background and allows capturing screenshots with transparency.
 
@@ -23,6 +27,25 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
   }' \
   --output "screenshot.png"
 ```
+
+</TabItem> <TabItem label="TypeScript SDK">
+
+```typescript
+import Cloudflare from "cloudflare";
+
+const client = new Cloudflare({
+	apiEmail: process.env["CLOUDFLARE_EMAIL"], // This is the default and can be omitted
+	apiKey: process.env["CLOUDFLARE_API_KEY"], // This is the default and can be omitted
+});
+
+const screenshot = await client.browserRendering.screenshot.create({
+	account_id: "account_id",
+});
+
+console.log(screenshot.status);
+```
+
+</TabItem> </Tabs>
 
 For more options to control the final screenshot, like `clip`, `captureBeyondViewport`, `fullPage` and others, check the endpoint [reference](/api/resources/browser_rendering/subresources/screenshot/methods/create/).
 

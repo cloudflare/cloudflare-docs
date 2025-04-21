@@ -31,7 +31,7 @@ Next you need an HTTPS endpoint at `mta-sts.example.com` to serve your policy fi
 
 To do this you need to deploy a Worker that allows email clients to pull Cloudflare’s Email Routing policy file using the “well-known” URI convention.
 
-4. Go to your **Account** > **Workers & Pages** and press **Create Application**. Pick the default "Hello World" option button, and replace the sample worker code with the following:
+4. Go to your **Account** > **Workers & Pages** and select **Create**. Pick the default "Hello World" option button, and replace the sample worker code with the following:
 
 ```js
 export default {
@@ -41,7 +41,9 @@ export default {
 };
 ```
 
-5. This Worker proxies `https://mta-sts.mx.cloudflare.net/.well-known/mta-sts.txt` to your own domain. After deploying it, go to the Worker configuration, then **Triggers** > **Custom Domains** and **Add Custom Domain**. Type the subdomain `mta-sts.example.com`.
+This Worker proxies `https://mta-sts.mx.cloudflare.net/.well-known/mta-sts.txt` to your own domain. 
+
+5. After deploying it, go to the Worker configuration, then **Settings** > **Domains & Routes** > **+Add**. Type the subdomain `mta-sts.example.com`.
 
 ![MTA-STS Worker Custom Domain](~/assets/images/email-routing/mta-sts-domain.png)
 

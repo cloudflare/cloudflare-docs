@@ -1,0 +1,17 @@
+---
+title: Audit logs
+pcx_content_type: reference
+sidebar:
+  order: 7
+---
+
+[Audit logs](/fundamentals/setup/account/account-security/review-audit-logs/) provide a comprehensive summary of changes made within your Cloudflare account. This page lists the actions that are logged for Secrets Store.
+
+- Access
+- Create
+  - Duplicating a secret is presented as a `create` log with a field `duplicated_from_id`.
+- Update
+  - A boolean `"value_modified": true` is presented when the secret value is edited.
+- Delete
+
+For information on how to access and use audit logs, refer to [Fundamentals](/fundamentals/setup/account/account-security/review-audit-logs/).

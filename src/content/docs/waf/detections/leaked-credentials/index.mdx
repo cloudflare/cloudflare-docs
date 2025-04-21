@@ -47,7 +47,7 @@ Leaked credentials detection includes rules for identifying credentials in HTTP 
 
 Additionally, the scan includes generic rules for other common web authentication patterns.
 
-You can also configure custom detection locations to address the specific authentication mechanism used in your web applications. A custom detection location tells the Cloudflare WAF where to find usernames and passwords in HTTP requests of your web application.
+You can also configure [custom detection locations](#custom-detection-locations) to address the specific authentication mechanism used in your web applications. A custom detection location tells the Cloudflare WAF where to find usernames and passwords in HTTP requests of your web application.
 
 ## Custom detection locations
 
@@ -71,6 +71,14 @@ You could configure a custom detection location with the following settings:
   `lookup_json_string(http.request.body.raw, "secret")`
 
 When specifying a custom detection location, only the location of the username field is required.
+
+The following table includes example detection locations for different request types:
+
+| Request type     | Username location / Password location                                                                           |
+| ---------------- | --------------------------------------------------------------------------------------------------------------- |
+| JSON body        | `lookup_json_string(http.request.body.raw, "user")`<br/>`lookup_json_string(http.request.body.raw, "secret")`   |
+| URL-encoded form | `url_decode(http.request.body.form["user"][0])`<br/>`url_decode(http.request.body.form["secret"][0])`           |
+| Multipart form   | `url_decode(http.request.body.multipart["user"][0])`<br/>`url_decode(http.request.body.multipart["secret"][0])` |
 
 Expressions used to specify custom detection locations can include the following fields and functions:
 

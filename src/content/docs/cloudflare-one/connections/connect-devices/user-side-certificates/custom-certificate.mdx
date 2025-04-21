@@ -19,7 +19,9 @@ Enterprise customers who do not wish to install a [Cloudflare certificate](/clou
 You can upload up to five custom root certificates. If your organization requires more than five certificates, contact your account team.
 
 :::caution
-Custom certificates are limited to use between your users and the Gateway proxy. Connections between Gateway and the origin server will use a Cloudflare certificate.
+Custom certificates are limited to use between your users and the Gateway proxy. Gateway connects to origin servers using publicly trusted certificates, similar to how a browser validates secure websites.
+
+If your users need to connect to self-signed origin servers, create an HTTP Allow policy for the origin server with the [untrusted certificate action](/cloudflare-one/policies/gateway/http-policies/#untrusted-certificates) set to _Pass through_.
 :::
 
 ## Generate a custom root CA

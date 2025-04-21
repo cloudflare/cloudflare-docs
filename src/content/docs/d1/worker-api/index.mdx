@@ -2,7 +2,7 @@
 pcx_content_type: navigation
 title: Workers Binding API
 sidebar:
-  order: 4
+  order: 5
 ---
 
 import { DirectoryListing, Details, Steps } from "~/components";
@@ -81,16 +81,17 @@ Replace the contents of your `index.js` file with the code below to view the eff
 export default {
 	async fetch(request, env) {
 	  const { pathname } = new URL(request.url);
-
 	//   if (pathname === "/api/beverages") {
 	// 	// If you did not use `DB` as your binding name, change it here
 	// 	const { results } = await env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?",).bind("Bs Beverages").all();
 	// 	return Response.json(results);
 	//   }
-
 		const companyName1 = `Bs Beverages`;
 		const companyName2 = `Around the Horn`;
 		const stmt = env.DB.prepare(`SELECT * FROM Customers WHERE CompanyName = ?`);
+		const stmtMulti = env.DB.prepare(`SELECT * FROM Customers; SELECT * FROM Customers WHERE CompanyName = ?`);
+		const session = env.DB.withSession("first-primary")
+		const sessionStmt = session.prepare(`SELECT * FROM Customers WHERE CompanyName = ?`);
 
 	  if (pathname === `/RUN`){
 		const returnValue = await stmt.bind(companyName1).run();
@@ -114,6 +115,11 @@ export default {
 	} else if (pathname === `/EXEC`){
 		const returnValue = await env.DB.exec(`SELECT * FROM Customers WHERE CompanyName = "Bs Beverages"`);
 		return Response.json(returnValue);
+
+	} else if (pathname === `/WITHSESSION`){
+		const returnValue = await sessionStmt.bind(companyName1).run();
+		console.log("You're now using D1 Sessions!")
+		return Response.json(returnValue);
 	}
 
 	  return new Response(
@@ -121,8 +127,7 @@ export default {
 		\nChange the URL to test the various methods inside your index.js file.`,
 	  );
 	},
-};
-
+  };
 ```
 </Details>
 
@@ -130,26 +135,22 @@ export default {
 
 <Steps>
 1. Navigate to your tutorial directory you created by following step 1.
-2. Run `npx wrangler dev`.
+2. Run `npx wrangler deploy`.
 	```sh
-	npx wrangler dev
+	npx wrangler deploy
 	```
 	```sh output
-	 ⛅️ wrangler 3.85.0 (update available 3.86.1)
-	-------------------------------------------------------
+	⛅️ wrangler 3.112.0
+	--------------------
 
+	Total Upload: 1.90 KiB / gzip: 0.59 KiB
 	Your worker has access to the following bindings:
 	- D1 Databases:
-		- DB: <DATABASE_NAME> (DATABASE_ID) (local)
-	⎔ Starting local server...
-	[wrangler:inf] Ready on http://localhost:8787
-	╭───────────────────────────╮
-	│  [b] open a browser       │
-	│  [d] open devtools        │
-	│  [l] turn off local mode  │
-	│  [c] clear console        │
-	│  [x] to exit              │
-	╰───────────────────────────╯
+		- DB: DATABASE_NAME (<DATABASE_ID>)
+	Uploaded WORKER_NAME (7.01 sec)
+	Deployed WORKER_NAME triggers (1.25 sec)
+		https://jun-d1-rr.d1-sandbox.workers.dev
+	Current Version ID: VERSION_ID
 	```
 3. Open a browser at the specified address.
 </Steps>

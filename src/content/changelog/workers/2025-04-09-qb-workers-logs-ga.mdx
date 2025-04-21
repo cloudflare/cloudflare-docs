@@ -1,0 +1,50 @@
+---
+title: Investigate your Workers with the Query Builder in the new Observability dashboard
+description: Workers Observability now offers a Query Builder to help developers construct structured queries to investigate their telemtry data.
+products:
+  - workers
+date: 2025-04-09T00:00:00Z
+hidden: false
+---
+
+import { WranglerConfig } from "~/components"
+
+The [Workers Observability dashboard](https://dash.cloudflare.com/?to=/:account/workers-and-pages/observability/) offers a single place to investigate and explore your [Workers Logs](/workers/observability/logs/workers-logs).
+
+The **Overview** tab shows logs from all your Workers in one place. The **Invocations** view groups logs together by invocation, which refers to the specific trigger that started the execution of the Worker (i.e. fetch). The **Events** view shows logs in the order they were produced, based on timestamp. Previously, you could only view logs for a single Worker.
+
+![Workers Observability Overview Tab](src/assets/images/changelog/workers/observability/2025-04-09-workers-observability-overview.png)
+
+The **Investigate** tab presents a Query Builder, which helps you write structured queries to investigate and visualize your logs. The Query Builder can help answer questions such as:
+- Which paths are experiencing the most 5XX errors?
+- What is the wall time distribution by status code for my Worker?
+- What are the slowest requests, and where are they coming from?
+- Who are my top N users? 
+
+![Workers Observability Overview Tab](src/assets/images/changelog/workers/observability/2025-04-09-query-builder.png)
+
+The Query Builder can use any field that you store in your logs as a key to visualize, filter, and group by. Use the Query Builder to quickly access your data, build visualizations, save queries, and share them with your team. 
+
+### Workers Logs is now Generally Available
+
+[Workers Logs](/workers/observability/logs/workers-logs) is now Generally Available. With a [small change](/workers/observability/logs/workers-logs/#enable-workers-logs) to your Wrangler configuration, Workers Logs ingests, indexes, and stores all logs emitted from your Workers for up to 7 days.
+
+We've introduced a number of changes during our beta period, including:
+- Dashboard enhancements with customizable fields as columns in the Logs view and support for invocation-based grouping
+- Performance improvements to ensure no adverse impact
+- Public [API endpoints](https://developers.cloudflare.com/api/resources/workers/subresources/observability/) for broader consumption
+
+The API documents three endpoints: list the keys in the telemetry dataset, run a query, and list the unique values for a key. For more, visit our [REST API documentation](https://developers.cloudflare.com/api/resources/workers/subresources/observability/).
+
+Visit the [docs](/workers/observability/query-builder) to learn more about the capabilities and methods exposed by the Query Builder. Start using Workers Logs and the Query Builder today by enabling observability for your Workers:
+
+<WranglerConfig>
+	```toml
+	[observability]
+	enabled = true
+
+	[observability.logs]
+	invocation_logs = true
+	head_sampling_rate = 1 # optional. default = 1.
+	```
+</WranglerConfig>

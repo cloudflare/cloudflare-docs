@@ -140,11 +140,17 @@ Policies with Block actions block DNS queries to reach destinations you specify 
 
 #### Custom block page
 
-When choosing the Block action, turn on **Display custom block page** to respond to queries with a block page and to specify the message you want to display to users who go to blocked websites. If the block page is disabled, Gateway will respond to blocked queries with an `A` record of `0.0.0.0` for IPv4 destinations, or with an `AAAA` record of `::` for IPv6 destinations. For more information, refer to the dedicated documentation on [customizing the block page](/cloudflare-one/policies/gateway/block-page/).
+When choosing the Block action, turn on **Modify Gateway block behavior** to respond to queries with a block page to display to users who go to blocked websites. Optionally, you can override your global block page setting with a URL redirect for the specific DNS policy. For more information, refer to [Block page](/cloudflare-one/policies/gateway/block-page/).
+
+If the block page is turned off for a policy, Gateway will respond to queries blocked at the DNS level with an `A` record of `0.0.0.0` for IPv4 destinations, or with an `AAAA` record of `::` for IPv6 destinations. The browser will display its default connection error page.
 
 #### WARP client block notifications
 
-<Render file="gateway/client-notifications-os" product="cloudflare-one" />
+<Render
+	file="gateway/client-notifications"
+	product="cloudflare-one"
+	params={{ toggleName: "**Display block notification for WARP Client**" }}
+/>
 
 ### Override
 

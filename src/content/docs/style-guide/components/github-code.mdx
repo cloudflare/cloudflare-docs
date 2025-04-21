@@ -89,14 +89,24 @@ const baz = foo();
 **required**
 **type:** `string`
 
-The owner and repository to pull from, for example `cloudflare/workers-rs`.
+The owner and repository to pull from, in the form of `cloudflare/<REPO-NAME>`
+
+For example:
+
+- `cloudflare/workers-rs`.
+- `cloudflare/templates`.
 
 ### `file`
 
 **required**
 **type:** `string`
 
-The file path to pull from, for example `templates/hello-world/src/lib.rs`.
+The file path to pull from, in the form of `path/to/filename-including-extensions`. This path excludes the repo name.
+
+For example:
+
+- `templates/hello-world/src/lib.rs`.
+- `d1-starter-sessions-api/src/index.ts`.
 
 ### `commit`
 

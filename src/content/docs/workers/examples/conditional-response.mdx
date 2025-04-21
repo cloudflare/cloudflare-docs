@@ -163,4 +163,76 @@ async def on_fetch(request):
     return fetch(request)
 ```
 
+</TabItem> <TabItem label="Hono" icon="seti:typescript">
+
+```ts
+import { Hono } from "hono";
+import { HTTPException } from "hono/http-exception";
+
+const app = new Hono();
+
+// Middleware to handle all conditions before reaching the main handler
+app.use("*", async (c, next) => {
+	const request = c.req.raw;
+	const BLOCKED_HOSTNAMES = ["nope.mywebsite.com", "bye.website.com"];
+	const hostname = new URL(c.req.url)?.hostname;
+
+	// Return a new Response based on a URL's hostname
+	if (BLOCKED_HOSTNAMES.includes(hostname)) {
+		return c.text("Blocked Host", 403);
+	}
+
+	// Block paths ending in .doc or .xml based on the URL's file extension
+	const forbiddenExtRegExp = new RegExp(/\.(doc|xml)$/);
+	if (forbiddenExtRegExp.test(c.req.pathname)) {
+		return c.text("Blocked Extension", 403);
+	}
+
+	// On User Agent
+	const userAgent = c.req.header("User-Agent") || "";
+	if (userAgent.includes("bot")) {
+		return c.text("Block User Agent containing bot", 403);
+	}
+
+	// On Client's IP address
+	const clientIP = c.req.header("CF-Connecting-IP");
+	if (clientIP === "1.2.3.4") {
+		return c.text("Block the IP 1.2.3.4", 403);
+	}
+
+	// On ASN
+	if (request.cf && request.cf.asn === 64512) {
+		return c.text("Block the ASN 64512 response");
+	}
+
+	// On Device Type
+	// Requires Enterprise "CF-Device-Type Header" zone setting or
+	// Page Rule with "Cache By Device Type" setting applied.
+	const device = c.req.header("CF-Device-Type");
+	if (device === "mobile") {
+		return c.redirect("https://mobile.example.com");
+	}
+
+	// Continue to the next handler
+	await next();
+});
+
+// Handle POST requests differently
+app.post("*", (c) => {
+	return c.text("Response for POST");
+});
+
+// Default handler for other methods
+app.get("*", async (c) => {
+	console.error(
+		"Getting Client's IP address, device type, and ASN are not supported in playground. Must test on a live worker",
+	);
+
+	// Fetch the original request
+	return fetch(c.req.raw);
+});
+
+export default app;
+```
+
 </TabItem> </Tabs>
