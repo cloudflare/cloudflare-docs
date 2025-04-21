@@ -30,21 +30,12 @@ To connect your private network:
 1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
 	- `Cloudflare Tunnel Write`
 
-2. Generate a secret for the tunnel using Terraform's [`random` provider](https://registry.terraform.io/providers/hashicorp/random/latest/docs):
-
-		```tf
-		resource "random_bytes" "tunnel_secret" {
-  		length = 64
-		}
-		```
-
-3. Create a tunnel using the [`cloudflare_zero_trust_tunnel_cloudflare`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_tunnel_cloudflared) resource.
+2. Create a tunnel using the [`cloudflare_zero_trust_tunnel_cloudflare`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_tunnel_cloudflared) resource.
 
 		```tf
 		resource "cloudflare_zero_trust_tunnel_cloudflared" "example_tunnel" {
 			account_id = var.cloudflare_account_id
 			name       = "Example tunnel"
-			tunnel_secret     = random_bytes.tunnel_secret.base64
 			config_src = "cloudflare"
 		}
 		```

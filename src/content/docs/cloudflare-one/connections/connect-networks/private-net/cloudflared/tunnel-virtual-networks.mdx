@@ -93,25 +93,15 @@ The following example demonstrates how to add two overlapping IP routes to Cloud
 
 		3. Create a Cloudflare Tunnel for each private network:
 			```tf
-			resource "random_bytes" "staging_tunnel_secret" {
-				length = 64
-			}
-
 			resource "cloudflare_zero_trust_tunnel_cloudflared" "staging_tunnel" {
 				account_id = var.cloudflare_account_id
 				name       = "Staging tunnel"
-				tunnel_secret     = random_bytes.staging_tunnel_secret.base64
 				config_src = "cloudflare"
-			}
-
-			resource "random_bytes" "production_tunnel_secret" {
-				length = 64
 			}
 
 			resource "cloudflare_zero_trust_tunnel_cloudflared" "production_tunnel" {
 				account_id = var.cloudflare_account_id
 				name       = "Production tunnel"
-				tunnel_secret     = random_bytes.production_tunnel_secret.base64
 				config_src = "cloudflare"
 			}
 			```
