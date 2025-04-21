@@ -18,7 +18,7 @@ compatible.
 
 The `disable_top_level_await_in_require` compat flag will cause `require()`
 to fail if the module uses a top-level await. This flag is default enabled
-on or after compatibility date 2024-12-02.
+with a compatibility date of 2024-12-02 or later.
 
 To restore the original behavior allowing top-level await, use the
 `enable_top_level_await_in_require` compatibility flag.
