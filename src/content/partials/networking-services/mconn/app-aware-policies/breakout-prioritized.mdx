@@ -60,7 +60,7 @@ Before you can add or remove {props.featureName} applications to your Connector,
 
 To add applications to your account:
 
-2.  Send a `POST` request to add new apps to the breakout traffic policy.
+Send a `POST` request to add new apps to the {props.featureName} policy.
 
 	<APIRequest
 	path="/accounts/{account_id}/magic/apps"
@@ -130,7 +130,7 @@ The traffic for the application you chose {props.whatHappensApp}.
 
 	Take note of the `"managed_app_id"` value for any application you want to add.
 
-2.  Send a `POST` request to add new apps to the breakout traffic policy.
+2. Send a `POST` request to add new apps to the {props.featureName} policy.
 
 	<APIRequest
 	path="/accounts/{account_id}/magic/sites/{site_id}/app_configs"
@@ -194,7 +194,7 @@ The traffic for the application you chose {props.whatHappensApp}.
 
 	Take note of the `"id"` value for the application that want to delete.
 
-2. Send a `DELETE` request to delete an application from the breakout traffic policy.
+2. Send a `DELETE` request to delete an application from the {props.featureName} policy.
 
 	<CURL
 	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/app_configs/{id}"
