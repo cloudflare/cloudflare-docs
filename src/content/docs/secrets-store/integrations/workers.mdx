@@ -112,7 +112,7 @@ To bind an account secret to your Worker, you must have one of the following [ro
 ```toml
 main = "./src/index.js"
 secrets_store_secrets = [
-  { binding = "secrets_store_binding", store_id= "<STORE_ID>", secret_name = "<MY_SECRET_NAME>" }
+  { binding = "<BINDING_VARIABLE>", store_id= "<STORE_ID>", secret_name = "<MY_SECRET_NAME>" }
 ]
 ```
 
@@ -147,7 +147,7 @@ You cannot access production secrets (created on the dashboard, via API, or with
 export default {
   async fetch(request, env) {
     // Example of using the secret safely in an API request
-		const APIkey = await env.secrets_store_binding.get()
+		const APIkey = await env.<BINDING_VARIABLE>.get()
 
     const response = await fetch("https://api.example.com/data", {
       headers: { "Authorization": `Bearer ${APIKey}` },
