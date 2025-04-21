@@ -627,13 +627,13 @@ wrangler secrets-store secret create <STORE_ID> [OPTIONS]
 The following is an example of using the `create` command to create an account-level secret.
 
 ```sh
-npx wrangler secrets-store secret create 8f7a1cdced6342c18d223ece462fd88d --name SecretsStore_Key-1 --scopes workers --remote
+npx wrangler secrets-store secret create 8f7a1cdced6342c18d223ece462fd88d --name ServiceA_key-1 --scopes workers --remote
 ```
 
 ```sh output
 ✓ Enter a secret value: › ***
 
-🔐 Creating secret... (Name: SecretsStore_Key-1, Value: REDACTED, Scopes: workers, Comment: undefined)
+🔐 Creating secret... (Name: ServiceA_key-1, Value: REDACTED, Scopes: workers, Comment: undefined)
 ✓ Select an account: › My account
 ✅ Created secret! (ID: 13bc7498c6374a4e9d13be091c3c65f1)
 ```
@@ -709,7 +709,7 @@ npx wrangler secrets-store secret get 8f7a1cdced6342c18d223ece462fd88d --secret-
 ✓ Select an account: › My account
 | Name                        | ID                                  | StoreID                             | Comment | Scopes  | Status  | Created                | Modified               |
 |-----------------------------|-------------------------------------|-------------------------------------|---------|---------|---------|------------------------|------------------------|
-| SecretsStore_Key-1          | 13bc7498c6374a4e9d13be091c3c65f1    | 8f7a1cdced6342c18d223ece462fd88d    |         | workers | active  | 4/9/2025, 10:06:01 PM  | 4/15/2025, 09:13:05 AM |
+| ServiceA_key-1          | 13bc7498c6374a4e9d13be091c3c65f1    | 8f7a1cdced6342c18d223ece462fd88d    |         | workers | active  | 4/9/2025, 10:06:01 PM  | 4/15/2025, 09:13:05 AM |
 ```
 
 ### `delete`
