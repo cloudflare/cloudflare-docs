@@ -1,5 +1,5 @@
 ---
-updated: 2025-01-13
+updated: 2025-04-21
 difficulty: Intermediate
 pcx_content_type: tutorial
 title: Setup Fullstack Authentication with Next.js, Auth.js, and Cloudflare D1
@@ -46,7 +46,7 @@ From within the repository or directory where you want to create your project ru
 <PackageManagers
 	type="create"
 	pkg="cloudflare@latest"
-	args={"auth-js-d1-example --framework=next --experimental"}
+	args={"auth-js-d1-example --framework=next"}
 />
 
 <Render
@@ -424,6 +424,8 @@ Now, it's time to preview our app. Run the following to preview your application
 
 :::caution[Windows support]
 OpenNext has [limited Windows support](https://opennext.js.org/cloudflare#windows-support) and recommends using WSL2 if developing on Windows.
+
+Also, you may need to comment out the `@import "tw-animate-css"` line in the `globals.css` file.
 :::
 
 You should see our login form. But wait, we're not done yet. Remember to create your database tables by visiting `/api/setup`. You should see `Migration completed`. This means your database is ready to go.
@@ -444,6 +446,10 @@ npx wrangler secret put AUTH_URL
 ```
 
 After the changes are deployed, you should now be able to access and try out your new application.
+
+:::note[D1 Database Creation]
+You will need to hit the `/api/setup` on your deployed URL to create the necessary tables in your D1 database. It will create 4 tables if they don’t already exist: `accounts`, `sessions`, `users`, and `verification_tokens`. If the `api/setup` route is not working, you can also initialize your tables manually. Look in [migrations.ts](https://github.com/nextauthjs/next-auth/blob/main/packages/adapter-d1/src/migrations.ts) of the Auth.js D1 adapter for the relevant SQL.
+:::
 
 You have successfully created, configured, and deployed a fullstack Next.js application with authentication powered by Auth.js, Resend, and Cloudflare D1.
 
