@@ -685,11 +685,13 @@ wrangler secrets-store store create <name>
 
 - `name` <Type text="string" /> <MetaInfo text="required" />
   - A descriptive name for the account-level secret. Cannot contain spaces.
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) required" />
+  - Execute the command against the remote Secrets Store.
 
 The following is an example of using the `create` command to create a store.
 
-```txt
-wrangler secrets-store store create default --remote
+```sh
+npx wrangler secrets-store store create default --remote
 ```
 
 ```sh output
@@ -707,11 +709,13 @@ wrangler secrets-store store delete <STORE_ID>
 
 - `STORE_ID` <Type text="string" /> <MetaInfo text="required" />
   - The secret store public ID. You can find it and copy from the [Secrets Store tab](https://dash.cloudflare.com/?to=/:account/secrets-store/) on the dashboard.
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) required" />
+  - Execute the command against the remote Secrets Store.
 
 The following is an example of using the `delete` command to delete a store.
 
 ```sh
-npx wrangler secrets-store store delete d2dafaeac9434de2b6d08b292ce08211
+npx wrangler secrets-store store delete d2dafaeac9434de2b6d08b292ce08211 --remote
 ```
 
 ```sh output
@@ -727,10 +731,13 @@ List the stores within an account.
 wrangler secrets-store store list
 ```
 
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) required" />
+  - Execute the command against the remote Secrets Store.
+
 The following is an example of using the `list` command to list stores.
 
 ```sh
-npx wrangler secrets-store store list
+npx wrangler secrets-store store list --remote
 ```
 
 ```sh output
