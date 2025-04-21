@@ -56,11 +56,11 @@ import { APIRequest, Aside, AnchorHeading, CURL, Markdown, Render, TabItem, Tabs
 
 ## Add an application to your account
 
-Before you can add or remove {props.featureName} applications to your Connector, you need to create a list with applications that you want to configure. Currently, adding to or modifying this list is only possible through the [`managed_app_id`](/api/resources/magic_transit/subresources/apps/methods/create/) endpoint.
+Before you can add or remove {props.featureName} applications to your Connector, you need to create a list with the applications that you want to configure. Currently, adding to or modifying this list is only possible through the [`managed_app_id`](/api/resources/magic_transit/subresources/apps/methods/create/) endpoint.
 
 To add applications to your account:
 
-Send a `POST` request to add new apps to the {props.featureName} policy.
+Send a `POST` request to add new apps to your account.
 
 	<APIRequest
 	path="/accounts/{account_id}/magic/apps"
@@ -84,6 +84,8 @@ Send a `POST` request to add new apps to the {props.featureName} policy.
 		"messages": []
 	}
 	```
+
+You can now add this new app to the {props.featureName} list in your Connector.
 
 ### Add an application to your Connector
 
