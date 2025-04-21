@@ -212,11 +212,11 @@ const authResult = async (): Promise<NextAuthResult> => {
 	return NextAuth({
 		providers: [
 			Resend({
-				apiKey: (await getCloudflareContext()).env.AUTH_RESEND_KEY,
-				from: (await getCloudflareContext()).env.AUTH_EMAIL_FROM,
+				apiKey: (await getCloudflareContext({async: true})).env.AUTH_RESEND_KEY,
+				from: (await getCloudflareContext({async: true})).env.AUTH_EMAIL_FROM,
 			}),
 		],
-		adapter: D1Adapter((await getCloudflareContext()).env.DB),
+		adapter: D1Adapter((await getCloudflareContext({async: true})).env.DB),
 	});
 };
 
@@ -255,7 +255,7 @@ import { getCloudflareContext } from "@opennextjs/cloudflare";
 
 export async function GET() {
     try {
-        await up((await getCloudflareContext()).env.DB)
+        await up((await getCloudflareContext({async: true})).env.DB)
     } catch (e: unknown) {
         if (e instanceof Error) {
             const causeMessage = e.cause instanceof Error ? e.cause.message : String(e.cause);
@@ -328,7 +328,7 @@ async function updateName(formData: FormData): Promise<void> {
 		return;
 	}
 	const query = `UPDATE users SET name = $1 WHERE id = $2`;
-	await updateRecord((await getCloudflareContext()).env.DB, query, [name, session.user.id]);
+	await updateRecord((await getCloudflareContext({async: true})).env.DB, query, [name, session.user.id]);
 	redirect('/');
 }
 
