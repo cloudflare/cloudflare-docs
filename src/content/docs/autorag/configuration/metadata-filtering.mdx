@@ -7,7 +7,7 @@ sidebar:
 
 Metadata filtering narrows down search results based on metadata, so only relevant content is retrieved. The filter narrows down results prior to retrieval, so that you only query the scope of documents that matter.
 
-Here is an example of metadata filtering in [Workers Binding](/autorag/usage/workers-binding/) but it can be easily adapted to use the [REST API](/autorag/usage/rest-api/) instead.
+Here is an example of metadata filtering using [Workers Binding](/autorag/usage/workers-binding/) but it can be easily adapted to use the [REST API](/autorag/usage/rest-api/) instead.
 
 ```js
 const answer = await env.AI.autorag("my-autorag").search({
@@ -38,7 +38,7 @@ You can currently filter by the `folder` and `modified_date` of an R2 object. Cu
 
 The directory to the object. For example, the `folder` of the object at `llama/logistics/llama-logistics.mdx` is `llama/logistics/`. Note that the `folder` does not include a leading `/`.
 
-Note that `folder` filter only includes files exactly on that folder, so files in subdirectories are not included. For example, specifying `folder: "llama/"` will match files in `llama/` but does not match files in `llama/logistics`.
+Note that `folder` filter only includes files exactly in that folder, so files in subdirectories are not included. For example, specifying `folder: "llama/"` will match files in `llama/` but does not match files in `llama/logistics`.
 
 ### `modified_date`
 
@@ -50,7 +50,7 @@ You can create simple comparison filters or an array of comparison filters using
 
 ### Comparison filter
 
-You can compare a metadata attribute (e.g. `folder` or `modified_date`) with a target value using a comparison filter.
+You can compare a metadata attribute (for example, `folder` or `modified_date`) with a target value using a comparison filter.
 
 ```js
 filters: {
@@ -89,7 +89,7 @@ Note the following limitations with the compound operators:
 - No nesting combinations of `and`'s and `or`'s, meaning you can only pick 1 `and` or 1 `or`.
 - When using `or`:
   - Only the `eq` operator is allowed.
-  - All conditions must filter on the **same key** (e.g. all on `folder`)
+  - All conditions must filter on the **same key** (for example, all on `folder`)
 
 ## Response
 
