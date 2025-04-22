@@ -47,6 +47,20 @@ For example, a vector embedding representing an image could include the path to 
 { id: '1', values: [32.4, 74.1, 3.2, ...], metadata: { path: 'r2://bucket-name/path/to/image.png', format: 'png', category: 'profile_image' } }
 ```
 
+### Performance Tips When Filtering by Metadata
+
+When creating metadata indexes for a large Vectorize index, we encourage users to think ahead and plan how they will query for vectors with filters on this metadata.
+
+Carefully consider the cardinality of metadata values in relation to your queries. Cardinality is the level of uniqueness of data values within a set. Low cardinality means there are only a few unique values: for instance, the number of planets in the Solar System; the number of countries in the world. High cardinality means there are many unique values: UUIv4 strings; timestamps with millisecond precision.
+
+High cardinality is good for the selectiveness of the equal (`$eq`) filter. For example, if you want to find vectors associated with one user's id. But the filter is not going to help if all vectors have the same value. That's an example of extreme low cardinality.
+
+High cardinality can also impact range queries, which searches across multiple unqiue metadata values. For example, an indexed metadata value using millisecond timestamps will see lower performance if the range spans long periods of time in which thousands of vectors with unique timestamps were written.
+
+Behind the scenes, Vectorize uses a reverse index to map values to vector ids. If the number of unique values in a particular range is too high, then that requires reading large portions of the index (a full index scan in the worst case). This would lead to memory issues, so Vectorize will degrade performance and the accuracy of the query in order to finish the request.
+
+One approach for high cardinality data is to somehow create buckets where more vectors get grouped to the same value. Continuing the millisecond timestamp example, let's imagine we typically filter with date ranges that have 5 minute increments of granularity. We could use a timestamp which is rounded down to the last 5 minute point. This "windows" our metadata values into 5 minute increments. And we can still store the original millisecond timestamp as a separate non-indexed field.
+
 ## Namespaces
 
 Namespaces provide a way to segment the vectors within your index. For example, by customer, merchant or store ID.
