@@ -26,7 +26,7 @@ Browser-based RDP can be used in conjunction with [routing over WARP](/cloudflar
 
 - An [active domain on Cloudflare](/fundamentals/setup/manage-domains/add-site/)
 - Domain uses either a [full setup](/dns/zone-setups/full-setup/) or a [partial (`CNAME`) setup](/dns/zone-setups/partial-setup/)
-- Windows machine supports RDP connections. For a list of supported operating systems, refer to the [Windows documentation](https://learn.microsoft.com/windows-server/remote/remote-desktop-services/remotepc/remote-desktop-supported-config).
+- RDP server runs a supported [Windows operating system](#rdp-server-operating-systems).
 
 ## 1. Connect the server to Cloudflare
 
@@ -120,7 +120,12 @@ To connect to a Windows machine over RDP:
 
 You now have access to the remote Windows desktop.
 
-## Supported RDP Server Operating Systems
+## Compatibility
+
+### RDP server operating systems
+
+Browser-based RDP supports connecting to Windows machines that run the following operating systems:
+
 - Windows 11 Pro
 - Windows 11 Enterprise
 - Windows 10 Pro
@@ -130,19 +135,27 @@ You now have access to the remote Windows desktop.
 - Windows Server 2019
 - Windows Server 2016
 
-## Supported Browsers
-- Chrome
-- Firefox
-- Brave
-- Opera
-- Microsoft Edge
+### Browsers
 
-## Limitations
-- Cloudflare uses TLS to connect to the target RDP server, but the origin TLS certificate is not verified
-- Using a [WARP authentication](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/#configure-warp-sessions-in-access) is not supported
-- Audio over RDP is not supported today
+| Browser                                      | Compatibility |
+| -------------------------------------------- | ------------- |
+| Google Chrome                                | ✅            |
+| Mozilla Firefox                              | ✅            |
+| Safari                                       | ❌            |
+| Microsoft Edge (Chromium-based)              | ✅            |
+| Other Chromium-based browsers (Opera, Brave) | ✅            |
+| Internet Explorer 11 and below               | ❌            |
 
-## Product compatibility
+### Cloudflare products
 
  <Render file="access/self-hosted-app/product-compatibility" product="cloudflare-one" />
+
+## Known limitations
+
+Browser-based RDP does not currently support:
+
+- TLS certificate verification: Cloudflare uses TLS to connect to the target RDP server but does not verify the origin TLS certificate.
+- [WARP authentication](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/#configure-warp-sessions-in-access)
+- Audio over RDP
+
 
