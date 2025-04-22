@@ -89,7 +89,7 @@ const props = {
 	<div class="flex items-center justify-center">
 		<button
 			id="changelogs-next-button"
-			class="bg-cl1-brand-orange text-cl1-black h-12 cursor-pointer rounded px-6 font-medium"
+			class="h-12 cursor-pointer rounded bg-cl1-brand-orange px-6 font-medium text-cl1-black"
 		>
 			Load more items
 		</button>
@@ -114,8 +114,8 @@ const props = {
 
 	filter?.addEventListener("change", updateFilter);
 
-	function filterByProduct(e: HTMLElement, value: string): boolean {
-		if (value === "all") {
+	function filterByProduct(e: HTMLElement, value?: string): boolean {
+		if (!value || value === "all") {
 			return true;
 		}
 
