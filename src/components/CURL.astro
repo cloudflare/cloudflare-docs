@@ -15,7 +15,9 @@ const props = z.object({
 	headers: z.record(z.string(), z.string()).default({}),
 	json: z.union([Record, z.array(Record)]).optional(),
 	form: Record.optional(),
-	query: z.record(z.string(), z.string()).optional(),
+	query: z
+		.record(z.string(), z.union([z.string(), z.array(z.string())]))
+		.optional(),
 	code: z
 		.custom<Omit<ComponentProps<typeof Code>, "code" | "lang">>()
 		.optional(),
@@ -38,7 +40,13 @@ if (json && form) {
 const url = new URL(baseUrl);
 if (query) {
 	for (const [key, value] of Object.entries(query)) {
-		url.searchParams.set(key, value);
+		if (Array.isArray(value)) {
+			for (const v of value) {
+				url.searchParams.append(key, v);
+			}
+		} else {
+			url.searchParams.set(key, value);
+		}
 	}
 }
 
