@@ -1,0 +1,117 @@
+---
+pcx_content_type: concept
+title: Metadata filtering
+sidebar:
+  order: 6
+---
+
+Metadata filtering narrows down search results based on metadata, so only relevant content is retrieved. The filter narrows down results prior to retrieval, so that you only query the scope of documents that matter.
+
+Here is an example of metadata filtering in [Workers Binding](/autorag/usage/workers-binding/) but it can be easily adapted to use the [REST API](/autorag/usage/rest-api/) instead.
+
+```js
+const answer = await env.AI.autorag("my-autorag").search({
+	query: "How do I train a llama to deliver coffee?",
+	filters: {
+		type: "and",
+		filters: [
+			{
+				type: "eq",
+				key: "folder",
+				value: "llama/logistics/",
+			},
+			{
+				type: "gte",
+				key: "modified_date",
+				value: "1735689600000", // unix timestamp for 2025-01-01
+			},
+		],
+	},
+});
+```
+
+## Metadata attributes
+
+You can currently filter by the `folder` and `modified_date` of an R2 object. Currently, custom metadata attributes are not supported.
+
+### `folder`
+
+The directory to the object. For example, the `folder` of the object at `llama/logistics/llama-logistics.mdx` is `llama/logistics/`. Note that the `folder` does not include a leading `/`.
+
+Note that `folder` filter only includes files exactly on that folder, so files in subdirectories are not included. For example, specifying `folder: "llama/"` will match files in `llama/` but does not match files in `llama/logistics`.
+
+### `modified_date`
+
+The timestamp for when the object was last modified. The comparison is supported in Unix timestamp format. For example, `value: "1735689600000"` can be used to compare the date of 2025-01-01.
+
+## Filter schema
+
+You can create simple comparison filters or an array of comparison filters using a compound filter.
+
+### Comparison filter
+
+You can compare a metadata attribute (e.g. `folder` or `modified_date`) with a target value using a comparison filter.
+
+```js
+filters: {
+  type: "operator",
+  key: "metadata_attribute",
+  value: "target_value"
+}
+```
+
+The available operators for the comparison are:
+
+| Operator | Description               |
+| -------- | ------------------------- |
+| `eq`     | Equals                    |
+| `ne`     | Not equals                |
+| `gt`     | Greater than              |
+| `gte`    | Greater than or equals to |
+| `lt`     | Less than                 |
+| `lte`    | Less than or equals to    |
+
+### Compound filter
+
+You can use a compound filter to combine multiple comparison filters with a logical operator.
+
+```js
+filters: {
+  type: "compound_operator",
+  filters: [...]
+}
+```
+
+The available compound operators are: `and`, `or`.
+
+Note the following limitations with the compound operators:
+
+- No nesting combinations of `and`'s and `or`'s, meaning you can only pick 1 `and` or 1 `or`.
+- When using `or`:
+  - Only the `eq` operator is allowed.
+  - All conditions must filter on the **same key** (e.g. all on `folder`)
+
+## Response
+
+You can see the metadata attributes of your retrieved data in the response under the property `attributes` for each retrieved chunk. For example:
+
+```js
+"data": [
+  {
+    "file_id": "llama001",
+    "filename": "llama/logistics/llama-logistics.md",
+    "score": 0.45,
+    "attributes": {
+      "modified_date": 1735689600000,   // unix timestamp for 2025-01-01
+      "folder": "llama/logistics/",
+    },
+    "content": [
+      {
+        "id": "llama001",
+        "type": "text",
+        "text": "Llamas can carry 3 drinks max."
+      }
+    ]
+  }
+]
+```
