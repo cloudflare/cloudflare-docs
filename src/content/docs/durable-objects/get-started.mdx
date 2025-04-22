@@ -260,13 +260,13 @@ Preview your Durable Object Worker at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.de
 
 ## Summary and final code
 
-You final code should look like this:
+Your final code should look like this:
 
 ```ts title="index.ts"
 import { DurableObject } from "cloudflare:workers";
 export class MyDurableObject extends DurableObject {
 	constructor(ctx: DurableObjectState, env: Env) {
-		// Required, as we're extending the base class.
+		// Required, as we are extending the base class.
 		super(ctx, env)
 	}
 
@@ -293,7 +293,7 @@ export default {
 By finishing this tutorial, you have:
 
 - Successfully created a Durable Object
-- Called the Durable Object by invoking a RPC method
+- Called the Durable Object by invoking a [RPC method](/workers/runtime-apis/rpc/)
 - Deployed the Durable Object globally
 
 ## Related resources
