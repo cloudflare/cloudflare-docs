@@ -40,7 +40,7 @@ To connect your private network:
 		}
 		```
 
-4. Route the CIDR of your private network through the tunnel using the [`cloudflare_zero_trust_tunnel_cloudflared_route`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_tunnel_cloudflared_route) resource:
+3. Route the CIDR of your private network through the tunnel using the [`cloudflare_zero_trust_tunnel_cloudflared_route`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_tunnel_cloudflared_route) resource:
 
 		```tf
 		resource "cloudflare_zero_trust_tunnel_cloudflared_route" "example_tunnel_route" {
@@ -51,10 +51,10 @@ To connect your private network:
 		}
 		```
 
-5. Get the [token](/cloudflare-one/connections/connect-networks/configure-tunnels/remote-tunnel-permissions/) used to run the tunnel:
+4. Get the [token](/cloudflare-one/connections/connect-networks/configure-tunnels/remote-tunnel-permissions/) used to run the tunnel:
 		<Render file="terraform/get-tunnel-token" product="cloudflare-one" />
 
-6. Install `cloudflared` on a host machine in your private network and run the tunnel:
+5. Install `cloudflared` on a host machine in your private network and run the tunnel:
 
 		<Render file="tunnel/install-and-run-tunnel" product="cloudflare-one" />
 
