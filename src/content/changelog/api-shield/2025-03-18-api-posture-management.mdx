@@ -13,7 +13,7 @@ View these risks in [Endpoint Management](/api-shield/management-and-monitoring/
  ...or in [Security Center Insights](/security-center/security-insights/):
 
 ![An example security center insight](~/assets/images/changelog/api-shield/posture-management-insight.png)
- 
+ API Shield will scan for risks on your API inventory daily. Here are the new risks we're scanning for and automatically labelling:
 API Shield will scan for risks on your API inventory daily. Here are the new risks we're scanning for and automatically labelling:
 
 - **cf-risk-sensitive**: applied if the customer is subscribed to the [sensitive data detection ruleset](/waf/managed-rules/reference/sensitive-data-detection/) and the WAF detects sensitive data returned on an endpoint in the last seven days.
@@ -29,6 +29,6 @@ In addition, API Shield has two new 'beta' scans for **Broken Object Level Autho
  - **cf-risk-bola-enumeration**: added when an endpoint experiences successful responses with drastic differences in the number of unique elements requested by different user sessions.
  - **cf-risk-bola-pollution**: added when an endpoint experiences successful responses where parameters are found in multiple places in the request.
 
-We are currently accepting more customers into our beta. Contact your account team if you are interested in BOLA attack detection for your API.
+We're currently accepting more customers into our beta. Contact your account team if you are interested in BOLA attack detection for your API.
 
 Refer to the [blog post](https://blog.cloudflare.com/cloudflare-security-posture-management/) for more information about Cloudflare's expanded posture management capabilities.
