@@ -21,13 +21,13 @@ Traffic that enters Cloudflare's network is referred to as "on-ramping," and tra
 
 ### On-ramp traffic to Cloudflare
 
-When you on-ramp traffic to Cloudflare, this ensures Cloudflare's can act on, secure, and increase performance of that traffic.
+When you on-ramp traffic to Cloudflare, this allows Cloudflare to act on, secure, and increase performance of that traffic.
 
 One example of on-ramping traffic to Cloudflare is updating your public website to use Cloudflare as the primary authoritative [DNS provider](/fundamentals/concepts/how-cloudflare-works/#cloudflare-as-a-dns-provider) for your domain.
 
 However, maybe you need to protect a private application that is not directly available on the Internet. In this scenario, you can:
 
-* Connect your private application to Cloudflare using a [device agent](/cloudflare-one/connections/connect-devices/warp/) which will also create [secure tunnels](/cloudflare-one/connections/connect-networks/) from the device to Cloudflare.
+* Connect your private application to Cloudflare using [secure tunnels](/cloudflare-one/connections/connect-networks/), and use a [device agent](/cloudflare-one/connections/connect-devices/warp/) to connect as a user.
 * For users already connected to a private company network, connect the entire network to Cloudflare using secure tunnels, and any request from a user device will access the private application through those tunnels.
 
 With these options, any request from a user device can access internal private applications via the secure private tunnels.
@@ -36,15 +36,15 @@ Refer to the list below for products you can use to on-ramp traffic to Cloudflar
 
 * [Anycast routing](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) uses Anycast IP addressing to route traffic to the nearest Cloudflare data center. Selective routing allows an Anycast network to be resilient in the face of high traffic volume, network congestion, and[ DDoS attacks](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/).
 * [DNS-based](/fundamentals/concepts/how-cloudflare-works/#cloudflare-as-a-dns-provider) traffic resolves domains onboarded to [Cloudflare's CDN](/fundamentals/concepts/how-cloudflare-works/). Cloudflare's DNS directs traffic to Cloudflare's global network of servers instead of a website's origin server.
-* [Cloudflare Tunnels](/cloudflare-one/connections/connect-networks/) connects your resources to Cloudflare without a publicly routable IP address so that your origins can serve traffic through Cloudflare without being vulnerable to attacks that bypass Cloudflare.
+* [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) connects your resources to Cloudflare without a publicly routable IP address so that your origins can serve traffic through Cloudflare without being vulnerable to attacks that bypass Cloudflare.
 * [Magic Transit](/magic-transit/about/) offers DDoS protection, traffic acceleration, and more for on-premise, cloud-hosted, and hybrid networks by accepting IP packets destined for your network, processing them, and outputting the packets to your origin infrastructure.
-* The Cloudflare[ WARP Client](/cloudflare-one/connections/connect-devices/warp/) securely and privately sends traffic from corporate devices to Cloudflare's global network while also applying advanced Zero Trust policies that check for a device's health before it connects to corporate applications.
+* The [Cloudflare WARP client](/cloudflare-one/connections/connect-devices/warp/) securely and privately sends traffic from corporate devices to Cloudflare's global network while also applying advanced Zero Trust policies that check for a device's health before it connects to corporate applications.
 
 ### Off-ramp traffic from Cloudflare
 
 If you need to ensure traffic leaves Cloudflare's network in a specific way, you can manage how traffic is off-ramped.
 
-For example, if you need to adhere to [regional laws](/cloudflare-one/connections/connect-networks/) that dictate user traffic and require data never leaves your country, you can configure off-ramp and on-ramp traffic on servers in the same geographical area.
+For example, if you need to adhere to [regional laws](/data-localization/regional-services/) that dictate user traffic and require data never leaves your country, you can configure off-ramp and on-ramp traffic on servers in the same geographical area.
 
 Or maybe you want to force traffic to off-ramp in a certain country to maintain your user's experience. For example, if you have employees in India who travel frequently, you can configure the off-ramp traffic to always appear to come from India so websites they visit maintain their language and preferences.
 
