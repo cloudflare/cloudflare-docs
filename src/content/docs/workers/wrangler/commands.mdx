@@ -268,7 +268,7 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
 - `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Develop against remote resources and data stored on Cloudflare's network.
 - `--test-scheduled` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
-  - Exposes a `/__scheduled` fetch route which will trigger a scheduled event (Cron Trigger) for testing during development. To simulate different cron patterns, a `cron` query parameter can be passed in: `/__scheduled?cron=*+*+*+*+*`.
+  - Exposes a `/__scheduled` fetch route which will trigger a scheduled event (Cron Trigger) for testing during development. To simulate different cron patterns, a `cron` query parameter can be passed in: `/__scheduled?cron=*+*+*+*+*` or `/cdn-cgi/handler/scheduled?cron=*+*+*+*+*`.
 - `--log-level` <Type text="'debug'|'info'|'log'|'warn'|'error|'none'" /> <MetaInfo text="(default: log) optional" />
   - Specify Wrangler's logging level.
 - `--show-interactive-dev-session` <Type text="boolean" /> <MetaInfo text="(default: true if the terminal supports interactivity) optional" />

@@ -5,7 +5,7 @@ head: []
 description: Enable your Worker to be executed on a schedule.
 ---
 
-import { Render, WranglerConfig } from "~/components";
+import { Render, WranglerConfig, TabItem, Tabs } from "~/components";
 
 ## Background
 
@@ -27,7 +27,42 @@ Cron Triggers execute on UTC time.
 
 To respond to a Cron Trigger, you must add a [`"scheduled"` handler](/workers/runtime-apis/handlers/scheduled/) to your Worker.
 
-<Render file="cron-trigger-example" />
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+
+```js
+export default {
+	async scheduled(controller, env, ctx) {
+		console.log("cron processed");
+	},
+};
+```
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+
+```ts
+interface Env {}
+export default {
+	async scheduled(
+		controller: ScheduledController,
+		env: Env,
+		ctx: ExecutionContext,
+	) {
+		console.log("cron processed");
+	},
+};
+```
+
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```python
+from workers import handler
+
+@handler
+async def on_scheduled(controller, env, ctx):
+  print("cron processed")
+```
+
+</TabItem></Tabs>
 
 Refer to the following additional examples to write your code:
 
@@ -140,12 +175,14 @@ Changes such as adding a new Cron Trigger, updating an old Cron Trigger, or dele
 
 :::
 
-Test Cron Triggers using `Wrangler` by passing in the `--test-scheduled` flag to [`wrangler dev`](/workers/wrangler/commands/#dev). This will expose a `/__scheduled` route which can be used to test using a HTTP request. To simulate different cron patterns, a `cron` query parameter can be passed in.
+Test Cron Triggers using `Wrangler` by passing in the `--test-scheduled` flag to [`wrangler dev`](/workers/wrangler/commands/#dev). This will expose a `/__scheduled` (or `/cdn-cgi/handler/scheduled` for Python Workers) route which can be used to test using a HTTP request. To simulate different cron patterns, a `cron` query parameter can be passed in.
 
 ```sh
 npx wrangler dev --test-scheduled
 
 curl "http://localhost:8787/__scheduled?cron=*+*+*+*+*"
+
+curl "http://localhost:8787/cdn-cgi/handler/scheduled?cron=*+*+*+*+*" # Python Workers
 ```
 
 ## View past events

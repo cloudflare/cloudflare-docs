@@ -15,9 +15,17 @@ description: Set a Cron Trigger for your Worker.
 
 import { Render, TabItem, Tabs, WranglerConfig } from "~/components";
 
-<Render file="cron-trigger-example" />
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 
-<Tabs syncKey="workersExamples"> <TabItem label="TypeScript (Standard)" icon="seti:typescript">
+```js
+export default {
+	async scheduled(controller, env, ctx) {
+		console.log("cron processed");
+	},
+};
+```
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
 interface Env {}
@@ -30,6 +38,16 @@ export default {
     console.log("cron processed");
   },
 };
+```
+
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```python
+from workers import handler
+
+@handler
+async def on_scheduled(controller, env, ctx):
+  print("cron processed")
 ```
 
 </TabItem> <TabItem label="Hono" icon="seti:typescript">
@@ -103,10 +121,12 @@ crons = ["0 * * * *"]
 
 The recommended way of testing Cron Triggers is using Wrangler.
 
-Cron Triggers can be tested using Wrangler by passing in the `--test-scheduled` flag to [`wrangler dev`](/workers/wrangler/commands/#dev). This will expose a `/__scheduled` route which can be used to test using a HTTP request. To simulate different cron patterns, a `cron` query parameter can be passed in.
+Cron Triggers can be tested using Wrangler by passing in the `--test-scheduled` flag to [`wrangler dev`](/workers/wrangler/commands/#dev). This will expose a `/__scheduled` (or `/cdn-cgi/handler/scheduled` for Python Workers) route which can be used to test using a HTTP request. To simulate different cron patterns, a `cron` query parameter can be passed in.
 
 ```sh
 npx wrangler dev --test-scheduled
 
 curl "http://localhost:8787/__scheduled?cron=0+*+*+*+*"
+
+curl "http://localhost:8787/cdn-cgi/handler/scheduled?cron=*+*+*+*+*" # Python Workers
 ```

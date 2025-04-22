@@ -33,7 +33,7 @@ Worker-to-Worker `fetch` requests are possible with [Service bindings](/workers/
 
 ```js null {3-7}
 export default {
-  async scheduled(event, env, ctx) {
+  async scheduled(controller, env, ctx) {
     return await fetch("https://example.com", {
       headers: {
         "X-Source": "Cloudflare-Workers",
@@ -58,7 +58,17 @@ async function eventHandler(event) {
 }
 ```
 
-</TabItem> </Tabs>
+</TabItem> <TabItem label="Python Worker" icon="seti:python">
+
+```python
+from workers import fetch, handler
+
+@handler
+async def on_scheduled(controller, env, ctx):
+  return await fetch("https://example.com", headers={"X-Source": "Cloudflare-Workers"})
+```
+
+</TabItem></Tabs>
 
 
 
