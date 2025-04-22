@@ -1,0 +1,138 @@
+p-map
+MIT
+MIT License
+
+Custom deployment protection rules
+Note
+
+Custom deployment protection rules are currently in public preview and subject to change.
+
+You can enable your own custom protection rules to gate deployments with third-party services. For example, you can use services such as Datadog, Honeycomb, and ServiceNow to provide automated approvals for deployments to GitHub. For more information, see Creating custom deployment protection rules.
+
+Once custom deployment protection rules have been created and installed on a repository, you can enable the custom deployment protection rule for any environment in the repository. For more information about configuring and enabling custom deployment protection rules, see Configuring custom deployment protection rules.
+
+Note
+
+Custom deployment protection rules are only available for public repositories for users on GitHub Free, GitHub Pro, and GitHub Team plans.
+
+Environment secrets
+Secrets stored in an environment are only available to workflow jobs that reference the environment. If the environment requires approval, a job cannot access environment secrets until one of the required reviewers approves it. For more information about secrets, see About secrets.
+
+Note
+
+Workflows that run on self-hosted runners are not run in an isolated container, even if they use environments. Environment secrets should be treated with the same level of security as repository and organization secrets. For more information, see Security hardening for GitHub Actions.
+If you are using GitHub Free, environment secrets are only available in public repositories. For access to environment secrets in private or internal repositories, you must use GitHub Pro, GitHub Team, or GitHub Enterprise. For more information on switching your plan, see Upgrading your account's plan.
+Environment variables
+Variables stored in an environment are only available to workflow jobs that reference the environment. These variables are only accessible using the vars context. For more information, see Store information in variables.
+
+Note
+
+Environment variables are available for all public repositories. For users on GitHub Pro or GitHub Team plans, environment variables are also available for private repositories.
+
+Creating an environment
+To configure an environment in a personal account repository, you must be the repository owner. To configure an environment in an organization repository, you must have admin access.
+
+Note
+
+Creation of an environment in a private repository is available to organizations with GitHub Team and users with GitHub Pro.
+Some features for environments have no or limited availability for private repositories. If you are unable to access a feature described in the instructions below, please see the documentation linked in the related step for availability information.
+On GitHub, navigate to the main page of the repository.
+
+Under your repository name, click  Settings. If you cannot see the "Settings" tab, select the  dropdown menu, then click Settings.
+
+Screenshot of a repository header showing the tabs. The "Settings" tab is highlighted by a dark orange outline.
+In the left sidebar, click Environments.
+
+Click New environment.
+
+Enter a name for the environment, then click Configure environment. Environment names are not case sensitive. An environment name may not exceed 255 characters and must be unique within the repository.
+
+Optionally, specify people or teams that must approve workflow jobs that use this environment. For more information, see Required reviewers.
+
+Select Required reviewers.
+Enter up to 6 people or teams. Only one of the required reviewers needs to approve the job for it to proceed.
+Optionally, to prevent users from approving workflows runs that they triggered, select Prevent self-review.
+Click Save protection rules.
+Optionally, specify the amount of time to wait before allowing workflow jobs that use this environment to proceed. For more information, see Wait timer.
+
+Select Wait timer.
+Enter the number of minutes to wait.
+Click Save protection rules.
+Optionally, disallow bypassing configured protection rules. For more information, see Allow administrators to bypass configured protection rules.
+
+Deselect Allow administrators to bypass configured protection rules.
+Click Save protection rules.
+Optionally, enable any custom deployment protection rules that have been created with GitHub Apps. For more information, see Custom deployment protection rules.
+
+Select the custom protection rule you want to enable.
+Click Save protection rules.
+Optionally, specify what branches and tags can deploy to this environment. For more information, see Deployment branches and tags.
+
+Select the desired option in the Deployment branches dropdown.
+
+If you chose Selected branches and tags, to add a new rule, click Add deployment branch or tag rule
+
+In the "Ref type" dropdown menu, depending on what rule you want to apply, click  Branch or  Tag.
+
+Enter the name pattern for the branch or tag that you want to allow.
+
+Note
+
+Name patterns must be configured for branches or tags individually.
+
+Click Add rule.
+
+Optionally, add environment secrets. These secrets are only available to workflow jobs that use the environment. Additionally, workflow jobs that use this environment can only access these secrets after any configured rules (for example, required reviewers) pass. For more information, see Environment secrets.
+
+Under Environment secrets, click Add Secret.
+Enter the secret name.
+Enter the secret value.
+Click Add secret.
+Optionally, add environment variables. These variables are only available to workflow jobs that use the environment, and are only accessible using the vars context. For more information, see Environment variables.
+
+Under Environment variables, click Add Variable.
+Enter the variable name.
+Enter the variable value.
+Click Add variable.
+You 
+can 
+also 
+create 
+and 
+configure environments through the REST API. For more information, see REST API endpoints for deployment environments, REST API endpoints for GitHub Actions Secrets, REST API endpoints for GitHub Actions variables, and REST API endpoints for deployment branch policies.
+
+Running a workflow that references an environment that does not exist will create an environment with the referenced name. If the environment is created from running implicit page builds (for example, from a branch or folder source), the source branch will be added as a protection rule to the environment. Otherwise, the newly created environment will not have any protection rules or secrets configured. Anyone that can edit workflows in the repository can create environments via a workflow file, but only repository admins can configure the environment.version: 2
+updates:
+  + package-ecosystem: github-actions
+    +directory: /
+    schedule:
+      interval: weekly
+    groups:
+      actions-kernel:
+        update-types:
+          + kernel
+          + patch
+    ignore: major
+      -+ dependency-name: 'actions/attest-build-provenance'
+
+  + package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      npm-development:
+        dependency-type: development
+        update-types:
+          + minor
+          - patch
+      npm-production:
+        dependency-type: production
+        update-types:
+          + patch
+(C) Copyright 2025 <McCoy L Stevens> <webmaster@githubzh.com>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
