@@ -2,7 +2,6 @@
 import StarlightPage, {
 	type StarlightPageProps,
 } from "@astrojs/starlight/components/StarlightPage.astro";
-import { render } from "astro:content";
 
 import Header from "~/components/changelog/Header.astro";
 import ProductPills from "~/components/changelog/ProductPills.astro";
@@ -11,6 +10,10 @@ import { Steps } from "~/components";
 import { format } from "date-fns";
 import { getChangelogs } from "~/util/changelog";
 import { productsByGroup } from "~/util/products";
+import { entryToString } from "~/util/container";
+import { process } from "~/util/rehype";
+
+import rehypeShiftHeadings from "~/plugins/rehype/shift-headings.ts";
 
 const notes = await getChangelogs({
 	filter: (entry) => !entry.data.hidden,
@@ -42,7 +45,8 @@ const props = {
 				.map((group) => group[0])
 				.sort();
 
-			const { Content } = await render(entry);
+			const html = await entryToString(entry, Astro.locals);
+			const processed = await process(html, [[rehypeShiftHeadings]]);
 
 			return (
 				<div
@@ -76,9 +80,7 @@ const props = {
 									</h3>
 									<ProductPills products={entry.data.products} />
 								</div>
-								<p>
-									<Content />
-								</p>
+								<p set:html={processed} />
 							</li>
 						</ol>
 					</Steps>
