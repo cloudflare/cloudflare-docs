@@ -1,0 +1,34 @@
+---
+title: Pre-search metadata filtering and multitenancy support in AutoRAG
+description: Add metadata filters to AutoRAG queries to enable multitenancy and control the scope of retrieved results.
+products:
+  - autorag
+date: 2025-04-22T6:00:00Z
+---
+
+You can now filter AutoRAG search results by `folder` and `modified_date` using metadata filters to narrow down the scope of your query.
+
+This makes it easy to build [multitenant experiences](/autorag/how-to/multitenancy/) where each user can only access their own data. By organizing your content into per-tenant folders and applying a `folder` filter at query time, you ensure that each tenant retrieves only their own documents.
+
+**Example folder structure:**
+
+```bash
+customer-a/logs/
+customer-a/contracts/
+customer-b/contracts/
+```
+
+**Example query:**
+
+```js
+const response = await env.AI.autorag("my-autorag").search({
+	query: "When did I sign my agreement contract?",
+	filters: {
+		type: "eq",
+		key: "folder",
+		value: "customer-a/contracts/",
+	},
+});
+```
+
+You can also combine filters to further narrow results before retrieval. Learn more in [metadata filtering](/autorag/configuration/metadata-filtering/).
