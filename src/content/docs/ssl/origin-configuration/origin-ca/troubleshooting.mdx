@@ -44,15 +44,20 @@ Use the following link to download an RSA version of the root certificate and up
 
 * [Cloudflare Origin RSA PEM](/ssl/static/origin_ca_rsa_root.pem)
 
-## Error message `Failed to validate requested hostname <hostname>: This zone is either not part of your account, or you do not have access to it`
+## This zone is either not part of your account, or you do not have access to it
+
+When trying to generate an Origin CA on the dashboard, you find the error `Failed to validate requested hostname <hostname>: This zone is either not part of your account, or you do not have access to it`.
 
 ### Cause
-This is a known issue where whilst being created on the Cloudflare Dashboard, Origin CA requires API access for the user creating the origin certificate. 
-If  API Access is disabled for the account, this error is returned.
+This is a known issue where, whilst being created on the Cloudflare dashboard, Origin CA requires API access for the user creating the origin certificate.
+If the user does not have **API Access**, this error is returned.
 
 ### Solution
-Please make sure that user creating the certificate has access to the API.
-You can check under Account Home > Manage Account > Members: toggle `Enable API Access` to On.
+Make sure that the user creating the certificate has access to the API. You can check under **Account Home** > **Manage Account** > **Members**:
+
+- The default setting for the account is specified in the card **Enable API Access**.
+- Specific user API Access (which can override the default setting) is presented after selecting the user in the list of members.
+
 
 ## Origin Server page is showing Origin CA from another zone from the account
 
