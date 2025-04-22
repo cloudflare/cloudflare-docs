@@ -5,6 +5,13 @@ productLink: "/ai-gateway/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+ - publish_date: "2025-04-22"
+    title: Streaming WebSocket Bug Fix
+    description: |-
+      Resolved an issue affecting streaming responses over [WebSockets](/ai-gateway/configuration/websockets-api/). This fix ensures more reliable and consistent streaming behavior across all supported AI providers.
+  title: Increased Timeout Limits
+    description: |-
+      Extended the default timeout for AI Gateway requests beyond the previous 100-second limit. This enhancement improves support for long-running requests.
   - publish_date: "2025-04-02"
     title: Cache Key Calculation Changes
     description: |-
