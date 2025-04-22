@@ -22,13 +22,13 @@ The user can access the application for the entire duration of the application t
 
 The global token expiration is usually set to equal or exceed the application token expiration. Setting a longer global token provides a more secure way to allow for longer user sessions, since the global token cannot be used to directly access an application.
 
-As an analogy, you can think of the global session like a festival where you buy a ticket to enter for the day. For certain rides or areas, the staff may periodically check your ticket to make sure you are authorized to enter. For example, the backstage area may allow ticket holders to go on a 30 min tour, after which you need to sign up for another tour. This is analogous to the app session. Now imagine a special policy exists where VIP ticket holders can go backstage for as long as they want. The VIPs have a policy session duration which overrides the default 30 min value.
+As an analogy, you can think of the global session like a festival where you buy a ticket to enter for the day. For certain rides or areas, the staff may periodically check your ticket to make sure you are authorized to enter. For example, the backstage area may allow ticket holders to go on a 30 minutes tour, after which you need to sign up for another tour. This is analogous to the app session. Now imagine a special policy exists where VIP ticket holders can go backstage for as long as they want. The VIPs have a policy session duration which overrides the default 30 minutes value.
 
 <Render file="access/one-time-pin-warning" />
 
 ### Global session duration
 
-The global session duration determines how often Cloudflare Access prompts the user to log in to their identity provider. You can set a global session duration between 15 minutes and 1 month. The default value is 24 hours.
+The global session duration determines how often Cloudflare Access prompts the user to log in to their identity provider. You can set a global session duration between 15 minutes and one month. The default value is 24 hours.
 
 To set the global session duration:
 
@@ -43,7 +43,7 @@ The user will be required to re-authenticate with the IdP after this period of t
 
 The policy session duration determines how long the user can access a self-hosted Access application. When the user's session expires, Access rechecks their stored user identity against the application's Access policies.
 
-By default, the policy session duration is equal to the [application session duration](#set-application-session-duration). To configure more granular permissions for specific users, you can change the policy session duration to a value ranging from immediate timeout to one month. For example, you may wish to set the application session duration to 7 days for engineers, but set a policy session duration to 24 hours for contractors.
+By default, the policy session duration is equal to the [application session duration](#set-application-session-duration). To configure more granular permissions for specific users, you can change the policy session duration to a value ranging from immediate timeout to one month. For example, you may wish to set the application session duration to seven days for engineers, but set a policy session duration to 24 hours for contractors.
 
 To set the policy session duration:
 
@@ -56,7 +56,7 @@ Users who match this policy will be issued an application token with this expira
 
 ### Application session duration
 
-The application session duration is the default [policy session duration](#policy-session-duration) for all policies in an Access application. Available session durations range from immediate timeout to 1 month. The default value is 24 hours.
+The application session duration is the default [policy session duration](#policy-session-duration) for all policies in an Access application. Available session durations range from immediate timeout to one month. The default value is 24 hours.
 
 To set the application session duration:
 
