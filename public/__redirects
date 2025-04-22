@@ -177,6 +177,9 @@
 # api-shield
 /api-shield/security/sequential-abuse-detection/ /api-shield/security/sequence-analytics/ 301
 
+#autorag
+/autorag/usage/recipes/ /autorag/how-to/
+
 # bots
 /bots/about/plans/ /bots/plans/ 301
 /bots/about/plans/biz-and-ent/ /bots/plans/biz-and-ent/ 301
