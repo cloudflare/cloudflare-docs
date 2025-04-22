@@ -59,7 +59,7 @@ If none of the above scenarios apply, contact Cloudflare support with the follow
 - URL of the request
 - Screenshot or copy/paste of the content from the error page
 
-For more troubleshooting information, refer to [Support](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-526-invalid-ssl-certificate).
+For more troubleshooting information, refer to [Support](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/#error-526-invalid-ssl-certificate).
 
 ## I see an error in the Gateway Overview page, and no analytics are displayed.
 
@@ -335,3 +335,9 @@ To resolve this error, review the following options:
 | `0` (disabled)     | **Enabled / Default**                                     | ❌ Blank screen                              |
 | `0` (disabled)     | **Disabled**                                              | ✅ Works - browser will use local IP address |
 | `2` (enabled)      | **Enabled / Default**                                     | ✅ Works - mDNS resolves successfully        |
+
+## After putting Google Workspace behind Access, I can’t log in. It keeps redirecting between Access and Google without ever completing authentication.
+
+When you put your Google Workspace behind Access, users will not be able to log in using Google or Google Workspace as an identity provider.
+
+This configuration creates an authentication loop. Cloudflare Access tries to authenticate the user via Google, but Google itself treats Cloudflare as its identity provider and requires authentication from Cloudflare. Since each system depends on the other to complete login first, the user is caught in an infinite redirect cycle and can never successfully authenticate.

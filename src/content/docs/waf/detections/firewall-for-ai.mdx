@@ -26,9 +26,14 @@ Firewall for AI is available in closed beta to Enterprise customers proxying tra
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
+:::note
+Firewall for AI is only available in the new [application security dashboard](/security/), currently in beta for users that opt in to the new user interface.
+:::
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **Settings**.
-3. Under **Incoming traffic detections**, turn on **Firewall for AI**.
+3. Under **Web application exploits**, select **Manage detections**.
+4. In **Firewall for AI**, select **Enable**.
 
 </TabItem> <TabItem label="API">
 
@@ -55,7 +60,7 @@ curl "https://<YOUR_HOSTNAME>/api/v1/" \
 
 The PII category for this request would be `EMAIL_ADDRESS`.
 
-Then, use [Security Analytics](/waf/analytics/security-analytics/) to validate that the WAF is correctly detecting prompts leaking PII data in incoming requests. Filter data by the `cf-llm` managed endpoint label and review the detection results on your traffic.
+Then, use [Security Analytics](/waf/analytics/security-analytics/) in the new application security dashboard to validate that the WAF is correctly detecting prompts leaking PII data in incoming requests. Filter data by the `cf-llm` managed endpoint label and review the detection results on your traffic.
 
 Alternatively, create a WAF custom rule like the one described in the next step using a _Log_ action. This rule will generate [security events](/waf/analytics/security-events/) that will allow you to validate your configuration.
 

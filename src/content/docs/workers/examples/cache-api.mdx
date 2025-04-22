@@ -132,4 +132,29 @@ async def on_fetch(request, _env, ctx):
     return response
 ```
 
+</TabItem> <TabItem label="Hono" icon="seti:typescript">
+
+```ts
+import { Hono } from "hono";
+import { cache } from "hono/cache";
+
+const app = new Hono();
+
+// We leverage hono built-in cache helper here
+app.get(
+	"*",
+	cache({
+		cacheName: "my-cache",
+		cacheControl: "max-age=3600", // 1 hour
+	}),
+);
+
+// Add a route to handle the request if it's not in cache
+app.get("*", (c) => {
+	return c.text("Hello from Hono!");
+});
+
+export default app;
+```
+
 </TabItem> </Tabs>

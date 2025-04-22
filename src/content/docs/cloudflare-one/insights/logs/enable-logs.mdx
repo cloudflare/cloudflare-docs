@@ -7,13 +7,21 @@ sidebar:
 
 Email Security allows you to configure Logpush to send detection data to an endpoint of your choice.
 
-## Prerequisites
-
-Before you can audit logs for Email Security, you will have to enable logpush jobs to your storage destination. Refer to [Enable destinations](/logs/get-started/enable-destinations/) to enable logs on destinations such as Cloudflare R2, HTTP, Amazon S3, and more.
-
 ## Enable detection logs
 
-Once you have configured your destination, you can set up audit logs for detections:
+Detection logs generate logs made by Email Security and some of the metadata associated with the detection.
+
+To enable detection logs, refer to [Enable destinations](/logs/get-started/enable-destinations/).
+
+If you enable detection logs using [R2](/r2/), choose **Email security alerts** when configuring the **Dataset**.
+
+## Enable user action logs
+
+User action logs allow you to view logs regarding all actions taken via the [API](/api/resources/email_security/) or the dashboard.
+
+Before you can enable audit logs for Email Security, you will have to enable logpush jobs to your storage destination. Refer to [Enable destinations](/logs/get-started/enable-destinations/) to enable logs on destinations such as Cloudflare R2, HTTP, Amazon S3, and more.
+
+Once you have configured your destination, you can set up audit logs for user action:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
 2. Select **Analytics & Logs** > **Logpush**.

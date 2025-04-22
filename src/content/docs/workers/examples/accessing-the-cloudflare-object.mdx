@@ -56,6 +56,30 @@ export default {
 } satisfies ExportedHandler;
 ```
 
+</TabItem> <TabItem label="Hono" icon="seti:typescript">
+
+```ts
+import { Hono } from "hono";
+
+const app = new Hono();
+
+app.get("*", async (c) => {
+	// Access the raw request to get the cf object
+	const req = c.req.raw;
+
+	// Check if the cf object is available
+	const data =
+		req.cf !== undefined
+			? req.cf
+			: { error: "The `cf` object is not available inside the preview." };
+
+	// Return the data formatted with 2-space indentation
+	return c.json(data);
+});
+
+export default app;
+```
+
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py

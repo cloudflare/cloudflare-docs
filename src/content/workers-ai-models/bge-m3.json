@@ -12,6 +12,10 @@
     "tags": [],
     "properties": [
         {
+            "property_id": "async_queue",
+            "value": "true"
+        },
+        {
             "property_id": "price",
             "value": [
                 {
@@ -88,6 +92,86 @@
                     },
                     "required": [
                         "text"
+                    ]
+                },
+                {
+                    "properties": {
+                        "requests": {
+                            "type": "array",
+                            "description": "Batch of the embeddings requests to run using async-queue",
+                            "items": {
+                                "type": "object",
+                                "oneOf": [
+                                    {
+                                        "title": "BGE M3 Input Query and Contexts",
+                                        "properties": {
+                                            "query": {
+                                                "type": "string",
+                                                "minLength": 1,
+                                                "description": "A query you wish to perform against the provided contexts. If no query is provided the model with respond with embeddings for contexts"
+                                            },
+                                            "contexts": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "text": {
+                                                            "type": "string",
+                                                            "minLength": 1,
+                                                            "description": "One of the provided context content"
+                                                        }
+                                                    }
+                                                },
+                                                "description": "List of provided contexts. Note that the index in this array is important, as the response will refer to it."
+                                            },
+                                            "truncate_inputs": {
+                                                "type": "boolean",
+                                                "default": false,
+                                                "description": "When provided with too long context should the model error out or truncate the context to fit?"
+                                            }
+                                        },
+                                        "required": [
+                                            "contexts"
+                                        ]
+                                    },
+                                    {
+                                        "title": "BGE M3 Input Embedding",
+                                        "properties": {
+                                            "text": {
+                                                "oneOf": [
+                                                    {
+                                                        "type": "string",
+                                                        "description": "The text to embed",
+                                                        "minLength": 1
+                                                    },
+                                                    {
+                                                        "type": "array",
+                                                        "description": "Batch of text values to embed",
+                                                        "items": {
+                                                            "type": "string",
+                                                            "description": "The text to embed",
+                                                            "minLength": 1
+                                                        },
+                                                        "maxItems": 100
+                                                    }
+                                                ]
+                                            },
+                                            "truncate_inputs": {
+                                                "type": "boolean",
+                                                "default": false,
+                                                "description": "When provided with too long context should the model error out or truncate the context to fit?"
+                                            }
+                                        },
+                                        "required": [
+                                            "text"
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "required": [
+                        "requests"
                     ]
                 }
             ]
@@ -172,6 +256,17 @@
                                 "cls"
                             ],
                             "description": "The pooling method used in the embedding process."
+                        }
+                    }
+                },
+                {
+                    "type": "object",
+                    "contentType": "application/json",
+                    "title": "Async response",
+                    "properties": {
+                        "request_id": {
+                            "type": "string",
+                            "description": "The async request id that can be used to obtain the results."
                         }
                     }
                 }

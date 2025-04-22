@@ -5,6 +5,15 @@ productLink: "/pages/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-04-18"
+    title: Action recommended - Node.js 18 end-of-life and impact on Pages Build System V2
+    description: |-
+      - If you are using [Pages Build System V2](/pages/configuration/build-image/) for a Git-connected Pages project, note that the default Node.js version, **Node.js 18**, will end its LTS support on **April 30, 2025**.
+      - Pages will not change the default Node.js version in the Build System V2 at this time, instead, we **strongly recommend pinning a modern Node.js version** to ensure your builds are consistent and secure.
+      - You can [pin any Node.js version](/pages/configuration/build-image/#override-default-versions) by:
+        1. Adding a `NODE_VERSION` environment variable with the desired version specified as the value.
+        2. Adding a `.node-version` file with the desired version specified in the file.
+      - Pinning helps avoid unexpected behavior and ensures your builds stay up-to-date with your chosen runtime. We also recommend pinning all critical tools and languages that your project relies on.
   - publish_date: "2025-02-26"
     title: Support for pnpm 10 in build system
     description: |-

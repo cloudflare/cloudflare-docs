@@ -169,3 +169,17 @@ For remotely-managed tunnels only.
 | `cloudflared tunnel run --token <TUNNEL_TOKEN>` | `TUNNEL_TOKEN`       |
 
 Associates the `cloudflared` instance with a specific tunnel. The tunnel's token is shown in the dashboard when you first [create the tunnel](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/). You can also retrieve the token using the [API](/api/resources/zero_trust/subresources/tunnels/subresources/token/methods/get/).
+
+
+## `token-file`
+
+:::note
+
+For remotely-managed tunnels only. Requires `2025.4.0` or later.
+:::
+
+| Syntax                                          | Environment Variable |
+| ----------------------------------------------- | -------------------- |
+| `cloudflared tunnel run --token-file <PATH>`    | `TUNNEL_TOKEN_FILE`  |
+
+Associates the `cloudflared` instance with a specific tunnel using a file which contains the token.

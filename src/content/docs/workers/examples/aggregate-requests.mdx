@@ -58,6 +58,32 @@ export default {
 } satisfies ExportedHandler;
 ```
 
+</TabItem> <TabItem label="Hono" icon="seti:typescript">
+
+```ts
+import { Hono } from "hono";
+
+const app = new Hono();
+
+app.get("*", async (c) => {
+	// someHost is set up to return JSON responses
+	const someHost = "https://jsonplaceholder.typicode.com";
+	const url1 = someHost + "/todos/1";
+	const url2 = someHost + "/todos/2";
+
+	// Fetch both URLs concurrently
+	const responses = await Promise.all([fetch(url1), fetch(url2)]);
+
+	// Parse JSON responses concurrently
+	const results = await Promise.all(responses.map((r) => r.json()));
+
+	// Return aggregated results
+	return c.json(results);
+});
+
+export default app;
+```
+
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py

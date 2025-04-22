@@ -320,6 +320,25 @@ async fn fetch(req: Request, _env: Env, _ctx: Context) -> Result<Response> {
     Ok(Response::from_body(res.body().clone())?
         .with_headers(new_headers)
         .with_status(res.status_code()))
+
 }
-```
+
+````
+</TabItem> <TabItem label="Hono" icon="seti:typescript">
+
+```ts
+import { Hono } from 'hono';
+import { secureHeaders } from 'hono/secure-headers';
+
+const app = new Hono();
+app.use(secureHeaders());
+
+// Handle all other requests by passing through to origin
+app.all('*', async (c) => {
+  return fetch(c.req.raw);
+});
+
+export default app;
+````
+
 </TabItem> </Tabs>

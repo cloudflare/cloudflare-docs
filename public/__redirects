@@ -450,7 +450,7 @@
 /cloudflare-one/email-security/directories/manage-ms-directories/ /cloudflare-one/email-security/directories/manage-integrated-directories/ 301
 /cloudflare-one/email-security/directories/manage-ms-directories/manage-groups-directory/ /cloudflare-one/email-security/directories/manage-integrated-directories/manage-groups-directory/ 301
 /cloudflare-one/email-security/directories/manage-ms-directories/manage-users-directory/ /cloudflare-one/email-security/directories/manage-integrated-directories/manage-users-directory/ 301
-
+/cloudflare-one/email-security/setup/partner-domain-tls/ /cloudflare-one/email-security/setup/pre-delivery-deployment/partner-domain-tls/ 301
 
 # firewall
 /firewall/api/cf-lists/ /waf/tools/lists/lists-api/ 301
@@ -716,7 +716,10 @@
 /learning-paths/cybersafe/concepts/what-is-area1/ /learning-paths/cybersafe/concepts/what-is-email-security/ 301
 /learning-paths/cybersafe/area1-onboarding/ /learning-paths/cybersafe/email-security-onboarding/ 301
 
-
+## zero-trust-web access / clientless-access
+/learning-paths/zero-trust-web-access/concepts/reverse-proxy-server/ https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/ 301
+/zero-trust-web-access/concepts/zero-trust/ https://www.cloudflare.com/learning/security/glossary/what-is-zero-trust/ 301
+/learning-paths/zero-trust-web-access/concepts/zero-trust-web-access/ /learning-paths/clientless-access/concepts/what-is-clientless-access/ 301
 
 ## dns-filtering / secure-internet-traffic
 /learning-paths/dns-filtering/ /learning-paths/secure-internet-traffic/ 301
@@ -743,7 +746,7 @@
 /learning-paths/secure-internet-traffic/ /learning-paths/secure-internet-traffic/concepts/ 301
 /learning-paths/secure-o365-email/ /learning-paths/secure-o365-email/concepts/ 301
 /learning-paths/workers/ /learning-paths/workers/concepts/ 301
-/learning-paths/zero-trust-web-access/ /learning-paths/zero-trust-web-access/concepts/ 301
+/learning-paths/clientless-access/ /learning-paths/clientless-access/concepts/ 301
 /learning-paths/application-security/default-traffic-security/security-level/ /learning-paths/application-security/default-traffic-security/browser-integrity/ 301
 
 # more redirects in the /dynamic/ section
@@ -801,7 +804,7 @@
 # magic-transit
 /magic-transit/magic-firewall/ /magic-firewall/ 301
 /magic-transit/set-up/onboarding/ /magic-transit/get-started/ 301
-/magic-transit/set-up/provide-configuration-data/assign-tunnel-route-priorities/ /magic-transit/how-to/configure-static-routes/ 301
+/magic-transit/set-up/provide-configuration-data/assign-tunnel-route-priorities/ /magic-transit/how-to/configure-routes/ 301
 /magic-transit/set-up/requirements/ /magic-transit/get-started/ 301
 /magic-transit/get-started/configure-tunnels/specify-gre-tunnel-endpoints/ /magic-transit/how-to/configure-tunnels/ 301
 /magic-transit/about/health-checks/ /magic-transit/reference/tunnel-health-checks/ 301
@@ -811,6 +814,8 @@
 /magic-transit/prerequisites/ /magic-transit/get-started/ 301
 /magic-transit/how-to/ /magic-transit/how-to/configure-tunnels/ 301
 /magic-transit/reference/ /magic-transit/reference/anti-replay-protection/ 301
+/magic-transit/how-to/configure-static-routes/ /magic-transit/how-to/configure-routes/ 301
+/magic-transit/how-to/bgp-peering/ /magic-transit/how-to/configure-routes/ 301
 
 # magic-wan
 /magic-wan/tutorials/ipsec/ /magic-wan/reference/tunnels/#ipsec-tunnels 301
@@ -834,6 +839,8 @@
 /magic-wan/configuration/common-settings/view-analytics/ /magic-wan/analytics/ 301
 /magic-wan/prerequisites/ /magic-wan/get-started/ 301
 /magic-wan/configuration/common-settings/check-tunnel-health-dashboard/ /magic-wan/configuration/common-settings/tunnel-health-checks/ 301
+/magic-wan/configuration/manually/how-to/configure-static-routes/ /magic-wan/configuration/manually/how-to/configure-routes/ 301
+/magic-wan/configuration/manually/how-to/bgp-peering/ /magic-wan/configuration/manually/how-to/configure-routes/ 301
 
 # notifications
 /fundamentals/notifications/ /notifications/ 301
@@ -995,6 +1002,7 @@
 /rules/transform/manage/ /rules/transform/ 301
 /rules/page-rules/how-to/rewrite-host-headers/ /rules/origin-rules/examples/change-uri-path-and-host-header/ 301
 /rules/page-rules/how-to/override-url-or-ip-address/ /rules/origin-rules/features/ 301
+/rules/origin-rules/examples/change-uri-path-and-host-header/ /rules/origin-rules/tutorials/change-uri-path-and-host-header/ 301
 
 # ruleset engine
 /ruleset-engine/rules-language/fields/standard-fields/ /ruleset-engine/rules-language/fields/reference/ 301
@@ -1212,6 +1220,10 @@
 /support/partners/ /support/ 301
 /support/partners/reduce-data-transfer-egress-costs-between-azure-and-cloudflare/ /support/third-party-software/others/reduce-data-transfer-egress-costs-between-azure-and-cloudflare/ 301
 /support/more-dashboard-apps/cloudflare-stream/ /support/more-dashboard-apps/ 301
+/support/troubleshooting/cloudflare-errors/ /support/troubleshooting/http-status-codes/ 301
+/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-10xxx-errors/ /support/troubleshooting/http-status-codes/cloudflare-10xxx-errors/ 301
+/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/ /support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/ 301
+/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/ /support/troubleshooting/http-status-codes/cloudflare-5xx-errors/ 301
 
 # r2
 /r2/platform/s3-compatibility/api/ /r2/api/s3/api/ 301
@@ -1279,6 +1291,7 @@
 /turnstile/migration/migrating-from-hcaptcha/ /turnstile/migration/hcaptcha/ 301
 /turnstile/concepts/widget-types/ /turnstile/concepts/widget/ 301
 /turnstile/concepts/domain-management/ /turnstile/concepts/hostname-management/ 301
+/turnstile/troubleshooting/challenge-solve-issues/ /fundamentals/security/cloudflare-challenges/challenge-solve-issues/ 301
 
 # waf
 /waf/about/ /waf/concepts/ 301
@@ -1540,6 +1553,12 @@
 /workers/tutorials/generate-dynamic-og-images-using-workers/ /workers/tutorials/ 302
 /workers/static-assets/compatibility-matrix/ /workers/static-assets/migrate-from-pages/ 301
 /workers/frameworks/framework-guides/remix/ /workers/frameworks/framework-guides/react-router/ 301
+/workers/testing/unit-testing/ /workers/testing/vitest-integration/write-your-first-test/ 301
+/workers/testing/integration-testing/ /workers/testing/ 301
+/workers/testing/vitest-integration/get-started/ /workers/testing/vitest-integration/write-your-first-test/ 301
+/workers/testing/vitest-integration/get-started/migrate-from-miniflare-2/ /workers/testing/vitest-integration/migration-guides/migrate-from-miniflare-2/ 301
+/workers/testing/vitest-integration/get-started/migrate-from-unstable-dev/ /workers/testing/vitest-integration/migration-guides/migrate-from-unstable-dev/ 301
+/workers/testing/vitest-integration/get-started/write-your-first-test/ /workers/testing/vitest-integration/write-your-first-test/ 301
 
 # workers ai
 /workers-ai/models/llm/ /workers-ai/models/#text-generation 301
@@ -1592,9 +1611,13 @@
 # Guides section
 /workers-ai/demos/ /workers-ai/guides/demos-architectures/ 301
 
+# Features section
+/workers-ai/markdown-conversion/ /workers-ai/features/markdown-conversion/ 301
+
 # workflows
 
 /workflows/reference/storage-options/ /workers/platform/storage-options/ 301
+
 
 # workers KV
 /kv/platform/environments/ /kv/reference/environments/ 301
@@ -1728,6 +1751,7 @@
 /cloudflare-one/connections/connect-networks/install-and-setup/tunnel-permissions/ /cloudflare-one/connections/connect-networks/configure-tunnels/local-management/tunnel-permissions/ 301
 /cloudflare-one/connections/connect-networks/install-and-setup/ports-and-ips/ /cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-with-firewall/ 301
 /cloudflare-one/connections/connect-networks/install-and-setup/tunnel-useful-terms/ /cloudflare-one/connections/connect-networks/get-started/tunnel-useful-terms/ 301
+/cloudflare-one/connections/connect-networks/install-and-setup/installation/ /cloudflare-one/connections/connect-networks/downloads/update-cloudflared/ 301
 /cloudflare-one/connections/connect-networks/do-more-with-tunnels/secure-server/ /cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-with-firewall/ 301
 /cloudflare-one/connections/connect-networks/do-more-with-tunnels/grafana/ /cloudflare-one/connections/connect-networks/monitor-tunnels/grafana/ 301
 /cloudflare-one/connections/connect-networks/downloads/system-requirements/ /cloudflare-one/connections/connect-networks/deploy-tunnels/system-requirements/ 301
@@ -1910,6 +1934,8 @@
 /learning-paths/dns-filtering/create-policy/* /learning-paths/secure-internet-traffic/build-dns-policies/:splat 301
 ## Secure your Internet Traffic
 /learning-paths/secure-internet-traffic/connect-devices/* /learning-paths/secure-internet-traffic/connect-devices-networks/:splat 301
+## Zero Trust Web Access --> Clientless Access
+/learning-paths/zero-trust-web-access/* /learning-paths/clientless-access/:splat 301
 
 # Cloudflare for SaaS
 /ssl/ssl-for-saas/common-tasks/* /cloudflare-for-platforms/cloudflare-for-saas/ 301

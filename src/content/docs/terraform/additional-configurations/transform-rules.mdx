@@ -13,9 +13,9 @@ import { Render } from "~/components";
 
 This page provides examples of creating [Transform Rules](/rules/transform/) in a zone using Terraform. The examples cover the following scenarios:
 
-- [Create a Rewrite URL Rule](#create-a-rewrite-url-rule)
-- [Create an HTTP Request Header Modification Rule](#create-an-http-request-header-modification-rule)
-- [Create an HTTP Response Header Modification Rule](#create-an-http-response-header-modification-rule)
+- [Create a URL rewrite rule](#create-a-url-rewrite-rule)
+- [Create a request header transform rule](#create-a-request-header-transform-rule)
+- [Create a response header transform rule](#create-a-response-header-transform-rule)
 
 ## Before you start
 
@@ -29,9 +29,9 @@ This page provides examples of creating [Transform Rules](/rules/transform/) in 
 
 ---
 
-## Create a Rewrite URL Rule
+## Create a URL rewrite rule
 
-The following example creates a Rewrite URL Rule that rewrites requests for `example.com/old-folder` to `example.com/new-folder`:
+The following example creates a URL rewrite rule that rewrites requests for `example.com/old-folder` to `example.com/new-folder`:
 
 <Render file="v4-code-snippets" />
 
@@ -45,7 +45,7 @@ resource "cloudflare_ruleset" "transform_url_rewrite" {
 
   rules {
     ref         = "url_rewrite_old_folder"
-    description = "Example Rewrite URL Rule"
+    description = "Example URL rewrite rule"
     expression  = "(http.host eq \"example.com\" and http.request.uri.path eq \"/old-folder\")"
     action      = "rewrite"
     action_parameters {
@@ -59,11 +59,11 @@ resource "cloudflare_ruleset" "transform_url_rewrite" {
 }
 ```
 
-<Render file="add-new-rule" params={{ one: "Rewrite URL Rule" }} /> <br />
+<Render file="add-new-rule" params={{ ruleType: "URL rewrite rule" }} /> <br />
 
-For more information on rewriting URLs, refer to [Rewrite URL Rules](/rules/transform/url-rewrite/).
+For more information on rewriting URLs, refer to [URL Rewrite Rules](/rules/transform/url-rewrite/).
 
-## Create an HTTP Request Header Modification Rule
+## Create a request header transform rule
 
 The following configuration example performs the following adjustments to HTTP request headers:
 
@@ -83,7 +83,7 @@ resource "cloudflare_ruleset" "transform_modify_request_headers" {
 
   rules {
     ref         = "modify_request_headers"
-    description = "Example HTTP Request Header Modification Rule"
+    description = "Example request header transform rule"
     expression  = "true"
     action      = "rewrite"
     action_parameters {
@@ -108,12 +108,13 @@ resource "cloudflare_ruleset" "transform_modify_request_headers" {
 
 <Render
 	file="add-new-rule"
-	params={{ one: "Request Header Modification Rule" }}
-/> <br />
+	params={{ ruleType: "request header transform rule" }}
+/>
+<br />
 
-For more information on modifying request headers, refer to [HTTP Request Header Modification Rules](/rules/transform/request-header-modification/).
+For more information on modifying request headers, refer to [Request Header Transform Rules](/rules/transform/request-header-modification/).
 
-## Create an HTTP Response Header Modification Rule
+## Create a response header transform rule
 
 The following configuration example performs the following adjustments to HTTP response headers:
 
@@ -133,7 +134,7 @@ resource "cloudflare_ruleset" "transform_modify_response_headers" {
 
   rules {
     ref         = "modify_response_headers"
-    description = "Example HTTP Response Header Modification Rule"
+    description = "Example response header transform rule"
     expression  = "true"
     action      = "rewrite"
     action_parameters {
@@ -158,7 +159,8 @@ resource "cloudflare_ruleset" "transform_modify_response_headers" {
 
 <Render
 	file="add-new-rule"
-	params={{ one: "Response Header Modification Rule" }}
-/> <br />
+	params={{ ruleType: "response header transform rule" }}
+/>
+<br />
 
-For more information on modifying response headers, refer to [HTTP Response Header Modification Rules](/rules/transform/response-header-modification/).
+For more information on modifying response headers, refer to [Response Header Transform Rules](/rules/transform/response-header-modification/).

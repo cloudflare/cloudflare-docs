@@ -16,7 +16,7 @@ import {
 
 The Durable Object Storage API allows <GlossaryTooltip term="Durable Object">Durable Objects</GlossaryTooltip> to access transactional and strongly consistent storage. A Durable Object's attached storage is private to its unique instance and cannot be accessed by other objects.
 
-The Durable Object Storage API comes with several methods, including SQL, point-in-time recovery (PITR), key-value (KV), and alarm APIs. Available API methods depend on the storage backend for a Durable Objects class, either [SQLite](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class) or [KV](/durable-objects/reference/durable-objects-migrations/#create-durable-object-class-with-key-value-storage). 
+The Durable Object Storage API comes with several methods, including SQL, point-in-time recovery (PITR), key-value (KV), and alarm APIs. Available API methods depend on the storage backend for a Durable Objects class, either [SQLite](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class) or [KV](/durable-objects/reference/durable-objects-migrations/#create-durable-object-class-with-key-value-storage).
 
 :::note[Recommended SQLite-backed Durable Objects]
 Cloudflare recommends all new Durable Object classes use the [SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class).
@@ -143,12 +143,13 @@ console.log(cursor.toArray()); // prints [{ artistid: 456, artistname: 'Bob' },{
 
 `SqlStorageCursor` has the following properties:
 
-* `columnNames`: <Type text='string[]' />
-  * The column names of the query in the order they appear in each row array returned by the `raw` iterator.
-*  `rowsRead`: <Type text='number' />
-  * The number of rows read so far as part of this SQL `query`. This may increase as you iterate the cursor. The final value is used for [SQL billing](/durable-objects/platform/pricing/#sqlite-storage-backend).
-*  `rowsWritten`: <Type text='number' />
-  * The number of rows written so far as part of this SQL `query`. This may increase as you iterate the cursor. The final value is used for [SQL billing](/durable-objects/platform/pricing/#sqlite-storage-backend).
+- `columnNames`: <Type text='string[]' />
+  - The column names of the query in the order they appear in each row array returned by the `raw` iterator.
+- `rowsRead`: <Type text='number' />
+  - The number of rows read so far as part of this SQL `query`. This may increase as you iterate the cursor. The final value is used for [SQL billing](/durable-objects/platform/pricing/#sqlite-storage-backend).
+- `rowsWritten`: <Type text='number' />
+  - The number of rows written so far as part of this SQL `query`. This may increase as you iterate the cursor. The final value is used for [SQL billing](/durable-objects/platform/pricing/#sqlite-storage-backend).
+- Any numeric value in a column is affected by JavaScript's 52-bit precision for numbers. If you store a very large number (in `int64`), then retrieve the same value, the returned value may be less precise than your original number.
 
 :::note[SQL transactions]
 Note that `sql.exec()` cannot execute transaction-related statements like `BEGIN TRANSACTION` or `SAVEPOINT`. Instead, use the [`ctx.storage.transaction()`](/durable-objects/api/storage-api/#transaction) or [`ctx.storage.transactionSync()`](/durable-objects/api/storage-api/#transactionsync) APIs to start a transaction, and then execute SQL queries in your callback.

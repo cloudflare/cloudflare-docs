@@ -7,7 +7,7 @@ head: []
 description: Cloudflare Workers plan and platform limits.
 ---
 
-import { Render } from "~/components";
+import { Render, WranglerConfig } from "~/components";
 
 ## Account plan limits
 
@@ -76,13 +76,37 @@ Cloudflare updates the Workers runtime a few times per week. When this happens, 
 
 ### CPU time
 
-CPU time is the amount of time the CPU actually spends doing work, during a given request. Most Workers requests consume less than a millisecond of CPU time. It is rare to find normally operating Workers that exceed the CPU time limit.
+CPU time is the amount of time the CPU actually spends doing work during a given request.
+If a Worker's request makes a sub-request and waits for that request to come back before
+doing additional work, this time spent waiting **is not** counted towards CPU time.
+
+**Most Workers requests consume less than 1-2 milliseconds of CPU time**, but you can increase the maximum CPU time from the default 30 seconds to 5 minutes (300,000 milliseconds) if you have CPU-bound tasks, such as large JSON payloads that need to be serialized, cryptographic key generation, or other data processing tasks.
 
 <Render file="isolate-cpu-flexibility" />
 
-Using DevTools locally can help identify CPU intensive portions of your code. See the [CPU profiling with DevTools documentation](/workers/observability/dev-tools/cpu-usage/) to learn more.
+To understand your CPU usage:
 
-You can also set a [custom limit](/workers/wrangler/configuration/#limits) on the amount of CPU time that can be used during each invocation of your Worker. To do so, navigate to the Workers section in the Cloudflare dashboard. Select the specific Worker you wish to modify, then click on the "Settings" tab where you can adjust the CPU time limit.
+- CPU time and Wall time are surfaced in the [invocation log](/workers/observability/logs/workers-logs/#invocation-logs) within Workers Logs.
+- For Tail Workers, CPU time and Wall time are surfaced at the top level of the [Workers Trace Events object](/logs/reference/log-fields/account/workers_trace_events/).
+- DevTools locally can help identify CPU intensive portions of your code. See the [CPU profiling with DevTools documentation](/workers/observability/dev-tools/cpu-usage/).
+
+You can also set a [custom limit](/workers/wrangler/configuration/#limits) on the amount of CPU time that can be used during each invocation of your Worker.
+
+<WranglerConfig>
+
+```jsonc
+{
+	// ...rest of your configuration...
+	"limits": {
+		"cpu_ms": 300000, // default is 30000 (30 seconds)
+	},
+	// ...rest of your configuration...
+}
+```
+
+</WranglerConfig>
+
+You can also customize this in the [Workers dashboard](https://dash.cloudflare.com/?to=/:account/workers). Select the specific Worker you wish to modify -> click on the "Settings" tab -> adjust the CPU time limit.
 
 :::note
 

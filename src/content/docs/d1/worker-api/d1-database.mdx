@@ -299,3 +299,11 @@ return { bookmark } = session.getBookmark();
 - <code>bookmark</code>: <Type text="String | null"/>
   - A [`bookmark`](/d1/reference/time-travel/#bookmarks) which identifies the latest version of the database seen by the last query executed within the Session.
   - Returns `null` if no query is executed within a Session.
+
+### `prepare()`
+
+This method is equivalent to [`D1Database::prepare`](/d1/worker-api/d1-database/#prepare).
+
+### `batch()`
+
+This method is equivalent to [`D1Database::batch`](/d1/worker-api/d1-database/#batch).

@@ -1,0 +1,39 @@
+---
+pcx_content_type: example
+summary: Create an origin rule to change the HTTP `Host` header.
+products:
+  - Origin Rules
+title: Change the HTTP Host header
+description: Create an origin rule to change the HTTP `Host` header.
+---
+
+import { Render, Tabs, TabItem, Example } from "~/components";
+
+The following origin rule overrides the HTTP `Host` header to `eu_server.example.net` for all requests containing `/eu/` in their URI path.
+
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Dashboard" no-code="true">
+
+<Example>
+
+Text in Expression Editor:
+
+```txt
+http.request.uri.path contains "/eu/"
+```
+
+Value after **Host Header** > **Rewrite to**:
+
+```txt
+eu_server.example.net
+```
+
+</Example>
+
+</TabItem>
+<TabItem label="API" no-code="true">
+
+<Render file="origin-rules-api-change-host-header" />
+
+</TabItem>
+</Tabs>

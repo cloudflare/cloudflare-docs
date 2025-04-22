@@ -1,0 +1,12 @@
+---
+{}
+---
+
+Use the `cloudflare_content_scanning_expression` resource to add a custom scan expression. For example:
+
+```terraform
+resource "cloudflare_content_scanning_expression" "my_custom_scan_expression" {
+  zone_id = <ZONE_ID>
+  payload = "lookup_json_string(http.request.body.raw, \"file\")"
+}
+```

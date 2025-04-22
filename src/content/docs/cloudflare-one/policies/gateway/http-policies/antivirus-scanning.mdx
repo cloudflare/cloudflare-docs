@@ -18,8 +18,17 @@ To turn on AV scanning:
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
 2. In **Firewall**, turn on **AV inspection**.
 3. Choose whether to scan files for malicious payloads during uploads, downloads, or both. You can also block requests containing [non-scannable files](#non-scannable-files).
+4. (Optional) Turn on **Display AV block notification for WARP Client** to send [block notifications](#warp-client-block-notifications) to users connected to Gateway with the WARP Client when AV inspection blocks a file.
 
 When a request is blocked due to the presence of malware, Gateway will log the match as a Block decision in your [HTTP logs](/cloudflare-one/insights/logs/gateway-logs/#http-logs).
+
+### WARP client block notifications
+
+<Render
+	file="gateway/client-notifications"
+	product="cloudflare-one"
+	params={{ toggleName: "**Display AV block notification for WARP Client**" }}
+/>
 
 ## File scan criteria
 

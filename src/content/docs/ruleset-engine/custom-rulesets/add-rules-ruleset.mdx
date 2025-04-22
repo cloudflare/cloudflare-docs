@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { APIRequest } from "~/components";
+import { APIRequest, Render } from "~/components";
 
 To add rules to an existing custom ruleset, use the [Update an account ruleset](/api/resources/rulesets/methods/update/) operation and pass the rules in an array. Each rule has an expression and an action.
 
@@ -19,6 +19,10 @@ You can use other API operations depending on the type of operation:
 - Update a single rule in a custom ruleset: Use the [Update an account ruleset rule](/api/resources/rulesets/subresources/rules/methods/edit/) operation.
 
 :::
+
+<Render file="custom-rulesets-terraform" />
+
+<Render file="custom-rulesets-dashboard" />
 
 ## Add rules
 

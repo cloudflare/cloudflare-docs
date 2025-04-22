@@ -48,7 +48,7 @@ The interface address on the Cloudflare side of the tunnel is `10.200.1.0/31`. Y
 
 Static routes are required for any networks that will be reached via the IPsec tunnel. In our example, there are two networks: `172.31.3.0/24` and the tunnel network `10.200.1.0/31`.
 
-1. [Create your static routes](/magic-wan/configuration/manually/how-to/configure-static-routes/#create-a-static-route). Name and describe them as needed, and add the following settings:
+1. [Create your static routes](/magic-wan/configuration/manually/how-to/configure-routes/#create-a-static-route). Name and describe them as needed, and add the following settings:
 
    - **First tunnel**: Following our example, add `10.200.1.0/31` as the **Prefix** and `10.200.1.1` for the **Tunnel/Next hop**.
    - **Second tunnel**: Following our example, add `172.31.3.0/24` as the **Prefix** and `10.200.1.1` for the **Tunnel/Next hop**.

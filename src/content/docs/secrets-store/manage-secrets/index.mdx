@@ -14,7 +14,11 @@ Once a secret is added to the Secrets Store, it can no longer be decrypted or ac
 
 ## Limits
 
-Customers who create a secrets store in the open beta can have up to 20 secrets per account.
+Customers who create a secrets store in the open beta can have up to 20 secrets per account. Also, there can only be one store per account.
+
+:::note[Production secrets]
+If you use [Wrangler](/secrets-store/manage-secrets/how-to/#manage-via-wrangler), there is a difference between production secrets and secrets that are only created locally (without the `--remote` flag). The limit of 20 secrets per account only considers production secrets.
+:::
 
 ## Resources
 

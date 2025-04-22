@@ -5,6 +5,12 @@ productLink: "/queues/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-04-17"
+    title: Improved limits for pull consumers
+    description: |-
+      [Queues Pull Consumers](/queues/configuration/pull-consumers/) can now pull and acknowledge up to 5,000 messages per second per queue. Previously, pull consumers were rate limited to 1200 requests / 5 minutes, aggregated across all queues.
+
+      Refer to the [documentation on pull consumers](/queues/configuration/pull-consumers/) to learn how to setup a pull consumer, acknowledge / retry messages, and setup multiple consumers.
   - publish_date: "2025-03-27"
     title: Pause delivery and purge queues
     description: |-

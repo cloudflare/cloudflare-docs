@@ -120,7 +120,7 @@ Decodes a Base64-encoded String specified in `source`.
 For example, with the following HTTP request header: `client_id: MTIzYWJj`, `(any(decode_base64(http.request.headers["client_id"][*])[*] eq "123abc"))` would return `true`.
 
 :::caution
-You can only use the `decode_base64()` function in [header modification rules](/rules/transform/), [custom rules](/waf/custom-rules/), and [rate limiting rules](/waf/rate-limiting-rules/).
+You can only use the `decode_base64()` function in [header transform rules](/rules/transform/), [custom rules](/waf/custom-rules/), and [rate limiting rules](/waf/rate-limiting-rules/).
 :::
 
 ### `ends_with`

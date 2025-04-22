@@ -24,19 +24,18 @@ There are three routes you can use to report an email as a phish:
 3. On the **Investigation** page, under **Your matching messages**, select the message you want to reclassify. Select the three dots, then select **Reclassify**. By selecting **Reclassify**, you are requesting a new disposition for the message.
 4. Select the new disposition, then select **Save**.
 
-## PhishNet O365
+## PhishNet M365
 
 PhishNet is an add-in button that helps users to submit directly to Email Security <GlossaryTooltip term="phishing">phish</GlossaryTooltip> samples missed by Email Security's detection.
 
-To set up PhishNet O365:
+To set up PhishNet M365:
 
-1. Log in to the [Microsoft admin panel](https://admin.microsoft.com/). Go to **Microsoft 365 admin center** > **Settings** > **Integrated Apps**.
-2. Select **Upload custom apps**.
-3. Choose **Provide link to manifest file** and paste the following URL:
-    ```txt
-    https://phishnet-o365.area1cloudflare-webapps.workers.dev?clientId=ODcxNDA0MjMyNDM3NTA4NjQwNDk1Mzc3MDIxNzE0OTcxNTg0Njk5NDEyOTE2NDU5ODQyNjU5NzYzNjYyNDQ3NjEwMzIxODEyMDk1NQ
-    ```
-4. Verify and complete the wizard.
+1. Get the customized manifest URL from [Zero Trust](https://one.dash.cloudflare.com/?to=/:account/email-security/settings/email-policy/phish-submission?tab=phish-submission).
+2. Log in to the [Microsoft admin panel](https://admin.microsoft.com/). 
+3. Go to **Microsoft 365 admin center** > **Settings** > **Integrated Apps**.
+4. Select **Upload custom apps**.
+5. Choose **Provide link to manifest file** and paste the URL you copied from the Zero Trust dashboard.
+6. Verify and complete the wizard.
 
 ## PhishNet for Google Workspace
 

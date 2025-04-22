@@ -77,6 +77,8 @@ To set the open files `ulimit`:
 ulimit -n 70000
 ```
 
+The command above sets the open files limit only for the current terminal session and will not persist after a reboot or new login. To apply this limit permanently, configure it using the persistent method appropriate for your operating system.
+
 ## Estimated throughput
 
 Most private network traffic proxied by `cloudflared` falls in one of two categories:

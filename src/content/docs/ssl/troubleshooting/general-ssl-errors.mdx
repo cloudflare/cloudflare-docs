@@ -114,13 +114,12 @@ The HSTS headers (`Strict-Transport-Security` and `X-Content-Type-Options`) in t
 
 ### Resolution
 
-You may have configured [HTTP Response Header Modification Rules](/rules/transform/response-header-modification) that are overriding the HSTS header values defined in the **SSL/TLS** app.
+You may have configured [Response Header Transform Rules](/rules/transform/response-header-modification) that are overriding the HSTS header values defined in the **SSL/TLS** app.
 
 1. Go to **Rules** > **Overview**.
-2. Next to **Response Header Transform Rules**, select **Manage Response Header Transform Rules**.
-3. Check the existing rules for a rule that is setting the value of one of the HSTS headers (`Strict-Transport-Security` or `X-Content-Type-Options`).
-4. Delete (or edit) the rule so that the HSTS configuration settings defined in the **SSL/TLS** app are applied.
-5. Repeat this procedure for the other HSTS header.
+2. Under **Response Header Transform Rules**, search for a rule setting the value of one of the HSTS headers (`Strict-Transport-Security` or `X-Content-Type-Options`).
+3. Delete (or edit) the rule so that the HSTS configuration settings defined in the **SSL/TLS** app are applied.
+4. Repeat this procedure for the other HSTS header.
 
 ---
 
@@ -144,9 +143,7 @@ You are getting the error `NET::ERR_CERT_COMMON_NAME_INVALID` in your browser.
 The following [`openssl`](https://www.openssl.org/) command might help troubleshooting TLS handshake between the client and the Cloudflare network edge:
 
 ```sh
-
 openssl s_client -connect example.com:443 -servername example.com version
-
 ```
 
 :::
@@ -155,5 +152,4 @@ openssl s_client -connect example.com:443 -servername example.com version
 
 ## Kaspersky Antivirus
 
-To avoid SSL errors with the Cloudflare dashboard when using Kaspersky
-Antivirus, allow `dash.cloudflare.com` in Kaspersky.
+To avoid SSL errors with the Cloudflare dashboard when using Kaspersky Antivirus, allow `dash.cloudflare.com` in Kaspersky.

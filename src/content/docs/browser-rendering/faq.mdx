@@ -18,9 +18,9 @@ Make sure that you are passing your Browser binding to the `puppeteer.launch` ap
 
 ##### Will browser rendering bypass Cloudflare's Bot Protection?
 
-Browser rendering requests are always identified as bots by Cloudflare.
+No, Browser Rendering requests are always identified as bots by Cloudflare and do not bypass Bot Protection. Additionally, Browser Rendering respects the robots.txt protocol, ensuring that any disallowed paths specified for user agents are not accessed during rendering.
 
-If you are trying to **scan** your **own zone**, you can create a [WAF skip rule](/waf/custom-rules/skip/) to bypass the bot protection using a header or a custom user agent.
+If you are attempting to scan your **own zone** and need Browser Rendering to access areas protected by Cloudflare’s Bot Protection, you can create a [WAF skip rule](/waf/custom-rules/skip/) to bypass the bot protection using a header or a custom user agent.
 
 ## Puppeteer
 

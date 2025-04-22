@@ -63,13 +63,19 @@ The AV scanner will not scan some particular types of files, namely encrypted or
 
 ## Custom scan expressions
 
-Sometimes, you may wish to specify where to find the content objects, such as when the content is a Base64-encoded string within a JSON payload. For example:
+Sometimes, you may want to specify where to find the content objects, such as when the content is a Base64-encoded string within a JSON payload. For example:
 
 ```json
 { "file": "<BASE64_ENCODED_STRING>" }
 ```
 
 In these situations, configure a custom scan expression to tell the content scanner where to find the content objects. For more information, refer to [Configure a custom scan expression](/waf/detections/malicious-uploads/get-started/#4-optional-configure-a-custom-scan-expression).
+
+For more information and additional examples of looking up fields in nested JSON payloads, refer to the [`lookup_json_string()`](/ruleset-engine/rules-language/functions/#lookup_json_string) function documentation.
+
+:::note
+The content scanner will automatically decode Base64 strings.
+:::
 
 ## Content scanning fields
 
