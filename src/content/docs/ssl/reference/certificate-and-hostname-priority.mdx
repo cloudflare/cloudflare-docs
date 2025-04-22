@@ -8,6 +8,8 @@ description: Learn about how Cloudflare decides which certificate and associated
 
 ---
 
+import { GlossaryTooltip } from "~/components";
+
 When a new certificate is created, Cloudflare first deploys the certificate and then serves it.
 
 ***
@@ -52,7 +54,7 @@ Cloudflare uses the following order to determine the certificate and settings us
 
 ## Hostname priority
 
-When multiple proxied DNS records exist for a hostname, in multiple zones — usually due to Cloudflare for SaaS — only one record will control the zone settings and associated origin server.
+When multiple <GlossaryTooltip term="proxy status">proxied DNS records</GlossaryTooltip> exist for a hostname, in multiple <GlossaryTooltip term="zone">zones</GlossaryTooltip> — usually due to [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) — only one record will control the zone settings and associated origin server.
 
 Cloudflare determines this priority in the following order, assuming each record exists and is proxied (orange-clouded):
 
