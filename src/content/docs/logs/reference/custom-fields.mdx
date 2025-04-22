@@ -229,6 +229,7 @@ If you are a Cloudflare Access user, as of March 2022 you have to manually add t
 
 ## Limitations
 
+- Custom fields allow 100 headers per field type — this applies separately to `request_fields`, `transformed_request_fields`, `response_fields`, `raw_response_fields`, and `cookie_fields`.
 - For headers which may be included multiple times (for example, the `set-cookie` response header), a custom field will only log the first instance of the header. Subsequent headers of the same type will be ignored.
 - The request header `Range` is currently not supported by Custom Fields.
 - Transformed and raw values for request and response headers are available only via the API and cannot be set through the UI.
