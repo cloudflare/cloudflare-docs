@@ -1,0 +1,7 @@
+gist
+generated actions NEXTJS
+.github/**/*/index.js
+.github/CODEOWNERS
+public/__redirects
+public/analytics/static/downloads/main.css
+src/content/workers-ai-models/*.json
