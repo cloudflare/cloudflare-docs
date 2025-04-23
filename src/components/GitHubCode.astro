@@ -29,7 +29,7 @@ const props = z
 	)
 	.refine(
 		(val) => {
-			return val.useTypeScriptExample && val.lang === "ts";
+			return !val.useTypeScriptExample || val.lang === "ts";
 		},
 		{
 			message:

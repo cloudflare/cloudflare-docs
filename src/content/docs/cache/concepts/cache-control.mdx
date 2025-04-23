@@ -89,6 +89,25 @@ Additional directives that influence cache behavior are listed below.
 * `vary` — Cloudflare does not consider vary values in caching decisions. Nevertheless, vary values are respected when [Vary for images](/cache/advanced-configuration/vary-for-images/) is configured and when the vary header is [`vary: accept-encoding`](/speed/optimization/content/compression/).
 * `immutable` — Indicates to clients the response body does not change over time. The resource, if unexpired, is unchanged on the server. The user should not send a conditional revalidation request, such as `If-None-Match` or `If-Modified-Since`, to check for updates, even when the user explicitly refreshes the page. This directive has no effect on public caches like Cloudflare, but does change browser behavior.
 
+### Understand `no-store` and `no-cache` directives
+
+There is often confusion between the directives `Cache-Control: no-store` and `Cache-Control: no-cache`, particularly regarding how they impact browser caching and features like the [Back-Forward Cache](https://developer.mozilla.org/en-US/docs/Glossary/bfcache) (BFCache).
+
+#### `no-store`
+
+- Tells both browsers and intermediaries (like CDNs) not to store a copy of the response under any circumstance.
+- The response is never written to disk or memory, which means the browser must fetch it again every time.
+- In many browsers, `no-store` disables BFCache, because restoring a page from BFCache requires the browser to keep a copy of the page's memory state, which contradicts the “do not store” directive.
+- This directive is used for highly sensitive or dynamic data (for example, banking apps, personal information, secure dashboards).
+
+#### `no-cache`
+
+- Allows storing of the response (in both browser and intermediate caches), but requires revalidation with the origin server before using it.
+- This ensures the content is always up-to-date, while still potentially allowing BFCache or other forms of performance optimization.
+- This directive is used for data that changes frequently but is not sensitive, and can be served faster if validated rather than re-downloaded.
+
+For more information about how these directives behave when Origin Cache Control is enabled or disabled refer to the [Directives](/cache/concepts/cache-control/#directives) section.
+
 ## Enable Origin Cache Control
 
 If you enable Origin Cache Control, Cloudflare will aim to strictly adhere to [RFC 7234](https://datatracker.ietf.org/doc/html/rfc7234). Enterprise customers have the ability to select if Cloudflare will adhere to this behavior, enabling or disabling Origin Cache Control for their websites through cache rules in the [dashboard](/cache/how-to/cache-rules/settings/#origin-cache-control-enterprise-only) or via [API](/cache/how-to/cache-rules/settings/#origin-cache-control-enterprise-only). Free, Pro, and Business customers have this option enabled by default and cannot disable it.

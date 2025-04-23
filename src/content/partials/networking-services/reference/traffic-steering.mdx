@@ -74,6 +74,8 @@ The priority value for static routes is directly configured as part of the route
 | `10.10.10.100/24` | `TUNNEL_3_ATL` | `100` |
 | `10.10.10.100/24` | `TUNNEL_4_ATL` | `100` |
 
+In the example above, tunnels with priority of `100` will be preferred to tunnels with priority of `200` since lower numbers have greater priority.
+
 Optionally, you can assign weights to distribute traffic more effectively among multiple tunnels. The weight values determine the proportion of traffic directed to each tunnel, with higher weights resulting in a greater share of traffic. The maximum weight value is `256`.
 
 In the example below, `TUNNEL_2_IAD` is likely to receive twice as much traffic as `TUNNEL_1_IAD`.
@@ -84,6 +86,8 @@ In the example below, `TUNNEL_2_IAD` is likely to receive twice as much traffic 
 | `10.10.10.100/24` | `TUNNEL_2_IAD` | `100` | `128` |
 | `10.10.10.100/24` | `TUNNEL_3_ATL` | `100` | `192` |
 | `10.10.10.100/24` | `TUNNEL_4_ATL` | `100` | `255` |
+
+Aside from priority, scoping static routes to specific geographic regions will also impact how traffic is steered. Refer to [Scoping routes to specific regions](#scoping-routes-to-specific-regions) for more details.
 
 ### Set priority for BGP routes
 
@@ -136,13 +140,13 @@ Cloudflare adjusts route priority when using AS prepending with communities. For
 
 If you have multiple connectivity paths to a network segment and you would like to apply different route prioritization based on where the traffic arrives at the Cloudflare network, you can scope routes to specific Cloudflare data center regions. This is useful, for example, if you run your own anycast network and want your end-user traffic to arrive at your network location closest to the user. When a route is scoped to a Cloudflare data center region it will only show up in the Magic routing table in that region, along with all global routes that do not have any region scope. Route prioritization and ECMP logic apply across both region-scoped and global routes.
 
-Adding region scoping to routes is only available to statically configured routes at this time.
+:::note
+Scoping routes to specific regions is not supported with BGP peering, and is only available to statically configured routes at this time.
+:::
 
 When using region-scoped routes, you should ensure that all prefixes have routes covering all regions. Otherwise, traffic may arrive at a Cloudflare region which is not covered by any route, in which case the traffic will be dropped.
 
-Scoping routes to specific regions is not supported with BGP peering at this time.
-
-### Scoping configuration data example
+The following table exemplifies how to use geographic scoping for routes:
 
 | Prefix | NextHop | Priority | Region code |
 | ----- | ----- | ----- | ----- |
@@ -150,6 +154,10 @@ Scoping routes to specific regions is not supported with BGP peering at this tim
 | `10.10.10.100/24` | `TUNNEL_2_IAD` | `100` | `EEUR` |
 | `10.10.10.100/24` | `TUNNEL_3_ATL` | `100` | `ENAM` |
 | `10.10.10.100/24` | `TUNNEL_4_ATL` | `100` | `ME` |
+| `10.10.10.100/24` | `TUNNEL_5_ATL` | `100` | `WNAM` |
+| `10.10.10.100/24` | `TUNNEL_4_ATL` | `100` | `ENAM` |
+
+When there are multiple routes to the same prefix with equal priority, and those routes are assigned to different geographic regions (like WNAM and ENAM), traffic entering the network in a specific region — for example, WNAM — will egress through the route associated with that same region.
 
 ### Region codes and associated regions
 

@@ -3,7 +3,6 @@ pcx_content_type: how-to
 title: Custom fields
 sidebar:
   order: 43
-
 ---
 
 The HTTP requests dataset includes most standard log information by default. However, if you need to capture additional request or response headers or cookies, you can use custom fields to tailor the logs to your specific needs
@@ -11,11 +10,12 @@ The HTTP requests dataset includes most standard log information by default. How
 Custom fields are configured per zone and, once set up, are enabled for all Logpush jobs in that zone that use the HTTP requests dataset and include the request headers, response headers, or cookie fields. You can log these fields in their raw form or as transformed values.
 
 :::note[By default:]
+
 - **Request headers** are logged as **raw values**.
 - **Response headers** are logged as **transformed values**.
-:::
+  :::
 
-This default behavior can be changed. You can configure either request or response headers to be logged as raw or transformed, depending on your needs -  but not both for the same header. 
+This default behavior can be changed. You can configure either request or response headers to be logged as raw or transformed, depending on your needs - but not both for the same header.
 
 Custom fields can be enabled via API or the Cloudflare dashboard.
 
@@ -47,7 +47,7 @@ The `action_parameters` object that you must include in the rule that configures
   "transformed_request_fields": [
     { "name": "<http_request_header_transformed>" }
   ],
-//select raw or transformed (default) response header   
+//select raw or transformed (default) response header
   "response_fields": [
     { "name": "<http_response_header_transformed>" }
   ],
@@ -62,11 +62,11 @@ The `action_parameters` object that you must include in the rule that configures
 
 Ensure that your rule definition complies with the following:
 
-* You must include at least one of the following arrays in the `action_parameters` object: `request_fields`, `response_fields`, and `cookie_fields`.
-* You must enter HTTP request and response header names in lower case.
-* Cookie names are case sensitive — you must enter cookie names with the same capitalization they have in the HTTP request.
-* You must set the rule expression to `true`.
-* You can only log raw or transformed values for either request or response headers but not both for the same header. 
+- You must include at least one of the following arrays in the `action_parameters` object: `request_fields`, `transformed_request_fields`, `response_fields`, `raw_response_fields`, and `cookie_fields`.
+- You must enter HTTP request and response header names in lower case.
+- Cookie names are case sensitive — you must enter cookie names with the same capitalization they have in the HTTP request.
+- You must set the rule expression to `true`.
+- You can only log raw or transformed values for either request or response headers but not both for the same header.
 
 Perform the following steps to create the rule:
 
@@ -124,7 +124,7 @@ Perform the following steps to create the rule:
            "response_fields": [
              { "name": "server" },
              { "name": "content-type" }
-					],
+   				],
          "raw_response_fields": [
              { "name": "allow" }
            ],
@@ -164,7 +164,7 @@ Perform the following steps to create the rule:
              "response_fields": [
                { "name": "server" },
                { "name": "content-type" },
-           "raw_response_fields": [    
+           "raw_response_fields": [
                { "name": "allow" }
              ],
              "cookie_fields": [
@@ -214,9 +214,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs \
 
 :::note[Note for Cloudflare Access users]
 
-
 If you are a Cloudflare Access user, as of March 2022 you have to manually add the `cf-access-user` user identity header to your logs by creating a custom fields ruleset or adding the `cf-access-user` HTTP request header to your custom fields configuration. Additionally, make sure that you include the `RequestHeaders` field in your Logpush job.
-
 
 :::
 
@@ -226,12 +224,12 @@ If you are a Cloudflare Access user, as of March 2022 you have to manually add t
 2. Go to **Analytics & Logs** > **Logpush**.
 3. In the **Custom log fields** section, select **Edit Custom Fields**.
 4. Select **Set new Custom Field**.
-5. From the **Field Type** dropdown, select *Request Header*, *Response Header* or *Cookies* and type the **Field Name**.
+5. From the **Field Type** dropdown, select _Request Header_, _Response Header_ or _Cookies_ and type the **Field Name**.
 6. When you are done, select **Save**.
 
 ## Limitations
 
-* For headers which may be included multiple times (for example, the `set-cookie` response header), a custom field will only log the first instance of the header. Subsequent headers of the same type will be ignored.
-* Currently, Cloudflare only logs original request/response headers. Headers that were modified earlier in the request lifecycle with [Transform Rules](/rules/transform/) will not be logged.
-* The request header `Range` is currently not supported by Custom Fields.
-* Transformed and raw values for request and response headers are available only via the API and cannot be set through the UI.
+- Custom fields allow 100 headers per field type — this applies separately to `request_fields`, `transformed_request_fields`, `response_fields`, `raw_response_fields`, and `cookie_fields`.
+- For headers which may be included multiple times (for example, the `set-cookie` response header), a custom field will only log the first instance of the header. Subsequent headers of the same type will be ignored.
+- The request header `Range` is currently not supported by Custom Fields.
+- Transformed and raw values for request and response headers are available only via the API and cannot be set through the UI.

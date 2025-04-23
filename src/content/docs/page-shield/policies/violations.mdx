@@ -5,17 +5,15 @@ sidebar:
   order: 4
 head: []
 description: Page Shield reports any violations to your custom Page Shield policies.
-
 ---
 
-import { Details, GlossaryTooltip } from "~/components"
+import { Details, GlossaryTooltip } from "~/components";
 
 :::note
-
 Only available to Enterprise customers with a paid add-on.
 :::
 
-Shortly after you configure Page Shield policies, the Cloudflare dashboard will start displaying any violations of those policies. This information will be available for policies with any [action](/page-shield/policies/#policy-actions) (*Allow* and *Log*).
+Shortly after you configure Page Shield policies, the Cloudflare dashboard will start displaying any violations of those policies. This information will be available for policies with any [action](/page-shield/policies/#policy-actions) (_Allow_ and _Log_).
 
 Information about policy violations is also available via [GraphQL API](/analytics/graphql-api/) and [Logpush](/logs/about/).
 
@@ -23,14 +21,14 @@ Information about policy violations is also available via [GraphQL API](/analyti
 
 The policy violation information is available in **Security** > **Page Shield** > **Policies**. It includes the following:
 
-* A sparkline next to the policy name, showing policy violations in the past seven days.
-* For policies with associated violations, an expandable details section for each policy, with the top resources present in policy violation events and a sparkline per top resource.
+- A sparkline next to the policy name, showing policy violations in the past seven days.
+- For policies with associated violations, an expandable details section for each policy, with the top resources present in policy violation events and a sparkline per top resource.
 
 ## Get policy violations via GraphQL API
 
 Use the [Cloudflare GraphQL API](/analytics/graphql-api/) to obtain policy violation information through the following dataset:
 
-* `pageShieldReportsAdaptiveGroups`
+- `pageShieldReportsAdaptiveGroups`
 
 You can query the dataset for policy violations occurred in the past 30 days.
 
@@ -41,35 +39,42 @@ For an introduction to GraphQL querying, refer to [Querying basics](/analytics/g
 ### Example
 
 ```graphql title="Example GraphQL query"
-query PageShieldReports($zoneTag: string, $datetimeStart: string, $datetimeEnd: string) {
-  viewer {
-    zones(filter: {zoneTag: $zoneTag}) {
-      pageShieldReportsAdaptiveGroups(limit: 100,  orderBy: [datetime_ASC], filter: {datetime_geq:$datetimeStart, datetime_leq:$datetimeEnd}) {
-        avg {
-          sampleInterval
-        }
-        count
-        dimensions {
-          policyID
-          datetime
-          datetimeMinute
-          datetimeFiveMinutes
-          datetimeFifteenMinutes
-          datetimeHalfOfHour
-          datetimeHour
-          url
-          urlHost
-          host
-          resourceType
-          pageURL
-          action
-        }
-      }
-    }
-  }
+query PageShieldReports(
+	$zoneTag: string
+	$datetimeStart: string
+	$datetimeEnd: string
+) {
+	viewer {
+		zones(filter: { zoneTag: $zoneTag }) {
+			pageShieldReportsAdaptiveGroups(
+				limit: 100
+				orderBy: [datetime_ASC]
+				filter: { datetime_geq: $datetimeStart, datetime_leq: $datetimeEnd }
+			) {
+				avg {
+					sampleInterval
+				}
+				count
+				dimensions {
+					policyID
+					datetime
+					datetimeMinute
+					datetimeFiveMinutes
+					datetimeFifteenMinutes
+					datetimeHalfOfHour
+					datetimeHour
+					url
+					urlHost
+					host
+					resourceType
+					pageURL
+					action
+				}
+			}
+		}
+	}
 }
 ```
-
 
 <Details header="Example curl request">
 
@@ -109,11 +114,10 @@ echo '{ "query":
   }
 }' | tr -d '\n' | curl --silent \
 https://api.cloudflare.com/client/v4/graphql \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --header "Content-Type: application/json" \
 --data @-
 ```
-
 
 </Details>
 

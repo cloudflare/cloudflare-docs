@@ -46,7 +46,7 @@ Here are a few scenarios where virtual networks may prove useful:
 The following example demonstrates how to add two overlapping IP routes to Cloudflare (`10.128.0.1/32` staging and `10.128.0.1/32` production).
 
 <Tabs>
-   <TabItem label="Dashboard">
+  <TabItem label="Dashboard">
       To route overlapping IPs over virtual networks:
 
       1. First, create two unique virtual networks:
@@ -67,10 +67,71 @@ The following example demonstrates how to add two overlapping IP routes to Cloud
 
       We now have two overlapping IP addresses routed over `staging-vnet` and `production-vnet` respectively. You can use the Cloudflare WARP client to [switch between virtual networks](#connect-to-a-virtual-network).
 
-   </TabItem>
+  </TabItem>
 
-   <TabItem label="cli">
-      To route overlapping IPs over virtual networks:
+	<TabItem label="Terraform (v5)">
+	To route overlapping IPs over virtual networks:
+		1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
+			- `Cloudflare Tunnel Write`
+
+		2. Create two unique virtual networks:
+			```tf
+			resource "cloudflare_zero_trust_tunnel_cloudflared_virtual_network" "staging_vnet" {
+				account_id = var.cloudflare_account_id
+				name       = "staging-vnet"
+				comment    = "Staging virtual network"
+				is_default = false
+			}
+
+			resource "cloudflare_zero_trust_tunnel_cloudflared_virtual_network" "production_vnet" {
+				account_id = var.cloudflare_account_id
+				name       = "production-vnet"
+				comment    = "Production virtual network"
+				is_default = false
+			}
+			```
+
+		3. Create a Cloudflare Tunnel for each private network:
+			```tf
+			resource "cloudflare_zero_trust_tunnel_cloudflared" "staging_tunnel" {
+				account_id = var.cloudflare_account_id
+				name       = "Staging tunnel"
+				config_src = "cloudflare"
+			}
+
+			resource "cloudflare_zero_trust_tunnel_cloudflared" "production_tunnel" {
+				account_id = var.cloudflare_account_id
+				name       = "Production tunnel"
+				config_src = "cloudflare"
+			}
+			```
+
+		4. Route `10.128.0.1/32` through `Staging tunnel` and assign it to `staging-vnet`. Route `10.128.0.1/32` through `Production tunnel` and assign it to `production-vnet`.
+
+				```tf
+				resource "cloudflare_zero_trust_tunnel_cloudflared_route" "staging_tunnel_route" {
+					account_id         = var.cloudflare_account_id
+					tunnel_id          = cloudflare_zero_trust_tunnel_cloudflared.staging_tunnel.id
+					network            = "10.128.0.1/32"
+					comment            = "Staging tunnel route"
+					virtual_network_id = cloudflare_zero_trust_tunnel_cloudflared_virtual_network.staging_vnet.id
+				}
+
+				resource "cloudflare_zero_trust_tunnel_cloudflared_route" "production_tunnel_route" {
+					account_id         = var.cloudflare_account_id
+					tunnel_id          = cloudflare_zero_trust_tunnel_cloudflared.production_tunnel.id
+					network            = "10.128.0.1/32"
+					comment            = "Production tunnel route"
+					virtual_network_id = cloudflare_zero_trust_tunnel_cloudflared_virtual_network.production_vnet.id
+				}
+				```
+		5. [Get the token](/cloudflare-one/connections/connect-networks/configure-tunnels/remote-tunnel-permissions/#get-the-tunnel-token) for each tunnel.
+
+		6. Using the tunnel tokens, run `Staging tunnel` in your staging environment and run `Production tunnel` in your production environment. Refer to [Install and run the tunnel](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel-api/#4-install-and-run-the-tunnel).
+  </TabItem>
+
+  <TabItem label="Locally-managed tunnels">
+      To route overlapping IPs over virtual networks for [locally-managed tunnels](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/):
 
       1. Create a tunnel for each private network:
 
@@ -113,10 +174,9 @@ The following example demonstrates how to add two overlapping IP routes to Cloud
          cloudflared tunnel vnet list
          ```
 
-    	{/* Commenting out notes within tabs for now
     	:::note[Default virtual network]
     	All accounts come pre-configured with a virtual network named `default`. You can choose a new default by typing `cloudflared tunnel vnet update --default <virtual-network-name>`.
-    	::: */}
+    	:::
 
 4.  Configure your tunnels with the IP/CIDR range of your private networks, and assign the tunnels to their respective virtual networks.
 
@@ -162,7 +222,7 @@ The following example demonstrates how to add two overlapping IP routes to Cloud
 ## Delete a virtual network
 
 <Tabs>
-   <TabItem label="Dashboard">
+  <TabItem label="Dashboard">
       To delete a virtual network:
 
       1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Networks** > **Tunnels** and ensure that no IP routes are assigned to the virtual network you are trying to delete. If your virtual network is in use, delete the route or reassign it to a different virtual network.
@@ -175,10 +235,10 @@ The following example demonstrates how to add two overlapping IP routes to Cloud
 
       You can optionally delete the tunnel associated with your virtual network.
 
-   </TabItem>
+  </TabItem>
 
-   <TabItem label="cli">
-      To delete a virtual network:
+  <TabItem label="Locally-managed tunnels">
+      To delete a virtual network for [locally-managed tunnels](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/):
 
       1. Delete all IP routes in the virtual network. For example,
 
@@ -200,7 +260,7 @@ The following example demonstrates how to add two overlapping IP routes to Cloud
 
       You can verify that the virtual network was successfully deleted by typing `cloudflared tunnel vnet list`.
 
-   </TabItem>
+  </TabItem>
 </Tabs>
 
 ## Connect to a virtual network

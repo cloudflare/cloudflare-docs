@@ -55,24 +55,20 @@ Let's look at some examples of how to use Playwright:
 Using browser automation to take screenshots of web pages is a common use case. This script tells the browser to navigate to https://demo.playwright.dev/todomvc, create some items, take a screenshot of the page, and return the image in the response.
 
 ```ts
-import type { Fetcher } from '@cloudflare/workers-types';
-import { launch } from '@cloudflare/playwright';
+import { launch, type BrowserWorker } from '@cloudflare/playwright';
 
 interface Env {
-  MYBROWSER: Fetcher;
+  MYBROWSER: BrowserWorker;
 }
 
 export default {
   async fetch(request: Request, env: Env) {
-		const { searchParams } = new URL(request.url);
-    const todos = searchParams.getAll('todo');
-
     const browser = await launch(env.MYBROWSER);
     const page = await browser.newPage();
 
     await page.goto('https://demo.playwright.dev/todomvc');
 
-    const TODO_ITEMS = todos.length > 0 ? todos : [
+    const TODO_ITEMS = [
       'buy some cheese',
       'feed the cat',
       'book a doctors appointment'
@@ -92,7 +88,7 @@ export default {
         'Content-Type': 'image/png',
       },
     });
-	},
+  },
 }
 ```
 
@@ -103,28 +99,24 @@ A Playwright trace is a detailed log of your workflow execution that captures in
 Here's an example of a worker generating a trace file:
 
 ```ts
-import type { Fetcher } from '@cloudflare/workers-types';
-import { launch, fs } from "@cloudflare/playwright";
+import { launch, type BrowserWorker } from "@cloudflare/playwright";
 import fs from '@cloudflare/playwright/fs';
 
 interface Env {
-  MYBROWSER: Fetcher;
+  MYBROWSER: BrowserWorker;
 }
 
 export default {
   async fetch(request: Request, env: Env) {
-    const { searchParams } = new URL(request.url);
-    const todos = searchParams.getAll('todo');
-    const trace = searchParams.has('trace');
-
     const browser = await launch(env.MYBROWSER);
     const page = await browser.newPage();
 
-    if (trace) await page.context().tracing.start({ screenshots: true, snapshots: true });
+    // Start tracing before navigating to the page
+    await page.context().tracing.start({ screenshots: true, snapshots: true });
 
     await page.goto('https://demo.playwright.dev/todomvc');
 
-    const TODO_ITEMS = todos.length > 0 ? todos : [
+    const TODO_ITEMS = [
       'buy some cheese',
       'feed the cat',
       'book a doctors appointment'
@@ -136,33 +128,17 @@ export default {
       await newTodo.press('Enter');
     }
 
-    await expect(page.getByTestId('todo-title')).toHaveCount(TODO_ITEMS.length);
+    // Stop tracing and save the trace to a zip file
+    await page.context().tracing.stop({ path: 'trace.zip' });
+    await browser.close();
+    const file = await fs.promises.readFile('trace.zip');
 
-    await Promise.all(TODO_ITEMS.map(
-      (value, index) => expect(page.getByTestId('todo-title').nth(index)).toHaveText(value)
-    ));
-
-    if (trace) {
-      await page.context().tracing.stop({ path: 'trace.zip' });
-      await browser.close();
-      const file = await fs.promises.readFile('trace.zip');
-
-      return new Response(file, {
-        status: 200,
-        headers: {
-          'Content-Type': 'application/zip',
-        },
-      });
-    } else {
-      const img = await page.screenshot();
-      await browser.close();
-
-      return new Response(img, {
-        headers: {
-          'Content-Type': 'image/png',
-        },
-      });
-    }
+    return new Response(file, {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/zip',
+      },
+    });
   },
 };
 ```
@@ -172,12 +148,11 @@ export default {
 One of the most common use cases for using Playwright is software testing. Playwright includes test assertion features in its APIs; refer to [Assertions](https://playwright.dev/docs/test-assertions) in the Playwright documentation for details. Here's an example of a Worker doing `expect()` test assertions of the [todomvc](https://demo.playwright.dev/todomvc) demo page:
 
 ```ts
-import type { Fetcher } from '@cloudflare/workers-types';
-import { launch } from '@cloudflare/playwright';
+import { launch, type BrowserWorker } from '@cloudflare/playwright';
 import { expect } from '@cloudflare/playwright/test';
 
 interface Env {
-  MYBROWSER: Fetcher;
+  MYBROWSER: BrowserWorker;
 }
 
 export default {
@@ -187,7 +162,7 @@ export default {
 
     await page.goto('https://demo.playwright.dev/todomvc');
 
-    const TODO_ITEMS = todos.length > 0 ? todos : [
+    const TODO_ITEMS = [
         'buy some cheese',
         'feed the cat',
         'book a doctors appointment'
@@ -204,7 +179,7 @@ export default {
     await Promise.all(TODO_ITEMS.map(
         (value, index) => expect(page.getByTestId('todo-title').nth(index)).toHaveText(value)
     ));
-	},
+  },
 };
 ```
 
@@ -228,16 +203,16 @@ In order to facilitate browser session management, we've extended the Playwright
 
 ```json
 [
-	{
-		"connectionId": "2a2246fa-e234-4dc1-8433-87e6cee80145",
-		"connectionStartTime": 1711621704607,
-		"sessionId": "478f4d7d-e943-40f6-a414-837d3736a1dc",
-		"startTime": 1711621703708
-	},
-	{
-		"sessionId": "565e05fb-4d2a-402b-869b-5b65b1381db7",
-		"startTime": 1711621703808
-	}
+  {
+    "connectionId": "2a2246fa-e234-4dc1-8433-87e6cee80145",
+    "connectionStartTime": 1711621704607,
+    "sessionId": "478f4d7d-e943-40f6-a414-837d3736a1dc",
+    "startTime": 1711621703708
+  },
+  {
+    "sessionId": "565e05fb-4d2a-402b-869b-5b65b1381db7",
+    "startTime": 1711621703808
+  }
 ]
 ```
 
@@ -249,20 +224,20 @@ Notice that the session `478f4d7d-e943-40f6-a414-837d3736a1dc` has an active wor
 
 ```json
 [
-	{
-		"closeReason": 2,
-		"closeReasonText": "BrowserIdle",
-		"endTime": 1711621769485,
-		"sessionId": "478f4d7d-e943-40f6-a414-837d3736a1dc",
-		"startTime": 1711621703708
-	},
-	{
-		"closeReason": 1,
-		"closeReasonText": "NormalClosure",
-		"endTime": 1711123501771,
-		"sessionId": "2be00a21-9fb6-4bb2-9861-8cd48e40e771",
-		"startTime": 1711123430918
-	}
+  {
+    "closeReason": 2,
+    "closeReasonText": "BrowserIdle",
+    "endTime": 1711621769485,
+    "sessionId": "478f4d7d-e943-40f6-a414-837d3736a1dc",
+    "startTime": 1711621703708
+  },
+  {
+    "closeReason": 1,
+    "closeReasonText": "NormalClosure",
+    "endTime": 1711123501771,
+    "sessionId": "2be00a21-9fb6-4bb2-9861-8cd48e40e771",
+    "startTime": 1711123430918
+  }
 ]
 ```
 

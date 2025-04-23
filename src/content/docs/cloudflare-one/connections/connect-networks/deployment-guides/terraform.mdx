@@ -133,16 +133,11 @@ The following configuration will modify settings in your Cloudflare account.
 		<TabItem label="Terraform (v5)">
 
 		```tf
-		# Generates a 32-byte secret for the tunnel.
-		resource "random_bytes" "tunnel_secret" {
-			byte_length = 32
-		}
 
 		# Creates a new remotely-managed tunnel for the GCP VM.
 		resource "cloudflare_zero_trust_tunnel_cloudflared" "gcp_tunnel" {
 			account_id    = var.cloudflare_account_id
 			name          = "Terraform GCP tunnel"
-			tunnel_secret = random_bytes.tunnel_secret.base64
 		}
 
 		# Reads the token used to run the tunnel on the server.
