@@ -49,7 +49,7 @@ app.get('/', (c) => c.text('Hello World!'));
 export default {
   // The Hono app handles regular HTTP requests
   fetch: app.fetch,
-  
+
   // The scheduled function handles Cron triggers
   async scheduled(
     controller: ScheduledController,
@@ -57,7 +57,7 @@ export default {
     ctx: ExecutionContext,
   ) {
     console.log("cron processed");
-    
+
     // You could also perform actions like:
     // - Fetching data from external APIs
     // - Updating KV or Durable Object storage

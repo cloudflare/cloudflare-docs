@@ -9,7 +9,7 @@ head:
 description: Storage and database options available on Cloudflare's developer platform.
 ---
 
-import { Render } from "~/components";
+import { Render, Details } from "~/components";
 
 Cloudflare Workers support a range of storage and database options for persisting different types of data across different use-cases, from key-value stores (like [Workers KV](/kv/)) through to SQL databases (such as [D1](/d1/)). This guide describes the use-cases suited to each storage option, as well as their performance and consistency properties.
 
@@ -44,24 +44,34 @@ The following table highlights the performance and consistency characteristics o
 
 | Feature                     | Workers KV                                       | R2                                    | Durable Objects                  | D1                                                  |
 | --------------------------- | ------------------------------------------------ | ------------------------------------- | -------------------------------- | --------------------------------------------------- |
-| Maximum storage per account | Unlimited<sup>1</sup>                            | Unlimited<sup>2</sup>                 | 50 GiB                           | 250GiB <sup>3</sup>                                 |
+| Maximum storage per account | Unlimited [^1]                                   | Unlimited [^2]                        | Unlimited [^3]                   | 250 GB [^4]                                         |
 | Storage grouping name       | Namespace                                        | Bucket                                | Durable Object                   | Database                                            |
-| Maximum size per value      | 25 MiB                                           | 5 TiB per object                      | 128 KiB per value                | 10 GiB per database <sup>4</sup>                    |
-| Consistency model           | Eventual: updates take up to 60s to be reflected | Strong (read-after-write)<sup>5</sup> | Serializable (with transactions) | Serializable (no replicas) / Causal (with replicas) |
+| Maximum size per value      | 25 MiB                                           | 5 TiB per object                      | 128 KiB per value                | 10 GB per database [^5]                             |
+| Consistency model           | Eventual: updates take up to 60s to be reflected | Strong (read-after-write) [^6]        | Serializable (with transactions) | Serializable (no replicas) / Causal (with replicas) |
 | Supported APIs              | Workers, HTTP/REST API                           | Workers, S3 compatible                | Workers                          | Workers, HTTP/REST API                              |
 
 </table-wrap>
 
-<sup>1</sup> Free accounts are limited to 1 GiB of KV storage.
+[^1]: Free accounts are limited to 1 GiB of KV storage.
+[^2]: Free accounts are limited to 10 GB of R2 storage.
+[^3]: Free accounts are limited to 5 GB of storage for SQLite-backed Durable Objects. 50 GB limit applies for KV-backed Durable Objects. Refer to [Durable Objects limits](/durable-objects/platform/limits/).
+[^4]: Free accounts are limited to 5 GB of database storage.
+[^5]: Free accounts are limited to 500 MB per database.
+[^6]: Refer to the [R2 documentation](/r2/reference/consistency/) for more details on R2's consistency model.
 
-<sup>2</sup> Free accounts are limited to 10 GB of R2 storage.
+<Details header= "Footnotes" open = {true}>
+1. Free accounts are limited to 1 GiB of KV storage.
 
-<sup>3</sup> Free accounts are limited to 5 GiB of database storage.
+2. Free accounts are limited to 10 GB of R2 storage.
 
-<sup>4</sup> Free accounts are limited to 500 MiB per database.
+3. Free accounts are limited to 5 GB of storage for SQLite-backed Durable Objects. 50 GB limit applies for KV-backed Durable Objects. Refer to [Durable Objects limits](/durable-objects/platform/limits/).
 
-<sup>5</sup> Refer to the [R2 documentation](/r2/reference/consistency/) for
-more details on R2's consistency model.
+4. Free accounts are limited to 5 GB of database storage.
+
+5. Free accounts are limited to 500 MB per database.
+
+6. Refer to the [R2 documentation](/r2/reference/consistency/) for more details on R2's consistency model.
+</Details>
 
 <Render file="limits_increase" />
 

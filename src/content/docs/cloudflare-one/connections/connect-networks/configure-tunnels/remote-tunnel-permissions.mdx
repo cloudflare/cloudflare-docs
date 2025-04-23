@@ -9,7 +9,7 @@ import { TabItem, Tabs, Render } from "~/components";
 
 A remotely-managed tunnel only requires the tunnel token to run. Anyone with access to the token will be able to run the tunnel.
 
-## View the tunnel token
+## Get the tunnel token
 
 To get the token for a remotely-managed tunnel:
 
@@ -35,6 +35,13 @@ Make a `GET` request to the [Cloudflare Tunnel token](/api/resources/zero_trust/
 ```
 
 </TabItem>
+
+<TabItem label="Terraform (v5)">
+
+<Render file="terraform/get-tunnel-token" product="cloudflare-one" />
+
+</TabItem>
+
 </Tabs>
 
 ## Rotate a token without service disruption

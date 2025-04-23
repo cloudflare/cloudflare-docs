@@ -81,33 +81,7 @@ You will need to declare the [providers](https://registry.terraform.io/browse/pr
 		<Tabs syncKey="dashPlusAPI">
 		<TabItem label="Terraform (v5)">
 
-		```tf
-		terraform {
-			required_providers {
-				cloudflare = {
-					source = "cloudflare/cloudflare"
-					version = ">= 5.3.0"
-				}
-				google = {
-					source = "hashicorp/google"
-				}
-				random = {
-					source = "hashicorp/random"
-				}
-			}
-			required_version = ">= 1.2"
-		}
-
-		# Providers
-		provider "cloudflare" {
-			api_token    = var.cloudflare_token
-		}
-		provider "google" {
-			project    = var.gcp_project_id
-		}
-		provider "random" {
-		}
-		```
+		<Render file="terraform/providers-v5" />
 
 		</TabItem>
 		<TabItem label="Terraform (v4)">
@@ -159,16 +133,11 @@ The following configuration will modify settings in your Cloudflare account.
 		<TabItem label="Terraform (v5)">
 
 		```tf
-		# Generates a 32-byte secret for the tunnel.
-		resource "random_bytes" "tunnel_secret" {
-			byte_length = 32
-		}
 
 		# Creates a new remotely-managed tunnel for the GCP VM.
 		resource "cloudflare_zero_trust_tunnel_cloudflared" "gcp_tunnel" {
 			account_id    = var.cloudflare_account_id
 			name          = "Terraform GCP tunnel"
-			tunnel_secret = random_bytes.tunnel_secret.base64
 		}
 
 		# Reads the token used to run the tunnel on the server.
@@ -245,6 +214,7 @@ The following configuration will modify settings in your Cloudflare account.
 			]
 		}
 		```
+
 		</TabItem>
 		<TabItem label="Terraform (v4)">
 

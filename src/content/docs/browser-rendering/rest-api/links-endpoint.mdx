@@ -5,9 +5,13 @@ sidebar:
   order: 10
 ---
 
+import { Tabs, TabItem } from "~/components";
+
 The `/links` endpoint retrieves all links from a webpage. It can be used to extract all links from a page, including those that are hidden.
 
 ## Basic usage
+
+<Tabs syncKey="workersExamples"> <TabItem label="curl">
 
 This example grabs all links from the Cloudflare Developers homepage.
 The response will be a JSON array containing the links found on the page.
@@ -100,6 +104,24 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 }
 ```
 
+</TabItem> <TabItem label="TypeScript SDK">
+
+```typescript
+import Cloudflare from "cloudflare";
+
+const client = new Cloudflare({
+	apiEmail: process.env["CLOUDFLARE_EMAIL"], // This is the default and can be omitted
+	apiKey: process.env["CLOUDFLARE_API_KEY"], // This is the default and can be omitted
+});
+
+const links = await client.browserRendering.links.create({
+	account_id: "account_id",
+});
+
+console.log(links);
+```
+
+</TabItem> </Tabs>
 ## Advanced usage
 
 In this example we can pass a `visibleLinksOnly` parameter to only return links that are visible on the page.

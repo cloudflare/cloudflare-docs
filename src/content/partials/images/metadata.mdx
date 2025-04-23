@@ -10,7 +10,7 @@ Color profiles and EXIF rotation are applied to the image even if the metadata i
 Available options are `copyright`, `keep`, and `none`. The default for all JPEG images is `copyright`. WebP and PNG output formats will always discard EXIF metadata.
 
 :::note
-- If Polish is enabled, then all metadata may already be removed and this option will have no effect.
+- If [Polish](/images/polish/) is enabled, then all metadata may already be removed and this option will have no effect.
 - Even when choosing to keep EXIF metadata, Cloudflare will modify JFIF data (potentially invalidating it) to avoid the known incompatibility between the two standards. For more details, refer to [JFIF Compatibility](https://en.wikipedia.org/wiki/JPEG_File_Interchange_Format#Compatibility).
 :::
 

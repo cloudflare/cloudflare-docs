@@ -4,7 +4,7 @@
 
 import { Render, RuleID } from "~/components";
 
-The following example deploys a [WAF managed ruleset](/waf/managed-rules/#managed-rulesets) to the `http_request_firewall_managed` phase of a given account (`{account_id}`) by creating a rule that executes the managed ruleset. The rules in the managed ruleset are executed when the zone name matches one of `example.com` or `anotherexample.com`.
+The following example deploys the [Cloudflare Managed Ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/) to the `http_request_firewall_managed` phase of a given account (`{account_id}`) by creating a rule that executes the managed ruleset. The rules in the managed ruleset are executed when the zone name matches one of `example.com` or `anotherexample.com`.
 
 1.  <Render
     	file="rulesets/api-account/step1-get-entrypoint"

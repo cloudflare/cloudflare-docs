@@ -15,18 +15,42 @@ const props = z.object({
 	headers: z.record(z.string(), z.string()).default({}),
 	json: z.union([Record, z.array(Record)]).optional(),
 	form: Record.optional(),
+	query: z
+		.record(z.string(), z.union([z.string(), z.array(z.string())]))
+		.optional(),
 	code: z
 		.custom<Omit<ComponentProps<typeof Code>, "code" | "lang">>()
 		.optional(),
 });
 
-const { method, url, headers, json, form, code } = props.parse(Astro.props);
+const {
+	method,
+	url: baseUrl,
+	headers,
+	json,
+	form,
+	query,
+	code,
+} = props.parse(Astro.props);
 
 if (json && form) {
 	throw new Error("[CURL] Cannot use both 'json' and 'form' properties.");
 }
 
-const lines = [`curl ${url}`, `\t--request ${method}`];
+const url = new URL(baseUrl);
+if (query) {
+	for (const [key, value] of Object.entries(query)) {
+		if (Array.isArray(value)) {
+			for (const v of value) {
+				url.searchParams.append(key, v);
+			}
+		} else {
+			url.searchParams.set(key, value);
+		}
+	}
+}
+
+const lines = [`curl "${url.toString()}"`, `\t--request ${method}`];
 
 if (headers) {
 	for (const [key, value] of Object.entries(headers)) {

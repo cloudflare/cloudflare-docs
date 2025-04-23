@@ -84,15 +84,15 @@ const app = new Hono();
 app.get('*', (c) => {
   // The name of the cookie
   const COOKIE_NAME = "__uid";
-  
+
   // Get the specific cookie value using Hono's cookie helper
   const cookieValue = getCookie(c, COOKIE_NAME);
-  
+
   if (cookieValue) {
     // Respond with the cookie value
     return c.text(cookieValue);
   }
-  
+
   return c.text("No cookie with name: " + COOKIE_NAME);
 });
 

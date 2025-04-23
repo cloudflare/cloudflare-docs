@@ -9,25 +9,28 @@ import { GlossaryTooltip, Render } from "~/components";
 
 A user session determines how long a user can access an Access application without re-authenticating.
 
-## Session duration
+## Session durations
 
 When a user logs in to an application protected by Access, Access validates their identity against your Access policies and generates two signed JSON Web Tokens (JWTs):
 
 | Token                                                                                 | Description                                                                                                          | Expiration                                                                                                                                        | Storage                                                                           |
 | ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
 | Global session token                                                                  | Stores the user's identity from the IdP and provides single sign-on (SSO) functionality for all Access applications. | [Global session duration](#set-global-session-duration)                                                                                           | Your Cloudflare <GlossaryTooltip term="team domain">team domain</GlossaryTooltip> |
-| [Application token](/cloudflare-one/identity/authorization-cookie/application-token/) | Allows the user to access a specific Access application.                                                             | [Policy session duration](#set-policy-session-duration) (if set), otherwise the [application session duration](#set-application-session-duration) | The hostname protected by the Access application                                  |
-|                                                                                       |                                                                                                                      |                                                                                                                                                   |                                                                                   |
+| [Application token](/cloudflare-one/identity/authorization-cookie/application-token/) | Allows the user to access a specific Access application.                                                             | [Policy session duration](#set-policy-session-duration), which defaults to the [application session duration](#set-application-session-duration) | The hostname protected by the Access application                                  |
 
 The user can access the application for the entire duration of the application token's lifecycle. When the application token expires, Cloudflare will automatically issue a new application token if the global token is still valid (and the user's identity still passes your Access policies). If the global token has also expired, the user will be prompted to re-authenticate with the IdP.
 
 The global token expiration is usually set to equal or exceed the application token expiration. Setting a longer global token provides a more secure way to allow for longer user sessions, since the global token cannot be used to directly access an application.
 
+As an analogy, you can think of the global session like a festival where you buy a ticket to enter for the day. For certain rides or areas, the staff may periodically check your ticket to make sure you are authorized to enter. For example, the backstage area may allow ticket holders to go on a 30 minutes tour, after which you need to sign up for another tour. This is analogous to the app session. Now imagine a special policy exists where VIP ticket holders can go backstage for as long as they want. The VIPs have a policy session duration which overrides the default 30 minutes value.
+
 <Render file="access/one-time-pin-warning" />
 
-### Set global session duration
+### Global session duration
 
-You can set a global session duration between 15 minutes and 1 month.
+The global session duration determines how often Cloudflare Access prompts the user to log in to their identity provider. You can set a global session duration between 15 minutes and one month. The default value is 24 hours.
+
+To set the global session duration:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
 2. Under **Global session timeout**, select **Edit**,
@@ -36,16 +39,33 @@ You can set a global session duration between 15 minutes and 1 month.
 
 The user will be required to re-authenticate with the IdP after this period of time.
 
-### Set application session duration
+### Policy session duration
 
-You can set an application session duration for self-hosted and private Access applications. Available session durations range from immediate timeout to 1 month. The default is 24 hours.
+The policy session duration determines how long the user can access a self-hosted Access application. When the user's session expires, Access rechecks their stored user identity against the application's Access policies.
+
+By default, the policy session duration is equal to the [application session duration](#set-application-session-duration). To configure more granular permissions for specific users, you can change the policy session duration to a value ranging from immediate timeout to one month. For example, you may wish to set the application session duration to seven days for engineers, but set a policy session duration to 24 hours for contractors.
+
+To set the policy session duration:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Policies**.
+2. Choose a policy and select **Configure**.
+3. Select a **Session Duration** from the dropdown menu.
+4. Save the policy.
+
+Users who match this policy will be issued an application token with this expiration time.
+
+### Application session duration
+
+The application session duration is the default [policy session duration](#policy-session-duration) for all policies in an Access application. Available session durations range from immediate timeout to one month. The default value is 24 hours.
+
+To set the application session duration:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 2. Choose an application and select **Configure**.
 3. Select a **Session Duration** from the dropdown menu.
 4. Save the application.
 
-The application token will expire after this period of time (unless you have set a [policy session duration](#set-policy-session-duration)).
+Users who match a policy configured with a _Same as application session timeout_ duration will be issued an application token with this expiration time.
 
 #### SaaS applications
 
@@ -55,16 +75,38 @@ The application token will expire after this period of time (unless you have set
 
 <Render file="access/self-hosted-app/ssh-sessions" />
 
-### Set policy session duration
+### WARP session duration
 
-You can set a policy session duration ranging from immediate timeout to one month. The policy session duration takes precedence over the application session duration.
+When [WARP authentication identity](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/#configure-warp-sessions-in-access) is enabled for an Access application, the WARP session duration overrides the application and policy session durations. If the global session expires but the user already has a valid WARP session, the user will not need to reauthenticate with the IdP until the WARP session expires, given the user is running WARP.
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Policies**.
-2. Choose a policy and select **Configure**.
-3. Select a **Session Duration** from the dropdown menu.
-4. Save the policy.
+### Order of enforcement
 
-Users who match this policy will be issued an application token with this expiration time.
+The following flowchart illustrates how Access enforces user sessions for a self-hosted application.
+
+```mermaid
+flowchart TB
+    %% Accessibility
+    accTitle: Access session durations
+    accDescr: Flowchart describing the order of enforcement for Access sessions
+
+    %% In with user traffic
+    start["User goes to Access application"]
+    start--"WARP authentication enabled" -->warpsession[WARP session expired?]
+    start-- "WARP authentication disabled" --> policysession[Policy session expired?]
+
+		warpsession--"Yes"-->idp[Prompt to log in to IdP]
+		warpsession--"No"-->accessgranted[Access granted]
+
+		policysession--"Yes"-->globalsession[Global session expired?]
+		policysession--"No"-->accessgranted
+
+		globalsession--"Yes"-->idp
+		globalsession--"No"-->refreshtoken[Check identity against Access policies]
+		refreshtoken-->accessgranted
+		idp-->refreshtoken
+
+
+```
 
 ## Revoke user sessions
 

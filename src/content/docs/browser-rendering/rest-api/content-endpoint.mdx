@@ -5,9 +5,13 @@ sidebar:
   order: 2
 ---
 
+import { Tabs, TabItem } from "~/components";
+
 The `/content` endpoint instructs the browser to navigate to a website and capture the fully rendered HTML of a page, including the `head` section, after JavaScript execution. This is ideal for capturing content from JavaScript-heavy or interactive websites.
 
 ## Basic usage
+
+<Tabs syncKey="workersExamples"> <TabItem label="curl">
 
 Go to `https://example.com` and return the rendered HTML.
 
@@ -17,6 +21,25 @@ curl -X 'POST' 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browse
   -H 'Authorization: Bearer <apiToken>' \
   -d '{"url": "https://example.com"}'
 ```
+
+</TabItem> <TabItem label="TypeScript SDK">
+
+```typescript
+import Cloudflare from "cloudflare";
+
+const client = new Cloudflare({
+	apiEmail: process.env["CLOUDFLARE_EMAIL"], // This is the default and can be omitted
+	apiKey: process.env["CLOUDFLARE_API_KEY"], // This is the default and can be omitted
+});
+
+const content = await client.browserRendering.content.create({
+	account_id: "account_id",
+});
+
+console.log(content);
+```
+
+</TabItem> </Tabs>
 
 ## Advanced usage
 

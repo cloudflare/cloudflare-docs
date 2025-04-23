@@ -110,32 +110,32 @@ const app = new Hono<Environment>();
 // Middleware to handle authentication with timing-safe comparison
 app.use('*', async (c, next) => {
   const secret = c.env.MY_SECRET_VALUE;
-  
+
   if (!secret) {
     return c.text("Missing secret binding", 500);
   }
-  
+
   const authToken = c.req.header("Authorization") || "";
-  
+
   // Early length check to avoid unnecessary processing
   if (authToken.length !== secret.length) {
     return c.text("Unauthorized", 401);
   }
-  
+
   const encoder = new TextEncoder();
-  
+
   const a = encoder.encode(authToken);
   const b = encoder.encode(secret);
-  
+
   if (a.byteLength !== b.byteLength) {
     return c.text("Unauthorized", 401);
   }
-  
+
   // Perform timing-safe comparison
   if (!crypto.subtle.timingSafeEqual(a, b)) {
     return c.text("Unauthorized", 401);
   }
-  
+
   // If we got here, the auth token is valid
   await next();
 });

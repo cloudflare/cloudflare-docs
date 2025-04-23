@@ -127,7 +127,7 @@ app.get('*', async (c) => {
 
   // Cast the raw request to include Cloudflare-specific properties
   const request = c.req.raw as RequestWithCf;
-  
+
   // Use the cf object to obtain the country of the request
   // more on the cf object: https://developers.cloudflare.com/workers/runtime-apis/request#incomingrequestcfproperties
   const country = request.cf.country;

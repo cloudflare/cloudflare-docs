@@ -13,12 +13,11 @@ We're excited to share that you can now use Playwright's browser automation [cap
 Below is an example of how to use Playwright with Browser Rendering to test a TODO application using assertions:
 
 ```ts title="Assertion example"
-import type { Fetcher } from '@cloudflare/workers-types';
-import { launch } from '@cloudflare/playwright';
+import { launch, type BrowserWorker } from '@cloudflare/playwright';
 import { expect } from '@cloudflare/playwright/test';
 
 interface Env {
-  MYBROWSER: Fetcher;
+  MYBROWSER: BrowserWorker;
 }
 
 export default {
@@ -29,7 +28,7 @@ export default {
 
     await page.goto('https://demo.playwright.dev/todomvc');
 
-    const TODO_ITEMS = todos.length > 0 ? todos : [
+    const TODO_ITEMS = [
         'buy some cheese',
         'feed the cat',
         'book a doctors appointment'
@@ -46,7 +45,7 @@ export default {
     await Promise.all(TODO_ITEMS.map(
         (value, index) => expect(page.getByTestId('todo-title').nth(index)).toHaveText(value)
     ));
-	},
+  },
 };
 ```
 

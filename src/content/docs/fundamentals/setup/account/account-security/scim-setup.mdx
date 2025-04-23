@@ -1,6 +1,6 @@
 ---
 pcx_content_type: how-to
-title: Provision with SCIM
+title: Dashboard SCIM provisioning
 updated: 2024-12-04
 
 ---
@@ -8,7 +8,7 @@ updated: 2024-12-04
 Cloudflare supports bulk provisioning of users into the Cloudflare dashboard by using the System for Cross-domain Identity Management (SCIM) protocol. This allows you to connect your external identity provider (IdP) to Cloudflare and quickly onboard and manage users and their permissions. Cloudflare supports SCIM onboarding with Okta and Microsoft Entra.
 
 :::note
-Cloudflare Zero Trust also supports SCIM for onboarding users to Cloudflare Access. [Learn more](/cloudflare-one/identity/users/scim/)
+This section covers SCIM provisioning for the Cloudflare dashboard only. If you need to provision SCIM for Cloudflare Zero Trust, refer to [Zero Trust SCIM provisioning](/cloudflare-one/identity/users/scim/).
 :::
 
 ## Limitations
@@ -78,7 +78,11 @@ To start, you will need to collect a couple of pieces of data from Cloudflare an
 6. Disable **Automatically log in when user lands on login page**.
 7. Select **Next**, then select **Done**.
 
-### Integrate the Cloudflare API.
+### Integrate the Cloudflare API
+
+:::note
+The **Update User Attributes** option is not supported.
+:::
 
 1. In your integration page, go to **Provisioning** > **Configure API Integration**.
 2. Enable **Enable API Integration**.
@@ -86,7 +90,7 @@ To start, you will need to collect a couple of pieces of data from Cloudflare an
 4. In OAuth Bearer Token, enter your API token value.
 5. Select **Save**.
 
-### Set up your SCIM users.
+### Set up your SCIM users
 
 1. In **Provisioning to App**, select **Edit**.
 2. Enable **Create Users** and **Deactivate Users**. Select **Save**.
@@ -122,14 +126,14 @@ Adding any users to these groups will grant them the role. Removing the users fr
 
 ## Provision with Microsoft Entra ID
 
-### Set up the Microsoft Entra ID Enterprise application.
+### Set up the Microsoft Entra ID Enterprise application
 
 1. Go to your Microsoft Entra ID instance and select **Enterprise Applications**.
 2. Select **Create your own application** and name your application.
 3. Select **Integrate any other application you don’t find in the gallery (Non-gallery)**.
 4. Select **Create**.
 
-### Provision the Microsoft Entra ID Enterprise application.
+### Provision the Microsoft Entra ID Enterprise application
 
 1. Under **Manage** on the sidebar menu, select **Provisioning**.
 2. Select **Automatic** on the dropdown menu for the Provisioning Mode.

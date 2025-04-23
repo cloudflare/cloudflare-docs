@@ -131,4 +131,6 @@ For more information on fixing certificate issues, refer to [Troubleshooting](/c
 
 If an HTTP request that matches a block policy does not arrive at the same Cloudflare data center as its DNS query, Gateway will display the default block page instead of your custom block page.
 
+This applies to DNS queries sent to any Gateway resolver endpoint, including those over IPv4, IPv6, and encrypted protocols like DoH (DNS over HTTPS) and DoT (DNS over TLS). If a DNS query is routed to a different Cloudflare data center than the corresponding HTTP request (for example, if DoH traffic is sent outside the WARP tunnel), Gateway cannot correlate the two requests and will display the default block page instead of your custom block page.
+
 If the HTTP request comes from a different IP address than the DNS request, Gateway may not display the rule ID, custom message, or other fields on the block page. This can happen when a recursive DNS resolver's source IP address differs from the user device's IP address.

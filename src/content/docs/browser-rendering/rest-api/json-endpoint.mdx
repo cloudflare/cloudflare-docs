@@ -5,6 +5,8 @@ sidebar:
   order: 9
 ---
 
+import { Tabs, TabItem } from "~/components";
+
 The `/json` endpoint extracts structured data from a webpage. You can specify the expected output using either a `prompt` or a `response_format` parameter which accepts a JSON schema. The endpoint returns the extracted data in JSON format.
 
 :::note[Note]
@@ -14,6 +16,8 @@ The `/json` endpoint leverages [Workers AI](/workers-ai/) for data extraction. U
 :::
 
 ## Basic Usage
+
+<Tabs syncKey="workersExamples"> <TabItem label="curl">
 
 ### With a Prompt and JSON schema
 
@@ -53,7 +57,6 @@ curl --request POST 'https://api.cloudflare.com/client/v4/accounts/CF_ACCOUNT_ID
   }
 }'
 ```
-
 
 ```json output collapse={15-48}
 {
@@ -99,7 +102,6 @@ curl --request POST 'https://api.cloudflare.com/client/v4/accounts/CF_ACCOUNT_ID
     "prompt": "get me the list of AI products"
   }'
 ```
-
 
 ```json output
 
@@ -150,7 +152,6 @@ curl --request POST 'https://api.cloudflare.com/client/v4/accounts/CF_ACCOUNT_ID
       }
   }'
 ```
-
 
 ```json output collapse={13-68}
 {
@@ -221,3 +222,24 @@ curl --request POST 'https://api.cloudflare.com/client/v4/accounts/CF_ACCOUNT_ID
 	}
 }
 ```
+
+</TabItem> <TabItem label="TypeScript SDK">
+
+Below is an example using the TypeScript SDK:
+
+```typescript
+import Cloudflare from "cloudflare";
+
+const client = new Cloudflare({
+	apiEmail: process.env["CLOUDFLARE_EMAIL"], // This is the default and can be omitted
+	apiKey: process.env["CLOUDFLARE_API_KEY"], // This is the default and can be omitted
+});
+
+const json = await client.browserRendering.json.create({
+	account_id: "account_id",
+});
+
+console.log(json);
+```
+
+</TabItem> </Tabs>

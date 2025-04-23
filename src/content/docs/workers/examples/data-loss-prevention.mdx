@@ -258,30 +258,30 @@ async function postDataBreach(request: Request) {
 app.use('*', async (c) => {
   // Fetch the origin response
   const response = await fetch(c.req.raw);
-  
+
   // Return origin response if response wasn't text
   const contentType = response.headers.get("content-type") || "";
   if (!contentType.toLowerCase().includes("text/")) {
     return response;
   }
-  
+
   // Get the response text
   let text = await response.text();
-  
+
   // When debugging, replace the response from the origin with an email
   text = DEBUG
     ? text.replace("You may use this", "me@example.com may use this")
     : text;
-  
+
   // Check for sensitive data
   for (const kind in sensitiveRegexsMap) {
     const sensitiveRegex = new RegExp(sensitiveRegexsMap[kind], "ig");
     const match = sensitiveRegex.test(text);
-    
+
     if (match) {
       // Alert a data breach
       await postDataBreach(c.req.raw);
-      
+
       // Respond with a block if credit card, otherwise replace sensitive text with `*`s
       if (kind === "creditCard") {
         return c.text(`${kind} found\nForbidden\n`, 403);
@@ -294,7 +294,7 @@ app.use('*', async (c) => {
       }
     }
   }
-  
+
   // Return the modified response
   return new Response(text, {
     status: response.status,

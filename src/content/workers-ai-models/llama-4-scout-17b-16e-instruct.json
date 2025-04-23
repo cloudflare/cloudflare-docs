@@ -31,6 +31,10 @@
             ]
         },
         {
+            "property_id": "function_calling",
+            "value": "true"
+        },
+        {
             "property_id": "terms",
             "value": "https://github.com/meta-llama/llama-models/blob/main/models/llama4/LICENSE"
         }

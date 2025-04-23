@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Tabs, TabItem } from "~/components";
+import { Render } from "~/components";
 
 Follow this guide to set up a Cloudflare Tunnel using the API.
 
@@ -142,49 +142,7 @@ To configure Zero Trust policies and connect as a user, refer to [Connect privat
 
 Install `cloudflared` on your server and run the tunnel using the `token` value obtained in [2. Create a tunnel](#2-create-a-tunnel). You can also get the tunnel token using the [Cloudflare Tunnel token](/api/resources/zero_trust/subresources/tunnels/subresources/cloudflared/subresources/token/methods/get/) endpoint.
 
-<Tabs> <TabItem label="Linux">
-
-1.  [Download and install](https://pkg.cloudflare.com/index.html) `cloudflared`.
-
-2.  Run the following command:
-
-        ```sh
-        sudo cloudflared service install <tunnel-token>
-        ```
-
-</TabItem> <TabItem label="Windows">
-
-1.  [Download and install](/cloudflare-one/connections/connect-networks/downloads/#windows) `cloudflared`.
-
-2.  Open Command Prompt as administrator.
-
-3.  Run the following command:
-
-        ```txt
-        cloudflared.exe service install <tunnel-token>
-        ```
-
-</TabItem> <TabItem label="macOS">
-
-1.  [Download and install](/cloudflare-one/connections/connect-networks/downloads/#macos) `cloudflared`.
-
-2.  Run the following command:
-
-        ```sh
-        sudo cloudflared service install <tunnel-token>
-        ```
-
-</TabItem> <TabItem label="Docker">
-
-1.  Open a terminal window.
-
-2.  Run the following command:
-
-        	```sh
-        	docker run cloudflare/cloudflared:latest tunnel --no-autoupdate run --token <tunnel-token>
-        	```
-
-</TabItem>  </Tabs>
+<Render file="tunnel/install-and-run-tunnel" product="cloudflare-one" />
 
 ## 5. Verify tunnel status
 

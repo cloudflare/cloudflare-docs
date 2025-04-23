@@ -190,7 +190,7 @@ app.get('*', async (c) => {
   async function gatherResponse(response: Response) {
     const { headers } = response;
     const contentType = headers.get("content-type") || "";
-    
+
     if (contentType.includes("application/json")) {
       return { contentType, result: JSON.stringify(await response.json()) };
     } else if (contentType.includes("application/text")) {
@@ -209,10 +209,10 @@ app.get('*', async (c) => {
       "content-type": "application/json;charset=UTF-8",
     },
   };
-  
+
   const response = await fetch(url, init);
   const { contentType, result } = await gatherResponse(response);
-  
+
   return new Response(result, {
     headers: {
       "content-type": contentType,

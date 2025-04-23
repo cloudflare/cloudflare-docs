@@ -58,7 +58,7 @@ using result = await stub.getCounter();
 
 When making requests via `fetch` or `R2.get()`, consume the entire response body, even if you are not asserting its content. For example:
 
-```ts 
+```ts
 test('check if file exists', async () => {
 	await env.R2.put('file', 'hello-world');
 	const response = await env.R2.get('file');

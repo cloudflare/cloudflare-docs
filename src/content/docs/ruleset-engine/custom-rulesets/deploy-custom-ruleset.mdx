@@ -6,19 +6,19 @@ sidebar:
 description: Learn how to deploy a custom ruleset to your Cloudflare account.
 ---
 
-import { APIRequest } from "~/components";
+import { APIRequest, Render } from "~/components";
 
-Before you begin:
+To deploy a custom ruleset, add a rule with `execute` action to the list of rules of a phase [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) at the account level. The expression of the new rule will define when the custom ruleset will run.
 
-1. Obtain the name of the phase where you want to deploy the custom ruleset.
+<Render file="custom-rulesets-terraform" />
+
+<Render file="custom-rulesets-dashboard" />
+
+## Before you begin
+
+1. Obtain the name of the [phase](/ruleset-engine/reference/phases-list/) where you want to deploy the custom ruleset.
 2. [Create a custom ruleset](/ruleset-engine/custom-rulesets/create-custom-ruleset/) and keep the ID of the new custom ruleset.
 3. [Fetch the rules already present in the phase entry point ruleset](/ruleset-engine/basic-operations/view-rulesets/#view-the-rules-included-in-a-ruleset). You must include in the `PUT` request all existing rules you want to keep.
-
-To deploy a custom ruleset, add a rule that executes the custom ruleset. Define the rule scope in the rule expression.
-
-:::caution
-Regarding the expression of the rule deploying the ruleset, you must use parentheses to enclose any custom conditions and end your expression with `and cf.zone.plan eq "ENT"` or else the API operation will fail.
-:::
 
 ## Example
 
@@ -108,3 +108,7 @@ The following `PUT` request adds a rule that executes a custom ruleset when the 
 	"messages": []
 }
 ```
+
+:::caution
+Regarding the expression of the rule deploying the ruleset, you must use parentheses to enclose any custom conditions and end your expression with `and cf.zone.plan eq "ENT"` or else the API operation will fail.
+:::

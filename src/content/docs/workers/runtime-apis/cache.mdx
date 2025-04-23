@@ -49,7 +49,17 @@ You may create and manage additional Cache instances via the [`caches.open`](htt
 let myCache = await caches.open('custom:cache');
 await myCache.match(request);
 ```
+:::note
+When using the cache API, avoid overriding the hostname in cache requests, as this can lead to unnecessary DNS lookups and cache inefficiencies. Always use the hostname that matches the domain associated with your Worker.
 
+```js
+// recommended approach: use your Worker hostname to ensure efficient caching
+request.url = "https://your-Worker-hostname.com/";
+
+let myCache = await caches.open('custom:cache');
+let response = await myCache.match(request);
+```
+:::
 ***
 
 ## Headers
@@ -105,10 +115,6 @@ cache.put(request, response);
 
 
 The `stale-while-revalidate` and `stale-if-error` directives are not supported when using the `cache.put` or `cache.match` methods.
-
-
-:::
-
 #### Parameters
 
 
@@ -152,10 +158,6 @@ cache.match(request, options);
 
 
 The `stale-while-revalidate` and `stale-if-error` directives are not supported when using the `cache.put` or `cache.match` methods.
-
-
-:::
-
 #### Parameters
 
 

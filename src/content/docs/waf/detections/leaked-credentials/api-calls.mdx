@@ -10,6 +10,10 @@ head:
 
 import { APIRequest } from "~/components";
 
+The following examples address common scenarios of using the Cloudflare API to manage and configure leaked credentials detection.
+
+If you are using Terraform, refer to [Terraform configuration examples](/waf/detections/leaked-credentials/terraform-examples/).
+
 ## General operations
 
 The following API examples cover basic operations such as enabling and disabling the leaked credentials detection.
@@ -53,11 +57,11 @@ To obtain the current status of the leaked credentials detection, use a `GET` re
 
 ## Custom detection location operations
 
-The following API examples cover operations on custom detection locations for leaked credentials detection.
+The following API examples cover operations on [custom detection locations](/waf/detections/leaked-credentials/#custom-detection-locations) for leaked credentials detection.
 
 ### Add a custom detection location
 
-Use a `POST` request similar to the following:
+To add a custom detection location, use a `POST` request similar to the following:
 
 <APIRequest
 	path="/zones/{zone_id}/leaked-credential-checks/detections"
@@ -95,7 +99,7 @@ To get a list of existing custom detection locations, use a `GET` request simila
 
 ### Delete a custom detection location
 
-Use a `DELETE` request similar to the following:
+To delete a custom detection location, use a `DELETE` request similar to the following:
 
 <APIRequest
 	path="/zones/{zone_id}/leaked-credential-checks/detections/{detection_id}"
