@@ -125,7 +125,7 @@ A cursor (`SqlStorageCursor`) to iterate over query row results as objects. `Sql
   * Returns a row object if query result has exactly one row. If query result has zero rows or more than one row, `one()` throws an exception.
 * `raw()`: <Type text='Iterator' />
   * Returns an Iterator over the same query results, with each row as an array of column values (with no column names) rather than an object.
-  * Returned Iterator supports `next()`, `toArray()`, and `one()` methods above.
+  * Returned Iterator supports `next()` and `toArray()` methods above.
   * Returned cursor and `raw()` iterator iterate over the same query results and can be combined. For example:
 
 ```ts
