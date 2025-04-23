@@ -467,16 +467,14 @@ For more information on isolating an Access application, refer to [Isolate self-
 
 ## Additional benefits
 
-Organizations that adopt Cloudflare to secure access to AI agents as exemplified in this tutorial, will also benefit from improved visibility, better cost control and agility.
+Organizations that adopt Cloudflare to secure access to AI agents will benefit from improved visibility and configurability.
 
 ### Visibility
 
-All [access events](/cloudflare-one/insights/logs/audit-logs/) to the AI wrapper and [DLP violations](/cloudflare-one/insights/logs/gateway-logs/#http-logs) will be logged in Cloudflare's dashboard. In addition, AI gateway provides [visibility](/ai-gateway/observability/logging/) into user prompts, model response, token usage and costs.
+Zero Trust will log all [Access events](/cloudflare-one/insights/logs/audit-logs/) and [DLP detections](/cloudflare-one/insights/logs/gateway-logs/#http-logs). In addition, AI Gateway provides [visibility](/ai-gateway/observability/logging/) into user prompts, model response, token usage, and costs.
 
-Finally, all the logs can be easily exported to external systems using [Logpush](/logs/).
+Logs can be exported to external providers with [Logpush](/logs/get-started/).
 
-### Cost control and agility
+### Configurability
 
-The worker exemplified in this tutorial could be easily modified to use a [different AI provider](/ai-gateway/providers/) or give the user with the option to choose between multiple AI providers, including [AI models running directly on Cloudflare's global network](/workers-ai/).
-
-This enables organizations to better control costs related to AI usage and/or quickly adopt the latest innovations in the field without impacting the frontend users are accessing or the access controls already put in place.
+You can configure your wrapper to use a [different AI provider](/ai-gateway/providers/) or give your user the option to choose between multiple AI providers, including AI models running directly on Cloudflare's global network with [Workers AI](/workers-ai/). With this, you can control costs related to AI usage or adopt newer models without impacting your users or the access controls already put in place.
