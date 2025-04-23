@@ -32,7 +32,7 @@ entries:
     availability: Accounts with at least one Enterprise zone.
     associatedProducts: Bots
     nextSteps: Select the [Security Analytics](/waf/analytics/security-analytics/) link enclosed in the alert message. Contact support if additional advice is needed on how to investigate the attack further.
-    otherFilters: Refer to the [alert logic]() for more information on additional filters or groupings.
+    otherFilters: Refer to the [alert logic](/bots/reference/alerts/#alert-logic) for more information on additional filters or groupings.
     additional_information: |-
       After an alert is created on the dashboard, it may take up to 30 minutes before sufficient data is available to begin detecting traffic anomalies. Verified bot traffic is excluded from both basic and advanced bot alerts.
 
