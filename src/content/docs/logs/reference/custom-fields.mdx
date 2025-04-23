@@ -62,7 +62,7 @@ The `action_parameters` object that you must include in the rule that configures
 
 Ensure that your rule definition complies with the following:
 
-- You must include at least one of the following arrays in the `action_parameters` object: `request_fields`, `response_fields`, and `cookie_fields`.
+- You must include at least one of the following arrays in the `action_parameters` object: `request_fields`, `transformed_request_fields`, `response_fields`, `raw_response_fields`, and `cookie_fields`.
 - You must enter HTTP request and response header names in lower case.
 - Cookie names are case sensitive — you must enter cookie names with the same capitalization they have in the HTTP request.
 - You must set the rule expression to `true`.
