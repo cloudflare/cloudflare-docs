@@ -155,7 +155,7 @@ When you are finished entering these details, select **SAVE**.
    * `X-Area1Security-Disposition: MALICIOUS`
    * `X-Area1Security-Disposition: SUSPICIOUS`
    * `X-Area1Security-Disposition: SPOOF`
-   * `X-Area1Security-Disposition: UCE`
+   * `X-Area1Security-Disposition: UCE` (`UCE` is the equivalent of `SPAM`)
 
    If desired, you can create a separate quarantine for each of the dispositions.
 
@@ -212,6 +212,6 @@ Unlike the configuration in [step 2](#2-quarantine-malicious-detections) where t
 
 4. In the **Message Tagging** section, select **Message is considered spam if the following header regexp matches**.
 
-5. In the **Regexp** section, enter the string `X-Area1Security-Disposition: UCE`.
+5. In the **Regexp** section, enter the string `X-Area1Security-Disposition: UCE` (`UCE` is the equivalent of `SPAM`).
 
 6. Select **SAVE** to save the updated configuration.
