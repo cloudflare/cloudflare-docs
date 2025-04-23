@@ -115,14 +115,15 @@ This `GET` request fetches a list of scripts detected by Page Shield on hostname
 
 By default, the response will only include scripts with `active` status when you do not specify a `status` filter parameter in the URL query string.
 
-TODO. Fix example.
-
-<APIRequest path="/zones/{zone_id}/page_shield/scripts" method="GET" />
-
-```bash
-curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/scripts?hosts=example.net&page=1&per_page=15" \
---header "Authorization: Bearer <API_TOKEN>"
-```
+<APIRequest
+	path="/zones/{zone_id}/page_shield/scripts"
+	parameters={{
+		hosts: "example.net",
+		page: "1",
+		per_page: "15",
+	}}
+	method="GET"
+/>
 
 ```json output
 {
@@ -172,14 +173,16 @@ For details on the available filtering, paging, and sorting parameters, refer to
 
 This `GET` request fetches a list of infrequently reported scripts on hostname `example.net`, requesting the first page with 15 items per page. The URL query string includes filtering and paging parameters.
 
-TODO. Fix example.
-
-<APIRequest path="/zones/{zone_id}/page_shield/scripts" method="GET" />
-
-```bash
-curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/scripts?status=infrequent&hosts=example.net&page=1&per_page=15" \
---header "Authorization: Bearer <API_TOKEN>"
-```
+<APIRequest
+	path="/zones/{zone_id}/page_shield/scripts"
+	parameters={{
+		status: "infrequent",
+		hosts: "example.net",
+		page: "1",
+		per_page: "15",
+	}}
+	method="GET"
+/>
 
 ```json output
 {
@@ -291,14 +294,14 @@ This `GET` request fetches a list of connections detected by Page Shield, reques
 
 By default, the response will only include connections with `active` status when you do not specify a `status` filter parameter in the URL query string.
 
-TODO. Fix example.
-
-<APIRequest path="/zones/{zone_id}/page_shield/connections" method="GET" />
-
-```bash
-curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/connections?page=1&per_page=15" \
---header "Authorization: Bearer <API_TOKEN>"
-```
+<APIRequest
+	path="/zones/{zone_id}/page_shield/connections"
+	parameters={{
+		page: "1",
+		per_page: "15",
+	}}
+	method="GET"
+/>
 
 ```json output
 {
@@ -376,14 +379,14 @@ This `GET` request fetches a list of cookies detected by Page Shield, requesting
 
 By default, the response will only include cookies with `active` status when you do not specify a `status` filter parameter in the URL query string.
 
-TODO. Fix example.
-
-<APIRequest path="/zones/{zone_id}/page_shield/cookies" method="GET" />
-
-```bash
-curl "https://api.cloudflare.com/api/v4/zones/{zone_id}/page_shield/cookies?page=1&per_page=15" \
---header "Authorization: Bearer <API_TOKEN>"
-```
+<APIRequest
+	path="/zones/{zone_id}/page_shield/cookies"
+	parameters={{
+		page: "1",
+		per_page: "15",
+	}}
+	method="GET"
+/>
 
 ```json output
 {
