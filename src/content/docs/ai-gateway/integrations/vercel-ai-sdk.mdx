@@ -47,11 +47,9 @@ const google = createGoogleGenerativeAI({
 });
 ```
 
-### Other providers
+### Retrieve `log id` from AI SDK
 
-For other providers that are not listed above, you can follow a similar pattern by creating a custom instance for any AI provider, and passing your AI Gateway URL. For help finding your provider-specific AI Gateway URL, refer to the [Supported providers page](/ai-gateway/providers).
-
-## Retrieve `log id` from AI SDK
+You can access the AI Gateway `log id` from the response headers when invoking the SDK.
 
 ```typescript
 const result = await generateText({
@@ -60,3 +58,7 @@ const result = await generateText({
 });
 console.log(result.response.headers["cf-aig-log-id"]);
 ```
+
+### Other providers
+
+For other providers that are not listed above, you can follow a similar pattern by creating a custom instance for any AI provider, and passing your AI Gateway URL. For help finding your provider-specific AI Gateway URL, refer to the [Supported providers page](/ai-gateway/providers).
