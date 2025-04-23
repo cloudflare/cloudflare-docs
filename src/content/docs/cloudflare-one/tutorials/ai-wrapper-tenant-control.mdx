@@ -5,7 +5,7 @@ pcx_content_type: tutorial
 title: Create an AI agent wrapper using AI Gateway for Secure Web Gateway filtering and tenant control
 ---
 
-import { TabItem, Tabs, Details } from "~/components";
+import { TabItem, Tabs, Details, Render } from "~/components";
 
 This tutorial explains how to use [Cloudflare AI Gateway](/ai-gateway/) and Zero Trust to create a functional and secure AI agent wrapper. Cloudflare Zero Trust admins can protect access to the wrapper with [Cloudflare Access](/cloudflare-one/policies/access/). Additionally, you can enforce [Gateway](/cloudflare-one/policies/gateway/) controls on how your users interact with AI agents, including executing AI agents in an isolated browser with [Browser Isolation](/cloudflare-one/policies/browser-isolation/), enforcing [Data Loss Prevention](/cloudflare-one/policies/data-loss-prevention/) profiles to prevent sensitive data exfiltration, and scanning content to avoid answers from AI agents that violate internal corporate guidelines. Creating an AI agent wrapper is also an effective way to enforce tenant control if you have an enterprise plan of a specific AI provider, such as ChatGPT Enterprise.
 
@@ -422,49 +422,48 @@ This ensures that public AI agents are not accessible using a managed endpoint.
 
 Alternatively, you can prevent users from using public AI agents by displaying a [custom block message](/cloudflare-one/policies/gateway/block-page/#customize-the-block-page), [redirect](/cloudflare-one/policies/gateway/block-page/#redirect-to-a-block-page), or a [user notification](/cloudflare-one/policies/gateway/http-policies/#warp-client-block-notifications) directing users to the AI agent wrapper.
 
-If you use another gateway for web filtering, try to replicate a similar policy.
+## 6. Enforce Data Loss Prevention and Clientless Browser Isolation
 
-## Enforce DLP and agentless RBI
+Now that you have full control over access to your AI agent wrapper, you can enforce extra security methods such as Data Loss Prevention (DLP) and Clientless Web Isolation to protect and control data shared with the AI agent.
 
-Since you have full control over access to your AI Agent wrapper, you can enforce extra security methods such as [**Data Loss Prevention**](/cloudflare-one/policies/data-loss-prevention/) and [**Remote Browser Isolation**](/cloudflare-one/policies/browser-isolation/).
+### Apply Data Loss Prevention profiles
 
-### Data Loss Prevention
-
-[**Data Loss Prevention**](/cloudflare-one/policies/data-loss-prevention/) can be used to avoid sensitive data to be used in prompts made to the AI agent. You will need to have an adequate HTTP policy in place for DLP to be enforced.
+You can use [Data Loss Prevention](/cloudflare-one/policies/data-loss-prevention/) to prevent your users from sending sensitive data to the AI agent.
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **DLP** > **DLP profiles**.
-2. Ensure that the DLP profiles you wish to enforce are properly configured.
-3. Then, go to **Gateway** > **Firewall policies**.
-4. Select **HTTP**.
-5. Select **Add a policy**.
-6. Under the **Traffic** section, select **Add condition**.
-7. Select **Host** and enter the custom domain of your AI Agent Wrapper.
-8. Select **Add** to add another condition.
-9. Select **DLP Profile** and choose the DLP profiles you would like to enforce.
-10. Add any other conditions that apply to your environment.
-11. Under **Action**, select **Block**.
+2. Ensure that the [DLP profiles](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/) you want to enforce are properly configured.
+3. Add an HTTP policy to enforce the DLP profile for the hostname for your wrapper. For example:
 
-### Agentless Remote Browser Isolation
+   | Selector    | Operator | Value                    | Logic | Action |
+   | ----------- | -------- | ------------------------ | ----- | ------ |
+   | Host        | is       | `ai-wrapper.example.com` | And   | Block  |
+   | DLP Profile | in       | _AI DLP profile_         |       |        |
 
-Since your AI Agent Wrapper has been published as a self-hosted Access application, we can enforce it to run as an isolated session by creating a new policy and attaching it to your application.
+4. Select **Create policy**.
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Policies**.
-2. Select **Add a policy**.
-3. Set the **Action** to **Allow**.
-4. Within the **Add rules** section, add identity rules to define who the application should be isolated for.
-5. Within the **Additional settings (optional)** section, tick the **Isolate application** toggle.
+### Execute in a clientless isolated browser
 
-Once policy has been created, you can now attach it to your AI Agent wrapper.
+Because you published your wrapper as a self-hosted Access application, you can execute it in an [isolated session](/cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/) for your users by creating an [Access policy](/cloudflare-one/policies/access/) and configuring it for your application.
+
+<Render file="clientless-browser-isolation" />
+
+3. Go to **Access** > **Policies**.
+4. Select **Add a policy**.
+5. Set the **Action** to _Allow_.
+6. In **Add rules**, add identity rules to define who the application should be isolated for.
+7. In **Additional settings (optional)**, turn on **Isolate application**.
+
+Once the Access policy has been created, you can attach it to your wrapper.
 
 1. Go to **Access** > **Applications**.
-2. Select your AI Agent wrapper application.
-3. Select **Configure**.
-4. Go to the **Policies** tab.
-5. Select **Select existing policies**.
-6. Select the policy you previously created.
-7. Make sure that the order of your policies is correct.
+2. Choose your wrapper application, then select **Configure**.
+3. In **Policies**, select **Select existing policies**.
+4. Choose the Access policy you previously created.
+5. Select **Confirm**, then select **Save application**.
 
-Since agentless Remote Browser Isolation sessions honor your Secure Web Gateway HTTP policies, your DLP Profiles will be applied.
+Because Clientless Web Isolation traffic applies your Gateway HTTP policies, your configured DLP profiles will apply to isolated sessions.
+
+For more information on isolating an Access application, refer to [Isolate self-hosted application](/cloudflare-one/policies/access/isolate-application/).
 
 ## Additional benefits
 
