@@ -14,6 +14,12 @@
 /dns/changelog/index.xml /changelog/rss/dns.xml 301
 /fundamentals/changelog/index.xml /changelog/rss/fundamentals.xml 301
 /logs/changelog/index.xml /changelog/rss/logs.xml 301
+/magic-cloud-networking/changelog/index.xml /changelog/rss/magic-cloud-networking.xml 301
+/magic-firewall/changelog/index.xml /changelog/rss/magic-firewall.xml 301
+/magic-network-monitoring/changelog/index.xml /changelog/rss/magic-network-monitoring.xml 301
+/magic-transit/changelog/index.xml /changelog/rss/magic-transit.xml 301
+/magic-wan/changelog/index.xml /changelog/rss/magic-wan.xml 301
+/network-interconnect/changelog/index.xml /changelog/rss/network-interconnect.xml 301
 /ssl/changelog/index.xml /changelog/rss/ssl.xml 301
 
 ## legacy
