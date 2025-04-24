@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { Badge } from "~/components";
+import { Badge, APIRequest } from "~/components";
 
 Consider the sections below to learn how to access analytics and logs for your DNS Firewall.
 
@@ -25,6 +25,13 @@ The DNS Firewall analytics has two [schemas](/analytics/graphql-api/getting-star
 
 You can also use the DNS Firewall API [reports endpoint](/api/resources/dns_firewall/subresources/analytics/subresources/reports/).
 
+<APIRequest
+	path="/accounts/{account_id}/dns_firewall/{dns_firewall_id}/dns_analytics/report"
+	method="GET"
+	parameters={{
+		dns_firewall_id: "f0be43d6a6654f22b6a924aff9d5852a"
+	}}
+/>
 
 ## Logs
 
