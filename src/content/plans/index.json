@@ -567,20 +567,6 @@
 	"global_configurations": {
 		"title": "Global configurations",
 		"link": "/fundamentals/global-configurations/",
-		"custom_pages": {
-			"title": "Custom error/challenge pages",
-			"link": "/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/",
-			"properties": {
-				"availability": {
-					"title": "Availability",
-					"summary": "Pro and above",
-					"free": "No",
-					"pro": "Yes",
-					"biz": "Yes",
-					"ent": "Yes"
-				}
-			}
-		},
 		"lists": {
 			"title": "Lists",
 			"link": "/waf/tools/lists/",
@@ -1250,6 +1236,20 @@
 					"pro": 25,
 					"biz": 50,
 					"ent": 300
+				},
+				"x_custom_pages": {
+					"title": "Custom Error Pages",
+					"free": "No",
+					"pro": "Yes",
+					"biz": "Yes",
+					"ent": "Yes"
+				},
+				"z_origin_error_pages": {
+					"title": "Enable Origin Error Pages",
+					"free": "No",
+					"pro": "No",
+					"biz": "No",
+					"ent": "Yes"
 				}
 			}
 		},
