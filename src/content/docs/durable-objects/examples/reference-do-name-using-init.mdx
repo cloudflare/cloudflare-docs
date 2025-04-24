@@ -12,9 +12,9 @@ description: Access the name from within a Durable Object using RpcTarget.
 
 import { TabItem, Tabs, GlossaryTooltip } from "~/components";
 
-When working with Durable Objects, you'll might need to access the name that was used to create the Durable Object via `idFromName()`. This name is typically a meaningful identifier that represents what the Durable Object is responsible for (like a user ID, room name, or resource identifier).
+When working with Durable Objects, you will need to access the name that was used to create the Durable Object via `idFromName()`. This name is typically a meaningful identifier that represents what the Durable Object is responsible for (like a user ID, room name, or resource identifier).
 
-However, there's a limitation in the current implementation: even though you create a Durable Object with `.idFromName(name)`, you cannot directly access this name inside the Durable Object via `this.ctx.id.name`.
+However, there is a limitation in the current implementation: even though you create a Durable Object with `.idFromName(name)`, you cannot directly access this name inside the Durable Object via `this.ctx.id.name`.
 
 The `RpcTarget` pattern shown below offers a solution by creating a communication layer that automatically carries the name with each method call. This keeps your API clean while ensuring the Durable Object has access to its own name.
 
