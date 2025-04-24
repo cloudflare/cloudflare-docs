@@ -14,7 +14,7 @@ Use Custom Errors to return custom content to your website visitors in case of H
 
 You can configure custom error content using the following methods:
 
-- [**Error Page**](#error-pages): An HTML page shown to website visitors when a specific error occurs (refer to the different error page types) or when showing a security challenge. Error Pages can be defined at the zone level and at the account level on paid plans, with zone-level configurations taking precedence.
+- [**Error Page**](#error-pages): An HTML page shown to website visitors when a specific error occurs (refer to the different [error page types](/rules/custom-errors/reference/error-page-types/)) or when showing a security challenge. Error Pages can be defined at the zone level and at the account level on paid plans, with zone-level configurations taking precedence.
 - [**Custom Error Rule**](#custom-error-rules): Defines the conditions under which Cloudflare will serve a custom error response to visitors in case of HTTP errors (status codes `400` and above), and the exact content that will be served. A matching custom error rule has priority over an Error Page configured at the account or at the zone level that would apply to the same error.
 
 Custom Errors require that you [proxy the DNS records](/dns/proxy-status/) of your domain (or subdomain) through Cloudflare.
