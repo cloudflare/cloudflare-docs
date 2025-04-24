@@ -21,7 +21,7 @@ export default {
 };
 ```
 
-Now when you run `npx wrangler dev`, wrangler will expose a local `/cdn-cgi/handler/email` endpoint that you can `POST` email messages to and trigger your Worker's `email()` handler:
+When you run `npx wrangler dev`, wrangler exposes a local `/cdn-cgi/handler/email` endpoint that allows you to `POST` email messages and trigger your Worker's `email()` handler:
 
 ```bash
 curl -X POST 'http://localhost:8787/cdn-cgi/handler/email' \
