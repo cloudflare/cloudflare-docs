@@ -227,7 +227,18 @@ const starlightPageProps = {
 	<SchemaViewer schema={model.schema.input} />
 
 	<h3 id="Output">Output</h3>
-	<SchemaViewer schema={model.schema.output} />
+	{
+		model.schema.output.format === "binary" ? (
+			<>
+				<p>
+					The binding returns a <code>ReadableStream</code> with the image in
+					PNG format.
+				</p>
+			</>
+		) : (
+			<SchemaViewer schema={model.schema.output} />
+		)
+	}
 
 	<h2 id="API Schemas">API Schemas</h2>
 	<p>The following schemas are based on JSON Schema</p>
