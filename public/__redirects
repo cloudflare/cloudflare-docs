@@ -20,6 +20,7 @@
 /magic-transit/changelog/index.xml /changelog/rss/magic-transit.xml 301
 /magic-wan/changelog/index.xml /changelog/rss/magic-wan.xml 301
 /network-interconnect/changelog/index.xml /changelog/rss/network-interconnect.xml 301
+/rules/changelog/index.xml /changelog/rss/rules.xml 301
 /ssl/changelog/index.xml /changelog/rss/ssl.xml 301
 
 ## legacy
