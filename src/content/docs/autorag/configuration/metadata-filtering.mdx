@@ -42,7 +42,7 @@ Note that `folder` filter only includes files exactly in that folder, so files i
 
 ### `modified_date`
 
-The timestamp for when the object was last modified. The comparison is supported in Unix timestamp format. For example, `value: "1735689600000"` can be used to compare the date of 2025-01-01.
+The timestamp indicating when the object was last modified. Comparisons are supported using a 13-digit Unix timestamp (milliseconds), but values will be rounded to 10 digits (seconds). For example, `1735689600999` or `2025-01-01 00:00:00.999 UTC` will be rounded down to `1735689600000`, corresponding to `2025-01-01 00:00:00 UTC`.
 
 ## Filter schema
 
