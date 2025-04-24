@@ -128,7 +128,7 @@ To communicate with a Durable Object, the Worker's fetch handler should look lik
 ```ts
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
-		const id = env.MY_DURABLE_OBJECT.idFromName(new URL(request.url).pathname);
+		const id:DurableObjectId = env.MY_DURABLE_OBJECT.idFromName(new URL(request.url).pathname);
 
 		const stub = env.MY_DURABLE_OBJECT.get(id);
 
