@@ -5,6 +5,10 @@ productLink: "/bots/"
 productArea: Application security
 productAreaLink: /fundamentals/reference/changelog/security/
 entries:
+  - publish_date: "2025-04-24"
+    title: Bot Detection Alerts are now available
+    description: |-
+      You can now create a [Bot Detection Alert](/bots/reference/alerts/) to notify you when Cloudflare detects a spike in Bot traffic on your website.
   - publish_date: "2024-08-19"
     title: AI bots is now a managed rule
     description: |-
