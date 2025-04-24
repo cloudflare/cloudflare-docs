@@ -7,7 +7,7 @@ params:
   - healthChecks
 ---
 
-import { APIRequest, Code, GlossaryTooltip, Render, Tabs, TabItem } from "~/components";
+import { APIRequest, Code, Details, GlossaryTooltip, Render, Tabs, TabItem } from "~/components";
 
 {props.productName} customers can configure Magic Tunnel health alerts to receive email, webhook, and PagerDuty notifications when the percentage of successful <GlossaryTooltip term="tunnel health-check">health checks</GlossaryTooltip> for a Magic Tunnel drops below the selected <a href={props.backgroundInfoPath}>service-level objective (SLO)</a>.
 
@@ -32,12 +32,28 @@ If a Magic Tunnel health alert is fired, customers can expect the following data
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Select **Notifications** > **Add**.
-3. Select **{props.productName}** > **Magic Tunnel Health Check Alert** > **Select** to add a notification.
-4. Enter a name and description for the notification.
-5. Add webhooks or an email address for the person who should receive the notification, and select **Next**.
-6. Choose the tunnels you want to receive alerts for.
-7. Select the **Alert Sensitivity Level** threshold. It is predefined for _Medium_, but you can choose between _High_, _Medium_, and _Low_. If you need more than three sensitivity levels, use the API.
-8. Select **Create** when you are done.
+3. From the **Product** drop-down menu, select **{props.productName}**.
+4. Select **Magic Tunnel Health Check Alert** > **Select** to add a notification. You can add alerts by tunnel or by data center.
+
+<Details header="Alert by tunnel">
+
+5. Enter a name and description for the notification.
+6. Add webhooks or an email address for the person who should receive the notification, and select **Next**.
+7. Select the **Alert Sensitivity Level** threshold from the dropdown menu. It is predefined for _Medium_, but you can choose between several options:
+	- Minimum (95.0)
+	- Very low (96.0)
+	- Low (97.0)
+	- Medium (98.0)
+	- High (99.0)
+	- Very high (99.5)
+	- Maximum (99.9)
+8. From the **Alert interval** drop-down menu, set the minimum amount of time that must pass before a duplicate alert is sent to you. Options range from five minutes to seven days.
+9. Enable **Set as default alert for any new tunnels created in the future** if you want the alert sensitivity level you chose to be automatically applied to all new tunnels you create.
+10. Select **Next**.
+11. Choose the tunnels you want to receive alerts for, and select **Next**.
+12. Review the details of your alert. If you are happy with them, select **Create alert**.
+
+</Details>
 
 </TabItem> <TabItem label="API">
 
