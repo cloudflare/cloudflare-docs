@@ -99,7 +99,7 @@ export class MyDurableObject extends DurableObject<Env> {
 		return "This is not in the RpcTarget";
 	}
 
-	//  * Function that takes the user's name and doesn't use the Durable Object identifier
+	//  * Function that takes the user's name and does not use the Durable Object identifier
 	//  * @param userName - The user's name to include in the greeting
 
 	async simpleGreeting(userName: string) {
@@ -126,7 +126,7 @@ export default {
 		// The DO identifier is passed in the RpcTarget
 		const greeting = await rpcTarget.computeMessage("world");
 
-		// Call the Durable Object method that doesn't use the Durable Object identifier
+		// Call the Durable Object method that does not use the Durable Object identifier
 		const simpleGreeting = await rpcTarget.simpleGreeting("world");
 
 		// Clean up the RpcTarget.
@@ -220,7 +220,7 @@ export class MyDurableObject extends DurableObject<Env> {
 		return "This is not in the RpcTarget";
 	}
 
-	//  * Function that takes the user's name and doesn't use the Durable Object identifier
+	//  * Function that takes the user's name and does not use the Durable Object identifier
 	//  * @param userName - The user's name to include in the greeting
 
 	async simpleGreeting(userName: string) {
@@ -247,7 +247,7 @@ export default {
 		// The DO identifier is stored in the Durable Object's storage
 		const greeting = await rpcTarget.computeMessage("world");
 
-		// Call the Durable Object method that doesn't use the Durable Object identifier
+		// Call the Durable Object method that does not use the Durable Object identifier
 		const simpleGreeting = await rpcTarget.simpleGreeting("world");
 
 		// Clean up the RpcTarget.
