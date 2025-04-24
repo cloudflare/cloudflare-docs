@@ -75,7 +75,7 @@ Your `MyDurableObject` class will have a constructor with two parameters. The fi
 <Tabs syncKey="language"> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
-export class MyDurableObject extends DurableObject {
+export class MyDurableObject extends DurableObject<Env> {
 	constructor(ctx, env) {}
 }
 ```
@@ -83,7 +83,7 @@ export class MyDurableObject extends DurableObject {
 </TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
-export class MyDurableObject extends DurableObject {
+export class MyDurableObject extends DurableObject<Env> {
 	constructor(ctx: DurableObjectState, env: Env) {
 		// Required, as we're extending the base class.
 		super(ctx, env)
@@ -100,10 +100,10 @@ Your file should now look like:
 <Tabs syncKey="language"> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
-export class MyDurableObject extends DurableObject {
+export class MyDurableObject extends DurableObject<Env> {
 	constructor(ctx: DurableObjectState, env: Env) {}
 
-	async sayHello() {
+	async sayHello():Promise<string> {
 		let result = this.ctx.storage.sql
 			.exec("SELECT 'Hello, World!' as greeting")
 			.one();
@@ -115,13 +115,13 @@ export class MyDurableObject extends DurableObject {
 </TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
-export class MyDurableObject extends DurableObject {
+export class MyDurableObject extends DurableObject<Env> {
 	constructor(ctx: DurableObjectState, env: Env) {
 		// Required, as we're extending the base class.
 		super(ctx, env)
 	}
 
-	async sayHello() {
+	async sayHello():Promise<string> {
 		let result = this.ctx.storage.sql
 			.exec("SELECT 'Hello, World!' as greeting")
 			.one();
@@ -155,12 +155,12 @@ To communicate with a Durable Object, the Worker's fetch handler should look lik
 
 ```js
 export default {
-	async fetch(request, env) {
-		let id = env.MY_DURABLE_OBJECT.idFromName(new URL(request.url).pathname);
+	async fetch(request, env):Promise<string> {
+		const id = env.MY_DURABLE_OBJECT.idFromName(new URL(request.url).pathname);
 
-		let stub = env.MY_DURABLE_OBJECT.get(id);
+		const stub = env.MY_DURABLE_OBJECT.get(id);
 
-		let greeting = await stub.sayHello();
+		const greeting = await stub.sayHello();
 
 		return new Response(greeting);
 	},
@@ -172,11 +172,11 @@ export default {
 ```ts
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
-		let id = env.MY_DURABLE_OBJECT.idFromName(new URL(request.url).pathname);
+		const id = env.MY_DURABLE_OBJECT.idFromName(new URL(request.url).pathname);
 
-		let stub = env.MY_DURABLE_OBJECT.get(id);
+		const stub = env.MY_DURABLE_OBJECT.get(id);
 
-		let greeting = await stub.sayHello();
+		const greeting = await stub.sayHello();
 
 		return new Response(greeting);
 	},
@@ -264,13 +264,13 @@ Your final code should look like this:
 
 ```ts title="index.ts"
 import { DurableObject } from "cloudflare:workers";
-export class MyDurableObject extends DurableObject {
+export class MyDurableObject extends DurableObject<Env> {
 	constructor(ctx: DurableObjectState, env: Env) {
 		// Required, as we are extending the base class.
 		super(ctx, env)
 	}
 
-	async sayHello() {
+	async sayHello():Promise<string> {
 		let result = this.ctx.storage.sql
 			.exec("SELECT 'Hello, World!' as greeting")
 			.one();
@@ -278,12 +278,12 @@ export class MyDurableObject extends DurableObject {
 	}
 }
 export default {
-	async fetch(request, env, ctx): Promise<Response> {
-		let id = env.MY_DURABLE_OBJECT.idFromName(new URL(request.url).pathname);
+	async fetch(request, env, ctx):Promise<Response> {
+		const id = env.MY_DURABLE_OBJECT.idFromName(new URL(request.url).pathname);
 
-		let stub = env.MY_DURABLE_OBJECT.get(id);
+		const stub = env.MY_DURABLE_OBJECT.get(id);
 
-		let greeting = await stub.sayHello();
+		const greeting = await stub.sayHello();
 
 		return new Response(greeting);
 	},
