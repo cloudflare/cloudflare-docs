@@ -19,5 +19,5 @@ provided to enable the fix.
 
 The fix is enabled by default with compatibility dates of 2024-12-16 or later.
 
-To restore the original buggy backpressure logic, disable the fix using the
+To restore the original backpressure logic, disable the fix using the
 `original-transform-stream-backpressure` flag.
