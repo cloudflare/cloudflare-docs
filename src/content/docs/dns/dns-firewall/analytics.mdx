@@ -6,9 +6,13 @@ sidebar:
 
 ---
 
+import { Badge } from "~/components";
+
 Consider the sections below to learn how to access analytics and logs for your DNS Firewall.
 
 ## Analytics
+
+### GraphQL
 
 Use the [GraphQL API](/analytics/graphql-api/) to access DNS Firewall analytics. Refer to the GraphQL Analytics API documentation for guidance on how to [get started](/analytics/graphql-api/getting-started/).
 
@@ -17,9 +21,10 @@ The DNS Firewall analytics has two [schemas](/analytics/graphql-api/getting-star
 * `dnsFirewallAnalyticsAdaptive`: Retrieve information about individual DNS Firewall queries.
 * `dnsFirewallAnalyticsAdaptiveGroups`: Get reports on aggregate information only.
 
-:::note
-GraphQL replaces the [Cloudflare API endpoint](/api/resources/dns_firewall/subresources/analytics/subresources/reports/methods/get/) for DNS Firewall Analytics.
-:::
+### Cloudflare API <Badge text="Legacy" variant="caution" size="medium" />
+
+You can also use the DNS Firewall API [reports endpoint](/api/resources/dns_firewall/subresources/analytics/subresources/reports/).
+
 
 ## Logs
 
