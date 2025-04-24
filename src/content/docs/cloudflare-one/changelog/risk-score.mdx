@@ -1,19 +1,20 @@
 ---
 pcx_content_type: changelog
 title: Risk score
-release_notes_file_name:
-  - risk-score
 head:
   - tag: title
     content: Risk score Changelog
 description: Review recent changes to Cloudflare Zero Trust user risk scoring.
-
 ---
 
-import { ProductReleaseNotes, Render } from "~/components"
+import { ProductChangelog } from "~/components";
 
-<Render file="changelog-note" />
+{/* <!-- All changelog entries live in src/content/changelogs/risk-score/. */}
 
-{/* <!-- All changelog entries live in src/content/changelogs/risk-score.yaml. For more details, refer to https://developers.cloudflare.com/style-guide/documentation-content-strategy/content-types/changelog/#yaml-file --> */}
+<ProductChangelog product="risk-score" hideEntry="2024-06-16-cloudflare-one" />
 
-<ProductReleaseNotes />
+## 2024-06-14
+
+**SentinelOne signal ingestion**
+
+You can now configure a [predefined risk behavior](/cloudflare-one/insights/risk-score/#predefined-risk-behaviors) to evaluate user risk score using device posture attributes from the [SentinelOne integration](/cloudflare-one/identity/devices/service-providers/sentinelone/).
