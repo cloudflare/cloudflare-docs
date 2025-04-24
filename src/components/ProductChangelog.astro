@@ -7,6 +7,8 @@ import { slug } from "github-slugger";
 import RSSButton from "~/components/RSSButton.astro";
 import AnchorHeading from "~/components/AnchorHeading.astro";
 import { format } from "date-fns";
+import ProductPills from "~/components/changelog/ProductPills.astro";
+
 const props = z
 	.object({
 		product: reference("products"),
@@ -24,8 +26,10 @@ const props = z
 const input = await props.parseAsync(Astro.props);
 let filter: GetChangelogsOptions["filter"];
 let rss: string;
+let areaFeed: boolean
 if ("product" in input) {
 	rss = `/changelog/rss/${input.product.id}.xml`;
+	areaFeed = false;
 	filter = (e) => {
 		return (
 		!e.data.hidden &&
@@ -35,6 +39,7 @@ if ("product" in input) {
 	};
 } else {
 	rss = `/changelog/rss/${slug(input.area)}.xml`;
+	areaFeed = true;
 	const products = await getCollection("products", (e) => {
 		return e.data.product.group === input.area &&
 		input.hideEntry !== e.id;
@@ -53,12 +58,28 @@ const changelogs = await getChangelogs({ filter });
 
 
 		const { Content } = await render(entry);
-		return (
-		<AnchorHeading depth={2} title={format(entry.data.date, "yyyy-MM-dd")} />
-		<br/>
-		<strong>{entry.data.title}</strong>
-		<br/>
-		<Content />
+		// If areaFeed is true, add ProductPills
+		if (areaFeed === true) {
+     return (
+       <AnchorHeading depth={2} title={format(entry.data.date, "yyyy-MM-dd")} />
+       <ProductPills products={entry.data.products} />
+       <br />
+       <strong>{entry.data.title}</strong>
+       <br />
+       <Content />
+     );
+   }
+
+
+   // Default output
+   return (
+     <>
+       <AnchorHeading depth={2} title={format(entry.data.date, "yyyy-MM-dd")} />
+       <br />
+       <strong>{entry.data.title}</strong>
+       <br />
+       <Content />
+     </>
 		);
 	})
 }

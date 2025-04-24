@@ -11,6 +11,16 @@
 /changelog/rss.xml /changelog/rss/index.xml 301
 /api-shield/changelog/index.xml /changelog/rss/api-shield.xml 301
 /cache/changelog/index.xml /changelog/rss/cache.xml 301
+/cloudflare-one/changelog/index.xml changelog/rss/cloudflare-one.xml 301
+/cloudflare-one/changelog/access/index.xml /changelog/rss/access.xml 301
+/cloudflare-one/changelog/browser-isolation/index.xml /changelog/rss/browser-isolation.xml 301
+/cloudflare-one/changelog/casb/index.xml /changelog/rss/casb.xml 301
+/cloudflare-one/changelog/dex/index.xml /changelog/rss/dex.xml 301
+/cloudflare-one/changelog/dlp/index.xml /changelog/rss/dlp.xml 301
+/cloudflare-one/changelog/email-security/index.xml /changelog/rss/email-security.xml 301
+/cloudflare-one/changelog/gateway/index.xml /changelog/rss/gateway.xml 301
+/cloudflare-one/changelog/risk-score/index.xml /changelog/rss/risk-score.xml 301
+/cloudflare-one/changelog/tunnel/index.xml /changelog/rss/cloudflare-tunnel.xml 301
 /dns/changelog/index.xml /changelog/rss/dns.xml 301
 /fundamentals/changelog/index.xml /changelog/rss/fundamentals.xml 301
 /logs/changelog/index.xml /changelog/rss/logs.xml 301
