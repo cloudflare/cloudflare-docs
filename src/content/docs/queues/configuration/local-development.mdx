@@ -70,20 +70,6 @@ You can start development servers for both workers with the following command:
 npx wrangler dev -c wrangler.jsonc -c consumer-worker/wrangler.jsonc --persist-to .wrangler/state
 ```
 
-```sh output
- ⛅️ wrangler 4.13.2
--------------------
-
-Your Worker and resources are simulated locally via Miniflare. For more information, see: https://developers.cloudflare.com/workers/testing/local-development.
-
-docs-queue-producer has access to the following bindings:
-- Queues:
-  - MY_QUEUE: <queue_name> [simulated locally]
-No bindings found.
-⎔ Starting local server...
-[wrangler:inf] Ready on http://localhost:8787
-```
-
 When the producer Worker sends messages to the queue, the consumer Worker will automatically be invoked to handle them.
 :::note
 [Consumer concurrency](/queues/configuration/consumer-concurrency/) is not supported while running locally.
