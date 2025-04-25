@@ -53,8 +53,8 @@ To create an HTTP policy to redirect URLs, refer to the [Redirect action](/cloud
 
 Paths and queries in the redirect URL take precedence over the original URL. When you turn on **Send policy context**, Gateway will append context to the end of the redirected URL. For example, if the original URL is `example.com/path/to/page?querystring=X&k=1` and the redirect URL is `cloudflare.com/redirect-path?querystring=Y`, Gateway will redirect requests to:
 
-```txt ins="&user_email=user@example.com"
-cloudflare.com/redirect-path?querystring=Y&user_email=user@example.com
+```txt ins="&cf_user_email=user@example.com"
+cloudflare.com/redirect-path?querystring=Y&cf_user_email=user@example.com
 ```
 
 ### Customize the block page
