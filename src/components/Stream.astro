@@ -63,16 +63,16 @@ if (thumbnail) {
 						thumbnail.searchParams.set("time", `${totalSeconds}s`);
 
 						return (
-							<li class="!mt-0">
+							<li class="mt-0!">
 								<button
-									class="flex h-full w-36 cursor-pointer flex-col rounded border border-gray-200 bg-transparent p-4 dark:border-gray-700"
+									class="flex h-full w-36 cursor-pointer flex-col rounded-sm border border-gray-200 bg-transparent p-4 dark:border-gray-700"
 									data-chapter={chapter}
 									data-time={totalSeconds}
 								>
 									<img
 										src={thumbnail.toString()}
 										alt={chapter}
-										class="rounded border border-accent"
+										class="rounded-sm border border-accent"
 									/>
 									<div class="flex h-full flex-col items-center justify-between">
 										<strong class="line-clamp-2 text-xs" title={chapter}>

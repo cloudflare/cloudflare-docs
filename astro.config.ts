@@ -1,6 +1,5 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
-import tailwind from "@astrojs/tailwind";
 import starlightDocSearch from "@astrojs/starlight-docsearch";
 import starlightImageZoom from "starlight-image-zoom";
 import liveCode from "astro-live-code";
@@ -90,11 +89,19 @@ export default defineConfig({
 				src: "./src/assets/logo.svg",
 			},
 			favicon: "/favicon.png",
-			social: {
-				github: "https://github.com/cloudflare/cloudflare-docs",
-				"x.com": "https://x.com/cloudflare",
-				youtube: "https://www.youtube.com/cloudflare",
-			},
+			social: [
+				{
+					label: "GitHub",
+					icon: "github",
+					href: "https://github.com/cloudflare/cloudflare-docs",
+				},
+				{ label: "X.com", icon: "x.com", href: "https://x.com/cloudflare" },
+				{
+					label: "YouTube",
+					icon: "youtube",
+					href: "https://www.youtube.com/cloudflare",
+				},
+			],
 			editLink: {
 				baseUrl:
 					"https://github.com/cloudflare/cloudflare-docs/edit/production/",
@@ -143,9 +150,9 @@ export default defineConfig({
 				starlightImageZoom(),
 			],
 			lastUpdated: true,
-		}),
-		tailwind({
-			applyBaseStyles: false,
+			markdown: {
+				headingLinks: false,
+			},
 		}),
 		liveCode({}),
 		icon(),

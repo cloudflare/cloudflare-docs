@@ -156,13 +156,13 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 					onChange={(e) => setFilters({ ...filters, search: e.target.value })}
 				/>
 
-				<div className="!mb-8 hidden md:block">
+				<div className="mb-8! hidden md:block">
 					<span className="text-sm font-bold uppercase text-gray-600 dark:text-gray-200">
 						▼ Tasks
 					</span>
 
 					{tasks.map((task) => (
-						<label key={task} className="!my-2 block">
+						<label key={task} className="my-2! block">
 							<input
 								type="checkbox"
 								className="mr-2"
@@ -189,13 +189,13 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 					))}
 				</div>
 
-				<div className="!mb-8 hidden md:block">
+				<div className="mb-8! hidden md:block">
 					<span className="text-sm font-bold uppercase text-gray-600 dark:text-gray-200">
 						▼ Capabilities
 					</span>
 
 					{capabilities.map((capability) => (
-						<label key={capability} className="!my-2 block">
+						<label key={capability} className="my-2! block">
 							<input
 								type="checkbox"
 								value={capability}
@@ -230,7 +230,7 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 					</span>
 
 					{authors.map((author) => (
-						<label key={author} className="!my-2 block">
+						<label key={author} className="my-2! block">
 							<input
 								type="checkbox"
 								className="mr-2"
@@ -259,10 +259,10 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 					))}
 				</div>
 			</div>
-			<div className="!mt-0 flex w-full flex-wrap items-stretch gap-[1%] self-start md:w-3/4">
+			<div className="mt-0! flex w-full flex-wrap items-stretch gap-[1%] self-start md:w-3/4">
 				{modelList.length === 0 && (
 					<div className="flex w-full flex-col justify-center rounded-md border bg-gray-50 py-6 text-center align-middle dark:border-gray-500 dark:bg-gray-800">
-						<span className="text-lg !font-bold">No models found</span>
+						<span className="text-lg font-bold!">No models found</span>
 						<p>
 							Try a different search term, or broaden your search by removing
 							filters.
@@ -282,7 +282,7 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 					return (
 						<a
 							key={model.model.id}
-							className="relative mb-3 block w-full self-start rounded-md border border-solid border-gray-200 p-3 !text-inherit no-underline hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800 lg:w-[48%]"
+							className="relative mb-3 block w-full self-start rounded-md border border-solid border-gray-200 p-3 text-inherit! no-underline hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800 lg:w-[48%]"
 							href={`/workers-ai/models/${model.model_display_name}`}
 						>
 							{isPinned && (
@@ -307,13 +307,13 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 								</span>
 								{isBeta && <span className="sl-badge caution ml-1">Beta</span>}
 							</div>
-							<div className="!m-0 text-xs">
+							<div className="m-0! text-xs">
 								<ModelInfo model={model.model} />
 							</div>
-							<p className="!mt-2 line-clamp-2 text-sm leading-6">
+							<p className="mt-2! line-clamp-2 text-sm leading-6">
 								{model.model.description}
 							</p>
-							<div className="!mt-2 text-xs">
+							<div className="mt-2! text-xs">
 								<ModelBadges model={model.model} />
 							</div>
 						</a>

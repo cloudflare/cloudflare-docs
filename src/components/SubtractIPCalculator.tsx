@@ -59,7 +59,7 @@ export default function SubtractIPCalculator({
 			</div>
 			<div>
 				<button
-					className="h-8 cursor-pointer rounded bg-cl1-brand-orange px-4 text-sm font-medium text-cl1-black disabled:cursor-not-allowed disabled:bg-cl1-gray-4 disabled:text-cl1-gray-1"
+					className="h-8 cursor-pointer rounded-sm bg-cl1-brand-orange px-4 text-sm font-medium text-cl1-black disabled:cursor-not-allowed disabled:bg-cl1-gray-4 disabled:text-cl1-gray-1"
 					disabled={disableButton()}
 					onClick={() => calculate()}
 				>

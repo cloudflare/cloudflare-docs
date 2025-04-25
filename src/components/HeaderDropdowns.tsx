@@ -51,7 +51,7 @@ function Dropdown({ dropdown }: { dropdown: (typeof dropdowns)[number] }) {
 			<button
 				ref={refs.setReference}
 				{...getReferenceProps()}
-				className="flex cursor-pointer items-center justify-center gap-2 rounded bg-transparent p-2 font-medium hover:bg-cl1-white hover:shadow-md dark:hover:bg-cl1-gray-0"
+				className="flex cursor-pointer items-center justify-center gap-2 rounded-sm bg-transparent p-2 font-medium hover:bg-cl1-white hover:shadow-md dark:hover:bg-cl1-gray-0"
 			>
 				{label}
 				<PiCaretDownBold />
@@ -61,7 +61,7 @@ function Dropdown({ dropdown }: { dropdown: (typeof dropdowns)[number] }) {
 					ref={refs.setFloating}
 					style={floatingStyles}
 					{...getFloatingProps()}
-					className="min-w-60 max-w-80 list-none rounded border border-cl1-gray-8 bg-cl1-white pl-0 shadow-md dark:border-cl1-gray-1 dark:bg-cl1-gray-0"
+					className="min-w-60 max-w-80 list-none rounded-sm border border-cl1-gray-8 bg-cl1-white pl-0 shadow-md dark:border-cl1-gray-1 dark:bg-cl1-gray-0"
 				>
 					{pages.map((page) => (
 						<li key={page.href}>
@@ -87,7 +87,7 @@ export default function HeaderDropdownsComponent() {
 				<a
 					key={href}
 					href={href}
-					className="flex items-center justify-center rounded p-2 font-medium text-black no-underline hover:bg-cl1-white hover:shadow-md dark:hover:bg-cl1-gray-0"
+					className="flex items-center justify-center rounded-sm p-2 font-medium text-black no-underline hover:bg-cl1-white hover:shadow-md dark:hover:bg-cl1-gray-0"
 				>
 					{label}
 				</a>

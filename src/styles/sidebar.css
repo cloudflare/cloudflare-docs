@@ -77,12 +77,12 @@
 }
 
 :root[data-theme="dark"] {
-	--sl-color-bg-sidebar: theme("colors.cl1.gray.0");
-	--sl-color-sidebar-active: theme("colors.cl1.blue.7");
-	--sl-color-sidebar-hover: theme("colors.cl1.gray.2");
+	--sl-color-bg-sidebar: var(--color-cl1-gray-0);
+	--sl-color-sidebar-active: var(--color-cl1-blue-7);
+	--sl-color-sidebar-hover: var(--color-cl1-gray-2);
 }
 
 :root[data-theme="light"] {
-	--sl-color-sidebar-active: theme("colors.cl1.blue.4");
-	--sl-color-sidebar-hover: theme("colors.cl1.gray.9");
+	--sl-color-sidebar-active: var(--color-cl1-blue-4);
+	--sl-color-sidebar-hover: var(--color-cl1-gray-9);
 }

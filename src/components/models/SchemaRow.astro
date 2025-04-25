@@ -6,12 +6,12 @@ const { node, root } = Astro.props;
 ---
 
 <li
-	class={`py-2 !my-0 !list-none ${root ? "" : "border-l border-l-gray-200 dark:border-l-gray-500 pl-4"}`}
+	class={`py-2 my-0! list-none! ${root ? "" : "border-l border-l-gray-200 dark:border-l-gray-500 pl-4"}`}
 >
 	{
 		(
 			<code
-				class="mr-2 rounded-md bg-gray-100 !pr-0 font-mono"
+				class="mr-2 rounded-md bg-gray-100 pr-0! font-mono"
 				title={node.title}
 			>
 				{node.subpath[node.subpath.length - 1]}
@@ -50,11 +50,11 @@ const { node, root } = Astro.props;
 			/>
 		)
 	}
-	<p class="!mb-0">{node.annotations.description}</p>
+	<p class="mb-0!">{node.annotations.description}</p>
 
 	{
 		node.children && (
-			<ul class="m-0 ml-4 !list-none p-0">
+			<ul class="m-0 ml-4 list-none! p-0">
 				{node.children.map((node: SchemaNode) => (
 					<Astro.self node={node} />
 				))}

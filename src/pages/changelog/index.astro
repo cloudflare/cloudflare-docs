@@ -50,7 +50,7 @@ const props = {
 
 			return (
 				<div
-					class="!mt-0 sm:flex"
+					class="mt-0! sm:flex"
 					data-products={JSON.stringify(
 						productIds.concat(
 							productGroups.map((group) =>
@@ -67,13 +67,13 @@ const props = {
 						{date}
 					</time>
 					<Steps>
-						<ol class="!mt-0 overflow-x-auto">
-							<li class="!pb-16">
+						<ol class="mt-0! overflow-x-auto">
+							<li class="pb-16!">
 								<div>
 									<h3 class="leading-none">
 										<a
 											href={`/changelog/${entry.id}/`}
-											class="mb-4 !text-black no-underline hover:underline"
+											class="mb-4 text-black! no-underline hover:underline"
 										>
 											{entry.data.title}
 										</a>
@@ -91,7 +91,7 @@ const props = {
 	<div class="flex items-center justify-center">
 		<button
 			id="changelogs-next-button"
-			class="h-12 cursor-pointer rounded bg-cl1-brand-orange px-6 font-medium text-cl1-black"
+			class="h-12 cursor-pointer rounded-sm bg-cl1-brand-orange px-6 font-medium text-cl1-black"
 		>
 			Load more items
 		</button>
