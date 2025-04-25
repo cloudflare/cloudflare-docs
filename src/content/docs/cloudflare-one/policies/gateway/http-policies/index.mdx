@@ -143,7 +143,7 @@ When you turn on **Preserve original path and query string**, Gateway will appen
 cloudflare.com/redirect-path/path/to/page?querystring=Y
 ```
 
-When you turn on both options, Gateway will preserve the original path and query string, then append context policy to the end of the redirect URL. For example, if the original URL is `example.com/path/to/page?querystring=X&k=1` and the redirect URL is `cloudflare.com/redirect-path?querystring=Y`, Gateway will redirect requests to:
+When you turn on both options, Gateway will preserve the original path and query string, then append policy context to the end of the redirect URL. For example, if the original URL is `example.com/path/to/page?querystring=X&k=1` and the redirect URL is `cloudflare.com/redirect-path?querystring=Y`, Gateway will redirect requests to:
 
 ```txt "cloudflare.com/redirect-path" "?querystring=Y" ins="&user_email=user@example.com"
 cloudflare.com/redirect-path/path/to/page?querystring=Y&k=1&user_email=user@example.com
