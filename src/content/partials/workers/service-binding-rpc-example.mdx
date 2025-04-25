@@ -17,7 +17,7 @@ main = "./src/workerB.js"
 
 <TypeScriptExample>
 
-```js
+```ts
 import { WorkerEntrypoint } from "cloudflare:workers";
 
 export default class extends WorkerEntrypoint {
@@ -49,7 +49,9 @@ services = [
 
 Making it possible for Worker A to call the `add()` method from Worker B:
 
-```js
+<TypeScriptExample>
+
+```ts
 export default {
 	async fetch(request, env) {
 		const result = await env.WORKER_B.add(1, 2);
@@ -57,3 +59,5 @@ export default {
 	},
 };
 ```
+
+</TypeScriptExample>

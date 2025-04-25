@@ -17,7 +17,7 @@ main = "./src/counterService.js"
 
 <TypeScriptExample>
 
-```js
+```ts
 import { WorkerEntrypoint } from "cloudflare:workers";
 
 export default class extends WorkerEntrypoint {
@@ -35,6 +35,8 @@ export default class extends WorkerEntrypoint {
 }
 ```
 
+</TypeScriptExample>
+
 This function can then be called by the client Worker:
 
 <WranglerConfig>
@@ -48,6 +50,8 @@ services = [
 ```
 
 </WranglerConfig>
+
+<TypeScriptExample>
 
 ```ts
 export default {
