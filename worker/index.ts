@@ -13,10 +13,8 @@ const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 export default class extends WorkerEntrypoint<Env> {
 	override async fetch(request: Request) {
 		if (request.url.endsWith("/index.md")) {
-			const res = await this.env.ASSETS.fetch(
-				request.url.replace("index.md", ""),
-				request,
-			);
+			const htmlUrl = request.url.replace("index.md", "");
+			const res = await this.env.ASSETS.fetch(htmlUrl, request);
 
 			if (res.status === 404) {
 				return res;
