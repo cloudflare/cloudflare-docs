@@ -49,11 +49,51 @@ Local development sessions create a standalone, local-only environment that mirr
 
 Refer to the [`wrangler dev` documentation](/workers/wrangler/commands/#dev) to learn more about how to configure a local development session.
 
-If you want to run separate producer and consumer Workers bound to the same Queue locally, you can use the [experimental feature](/workers/runtime-apis/bindings/service-bindings/#local-development) of Wrangler. To develop locally with separate producer and consumer Workers, you can start the development server with the following command:
+## Separating producer & consumer Workers
+
+If you want to run separate producer and consumer Workers bound to the same Queue locally, you can use the [experimental feature](/workers/runtime-apis/bindings/service-bindings/#local-development) of Wrangler.
+
+:::caution
+
+Support for running multiple Workers at once with one Wrangler command is experimental, and subject to change as we work on the experience. If you run into bugs or have any feedback, [open an issue on the workers-sdk repository](https://github.com/cloudflare/workers-sdk/issues/new)
+
+:::
+
+For a project with the following structure,
+
+```
+project-root/
+  ├── consumer-worker/
+  │   ├── wrangler.jsonc
+  │   └── index.ts
+  └── producer-worker/
+    ├── wrangler.jsonc
+    └── index.ts
+```
+
+you can start the development server with the following command:
 
 ```sh
+# navigate to the producer Worker directory
+# cd producer-worker
 # From the producer Worker directory
 npx wrangler dev -c ./wrangler.jsonc -c ../consumer-worker/wrangler.jsonc --persist-to .wrangler/state
+```
+
+The development server will start and you will see output similar to the following:
+
+```sh output
+ ⛅️ wrangler 4.13.2
+-------------------
+
+Your Worker and resources are simulated locally via Miniflare. For more information, see: https://developers.cloudflare.com/workers/testing/local-development.
+
+docs-queue-producer has access to the following bindings:
+- Queues:
+  - MY_QUEUE: <queue_name> [simulated locally]
+No bindings found.
+⎔ Starting local server...
+[wrangler:inf] Ready on http://localhost:8787
 ```
 
 ## Known Issues
