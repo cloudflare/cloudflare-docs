@@ -49,8 +49,13 @@ Local development sessions create a standalone, local-only environment that mirr
 
 Refer to the [`wrangler dev` documentation](/workers/wrangler/commands/#dev) to learn more about how to configure a local development session.
 
+If you want to run separate producer and consumer Workers bound to the same Queue locally, you can use the [experimental feature](/workers/runtime-apis/bindings/service-bindings/#local-development) of Wrangler. To develop locally with separate producer and consumer Workers, you can start the development server with the following command:
+
+```sh
+# From the producer Worker directory
+npx wrangler dev -c ./wrangler.jsonc -c ../consumer-worker/wrangler.jsonc --persist-to .wrangler/state
+```
+
 ## Known Issues
 
-Wrangler does not yet support running separate producer and consumer Workers bound to the same Queue locally. To develop locally with Queues, you can temporarily put your consumer's `queue()` handler in the same Worker as your producer, so the same Worker acts as both a producer and consumer.
-
-Wrangler also does not yet support `wrangler dev --remote`.
+- When developing locally, you can not connect your Worker to the remote queue. Hence, Queues does not yet support `wrangler dev --remote`.
