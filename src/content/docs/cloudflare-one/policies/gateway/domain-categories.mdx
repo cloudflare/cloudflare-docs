@@ -229,3 +229,44 @@ Then, the initial categorization is refined via:
 3. Machine learning models. Our algorithms, including DGA Domains, DNS tunneling, and phishing detection models analyze patterns and behaviors to detect new and evolving threats.
 
 4. Community feedback. Through a review process, Cloudflare assesses feedback by both our internal models and threat analysts. This ensures that our categorizations reflect the most current and accurate threat intelligence.
+
+## How to use categories in terraform?
+
+For terraform users, we offer categories as a dataset, so that you don't have to mention them by integer id, and instead you can mention them in your policy by the category name.
+
+Example terraform category setup
+
+<pre> 
+```
+data "cloudflare_zero_trust_gateway_categories_list" "categories" {
+  account_id     = "<accounbt-id-string>"
+}
+
+
+locals {
+  main_categories_map = {
+    for idx, c in data.cloudflare_zero_trust_gateway_categories_list.categories[0].result: 
+        c.name => c.id
+  }
+
+  subcategories_map = merge(flatten([
+    for idx, c in data.cloudflare_zero_trust_gateway_categories_list.categories[0].result: {
+        for k,v in coalesce(c.subcategories, []): v.name => v.id
+    }])...)
+}
+
+resource "cloudflare_zero_trust_gateway_policy" "zt_block_dns_tech_categories" {
+    account_id     = "<accounbt-id-string>"
+    name           = "DNS Blocked"
+    action         = "block"
+    traffic        = "any(dns.content_category[*] in {${join(" ", [
+           local.main_categories_map["Technology"], 
+           local.subcategories_map["APIs"], 
+           local.subcategories_map["Artificial Intelligence"], 
+           local.subcategories_map["Content Servers"], 
+           local.subcategories_map["Translator"]
+           ])}})"
+}
+
+```
+</pre>
