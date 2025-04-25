@@ -20,21 +20,8 @@ To develop locally with Queues, you will need:
 ## Start a local development session
 
 Open your terminal and run the following commands to start a local development session:
-
 ```sh
-# Confirm we are using wrangler v3.1.0+
-wrangler --version
-```
-
-```sh output
- ⛅️ wrangler 4.13.2
-```
-
-Start a local dev session
-
-```sh
-# Start a local dev session:
-npx wrangler dev
+npx wrangler@latest dev
 ```
 
 ```sh output
@@ -56,7 +43,7 @@ Wrangler supports running multiple Workers simultaneously with a single command.
 Support for running multiple Workers at once with one Wrangler command is experimental, and subject to change as we work on the experience. If you run into bugs or have any feedback, [open an issue on the workers-sdk repository](https://github.com/cloudflare/workers-sdk/issues/new)
 :::
 
-For example, if your project is setup with the following directory structure: 
+For example, if your project has the following directory structure: 
 ```
 producer-worker/
 ├── wrangler.jsonc
@@ -68,7 +55,7 @@ producer-worker/
 
 You can start development servers for both workers with the following command:
 ```sh
-npx wrangler dev -c wrangler.jsonc -c consumer-worker/wrangler.jsonc --persist-to .wrangler/state
+npx wrangler@latest dev -c wrangler.jsonc -c consumer-worker/wrangler.jsonc --persist-to .wrangler/state
 ```
 
 When the producer Worker sends messages to the queue, the consumer Worker will automatically be invoked to handle them.
