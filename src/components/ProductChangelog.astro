@@ -4,9 +4,10 @@ import { reference } from "astro:content";
 import { z } from "astro:schema";
 import { getCollection, render } from "astro:content";
 import { slug } from "github-slugger";
+import { format } from "date-fns";
+
 import RSSButton from "~/components/RSSButton.astro";
 import AnchorHeading from "~/components/AnchorHeading.astro";
-import { format } from "date-fns";
 import ProductPills from "~/components/changelog/ProductPills.astro";
 
 const props = z
@@ -19,35 +20,38 @@ const props = z
 		}),
 	)
 	.and(
-    z.object({
-      hideEntry: z.string().optional(),
-    }),
-  );;
+		z.object({
+			hideEntry: z.string().optional(),
+		}),
+	);
+
 const input = await props.parseAsync(Astro.props);
+
 let filter: GetChangelogsOptions["filter"];
 let rss: string;
-let areaFeed: boolean
+
 if ("product" in input) {
 	rss = `/changelog/rss/${input.product.id}.xml`;
-	areaFeed = false;
+
 	filter = (e) => {
 		return (
-		!e.data.hidden &&
-		e.data.products.some(({ id }) => id === input.product.id) &&
-		input.hideEntry !== e.id
-	);
+			!e.data.hidden &&
+			e.data.products.some(({ id }) => id === input.product.id) &&
+			input.hideEntry !== e.id
+		);
 	};
 } else {
 	rss = `/changelog/rss/${slug(input.area)}.xml`;
-	areaFeed = true;
+
 	const products = await getCollection("products", (e) => {
-		return e.data.product.group === input.area &&
-		input.hideEntry !== e.id;
+		return e.data.product.group === input.area && input.hideEntry !== e.id;
 	});
+
 	filter = (e) => {
 		return e.data.products.some((x) => products.some((y) => x.id === y.id));
 	};
 }
+
 const changelogs = await getChangelogs({ filter });
 ---
 
@@ -55,31 +59,20 @@ const changelogs = await getChangelogs({ filter });
 
 {
 	changelogs.map(async (entry) => {
-
-
 		const { Content } = await render(entry);
-		// If areaFeed is true, add ProductPills
-		if (areaFeed === true) {
-     return (
-       <AnchorHeading depth={2} title={format(entry.data.date, "yyyy-MM-dd")} />
-       <ProductPills products={entry.data.products} />
-       <br />
-       <strong>{entry.data.title}</strong>
-       <br />
-       <Content />
-     );
-   }
 
-
-   // Default output
-   return (
-     <>
-       <AnchorHeading depth={2} title={format(entry.data.date, "yyyy-MM-dd")} />
-       <br />
-       <strong>{entry.data.title}</strong>
-       <br />
-       <Content />
-     </>
+		return (
+			<>
+				<AnchorHeading
+					depth={2}
+					title={format(entry.data.date, "yyyy-MM-dd")}
+				/>
+				{"area" in input && <ProductPills products={entry.data.products} />}
+				<br />
+				<strong>{entry.data.title}</strong>
+				<br />
+				<Content />
+			</>
 		);
 	})
 }
