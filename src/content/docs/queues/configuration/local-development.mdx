@@ -50,38 +50,26 @@ Local development sessions create a standalone, local-only environment that mirr
 Refer to the [`wrangler dev` documentation](/workers/wrangler/commands/#dev) to learn more about how to configure a local development session.
 
 ## Separating producer & consumer Workers
-
-If you want to run separate producer and consumer Workers bound to the same Queue locally, you can use the [experimental feature](/workers/runtime-apis/bindings/service-bindings/#local-development) of Wrangler.
+Wrangler supports running multiple Workers simultaneously with a single command. If your architecture separates the producer and consumer into distinct Workers, you can use this functionality to test the entire message flow locally.
 
 :::caution
-
 Support for running multiple Workers at once with one Wrangler command is experimental, and subject to change as we work on the experience. If you run into bugs or have any feedback, [open an issue on the workers-sdk repository](https://github.com/cloudflare/workers-sdk/issues/new)
-
 :::
 
-For a project with the following structure,
-
+For example, if your project is setup with the following directory structure: 
 ```
-project-root/
-  ├── consumer-worker/
-  │   ├── wrangler.jsonc
-  │   └── index.ts
-  └── producer-worker/
+producer-worker/
+├── wrangler.jsonc
+├── index.ts
+└── consumer-worker/
     ├── wrangler.jsonc
     └── index.ts
 ```
 
-you can start the development server with the following command:
-
+You can start the development server for both workers with the following command:
 ```sh
-# navigate to the producer Worker directory
-# cd producer-worker
-# From the producer Worker directory
-npx wrangler dev -c ./wrangler.jsonc -c ../consumer-worker/wrangler.jsonc --persist-to .wrangler/state
+npx wrangler dev -c wrangler.jsonc -c consumer-worker/wrangler.jsonc --persist-to .wrangler/state
 ```
-
-The development server will start and you will see output similar to the following:
-
 ```sh output
  ⛅️ wrangler 4.13.2
 -------------------
@@ -95,6 +83,8 @@ No bindings found.
 ⎔ Starting local server...
 [wrangler:inf] Ready on http://localhost:8787
 ```
+
+When the producer Worker sends messages to the queue, the consumer Worker will automatically be invoked to handle them.
 
 ## Known Issues
 
