@@ -52,7 +52,9 @@ WARP connects to the following IP addresses, depending on which [tunnel protocol
 | IPv4 address   | `162.159.197.0/24`                                                                             |
 | IPv6 address   | `2606:4700:102::/48`                                                                           |
 | Default port   | `UDP 443`                                                                                      |
-| Fallback ports | `UDP 500` <br/> `UDP 1701` <br/> `UDP 4500` <br/> `UDP 4443` <br/> `UDP 8443` <br/> `UDP 8095` |
+| Fallback ports | `UDP 500` <br/> `UDP 1701` <br/> `UDP 4500` <br/> `UDP 4443` <br/> `UDP 8443` <br/> `UDP 8095` <br/> `TCP 443` [^1] |
+
+[^1]: Required for HTTP/2 fallback
 
 :::note
 
