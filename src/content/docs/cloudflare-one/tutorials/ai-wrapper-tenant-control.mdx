@@ -1,19 +1,21 @@
 ---
-updated: 2025-04-15
+updated: 2025-04-25
 category: 🔐 Zero Trust
 pcx_content_type: tutorial
-title: Create an AI agent wrapper using AI Gateway for Secure Web Gateway filtering and tenant control
+title: Create and secure an AI agent wrapper using AI Gateway and Zero Trust
 ---
 
 import { TabItem, Tabs, Details, Render } from "~/components";
 
-This tutorial explains how to use [Cloudflare AI Gateway](/ai-gateway/) and Zero Trust to create a functional and secure AI agent wrapper. Cloudflare Zero Trust admins can protect access to the wrapper with [Cloudflare Access](/cloudflare-one/policies/access/). Additionally, you can enforce [Gateway](/cloudflare-one/policies/gateway/) controls on how your users interact with AI agents, including executing AI agents in an isolated browser with [Browser Isolation](/cloudflare-one/policies/browser-isolation/), enforcing [Data Loss Prevention](/cloudflare-one/policies/data-loss-prevention/) profiles to prevent sensitive data exfiltration, and scanning content to avoid answers from AI agents that violate internal corporate guidelines. Creating an AI agent wrapper is also an effective way to enforce tenant control if you have an enterprise plan of a specific AI provider, such as ChatGPT Enterprise.
+This tutorial explains how to use [Cloudflare AI Gateway](/ai-gateway/) and Zero Trust to create a functional and secure AI agent wrapper. Cloudflare Zero Trust administrators can protect access to the wrapper with [Cloudflare Access](/cloudflare-one/policies/access/). Additionally, you can enforce [Gateway policies](/cloudflare-one/policies/gateway/) to control how your users interact with AI agents, including executing AI agents in an isolated browser with [Browser Isolation](/cloudflare-one/policies/browser-isolation/), enforcing [Data Loss Prevention](/cloudflare-one/policies/data-loss-prevention/) profiles to prevent sensitive data exfiltration, and scanning content to avoid answers from AI agents that violate internal corporate guidelines. Creating an AI agent wrapper is also an effective way to enforce tenant control if you have an enterprise plan of a specific AI provider, such as ChatGPT Enterprise.
 
 This tutorial uses ChatGPT as an example AI agent.
 
-## Prerequisites
+## Before you begin
 
-- API key for your desired AI provider, such as an [OpenAI API key](https://platform.openai.com/api-keys) for ChatGPT.
+Make sure you have:
+
+- An API key for your desired AI provider, such as an [OpenAI API key](https://platform.openai.com/api-keys) for ChatGPT.
 
 ## 1. Create an AI gateway
 
@@ -477,4 +479,4 @@ Logs can be exported to external providers with [Logpush](/logs/get-started/).
 
 ### Configurability
 
-You can configure your wrapper to use a [different AI provider](/ai-gateway/providers/) or give your user the option to choose between multiple AI providers, including AI models running directly on Cloudflare's global network with [Workers AI](/workers-ai/). With this, you can control costs related to AI usage or adopt newer models without impacting your users or the access controls already put in place.
+You can configure your wrapper to use a [different AI provider](/ai-gateway/providers/) or give your users the option to choose between multiple AI providers, including AI models running directly on Cloudflare's global network with [Workers AI](/workers-ai/). With this, you can control costs related to AI usage or adopt newer models without impacting your users or the access controls already put in place.
