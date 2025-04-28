@@ -11,9 +11,8 @@ const NOINDEX_PRODUCTS = ["email-security", "style-guide", "security"];
 
 const currentSection = Astro.url.pathname.split("/")[1].replaceAll(".", "");
 
-const entry = Astro.locals.starlightRoute.entry;
+const { entry, head } = Astro.locals.starlightRoute;
 const frontmatter = entry.data;
-const head = frontmatter.head;
 
 const metaTags = [] as Record<string, string>[];
 
@@ -161,6 +160,8 @@ metaTags.map((attrs) => {
 		attrs,
 	});
 });
+
+console.log(head);
 ---
 
 <script src="src/scripts/footnotes.ts"></script>
