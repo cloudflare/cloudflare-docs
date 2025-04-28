@@ -41,7 +41,7 @@ To continue, you will need:
 
 Create a new Worker project using the `c3` CLI with the `nuxt` framework preset.
 
-<PackageManagers type="create" pkg="cloudflare@latest" args={"voice-notes --framework=nuxt --experimental"} />
+<PackageManagers type="create" pkg="cloudflare@latest" args="voice-notes --framework=nuxt" />
 
 ### Install additional dependencies
 
@@ -156,29 +156,7 @@ Before uploading the audio recordings to `R2`, you need to create a bucket first
 
 Create an `R2` bucket.
 
-<Tabs>
-<TabItem label="npm" icon="seti:npm">
-
-```sh
-npx wrangler r2 bucket create <BUCKET_NAME>
-```
-
-</TabItem>
-<TabItem label="yarn" icon="seti:yarn">
-
-```sh
-yarn dlx wrangler r2 bucket create <BUCKET_NAME>
-```
-
-</TabItem>
-<TabItem label="pnpm" icon="pnpm">
-
-```sh
-pnpm dlx wrangler r2 bucket create <BUCKET_NAME>
-```
-
-</TabItem>
-</Tabs>
+<PackageManagers type="exec" pkg="wrangler" args="r2 bucket create <BUCKET_NAME>" />
 
 Add the storage binding to your Wrangler file.
 
@@ -229,29 +207,7 @@ Before creating the endpoint, you will need to perform steps similar to those fo
 
 Create a `D1` database.
 
-<Tabs>
-<TabItem label="npm" icon="seti:npm">
-
-```sh
-npx wrangler d1 create <DB_NAME>
-```
-
-</TabItem>
-<TabItem label="yarn" icon="seti:yarn">
-
-```sh
-yarn dlx wrangler d1 create <DB_NAME>
-```
-
-</TabItem>
-<TabItem label="pnpm" icon="pnpm">
-
-```sh
-pnpm dlx wrangler d1 create <DB_NAME>
-```
-
-</TabItem>
-</Tabs>
+<PackageManagers type="exec" pkg="wrangler" args="d1 create <DB_NAME>" />
 
 Add the D1 bindings to the Wrangler file. You can get the `DB_ID` from the output of the `d1 create` command.
 
@@ -266,29 +222,7 @@ As before, rerun the `cf-typegen` command to generate the types.
 
 Next, create a DB migration.
 
-<Tabs>
-<TabItem label="npm" icon="seti:npm">
-
-```sh
-npx wrangler d1 migrations create <DB_NAME> "create notes table"
-```
-
-</TabItem>
-<TabItem label="yarn" icon="seti:yarn">
-
-```sh
-yarn dlx wrangler d1 migrations create <DB_NAME> "create notes table"
-```
-
-</TabItem>
-<TabItem label="pnpm" icon="pnpm">
-
-```sh
-pnpm dlx wrangler d1 migrations create <DB_NAME> "create notes table"
-```
-
-</TabItem>
-</Tabs>
+<PackageManagers type="exec" pkg="wrangler" args={`d1 migrations create <DB_NAME> "create notes table"`} />
 
 This will create a new `migrations` folder in the project's root directory, and add an empty `0001_create_notes_table.sql` file to it. Replace the contents of this file with the code below.
 
@@ -304,29 +238,7 @@ CREATE TABLE IF NOT EXISTS notes (
 
 And then apply this migration to create the `notes` table.
 
-<Tabs>
-<TabItem label="npm" icon="seti:npm">
-
-```sh
-npx wrangler d1 migrations apply <DB_NAME>
-```
-
-</TabItem>
-<TabItem label="yarn" icon="seti:yarn">
-
-```sh
-yarn dlx wrangler d1 migrations apply <DB_NAME>
-```
-
-</TabItem>
-<TabItem label="pnpm" icon="pnpm">
-
-```sh
-pnpm dlx wrangler d1 migrations apply <DB_NAME>
-```
-
-</TabItem>
-</Tabs>
+<PackageManagers type="exec" pkg="wrangler" args="d1 migrations apply <DB_NAME>" />
 
 :::note
 The above command will create the notes table locally. To apply the migration on your remote production database, use the `--remote` flag.

@@ -1591,6 +1591,8 @@
 /workers/testing/vitest-integration/get-started/migrate-from-miniflare-2/ /workers/testing/vitest-integration/migration-guides/migrate-from-miniflare-2/ 301
 /workers/testing/vitest-integration/get-started/migrate-from-unstable-dev/ /workers/testing/vitest-integration/migration-guides/migrate-from-unstable-dev/ 301
 /workers/testing/vitest-integration/get-started/write-your-first-test/ /workers/testing/vitest-integration/write-your-first-test/ 301
+/workers/databases/native-integrations/fauna/ /workers/databases/native-integrations/ 301
+/workers/tutorials/store-data-with-fauna/ https://fauna.com/blog/the-future-of-fauna 301
 
 # workers ai
 /workers-ai/models/llm/ /workers-ai/models/#text-generation 301
