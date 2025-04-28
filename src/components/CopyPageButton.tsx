@@ -145,7 +145,7 @@ export default function CopyPageButton() {
 										<Icon />
 										{label}
 									</div>
-									<div className="ml-6 mt-0.5 text-xs text-(--sl-color-gray-3)">
+									<div className="mt-0.5 ml-6 text-xs text-(--sl-color-gray-3)">
 										{description}
 									</div>
 								</button>

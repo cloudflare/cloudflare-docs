@@ -66,7 +66,7 @@ const ProductCatalog = ({ products }: { products: ProductData[] }) => {
 				/>
 
 				<div className="mb-8! hidden md:block">
-					<span className="text-sm font-bold uppercase text-gray-600 dark:text-gray-200">
+					<span className="text-sm font-bold text-gray-600 uppercase dark:text-gray-200">
 						Groups
 					</span>
 
@@ -101,7 +101,7 @@ const ProductCatalog = ({ products }: { products: ProductData[] }) => {
 
 			<div className="mt-0! grid w-full grid-cols-1 items-stretch gap-2 self-start md:grid-cols-2 lg:w-3/4 lg:grid-cols-3 lg:gap-4">
 				{productList.length === 0 && (
-					<div className="flex w-full flex-col justify-center rounded-md border bg-gray-50 py-6 text-center align-middle dark:border-gray-500 dark:bg-gray-800 md:col-span-2 lg:col-span-3">
+					<div className="flex w-full flex-col justify-center rounded-md border bg-gray-50 py-6 text-center align-middle md:col-span-2 lg:col-span-3 dark:border-gray-500 dark:bg-gray-800">
 						<span className="text-lg font-bold!">No products found</span>
 						<p>
 							Try a different search term, or broaden your search by removing
@@ -128,7 +128,7 @@ const ProductCatalog = ({ products }: { products: ProductData[] }) => {
 									</div>
 								)}
 								{!product.icon && (
-									<div className="mr-2 flex h-8 w-8 items-center justify-center rounded-full bg-orange-50 p-1 text-lg font-bold leading-none text-[color:var(--orange-accent-200)] dark:bg-orange-950">
+									<div className="mr-2 flex h-8 w-8 items-center justify-center rounded-full bg-orange-50 p-1 text-lg leading-none font-bold text-[color:var(--orange-accent-200)] dark:bg-orange-950">
 										{product.data.name.substr(0, 1)}
 									</div>
 								)}

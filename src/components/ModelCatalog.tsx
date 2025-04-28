@@ -157,7 +157,7 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 				/>
 
 				<div className="mb-8! hidden md:block">
-					<span className="text-sm font-bold uppercase text-gray-600 dark:text-gray-200">
+					<span className="text-sm font-bold text-gray-600 uppercase dark:text-gray-200">
 						▼ Tasks
 					</span>
 
@@ -190,7 +190,7 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 				</div>
 
 				<div className="mb-8! hidden md:block">
-					<span className="text-sm font-bold uppercase text-gray-600 dark:text-gray-200">
+					<span className="text-sm font-bold text-gray-600 uppercase dark:text-gray-200">
 						▼ Capabilities
 					</span>
 
@@ -225,7 +225,7 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 				</div>
 
 				<div className="hidden md:block">
-					<span className="text-sm font-bold uppercase text-gray-600 dark:text-gray-200">
+					<span className="text-sm font-bold text-gray-600 uppercase dark:text-gray-200">
 						▼ Authors
 					</span>
 
@@ -282,11 +282,11 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 					return (
 						<a
 							key={model.model.id}
-							className="relative mb-3 block w-full self-start rounded-md border border-solid border-gray-200 p-3 text-inherit! no-underline hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800 lg:w-[48%]"
+							className="relative mb-3 block w-full self-start rounded-md border border-solid border-gray-200 p-3 text-inherit! no-underline hover:bg-gray-50 lg:w-[48%] dark:border-gray-700 dark:hover:bg-gray-800"
 							href={`/workers-ai/models/${model.model_display_name}`}
 						>
 							{isPinned && (
-								<span className="absolute right-2 top-1" title="Pinned model">
+								<span className="absolute top-1 right-2" title="Pinned model">
 									📌
 								</span>
 							)}
@@ -298,11 +298,11 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 										alt={`${authorInfo.name} logo`}
 									/>
 								) : (
-									<div className="mr-2 flex h-6 w-6 items-center justify-center rounded-md bg-gray-100 text-sm font-black uppercase text-gray-400">
+									<div className="mr-2 flex h-6 w-6 items-center justify-center rounded-md bg-gray-100 text-sm font-black text-gray-400 uppercase">
 										{author.slice(0, 1)}
 									</div>
 								)}
-								<span className="overflow-hidden text-ellipsis whitespace-nowrap text-lg font-semibold">
+								<span className="overflow-hidden text-lg font-semibold text-ellipsis whitespace-nowrap">
 									{model.model_display_name}
 								</span>
 								{isBeta && <span className="sl-badge caution ml-1">Beta</span>}

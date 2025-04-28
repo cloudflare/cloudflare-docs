@@ -70,7 +70,7 @@ const LearningPathCatalog = ({
 		<div className="md:flex">
 			<div className="mr-8 w-full md:w-1/4">
 				<div className="mb-8! hidden md:block">
-					<span className="text-sm font-bold uppercase text-gray-600 dark:text-gray-200">
+					<span className="text-sm font-bold text-gray-600 uppercase dark:text-gray-200">
 						Product groups
 					</span>
 
@@ -103,7 +103,7 @@ const LearningPathCatalog = ({
 				</div>
 
 				<div className="mb-8! hidden md:block">
-					<span className="text-sm font-bold uppercase text-gray-600 dark:text-gray-200">
+					<span className="text-sm font-bold text-gray-600 uppercase dark:text-gray-200">
 						Products
 					</span>
 
@@ -138,7 +138,7 @@ const LearningPathCatalog = ({
 
 			<div className="mt-0! grid w-full grid-cols-1 items-stretch gap-2 self-start lg:w-3/4 lg:grid-cols-2 lg:gap-4">
 				{filtered.length === 0 && (
-					<div className="flex w-full flex-col justify-center rounded-md border bg-gray-50 py-6 text-center align-middle dark:border-gray-500 dark:bg-gray-800 md:col-span-2 lg:col-span-3">
+					<div className="flex w-full flex-col justify-center rounded-md border bg-gray-50 py-6 text-center align-middle md:col-span-2 lg:col-span-3 dark:border-gray-500 dark:bg-gray-800">
 						<span className="text-lg font-bold!">No products found</span>
 						<p>
 							Try a different search term, or broaden your search by removing
@@ -167,7 +167,7 @@ const LearningPathCatalog = ({
 								{path.video && <span className="sl-badge tip">Video</span>}
 							</div>
 							<p className="mt-3! font-semibold">{path.title}</p>
-							<div className="leading-2 mt-1! text-sm">
+							<div className="mt-1! text-sm leading-2">
 								<Markdown disallowedElements={["a"]} unwrapDisallowed={true}>
 									{path.description}
 								</Markdown>

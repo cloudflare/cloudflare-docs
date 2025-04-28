@@ -84,7 +84,7 @@ const FieldCatalog = ({ fields }: { fields: Fields }) => {
 				/>
 
 				<div className="mb-8! hidden md:block">
-					<span className="text-sm font-bold uppercase text-gray-600 dark:text-gray-200">
+					<span className="text-sm font-bold text-gray-600 uppercase dark:text-gray-200">
 						▼ Categories
 					</span>
 
@@ -131,12 +131,12 @@ const FieldCatalog = ({ fields }: { fields: Fields }) => {
 					return (
 						<a
 							key={field.name}
-							className="mb-3 block w-full self-stretch rounded-md border border-solid border-gray-200 p-3 text-inherit! no-underline hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800 lg:w-[48%]"
+							className="mb-3 block w-full self-stretch rounded-md border border-solid border-gray-200 p-3 text-inherit! no-underline hover:bg-gray-50 lg:w-[48%] dark:border-gray-700 dark:hover:bg-gray-800"
 							href={`/ruleset-engine/rules-language/fields/reference/${field.name}/`}
 						>
 							<div className="-mb-1 flex items-center">
 								<span
-									className="overflow-hidden text-ellipsis whitespace-nowrap text-lg font-semibold"
+									className="overflow-hidden text-lg font-semibold text-ellipsis whitespace-nowrap"
 									title={`${field.name}: ${field.data_type}`}
 								>
 									{field.name}
