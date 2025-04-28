@@ -2,15 +2,7 @@ import { WorkerEntrypoint } from "cloudflare:workers";
 import { generateRedirectsEvaluator } from "redirects-in-workers";
 import redirectsFileContents from "../dist/__redirects";
 
-import { parse } from "node-html-parser";
-import { process } from "../src/util/rehype";
-
-import rehypeParse from "rehype-parse";
-import rehypeBaseUrl from "../src/plugins/rehype/base-url";
-import rehypeFilterElements from "../src/plugins/rehype/filter-elements";
-import remarkGfm from "remark-gfm";
-import rehypeRemark from "rehype-remark";
-import remarkStringify from "remark-stringify";
+import { htmlToMarkdown } from "../src/util/markdown";
 
 const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 	maxLineLength: 10_000, // Usually 2_000
@@ -36,20 +28,11 @@ export default class extends WorkerEntrypoint<Env> {
 			) {
 				const html = await res.text();
 
-				const content = parse(html).querySelector(".sl-markdown-content");
+				const markdown = await htmlToMarkdown(html);
 
-				if (!content) {
+				if (!markdown) {
 					return new Response("Not Found", { status: 404 });
 				}
-
-				const markdown = await process(content.toString(), [
-					rehypeParse,
-					rehypeBaseUrl,
-					rehypeFilterElements,
-					[remarkGfm, { tablePipeAlign: false }],
-					rehypeRemark,
-					remarkStringify,
-				]);
 
 				return new Response(markdown, {
 					headers: {
