@@ -3,16 +3,15 @@ pcx_content_type: concept
 title: Pages Plugins
 sidebar:
   order: 9
-
 ---
 
-import { DirectoryListing, Render } from "~/components"
+import { DirectoryListing, Render } from "~/components";
 
 Cloudflare maintains a number of official Pages Plugins for you to use in your Pages projects:
 
 <DirectoryListing />
 
-***
+---
 
 ## Author a Pages Plugin
 
@@ -20,13 +19,13 @@ A Pages Plugin is a Pages Functions distributable which includes built-in routin
 
 For example, a Pages Plugin could:
 
-* Intercept HTML pages and inject in a third-party script.
-* Proxy a third-party service's API.
-* Validate authorization headers.
-* Provide a full admin web app experience.
-* Store data in KV or Durable Objects.
-* Server-side render (SSR) webpages with data from a CMS.
-* Report errors and track performance.
+- Intercept HTML pages and inject in a third-party script.
+- Proxy a third-party service's API.
+- Validate authorization headers.
+- Provide a full admin web app experience.
+- Store data in KV or Durable Objects.
+- Server-side render (SSR) webpages with data from a CMS.
+- Report errors and track performance.
 
 A Pages Plugin is essentially a library that developers can use to augment their existing Pages project with a deep integration to Functions.
 
@@ -34,7 +33,7 @@ A Pages Plugin is essentially a library that developers can use to augment their
 
 Developers can enhance their projects by mounting a Pages Plugin at a route of their application. Plugins will provide instructions of where they should typically be mounted (for example, an admin interface might be mounted at `functions/admin/[[path]].ts`, and an error logger might be mounted at `functions/_middleware.ts`). Additionally, each Plugin may take some configuration (for example, with an API token).
 
-***
+---
 
 ## Static form example
 
@@ -42,9 +41,9 @@ In this example, you will build a Pages Plugin and then include it in a project.
 
 The first Plugin should:
 
-* intercept HTML forms.
-* store the form submission in [KV](/kv/api/).
-* respond to submissions with a developer's custom response.
+- intercept HTML forms.
+- store the form submission in [KV](/kv/api/).
+- respond to submissions with a developer's custom response.
 
 ### 1. Create a new Pages Plugin
 
@@ -52,29 +51,27 @@ Create a `package.json` with the following:
 
 ```json
 {
-  "name": "@cloudflare/static-form-interceptor",
-  "main": "dist/index.js",
-  "types": "index.d.ts",
-  "files": ["dist", "index.d.ts", "tsconfig.json"],
-  "scripts": {
-    "build": "npx wrangler pages functions build --plugin --outdir=dist",
-    "prepare": "npm run build"
-  }
+	"name": "@cloudflare/static-form-interceptor",
+	"main": "dist/index.js",
+	"types": "index.d.ts",
+	"files": ["dist", "index.d.ts", "tsconfig.json"],
+	"scripts": {
+		"build": "npx wrangler pages functions build --plugin --outdir=dist",
+		"prepare": "npm run build"
+	}
 }
 ```
 
 :::note
 
-
 The `npx wrangler pages functions build` command supports a number of arguments, including:
 
-* `--plugin` which tells the command to build a Pages Plugin, (rather than Pages Functions as part of a Pages project)
-* `--outdir` which allows you to specify where to output the built Plugin
-* `--external` which can be used to avoid bundling external modules in the Plugin
-* `--watch` argument tells the command to watch for changes to the source files and rebuild the Plugin automatically
+- `--plugin` which tells the command to build a Pages Plugin, (rather than Pages Functions as part of a Pages project)
+- `--outdir` which allows you to specify where to output the built Plugin
+- `--external` which can be used to avoid bundling external modules in the Plugin
+- `--watch` argument tells the command to watch for changes to the source files and rebuild the Plugin automatically
 
 For more information about the available arguments, run `npx wrangler pages functions build --help`.
-
 
 :::
 
@@ -82,15 +79,13 @@ In our example, `dist/index.js` will be the entrypoint to your Plugin. This is a
 
 Next, create a `functions` directory and start coding your Plugin. The `functions` folder will be mounted at some route by the developer, so consider how you want to structure your files. Generally:
 
-* if you want your Plugin to run on a single route of the developer's choice (for example, `/foo`), create a `functions/index.ts` file.
-* if you want your Plugin to be mounted and serve all requests beyond a certain path (for example, `/admin/login` and `/admin/dashboard`), create a `functions/[[path]].ts` file.
-* if you want your Plugin to intercept requests but fallback on either other Functions or the project's static assets, create a `functions/_middleware.ts` file.
+- if you want your Plugin to run on a single route of the developer's choice (for example, `/foo`), create a `functions/index.ts` file.
+- if you want your Plugin to be mounted and serve all requests beyond a certain path (for example, `/admin/login` and `/admin/dashboard`), create a `functions/[[path]].ts` file.
+- if you want your Plugin to intercept requests but fallback on either other Functions or the project's static assets, create a `functions/_middleware.ts` file.
 
 :::note[Do not include the mounted path in your Plugin]
 
-
 Your Plugin should not use the mounted path anywhere in the file structure (for example, `/foo` or `/admin`). Developers should be free to mount your Plugin wherever they choose, but you can make recommendations of how you expect this to be mounted in your `README.md`.
-
 
 :::
 
@@ -100,43 +95,47 @@ Returning to your static form example, if you want to intercept requests and ove
 
 ```typescript
 class FormHandler {
-  element(element) {
-    const name = element.getAttribute('data-static-form-name')
-    element.setAttribute('method', 'POST')
-    element.removeAttribute('action')
-    element.append(`<input type="hidden" name="static-form-name" value="${name}" />`, { html: true })
-  }
+	element(element) {
+		const name = element.getAttribute("data-static-form-name");
+		element.setAttribute("method", "POST");
+		element.removeAttribute("action");
+		element.append(
+			`<input type="hidden" name="static-form-name" value="${name}" />`,
+			{ html: true },
+		);
+	}
 }
 
 export const onRequestGet = async (context) => {
-  // We first get the original response from the project
-  const response = await context.next()
+	// We first get the original response from the project
+	const response = await context.next();
 
-  // Then, using HTMLRewriter, we transform `form` elements with a `data-static-form-name` attribute, to tell them to POST to the current page
-  return new HTMLRewriter().on('form[data-static-form-name]', new FormHandler()).transform(response)
-}
+	// Then, using HTMLRewriter, we transform `form` elements with a `data-static-form-name` attribute, to tell them to POST to the current page
+	return new HTMLRewriter()
+		.on("form[data-static-form-name]", new FormHandler())
+		.transform(response);
+};
 
 export const onRequestPost = async (context) => {
-  // Parse the form
-  const formData = await context.request.formData()
-  const name = formData.get('static-form-name')
-  const entries = Object.fromEntries([...formData.entries()].filter(([name]) => name !== 'static-form-name'))
+	// Parse the form
+	const formData = await context.request.formData();
+	const name = formData.get("static-form-name");
+	const entries = Object.fromEntries(
+		[...formData.entries()].filter(([name]) => name !== "static-form-name"),
+	);
 
-  // Get the arguments given to the Plugin by the developer
-  const { kv, respondWith } = context.pluginArgs
+	// Get the arguments given to the Plugin by the developer
+	const { kv, respondWith } = context.pluginArgs;
 
+	// Store form data in KV under key `form-name:YYYY-MM-DDTHH:MM:SSZ`
+	const key = `${name}:${new Date().toISOString()}`;
+	context.waitUntil(kv.put(name, JSON.stringify(entries)));
 
-  // Store form data in KV under key `form-name:YYYY-MM-DDTHH:MM:SSZ`
-  const key = `${name}:${new Date().toISOString()}`
-  context.waitUntil(kv.put(name, JSON.stringify(entries)))
-
-  // Respond with whatever the developer wants
-  const response = await respondWith({ formData })
-  return response
-}
+	// Respond with whatever the developer wants
+	const response = await respondWith({ formData });
+	return response;
+};
 ```
-
-<Render file="request-dot-clone-warning" product="workers" />
 
 ### 2. Type your Pages Plugin
 
@@ -146,8 +145,8 @@ In the `index.d.ts`, export a function which takes your `pluginArgs` and returns
 
 ```typescript
 export type PluginArgs = {
-  kv: KVNamespace;
-  respondWith: (args: { formData: FormData }) => Promise<Response>;
+	kv: KVNamespace;
+	respondWith: (args: { formData: FormData }) => Promise<Response>;
 };
 
 export default function (args: PluginArgs): PagesFunction;
@@ -163,7 +162,7 @@ You can distribute your Plugin however you choose. Popular options include publi
 
 Make sure you are including the generated `dist/` directory, your typings `index.d.ts`, as well as a `README.md` with instructions on how developers can use your Plugin.
 
-***
+---
 
 ### 5. Install your Pages Plugin
 
@@ -187,14 +186,14 @@ A Plugin's default export is a function which takes the same context parameter t
 import staticFormInterceptorPlugin from "@cloudflare/static-form-interceptor";
 
 export const onRequest = (context) => {
-  return staticFormInterceptorPlugin({
-    kv: context.env.FORM_KV,
-    respondWith: async ({ formData }) => {
-      // Could call email/notification service here
-      const name = formData.get("name");
-      return new Response(`Thank you for your submission, ${name}!`);
-    },
-  })(context);
+	return staticFormInterceptorPlugin({
+		kv: context.env.FORM_KV,
+		respondWith: async ({ formData }) => {
+			// Could call email/notification service here
+			const name = formData.get("name");
+			return new Response(`Thank you for your submission, ${name}!`);
+		},
+	})(context);
 };
 ```
 
@@ -207,20 +206,20 @@ With your Plugin mounted on the `/contact` route, a corresponding HTML file migh
 ```html
 <!DOCTYPE html>
 <html>
-  <body>
-    <h1>Contact us</h1>
-    <!-- Include the `data-static-form-name` attribute to name the submission -->
-    <form data-static-form-name="contact">
-      <label>
-        <span>Name</span>
-        <input type="text" autocomplete="name" name="name" />
-      </label>
-      <label>
-        <span>Message</span>
-        <textarea name="message"></textarea>
-      </label>
-    </form>
-  </body>
+	<body>
+		<h1>Contact us</h1>
+		<!-- Include the `data-static-form-name` attribute to name the submission -->
+		<form data-static-form-name="contact">
+			<label>
+				<span>Name</span>
+				<input type="text" autocomplete="name" name="name" />
+			</label>
+			<label>
+				<span>Message</span>
+				<textarea name="message"></textarea>
+			</label>
+		</form>
+	</body>
 </html>
 ```
 
@@ -234,7 +233,7 @@ If you experience any problems with any one Plugin, file an issue on that Plugin
 
 If you experience any problems with Plugins in general, we would appreciate your feedback in the #pages-discussions channel in [Discord](https://discord.com/invite/cloudflaredev)! We are excited to see what you build with Plugins and welcome any feedback about the authoring or developer experience. Let us know in the Discord channel if there is anything you need to make Plugins even more powerful.
 
-***
+---
 
 ## Chain your Plugin
 
@@ -246,25 +245,26 @@ import cloudflareAccessPlugin from "@cloudflare/pages-plugin-cloudflare-access";
 import adminDashboardPlugin from "@cloudflare/a-fictional-admin-plugin";
 
 export const onRequest = [
-  // Initialize a Sentry Plugin to capture any errors
-  sentryPlugin({ dsn: "https://sentry.io/welcome/xyz" }),
+	// Initialize a Sentry Plugin to capture any errors
+	sentryPlugin({ dsn: "https://sentry.io/welcome/xyz" }),
 
-  // Initialize a Cloudflare Access Plugin to ensure only administrators can access this protected route
-  cloudflareAccessPlugin({
-    domain: "https://test.cloudflareaccess.com",
-    aud: "4714c1358e65fe4b408ad6d432a5f878f08194bdb4752441fd56faefa9b2b6f2",
-  }),
+	// Initialize a Cloudflare Access Plugin to ensure only administrators can access this protected route
+	cloudflareAccessPlugin({
+		domain: "https://test.cloudflareaccess.com",
+		aud: "4714c1358e65fe4b408ad6d432a5f878f08194bdb4752441fd56faefa9b2b6f2",
+	}),
 
-  // Populate the Sentry plugin with additional information about the current user
-  (context) => {
-    const email = context.data.cloudflareAccessJWT.payload?.email || "service user";
+	// Populate the Sentry plugin with additional information about the current user
+	(context) => {
+		const email =
+			context.data.cloudflareAccessJWT.payload?.email || "service user";
 
-    context.data.sentry.setUser({ email });
+		context.data.sentry.setUser({ email });
 
-    return next();
-  },
+		return next();
+	},
 
-  // Finally, serve the admin dashboard plugin, knowing that errors will be captured and that every incoming request has been authenticated
-  adminDashboardPlugin(),
+	// Finally, serve the admin dashboard plugin, knowing that errors will be captured and that every incoming request has been authenticated
+	adminDashboardPlugin(),
 ];
 ```

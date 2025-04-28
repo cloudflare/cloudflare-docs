@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 The hCaptcha Pages Plugin validates hCaptcha tokens.
 
@@ -36,8 +36,6 @@ export const onRequestPost: PagesFunction[] = [
 	},
 ];
 ```
-
-<Render file="request-dot-clone-warning" product="workers" />
 
 This Plugin only exposes a single route. It will be available wherever it is mounted. In the above example, because it is mounted in `functions/register.ts`, it will validate requests to `/register`. The Plugin is mounted with a single object parameter with the following properties.
 
