@@ -3187,7 +3187,7 @@
 					"free": 0,
 					"pro": 0,
 					"biz": 1,
-					"ent": "1 (default)\n\n<em>With add-on</em>\nCustom (can purchase more)"
+					"ent": "1 (default)\n\n<em>With advanced:</em>\nCustom (can purchase more)"
 				},
 				"customized_templates": {
 					"title": "Customized templates",
@@ -3195,7 +3195,7 @@
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
-					"ent": "Paid add-on"
+					"ent": "Advanced add-on"
 				},
 				"queueing_methods": {
 					"title": "Queueing methods",
@@ -3203,7 +3203,7 @@
 					"free": "No",
 					"pro": "No",
 					"biz": "First In First Out (FIFO)",
-					"ent": "First In First Out (FIFO) (default)\n\n<em>With add-on</em>\nAll options"
+					"ent": "First In First Out (FIFO) (default)\n\n<em>With advanced:</em>\nFIFO, Random, Reject, Passthrough"
 				},
 				"configure_multiple_hostnames_paths": {
 					"title": "Configure multiple hostnames and paths",
@@ -3211,7 +3211,7 @@
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
-					"ent": "Paid add-on"
+					"ent": "Advanced add-on"
 				},
 				"disable_session_renewal": {
 					"title": "Disable session renewal",
@@ -3219,7 +3219,7 @@
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
-					"ent": "Paid add-on"
+					"ent": "Advanced add-on"
 				},
 				"json_response": {
 					"title": "JSON-friendly response",
@@ -3227,7 +3227,7 @@
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
-					"ent": "Paid add-on"
+					"ent": "Advanced add-on"
 				},
 				"k_customize_queuing_status_code": {
 					"title": "Customize queuing status code",
@@ -3243,7 +3243,7 @@
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
-					"ent": "Paid add-on"
+					"ent": "Advanced add-on"
 				},
 				"rules": {
 					"title": "Waiting Room rules",
@@ -3251,7 +3251,7 @@
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
-					"ent": "Paid add-on"
+					"ent": "Advanced add-on"
 				},
 				"session_revocation": {
 					"title": "Session Revocation",
@@ -3259,7 +3259,7 @@
 					"free": "No",
 					"pro": "No",
 					"biz": "No",
-					"ent": "Paid add-on"
+					"ent": "Advanced add-on"
 				},
 				"seo_crawler": {
 					"title": "SEO Crawler Bypassing",
@@ -3275,7 +3275,7 @@
 					"free": "No",
 					"pro": "No",
 					"biz": "Invisible only",
-					"ent": "Invisible (default)\n\n<em>With add-on</em>\nAll options"
+					"ent": "Invisible (default)\n\n<em>With advanced:</em>\nInvisible, Managed, Non Interactive"
 				},
 				"turnstile_fail_action": {
 					"title": "Turnstile Fail Action",
@@ -3283,7 +3283,7 @@
 					"free": "No",
 					"pro": "No",
 					"biz": "Log only",
-					"ent": "Log only (default)\n\n<em>With add-on</em>\nInfinite queue"
+					"ent": "Log only (default)\n\n<em>With advanced:</em>\nLog only & Infinite queue"
 				}
 			}
 		}
