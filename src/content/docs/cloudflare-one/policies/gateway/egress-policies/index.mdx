@@ -110,7 +110,10 @@ Gateway matches egress traffic against the following selectors, or criteria:
 
 ### Host <Badge text="Beta" variant="caution"/>
 
-<Render file="gateway/selectors/host" />
+<Render
+	file="gateway/selectors/host"
+	params={{ APIendpoint: "net.fqdn.host" }}
+/>
 
 <Render file="gateway/selectors/egress-selector-limitation" />
 
