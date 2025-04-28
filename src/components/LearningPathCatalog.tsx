@@ -167,7 +167,7 @@ const LearningPathCatalog = ({
 								{path.video && <span className="sl-badge tip">Video</span>}
 							</div>
 							<p className="mt-3! font-semibold">{path.title}</p>
-							<div className="mt-1! text-sm leading-2">
+							<div className="mt-1! text-sm">
 								<Markdown disallowedElements={["a"]} unwrapDisallowed={true}>
 									{path.description}
 								</Markdown>
