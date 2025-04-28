@@ -173,13 +173,23 @@ Some common time intervals that may be useful for setting up your Cron Trigger:
 
 ## Test Cron Triggers locally
 
-Test Cron Triggers using Wrangler with [`wrangler dev`](/workers/wrangler/commands/#dev). This will expose a `/cdn-cgi/handler/scheduled` route which can be used to test using a HTTP request. To simulate different cron patterns, a `cron` query parameter can be passed in.
+Test Cron Triggers using Wrangler with [`wrangler dev`](/workers/wrangler/commands/#dev). This will expose a `/cdn-cgi/handler/scheduled` route which can be used to test using a HTTP request.
+
+```sh
+curl "http://localhost:8787/cdn-cgi/handler/scheduled"
+```
+
+To simulate different cron patterns, a `cron` query parameter can be passed in.
 
 ```sh
 curl "http://localhost:8787/cdn-cgi/handler/scheduled?cron=*+*+*+*+*"
 ```
 
 Optionally, you can also pass a `time` query parameter to override `controller.scheduledTime` in your scheduled event listener.
+
+```sh
+curl "http://localhost:8787/cdn-cgi/handler/scheduled?cron=*+*+*+*+*&time=1745856238"
+```
 
 ## View past events
 
