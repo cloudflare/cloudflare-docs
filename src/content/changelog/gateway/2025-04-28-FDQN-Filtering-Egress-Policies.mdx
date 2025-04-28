@@ -1,0 +1,15 @@
+---
+title: FQDN Filtering For Gateway Egress Policies
+description: Select your egress IP depending on your upstream FQDN, Application, or Category!
+products:
+  - gateway
+hidden: false
+date: 2025-04-28T11:00:00Z
+---
+
+Cloudflare One administrators can now control which egress IP is used based on a destination's Fully Qualified Domain Nate (FDQN) within Gateway Egress policies. 
+- Host, Domain, Content Categories, and Application selectors are now available in the Gateway Egress policy builder in beta
+- During the beta period this will apply to traffic on-ramped via the WARP client, Proxy Endpoints (commonly deployed via PAC files), or Browser Isolation
+  - For WARP client support, additional configuration is required. For more information, refer to the [WARP client configuration documentation](/cloudflare-one/policies/gateway/egress-policies/#limitations).
+  
+This will help apply egress IPs to your users' traffic when an upstream application or network requires it, while the rest of their traffic can take the most performant egress path.
