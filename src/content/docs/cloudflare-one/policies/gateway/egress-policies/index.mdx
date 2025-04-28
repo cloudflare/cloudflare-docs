@@ -101,7 +101,10 @@ Gateway matches egress traffic against the following selectors, or criteria:
 
 ### Domain <Badge text="Beta" variant="caution"/>
 
-<Render file="gateway/selectors/domain" />
+<Render
+	file="gateway/selectors/domain"
+	params={{ APIendpoint: "net.fqdn.domains" }}
+/>
 
 <Render file="gateway/selectors/egress-selector-limitation" />
 
