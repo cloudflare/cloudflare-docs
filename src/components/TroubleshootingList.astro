@@ -55,7 +55,7 @@ const resources = await getCollection("docs", (entry) => {
 				const title =
 					resource.data.head
 						.find((x) => x.tag === "title")
-						?.content.split(" · ")[0] ?? resource.data.title;
+						?.content?.split(" · ")[0] ?? resource.data.title;
 
 				return (
 					<tr>

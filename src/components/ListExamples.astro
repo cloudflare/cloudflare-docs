@@ -40,9 +40,17 @@ const filterValues: Record<string, string[]> = {};
 
 if (filters) {
 	for (const filter of filters) {
-		const values = examples.flatMap((x) =>
-			filter in x.data ? x.data[filter] : [],
-		);
+		const values = examples.flatMap((x) => {
+			if (filter in x.data) {
+				const value = x.data[filter];
+
+				if (typeof value === "string") {
+					return value;
+				}
+			}
+
+			return [];
+		});
 
 		const unique = [...new Set(values.flatMap((v) => v?.toString() ?? []))];
 
