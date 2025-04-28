@@ -26,7 +26,7 @@ export default class extends WorkerEntrypoint<Env> {
 			) {
 				const html = await res.text();
 
-				const markdown = await htmlToMarkdown(html);
+				const markdown = await htmlToMarkdown(html, request.url);
 
 				if (!markdown) {
 					return new Response("Not Found", { status: 404 });

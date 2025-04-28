@@ -10,8 +10,10 @@ import remarkStringify from "remark-stringify";
 
 export async function htmlToMarkdown(
 	html: string,
+	url: string,
 ): Promise<string | undefined> {
-	const content = parse(html).querySelector(".sl-markdown-content");
+	const dom = parse(html);
+	const content = dom.querySelector(".sl-markdown-content");
 
 	if (!content) {
 		return;
@@ -26,5 +28,24 @@ export async function htmlToMarkdown(
 		remarkStringify,
 	]);
 
-	return markdown;
+	const title = dom.querySelector("title")?.textContent;
+	const description = dom.querySelector("meta[name='description']")?.attributes
+		.content;
+	const lastUpdated = dom.querySelector(".meta time")?.attributes.datetime;
+
+	const withFrontmatter = [
+		"---",
+		`title: ${title}`,
+		description ? `description: ${description}` : [],
+		lastUpdated ? `lastUpdated: ${lastUpdated}` : [],
+		`source_url:`,
+		`  html: ${url}`,
+		`  md: ${url.replace("index.md", "")}`,
+		"---\n",
+		markdown,
+	]
+		.flat()
+		.join("\n");
+
+	return withFrontmatter;
 }
