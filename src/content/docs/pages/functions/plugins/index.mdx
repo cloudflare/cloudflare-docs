@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { DirectoryListing } from "~/components"
+import { DirectoryListing, Render } from "~/components"
 
 Cloudflare maintains a number of official Pages Plugins for you to use in your Pages projects:
 
@@ -135,6 +135,8 @@ export const onRequestPost = async (context) => {
   return response
 }
 ```
+
+<Render file="request-dot-clone-warning" product="workers" />
 
 ### 2. Type your Pages Plugin
 
