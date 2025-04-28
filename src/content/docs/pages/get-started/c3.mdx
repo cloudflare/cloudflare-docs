@@ -25,9 +25,13 @@ Cloudflare provides a CLI command for creating new Workers and Pages projects â€
 
 Open a terminal window and run:
 
-<Render file="c3-run-command-no-directory" product="workers" />
+<Render file="c3-run-command-no-directory" product="pages" />
 
 Running this command will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package, and then ask you questions about the type of application you wish to create.
+
+:::note
+To create a Pages project you must now specify the `--platform=pages` arg, otherwise C3 will always create a Workers project.
+:::
 
 ## Web frameworks
 
@@ -71,25 +75,7 @@ C3 collects any required input through a series of interactive prompts. You may 
 
 This is the full format of a C3 invocation alongside the possible CLI arguments:
 
-<Tabs> <TabItem label="npm">
-
-```sh
-npm create cloudflare@latest [--] [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]
-```
-
-</TabItem> <TabItem label="yarn">
-
-```sh
-yarn create cloudflare [--] [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]
-```
-
-</TabItem> <TabItem label="pnpm">
-
-```sh
-pnpm create cloudflare@latest [--] [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]
-```
-
-</TabItem> </Tabs>
+<PackageManagers type="create" pkg="cloudflare@latest" args="--platform=pages [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]"/>
 
 - `DIRECTORY` <Type text="string" /> <MetaInfo text="optional" />
 
