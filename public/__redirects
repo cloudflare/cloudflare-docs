@@ -1641,7 +1641,7 @@
 /workers-ai/privacy/ /workers-ai/platform/privacy/ 301
 /workers-ai/glossary/ /workers-ai/platform/glossary/ 301
 /workers-ai/workers-ai-errors/ /workers-ai/platform/errors/ 301
-/workers-ai/platform/privacy/ /workers-ai/platform/datausage/ 301
+/workers-ai/platform/privacy/ /workers-ai/platform/data-usage/ 301
 
 # Guides section
 /workers-ai/demos/ /workers-ai/guides/demos-architectures/ 301
