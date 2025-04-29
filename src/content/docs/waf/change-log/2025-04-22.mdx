@@ -9,6 +9,12 @@ tableOfContents: false
 
 import { RuleID } from "~/components";
 
+Each of this week's rule releases covers a distinct CVE, with half of the rules targeting Remote Code Execution (RCE) attacks. Of the 6 CVEs covered, four were scored as critical, with the other two scored as high.
+
+When deciding which exploits to tackle, Cloudflare tunes into the attackers' areas of focus. Cloudflare's network intelligence provides a unique lens into attacker activity – for instance, through the volume of blocked requests related with CVE exploits after updating WAF Managed Rules with new detections.
+
+From this week's releases, one indicator that RCE is a "hot topic" attack type is the fact that the Oracle PeopleSoft RCE rule accounts for half of all of the new rule matches. This rule patches CVE-2023-22047, a high-severity vulnerability in the Oracle PeopleSoft suite that allows unauthenticated attackers to access PeopleSoft Enterprise PeopleTools data through remote code execution. This is particularly concerning because of the nature of the data managed by PeopleSoft – this can include payroll records or student profile information. This CVE, along with five others, are addressed with the latest detection update to WAF Managed Rules.
+
 <table style="width: 100%">
 	<thead>
 		<tr>
@@ -83,7 +89,9 @@ import { RuleID } from "~/components";
 				<RuleID id="410317f1e32b41859fa3214dd52139a8" />
 			</td>
 			<td>100744</td>
-			<td>Oracle Access Manager - Remote Code Execution - CVE:CVE-2021-35587</td>
+			<td>
+				Oracle Access Manager - Remote Code Execution - CVE:CVE-2021-35587
+			</td>
 			<td>Log</td>
 			<td>Disabled</td>
 			<td>This is a New Detection</td>
