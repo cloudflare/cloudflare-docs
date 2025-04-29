@@ -13,10 +13,8 @@ const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 export default class extends WorkerEntrypoint<Env> {
 	override async fetch(request: Request) {
 		if (request.url.endsWith("/index.md")) {
-			const res = await this.env.ASSETS.fetch(
-				request.url.replace("index.md", ""),
-				request,
-			);
+			const htmlUrl = request.url.replace("index.md", "");
+			const res = await this.env.ASSETS.fetch(htmlUrl, request);
 
 			if (res.status === 404) {
 				return res;
@@ -28,7 +26,7 @@ export default class extends WorkerEntrypoint<Env> {
 			) {
 				const html = await res.text();
 
-				const markdown = await htmlToMarkdown(html);
+				const markdown = await htmlToMarkdown(html, request.url);
 
 				if (!markdown) {
 					return new Response("Not Found", { status: 404 });

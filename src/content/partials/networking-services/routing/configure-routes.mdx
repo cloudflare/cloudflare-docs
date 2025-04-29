@@ -299,7 +299,7 @@ You need to configure two ASNs:
 If you already have set up your Cloudflare account ASN, you can skip steps two and three below.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
-2. Go to **{props.productName}** > **Configuration** > **BGP**.
+2. Go to **{props.productName}** > **Configuration** > **BGP configuration**.
 3. In **CF Account ASN**, enter Cloudflare's ASN.
 4. Go to **Interconnects**.
 5. Find the Direct CNI interconnect you want to configure with BGP > select the **three dots** next to it > **Configure BGP**.
@@ -308,4 +308,4 @@ If you already have set up your Cloudflare account ASN, you can skip steps two a
 8. (Optional) In **Advertised prefix list**, input the additional prefixes automatically assigned by Cloudflare during the creation of the CNI interconnect, to advertise alongside your existing routes. Leave blank if you do not want to advertise extra routes. <br /> Typical prefixes to configure here include:
 	- A route to `0.0.0.0/0`, the default route — to attract all Internet-bound traffic if using {props.productGatewayOrEgress}.
 	- A route to `100.96.0.0/12`, the portion of CGNAT space [used by default with WARP clients](/cloudflare-one/connections/connect-networks/private-net/warp-connector/user-to-site/#add-route-to-router).
-9. Select **Enable BGP**.
+9. Select **Save**.

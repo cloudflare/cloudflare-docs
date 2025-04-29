@@ -1,0 +1,50 @@
+---
+pcx_content_type: troubleshooting
+title: Error 524
+source: null
+---
+
+## Error 524: a timeout occurred
+
+Error `524` usually indicates that Cloudflare successfully connected to the origin web server, but the origin did not provide an HTTP response before the default 100 seconds [Proxy Read Timeout](/fundamentals/reference/connection-limits/).
+
+### Common causes
+
+This can happen if the origin server is taking too long because it has too much work to do, for example, a large data query, or because the server is struggling for resources and cannot return any data in time.
+
+Error `524` can also indicate that Cloudflare successfully connected to the origin web server to write data, but the write did not complete before the 30 seconds [Proxy Write Timeout](/fundamentals/reference/connection-limits/) (or 6.5 seconds in the case of [Cloudflare Images](/images/)).
+
+:::note
+
+A `524` occurs if the origin web server acknowledges (ACK) the resource request after the connection has been
+established, but does not send a timely response.
+:::
+
+### Resolution
+
+Here are the options we suggest to work around this issue:
+
+- Implement status polling of large HTTP processes to avoid hitting this error.
+- [Contact your hosting provider](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/#required-error-details-for-hosting-provider) to exclude the following common causes at your origin web server:
+  - A long-running process on the origin web server.
+  - An overloaded origin web server.
+
+:::note
+
+Logging request response time at your origin web server helps identify the cause of resource slowness. Contact your hosting provider or site administrator for assistance in adjusting log formats or search for related logging documentation for your brand of web server such as [Apache](http://httpd.apache.org/docs/current/mod/mod_log_config.html) or [Nginx](http://nginx.org/en/docs/http/ngx_http_log_module.html#log_format).
+:::
+
+- Enterprise customers can increase the `524` timeout up to 6,000 seconds using the [Edit zone setting](/api/resources/zones/subresources/settings/methods/edit/) endpoint (`proxy_read_timeout` setting). If your content can be cached, you may also choose to use a [Cache Rule](/cache/how-to/cache-rules/settings/#proxy-read-timeout-enterprise-only) with the `Proxy Read Timeout` setting selected instead in the Cloudflare Dashboard.
+
+:::note
+
+If the timeouts are on write requests, the [Proxy Write Timeout](/fundamentals/reference/connection-limits/) of 30 seconds cannot be adjusted.
+:::
+
+- If you regularly run HTTP requests that take over 100 seconds to complete (for example, large data exports), move those processes behind a subdomain not proxied (grey clouded) in the Cloudflare **DNS** app.
+
+:::note
+
+Note that you may observe a 1 second difference between the timeout you have set and the actual time at which the Error `524` is returned. This is expected, it is due to the current work on implementing our proxy - [Pingora](https://blog.cloudflare.com/how-we-built-pingora-the-proxy-that-connects-cloudflare-to-the-internet/).
+As a workaround, you can simply set the timeout to one second more (121 seconds instead of 120 seconds, for example).
+:::

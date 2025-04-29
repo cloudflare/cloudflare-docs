@@ -1,5 +1,5 @@
 diff --git a/node_modules/@astrojs/starlight/user-components/Tabs.astro b/node_modules/@astrojs/starlight/user-components/Tabs.astro
-index 4234eb0..276d211 100644
+index 6d173df..61eed80 100644
 --- a/node_modules/@astrojs/starlight/user-components/Tabs.astro
 +++ b/node_modules/@astrojs/starlight/user-components/Tabs.astro
 @@ -3,10 +3,11 @@ import Icon from './Icon.astro';
@@ -24,3 +24,15 @@ index 4234eb0..276d211 100644
  								{label}
  							</a>
  						</li>
+diff --git a/node_modules/@astrojs/starlight/utils/git.ts b/node_modules/@astrojs/starlight/utils/git.ts
+index 1536fac..94876b1 100644
+--- a/node_modules/@astrojs/starlight/utils/git.ts
++++ b/node_modules/@astrojs/starlight/utils/git.ts
+@@ -72,6 +72,7 @@ export function getAllNewestCommitDate(rootPath: string, docsPath: string): [str
+ 		{
+ 			cwd: repoRoot,
+ 			encoding: 'utf-8',
++			maxBuffer: 10 * 1024 * 1024,
+ 		}
+ 	);
+ 
