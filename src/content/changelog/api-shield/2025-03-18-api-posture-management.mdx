@@ -17,7 +17,7 @@ View these risks in [Endpoint Management](/api-shield/management-and-monitoring/
 API Shield will scan for risks on your API inventory daily. Here are the new risks we're scanning for and automatically labelling:
 
 - **cf-risk-sensitive**: applied if the customer is subscribed to the [sensitive data detection ruleset](/waf/managed-rules/reference/sensitive-data-detection/) and the WAF detects sensitive data returned on an endpoint in the last seven days.
-- **cf-risk-missing-auth**: applied if the customer has configured a session ID and no successful requests to the endpoint contain the session ID. 
+- **cf-risk-missing-auth**: applied if the customer has configured a session ID and no successful requests to the endpoint contain the session ID.
 - **cf-risk-mixed-auth**: applied if the customer has configured a session ID and some successful requests to the endpoint contain the session ID while some lack the session ID.
 - **cf-risk-missing-schema**: added when a learned schema is available for an endpoint that has no active schema.
 - **cf-risk-error-anomaly**: added when an endpoint experiences a recent increase in response errors over the last 24 hours.
