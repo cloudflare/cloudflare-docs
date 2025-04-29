@@ -24,7 +24,7 @@ Once deployed, this server will be live at your workers.dev subdomain (e.g. remo
 
 If you're using the "Deploy to Cloudflare" button, a new git repository will be set up on your GitHub or GitLab account for your MCP server, configured to automatically deploy to Cloudflare each time you push a change or merge a pull request to the main branch of the repository. You can then clone this repository, [develop locally](/agents/guides/remote-mcp-server/#local-development), and start writing code and building.
 
-## Set up and deploy your MCP server via CLI
+### Set up and deploy your MCP server via CLI
 
 Alternatively, you can use the command line as shown below to create a new MCP Server on your local machine.
 
@@ -40,7 +40,7 @@ Now, you have the MCP server setup, with dependencies installed. Move into that 
 cd my-mcp-server
 ```
 
-### Local development
+#### Local development
 
 In the directory of your new project, run the following command to start the development server:
 
@@ -66,7 +66,7 @@ In the inspector, enter the URL of your MCP server, `http://localhost:8787/sse`,
 
 ![MCP inspector — authenticated](~/assets/images/agents/mcp-inspector-authenticated.png)
 
-### Deploy your MCP server
+#### Deploy your MCP server
 
 You can deploy your MCP server to Cloudflare using the following [Wrangler CLI command](/workers/wrangler) within the example project:
 
