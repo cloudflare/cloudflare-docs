@@ -1,19 +1,14 @@
 ---
 pcx_content_type: changelog
 title: Changelog
-release_notes_name: Cloudflare One
-release_notes_product_area_name: Cloudflare One
 sidebar:
   order: 15
 head: []
 description: Review recent changes to Cloudflare One.
-
 ---
 
-import { ProductReleaseNotes, Render } from "~/components"
+import { ProductChangelog } from "~/components";
 
-<Render file="changelog-note" />
+{/* <!-- All changelog entries live in associated src/content/changelogs/. */}
 
-{/* <!-- All changelog entries live in associated src/content/changelogs/{productName}.yaml. For more details, refer to https://developers.cloudflare.com/style-guide/documentation-content-strategy/content-types/changelog/#yaml-file --> */}
-
-<ProductReleaseNotes />
+<ProductChangelog area="Cloudflare One" />

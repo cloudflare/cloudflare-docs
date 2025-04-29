@@ -20,37 +20,48 @@ To develop locally with Queues, you will need:
 ## Start a local development session
 
 Open your terminal and run the following commands to start a local development session:
-
 ```sh
-# Confirm we are using wrangler v3.1.0+
-wrangler --version
-```
-
-```sh output
-⛅️ wrangler 3.1.0
-```
-
-Start a local dev session
-
-```sh
-# Start a local dev session:
-npx wrangler dev
+npx wrangler@latest dev
 ```
 
 ```sh output
 ------------------
-wrangler dev now uses local mode by default, powered by 🔥 Miniflare and 👷 workerd.
-To run an edge preview session for your Worker, use wrangler dev --remote
-⎔ Starting local server...
-[mf:inf] Ready on http://127.0.0.1:8787/
+Your Worker and resources are simulated locally via Miniflare. For more information, see: https://developers.cloudflare.com/workers/testing/local-development.
+
+Your worker has access to the following bindings:
+- Queues: <QUEUE-NAME>
 ```
 
 Local development sessions create a standalone, local-only environment that mirrors the production environment Queues runs in so you can test your Workers _before_ you deploy to production.
 
 Refer to the [`wrangler dev` documentation](/workers/wrangler/commands/#dev) to learn more about how to configure a local development session.
 
+## Separating producer & consumer Workers
+Wrangler supports running multiple Workers simultaneously with a single command. If your architecture separates the producer and consumer into distinct Workers, you can use this functionality to test the entire message flow locally.
+
+:::caution
+Support for running multiple Workers at once with one Wrangler command is experimental, and subject to change as we work on the experience. If you run into bugs or have any feedback, [open an issue on the workers-sdk repository](https://github.com/cloudflare/workers-sdk/issues/new)
+:::
+
+For example, if your project has the following directory structure: 
+```
+producer-worker/
+├── wrangler.jsonc
+├── index.ts
+└── consumer-worker/
+    ├── wrangler.jsonc
+    └── index.ts
+```
+
+You can start development servers for both workers with the following command:
+```sh
+npx wrangler@latest dev -c wrangler.jsonc -c consumer-worker/wrangler.jsonc --persist-to .wrangler/state
+```
+
+When the producer Worker sends messages to the queue, the consumer Worker will automatically be invoked to handle them.
+:::note
+[Consumer concurrency](/queues/configuration/consumer-concurrency/) is not supported while running locally.
+:::
+
 ## Known Issues
-
-Wrangler does not yet support running separate producer and consumer Workers bound to the same Queue locally. To develop locally with Queues, you can temporarily put your consumer's `queue()` handler in the same Worker as your producer, so the same Worker acts as both a producer and consumer.
-
-Wrangler also does not yet support `wrangler dev --remote`.
+- Queues does not support Wrangler remote mode (`wrangler dev --remote`).

@@ -5,16 +5,44 @@ sidebar:
   order: 1
 ---
 
-You can upload objects to your bucket from the Cloudflare dashboard or using the Wrangler.
+import { Steps, Tabs, TabItem } from "~/components"
+
+You can upload objects to your bucket from using API (both [Workers Binding API](/r2/api/workers/workers-api-reference/) or [compatible S3 API](/r2/api/s3/api/)), rclone, Cloudflare dashboard, or Wrangler.
+
+## Upload objects via Rclone
+
+Rclone is a command-line tool which manages files on cloud storage. You can use rclone to upload objects to R2. Rclone is useful if you wish to upload multiple objects concurrently.
+
+To use rclone, install it onto your machine using their official documentation - [Install rclone](https://rclone.org/install/).
+
+Upload your files to R2 using the `rclone copy` command.
+
+```sh
+# Upload a single file
+rclone copy /path/to/local/file.txt r2:bucket_name
+
+# Upload everything in a directory
+rclone copy /path/to/local/folder r2:bucket_name
+```
+
+Verify that your files have been uploaded by listing the objects stored in the destination R2 bucket using `rclone ls` command.
+
+```sh
+rclone ls r2:bucket_name
+```
+
+For more information, refer to our [rclone example](/r2/examples/rclone/).
 
 ## Upload objects via the Cloudflare dashboard
 
 To upload objects to your bucket from the Cloudflare dashboard:
 
+<Steps>
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select **R2**.
 2. From the **R2** page in the dashboard, locate and select your bucket.
 3. Select **Upload**.
 4. Choose to either drag and drop your file into the upload area or **select from computer**.
+</Steps>
 
 You will receive a confirmation message after a successful upload.
 
@@ -38,3 +66,9 @@ Upload complete.
 ```
 
 You can set the `Content-Type` (MIME type), `Content-Disposition`, `Cache-Control` and other HTTP header metadata through optional flags.
+
+:::note
+Wrangler's `object put` command only allows you to upload one object at a time.
+
+Use rclone if you wish to upload multiple objects to R2.
+:::

@@ -1,9 +1,8 @@
 ---
 {}
-
 ---
 
-import { WranglerConfig } from "~/components";
+import { WranglerConfig, TypeScriptExample } from "~/components";
 
 For example, if Worker B implements the public method `add(a, b)`:
 
@@ -16,19 +15,25 @@ main = "./src/workerB.js"
 
 </WranglerConfig>
 
-```js
+<TypeScriptExample>
+
+```ts
 import { WorkerEntrypoint } from "cloudflare:workers";
 
 export default class extends WorkerEntrypoint {
-  async fetch() { return new Response("Hello from Worker B"); }
+	async fetch() {
+		return new Response("Hello from Worker B");
+	}
 
-  add(a, b) { return a + b; }
+	add(a: number, b: number) {
+		return a + b;
+	}
 }
 ```
 
+</TypeScriptExample>
+
 Worker A can declare a [binding](/workers/runtime-apis/bindings) to Worker B:
-
-
 
 <WranglerConfig>
 
@@ -44,11 +49,15 @@ services = [
 
 Making it possible for Worker A to call the `add()` method from Worker B:
 
-```js
+<TypeScriptExample>
+
+```ts
 export default {
-  async fetch(request, env) {
-    const result = await env.WORKER_B.add(1, 2);
-    return new Response(result);
-  }
-}
+	async fetch(request, env) {
+		const result = await env.WORKER_B.add(1, 2);
+		return new Response(result);
+	},
+};
 ```
+
+</TypeScriptExample>

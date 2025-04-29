@@ -22,8 +22,8 @@ import {
 
 <PackageManagers
 	type="create"
-	pkg="cloudflare@latest my-astro-app"
-	args="--framework=astro --platform=workers"
+	pkg="cloudflare@latest"
+	args="my-astro-app --framework=astro"
 />
 
 ---
@@ -47,7 +47,7 @@ Astro is also framework-agnostic, and supports every major UI framework, includi
     <PackageManagers
     	type="create"
     	pkg="cloudflare@latest"
-    	args="my-astro-app -- --framework=astro --platform=workers"
+    	args="my-astro-app --framework=astro"
     />
 
      <Details header="What's happening behind the scenes?">

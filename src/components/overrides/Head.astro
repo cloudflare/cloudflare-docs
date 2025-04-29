@@ -11,9 +11,8 @@ const NOINDEX_PRODUCTS = ["email-security", "style-guide", "security"];
 
 const currentSection = Astro.url.pathname.split("/")[1].replaceAll(".", "");
 
-const entry = Astro.locals.starlightRoute.entry;
+const { entry, head } = Astro.locals.starlightRoute;
 const frontmatter = entry.data;
-const head = frontmatter.head;
 
 const metaTags = [] as Record<string, string>[];
 
@@ -37,14 +36,12 @@ if (currentSection) {
 
 				head[titleIdx] = {
 					tag: "title",
-					attrs: {},
 					content: title,
 				};
 			} else {
 				title = `${frontmatter.title} · ${product.data.meta.title}`;
 				head.push({
 					tag: "title",
-					attrs: {},
 					content: title,
 				});
 			}
@@ -71,7 +68,6 @@ if (currentSection) {
 					name: "pcx_content_group",
 					content: product.data.product.group,
 				},
-				content: "",
 			});
 		}
 	}
@@ -133,7 +129,6 @@ if (frontmatter.pcx_content_type === "changelog") {
 			type: "application/rss+xml",
 			href: href.toString(),
 		},
-		content: "",
 	});
 }
 
@@ -157,14 +152,12 @@ head.push({
 		type: "text/markdown",
 		href: Astro.url.pathname + "index.md",
 	},
-	content: "",
 });
 
 metaTags.map((attrs) => {
 	head.push({
 		tag: "meta",
 		attrs,
-		content: "",
 	});
 });
 ---

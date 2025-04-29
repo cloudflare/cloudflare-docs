@@ -69,6 +69,10 @@ Cloudflare automatically runs risk scans every 24 hours on your saved endpoints.
 
 `cf-risk-size-anomaly`: Automatically added when an endpoint experiences a spike in response body size over the last 24 hours.
 
+`cf-risk-bola-enumeration`: Automatically added when an endpoint experiences successful responses with drastic differences in the number of unique elements requested by different user sessions.
+
+`cf-risk-bola-pollution`: Automatically added when an endpoint experiences successful responses where parameters are found in multiple places in the request, as opposed to what is expected from the API's schema.
+
 :::note
 Cloudflare will only add authentication labels to endpoints with successful response codes. Refer to the below table for more details.
 :::

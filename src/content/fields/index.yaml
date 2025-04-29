@@ -1940,7 +1940,7 @@ entries:
 
       For a list of 1XXX errors, refer to [Troubleshooting Cloudflare 1XXX errors](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/).
 
-      **Note**: This field is only available in [HTTP response header modifications](/rules/transform/response-header-modification/) and [Custom Errors](/rules/custom-errors/).
+      **Note**: This field is only available in [Response Header Transform Rules](/rules/transform/response-header-modification/) and [Custom Errors](/rules/custom-errors/).
     example_value: |-
       1020
 
@@ -1967,4 +1967,4 @@ entries:
 
       You can use this field to customize the response for a specific type of error (for example, all 1XXX errors or all WAF block actions).
 
-      **Note**: This field is only available in [HTTP response header modifications](/rules/transform/response-header-modification/) and [Custom Errors](/rules/custom-errors/).
+      **Note**: This field is only available in [Response Header Transform Rules](/rules/transform/response-header-modification/) and [Custom Errors](/rules/custom-errors/).

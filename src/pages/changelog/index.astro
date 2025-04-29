@@ -2,7 +2,6 @@
 import StarlightPage, {
 	type StarlightPageProps,
 } from "@astrojs/starlight/components/StarlightPage.astro";
-import { render } from "astro:content";
 
 import Header from "~/components/changelog/Header.astro";
 import ProductPills from "~/components/changelog/ProductPills.astro";
@@ -11,6 +10,10 @@ import { Steps } from "~/components";
 import { format } from "date-fns";
 import { getChangelogs } from "~/util/changelog";
 import { productsByGroup } from "~/util/products";
+import { entryToString } from "~/util/container";
+import { process } from "~/util/rehype";
+
+import rehypeShiftHeadings from "~/plugins/rehype/shift-headings.ts";
 
 const notes = await getChangelogs({
 	filter: (entry) => !entry.data.hidden,
@@ -42,11 +45,12 @@ const props = {
 				.map((group) => group[0])
 				.sort();
 
-			const { Content } = await render(entry);
+			const html = await entryToString(entry, Astro.locals);
+			const processed = await process(html, [[rehypeShiftHeadings]]);
 
 			return (
 				<div
-					class="!mt-0 sm:flex"
+					class="mt-0! sm:flex"
 					data-products={JSON.stringify(
 						productIds.concat(
 							productGroups.map((group) =>
@@ -63,22 +67,20 @@ const props = {
 						{date}
 					</time>
 					<Steps>
-						<ol class="!mt-0 overflow-x-auto">
-							<li class="!pb-16">
+						<ol class="mt-0! overflow-x-auto">
+							<li class="pb-16!">
 								<div>
 									<h3 class="leading-none">
 										<a
 											href={`/changelog/${entry.id}/`}
-											class="mb-4 !text-black no-underline hover:underline"
+											class="mb-4 text-black! no-underline hover:underline"
 										>
 											{entry.data.title}
 										</a>
 									</h3>
 									<ProductPills products={entry.data.products} />
 								</div>
-								<p>
-									<Content />
-								</p>
+								<p set:html={processed} />
 							</li>
 						</ol>
 					</Steps>
@@ -89,7 +91,7 @@ const props = {
 	<div class="flex items-center justify-center">
 		<button
 			id="changelogs-next-button"
-			class="h-12 cursor-pointer rounded bg-cl1-brand-orange px-6 font-medium text-cl1-black"
+			class="h-12 cursor-pointer rounded-sm bg-cl1-brand-orange px-6 font-medium text-cl1-black"
 		>
 			Load more items
 		</button>

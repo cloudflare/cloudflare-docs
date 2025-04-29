@@ -19,6 +19,25 @@ entries:
       * Argo Smart Routing has **Notify when total bytes of traffic exceeds** as a threshold.
       * Load Balancing has **Notify when total number of DNS Queries exceeds** as a threshold.
 
+  - name: Bot Detection Alert
+    audience: Enterprise customers who want to be notified when Cloudflare detects a spike in bot traffic on their zones.
+    availability: Accounts with at least one Enterprise zone.
+    associatedProducts: Bots
+    nextSteps: Select the [Security Analytics](/waf/analytics/security-analytics/) link enclosed in the alert message. Contact support if additional advice is needed on how to investigate the attack further.
+    otherFilters: None.
+    additional_information: After an alert is created on the dashboard, it may take up to 30 minutes before sufficient data is available to begin detecting traffic anomalies. Verified bot traffic is excluded from bot alerts.
+
+  - name: Custom Bot Detection Alert
+    audience: Enterprise customers who want to be notified when Cloudflare detects a spike in bot traffic on their zones.
+    availability: Accounts with at least one Enterprise zone.
+    associatedProducts: Bots
+    nextSteps: Select the [Security Analytics](/waf/analytics/security-analytics/) link enclosed in the alert message. Contact support if additional advice is needed on how to investigate the attack further.
+    otherFilters: Refer to the [alert logic](/bots/reference/alerts/#alert-logic) for more information on additional filters or groupings.
+    additional_information: |-
+      After an alert is created on the dashboard, it may take up to 30 minutes before sufficient data is available to begin detecting traffic anomalies. Verified bot traffic is excluded from both basic and advanced bot alerts.
+
+      Alerts with grouping could cause potential noise if you set them up for a high-traffic zone. Grouping alerts function as if you set up separate policies with a filter for each value. Alerts may trigger multiple values in the same group as long as the traffic for each value reaches the threshold of 200. 
+
   - name: Brand Protection Alerts
     audience: Customers who want a summary of activity related to [Brand Protection](/security-center/brand-protection/).
     availability: Professional plans or higher.

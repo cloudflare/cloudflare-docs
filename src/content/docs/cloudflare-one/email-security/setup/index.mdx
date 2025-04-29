@@ -10,3 +10,52 @@ import { DirectoryListing } from "~/components"
 You can set up Email Security via:
 
 <DirectoryListing />
+
+## Post-delivery deployment
+
+With post-delivery deployment, Email Security scans emails **after** they reach users' inbox.
+
+Post-delivery deployment includes [Microsoft Graph API](/cloudflare-one/email-security/setup/post-delivery-deployment/api/) and [BCC](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/bcc-setup/gmail-bcc-setup/gmail-bcc-setup/)/[Journaling](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/journaling-setup/office365-journaling/).
+
+With Microsoft Graph API, you authorize Email Security to scan domains via your email provider credentials. With BCC/Journaling, you send messages to Email Security via BCC or Journaling configurations within your email provider.
+
+When you set up Microsoft Graph API, you get access to the following features:
+
+- Auto-moves.
+- Directory synchronization.
+- Post-delivery response / Phish submission response.
+- Auto pull EMLs for [reclassification](/cloudflare-one/email-security/email-monitoring/search-email/#reclassify-messages) whose disposition is "None".
+- Manually move messages to different inboxes.
+
+If you set up Email Security via BCC/Journaling and you want to access the features listed above, you will need to [associate an integration](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/bcc-setup/gmail-bcc-setup/enable-auto-moves/).
+
+## Pre-delivery deployment
+
+With pre-delivery deployment, Email Security scans emails **before** they reach users' inbox.
+
+MX/Inline allows you to send messages to Email Security to scan before they reach your users' inbox. You may need to update your MX records.
+
+With MX/Inline, you will not be able to auto-move emails.
+
+However, you will need to associate an integration to access the following features:
+
+- Directory synchronization.
+- Post-delivery response / Phish submission response.
+- Auto pull EMLs for reclassification for disposition "None".
+- Manually move messages.
+
+### Associate an integration
+
+To associate an integration:
+
+1. Log in to [Zero Trust](https://one.dash.cloudflare.com/) > **Email Security**.
+2. Go to **Settings** and locate your domain.
+3. Select the three dots > **Associate an integration**.
+4. Select the integration you want to associate, then select **Associate**.
+
+To enable post-delivery response and phish submission response:
+
+1. Go to **Settings** > **Moves**.
+2. Go to **Auto-moves**, select **View** > **Configure**.
+3. Select **Post-delivery response (Recommended)** and **Phish submission response (Recommended)**.
+4. Select **Save**.

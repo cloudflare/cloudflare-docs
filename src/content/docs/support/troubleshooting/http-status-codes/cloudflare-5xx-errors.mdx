@@ -27,7 +27,7 @@ When contacting your hosting provider, share the following information:
 
 The cause of the error is not always found in the origin server's error logs. Be sure to check the logs of any load balancers, caches, proxies, or firewalls between Cloudflare and the origin web server.
 
-Additional details to provide to your hosting provider or site administrator can be found in the error descriptions below. Note that Cloudflare [Custom Error Pages](/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/) can alter the appearance of default error pages discussed in this page.
+Additional details to provide to your hosting provider or site administrator can be found in the error descriptions below. Note that Cloudflare [Custom Errors](/rules/custom-errors/) can alter the appearance of default error pages discussed in this page.
 
 ### Error analytics
 
@@ -132,7 +132,7 @@ To resolve a `503` error, first determine whether the issue originates from your
 
 If the error does not contain `cloudflare` or `cloudflare-nginx` in the HTML response body, contact your hosting provider to verify if they rate limit requests to your origin web server.
 
-####  503 Error with `cloudflare` or `cloudflare-nginx`
+#### 503 Error with `cloudflare` or `cloudflare-nginx`
 
 If the error contains `cloudflare` or `cloudflare-nginx` in the HTML response body, a connectivity issue occurred in a Cloudflare data center. Provide [Cloudflare support](/support/contacting-cloudflare-support/) with the following information:
 

@@ -22,7 +22,7 @@ const answer = await env.AI.autorag("my-autorag").search({
 			},
 			{
 				type: "gte",
-				key: "modified_date",
+				key: "timestamp",
 				value: "1735689600000", // unix timestamp for 2025-01-01
 			},
 		],
@@ -32,7 +32,7 @@ const answer = await env.AI.autorag("my-autorag").search({
 
 ## Metadata attributes
 
-You can currently filter by the `folder` and `modified_date` of an R2 object. Currently, custom metadata attributes are not supported.
+You can currently filter by the `folder` and `timestamp` of an R2 object. Currently, custom metadata attributes are not supported.
 
 ### `folder`
 
@@ -40,7 +40,7 @@ The directory to the object. For example, the `folder` of the object at `llama/l
 
 Note that `folder` filter only includes files exactly in that folder, so files in subdirectories are not included. For example, specifying `folder: "llama/"` will match files in `llama/` but does not match files in `llama/logistics`.
 
-### `modified_date`
+### `timestamp`
 
 The timestamp indicating when the object was last modified. Comparisons are supported using a 13-digit Unix timestamp (milliseconds), but values will be rounded to 10 digits (seconds). For example, `1735689600999` or `2025-01-01 00:00:00.999 UTC` will be rounded down to `1735689600000`, corresponding to `2025-01-01 00:00:00 UTC`.
 
@@ -50,7 +50,7 @@ You can create simple comparison filters or an array of comparison filters using
 
 ### Comparison filter
 
-You can compare a metadata attribute (for example, `folder` or `modified_date`) with a target value using a comparison filter.
+You can compare a metadata attribute (for example, `folder` or `timestamp`) with a target value using a comparison filter.
 
 ```js
 filters: {
@@ -102,7 +102,7 @@ You can see the metadata attributes of your retrieved data in the response under
     "filename": "llama/logistics/llama-logistics.md",
     "score": 0.45,
     "attributes": {
-      "modified_date": 1735689600000,   // unix timestamp for 2025-01-01
+      "timestamp": 1735689600000,   // unix timestamp for 2025-01-01
       "folder": "llama/logistics/",
     },
     "content": [

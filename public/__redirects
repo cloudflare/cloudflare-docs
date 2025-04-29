@@ -11,9 +11,26 @@
 /changelog/rss.xml /changelog/rss/index.xml 301
 /api-shield/changelog/index.xml /changelog/rss/api-shield.xml 301
 /cache/changelog/index.xml /changelog/rss/cache.xml 301
+/cloudflare-one/changelog/index.xml changelog/rss/cloudflare-one.xml 301
+/cloudflare-one/changelog/access/index.xml /changelog/rss/access.xml 301
+/cloudflare-one/changelog/browser-isolation/index.xml /changelog/rss/browser-isolation.xml 301
+/cloudflare-one/changelog/casb/index.xml /changelog/rss/casb.xml 301
+/cloudflare-one/changelog/dex/index.xml /changelog/rss/dex.xml 301
+/cloudflare-one/changelog/dlp/index.xml /changelog/rss/dlp.xml 301
+/cloudflare-one/changelog/email-security/index.xml /changelog/rss/email-security.xml 301
+/cloudflare-one/changelog/gateway/index.xml /changelog/rss/gateway.xml 301
+/cloudflare-one/changelog/risk-score/index.xml /changelog/rss/risk-score.xml 301
+/cloudflare-one/changelog/tunnel/index.xml /changelog/rss/cloudflare-tunnel.xml 301
 /dns/changelog/index.xml /changelog/rss/dns.xml 301
 /fundamentals/changelog/index.xml /changelog/rss/fundamentals.xml 301
 /logs/changelog/index.xml /changelog/rss/logs.xml 301
+/magic-cloud-networking/changelog/index.xml /changelog/rss/magic-cloud-networking.xml 301
+/magic-firewall/changelog/index.xml /changelog/rss/magic-firewall.xml 301
+/magic-network-monitoring/changelog/index.xml /changelog/rss/magic-network-monitoring.xml 301
+/magic-transit/changelog/index.xml /changelog/rss/magic-transit.xml 301
+/magic-wan/changelog/index.xml /changelog/rss/magic-wan.xml 301
+/network-interconnect/changelog/index.xml /changelog/rss/network-interconnect.xml 301
+/rules/changelog/index.xml /changelog/rss/rules.xml 301
 /ssl/changelog/index.xml /changelog/rss/ssl.xml 301
 
 ## legacy
@@ -1016,6 +1033,9 @@
 /rules/page-rules/how-to/rewrite-host-headers/ /rules/origin-rules/examples/change-uri-path-and-host-header/ 301
 /rules/page-rules/how-to/override-url-or-ip-address/ /rules/origin-rules/features/ 301
 /rules/origin-rules/examples/change-uri-path-and-host-header/ /rules/origin-rules/tutorials/change-uri-path-and-host-header/ 301
+/rules/custom-errors/create-api/ /rules/custom-errors/create-rules/ 301
+/rules/custom-errors/error-tokens/ /rules/custom-errors/reference/error-tokens/ 301
+/rules/custom-errors/parameters/ /rules/custom-errors/reference/parameters/ 301
 
 # ruleset engine
 /ruleset-engine/rules-language/fields/standard-fields/ /ruleset-engine/rules-language/fields/reference/ 301
@@ -1237,6 +1257,9 @@
 /support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-10xxx-errors/ /support/troubleshooting/http-status-codes/cloudflare-10xxx-errors/ 301
 /support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/ /support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/ 301
 /support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/ /support/troubleshooting/http-status-codes/cloudflare-5xx-errors/ 301
+/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/ /rules/custom-errors/ 301
+/support/more-dashboard-apps/cloudflare-custom-pages/ /rules/custom-errors/ 301
+/support/more-dashboard-apps/ /support/ 301
 
 # r2
 /r2/platform/s3-compatibility/api/ /r2/api/s3/api/ 301
@@ -1572,6 +1595,8 @@
 /workers/testing/vitest-integration/get-started/migrate-from-miniflare-2/ /workers/testing/vitest-integration/migration-guides/migrate-from-miniflare-2/ 301
 /workers/testing/vitest-integration/get-started/migrate-from-unstable-dev/ /workers/testing/vitest-integration/migration-guides/migrate-from-unstable-dev/ 301
 /workers/testing/vitest-integration/get-started/write-your-first-test/ /workers/testing/vitest-integration/write-your-first-test/ 301
+/workers/databases/native-integrations/fauna/ /workers/databases/native-integrations/ 301
+/workers/tutorials/store-data-with-fauna/ https://fauna.com/blog/the-future-of-fauna 301
 
 # workers ai
 /workers-ai/models/llm/ /workers-ai/models/#text-generation 301
@@ -1620,6 +1645,7 @@
 /workers-ai/privacy/ /workers-ai/platform/privacy/ 301
 /workers-ai/glossary/ /workers-ai/platform/glossary/ 301
 /workers-ai/workers-ai-errors/ /workers-ai/platform/errors/ 301
+/workers-ai/platform/privacy/ /workers-ai/platform/data-usage/ 301
 
 # Guides section
 /workers-ai/demos/ /workers-ai/guides/demos-architectures/ 301

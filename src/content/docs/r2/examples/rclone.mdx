@@ -1,26 +1,42 @@
 ---
-title: rclone
+title: Rclone
 pcx_content_type: example
 ---
 
-import { Render } from "~/components";
+import { Render, Steps } from "~/components";
 
 <Render file="keys" />
 <br />
 
+Rclone is a command-line tool which manages files on cloud storage. You can use rclone to upload objects to R2 concurrently.
+
+## Configure rclone
+
 With [`rclone`](https://rclone.org/install/) installed, you may run [`rclone config`](https://rclone.org/s3/) to configure a new S3 storage provider. You will be prompted with a series of questions for the new provider details.
 
 :::note[Recommendation]
-
 It is recommended that you choose a unique provider name and then rely on all default answers to the prompts.
 
 This will create a `rclone` configuration file, which you can then modify with the preset configuration given below.
 :::
 
-:::note
+<Steps>
+1. Create new remote by selecting `n`.
+2. Select a name for the new remote. For example, use `r2`.
+3. Select the `Amazon S3 Compliant Storage Providers` storage type.
+4. Select `Cloudflare R2 storage` for the provider.
+5. Select whether you would like to enter AWS credentials manually, or get it from the runtime environment.
+6. Enter the AWS Access Key ID.
+7. Enter AWS Secret Access Key (password).
+8. Select the region to connect to (optional).
+9. Select the S3 API endpoint.
+</Steps>
 
+:::note
 Ensure you are running `rclone` v1.59 or greater ([rclone downloads](https://beta.rclone.org/)). Versions prior to v1.59 may return `HTTP 401: Unauthorized` errors, as earlier versions of `rclone` do not strictly align to the S3 specification in all cases.
 :::
+
+### Edit an existing rclone configuration
 
 If you have already configured `rclone` in the past, you may run `rclone config file` to print the location of your `rclone` configuration file:
 
