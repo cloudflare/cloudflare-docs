@@ -1,0 +1,178 @@
+---
+title: Extracting blog post content as markdown using the markdown endpoint
+sidebar:
+  order: 4
+---
+
+This guide shows you how to capture the complete JSON output from Cloudflare's [`/markdown` API endpoint](/browser-rendering/rest-api/markdown-endpoint/).
+
+We are extracting the content of a blog post from the Cloudflare Blog: [Introducing AutoRAG on Cloudflare](https://blog.cloudflare.com/introducing-autorag-on-cloudflare/)
+
+## Prerequisites
+
+1. Cloudflare Account and API Token.
+
+   - [Create a token](/fundamentals/api/get-started/create-token/) with **Browser Rendering: Edit** permissions.
+   - You can do this under **My Profile → API Tokens → Create Token** on your [Cloudflare dashboard](https://dash.cloudflare.com/).
+   - Note your **Account ID** (from the dashboard homepage) and **API Token**.
+
+2. Command-line tools installed.
+
+   - cURL: a command-line tool for sending HTTP requests.
+     - macOS/Linux: usually preinstalled.
+     - Windows: available via WSL, Git Bash, or native Windows builds.
+
+## 1: Configure your environment variables
+
+Save your sensitive information into environment variables to avoid hardcoding credentials.
+
+```bash
+export CF_ACCOUNT_ID="your-cloudflare-account-id"
+export CF_API_TOKEN="your-api-token-with-edit-permissions"
+```
+
+## 2: Make the API Request and save the raw JSON
+
+Run this command to fetch the markdown representation of the AutoRAG blog post and store it into a local JSON file:
+
+```bash
+curl -s -X POST \
+  "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/browser-rendering/markdown" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer ${CF_API_TOKEN}" \
+  -d '{
+    "url": "https://blog.cloudflare.com/introducing-autorag-on-cloudflare/"
+  }' \
+> autorag-full-response.json
+```
+
+The `>` parameter redirects output into a file (`autorag-full-response.json`).
+
+## 3: Inspect the saved JSON
+
+You can check the start of the saved JSON file to ensure it looks right:
+
+```bash
+head -n 20 autorag-full-response.json
+```
+
+```json output
+{
+  "success": true,
+  "errors": [],
+  "messages": [],
+  "result": "# "[Get Started Free](https://dash.cloudflare.com/sign-up)|[Contact Sales](https://www.cloudflare.com/plans/enterprise/contact/)\n\n[![The Cloudflare Blog](https://cf-assets.www.cloudflare ..."
+}
+```
+
+## 4: (Optional) Skip unwanted resources
+
+To ignore unnecessary assets like CSS, JavaScript, or images when fetching the page add `rejectRequestPattern` parameter:
+
+```bash
+curl -s -X POST \
+  "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/browser-rendering/markdown" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer ${CF_API_TOKEN}" \
+  -d '{
+    "url": "https://blog.cloudflare.com/introducing-autorag-on-cloudflare/",
+    "rejectRequestPattern": [
+      "/^.*\\.(css|js|png|svg)$/"
+    ]
+  }' \
+> autorag-no-assets.json
+```
+
+## 5: Extracting and saving the markdown from the JSON file
+
+After saving the full response, below is how to how to extract just the Markdown.
+
+The script does the following:
+
+1. Reads the full JSON response from `autorag-full-response.json`
+2. Extracts the Markdown string from the `"result"` field
+3. Writes that Markdown to `autorag-blog.md`
+
+```py
+#!/usr/bin/env python3
+"""
+extract_markdown.py
+
+Reads the full JSON response from Cloudflare's Markdown endpoint
+and writes the 'result' field (the converted Markdown) to a .md file.
+"""
+
+import json
+import sys
+from pathlib import Path
+
+# Input and output file paths
+INPUT_JSON = Path("autorag-full-response.json")
+OUTPUT_MD   = Path("autorag-blog.md")
+
+def main():
+    # Check that the input file exists
+    if not INPUT_JSON.is_file():
+        print(f"Error: Input file '{INPUT_JSON}' not found.", file=sys.stderr)
+        sys.exit(1)
+
+    # Load the JSON response
+    try:
+        with INPUT_JSON.open("r", encoding="utf-8") as f:
+            data = json.load(f)
+    except json.JSONDecodeError as e:
+        print(f"Error: Failed to parse JSON in '{INPUT_JSON}': {e}", file=sys.stderr)
+        sys.exit(1)
+
+    # Validate structure
+    if not data.get("success", False):
+        print("Error: API reported failure.", file=sys.stderr)
+        errors = data.get("errors") or data.get("messages")
+        if errors:
+            print("Details:", errors, file=sys.stderr)
+        sys.exit(1)
+
+    if "result" not in data:
+        print("Error: 'result' field not found in JSON.", file=sys.stderr)
+        sys.exit(1)
+
+    # Extract and write the Markdown
+    markdown_content = data["result"]
+    try:
+        with OUTPUT_MD.open("w", encoding="utf-8") as md_file:
+            md_file.write(markdown_content)
+    except IOError as e:
+        print(f"Error: Could not write to '{OUTPUT_MD}': {e}", file=sys.stderr)
+        sys.exit(1)
+
+    print(f"Success: Markdown content written to '{OUTPUT_MD}'.")
+
+if __name__ == "__main__":
+    main()
+```
+
+### Usage
+
+1. Ensure you have run the `curl` command to produce `autorag-full-response.json`.
+
+2. Place `extract_markdown.py` in the same directory.
+
+3. Run:
+
+```
+python3 extract_markdown.py
+```
+
+After execution, `autorag-blog.md` will contain the extracted Markdown.
+
+## Final folder structure
+
+After following these steps, your working folder will look like:
+
+```
+.
+├── autorag-full-response.json    # Full API response
+├── autorag-no-assets.json        # Full API response without extra assets (optional)
+├── autorag-blog.md               # Extracted Markdown content
+└── extract_markdown.py           # Python extraction script (optional)
+```
