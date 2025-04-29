@@ -12,7 +12,7 @@ const NOINDEX_PRODUCTS = ["email-security", "style-guide", "security"];
 
 const currentSection = Astro.url.pathname.split("/")[1].replaceAll(".", "");
 
-const { entry, head } = Astro.locals.starlightRoute;
+const { entry, head, lastUpdated } = Astro.locals.starlightRoute;
 const frontmatter = entry.data;
 
 const metaTags = [] as Record<string, string>[];
@@ -123,6 +123,15 @@ if (frontmatter.tags) {
 	metaTags.push({
 		name: "pcx_tags",
 		content: frontmatter.tags.toString(),
+	});
+}
+
+if (lastUpdated) {
+	const daysBetween = differenceInCalendarDays(new Date(), lastUpdated);
+
+	metaTags.push({
+		name: "pcx_last_modified",
+		content: daysBetween.toString(),
 	});
 }
 
