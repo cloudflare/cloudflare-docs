@@ -7,6 +7,7 @@ import { getEntry } from "astro:content";
 import { getOgImage } from "~/util/og";
 import type { CollectionEntry } from "astro:content";
 
+const DEFAULT_TITLE_DELIMITER = "|";
 const NOINDEX_PRODUCTS = ["email-security", "style-guide", "security"];
 
 const currentSection = Astro.url.pathname.split("/")[1].replaceAll(".", "");
@@ -31,7 +32,9 @@ if (currentSection) {
 			let title: string;
 
 			if (titleIdx !== -1) {
-				const existingTitle = head[titleIdx].content;
+				const existingTitle = head[titleIdx].content?.split(
+					` ${DEFAULT_TITLE_DELIMITER} `,
+				)[0];
 				title = `${existingTitle} · ${product.data.meta.title}`;
 
 				head[titleIdx] = {
@@ -77,6 +80,26 @@ if (shouldNoIndex) {
 	metaTags.push({
 		name: "robots",
 		content: "noindex",
+	});
+}
+
+if (
+	frontmatter.description &&
+	head.findIndex(
+		({ tag, attrs }) => tag === "meta" && attrs?.name === "description",
+	) === -1
+) {
+	const existingOpenGraphTag = head.findIndex(
+		({ tag, attrs }) => tag === "meta" && attrs?.property === "og:description",
+	);
+
+	if (existingOpenGraphTag !== -1) {
+		head[existingOpenGraphTag].attrs!.content = frontmatter.description;
+	}
+
+	metaTags.push({
+		name: "description",
+		content: frontmatter.description as string,
 	});
 }
 
