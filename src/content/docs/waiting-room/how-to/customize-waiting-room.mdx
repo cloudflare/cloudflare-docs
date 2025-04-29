@@ -96,7 +96,7 @@ The following script within the `<body>` section after `<main>` fetches the wait
 </script>
 ```
 
-#### Turnstile
+#### Turnstile variable
 
 If you are using Turnstile for your customized waiting room, you will need to ensure the `turnstile` variable is added. The default queuing page template and any newly created custom templates already include this variable. If you have an existing custom HTML template and wish to enable the Turnstile integration, you will need to add `{{{turnstile}}}` somewhere in the template to let Waiting Room know where the widget should be placed. Waiting Room uses Mustache templates, so including raw HTML within your template without escaping requires three curly braces instead of two.
 
