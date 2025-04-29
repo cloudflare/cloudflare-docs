@@ -27,3 +27,20 @@ database_id = "<unique-ID-for-your-database>"
 </WranglerConfig>
 
 ````
+
+A `$today` value can be used in this component to automatically insert the today's date. This is useful for suggesting that users set the latest compatibility date.
+
+
+````mdx live
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+```jsonc
+{
+	"name": "my-worker",
+	"compatibility_date": "$today"
+}
+```
+</WranglerConfig>
+
+````
