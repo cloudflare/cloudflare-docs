@@ -40,13 +40,11 @@ const filterValues: Record<string, string[]> = {};
 
 if (filters) {
 	for (const filter of filters) {
-		const values = examples.flatMap((x) => {
-			if (filter in x.data) {
-				const value = x.data[filter];
+		const values = examples.flatMap((entry) => {
+			if (filter === "head") return [];
 
-				if (typeof value === "string") {
-					return value;
-				}
+			if (filter in entry.data) {
+				return entry.data[filter];
 			}
 
 			return [];
