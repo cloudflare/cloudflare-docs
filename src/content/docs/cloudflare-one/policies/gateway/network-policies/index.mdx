@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { Details, InlineBadge, Render } from "~/components";
+import { Details, InlineBadge, Render, Badge } from "~/components";
 
 :::note
 To enable this feature, download and deploy the [WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your devices.
@@ -83,7 +83,7 @@ Policies with Allow actions allow network traffic to reach certain IPs or ports.
 | Destination IP | in       | `92.100.02.102` | And   | Allow  |
 | Email          | in       | `*@example.com` |       |        |
 
-### Audit SSH
+### Audit SSH <Badge text="Deprecated" variant="caution"/>
 
 API value: `audit_ssh`
 
@@ -117,17 +117,19 @@ API value: `audit_ssh`
 
 </Details>
 
+:::caution
+Gateway no longer supports the Audit SSH action for new policies. To log your SSH traffic, Cloudflare recommends deploying [Access for Infrastructure](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) for your SSH server and configuring [SSH command logs](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/#ssh-command-logs).
+:::
+
 Policies with Audit SSH actions allow administrators to log SSH traffic. Gateway will detect SSH traffic over port `22`. For example, the following configuration logs SSH commands sent to a given IP address:
 
 | Selector       | Operator | Value          | Action    |
 | -------------- | -------- | -------------- | --------- |
 | Destination IP | in       | `203.0.113.83` | Audit SSH |
 
-For more information on SSH logging, refer to [Configure SSH proxy and command logs](/cloudflare-one/policies/gateway/network-policies/ssh-logging/).
-
-:::note
 Gateway only audits SSH traffic over port `22`. Non-standard ports, including those specified with the [Destination Port selector](#destination-port), are not supported.
-:::
+
+For more information on SSH logging, refer to [Configure SSH proxy and command logs](/cloudflare-one/policies/gateway/network-policies/ssh-logging/).
 
 ### Block
 
