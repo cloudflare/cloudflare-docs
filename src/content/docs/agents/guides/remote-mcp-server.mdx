@@ -9,16 +9,22 @@ import { Details, Render, PackageManagers } from "~/components";
 
 ## Deploy your first MCP server
 
-This guide walks you through deploying an [example MCP server](https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-authless) to your Cloudflare account. 
-Once deployed, you can customize the MCP server to add your own [tools](/agents/model-context-protocol/tools/). This example does not require users to authenticate, meaning any client can connect to the server to use the tools. To add authentication & authorization to your MCP server, follow the example [below](/agents/guides/remote-mcp-server/#add-authentication). 
+This guide will show you how to deploy your own remote MCP server on Cloudflare, with two options:
+
+- **Without authentication** — anyone can connect and use the server (no login required).
+- **With [authentication and authorization](/agents/guides/remote-mcp-server/#add-authentication)** — users sign in before accessing tools, and you can control which tools an agent can call based on the user's permissions.
+
+You can start by deploying a [public MCP server](https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-authless) without authentication, then add user authentication and scoped authorization later. If you already know your server will require authentication, you can skip ahead to the next section.
 
 The button below will guide you through everything you need to do to deploy this [example MCP server](https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-authless) to your Cloudflare account:
 
 [![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-authless)
 
+Once the MCP server is set up, you can customize the server to add your own [tools](/agents/model-context-protocol/tools/). This example does not require users to authenticate, meaning any client can connect to the server to use the tools. To add authentication & authorization to your MCP server, follow the example in the [next section](/agents/guides/remote-mcp-server/#add-authentication). 
+
 Once deployed, this server will be live at your workers.dev subdomain (e.g. remote-mcp-server-authless.your-account.workers.dev/sse). You can connect to it immediately using the [AI Playground](https://playground.ai.cloudflare.com/) (a remote MCP client), [MCP inspector](https://github.com/modelcontextprotocol/inspector) or [other MCP clients](/agents/guides/remote-mcp-server/#connect-your-remote-mcp-server-to-claude-and-other-mcp-clients-via-a-local-proxy). 
 
-Once you deploy the MCP server, a new git repository will be set up on your GitHub or GitLab account for your MCP server, configured to automatically deploy Cloudflare each time you push a change or merge a pull request to the main branch of the repository. You can then clone this repository, [develop locally](/agents/guides/remote-mcp-server/#local-development), and start writing code and building.
+If you're using the "Deploy to Cloudflare" button, a new git repository will be set up on your GitHub or GitLab account for your MCP server, configured to automatically deploy to Cloudflare each time you push a change or merge a pull request to the main branch of the repository. You can then clone this repository, [develop locally](/agents/guides/remote-mcp-server/#local-development), and start writing code and building.
 
 ## Set up and deploy your MCP server via CLI
 
