@@ -80,7 +80,36 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/devices/settings \
 }'
 ```
 
-</TabItem> </Tabs>
+</TabItem>
+<TabItem label="Terraform (v5)">
+
+1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
+	- `Zero Trust Write`
+
+2. Configure the default profile using the [`cloudflare_zero_trust_device_default_profile`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_device_default_profile) resource:
+
+	```tf
+	resource "cloudflare_zero_trust_device_default_profile" "default_profile" {
+		account_id            = var.cloudflare_account_id
+		allow_mode_switch     = false
+		allow_updates         = false
+		allowed_to_leave      = false
+		auto_connect          = 600
+		captive_portal        = 180
+		disable_auto_fallback = true
+		exclude_office_ips    = false
+		service_mode_v2       = {mode = "warp"}
+		support_url           = "https://support.example.com"
+		switch_locked         = true
+		tunnel_protocol       = "wireguard"
+	}
+	```
+
+3. Configure global WARP settings:
+
+
+</TabItem>
+</Tabs>
 
 ## (Optional) Create an office profile
 
