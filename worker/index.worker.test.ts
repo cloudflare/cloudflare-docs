@@ -1,6 +1,7 @@
 import { SELF } from "cloudflare:test";
 import { describe, it, expect } from "vitest";
 import { XMLParser } from "fast-xml-parser";
+import { parse } from "node-html-parser";
 
 describe("Cloudflare Docs", () => {
 	describe("html handling", () => {
@@ -298,6 +299,43 @@ describe("Cloudflare Docs", () => {
 			const response = await SELF.fetch(request);
 			expect(response.status).toBe(404);
 			expect(await response.text()).toContain("Page not found.");
+		});
+	});
+
+	describe("head tags", async () => {
+		const request = new Request("http://fakehost/workers/");
+		const response = await SELF.fetch(request);
+		expect(response.status).toBe(200);
+
+		const html = await response.text();
+		const dom = parse(html);
+
+		it("product meta tags", () => {
+			const product = dom.querySelector("meta[name='pcx_product']")?.attributes
+				.content;
+
+			const group = dom.querySelector("meta[name='pcx_content_group']")
+				?.attributes.content;
+
+			expect(product).toBe("Workers");
+			expect(group).toBe("Developer platform");
+		});
+
+		it("index.md rel='alternate' tag", () => {
+			const markdown = dom.querySelector(
+				"link[rel='alternate'][type='text/markdown']",
+			)?.attributes.href;
+
+			expect(markdown).toBe("/workers/index.md");
+		});
+
+		it("og:image tag", () => {
+			const image = dom.querySelector("meta[property='og:image']")?.attributes
+				.content;
+
+			expect(image).toBe(
+				"https://developers.cloudflare.com/dev-products-preview.png",
+			);
 		});
 	});
 });
