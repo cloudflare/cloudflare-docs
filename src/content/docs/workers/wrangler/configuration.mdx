@@ -204,6 +204,7 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
   - Configures automatic observability settings for telemetry data emitted from your Worker. Refer to [Observability](#observability).
 
 * `assets` <Type text="Assets" /> <MetaInfo text="optional" />
+
   - Configures static assets that will be served. Refer to [Assets](/workers/static-assets/binding/) for more details.
 
 * `migrations` <Type text="object"/> <MetaInfo text="optional"/>
@@ -1028,15 +1029,15 @@ The following options are available under the `assets` key.
 
 - `run_worker_first` <Type text="boolean" /> <MetaInfo text="optional, defaults to false" />
 
-  - Controls whether static assets are fetched directly, or a Worker script is invoked. Learn more about fetching assets when using [`run_worker_first`](/workers/static-assets/routing/#invoking-worker-script-ahead-of-assets).
+  - Controls whether static assets are fetched directly, or a Worker script is invoked. Learn more about fetching assets when using [`run_worker_first`](/workers/static-assets/routing/worker-script/#run-your-worker-script-first).
 
 - `html_handling`: <Type text={'"auto-trailing-slash" | "force-trailing-slash" | "drop-trailing-slash" | "none"'} /> <MetaInfo text={'optional, defaults to "auto-trailing-slash"'} />
 
-  - Determines the redirects and rewrites of requests for HTML content. Learn more about the various options in [assets routing](/workers/static-assets/routing/#html_handling).
+  - Determines the redirects and rewrites of requests for HTML content. Learn more about the various options in [assets routing](/workers/static-assets/routing/advanced/html-handling/).
 
 - `not_found_handling`: <Type text={'"single-page-application" | "404-page" | "none"'} /> <MetaInfo text={'optional, defaults to "none"'} />
 
-  - Determines the handling of requests that do not map to an asset. Learn more about the various options in [assets routing](/workers/static-assets/routing/#not_found_handling).
+  - Determines the handling of requests that do not map to an asset. Learn more about the various options in [assets routing](/workers/static-assets/routing/).
 
 Example:
 
