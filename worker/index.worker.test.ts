@@ -327,7 +327,9 @@ describe("Cloudflare Docs", () => {
 					"link[rel='alternate'][type='text/markdown']",
 				)?.attributes.href;
 
-				expect(markdown).toBe("/workers/index.md");
+				expect(markdown).toBe(
+					"https://developers.cloudflare.com/workers/index.md",
+				);
 			});
 
 			it("og:image tag", () => {

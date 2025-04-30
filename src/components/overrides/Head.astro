@@ -182,7 +182,7 @@ head.push({
 	attrs: {
 		rel: "alternate",
 		type: "text/markdown",
-		href: Astro.url.pathname + "index.md",
+		href: Astro.site + Astro.url.pathname.slice(1) + "index.md",
 	},
 });
 
