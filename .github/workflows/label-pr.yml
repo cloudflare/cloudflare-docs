@@ -13,6 +13,9 @@ concurrency:
 jobs:
   label_products:
     name: Label products
+    permissions:
+      issues: write
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -23,6 +26,9 @@ jobs:
 
   label_size:
     name: Label size
+    permissions:
+      issues: write
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
