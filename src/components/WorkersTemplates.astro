@@ -1,0 +1,51 @@
+---
+import { AnchorHeading, PackageManagers } from "~/components";
+import { fetchWithToken } from "~/util/github";
+
+const REPO = "cloudflare/templates";
+
+const latestCommit = await fetchWithToken(
+	`https://api.github.com/repos/${REPO}/commits?sha=main&per_page=1`,
+)
+	.then((r) => r.json())
+	.then((r) => r[0].sha);
+
+const res = await fetchWithToken(
+	`https://api.github.com/repos/${REPO}/contents/?ref=${latestCommit}`,
+);
+const json = await res.json();
+
+const dirs = json.filter((ent: any) => ent.type === "dir");
+---
+
+{
+	dirs
+		.filter((dir: any) => dir.name !== ".github")
+		.map(async (dir: any) => {
+			const packageJson = await fetch(
+				`https://gh-code.developers.cloudflare.com/${REPO}/${latestCommit}/${dir.path}/package.json`,
+			).then((r) => r.json());
+
+			return (
+				<div>
+					<AnchorHeading depth={3} title={dir.name} />
+					<div class="flex items-center justify-between gap-4">
+						<p>{packageJson.description}</p>
+						<a
+							href={`https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/${dir.path}`}
+						>
+							<img
+								src="https://deploy.workers.cloudflare.com/button"
+								alt="Deploy to Cloudflare"
+							/>
+						</a>
+					</div>
+					<PackageManagers
+						type="create"
+						pkg="cloudflare@latest"
+						args={`--template=cloudflare/templates/${dir.path}`}
+					/>
+				</div>
+			);
+		})
+}
