@@ -182,7 +182,7 @@ The recommended steps for replacing your firewall rules (and filters) configurat
 terraform import cloudflare_ruleset.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31 zone/<ZONE_ID>/3c0b456bc2aa443089c5f40f45f51b31
 ```
 
-```sh output
+```txt output
 cloudflare_ruleset.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31: Importing from ID "zone/<ZONE_ID>/3c0b456bc2aa443089c5f40f45f51b31"...
 cloudflare_ruleset.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31: Import prepared!
   Prepared cloudflare_ruleset for import
@@ -200,7 +200,7 @@ your Terraform state and will henceforth be managed by Terraform.
    terraform plan
    ```
 
-   ```sh output
+   ```txt output
 
    cloudflare_ruleset.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31: Refreshing state... [id=3c0b456bc2aa443089c5f40f45f51b31]
    [...]
@@ -221,7 +221,7 @@ your Terraform state and will henceforth be managed by Terraform.
       terraform state list | grep -E '^cloudflare_(filter|firewall_rule)\.'
       ```
 
-      ```sh output
+      ```txt output
       cloudflare_filter.my_filter
       cloudflare_firewall_rule.my_firewall_rule
       ```
@@ -232,7 +232,7 @@ your Terraform state and will henceforth be managed by Terraform.
       terraform state rm -dry-run cloudflare_filter.my_filter cloudflare_firewall_rule.my_firewall_rule
       ```
 
-      ```sh output
+      ```txt output
       Would remove cloudflare_filter.my_filter
       Would remove cloudflare_firewall_rule.my_firewall_rule
       ```
@@ -243,7 +243,7 @@ your Terraform state and will henceforth be managed by Terraform.
       terraform state rm cloudflare_filter.my_filter cloudflare_firewall_rule.my_firewall_rule
       ```
 
-      ```sh output
+      ```txt output
       Removed cloudflare_filter.my_filter
       Removed cloudflare_firewall_rule.my_firewall_rule
       Successfully removed 2 resource instance(s).
@@ -257,7 +257,7 @@ your Terraform state and will henceforth be managed by Terraform.
 terraform plan
 ```
 
-```sh output
+```txt output
 cloudflare_ruleset.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31: Refreshing state... [id=3c0b456bc2aa443089c5f40f45f51b31]
 [...]
 
