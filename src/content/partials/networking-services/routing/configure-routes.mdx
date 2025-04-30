@@ -9,7 +9,7 @@ params:
   - productGatewayOrEgress
 ---
 
-import { APIRequest, Markdown, Render, TabItem, Tabs } from "~/components";
+import { Aside, APIRequest, Markdown, Render, TabItem, Tabs } from "~/components";
 
 Magic Networking uses a routing table to steer your traffic via next-hop from Cloudflare's global network to your connected networks. Entries can be added to the Magic routing table via static route configuration or via routes learned through BGP peering (only available over Direct CNI).
 
@@ -308,6 +308,14 @@ If you already have set up your Cloudflare account ASN, you can skip steps two a
 4. Go to **Interconnects**.
 5. Find the Direct CNI interconnect you want to configure with BGP > select the **three dots** next to it > **Configure BGP**.
 6. In **Customer device ASN**, enter the ASN for your network.
+
+	{ props.magicWord === "Magic WAN" && (
+		<>
+		<Aside type="note">Multiple interconnects with the same ASN will not exchange routes if standard BGP loop prevention is enabled. Consider using a different ASN per session, or enabling duplicate ASNs (like Cisco's `allowas-in` feature) to exchange routes between networks.</Aside>
+		</>
+		)
+	}
+
 7. In **MD5 key**, you can optionally enter the key for your network. Note that this is meant to prevent accidental misconfigurations, and is not a security mechanism.
 8. (Optional) In **Advertised prefix list**, input the additional prefixes automatically assigned by Cloudflare during the creation of the CNI interconnect, to advertise alongside your existing routes. Leave blank if you do not want to advertise extra routes. <br /> Typical prefixes to configure here include:
 	- A route to `0.0.0.0/0`, the default route — to attract all Internet-bound traffic if using {props.productGatewayOrEgress}.
