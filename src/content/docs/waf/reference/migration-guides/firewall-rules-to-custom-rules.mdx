@@ -158,9 +158,11 @@ The recommended steps for replacing your firewall rules (and filters) configurat
 
 1. Run the following command to generate all ruleset configurations for a zone:
 
-   ```sh null {3,6}
+   ```sh
    cf-terraforming generate --zone <ZONE_ID> --resource-type "cloudflare_ruleset"
+   ```
 
+   ```txt output {1,4}
    resource "cloudflare_ruleset" "terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31" {
      kind    = "zone"
      name    = "default"
@@ -178,21 +180,21 @@ The recommended steps for replacing your firewall rules (and filters) configurat
 
 3. Import the `cloudflare_ruleset` resource you previously identified into Terraform state using the `terraform import` command. For example:
 
-```sh
-terraform import cloudflare_ruleset.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31 zone/<ZONE_ID>/3c0b456bc2aa443089c5f40f45f51b31
-```
+   ```sh
+   terraform import cloudflare_ruleset.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31 zone/<ZONE_ID>/3c0b456bc2aa443089c5f40f45f51b31
+   ```
 
-```sh output
-cloudflare_ruleset.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31: Importing from ID "zone/<ZONE_ID>/3c0b456bc2aa443089c5f40f45f51b31"...
-cloudflare_ruleset.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31: Import prepared!
-  Prepared cloudflare_ruleset for import
-cloudflare_ruleset.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31: Refreshing state... [id=3c0b456bc2aa443089c5f40f45f51b31]
+   ```txt output
+   cloudflare_ruleset.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31: Importing from ID "zone/<ZONE_ID>/3c0b456bc2aa443089c5f40f45f51b31"...
+   cloudflare_ruleset.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31: Import prepared!
+     Prepared cloudflare_ruleset for import
+   cloudflare_ruleset.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31: Refreshing state... [id=3c0b456bc2aa443089c5f40f45f51b31]
 
-Import successful!
+   Import successful!
 
-The resources that were imported are shown above. These resources are now in
-your Terraform state and will henceforth be managed by Terraform.
-```
+   The resources that were imported are shown above. These resources are now in
+   your Terraform state and will henceforth be managed by Terraform.
+   ```
 
 4. Run `terraform plan` to validate that Terraform now checks the state of the new `cloudflare_ruleset` resource, in addition to other existing resources already managed by Terraform. For example:
 
@@ -200,7 +202,7 @@ your Terraform state and will henceforth be managed by Terraform.
    terraform plan
    ```
 
-   ```sh output
+   ```txt output
 
    cloudflare_ruleset.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31: Refreshing state... [id=3c0b456bc2aa443089c5f40f45f51b31]
    [...]
@@ -221,7 +223,7 @@ your Terraform state and will henceforth be managed by Terraform.
       terraform state list | grep -E '^cloudflare_(filter|firewall_rule)\.'
       ```
 
-      ```sh output
+      ```txt output
       cloudflare_filter.my_filter
       cloudflare_firewall_rule.my_firewall_rule
       ```
@@ -232,7 +234,7 @@ your Terraform state and will henceforth be managed by Terraform.
       terraform state rm -dry-run cloudflare_filter.my_filter cloudflare_firewall_rule.my_firewall_rule
       ```
 
-      ```sh output
+      ```txt output
       Would remove cloudflare_filter.my_filter
       Would remove cloudflare_firewall_rule.my_firewall_rule
       ```
@@ -243,7 +245,7 @@ your Terraform state and will henceforth be managed by Terraform.
       terraform state rm cloudflare_filter.my_filter cloudflare_firewall_rule.my_firewall_rule
       ```
 
-      ```sh output
+      ```txt output
       Removed cloudflare_filter.my_filter
       Removed cloudflare_firewall_rule.my_firewall_rule
       Successfully removed 2 resource instance(s).
@@ -253,18 +255,18 @@ your Terraform state and will henceforth be managed by Terraform.
 
 7. Run `terraform plan` to verify that the resources you deleted from configuration files no longer appear. You should not have any pending changes.
 
-```sh
-terraform plan
-```
+   ```sh
+   terraform plan
+   ```
 
-```sh output
-cloudflare_ruleset.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31: Refreshing state... [id=3c0b456bc2aa443089c5f40f45f51b31]
-[...]
+   ```txt output
+   cloudflare_ruleset.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31: Refreshing state... [id=3c0b456bc2aa443089c5f40f45f51b31]
+   [...]
 
-No changes. Your infrastructure matches the configuration.
+   No changes. Your infrastructure matches the configuration.
 
-Terraform has compared your real infrastructure against your configuration and found no differences, so no changes are needed.
-```
+   Terraform has compared your real infrastructure against your configuration and found no differences, so no changes are needed.
+   ```
 
 For details on importing Cloudflare resources to Terraform and using the `cf-terraforming` tool, refer to the following resources:
 
