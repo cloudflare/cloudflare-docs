@@ -40,7 +40,7 @@ The Agents SDK support Server-Sent Events directly: you can use SSE to stream da
 
 When an Agent is deployed to Cloudflare Workers, there is no effective limit on the total time it takes to stream the response back: large AI model responses that take several minutes to reason and then respond will not be prematurely terminated.
 
-Note that this does not mean the client can't potentially disconnect during the streaming process: you can account for this by either [writing to the Agent's stateful storage](/agents/api-reference/store-and-sync-state/) and/or [using WebSockets](/agents/api-reference/websockets/). Because you can always [route to the same Agent](/agents/api-reference/calling-agents/), you do not need to use a centralized session store to pick back up where you left off when a client disconnects.
+Note that this does not mean the client cannot potentially disconnect during the streaming process: you can account for this by either [writing to the Agent's stateful storage](/agents/api-reference/store-and-sync-state/) and/or [using WebSockets](/agents/api-reference/websockets/). Because you can always [route to the same Agent](/agents/api-reference/calling-agents/), you do not need to use a centralized session store to pick back up where you left off when a client disconnects.
 
 The following example uses the AI SDK to generate text and stream it back to the client. It will automatically stream the response back to the client as the model generates it:
 
