@@ -10,4 +10,4 @@ enable_flag: "nodejs_als"
 disable_flag: "no_nodejs_als"
 ---
 
-The Node.js [AsyncLocalStorage](https://nodejs.org/api/async_hooks.html#async_hooks_class_asynclocalstorage) API is enabled in Workers, allowing you to store data accessible to all asynchronous operations within a given execution context.
+The Node.js [AsyncLocalStorage](https://nodejs.org/api/async_hooks.html#async_hooks_class_asynclocalstorage) API is enabled in Workers, allowing you to store data accessible to all asynchronous operations within a given execution context. This is useful for storing data that is relevant to the current request, such as request-specific metadata or tracing information.

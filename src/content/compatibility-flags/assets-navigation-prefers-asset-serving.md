@@ -15,4 +15,4 @@ For Workers with [static assets](/workers/static-assets/) and this compatibility
 
 Without this flag, the runtime will continue to apply the old behavior of invoking a Worker script (if present) for any requests which do not exactly match a static asset.
 
-When `assets.run_worker_first = true` is set, this compatibility flag becomes ineffective. The `assets.run_worker_first = true` setting ensures the Worker script executes before any asset-serving logic.
+When `assets.run_worker_first = true` is set, this compatibility flag has no effect. The `assets.run_worker_first = true` setting ensures the Worker script executes before any asset-serving logic.
