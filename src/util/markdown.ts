@@ -39,8 +39,8 @@ export async function htmlToMarkdown(
 		description ? `description: ${description}` : [],
 		lastUpdated ? `lastUpdated: ${lastUpdated}` : [],
 		`source_url:`,
-		`  html: ${url}`,
-		`  md: ${url.replace("index.md", "")}`,
+		`  html: ${url.replace("index.md", "")}`,
+		`  md: ${url}`,
 		"---\n",
 		markdown,
 	]
