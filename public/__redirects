@@ -665,6 +665,7 @@
 /fundamentals/concepts/what-is-cloudflare/ https://www.cloudflare.com/learning/what-is-cloudflare/ 301
 /fundamentals/concepts/the-internet/ https://www.cloudflare.com/learning/network-layer/how-does-the-internet-work/ 301
 /fundamentals/concepts/free-plan/ /fundamentals/subscriptions-and-billing/free-plan/ 301
+/fundamentals/setup/manage-domains/connect-your-domain/ /fundamentals/setup/manage-domains/add-site/ 301
 
 # gateway
 /gateway/about/ /cloudflare-one/policies/gateway/ 301
