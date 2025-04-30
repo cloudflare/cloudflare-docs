@@ -9,7 +9,7 @@ params:
   - productGatewayOrEgress
 ---
 
-import { APIRequest, Markdown, Render, TabItem, Tabs } from "~/components";
+import { Aside, APIRequest, Markdown, Render, TabItem, Tabs } from "~/components";
 
 Magic Networking uses a routing table to steer your traffic via next-hop from Cloudflare's global network to your connected networks. Entries can be added to the Magic routing table via static route configuration or via routes learned through BGP peering (only available over Direct CNI).
 
@@ -277,8 +277,12 @@ By default, each BGP peering session will use the same Cloudflare-side ASN to re
 	<Markdown
     text={`
 		Magic WAN customers should also be aware of the following:
+		- The customer chooses their device ASN, which must be different to the Cloudflare-side ASN.
 		- The Cloudflare side ASN will be included in the \`AS_PATH\` of announced routes to any BGP enabled interconnect.
-		- The customer chooses their device ASN, which should be different to the Cloudflare-side ASN.
+		- The customer-announced \`AS_PATH\` is transitive between interconnects — meaning the origin (customer) ASN is visible in the \`AS_PATH\` of routes received from Cloudflare via BGP. Due to default BGP loop prevention mechanisms, a router will reject any route that contains its own ASN in the \`AS_PATH\`. For example, if two Magic WAN-connected sites both use \`ASN 65000\`, site A will not accept routes from site B, and vice versa, because each site sees its own ASN in the advertised \`AS_PATH\`. <br />
+			To enable routing between private networks over Magic WAN, you should either:
+			- Assign a unique ASN to each site/network, or
+			- Configure your edge CPE to accept BGP routes that include its own ASN in the \`AS_PATH\`.
   `}
     inline={false}
   />
@@ -304,6 +308,14 @@ If you already have set up your Cloudflare account ASN, you can skip steps two a
 4. Go to **Interconnects**.
 5. Find the Direct CNI interconnect you want to configure with BGP > select the **three dots** next to it > **Configure BGP**.
 6. In **Customer device ASN**, enter the ASN for your network.
+
+	{ props.magicWord === "Magic WAN" && (
+		<>
+		<Aside type="note">Multiple interconnects with the same ASN will not exchange routes if standard BGP loop prevention is enabled. Consider using a different ASN per session, or enabling duplicate ASNs (like Cisco's <code>allowas-in</code> feature) to exchange routes between networks. </Aside>
+		</>
+		)
+	}
+
 7. In **MD5 key**, you can optionally enter the key for your network. Note that this is meant to prevent accidental misconfigurations, and is not a security mechanism.
 8. (Optional) In **Advertised prefix list**, input the additional prefixes automatically assigned by Cloudflare during the creation of the CNI interconnect, to advertise alongside your existing routes. Leave blank if you do not want to advertise extra routes. <br /> Typical prefixes to configure here include:
 	- A route to `0.0.0.0/0`, the default route — to attract all Internet-bound traffic if using {props.productGatewayOrEgress}.
