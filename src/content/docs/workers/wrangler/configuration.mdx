@@ -21,7 +21,8 @@ As of Wrangler v3.91.0 Wrangler supports both JSON (`wrangler.json` or `wrangler
 Prior to that version, only `wrangler.toml` was supported.
 
 The format of Wrangler's configuration file is exactly the same across both languages, only the syntax differs.
-You can also easily switch between the two, there are many online converters for that such as: [toml2jsonConverter](https://esakat.github.io/toml2jsonConverter).
+
+You can use one of the many available online converters to easily switch between the two.
 
 Throughout this page and the rest of Cloudflare's documentation, configuration snippets are provided as both JSON and TOML.
 
@@ -1306,17 +1307,17 @@ A common example of using a redirected configuration is where a custom build too
 
 <WranglerConfig>
 
-  ```toml title="wrangler.toml"
-  name = "my-worker"
-  main = "src/index.ts"
-  [[kv_namespaces]]
-  binding = "<BINDING_NAME1>"
-  id = "<NAMESPACE_ID1>"
-  ```
-  
+```toml title="wrangler.toml"
+name = "my-worker"
+main = "src/index.ts"
+[[kv_namespaces]]
+binding = "<BINDING_NAME1>"
+id = "<NAMESPACE_ID1>"
+```
+
 </WranglerConfig>
 
-  Note that this configuration points `main` at the user's code entry-point.
+Note that this configuration points `main` at the user's code entry-point.
 
 - Then, the user runs a custom build, which might read the user's Wrangler configuration file to find the source code entry-point:
 
