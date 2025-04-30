@@ -311,7 +311,7 @@ If you already have set up your Cloudflare account ASN, you can skip steps two a
 
 	{ props.magicWord === "Magic WAN" && (
 		<>
-		<Aside type="note">Multiple interconnects with the same ASN will not exchange routes if standard BGP loop prevention is enabled. Consider using a different ASN per session, or enabling duplicate ASNs (like Cisco's `allowas-in` feature) to exchange routes between networks.</Aside>
+		<Aside type="note">Multiple interconnects with the same ASN will not exchange routes if standard BGP loop prevention is enabled. Consider using a different ASN per session, or enabling duplicate ASNs (like Cisco's <code>allowas-in</code> feature) to exchange routes between networks.</Aside>
 		</>
 		)
 	}
