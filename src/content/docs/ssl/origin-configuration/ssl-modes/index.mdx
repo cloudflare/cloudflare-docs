@@ -39,14 +39,14 @@ Automatic SSL/TLS will not change your setting to a less secure encryption mode.
 
 #### Additional details
 
-- **Scan frequency**: Recommender scans currently occur approximately once per month, though they may happen more frequently in some cases (for example, configuration changes or upgrades). Scans stop when:
+- **Scan frequency**: Automatic scans currently occur approximately once per month, though they may happen more frequently in some cases (for example, configuration changes or upgrades). Scans stop when:
 
    - The site is already using the most secure mode (for example, **Full (strict)**), or
    - You switch from auto mode to **Custom SSL/TLS**.
 
 - **Error checking before upgrades**: To prevent disruptions, Cloudflare checks for `5XX` errors (like `502` or `503`) and evaluates whether the HTTP and HTTPS content is consistent before upgrading a zone's encryption mode.
 
-- **Upgrade notifications**: Cloudflare sends weekly digest emails listing which zones have been upgraded by the Recommender. These emails are currently sent to Super Admins only.
+- **Upgrade notifications**: Cloudflare sends weekly digest emails listing which zones have been upgraded. These emails are currently sent to Super Admins only.
 
 #### Opt out single zone
 
