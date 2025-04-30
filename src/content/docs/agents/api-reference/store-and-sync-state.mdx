@@ -176,7 +176,7 @@ Common use cases:
 
 ### SQL API
 
-Every individual Agent instance has its own SQL (SQLite) database that runs _within the same context_ as the Agent itself. This means that inserting or querying data within your Agent is effectively zero-latency: the Agent doesn't have to round-trip across a continent or the world to access its own data.
+Every individual Agent instance has its own SQL (SQLite) database that runs _within the same context_ as the Agent itself. This means that inserting or querying data within your Agent is effectively zero-latency: the Agent does not have to round-trip across a continent or the world to access its own data.
 
 You can access the SQL API within any method on an Agent via `this.sql`. The SQL API accepts template literals, and
 
@@ -280,7 +280,7 @@ export class ReasoningAgent extends Agent<Env> {
 
 </TypeScriptExample>
 
-This works because each instance of an Agent has its _own_ database, the state stored in that database is private to that Agent: whether it's acting on behalf of a single user, a room or channel, or a deep research tool. By default, you don't have to manage contention or reach out over the network to a centralized database to retrieve and store state.
+This works because each instance of an Agent has its _own_ database, the state stored in that database is private to that Agent: whether it is acting on behalf of a single user, a room or channel, or a deep research tool. By default, you do not need to manage contention or reach out over the network to a centralized database to retrieve and store state.
 
 ### Next steps
 
