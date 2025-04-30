@@ -6,52 +6,32 @@
 # For a list of all options, see https://vale.sh/docs/topics/styles/
 
 extends: substitution
-message: "Use '%s' instead of '%s'."
+message: "Do not use contractions. Use '%s' instead of '%s'."
 link: https://developers.cloudflare.com/style-guide/grammar/parts-of-speech/contractions/
 level: error
 ignorecase: true
 action:
   name: replace
 swap:
-  are not: aren't
-  cannot: can't
-  could not: couldn't
-  did not: didn't
-  do not: don't
-  does not: doesn't
-  has not: hasn't
-  have not: haven't
-  how is: how's
-  is not: isn't
-
-  'it is(?!\.)': it's
-  'it''s(?=\.)': it is
-
-  should not: shouldn't
-
-  "that is(?![.,])": that's
-  'that''s(?=\.)': that is
-
-  'they are(?!\.)': they're
-  'they''re(?=\.)': they are
-
-  was not: wasn't
-
-  'we are(?!\.)': we're
-  'we''re(?=\.)': we are
-
-  'we have(?!\.)': we've
-  'we''ve(?=\.)': we have
-
-  were not: weren't
-
-  'what is(?!\.)': what's
-  'what''s(?=\.)': what is
-
-  'when is(?!\.)': when's
-  'when''s(?=\.)': when is
-
-  'where is(?!\.)': where's
-  'where''s(?=\.)': where is
-
-  will not: won't
+  aren't: are not
+  can't: cannot
+  couldn't: could not
+  didn't: did not
+  don't: do not
+  doesn't: does not
+  hasn't: has not
+  haven't: have not
+  how's: how is
+  isn't: is not
+  it's: it is
+  shouldn't: should not
+  that's: that is
+  they're: they are
+  wasn't: was not
+  we're: we are
+  we've: we have
+  weren't: were not
+  what's: what is
+  when's: when is
+  where's: where is
+  won't: will not

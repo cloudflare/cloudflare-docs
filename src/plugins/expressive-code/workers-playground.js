@@ -88,10 +88,10 @@ export default () => {
 							properties: {
 								className: [
 									"playground-frame",
-									"!flex",
-									"!p-4",
-									"!justify-end",
-									"!items-center",
+									"flex!",
+									"p-4!",
+									"justify-end!",
+									"items-center!",
 								],
 							},
 							children: [
@@ -100,13 +100,13 @@ export default () => {
 									tagName: "a",
 									properties: {
 										className: [
-											"!bg-cl1-brand-orange",
-											"!rounded",
-											"!px-6",
-											"!py-2",
-											"!text-cl1-black",
-											"!font-medium",
-											"!no-underline",
+											"bg-cl1-brand-orange!",
+											"rounded-sm!",
+											"px-6!",
+											"py-2!",
+											"text-cl1-black!",
+											"font-medium!",
+											"no-underline!",
 										],
 										href: `https://workers.cloudflare.com/playground#${serialised}`,
 										target: "_blank",

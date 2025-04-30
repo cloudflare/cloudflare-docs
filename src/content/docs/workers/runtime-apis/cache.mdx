@@ -14,9 +14,7 @@ The Cache API is available globally but the contents of the cache do not replica
 
 :::caution[Tiered caching]
 
-
 The `cache.put` method is not compatible with tiered caching. Refer to [Cache API](/workers/reference/how-the-cache-works/#cache-api) for more information. To perform tiered caching, use the [fetch API](/workers/reference/how-the-cache-works/#interact-with-the-cloudflare-cache).
-
 
 :::
 
@@ -26,9 +24,7 @@ However, any Cache API operations in the Cloudflare Workers dashboard editor and
 
 :::note
 
-
 This individualized zone cache object differs from Cloudflare’s Global CDN. For details, refer to [How the cache works](/workers/reference/how-the-cache-works/).
-
 
 :::
 
@@ -49,7 +45,9 @@ You may create and manage additional Cache instances via the [`caches.open`](htt
 let myCache = await caches.open('custom:cache');
 await myCache.match(request);
 ```
+
 :::note
+
 When using the cache API, avoid overriding the hostname in cache requests, as this can lead to unnecessary DNS lookups and cache inefficiencies. Always use the hostname that matches the domain associated with your Worker.
 
 ```js
@@ -59,14 +57,14 @@ request.url = "https://your-Worker-hostname.com/";
 let myCache = await caches.open('custom:cache');
 let response = await myCache.match(request);
 ```
+
 :::
+
 ***
 
 ## Headers
 
 Our implementation of the Cache API respects the following HTTP headers on the response passed to `put()`:
-
-
 
 * `Cache-Control`
   * Controls caching directives. This is consistent with [Cloudflare Cache-Control Directives](/cache/concepts/cache-control#cache-control-directives). Refer to [Edge TTL](/cache/how-to/configure-cache-status-code#edge-ttl) for a list of HTTP response codes and their TTL when `Cache-Control` directives are not present.
@@ -79,17 +77,13 @@ Our implementation of the Cache API respects the following HTTP headers on the r
 * `Last-Modified`
   * Allows `cache.match()` to evaluate conditional requests with `If-Modified-Since`.
 
-
-
 This differs from the web browser Cache API as they do not honor any headers on the request or response.
 
 :::note
 
-
 Responses with `Set-Cookie` headers are never cached, because this sometimes indicates that the response contains unique data. To store a response with a `Set-Cookie` header, either delete that header or set `Cache-Control: private=Set-Cookie` on the response before calling `cache.put()`.
 
 Use the `Cache-Control` method to store the response without the `Set-Cookie` header.
-
 
 :::
 
@@ -103,21 +97,17 @@ Use the `Cache-Control` method to store the response without the `Set-Cookie` he
 cache.put(request, response);
 ```
 
-
-
 * <code>put(request, response)</code> : Promise
 
   * Attempts to add a response to the cache, using the given request as the key. Returns a promise that resolves to `undefined` regardless of whether the cache successfully stored the response.
 
-
-
 :::note
 
-
 The `stale-while-revalidate` and `stale-if-error` directives are not supported when using the `cache.put` or `cache.match` methods.
+
+:::
+
 #### Parameters
-
-
 
 * `request` string | Request
 
@@ -125,8 +115,6 @@ The `stale-while-revalidate` and `stale-if-error` directives are not supported w
 
 * `response` Response
   * A [`Response`](/workers/runtime-apis/response/) object to store under the given key.
-
-
 
 #### Invalid parameters
 
@@ -146,21 +134,17 @@ The `stale-while-revalidate` and `stale-if-error` directives are not supported w
 cache.match(request, options);
 ```
 
-
-
 * <code>match(request, options)</code> : Promise`<Response | undefined>`
 
   * Returns a promise wrapping the response object keyed to that request.
 
-
-
 :::note
 
-
 The `stale-while-revalidate` and `stale-if-error` directives are not supported when using the `cache.put` or `cache.match` methods.
+:::
+
+
 #### Parameters
-
-
 
 * `request` string | Request
 
@@ -169,13 +153,9 @@ The `stale-while-revalidate` and `stale-if-error` directives are not supported w
 * `options`
   * Can contain one possible property: `ignoreMethod` (Boolean). When `true`, the request is considered to be a `GET` request regardless of its actual value.
 
-
-
 Unlike the browser Cache API, Cloudflare Workers do not support the `ignoreSearch` or `ignoreVary` options on `match()`. You can accomplish this behavior by removing query strings or HTTP headers at `put()` time.
 
 Our implementation of the Cache API respects the following HTTP headers on the request passed to `match()`:
-
-
 
 * `Range`
 
@@ -193,7 +173,6 @@ Our implementation of the Cache API respects the following HTTP headers on the r
   * Never sends a subrequest to the origin. If no matching response is found in cache, the promise that `cache.match()` returns is fulfilled with `undefined`.
 
 
-
 #### Errors
 
 `cache.match` generates a `504` error response when the requested content is missing or expired. The Cache API does not expose this `504` directly to the Worker script, instead returning `undefined`. Nevertheless, the underlying `504` is still visible in Cloudflare Logs.
@@ -206,11 +185,7 @@ If you use Cloudflare Logs, you may see these `504` responses with the `RequestS
 cache.delete(request, options);
 ```
 
-
-
 * <code>delete(request, options)</code> : Promise`<boolean>`
-
-
 
 Deletes the `Response` object from the cache and returns a `Promise` for a Boolean response:
 
@@ -219,15 +194,11 @@ Deletes the `Response` object from the cache and returns a `Promise` for a Boole
 
 :::caution[Global purges]
 
-
 The `cache.delete` method only purges content of the cache in the data center that the Worker was invoked. For global purges, refer to [Purging assets stored with the Cache API](/workers/reference/how-the-cache-works/#purge-assets-stored-with-the-cache-api).
-
 
 :::
 
 #### Parameters
-
-
 
 * `request` string | Request
 
@@ -235,8 +206,6 @@ The `cache.delete` method only purges content of the cache in the data center th
 
 * `options` object
   * Can contain one possible property: `ignoreMethod` (Boolean). Consider the request method a GET regardless of its actual value.
-
-
 
 ***
 

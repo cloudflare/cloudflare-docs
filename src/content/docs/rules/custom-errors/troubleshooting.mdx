@@ -1,0 +1,49 @@
+---
+title: Troubleshoot Error Pages issues
+pcx_content_type: reference
+sidebar:
+  order: 10
+  label: Troubleshooting
+---
+
+## Cannot preview error page
+
+If Cloudflare cannot load your site or you have blocked the United States (US) via [IP Access rules](/waf/tools/ip-access-rules/) or WAF custom rules, publishing and previewing the error page will not work.
+
+A common error might look like the following: `Error fetching page: Fetch failed, https://example.com/ipcountryblock.html returned 403 (Code: 1202)`.
+
+Make sure that you are serving the custom error page with an `HTTP 200` status code, and that no WAF rule is blocking or challenging your custom error page.
+
+## Error pages for blocked requests
+
+If you block countries or IP addresses with an [IP Access rule](/waf/tools/ip-access-rules/), affected visitors will get a `1005` error and your **IP/Country Block** custom page.
+
+If you block countries or IP addresses with a [WAF custom rule](/waf/custom-rules/) and you do not configure a [custom response](/waf/custom-rules/create-dashboard/#configure-a-custom-response-for-blocked-requests) for blocked requests in the rule, affected visitors will get your **WAF Block** page.
+
+If you block requests due to a [rate limiting rule](/waf/rate-limiting-rules/) and you do not configure a [custom response for blocked requests](/waf/rate-limiting-rules/create-zone-dashboard/#configure-a-custom-response-for-blocked-requests) in the rule, affected visitors will get your **429 Errors** page displaying a Cloudflare `1015` error.
+
+If you block countries or IP addresses with a firewall rule (now deprecated), affected visitors will get your **1000 Class Errors** page.
+
+## 1XXX errors
+
+You cannot customize the following 1XXX errors via Error Pages:
+
+- `1001` - Unable to resolve
+- `1003` - Bad Host header
+- `1018` - Unable to resolve because of ownership lookup failure
+- `1023` - Unable to resolve because of feature lookup failure
+
+## Custom error page size
+
+Your custom error page cannot be blank and cannot exceed 1.5 MB. To avoid exceeding the custom error page limit, preview your page before publishing to test your page size before publishing.
+
+## General troubleshooting advice
+
+If you encounter errors while attempting to preview or publish your custom error page, use an [HTML validator](https://validator.w3.org/) to ensure that your code resolves properly.
+
+Make sure that you are serving the custom error page with an `HTTP 200` status code.
+
+## More resources
+
+- [HTTP Status Codes](/support/troubleshooting/http-status-codes/)
+- [Challenges](/fundamentals/security/cloudflare-challenges/)

@@ -7,7 +7,7 @@ sidebar:
 
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip} from "~/components"
 
 Each client supports the following set of parameters as part of their deployment, regardless of the deployment mechanism.
 
@@ -121,6 +121,12 @@ This functionality is intended for use with a Cloudflare China local network par
 The string must be a valid IPv4 or IPv6 address, otherwise the WARP client will fail to parse the entire MDM file.
 
 ### `override_doh_endpoint`
+
+:::note
+Only supported in Gateway with DoH mode.[^1]
+:::
+
+[^1]: Gateway with WARP is supported in client version 2025.2.664.0 and below. In version 2025.4.589.1 and above, this parameter does not apply to Gateway with WARP because all DoH traffic goes inside of the WARP tunnel.
 
 Overrides the [IP address](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#doh-ip) used by the WARP client to resolve DNS queries via DNS over HTTPS (DoH). If you set this parameter, be sure to update your organization's firewall to ensure the new IP is allowed through.
 

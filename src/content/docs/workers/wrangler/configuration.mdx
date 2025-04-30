@@ -178,6 +178,11 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
   - Minify the Worker script before uploading.
   - If you're using the [Cloudflare Vite plugin](/workers/vite-plugin/), `minify` is replaced by Vite's [`build.minify`](https://vite.dev/config/build-options.html#build-minify).
 
+- `keep_names` <Type text="boolean" /> <MetaInfo text="optional" />
+
+  - Wrangler uses esbuild to process the Worker code for development and deployment. This option allows
+    you to specify whether esbuild should apply its [keepNames](https://esbuild.github.io/api/#keep-names) logic to the code or not. Defaults to `true`.
+
 - `logpush` <Type text="boolean" /> <MetaInfo text="optional" />
 
   - Enables Workers Trace Events Logpush for a Worker. Any scripts with this property will automatically get picked up by the Workers Logpush job configured for your account. Defaults to `false`. Refer to [Workers Logpush](/workers/observability/logs/logpush/).

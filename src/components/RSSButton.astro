@@ -27,7 +27,7 @@ const input = props.parse(Astro.props);
 
 <a
 	href={"href" in input ? input.href : `/changelog/rss/${input.changelog}.xml`}
-	class="inline-flex items-center justify-center gap-1 rounded font-semibold no-underline"
+	class="inline-flex items-center justify-center gap-1 rounded-sm font-semibold no-underline"
 	target="_blank"
 >
 	{input.text}

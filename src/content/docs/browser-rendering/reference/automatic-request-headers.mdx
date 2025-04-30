@@ -1,0 +1,19 @@
+---
+pcx_content_type: reference
+title: Automatic request headers
+sidebar:
+  order: 2
+---
+
+When using the [REST API](/browser-rendering/rest-api/) to fetch content via Browser Rendering, Cloudflare adds the following headers to outbound requests made to the target URL:
+
+| Header               | Description                                                                         |
+| -------------------- | ----------------------------------------------------------------------------------- |
+| `cf-biso-request-id` | A unique identifier for the Browser Rendering request                               |
+| `cf-biso-devtools`   | A flag indicating the request originated from Cloudflare's rendering infrastructure |
+
+:::note[Note]
+
+These headers are unique to Browser Rendering and are automatically included and cannot be removed or overridden (such as via `setExtraHTTPHeaders`). They are intended to ensure transparency, allowing destination servers to identify traffic as coming from Cloudflare Browser Rendering.
+
+:::

@@ -71,6 +71,12 @@ Refer to the following additional examples to write your code:
 
 ### 2. Update configuration
 
+:::note[Cron Trigger changes take time to propagate.]
+
+Changes such as adding a new Cron Trigger, updating an old Cron Trigger, or deleting a Cron Trigger may take several minutes (up to 15 minutes) to propagate to the Cloudflare global network.
+
+:::
+
 After you have updated your Worker code to include a `"scheduled"` event, you must update your Worker project configuration.
 
 #### Via the [Wrangler configuration file](/workers/wrangler/configuration/)
@@ -165,24 +171,24 @@ Some common time intervals that may be useful for setting up your Cron Trigger:
 - `59 23 LW * *`
   - 23:59 (UTC) on the last weekday of the month
 
-## Test Cron Triggers
+## Test Cron Triggers locally
 
-The recommended way of testing Cron Triggers is using Wrangler.
-
-:::note[Cron Trigger changes take time to propagate.]
-
-Changes such as adding a new Cron Trigger, updating an old Cron Trigger, or deleting a Cron Trigger may take several minutes (up to 15 minutes) to propagate to the Cloudflare global network.
-
-:::
-
-Test Cron Triggers using `Wrangler` by passing in the `--test-scheduled` flag to [`wrangler dev`](/workers/wrangler/commands/#dev). This will expose a `/__scheduled` (or `/cdn-cgi/handler/scheduled` for Python Workers) route which can be used to test using a HTTP request. To simulate different cron patterns, a `cron` query parameter can be passed in.
+Test Cron Triggers using Wrangler with [`wrangler dev`](/workers/wrangler/commands/#dev). This will expose a `/cdn-cgi/handler/scheduled` route which can be used to test using a HTTP request.
 
 ```sh
-npx wrangler dev --test-scheduled
+curl "http://localhost:8787/cdn-cgi/handler/scheduled"
+```
 
-curl "http://localhost:8787/__scheduled?cron=*+*+*+*+*"
+To simulate different cron patterns, a `cron` query parameter can be passed in.
 
-curl "http://localhost:8787/cdn-cgi/handler/scheduled?cron=*+*+*+*+*" # Python Workers
+```sh
+curl "http://localhost:8787/cdn-cgi/handler/scheduled?cron=*+*+*+*+*"
+```
+
+Optionally, you can also pass a `time` query parameter to override `controller.scheduledTime` in your scheduled event listener.
+
+```sh
+curl "http://localhost:8787/cdn-cgi/handler/scheduled?cron=*+*+*+*+*&time=1745856238"
 ```
 
 ## View past events

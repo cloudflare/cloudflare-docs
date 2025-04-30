@@ -1,0 +1,43 @@
+---
+pcx_content_type: troubleshooting
+title: Error 525
+source: null
+---
+
+import { GlossaryTooltip } from "~/components";
+
+## Error 525: SSL handshake failed
+
+This error indicates that the SSL handshake between Cloudflare and the origin web server failed.
+
+### Common causes
+
+Error `525` occurs when these two conditions are true:
+
+- The [SSL handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/) fails between Cloudflare and the origin web server.
+- [_Full_ or _Full (Strict)_](/ssl/origin-configuration/ssl-modes) **SSL** is set in the **Overview** tab of your Cloudflare **SSL/TLS** app.
+
+:::note
+
+If your hosting provider frequently changes your origin web server's IP address, refer to Cloudflare's documentation on [dynamic DNS updates](/dns/manage-dns-records/how-to/managing-dynamic-ip-addresses).
+:::
+
+### Resolution
+
+Contact your hosting provider to exclude the following common causes at your origin web server:
+
+- No valid SSL certificate is installed.
+- Port `443` (or another custom secure port) is not open.
+- No <GlossaryTooltip term="Server Name Indication (SNI)">SNI</GlossaryTooltip> support.
+- The [cipher suites](/ssl/origin-configuration/cipher-suites/) used by Cloudflare do not match the cipher suites supported by the origin web server.
+
+:::note
+
+If `525` errors occur intermittently, review the origin web server error logs to determine the cause. Configure Apache to [log mod_ssl errors](https://cwiki.apache.org/confluence/display/HTTPD/DebuggingSSLProblems#Enable_SSL_logging). Also, nginx includes SSL errors in its standard error log, but may possibly require [an increased log level](https://docs.nginx.com/nginx/admin-guide/monitoring/logging/).
+:::
+
+- Verify that a certificate is installed on your origin server. For details on running tests, refer to [Troubleshoot requests with curl](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#troubleshoot-requests-with-curl). If no certificate is installed, you can generate and install a free [Cloudflare origin CA certificate](/ssl/origin-configuration/origin-ca) to encrypt traffic between Cloudflare and your origin web server.
+
+- [Review the cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/) used by your server to ensure they are compatible with Cloudflare.
+
+- Check your server's error logs from the timestamps when `525` errors occur to identify any issues causing the connection to be reset during the SSL handshake.

@@ -6,7 +6,7 @@ sidebar:
   order: 1
 ---
 
-import { WranglerConfig } from "~/components"
+import { WranglerConfig, Render } from "~/components"
 
 
 In this guide, you will build an app that accepts image uploads, overlays the image with a visual watermark, then stores the transformed image in your R2 bucket.
@@ -141,6 +141,8 @@ export default {
   }
 };
 ```
+
+<Render file="request-dot-clone-warning" product="workers" />
 
 ## 4: Transform the image
 

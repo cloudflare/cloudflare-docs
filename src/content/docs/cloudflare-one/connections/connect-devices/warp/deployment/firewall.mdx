@@ -52,7 +52,9 @@ WARP connects to the following IP addresses, depending on which [tunnel protocol
 | IPv4 address   | `162.159.197.0/24`                                                                             |
 | IPv6 address   | `2606:4700:102::/48`                                                                           |
 | Default port   | `UDP 443`                                                                                      |
-| Fallback ports | `UDP 500` <br/> `UDP 1701` <br/> `UDP 4500` <br/> `UDP 4443` <br/> `UDP 8443` <br/> `UDP 8095` |
+| Fallback ports | `UDP 500` <br/> `UDP 1701` <br/> `UDP 4500` <br/> `UDP 4443` <br/> `UDP 8443` <br/> `UDP 8095` <br/> `TCP 443` [^1] |
+
+[^1]: Required for HTTP/2 fallback
 
 :::note
 
@@ -67,13 +69,25 @@ The following domains are used as part of our captive portal check:
 - `cloudflareok.com`
 - `cloudflarecp.com`
 
-## Connectivity check
+## Connectivity checks
 
-As part of establishing the WARP connection, the client will check the following HTTPS URLs to validate a successful connection:
+As part of establishing the WARP connection, the client runs connectivity checks inside and outside of the WARP tunnel.
 
-- `engage.cloudflareclient.com` verifies general Internet connectivity outside of the WARP tunnel. These requests are always sent directly to an IP in the [WARP ingress IPv4 or IPv6 range](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip) (or to your [`override_warp_endpoint`](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/#override_warp_endpoint) if set). Requests will not use a proxy server, even if one is configured for the system.
+### Outside tunnel
 
-- `connectivity.cloudflareclient.com` verifies connectivity inside of the WARP tunnel. Because this check happens inside of the tunnel, you do not need to add `connectivity.cloudflareclient.com` to your firewall allowlist.
+The client connects to the following destinations to verify general Internet connectivity outside of the WARP tunnel. Make sure that these IPs and domains are on your firewall allowlist.
+
+- `engage.cloudflareclient.com`: The client will always send requests directly to an IP in the [WARP ingress IPv4 or IPv6 range](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip) (or to your [`override_warp_endpoint`](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/#override_warp_endpoint) if set). Requests will not use a proxy server, even if one is configured for the system.
+- `162.159.197.3`
+- `2606:4700:102::3`
+
+### Inside tunnel
+
+The client connects to the following destinations to verify connectivity inside of the WARP tunnel. Because this check happens inside of the tunnel, you do not need to add these IPs and domains to your firewall allowlist. However, since the requests go through Gateway, ensure that they are not blocked by a Gateway HTTP or Network policy.
+
+- `connectivity.cloudflareclient.com`
+- `162.159.197.4`
+- `2606:4700:102::4`
 
 ## NEL reporting (optional)
 

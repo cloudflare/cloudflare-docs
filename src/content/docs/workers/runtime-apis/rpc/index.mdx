@@ -4,10 +4,15 @@ title: Remote-procedure call (RPC)
 head: []
 description: The built-in, JavaScript-native RPC system built into Workers and
   Durable Objects.
-
 ---
 
-import { DirectoryListing, Render, Stream, WranglerConfig } from "~/components"
+import {
+	DirectoryListing,
+	Render,
+	Stream,
+	WranglerConfig,
+	TypeScriptExample,
+} from "~/components";
 
 :::note
 To use RPC, [define a compatibility date](/workers/configuration/compatibility-dates) of `2024-04-03` or higher, or include `rpc` in your [compatibility flags](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag).
@@ -15,8 +20,8 @@ To use RPC, [define a compatibility date](/workers/configuration/compatibility-d
 
 Workers provide a built-in, JavaScript-native [RPC (Remote Procedure Call)](https://en.wikipedia.org/wiki/Remote_procedure_call) system, allowing you to:
 
-* Define public methods on your Worker that can be called by other Workers on the same Cloudflare account, via [Service Bindings](/workers/runtime-apis/bindings/service-bindings/rpc)
-* Define public methods on [Durable Objects](/durable-objects) that can be called by other workers on the same Cloudflare account that declare a binding to it.
+- Define public methods on your Worker that can be called by other Workers on the same Cloudflare account, via [Service Bindings](/workers/runtime-apis/bindings/service-bindings/rpc)
+- Define public methods on [Durable Objects](/durable-objects) that can be called by other workers on the same Cloudflare account that declare a binding to it.
 
 The RPC system is designed to feel as similar as possible to calling a JavaScript function in the same Worker. In most cases, you should be able to write code in the same way you would if everything was in a single Worker.
 
@@ -42,11 +47,11 @@ As an exception to Structured Clone, application-defined classes (or objects wit
 
 The RPC system also supports a number of types that are not Structured Cloneable, including:
 
-* Functions, which are replaced by stubs that call back to the sender.
-* Application-defined classes that extend `RpcTarget`, which are similarly replaced by stubs.
-* [ReadableStream](/workers/runtime-apis/streams/readablestream/) and [WriteableStream](/workers/runtime-apis/streams/writablestream/), with automatic streaming flow control.
-* [Request](/workers/runtime-apis/request/) and [Response](/workers/runtime-apis/response/), for conveniently representing HTTP messages.
-* RPC stubs themselves, even if the stub was received from a third Worker.
+- Functions, which are replaced by stubs that call back to the sender.
+- Application-defined classes that extend `RpcTarget`, which are similarly replaced by stubs.
+- [ReadableStream](/workers/runtime-apis/streams/readablestream/) and [WriteableStream](/workers/runtime-apis/streams/writablestream/), with automatic streaming flow control.
+- [Request](/workers/runtime-apis/request/) and [Response](/workers/runtime-apis/response/), for conveniently representing HTTP messages.
+- RPC stubs themselves, even if the stub was received from a third Worker.
 
 ## Functions
 
@@ -77,38 +82,40 @@ main = "./src/counter.js"
 
 </WranglerConfig>
 
-```js
+<TypeScriptExample>
+
+```ts
 import { WorkerEntrypoint, RpcTarget } from "cloudflare:workers";
 
 class Counter extends RpcTarget {
-  #value = 0;
+	#value = 0;
 
-  increment(amount) {
-    this.#value += amount;
-    return this.#value;
-  }
+	increment(amount: number) {
+		this.#value += amount;
+		return this.#value;
+	}
 
-  get value() {
-    return this.#value;
-  }
+	get value() {
+		return this.#value;
+	}
 }
 
 export class CounterService extends WorkerEntrypoint {
-  async newCounter() {
-    return new Counter();
-  }
+	async newCounter() {
+		return new Counter();
+	}
 }
 
 export default {
-  fetch() {
-    return new Response("ok")
-  }
-}
+	fetch() {
+		return new Response("ok");
+	},
+};
 ```
 
+</TypeScriptExample>
+
 The method `increment` can be called directly by the client, as can the public property `value`:
-
-
 
 <WranglerConfig>
 
@@ -122,21 +129,25 @@ services = [
 
 </WranglerConfig>
 
-```js
+<TypeScriptExample>
+
+```ts
 export default {
-  async fetch(request, env) {
-    using counter = await env.COUNTER_SERVICE.newCounter();
+	async fetch(request: Request, env: Env) {
+		using counter = await env.COUNTER_SERVICE.newCounter();
 
-    await counter.increment(2);   // returns 2
-    await counter.increment(1);   // returns 3
-    await counter.increment(-5);  // returns -2
+		await counter.increment(2); // returns 2
+		await counter.increment(1); // returns 3
+		await counter.increment(-5); // returns -2
 
-    const count = await counter.value;  // returns -2
+		const count = await counter.value; // returns -2
 
-    return new Response(count);
-  }
-}
+		return new Response(count);
+	},
+};
 ```
+
+</TypeScriptExample>
 
 :::note
 
@@ -161,11 +172,15 @@ Classes which do not inherit `RpcTarget` cannot be sent over RPC at all. This di
 
 When you call an RPC method and get back an object, it's common to immediately call a method on the object:
 
-```js
+<TypeScriptExample>
+
+```ts
 // Two round trips.
 using counter = await env.COUNTER_SERVICE.getCounter();
 await counter.increment();
 ```
+
+</TypeScriptExample>
 
 But consider the case where the Worker service that you are calling may be far away across the network, as in the case of [Smart Placement](/workers/runtime-apis/bindings/service-bindings/#smart-placement) or [Durable Objects](/durable-objects). The code above makes two round trips, once when calling `getCounter()`, and again when calling `.increment()`. We'd like to avoid this.
 
@@ -173,11 +188,15 @@ With most RPC systems, the only way to avoid the problem would be to combine the
 
 Workers RPC allows a different approach: You can simply omit the first `await`:
 
-```js
+<TypeScriptExample>
+
+```ts
 // Only one round trip! Note the missing `await`.
 using promiseForCounter = env.COUNTER_SERVICE.getCounter();
 await promiseForCounter.increment();
 ```
+
+</TypeScriptExample>
 
 In this code, `getCounter()` returns a promise for a counter. Normally, the only thing you would do with a promise is `await` it. However, Workers RPC promises are special: they also allow you to initiate speculative calls on the future result of the promise. These calls are sent to the server immediately, without waiting for the initial call to complete. Thus, multiple chained calls can be completed in a single round trip.
 
@@ -185,35 +204,43 @@ How does this work? The promise returned by an RPC is not a real JavaScript `Pro
 
 This works when calling properties of objects returned by RPC methods as well. For example:
 
-```js
+<TypeScriptExample>
+
+```ts
 import { WorkerEntrypoint } from "cloudflare:workers";
 
 export class MyService extends WorkerEntrypoint {
-  async foo() {
-    return {
-      bar: {
-        baz: () => "qux"
-      }
-    }
-  }
+	async foo() {
+		return {
+			bar: {
+				baz: () => "qux",
+			},
+		};
+	}
 }
 ```
 
-```js
+</TypeScriptExample>
+
+<TypeScriptExample>
+
+```ts
 export default {
-  async fetch(request, env) {
-    using foo = env.MY_SERVICE.foo();
-    let baz = await foo.bar.baz();
-    return new Response(baz);
-  }
-}
+	async fetch(request, env) {
+		using foo = env.MY_SERVICE.foo();
+		let baz = await foo.bar.baz();
+		return new Response(baz);
+	},
+};
 ```
+
+</TypeScriptExample>
 
 If the initial RPC ends up throwing an exception, then any pipelined calls will also fail with the same exception
 
 ## ReadableStream, WriteableStream, Request and Response
 
-You can send and receive [`ReadableStream`](/workers/runtime-apis/streams/readablestream/), [`WriteableStream`](/workers/runtime-apis/streams/writablestream/), [`Request`](/workers/runtime-apis/request/), and [`Response`](/workers/runtime-apis/response/) using RPC methods. When doing so, bytes in the body are automatically streamed with appropriate flow control.
+You can send and receive [`ReadableStream`](/workers/runtime-apis/streams/readablestream/), [`WriteableStream`](/workers/runtime-apis/streams/writablestream/), [`Request`](/workers/runtime-apis/request/), and [`Response`](/workers/runtime-apis/response/) using RPC methods. When doing so, bytes in the body are automatically streamed with appropriate flow control. This allows you to send messages over RPC which are larger than [the typical 32 MiB limit](#limitations).
 
 Only [byte-oriented streams](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API/Using_readable_byte_streams) (streams with an underlying byte source of `type: "bytes"`) are supported.
 
@@ -223,10 +250,14 @@ In all cases, ownership of the stream is transferred to the recipient. The sende
 
 A stub received over RPC from one Worker can be forwarded over RPC to another Worker.
 
-```js
+<TypeScriptExample>
+
+```ts
 using counter = env.COUNTER_SERVICE.getCounter();
 await env.ANOTHER_SERVICE.useCounter(counter);
 ```
+
+</TypeScriptExample>
 
 Here, three different workers are involved:
 
@@ -244,7 +275,11 @@ Currently, this proxying only lasts until the end of the Workers' execution cont
 
 In this video, we explore how Cloudflare Workers support Remote Procedure Calls (RPC) to simplify communication between Workers. Learn how to implement RPC in your JavaScript applications and build serverless solutions with ease. Whether you're managing microservices or optimizing web architecture, this tutorial will show you how to quickly set up and use Cloudflare Workers for RPC calls. By the end of this video, you'll understand how to call functions between Workers, pass functions as arguments, and implement user authentication with Cloudflare Workers.
 
-<Stream id="d506935b6767fd07626adbec46d41e6d" title="Introduction to Workers RPC" thumbnail="2.5s" />
+<Stream
+	id="d506935b6767fd07626adbec46d41e6d"
+	title="Introduction to Workers RPC"
+	thumbnail="2.5s"
+/>
 
 ## More Details
 
@@ -252,5 +287,30 @@ In this video, we explore how Cloudflare Workers support Remote Procedure Calls 
 
 ## Limitations
 
-* [Smart Placement](/workers/configuration/smart-placement/) is currently ignored when making RPC calls. If Smart Placement is enabled for Worker A, and Worker B declares a [Service Binding](/workers/runtime-apis/bindings) to it, when Worker B calls Worker A via RPC, Worker A will run locally, on the same machine.
-* The maximum serialized RPC limit is 1 MB. Consider using [`ReadableStream`](/workers/runtime-apis/streams/readablestream/) when returning more data.
+- [Smart Placement](/workers/configuration/smart-placement/) is currently ignored when making RPC calls. If Smart Placement is enabled for Worker A, and Worker B declares a [Service Binding](/workers/runtime-apis/bindings) to it, when Worker B calls Worker A via RPC, Worker A will run locally, on the same machine.
+
+- The maximum serialized RPC limit is 32 MiB. Consider using [`ReadableStream`](/workers/runtime-apis/streams/readablestream/) when returning more data.
+
+  <TypeScriptExample>
+
+  ```ts
+  export class MyService extends WorkerEntrypoint {
+  	async foo() {
+  		// Although this works, it puts a lot of memory pressure on the isolate.
+  		// If possible, streaming the data from its original source is much preferred and would yield better performance.
+  		// If you must buffer the data into memory, consider chunking it into smaller pieces if possible.
+
+  		const sizeInBytes = 33 * 1024 * 1024; // 33 MiB
+  		const arr = new Uint8Array(sizeInBytes);
+
+  		return new ReadableStream({
+  			start(controller) {
+  				controller.enqueue(arr);
+  				controller.close();
+  			},
+  		});
+  	}
+  }
+  ```
+
+  </TypeScriptExample>

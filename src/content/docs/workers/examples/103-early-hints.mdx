@@ -15,6 +15,12 @@ sidebar:
 description: Allow a client to request static assets while waiting for the HTML response.
 ---
 
+If you want to get started quickly, click on the button below.
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/docs-examples/tree/main/workers/103-early-hints)
+
+This creates a repository in your GitHub account and deploys the application to Cloudflare Workers.
+
 import { TabItem, Tabs } from "~/components";
 
 `103` Early Hints is an HTTP status code designed to speed up content delivery. When enabled, Cloudflare can cache the `Link` headers marked with preload and/or preconnect from HTML pages and serve them in a `103` Early Hints response before reaching the origin server. Browsers can use these hints to fetch linked assets while waiting for the origin’s final response, dramatically improving page load speeds.

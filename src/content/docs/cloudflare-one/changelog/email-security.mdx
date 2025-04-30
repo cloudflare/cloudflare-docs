@@ -1,15 +1,31 @@
 ---
 pcx_content_type: changelog
 title: Email Security
-release_notes_file_name:
-  - email-security
-
 ---
 
-import { ProductReleaseNotes, Render } from "~/components"
+import { ProductChangelog } from "~/components";
 
-<Render file="changelog-note" />
+{/* <!-- All changelog entries live in src/content/changelogs/email-security/. */}
 
-{/* <!-- Actual content lives in /src/content/release-notes/email-security.yaml. Update the file there for new entries to appear here. For more details, refer to https://developers.cloudflare.com/style-guide/documentation-content-strategy/content-types/changelog/#yaml-file --> */}
+<ProductChangelog
+	product="email-security"
+	hideEntry="2024-06-16-cloudflare-one"
+/>
 
-<ProductReleaseNotes />
+## 2024-12-19
+
+**Email Security expanded folder scanning**
+
+Microsoft 365 customers can now choose to scan all folders or just the inbox when deploying via the Graph API.
+
+## 2024-08-06
+
+**Email Security is live**
+
+Email Security is now live under Zero Trust.
+
+## 2024-08-06
+
+**Microsoft Graph API deployment.**
+
+Customers using Microsoft Office 365 can set up Email Security via Microsoft Graph API.

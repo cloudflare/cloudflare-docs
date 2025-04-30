@@ -16,7 +16,7 @@ import FeedbackPrompt from "../FeedbackPrompt.tsx";
 				{Astro.locals.starlightRoute.editUrl && (
 					<a
 						href={Astro.locals.starlightRoute.editUrl}
-						class="inline-flex h-8 items-center justify-center gap-2 rounded border border-[--sl-color-hairline] px-3 text-black"
+						class="inline-flex h-8 items-center justify-center gap-2 rounded-sm border border-(--sl-color-hairline) px-3 text-black"
 					>
 						<Icon name="pencil" />
 						Edit
@@ -24,7 +24,7 @@ import FeedbackPrompt from "../FeedbackPrompt.tsx";
 				)}
 				<a
 					href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose"
-					class="inline-flex h-8 items-center justify-center gap-2 rounded border border-[--sl-color-hairline] px-3 text-black"
+					class="inline-flex h-8 items-center justify-center gap-2 rounded-sm border border-(--sl-color-hairline) px-3 text-black"
 				>
 					<Icon name="github" />
 					Issue

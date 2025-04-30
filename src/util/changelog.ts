@@ -13,6 +13,9 @@ import rehypeParse from "rehype-parse";
 import rehypeStringify from "rehype-stringify";
 import rehypeBaseUrl from "~/plugins/rehype/base-url";
 import rehypeFilterElements from "~/plugins/rehype/filter-elements";
+import remarkGfm from "remark-gfm";
+import rehypeRemark from "rehype-remark";
+import remarkStringify from "remark-stringify";
 
 export type GetChangelogsOptions = {
 	filter?: (entry: CollectionEntry<"changelog">) => boolean;
@@ -68,7 +71,7 @@ type GetRSSItemsOptions = {
 	 */
 	locals: App.Locals;
 	/**
-	 * Returns Markdown in the `<content:encoded>` field instead of HTML.
+	 * Returns Markdown in the `<description>` field instead of HTML.
 	 */
 	markdown?: boolean;
 };
@@ -76,6 +79,7 @@ type GetRSSItemsOptions = {
 export async function getRSSItems({
 	notes,
 	locals,
+	markdown,
 }: GetRSSItemsOptions): Promise<Array<RSSFeedItem>> {
 	return await Promise.all(
 		notes.map(async (note) => {
@@ -90,8 +94,13 @@ export async function getRSSItems({
 				rehypeParse,
 				rehypeBaseUrl,
 				rehypeFilterElements,
-				rehypeStringify,
 			];
+
+			if (markdown) {
+				plugins.push(remarkGfm, rehypeRemark, remarkStringify);
+			} else {
+				plugins.push(rehypeStringify);
+			}
 
 			const file = await unified()
 				.data("settings", {

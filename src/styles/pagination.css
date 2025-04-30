@@ -40,9 +40,9 @@
 }
 
 :root[data-theme="light"] {
-	--pagination-arrow-color: theme("colors.cl1.gray.0");
+	--pagination-arrow-color: var(--color-cl1-gray-0);
 }
 
 :root[data-theme="dark"] {
-	--pagination-arrow-color: theme("colors.cl1.gray.9");
+	--pagination-arrow-color: var(--color-cl1-gray-9);
 }

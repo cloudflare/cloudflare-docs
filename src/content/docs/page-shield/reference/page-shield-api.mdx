@@ -485,7 +485,7 @@ For a list of CSP directives and keywords supported by Page Shield policies, ref
 	json={{
 		description: "My first policy in log mode",
 		action: "log",
-		expression: "http.host eq myapp.example.com",
+		expression: 'http.host eq "myapp.example.com"',
 		enabled: "true",
 		value:
 			"script-src myapp.example.com cdnjs.cloudflare.com https://www.google-analytics.com/analytics.js 'self'",
@@ -501,7 +501,7 @@ For a list of CSP directives and keywords supported by Page Shield policies, ref
 		"id": "<POLICY_ID>",
 		"description": "My first policy in log mode",
 		"action": "log",
-		"expression": "http.host eq myapp.example.com",
+		"expression": "http.host eq \"myapp.example.com\"",
 		"enabled": "true",
 		"value": "script-src myapp.example.com cdnjs.cloudflare.com https://www.google-analytics.com/analytics.js 'self'"
 	}

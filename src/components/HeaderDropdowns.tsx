@@ -51,7 +51,7 @@ function Dropdown({ dropdown }: { dropdown: (typeof dropdowns)[number] }) {
 			<button
 				ref={refs.setReference}
 				{...getReferenceProps()}
-				className="flex cursor-pointer items-center justify-center gap-2 rounded bg-transparent p-2 font-medium hover:bg-cl1-white hover:shadow-md dark:hover:bg-cl1-gray-0"
+				className="hover:bg-cl1-white dark:hover:bg-cl1-gray-0 flex cursor-pointer items-center justify-center gap-2 rounded-sm bg-transparent p-2 font-medium hover:shadow-md"
 			>
 				{label}
 				<PiCaretDownBold />
@@ -61,13 +61,13 @@ function Dropdown({ dropdown }: { dropdown: (typeof dropdowns)[number] }) {
 					ref={refs.setFloating}
 					style={floatingStyles}
 					{...getFloatingProps()}
-					className="min-w-60 max-w-80 list-none rounded border border-cl1-gray-8 bg-cl1-white pl-0 shadow-md dark:border-cl1-gray-1 dark:bg-cl1-gray-0"
+					className="border-cl1-gray-8 bg-cl1-white dark:border-cl1-gray-1 dark:bg-cl1-gray-0 max-w-80 min-w-60 list-none rounded-sm border pl-0 shadow-md"
 				>
 					{pages.map((page) => (
 						<li key={page.href}>
 							<a
 								href={page.href}
-								className="8 block p-3 text-black no-underline hover:bg-cl1-gray-9 dark:hover:bg-cl1-gray-1"
+								className="8 hover:bg-cl1-gray-9 dark:hover:bg-cl1-gray-1 block p-3 text-black no-underline"
 								target={page.href.startsWith("https") ? "_blank" : undefined}
 							>
 								{page.label}
@@ -82,12 +82,12 @@ function Dropdown({ dropdown }: { dropdown: (typeof dropdowns)[number] }) {
 
 export default function HeaderDropdownsComponent() {
 	return (
-		<div className="flex gap-2 text-nowrap leading-6">
+		<div className="flex gap-2 leading-6 text-nowrap">
 			{links.map(({ label, href }) => (
 				<a
 					key={href}
 					href={href}
-					className="flex items-center justify-center rounded p-2 font-medium text-black no-underline hover:bg-cl1-white hover:shadow-md dark:hover:bg-cl1-gray-0"
+					className="hover:bg-cl1-white dark:hover:bg-cl1-gray-0 flex items-center justify-center rounded-sm p-2 font-medium text-black no-underline hover:shadow-md"
 				>
 					{label}
 				</a>
