@@ -96,7 +96,7 @@ If you've already built a remote MCP server using the Cloudflare Agents SDK, mak
 - Use `MyMcpAgent.serveSSE('/sse')` for the existing SSE transport. Previously, this would have been `MyMcpAgent.mount('/sse')`, which has been kept as an alias.
 - Add a new path with `MyMcpAgent.serve('/mcp')` to support the new Streamable HTTP transport.
 
-If you have an MCP server with authentication/authorization using the Workers OAuth Provider, [update the configuration](http://localhost:1111/agents/model-context-protocol/transport/#mcp-server-with-authentication) to use the `apiHandlers` property, which replaces `apiRoute` and `apiHandler`.
+If you have an MCP server with authentication/authorization using the Workers OAuth Provider, [update the configuration](/agents/model-context-protocol/transport/#mcp-server-with-authentication) to use the `apiHandlers` property, which replaces `apiRoute` and `apiHandler`.
 
 :::note
 To use apiHandlers, update to @cloudflare/workers-oauth-provider v0.0.4 or later.
