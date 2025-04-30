@@ -10,12 +10,11 @@ const latestCommit = await fetchWithToken(
 	.then((r) => r.json())
 	.then((r) => r[0].sha);
 
-const res = await fetchWithToken(
+const contents = await fetchWithToken(
 	`https://api.github.com/repos/${REPO}/contents/?ref=${latestCommit}`,
-);
-const json = await res.json();
+).then((r) => r.json());
 
-const dirs = json.filter((ent: any) => ent.type === "dir");
+const dirs = contents.filter((ent: any) => ent.type === "dir");
 ---
 
 {
