@@ -1,5 +1,5 @@
 extends: existence
-message: "Don't use exclamation points in text."
+message: "Do not use exclamation points in text. Only replace the exclamation point and no other text."
 link: "https://developers.google.com/style/exclamation-points"
 nonword: true
 level: error
