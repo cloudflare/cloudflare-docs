@@ -288,7 +288,7 @@ For this REST endpoint, you need to have an API token with `D1:Edit` permission.
 
 <Tabs>
 <TabItem label="cURL">
-```curl
+```sh
 curl -X PUT "https://api.cloudflare.com/client/v4/accounts/{account_id}/d1/database/{database_id}" \
   -H "Authorization: Bearer $TOKEN" \
   -H "Content-Type: application/json" \
@@ -325,7 +325,7 @@ Disabling read replication takes up to 24 hours for replicas to stop processing 
 
 <Tabs>
 <TabItem label="cURL">
-```curl
+```sh
 curl -X PUT "https://api.cloudflare.com/client/v4/accounts/{account_id}/d1/database/{database_id}" \
   -H "Authorization: Bearer $TOKEN" \
   -H "Content-Type: application/json" \
@@ -359,7 +359,7 @@ For this REST endpoint, you need to have an API token with `D1:Read` permission.
 
 <Tabs>
 <TabItem label="cURL">
-```curl
+```sh
 curl -X GET "https://api.cloudflare.com/client/v4/accounts/{account_id}/d1/database/{database_id}" \
   -H "Authorization: Bearer $TOKEN"
 ```
