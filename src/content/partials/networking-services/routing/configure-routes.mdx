@@ -277,8 +277,9 @@ By default, each BGP peering session will use the same Cloudflare-side ASN to re
 	<Markdown
     text={`
 		Magic WAN customers should also be aware of the following:
+		- The customer chooses their device ASN, which must be different to the Cloudflare-side ASN.
 		- The Cloudflare side ASN will be included in the \`AS_PATH\` of announced routes to any BGP enabled interconnect.
-		- The customer chooses their device ASN, which should be different to the Cloudflare-side ASN.
+		- Customer announced \`AS_PATH\` is transitive between interconnects — that is, the origin or customer ASN is visible on the \`AS_PATH\` for the routes your CPE receives from Cloudflare in BGP. Default BGP loop prevention mechanisms will mean that routes are not accepted from the same ASN. For example, if you have two different Magic WAN-connected sites both using \`ASN65000\`, then site A will not learn routes coming from site B because of default BGP loop prevention behavior. For routing between private networks using Magic WAN, you should assign a unique ASN for each network/site, or configure the edge CPE to accept BGP-learned routes containing its local ASN.
   `}
     inline={false}
   />
