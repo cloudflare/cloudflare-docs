@@ -1237,8 +1237,8 @@
 					"biz": 50,
 					"ent": 300
 				},
-				"x_custom_pages": {
-					"title": "Custom Error Pages",
+				"x_error_pages": {
+					"title": "Error Pages",
 					"free": "No",
 					"pro": "Yes",
 					"biz": "Yes",

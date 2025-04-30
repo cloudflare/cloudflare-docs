@@ -43,16 +43,16 @@ Custom block response configurations will not be returned by the Firewall Rules 
 
 ### Different error page for blocked requests
 
-Requests blocked by a firewall rule with a _Block_ action would get a Cloudflare [1020 error code](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/#error-1020-access-denied) response. Cloudflare users could customize this error page in **Custom Pages** > **1000 Class Errors**.
+Requests blocked by a firewall rule with a _Block_ action would get a Cloudflare [1020 error code](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/#error-1020-access-denied) response. Cloudflare users could customize this error page for a zone in **Error Pages** > **1000 class errors**.
 
 Requests blocked by a WAF custom rule will get a different response: the WAF block response. To customize the default block response, you can either:
 
-- Define a custom WAF block response for your entire zone in [**Custom Pages**](https://dash.cloudflare.com/?to=/:account/:zone/custom-pages) > **WAF Block**. This custom page will always have an HTML content type.
+- Define a custom WAF block response for your entire zone in [**Error Pages**](https://dash.cloudflare.com/?to=/:account/:zone/error-pages) > **WAF block**. This error page will always have an HTML content type.
 - [Define a custom response](/waf/custom-rules/create-dashboard/#configure-a-custom-response-for-blocked-requests) for requests blocked by a specific WAF custom rule. This custom response supports other content types besides HTML.
 
-If you have customized your 1xxx error page in Custom Pages for requests blocked by firewall rules, you will need to create a new response page for blocked requests using one of the above methods.
+If you have customized your 1XXX error page in Error Pages for requests blocked by firewall rules, you will need to create a new response page for blocked requests using one of the above methods.
 
-For more information on custom Error Pages, refer to [Custom Errors](/rules/custom-errors/).
+For more information on Error Pages, refer to [Custom Errors](/rules/custom-errors/).
 
 ### New Skip action replacing both Allow and Bypass actions
 
