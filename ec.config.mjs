@@ -30,7 +30,6 @@ export default defineEcConfig({
 	},
 	shiki: {
 		langAlias: {
-			tf: "hcl",
 			curl: "sh",
 		},
 	},
