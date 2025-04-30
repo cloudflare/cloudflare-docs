@@ -1,28 +1,63 @@
 ---
-title: rclone
+title: Manage R2 Storage from Your Command Line with Rclone
 pcx_content_type: example
 ---
 
-import { Render } from "~/components";
+import { Render, Steps } from "~/components";
+
+## Overview
+
+[Rclone](https://rclone.org/) is a command-line tool that allows you to manage files on cloud storage directly from your terminal. With Rclone, you can:
+
+- Upload and download files
+- Sync entire directories between your local machine and R2
+- Generate temporary public access links
+
+This guide will show you how to set up and use Rclone with Cloudflare R2.
+
+## Prerequisites
+
+Before you begin, you'll need:
+
+- [Rclone installed](https://rclone.org/install/) on your system (v1.59 or later)
+- An R2 bucket created in your Cloudflare account
+- Your Cloudflare `ACCOUNT_ID` (found in the URL of your Cloudflare dashboard)
 
 <Render file="keys" />
-<br />
 
-With [`rclone`](https://rclone.org/install/) installed, you may run [`rclone config`](https://rclone.org/s3/) to configure a new S3 storage provider. You will be prompted with a series of questions for the new provider details.
+## Setting up Rclone with R2
 
-:::note[Recommendation]
+To connect Rclone to your R2 storage, you'll need to configure a new remote connection. Run [`rclone config`](https://rclone.org/s3/) to start the interactive setup process. You will be prompted with a series of questions for the provider details.
 
-It is recommended that you choose a unique provider name and then rely on all default answers to the prompts.
+:::note[Configuration tip]
 
-This will create a `rclone` configuration file, which you can then modify with the preset configuration given below.
+When running through the setup wizard, choose a memorable name for your R2 connection (like `r2` or `cloudflare-r2`).
 :::
+
+<Steps>
+
+1. Create new remote by selecting `n`.
+2. Select a name for the new remote. For example, use `r2`.
+3. Select the `Amazon S3 Compliant Storage Providers` storage type.
+4. Select `Cloudflare R2 storage` for the provider.
+5. Select `1` to enter your access credentials manually.
+6. Enter your R2 Access Key ID.
+7. Enter your R2 Secret Access Key.
+8. Press `Enter` to accept the default region `auto` since R2 buckets are automitically distributed across all Cloudflare data centers for low latency.
+9. Enter your R2 API endpoint: `https://<accountid>.r2.cloudflarestorage.com`.
+
+</Steps>
 
 :::note
 
-Ensure you are running `rclone` v1.59 or greater ([rclone downloads](https://beta.rclone.org/)). Versions prior to v1.59 may return `HTTP 401: Unauthorized` errors, as earlier versions of `rclone` do not strictly align to the S3 specification in all cases.
+Ensure you are running `rclone` v1.59 or later ([download here](https://rclone.org/downloads/)). Earlier versions may return `HTTP 401: Unauthorized` errors when working with R2, as they don't fully comply with the S3 specification that R2 implements.
 :::
 
-If you have already configured `rclone` in the past, you may run `rclone config file` to print the location of your `rclone` configuration file:
+### Manual configuration
+
+After running the initial setup wizard, you'll need to edit the rclone configuration file directly if you want to update the R2-specific parameters for your connection:
+
+1. First, locate your configuration file:
 
 ```sh
 rclone config file
@@ -30,79 +65,221 @@ rclone config file
 # ~/.config/rclone/rclone.conf
 ```
 
-Then use an editor (`nano` or `vim`, for example) to add or edit the new provider. This example assumes you are adding a new `r2demo` provider:
+2. Open the file with your preferred text editor (like `nano` or `vim`) and add or modify your R2 configuration to match this format:
 
 ```toml
-[r2demo]
+[r2]  # Use the name you chose during setup
 type = s3
 provider = Cloudflare
-access_key_id = abc123
-secret_access_key = xyz456
-endpoint = https://<accountid>.r2.cloudflarestorage.com
+access_key_id = YOUR_ACCESS_KEY_ID
+secret_access_key = YOUR_SECRET_ACCESS_KEY
+endpoint = https://ACCOUNT_ID.r2.cloudflarestorage.com
 acl = private
+```
+
+Replace:
+
+- `YOUR_ACCESS_KEY_ID` and `YOUR_SECRET_ACCESS_KEY` with your R2 credentials
+- `ACCOUNT_ID` with your Cloudflare account ID (found in the URL of your Cloudflare dashboard)
+
+:::note
+
+If you're using a token with [Object-level permissions](/r2/api/s3/tokens/#permissions) instead of a full access key, add `no_check_bucket = true` to your configuration to avoid permission errors when rclone tries to list all buckets.
+:::
+
+3. Verify your configuration is working:
+
+```sh
+rclone ls r2:<bucket-name>
+# Replace <bucket-name> with the name of an R2 bucket
+# If successful, this will list the files in your selected bucket
+```
+
+## Working with R2 buckets and objects
+
+Once configured, you can use rclone's powerful commands to interact with your R2 storage. In all examples below, replace `r2` with whatever name you chose for your R2 remote.
+
+### Listing buckets and objects
+
+Use the [rclone tree](https://rclone.org/commands/rclone_tree/) command to view the structure of your R2 storage:
+
+```sh
+# List all buckets and their contents
+rclone tree r2:
+# /
+# ├── user-uploads
+# │   └── photo.jpg
+# └── my-documents
+#     ├── report.pdf
+#     └── notes.txt
+
+# List contents of a specific bucket
+rclone tree r2:my-documents
+# /
+# ├── report.pdf
+# └── notes.txt
+```
+
+For a more detailed listing with sizes and dates, use `rclone ls` or `rclone lsl`:
+
+```sh
+# List with file sizes
+rclone ls r2:my-documents
+# 2048 report.pdf
+# 1024 notes.txt
+
+# List with sizes, dates, and times
+rclone lsl r2:my-documents
+# 2048 2023-05-15 13:45:30 report.pdf
+# 1024 2023-05-14 09:12:05 notes.txt
+```
+
+### Uploading and downloading files
+
+Use the [rclone copy](https://rclone.org/commands/rclone_copy/) command to transfer individual files to and from your R2 storage:
+
+```sh
+# Upload a file to a bucket
+rclone copy presentation.pptx r2:my-documents/
+rclone ls r2:my-documents
+# 2048 report.pdf
+# 1024 notes.txt
+# 3072 presentation.pptx
+
+# Download a file from a bucket
+rclone copy r2:my-documents/report.pdf ./downloads/
+# Creates ./downloads/report.pdf on your local machine
+```
+
+### Syncing directories
+
+Use [rclone sync](https://rclone.org/commands/rclone_sync/) to make a destination sync with a source:
+
+```sh
+# Sync a local directory to R2 (upload new/changed files, remove deleted files)
+rclone sync ./my-project r2:backups/my-project
+
+# Sync from R2 to a local directory (download the latest version)
+rclone sync r2:my-documents ./local-documents
+```
+
+:::warning[Be careful with sync]
+The `sync` command will delete files at the destination that don't exist in the source. Use `--dry-run` first to see what would change without making actual modifications.
+:::
+
+### Managing large files with multipart uploads
+
+When uploading large files to R2, rclone uses **multipart uploads** to improve reliability and performance. Understanding how multipart uploads work can help you optimize your costs and upload experience.
+
+#### Optimizing multipart upload settings
+
+For large files, rclone performs multipart uploads by breaking the file into chunks and uploading each chunk separately. This affects your R2 costs since:
+
+1. Each part upload counts as a separate Class A operation
+2. Larger part sizes mean fewer operations (potentially lower cost)
+3. A multipart upload requires at least 3 operations: `CreateMultipartUpload`, at least one `UploadPart`, and `CompleteMultipartUpload`
+
+You can configure rclone's multipart upload behavior with these parameters:
+
+```sh
+# Upload a large video with custom multipart upload settings (100MB parts)
+rclone copy large-video.mp4 r2:media/ --s3-upload-cutoff=100M --s3-chunk-size=100M
+```
+
+- `--s3-chunk-size`: The size of each part (default: 5MB)
+- `--s3-upload-cutoff`: Files larger than this will use multipart upload (default: 200MB)
+
+:::tip[Multipart upload cost optimization]
+For R2's pricing model, using larger chunk sizes (50-100MB) for multipart uploads can reduce the total number of operations and potentially lower your costs. However, remember that failed multipart uploads might need to restart individual chunks, so very large chunks can be inefficient on unreliable connections.
+:::
+
+### Common file operations
+
+Rclone provides many other useful commands for managing your R2 objects:
+
+```sh
+# Copy files between buckets
+rclone copy r2:bucket1/important.pdf r2:bucket2/backup/
+
+# Move a file (copy + delete source)
+rclone moveto r2:my-documents/draft.docx r2:my-documents/final.docx
+
+# Delete a file
+rclone delete r2:my-documents/temp.txt
+
+# Delete a directory and all its contents
+rclone purge r2:temp-files/
+```
+
+### Generating temporary access links
+
+One common need is to share files with others who don't have R2 access. The [rclone link](https://rclone.org/commands/rclone_link/) command generates presigned URLs that provide temporary public access to private objects:
+
+```sh
+# Generate a link that expires after 1 hour (3600 seconds)
+rclone link r2:my-documents/report.pdf --expire 3600
+# https://<accountid>.r2.cloudflarestorage.com/my-documents/report.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=<credential>&X-Amz-Date=<timestamp>&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=<signature>
+
+# Generate a link that expires after 1 day
+rclone link r2:photos/vacation.jpg --expire 86400
+```
+
+These URLs can be shared with anyone, and they'll be able to access the file directly through their browser or download tools until the expiration time.
+
+:::note
+R2 doesn't support the `--unlink` flag in rclone.
+:::
+
+## Mounting R2 buckets as local filesystems
+
+Rclone can mount your R2 buckets as a local filesystem, allowing you to browse and edit files as if they were on your local machine:
+
+```sh
+# Mount an R2 bucket as a local filesystem
+mkdir -p ~/r2-mount
+rclone mount r2:my-documents ~/r2-mount &
+
+# Now you can access files through the mount point
+ls ~/r2-mount
+# report.pdf notes.txt presentation.pptx
+
+# Edit files directly
+nano ~/r2-mount/notes.txt
+
+# When done, unmount the bucket
+fusermount -u ~/r2-mount    # Linux
+umount ~/r2-mount           # macOS
 ```
 
 :::note
 
-If you are using a token with [Object-level permissions](/r2/api/s3/tokens/#permissions), you will need to add `no_check_bucket = true` to the configuration to avoid errors.
-:::
+- On Windows, you'll need to assign a drive letter instead: `rclone mount r2:my-documents Z: &`
+- For macOS, you may need to install [macFUSE](https://osxfuse.github.io/) first
+  :::
 
-You may then use the new `rclone` provider for any of your normal workflows.
+## Troubleshooting
 
-## List buckets & objects
+If you encounter issues while using rclone with R2, try the following:
 
-The [rclone tree](https://rclone.org/commands/rclone_tree/) command can be used to list the contents of the remote, in this case Cloudflare R2.
+### Common errors and solutions
 
-```sh
-rclone tree r2demo:
-# /
-# ├── user-uploads
-# │   └── foobar.png
-# └── my-bucket-name
-#     ├── cat.png
-#     └── todos.txt
+| Error                    | Possible Cause                                       | Solution                                                  |
+| ------------------------ | ---------------------------------------------------- | --------------------------------------------------------- |
+| `HTTP 401: Unauthorized` | Incorrect credentials or outdated rclone version     | Verify access keys and ensure rclone is v1.59+            |
+| `access denied`          | Permissions issue with your token                    | Check if token has required permissions for the operation |
+| `bucket not found`       | Bucket doesn't exist or wrong endpoint               | Verify bucket name and account ID in endpoint URL         |
+| `no_check_bucket` errors | Using object-level tokens without the proper setting | Add `no_check_bucket = true` to your config               |
 
-rclone tree r2demo:my-bucket-name
-# /
-# ├── cat.png
-# └── todos.txt
-```
-
-## Upload and retrieve objects
-
-The [rclone copy](https://rclone.org/commands/rclone_copy/) command can be used to upload objects to an R2 bucket and vice versa - this allows you to upload files up to the 5 TB maximum object size that R2 supports.
+For more detailed debugging, add the `--verbose` or `-v` flag to any rclone command:
 
 ```sh
-# Upload dog.txt to the user-uploads bucket
-rclone copy dog.txt r2demo:user-uploads/
-rclone tree r2demo:user-uploads
-# /
-# ├── foobar.png
-# └── dog.txt
-
-# Download dog.txt from the user-uploads bucket
-rclone copy r2demo:user-uploads/dog.txt .
+rclone lsd r2: -v
 ```
 
-### A note about multipart upload part sizes
+### Getting help
 
-For multipart uploads, part sizes can significantly affect the number of Class A operations that are used, which can alter how much you end up being charged.
-Every part upload counts as a separate operation, so larger part sizes will use fewer operations, but might be costly to retry if the upload fails. Also consider that a multipart upload is always going to consume at least 3 times as many operations as a single `PutObject`, because it will include at least one `CreateMultipartUpload`, `UploadPart` & `CompleteMultipartUpload` operations.
+For more help with rclone:
 
-Balancing part size depends heavily on your use-case, but these factors can help you minimize your bill, so they are worth thinking about.
-
-You can configure rclone's multipart upload part size using the `--s3-chunk-size` CLI argument. Note that you might also have to adjust the `--s3-upload-cutoff` argument to ensure that rclone is using multipart uploads. Both of these can be set in your configuration file as well. Generally, `--s3-upload-cutoff` will be no less than `--s3-chunk-size`.
-
-```sh
-rclone copy long-video.mp4 r2demo:user-uploads/ --s3-upload-cutoff=100M --s3-chunk-size=100M
-```
-
-## Generate presigned URLs
-
-You can also generate presigned links which allow you to share public access to a file temporarily using the [rclone link](https://rclone.org/commands/rclone_link/) command.
-
-```sh
-# You can pass the --expire flag to determine how long the presigned link is valid. The --unlink flag isn't supported by R2.
-rclone link r2demo:my-bucket-name/cat.png --expire 3600
-# https://<accountid>.r2.cloudflarestorage.com/my-bucket-name/cat.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=<credential>&X-Amz-Date=<timestamp>&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=<signature>
-```
+- Run `rclone help` for command documentation
+- Visit the [rclone forum](https://forum.rclone.org/) for community support
+- For R2-specific issues, check the [Cloudflare Community forums](https://community.cloudflare.com/c/developers/r2/63) or join the [Cloudflare Discord](https://discord.cloudflare.com)
