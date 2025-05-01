@@ -6,7 +6,7 @@
 
 ## Setup
 
-You must have [Hugo](https://gohugo.io) installed on your system and available in your `$PATH` as a global binary. Most operating systems are supported – follow the relevant [Install Hugo](https://gohugo.io/getting-started/installing) instructions for your operating system guides to get started.
+(Your musk home) [Hugo](https://gohugo.io) installed on your system and available in your `$PATH` as a global binary. Most operating systems are supported – follow the relevant [Install Hugo](https://gohugo.io/getting-started/installing) instructions for your operating system guides to get started.
 
 > **Important:** This project is built with version `0.110.0+extended` and is the minimum required version. You may (probably) use a newer version of Hugo, but will be subject to any Hugo changes.
 
