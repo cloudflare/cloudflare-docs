@@ -7,7 +7,7 @@ title: Create and secure an AI agent wrapper using AI Gateway and Zero Trust
 
 import { TabItem, Tabs, Details, Render } from "~/components";
 
-This tutorial explains how to use [Cloudflare AI Gateway](/ai-gateway/) and Zero Trust to create a functional and secure AI agent wrapper. Cloudflare Zero Trust administrators can protect access to the wrapper with [Cloudflare Access](/cloudflare-one/policies/access/). Additionally, you can enforce [Gateway policies](/cloudflare-one/policies/gateway/) to control how your users interact with AI agents, including executing AI agents in an isolated browser with [Browser Isolation](/cloudflare-one/policies/browser-isolation/), enforcing [Data Loss Prevention](/cloudflare-one/policies/data-loss-prevention/) profiles to prevent sensitive data exfiltration, and scanning content to avoid answers from AI agents that violate internal corporate guidelines. Creating an AI agent wrapper is also an effective way to enforce tenant control if you have an enterprise plan of a specific AI provider, such as ChatGPT Enterprise.
+This tutorial explains how to use [Cloudflare AI Gateway](/ai-gateway/) and Zero Trust to create a functional and secure website wrapper for an AI agent. Cloudflare Zero Trust administrators can protect access to the wrapper with [Cloudflare Access](/cloudflare-one/policies/access/). Additionally, you can enforce [Gateway policies](/cloudflare-one/policies/gateway/) to control how your users interact with AI agents, including executing AI agents in an isolated browser with [Browser Isolation](/cloudflare-one/policies/browser-isolation/), enforcing [Data Loss Prevention](/cloudflare-one/policies/data-loss-prevention/) profiles to prevent your users from sharing sensitive data, and scanning content to avoid answers from AI agents that violate internal corporate guidelines. Creating an AI agent wrapper is also an effective way to enforce tenant control if you have an enterprise plan for a specific AI provider, such as ChatGPT Enterprise.
 
 This tutorial uses ChatGPT as an example AI agent.
 
@@ -15,13 +15,14 @@ This tutorial uses ChatGPT as an example AI agent.
 
 Make sure you have:
 
+- A [Cloudflare Zero Trust organization](/cloudflare-one/setup/).
 - An API key for your desired AI provider, such as an [OpenAI API key](https://platform.openai.com/api-keys) for ChatGPT.
 
 ## 1. Create an AI gateway
 
-First, create an AI gateway to control an AI app.
+First, create an AI gateway to control your AI app.
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **AI** > **AI Gateway**.
 3. Select **Create Gateway**.
 4. Name your gateway.
@@ -430,7 +431,7 @@ Now that you have full control over access to your AI agent wrapper, you can enf
 
 ### Apply Data Loss Prevention profiles
 
-You can use [Data Loss Prevention](/cloudflare-one/policies/data-loss-prevention/) to prevent your users from sending sensitive data to the AI agent.
+You can use [Data Loss Prevention (DLP)](/cloudflare-one/policies/data-loss-prevention/) to prevent your users from sending sensitive data to the AI agent.
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **DLP** > **DLP profiles**.
 2. Ensure that the [DLP profiles](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/) you want to enforce are properly configured.
@@ -442,6 +443,8 @@ You can use [Data Loss Prevention](/cloudflare-one/policies/data-loss-prevention
    | DLP Profile | in       | _AI DLP profile_         |       |        |
 
 4. Select **Create policy**.
+
+For more information on creating DLP policies, refer to [Scan HTTP traffic](/cloudflare-one/policies/data-loss-prevention/dlp-policies/).
 
 ### Execute in a clientless isolated browser
 
