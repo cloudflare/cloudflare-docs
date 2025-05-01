@@ -190,7 +190,6 @@ function requirePermission(permission, handler) {
   return async (request, context) => {
     // Check if user has the required permission
     const userPermissions = context.props.permissions || [];
-    const userPermissions = context.props.permissions || [];
     if (!userPermissions.includes(permission)) {
       return {
         content: [{ type: "text", text: `Permission denied: requires ${permission}` }],
