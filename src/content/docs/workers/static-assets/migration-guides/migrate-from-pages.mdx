@@ -1,6 +1,6 @@
 ---
 pcx_content_type: concept
-title: Migrate from Pages
+title: Migrate from Pages to Workers
 sidebar:
   order: 7
 head: []
@@ -193,7 +193,7 @@ Once the Worker script has been compiled, you can update your configuration file
 
 If you authored [a `_routes.json` file](/pages/functions/routing/#create-a-_routesjson-file) in your Pages project, or used [middleware](/pages/functions/middleware/) in Pages Functions, you must pay close attention to the configuration of your Worker script. Pages would default to serving your Pages Functions ahead of static assets and `_routes.json` and Pages Functions middleware allowed you to customize this behavior.
 
-Workers, on the other hand, will default to serving static assets ahead of your Worker script, unless you have configured [`assets.run_worker_first`](/workers/static-assets/routing/#invoking-worker-script-ahead-of-assets). This option is required if you are, for example, performing any authentication checks or logging requests before serving static assets.
+Workers, on the other hand, will default to serving static assets ahead of your Worker script, unless you have configured [`assets.run_worker_first`](/workers/static-assets/routing/worker-script/#run-your-worker-script-first). This option is required if you are, for example, performing any authentication checks or logging requests before serving static assets.
 
 <WranglerConfig>
 
@@ -400,7 +400,7 @@ This compatibility matrix compares the features of Workers and Pages. Unless oth
 | [Middleware](/workers/static-assets/binding/#run_worker_first)                                              | ✅ [^1] | ✅      |
 | [Redirects](/workers/static-assets/redirects/)                                                              | ✅      | ✅      |
 | [Smart Placement](/workers/configuration/smart-placement/)                                                  | ✅      | ✅      |
-| [Serve assets on a path](/workers/static-assets/routing/)                                                   | ✅      | ❌      |
+| [Serve assets on a path](/workers/static-assets/routing/advanced/serving-a-subdirectory/)                   | ✅      | ❌      |
 | **Observability**                                                                                           |         |         |
 | [Workers Logs](/workers/observability/)                                                                     | ✅      | ❌      |
 | [Logpush](/workers/observability/logs/logpush/)                                                             | ✅      | ❌      |

@@ -21,7 +21,7 @@ On running `vite build`, an output `wrangler.json` configuration file is generat
 The `assets.directory` field in this file is automatically populated with the path to your `client` build output.
 It is therefore not necessary to provide the `assets.directory` field in your input Worker configuration.
 
-The `assets` configuration should be used, however, if you wish to set [routing configuration](/workers/static-assets/routing/#routing-configuration) or enable the [assets binding](/workers/static-assets/binding/#binding).
+The `assets` configuration should be used, however, if you wish to set [routing configuration](/workers/static-assets/routing/) or enable the [assets binding](/workers/static-assets/binding/#binding).
 The following example configures the `not_found_handling` for a single-page application so that the fallback will always be the root `index.html` file.
 
 <WranglerConfig>

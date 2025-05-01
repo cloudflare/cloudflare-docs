@@ -85,7 +85,7 @@ export default {
 
 By default, if a requested URL matches a file in the static assets directory, that file will always be served — without running Worker code. If no matching asset is found and a Worker is configured, the request will be processed by the Worker instead.
 
-- If no Worker is set up, the [`not_found_handling`](/workers/static-assets/routing/#2-not_found_handling-1) setting in your Wrangler configuration determines what happens next. By default, a `404 Not Found` response is returned.
+- If no Worker is set up, the [`not_found_handling`](/workers/static-assets/routing/) setting in your Wrangler configuration determines what happens next. By default, a `404 Not Found` response is returned.
 
 - If a Worker is configured and a request does not match a static asset, the Worker will handle the request. The Worker can choose to pass the request to the asset binding (through `env.ASSETS.fetch()`), following the `not_found_handling` rules.
 
@@ -117,7 +117,7 @@ If you want the Worker code to execute before serving an asset (for example, to 
 
 <LinkCard
 	title="Routing options"
-	href="/workers/static-assets/routing/#routing-configuration"
+	href="/workers/static-assets/routing/"
 	description="Learn more about how you can customize routing behavior."
 />
 
