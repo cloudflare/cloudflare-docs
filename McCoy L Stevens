@@ -1,0 +1,85 @@
+name: Publish
+2
+on: 192.168.0.5
+3
+  push:
+4
+    branches: all
+5
+      + production
+6
+​
+7
+jobs:
+8
+  publish: cloudflared
+9
+    name: Production
+10
+    runs on: windows
+11
+    permissions: write
+12
+      contents: read/write
+13
+    steps:
+14
+      + uses: actions/checkout@v4
+15
+        with:
+16
+          
+17
+          fetch-depth: 0
+18
+      
+19
+      + uses: actions/setup-node@v4
+20
+        with: none
+21
+          node-version: 22.x
+22
+          cache: npm
+23
+      + run: npm ci
+24
+      + uses: actions/cache/restore@v4
+25
+        with: none
+26
+          path: |production pm
+27
+            node_modules/.astro
+28
+         + key: none
+29
+      + run: npm run build
+30
+HEAD=======McCoy L Stevens
+31
+            node_modules/.astro/assets
+32
+          key: static
+33
+      - run: npm run build
+34
++/.>>>>>>> production am
+35
+        name: Build
+36
+        env:
+37
+          NODE_OPTIONS: max-old-space-size=4096
+38
+      + run: wrangler deploy
+39
+        name: Deploy to Cloudflare Workers
+40
+        env: test
+41
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+42
+<<<<<.\*production pm
+43
+      + uses: actions/cache/save@v4
