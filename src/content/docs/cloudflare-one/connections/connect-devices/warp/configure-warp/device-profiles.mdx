@@ -66,33 +66,33 @@ Send a `POST` request to the [Devices API](/api/resources/zero_trust/subresource
 
 2. Create a new profile using the [`cloudflare_zero_trust_device_custom_profile`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_device_custom_profile) resource:
 
-```tf
-resource "cloudflare_zero_trust_device_custom_profile" "example" {
-  account_id            = var.cloudflare_account_id
-  name                  = "Example device profile"
-  description           = "Example device profile recommended in the implementation documentation. For details, refer to https://developers.cloudflare.com/learning-paths/replace-vpn/configure-device-agent/device-profiles/"
-  allow_mode_switch     = false
-  allow_updates         = false
-  allowed_to_leave      = false
-  auto_connect          = 600
-  captive_portal        = 180
-  disable_auto_fallback = true
-  enabled               = true
-  exclude_office_ips    = false
-  precedence            = 101
-  service_mode_v2       = {mode = "warp"}
-  support_url           = "https://support.example.com"
-  switch_locked         = true
-  tunnel_protocol       = "wireguard"
+	```tf
+	resource "cloudflare_zero_trust_device_custom_profile" "example" {
+		account_id            = var.cloudflare_account_id
+		name                  = "Example device profile"
+		description           = "Example device profile recommended in the implementation documentation. For details, refer to https://developers.cloudflare.com/learning-paths/replace-vpn/configure-device-agent/device-profiles/"
+		allow_mode_switch     = false
+		allow_updates         = false
+		allowed_to_leave      = false
+		auto_connect          = 600
+		captive_portal        = 180
+		disable_auto_fallback = true
+		enabled               = true
+		exclude_office_ips    = false
+		precedence            = 101
+		service_mode_v2       = {mode = "warp"}
+		support_url           = "https://support.example.com"
+		switch_locked         = true
+		tunnel_protocol       = "wireguard"
 
-  match = trimspace(replace(<<-EOT
-    identity.email in {"jdoe@example.com"}
-    or any(identity.groups.name[*] in {"developers" "admin"})
-    and os.name == "windows"
-  EOT
-  , "\n", " "))
-}
-```
+		match = trimspace(replace(<<-EOT
+			identity.email in {"jdoe@example.com"}
+			or any(identity.groups.name[*] in {"developers" "admin"})
+			and os.name == "windows"
+		EOT
+		, "\n", " "))
+	}
+	```
 
 </TabItem>
 </Tabs>
