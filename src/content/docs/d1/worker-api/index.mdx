@@ -41,10 +41,10 @@ const result = await env.MY_DB.prepare(
 ## Type conversion
 
 D1 automatically converts supported JavaScript (including TypeScript) types passed as parameters via the Workers Binding API to their associated D1 types <sup>1</sup>.
-This conversion is permanent and one-way only, meaning that when reading the written values back in your code you will get the converted values and not the originally inserted values.
+This conversion is permanent and one-way only. This means that when reading the written values back in your code, you will get the converted values rather than the originally inserted values.
 
 :::note
-We recommend using [STRICT tables](https://www.sqlite.org/stricttables.html) in your SQL schema to avoid issues with mismatched types actually stored in your database compared to what your schema defines.
+We recommend using [STRICT tables](https://www.sqlite.org/stricttables.html) in your SQL schema to avoid issues with mismatched types between values that are actually stored in your database compared to values defined by your schema.
 :::
 
 The type conversion during writes is as follows:
