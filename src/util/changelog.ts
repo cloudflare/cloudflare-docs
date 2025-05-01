@@ -16,6 +16,32 @@ import rehypeFilterElements from "~/plugins/rehype/filter-elements";
 import remarkGfm from "remark-gfm";
 import rehypeRemark from "rehype-remark";
 import remarkStringify from "remark-stringify";
+import { marked } from "marked";
+
+async function getWARPReleases(): Promise<Array<CollectionEntry<"changelog">>> {
+	const releases = await getCollection("warp-releases");
+
+	return releases.map((release) => {
+		const { platformName, version, releaseNotes, releaseDate } = release.data;
+		const title = `WARP client for ${platformName} (version ${version})`;
+
+		return {
+			id: release.id,
+			collection: "changelog",
+			body: releaseNotes,
+			data: {
+				title,
+				description: title,
+				hidden: false,
+				date: releaseDate,
+				products: [{ id: "zero-trust-warp", collection: "products" }],
+			},
+			rendered: {
+				html: marked.parse(releaseNotes, { async: false }),
+			},
+		};
+	});
+}
 
 export type GetChangelogsOptions = {
 	filter?: (entry: CollectionEntry<"changelog">) => boolean;
@@ -50,6 +76,8 @@ export async function getChangelogs({
 			};
 		}),
 	);
+
+	entries = entries.concat(await getWARPReleases());
 
 	if (filter) {
 		entries = entries.filter((e) => filter(e));
