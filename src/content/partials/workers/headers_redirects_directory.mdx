@@ -1,0 +1,9 @@
+---
+params:
+  - filename
+  - product
+---
+
+import { Markdown } from "~/components";
+
+If you are using a framework, you will often have a directory named `public/` or `static/`, and this usually contains deploy-ready assets, such as favicons, `robots.txt` files, and site manifests. These files get copied over to a final output directory during the build, so this is the perfect place to author your `_redirects` file. If you are not using a framework, the <code>{props.filename}</code> file can go directly into your {props.product === 'workers' ? <a href="/workers/static-assets/binding/#directory">static assets directory</a> : <a href="/pages/configuration/build-configuration/">build output directory</a>}.

@@ -12,7 +12,7 @@ The following variables will be passed into your GCP and Cloudflare configuratio
 
 2. Open the file in a text editor and copy and paste the following:
 
-   ```txt
+   ```tf
    # GCP variables
    variable "gcp_project_id" {
      description = "Google Cloud Platform (GCP) project ID"
@@ -53,7 +53,7 @@ The following variables will be passed into your GCP and Cloudflare configuratio
    }
 
    variable "cloudflare_token" {
-     description = "Cloudflare API token created at https://dash.cloudflare.com/profile/api-tokens"
+     description = "Cloudflare API token"
      type        = string
      sensitive   = true
    }

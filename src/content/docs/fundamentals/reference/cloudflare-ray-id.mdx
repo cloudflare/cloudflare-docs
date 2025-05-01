@@ -7,6 +7,10 @@ A **Cloudflare Ray ID** is an identifier given to every request that goes throug
 
 Ray IDs are particularly useful when evaluating Security Events for patterns or false positives or more generally understanding your application traffic.
 
+Ray IDs are added as a [request header, cf-ray](/fundamentals/reference/http-headers/#cf-ray), to the connection from Cloudflare to the origin web server. 
+As such the Ray IDs can be found using the Developer Tools in your browser or using curl with the `-v` option to show the headers.
+
+
 :::caution
 Ray IDs are not guaranteed to be unique for every request. In some situations, different requests may have the same Ray ID.
 :::

@@ -7,20 +7,20 @@ head: []
 description: Cloudflare Workers plan and platform limits.
 ---
 
-import { Render } from "~/components";
+import { Render, WranglerConfig } from "~/components";
 
 ## Account plan limits
 
-| Feature                                                                          | Workers Free | Workers Paid              |
-| -------------------------------------------------------------------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Feature                                                                          | Workers Free | Workers Paid |
+| -------------------------------------------------------------------------------- | ------------ | ------------ |
 | [Subrequests](#subrequests)                                                      | 50/request   | 1000/request |
-| [Simultaneous outgoing<br/>connections/request](#simultaneous-open-connections)  | 6            | 6                                                                                                                                                                                                                                                                  |
-| [Environment variables](#environment-variables)                                  | 64/Worker    | 128/Worker                                                                                                                                                                                                                                                         |
-| [Environment variable<br/>size](#environment-variables)                          | 5 KB         | 5 KB                                                                                                                                                                                                                                                               |
-| [Worker size](#worker-size)                                                      | 3 MB         | 10 MB                                                                                                                                                                                                                                                              |
-| [Worker startup time](#worker-startup-time)                                      | 400 ms       | 400 ms                                                                                                                                                                                                                                                             |
-| [Number of Workers](#number-of-workers)<sup>1</sup>                              | 100          | 500                                                                                                                                                                                                                                                                |
-| Number of [Cron Triggers](/workers/configuration/cron-triggers/)<br/>per account | 5            | 250                                                                                                                                                                                                                                                                |
+| [Simultaneous outgoing<br/>connections/request](#simultaneous-open-connections)  | 6            | 6            |
+| [Environment variables](#environment-variables)                                  | 64/Worker    | 128/Worker   |
+| [Environment variable<br/>size](#environment-variables)                          | 5 KB         | 5 KB         |
+| [Worker size](#worker-size)                                                      | 3 MB         | 10 MB        |
+| [Worker startup time](#worker-startup-time)                                      | 400 ms       | 400 ms       |
+| [Number of Workers](#number-of-workers)<sup>1</sup>                              | 100          | 500          |
+| Number of [Cron Triggers](/workers/configuration/cron-triggers/)<br/>per account | 5            | 250          |
 
 <sup>1</sup> If you are running into limits, your project may be a good fit for
 [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/).
@@ -58,11 +58,11 @@ Cloudflare does not enforce response limits on response body sizes, but cache li
 
 ## Worker limits
 
-| Feature                  | Workers Free                               | Workers Paid     |
-| ------------------------ | ------------------------------------------ | ---------------- |
-| [Request](#request)      | 100,000 requests/day<br/>1000 requests/min | No limit         |
-| [Worker memory](#memory) | 128 MB                                     | 128 MB           |
-| [CPU time](#cpu-time)    | 10 ms                                      | 30 s HTTP request <br/> 15 min [Cron Trigger](/workers/configuration/cron-triggers/)    	|
+| Feature                  | Workers Free                               | Workers Paid                                                                                                                                                                                                                              |
+| ------------------------ | ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Request](#request)      | 100,000 requests/day<br/>1000 requests/min | No limit                                                                                                                                                                                                                                  |
+| [Worker memory](#memory) | 128 MB                                     | 128 MB                                                                                                                                                                                                                                    |
+| [CPU time](#cpu-time)    | 10 ms                                      | 5 min HTTP request <br/> 15 min [Cron Trigger](/workers/configuration/cron-triggers/)                                                                                                                                                     |
 | [Duration](#duration)    | No limit                                   | No limit for Workers. <br/>15 min duration limit for [Cron Triggers](/workers/configuration/cron-triggers/), [Durable Object Alarms](/durable-objects/api/alarms/) and [Queue Consumers](/queues/configuration/javascript-apis/#consumer) |
 
 ### Duration
@@ -76,13 +76,37 @@ Cloudflare updates the Workers runtime a few times per week. When this happens, 
 
 ### CPU time
 
-CPU time is the amount of time the CPU actually spends doing work, during a given request. Most Workers requests consume less than a millisecond of CPU time. It is rare to find normally operating Workers that exceed the CPU time limit.
+CPU time is the amount of time the CPU actually spends doing work during a given request.
+If a Worker's request makes a sub-request and waits for that request to come back before
+doing additional work, this time spent waiting **is not** counted towards CPU time.
+
+**Most Workers requests consume less than 1-2 milliseconds of CPU time**, but you can increase the maximum CPU time from the default 30 seconds to 5 minutes (300,000 milliseconds) if you have CPU-bound tasks, such as large JSON payloads that need to be serialized, cryptographic key generation, or other data processing tasks.
 
 <Render file="isolate-cpu-flexibility" />
 
-Using DevTools locally can help identify CPU intensive portions of your code. See the [CPU profiling with DevTools documentation](/workers/observability/dev-tools/cpu-usage/) to learn more.
+To understand your CPU usage:
 
-You can also set a custom limit on the amount of CPU time that can be used during each invocation of your Worker. To do so, navigate to the Workers section in the Cloudflare dashboard. Select the specific Worker you wish to modify, then click on the "Settings" tab where you can adjust the CPU time limit.
+- CPU time and Wall time are surfaced in the [invocation log](/workers/observability/logs/workers-logs/#invocation-logs) within Workers Logs.
+- For Tail Workers, CPU time and Wall time are surfaced at the top level of the [Workers Trace Events object](/logs/reference/log-fields/account/workers_trace_events/).
+- DevTools locally can help identify CPU intensive portions of your code. See the [CPU profiling with DevTools documentation](/workers/observability/dev-tools/cpu-usage/).
+
+You can also set a [custom limit](/workers/wrangler/configuration/#limits) on the amount of CPU time that can be used during each invocation of your Worker.
+
+<WranglerConfig>
+
+```jsonc
+{
+	// ...rest of your configuration...
+	"limits": {
+		"cpu_ms": 300000, // default is 30000 (30 seconds)
+	},
+	// ...rest of your configuration...
+}
+```
+
+</WranglerConfig>
+
+You can also customize this in the [Workers dashboard](https://dash.cloudflare.com/?to=/:account/workers). Select the specific Worker you wish to modify -> click on the "Settings" tab -> adjust the CPU time limit.
 
 :::note
 
@@ -93,7 +117,7 @@ Scheduled Workers ([Cron Triggers](/workers/configuration/cron-triggers/)) have 
 
 ## Cache API limits
 
-| Feature                                  | Workers Free | Workers Paid
+| Feature                                  | Workers Free | Workers Paid |
 | ---------------------------------------- | ------------ | ------------ |
 | [Maximum object size](#cache-api-limits) | 512 MB       | 512 MB       |
 | [Calls/request](#cache-api-limits)       | 50           | 1,000        |
@@ -272,6 +296,8 @@ You can measure your Worker's startup time by deploying it to Cloudflare using [
 
 If you are having trouble staying under this limit, consider [profiling using DevTools](/workers/observability/dev-tools/) locally to learn how to optimize your code.
 
+When you attempt to deploy a Worker using the [Wrangler CLI](/workers/wrangler/), but your deployment is rejected because your Worker exceeds the maximum startup time, Wrangler will automatically generate a CPU profile that you can import into Chrome DevTools or open directly in VSCode. You can use this to learn what code in your Worker uses large amounts of CPU time at startup. Refer to [`wrangler check startup`](/workers/wrangler/commands/#startup) for more details.
+
 <Render file="limits_increase" />
 
 ---
@@ -289,6 +315,10 @@ If you need more than 500 Workers, consider using [Workers for Platforms](/cloud
 ### Number of routes per zone
 
 Each zone has a limit of 1,000 [routes](/workers/configuration/routing/routes/). If you require more than 1,000 routes on your zone, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) or request an increase to this limit.
+
+### Number of routes per zone when using `wrangler dev --remote`
+
+When you run a [remote development](/workers/local-development/#develop-using-remote-resources-and-bindings) session using the `--remote` flag, a limit of 50 [routes](/workers/configuration/routing/routes/) per zone is enforced. The Quick Editor in the Cloudflare Dashboard also uses `wrangler dev --remote`, so any changes made there are subject to the same 50-route limit. If your zone has more than 50 routes, you **will not be able to run a remote session**. To fix this, you must remove routes until you are under the 50-route limit.
 
 ### Number of custom domains per zone
 
@@ -308,7 +338,7 @@ When using Image Resizing with Workers, refer to [Image Resizing documentation](
 
 ## Log size
 
-You can emit a maximum of 128 KB of data (across `console.log()` statements, exceptions, request metadata and headers) to the console for a single request. After you exceed this limit, further context associated with the request will not be recorded in logs, appear when tailing logs of your Worker, or within a [Tail Worker](/workers/observability/logs/tail-workers/).
+You can emit a maximum of 256 KB of data (across `console.log()` statements, exceptions, request metadata and headers) to the console for a single request. After you exceed this limit, further context associated with the request will not be recorded in logs, appear when tailing logs of your Worker, or within a [Tail Worker](/workers/observability/logs/tail-workers/).
 
 Refer to the [Workers Trace Event Logpush documentation](/workers/observability/logs/logpush/#limits) for information on the maximum size of fields sent to logpush destinations.
 
@@ -323,10 +353,11 @@ Unbound and Bundled plans have been deprecated and are no longer available for n
 If your Worker is on an Unbound plan, your limits are exactly the same as the Workers Paid plan.
 
 If your Worker is on a Bundled plan, your limits are the same as the Workers Paid plan except for the following differences:
-* Your limit for [subrequests](/workers/platform/limits/#subrequests) is 50/request
-* Your limit for [CPU time](/workers/platform/limits/#cpu-time) is 50ms for HTTP requests and 50ms for [Cron Triggers](/workers/configuration/cron-triggers/)
-* You have no [Duration](/workers/platform/limits/#duration) limits for [Cron Triggers](/workers/configuration/cron-triggers/), [Durable Object alarms](/durable-objects/api/alarms/), or [Queue consumers](/queues/configuration/javascript-apis/#consumer)
-* Your Cache API limits for calls/requests is 50
+
+- Your limit for [subrequests](/workers/platform/limits/#subrequests) is 50/request
+- Your limit for [CPU time](/workers/platform/limits/#cpu-time) is 50ms for HTTP requests and 50ms for [Cron Triggers](/workers/configuration/cron-triggers/)
+- You have no [Duration](/workers/platform/limits/#duration) limits for [Cron Triggers](/workers/configuration/cron-triggers/), [Durable Object alarms](/durable-objects/api/alarms/), or [Queue consumers](/queues/configuration/javascript-apis/#consumer)
+- Your Cache API limits for calls/requests is 50
 
 ---
 

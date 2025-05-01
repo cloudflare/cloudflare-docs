@@ -8,7 +8,6 @@ sidebar:
 import { Render } from "~/components";
 
 :::note
-
 Only available on Enterprise plans.
 :::
 
@@ -19,6 +18,10 @@ Egress policies allow you to control which dedicated egress IP is used and when,
 Cloudflare does not publish WARP egress IP ranges. WARP egress IPs are not documented at [Cloudflare's IP Ranges](https://cloudflare.com/ips). To obtain a dedicated WARP egress IP, contact your account team.
 
 <Render file="gateway/terraform-precedence-warning" product="cloudflare-one" />
+
+## Load balancing
+
+Gateway traffic that does not match an egress policy will egress from the closest Cloudflare data center with a default Gateway egress IP. If there are two data centers of equal distance from the user, Gateway will split the traffic between the two data centers, and the load balancer will retain the same user selection and egress IP regardless of data center.
 
 ## Force IP version
 

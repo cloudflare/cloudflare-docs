@@ -124,7 +124,7 @@ Asset purges are free operations.
 
 Cache Reserve will be instantly purged along with edge cache when you send a purge by URL request.
 
-Other purge methods, such as purge by tag, host, prefix, or purge everything will force an attempt to revalidate on the subsequent request for the Cache Reserve asset. Note that assets purged this way will still incur storage costs until their retention TTL expires.
+Other purge methods, such as purge by tag, host, prefix, or purge everything will force an attempt to [revalidate](/cache/concepts/cache-responses/#revalidated) on the subsequent request for the Cache Reserve asset. Note that assets purged this way will still incur storage costs until their retention TTL expires.
 
 :::note
 Note this differs from the standard CDN's purge by tag, host, or prefix features which force a cache miss, requiring the origin to deliver the asset in full.

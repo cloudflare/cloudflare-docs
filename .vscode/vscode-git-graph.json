@@ -1,0 +1,17 @@
+{
+    "name": "C",
+    "pullRequestConfig": {
+        "provider": "github",
+        "hostRootUrl": "https://github.com",
+        "sourceRemote": "origin",
+        "sourceOwner": "you-personal-account",
+        "sourceRepo": "cloudflare-docs",
+        "destRemote": "upstream",
+        "destOwner": "cloudflare",
+        "destRepo": "cloudflare-docs",
+        "destProjectId": "",
+        "destBranch": "Add-api-references",
+        "custom": null
+    },
+    "exportedAt": 1745329248618
+}

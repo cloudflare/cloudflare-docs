@@ -1,8 +1,8 @@
 ---
-{}
+inputParameters: fileSizeLimitMB
 ---
 
 Gateway cannot scan requests containing the following files:
 
-- Files larger than 15 MB
+- Files larger than {props.fileSizeLimitMB} MB
 - PGP encrypted files

@@ -1,0 +1,67 @@
+name: Update api-schemas pinned commit
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+jobs:
+  check-and-update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout docs repository
+        uses: actions/checkout@v4
+
+      - name: Get latest api-schemas commit
+        id: get-commit
+        run: |
+          LATEST_COMMIT=$(curl -s -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/cloudflare/api-schemas/commits/main | \
+            jq -r '.sha')
+          echo "latest_commit=$LATEST_COMMIT" >> $GITHUB_OUTPUT
+
+      - name: Check current commit reference
+        id: check-current
+        run: |
+          CURRENT_COMMIT=$(grep 'const COMMIT = ' src/util/api.ts | sed 's/.*"\(.*\)".*/\1/')
+          echo "current_commit=$CURRENT_COMMIT" >> $GITHUB_OUTPUT
+
+      - name: Create PR if needed
+        if: steps.get-commit.outputs.latest_commit != steps.check-current.outputs.current_commit
+        run: |
+          # Set up git config
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          NEW_COMMIT="${{ steps.get-commit.outputs.latest_commit }}"
+          BRANCH_NAME="update-api-schemas-$NEW_COMMIT"
+
+          # Check if PR already exists
+          EXISTING_PR=$(gh pr list --head "$BRANCH_NAME" --json number --jq '.[0].number')
+          if [ -n "$EXISTING_PR" ]; then
+            echo "PR already exists for branch $BRANCH_NAME. Skipping PR creation."
+            exit 0
+          fi
+
+          # Create a new branch
+          git checkout -b $BRANCH_NAME
+
+          # Update the commit reference
+          sed -i "s/const COMMIT = \".*\"/const COMMIT = \"$NEW_COMMIT\"/" src/util/api.ts
+
+          # Commit and push changes
+          git add src/util/api.ts
+          git commit -m "[Docs Site] Update pinned api-schemas commit to $NEW_COMMIT"
+          git push origin $BRANCH_NAME
+
+          # Create pull request
+          gh pr create \
+            --title "[Docs Site] Update pinned api-schemas commit" \
+            --body "This PR updates the api-schemas commit reference to the latest version ($NEW_COMMIT)." \
+            --base production \
+            --head $BRANCH_NAME
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

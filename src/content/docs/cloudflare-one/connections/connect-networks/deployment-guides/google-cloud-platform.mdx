@@ -6,6 +6,7 @@ sidebar:
 ---
 
 import { Render } from "~/components";
+import SubtractIPCalculator from "~/components/SubtractIPCalculator.tsx";
 
 This guide covers how to connect a Google Cloud Project (GCP) virtual machine to Cloudflare using our lightweight connector, `cloudflared`.
 
@@ -77,7 +78,19 @@ To complete the following procedure, you will need to:
 To configure a private network route for your Cloudflare Tunnel:
 
 1. In the **Private Network** tab, enter the **Internal IP** of your GCP VM instance (for example, `10.0.0.2`). You can expand the IP range later if necessary.
-2. In your [Split Tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route), make sure the internal IP is routing through WARP. For example, if you are using Split Tunnels in Exclude mode, delete `10.0.0.0/8`. We recommend re-adding the IPs that are not explicitly used by your GCP VM -- you can use [this calculator](https://www.procustodibus.com/blog/2021/03/wireguard-allowedips-calculator/) to determine which IP addresses to re-add.
+2. In your [Split Tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route), make sure the internal IP is routing through WARP. For example, if you are using Split Tunnels in Exclude mode, delete `10.0.0.0/8`. We recommend re-adding the IPs that are not explicitly used by your GCP VM.
+
+		To determine which IP addresses to re-add, subtract your GCP instance IPs from `10.0.0.0/8`:
+
+		<SubtractIPCalculator
+			client:load
+			defaults={{
+				base: "10.0.0.0/8",
+				exclude: ["10.0.0.2", "10.0.16.0/24"]
+			}}
+		/>
+
+		Add the results back to your Split Tunnel Exclude mode list.
 3. To test on a user device:
 
    1. [Log in to the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/).

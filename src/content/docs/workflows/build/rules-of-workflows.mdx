@@ -380,7 +380,7 @@ export class MyWorkflow extends WorkflowEntrypoint {
 
 ### Instance IDs are unique
 
-Workflow [instance IDs](/workflows/build/workers-api/#workflowinstance) are unique per Workflow. The ID is the unique identifier that associates logs, metrics, state and status of a run to a specific an instance, even after completion. Allowing ID re-use would make it hard to understand if a Workflow instance ID referred to an instance that run yesterday, last week or today.
+Workflow [instance IDs](/workflows/build/workers-api/#workflowinstance) are unique per Workflow. The ID is the unique identifier that associates logs, metrics, state and status of a run to a specific instance, even after completion. Allowing ID re-use would make it hard to understand if a Workflow instance ID referred to an instance that run yesterday, last week or today.
 
 It would also present a problem if you wanted to run multiple different Workflow instances with different [input parameters](/workflows/build/events-and-parameters/) for the same user ID, as you would immediately need to determine a new ID mapping.
 
@@ -448,4 +448,33 @@ export class MyWorkflow extends WorkflowEntrypoint {
 	}
 }
 ```
+</TypeScriptExample>
+
+### Batch multiple Workflow invocations
+
+When creating multiple Workflow instances, use the [`createBatch`](/workflows/build/workers-api/#createBatch) method to batch the invocations together. This allows you to create multiple Workflow instances in a single request, which will reduce the number of requests made to the Workflows API and increase the number of instances you can create per minute.
+
+<TypeScriptExample filename="index.ts">
+
+```ts
+export default {
+  async fetch(req: Request, env: Env): Promise<Response> {
+		let instances = [{"id": "user1", "params": {"name": "John"}}, {"id": "user2", "params": {"name": "Jane"}}, {"id": "user3", "params": {"name": "Alice"}}, {"id": "user4", "params": {"name": "Bob"}}];
+
+		// 🔴 Bad: Create them one by one, which is more likely to hit creation rate limits.
+		for (let instance of instances) {
+			await env.MY_WORKFLOW.create({
+				id: instance.id,
+				params: instance.params
+			});
+		}
+
+    // ✅ Good: Batch calls together
+    // This improves throughput.
+    let instances = await env.MY_WORKFLOW.createBatch(instances);
+    return Response.json({ instances })
+  },
+};
+```
+
 </TypeScriptExample>

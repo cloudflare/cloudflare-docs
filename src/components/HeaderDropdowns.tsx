@@ -10,14 +10,16 @@ import {
 import { useState } from "react";
 import { PiCaretDownBold } from "react-icons/pi";
 
+const links = [
+	{ label: "Docs Directory", href: "/products/" },
+	{
+		label: "APIs",
+		href: "https://developers.cloudflare.com/api/",
+	},
+	{ label: "SDKs", href: "/fundamentals/api/reference/sdks/" },
+];
+
 const dropdowns = Object.entries({
-	"API & SDKs": [
-		{
-			label: "API documentation",
-			href: "https://developers.cloudflare.com/api/",
-		},
-		{ label: "SDKs", href: "/fundamentals/api/reference/sdks/" },
-	],
 	Help: [
 		{ label: "Help center", href: "https://support.cloudflare.com/" },
 		{ label: "Cloudflare status", href: "https://www.cloudflarestatus.com/" },
@@ -81,12 +83,15 @@ function Dropdown({ dropdown }: { dropdown: (typeof dropdowns)[number] }) {
 export default function HeaderDropdownsComponent() {
 	return (
 		<div className="flex gap-2 text-nowrap leading-6">
-			<a
-				href="/products/"
-				className="flex items-center justify-center rounded p-2 font-medium text-black no-underline hover:bg-cl1-white hover:shadow-md dark:hover:bg-cl1-gray-0"
-			>
-				Docs Directory
-			</a>
+			{links.map(({ label, href }) => (
+				<a
+					key={href}
+					href={href}
+					className="flex items-center justify-center rounded p-2 font-medium text-black no-underline hover:bg-cl1-white hover:shadow-md dark:hover:bg-cl1-gray-0"
+				>
+					{label}
+				</a>
+			))}
 			{dropdowns.map((dropdown) => (
 				<Dropdown key={dropdown[0]} dropdown={dropdown} />
 			))}

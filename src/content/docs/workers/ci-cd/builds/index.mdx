@@ -8,20 +8,30 @@ sidebar:
       text: Beta
 ---
 
-Workers Builds allows you to connect an _existing Worker_ to its GitHub or GitLab repository, enabling automated builds and deployments for your project on push.
-
-Support for creating a _new Worker_ from importing a Git repository is coming soon.
+The Cloudflare [Git integration](/workers/ci-cd/builds/git-integration/) lets you connect a new or existing Worker to a GitHub or GitLab repository, enabling automated builds and deployments for your Worker on push.
 
 ## Get started
 
-If you have an existing Worker and have pushed the project to a Git repository, you can now connect the repository to your Worker, enabling automatic builds and deployments.
+### Connect a new Worker
 
-To set up builds for your Worker:
+To create a new Worker and connect it to a GitHub or GitLab repository:
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Go to **Workers & Pages**.
+3. Select **Create**.
+4. Under **Import a repository**, select a **Git account**.
+5. Select the repository you want to import from the list. You can also use the search bar to narrow the results.
+6. Configure your project and select **Save and Deploy**.
+7. Preview your Worker at its provided [`workers.dev`](/workers/configuration/routing/workers-dev/) subdomain.
 
-1. Select your Worker in the [Workers & Pages Dashboard](https://dash.cloudflare.com) and navigate to **Settings > Build**.
-2. Select the Git provider you would like to connect to or select **Connect** and follow the prompts to install the Cloudflare [Git integration](/workers/ci-cd/builds/git-integration/) on your Git account.
-3. Configure your [build settings](/workers/ci-cd/builds/configuration/) by selecting your desired Git repository, branch, and configure commands for your build.
-4. Push a commit to your Git repository to trigger a build and deploy for your Worker.
+### Connect an existing Worker
+
+To connect an existing Worker to a GitHub or GitLab repository:
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Go to **Workers & Pages**.
+3. Select the Worker you want to connect to a repository.
+4. Select **Settings** and then **Builds**.
+5. Select **Connect** and follow the prompts to connect the repository to your Worker and configure your [build settings](/workers/ci-cd/builds/configuration/).
+6. Push a commit to your Git repository to trigger a build and deploy to your Worker.
 
 :::caution
 
@@ -43,6 +53,13 @@ If a build succeeds, it is uploaded as a version. If the build is configured to 
 
 ## Disconnecting builds
 
-To disable automatic builds and deployments from your Git repository, go to **Settings** > **Builds** and select **Disconnect** under **Git Repositories**. If you want to switch to a different repository for your Worker, you must first disable builds, then reconnect to select the new repository.
+To disconnect a Worker from a GitHub or GitLab repository:
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Go to **Workers & Pages**.
+3. Select the Worker you want to disconnect from a repository.
+4. Select **Settings** and then **Builds**.
+5. Select **Disconnect**.
+
+If you want to switch to a different repository for your Worker, you must first disable builds, then reconnect to select the new repository.
 
 To disable automatic deployments while still allowing builds to run automatically and save as [versions](/workers/configuration/versions-and-deployments/) (without promoting them to an active deployment), update your deploy command to: `npx wrangler versions upload`.

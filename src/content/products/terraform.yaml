@@ -3,7 +3,7 @@ name: Terraform
 product:
   title: Terraform
   url: /terraform/
-  group: Cloudflare essentials
+  group: Core platform
 
 meta:
   title: Cloudflare Terraform docs

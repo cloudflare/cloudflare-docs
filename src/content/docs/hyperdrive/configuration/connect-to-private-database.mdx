@@ -28,12 +28,12 @@ The Cloudflare Tunnel will establish an outbound bidirectional connection from y
 
 :::caution[Warning]
 
-If your organization also uses [Super Bot Fight Mode](/bots/get-started/pro/), keep **Definitely Automated** set to **Allow**. Otherwise, tunnels might fail with a `websocket: bad handshake` error.
+If your organization also uses [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/), keep **Definitely Automated** set to **Allow**. Otherwise, tunnels might fail with a `websocket: bad handshake` error.
 :::
 
 ## Prerequisites
 
-- A database in your private network, [configured to use TLS/SSL](/hyperdrive/configuration/connect-to-postgres/#supported-tls-ssl-modes).
+- A database in your private network, [configured to use TLS/SSL](/hyperdrive/examples/connect-to-postgres/#supported-tls-ssl-modes).
 - A hostname on your Cloudflare account, which will be used to route requests to your database.
 
 ## 1. Create a tunnel in your private network
@@ -190,7 +190,12 @@ To test your Hyperdrive configuration to the database using Cloudflare Tunnel an
 
 <Render file="create-hyperdrive-binding" product="hyperdrive" />
 
-### Query your database using Postgres.js
+### Query your database
+
+Validate that you can connect to your database from Workers and make queries.
+
+<Tabs>
+<TabItem label="PostgreSQL">
 
 Use Postgres.js to send a test query to validate that the connection has been successful.
 
@@ -203,6 +208,24 @@ npx wrangler deploy
 ```
 
 If you successfully receive the list of `pg_tables` from your database when you access your deployed Worker, your Hyperdrive has now been configured to securely connect to a private database using [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) and [Cloudflare Access](/cloudflare-one/policies/access/).
+
+</TabItem>
+<TabItem label="MySQL">
+
+Use [mysql2](https://github.com/sidorares/node-mysql2) to send a test query to validate that the connection has been successful.
+
+<Render file="use-mysql2-to-make-query" product="hyperdrive" />
+
+Now, deploy your Worker:
+
+```bash
+npx wrangler deploy
+```
+
+If you successfully receive the list of tables from your database when you access your deployed Worker, your Hyperdrive has now been configured to securely connect to a private database using [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) and [Cloudflare Access](/cloudflare-one/policies/access/).
+
+</TabItem>
+</Tabs>
 
 ## Troubleshooting
 

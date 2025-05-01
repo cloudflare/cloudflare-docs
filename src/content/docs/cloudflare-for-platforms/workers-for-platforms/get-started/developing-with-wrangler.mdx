@@ -27,7 +27,7 @@ Support for Workers for Platforms with `wrangler dev` in local mode is experimen
 	product="workers"
 	params={{
 		category: "hello-world",
-		type: "Hello World Worker",
+		type: "Worker only",
 		lang: "JavaScript",
 	}}
 />
@@ -77,7 +77,7 @@ dispatch_namespace = "my-namespace"
 	product="workers"
 	params={{
 		category: "hello-world",
-		type: "Hello World Worker",
+		type: "Worker only",
 		lang: "JavaScript",
 	}}
 />
@@ -111,8 +111,6 @@ export default {
 
 Update the Wrangler file for dispatch-worker and add the dispatch namespace binding:
 
-
-
 <WranglerConfig>
 
 ```toml
@@ -139,7 +137,7 @@ outbound = { service = "outbound-worker", parameters = ["paramCustomerName"] }
 	product="workers"
 	params={{
 		category: "hello-world",
-		type: "Hello World Worker",
+		type: "Worker only",
 		lang: "JavaScript",
 	}}
 />

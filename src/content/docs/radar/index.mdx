@@ -8,31 +8,115 @@ head:
     content: Overview
 ---
 
-import { Description, Feature, Plan } from "~/components"
+import {
+	CardGrid,
+	Description,
+	Feature,
+	LinkButton,
+	LinkTitleCard,
+	Plan,
+} from "~/components";
 
 <Description>
-
 Get access to Cloudflare's data on global Internet traffic.
 </Description>
 
-<Plan type="all" />
+<Plan type="all"/>
 
-[Cloudflare Radar](https://radar.cloudflare.com) is a hub that showcases global Internet traffic, attacks, and technology trends and insights. It is powered by data from Cloudflare’s global network, as well as aggregated and [anonymized](/1.1.1.1/privacy/public-dns-resolver/) data from Cloudflare’s [1.1.1.1 public DNS resolver](/1.1.1.1/).
+[Cloudflare Radar](https://radar.cloudflare.com) is a hub that showcases global Internet traffic, attacks, and technology trends and insights. It is powered by data from [Cloudflare’s global network](https://www.cloudflare.com/network/), as well as aggregated and [anonymized data](/1.1.1.1/privacy/public-dns-resolver/) from Cloudflare’s [1.1.1.1 public DNS resolver](/1.1.1.1/).
 
-Using Radar's API you can access Cloudflare's data on global Internet traffic.
-
-Radar's API is free, allowing academics, data sleuths and other web enthusiasts to investigate Internet usage across the globe.
+Using [Radar's API](/api/resources/radar/) you can access Cloudflare's data on global Internet traffic.
+Radar's API is free, allowing academics, technology professionals, and other web enthusiasts to investigate Internet usage across the globe.
 
 Data available via Radar API endpoints is made available under the [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) license.
 
-***
+<LinkButton
+	variant="primary"
+	href="/radar/get-started/"
+>
+	Get started
+</LinkButton>
+
+<LinkButton
+	variant="secondary"
+	href="https://radar.cloudflare.com/"
+>
+	Radar website
+</LinkButton>
+
+---
 
 ## Features
 
-<Feature header="Make your first API request" href="/radar/get-started/first-request/" cta="Make your first API request">
-Start learning how to use Radar's API by making your first request.
+<Feature
+	header="Make your first API request"
+	href="/radar/get-started/first-request/"
+	cta="Make your first API request"
+>
+	Start learning how to use Radar's API by making your first request.
 </Feature>
 
-<Feature header="Compare data" href="/radar/get-started/making-comparisons/" cta="Compare data">
-What to know before making comparisons between locations, [autonomous systems](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-an-autonomous-system/) and more.
+<Feature
+	header="Compare data"
+	href="/radar/get-started/making-comparisons/"
+	cta="Compare data"
+>
+	What to know before making comparisons between locations, [autonomous
+	systems](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-an-autonomous-system/), and more.
 </Feature>
+
+<Feature
+	header="URL Scanner"
+	href="/radar/investigate/url-scanner/"
+	cta="Use URL Scanner"
+>
+	Understand the security, performance, technology, and network details of a URL with a publicly shareable report.
+</Feature>
+
+---
+
+## More resources
+
+<CardGrid>
+
+	<LinkTitleCard
+		title="Investigate"
+		href="/radar/investigate/"
+		icon="document"
+	>
+		Explore the diverse data available in Cloudflare Radar, including NetFlows, HTTP requests, DNS queries, and much more.
+	</LinkTitleCard>
+
+	<LinkTitleCard
+		title="@CloudflareRadar"
+		href="https://x.com/cloudflareradar"
+		icon="x.com"
+	>
+		Follow @CloudflareRadar on X to learn about Internet trends, as seen by the Cloudflare global network.
+	</LinkTitleCard>
+
+	<LinkTitleCard
+		title="@cloudflareradar"
+		href="https://noc.social/@cloudflareradar"
+		icon="mastodon"
+	>
+		Follow @cloudflareradar on Mastodon to learn about Internet trends, as seen by the Cloudflare global network.
+	</LinkTitleCard>
+
+	<LinkTitleCard
+		title="@radar.cloudflare.com"
+		href="https://bsky.app/profile/radar.cloudflare.com"
+		icon="blueSky"
+	>
+		Follow @radar.cloudflare.com on Bluesky to learn about Internet trends, as seen by the Cloudflare global network.
+	</LinkTitleCard>
+
+	<LinkTitleCard
+		title="Cloudflare blog"
+		href="https://blog.cloudflare.com/tag/cloudflare-radar/"
+		icon="open-book"
+	>
+		Read articles about the latest trends and updates on Cloudflare Radar.
+	</LinkTitleCard>
+
+</CardGrid>

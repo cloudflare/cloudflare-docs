@@ -3,7 +3,7 @@ name: Google tag in first-party mode
 product:
   title: Google tag in first-party mode
   url: /google-tag-first-party-mode/
-  group: Performance
+  group: Application performance
   show: false
 
 meta:

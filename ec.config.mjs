@@ -17,6 +17,8 @@ export default {
 	],
 	themes: [darkTheme, lightTheme],
 	styleOverrides: {
+		borderWidth: "1px",
+		borderRadius: "0.25rem",
 		textMarkers: {
 			defaultLuminance: ["32%", "88%"],
 		},

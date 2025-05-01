@@ -102,7 +102,7 @@ Create your dynamic dispatch Worker. In this example, the dispatch Worker is cal
 	product="workers"
 	params={{
 		category: "hello-world",
-		type: "Hello World Worker",
+		type: "Worker only",
 		lang: "JavaScript",
 	}}
 />
@@ -135,6 +135,7 @@ export default {
 	},
 };
 ```
+
 This example shows a simple dynamic dispatch Worker that routes all requests to a single user Worker. For more advanced routing patterns, you could route based on hostname, path, custom metadata, or other request properties.
 
 Deploy your dynamic dispatch Worker:

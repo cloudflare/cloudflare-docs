@@ -26,7 +26,7 @@ The rule below is being created on the `enterprise` plan, so we are no longer li
 * The rule will also limit the number of requests to `/create-account`, but will only trigger against `POST` requests. In the basic example, even requests with the `GET` method will increment the counter.
 * Requests that do not have a [client certificate (mTLS)](/ssl/client-certificates/), will increment the counter.
 * Requests will be counted using the [IP with NAT support](/waf/rate-limiting-rules/parameters/#use-cases-of-ip-with-nat-support) characteristic.
-* Within a 1 minute period, for each counted entity, if the number of requests exceeds 10, then the user will be presented with a [`Managed Challenge`](/waf/reference/cloudflare-challenges/#managed-challenge-recommended) for a custom duration of 1 day.
+* Within a 1 minute period, for each counted entity, if the number of requests exceeds 10, then the user will be presented with a [`Managed Challenge`](/fundamentals/security/cloudflare-challenges/#managed-challenge-recommended) for a custom duration of 1 day.
 
 ![rate-limiting-advanced-config-1](~/assets/images/waf/rate-limiting-rules/rl-advanced-config.png)
 

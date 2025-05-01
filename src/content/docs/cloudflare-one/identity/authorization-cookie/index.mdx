@@ -1,6 +1,7 @@
 ---
 pcx_content_type: concept
 title: Authorization cookie
+description: Learn how Cloudflare Access uses CF_Authorization cookies to secure self-hosted web applications.
 sidebar:
   order: 12
 
@@ -9,7 +10,6 @@ sidebar:
 import { Details, GlossaryTooltip } from "~/components"
 
 When you protect a site with Cloudflare Access, Cloudflare checks every HTTP request bound for that site to ensure that the request has a valid `CF_Authorization` cookie. If a request does not include the cookie, Access will block the request.
-
 ## Access JWTs
 
 The `CF_Authorization` cookie contains the user's identity in the form of a JSON Web Token (JWT). Cloudflare securely creates these tokens through the OAUTH or SAML integration between Cloudflare Access and the configured identity provider.
@@ -59,7 +59,7 @@ The selector options are:
 * **Lax** - Cookies are allowed to be sent with top-level navigations and will be sent along with GET requests initiated by third party websites.
 * **Strict** - Cookies will only be sent in a first-party context and not be sent along with requests initiated by third party websites.
 
-Refer to the [Mozilla documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite) for more information.
+Refer to the [Mozilla documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie#samesitesamesite-value) for more information.
 
 #### When not to use SameSite
 

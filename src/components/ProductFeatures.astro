@@ -56,21 +56,23 @@ const entries = Object.entries(plan);
 							)}
 							{additional_descriptions && (
 								<>
-									{value.lite ||
-										(value.free && (
+									{value.lite ? (
+										<li>
+											<strong>Lite: </strong>
+											<Fragment
+												set:html={marked.parseInline(value.lite.toString())}
+											/>
+										</li>
+									) : (
+										value.free && (
 											<li>
 												<strong>Lite: </strong>
-												{value.lite ? (
-													<Fragment
-														set:html={marked.parseInline(value.lite.toString())}
-													/>
-												) : (
-													<Fragment
-														set:html={marked.parseInline(value.free.toString())}
-													/>
-												)}
+												<Fragment
+													set:html={marked.parseInline(value.free.toString())}
+												/>
 											</li>
-										))}
+										)
+									)}
 								</>
 							)}
 							{value.pro && (
@@ -83,23 +85,23 @@ const entries = Object.entries(plan);
 							)}
 							{additional_descriptions && (
 								<>
-									{value.pro_plus ||
-										(value.pro && (
+									{value.pro_plus ? (
+										<li>
+											<strong>Pro Plus: </strong>
+											<Fragment
+												set:html={marked.parseInline(value.pro_plus.toString())}
+											/>
+										</li>
+									) : (
+										value.pro && (
 											<li>
 												<strong>Pro Plus: </strong>
-												{value.pro_plus ? (
-													<Fragment
-														set:html={marked.parseInline(
-															value.pro_plus.toString(),
-														)}
-													/>
-												) : (
-													<Fragment
-														set:html={marked.parseInline(value.pro.toString())}
-													/>
-												)}
+												<Fragment
+													set:html={marked.parseInline(value.pro.toString())}
+												/>
 											</li>
-										))}
+										)
+									)}
 								</>
 							)}
 							{value.biz && (

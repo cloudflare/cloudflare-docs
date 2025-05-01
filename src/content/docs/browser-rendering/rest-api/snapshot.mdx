@@ -5,9 +5,13 @@ sidebar:
   order: 6
 ---
 
+import { Tabs, TabItem } from "~/components";
+
 The `/snapshot` endpoint captures both the HTML content and a screenshot of the webpage in one request. It returns the HTML as a text string and the screenshot as a Base64-encoded image.
 
 ## Basic usage
+
+<Tabs syncKey="workersExamples"> <TabItem label="curl">
 
 1. Go to `https://example.com/`.
 2. Inject custom JavaScript.
@@ -26,9 +30,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
   }'
 ```
 
-### JSON response
-
-```json title="json response"
+```json output
 {
 	"success": true,
 	"result": {
@@ -37,6 +39,25 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 	}
 }
 ```
+
+</TabItem> <TabItem label="TypeScript SDK">
+
+```typescript
+import Cloudflare from "cloudflare";
+
+const client = new Cloudflare({
+	apiEmail: process.env["CLOUDFLARE_EMAIL"], // This is the default and can be omitted
+	apiKey: process.env["CLOUDFLARE_API_KEY"], // This is the default and can be omitted
+});
+
+const snapshot = await client.browserRendering.snapshot.create({
+	account_id: "account_id",
+});
+
+console.log(snapshot.content);
+```
+
+</TabItem> </Tabs>
 
 ## Advanced usage
 
@@ -69,9 +90,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
   }'
 ```
 
-### JSON response
-
-```json title="json response"
+```json output
 {
 	"success": true,
 	"result": {

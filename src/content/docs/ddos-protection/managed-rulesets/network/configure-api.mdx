@@ -6,14 +6,15 @@ sidebar:
 head:
   - tag: title
     content: Configure Network-layer DDoS Attack Protection via API
-
 ---
 
-import { Details, Render } from "~/components"
+import { Details, Render } from "~/components";
 
 Configure the Cloudflare Network-layer DDoS Attack Protection managed ruleset by defining overrides at the account level using the [Rulesets API](/ruleset-engine/rulesets-api/).
 
 Each account has the Network-layer DDoS Attack Protection managed ruleset enabled by default. This means that you do not need to deploy the managed ruleset to the `ddos_l4` phase entry point ruleset explicitly. You only have to create a rule in the phase entry point to deploy the managed ruleset if you need to configure overrides.
+
+If you are using Terraform, refer to [DDoS managed rulesets configuration using Terraform](/terraform/additional-configurations/ddos-managed-rulesets/#example-configure-network-layer-ddos-attack-protection).
 
 ## Configure an override for the Network-layer DDoS Attack Protection managed ruleset
 
@@ -26,6 +27,7 @@ When configuring the Network-layer DDoS Attack Protection managed ruleset, use o
 - The Network-layer DDoS Attack Protection managed ruleset is always enabled. You cannot disable its rules using an override with `"enabled": false`.
 - <Render file="managed-rulesets/read-only-rules-note" />
 - You can only define overrides for the Network-layer DDoS Attack Protection managed ruleset at the account level.
+
 :::
 
 ## Example

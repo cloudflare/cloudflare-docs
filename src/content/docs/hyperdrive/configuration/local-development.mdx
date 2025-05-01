@@ -7,21 +7,21 @@ sidebar:
 
 import { WranglerConfig } from "~/components";
 
-Hyperdrive can be used when developing and testing your Workers locally by connecting to any local database instance running on your machine directly. Local development uses [Wrangler](/workers/wrangler/install-and-update/), the command-line interface for Workers, to manage local development sessions and state.
+Hyperdrive can be used when developing and testing your Workers locally by connecting to a local database instance running on your machine directly, or a remote database instance. Local development uses [Wrangler](/workers/wrangler/install-and-update/), the command-line interface for Workers, to manage local development sessions and state.
 
-## Configure local development
+:::note[Note]
 
-:::note
+You can connect to a local database for local development using the local connection string configurations for Wrangler, as detailed below. This allows you to connect to a local database instance running on your machine directly.
 
-This guide assumes you are using `wrangler` version `3.27.0` or later.
-
-If you are new to Hyperdrive and/or Cloudflare Workers, refer to [Hyperdrive tutorial](/hyperdrive/get-started/) to install `wrangler` and deploy their first database.
+You can also connect to a remote database for remote development using the `npx wrangler dev --remote` command, which will use the remote database configured for your Hyperdrive configuration.
 
 :::
 
+## Configure local development
+
 To specify a database to connect to when developing locally, you can:
 
-- **Recommended** Create a `WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>` environmental variable with the connection string of your database. `<BINDING_NAME>` is the name of the binding assigned to your Hyperdrive in your [Wrangler configuration file](/workers/wrangler/configuration/) or Pages configuration. This allows you to avoid committing potentially sensitive credentials to source control in your Wrangler configuration file, if your test/development database is not ephemeral. If you have configured multiple Hyperdrive bindings, replace `<BINDING_NAME>` with the unique binding name for each.
+- **Recommended:** Create a `WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>` environmental variable with the connection string of your database. `<BINDING_NAME>` is the name of the binding assigned to your Hyperdrive in your [Wrangler configuration file](/workers/wrangler/configuration/) or Pages configuration. This allows you to avoid committing potentially sensitive credentials to source control in your Wrangler configuration file, if your test/development database is not ephemeral. If you have configured multiple Hyperdrive bindings, replace `<BINDING_NAME>` with the unique binding name for each.
 - Set `localConnectionString` in the Wrangler configuration file.
 
 If both the `WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>` environmental variable and `localConnectionString` in the Wrangler configuration file are set, `wrangler dev` will use the environmental variable instead. Use `unset WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>` to unset any existing environmental variables.

@@ -62,6 +62,47 @@ List R2 bucket in the current account.
 wrangler r2 bucket list
 ```
 
+<AnchorHeading
+	title="`catalog enable`"
+	slug="r2-bucket-catalog-enable"
+	depth={3}
+/>
+
+Enable [R2 Data Catalog](/r2/data-catalog/) on an R2 bucket.
+
+```txt
+wrangler r2 bucket catalog enable <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the bucket to enable R2 Data Catalog for.
+
+<AnchorHeading
+	title="`catalog disable`"
+	slug="r2-bucket-catalog-disable"
+	depth={3}
+/>
+
+Disable [R2 Data Catalog](/r2/data-catalog/) on an R2 bucket.
+
+```txt
+wrangler r2 bucket catalog disable <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the bucket to disable R2 Data Catalog for.
+
+<AnchorHeading title="`catalog get`" slug="r2-bucket-catalog-get" depth={3} />
+
+Get the status of [R2 Data Catalog](/r2/data-catalog/) for an R2 bucket, including catalog URI and warehouse name.
+
+```txt
+wrangler r2 bucket catalog get <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the R2 bucket whose data catalog status to retrieve.
+
 <AnchorHeading title="`cors set`" slug="r2-bucket-cors-set" depth={3} />
 
 Set the [CORS configuration](/r2/buckets/cors/) for an R2 bucket from a JSON file.

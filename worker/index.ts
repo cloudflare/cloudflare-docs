@@ -1,28 +1,66 @@
 import { WorkerEntrypoint } from "cloudflare:workers";
 import { generateRedirectsEvaluator } from "redirects-in-workers";
-import redirectsFileContents from "../dist/_redirects";
+import redirectsFileContents from "../dist/__redirects";
 
-const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents);
+import { parse } from "node-html-parser";
+import { process } from "../src/util/rehype";
+
+import rehypeParse from "rehype-parse";
+import rehypeBaseUrl from "../src/plugins/rehype/base-url";
+import rehypeFilterElements from "../src/plugins/rehype/filter-elements";
+import remarkGfm from "remark-gfm";
+import rehypeRemark from "rehype-remark";
+import remarkStringify from "remark-stringify";
+
+const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
+	maxLineLength: 10_000, // Usually 2_000
+	maxStaticRules: 10_000, // Usually 2_000
+	maxDynamicRules: 2_000, // Usually 100
+});
 
 export default class extends WorkerEntrypoint<Env> {
 	override async fetch(request: Request) {
-		try {
-			try {
-				// Remove once the whacky double-slash rules get removed
-				const url = new URL(request.url);
-				request = new Request(
-					new URL(
-						url.pathname.replaceAll("//", "/") + url.search,
-						"https://developers.cloudflare.com/",
-					),
-					request,
-				);
-			} catch (error) {
-				console.error("Could not normalize request URL", error);
+		if (request.url.endsWith("/index.md")) {
+			const res = await this.env.ASSETS.fetch(
+				request.url.replace("index.md", ""),
+				request,
+			);
+
+			if (res.status === 404) {
+				return res;
 			}
 
+			if (
+				res.status === 200 &&
+				res.headers.get("content-type")?.startsWith("text/html")
+			) {
+				const html = await res.text();
+
+				const content = parse(html).querySelector(".sl-markdown-content");
+
+				if (!content) {
+					return new Response("Not Found", { status: 404 });
+				}
+
+				const markdown = await process(content.toString(), [
+					rehypeParse,
+					rehypeBaseUrl,
+					rehypeFilterElements,
+					[remarkGfm, { tablePipeAlign: false }],
+					rehypeRemark,
+					remarkStringify,
+				]);
+
+				return new Response(markdown, {
+					headers: {
+						"content-type": "text/markdown; charset=utf-8",
+					},
+				});
+			}
+		}
+
+		try {
 			try {
-				// @ts-expect-error Ignore Fetcher type mismatch
 				const redirect = await redirectsEvaluator(request, this.env.ASSETS);
 				if (redirect) {
 					return redirect;
@@ -38,7 +76,6 @@ export default class extends WorkerEntrypoint<Env> {
 				);
 				const redirect = await redirectsEvaluator(
 					new Request(forceTrailingSlashURL, request),
-					// @ts-expect-error Ignore Fetcher type mismatch
 					this.env.ASSETS,
 				);
 				if (redirect) {

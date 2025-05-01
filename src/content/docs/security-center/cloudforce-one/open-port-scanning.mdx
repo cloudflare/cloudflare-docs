@@ -1,0 +1,192 @@
+---
+pcx_content_type: how-to
+title: Open Port Scanning
+sidebar:
+  order: 11
+  badge:
+    text: Beta
+---
+
+import { Details } from "~/components"
+
+
+
+Open Port Scanning allows [Magic Transit](/magic-transit/) and [Bring your Own IPs](/byoip/) users to efficiently monitor IP ranges for security vulnerabilities. This API enables users to scan their designated IP ranges, detect any open ports, and receive daily notifications regarding newly opened ports.
+
+You can access this feature via the [API](/api/resources/cloudforce_one/subresources/scans/subresources/config/).
+
+## Prerequisites
+
+- Cloudforce One Administrator, Administrator and Super Administrator roles.
+- Account token: **Custom API Token** >  **Cloudforce One:Edit**. 
+
+To create a custom API token:
+
+1. From the [Cloudflare dashboard](https://dash.cloudflare.com/profile/api-tokens/), go to **My Profile** > **API Tokens** for user tokens. Go to **Create Custom Token** > **Get started**.
+2. Enter a **Token name**, for example, `Open Port Scanning`.
+3. In **Permissions**:
+    - Choose **Account**.
+    - Select **Cloudforce One** as the account.
+    - Choose **Edit** access.
+4. In Client IP Address Filtering:
+    - In **Operator**, select `is in`.
+    - In **Value**, enter a valid IP address.
+5. Select **Continue to summary**.
+6. Review the token, then select **Create Token**.
+
+:::note
+The Open Port Scanner will run from a predetermined set of IPs. The Cloudforce One team recommends you to allowlist these IPs in your rules. 
+:::
+
+## Configure Open Port Scanning
+
+To configure Open Port Scanning, follow these steps:
+
+1. **Create a new scan config**:
+    - **IPs**: Enter the IP ranges you wish to monitor. Ensure that the ranges are correctly formatted to avoid scanning errors. The API will validate if the IPs requested are onboarded to Cloudflare and associated to the account belonging to the API token used.
+    - **Frequency**: Enter the scan frequency in days.
+    - **Ports**: Select the ports to scan. Choose among:
+        - All
+        - Default (refer to [Default ports](/security-center/cloudforce-one/open-port-scanning/#default-ports) for a comprehensive list)
+        - List of specific ports
+2. **Scan IPs**: Initiate the scanning process. The system will analyze the specified IP ranges to identify any open ports.
+3. **Generate list of open ports**: Once the scan is complete, the API will generate a list of detected open ports for review and action.
+4. **Select open ports to list**: Choose which open ports you would like to be notified about. You can exclude  any ports that do not require immediate attention.
+5. **View differences from previous scan**: The API will highlight any changes in open ports since the last scan, allowing you to quickly assess new vulnerabilities.
+6. **Stop scanning**: If necessary, you can stop  the scanning process at any time.
+7. **Set up alerts**: Configure alerts for specific ports of interest. You will be notified immediately via email or webhook if any of these designated ports become newly open. 
+
+:::note[Beta feature notice]
+Open Port Scanning feature is currently in closed beta. The Cloudforce One team appreciates your feedback as the team works to enhance its functionality and user experience.
+If you want to subscribe  to this feature or participate in the beta program, [join our closed beta for Port Scanning](https://www.cloudflare.com/lp/open-port-scanning-beta/).
+:::
+
+## Default ports
+
+<Details header="List of default ports">
+- `80`
+- `631`
+- `161`
+- `137`
+- `123`
+- `138`
+- `1434`
+- `445`
+- `135`
+- `67`
+- `23`
+- `53`
+- `443`
+- `21`
+- `139`
+- `22`
+- `500`
+- `68`
+- `520`
+- `1900`
+- `25`
+- `4500`
+- `514`
+- `49152`
+- `162`
+- `69`
+- `5353`
+- `111`
+- `49154`
+- `3389`
+- `110`
+- `1701`
+- `998`
+- `996`
+- `997`
+- `999`
+- `3283`
+- `49153`
+- `445`
+- `1812`
+- `136`
+- `139`
+- `143`
+- `53`
+- `2222`
+- `135`
+- `3306`
+- `2049`
+- `32768`
+- `5060`
+- `8080`
+- `1025`
+- `1433`
+- `3456`
+- `80`
+- `1723`
+- `111`
+- `995`
+- `993`
+- `20031`
+- `1026`
+- `7`
+- `5900`
+- `1646`
+- `1645`
+- `593`
+- `1025`
+- `518`
+- `2048`
+- `626`
+- `1027`
+- `587`
+- `177`
+- `1719`
+- `427`
+- `497`
+- `8888`
+- `4444`
+- `1023`
+- `65024`
+- `199`
+- `19`
+- `9`
+- `49193`
+- `1029`
+- `1720`
+- `49`
+- `465`
+- `88`
+- `1028`
+- `17185`
+- `1718`
+- `49186`
+- `548`
+- `113`
+- `81`
+- `6001`
+- `2000`
+- `10000`
+- `31337`
+</Details>
+
+## Frequently Asked Questions
+
+1. What IPs will the scan come from?
+
+    - `2a09:bac0:1008:5000:1000:0000:0000:0050/104.30.128.13`
+    - `2a09:bac0:1008:5000:1000:0000:0000:0048/104.30.129.33`
+    - `2001:19f0:1000:2941:5400:4ff:fe70:2a7a/140.82.60.241` 
+
+2. Can the Port Scanner bypass other security rules configured?
+
+    - The Cloudforce One team asks customers to ensure they allow the IPs for the scanner to run correctly.
+
+3. How long do scans take?
+
+    - Depending on the number of IP addresses and number of ports scanned, scans can take between a few minutes and up to 10 hours.
+
+4. Can I stop automatic scanning?
+
+    - Yes, you can decide at any point to stop scan and restart scans when it is convenient for you.
+
+5. What are the limitations for the scans?
+
+    - Scans are limited to ranges of up to 5,000 IPs.
+    - The API scans both IPv4 and IPv6 IP addresses.

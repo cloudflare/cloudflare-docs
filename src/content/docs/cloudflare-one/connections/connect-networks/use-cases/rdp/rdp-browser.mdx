@@ -1,0 +1,127 @@
+---
+pcx_content_type: how-to
+title: Connect to RDP in a browser
+sidebar:
+  order: 2
+  label: Browser-based RDP
+  badge:
+    text: Beta
+---
+
+import { Render, GlossaryTooltip  } from "~/components"
+
+:::note[Availability]
+Browser-based RDP is currently available in closed beta to Enterprise customers. To request access, contact your account team.
+:::
+
+With Cloudflare Zero Trust, users can connect to an RDP server without installing an RDP client or the [WARP client](/cloudflare-one/connections/connect-devices/warp/) on their device. Browser-based RDP leverages [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/), which creates a secure, outbound-only connection from your RDP server to Cloudflare's global network. Setup involves running the `cloudflared` daemon on the RDP server (or any other host machine within the private network) and routing RDP traffic over a public hostname.
+
+There are two ways for users to [reach the RDP server in their browser](#4-connect-as-a-user):
+- **App Launcher**: Users can log in to the [Access App Launcher](/cloudflare-one/applications/app-launcher/) with their Cloudflare Access credentials and then initiate an RDP connection within the browser to their Windows machine. Users will authenticate to the Windows machine using their pre-configured Windows username and password. Cloudflare does not manage any credentials on the Windows server.
+- **Direct URL**: A user may also navigate directly to the Windows server at `https://<app-domain>/rdp/<vnet-id>/<target-ip>/<port>`. The authentication flow is the same as for the App Launcher; first users must log in to Cloudflare Access and then use their Windows credentials to authenticate to the Windows machine.
+
+Browser-based RDP can be used in conjunction with [routing over WARP](/cloudflare-one/connections/connect-networks/use-cases/rdp/rdp-warp-to-tunnel/) so that there are multiple ways to connect to the server. You can reuse the same Cloudflare Tunnel when configuring each connection method.
+
+## Prerequisites
+
+- An [active domain on Cloudflare](/fundamentals/setup/manage-domains/add-site/)
+- Domain uses either a [full setup](/dns/zone-setups/full-setup/) or a [partial (`CNAME`) setup](/dns/zone-setups/partial-setup/)
+- Windows machine supports RDP connections. For a list of supported operating systems, refer to the [Windows documentation](https://learn.microsoft.com/windows-server/remote/remote-desktop-services/remotepc/remote-desktop-supported-config).
+
+## 1. Connect the server to Cloudflare
+
+<Render file="tunnel/connect-private-network" />
+
+<Render file="tunnel/connect-private-network-infra-access" />
+
+## 2. Add a target
+
+<Render file="access/add-target" params={{ protocol: "rdp" }}/>
+
+## 3. Create an Access application
+
+<Render file="access/self-hosted-app/create-app" />
+
+6. Select **Add public hostname**.
+
+		:::note
+		Browser-based RDP is only compatible with public hostnames. If you add a private hostname or IP, RDP functionality will not be available in this application.
+		:::
+
+7. <Render file="access/self-hosted-app/choose-domain" product="cloudflare-one" />
+
+		:::note
+		You can only enable browser-based RDP on domains and subdomains, not for specific paths.
+		:::
+
+8. Expand **Browser rendering settings**. In the **Browser rendering** dropdown, select _RDP_.
+
+9. In **Target criteria**, select the [target hostname(s)](#2-add-a-target) that define your RDP servers. The application definition will apply to all targets that share the selected target hostname, including any targets added in the future.
+
+10. In **Port**, enter the [RDP listening port](https://docs.microsoft.com/en-us/windows-server/remote/remote-desktop-services/clients/change-listening-port) of your server. It will likely be port `3389`.
+
+11. (Optional) If you run RDP on more than one port, select **Add new target criteria** and reconfigure the same target hostname(s) with the different port number.
+
+12. <Render file="access/add-access-policies" product="cloudflare-one" />
+
+:::note
+Ensure that only **Allow** or **Block** policies are present. **Bypass** and **Service Auth** are not supported for browser-rendered applications.
+:::
+
+13. <Render file="access/access-choose-idps" product="cloudflare-one" />
+
+14. Select **Next**.
+
+15. (Recommended) Turn on **Show application in App Launcher** and configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application. The App Launcher allows users to view the Windows servers that they can access using browser-based RDP. Without the App Launcher, users will need to know each target's direct URL.
+
+		:::note
+		Ensure that users match an Allow rule in your [App Launcher policies](/cloudflare-one/applications/app-launcher/#enable-the-app-launcher).
+		:::
+
+16. <Render file="access/access-block-page" product="cloudflare-one" />
+
+17. Select **Next**.
+
+18. <Render file="access/self-hosted-app/advanced-settings" product="cloudflare-one" />
+
+19. Select **Save**.
+
+## 4. Create a DNS record
+
+In the [Cloudflare dashboard](https://dash.cloudflare.com/login), go to **DNS** > **Records** and verify that a [DNS record](/dns/manage-dns-records/how-to/create-dns-records/) exists for your domain. The DNS record allows Cloudflare to proxy browser-based RDP traffic to your private network. Any arbitrary DNS record will work.
+
+If you do not already have a DNS record, [create a new DNS record](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records). For example, you could create an `AAAA` record that points your Access application public hostname (`app.example.com`) to the IPv6 [discard address range](https://www.rfc-editor.org/rfc/rfc6666.html):
+
+- **Type**: _AAAA_
+- **Name**: `app`
+- **IPv6 address**: `100::`
+- **Proxy status**: On
+
+## 5. Connect as a user
+
+To connect to a Windows machine over RDP:
+
+1. Open a browser and go to your App Launcher URL:
+
+	```text
+	https://<your-team-name>.cloudflareaccess.com
+	```
+
+	Replace `<your-team-name>` with your Zero Trust <GlossaryTooltip term="team name">team name</GlossaryTooltip>.
+2. Follow the prompts to log in to your identity provider.
+
+	Once you have authenticated, the App Launcher will display tiles showing the applications that you are authorized to use. Windows servers (targets) available through browser-based RDP will also appear as tiles. If a target is reachable through multiple Access applications, the target will have a tile per Access application.
+3. Select the target you want to connect to.
+
+	The App Launcher tile will launch a URL of the form `https://<app-domain>/rdp/<vnet-id>/<target-ip>/<port>`. You may also navigate directly to this URL.
+4. Select the port that you want to connect to. The port selection screen only appears if the Access application allows RDP traffic on multiple ports (for example, port `3389` and port `65321`).
+5. (Optional) In your browser settings, allow the Access application to access the clipboard. Clipboard permissions grant the ability to copy or paste text between the local machine and the remote Windows machine.
+6. Enter your Windows username and password.
+
+You now have access to the remote Windows desktop.
+
+## Product compatibility
+
+ <Render file="access/self-hosted-app/product-compatibility" product="cloudflare-one" />
+
+

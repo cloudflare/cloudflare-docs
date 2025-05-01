@@ -1,31 +1,31 @@
 ---
-title: Introducing the agents-sdk
-description: Build and ship AI Agents on Cloudflare using the agents-sdk
+title: Introducing the Agents SDK
+description: Build and ship AI Agents on Cloudflare using the Agents SDK
 products:
   - agents
   - workers
 date: 2025-02-25T14:00:00Z
 ---
 
-We've released the [agents-sdk](http://blog.cloudflare.com/build-ai-agents-on-cloudflare/), a package and set of tools that help you build and ship AI Agents.
+We've released the [Agents SDK](http://blog.cloudflare.com/build-ai-agents-on-cloudflare/), a package and set of tools that help you build and ship AI Agents.
 
-You can get up and running with a [chat-based AI Agent](https://github.com/cloudflare/agents-starter) (and deploy it to Workers) that uses the `agents-sdk`, tool calling, and state syncing with a React-based front-end by running the following command:
+You can get up and running with a [chat-based AI Agent](https://github.com/cloudflare/agents-starter) (and deploy it to Workers) that uses the Agents SDK, tool calling, and state syncing with a React-based front-end by running the following command:
 
 ```sh
 npm create cloudflare@latest agents-starter -- --template="cloudflare/agents-starter"
 # open up README.md and follow the instructions
 ```
 
-You can also add an Agent to any existing Workers application by installing the `agents-sdk` package directly
+You can also add an Agent to any existing Workers application by installing the `agents` package directly
 
 ```sh
-npm i agents-sdk
+npm i agents
 ```
 
 ... and then define your first Agent:
 
 ```ts
-import { Agent } from 'agents-sdk';
+import { Agent } from 'agents';
 
 export class YourAgent extends Agent<Env> {
 	// Build it out
@@ -37,4 +37,4 @@ export class YourAgent extends Agent<Env> {
 }
 ```
 
-Head over to the [Agents documentation](/agents/) to learn more about the `agents-sdk`, the SDK APIs, as well as how to test and deploying agents to production.
+Head over to the [Agents documentation](/agents/) to learn more about the Agents SDK, the SDK APIs, as well as how to test and deploying agents to production.

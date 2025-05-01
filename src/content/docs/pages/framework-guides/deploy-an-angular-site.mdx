@@ -17,8 +17,8 @@ To use `create-cloudflare` to create a new Angular project, run the following co
 
 <PackageManagers
 	type="create"
-	pkg="cloudflare@latest"
-	args="my-angular-app --framework=angular"
+	pkg="cloudflare@latest my-angular-app"
+	args="--framework=angular --platform=pages"
 />
 
 `create-cloudflare` will install dependencies, including the [Wrangler](/workers/wrangler/install-and-update/#check-your-wrangler-version) CLI and the Cloudflare Pages adapter, and ask you setup questions.
@@ -49,12 +49,7 @@ git push -u origin main
 
 ### Create a Pages project
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Workers & Pages** > **Create application** > **Pages** > **Connect to Git** and create a new Pages project.
-
-You will be asked to authorize access to your GitHub account if you have not already done so. Cloudflare needs this so that it can monitor and deploy your projects from the source. You may narrow access to specific repositories if you prefer; however, you will have to manually update this list [within your GitHub settings](https://github.com/settings/installations) when you want to add more repositories to Cloudflare Pages.
-
-3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
+<Render file="deploy-to-pages-steps-with-preset" params={{ name: "Angular" }} />
 
 <PagesBuildPreset framework="angular" />
 

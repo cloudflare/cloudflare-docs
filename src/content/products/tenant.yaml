@@ -3,7 +3,7 @@ name: Tenant
 product:
   title: Tenant
   url: /tenant/
-  group: Cloudflare essentials
+  group: Core platform
   additional_groups: [Developer platform]
 
 meta:

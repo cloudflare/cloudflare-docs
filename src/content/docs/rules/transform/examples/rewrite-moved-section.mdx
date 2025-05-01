@@ -1,19 +1,19 @@
 ---
 pcx_content_type: example
-summary: Create a rewrite URL rule (part of Transform Rules) to rewrite
+summary: Create a URL rewrite rule (part of Transform Rules) to rewrite
   everything under `/blog/<PATH>` to `/marketing/<PATH>`.
 products:
   - Transform Rules
 operation:
   - Rewrite URL
 title: Rewrite path of moved section of a website
-description: Create a rewrite URL rule (part of Transform Rules) to rewrite
+description: Create a URL rewrite rule (part of Transform Rules) to rewrite
   everything under `/blog/<PATH>` to `/marketing/<PATH>`.
 ---
 
 import { Example } from "~/components";
 
-To rewrite everything under `/blog/<PATH>` to `/marketing/<PATH>`, create a new rewrite URL rule and define a dynamic URL path rewrite using [wildcard pattern parameters](/rules/transform/url-rewrite/create-dashboard/#wildcard-pattern-parameters):
+To rewrite everything under `/blog/<PATH>` to `/marketing/<PATH>`, create a new URL rewrite rule and define a dynamic URL path rewrite using [wildcard pattern parameters](/rules/transform/url-rewrite/create-dashboard/#wildcard-pattern-parameters):
 
 <Example>
 
@@ -23,8 +23,9 @@ To rewrite everything under `/blog/<PATH>` to `/marketing/<PATH>`, create a new 
   - **Request URL**: `https://<YOUR_HOSTNAME>/blog/*`
 
 **Then rewrite the path and/or query**
-- **Target path**: `/blog/*`
-- **Rewrite to**: `/marketing/${1}`
+
+- **Target path**: [`/`] `blog/*`
+- **Rewrite to**: [`/`] `marketing/${1}`
 
 </Example>
 

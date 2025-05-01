@@ -175,6 +175,10 @@ Windows offers two locations to install the certificate, each impacting which us
 
 The root certificate is now installed and ready to be used.
 
+:::caution
+If your certificate is installed in the **Local Machine Store**, the [device posture check](/cloudflare-one/identity/devices/warp-client-checks/) looking for a certificate will fail. Install the certificate in the **Current User Store** to ensure a successful posture device check.
+:::
+
 ### Linux
 
 The location where the root certificate should be installed is different depending on your Linux distribution. Follow the specific instructions for your distribution.

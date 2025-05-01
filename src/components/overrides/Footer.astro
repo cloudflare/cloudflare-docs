@@ -1,5 +1,8 @@
 ---
 import Default from "@astrojs/starlight/components/Footer.astro";
+import { Icon } from "@astrojs/starlight/components";
+import type { StarlightIcon } from "@astrojs/starlight/types";
+
 import OneTrust from "../OneTrust.astro";
 import FeedbackPrompt from "../FeedbackPrompt.tsx";
 
@@ -38,6 +41,24 @@ const groups = Object.entries({
 		{ text: "RPKI Toolkit", href: "https://rpki.cloudflare.com/" },
 		{ text: "Certificate Transparency", href: "https://ct.cloudflare.com/" },
 	],
+	Community: [
+		{ text: "X", href: "https://x.com/cloudflare", icon: "x.com" },
+		{
+			text: "Discord",
+			href: "http://discord.cloudflare.com/",
+			icon: "discord",
+		},
+		{
+			text: "YouTube",
+			href: "https://www.youtube.com/cloudflare",
+			icon: "youtube",
+		},
+		{
+			text: "GitHub",
+			href: "https://github.com/cloudflare/cloudflare-docs",
+			icon: "github",
+		},
+	],
 });
 
 const links = Object.entries({
@@ -69,7 +90,7 @@ if (
 }
 {!splash && <Default />}
 <div class="w-full">
-	<div class="grid grid-cols-2 gap-8 pb-10 pt-6 md:grid-cols-4">
+	<div class="grid grid-cols-2 gap-8 pb-10 pt-6 lg:grid-cols-5">
 		{
 			groups.map(([title, items]) => (
 				<ul class="flex w-full list-none flex-col gap-3 pl-0">
@@ -78,7 +99,11 @@ if (
 					</li>
 					{items.map((link) => (
 						<li class="text-sm">
-							<a href={link.href} class="!text-black no-underline">
+							<a
+								href={link.href}
+								class="flex items-center gap-2 !text-black no-underline"
+							>
+								{"icon" in link && <Icon name={link.icon as StarlightIcon} />}
 								{link.text}
 							</a>
 						</li>

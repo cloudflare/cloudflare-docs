@@ -1,0 +1,36 @@
+---
+title: Full-stack frameworks are now Generally Available on Cloudflare Workers
+description: Cloudflare Workers now provides production ready, generally available (GA) support for React Router v7 (Remix), Astro, Hono, Vue.js, Nuxt, Svelte (SvelteKit), and more.
+products:
+  - workers
+  - workers-for-platforms
+date: 2025-04-08T18:00:00Z
+---
+
+import { Image } from "astro:assets";
+import fullstackWorkers from "~/assets/images/changelog/workers/fullstack-on-workers.png";
+
+<Image src={fullstackWorkers} alt="Full-stack on Cloudflare Workers" />
+
+The following full-stack frameworks now have Generally Available ("GA") adapters for Cloudflare Workers, and are ready for you to use in production:
+
+- [React Router v7 (Remix)](/workers/frameworks/framework-guides/react-router/)
+- [Astro](/workers/frameworks/framework-guides/astro/)
+- [Hono](/workers/frameworks/framework-guides/hono/)
+- [Vue.js](/workers/frameworks/framework-guides/vue/)
+- [Nuxt](/workers/frameworks/framework-guides/nuxt/)
+- [Svelte (SvelteKit)](/workers/frameworks/framework-guides/svelte/)
+- And [more](/workers/frameworks/).
+
+The following frameworks are now in **beta**, with GA support coming very soon:
+
+- [Next.js](/workers/frameworks/framework-guides/nextjs/), supported through [@opennextjs/cloudflare](https://opennext.js.org/cloudflare) is now `v1.0-beta`.
+- [Angular](/workers/frameworks/framework-guides/angular/)
+- [SolidJS (SolidStart)](/workers/frameworks/framework-guides/solid/)
+
+You can also build complete full-stack apps on Workers **without a framework**:
+
+- You can [“just use Vite"](https://blog.cloudflare.com/introducing-the-cloudflare-vite-plugin) and React together, and build a back-end API in the same Worker. Follow our [React SPA with an API tutorial](/workers/vite-plugin/tutorial/) to learn how.
+
+
+**Get started building today with our [framework guides](/workers/frameworks/)**,  or read our [Developer Week 2025 blog post](https://blog.cloudflare.com/full-stack-development-on-cloudflare-workers) about all the updates to building full-stack applications on Workers.

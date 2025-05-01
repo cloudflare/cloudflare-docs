@@ -1,0 +1,51 @@
+---
+title: Width
+styleGuide:
+  component: Width
+---
+
+This component can be used to constrain the width of content, such as text or images.
+
+## Import
+
+```mdx
+import { Width } from "~/components";
+```
+
+## Usage
+
+```mdx live
+import { Width } from "~/components";
+
+<Width size="large">This content will take up 75% of the container width</Width>
+
+<Width size="medium">
+	This content will take up 50% of the container width
+</Width>
+
+<Width size="small">This content will take up 25% of the container width</Width>
+
+<Width size="small" center>
+	This content will take up 25% of the container width and be centered
+</Width>
+```
+
+## `<Width>` Props
+
+### `size`
+
+**required**
+
+**type:** `"large" | "medium" | "small"`
+
+Controls the width of the container:
+
+- `large`: 75% of container width
+- `medium`: 50% of container width
+- `small`: 25% of container width
+
+### `center`
+
+**type:** `boolean`
+
+Whether to horizontally center the content.

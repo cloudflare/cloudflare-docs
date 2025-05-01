@@ -3,9 +3,6 @@ pcx_content_type: configuration
 title: Source maps and stack traces
 head: []
 description: Adding source maps and generating stack traces for Pages.
-sidebar:
-  badge:
-    text: Beta
 
 ---
 
@@ -47,8 +44,13 @@ You can then view the stack trace when streaming [real-time logs](/pages/functio
 
 The source map is retrieved after your Pages Function invocation completes — it's an asynchronous process that does not impact your applications's CPU utilization or performance. Source maps are not accessible inside the application at runtime, if you `console.log()` the [stack property](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/stack), you will not get a deobfuscated stack trace.
 
-
 :::
+
+## Limits
+
+| Description                    | Limit         |
+| ------------------------------ | ------------- |
+| Maximum Source Map Size        | 15 MB gzipped |
 
 ## Related resources
 

@@ -1,0 +1,48 @@
+---
+pcx_content_type: concept
+title: How pipelines work
+sidebar:
+  order: 1
+---
+
+Cloudflare Pipelines let you ingest data from a source and deliver to a sink. It is built for high volume, real time data streams. Each pipeline can ingest up to 100 MB/s of data, via HTTP or a Worker, and load the data as files in an R2 bucket.
+
+![Pipelines Architecture](~/assets/images/pipelines/architecture.png)
+
+## Supported sources, data formats, and sinks
+
+### Sources
+Pipelines supports the following sources:
+* [HTTP Clients](/pipelines/build-with-pipelines/sources/http), with optional authentication and CORS settings
+* [Cloudflare Workers](/workers/), using the [Pipelines Workers API](/pipelines/build-with-pipelines/sources/workers-apis)
+
+Multiple sources can be active on a single pipeline simultaneously. For example, you can create a pipeline which accepts data from Workers and via HTTP. Multiple workers can be configured to send data to the same pipeline. There is no limit to the number of source clients.
+
+### Data format
+Pipelines can ingest JSON serializable records.
+
+### Sinks
+Pipelines supports delivering data into [R2 Object Storage](/r2/). Ingested data is delivered as newline delimited JSON files (`ndjson`) with optional compression. Multiple pipelines can be configured to deliver data to the same R2 bucket.
+
+## Data durability
+Pipelines are designed to be reliable. Any data which is successfully ingested will be delivered, at least once, to the configured R2 bucket, provided that the [R2 API credentials associated with a pipeline](/r2/api/tokens/) remain valid. Ordering of records is best effort.
+
+Each pipeline maintains a storage buffer. Requests to send data to a pipeline receive a successful response only after the data is committed to this storage buffer.
+
+Ingested data accumulates, until a sufficiently [large batch of data](/pipelines/build-with-pipelines/output-settings/#customize-batch-behavior) has been filled. Once the batch reaches its target size, the entire batch of data is converted to a file and delivered to R2.
+
+Transient failures, such as network connectivity issues, are automatically retried.
+
+However, if the [R2 API credentials associated with a pipeline](/r2/api/tokens/) expire or are revoked, data delivery will fail. In this scenario, some data might continue to accumulate in the buffers, but the pipeline will eventually start rejecting requests once the buffers are full.
+
+## Updating a pipeline
+Pipelines update without dropping records. Updating an existing pipeline creates a new instance of the pipeline. Requests are gracefully re-routed to the new instance. The old instance continues to write data into the configured sink. Once the old instance is fully drained, it is spun down.
+
+This means that updates might take a few minutes to go into effect. For example, if you update a pipeline's sink, previously ingested data might continue to be delivered into the old sink.
+
+## Backpressure behavior
+If you send too much data, the pipeline will communicate backpressure by returning a 429 response to HTTP requests, or throwing an error if using the Workers API. Refer to the [limits](/pipelines/platform/limits) to learn how much volume a single pipeline can support. You might see 429 responses if you are sending too many requests or sending too much data.
+
+If you are consistently seeing backpressure from your pipeline, consider the following strategies:
+* Increase the [shard count](/pipelines/build-with-pipelines/shards) to increase the maximum throughput of your pipeline.
+* Send data to a second pipeline if you receive an error. You can set up multiple pipelines to write to the same R2 bucket.

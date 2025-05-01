@@ -1,0 +1,133 @@
+---
+pcx_content_type: configuration
+title: Realtime WebSockets API
+sidebar:
+  order: 2
+---
+
+Some AI providers support real-time, low-latency interactions over WebSockets. AI Gateway allows seamless integration with these APIs, supporting multimodal interactions such as text, audio, and video.
+
+## Supported Providers
+
+- [OpenAI](https://platform.openai.com/docs/guides/realtime-websocket)
+- [Google AI Studio](https://ai.google.dev/gemini-api/docs/multimodal-live)
+- [Cartesia](https://docs.cartesia.ai/api-reference/tts/tts)
+- [ElevenLabs](https://elevenlabs.io/docs/conversational-ai/api-reference/conversational-ai/websocket)
+
+## Authentication
+
+For real-time WebSockets, authentication can be done using:
+
+- Headers (for non-browser environments)
+- `sec-websocket-protocol` (for browsers)
+
+## Examples
+
+### OpenAI
+
+```javascript
+import WebSocket from "ws";
+
+const url =
+	"wss://gateway.ai.cloudflare.com/v1/<account_id>/<gateway>/openai?model=gpt-4o-realtime-preview-2024-12-17";
+const ws = new WebSocket(url, {
+	headers: {
+		"cf-aig-authorization": process.env.CLOUDFLARE_API_KEY,
+		Authorization: "Bearer " + process.env.OPENAI_API_KEY,
+		"OpenAI-Beta": "realtime=v1",
+	},
+});
+
+ws.on("open", () => console.log("Connected to server."));
+ws.on("message", (message) => console.log(JSON.parse(message.toString())));
+
+ws.send(
+	JSON.stringify({
+		type: "response.create",
+		response: { modalities: ["text"], instructions: "Tell me a joke" },
+	}),
+);
+```
+
+### Google AI Studio
+
+```javascript
+const ws = new WebSocket(
+	"wss://gateway.ai.cloudflare.com/v1/<account_id>/<gateway>/google?api_key=<google_api_key>",
+	["cf-aig-authorization.<cloudflare_token>"],
+);
+
+ws.on("open", () => console.log("Connected to server."));
+ws.on("message", (message) => console.log(message.data));
+
+ws.send(
+	JSON.stringify({
+		setup: {
+			model: "models/gemini-2.0-flash-exp",
+			generationConfig: { responseModalities: ["TEXT"] },
+		},
+	}),
+);
+```
+
+### Cartesia
+
+```javascript
+const ws = new WebSocket(
+	"wss://gateway.ai.cloudflare.com/v1/<account_id>/<gateway>/cartesia?cartesia_version=2024-06-10&api_key=<cartesia_api_key>",
+	["cf-aig-authorization.<cloudflare_token>"],
+);
+
+ws.on("open", function open() {
+	console.log("Connected to server.");
+});
+
+ws.on("message", function incoming(message) {
+	console.log(message.data);
+});
+
+ws.send(
+	JSON.stringify({
+		model_id: "sonic",
+		transcript: "Hello, world! I'm generating audio on ",
+		voice: { mode: "id", id: "a0e99841-438c-4a64-b679-ae501e7d6091" },
+		language: "en",
+		context_id: "happy-monkeys-fly",
+		output_format: {
+			container: "raw",
+			encoding: "pcm_s16le",
+			sample_rate: 8000,
+		},
+		add_timestamps: true,
+		continue: true,
+	}),
+);
+```
+
+### ElevenLabs
+
+```javascript
+const ws = new WebSocket(
+	"wss://gateway.ai.cloudflare.com/v1/<account_id>/<gateway>/elevenlabs?agent_id=<elevenlabs_agent_id>",
+	[
+		"xi-api-key.<elevenlabs_api_key>",
+		"cf-aig-authorization.<cloudflare_token>",
+	],
+);
+
+ws.on("open", function open() {
+	console.log("Connected to server.");
+});
+
+ws.on("message", function incoming(message) {
+	console.log(message.data);
+});
+
+ws.send(
+	JSON.stringify({
+		text: "This is a sample text ",
+		voice_settings: { stability: 0.8, similarity_boost: 0.8 },
+		generation_config: { chunk_length_schedule: [120, 160, 250, 290] },
+	}),
+);
+```

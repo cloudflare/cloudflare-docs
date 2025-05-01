@@ -1,9 +1,11 @@
 ---
 import { getEntry, type CollectionEntry } from "astro:content";
 import { marked } from "marked";
-import { getReleaseNotes } from "~/util/release-notes";
-import AnchorHeading from "~/components/AnchorHeading.astro";
 import { entryToString } from "~/util/container";
+import { getReleaseNotes } from "~/util/release-notes";
+
+import AnchorHeading from "~/components/AnchorHeading.astro";
+import RSSButton from "~/components/RSSButton.astro";
 
 const page = await getEntry("docs", Astro.params.slug!);
 
@@ -75,12 +77,11 @@ if (!releaseNotes) {
 {
 	page.data.pcx_content_type === "changelog" && (
 		<p>
-			<a href={`/${page.id}/index.xml`} target="_blank">
-				Subscribe to RSS
-			</a>
+			<RSSButton href={`/${page.id}/index.xml`} />
 		</p>
 	)
 }
+
 {
 	releaseNotes.map(([date, entries]) => (
 		<div data-date={date}>

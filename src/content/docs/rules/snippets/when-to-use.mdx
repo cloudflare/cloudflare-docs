@@ -1,0 +1,571 @@
+---
+title: When to use Snippets vs Workers
+pcx_content_type: design-guide
+sidebar:
+  order: 8
+---
+
+This guide helps you determine when to use Snippets or Workers on Cloudflare's global network. It provides best practices, comparisons, and real-world use cases to help you choose the right product for your workload.
+
+## What are Snippets?
+
+Cloudflare Snippets provide a fast, declarative way to modify HTTP requests and responses at the edge — without requiring a full-stack compute platform. Snippets extend [Cloudflare Rules](/rules/) by allowing you to write JavaScript-based logic that modifies requests before they reach an origin and responses after they return from upstream.
+
+Snippets enable you to:
+
+- Modify headers, validate JWTs, and implement complex rewrites or redirects.
+- Retry failed requests to different origins and apply custom caching strategies.
+- Execute multiple Snippets sequentially, with each Snippet modifying the request or response before handing it off to the next.
+
+Snippets are included at no additional cost in [all paid plans](/rules/snippets/#availability), making them the preferred solution for lightweight edge logic.
+
+## What are Workers?
+
+By contrast, [Cloudflare Workers](/workers/) provide a full-stack compute platform designed for applications requiring state, compute, and integrations with Cloudflare’s [Developer Platform](/learning-paths/workers/devplat/intro-to-devplat/). Workers operate on a [usage-based pricing model](/workers/platform/pricing/) and include a free tier.
+
+---
+
+## Choosing the right product
+
+Snippets are ideal for fast, cost-free request and response modifications at the edge. They extend [Cloudflare Rules](/rules/) without requiring additional infrastructure or external solutions.
+
+### When to use Snippets
+
+- Ultra-fast traffic modifications applied directly on Cloudflare's network.
+- Extend Cloudflare Rules beyond built-in actions for greater control.
+- Simplify CDN migrations by replacing VCL, EdgeWorkers, or on-premise logic.
+- Modify headers, cache responses, and perform redirects.
+- Integrate edge logic into development workflows using JavaScript.
+
+### What Snippets are not designed for
+
+- Persistent state management (for example, session storage or databases).
+- Compute-intensive tasks (for example, image transformations or [AI inference](/workers-ai/)).
+- Deep integrations with [Developer Platform](/learning-paths/workers/devplat/intro-to-devplat/) services like [Durable Objects](/durable-objects/) or [D1](/d1/).
+- Use cases requiring advanced runtime features, such as:
+  - [Environment variables](/workers/configuration/environment-variables/)
+  - [Bindings](/workers/runtime-apis/bindings/)
+  - [Cron triggers](/workers/configuration/cron-triggers/)
+  - High [compute limits](/rules/snippets/#limits)
+
+### Key features
+
+- Ultra-fast, edge-optimized execution, powered by [Ruleset Engine](/ruleset-engine/) and [Workers runtime](/workers/runtime-apis/).
+- Included at no additional cost on [all paid plans](/rules/snippets/#availability).
+- Granular request matching using dozens of request attributes, such as [URI](/ruleset-engine/rules-language/fields/reference/http.request.full_uri/), [user-agent](/ruleset-engine/rules-language/fields/reference/http.user_agent/), and [cookies](/ruleset-engine/rules-language/fields/reference/http.request.cookies/).
+- Sequential execution – multiple Snippets [can run](/rules/snippets/how-it-works/) on the same request, applying modifications step by step.
+- Native integration with [Cloudflare Rules](/rules/) – Snippets inherit request modifications from other products running in earlier [request phases](/ruleset-engine/reference/phases-list/#request-phases).
+- JavaScript and Web APIs support, including:
+  - [Fetch API](/workers/runtime-apis/fetch/)
+  - [Cache API](/workers/runtime-apis/cache/)
+- Essential [Workers runtime](/workers/runtime-apis/) features, such as:
+  - [`request.cf` object](/workers/runtime-apis/request/#incomingrequestcfproperties)
+  - [`HTMLRewriter`](/workers/runtime-apis/html-rewriter/)
+- Automated deployment and versioning via [Terraform](/rules/snippets/create-terraform/).
+
+---
+
+## Snippets vs Workers: Feature comparison
+
+| Feature                                                                                                                                                                                                       | Snippets | Workers |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------: | :-----: |
+| Execute scripts based on request attributes (for example, headers, geolocation, and cookies)                                                                                                                  |    ✅    |   ❌    |
+| Execute code on a specific URL route                                                                                                                                                                          |    ✅    |   ✅    |
+| Modify HTTP requests/responses or serve a [different response](/rules/snippets/examples/maintenance/)                                                                                                         |    ✅    |   ✅    |
+| [Add](/rules/snippets/examples/hex-timestamp/), [remove](/rules/snippets/examples/remove-response-headers/), or [rewrite](/rules/snippets/examples/override-set-cookies-value/) headers dynamically           |    ✅    |   ✅    |
+| [Cache](/rules/snippets/examples/custom-cache/) assets at the edge                                                                                                                                            |    ✅    |   ✅    |
+| Route traffic dynamically between [origin servers](/rules/snippets/examples/serve-different-origin/)                                                                                                          |    ✅    |   ✅    |
+| [Authenticate](/rules/snippets/examples/auth-with-headers/) requests, [pre-sign](/cache/interaction-cloudflare-products/waf-snippets/) URLs, run [A/B testing](/rules/snippets/examples/ab-testing-same-url/) |    ✅    |   ✅    |
+| Define logic using [JavaScript and Web APIs](/workers/languages/javascript/)                                                                                                                                  |    ✅    |   ✅    |
+| Perform compute-heavy tasks (for example, [AI](/workers-ai/), [image transformations](/images/transform-images/transform-via-workers/))                                                                       |    ❌    |   ✅    |
+| Store persistent data (for example, [KV](/kv/), [Durable Objects](/durable-objects/), and [D1](/d1/))                                                                                                         |    ❌    |   ✅    |
+| Build [APIs](/d1/tutorials/build-a-comments-api/) and [full-stack applications](/pages/framework-guides/deploy-an-astro-site/#video-tutorial)                                                                 |    ❌    |   ✅    |
+| Use TypeScript, Python, Rust, or other programming [languages](/workers/languages/)                                                                                                                           |    ❌    |   ✅    |
+| Support non-HTTP [protocols](/workers/reference/protocols/)                                                                                                                                                   |    ❌    |   ✅    |
+| Analyze execution [logs](/workers/observability/logs/workers-logs/) and track performance metrics                                                                                                             |    ❌    |   ✅    |
+| Deploy via [command-line interface (CLI)](/workers/wrangler/)                                                                                                                                                 |    ❌    |   ✅    |
+| Roll out gradually, roll back to previous [versions](/workers/configuration/versions-and-deployments/)                                                                                                        |    ❌    |   ✅    |
+| Optimize execution with [Smart Placement](/workers/configuration/smart-placement/)                                                                                                                            |    ❌    |   ✅    |
+
+---
+
+## Code examples: Common Snippets templates
+
+Below are practical use cases demonstrating Snippets in action. You can find more templates to get started in the [Examples](/rules/snippets/examples/) section.
+
+### Modify HTTP headers
+
+Modifies request and response headers dynamically.
+
+```javascript
+export default {
+	async fetch(request) {
+		// Get the current timestamp
+		const timestamp = Date.now();
+
+		// Convert the timestamp to hexadecimal format
+		const hexTimestamp = timestamp.toString(16);
+
+		// Clone the request and add the custom header with HEX timestamp
+		const modifiedRequest = new Request(request, {
+			headers: new Headers(request.headers),
+		});
+		modifiedRequest.headers.set("X-Hex-Timestamp", hexTimestamp);
+
+		// Pass the modified request to the origin
+		const response = await fetch(modifiedRequest);
+
+		// Clone the response so that it's no longer immutable
+		const newResponse = new Response(response.body, response);
+
+		// Add a custom header with a value to the response
+		newResponse.headers.append(
+			"x-snippets-hello",
+			"Hello from Cloudflare Snippets",
+		);
+
+		// Delete headers from the response
+		newResponse.headers.delete("x-header-to-delete");
+		newResponse.headers.delete("x-header2-to-delete");
+
+		// Adjust the value for an existing header in the response
+		newResponse.headers.set("x-header-to-change", "NewValue");
+
+		// Serve modified response to the visitor
+		return newResponse;
+	},
+};
+```
+
+### Serve a custom maintenance page
+
+Routes traffic to a maintenance page when your origin is undergoing a planned maintenance.
+
+```javascript
+export default {
+	async fetch(request) {
+		return new Response(
+			`
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <title>We'll Be Right Back!</title>
+                <style> body { font-family: Arial, sans-serif; text-align: center; padding: 20px; } </style>
+            </head>
+            <body>
+                <h1>We'll Be Right Back!</h1>
+                <p>Our site is undergoing maintenance. Check back soon!</p>
+            </body>
+            </html>
+        `,
+			{ status: 503, headers: { "Content-Type": "text/html" } },
+		);
+	},
+};
+```
+
+### Custom cache
+
+Performs programmatic caching at the edge to reduce origin load.
+
+```javascript
+const CACHE_DURATION = 30 * 24 * 60 * 60; // 30 days
+
+export default {
+	async fetch(request) {
+		const cache = caches.default;
+		const cacheKey = new Request(request.url, { method: "GET" });
+
+		let response = await cache.match(cacheKey);
+		if (!response) {
+			response = await fetch(request);
+			response = new Response(response.body, response);
+			response.headers.set("Cache-Control", `s-maxage=${CACHE_DURATION}`);
+			await cache.put(cacheKey, response.clone());
+		}
+		return response;
+	},
+};
+```
+
+### Redirect based on country code
+
+Redirects visitors based on their geographic location.
+
+```javascript
+export default {
+	async fetch(request) {
+		const country = request.cf.country;
+		const redirectMap = {
+			US: "https://example.com/us",
+			EU: "https://example.com/eu",
+		};
+		if (redirectMap[country])
+			return Response.redirect(redirectMap[country], 301);
+		return fetch(request);
+	},
+};
+```
+
+### Redirect 403 Forbidden to a different page
+
+If the origin responded with `403 Forbidden` error code, redirects visitor to a different page.
+
+```javascript
+export default {
+	async fetch(request) {
+		// Send original request to the origin
+		const response = await fetch(request);
+		// Check if origin responded with 403 status code
+		if (response.status == 403) {
+			// If so, redirect to this URL
+			const destinationURL = "https://example.com";
+			// With this status code
+			const statusCode = 301;
+			// Serve redirect
+			return Response.redirect(destinationURL, statusCode);
+		}
+		// Otherwise, serve origin's response
+		else {
+			return response;
+		}
+	},
+};
+```
+
+### Retry to another origin
+
+If the response to the original request is not `200 OK` or a redirect, sends to another origin.
+
+```javascript
+export default {
+	async fetch(request) {
+		// Send original request to the origin
+		const response = await fetch(request);
+
+		// If response is not 200 OK or a redirect, send to another origin
+		if (!response.ok && !response.redirected) {
+			// First, clone the original request to construct a new request
+			const newRequest = new Request(request);
+			// Add a header to identify a re-routed request at the new origin
+			newRequest.headers.set("X-Rerouted", "1");
+			// Clone the original URL
+			const url = new URL(request.url);
+			// Send request to a different origin / hostname
+			url.hostname = "example.com";
+			// Serve response to the new request from the origin
+			return await fetch(url, newRequest);
+		}
+
+		// If response is 200 OK or a redirect, serve it
+		return response;
+	},
+};
+```
+
+### Remove fields from API response
+
+If the origin responds with JSON, deletes sensitive fields before returning a response to the visitor.
+
+```javascript
+export default {
+	async fetch(request) {
+		// Send original request to the origin
+		const response = await fetch(request);
+		// Check if origin responded with JSON
+		try {
+			// Parse API response as JSON
+			var api_response = response.json();
+			// Specify the fields you want to delete. For example, to delete "botManagement" array from parsed JSON:
+			delete api_response.botManagement;
+			// Serve modified API response
+			return Response.json(api_response);
+		} catch (err) {
+			// On failure, serve unmodified origin's response
+			return response;
+		}
+	},
+};
+```
+
+### Set CORS headers
+
+Adjusts [Cross-Origin Resource Sharing (CORS)](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) headers and handles preflight requests.
+
+```javascript
+// Define CORS headers
+const corsHeaders = {
+	"Access-Control-Allow-Origin": "*", // Replace * with your allowed origin(s)
+	"Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS", // Adjust allowed methods as needed
+	"Access-Control-Allow-Headers": "Content-Type, Authorization", // Adjust allowed headers as needed
+	"Access-Control-Max-Age": "86400", // Adjust max age (in seconds) as needed
+};
+
+export default {
+	async fetch(request) {
+		// Make a copy of the request to modify its headers
+		const modifiedRequest = new Request(request);
+
+		// Handle preflight requests (OPTIONS)
+		if (request.method === "OPTIONS") {
+			return new Response(null, {
+				headers: {
+					...corsHeaders,
+				},
+				status: 200, // Respond with OK status for preflight requests
+			});
+		}
+
+		// Pass the modified request through to the origin
+		const response = await fetch(modifiedRequest);
+
+		// Make a copy of the response to modify its headers
+		const modifiedResponse = new Response(response.body, response);
+
+		// Set CORS headers on the response
+		Object.keys(corsHeaders).forEach((header) => {
+			modifiedResponse.headers.set(header, corsHeaders[header]);
+		});
+
+		return modifiedResponse;
+	},
+};
+```
+
+### Rewrite links on HTML pages
+
+Replaces outdated links without having to make changes on your origin.
+
+```javascript
+export default {
+	async fetch(request) {
+		// Define the old hostname here.
+		const OLD_URL = "oldsite.com";
+		// Then add your new hostname that should replace the old one.
+		const NEW_URL = "newsite.com";
+
+		class AttributeRewriter {
+			constructor(attributeName) {
+				this.attributeName = attributeName;
+			}
+			element(element) {
+				const attribute = element.getAttribute(this.attributeName);
+				if (attribute) {
+					element.setAttribute(
+						this.attributeName,
+						attribute.replace(OLD_URL, NEW_URL),
+					);
+				}
+			}
+		}
+
+		const rewriter = new HTMLRewriter()
+			.on("a", new AttributeRewriter("href"))
+			.on("img", new AttributeRewriter("src"));
+
+		const res = await fetch(request);
+		const contentType = res.headers.get("Content-Type");
+
+		// If the response is HTML, it can be transformed with
+		// HTMLRewriter -- otherwise, it should pass through
+		if (contentType.startsWith("text/html")) {
+			return rewriter.transform(res);
+		} else {
+			return res;
+		}
+	},
+};
+```
+
+### Slow down requests
+
+Defines a delay to be used when incoming requests match your rule. Useful for suspicious requests.
+
+```javascript
+export default {
+	async fetch(request) {
+		// Define delay
+		const delay_in_seconds = 5;
+		// Introduce a delay
+		await new Promise((resolve) =>
+			setTimeout(resolve, delay_in_seconds * 1000),
+		); // Set delay in milliseconds
+
+		// Pass the request to the origin
+		const response = await fetch(request);
+		return response;
+	},
+};
+```
+
+---
+
+## Using Snippets and Workers together
+
+While Snippets and Workers have distinct capabilities, they can work together to handle complex traffic workflows.
+
+To avoid conflicts, Snippets and Workers should operate on separate request paths rather than running on the same URL. Have them fetch their respective URLs as a subrequest within their logic, ensuring smooth execution and caching behavior.
+
+### Example 1: Passing data between Snippets and Workers
+
+Snippets can modify incoming requests before they reach a Worker, and Workers can read these modifications, perform additional transformations, and pass them downstream.
+
+#### Snippet: Add a custom header
+
+```javascript
+export default {
+	async fetch(request) {
+		// Get the current timestamp
+		const timestamp = Date.now();
+		const hexTimestamp = timestamp.toString(16);
+
+		// Clone request and add a custom header
+		const modifiedRequest = new Request(request, {
+			headers: new Headers(request.headers),
+		});
+		modifiedRequest.headers.set("X-Hex-Timestamp", hexTimestamp);
+
+		console.log(`X-Hex-Timestamp: ${hexTimestamp}`);
+
+		// Pass modified request to origin
+		return fetch(modifiedRequest);
+	},
+};
+```
+
+#### Worker: Read a header and add it to the response
+
+```javascript
+export default {
+	async fetch(request) {
+		const response = await fetch("https://{snippets_url}", request); // Ensure {snippets_url} points to the endpoint modified by Snippets
+		const newResponse = new Response(response.body, response);
+
+		let hexTimestamp = request.headers.get("X-Hex-Timestamp") || "null";
+		console.log(hexTimestamp);
+
+		newResponse.headers.set("X-Hex-Timestamp", hexTimestamp);
+		return newResponse;
+	},
+};
+```
+
+**Result:** The Snippet sets `X-Hex-Timestamp`, which the Worker reads and forwards to the origin.
+
+### Example 2: Caching Worker responses using Snippets
+
+A Worker performs compute-heavy processing (for example, image transformation), while a Snippet serves cached results to avoid unnecessary Worker execution. This can be helpful in situations when running Workers [before cache](/cache/interaction-cloudflare-products/workers/) is not desirable.
+
+#### Worker: Transform and cache responses
+
+```javascript
+export default {
+	async fetch(request) {
+		const url = new URL(request.url);
+		url.hostname = "origin.example.com"; // Ensure this hostname points to the origin where the resource is hosted
+
+		const newRequest = new Request(url, request);
+		const customKey = `https://${url.hostname}${url.pathname}`; // This custom cache key should be the same in both Worker and Snippet configuration for cache to work
+
+		// Fetch and modify response
+		const response = await fetch(newRequest);
+		const newResponse = new Response(response.body, response);
+
+		// Cache the transformed response
+		const cache = caches.default;
+		const cachedResponse = newResponse.clone();
+		cachedResponse.headers.set("X-Cached-In-Workers", "true");
+		await cache.put(customKey, cachedResponse);
+
+		newResponse.headers.set("X-Retrieved-From-Workers", "true");
+		return newResponse;
+	},
+};
+```
+
+#### Snippet: Serve cached responses or forward to Worker
+
+```javascript
+export default {
+	async fetch(request) {
+		const url = new URL(request.url);
+		url.hostname = "origin.example.com"; // Ensure this hostname points to the origin where the resource is hosted
+		const cacheKey = `https://${url.hostname}${url.pathname}`; // This custom cache key should be the same in both Worker and Snippet configuration for cache to work
+
+		// Access cache
+		const cache = caches.default;
+		let response = await cache.match(cacheKey);
+
+		if (!response) {
+			console.log(`Cache miss for: ${cacheKey}. Fetching from Worker...`);
+			url.hostname = "worker.example.com"; // Ensure this hostname points to the Workers route
+			response = await fetch(new Request(url, request));
+
+			// Cache the response for future use
+			response = new Response(response.body, response);
+			response.headers.set("Cache-Control", `s-maxage=3600`);
+			response.headers.set("x-snippets-cache", "stored");
+		} else {
+			console.log(`Cache hit for: ${cacheKey}`);
+			response = new Response(response.body, response);
+			response.headers.set("x-snippets-cache", "hit");
+		}
+
+		return response;
+	},
+};
+```
+
+**Result:** The transformed response (`X-Cached-In-Workers: true`) is served from cache, avoiding redundant Worker execution (`X-Retrieved-From-Workers` is not present). When cache expires, the Snippet fetches a fresh version.
+
+---
+
+## Migration between Snippets and Workers
+
+Snippets and Workers share the same [Workers runtime](/workers/runtime-apis/), meaning JavaScript code that does not rely on bindings, persistent storage, or advanced execution features can be migrated seamlessly between them.
+
+### When to migrate workloads to Snippets
+
+You should consider migrating a Worker to Snippets if it:
+
+- Only modifies headers, redirects, caching rules, or origin routing.
+- Does not require bindings, persistent storage, or external integrations.
+- Is a lightweight JavaScript function with simple logic.
+- Needs to run an unlimited number of times for free on a Pro, Business, or Enterprise plan.
+
+Migrating to Snippets allows you to:
+
+- Leverage advanced request matching via the [Ruleset Engine](/ruleset-engine/).
+- Eliminate usage-based billing — Snippets are [included at no cost](/rules/snippets/#availability) on all paid plans.
+- Simplify management by integrating traffic modifications directly into Cloudflare Rules.
+
+### When to migrate workloads to Workers
+
+You should migrate from Snippets to Workers if your logic:
+
+- Exceeds execution time, memory, or other [limits](/rules/snippets/#limits).
+- Requires persistent state management, such as:
+  - [Key-Value (KV) storage](/kv/)
+  - [SQL databases (D1)](/d1/)
+  - [Durable Objects](/durable-objects/)
+- Performs compute-intensive operations, including:
+  - [AI inference](/workers-ai/)
+  - [Vector search](/vectorize/)
+  - [Image transformations](/images/transform-images/transform-via-workers/)
+- Interacts with Cloudflare's [Developer Platform](/learning-paths/workers/devplat/intro-to-devplat/).
+- Requires [unit testing](/workers/testing/).
+- Needs deployment automation via CLI ([Wrangler](/workers/wrangler/)).
+
+If your Snippet reaches the limits of execution time, memory, or functionality, transitioning to Workers ensures your logic can scale without restrictions.
+
+---
+
+## Conclusion
+
+Cloudflare Snippets provide a production-ready solution for fast, declarative edge traffic logic, bridging the gap between [Cloudflare Rules](/rules/) and [Developer Platform](/learning-paths/workers/devplat/intro-to-devplat/).
+
+Snippets and Workers solve different problems:
+
+- Use Snippets for fast, lightweight traffic modifications at the edge, including header rewrites, caching, redirects, origin routing, custom responses, A/B testing and authentication.
+- Workers are built for advanced compute, persistent state, and full-stack applications.

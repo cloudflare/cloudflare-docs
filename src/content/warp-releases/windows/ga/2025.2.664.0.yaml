@@ -1,0 +1,23 @@
+releaseNotes: >-
+  This release contains a hotfix for captive portal detection for the 2025.2.600.0
+  release.
+
+
+  **Changes and improvements**
+
+  - Fix to reduce the number of browser tabs opened during captive portal logins.
+
+
+  **Known issues**
+
+  - DNS resolution may be broken when the following conditions are all true:
+    - WARP is in Secure Web Gateway without DNS filtering (tunnel-only) mode.
+    - A custom DNS server address is configured on the primary network adapter.
+    - The custom DNS server address on the primary network adapter is changed while WARP is connected.
+
+    To work around this issue, reconnect the WARP client by toggling off and back on.
+version: 2025.2.664.0
+releaseDate: 2025-04-08T21:25:24.685Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2025.2.664.0
+packageSize: 128217088
+platformName: Windows

@@ -13,8 +13,12 @@ import { Details, Render } from "~/components";
 
 This page provides examples of creating [rate limiting rules](/waf/rate-limiting-rules/) in a zone or account using Terraform.
 
-:::note
+If you are using the Cloudflare API, refer to the following resources:
 
+- [Create a rate limiting rule via API](/waf/rate-limiting-rules/create-api/)
+- [Create a rate limiting ruleset via API](/waf/account/rate-limiting-rulesets/create-api/)
+
+:::note
 For more information on configuring the previous version of rate limiting rules in Terraform, refer to the [`cloudflare_rate_limit` resource](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/rate_limit) in the Terraform documentation.
 :::
 
@@ -59,7 +63,8 @@ resource "cloudflare_ruleset" "zone_rl" {
 }
 ```
 
-<Render file="add-new-rule" params={{ one: "rate limiting rule" }} /> <br />
+<Render file="add-new-rule" params={{ ruleType: "rate limiting rule" }} />
+<br />
 
 ## Create a rate limiting rule at the account level
 
@@ -120,7 +125,8 @@ resource "cloudflare_ruleset" "account_rl_entrypoint" {
 }
 ```
 
-<Render file="add-new-rule" params={{ one: "rate limiting rule" }} /> <br />
+<Render file="add-new-rule" params={{ ruleType: "rate limiting rule" }} />
+<br />
 
 ## Create an advanced rate limiting rule
 
@@ -162,4 +168,5 @@ resource "cloudflare_ruleset" "zone_rl_custom_response" {
 }
 ```
 
-<Render file="add-new-rule" params={{ one: "rate limiting rule" }} /> <br />
+<Render file="add-new-rule" params={{ ruleType: "rate limiting rule" }} />
+<br />

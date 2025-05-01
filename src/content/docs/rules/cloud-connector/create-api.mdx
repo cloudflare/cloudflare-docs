@@ -8,6 +8,8 @@ head:
     content: Configure a Cloud Connector rule via API
 ---
 
+import { APIRequest } from "~/components";
+
 You can configure Cloud Connector rules using the [Cloudflare API](/fundamentals/api/).
 
 ## Required permissions
@@ -43,10 +45,7 @@ The following table summarizes the available operations.
 
 The following example returns a list of existing Cloud Connector rules:
 
-```bash
-curl https://api.cloudflare.com/client/v4/zones/{zone_id}/cloud_connector/rules \
---header "Authorization: Bearer <API_TOKEN>"
-```
+<APIRequest path="/zones/{zone_id}/cloud_connector/rules" method="GET" />
 
 ```json output
 {
@@ -76,22 +75,20 @@ To create a new rule and keep all existing rules, you must include them all in y
 
 The following example request will replace all existing Cloud Connector rules with a single rule:
 
-```bash
-curl --request PUT \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/cloud_connector/rules" \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '[
-  {
-    "expression": "http.request.uri.path wildcard \"/images/*\"",
-    "provider": "cloudflare_r2",
-    "description": "Connect to R2 bucket containing images",
-    "parameters": {
-      "host": "mybucketcustomdomain.example.com"
-    }
-  }
-]'
-```
+<APIRequest
+	path="/zones/{zone_id}/cloud_connector/rules"
+	method="PUT"
+	json={[
+		{
+			expression: 'http.request.uri.path wildcard "/images/*"',
+			provider: "cloudflare_r2",
+			description: "Connect to R2 bucket containing images",
+			parameters: {
+				host: "mybucketcustomdomain.example.com",
+			},
+		},
+	]}
+/>
 
 The required body parameters for each rule are: `expression`, `provider`, and `parameters.host`.
 

@@ -7,9 +7,14 @@ sidebar:
 
 import { RuleID, Render } from "~/components";
 
-You can deploy a managed ruleset at the zone level or at the account level.
+You can deploy a managed ruleset at the zone level or at the account level. To deploy a managed ruleset to a phase, use the [Rulesets API](/ruleset-engine/rulesets-api/).
 
-To deploy a managed ruleset to a phase, use the [Rulesets API](/ruleset-engine/rulesets-api/).
+If you are using Terraform, refer to [WAF Managed Rules configuration using Terraform](/terraform/additional-configurations/waf-managed-rulesets/) for more information.
+
+If you are using the Cloudflare dashboard, refer to the following pages:
+
+- [Deploy a WAF managed ruleset in the dashboard (zone)](/waf/managed-rules/deploy-zone-dashboard/)
+- [Deploy a WAF managed ruleset in the dashboard (account)](/waf/account/managed-rulesets/deploy-dashboard/)
 
 ## Deploy a managed ruleset to a phase at the zone level
 
@@ -17,7 +22,7 @@ Use the following workflow to deploy a managed ruleset to a phase at the zone le
 
 1. Get your [zone ID](/fundamentals/setup/find-account-and-zone-ids/).
 2. Invoke the [List account rulesets](/api/resources/rulesets/methods/list/) operation to obtain the available managed rulesets. Managed rulesets exist at the account level, but you can deploy them to a zone. Find the ruleset ID of the managed ruleset you want to deploy.
-3. Identify the [phase](/ruleset-engine/about/phases/) where you want to deploy the managed ruleset. Ensure that the managed ruleset belongs to the same phase where you want to deploy it. To learn more about the available phases supported by each Cloudflare product, refer to the specific documentation for that product, or the [Phases list](/ruleset-engine/reference/phases-list/).
+3. Identify the [phase](/ruleset-engine/reference/phases-list/) where you want to deploy the managed ruleset. Ensure that the managed ruleset belongs to the same phase where you want to deploy it.
 4. Add a rule to the zone-level phase [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) that executes the managed ruleset. Refer to the following example for details on this step.
 
 ### Example
@@ -32,11 +37,11 @@ Use the following workflow to deploy a managed ruleset to a phase at the account
 
 1. Get your [account ID](/fundamentals/setup/find-account-and-zone-ids/).
 2. Invoke the [List account rulesets](/api/resources/rulesets/methods/list/) operation to obtain the available managed rulesets. Find the ruleset ID of the managed ruleset you want to deploy.
-3. Identify the [phase](/ruleset-engine/about/phases/) where you want to deploy the managed ruleset. Ensure that the managed ruleset belongs to the same phase where you want to deploy it. To learn more about the available phases supported by each Cloudflare product, refer to the specific documentation for that product, or the [Phases list](/ruleset-engine/reference/phases-list/).
+3. Identify the [phase](/ruleset-engine/reference/phases-list/) where you want to deploy the managed ruleset. Ensure that the managed ruleset belongs to the same phase where you want to deploy it.
 4. Add a rule to the account-level phase [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) that executes the managed ruleset. Use parentheses to enclose any custom conditions in the rule expression and end your expression with `and cf.zone.plan eq "ENT"` so that it only applies to zones on an Enterprise plan. Refer to the following example for details on this step.
 
 ### Example
 
 <Render file="managed-rulesets/api-account-example" product="waf" />
 
-In this example, the managed ruleset executes the behavior configured by Cloudflare. To customize the behavior of managed rulesets, refer to [Override a managed ruleset](/ruleset-engine/managed-rulesets/override-managed-ruleset/).
+In this example, the managed ruleset executes the behavior configured by Cloudflare. To learn how to customize the behavior of managed rulesets, refer to [Override a managed ruleset](/ruleset-engine/managed-rulesets/override-managed-ruleset/).

@@ -81,7 +81,7 @@ To support the [use cases](#use-cases) mentioned above, and assuming you only ha
 
 The endpoint pointing to [Cloudflare Pages](/pages/) must have **host header** filled in with the project domain (`<project>.pages.dev`) for it to resolve correctly. You can find a reference table for correct setup in Step 8 below.
 
-Failing to add the host header will result in [response code mismatch error](/load-balancing/troubleshooting/common-error-codes/#response-code-mismatch-error) for the monitor, and [Error 1000: DNS points to prohibited IP](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/#error-1000-dns-points-to-prohibited-ip) for visitors (if the load balancer is enabled despite the unhealthy monitor status).
+Failing to add the host header will result in [response code mismatch error](/load-balancing/troubleshooting/common-error-codes/#response-code-mismatch-error) for the monitor, and [Error 1000: DNS points to prohibited IP](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/#error-1000-dns-points-to-prohibited-ip) for visitors (if the load balancer is enabled despite the unhealthy monitor status).
 :::
 
 1. Go to **Traffic** > **Load Balancing**.

@@ -1,9 +1,22 @@
 import rehypeExternalLinks, { type Options } from "rehype-external-links";
+import type { Element } from "hast";
+
+function hasImgChild(node: Element): boolean {
+	return node.children.some(
+		(child) => child.type === "element" && child.tagName === "img",
+	);
+}
+
+export const externalLinkArrow = " ↗";
 
 export const rehypeExternalLinksOptions = {
-	content: {
-		type: "text",
-		value: " ↗",
+	content: (element) => {
+		if (!hasImgChild(element)) {
+			return {
+				type: "text",
+				value: externalLinkArrow,
+			};
+		}
 	},
 	contentProperties: {
 		class: "external-link",

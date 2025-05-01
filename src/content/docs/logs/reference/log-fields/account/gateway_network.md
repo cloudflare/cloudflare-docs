@@ -129,6 +129,12 @@ Type: `string`
 
 The proxy endpoint used on this network session, if any.
 
+## RegistrationID
+
+Type: `string`
+
+The UUID of the device registration from which the network session originated.
+
 ## SNI
 
 Type: `string`

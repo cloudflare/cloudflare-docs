@@ -5,19 +5,24 @@ sidebar:
   order: 2
 ---
 
-import { GlossaryTooltip } from "~/components";
+import { APIRequest, Badge, GlossaryTooltip } from "~/components";
 
-To begin using Magic Network Monitoring, complete the list of tasks below.
+To begin using Magic Network Monitoring for network and/or cloud traffic visibility, complete the list of tasks below.
+
+- [NetFlow and sFlow guide](#netflow-and-sflow-guide)
+- [VPC flow log guide (beta)](#vpc-flow-log-guide)
 
 If you are an Enterprise customer, Cloudflare can significantly accelerate the onboarding timeline during active-attack scenarios. Enterprise customers that would like to use Magic Network Monitoring and Magic Transit On Demand together can begin by [configuring Magic Transit](/magic-transit/get-started/).
 
-## 1. Verify NetFlow or sFlow capabilities
+## NetFlow and sFlow guide
+
+### 1. Verify NetFlow or sFlow capabilities
 
 Verify your routers are capable of exporting <GlossaryTooltip term="NetFlow">NetFlow</GlossaryTooltip> or <GlossaryTooltip term="sFlow">sFlow</GlossaryTooltip> to an IP address on Cloudflare's network. Magic Network Monitoring supports NetFlow v5, NetFlow v9, IPFIX, and sFlow.
 
 Refer to [Supported routers](/magic-network-monitoring/routers/supported-routers) to view a list of supported routers. The list is not exhaustive.
 
-## 2. Register your router with Cloudflare
+### 2. Register your router with Cloudflare
 
 When you register your router with Cloudflare, your router links your NetFlow or sFlow data to your Cloudflare account.
 
@@ -29,7 +34,7 @@ When you register your router with Cloudflare, your router links your NetFlow or
 6. Under **Default router sampling rate**, enter a value for the <GlossaryTooltip term="sampling">sampling</GlossaryTooltip> rate. The value should match the sampling rate of your NetFlow or sFlow configuration.
 7. Select **Next**.
 
-## 3. Configure your router
+### 3. Configure your router
 
 Next, configure your router to send NetFlow/SFlow data to Cloudflare. For this step, you will also need to have your router's configuration menu open to input the values shown in the Cloudflare dashboard.
 
@@ -40,7 +45,7 @@ Refer to the [NetFlow/IPFIX configuration](/magic-network-monitoring/routers/net
 3. Enter the values shown in your router's configuration.
 4. Select **Next**.
 
-## 4. Check your router configuration
+### 4. Check your router configuration
 
 After setting up your router, confirm the configuration was successfully set up.
 
@@ -54,6 +59,40 @@ When you are done with router configuration, select **Finish onboarding**.
 This will only be visible during the onboarding process. When you are finished onboarding, this page will no longer be visible.
 :::
 
-## 5. Create rules
+### 5. Create rules
 
 Create rules to analyze data for a specific set of destinations or to implement thresholds. Refer to [Rules](/magic-network-monitoring/rules/) for more information.
+
+## VPC flow log guide <Badge text="Beta" variant="caution" />
+
+### 1. Verify cloud flow log capabilities
+
+Verify that your AWS account is capable of exporting AWS VPC flow logs via AWS Firehose. Currently, Magic Network Monitoring only supports VPC flow log ingestion for AWS.
+
+### 2. Set up AWS Firehose to export VPC flow logs to Cloudflare
+
+:::note
+AWS VPC flow logs can only be configured via the Cloudflare API for Magic Network Monitoring. There are no inputs in the dashboard for configuring AWS VPC flow logs.
+:::
+
+1. Create an authorization token via [Cloudflare's API for Magic Network Monitoring](/api/resources/magic_network_monitoring/subresources/vpc_flows/subresources/tokens/methods/create/). This authorization token allows Cloudflare to identify and verify the account sending VPC flow logs to our endpoint.
+
+	<APIRequest
+		path="/accounts/{account_id}/mnm/vpc-flows/token"
+		method="POST"
+	/>
+
+2. Set the `HTTP Headers - X-Amz-Firehose-Access-Key` in the stream configuration for the authorization token generated in the previous step.
+
+3. Send your AWS Firehose VPC flow log stream towards `https://aws-flow-logs.cloudflare.com/`.
+
+4. Select all of the AWS VPC flow log data fields that you want to send to Cloudflare. You should select the highest number AWS VPC flow log version that supports all the fields you want to export to Cloudflare (refer to [AWS flow log documentation](https://docs.aws.amazon.com/vpc/latest/userguide/flow-log-records.html) for more information). For example, if you need a version 8 field like `reject-reason`, you must export all fields from versions 1 through 8. Cloudflare supports all seven templates for AWS VPC Flow logs.
+
+### 3. Verify your cloud traffic via analytics
+
+After setting up AWS Firehose to send VPC flow logs to Magic Network Monitoring, you can confirm that Cloudflare is receiving the logs as expected by searching for your cloud traffic data in the analytics page of the Magic Network Monitoring dashboard.
+
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Analytics & Logs** > **Magic Monitoring**.
+
+The default view will be the analytics dashboard for Magic Network Monitoring.

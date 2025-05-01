@@ -2,7 +2,7 @@
 	"title": "Introduction to the China Network",
 	"path": "/learning-paths/china-network-overview/series/china-network-main-features-1/",
 	"priority": 1,
-	"description":"Watch to learn how Cloudflare's China Network can help you improve performance, compliance, and connectivity for your users in mainland China.",
+	"description": "Watch to learn how Cloudflare's China Network can help you improve performance, compliance, and connectivity for your users in mainland China.",
 	"products": ["China Network"],
 	"product_group": "Application performance",
 	"additional_groups": ["Application security"],

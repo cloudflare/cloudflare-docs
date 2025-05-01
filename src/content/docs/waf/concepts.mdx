@@ -45,9 +45,11 @@ Enabling traffic detections will not apply any mitigation measures to incoming t
 
 The WAF currently provides the following detections for finding security threats in incoming requests:
 
-- [**Bot score**](/bots/concepts/bot-score/): Scores traffic on a scale from 1 (likely to be a bot) to 99 (likely to be human).
 - [**Attack score**](/waf/detections/attack-score/): Checks for known attack variations and malicious payloads. Scores traffic on a scale from 1 (likely to be malicious) to 99 (unlikely to be malicious).
+- [**Leaked credentials**](/waf/detections/leaked-credentials/): Scans incoming requests for credentials (usernames and passwords) previously leaked from data breaches.
 - [**Malicious uploads**](/waf/detections/malicious-uploads/): Scans content objects, such as uploaded files, for malicious signatures like malware.
+- [**Firewall for AI**](/waf/detections/firewall-for-ai/): Helps protect your services powered by large language models (LLMs) against abuse.
+- [**Bot score**](/bots/concepts/bot-score/): Scores traffic on a scale from 1 (likely to be a bot) to 99 (likely to be human).
 
 To enable traffic detections in the Cloudflare dashboard, go to your domain > **Security** > **Settings**.
 
