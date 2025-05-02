@@ -5,7 +5,7 @@
 #
 # For a list of all options, see https://vale.sh/docs/topics/styles/
 extends: repetition
-message: "**Warning**: Remove this duplicate word: '%s'."
+message: "**Warning**: Remove this duplicate word: '%s'. Only remove this duplicate word and nothing else."
 level: warning
 alpha: true
 tokens:

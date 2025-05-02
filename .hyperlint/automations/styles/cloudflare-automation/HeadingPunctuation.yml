@@ -1,5 +1,5 @@
 extends: existence
-message: "Don't use end punctuation in headings."
+message: "Don't use end punctuation in headings. Only update the punctuation and nothing else."
 link: https://docs.microsoft.com/en-us/style-guide/punctuation/periods
 nonword: true
 level: warning

@@ -3,7 +3,7 @@ name: gitlab_base.UnclearAntecedent
 description: |
   Checks for words that need a noun for clarity.
 extends: existence
-message: "Instead of '%s', try starting this sentence with a specific subject and verb."
+message: "Instead of '%s', try starting this sentence with a specific subject and verb. Only update this part of the sentence and nothing else."
 link: https://docs.gitlab.com/development/documentation/styleguide/word_list/#this-these-that-those
 vocab: false
 level: warning
