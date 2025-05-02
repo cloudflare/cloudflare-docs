@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { Render, TabItem, Tabs, APIRequest } from "~/components";
 
 <Render file="warp/device-profiles-intro" />
 
@@ -32,34 +32,70 @@ Your profile will appear in the **Profile settings** list. You can rearrange the
 
 <TabItem label="API">
 
-Send a `POST` request to the [Devices endpoint](/api/resources/zero_trust/subresources/devices/subresources/policies/subresources/custom/methods/create/):
+Send a `POST` request to the [Devices API](/api/resources/zero_trust/subresources/devices/subresources/policies/subresources/custom/methods/create/):
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/devices/policy \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---header "Content-Type: application/json" \
---data '{
-  "allow_mode_switch": false,
-  "allow_updates": false,
-  "allowed_to_leave": false,
-  "auto_connect": 900,
-  "captive_portal": 180,
-  "description": "Cloudflare'\''s basic device settings profile, recommended in the implementation documentation. For details, refer to https://developers.cloudflare.com/learning-paths/replace-vpn/configure-device-agent/device-profiles/",
-  "disable_auto_fallback": true,
-  "enabled": true,
-  "exclude_office_ips": false,
-  "match": "identity.email == \"me@mycompany.com\"",
-  "name": "Cloudflare basic device profile",
-  "precedence": 101,
-  "service_mode_v2": {
-    "mode": "warp"
-  },
-  "support_url": "https://it.company.com/help",
-  "switch_locked": true
-}'
-```
+<APIRequest
+  path="/accounts/{account_id}/devices/policy"
+  method="POST"
+  json={{
+    "allow_mode_switch": false,
+		"allow_updates": false,
+		"allowed_to_leave": false,
+		"auto_connect": 600,
+		"captive_portal": 180,
+		"description": "Example device profile recommended in the implementation documentation. For details, refer to https://developers.cloudflare.com/learning-paths/replace-vpn/configure-device-agent/device-profiles/",
+		"disable_auto_fallback": true,
+		"enabled": true,
+		"exclude_office_ips": false,
+		"match": "identity.email in {\"jdoe@example.com\"} or any(identity.groups.name[*] in {\"developers\" \"admin\"}) and os.name == \"windows\"",
+		"name": "Example device profile",
+		"precedence": 101,
+		"service_mode_v2": {
+			"mode": "warp"
+		},
+		"support_url": "https://support.example.com",
+		"switch_locked": true
+  }}
+/>
 
-</TabItem> </Tabs>
+</TabItem>
+<TabItem label="Terraform (v5)">
+
+1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
+	- `Zero Trust Write`
+
+2. Create a new profile using the [`cloudflare_zero_trust_device_custom_profile`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_device_custom_profile) resource:
+
+	```tf
+	resource "cloudflare_zero_trust_device_custom_profile" "example" {
+		account_id            = var.cloudflare_account_id
+		name                  = "Example device profile"
+		description           = "Example device profile recommended in the implementation documentation. For details, refer to https://developers.cloudflare.com/learning-paths/replace-vpn/configure-device-agent/device-profiles/"
+		allow_mode_switch     = false
+		allow_updates         = false
+		allowed_to_leave      = false
+		auto_connect          = 600
+		captive_portal        = 180
+		disable_auto_fallback = true
+		enabled               = true
+		exclude_office_ips    = false
+		precedence            = 101
+		service_mode_v2       = {mode = "warp"}
+		support_url           = "https://support.example.com"
+		switch_locked         = true
+		tunnel_protocol       = "wireguard"
+
+		match = trimspace(replace(<<-EOT
+			identity.email in {"jdoe@example.com"}
+			or any(identity.groups.name[*] in {"developers" "admin"})
+			and os.name == "windows"
+		EOT
+		, "\n", " "))
+	}
+	```
+
+</TabItem>
+</Tabs>
 
 ## Edit profile settings
 
@@ -94,19 +130,75 @@ Alternatively, if you do not have access to the CLI, you can use [DEX remote cap
 
 ## Selectors
 
-| Selector                 | Description                                                                                                                                      | WARP mode required |
-| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------ |
-| User email               | Email address of a user <br /> `user-name@company.com`                                                                                           | Gateway with WARP  |
-| User group emails        | Email address of an [IdP group](/cloudflare-one/policies/gateway/identity-selectors/#idp-groups-in-gateway) <br /> `contractors@company.com`     | Gateway with WARP  |
-| User group IDs           | ID of an [IdP group](/cloudflare-one/policies/gateway/identity-selectors/#idp-groups-in-gateway) <br /> `12jf495bhjd7893ml09o`                   | Gateway with WARP  |
-| User group names         | Name of an [IdP group](/cloudflare-one/policies/gateway/identity-selectors/#idp-groups-in-gateway) <br /> `developers`                           | Gateway with WARP  |
-| Operating system         | Operating system of the device <br /> `macOS`                                                                                                    | Any mode           |
-| Operating system version | [OS version](/cloudflare-one/identity/devices/warp-client-checks/os-version/#determine-the-os-version) specified in Semver format <br /> `1.2.0` | Any mode           |
-| Managed network          | [Network location](/cloudflare-one/connections/connect-devices/warp/configure-warp/managed-networks/) of the device                              | Any mode           |
-| SAML Attributes          | Attribute name and value from a [SAML IdP](/cloudflare-one/policies/gateway/identity-selectors/#generic-saml-idp)                                | Gateway with WARP  |
-| Service Token          | [Service token](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/#check-for-service-token) used to enroll the device                      | Any mode   |
+You can configure device profiles to match against the following selectors, or criteria. Identity-based selectors are only available if the user [enrolled the device](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/) by logging in to an identity provider (IdP).
+
+### User email
+
+Apply a device profile based on the user's email.
+
+<Render file="gateway/selectors/user-email" params={{ UIname: "User email" }}/>
+
+### User group emails
+
+Apply a device profile based on an [IdP group](/cloudflare-one/policies/gateway/identity-selectors/#idp-groups-in-gateway) email address of which the user is configured as a member in the IdP.
+
+<Render file="gateway/selectors/user-group-email" params={{ UIname: "User group emails" }}/>
+
+### User group IDs
+
+Apply a device profile based on an [IdP group](/cloudflare-one/policies/gateway/identity-selectors/#idp-groups-in-gateway) ID of which the user is configured as a member in the IdP.
+
+<Render file="gateway/selectors/user-group-ids" params={{ UIname: "User group IDs" }}/>
+
+### User group names
+
+Apply a device profile based on an [IdP group](/cloudflare-one/policies/gateway/identity-selectors/#idp-groups-in-gateway) name of which the user is configured as a member in the IdP.
+
+<Render file="gateway/selectors/user-group-names" params={{ UIname: "User group names" }}/>
+
+### Operating system
+
+Apply a device profile based on the operating system of the device.
+
+| UI name         | API example                                       |
+| --------------- | ------------------------------------------------- |
+| Operating system | `os.name in {\"windows\" \"mac\"}` |
+
+### Operating system version
+
+Apply a device profile based on the [OS version](/cloudflare-one/identity/devices/warp-client-checks/os-version/#determine-the-os-version) of the device.
+
+| UI name         | API example                                       |
+| --------------- | ------------------------------------------------- |
+| Operating system version | `os.version == \"1.2.0\"` |
+
+ <Render file="warp/os-version-semver" />
+
+### Managed network
+
+Apply a device profile based on the [managed network](/cloudflare-one/connections/connect-devices/warp/configure-warp/managed-networks/) that the device is connected to.
+
+| UI name         | API example                                       |
+| --------------- | ------------------------------------------------- |
+| Managed network | `network == \"Austin office\"` |
+
+### SAML attributes
+
+Apply a device profile based on an attribute name and value from a [SAML IdP](/cloudflare-one/policies/gateway/identity-selectors/#generic-saml-idp).
+
+<Render file="gateway/selectors/saml-attributes" />
+
+### Service token
+
+Apply a device profile based on the [service token](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/#check-for-service-token) used to enroll the device.
+
+| UI name         | API example                                       |
+| --------------- | ------------------------------------------------- |
+| Service Token | `identity.service_token_uuid == \"f174e90a-fafe-4643-bbbc-4a0ed4fc8415\"` |
 
 ## Comparison operators
+
+Comparison operators determine how device profiles match a selector.
 
 | Operator | Meaning                                    |
 | -------- | ------------------------------------------ |
