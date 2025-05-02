@@ -4,7 +4,6 @@ Disallow: /client-ip-geolocation
 Disallow: /plans/
 Disallow: /constellation
 Disallow: /cdn-cgi/
-Disallow: /google-tag-first-party-mode/
 Disallow: /security/
 Disallow: /email-security/
 
