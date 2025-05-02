@@ -40,7 +40,7 @@ To connect to AWS Direct Connect:
 
 ### Google Cloud interconnect (beta)
 
-1. Log in to the [Cloudflare dashboard](https://developers.cloudflare.com/), and select your account.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
 2. Select **Interconnects** > **Create new**.
 3. Under **Cloud CNI** select **Create new** .
 4. Under **Google Integration**, select **Select integration**.
@@ -53,12 +53,11 @@ To connect to AWS Direct Connect:
 
 Your Google Cloud Platform (GCP) interconnect will take a few minutes to be available. A BGP session will be established but no routes will be exchanged.
 
-
 #### GCP next steps
 
-You can now select **View interconnects** for a list of all interconnects on your account. You can click on the interconnect name to show the interconnect details. The interconnect has a unique **Interconnect ID**.
+You can now select **View interconnects** for a list of all interconnects on your account. Select the interconnect name to show the interconnect details. The interconnect has a unique **Interconnect ID**.
 
-Now that you have configured your Google Cloud Interconnect, you will need to add routes to use the interconnect:
+After you have configured your Google Cloud Interconnect, you will need to add routes to use the interconnect:
 
 - To create routes in the Magic routing table to direct traffic towards GCP:
 	- Add [static routes](/magic-wan/configuration/manually/how-to/configure-routes/#configure-static-routes) to your Magic WAN routing table with [legacy bidirectional tunnel health checks](/magic-wan/configuration/manually/how-to/configure-tunnels/#legacy-bidirectional-health-checks) to detect failures and steer traffic to alternative paths.
