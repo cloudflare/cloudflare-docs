@@ -253,6 +253,12 @@ The `cacheTtl` parameter must be an integer greater than or equal to `60`, which
 
 The effective `cacheTtl` of an already cached item can be reduced by getting it again with a lower `cacheTtl`. For example, if you did `NAMESPACE.get(key, {cacheTtl: 86400})` but later realized that caching for 24 hours was too long, you could `NAMESPACE.get(key, {cacheTtl: 300})` or even `NAMESPACE.get(key)` and it would check for newer data to respect the provided `cacheTtl`, which defaults to 60 seconds.
 
+### Requesting more keys per Worker invocation with bulk requests
+
+Workers are limited to 1000 operations to external services per invocation. This applies to Workers KV, as documented in [Workers KV limits](/kv/platform/limits/). 
+
+To read more than 1000 keys per operation, you can use the bulk read operations to read multiple keys in a single operation. These count as a single operation against the 1000 operation limit. 
+
 ## Other methods to access KV
 
 You can [read key-value pairs from the command line with Wrangler](/kv/reference/kv-commands/#kv-key-get) and [from the REST API](/api/resources/kv/subresources/namespaces/subresources/values/methods/get/).
