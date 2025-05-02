@@ -16,7 +16,7 @@ method is specified as `get`, `post`, `put`, `delete`, `head`, or `options`,
 implementations are expected to uppercase the method. All other method names
 would generally be expected to throw as unrecognized (for example, `patch` would be
 an error while `PATCH` is accepted). This is a bit restrictive, even if it is in the spec.
-This flag modifies the behavior to uppercase all methods
+This flag ensures that all methods are uppercased
 prior to parsing so that the method is always recognized if it is a known
 method.
 
