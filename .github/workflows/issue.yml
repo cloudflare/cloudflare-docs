@@ -6,7 +6,7 @@ on:
 
 jobs:
   compile:
-    name:
+    name: Assignee
     permissions:
       issues: write
     runs-on: ubuntu-latest
