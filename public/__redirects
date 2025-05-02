@@ -199,6 +199,7 @@
 
 # api-shield
 /api-shield/security/sequential-abuse-detection/ /api-shield/security/sequence-analytics/ 301
+/api-shield/security/bola-attack-detection/ /api-shield/security/bola-vulnerability-detection/ 301
 
 #autorag
 /autorag/usage/recipes/ /autorag/how-to/ 301
