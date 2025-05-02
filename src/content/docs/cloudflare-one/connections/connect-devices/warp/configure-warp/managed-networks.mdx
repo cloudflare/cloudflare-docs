@@ -166,6 +166,8 @@ SHA256 Fingerprint=DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8
 
 ## 3. Add managed network to Zero Trust
 
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
 2. Scroll down to **Network locations** and select **Add new**.
 3. Name your network location.
@@ -176,9 +178,33 @@ SHA256 Fingerprint=DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8
 	:::
 5. (Optional) In **TLS Cert SHA-256**, enter the [SHA-256 fingerprint](#2-extract-the-sha-256-fingerprint) of the TLS certificate. This field is only needed for self-signed certificates. If a TLS fingerprint is not supplied, WARP validates the certificate against the local certificate store and checks that it is signed by a public certificate authority.
 
+</TabItem>
+<TabItem label="Terraform (v5)">
+
+1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
+	- `Zero Trust Write`
+
+2. Add a managed network using the [`cloudflare_zero_trust_device_managed_network`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_device_managed_network) resource:
+
+	```tf
+	resource "cloudflare_zero_trust_device_managed_networks" "office" {
+		account_id = var.cloudflare_account_id
+		name       = "Office managed network"
+		type       = "tls"
+		config = {
+			tls_sockaddr = "192.168.185.198:3333"
+			sha256       = "DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8662"
+		}
+	}
+	```
+</TabItem>
+</Tabs>
+
 WARP will automatically exclude the TLS endpoint from all device profiles. This prevents remote users from accessing the endpoint through the WARP tunnel on any port. If a device profile uses [Split Tunnels](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) in **Include** mode, make sure that the Split Tunnel entries do not contain the TLS endpoint IP address; otherwise, the entire IP range will be excluded from the WARP tunnel.
 
 ## 4. Configure device profile
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
 
@@ -191,6 +217,29 @@ WARP will automatically exclude the TLS endpoint from all device profiles. This 
    | Managed network | is       | `<NETWORK-NAME>` |
 
 4. Save the profile.
+
+</TabItem>
+<TabItem label="Terraform (v5)">
+
+In [`cloudflare_zero_trust_device_custom_profile`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_device_custom_profile), configure a `match` expression using the `network` selector. For example, the following device profile will match all devices connected a specific managed network:
+
+```tf
+resource "cloudflare_zero_trust_device_custom_profile" "office" {
+	account_id            = var.cloudflare_account_id
+	name                  = "Office"
+	description           = "Devices connected to the office network"
+	precedence            = 1
+	service_mode_v2       = {mode = "warp"}
+
+	match = trimspace(replace(<<-EOT
+		network == "${cloudflare_zero_trust_device_managed_networks.office.name}"
+	EOT
+	, "\n", " "))
+}
+```
+
+</TabItem>
+</Tabs>
 
 Managed networks are now enabled. Every time a device in your organization connects to a network (for example, when waking up the device or changing Wi-Fi networks), the WARP client will determine its network location and apply the corresponding settings profile.
 
