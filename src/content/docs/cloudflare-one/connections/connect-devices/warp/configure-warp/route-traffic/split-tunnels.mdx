@@ -13,7 +13,7 @@ Split Tunnels can be configured to exclude or include IP addresses or domains fr
 Split Tunnels only impacts the flow of IP traffic. DNS requests are still resolved by Gateway and subject to DNS policies unless you add the domains to your [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) configuration.
 :::
 
-Because Split Tunnels controls what Gateway has visibility on at the network level, we recommend testing all changes before rolling out updates to end users. It may take up to 24 hours for changes to propagate to clients, depending on how many devices are connected to your organization.
+Because Split Tunnels controls what Gateway has visibility on at the network level, we recommend testing all changes before rolling out updates to end users. It may take up to 10 minutes for changes to propagate to clients, depending on how many devices are connected to your organization.
 
 ## Change Split Tunnels mode
 
@@ -94,7 +94,7 @@ Removing default Split Tunnel entries may cause users to lose Internet connectiv
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **WARP Client**.
 2. Under **Device settings**, locate the [device profile](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) you would like to modify and select **Configure**.
-3. Under **Split Tunnels**. select **Manage**.
+3. Under **Split Tunnels**, select **Manage**.
 4. Find the IP address or hostname in the list and select **Delete**.
 
 If you need to revert to the default Split Tunnel entries recommended by Cloudflare, select **Restore default entries**.
