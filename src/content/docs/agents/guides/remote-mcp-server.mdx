@@ -20,7 +20,7 @@ The button below will guide you through everything you need to do to deploy this
 
 [![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-authless)
 
-Once deployed, this server will be live at your workers.dev subdomain (e.g. remote-mcp-server-authless.your-account.workers.dev/sse). You can connect to it immediately using the [AI Playground](https://playground.ai.cloudflare.com/) (a remote MCP client), [MCP inspector](https://github.com/modelcontextprotocol/inspector) or [other MCP clients](/agents/guides/remote-mcp-server/#connect-your-remote-mcp-server-to-claude-and-other-mcp-clients-via-a-local-proxy). Then, once you're ready, you can customize the MCP server and add your own [tools](/agents/model-context-protocol/tools/). 
+Once deployed, this server will be live at your workers.dev subdomain (for example, remote-mcp-server-authless.your-account.workers.dev/sse). You can connect to it immediately using the [AI Playground](https://playground.ai.cloudflare.com/) (a remote MCP client), [MCP inspector](https://github.com/modelcontextprotocol/inspector) or [other MCP clients](/agents/guides/remote-mcp-server/#connect-your-remote-mcp-server-to-claude-and-other-mcp-clients-via-a-local-proxy).
 
 If you're using the "Deploy to Cloudflare" button, a new git repository will be set up on your GitHub or GitLab account for your MCP server, configured to automatically deploy to Cloudflare each time you push a change or merge a pull request to the main branch of the repository. You can then clone this repository, [develop locally](/agents/guides/remote-mcp-server/#local-development), and start writing code and building.
 
@@ -80,7 +80,7 @@ After deploying, take the URL of your deployed MCP server, and enter it in the M
 
 ### Connect your Remote MCP server to Claude and other MCP Clients via a local proxy
 
-Now that your MCP server is running, you can use the [`mcp-remote` local proxy](https://www.npmjs.com/package/mcp-remote) to connect Claude Desktop or other MCP clients to it — even though these tools aren't yet _remote_ MCP clients, and don't support remote transport or authorization on the client side. This lets you test what an interaction with your MCP server will be like with a real MCP client.
+Now that your MCP server is running, you can use the [`mcp-remote` local proxy](https://www.npmjs.com/package/mcp-remote) to connect Claude Desktop or other MCP clients to it — even though these tools are not yet _remote_ MCP clients, and do not support remote transport or authorization on the client side. This lets you test what an interaction with your MCP server will be like with a real MCP client.
 
 Update your Claude Desktop configuration to point to the URL of your MCP server. You can use either the `localhost:8787/sse` URL, or the URL of your deployed MCP server:
 
@@ -104,11 +104,11 @@ Learn more about other ways of using remote MCP servers with MCP clients here in
 
 ## Add Authentication
 
-Now that you’ve deployed a public MCP server, let’s walk through how to enable user authentication using OAuth.
+Now that you've deployed a public MCP server, let's walk through how to enable user authentication using OAuth.
 
 The public server example you deployed earlier allows any client to connect and invoke tools without logging in. To add authentication, you’ll update your MCP server to act as an OAuth provider, handling secure login flows and issuing access tokens that MCP clients can use to make authenticated tool calls.
 
-This is especially useful if users already need to log in to use your service. Once authentication is enabled, users can sign in with their existing account and grant their AI agent permission to interact with the tools exposed by your MCP server, using scoped permissions.
+Enabling authentication is especially useful if users already need to log in to use your service. Once authentication is enabled, users can sign in with their existing account and grant their AI agent permission to interact with the tools exposed by your MCP server, using scoped permissions.
 
 In this example, we use GitHub as an OAuth provider, but you can connect your MCP server with any [OAuth provider](/agents/model-context-protocol/authorization/#2-third-party-oauth-provider) that supports the OAuth 2.0 specification, including Google, Slack, [Stytch](/agents/model-context-protocol/authorization/#stytch), [Auth0](/agents/model-context-protocol/authorization/#stytch), [WorkOS](/agents/model-context-protocol/authorization/#stytch), and more.
 
