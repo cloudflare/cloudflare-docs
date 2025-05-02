@@ -46,6 +46,8 @@ jobs:
         run: ./bin/htmltest -c ./bin/.htmltest.yml
 
       - name: Create issue on failure
+        permissions:
+          issues: write
         if: ${{ failure() }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

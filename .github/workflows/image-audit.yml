@@ -38,6 +38,8 @@ jobs:
           fi
 
       - name: Create Issue if Unused Files Found
+        permissions:
+          issues: write
         if: steps.find-files.outputs.unused_files
         env:
           UNUSED_FILES: ${{ steps.find-files.outputs.unused_files }}
