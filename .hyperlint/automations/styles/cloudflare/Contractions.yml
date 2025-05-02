@@ -6,7 +6,7 @@
 # For a list of all options, see https://vale.sh/docs/topics/styles/
 
 extends: substitution
-message: "Do not use contractions. Use '%s' instead of '%s'."
+message: "Do not use contractions. Use '%s' instead of '%s'. Only change the contractions, nothing else."
 link: https://developers.cloudflare.com/style-guide/grammar/parts-of-speech/contractions/
 level: error
 ignorecase: true
