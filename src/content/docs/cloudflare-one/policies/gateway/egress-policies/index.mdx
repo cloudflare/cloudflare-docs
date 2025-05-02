@@ -178,6 +178,8 @@ Gateway uses Rust to evaluate regular expressions. The Rust implementation is sl
 
 ## Limitations
 
+### Selector prerequisites
+
 The [Application](#application), [Content Categories](#content-categories), [Domain](#domain), and [Host](#host) selectors are only available for traffic onboarded to Gateway with [WARP](/cloudflare-one/connections/connect-devices/warp/), [PAC files](/cloudflare-one/connections/connect-devices/agentless/pac-files/), or [Browser Isolation](/cloudflare-one/policies/browser-isolation/). To turn on the selectors for your account, use the [Patch Zero Trust account configuration endpoint](/api/resources/zero_trust/subresources/gateway/subresources/configurations/methods/edit/). For example:
 
 ```sh title="Turn on selectors for egress policies"
