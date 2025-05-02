@@ -35,6 +35,12 @@ Once your SSO domain is approved, a new **SSO App** application will appear unde
 - Every user with that email domain must be an employee in your organization. For example, university domains such as `@harvard.edu` are not allowed because they include student emails.
 - Your SSO domain can include multiple email domains.
 
+:::caution
+
+Enabling Cloudflare Dashboard SSO for an email domain (for example, `@mycompany.com`) will apply globally across all Cloudflare accounts where users log in with that domain. All users will be required to authenticate via the specified identity provider (IdP), including users on pre-existing Cloudflare accounts.
+
+:::
+
 ## 3. Enable dashboard SSO
 
 :::note
