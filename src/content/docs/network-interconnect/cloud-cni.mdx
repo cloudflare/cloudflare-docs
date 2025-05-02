@@ -63,5 +63,5 @@ After you have configured your Google Cloud Interconnect, you will need to add r
 	- Add [static routes](/magic-wan/configuration/manually/how-to/configure-routes/#configure-static-routes) to your Magic WAN routing table with [legacy bidirectional tunnel health checks](/magic-wan/configuration/manually/how-to/configure-tunnels/#legacy-bidirectional-health-checks) to detect failures and steer traffic to alternative paths.
 	- Note that routes advertised by BGP from GCP Cloud Router will be ignored.
 - To create routes in GCP routing table to direct traffic towards Cloudflare, you must use the GCP Cloud Router:
-		- You can add [custom learned routes to Cloud Router](https://cloud.google.com/network-connectivity/docs/router/how-to/configure-custom-learned-routes).
-		- You can use the BGP session. Reach out to your account team to request a list of one or more prefixes to advertise, and specify the interconnect ID you want to advertise over.
+		- Add [custom learned routes to Cloud Router](https://cloud.google.com/network-connectivity/docs/router/how-to/configure-custom-learned-routes).
+		- Use the BGP session. Reach out to your account team to request a list of one or more prefixes to advertise, and specify the interconnect ID you want to advertise over.
