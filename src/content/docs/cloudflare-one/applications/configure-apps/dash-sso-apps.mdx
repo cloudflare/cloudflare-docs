@@ -64,9 +64,45 @@ Cloudflare recommends carefully storing your [Global API key](/fundamentals/api/
 Cloudflare dashboard SSO does not support:
 
 - Users with plus-addressed emails, such as `example+2@domain.com`. If you have users like this added to your Cloudflare organization, they will be unable to login with SSO.
-- IdP-initiated logins (such as a tile in Okta). All login attempts must originate from `https://dash.cloudflare.com`. You can create a bookmark for this URL in your IdP to assist users.
 - Adding a separate email-based policy to the SSO application that does not match your SSO domain policy. As your account team must [approve and create your SSO domain](/cloudflare-one/applications/configure-apps/dash-sso-apps/#2-contact-your-account-team) based on the [SSO domain requirements](/cloudflare-one/applications/configure-apps/dash-sso-apps/#sso-domain-requirements), adding a new domain policy on your own will not work.
 - Deleting the auto-generated `allow email domain` policy. If this policy was deleted, your organization's administrators would not be able to access the Cloudflare dashboard.
+
+## IdP-initiated SSO
+
+IdP-initiated login is supported for Cloudflare dashboard SSO, with configuration available via your identity provider (IdP).
+
+A step-by-step guide is currently available for Okta, and similar configurations are possible with other identity providers that support custom SSO endpoints.
+
+### Okta
+
+Configure an identity provider (IdP)-initiated single sign-on (SSO) session using Cloudflare Zero Trust and Okta.
+
+#### Prerequisites
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications** > select your **SSO App**.
+2. Select **Configure** to access the application settings.
+3. In the **Basic Information** section, find the **SSO Endpoint URL** and copy it. You will need the copied **SSO Endpoint URL** for your IdP setup.
+
+#### Configure Okta as the IdP
+
+1. Log in to your [Okta Admin Dashboard](https://login.okta.com/) and go to **Applications** > **Applications**.
+2. Select **Create App Integration** to start a new SAML integration to handle the IdP-initated SSO flow.
+3. In the pop-up, select **SAML 2.0** and select **Next**.
+4. Enter a name for the app and select **Next**.
+5. In the **Single Sign-On URL** field, paste the **SSO Endpoint URL** [you copied earlier](/cloudflare-one/applications/configure-apps/dash-sso-apps/#prerequisites-1).
+6. Set the **Name ID Format** to **EmailAddress**.
+7. Set the **Application Username** to **Email**.
+8. Select **Next** > **Finish** to save the integration.
+9. Test the integration by going to your Okta User Dashboard, locating the new app tile, and selecting it to verify the SSO flow.
+
+**(Optional) Enforce single IdP login with Instant Auth**
+
+If you use only one IdP (for exampple, Okta) for Cloudflare SSO and want users to skip the identity provider selection prompt:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications** > select your **SSO App**.
+2. Go to **Login methods**.
+3. Disable **Accept all available identity providers** and ensure only Okta is selected as the login method.
+4. Enable **Instant Auth** to allow users to skip identity provider selection.
 
 ## Bypass dashboard SSO
 
