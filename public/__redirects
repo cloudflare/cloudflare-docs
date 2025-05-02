@@ -11,7 +11,7 @@
 /changelog/rss.xml /changelog/rss/index.xml 301
 /api-shield/changelog/index.xml /changelog/rss/api-shield.xml 301
 /cache/changelog/index.xml /changelog/rss/cache.xml 301
-/cloudflare-one/changelog/index.xml changelog/rss/cloudflare-one.xml 301
+/cloudflare-one/changelog/index.xml /changelog/rss/cloudflare-one.xml 301
 /cloudflare-one/changelog/access/index.xml /changelog/rss/access.xml 301
 /cloudflare-one/changelog/browser-isolation/index.xml /changelog/rss/browser-isolation.xml 301
 /cloudflare-one/changelog/casb/index.xml /changelog/rss/casb.xml 301
@@ -2017,7 +2017,7 @@
 /learning-paths/get-started/performance/add-on-products/ /products/?product-group=Application+performance 301
 ## Get started free plan --> fundamentals
 /learning-paths/get-started-free/onboarding/ /fundamentals/ 301
-/learning-paths/get-started-free/onboarding/add-and-activate/ /fundamentals/setup/manage-domains/add-site/ 301 301
+/learning-paths/get-started-free/onboarding/add-and-activate/ /fundamentals/setup/manage-domains/add-site/ 301
 /learning-paths/get-started-free/onboarding/proxy-dns-records/ /dns/proxy-status/ 301
 /learning-paths/get-started-free/onboarding/check-dns/ /dns/zone-setups/full-setup/troubleshooting/ 301
 /learning-paths/get-started-free/onboarding/check-ssl/ /ssl/troubleshooting/ 301
