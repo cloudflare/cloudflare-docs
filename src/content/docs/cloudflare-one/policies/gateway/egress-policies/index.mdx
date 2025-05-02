@@ -178,7 +178,23 @@ Gateway uses Rust to evaluate regular expressions. The Rust implementation is sl
 
 ## Limitations
 
-The [Application](#application), [Content Categories](#content-categories), [Domain](#domain), and [Host](#host) selectors are only available for traffic onboarded to Gateway with [WARP](/cloudflare-one/connections/connect-devices/warp/), [PAC files](/cloudflare-one/connections/connect-devices/agentless/pac-files/), or [Browser Isolation](/cloudflare-one/policies/browser-isolation/). To use these selectors to filter traffic onboarded with WARP, you need to:
+The [Application](#application), [Content Categories](#content-categories), [Domain](#domain), and [Host](#host) selectors are only available for traffic onboarded to Gateway with [WARP](/cloudflare-one/connections/connect-devices/warp/), [PAC files](/cloudflare-one/connections/connect-devices/agentless/pac-files/), or [Browser Isolation](/cloudflare-one/policies/browser-isolation/). To turn on the selectors for your account, use the [Patch Zero Trust account configuration endpoint](/api/resources/zero_trust/subresources/gateway/subresources/configurations/methods/edit/). For example:
+
+```sh title="Turn on selectors for egress policies"
+curl --request PATCH \
+"https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/configuration" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--header "Content-Type: application/json" \
+--data '{
+  "settings": {
+    "host_selector": {
+      "enabled": true
+		}
+	}
+}'
+```
+
+Additionally, to use these selectors to filter traffic onboarded with WARP, you need to:
 
 1. Ensure you have deployed [WARP beta version 2025.4.589.1](/cloudflare-one/connections/connect-devices/warp/download-warp/beta-releases/) or later on your users' devices.
 2. In your WARP [device profile](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/), ensure Split Tunnel is set to [**Exclude IPs and domains**](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#change-split-tunnels-mode).
