@@ -15,6 +15,8 @@ concurrency:
 
 jobs:
   flag_changed_filenames:
+    permissions:
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -36,8 +38,6 @@ jobs:
           echo "${delimiter}" >> "$GITHUB_ENV"
 
       - name: Comment or Update Comment on PR based on changed files
-        permissions:
-          pull-requests: write
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |

@@ -11,6 +11,8 @@ jobs:
   compile:
     name: Compiles
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -46,8 +48,6 @@ jobs:
         run: ./bin/htmltest -c ./bin/.htmltest.yml
 
       - name: Create issue on failure
-        permissions:
-          issues: write
         if: ${{ failure() }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
