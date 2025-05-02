@@ -675,6 +675,9 @@
 /gateway/locations/setup-instructions/android/ /cloudflare-one/connections/connect-devices/agentless/dns/locations/ 301
 /gateway/locations/setup-instructions/router/ /cloudflare-one/policies/gateway/dns-policies/ 301
 
+# google tag
+/google-tag-first-party-mode/ /google-tag-gateway/ 301
+
 # images
 /images/cloudflare-images/upload-images/supported-formats/ /images/upload-images/ 301
 /image-resizing/ /images/manage-images/create-variants/ 301
