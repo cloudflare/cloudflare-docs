@@ -9,7 +9,7 @@ import { Render } from "~/components";
 
 Remote, authorized connections are an evolving part of the [Model Context Protocol (MCP) specification](https://spec.modelcontextprotocol.io/specification/draft/basic/authorization/). Not all MCP clients support remote connections yet.
 
-This guide will show you options for how to start using your remote MCP server with MCP clients that support remote connections. If you haven't yet created and deployed a remote MCP server, you should follow the [Build a Remote MCP Server](/agents/guides/remote-mcp-server/) guide first.
+This guide will show you options for how to start using your remote MCP server with MCP clients that support remote connections. If you have not yet created and deployed a remote MCP server, you should follow the [Build a Remote MCP Server](/agents/guides/remote-mcp-server/) guide first.
 
 ## The Model Context Protocol (MCP) inspector
 
@@ -31,7 +31,7 @@ Once you have authenticated, you will be redirected back to the inspector. You s
 
 ## Connect your remote MCP server to Claude Desktop via a local proxy
 
-Even though [Claude Desktop](https://claude.ai/download) doesn't yet support remote MCP clients, you can use the [`mcp-remote` local proxy](https://www.npmjs.com/package/mcp-remote) to connect it to your remote MCP server. This lets you to test what an interaction with your remote MCP server will be like with a real-world MCP client.
+Even though [Claude Desktop](https://claude.ai/download) does not yet support remote MCP clients, you can use the [`mcp-remote` local proxy](https://www.npmjs.com/package/mcp-remote) to connect it to your remote MCP server. This lets you to test what an interaction with your remote MCP server will be like with a real-world MCP client.
 
 1. Open Claude Desktop and navigate to Settings -> Developer -> Edit Config. This opens the configuration file that controls which MCP servers Claude can access.
 2. Replace the content with a configuration like this:
@@ -55,7 +55,7 @@ Once authenticated, you'll be able to see your tools by clicking the tools icon 
 
 ## Connect your remote MCP server to Cursor
 
-To connect [Cursor](https://www.cursor.com/) with your remote MCP server, choose `Type`: "Command" and in the `Command` field, combine the command and args fields into one (e.g.`npx mcp-remote https://your-worker-name.your-account.workers.dev/sse`).
+To connect [Cursor](https://www.cursor.com/) with your remote MCP server, choose `Type`: "Command" and in the `Command` field, combine the command and args fields into one (for example, `npx mcp-remote https://your-worker-name.your-account.workers.dev/sse`).
 
 ## Connect your remote MCP server to Windsurf
 
