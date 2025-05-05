@@ -22,11 +22,11 @@ Add Guardrails to any gateway to start evaluating and potentially modifying resp
 For additional details about how to implement Guardrails, refer to [Usage considerations](/ai-gateway/guardrails/usage-considerations/).
 :::
 
-## Viewing Guardrail Results in Logs
+## Viewing Guardrail results in Logs
 
 After enabling Guardrails, you can monitor results through **AI Gateway Logs** in the Cloudflare dashboard. Guardrail logs are marked with a **green shield icon**, and each logged request includes an `eventID`, which links to its corresponding Guardrail evaluation log(s) for easy tracking. Logs are generated for all requests, including those that **pass** Guardrail checks.
 
-## Error Handling and Blocked Requests
+## Error handling and blocked requests
 
 When a request is blocked by guardrails, you will receive a structured error response. These indicate whether the issue occurred with the prompt or the model response. Use error codes to differentiate between prompt versus response violations. 
 
