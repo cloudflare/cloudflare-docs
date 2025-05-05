@@ -438,9 +438,9 @@
 				"options": {
 					"title": "Purge options",
 					"free": "URL, Hostname, Tag, Prefix, and Purge Everything",
-                    "pro": "URL, Hostname, Tag, Prefix, and Purge Everything",
-                    "biz": "URL, Hostname, Tag, Prefix, and Purge Everything",
-                    "ent": "URL, Hostname, Tag, Prefix, and Purge Everything"
+					"pro": "URL, Hostname, Tag, Prefix, and Purge Everything",
+					"biz": "URL, Hostname, Tag, Prefix, and Purge Everything",
+					"ent": "URL, Hostname, Tag, Prefix, and Purge Everything"
 				}
 			}
 		},
@@ -456,19 +456,19 @@
 					"biz": "10 requests per second",
 					"ent": "50 requests per second"
 				},
-                "limits_bucket": {
-                    "title": "Bucket size",
-                    "free": "25",
-                    "pro": "25",
-                    "biz": "50",
-                    "ent": "500"
-                },
-                "limits_operations": {
-                    "title": "Max operations per request",
-                    "free": "100",
-                    "pro": "100",
-                    "biz": "100",
-                    "ent": "100"
+				"limits_bucket": {
+					"title": "Bucket size",
+					"free": "25",
+					"pro": "25",
+					"biz": "50",
+					"ent": "500"
+				},
+				"limits_operations": {
+					"title": "Max operations per request",
+					"free": "100",
+					"pro": "100",
+					"biz": "100",
+					"ent": "100"
 				}
 			}
 		},
@@ -484,12 +484,12 @@
 					"biz": "1500 URLs per second",
 					"ent": "3000 URLs per second"
 				},
-                "limits_operations": {
-                    "title": "Max operations per request",
-                    "free": "100",
-                    "pro": "100",
-                    "biz": "100",
-                    "ent": "500"
+				"limits_operations": {
+					"title": "Max operations per request",
+					"free": "100",
+					"pro": "100",
+					"biz": "100",
+					"ent": "500"
 				}
 			}
 		},
@@ -2724,6 +2724,13 @@
 					"pro": "5,000",
 					"biz": "5,000",
 					"ent": "Unlimited, but contact sales if using over 5,000."
+				},
+				"d_cost_per_hostname": {
+					"title": "Price per additional hostname",
+					"free": "$.10",
+					"pro": "$.10",
+					"biz": "$.10",
+					"ent": "$.10"
 				},
 				"custom_analytics": {
 					"title": "[Custom analytics](/cloudflare-for-platforms/cloudflare-for-saas/hostname-analytics/)",
