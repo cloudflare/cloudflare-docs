@@ -108,9 +108,7 @@ You can now build the Worker using the online code editor by selecting **Edit co
 
 The following is an example starter Worker that serves a simple front-end to allow a user to interact with an AI provider behind AI Gateway. This example uses OpenAI as its AI provider:
 
-<Details header="Example AI wrapper Worker">
-
-```javascript
+```javascript {9} collapse={54-230}
 export default {
 	async fetch(request, env) {
 		if (request.url.endsWith("/api/chat")) {
@@ -119,7 +117,7 @@ export default {
 					const { messages } = await request.json();
 
 					const response = await fetch(
-						"https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_ID>/openai/chat/completions",
+						"https://gateway.ai.cloudflare.com/v1/$ACCOUNT_ID/$GATEWAY_ID/openai/chat/completions",
 						{
 							method: "POST",
 							headers: {
@@ -344,8 +342,6 @@ const HTML = `<!DOCTYPE html>
   </html>`;
 ```
 
-</Details>
-
 Note that the account ID and gateway ID need to be replaced in the AI Gateway endpoint. You can add these as [environment variables](/workers/configuration/environment-variables/) or [secrets](/workers/configuration/secrets/) in Workers. If you chose to use Authenticated Gateway when creating your AI gateway, make sure to also add your token as a secret and pass its value to the AI gateway in the `cf-aig-authorization` header.
 
 ### 3. Publish the Worker
@@ -356,16 +352,16 @@ Once the Worker code is complete, you need to make the Worker addressable using 
 
 Edit the `wrangler.toml` configuration file and add the following information to ensure that the Worker is only accessible using the custom hostname:
 
-```toml
+```diff lang="toml"
 name = "ai-agent-wrapper"
 main = "src/index.js"
 compatibility_date = "2023-10-30"
 workers_dev = false
 
-# replace with your custom domain
-routes = [
-  { pattern = "<YOUR_CUSTOM_DOMAIN>", custom_domain = true }
-]
++# Replace with your custom domain
++routes = [
++  { pattern = "<YOUR_CUSTOM_DOMAIN>", custom_domain = true }
++]
 
 [vars]
 # Add any environment variables here
