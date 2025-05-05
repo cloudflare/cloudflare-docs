@@ -695,14 +695,14 @@
 					"free": "7 days",
 					"pro": "31 days",
 					"biz": "31 days",
-					"ent": "31 days"
+					"ent": "62 days"
 				},
 				"historical_data": {
 					"title": "Historical data",
 					"free": "8 days",
 					"pro": "31 days",
 					"biz": "31 days",
-					"ent": "31 days"
+					"ent": "62 days"
 				}
 			}
 		},
