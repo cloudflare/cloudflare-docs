@@ -108,6 +108,7 @@ export default defineConfig({
 					"https://github.com/cloudflare/cloudflare-docs/edit/production/",
 			},
 			components: {
+				Banner: "./src/components/overrides/Banner.astro",
 				Footer: "./src/components/overrides/Footer.astro",
 				Head: "./src/components/overrides/Head.astro",
 				Header: "./src/components/overrides/Header.astro",

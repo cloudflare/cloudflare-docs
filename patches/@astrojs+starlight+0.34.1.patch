@@ -1,3 +1,24 @@
+diff --git a/node_modules/@astrojs/starlight/components/SidebarSublist.astro b/node_modules/@astrojs/starlight/components/SidebarSublist.astro
+index a027f56..7e372d7 100644
+--- a/node_modules/@astrojs/starlight/components/SidebarSublist.astro
++++ b/node_modules/@astrojs/starlight/components/SidebarSublist.astro
+@@ -4,6 +4,7 @@ import type { SidebarEntry } from '../utils/routing/types';
+ import Icon from '../user-components/Icon.astro';
+ import Badge from '../user-components/Badge.astro';
+ import SidebarRestorePoint from './SidebarRestorePoint.astro';
++import SidebarIcon from "~/components/SidebarIcon.astro"
+ 
+ interface Props {
+ 	sublist: SidebarEntry[];
+@@ -24,7 +25,7 @@ const { sublist, nested } = Astro.props;
+ 						class:list={[{ large: !nested }, entry.attrs.class]}
+ 						{...entry.attrs}
+ 					>
+-						<span>{entry.label}</span>
++						<span>{entry.icon && <SidebarIcon {...entry.icon} />}{entry.label}</span>
+ 						{entry.badge && (
+ 							<Badge
+ 								variant={entry.badge.variant}
 diff --git a/node_modules/@astrojs/starlight/user-components/Tabs.astro b/node_modules/@astrojs/starlight/user-components/Tabs.astro
 index 6d173df..61eed80 100644
 --- a/node_modules/@astrojs/starlight/user-components/Tabs.astro
