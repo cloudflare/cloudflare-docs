@@ -239,6 +239,9 @@ export default {
 		// // Step 3: Generate and return PDF
 		const pdf = await page.pdf({ printBackground: true });
 
+		// Close browser since we no longer need it
+    await browser.close();
+
 		return new Response(pdf, {
 			headers: {
 				"content-type": "application/pdf",
