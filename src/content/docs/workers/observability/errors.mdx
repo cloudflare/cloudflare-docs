@@ -13,18 +13,18 @@ Review Workers errors and exceptions.
 
 When a Worker running in production has an error that prevents it from returning a response, the client will receive an error page with an error code, defined as follows:
 
-| Error code | Meaning                                                                                                           |
-| ---------- | ----------------------------------------------------------------------------------------------------------------- |
-| `1101`     | Worker threw a JavaScript exception.                                                                              |
-| `1102`     | Worker exceeded [CPU time limit](/workers/platform/limits/#cpu-time).                                             |
-| `1103`     | The owner of this worker needs to contact [Cloudflare Support](/support/contacting-cloudflare-support/)           |
-| `1015`     | Worker hit the [burst rate limit](/workers/platform/limits/#burst-rate).                                          |
-| `1019`     | Worker hit [loop limit](#loop-limit).                                                                             |
-| `1021`     | Worker has requested a host it cannot access.                                                                     |
-| `1022`     | Cloudflare has failed to route the request to the Worker.                                                         |
-| `1024`     | Worker cannot make a subrequest to a Cloudflare-owned IP address.                                                 |
-| `1027`     | Worker exceeded free tier [daily request limit](/workers/platform/limits/#daily-request).                         |
-| `1042`     | Worker tried to fetch from another Worker on the same zone, which is [unsupported](/workers/runtime-apis/fetch/). |
+| Error code | Meaning                                                                                                                                         |
+| ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `1101`     | Worker threw a JavaScript exception.                                                                                                            |
+| `1102`     | Worker exceeded [CPU time limit](/workers/platform/limits/#cpu-time).                                                                           |
+| `1103`     | The owner of this worker needs to contact [Cloudflare Support](/support/contacting-cloudflare-support/)                                         |
+| `1015`     | Worker hit the [burst rate limit](/workers/platform/limits/#burst-rate).                                                                        |
+| `1019`     | Worker hit [loop limit](#loop-limit).                                                                                                           |
+| `1021`     | Worker has requested a host it cannot access.                                                                                                   |
+| `1022`     | Cloudflare has failed to route the request to the Worker.                                                                                       |
+| `1024`     | Worker cannot make a subrequest to a Cloudflare-owned IP address.                                                                               |
+| `1027`     | Worker exceeded free tier [daily request limit](/workers/platform/limits/#daily-request).                                                       |
+| `1042`     | Worker tried to fetch from another Worker on the same zone, which is only [supported](/workers/runtime-apis/fetch/) when the [`global_fetch_strictly_public` compatibility flag](/workers/configuration/compatibility-flags/#global-fetch-strictly-public) is used. |
 
 Other `11xx` errors generally indicate a problem with the Workers runtime itself. Refer to the [status page](https://www.cloudflarestatus.com) if you are experiencing an error.
 
@@ -255,10 +255,10 @@ The **Errors by invocation status** chart shows the number of errors broken down
 
 The **Client disconnected by type** chart shows the number of client disconnect errors broken down into the following categories:
 
-| Client Disconnects             | Meaning                                                                                                                                                     |
-| ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Client Disconnects             | Meaning                                                                                                                                                                                          |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `Response Stream Disconnected` | Connection was terminated during the deferred proxying stage of a Worker request flow. It commonly appears for longer lived connections such as [WebSockets](/workers/runtime-apis/websockets/). |
-| `Cancelled`                    | The Client disconnected before the Worker completed its response.                                                                                           |
+| `Cancelled`                    | The Client disconnected before the Worker completed its response.                                                                                                                                |
 
 ## Debug exceptions with Workers Logs
 
