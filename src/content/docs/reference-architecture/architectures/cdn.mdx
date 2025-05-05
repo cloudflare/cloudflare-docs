@@ -241,12 +241,12 @@ Figure 8 illustrates how Cache Reserve can help reduce load on an origin server 
 
 ![Figure 8: Traffic between end users and an origin server showing Cache Reserve as the final step in the architecture of the Cloudflare CDN solution.](~/assets/images/reference-architecture/cdn-reference-architecture-images/ref-arch-cdn-figure8.svg "Figure 8: Cloudflare CDN with Tiered Cache and Cache Reserve")
 
-### China Network & China Express for clients in China
+### China Network & Global Acceleration for clients in China
 
-Latency is not only proportional to the physical distance between the client and the origin or cache, but it may also increase significantly when traffic comes from or goes to certain countries, such as China. To mitigate the latency, Cloudflare offers two solutions:
+Latency depends not just on how far the client is from the origin or cache, but can also be significantly affected by the geographic region of the traffic — like China. To address these latency challenges, Cloudflare provides two key solutions:
 
-1. [China Network](https://www.cloudflare.com/application-services/products/china-network/) provides in-China caching for end users located in China, regardless of the origin location. This solution is provided by collaborating with JD Cloud and uses their data centers to ensure the fastest and most reliable cache performance for Chinese users compared to data centers outside of China.
-2. [China Express](https://blog.cloudflare.com/improving-customer-experience-in-china-using-china-express) offers reliable and secure connectivity to streamline content from origins to JD Cloud data centers in China. This is particularly beneficial for dynamic content like web applications and API calls.
+1. [China Network](/china-network/) provides in-China caching for end users located in China, regardless of the origin location. This solution is provided by collaborating with JD Cloud and uses their data centers to ensure the fastest and most reliable cache performance for Chinese users compared to data centers outside of China.
+2. [Global Acceleration](/china-network/concepts/global-acceleration/) offers reliable and secure connectivity to streamline content from origins to JD Cloud data centers in China. This is particularly beneficial for dynamic content like web applications and API calls.
 
 ## Summary
 
