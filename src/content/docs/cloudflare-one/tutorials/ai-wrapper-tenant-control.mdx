@@ -354,7 +354,7 @@ Once the Worker code is complete, you need to make the Worker addressable using 
 
 <Tabs> <TabItem label="Wrangler">
 
-Edit the `wrangler.toml` configuration file and add the following information to ensure that the worker is only accessible using the custom hostname:
+Edit the `wrangler.toml` configuration file and add the following information to ensure that the Worker is only accessible using the custom hostname:
 
 ```toml
 name = "ai-agent-wrapper"
@@ -375,9 +375,9 @@ To publish the worker, run `wrangler publish`.
 
 </TabItem> <TabItem label="Dashboard">
 
-If the worker was built remotely using the online code editor available in the **Dash**, it can be published by clicking **Deploy**.
+If you built your Worker remotely using the [code editor](/workers/get-started/dashboard/) available in the Cloudflare dashboard, you can deploy it by selecting **Deploy**.
 
-To ensure that the worker is only accessible via the custom hostname, do the following:
+To ensure that the Worker is only accessible from the custom hostname:
 
 1. Go to **Workers & Pages** > **Workers & Pages**.
 2. Select your Worker.
