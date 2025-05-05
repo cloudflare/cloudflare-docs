@@ -247,7 +247,7 @@ func main() {
 
     const getUtf8Bytes = str =>
       new Uint8Array(
-        [...unescape(encodeURIComponent(str))].map(c => c.charCodeAt(0))
+        [...decodeURIComponent(encodeURIComponent(str))].map(c => c.charCodeAt(0))
       );
 
     const keyBytes = getUtf8Bytes(key);
