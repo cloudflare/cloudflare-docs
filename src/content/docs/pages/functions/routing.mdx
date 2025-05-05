@@ -3,6 +3,11 @@ pcx_content_type: reference
 title: Routing
 sidebar:
   order: 2
+banner:
+  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
+  type: note
+  dismissible:
+    id: pages-migrate-to-workers
 ---
 
 import { FileTree } from "~/components";
@@ -106,7 +111,7 @@ For files which match a single URL segment (use a single set of brackets), the v
 
 ```js
 export function onRequest(context) {
-  return new Response(context.params.user)
+	return new Response(context.params.user);
 }
 ```
 
@@ -116,7 +121,7 @@ For files which match against multiple URL segments (use a double set of bracket
 
 ```js
 export function onRequest(context) {
-  return new Response(JSON.stringify(context.params.catchall))
+	return new Response(JSON.stringify(context.params.catchall));
 }
 ```
 
@@ -138,9 +143,9 @@ Create a `_routes.json` file to control when your Function is invoked. It should
 
 This file will include three different properties:
 
-* **version**: Defines the version of the schema. Currently there is only one version of the schema (version 1), however, we may add more in the future and aim to be backwards compatible.
-* **include**: Defines routes that will be invoked by Functions. Accepts wildcard behavior.
-* **exclude**: Defines routes that will not be invoked by Functions. Accepts wildcard behavior. `exclude` always take priority over `include`.
+- **version**: Defines the version of the schema. Currently there is only one version of the schema (version 1), however, we may add more in the future and aim to be backwards compatible.
+- **include**: Defines routes that will be invoked by Functions. Accepts wildcard behavior.
+- **exclude**: Defines routes that will not be invoked by Functions. Accepts wildcard behavior. `exclude` always take priority over `include`.
 
 :::note
 
@@ -154,9 +159,9 @@ Below is an example of a `_routes.json`.
 
 ```json
 {
-   "version": 1,
-   "include": ["/*"],
-   "exclude": []
+	"version": 1,
+	"include": ["/*"],
+	"exclude": []
 }
 ```
 
@@ -166,9 +171,9 @@ Below is another example of a `_routes.json` file. Any route inside the `/build`
 
 ```json
 {
-   "version": 1,
-   "include": ["/*"],
-   "exclude": ["/build/*"]
+	"version": 1,
+	"include": ["/*"],
+	"exclude": ["/build/*"]
 }
 ```
 
@@ -176,6 +181,6 @@ Below is another example of a `_routes.json` file. Any route inside the `/build`
 
 Functions invocation routes have the following limits:
 
-* You must have at least one include rule.
-* You may have no more than 100 include/exclude rules combined.
-* Each rule may have no more than 100 characters.
+- You must have at least one include rule.
+- You may have no more than 100 include/exclude rules combined.
+- Each rule may have no more than 100 characters.
