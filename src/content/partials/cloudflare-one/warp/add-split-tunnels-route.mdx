@@ -2,7 +2,7 @@
 {}
 ---
 
-import { GlossaryTooltip, TabItem, Tabs } from "~/components";
+import { GlossaryTooltip, TabItem, Tabs, Render } from "~/components";
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **WARP Client**.
 2. Under **Device settings**, locate the [device profile](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) you would like to modify and select **Configure**.
@@ -32,5 +32,7 @@ import { GlossaryTooltip, TabItem, Tabs } from "~/components";
 		When a user goes to the domain, the domain gets resolved according to your Local Domain Fallback configuration (either by Gateway or by your private DNS server). WARP Split Tunnels will then dynamically include or exclude the IP address returned in the DNS lookup.
 
 		</TabItem> </Tabs>
+
+<Render file="warp/client-notification-lag" product="cloudflare-one" />
 
 We recommend keeping the Split Tunnels list short, as each entry takes time for the client to parse. In particular, domains are slower to action than IP addresses because they require on-the-fly IP lookups and routing table / local firewall changes. A shorter list will also make it easier to understand and debug your configuration. For information on device profile limits, refer to [Account limits](/cloudflare-one/account-limits/#warp).
