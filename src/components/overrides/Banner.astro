@@ -36,8 +36,10 @@ const { banner } = Astro.locals.starlightRoute.entry.data;
 					<div
 						class={`sl-banner dismissible relative ${banner.type !== "default" ? `alert ${banner.type}` : ""}`}
 					>
-						<div class="flex gap-2">
-							{icon && <Icon name={icon} size="1.333em" />}
+						<div class="flex gap-2 leading-6">
+							{icon && (
+								<Icon name={icon} size="1.333em" class="min-w-[1.333em]" />
+							)}
 							<span set:html={banner.content} />
 						</div>
 						<Dismisser
@@ -97,6 +99,7 @@ const { banner } = Astro.locals.starlightRoute.entry.data;
 		.alert {
 			--__sl-banner-text: var(--sl-color-white);
 			text-align: left;
+			text-wrap: wrap;
 		}
 
 		.alert :global(a) {
