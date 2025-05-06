@@ -191,15 +191,13 @@ Gateway also provides a PUT endpoint to update the precedence of a policy, where
 When polcies are re arranged using dahsboard drag and drop UI, we calculate an appropriate precedence number and assigns it to the policy.
 Changing the order both at UI/API and at terraform might result in stale precedence issues.
 
-### Precedenc management via terraform
+### Precedenc management via Terraform
 
 Now let's see how we can manage a large number of gateway policies and order of execution via terraform
 
-With terraform v5, gateway users can list thier policies in a terraform file with any integer precedence value as they wish. We suggest starting with 1000 and leave enoughg of a gap inbetween the adjacent policy precedences, so we could sandwitch policies in between those precedence gap in the future.
+With terraform v5, gateway users can list thier policies in a terraform file with any integer precedence value as they wish. We suggest starting with 1000 and leave enoughg of a gap inbetween the adjacent policy precedences, so we could sandwitch policies in between those precedence gap in the future. For example:
 
-<pre>
-```
-
+```tf
 resource "cloudflare_zero_trust_gateway_policy" "policy_1" {
     account_id     = "<account-id>"
     .....
@@ -218,10 +216,7 @@ resource "cloudflare_zero_trust_gateway_policy" "policy_3" {
     .....
     precedence     = 3000
 }
-
-
 ```
-</pre>
 
 As shown above, way we can arrange the polcies in ascending order of precedence. To move policy 3, to in between policy 1 and policy 2, simply update the precedence of policy 3 to anumber in between [1001..1999], and also move the terraform definition to in between policy 1 and policy 2.
 Mandating a sufficient gap between precedences will make re ordering of policies smoother in the future.

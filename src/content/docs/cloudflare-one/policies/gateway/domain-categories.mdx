@@ -232,12 +232,9 @@ Then, the initial categorization is refined via:
 
 ## How to use categories in terraform?
 
-For terraform users, we offer categories as a dataset, so that you don't have to mention them by integer id, and instead you can mention them in your policy by the category name.
+For terraform users, we offer categories as a dataset, so that you don't have to mention them by integer id, and instead you can mention them in your policy by the category name. For example:
 
-Example terraform category setup
-
-<pre> 
-```
+```tf
 data "cloudflare_zero_trust_gateway_categories_list" "categories" {
   account_id     = "<accounbt-id-string>"
 }
@@ -245,7 +242,7 @@ data "cloudflare_zero_trust_gateway_categories_list" "categories" {
 
 locals {
   main_categories_map = {
-    for idx, c in data.cloudflare_zero_trust_gateway_categories_list.categories[0].result: 
+    for idx, c in data.cloudflare_zero_trust_gateway_categories_list.categories[0].result:
         c.name => c.id
   }
 
@@ -260,13 +257,11 @@ resource "cloudflare_zero_trust_gateway_policy" "zt_block_dns_tech_categories" {
     name           = "DNS Blocked"
     action         = "block"
     traffic        = "any(dns.content_category[*] in {${join(" ", [
-           local.main_categories_map["Technology"], 
-           local.subcategories_map["APIs"], 
-           local.subcategories_map["Artificial Intelligence"], 
-           local.subcategories_map["Content Servers"], 
+           local.main_categories_map["Technology"],
+           local.subcategories_map["APIs"],
+           local.subcategories_map["Artificial Intelligence"],
+           local.subcategories_map["Content Servers"],
            local.subcategories_map["Translator"]
            ])}})"
 }
-
 ```
-</pre>
