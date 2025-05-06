@@ -19,8 +19,6 @@ if (!currentProduct) {
 }
 
 const productTitle = currentProduct.data.product.title;
-const videoText = "🎥 Video";
-const tutorialText = "📝 Tutorial";
 
 const docs = await getCollection("docs", (entry) => {
 	return (
@@ -57,13 +55,9 @@ const timeAgo = (date?: Date) => {
 	<tbody>
 		{
 			tutorials.map(async (tutorial) => {
-				const title =
-					tutorial.collection === "docs" ? tutorial.data.title : tutorial.id;
+				const title = tutorial.data.title;
 
-				const href =
-					tutorial.collection === "docs"
-						? `/${tutorial.id}/`
-						: tutorial.data.link;
+				const href = `/${tutorial.id}/`;
 
 				const anchor = await process(`<a href=${href}>${title}</a>`, [
 					rehypeExternalLinks,
@@ -75,7 +69,7 @@ const timeAgo = (date?: Date) => {
 							<Fragment set:html={anchor} />
 						</td>
 						<td>{timeAgo(tutorial.data.updated)}</td>
-						<td>{tutorial.collection === "docs" ? tutorialText : videoText}</td>
+						<td>📝 Tutorial</td>
 						<td>{tutorial.data.difficulty}</td>
 					</tr>
 				);
