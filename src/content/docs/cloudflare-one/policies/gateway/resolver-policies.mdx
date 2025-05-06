@@ -105,11 +105,14 @@ For more information on creating a DNS policy, refer to [DNS policies](/cloudfla
 
 ### Domain
 
-<Render file="gateway/selectors/domain" />
+<Render
+	file="gateway/selectors/domain"
+	params={{ APIendpoint: "dns.domains" }}
+/>
 
 ### Host
 
-<Render file="gateway/selectors/host" />
+<Render file="gateway/selectors/host" params={{ APIendpoint: "dns.fqdn" }} />
 
 ### Location
 

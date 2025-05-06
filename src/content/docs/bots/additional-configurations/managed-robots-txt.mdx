@@ -1,0 +1,36 @@
+---
+pcx_content_type: reference
+title: Direct AI crawlers with managed robots.txt
+sidebar:
+  order: 8
+  label: Managed robots.txt
+---
+
+import { Render, Tabs, TabItem } from "~/components"
+
+Protect your website or application from AI crawlers by implementing a `robots.txt` file on your domain to direct AI bot operators on what content they can and cannot scrape for AI model training. 
+
+Cloudflare's managed `robots.txt` explicitly disallows known bots engaged in scraping for AI purposes and AI agent activity. 
+
+AI bots are expected to follow the `robots.txt` directives. Otherwise, they risk getting banned. 
+
+To implement a `robots.txt` file on your domain based on your plan:
+
+<Tabs>
+  <TabItem label="Bot Fight Mode">
+    <Render file="enable-managed-robots-txt" params={{ one: "Bot Fight Mode" }} />
+  </TabItem>
+  <TabItem label="Super Bot Fight Mode">
+    <Render file="enable-managed-robots-txt" params={{ one: "Super Bot Fight Mode" }} />
+  </TabItem>
+    <TabItem label="Bot Management for Enterprise">
+    <Render file="enable-managed-robots-txt" params={{ one: "Bot Management" }} />
+  </TabItem>
+</Tabs>
+
+:::note
+When you enable the `robots.txt` file on your domain, existing `robots.txt` files will be replaced.
+:::
+
+## Availability
+Managed `robots.txt` for AI crawlers is available on all plans.

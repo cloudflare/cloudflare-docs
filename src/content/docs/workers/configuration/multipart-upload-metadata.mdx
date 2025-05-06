@@ -43,8 +43,8 @@ At a minimum, the `main_module` key is required to upload a Worker.
 
   * [Asset](/workers/static-assets/) configuration for a Worker.
   * `config` <Type text="object" /> <MetaInfo text="optional" />
-    * [html_handling](/workers/static-assets/routing/#1-html_handling) determines the redirects and rewrites of requests for HTML content.
-    * [not_found_handling](/workers/static-assets/routing/#2-not_found_handling) determines the response when a request does not match a static asset, and there is no Worker script.
+    * [html_handling](/workers/static-assets/routing/advanced/html-handling/) determines the redirects and rewrites of requests for HTML content.
+    * [not_found_handling](/workers/static-assets/routing/) determines the response when a request does not match a static asset.
   * `jwt` field provides a token authorizing assets to be attached to a Worker.
 
 * `keep_assets` <Type text="boolean" /> <MetaInfo text="optional" />

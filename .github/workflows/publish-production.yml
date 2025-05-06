@@ -32,6 +32,13 @@ jobs:
         name: Deploy to Cloudflare Workers
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      - name: Build vendored Markdown archive
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          npx tsx bin/generate-index-md.ts
+          cd distmd && zip -r markdown.zip .
+          npx wrangler r2 object put vendored-markdown/markdown.zip --file=markdown.zip --remote
       - uses: actions/cache/save@v4
         if: always()
         with:

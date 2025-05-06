@@ -2,11 +2,9 @@
 name: gitlab_base.HeadingLink
 description: |
   Do not include links in a heading.
-  Headings already have self-referencing anchor links,
-  and they're used for generating the table of contents.
-  Adding a link will break the anchor linking behavior.
+  Headings already have self-referencing anchor links.
 extends: existence
-message: "Do not use links in headings."
+message: "Do not use links in headings. Only update the links and nothing else."
 vocab: false
 level: error
 ignorecase: true

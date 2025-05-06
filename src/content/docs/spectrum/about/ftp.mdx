@@ -73,7 +73,7 @@ To use Spectrum TCP to proxy and protect FTPS, specifically ProFTPD, the followi
 On the ProFTPD server side use the following example configuration:
 
 * `MasqueradeAddress`: `www.example.com`
-* `AllowForeignAddress`: You can use the option `on` to allow all IPs, but it is recommended to only allow [Cloudflare IP](https://developers.cloudflare.com/learning-paths/get-started/add-domain-to-cf/allow-cloudflare-ips/).
+* `AllowForeignAddress`: You can use the option `on` to allow all IPs, but it is recommended to only allow [Cloudflare IP](/fundamentals/concepts/cloudflare-ip-addresses/#allow-cloudflare-ip-addresses).
 * `PassivePorts`: `50000-50500`
 
 For more details, refer to the [ProFTPD documentation](http://www.proftpd.org/docs/modules/mod_core.html).

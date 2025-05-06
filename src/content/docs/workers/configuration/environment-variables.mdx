@@ -2,20 +2,20 @@
 pcx_content_type: configuration
 title: Environment variables
 head: []
-description: Environment variables are a type of binding that allow you to attach text strings or JSON values to your Worker
+description: You can add environment variables, which are a type of binding, to attach text strings or JSON values to your Worker.
 ---
 
 import { Render, TabItem, Tabs, WranglerConfig } from "~/components";
 
 ## Background
 
-Environment variables are a type of binding that allow you to attach text strings or JSON values to your Worker. Environment variables are available on the [`env` parameter](/workers/runtime-apis/handlers/fetch/#parameters) passed to your Worker's [`fetch` event handler](/workers/runtime-apis/handlers/fetch/).
+You can add environment variables, which are a type of binding, to attach text strings or JSON values to your Worker. Environment variables are available on the [`env` parameter](/workers/runtime-apis/handlers/fetch/#parameters) passed to your Worker's [`fetch` event handler](/workers/runtime-apis/handlers/fetch/).
 
 Text strings and JSON values are not encrypted and are useful for storing application configuration.
 
 ## Add environment variables via Wrangler
 
-Text and JSON values are defined via the `[vars]` configuration in your Wrangler file. In the following example, `API_HOST` and `API_ACCOUNT_ID` are text values and `SERVICE_X_DATA` is a JSON value.
+To add env variables using Wrangler, define text and JSON via the `[vars]` configuration in your Wrangler file. In the following example, `API_HOST` and `API_ACCOUNT_ID` are text values and `SERVICE_X_DATA` is a JSON value.
 
 <Render file="envvar-example" />
 

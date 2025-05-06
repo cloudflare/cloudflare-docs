@@ -5,7 +5,7 @@
 #
 # For a list of all options, see https://vale.sh/docs/topics/styles/
 extends: existence
-message: "**Warning**: Rewrite the link text for `%s` to be more descriptive. For more information, refer to [Descriptive link text](https://developers.cloudflare.com/style-guide/formatting/structure/links/#descriptive-link-text)."
+message: "Rewrite the link text for `%s` to be more descriptive. Only rewrite the link text, nothing else."
 level: warning
 ignorecase: true
 scope: raw

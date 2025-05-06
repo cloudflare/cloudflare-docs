@@ -24,7 +24,7 @@ Targets like `*.cloudflare.com` or other Cloudflare-owned destinations are only 
 ### Penetration testing
 
 - **Network behavior**:
-  - Cloudflare's [anycast network](/fundamentals/concepts/how-cloudflare-works/) will report ports other than `80` and `443` as open due to its shared infrastructure and the nature of Cloudflare's proxy. This is expected behavior and does not indicate a vulnerability.
+  - Cloudflare's [anycast network](/fundamentals/concepts/how-cloudflare-works/) will report ports other than `80` and `443` as open due to its shared infrastructure and the nature of Cloudflare's proxy. The reporting is expected behavior and does not indicate a vulnerability.
   - Tools like Netcat may list [non-standard HTTP ports](/fundamentals/reference/network-ports/) as open; however, these ports are open solely for Cloudflare's routing purposes and do not necessarily indicate that a connection can be established with the customer's origin over those ports.
 - **Known false positives**: Any findings related to the [ROBOT vulnerability](/ssl/reference/compliance-and-vulnerabilities/#return-of-bleichenbachers-oracle-threat-robot) are false positives when the customer's assets are behind Cloudflare.
 - **Customer security review**: During penetration testing, customers should be aware of the Cloudflare security and performance features, configurations, and rules active on their account or zone. After completing the test, it is recommended that customers review their security posture and make any necessary adjustments based on the findings.

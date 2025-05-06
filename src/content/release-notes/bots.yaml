@@ -5,6 +5,10 @@ productLink: "/bots/"
 productArea: Application security
 productAreaLink: /fundamentals/reference/changelog/security/
 entries:
+  - publish_date: "2025-04-28"
+    title: Managed robots.txt is now available
+    description: |-
+      Direct AI crawlers on what they can and cannot scrape from your website or application by [implementing a `robots.txt` file](/bots/additional-configurations/managed-robots-txt/) to your domain.
   - publish_date: "2025-04-24"
     title: Bot Detection Alerts are now available
     description: |-
