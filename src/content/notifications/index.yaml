@@ -36,7 +36,7 @@ entries:
     additional_information: |-
       After an alert is created on the dashboard, it may take up to 30 minutes before sufficient data is available to begin detecting traffic anomalies. Verified bot traffic is excluded from both basic and advanced bot alerts.
 
-      Alerts with grouping could cause potential noise if you set them up for a high-traffic zone. Grouping alerts function as if you set up separate policies with a filter for each value. Alerts may trigger multiple values in the same group as long as the traffic for each value reaches the threshold of 200. 
+      Alerts with grouping could cause potential noise if you set them up for a high-traffic zone. Grouping alerts function as if you set up separate policies with a filter for each value. Alerts may trigger multiple values in the same group as long as the traffic for each value reaches the threshold of 200.
 
   - name: Brand Protection Alerts
     audience: Customers who want a summary of activity related to [Brand Protection](/security-center/brand-protection/).
@@ -238,7 +238,7 @@ entries:
     audience: Magic Transit and Magic WAN customers who wish to receive alerts when the percentage of tunnel states meeting the selected service-level objective (SLO) drops below the defined threshold for a Magic Tunnel.
     availability: Purchase of Magic Transit and Magic WAN.
     associatedProducts: Magic Transit
-    nextSteps: Refer to the [Magic Transit tunnel health](/magic-transit/how-to/check-tunnel-health-dashboard/) or [Magic WAN tunnel health](/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/) for more information on what the issue might be.
+    nextSteps: Refer to the [Magic Transit tunnel health](/magic-transit/network-health/check-tunnel-health-dashboard/) or [Magic WAN tunnel health](/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/) for more information on what the issue might be.
     otherFilters: |-
       * Notification Name: A custom name for the notification.
       * Description (optional): A custom description for the notification.
