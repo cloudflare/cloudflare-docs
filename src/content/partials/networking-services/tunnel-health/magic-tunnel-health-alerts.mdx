@@ -33,7 +33,7 @@ If a Magic Tunnel health alert is fired, customers can expect the following data
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Select **Notifications** > **Add**.
 3. From the **Product** drop-down menu, select **{props.productName}**.
-4. Select **Magic Tunnel Health Check Alert** > **Select** to add a notification. You can add alerts by tunnel or by data center.
+4. Select **Magic Tunnel Health Check Alert** > **Select** to add a notification. You can add alerts by tunnel or by data center (beta).
 
 <Details header="Alert by tunnel">
 
@@ -56,7 +56,7 @@ If a Magic Tunnel health alert is fired, customers can expect the following data
 
 </Details>
 
-<Details header="Alert by data center">
+<Details header="Alert by data center (beta)">
 
 5. Select **Alert by data center**.
 6. Enter a name and description for the notification.
@@ -250,7 +250,7 @@ With these settings, at 100% failure Cloudflare will send alerts at the followin
 - **Medium sensitivity**: First alert within 20 minutes.
 - **Low sensitivity**: First alert within 30 minutes.
 
-Refer to the <a href={props.backgroundInfoPath}>Magic tunnels background information page</a> for more information on this topic.
+Refer to the <a href={props.backgroundInfoPath}>Magic Tunnel health check calculation</a> for more information on this topic.
 
 ## Test SLOs
 
