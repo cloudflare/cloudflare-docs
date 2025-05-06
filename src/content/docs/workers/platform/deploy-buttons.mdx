@@ -60,7 +60,7 @@ If your Worker application requires Cloudflare resources, they will be automatic
 Cloudflare will read the Wrangler configuration file of your source repo to determine resource requirements for your application. During deployment, Cloudflare will provision any necessary resources and update the Wrangler configuration where applicable for newly created resources (e.g. database IDs and namespace IDs). To ensure successful deployment, please make sure your source repository includes default values for resource names, resource IDs and any other properties for each binding.
 
 ## Best practices
-**Configuring Build/Deploy commands**: If you are using custom  `build` and `deploy` scripts in your package.json (for example, if using a full stack framework or running D1 migrations), Cloudfare will automatically detect and pre-populate the build and deploy fields. Users can choose to modify or accept the custom commands during deployment configuration.
+**Configuring Build/Deploy commands**: If you are using custom  `build` and `deploy` scripts in your package.json (for example, if using a full stack framework or running D1 migrations), Cloudflare will automatically detect and pre-populate the build and deploy fields. Users can choose to modify or accept the custom commands during deployment configuration.
 
 If no `deploy` script is specified, Cloudflare will preconfigure `npx wrangler deploy` by default. If no `build` script is specified, Cloudflare will leave this field blank.
 
