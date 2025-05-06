@@ -89,4 +89,4 @@ Refer to [WARP diagnostic logs](/cloudflare-one/connections/connect-devices/warp
 
 - PCAPs will fail on Windows if you have another third-party packet capture tool (such as, Packet Monitor `pktmon`) running.
 
-- [`capture-default.pcap`](https://developers.cloudflare.com/cloudflare-one/insights/dex/remote-captures/#limitations:~:text=capture%2Ddefault.pcap) (packet captures on the default network interface) is not available for devices configured with a non-English language. The WARP client runs `pktmon list --json` to query network adapters, but because `pktmon` uses the system language settings directly, systems configured with a non-English language are not compatible with our English-only parser.
+- On Windows, packet captures may fail on devices configured with a non-English language due to limitations with the underlying `PktMon` tool.
