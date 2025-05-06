@@ -40,14 +40,7 @@ If a Magic Tunnel health alert is fired, customers can expect the following data
 5. Select **Alert by tunnel**.
 6. Enter a name and description for the notification.
 7. Add webhooks or an email address for the person who should receive the notification, and select **Next**.
-8. Select the **Alert Sensitivity Level** threshold from the dropdown menu. It is predefined for _Medium_, but you can choose between several options:
-	- Minimum (95.0)
-	- Very low (96.0)
-	- Low (97.0)
-	- Medium (98.0)
-	- High (99.0)
-	- Very high (99.5)
-	- Maximum (99.9)
+8. Select the **Alert Sensitivity Level** threshold from the dropdown menu. The threshold is predefined to _Medium (98.0)_. There are options available between _Minimum (95.0)_ and _Maximum (99.9)_. Refer to <a href={props.magicTunnelHealthCheckCalculation}>Magic Tunnel health check calculation</a> for more information on this topic.
 9. From the **Alert interval** drop-down menu, set the minimum amount of time that must pass before a duplicate alert is sent to you. Options range from five minutes to seven days.
 10. Enable **Set as default alert for any new tunnels created in the future** if you want the alert sensitivity level you chose to be automatically applied to all new tunnels you create.
 11. Select **Next**.
@@ -61,14 +54,7 @@ If a Magic Tunnel health alert is fired, customers can expect the following data
 5. Select **Alert by data center**.
 6. Enter a name and description for the notification.
 7. Add webhooks or an email address for the person who should receive the notification, and select **Next**.
-8. Select the **Alert Sensitivity Level** threshold from the dropdown menu. It is predefined for _Medium_, but you can choose between several options:
-	- Minimum (95.0)
-	- Very low (96.0)
-	- Low (97.0)
-	- Medium (98.0)
-	- High (99.0)
-	- Very high (99.5)
-	- Maximum (99.9)
+8. Select the **Alert Sensitivity Level** threshold from the dropdown menu. The threshold is predefined to _Medium (98.0)_. There are options available between _Minimum (95.0)_ and _Maximum (99.9)_. Refer to <a href={props.magicTunnelHealthCheckCalculation}>Magic Tunnel health check calculation</a> for more information on this topic.
 9. From the **Alert interval** drop-down menu, set the minimum amount of time that must pass before a duplicate alert is sent to you. Options range from five minutes to seven days.
 10. Choose the data centers you want to receive alerts for, and select **Next**.
 11. Select the on-ramps for that data center you want to receive alerts for, and select **Next**.
@@ -250,7 +236,7 @@ With these settings, at 100% failure Cloudflare will send alerts at the followin
 - **Medium sensitivity**: First alert within 20 minutes.
 - **Low sensitivity**: First alert within 30 minutes.
 
-Refer to the <a href={props.magicTunnelHealthCheckCalculation}>Magic Tunnel health check calculation</a> for more information on this topic.
+Refer to <a href={props.magicTunnelHealthCheckCalculation}>Magic Tunnel health check calculation</a> for more information on this topic.
 
 ## Test SLOs
 
