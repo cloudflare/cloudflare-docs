@@ -239,7 +239,6 @@ data "cloudflare_zero_trust_gateway_categories_list" "categories" {
   account_id     = "<accounbt-id-string>"
 }
 
-
 locals {
   main_categories_map = {
     for idx, c in data.cloudflare_zero_trust_gateway_categories_list.categories[0].result:

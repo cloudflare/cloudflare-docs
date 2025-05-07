@@ -183,15 +183,14 @@ Therefore, the user is able to connect to `https://test.example.com`.
 
 ### How gateway calculates precedence?
 
-The gateway API starts assigning precedence to policies created in an account, starting with 1000, unless explictly soecified in the policy otherwise.
-Every time a new policy is added to the bottom of the order, we simply calculate the highest precedence in the account at the moment and
-add 1000 + rand(1...100) to the new policy, so that it now claims the maximum precedence in the account.
+The gateway API starts assigning precedence to policies created in an account, starting with 1000, unless explicitly specified in the policy otherwise.
+Every time a new policy is added to the bottom of the order, Gateway calculates the highest precedence in the account at the moment and add 1000 + rand(1...100) to the new policy, so that it now claims the maximum precedence in the account.
 
 Gateway also provides a PUT endpoint to update the precedence of a policy, where the user can set any value for precedence that is not already claimed by another policy. This helps to position a policy in between two already existing policies.
 When polcies are re arranged using dahsboard drag and drop UI, we calculate an appropriate precedence number and assigns it to the policy.
 Changing the order both at UI/API and at terraform might result in stale precedence issues.
 
-### Precedenc management via Terraform
+### Manage precedence with Terraform
 
 Now let's see how we can manage a large number of gateway policies and order of execution via terraform
 
