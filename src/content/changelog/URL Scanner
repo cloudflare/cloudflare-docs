@@ -1,0 +1,12 @@
+---
+title: URL Scanner geoegress
+description: Choose the location from which you can scan the submitted URL
+date: 2025-04-25T11:00:00Z
+---
+ 
+We've added a new feature to the URL Scanner that allows Enterprise customers to select the geographic location from which they want their URL scans to be performed. 
+This feature enables users to analyze how a website may present different content depending on the user's location, helping to uncover and analyze region-specific malicious activities.
+
+What's changed:
+*Enterprise customers can now select a country for their URL scans using the Location Picker in the Cloudflare dashboard or via API.
+*The URL defaults to the user's current location if no specific location is chosen.
