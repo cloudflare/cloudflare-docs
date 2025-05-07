@@ -15,6 +15,8 @@ When you choose the _Application_ selector in a Gateway policy builder, the **Va
 
 ## App types
 
+Gateway sorts applications into the following app type groups:
+
 | Value                                          | Definition                                                                                                                  |
 | ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
 | Artificial Intelligence                        | AI assistance applications                                                                                                  |
@@ -43,20 +45,9 @@ When you choose the _Application_ selector in a Gateway policy builder, the **Va
 | Video Streaming                                | Video streaming applications                                                                                                |
 | [Do Not Inspect](#do-not-inspect-applications) | Applications incompatible with the TLS certificate required by the [Gateway proxy](/cloudflare-one/policies/gateway/proxy/) |
 
+## Usage
+
 ### Do Not Inspect applications
-
-#### TLS decryption limitations
-
-Applications can be incompatible with [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) for various reasons:
-
-<GlossaryDefinition
-	term="certificate pinning"
-	prepend="Certificate pinning is "
-/>
-
-- **Non-web traffic**: Some applications send non-web traffic, such as Session Initiation Protocol (SIP) and Extensible Messaging and Presence Protocol (XMPP), over TLS. Gateway cannot inspect these protocols.
-
-#### Application grouping
 
 Gateway automatically groups applications incompatible with TLS decryption into the _Do Not Inspect_ app type. As Cloudflare identifies incompatible applications, Gateway will periodically update this app type to add new applications. To ensure Gateway does not intercept any current or future incompatible traffic, you can [create a Do Not Inspect HTTP policy](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) with the entire _Do Not Inspect_ app type selected.
 
@@ -64,6 +55,17 @@ Gateway automatically groups applications incompatible with TLS decryption into 
 
 Instead of creating a Do Not Inspect policy for an application, you may be able to configure the application to [trust a Cloudflare certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/manual-deployment/#add-the-certificate-to-applications). Doing so will allow the application to function without losing visibility into your traffic.
 :::
+
+#### TLS decryption limitations
+
+Applications can be incompatible with [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) for various reasons:
+
+- <GlossaryDefinition
+  	term="certificate pinning"
+  	prepend="**Certificate pinning**: Certificate pinning is "
+  />
+
+- **Non-web traffic**: Some applications send non-web traffic, such as Session Initiation Protocol (SIP) and Extensible Messaging and Presence Protocol (XMPP), over TLS. Gateway cannot inspect these protocols.
 
 #### Microsoft 365 integration
 
@@ -76,3 +78,33 @@ To turn on the Microsoft 365 integration:
 3. To verify the policy was created, select **View policy**. Alternatively, go to **Gateway** > **Firewall policies** > **HTTP**. A policy named Microsoft 365 Auto Generated will be enabled in your list.
 
 All future Microsoft 365 traffic will bypass Gateway logging and filtering. To disable this behavior, turn off or delete the policy.
+
+### Terraform
+
+Terraform users can retrieve the app types list with the `cloudflare_zero_trust_gateway_app_types_list` data source. This allows you to create Gateway policies with the application's name rather than its numeric UUID. For example:
+
+```tf
+data "cloudflare_zero_trust_gateway_app_types_list" "gateway_apptypes" {
+  account_id = var.cloudflare_account_id
+}
+
+locals {
+  apptypes_map = merge([
+    for c in data.cloudflare_zero_trust_gateway_app_types_list.gateway_apptypes.result :
+    { (c.name) = c.id }
+  ]...)
+}
+
+resource "cloudflare_zero_trust_gateway_policy" "zt_block_dns_apps" {
+  account_id = var.cloudflare_account_id
+  name       = "DNS Blocked apps"
+  action     = "block"
+  traffic    = "any(app.ids[*] in {${join(" ", [
+    local.apptypes_map["Discord"],
+    local.apptypes_map["GoToMeeting"],
+    local.apptypes_map["Greenhouse"],
+    local.apptypes_map["Zelle"],
+    local.apptypes_map["Microsoft Visual Studio"]
+  ])}})"
+}
+```

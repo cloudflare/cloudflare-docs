@@ -180,3 +180,37 @@ When a user goes to `https://test.example.com`, Gateway performs the following o
    3. Policy #3 is not evaluated because there has already been an explicit match.
 
 Therefore, the user is able to connect to `https://test.example.com`.
+
+## Precedence calculations
+
+When arranging policies in Zero Trust, Gateway automatically calculates the precedence for rearranged policies.
+
+When using the API to create a policy, unless the precedence is explicitly defined in the policy, Gateway will assign precedence to policies starting at `1000`. Every time a new policy is added to the bottom of the order, Gateway will calculate the current highest precedence in the account and add a random integer between 1 and 100 to `1000` so that it now claims the maximum precedence in the account. To manually update a policy's precedence, use the [Update a Zero Trust Gateway rule](/api/resources/zero_trust/subresources/gateway/subresources/rules/methods/update/) endpoint. You can set a policy's precedence to any value that is not already in use.
+
+Changing the order within the Zero Trust dashboard or API may result in configuration issues when using [Terraform](#manage-precedence-with-terraform).
+
+## Manage precedence with Terraform
+
+You can manage a the order of execution of your Gateway policies using Terraform. With version 5 of the Terraform Cloudflare provider, Gateway users can list their policies in a Terraform file with any desired integer precedence value. Cloudflare recommends starting with a precedence of `1000` and adding extra space between each policy's precedence for any future policies. For example:
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "policy_1" {
+  account_id = var.cloudflare_account_id
+  # other attributes...
+  precedence = 1000
+}
+
+resource "cloudflare_zero_trust_gateway_policy" "policy_2" {
+  account_id = var.cloudflare_account_id
+  # other attributes...
+  precedence = 2000
+}
+
+resource "cloudflare_zero_trust_gateway_policy" "policy_3" {
+  account_id = var.cloudflare_account_id
+  # other attributes...
+  precedence = 3000
+}
+```
+
+To avoid precedence calculation errors, you should move one policy at a time before running `terraform plan` and `terraform apply`. If you use both Terraform and the Zero Trust dashboard or API, sync your polices with `terraform plan` before reordering policies in Terraform. Alternatively, you can set your account to [read-only in the Zero Trust dashboard](/cloudflare-one/api-terraform/#set-dashboard-to-read-only), only allowing changes using the API or Terraform.
