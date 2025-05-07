@@ -36,7 +36,7 @@ const { banner } = Astro.locals.starlightRoute.entry.data;
 					<div
 						class={`sl-banner dismissible relative ${banner.type !== "default" ? `alert ${banner.type}` : ""}`}
 					>
-						<div class="flex gap-2 leading-6">
+						<div class={`leading-6 ${icon ? "flex gap-2" : ""}`}>
 							{icon && (
 								<Icon name={icon} size="1.333em" class="min-w-[1.333em]" />
 							)}
@@ -68,7 +68,7 @@ const { banner } = Astro.locals.starlightRoute.entry.data;
 			<div
 				class={`sl-banner relative ${banner.type !== "default" ? `alert ${banner.type}` : ""}`}
 			>
-				<div class="flex gap-2">
+				<div class={`leading-6 ${icon ? "flex gap-2" : ""}`}>
 					{icon && <Icon name={icon} size="1.333em" />}
 					<span set:html={banner.content} />
 				</div>
