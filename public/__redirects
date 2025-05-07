@@ -2088,6 +2088,8 @@
 /workers-ai/demos/* /workers-ai/guides/demos-architectures/:splat 301
 /workers-ai/tutorials/* /workers-ai/guides/tutorials/:splat 301
 
+# Workflows
+/workflows/tutorials/ /workflows/ 301
 
 # Others
 /logs/analytics-integrations/* /fundamentals/data-products/analytics-integrations/:splat 301
