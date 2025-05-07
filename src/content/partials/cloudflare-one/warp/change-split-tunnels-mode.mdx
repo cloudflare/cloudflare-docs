@@ -28,7 +28,7 @@ import { Tabs, TabItem } from '~/components';
 		```tf
 		resource "cloudflare_zero_trust_device_custom_profile" "exclude_example" {
 			account_id            = var.cloudflare_account_id
-			name                  = "Device profile in Split Tunnels Exclude mode"
+			name                  = "Custom profile in Split Tunnels Exclude mode"
 			enabled               = true
 			precedence            = 101
 			service_mode_v2       = {mode = "warp"}
@@ -48,7 +48,7 @@ import { Tabs, TabItem } from '~/components';
 		```tf
 		resource "cloudflare_zero_trust_device_custom_profile" "include_example" {
 			account_id            = var.cloudflare_account_id
-			name                  = "Device profile in Split Tunnels Include mode"
+			name                  = "Custom profile in Split Tunnels Include mode"
 			enabled               = true
 			precedence            = 101
 			service_mode_v2       = {mode = "warp"}
