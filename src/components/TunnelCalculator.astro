@@ -204,7 +204,7 @@ const metrics = Object.entries({
 
 	document.querySelectorAll("input[data-tunnel-calculator]").forEach((input) =>
 		input.addEventListener("change", () => {
-			calculate;
+			calculate();
 			track("interacted with docs calculator", { value: "tunnel calculator" });
 		}),
 	);
