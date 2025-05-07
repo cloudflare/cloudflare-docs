@@ -2089,7 +2089,7 @@
 /workers-ai/tutorials/* /workers-ai/guides/tutorials/:splat 301
 
 # Workflows
-/workflows/tutorials/ /workflows/ 301
+/workflows/tutorials/ /workflows/examples 301
 
 # Others
 /logs/analytics-integrations/* /fundamentals/data-products/analytics-integrations/:splat 301
