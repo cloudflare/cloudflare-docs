@@ -1,8 +1,8 @@
 ---
 pcx_content_type: navigation
-title: Introduction to Workflows - 2
+title: Use cron triggers to develop time-aware applications
 sidebar:
-  order: 2
+  order: 3
 tableOfContents: false
 ---
 
@@ -11,337 +11,135 @@ import { Render, Tabs, TabItem, Stream, Card } from "~/components";
 <Tabs>
   <TabItem label="Watch this episode">
 
-  In this video, we discuss Cloudflare One, our Secure Access Service Edge (SASE) platform and how it has been designed to revolutionize the corporate network and enable companies with their Zero Trust strategy. Legacy network design is struggling to address today's challenges of security, performance and monitoring needs. Many IT teams are trying to evolve their corporate network with point solutions and finding the lack of integration and performance an issue.
+  Cloudflare Workflows provide a powerful way to manage asynchronous, durable processes. The ability to explicitly schedule tasks using cron triggers and pause execution with `step.sleep` allows developers to build sophisticated, time-aware applications.
 
     <Card>
         <Stream
         id="7734dea79c9d052395100e4066bee1f9"
-        title="Introduction to Workflows"
-        thumbnail="https://dash.cloudflare.com/b54f07a6c269ecca2fa60f1ae4920c99/r2/default/buckets/video-thumbnails/objects/Workflows-video-3.png/details"
+        title="Use cron triggers to develop time-aware applications"
+        thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/Workflows-video-3.png"
         showMoreVideos={false}
         chapters={{
-          "Introduction to SASE and Modern Corporate Networking" : "0s",
-          "The Evolution of Corporate Networks and Security Challenges" : "1m8s",
-          "Why Legacy Solutions Like VPNs and SD-WAN Are Insufficient" : "3m5s",
-          "How Cloudflare's Global Network Powers SASE Solutions" : "4m13s",
-          "The Role of Cloudflare's Connectivity Cloud in Securing Enterprises" : "5m28s",
-          "Simplified Security, Network Optimization, and Cost Savings with Cloudflare" : "6m15s"
-
+          "Intro": "0s",
+          "Interaction code": "1m53s",
+          "Leaderboard code": "3m21s",
+          "Wrangler.toml": "3m41s",
+          "Puntificator: Using AI to develop more puns automatically": "4m46s",
+          "Nested Workflows": "5m55s",
+          "Npx wrangler workflow instances": "6m37s",
+          "Conclusion": "7m41s"
         }}
       />
 
       **Related content**
 
-      If you want to dive into detail about modernizing your corporate network with Cloudflare, refer to the following pages:
+      If you want to dive into detail, refer to the following pages:
 
-        - [Evolving to a SASE architecture with Cloudflare](/reference-architecture/architectures/sase/)
-        - [Network-focused migration from VPN concentrators to Zero Trust Network Access](/reference-architecture/design-guides/network-vpn-migration/)
-        - [Using a Zero Trust framework to secure SaaS applications](/reference-architecture/design-guides/zero-trust-for-saas/)
-        - [Building Zero Trust architecture into your startup](/reference-architecture/design-guides/zero-trust-for-startups/)
+    - [Source code for the Punderful repository](https://github.com/craigsdennis/punderful-workflows)
+    - [Cloudflare Workflows](/workflows/)
+    - [Cloudflare Workers AI](/workers-ai/)
 
     </Card>
   </TabItem>
-  <TabItem label="hi">
-    # Cloudflare Workflows: Index Your Data With Background Workflows
+  
+  <TabItem label="Step-by-step tutorial">
 
-## Outline
--   Introduction to Cloudflare Workflows
--   Punderful Application Overview
--   Implementing a Workflow to Process New Puns
-    -   Triggering the Workflow
-    -   Defining the Workflow Class
-    -   Workflow Steps
-        -   Content Moderation
-        -   Creating Embeddings
-        -   Categorizing the Pun
-        -   Adding Embeddings to Vectorize
-        -   Updating Database Status
-    -   Workflow Bindings
--   Vectorize for Semantic Search
--   Scalability
--   Conclusion
+      Workflows allow you to kick off asynchronous processes without blocking the user. This is demonstrated in the `addInteraction` function, which creates a new instance of the `INTERACTION` workflow.
 
-## Introduction to Cloudflare Workflows
+      Locate the `addInteraction` function in `src/index.tsx`:
+      
+      [See here](https://github.com/craigsdennis/punderful-workflows/blob/main/src/index.tsx#L237)
 
-Cloudflare Workflows provides durable execution capabilities, allowing developers to create reliable, repeatable workflows that run in the background. Workflows are designed to resume execution even if the underlying compute fails, ensuring that tasks complete eventually. They are built on top of Cloudflare Workers and handle scaling and provisioning automatically.
+      This function is called when a user interacts with a pun (e.g., likes it). Instead of performing the interaction logic directly, it offloads the work to a workflow.
 
-Workflows are triggered by events, such as Event Notifications consumed from a Queue, HTTP requests, another Worker, or even scheduled timers. Individual steps within a Workflow are designed as retriable units of work. The state is persisted between steps, allowing workflows to resume from the last successful step after failures. Workflows automatically emit metrics for each step, aiding in debugging and observability.
+      Examine the `InteractionWorkflow` definition in `src/workflows/interaction.ts`. This workflow performs tasks like checking if the user/session exists and recording the interaction in the database.
+      
+      [See here](https://github.com/craigsdennis/punderful-workflows/blob/main/src/workflows/interaction.ts)
 
-## Punderful Application Overview
+      ### Leaderboard Code
 
-Punderful is a sample application that showcases the use of various Cloudflare primitives, including Workers, D1, Vectorize, Workers AI, and Workflows. The application displays a list of puns stored in a D1 database.
+      A common use case for background processes is crunching data and caching results, such as building a leaderboard.
 
-The homepage lists the latest puns stored in D1.
+      Examine the `LeaderboardWorkflow` in `src/workflows/leaderboard.ts`. This workflow performs a database query to find trending puns and then stores the results in Cloudflare KV (Key-Value Store).
+      
+      [See here](https://github.com/craigsdennis/punderful-workflows/blob/main/src/workflows/leaderboard.ts)
 
-The application also includes a semantic search feature powered by Vectorize. To perform a search:
+      This workflow can be scheduled to run periodically to update the leaderboard data.
 
-1.  Go to the Punderful search page.
-2.  Type a search query in the "Search for a pun..." input box.
-3.  Observe the search results appearing instantly below the search box.
+      ### Wrangler.toml Configuration
 
-To demonstrate adding a new pun:
+      The `wrangler.toml` file is used to configure your Worker and Workflows. This includes defining bindings to resources like KV namespaces and setting up triggers for workflows.
 
-1.  Go to the Punderful creation page.
-2.  Enter a new pun in the "Enter your pun here..." textarea.
-3.  Observe the preview of the pun updating as you type.
-4.  Click the "Submit Pun" button.
+      Open `wrangler.toml` and find the `[triggers]` section.
+      
+      [See here](https://github.com/craigsdennis/punderful-workflows/blob/main/wrangler.toml#L67)
 
-When a new pun is submitted, it needs to be indexed in Vectorize for the semantic search to work. This indexing process involves creating embeddings from the pun text. This is a task suitable for background processing using Cloudflare Workflows, avoiding delays for the user in the request-response loop.
+      The `crons` array allows you to define scheduled triggers for your main Worker. The example shows a cron job configured to run every 30 minutes.
 
-## Implementing a Workflow to Process New Puns
+      Locate the `scheduled` handler in your main Worker code (`src/index.tsx`). This handler is executed when a cron trigger fires.
 
-A workflow is implemented to handle the background processing required when a new pun is submitted.
+      [See here](https://github.com/craigsdennis/punderful-workflows/blob/main/src/index.tsx#L315)
 
-### Triggering the Workflow
+      This handler creates an instance of the `LEADERBOARD_WORKFLOW`, initiating the leaderboard update process on a schedule.
 
-When a new pun is submitted via the `/api/puns` endpoint, the data is first inserted into the D1 database. Then, a new Workflow instance is created and triggered to perform the subsequent background tasks.
+      ### Puntificator: Using AI to Develop More Puns Automatically
 
-```typescript
-// File: src/index.ts
-// ... (previous code for API handlers and database insertion)
+      Workflows can also be used for more complex, multi-step processes, including interacting with AI models. The `PuntificatorWorkflow` is an example that leverages AI to generate and evaluate new puns.
 
-app.post('/api/puns', async (c) => {
-  const payload = await c.req.json();
-  console.log({ payload });
-  const punId = await insertPun(c, payload.pun);
+      Examine the `PuntificatorWorkflow` definition in `src/workflows/puntificator.ts`.
+      [See here](https://github.com/craigsdennis/punderful-workflows/blob/main/src/workflows/puntificator.ts)
 
-  // Trigger the workflow
-  const workflow = await c.env.PUBLISH.create(crypto.randomUUID(), {
-    punId,
-    pun: payload.pun,
-  });
+      This workflow includes steps to:
 
-  return c.json({ workflow });
-});
+      1.  Retrieve trending puns.
+      2.  Create a new pun based on trends using an AI model.
+      3.  Judge the quality of the created pun using another AI model.
+      4.  Save the pun if it meets a certain rating threshold.
 
-// ... (remaining code)
-```
+      Crucially, this workflow includes a `step.sleep` call:
 
-In this handler, `c.env.PUBLISH.create(crypto.randomUUID(), { punId, pun: payload.pun })` creates a new instance of the workflow bound as `PUBLISH`, assigns it a unique ID, and passes the `punId` and `pun` text as the payload.
+      [See here](https://github.com/craigsdennis/punderful-workflows/blob/main/src/workflows/puntificator.ts#L135)
 
-### Defining the Workflow Class
+      This step pauses the workflow execution for a specified duration (1 day in this case). This is useful for waiting to see user feedback on a published pun before potentially taking further action based on its popularity.
 
-The workflow logic is defined in a class that extends `WorkflowEntrypoint`.
+      ### Nested Workflows
 
-```typescript
-// File: src/index.ts
+      Workflows can initiate other workflows, allowing you to compose complex processes from smaller, modular units.
 
-// ... (previous code for API handlers and type definitions)
+      In the `PuntificatorWorkflow`, find where it calls the `PUBLISH` workflow.
 
-export class PublishWorkflow extends WorkflowEntrypoint<Env, Params> {
-  async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
-    const { pun, punId } = event.payload;
+      [See here](https://github.com/craigsdennis/punderful-workflows/blob/main/src/workflows/puntificator.ts#L115)
 
-    // ... (Workflow steps defined below)
-  }
-}
+      This demonstrates how one workflow can trigger another, enabling the separation of concerns and modular design.
 
-// ... (remaining code)
-```
+      Examine the `PublishWorkflow` in `src/workflows/publish.ts`.
 
-The `run` method is the entrypoint for the workflow execution. It receives the `event` containing the payload and a `step` object to define individual, durable steps.
+      [See here](https://github.com/craigsdennis/punderful-workflows/blob/main/src/workflows/publish.ts)
 
-### Workflow Steps
-
-Each discrete, retriable task in the workflow is defined using `await step.do()`.
-
-#### Content Moderation
-
-Optionally, the workflow can perform content moderation using an external service like OpenAI's moderation API if an API key is available in the environment.
-
-```typescript
-// File: src/index.ts
-// ... (inside PublishWorkflow.run method)
-
-    // step: [OPTIONAL] Moderate using OpenAI's free moderation API
-    if (this.env.OPENAI_API_KEY !== undefined) {
-      const moderation = await step.do('content-moderation', async () => {
-        const openai = new OpenAI({ apiKey: this.env.OPENAI_API_KEY });
-        const moderation = await openai.moderations.create({
-          model: 'omn-moderation-latest',
-          input: pun,
-        });
-        return moderation;
-      });
-
-      if (moderation.results[0].flagged) {
-        console.warn('Pun flagged:', JSON.stringify(moderation));
-        await this.env.DB.prepare(`UPDATE puns SET status=? WHERE id=?`).bind('flagged', punId).run();
-        throw new Error(`Pun ${punId} failed moderation`) as NonRetryableError;
-      }
-      return true;
-    } else {
-      console.warn('OPENAI_API_KEY is not present in your environment, set it to enable moderation');
-    }
-
-// ... (remaining workflow steps)
-```
-
-This step calls the OpenAI moderation API. If the content is flagged as inappropriate, the pun's status is updated in the database, and a `NonRetryableError` is thrown. Throwing a `NonRetryableError` prevents the workflow from retrying this step, as the content is permanently deemed inappropriate.
-
-#### Creating Embeddings
-
-Next, create vector embeddings for the pun text using a Workers AI model.
-
-```typescript
-// File: src/index.ts
-// ... (inside PublishWorkflow.run method, after moderation step)
-
-    // step: Create embedding for indexing
-    const punEmbedding = await step.do('create-pun-embedding', async () => {
-      const results = await this.env.AI.run('@cf/baai/bge-large-en-v1.5', {
-        text: pun,
-      });
-      return results.data[0];
-    });
-
-// ... (remaining workflow steps)
-```
-
-This step uses the `@cf/baai/bge-large-en-v1.5` model from Workers AI to generate a vector embedding for the `pun` text. The result (the embedding vector) is returned by the step and can be used in subsequent steps. `step.do()` ensures this step will be retried if it fails, guaranteeing that embeddings are eventually created.
-
-#### Categorizing the Pun
-
-Optionally, use a Workers AI language model to categorize the pun.
-
-```typescript
-// File: src/index.ts
-// ... (inside PublishWorkflow.run method, after embedding step)
-
-    // step: Categorize
-    const categories = await step.do('categorize-pun', async () => {
-      const results = await this.env.AI.run('@cf/meta/llama-3.1-8b-instruct', {
-        messages: [
-          {
-            role: 'system',
-            content: 'You help categorize puns for people to search for later. The user is going to give you a pun and your job is to list the most relevant categories for the pun, based on the content of the pun. Do not include words about pun in general, focus on what the content is about. For instance don\'t return "word play" or "pun" as a category. Return only the categories, comma separated. Do not include a preamble or introducdtion, just the categories.',
-          },
-          { role: 'user', content: pun },
-        ],
-        gateway: {
-          id: "punderful"
-        }
-      });
-      return results.response;
-    });
-
-// ... (remaining workflow steps)
-```
-
-This step uses the `@cf/meta/llama-3.1-8b-instruct` model with a specific system prompt to generate categories for the pun. The generated categories string is returned by the step. This step also benefits from `step.do()`'s reliability.
+      This workflow handles the logic for publishing a pun, likely involving saving it to the database and making it visible on the site.
 
-#### Adding Embeddings to Vectorize
+      ### Workflow Instances
 
-Insert the created pun embedding and potentially categories embedding into the Vectorize database.
+      You can trigger workflows manually and inspect their execution status and output using the `wrangler` command-line tool.
 
-```typescript
-// File: src/index.ts
-// ... (inside PublishWorkflow.run method, after categorization step)
+      To trigger the `PuntificatorWorkflow` manually:
 
-    // Step: Add embeddings to vector store
-    await step.do('add-embeddings-to-vector-store', async () => {
-      await this.env.VECTORIZE.upsert([
-        {
-          id: `content-${punId}`,
-          values: punEmbedding,
-          namespace: 'content',
-          metadata: {
-            punId,
-            pun,
-            categories,
-          },
-        },
-      ]);
+      ```bash
+      npx wrangler workflows trigger puntificator
+      ```
 
-      // Assuming categoriesEmbedding is also generated or derived
-      // await this.env.VECTORIZE.upsert([
-      //   {
-      //     id: `categories-${punId}`,
-      //     values: categoriesEmbedding,
-      //     namespace: 'categories',
-      //     metadata: {
-      //       punId,
-      //       pun,
-      //       categories,
-      //     },
-      //   }
-      // ]);
-    });
+      This command will queue an instance of the workflow. You will see a success message and the instance ID.
 
-// ... (remaining workflow steps)
-```
+      To describe the latest instance of a workflow:
 
-This step uses `this.env.VECTORIZE.upsert()` to add the generated embeddings and associated metadata to the Vectorize database. This makes the pun searchable semantically. `step.do()` ensures this critical indexing step is completed reliably.
+      ```bash
+      npx wrangler workflows instances describe puntificator latest
+      ```
 
-#### Updating Database Status
-
-The final step updates the status of the pun in the D1 database to indicate that it has been published and processed by the workflow.
-
-```typescript
-// File: src/index.ts
-// ... (inside PublishWorkflow.run method, after Vectorize step)
-
-    // Step: Update the db
-    await step.do('update-status-to-published', async () => {
-      const results = await this.env.DB.prepare(`UPDATE puns SET status=? WHERE id=?`).bind('published', punId).run();
-    });
-
-// ... (remaining workflow logic)
-```
-
-This step updates the `status` column in the D1 database to 'published' for the corresponding pun ID. Once this step is complete, the pun is considered fully processed and ready to be displayed on the homepage.
-
-### Workflow Bindings
-
-To make the `PublishWorkflow` class available to the main Worker and to provide access to necessary resources (like D1, AI, Vectorize), bindings are configured in the `wrangler.toml` file.
-
-```toml
-# File: wrangler.toml
-# ... (other configurations)
-
-[workflows]
-# Name of your workflow
-name = "publish"
-# Binding name env.MYWORKFLOW
-binding = "PUBLISH"
-# This is class that extends the Workflow class in src/index.ts
-class_name = "PublishWorkflow"
-
-[ai]
-binding = "AI"
-
-[vectorize]
-binding = "VECTORIZE"
-index_name = "puns5" # Example index name
-
-# ... (other bindings like d1_databases)
-```
-
-This configuration defines a workflow named `publish`, binds it to the environment variable `PUBLISH`, and links it to the `PublishWorkflow` class in `src/index.ts`. It also shows bindings for Workers AI (`AI`) and Vectorize (`VECTORIZE`), which are accessed via `this.env` within the workflow.
-
-## Vectorize for Semantic Search
-
-Vectorize is a vector database used in this application to enable semantic search for puns. It stores the vector embeddings created by Workers AI. The search functionality queries this Vectorize index to find puns similar in meaning to the user's query.
-
-The homepage displays recently published puns (status 'published'). The detail page for a specific pun displays "Similar Puns", which are found by querying Vectorize with the embedding of the current pun.
-
-## Scalability
-
-Cloudflare Workers and Workflows are designed to scale automatically based on demand, handling concurrent requests and background tasks efficiently without requiring manual provisioning.
-
-## Conclusion
-
-Cloudflare Workflows provides a powerful primitive for building reliable, durable background processes, seamlessly integrating with other Cloudflare services like D1, Workers AI, and Vectorize. This enables developers to build complex applications with robust background task handling, guaranteed execution, and built-in observability.
-
-[Source code for the Punderful repository](https://github.com/craigsdennis/punderful-workflows)
-
-## References:
--   https://developers.cloudflare.com
--   https://developers.cloudflare.com/workflows/
--   https://developers.cloudflare.com/workers-ai/
+      This command will show details about the most recent run of the specified workflow, including its start time, end time, duration, state, and the state of each individual step within the workflow. You can observe steps like `create-new-pun-based-on-trends`, `judge-pun`, `save-pun`, `publish`, and `wait-for-publish` (which shows a 'Sleeping' state).
 
   </TabItem>
   <TabItem label="Series overview">
-    <Render file="sase-series-navigation" />
+    <Render file="workflows-series-navigation" />
   </TabItem>
 </Tabs>
