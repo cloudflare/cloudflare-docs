@@ -34,7 +34,7 @@ A common use case is to limit the rate of requests performed by individual user 
 
 Another use case when controlling access to resources is to exclude or include IP addresses or Autonomous System Numbers (ASNs) from a rate limiting rule.
 
-The following example rule allows up to 10 requests per minute from the same IP address doing a `GET` request for `/status`, as long as the visitor's IP address is not included in the `partner_ips` [IP list](/waf/tools/lists/custom-lists/#lists-with-ip-addresses-ip-lists).
+The following example rule allows up to 10 requests per minute from the same IP address doing a `GET` request for `/status`, as long as the visitor's IP address is not included in the `partner_ips` [IP list](/waf/tools/lists/custom-lists/#ip-lists).
 
 | Setting                  | Value                                                                                                        |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------ |

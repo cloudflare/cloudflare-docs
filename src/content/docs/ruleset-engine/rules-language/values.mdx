@@ -104,6 +104,7 @@ Cloudflare Business and Enterprise customer plans have access to the `matches` [
 Cloudflare has a few limits in place regarding regular expressions. One of those limits is that each rule supports a maximum of 64 regular expressions (regexes), regardless of your domain's plan.
 
 You can use the following strategies to reduce the number of regular expressions in a rule:
+
 - Use the [`contains`](/ruleset-engine/rules-language/operators/#comparison-operators) operator.
 - Use the [`wildcard`](/ruleset-engine/rules-language/operators/#wildcard-matching) / [`strict wildcard`](/ruleset-engine/rules-language/operators/#wildcard-matching) operators.
 - Use the [`starts_with()`](/ruleset-engine/rules-language/functions/#starts_with) and [`ends_with()`](/ruleset-engine/rules-language/functions/#ends_with) functions.
@@ -236,7 +237,7 @@ Lists allow you to create a group of items and refer to them collectively, by na
 
 To refer to a list in a rule expression, use `$<list_name>` and specify the `in` [operator](/ruleset-engine/rules-language/operators/). Only one value in the list has to match the left-hand side of the expression (before the `in` operator) for the simple expression to evaluate to `true`. If there is no match, the expression will evaluate to `false`.
 
-The following example expression filters requests from IP addresses that are in an [IP list](/waf/tools/lists/custom-lists/#lists-with-ip-addresses-ip-lists) named `office_network`:
+The following example expression filters requests from IP addresses that are in an [IP list](/waf/tools/lists/custom-lists/#ip-lists) named `office_network`:
 
 ```sql
 (ip.src in $office_network)
@@ -267,5 +268,3 @@ ip.src in {198.51.100.1 198.51.100.3..198.51.100.7 192.0.2.0/24 2001:0db8::/32}
 
 tcp.dstport in {8000..8009 8080..8089}
 ```
-
-

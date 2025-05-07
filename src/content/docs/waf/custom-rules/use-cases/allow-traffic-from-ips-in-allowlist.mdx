@@ -6,10 +6,10 @@ head:
     content: Allow traffic from IP addresses in allowlist only
 ---
 
-This example skips WAF rules for requests from IP addresses in an allowlist (defined using an [IP list](/waf/tools/lists/custom-lists/#lists-with-ip-addresses-ip-lists)).
+This example skips WAF rules for requests from IP addresses in an allowlist (defined using an [IP list](/waf/tools/lists/custom-lists/#ip-lists)).
 
 1.  [Create an IP list](/waf/tools/lists/create-dashboard/) with the IP addresses for which you want to allow access.<br/>
-    For example, create an IP list named `allowed_ips` with one or more IP addresses. For more information on the accepted IP address formats, refer to [IP lists](/waf/tools/lists/custom-lists/#lists-with-ip-addresses-ip-lists).
+    For example, create an IP list named `allowed_ips` with one or more IP addresses. For more information on the accepted IP address formats, refer to [IP lists](/waf/tools/lists/custom-lists/#ip-lists).
 
 2.  Create a custom rule skipping all rules for any request from the IPs in the list you created (`allowed_ips` in the current example).
 
