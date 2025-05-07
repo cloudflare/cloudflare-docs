@@ -26,20 +26,19 @@ import { GlossaryTooltip } from "~/components";
 
 2. Enter a URL to trace. The URL must include a hostname that belongs to your account.
 
-3. Select an HTTP method. If you select _POST_, _PUT_, or _PATCH_, you should enter a value in **Request body**.
+3. Select an HTTP method. If you select _POST_, _PUT_, or _PATCH_, you should enter a value in **Request Body**.
 
 4. (Optional) Define any custom request properties to simulate the conditions of a specific HTTP/S request. You can customize the following request properties:
 
    - **Protocol** (HTTP protocol version)
-   - **Request headers**
+   - **User Agent and Request Headers**
    - **Cookies**
    - **Geolocation** (request source [country](/ruleset-engine/rules-language/fields/reference/ip.src.country/), [region](/ruleset-engine/rules-language/fields/reference/ip.src.region/), and [city](/ruleset-engine/rules-language/fields/reference/ip.src.city/))
-   - [**Bot score**](/bots/concepts/bot-score/)
-   - **Threat score**
-   - **Request body** (for `POST`, `PUT`, and `PATCH` requests)
-   - **Skip challenge** (skips a Cloudflare-issued [challenge](/fundamentals/security/cloudflare-challenges/), if any, allowing the trace to continue)
+   - [**Bot Score**](/bots/concepts/bot-score/)
+   - **Request Body** (for `POST`, `PUT`, and `PATCH` requests)
+   - **Skip Challenge** (skips a Cloudflare-issued [challenge](/fundamentals/security/cloudflare-challenges/), if any, allowing the trace to continue)
 
-5. Select **Send trace**.
+5. Select **Send Trace**.
 
 ### 3. Assess results
 

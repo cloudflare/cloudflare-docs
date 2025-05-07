@@ -32,7 +32,7 @@ _Note: During a JavaScript challenge you will be shown an interstitial page for 
 
 A request that came from an IP address that is not trusted by Cloudflare based on the threat score.
 
-Cloudflare uses threat scores gathered from sources such as Project Honeypot, as well as our own communities' traffic to determine whether a visitor is legitimate or malicious. When a legitimate visitor passes a challenge, that helps offset the threat score against the previous negative behavior seen from that IP address. Our system learns who is a threat from this activity.
+Previously, the threat score was a score from `0` (zero risk) to `100` (high risk) classifying the IP reputation of a visitor. Currently, the threat score is always `0` (zero).
 
 ## Country block
 
@@ -68,4 +68,4 @@ Request that came from a bot.
 
 Unclassified threats comprises a number of automatic blocks that are not related to the Browser Integrity Challenge (Bad Browser). These threats usually relate to Hotlink Protection, and other actions that happen on Cloudflare's global network based on the composition of the request (and not its content).
 
-Unclassified means a number of conditions under which we group common threats related to Hotlink Protection as well as certain cases of IP reputation and specific requests that are blocked at Cloudflare's global network before reaching your servers.
+Unclassified means a number of conditions under which we group common threats related to Hotlink Protection as well as specific requests that are blocked at Cloudflare's global network before reaching your servers.
