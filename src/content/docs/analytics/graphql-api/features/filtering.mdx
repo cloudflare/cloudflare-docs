@@ -3,7 +3,6 @@ pcx_content_type: reference
 title: Filtering
 sidebar:
   order: 11
-
 ---
 
 Filters constrain queries to a particular account or set of zones, requests by date, or those from a specific user agent, for example. Without filters, queries can suffer performance degradation, results can exceed supported bounds, and the data returned can be noisy.
@@ -14,9 +13,9 @@ The GraphQL filter is represented by the [GraphQL Input Object](https://graphql.
 
 You can use filters as an argument on the following resources:
 
-* zones
-* accounts
-* tables (datasets)
+- zones
+- accounts
+- tables (datasets)
 
 ### Zone filter
 
@@ -51,9 +50,7 @@ You must specify an account filter when making an account-scoped query, and you 
 
 :::note[Note]
 
-
 Network Analytics queries require an Account ID (`accountTag`) filter.
-
 
 :::
 
@@ -114,20 +111,23 @@ The `like` operator is available for string comparisons and supports the `%` cha
 
 :::note
 
-Filtering times are based on event start timestamps, which means requests that end after the filter may be included in queries (as long as they start within the given time). 
+Filtering times are based on event start timestamps, which means requests that end after the filter may be included in queries (as long as they start within the given time).
 :::
 
 ### General example
 
-```graphql
-{
-  viewer {
-    zones(filter: {zoneTag: $zoneTag}) {
-      httpRequestsAdaptiveGroups(filter: {datetime_gt: "2021-06-10T00:00:00Z", clientCountryName: "GB"}, limit: 1) {
-        count
-      }
-    }
-  }
+```graphql graphql-api-explorer
+query GeneralExample($zoneTag: string, $start: Time) {
+	viewer {
+		zones(filter: { zoneTag: $zoneTag }) {
+			httpRequestsAdaptiveGroups(
+				filter: { datetime_gt: $start, clientCountryName: "GB" }
+				limit: 1
+			) {
+				count
+			}
+		}
+	}
 }
 ```
 
@@ -229,7 +229,7 @@ WHERE has(ruleIDs, 'rule-id-1') AND has(ruleIDs, 'rule-id-2')
 
 ### Filter end users
 
-Add the `requestSource` filter for `eyeball` to return request, data transfer, and visit data about only the end users of your website. This will exclude actions taken by Cloudflare products (for example, cache purge,  healthchecks, Workers subrequests) on your zone.
+Add the `requestSource` filter for `eyeball` to return request, data transfer, and visit data about only the end users of your website. This will exclude actions taken by Cloudflare products (for example, cache purge, healthchecks, Workers subrequests) on your zone.
 
 ## Subqueries (advanced filters)
 

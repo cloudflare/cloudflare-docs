@@ -5,7 +5,6 @@ type: overview
 head:
   - tag: title
     content: Configure GraphQL malicious query protection
-
 ---
 
 Use the [Cloudflare GraphQL API](/analytics/graphql-api/getting-started/) to gather data about your GraphQL API’s current usage and configure Cloudflare’s GraphQL malicious query protection to log or block malicious queries.
@@ -16,14 +15,14 @@ Query size is defined as the number of terminal fields (leaves) in the query, wh
 
 ```graphql title="GraphQL query"
 {
-  terminalField1
-  nonTerminalField1(filter: 123) {
-    terminalField2
-    nonTerminalField2 {
-      terminalField3
-      terminalField4
-    }
-  }
+	terminalField1
+	nonTerminalField1(filter: 123) {
+		terminalField2
+		nonTerminalField2 {
+			terminalField3
+			terminalField4
+		}
+	}
 }
 ```
 
@@ -31,19 +30,30 @@ Query size is defined as the number of terminal fields (leaves) in the query, wh
 
 Using the new `apiGatewayGraphqlQueryAnalyticsGroups` node in the Cloudflare GraphQL API, you can retrieve `apiGatewayGraphqlQuerySize` and `apiGatewayGraphqlQueryDepth` dimensions.
 
-```graphql title="GraphQL query"
-query ApiGatewayGraphqlQueryAnalytics($zoneTag: string, $datetimeStart: Time, $datetimeEnd: Time) {
-  viewer {
-    zones(filter: {zoneTag: $zoneTag}) {
-      apiGatewayGraphqlQueryAnalyticsGroups(limit: 100,  orderBy: [apiGatewayGraphqlQuerySize_DESC, apiGatewayGraphqlQueryDepth_DESC], filter: {datetime_geq:$datetimeStart, datetime_leq:$datetimeEnd}) {
-        count
-        dimensions {
-          apiGatewayGraphqlQuerySize
-          apiGatewayGraphqlQueryDepth
-        }
-      }
-    }
-  }
+```graphql graphql-api-explorer title="GraphQL query"
+query ApiGatewayGraphqlQueryAnalytics(
+	$zoneTag: string
+	$start: Time
+	$end: Time
+) {
+	viewer {
+		zones(filter: { zoneTag: $zoneTag }) {
+			apiGatewayGraphqlQueryAnalyticsGroups(
+				limit: 100
+				orderBy: [
+					apiGatewayGraphqlQuerySize_DESC
+					apiGatewayGraphqlQueryDepth_DESC
+				]
+				filter: { datetime_geq: $start, datetime_leq: $end }
+			) {
+				count
+				dimensions {
+					apiGatewayGraphqlQuerySize
+					apiGatewayGraphqlQueryDepth
+				}
+			}
+		}
+	}
 }
 ```
 
@@ -51,31 +61,31 @@ With the above query, you will get the following response:
 
 ```json title="Response"
 {
-  "data": {
-    "viewer": {
-      "zones": [
-        {
-          "apiGatewayGraphqlQueryAnalyticsGroups": [
-            {
-              "count": 10,
-              "dimensions": {
-                "apiGatewayGraphqlQueryDepth": 1,
-                "apiGatewayGraphqlQuerySize": 11
-              }
-            },
-            {
-              "count": 10,
-              "dimensions": {
-                "apiGatewayGraphqlQueryDepth": 1,
-                "apiGatewayGraphqlQuerySize": 2
-              }
-            }
-          ]
-        }
-      ]
-    }
-  },
-  "errors": null
+	"data": {
+		"viewer": {
+			"zones": [
+				{
+					"apiGatewayGraphqlQueryAnalyticsGroups": [
+						{
+							"count": 10,
+							"dimensions": {
+								"apiGatewayGraphqlQueryDepth": 1,
+								"apiGatewayGraphqlQuerySize": 11
+							}
+						},
+						{
+							"count": 10,
+							"dimensions": {
+								"apiGatewayGraphqlQueryDepth": 1,
+								"apiGatewayGraphqlQuerySize": 2
+							}
+						}
+					]
+				}
+			]
+		}
+	},
+	"errors": null
 }
 ```
 
@@ -141,8 +151,6 @@ For example, you can deploy the following rule via the API or the dashboard to b
 
 :::note
 
-
 You are not able to configure which endpoints the GraphQL parsing runs on. Requests are parsed if they are targeting a path ending in `/graphql`.
-
 
 :::
