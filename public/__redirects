@@ -849,6 +849,10 @@
 /magic-transit/reference/ /magic-transit/reference/anti-replay-protection/ 301
 /magic-transit/how-to/configure-static-routes/ /magic-transit/how-to/configure-routes/ 301
 /magic-transit/how-to/bgp-peering/ /magic-transit/how-to/configure-routes/ 301
+/magic-transit/how-to/run-endpoint-health-checks/ /magic-transit/network-health/run-endpoint-health-checks/ 301
+/magic-transit/how-to/check-tunnel-health-dashboard/ /magic-transit/network-health/check-tunnel-health-dashboard/ 301
+/magic-transit/how-to/configure-magic-tunnel-alerts/ /magic-transit/network-health/configure-magic-tunnel-alerts/ 301
+/magic-transit/how-to/tunnel-health-checks/ /magic-transit/network-health/update-tunnel-health-checks/ 301
 
 # magic-wan
 /magic-wan/tutorials/ipsec/ /magic-wan/reference/tunnels/#ipsec-tunnels 301
