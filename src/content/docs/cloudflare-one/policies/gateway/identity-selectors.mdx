@@ -36,41 +36,31 @@ Gateway will automatically detect changes in user name, title, and group members
 
 Specify a value from the SAML Attribute Assertion.
 
-| UI name         | API example                                       |
-| --------------- | ------------------------------------------------- |
-| SAML Attributes | `identity.saml_attributes == "\"group=finance\""` |
+<Render file="gateway/selectors/saml-attributes" />
 
 ### User Email
 
 Use this selector to create identity-based Gateway rules based on a user's email.
 
-| UI name    | API example value                           |
-| ---------- | ------------------------------------------- |
-| User Email | `identity.email == "user-name@company.com"` |
+<Render file="gateway/selectors/user-email" params={{ UIname: "User Email" }}/>
 
 ### User Group IDs
 
 Use this selector to create identity-based Gateway rules based on an IdP group ID of which the user is configured as a member in the IdP.
 
-| UI name        | API example                                    |
-| -------------- | ---------------------------------------------- |
-| User Group IDs | `identity.groups.id == "12jf495bhjd7893ml09o"` |
+<Render file="gateway/selectors/user-group-ids" params={{ UIname: "User Group IDs" }}/>
 
 ### User Group Email
 
 Use this selector to create identity-based Gateway rules based on an IdP group email address of which the user is configured as a member in the IdP.
 
-| UI name          | API example                                       |
-| ---------------- | ------------------------------------------------- |
-| User Group Email | `identity.groups.id == "contractors@company.com"` |
+<Render file="gateway/selectors/user-group-email" params={{ UIname: "User Group Email" }}/>
 
 ### User Group Names
 
 Use this selector to create identity-based Gateway rules based on an IdP group name of which the user is configured as a member in the IdP.
 
-| UI name          | API example                             |
-| ---------------- | --------------------------------------- |
-| User Group Names | `identity.groups.name == "\"finance\""` |
+<Render file="gateway/selectors/user-group-names" params={{ UIname: "User Group Names" }}/>
 
 ### User Name
 

@@ -15,9 +15,10 @@ const props = z.object({
 	descriptions: z.boolean().default(false),
 	folder: z.string().optional(),
 	maxDepth: z.number().default(1),
+	tag: z.string().optional(),
 });
 
-let { descriptions, folder, maxDepth } = props.parse(Astro.props);
+let { descriptions, folder, maxDepth, tag } = props.parse(Astro.props);
 
 if (!folder) folder = Astro.params.slug!;
 
@@ -34,7 +35,11 @@ function getChildren(parentPath: string, depth: number) {
 	return allPages.filter((page) => {
 		const pagePath = page.id;
 		const pageDepth = pagePath.split("/").length;
-		return pageDepth === depth && pagePath.startsWith(parentPath);
+		return (
+			pageDepth === depth &&
+			pagePath.startsWith(parentPath) &&
+			(tag ? page.data.tags?.includes(tag) : true)
+		);
 	});
 }
 

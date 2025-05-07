@@ -6,11 +6,11 @@ sidebar:
 head: []
 description: Learn how to review scripts and connections that Page Shield
   considered malicious.
-
 ---
 
-:::note
+import { Render } from "~/components";
 
+:::note
 Only available to Enterprise customers with a paid add-on.
 :::
 
@@ -26,10 +26,13 @@ To review the scripts considered malicious:
 
 3. Select **Details** for each script considered malicious. The script details will contain:
 
-   * **Malicious Code**: Whether Cloudflare's internal systems consider the script malicious or not, and what is the score of the current script version (1-99).
-   * **Malicious URL**: Whether the script URL is known to be malicious according to threat intelligence feeds.
-   * **Malicious domain**: Whether the script's domain is known to be malicious according to threat intelligence feeds.
-   * **Malicious category**: The categorization of the script considered malicious according to threat intelligence feeds.
+   - **Malicious code analysis**: Scores between 1-99 classifying how malicious the current script version is, where 1 means definitely malicious and 99 means definitely not malicious.
+   - **Code behavior analysis**: Scores classifying the behavior of the current script version in terms of code obfuscation and data exfiltration. The scores vary between 1-99, where 1 means definitely malicious and 99 means definitely not malicious.
+   - **Threat intelligence**: Whether the script URL and/or domain is known to be malicious according to threat intelligence feeds. If the script is considered malicious according to the feeds, Page Shield will list the associated threat [categories](/page-shield/how-it-works/malicious-script-detection/#malicious-script-and-connection-categories). If threat intelligence feeds do not have any information about the script URL or domain, the dashboard will show **Not present**.
+
+   The script details also include the last 10 script versions detected by Page Shield.
+
+   <Render file="scripts-hash-note" />
 
    For more information, refer to [Malicious script and connection detection](/page-shield/how-it-works/malicious-script-detection/).
 
@@ -47,9 +50,9 @@ To review the connections considered malicious:
 
 3. Select **Details** for each connection considered malicious. The connection details will contain:
 
-   * **URL match**: Whether the connection's target URL is known to be malicious according to threat intelligence feeds. This field requires that you configure Page Shield to analyze the [full URI](/page-shield/reference/settings/#connection-target-details) of outgoing connections.
-   * **Domain match**: Whether the connection's target domain is known to be malicious according to threat intelligence feeds.
-   * **Category**: The categorization of the connection considered malicious according to threat intelligence feeds.
+   - **URL match**: Whether the connection's target URL is known to be malicious according to threat intelligence feeds. This field requires that you configure Page Shield to analyze the [full URI](/page-shield/reference/settings/#connection-target-details) of outgoing connections.
+   - **Domain match**: Whether the connection's target domain is known to be malicious according to threat intelligence feeds.
+   - **Category**: The categorization of the connection considered malicious according to threat intelligence feeds.
 
    For more information, refer to [Malicious script and connection detection](/page-shield/how-it-works/malicious-script-detection/).
 

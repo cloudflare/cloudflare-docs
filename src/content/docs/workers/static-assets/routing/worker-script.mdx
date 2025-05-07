@@ -1,0 +1,78 @@
+---
+pcx_content_type: concept
+title: Worker script
+description: How the presence of a Worker script influences static asset routing and the related configuration options.
+sidebar:
+  order: 4
+---
+
+import { WranglerConfig, TypeScriptExample, Aside } from "~/components";
+
+If you have both static assets and a Worker script configured, Cloudflare will first attempt to serve static assets if one matches the incoming request. You can read more about how we match assets in the [HTML handling docs](/workers/static-assets/routing/advanced/html-handling/).
+
+If an appropriate static asset if not found, Cloudflare will invoke your Worker script.
+
+This allows you to easily combine together these two features to create powerful applications (e.g. a [full-stack application](/workers/static-assets/routing/full-stack-application/), or a [Single Page Application (SPA)](/workers/static-assets/routing/single-page-application/) or [Static Site Generation (SSG) application](/workers/static-assets/routing/static-site-generation/) with an API).
+
+## Run your Worker script first
+
+If you need to always run your Worker script before serving static assets, (for example, you wish to log requests, perform some authentication checks, use [HTMLRewriter](/workers/runtime-apis/html-rewriter/), or otherwise transform assets before serving), you can configure the [`assets.run_worker_first` setting](/workers/static-assets/binding/#run_worker_first). This will retain any other settings governing asset-serving behavior (e.g. `assets.not_found_handling`) but gives you more control over exactly how and when those assets are served. This could be considered a platform-level "middleware" feature.
+
+<Aside type="caution">
+	If you are using [Smart Placement](/workers/configuration/smart-placement/) in
+	combination with `assets.run_worker_first`, you may find that placement
+	decisions are not optimized correctly as, currently, the entire Worker script
+	is placed as a single unit. This may not accurately reflect the desired
+	"split" in behavior of edge-first vs. smart-placed compute for your
+	application. This is a limitation that we are currently working to resolve.
+</Aside>
+
+Once the Worker has been invoked, to then defer to static-asset serving, you can use an Assets binding:
+
+<WranglerConfig>
+
+```json
+{
+	"name": "my-worker",
+	"compatibility_date": "$today",
+	"main": "./worker/index.ts",
+	"assets": {
+		"directory": "./dist/",
+		"binding": "ASSETS",
+		"run_worker_first": true
+	}
+}
+```
+
+</WranglerConfig>
+
+<TypeScriptExample filename="./worker/index.ts">
+
+```ts
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+export default class extends WorkerEntrypoint<Env> {
+	async fetch(request: Request) {
+		// You can perform checks before fetching assets
+		const user = await checkIfRequestIsAuthenticated(request);
+
+		if (!user) {
+			return new Response("Unauthorized", { status: 401 });
+		}
+
+		// You can then just fetch the assets as normal, or you could pass in a custom Request object here if you wanted to fetch some other specific asset
+		const assetResponse = await this.env.ASSETS.fetch(request);
+
+		// You can return static asset response as-is, or you can transform them with something like HTMLRewriter
+		return new HTMLRewriter()
+			.on("#user", {
+				element(element) {
+					element.setInnerContent(JSON.stringify({ name: user.name }));
+				},
+			})
+			.transform(assetResponse);
+	}
+}
+```
+
+</TypeScriptExample>

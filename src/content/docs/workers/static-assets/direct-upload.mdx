@@ -15,6 +15,7 @@ import {
 	Render,
 	TabItem,
 	Tabs,
+	TypeScriptExample,
 } from "~/components";
 import { Icon } from "astro-icon/components";
 
@@ -176,7 +177,7 @@ If this is a Worker which already has assets, and you wish to just re-use the ex
 }
 ```
 
-Asset [routing configuration](/workers/static-assets/routing/#routing-configuration) can be provided in the `assets` object, such as `html_handling` and `not_found_handling`.
+Asset [routing configuration](/workers/wrangler/configuration/#assets) can be provided in the `assets` object, such as `html_handling` and `not_found_handling`.
 
 ```bash title="Example Worker Metadata Specifying Asset Configuration"
 {
@@ -213,7 +214,7 @@ Optionally, an assets binding can be provided if you wish to fetch and serve ass
 
 ## Programmatic Example
 
-<Tabs> <TabItem label="TypeScript" icon="seti:typescript">
+<TypeScriptExample>
 
 ```ts
 import * as fs from "fs";
@@ -427,4 +428,4 @@ if (buckets.length > 0) {
 await scriptUpload(completionToken);
 ```
 
-</TabItem> </Tabs>
+</TypeScriptExample>

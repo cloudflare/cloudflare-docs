@@ -25,7 +25,7 @@ import { Render } from "~/components"
 | Value size                        | 25 MiB                | 25 MiB       |
 | Minimum [`cacheTtl`](/kv/api/read-key-value-pairs/#cachettl-parameter)         | 60 seconds            | 60 seconds   |
 
-[^1]: Within a single invocation, a Worker can make up to 1,000 operations to external services (for example, 500 Workers KV reads and 500 R2 reads).
+[^1]: Within a single invocation, a Worker can make up to 1,000 operations to external services (for example, 500 Workers KV reads and 500 R2 reads). A bulk request to Workers KV counts for 1 request to an external service.
 
 <Render file="limits_increase" product="workers" />
 

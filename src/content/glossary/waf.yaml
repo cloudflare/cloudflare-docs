@@ -56,6 +56,4 @@ entries:
 
   - term: threat score
     general_definition: |-
-      the threat score is a score from 0 (zero risk) to 100 (high risk) classifying the IP reputation of a visitor.
-
-      IP reputation is calculated based on Project Honeypot, external public IP information, as well as internal threat intelligence from WAF managed rules and DDoS.
+      the threat score was a score from `0` (zero risk) to `100` (high risk) classifying the IP reputation of a visitor. Currently, the threat score is always `0` (zero).

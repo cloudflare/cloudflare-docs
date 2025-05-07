@@ -97,7 +97,7 @@ Use the [Create list items](/api/resources/rules/subresources/lists/subresources
 This is an asynchronous operation. The response will contain an `operation_id` which you will use to check if the operation completed successfully using the [Get bulk operation status](/api/resources/rules/subresources/lists/subresources/bulk_operations/methods/get/) operation:
 
 <APIRequest
-	path="/accounts/{account_identifier}/rules/lists/bulk_operations/{operation_id}"
+	path="/accounts/{account_id}/rules/lists/bulk_operations/{operation_id}"
 	method="GET"
 	parameters={{
 		operation_id: "92558f8b296d4dbe9d0419e0e53f6622",

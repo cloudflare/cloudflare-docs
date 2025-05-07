@@ -15,7 +15,6 @@ graph LR
 B -->|Low quality| C@{ shape: procs, label: "Subscribers"}
 B -->|Medium quality| D@{ shape: procs, label: "Subscribers"}
 B -->|High quality| E@{ shape: procs, label: "Subscribers"}
-
 ```
 
 ### How it works
@@ -56,7 +55,7 @@ When a layer switch is requested (through updating `preferredRid`) with the `/tr
 
 For publishers (local tracks), you only need to include the simulcast attributes in your SDP. The SFU will automatically handle the simulcast configuration based on the SDP. For example, the SDP should contain a section like this:
 
-```sdp
+```txt
 a=simulcast:send f;h;q
 a=rid:f send
 a=rid:h send
@@ -75,6 +74,7 @@ const transceiver = peerConnection.addTransceiver(track, {
   ]
 });
 ```
+
 ## Example
 
 Here's an example of how to use simulcast with Cloudflare Realtime:

@@ -21,6 +21,8 @@ import { Render, WranglerConfig } from "~/components";
 | [Worker startup time](#worker-startup-time)                                      | 400 ms       | 400 ms       |
 | [Number of Workers](#number-of-workers)<sup>1</sup>                              | 100          | 500          |
 | Number of [Cron Triggers](/workers/configuration/cron-triggers/)<br/>per account | 5            | 250          |
+| Number of [Static Asset](#static-assets) files                                   | 20000        | 20000        |
+| Individual [Static Asset](#static-assets) file size                              | 25 MiB       | 25 MiB       |
 
 <sup>1</sup> If you are running into limits, your project may be a good fit for
 [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/).
@@ -358,6 +360,22 @@ If your Worker is on a Bundled plan, your limits are the same as the Workers Pai
 - Your limit for [CPU time](/workers/platform/limits/#cpu-time) is 50ms for HTTP requests and 50ms for [Cron Triggers](/workers/configuration/cron-triggers/)
 - You have no [Duration](/workers/platform/limits/#duration) limits for [Cron Triggers](/workers/configuration/cron-triggers/), [Durable Object alarms](/durable-objects/api/alarms/), or [Queue consumers](/queues/configuration/javascript-apis/#consumer)
 - Your Cache API limits for calls/requests is 50
+
+---
+
+## Static Assets
+
+### Files
+
+There is a 20,000 file count limit per [Worker version](/workers/configuration/versions-and-deployments/), and a 25 MiB individual file size limit. This matches the [limits in Cloudflare Pages](/pages/platform/limits/) today.
+
+### Headers
+
+A `_headers` file may contain up to 100 rules and each line may contain up to 2,000 characters. The entire line, including spacing, header name, and value, counts towards this limit.
+
+### Redirects
+
+A `_redirects` file may contain up to 2,000 static redirects and 100 dynamic redirects, for a combined total of 2,100 redirects. Each redirect declaration has a 1,000-character limit.
 
 ---
 

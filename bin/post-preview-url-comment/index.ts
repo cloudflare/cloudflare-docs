@@ -21,6 +21,15 @@ async function run(): Promise<void> {
 		const ctx = github.context;
 		const branch = ctx.ref.replace("refs/heads/", "");
 
+		const previewUrl = {
+			branch: `https://${branchToSubdomain(branch)}.preview.developers.cloudflare.com`,
+			commit: `https://${ctx.sha.slice(0, 8)}.preview.developers.cloudflare.com`,
+		};
+
+		core.info(
+			`Commit URL: ${previewUrl.commit}\nBranch URL: ${previewUrl.branch}`,
+		);
+
 		core.info(`Finding pull requests for ${ctx.ref}`);
 
 		const { data: pulls } = await octokit.rest.pulls.list({
@@ -62,15 +71,6 @@ async function run(): Promise<void> {
 		} else {
 			core.info(`No existing comment found`);
 		}
-
-		const previewUrl = {
-			branch: `https://${branchToSubdomain(branch)}.preview.developers.cloudflare.com`,
-			commit: `https://${ctx.sha.slice(0, 8)}.preview.developers.cloudflare.com`,
-		};
-
-		core.info(
-			`Commit URL: ${previewUrl.commit}\nBranch URL: ${previewUrl.branch}`,
-		);
 
 		const changedFiles = files
 			.filter(
