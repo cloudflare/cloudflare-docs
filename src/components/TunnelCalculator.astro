@@ -122,6 +122,8 @@ const metrics = Object.entries({
 </sup>
 
 <script>
+	import { track } from "~/util/zaraz";
+
 	function getValueOfInputById(id: string) {
 		const element = document.querySelector<HTMLInputElement>(id);
 
@@ -200,7 +202,10 @@ const metrics = Object.entries({
 		}
 	}
 
-	document
-		.querySelectorAll("input[data-tunnel-calculator]")
-		.forEach((input) => input.addEventListener("change", calculate));
+	document.querySelectorAll("input[data-tunnel-calculator]").forEach((input) =>
+		input.addEventListener("change", () => {
+			calculate();
+			track("interacted with docs calculator", { value: "tunnel calculator" });
+		}),
+	);
 </script>
