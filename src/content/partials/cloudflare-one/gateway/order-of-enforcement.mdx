@@ -181,20 +181,19 @@ When a user goes to `https://test.example.com`, Gateway performs the following o
 
 Therefore, the user is able to connect to `https://test.example.com`.
 
-### How gateway calculates precedence?
+## Precedence calculations
 
-The gateway API starts assigning precedence to policies created in an account, starting with 1000, unless explicitly specified in the policy otherwise.
-Every time a new policy is added to the bottom of the order, Gateway calculates the highest precedence in the account at the moment and add 1000 + rand(1...100) to the new policy, so that it now claims the maximum precedence in the account.
+When arranging policies in Zero Trust, Gateway automatically calculates the precedence for rearranged policies.
 
-Gateway also provides a PUT endpoint to update the precedence of a policy, where the user can set any value for precedence that is not already claimed by another policy. This helps to position a policy in between two already existing policies.
-When polcies are re arranged using dahsboard drag and drop UI, we calculate an appropriate precedence number and assigns it to the policy.
-Changing the order both at UI/API and at terraform might result in stale precedence issues.
+When using the API to create a policy, unless the precedence is explicitly defined in the policy, Gateway will assign precedence to policies starting at `1000`. Every time a new policy is added to the bottom of the order, Gateway will calculate the current highest precedence in the account and add a random integer between 1 and 100 to `1000` so that it now claims the maximum precedence in the account. To manually update a policy's precedence, use the [Update a Zero Trust Gateway rule](/api/resources/zero_trust/subresources/gateway/subresources/rules/methods/update/) endpoint. You can set a policy's precedence to any value that is not already in use.
 
-### Manage precedence with Terraform
+Changing the order within the UI or API may result in configuration issues when using [Terraform](#manage-precedence-with-terraform).
 
-Now let's see how we can manage a large number of gateway policies and order of execution via terraform
+## Manage precedence with Terraform
 
-With terraform v5, gateway users can list thier policies in a terraform file with any integer precedence value as they wish. We suggest starting with 1000 and leave enoughg of a gap inbetween the adjacent policy precedences, so we could sandwitch policies in between those precedence gap in the future. For example:
+Now let's see how we can manage a large number of gateway policies and order of execution via Terraform
+
+With Terraform v5, gateway users can list their policies in a terraform file with any integer precedence value as they wish. We suggest starting with 1000 and leave enough of a gap between the adjacent policy precedences, so we could sandwich policies in between those precedence gap in the future. For example:
 
 ```tf
 resource "cloudflare_zero_trust_gateway_policy" "policy_1" {
@@ -217,8 +216,8 @@ resource "cloudflare_zero_trust_gateway_policy" "policy_3" {
 }
 ```
 
-As shown above, way we can arrange the polcies in ascending order of precedence. To move policy 3, to in between policy 1 and policy 2, simply update the precedence of policy 3 to anumber in between [1001..1999], and also move the terraform definition to in between policy 1 and policy 2.
+As shown above, way we can arrange the policies in ascending order of precedence. To move policy 3, to in between policy 1 and policy 2, simply update the precedence of policy 3 to a number in between [1001..1999], and also move the Terraform definition to in between policy 1 and policy 2.
 Mandating a sufficient gap between precedences will make re ordering of policies smoother in the future.
-The only thing to be careful about here is, we recomment moving one policy at a time and applying the state changes. This will cause a complicated reordering manuever to be performed as series of single moves and plan-apply cycles.
+The only thing to be careful about here is, we recommend moving one policy at a time and applying the state changes. This will cause a complicated reordering manuever to be performed as series of single moves and plan-apply cycles.
 
-Note: If the customer uses a mix of terraform and UI/API, please sync your polices with plan refresh before you start reordering policies in the terraform. You may also lock down your account as terraform only, from the zero trust dashboard settings.
+Note: If the customer uses a mix of Terraform and UI/API, please sync your polices with plan refresh before you start reordering policies in the Terraform. You may also lock down your account as Terraform only, from the zero trust dashboard settings.
