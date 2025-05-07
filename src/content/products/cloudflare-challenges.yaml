@@ -10,4 +10,4 @@ product:
 
 meta:
   title: Cloudflare challenges docs
-  description: Cloudflare challenges verify whether a visitor to a customer's site is a real human and not a bot or automated script. 
+  description: Verify whether a visitor is a real human using a challenge
