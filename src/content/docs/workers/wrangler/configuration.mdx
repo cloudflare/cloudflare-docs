@@ -694,8 +694,8 @@ To bind Images to your Worker, assign an array of the below object to the `image
 ```jsonc
 {
 	"images": {
-		"binding": "IMAGES", // i.e. available in your Worker on env.IMAGES
-	},
+		"binding": "IMAGES" // i.e. available in your Worker on env.IMAGES
+	}
 }
 ```
 
@@ -1037,7 +1037,7 @@ The following options are available under the `assets` key.
 
 - `not_found_handling`: <Type text={'"single-page-application" | "404-page" | "none"'} /> <MetaInfo text={'optional, defaults to "none"'} />
 
-  - Determines the handling of requests that do not map to an asset. Learn more about the various options in [assets routing](/workers/static-assets/routing/).
+  - Determines the handling of requests that do not map to an asset. Learn more about the various options for [routing behavior](/workers/static-assets/#routing-behavior).
 
 Example:
 
