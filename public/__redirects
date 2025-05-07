@@ -673,6 +673,9 @@
 /fundamentals/concepts/the-internet/ https://www.cloudflare.com/learning/network-layer/how-does-the-internet-work/ 301
 /fundamentals/concepts/free-plan/ /fundamentals/subscriptions-and-billing/free-plan/ 301
 /fundamentals/setup/manage-domains/connect-your-domain/ /fundamentals/setup/manage-domains/add-site/ 301
+/fundamentals/security/cloudflare-challenges/challenge-passage/ /fundamentals/security/cloudflare-challenges/challenge-types/challenge-pages/#challenge-passage 301
+/fundamentals/security/cloudflare-challenges/challenge-solve-rate/ /fundamentals/security/cloudflare-challenges/reference/challenge-solve-rate/ 301
+/fundamentals/security/cloudflare-challenges/challenge-solve-issues/ /fundamentals/security/cloudflare-challenges/troubleshooting/challenge-solve-issues/ 301
 
 # gateway
 /gateway/about/ /cloudflare-one/policies/gateway/ 301
