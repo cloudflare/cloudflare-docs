@@ -1,0 +1,63 @@
+---
+pcx_content_type: reference
+title: Supported browsers
+sidebar:
+  order: 2
+---
+
+When your application sends a challenge, your visitors either receive a non-interactive or an interactive challenge page.
+
+Cloudflare Challenges are most compatible with major desktop and mobile browsers and applications. If your visitors are using an up-to-date version of a major browser, they will receive the challenge correctly.
+
+Officially supported browsers include:
+
+- Google Chrome (desktop and mobile)
+- Firefox
+- Safari (desktop and mobile)
+- Microsoft Edge
+
+
+:::caution
+Challenges are not supported by Microsoft Internet Explorer. 
+:::
+
+:::note
+Other browsers that are not listed above are supported on a best-effort basis.
+:::
+
+If your visitors encounter issues using a major browser besides Internet Explorer, they should upgrade their browser.
+
+## Testing
+
+Cloudflare runs tests against the following browsers and its latest versions:
+
+- Chrome on Windows
+- Safari on Mac OS
+- Safari on iOS
+- Microsoft Edge
+- Android browser for Samsung
+
+Cloudflare runs webview specific tests against the following browsers:
+
+- Flutter
+- Android webview
+
+Cloudflare runs tests to monitor the following browsers every few hours:
+
+- Latest versions of Chrome, Microsoft Edge, and Firefox
+- Latest beta versions of Chrome, Microsoft Edge, and Firefox
+- Latest versions of Safari for Mac OS
+- Android browser for Samsung
+- Safari on iOS
+
+## Limitations
+
+### Browser extensions
+
+If you have browser extensions, they might lead to unpassable challenge loops. To fix this issue, disable your extensions and reload the page.
+
+Refer to [Challenge solve issues](/cloudflare-challenges/troubleshooting/challenge-solve-issues/) for more troubleshooting information.
+
+### Mobile device emulation
+
+Challenges are not supported when device emulation is enabled on a browser, for example, using the browser's developer tools.

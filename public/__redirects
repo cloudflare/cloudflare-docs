@@ -218,7 +218,7 @@
 /support/other-languages/deutsch/cloudflare-bot/ /bots/troubleshooting/ 301
 /bots/reference/verified-bot-categories/ /bots/concepts/bot/verified-bots/categories/ 301
 /bots/reference/verified-bot-policy/ /bots/concepts/bot/verified-bots/policy/ 301
-/bots/concepts/challenge-solve-rate/ /fundamentals/security/cloudflare-challenges/challenge-solve-rate/ 301
+/bots/concepts/challenge-solve-rate/ /cloudflare-challenges/reference/challenge-solve-rate/ 301
 /bots/concepts/detection-ids/ /bots/additional-configurations/detection-ids/ 301
 /bots/concepts/ja3-ja4-fingerprint/ /bots/additional-configurations/ja3-ja4-fingerprint/ 301
 /bots/concepts/signals-intelligence/ /bots/additional-configurations/ja3-ja4-fingerprint/signals-intelligence/ 301
@@ -502,7 +502,7 @@
 /firewall/cf-rulesets/custom-rules/rate-limiting/ /waf/rate-limiting-rules/ 301
 /support/page-rules/required-firewall-rule-changes-to-enable-url-normalization/ /firewall/troubleshooting/required-changes-to-enable-url-normalization/ 301
 /firewall/known-issues-and-faq/ /waf/troubleshooting/faq/ 301
-/firewall/cf-firewall-rules/cloudflare-challenges/ /fundamentals/security/cloudflare-challenges/ 301
+/firewall/cf-firewall-rules/cloudflare-challenges/ /cloudflare-challenges/ 301
 
 # fundamentals
 /fundamentals/account-and-billing/account-setup/ /fundamentals/subscriptions-and-billing/ 301
@@ -554,7 +554,7 @@
 /fundamentals/global-configurations/ /fundamentals/ 301
 /fundamentals/customizations/ /fundamentals/ 301
 /fundamentals/security/cybersafe/ /fundamentals/reference/policies-compliances/cybersafe/ 301
-/fundamentals/security/challenge-passage/ /fundamentals/security/cloudflare-challenges/challenge-passage/ 301
+/fundamentals/security/challenge-passage/ /cloudflare-challenges/challenge-types/challenge-pages/#challenge-passage 301
 /fundamentals/glossary/ /fundamentals/reference/glossary/ 301
 /fundamentals/account-and-billing/login/ /fundamentals/setup/account/login/ 301
 /fundamentals/account-and-billing/account-maintenance/delete-account/ /fundamentals/subscriptions-and-billing/delete-account/ 301
@@ -591,7 +591,7 @@
 /fundamentals/get-started/setup/minimize-downtime/ /fundamentals/performance/minimize-downtime/ 301
 /fundamentals/basic-tasks/maintenance-mode/ /fundamentals/performance/minimize-downtime/ 301
 /fundamentals/get-started/concepts/what-is-cloudflare/ https://www.cloudflare.com/learning/what-is-cloudflare/ 301
-/fundamentals/get-started/concepts/cloudflare-challenges/ /fundamentals/security/cloudflare-challenges/ 301
+/fundamentals/get-started/concepts/cloudflare-challenges/ /cloudflare-challenges/ 301
 /fundamentals/get-started/concepts/accounts-and-zones/ /fundamentals/setup/accounts-and-zones/ 301
 /fundamentals/get-started/concepts/cloudflare-ip-addresses/ /fundamentals/concepts/cloudflare-ip-addresses/ 301
 /fundamentals/get-started/concepts/network-layers/ /fundamentals/reference/network-layers/ 301
@@ -673,6 +673,9 @@
 /fundamentals/concepts/the-internet/ https://www.cloudflare.com/learning/network-layer/how-does-the-internet-work/ 301
 /fundamentals/concepts/free-plan/ /fundamentals/subscriptions-and-billing/free-plan/ 301
 /fundamentals/setup/manage-domains/connect-your-domain/ /fundamentals/setup/manage-domains/add-site/ 301
+/fundamentals/security/cloudflare-challenges/challenge-passage/ /cloudflare-challenges/challenge-types/challenge-pages/#challenge-passage 301
+/fundamentals/security/cloudflare-challenges/challenge-solve-rate/ /cloudflare-challenges/reference/challenge-solve-rate/ 301
+/fundamentals/security/cloudflare-challenges/challenge-solve-issues/ /cloudflare-challenges/troubleshooting/challenge-solve-issues/ 301
 
 # gateway
 /gateway/about/ /cloudflare-one/policies/gateway/ 301
@@ -1338,7 +1341,7 @@
 /turnstile/migration/migrating-from-hcaptcha/ /turnstile/migration/hcaptcha/ 301
 /turnstile/concepts/widget-types/ /turnstile/concepts/widget/ 301
 /turnstile/concepts/domain-management/ /turnstile/concepts/hostname-management/ 301
-/turnstile/troubleshooting/challenge-solve-issues/ /fundamentals/security/cloudflare-challenges/challenge-solve-issues/ 301
+/turnstile/troubleshooting/challenge-solve-issues/ /cloudflare-challenges/troubleshooting/challenge-solve-issues/ 301
 
 # waf
 /waf/about/ /waf/concepts/ 301
@@ -1375,8 +1378,8 @@
 /waf/analytics/security-events/free-plan/ /waf/analytics/security-events/ 301
 /waf/analytics/security-events/paid-plans/ /waf/analytics/security-events/ 301
 /waf/analytics/security-events/additional-information/ /waf/tools/validation-checks/ 301
-/waf/reference/cloudflare-challenges/ /fundamentals/security/cloudflare-challenges/ 301
-/waf/tools/challenge-passage/ /fundamentals/security/cloudflare-challenges/challenge-passage/ 301
+/waf/reference/cloudflare-challenges/ /cloudflare-challenges/ 301
+/waf/tools/challenge-passage/ /cloudflare-challenges/challenge-types/challenge-pages/#challenge-passage 301
 
 # waiting-room
 /waiting-room/how-to/mobile-traffic/ /waiting-room/how-to/json-response/ 301

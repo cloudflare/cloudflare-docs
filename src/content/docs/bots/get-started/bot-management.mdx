@@ -69,7 +69,7 @@ Cloudflare has [default templates](https://dash.cloudflare.com/?to=/:account/:zo
     (cf.bot_management.score ge 2 and cf.bot_management.score le 29 and not cf.bot_management.verified_bot and not cf.bot_management.static_resource)
     ```
 
-- (Optional) [JavaScript detections template](https://dash.cloudflare.com/?to=/:account/:zone/security/security-rules/custom-rules/create?template=JavaScript%20Verified%20URLs): If you enabled JavaScript detections, then set up a [managed challenge](/fundamentals/security/cloudflare-challenges/#managed-challenge-recommended), make sure to add a method and URI path. JavaScript detections improves security for URLs that should only expect JavaScript-enabled clients.
+- (Optional) [JavaScript detections template](https://dash.cloudflare.com/?to=/:account/:zone/security/security-rules/custom-rules/create?template=JavaScript%20Verified%20URLs): If you enabled JavaScript detections, then set up a [managed challenge](/cloudflare-challenges/challenge-types/challenge-pages/#managed-challenge-recommended), make sure to add a method and URI path. JavaScript detections improves security for URLs that should only expect JavaScript-enabled clients.
 
     ```txt wrap
     (not cf.bot_management.js_detection.passed and http.request.method eq "" and http.request.uri.path in {""})
