@@ -83,13 +83,12 @@ export default {
 
 ### Routing behavior
 
-By default, if a requested URL matches a file in the static assets directory, that file will always be served — without running Worker code. If no matching asset is found and a Worker is configured, the request will be processed by the Worker instead.
+By default, if a requested URL matches a file in the static assets directory, that file will be served — without invoking Worker code. If no matching asset is found and a Worker script is present, the request will be processed by the Worker. The Worker can return a response or choose to defer again to static assets by using the [assets binding](/workers/static-assets/binding/) (e.g. `env.ASSETS.fetch(request)`). If no Worker script is present, a `404 Not Found` response is returned.
 
-- If no Worker is set up, the [`not_found_handling`](/workers/static-assets/routing/) setting in your Wrangler configuration determines what happens next. By default, a `404 Not Found` response is returned.
+The default behavior for requests which don't match a static asset can be changed by setting the [`not_found_handling` option under `assets`](/workers/wrangler/configuration/#assets) in your Wrangler configuration file:
 
-- If a Worker is configured and a request does not match a static asset, the Worker will handle the request. The Worker can choose to pass the request to the asset binding (through `env.ASSETS.fetch()`), following the `not_found_handling` rules.
-
-You can configure and override this default routing behaviour. For example, if you have a Single Page Application and want to serve `index.html` for all unmatched routes, you can set `not_found_handling = "single-page-application"`:
+- [`not_found_handling = "single-page-application"`](/workers/static-assets/routing/single-page-application/): Sets your application to return a `200 OK` response with `index.html` for requests which don't match a static asset. Use this if you have a Single Page Application.
+- [`not_found_handling = "404-page"`](/workers/static-assets/routing/static-site-generation/#custom-404-pages): Sets your application to return a `404 Not Found` response with the nearest `404.html` for requests which don't match a static asset.
 
 <WranglerConfig>
 
