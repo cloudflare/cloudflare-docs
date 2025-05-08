@@ -124,9 +124,11 @@ query GraphqlExample($zoneTag: string, $start: Time, $end: Time) {
 ```
 ````
 
-When the `Run in GraphQL API Explorer` button is clicked, the following variables will be pre-populated in the GraphQL API Explorer along with the query.
+When a user selects the `Run in GraphQL API Explorer` button, the following variables will be pre-populated in the GraphQL API Explorer along with the query.
 
-**Note: The user must be logged in or have an API token saved to see the query and variables pre-populated.**
+:::note
+The user must be logged in or have an API token saved to see the query and variables pre-populated.
+:::
 
 ```
 {"zoneTag":"ZONE_ID", "start":"2025-05-07T14:54:36Z", "end":"2025-05-07T20:54:36Z"}
