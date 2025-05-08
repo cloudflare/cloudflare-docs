@@ -85,10 +85,10 @@ export default {
 
 By default, if a requested URL matches a file in the static assets directory, that file will be served — without invoking Worker code. If no matching asset is found and a Worker script is present, the request will be processed by the Worker. The Worker can return a response or choose to defer again to static assets by using the [assets binding](/workers/static-assets/binding/) (e.g. `env.ASSETS.fetch(request)`). If no Worker script is present, a `404 Not Found` response is returned.
 
-The default behavior when neither an asset nor a Worker script is found can be changed by setting the [`not_found_handling` option under `assets`](/workers/wrangler/configuration/#assets) in your Wrangler configuration file:
+The default behavior for requests which don't match a static asset can be changed by setting the [`not_found_handling` option under `assets`](/workers/wrangler/configuration/#assets) in your Wrangler configuration file:
 
-- `not_found_handling = "single-page-application"`: Sets your application to return `index.html` for unmatched routes. Use this if you have a Single Page Application.
-- `not_found_handling = "404-page""`: Sets your application to return `404.html` for unmatched routes.
+- [`not_found_handling = "single-page-application"`](/workers/static-assets/routing/single-page-application/): Sets your application to return a `200 OK` response with `index.html` for requests which don't match a static asset. Use this if you have a Single Page Application.
+- [`not_found_handling = "404-page"`](/workers/static-assets/routing/static-site-generation/#custom-404-pages): Sets your application to return a `404 Not Found` response with the nearest `404.html` for requests which don't match a static asset.
 
 <WranglerConfig>
 
