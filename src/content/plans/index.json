@@ -2727,10 +2727,10 @@
 				},
 				"d_cost_per_hostname": {
 					"title": "Price per additional hostname",
-					"free": "$.10",
-					"pro": "$.10",
-					"biz": "$.10",
-					"ent": "$.10"
+					"free": "$0.10",
+					"pro": "$0.10",
+					"biz": "$0.10",
+					"ent": "$0.10"
 				},
 				"custom_analytics": {
 					"title": "[Custom analytics](/cloudflare-for-platforms/cloudflare-for-saas/hostname-analytics/)",
