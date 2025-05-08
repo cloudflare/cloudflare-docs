@@ -5,64 +5,99 @@ sidebar:
   order: 1
 ---
 
-You can deploy Email Security via:
+Before you start the onboarding process, you will have to choose a deployment path. Email Security provides two deployment modes: [post-delivery](/cloudflare-one/email-security/setup/) (for API and BCC/Journaling), and [pre-delivery](/cloudflare-one/email-security/setup/#pre-delivery-deployment) (for MX/Inline).
 
-- [Microsoft Graph API](/cloudflare-one/email-security/setup/post-delivery-deployment/api/)
-- [BCC](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/bcc-setup/gmail-bcc-setup/gmail-bcc-setup/)/[Journaling](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/journaling-setup/office365-journaling/)
-- [MX/Inline](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment-setup/)
+## Post-delivery deployment
 
-When you set up an integration, you will be able to:
+### How it works
 
-- Configure [auto-move events](/cloudflare-one/email-security/auto-moves/).
-- [Synchronize a directory](/cloudflare-one/email-security/directories/).
-- Auto pull EMLs for [reclassification](/cloudflare-one/email-security/email-monitoring/search-email/#reclassify-messages) whose disposition is "None".
-- Manually move messages to different inboxes.
+When you choose post-delivery, Cloudflare scans emails **after** they reach a users' inbox.
 
-With Microsoft Graph API and BCC/Journaling, Cloudflare scans emails after they reach a users' inbox. MX/Inline instead scans emails before they reach users' inbox.
+If you are a Microsoft 365 user, this is done via Microsoft's Graph API or journaling.
 
-## Microsoft Graph API
+If you are a Google Workspace or Microsoft Exchange user, this is done via BCC.
 
-When you deploy Email Security via Microsoft Graph API, you authorize Email Security to scan domains via your email provider credentials.
+### Why you should consider post-delivery deployment
 
-When you deploy Email Security via Microsoft Graph API:
+Post-delivery deployment is time-efficient, because it does not involve MX changes. Post-delivery deployment does not disrupt mail flow. Post-delivery deployment allows you to enable [auto-move events](/cloudflare-one/email-security/auto-moves/), quarantine your messages, and synchronize your [directory](/cloudflare-one/email-security/directories/) when you use Microsoft Graph API.
 
-- You authorize Email Security to scan domains via your email provider credentials. 
-- Microsoft Graph API requires minimal configuration effort.
-- Your email inbox is moderately protected.
-- Email Security gets API access into your tenant.
+:::note
+When you choose post-delivery deployment:
+- The threat is removed **after** receipt.
+- Post-delivery requires API scopes, or journaling rule configuration.
+- Auto-move is not available in BCC/Journaling paths.
+:::
 
-## BCC/Journaling
+## Pre-delivery deployment
 
-When you deploy Email Security via BCC/Journaling:
+### How it works
 
-- You send messages to Email Security via BCC or Journaling configurations within your email provider. 
-- BCC/Journaling requires moderate configuration effort.
-- Your email inbox has the lowest level of protection.
-- Email Security receives copies of your email.
+When you choose pre-delivery, Cloudflare scans emails **before** they reach a users' inbox. The MX record points to Cloudflare.
 
-## MX/Inline
+### Why you should consider pre-delivery deployment
 
-When you deploy Email Security via MX/Inline:
+Pre-delivery deployment provides the highest level of protection. It enforces [bannering](/cloudflare-one/email-security/detection-settings/configure-text-add-ons/) or link rewrite at delivery.
 
-- You send messages to Email Security to scan before they reach your users' inbox. You may need to update your MX records.
-- MX/Inline requires significant configuration effort.
-- Your email inbox has the highest level of protection.
-- Email Security has partial access to your mail stream.
+Pre-delivery blocks threats in transit, and it adds banners or texts before the user views the email.
 
-With MX/Inline, you will not be able to auto-move emails.
+:::note
+When you choose pre-delivery deployment:
+- You must edit MX records or create a connector.
+- You can enable auto-move events only once you associate an integration.
+- Cloudflare [egress IPs](/cloudflare-one/email-security/setup/pre-delivery-deployment/egress-ips/) are allowed on downstream servers.
+:::
 
-### Associate an integration
+## Dispositions
 
-To associate an integration:
+Email traffic that flows through Email Security is given a final disposition, which represents Email Security's evaluation of that specific message. Refer to [Dispositions and attributes](/cloudflare-one/email-security/reference/dispositions-and-attributes/) to learn more.
 
-1. Log in to [Zero Trust](https://one.dash.cloudflare.com/) > **Email Security**.
-2. Go to **Settings** and locate your domain.
-3. Select the three dots > **Associate an integration**.
-4. Select the integration you want to associate, then select **Associate**.
+Dispositions allow you to configure policies and tune reporting. For example, you can configure a policy to move suspicious emails to your junk folder.
 
-To enable post-delivery response and phish submission response:
+## Impersonation registry
 
-1. Go to **Settings** > **Moves**.
-2. Go to **Auto-moves**, select **View** > **Configure**.
-3. Select **Post-delivery response (Recommended)** and **Phish submission response (Recommended)**.
-4. Select **Save**.
+Most Business Email Compromise targets executives or finance roles. You must add addresses of roles who are likely to be impersonated. Refer to [Impersonation registry](/cloudflare-one/email-security/detection-settings/impersonation-registry/) to learn how to add a user to the impersonation registry.
+
+Roles you may to include in the impersonation registry are:
+
+- C-suites
+- Finance roles
+- HR
+- IT help-desk.
+
+You should review your impersonation registry on a quarterly basis as roles change.
+
+## Reclassifications
+
+A reclassification is a change to an email's disposition **after** initial scanning. It is Cloudflare's built-in feedback loop for correcting false positives/negatives **and** training the detection models to get smarter over time. Security teams and end users can make a reclassification. Refer to [Reclassify messages](/cloudflare-one/email-security/email-monitoring/search-email/#reclassify-messages) to learn more.
+
+### Why you should reclassify messages
+
+Reclassifications are critical because:
+
+- **They help improve model accuracy**: Every validated reclassification teaches Cloudflare's machine learning to recognise new lures, language, infrastructure and benign patterns.
+- **They reduce alert fatigue**: Correcting *Suspicious* or *Spam* emails that users actually want tailors detections to your organization, cutting noise in the dashboard.
+- **They close the remediation loop**: When a disposition is upgraded to Malicious, Cloudflare auto-moves those emails out of every inbox (Graph API or Google Workspace API integrations).
+- **They can help you log activity taken on any reclassification**: Each reclassification displays a submission ID, details about original, requested and final dispositions, and more. Refer to [Reclassify messages](/cloudflare-one/email-security/email-monitoring/search-email/#reclassify-messages) to learn more about reclassifications.
+
+To make the most of reclassifications:
+
+1. Review reclassifications on a weekly basis.
+2. Ensure you have an integration associated with any MX/Inline deployment. When you associate an integration, you will not need to upload the EMLs every time, and we can use APIs to receive a copy of your email messages.
+3. Investigate any increase in [user submissions](/cloudflare-one/email-security/email-monitoring/search-email/#user-submissions) (users may have found a phish that bypassed filters) and confirm that analyst-final dispositions align with your policies.
+
+A correct use of reclassifications ensures that Email Security delivers a stronger protection with less manual tuning.
+
+## Configuration checklist
+
+| Step                                                                                                    | Post-delivery | Pre-delivery |
+|---------------------------------------------------------------------------------------------------------|---------------|--------------|
+| Authorize integration (Graph API or Google Workspace)                                                   | Required      | Required     |
+| Create service account and journaling rule                                                              | Required      | Required     |
+| Associate an integration with an MX/Inline domain                                                       |               | Required     |
+| Add/verify domains                                                                                      | Required      | Required     |
+| Update MX records/connector, then allow Cloudflare egress IPs on downstream mail server |               | Required     |
+| Enable Post‑delivery response and Phish submission response                                             | Required      | Required     |
+| Populate Impersonation registry and allow / block lists                                                 | Required      | Required     |
+| Configure partner TLS and admin quarantine                                                              |               | Required     |
+| Configure Text Addons and Link Actions                                                                  |               | Required     |
+| Send a test email and verify it appears in Monitoring → Email activity with expected disposition        | Required      | Required     |
