@@ -52,7 +52,7 @@ import { Render, Tabs, TabItem, Stream, Card } from "~/components";
       
       [See here](https://github.com/craigsdennis/punderful-workflows/blob/main/src/index.tsx#L237)
 
-      This function is called when a user interacts with a pun (e.g., likes it). Instead of performing the interaction logic directly, it offloads the work to a workflow.
+      This function is called when a user interacts with a pun (for example, likes it). Instead of performing the interaction logic directly, it offloads the work to a workflow.
 
       Examine the `InteractionWorkflow` definition in `src/workflows/interaction.ts`. This workflow performs tasks like checking if the user/session exists and recording the interaction in the database.
       
@@ -89,6 +89,7 @@ import { Render, Tabs, TabItem, Stream, Card } from "~/components";
       Workflows can also be used for more complex, multi-step processes, including interacting with AI models. The `PuntificatorWorkflow` is an example that leverages AI to generate and evaluate new puns.
 
       Examine the `PuntificatorWorkflow` definition in `src/workflows/puntificator.ts`.
+      
       [See here](https://github.com/craigsdennis/punderful-workflows/blob/main/src/workflows/puntificator.ts)
 
       This workflow includes steps to:
@@ -102,7 +103,7 @@ import { Render, Tabs, TabItem, Stream, Card } from "~/components";
 
       [See here](https://github.com/craigsdennis/punderful-workflows/blob/main/src/workflows/puntificator.ts#L135)
 
-      This step pauses the workflow execution for a specified duration. This is useful for waiting to see user feedback on a published pun before potentially taking further action based on its popularity.
+      This step pauses the workflow execution for a specified duration. This is useful for waiting to consider user feedback on a published pun before potentially taking further action based on its popularity.
 
       ### Nested Workflows
 
@@ -130,7 +131,7 @@ import { Render, Tabs, TabItem, Stream, Card } from "~/components";
       npx wrangler workflows trigger puntificator
       ```
 
-      This command will queue an instance of the workflow. You will see a success message and the instance ID.
+      This command will queue an instance of the workflow. You will receive a success message and the instance ID.
 
       To describe the latest instance of a workflow:
 
