@@ -157,6 +157,9 @@
 /src/content/docs/docs-guide/ @dcpena @cloudflare/pcx-technical-writing
 /src/content/docs/style-guide/ @dcpena @cloudflare/pcx-technical-writing
 
+# Google tag gateway
+/src/content/docs/google-tag-gateway/ @simonabadoiu @jonnyparris @cloudflare/pcx-technical-writing
+
 # Magic products
 
 /src/content/docs/magic-transit/ @marciocloudflare @cloudflare/pcx-technical-writing
