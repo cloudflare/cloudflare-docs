@@ -17,9 +17,14 @@ The WARP client connects to Cloudflare via a standard HTTPS connection outside t
 
 ## DoH IP
 
-All DNS requests through WARP are sent outside the tunnel via DoH (DNS over HTTPS). In your organization's firewall, you must allow the following host: `<ACCOUNT_ID>.cloudflare-gateway.com`. WARP will connect to the following IPs, which must be reachable for DNS to work correctly.
+:::note
+Only required for [Gateway with DoH](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-doh) mode.
+:::
 
-<Render file="warp/doh-ips" />
+In [Gateway with DoH](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-doh) mode, the WARP client sends DNS requests to Gateway over an HTTPS connection outside the tunnel. For DNS to work correctly, you must allow `<ACCOUNT_ID>.cloudflare-gateway.com` which will lookup the following IPs:
+
+- IPv4 DoH Addresses: `162.159.36.1` and `162.159.46.1`
+- IPv6 DoH Addresses: `2606:4700:4700::1111` and `2606:4700:4700::1001`
 
 ### Android devices
 
