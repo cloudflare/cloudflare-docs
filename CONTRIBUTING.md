@@ -142,9 +142,9 @@ By default, the `Variables` section will be automatically populated based on the
 - Any variable name that includes `start` and has a type of `Date` --> start: "2025-05-07" (24 hours from the current date)
 - Any variable name that includes `end` and has a type of `Date` --> end: "2025-05-08" (current date)
 - `zoneTag` and has a type of `string` --> zoneTag: "ZONE_ID"
-- `accountTag` and has a type of `string` --> accountTag: "<ACCOUNT_ID>"
-- Any variable name that includes `id` and has a type of `string` --> id: "<REPLACE_WITH_ID>"
-- Any variable name and has a type of string --> anyString: "<REPLACE_WITH_STRING>"
+- `accountTag` and has a type of `string` --> accountTag: "ACCOUNT_ID"
+- Any variable name that includes `id` and has a type of `string` --> id: "REPLACE_WITH_ID"
+- Any variable name and has a type of string --> anyString: "REPLACE_WITH_STRING"
 - `limit` with type `*int*` --> limit: 100
 
 In addition to the variables that are automatically populated, you can add custom variables by setting their values as a JSON string in the `graphql-api-explorer` metadata.
