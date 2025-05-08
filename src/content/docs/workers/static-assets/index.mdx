@@ -83,13 +83,12 @@ export default {
 
 ### Routing behavior
 
-By default, if a requested URL matches a file in the static assets directory, that file will always be served — without running Worker code. If no matching asset is found and a Worker is configured, the request will be processed by the Worker instead.
+By default, if a requested URL matches a file in the static assets directory, that file will always be served — without running Worker code. If no matching asset is found and a Worker is configured, the request will be processed by the Worker instead. The Worker can choose to pass the request to the asset binding (through `env.ASSETS.fetch()`). If no worker is set up, a `404 Not Found` response is returned.
 
-- If no Worker is set up, the [`not_found_handling`](/workers/static-assets/#routing-behavior) setting in your Wrangler configuration determines what happens next. By default, a `404 Not Found` response is returned.
+The default behavior when neither an asset nor a Worker is found can be changed by setting the [`not_found_handling` option under `assets`](/workers/wrangler/configuration/#assets) in your Wrangler configuration:
 
-- If a Worker is configured and a request does not match a static asset, the Worker will handle the request. The Worker can choose to pass the request to the asset binding (through `env.ASSETS.fetch()`), following the `not_found_handling` rules.
-
-You can configure and override this default routing behaviour. For example, if you have a Single Page Application and want to serve `index.html` for all unmatched routes, you can set `not_found_handling = "single-page-application"`:
+- `not_found_handling = "single-page-application"`: Sets your application to return `index.html` for unmatched routes. Use this if you have a Single Page Application.
+- `not_found_handling = "404-page""`: Sets your application to return `404.html` for unmatched routes.
 
 <WranglerConfig>
 
