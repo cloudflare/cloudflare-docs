@@ -354,7 +354,7 @@ msiexec /i <PATH_TO_WARP_MSI> /L*V <PATH_TO_OUTPUT_LOG>
 
 Check the logs to verify if there are any missing DLLs (for example, `netstandard2.0`), which may point to a missing or outdated version of the .NET Framework.
 
-One common cause is a missing or outdated version of the [.NET Framework Runtime](https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/download-warp/#windows:~:text=NET%20Framework%20version-,4.7.2%20or%20later,-HD%20space). Cloudflare WARP requires a .NET Framework version of `4.7.2` or later.
+One common cause is a missing or outdated version of the [.NET Framework Runtime](/cloudflare-one/connections/connect-devices/warp/download-warp/#windows:~:text=NET%20Framework%20version-,4.7.2%20or%20later,-HD%20space). Cloudflare WARP requires a .NET Framework version of `4.7.2` or later.
 
 Some legacy Windows systems (such as Windows 10 Enterprise 1607 LTSB, which is bundled with .NET `4.6`) do not include this runtime by default and may fail during installation with a `Setup Wizard ended prematurely` error. More recent Windows versions include .NET `4.7.2` or later by default and do not encounter this error.
 
@@ -366,5 +366,5 @@ To fix this:
 If the problem continues, try running the [.NET Repair Tool](https://www.microsoft.com/en-ca/download/details.aspx?id=30135), or check which .NET versions are installed by running the following command in PowerShell:
 
 ```powershell
-Get-ChildItem -Path “HKLM:\SOFTWARE\Microsoft\NET Framework Setup\NDP” -Recurse | ForEach-Object { $_.Name; Get-ItemProperty $_.PSPath; "" }
+Get-ChildItem -Path "HKLM:\SOFTWARE\Microsoft\NET Framework Setup\NDP" -Recurse | ForEach-Object { $_.Name; Get-ItemProperty $_.PSPath; "" }
 ```
