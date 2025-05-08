@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Multipart upload metadata
-
 ---
 
 import { Type, MetaInfo } from "~/components";
@@ -12,15 +11,15 @@ If you're using the [Workers Script Upload API](/api/resources/workers/subresour
 
 ```json
 {
-  "main_module": "main.js",
-  "bindings": [
-    {
-      "type": "plain_text",
-      "name": "MESSAGE",
-      "text": "Hello, world!"
-    }
-  ],
-  "compatibility_date": "2021-09-14"
+	"main_module": "main.js",
+	"bindings": [
+		{
+			"type": "plain_text",
+			"name": "MESSAGE",
+			"text": "Hello, world!"
+		}
+	],
+	"compatibility_date": "2021-09-14"
 }
 ```
 
@@ -33,41 +32,38 @@ The following attributes are configurable at the top-level.
 At a minimum, the `main_module` key is required to upload a Worker.
 :::
 
+- `main_module` <Type text="string" /> <MetaInfo text="required" />
 
+  - The part name that contains the module entry point of the Worker that will be executed. For example, `main.js`.
 
-* `main_module` <Type text="string" /> <MetaInfo text="required" />
+- `assets` <Type text="object" /> <MetaInfo text="optional" />
 
-  * The part name that contains the module entry point of the Worker that will be executed. For example, `main.js`.
+  - [Asset](/workers/static-assets/) configuration for a Worker.
+  - `config` <Type text="object" /> <MetaInfo text="optional" />
+    - [html_handling](/workers/static-assets/routing/advanced/html-handling/) determines the redirects and rewrites of requests for HTML content.
+    - [not_found_handling](/workers/static-assets/#routing-behavior) determines the response when a request does not match a static asset.
+  - `jwt` field provides a token authorizing assets to be attached to a Worker.
 
-* `assets` <Type text="object" /> <MetaInfo text="optional" />
+- `keep_assets` <Type text="boolean" /> <MetaInfo text="optional" />
 
-  * [Asset](/workers/static-assets/) configuration for a Worker.
-  * `config` <Type text="object" /> <MetaInfo text="optional" />
-    * [html_handling](/workers/static-assets/routing/advanced/html-handling/) determines the redirects and rewrites of requests for HTML content.
-    * [not_found_handling](/workers/static-assets/routing/) determines the response when a request does not match a static asset.
-  * `jwt` field provides a token authorizing assets to be attached to a Worker.
+  - Specifies whether assets should be retained from a previously uploaded Worker version; used in lieu of providing a completion token.
 
-* `keep_assets` <Type text="boolean" /> <MetaInfo text="optional" />
+- `bindings` array\[object] optional
 
-  * Specifies whether assets should be retained from a previously uploaded Worker version; used in lieu of providing a completion token.
+  - [Bindings](#bindings) to expose in the Worker.
 
-* `bindings` array\[object] optional
+- `placement` <Type text="object" /> <MetaInfo text="optional" />
 
-  * [Bindings](#bindings) to expose in the Worker.
+  - [Smart placement](/workers/configuration/smart-placement/) object for the Worker.
+  - `mode` field only supports `smart` for automatic placement.
 
-* `placement` <Type text="object" /> <MetaInfo text="optional" />
+- `compatibility_date` <Type text="string" /> <MetaInfo text="optional" />
 
-  * [Smart placement](/workers/configuration/smart-placement/) object for the Worker.
-  * `mode` field only supports `smart` for automatic placement.
+  - [Compatibility Date](/workers/configuration/compatibility-dates/#setting-compatibility-date) indicating targeted support in the Workers runtime. Backwards incompatible fixes to the runtime following this date will not affect this Worker. Highly recommended to set a `compatibility_date`, otherwise if on upload via the API, it defaults to the oldest compatibility date before any flags took effect (2021-11-02).
 
-* `compatibility_date` <Type text="string" /> <MetaInfo text="optional" />
+- `compatibility_flags` array\[string] optional
 
-  * [Compatibility Date](/workers/configuration/compatibility-dates/#setting-compatibility-date) indicating targeted support in the Workers runtime. Backwards incompatible fixes to the runtime following this date will not affect this Worker. Highly recommended to set a `compatibility_date`, otherwise if on upload via the API, it defaults to the oldest compatibility date before any flags took effect (2021-11-02).
-
-* `compatibility_flags` array\[string] optional
-
-  * [Compatibility Flags](/workers/configuration/compatibility-flags/#setting-compatibility-flags) that enable or disable certain features in the Workers runtime. Used to enable upcoming features or opt in or out of specific changes not included in a `compatibility_date`.
-
+  - [Compatibility Flags](/workers/configuration/compatibility-flags/#setting-compatibility-flags) that enable or disable certain features in the Workers runtime. Used to enable upcoming features or opt in or out of specific changes not included in a `compatibility_date`.
 
 ## Additional attributes: [Workers Script Upload API](/api/resources/workers/subresources/scripts/methods/update/)
 
@@ -78,25 +74,21 @@ For [immediately deployed uploads](/workers/configuration/versions-and-deploymen
 These attributes are **not available** for version uploads.
 :::
 
+- `migrations` array\[object] optional
 
+  - [Durable Objects migrations](/durable-objects/reference/durable-objects-migrations/) to apply.
 
-* `migrations` array\[object] optional
+- `logpush` <Type text="boolean" /> <MetaInfo text="optional" />
 
-  * [Durable Objects migrations](/durable-objects/reference/durable-objects-migrations/) to apply.
+  - Whether [Logpush](/cloudflare-for-platforms/cloudflare-for-saas/hostname-analytics/#logpush) is turned on for the Worker.
 
-* `logpush` <Type text="boolean" /> <MetaInfo text="optional" />
+- `tail_consumers` array\[object] optional
 
-  * Whether [Logpush](/cloudflare-for-platforms/cloudflare-for-saas/hostname-analytics/#logpush) is turned on for the Worker.
+  - [Tail Workers](/workers/observability/logs/tail-workers/) that will consume logs from the attached Worker.
 
-* `tail_consumers` array\[object] optional
+- `tags` array\[string] optional
 
-  * [Tail Workers](/workers/observability/logs/tail-workers/) that will consume logs from the attached Worker.
-
-* `tags` array\[string] optional
-
-  * List of strings to use as tags for this Worker.
-
-
+  - List of strings to use as tags for this Worker.
 
 ## Additional attributes: [Version Upload API](/api/resources/workers/subresources/scripts/subresources/versions/methods/create/)
 
@@ -107,15 +99,11 @@ For [version uploads](/workers/configuration/versions-and-deployments/#upload-a-
 These attributes are **not available** for immediately deployed uploads.
 :::
 
+- `annotations` <Type text="object" /> <MetaInfo text="optional" />
 
-
-* `annotations` <Type text="object" /> <MetaInfo text="optional" />
-
-  * Annotations object specific to the Worker version.
-  * `workers/message` specifies a custom message for the version.
-  * `workers/tag` specifies a custom identifier for the version.
-
-
+  - Annotations object specific to the Worker version.
+  - `workers/message` specifies a custom message for the version.
+  - `workers/tag` specifies a custom identifier for the version.
 
 ## Bindings
 
@@ -123,88 +111,88 @@ Workers can interact with resources on the Cloudflare Developer Platform using [
 
 ```json
 {
-  "bindings": [
-    {
-      "type": "ai",
-      "name": "<VARIABLE_NAME>"
-    },
-    {
-      "type": "analytics_engine",
-      "name": "<VARIABLE_NAME>",
-      "dataset": "<DATASET>"
-    },
-    {
-      "type": "assets",
-      "name": "<VARIABLE_NAME>"
-    },
-    {
-      "type": "browser_rendering",
-      "name": "<VARIABLE_NAME>"
-    },
-    {
-      "type": "d1",
-      "name": "<VARIABLE_NAME>",
-      "id": "<D1_ID>"
-    },
-    {
-      "type": "durable_object_namespace",
-      "name": "<VARIABLE_NAME>",
-      "class_name": "<DO_CLASS_NAME>"
-    },
-    {
-      "type": "hyperdrive",
-      "name": "<VARIABLE_NAME>",
-      "id": "<HYPERDRIVE_ID>"
-    },
-    {
-      "type": "kv_namespace",
-      "name": "<VARIABLE_NAME>",
-      "namespace_id": "<KV_ID>"
-    },
-    {
-      "type": "mtls_certificate",
-      "name": "<VARIABLE_NAME>",
-      "certificate_id": "<MTLS_CERTIFICATE_ID>"
-    },
-    {
-      "type": "plain_text",
-      "name": "<VARIABLE_NAME>",
-      "text": "<VARIABLE_VALUE>"
-    },
-    {
-      "type": "queue",
-      "name": "<VARIABLE_NAME>",
-      "queue_name": "<QUEUE_NAME>"
-    },
-    {
-      "type": "r2_bucket",
-      "name": "<VARIABLE_NAME>",
-      "bucket_name": "<R2_BUCKET_NAME>"
-    },
-    {
-      "type": "secret_text",
-      "name": "<VARIABLE_NAME>",
-      "text": "<SECRET_VALUE>"
-    },
-    {
-      "type": "service",
-      "name": "<VARIABLE_NAME>",
-      "service": "<SERVICE_NAME>",
-      "environment": "production"
-    },
-    {
-      "type": "tail_consumer",
-      "service": "<WORKER_NAME>"
-    },
-    {
-      "type": "vectorize",
-      "name": "<VARIABLE_NAME>",
-      "index_name": "<INDEX_NAME>"
-    },
-    {
-      "type": "version_metadata",
-      "name": "<VARIABLE_NAME>"
-    }
-  ]
+	"bindings": [
+		{
+			"type": "ai",
+			"name": "<VARIABLE_NAME>"
+		},
+		{
+			"type": "analytics_engine",
+			"name": "<VARIABLE_NAME>",
+			"dataset": "<DATASET>"
+		},
+		{
+			"type": "assets",
+			"name": "<VARIABLE_NAME>"
+		},
+		{
+			"type": "browser_rendering",
+			"name": "<VARIABLE_NAME>"
+		},
+		{
+			"type": "d1",
+			"name": "<VARIABLE_NAME>",
+			"id": "<D1_ID>"
+		},
+		{
+			"type": "durable_object_namespace",
+			"name": "<VARIABLE_NAME>",
+			"class_name": "<DO_CLASS_NAME>"
+		},
+		{
+			"type": "hyperdrive",
+			"name": "<VARIABLE_NAME>",
+			"id": "<HYPERDRIVE_ID>"
+		},
+		{
+			"type": "kv_namespace",
+			"name": "<VARIABLE_NAME>",
+			"namespace_id": "<KV_ID>"
+		},
+		{
+			"type": "mtls_certificate",
+			"name": "<VARIABLE_NAME>",
+			"certificate_id": "<MTLS_CERTIFICATE_ID>"
+		},
+		{
+			"type": "plain_text",
+			"name": "<VARIABLE_NAME>",
+			"text": "<VARIABLE_VALUE>"
+		},
+		{
+			"type": "queue",
+			"name": "<VARIABLE_NAME>",
+			"queue_name": "<QUEUE_NAME>"
+		},
+		{
+			"type": "r2_bucket",
+			"name": "<VARIABLE_NAME>",
+			"bucket_name": "<R2_BUCKET_NAME>"
+		},
+		{
+			"type": "secret_text",
+			"name": "<VARIABLE_NAME>",
+			"text": "<SECRET_VALUE>"
+		},
+		{
+			"type": "service",
+			"name": "<VARIABLE_NAME>",
+			"service": "<SERVICE_NAME>",
+			"environment": "production"
+		},
+		{
+			"type": "tail_consumer",
+			"service": "<WORKER_NAME>"
+		},
+		{
+			"type": "vectorize",
+			"name": "<VARIABLE_NAME>",
+			"index_name": "<INDEX_NAME>"
+		},
+		{
+			"type": "version_metadata",
+			"name": "<VARIABLE_NAME>"
+		}
+	]
 }
 ```
