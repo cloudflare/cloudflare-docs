@@ -1,4 +1,5 @@
-anycast
+Correct casings or misspellings for the following words. Ignore this rule if the words are in code blocks, `code fences`, or in HTML or Markdown links.
+
 Bitbucket
 cdnjs
 CLI
@@ -30,15 +31,11 @@ unpkg
 UNIX
 URI
 URL
-Vectorize
 WebRTC
 WebSocket
 Wi-Fi
 WordPress
-Worker
-Workers
-[wW]rangler
-wrangler.toml
+Wrangler
 VMware
 VPN
 YubiKey
