@@ -17,9 +17,25 @@ Secure your email inbox with API-first Email Security.
 
 Email Security secures your email inbox with API-first email security. Email Security integrates with your existing email provider and blocks phishing attacks, malware, [Business Email Compromise](https://www.cloudflare.com/en-gb/learning/email-security/business-email-compromise-bec/) attacks, and vendor email fraud.
 
-Email Security allows you to:
+Email Security overview page allows you to:
 
-- Configure [allow policies](/cloudflare-one/email-security/detection-settings/allow-policies/), [blocked senders](/cloudflare-one/email-security/detection-settings/blocked-senders/), [trusted domains](/cloudflare-one/email-security/detection-settings/trusted-domains/), and [additional detections](/cloudflare-one/email-security/detection-settings/additional-detections/).
-- [Automatically move messages](/cloudflare-one/email-security/auto-moves/) to specific folders based on a [certain disposition](/cloudflare-one/email-security/reference/dispositions-and-attributes/).
-- [Manage directories](/cloudflare-one/email-security/directories/).
-- [Monitor your inbox](/cloudflare-one/email-security/email-monitoring/), perform a thorough [search of your email](/cloudflare-one/email-security/email-monitoring/search-email/), and download a [disposition report](/cloudflare-one/email-security/email-monitoring/download-disposition-report/).
+- View [reclassifications](/cloudflare-one/email-security/email-monitoring/search-email/#reclassify-messages).
+- Manage [detection settings](/cloudflare-one/email-security/detection-settings/).
+- [Run screens](/cloudflare-one/email-security/email-monitoring/search-email/#screen-criteria).
+
+To access your Email Security overview:
+
+1. Log in to [Cloudflare dashboard](https://one.dash.cloudflare.com/).
+2. Go to **Zero Trust** > **Email Security** > **Overview**.
+3. Complete the [setup process](/cloudflare-one/email-security/setup/).
+
+:::note
+If you have not yet purchased Email Security, you can try Email Security with Retro Scan. Refer to [Retro Scan](/cloudflare-one/email-security/retro-scan/) to learn more.
+:::
+
+Once you have completed the setup process, the Email Security overview will display:
+
+- A series of recommendations. For example, you may be recommended to learn how to submit emails for reclassification, create policies, or learn how to manage your [impersonation registry](/cloudflare-one/email-security/detection-settings/impersonation-registry/).
+- Email Security metrics (your email security activity from the last 7 days).
+- Recently modified policies, where you will be able to view all modified policies.
+- Education and resources: Links to [implementation guides](/cloudflare-one/implementation-guides/), [Email Security changelogs](/cloudflare-one/changelog/email-security/), and [API documentation](https://developers.cloudflare.com/api/resources/email_security/subresources/investigate/methods/get/).
