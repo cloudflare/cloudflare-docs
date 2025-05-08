@@ -13,7 +13,7 @@ Before you start the onboarding process, you will have to choose a deployment pa
 
 ### How it works
 
-When you choose post-delivery, Cloudflare scans emails **after** they reach a users' inbox.
+When you choose post-delivery deployment, Cloudflare scans emails **after** they reach a users' inbox.
 
 If you are a Microsoft 365 user, this is done via Microsoft's Graph API or journaling.
 
@@ -26,7 +26,7 @@ Post-delivery deployment is time-efficient, because it does not involve MX chang
 :::note
 When you choose post-delivery deployment:
 - The threat is removed **after** receipt.
-- Post-delivery requires API scopes, or journaling rule configuration.
+- It requires API scopes, or journaling rule configuration.
 - Auto-move is not available in BCC/Journaling paths.
 :::
 
@@ -34,11 +34,11 @@ When you choose post-delivery deployment:
 
 ### How it works
 
-When you choose pre-delivery, Cloudflare scans emails **before** they reach a users' inbox. The MX record points to Cloudflare.
+When you choose pre-delivery deployment, Cloudflare scans emails **before** they reach a users' inbox. The MX record points to Cloudflare.
 
 ### Why you should consider pre-delivery deployment
 
-Pre-delivery deployment provides the highest level of protection. It enforces [bannering](/cloudflare-one/email-security/detection-settings/configure-text-add-ons/) or link rewrite at delivery.
+Pre-delivery deployment provides you with the highest level of protection. It enforces [bannering](/cloudflare-one/email-security/detection-settings/configure-text-add-ons/) or link rewrite at delivery.
 
 Pre-delivery blocks threats in transit, and it adds banners or texts before the user views the email.
 
@@ -57,7 +57,7 @@ Dispositions allow you to configure policies and tune reporting. For example, yo
 
 ## Impersonation registry
 
-Most Business Email Compromise targets executives or finance roles. You must add addresses of roles who are likely to be impersonated. Refer to [Impersonation registry](/cloudflare-one/email-security/detection-settings/impersonation-registry/) to learn how to add a user to the impersonation registry.
+Most [Business email compromise(BEC)](https://www.cloudflare.com/en-gb/learning/email-security/business-email-compromise-bec/) targets executives or finance roles. You must add addresses of roles who are likely to be impersonated. Refer to [Impersonation registry](/cloudflare-one/email-security/detection-settings/impersonation-registry/) to learn how to add a user to the impersonation registry.
 
 Roles you may to include in the impersonation registry are:
 
