@@ -5,7 +5,7 @@
 #
 # For a list of all options, see https://vale.sh/docs/topics/styles/
 extends: existence
-message: "Rewrite the link text for `%s` to be more descriptive. Only rewrite the link text, nothing else."
+message: "Rewrite the link text for `%s` to be more descriptive. Only rewrite the link text (but preserve the link), nothing else."
 level: warning
 ignorecase: true
 scope: raw
