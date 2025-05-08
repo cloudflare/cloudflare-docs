@@ -5,6 +5,8 @@ sidebar:
   order: 1
 ---
 
+import { Markdown } from "~/components";
+
 Before you start the onboarding process, you will have to choose a deployment path. Email Security provides two deployment modes: [post-delivery](/cloudflare-one/email-security/setup/) (for API and BCC/Journaling), and [pre-delivery](/cloudflare-one/email-security/setup/#pre-delivery-deployment) (for MX/Inline).
 
 ## Post-delivery deployment
@@ -91,13 +93,15 @@ A correct use of reclassifications ensures that Email Security delivers a strong
 
 | Step                                                                                                    | Post-delivery | Pre-delivery |
 |---------------------------------------------------------------------------------------------------------|---------------|--------------|
-| Authorize integration (Graph API or Google Workspace)                                                   | Required      | Required     |
-| Create service account and journaling rule                                                              | Required      | Required     |
+| Authorize integration ([Graph API](/cloudflare-one/email-security/setup/post-delivery-deployment/api/office365-api/#enable-microsoft-integration) or [Google Workspace](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/bcc-setup/gmail-bcc-setup/enable-gmail-integration/))[^1]                                                 | Required      | Required [^2]     |
 | Associate an integration with an MX/Inline domain                                                       |               | Required     |
 | Add/verify domains                                                                                      | Required      | Required     |
-| Update MX records/connector, then allow Cloudflare egress IPs on downstream mail server |               | Required     |
-| Enable Post‑delivery response and Phish submission response                                             | Required      | Required     |
-| Populate Impersonation registry and allow / block lists                                                 | Required      | Required     |
-| Configure partner TLS and admin quarantine                                                              |               | Required     |
-| Configure Text Addons and Link Actions                                                                  |               | Required     |
-| Send a test email and verify it appears in Monitoring → Email activity with expected disposition        | Required      | Required     |
+| [Update MX records/connector](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment-setup/), then allow Cloudflare [egress IPs](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment-setup/) on downstream mail server |               | Required     |
+| Enable [Post‑delivery response and Phish submission response](/cloudflare-one/email-security/auto-moves/)                                             | Required      | Required     |
+| Populate [impersonation registry](/cloudflare-one/email-security/detection-settings/impersonation-registry/) and [allow](/cloudflare-one/email-security/detection-settings/allow-policies/)/[block](/cloudflare-one/email-security/detection-settings/blocked-senders/) lists                                                 | Required      | Required     |
+| Configure [partner domain TLS](/cloudflare-one/email-security/setup/pre-delivery-deployment/partner-domain-tls/) and admin quarantine                                                              |               | Required     |
+| Configure [text add-ons](/cloudflare-one/email-security/detection-settings/configure-text-add-ons/) and [link actions](/cloudflare-one/email-security/detection-settings/configure-link-actions/)                                                                  |               | Required     |
+| Send a test email and verify it appears in **Monitoring** > [**Email activity**](/cloudflare-one/email-security/email-monitoring/#email-activity) with expected disposition        | Required      | Required     |
+
+[^1]: Alternatively, you can create a service account and add BCC rules.
+[^2]: Still used for directory/auto‑move insight if desired as well as authorizing free API CASB
