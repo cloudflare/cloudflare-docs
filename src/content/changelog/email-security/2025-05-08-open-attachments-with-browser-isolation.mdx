@@ -1,0 +1,31 @@
+---
+title: Open up Email Attachments with Browser Isolation
+description: A new attachment section in email security allows you to safely open up attachments to view and investigate.
+date: 2025-05-08T19:20:11Z
+---
+
+## What’s New
+
+When investigating a message, you will now see a new **Attachments** section. Here, you can view processed attachments and their classifications (e.g., _Malicious_, _Suspicious_, _Encrypted_). Next to each attachment, a **Browser Isolation** icon allows your team to safely open the file in a **clientless, isolated browser** with no risk to the analyst or your environment.
+
+## How to Enable
+
+To use this feature, you must:
+
+- Enable **Clientless Web Isolation** in their Zero Trust settings.
+- Have **Browser Isolation (BISO)** seats assigned.
+
+**Setup guide:**  
+[Clientless Browser Isolation Setup](https://developers.cloudflare.com/cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/)
+
+## Limitations
+
+Some attachment types may not render in Browser Isolation. If you see a file type that you would like to see be opened with browser isolation please reach out to your Cloudflare contact. 
+
+## Availability
+
+This feature is available across all CES packages:
+
+- **CES_ADVANTAGE**
+- **CES_ENTERPRISE**
+- **CES_ENTERPRISE_PHISHGUARD**
