@@ -81,7 +81,7 @@ All future Microsoft 365 traffic will bypass Gateway logging and filtering. To d
 
 ### Terraform
 
-Terraform users can retrieve the app types list with the `cloudflare_zero_trust_gateway_app_types_list` data source. This allows you to create Gateway policies with the application's name rather than its numeric UUID. For example:
+Terraform users can retrieve the app types list with the `cloudflare_zero_trust_gateway_app_types_list` data source. This allows you to create Gateway policies with the application's name rather than its numeric ID. For example:
 
 ```tf
 data "cloudflare_zero_trust_gateway_app_types_list" "gateway_apptypes" {
