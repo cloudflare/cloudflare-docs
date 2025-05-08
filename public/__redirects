@@ -676,6 +676,7 @@
 /fundamentals/security/cloudflare-challenges/challenge-passage/ /cloudflare-challenges/challenge-types/challenge-pages/#challenge-passage 301
 /fundamentals/security/cloudflare-challenges/challenge-solve-rate/ /cloudflare-challenges/reference/challenge-solve-rate/ 301
 /fundamentals/security/cloudflare-challenges/challenge-solve-issues/ /cloudflare-challenges/troubleshooting/challenge-solve-issues/ 301
+/fundamentals/security/cloudflare-challenges/ /cloudflare-challenges/ 301
 
 # gateway
 /gateway/about/ /cloudflare-one/policies/gateway/ 301
