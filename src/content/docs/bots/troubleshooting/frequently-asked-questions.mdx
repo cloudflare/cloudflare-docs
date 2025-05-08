@@ -16,7 +16,7 @@ Cloudflare uses multiple methods to detect bots, but these vary by plan. For mor
 
 ---
 
-## How do I know what's included in my plan?
+## How do I know what is included in my plan?
 
 To know what's included in your plan, refer to our [Plans](/bots/plans).
 
@@ -75,7 +75,7 @@ Yes. WAF rules are executed before Super Bot Fight Mode. If a WAF custom rule pe
 
 A request's _cf.bot_management.verified_bot_ value is a boolean indicating whether such request comes from a Cloudflare allowed bot.
 
-Cloudflare has built an allowlist of good, automated bots, e.g. Google Search Engine, Pingdom, and more.
+Cloudflare has built an allowlist of good, automated bots, for example Google Search Engine, Pingdom, and more.
 
 This allowlist is large based on reverse DNS verification, meaning that the IPs we allow really match the requesting service. In addition to this, Cloudflare uses multiple validation methods including ASN blocks and public lists. If none of these validation types are available for a customer, we use internal Cloudflare data and machine learning to identify legitimate IP addresses from good bots.
 
@@ -103,7 +103,7 @@ If you are experiencing errors with your bot solution and need to submit a Suppo
 
 :::caution
 
-The following information gathering are required when you are experiencing issues (e.g. false positives) with Enterprise Bot Management only (Enterprise plan).
+The following information gathering are required when you are experiencing issues (for example, false positives) with Enterprise Bot Management only (Enterprise plan).
 
 Because Bot Fight Mode (BFM) and Super Bot Fight Mode (SBFM) are set at a domain level, we often find that disabling these features is the best solution to false positives.
 
@@ -136,7 +136,7 @@ Please follow instructions in the following questions on how to disable BFM and 
 
 **How to disable BFM/SBFM feature?**
 
-If you encounter any issues with BFM/SBFM feature (e.g. false positive), you can disable it under **Security** > **Bots**.
+If you encounter any issues with BFM/SBFM feature (for example, false positive), you can disable it under **Security** > **Bots**.
 
 - For **Free** plans, toggle the **Bot Fight Mode** option to **Off**
 - For **Pro** plans, click the **Configure Super Bot Fight Mode** link and set each of **Definitely automated** and **Verified bots** features to **Allow**, and toggle the **Static resource protection** and **JavaScript Detections** options to **Off**
