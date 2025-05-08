@@ -191,7 +191,7 @@ Changing the order within the Zero Trust dashboard or API may result in configur
 
 ## Manage precedence with Terraform
 
-You can manage a the order of execution of your Gateway policies using Terraform. With version 5 of the Terraform Cloudflare provider, Gateway users can list their policies in a Terraform file with any desired integer precedence value. Cloudflare recommends starting with a precedence of `1000` and adding extra space between each policy's precedence for any future policies. For example:
+You can manage the order of execution of your Gateway policies using Terraform. With version 5 of the Terraform Cloudflare provider, Gateway users can list their policies in a Terraform file with any desired integer precedence value. Cloudflare recommends starting with a precedence of `1000` and adding extra space between each policy's precedence for any future policies. For example:
 
 ```tf
 resource "cloudflare_zero_trust_gateway_policy" "policy_1" {
@@ -213,4 +213,4 @@ resource "cloudflare_zero_trust_gateway_policy" "policy_3" {
 }
 ```
 
-To avoid precedence calculation errors, you should move one policy at a time before running `terraform plan` and `terraform apply`. If you use both Terraform and the Zero Trust dashboard or API, sync your polices with `terraform plan` before reordering policies in Terraform. Alternatively, you can set your account to [read-only in the Zero Trust dashboard](/cloudflare-one/api-terraform/#set-dashboard-to-read-only), only allowing changes using the API or Terraform.
+To avoid precedence calculation errors when reordering policies with Terraform, you should move one policy at a time before running `terraform plan` and `terraform apply`. If you use both Terraform and the Zero Trust dashboard or API, sync your polices with `terraform refresh` before reordering policies in Terraform. Alternatively, you can set your account to [read-only in the Zero Trust dashboard](/cloudflare-one/api-terraform/#set-dashboard-to-read-only), only allowing changes using the API or Terraform.
