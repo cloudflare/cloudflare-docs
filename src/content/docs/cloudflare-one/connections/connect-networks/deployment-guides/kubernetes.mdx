@@ -5,7 +5,7 @@ sidebar:
   order: 6
 ---
 
-A Kubernetes cluster has two components, the primary, and the workers. The primary is the control plane that the user interacts with to manage the containers.
+[Kubernetes](https://kubernetes.io/) is a container orchestration and management tool. Kubernetes is declarative, so you define the end state in a .yml file. A Kubernetes cluster has two components, the master, and the workers. The master is the control plane that the user interacts with to manage the containers. Worker nodes are where the containers are deployed and run. A Kubernetes cluster is connected internally through a private network. Cloudflare Tunnel can be used to expose services running inside the Kubernetes cluster to the public.
 
 ## Creating the Kubernetes Cluster
 
