@@ -68,13 +68,13 @@ The LOA must be a PDF. Transit providers may reject the LOA if it is a JPG or PN
 
 <Render file="loa" product="byoip" />
 
-### Verify IRR entries
+## Verify IRR entries
 
 Verify that your Internet Routing Registry (IRR) entries match your corresponding origin autonomous system numbers (ASNs) to ensure Magic Transit routes traffic to the correct autonomous systems (AS). For guidance, refer to [Verify IRR entries](/byoip/concepts/irr-entries/best-practices/#verify-an-irr-entry).
 
-If you are using a Cloudflare IP, you do not need to verify your IRR entries.
+If you are using a [Cloudflare IP](#ips), you do not need to verify your IRR entries.
 
-#### Optional: RPKI check for prefix validation
+### Optional: RPKI check for prefix validation
 
 You can also use the Resource Public Key Infrastructure (RPKI) as an additional option to validate your prefixes. RPKI is a [security framework method](https://blog.cloudflare.com/rpki/) that associates a route with an autonomous system. It uses cryptography to validate the information before being passed onto the routers.
 
@@ -82,7 +82,7 @@ If you operate a network (ISP, cloud provider, enterprise, etc.), using RPKI ens
 
 To check your prefixes, you can use [Cloudflare's RPKI Portal](https://rpki.cloudflare.com/?view=validator).
 
-### Set maximum segment size
+## Set maximum segment size
 
 <Render
 	file="prerequisites/maximum-segment-size"
