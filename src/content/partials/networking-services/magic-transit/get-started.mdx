@@ -41,16 +41,16 @@ Magic Transit is not a self-serve product, and as such you need to start by [eng
   )
 }
 
-
-### Verify router compatibility
+## Verify router compatibility
 
 Magic Transit relies on <GlossaryTooltip term="anycast">anycast</GlossaryTooltip> tunnels to transmit <GlossaryTooltip term="data packet">packets</GlossaryTooltip> from Cloudflare's global network to your origin network.
 
 The routers at your tunnel endpoints must meet the following requirements to ensure compatibility with Magic Transit.
 
-- Support anycast tunneling.
+- Support GRE tunnels (or IPsec if GRE is not available).
 - Allow configuration of at least one tunnel per Internet service provider (ISP).
 - Support <GlossaryTooltip term="maximum segment size (MSS)">maximum segment size (MSS)</GlossaryTooltip> clamping.
+- Support asymmetric traffic flow (for ingress-only Magic Transit).
 
 ### Draft Letter of Agency
 
