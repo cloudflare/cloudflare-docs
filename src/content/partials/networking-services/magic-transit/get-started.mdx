@@ -5,7 +5,12 @@ params:
 
 import { AnchorHeading, Aside, GlossaryTooltip, Markdown, Render } from "~/components";
 
-Before you can begin using Magic Transit, be sure to complete the onboarding steps below. Cloudflare can significantly accelerate this timeline during active-attack scenarios.
+{ props.magicWord === "Magic Transit" && (
+  <>
+	<p>Before you can begin using Magic Transit, be sure to complete the onboarding steps below. Cloudflare can significantly accelerate this timeline during active-attack scenarios.</p>
+  </>
+  )
+}
 
 ## Scope your configuration
 
