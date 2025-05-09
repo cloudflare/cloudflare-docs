@@ -116,9 +116,7 @@ Refer to [Maximum transmission unit and maximum segment size](/magic-transit/ref
 
 ## Follow router vendor guidelines
 
-<Render file="prerequisites/router-vendor-guidelines-mss-settings-origin"
-	product="networking-services"
-/>
+<Render file="prerequisites/router-vendor-guidelines-mss-settings-origin"	product="networking-services" />
 
 
 { props.magicWord === "Magic Transit" && (
@@ -133,24 +131,7 @@ Refer to [Maximum transmission unit and maximum segment size](/magic-transit/ref
 	<p>After setting up your tunnels and routes, Cloudflare validates tunnel connectivity, tunnel and endpoint <a href="/magic-transit/reference/tunnel-health-checks/#tunnel-health-checks">health checks</a>, <GlossaryTooltip term="letter of agency">Letter of Agency (LOA)</GlossaryTooltip>, Internet Routing Registry (IRR), and <GlossaryTooltip term="maximum segment size (MSS)">maximum segment size (MSS) configurations</GlossaryTooltip>. Configurations for Cloudflare global network are applied and take around one day to rollout.</p>
 
 	<AnchorHeading title="Advertise prefixes" depth={2} />
-	<p>Once pre-flight checks are completed, Cloudflare will unlock your <GlossaryTooltip term="prefix">prefixes</GlossaryTooltip> for you to <a href="/magic-transit/how-to/advertise-prefixes/">advertise via the dashboard, API or BGP</a> at a time of your choosing. Refer to <a href="/byoip/concepts/dynamic-advertisement/best-practices/">Dynamic advertisement best practices</a> to learn more about advertising prefixes.</p>
-	<p>If you are using a Cloudflare IP, you do not need to advertise your prefixes.</p>
-
-	<Aside type="caution">
-	<Markdown
-	text={`
-	You must [put the appropriate MSS clamps](#set-maximum-segment-size) in place before [routing](https://www.cloudflare.com/learning/network-layer/what-is-routing/) changes are made. Failure to apply an MSS clamp can result in dropped packets and hard-to-debug connectivity issues.
-
-	Also, when using [Cloudflare Network Interconnect](/magic-transit/network-interconnect/) with Magic Transit you must set the following MSS clamp sizes to accommodate additional overhead:
-
-	- GRE tunnels over Classic CNI: 1476 bytes
-	- Direct CNI / Classic CNI with a maximum transmission unit (MTU) size of 1500 bytes handoff does not require an MSS clamp.
-
-	MSS clamps are used to backhaul data from the data center where traffic is ingested (close to the end user) to the facility with the CNI link.
-	`}
-	inline={false}
-	/>
-	</Aside>
+	<Render file="magic-transit/advertise-prefixes"	product="networking-services" />
 
   </>
   )
