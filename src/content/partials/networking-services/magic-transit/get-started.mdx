@@ -27,6 +27,20 @@ Magic Transit is not a self-serve product, and as such you need to start by [eng
   )
 }
 
+{ props.magicWord === "Learning Path" && (
+  <>
+<Render
+	file="magic-transit/cloudflare-ips"
+	product="networking-services"
+	params={{
+		mtLpCreateTunnel: "#",
+		mtLpStaticRoute: "#",
+		mtLpBgpPeering: "#"
+		}} />
+  </>
+  )
+}
+
 
 ### Verify router compatibility
 
