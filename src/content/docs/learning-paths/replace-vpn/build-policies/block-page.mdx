@@ -5,7 +5,7 @@ sidebar:
   order: 5
 ---
 
-import { Render } from "~/components";
+import { Render, Tabs, TabItem } from "~/components";
 
 With Cloudflare Zero Trust, you can deliver actionable feedback to users when they are blocked by a Gateway policy. Custom block messages can reduce user confusion and decrease your IT ticket load.
 
@@ -35,6 +35,8 @@ The Gateway custom block page is a different concept from [Access custom block p
 
 For DNS policies, you will need to enable the block page on a per-policy basis.
 
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
 <Render
 	file="gateway/add-block-page"
 	product="cloudflare-one"
@@ -44,6 +46,47 @@ For DNS policies, you will need to enable the block page on a per-policy basis.
     }}
 
 />
+
+</TabItem>
+<TabItem label="Terraform (v5)">
+
+1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
+	- `Zero Trust Write`
+
+2. Choose a DNS policy with a Block action.
+
+3. In the policy's [`rule_settings`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_gateway_policy), turn on `block_page_enabled`. If you have configured a [custom Gateway block page](/cloudflare-one/policies/gateway/block-page/#customize-the-block-page), you can optionally show an additional `block_reason` when traffic is blocked by this policy.
+
+	```tf
+	resource "cloudflare_zero_trust_gateway_policy" "dns_block_security_categories" {
+		name        = "Block DNS Security Categories"
+		enabled     = true
+		account_id  = var.cloudflare_account_id
+		description = "Managed by Terraform - Generic security policy based on Cloudflare Threat Intelligence categories."
+		precedence  = 101
+		action      = "block"
+		filters     = ["dns"]
+		/* Categories being enabled here:
+			- 80:  "Command and Control & Botnet"
+			- 83:  "Cryptomining"
+			- 117: "Malware"
+			- 131: "Phishing"
+			- 153: "Spyware"
+			- 175: "DNS Tunneling"
+			- 176: "DGA Domains"
+			- 178: "Brand Embedding"
+		*/
+		traffic = "any(dns.security_category[*] in {80 83 117 131 153 175 176 178})"
+		identity = ""
+
+		rule_settings = {
+			block_page_enabled = true
+			block_reason  = "This domain has been flagged as a potential security risk." // Adds an additional message to the custom block page. Requires enabling custom block page in cloudflare_zero_trust_gateway_settings.
+		}
+	}
+	```
+</TabItem>
+</Tabs>
 
 ### Customize the block page
 
