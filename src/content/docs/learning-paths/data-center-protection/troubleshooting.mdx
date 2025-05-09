@@ -7,7 +7,7 @@ sidebar:
 
 ## For Magic Transit ingress-only with Direct Server Return
 
-### Devices within the Magic Transit prefix are unable to reach any remote IPs on the Internet after the prefix was cut over to Cloudflare, regardless of traffic type (UDP, TCP, or ICMP)
+### Magic Transit devices cannot reach Internet IPs after cutover to Cloudflare.
 
 **Potential solutions**:
 - Run a traceroute from the Magic Transit prefix out to the destination IP on the Internet.
@@ -25,21 +25,25 @@ sidebar:
 - To quickly test whether the issue is related to MTU or MSS settings, you can temporarily lower the MSS clamp on the LAN interface of a test device within the Magic Transit prefix. If this resolves the issue, it confirms that the MSS clamp setting needs to be fine-tuned for your prefix. Be sure to verify that the correct MSS clamp is applied on all egress interfaces of your edge CPE(s).
 
 
-### Devices on the Internet cannot access a TCP service on your Magic Transit prefix — for example, browsing to a server which is hosted on the Magic Transit prefix
+### Devices on the Internet cannot access a TCP service on Magic Transit prefix
+
+For example, devices cannot browse to a server which is hosted on the Magic Transit prefix.
 
 **Potential solutions**:
 - The MSS clamp is configured on all your CPE egress ports at the location where the Magic Transit prefix is configured.
 - Confirm the MSS values advertised in the TCP SYN-ACK by capturing packets at both ends of the traffic flow — for example, on the remote Internet IP and on your Magic Transit device.
 - To quickly test whether the issue is related to MTU or MSS settings, you can temporarily lower the MSS clamp on the LAN interface of a test device within the Magic Transit prefix. If this resolves the issue, it confirms that the MSS clamp setting needs to be fine-tuned for your prefix. Be sure to verify that the correct MSS clamp is applied on all egress interfaces of your edge CPE(s).
 
-### Users with traffic passing via IPsec or GRE tunnels between the Magic Transit prefix and third parties are reporting issues
+### Users report issues with IPsec or GRE traffic between Magic Transit and third parties
 
 **Potential solutions**:
 - The MSS clamp is properly applied to traffic traversing the IPsec/GRE tunnel. Use packet captures at both tunnel endpoints to inspect the MSS values advertised in the TCP SYN-ACK.
 - Verify the MSS setting on your firewall's IPsec internal tunnel interface connected to the Magic Transit prefix. Set it to approximately 1300 bytes to avoid fragmentation of inbound packets traversing the Magic Transit GRE tunnel (MTU 1476 bytes). For GRE tunnels, adjust the MSS by subtracting 24 bytes from the original value to account for GRE encapsulation overhead.
 - If this does not work, then you can reach out to Cloudflare to ask that we enable the `clear don't fragment` bit for a specific endpoint IP on your prefix which is having the problem, to see if that resolves the issue.
 
-### You suspect that Cloudflare mitigations are dropping legitimate traffic to your Magic Transit prefix
+### Cloudflare might be dropping valid traffic to your Magic Transit prefix
+
+If you suspect that Cloudflare mitigations might be dropping legitimate traffic to your Magic Transit prefix:
 
 1. Go to the the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **Analytics & Logs** > **Network Analytics**.
@@ -60,7 +64,7 @@ sidebar:
 
 ## For Magic Transit ingress + egress
 
-### Devices using your Magic Transit IP cannot reach any Internet sites via TCP, UDP, or ICMP.
+### Devices using your Magic Transit IP cannot reach any Internet sites via TCP, UDP, or ICMP
 
 **Potential solutions**:
 - If you are using Cloudflare Magic Transit leased IPs, ensure your CPE is correctly NATing to the Cloudflare leased IP and has policy-based Routing configured properly to forward egress traffic via the Magic Transit IPsec/GRE tunnel.
