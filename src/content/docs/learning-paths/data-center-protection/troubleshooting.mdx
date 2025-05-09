@@ -1,0 +1,108 @@
+---
+title: Troubleshooting connectivity issues after prefix advertisement
+pcx_content_type: learning-unit
+sidebar:
+  order: 9
+---
+
+## For Magic Transit ingress-only with Direct Server Return
+
+### Devices within the Magic Transit prefix are unable to reach any remote IPs on the Internet after the prefix was cut over to Cloudflare, regardless of traffic type (UDP, TCP, or ICMP)
+
+**Check**:
+- Run a traceroute from the Magic Transit prefix out to the destination IP on the Internet.
+- Verify on your CPE there is no uRPF strict mode or anti-spoofing which would drop this traffic.
+- Verify that your CPE is not enforcing uRPF strict mode or other anti-spoofing mechanisms that could drop this traffic.. If they do, ask them to change this to loose mode.
+- Other workarounds:
+	- If you have a less-specific prefix then you can continue to advertise this to your ISP while Cloudflare advertises a more-specific prefix. For example, Cloudflare advertises a `/24` to the Internet; you advertise its parent `/23` to your ISP.
+	- You can continue advertising a `/24` to your ISP, but this is not recommended, as inbound traffic from your ISP would bypass Cloudflare and therefore not benefit from Magic Transit DDoS protection.
+
+### Devices connected to the Magic Transit prefix cannot access Internet websites via TCP on ports `443` or `80` (HTTPS/HTTP)
+
+**Check**:
+- The MSS clamp is configured on all your CPE egress ports at the location where the Magic Transit prefix is configured.
+- Confirm the MSS values advertised in the TCP SYN-ACK by capturing packets at both ends of the traffic flow — for example, on the remote Internet IP and on your Magic Transit device.
+- To quickly test whether the issue is related to MTU or MSS settings, you can temporarily lower the MSS clamp on the LAN interface of a test device within the Magic Transit prefix. If this resolves the issue, it confirms that the MSS clamp setting needs to be fine-tuned for your prefix. Be sure to verify that the correct MSS clamp is applied on all egress interfaces of your edge CPE(s).
+
+
+### Devices on the Internet cannot access a TCP service on your Magic Transit prefix — for example, browsing to a server which is hosted on the Magic Transit prefix
+
+**Check**:
+- The MSS clamp is configured on all your CPE egress ports at the location where the Magic Transit prefix is configured.
+- Confirm the MSS values advertised in the TCP SYN-ACK by capturing packets at both ends of the traffic flow — for example, on the remote Internet IP and on your Magic Transit device.
+- To quickly test whether the issue is related to MTU or MSS settings, you can temporarily lower the MSS clamp on the LAN interface of a test device within the Magic Transit prefix. If this resolves the issue, it confirms that the MSS clamp setting needs to be fine-tuned for your prefix. Be sure to verify that the correct MSS clamp is applied on all egress interfaces of your edge CPE(s).
+
+### Users with traffic passing via IPsec or GRE tunnels between the Magic Transit prefix and third parties are reporting issues
+
+**Check**:
+- The MSS clamp is properly applied to traffic traversing the IPsec/GRE tunnel. Use packet captures at both tunnel endpoints to inspect the MSS values advertised in the TCP SYN-ACK.
+- Verify the MSS setting on your firewall's IPsec internal tunnel interface connected to the Magic Transit prefix. Set it to approximately 1300 bytes to avoid fragmentation of inbound packets traversing the Magic Transit GRE tunnel (MTU 1476 bytes). For GRE tunnels, adjust the MSS by subtracting 24 bytes from the original value to account for GRE encapsulation overhead.
+- If this does not work, then you can reach out to Cloudflare to ask that we enable the `clear don't fragment` bit for a specific endpoint IP on your prefix which is having the problem, to see if that resolves the issue.
+
+### You suspect that Cloudflare mitigations are dropping legitimate traffic to your Magic Transit prefix
+
+1. Go to the the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Analytics & Logs** > **Network Analytics**.
+3. In the **All traffic** tab select **Add filter** to configure the filters for the traffic-flow in question — like source IP, destination IP and protocol/ports.
+4. Check the analytics results to determine which Cloudflare mitigation system has dropped the traffic — for example, DDoS Managed Rules, Advanced TCP/DNS Protection or Magic Firewall.
+5. If the traffic was dropped by DDoS Managed Rules:
+	- Check whether the rule that dropped the traffic is customizable. If it is, go to [DDoS Overrides](/ddos-protection/managed-rulesets/network/configure-dashboard/#create-a-ddos-override). There, you can create/amend an existing override to ensure that this endpoint IP is added to the override with a lower sensitivity applied.
+	- If this rule is not customizable and is part of Cloudflare's always-on standard DDoS mitigations, reach out to Cloudflare support team to request for assistance on this.
+6. If the traffic was dropped by Advanced TCP Protection (ATP):
+	- If the mode for the global rule is **Mitigation** you can set up a filter for `monitoring` so that ATP will not drop traffic for this particular traffic flow.
+	- If you need further assistance, reach out to your Cloudflare support team who can adjust other backend configuration options for this mitigation system.
+7. If the traffic was dropped by Advanced DNS Protection:
+	- You can create a rule to apply on traffic received in a region or datacenter with a lower sensitivity setting. Once created, you can change the mode of the rule to `monitoring`.
+	- Alternatively, you can change the mode for the global rule from `mitigation` to `monitoring`.
+8. If the traffic was dropped by Magic Firewall:
+	- Check which configured Magic Firewall rule caused the drop.
+	- You can choose to edit the rule or disable it. You can also add a new rule to permit your traffic and ensure it is placed above the rule that is configured to drop the traffic.
+
+## For Magic Transit ingress + egress
+
+### Devices using your Magic Transit IP cannot reach any Internet sites via TCP, UDP, or ICMP.
+
+**Check**:
+- If you are using Cloudflare Magic Transit leased IPs, ensure your CPE is correctly NATing to the Cloudflare leased IP and has policy-based Routing configured properly to forward egress traffic via the Magic Transit IPsec/GRE tunnel.
+- Check that the Magic Firewall rules are configured to allow the egress traffic. As a reminder, Magic Firewall is stateless, and configured rules will apply for both ingress and egress traffic.
+- Check that the egress traffic flow is visible inside Network Analytics. Also, check for the inbound traffic flow returning to the Magic Transit prefix. Verify if any mitigations are applied on the traffic.
+
+If the problem is seen for TCP only and UDP/ICMP are successful, check the MSS and MTU configuration on your CPE's GRE/IPsec tunnel. Perform a packet capture on the CPE/end-device to confirm the SYN-ACK values exchanged.
+
+## Post prefix advertisement monitoring and fine tuning
+
+### DDOS Managed Rules
+
+#### Adaptive DDOS rules
+
+[These rules](/ddos-protection/managed-rulesets/adaptive-protection/) are based on a seven-day rolling window. We recommend reviewing the logs from these adaptive rules in Network Analytics seven days after your last prefix advertisement.
+
+If you see matches for legitimate traffic, consider lowering the sensitivity of the rule and then review the logs again. Once you are satisfied that legitimate traffic is not being flagged, [create a DDoS override](/ddos-protection/managed-rulesets/network/configure-dashboard/#create-a-ddos-override) for this rule with action as `DDOS Dynamic` or `Block`.
+
+#### Advanced TCP Protection and Advanced DNS Protection
+
+For both [Advanced TCP Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-tcp-protection/) and [Advanced DNS Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-dns-protection/), your Cloudflare account team will need to configure manual thresholds for your account, based on your ingress traffic.
+
+Once all your prefixes are advertised and/or once all your expected traffic is cut over to the Magic Transit prefixes, reach out to your Cloudflare account team to have the thresholds configured.
+
+You can then change the mode on your Advanced TCP and DNS protections from `monitoring` to `mitigation`. You can also  create a filter for `monitoring` mode for any traffic flows for which you see false positives. Try to keep this specific so that the protection is enabled for other inbound traffic flows.
+
+### Magic Firewall rules
+
+We strongly encourage you to ensure you have a Magic Firewall ruleset configured and customized to your environment to help stop unwanted and attack traffic.
+
+You can configure Magic Firewall rules and keep them in `disabled` mode to review the traffic that would have matched, using `verdict = drop` and the rule ID within Network Analytics. Once you are satisfied that the rule is blocking/permitting the intended traffic, you can change the mode to `enabled`.
+
+Refer to Magic Firewall's [best practices](/magic-firewall/best-practices/) for configuration guidance and suggestions.
+
+### Alerts for Magic Tunnel health checks and DDoS
+
+- Ensure all teams/members needing to receive these are getting the alerts
+- Check the Magic Tunnel Health Check Alert configuration for Sensitivity and Alert interval and tunnels in-scope.
+- Refer to [Set up Magic Tunnel health alerts](/learning-paths/data-center-protection/enable-notifications/#set-up-magic-tunnel-health-alerts) and [DDoS alerts](/ddos-protection/reference/alerts/) for more details.
+
+### Optional
+
+- Enable [Logpush](/logs/about/) to your Security Information and Event Management (SIEM).
+- Enable Magic Firewall's [Intrusion Detection System (IDS)](/magic-firewall/about/ids/). Requires Logpush and is only available for accounts with [Advanced Magic Firewall](/magic-firewall/plans/#advanced-features).
+- Use [Magic Network Monitoring](/magic-network-monitoring/) for visibility into traffic on your non-Magic Transit prefixes, using NetFlow or sFlow from your CPEs.
