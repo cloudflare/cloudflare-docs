@@ -5,6 +5,10 @@ productLink: "/bots/"
 productArea: Application security
 productAreaLink: /fundamentals/reference/changelog/security/
 entries:
+  - publish_date: "2025-05-08"
+    title: Machine Learning model v9 is now the default model
+    description: |-
+      [Machine Learning model v9](/bots/reference/machine-learning-models/#model-versions-and-release-notes) is now the default model for all new zones and existing zones set to use the latest machine learning model. 
   - publish_date: "2025-04-28"
     title: Managed robots.txt is now available
     description: |-

@@ -14,14 +14,14 @@ reviewer:
     enabled: true
   custom_style_guide:
     enabled: false
-    path_to_style_guide_dir: ".hyperlint/styles/plain-text-style-checks/"
+    path_to_style_guide_dir: ".hyperlint/automations/styles/plain-text-style-checks/"
     check_status_upon_review_failure: neutral
   limit_num_reviews: 2
   limit_num_comments: 5
 automation:
   custom_style_guide:
     enabled: true
-    path_to_style_guide_dir: ".hyperlint/styles/plain-text-style-checks/"
+    path_to_style_guide_dir: ".hyperlint/automations/styles/plain-text-style-checks/"
   enabled: true
   vale_style_guide:
     enabled: true
