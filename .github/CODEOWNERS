@@ -212,6 +212,7 @@
 /src/content/docs/waf/ @pedrosousa @cloudflare/firewall @cloudflare/pcx-technical-writing
 /src/content/docs/waf/change-log/ @pedrosousa @cloudflare/firewall @vs-mg @cloudflare/pcx-technical-writing
 /src/content/release-notes/waf.yaml @pedrosousa @cloudflare/firewall @vs-mg @cloudflare/pcx-technical-writing
+/src/content/docs/cloudflare-challenges/ @patriciasantaana @cloudflare/pcx-technical-writing
 
 # Support
 
