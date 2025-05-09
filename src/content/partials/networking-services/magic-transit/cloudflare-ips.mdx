@@ -1,15 +1,40 @@
 ---
-{}
+params:
+  - magicWord
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip, Markdown } from "~/components"
 
 To use Magic Transit you need to own a publicly routable IP address block with a minimum size of `/24`. If you do not own a `/24` address block, you can use Magic Transit with a Cloudflare-owned IP address. This option is helpful for users who do not meet the `/24` prefix length requirements or who want to protect a smaller network.
 
 To protect your network using a Cloudflare IP address, contact your account manager. After receiving your IP address, you will need to:
 
-- [Create a tunnel](/magic-transit/how-to/configure-tunnels/).
-- [Set up static routes](/magic-transit/how-to/configure-routes/#configure-static-routes) or [BGP peering](/magic-transit/how-to/configure-routes/#configure-bgp-routes).
+{ props.magicWord === "Magic Transit" && (
+  <>
+		<Markdown
+		text={`
+		- [Create a tunnel](/magic-transit/how-to/configure-tunnels/).
+		- [Set up static routes](/magic-transit/how-to/configure-routes/#configure-static-routes) or [BGP peering](/magic-transit/how-to/configure-routes/#configure-bgp-routes).
+		`}
+		inline={false}
+		/>
+  </>
+  )
+}
+
+{ props.magicWord === "Learning Path" && (
+  <>
+		<Markdown
+		text={`
+		- [Create a tunnel](#).
+		- [Set up static routes](#) or [BGP peering](#).
+		`}
+		inline={false}
+		/>
+  </>
+  )
+}
+
 - [Configure health checks](/magic-transit/network-health/run-endpoint-health-checks/).
 - Confirm [tunnel](/magic-transit/network-health/update-tunnel-health-checks/) and endpoint health checks were properly configured.
 - Update your infrastructure at your own pace to use the allocated Cloudflare IPs.
