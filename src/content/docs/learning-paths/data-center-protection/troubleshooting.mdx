@@ -12,7 +12,7 @@ sidebar:
 **Potential solutions**:
 - Run a traceroute from the Magic Transit prefix out to the destination IP on the Internet.
 - Verify on your CPE there is no uRPF strict mode or anti-spoofing which would drop this traffic.
-- Verify that your CPE is not enforcing uRPF strict mode or other anti-spoofing mechanisms that could drop this traffic.. If they do, ask them to change this to loose mode.
+- Verify that your CPE is not enforcing uRPF strict mode or other anti-spoofing mechanisms that could drop this traffic. If they do, ask them to change this to loose mode.
 - Other workarounds:
 	- If you have a less-specific prefix then you can continue to advertise this to your ISP while Cloudflare advertises a more-specific prefix. For example, Cloudflare advertises a `/24` to the Internet; you advertise its parent `/23` to your ISP.
 	- You can continue advertising a `/24` to your ISP, but this is not recommended, as inbound traffic from your ISP would bypass Cloudflare and therefore not benefit from Magic Transit DDoS protection.
@@ -45,7 +45,7 @@ For example, devices cannot browse to a server which is hosted on the Magic Tran
 
 If you suspect that Cloudflare mitigations might be dropping legitimate traffic to your Magic Transit prefix:
 
-1. Go to the the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **Analytics & Logs** > **Network Analytics**.
 3. In the **All traffic** tab select **Add filter** to configure the filters for the traffic-flow in question — like source IP, destination IP and protocol/ports.
 4. Check the analytics results to determine which Cloudflare mitigation system has dropped the traffic — for example, DDoS Managed Rules, Advanced TCP/DNS Protection or Magic Firewall.

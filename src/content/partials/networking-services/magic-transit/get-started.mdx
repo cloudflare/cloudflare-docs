@@ -83,7 +83,7 @@ If you are using a [Cloudflare IP](#ips), you do not need to verify your IRR ent
 
 You can also use the Resource Public Key Infrastructure (RPKI) as an additional option to validate your prefixes. RPKI is a [security framework method](https://blog.cloudflare.com/rpki/) that associates a route with an autonomous system. It uses cryptography to validate the information before being passed onto the routers.
 
-If you operate a network (ISP, cloud provider, enterprise, etc.), using RPKI ensures that your IP prefixes are correctly recognized. This prevents service disruptions and protects your brand's reputation. Without RPKI, attackers could announce your IP space, misdirect your traffic, and potentially harm your business.
+If you operate a network (ISP, cloud provider, enterprise, and others.), using RPKI ensures that your IP prefixes are correctly recognized. This prevents service disruptions and protects your brand's reputation. Without RPKI, attackers could announce your IP space, misdirect your traffic, and potentially harm your business.
 
 To check your prefixes, you can use [Cloudflare's RPKI Portal](https://rpki.cloudflare.com/?view=validator).
 
@@ -145,7 +145,7 @@ Refer to [Maximum transmission unit and maximum segment size](/magic-transit/ref
 { props.magicWord === "Learning Path" && (
   <>
 	<AnchorHeading title="BGP for Magic Transit prefix advertisement control (optional)" depth={2} />
-	<p>If you want to use <a href="/magic-transit/how-to/advertise-prefixes/#border-gateway-protocol-bgp-control-for-advertisements-optional">BGP for prefix advertisement control</a> then you need to let the account team know the IPs and ASN for your customer premises equipment (CPE)  to use for the BGP peerings. You should allow around five working days for Cloudflare to add this to our Route Reflectors.</p>
+	<p>If you want to use <a href="/magic-transit/how-to/advertise-prefixes/#border-gateway-protocol-bgp-control-for-advertisements-optional">BGP for prefix advertisement control</a> then you need to let the account team know the IPs and ASN for your customer premises equipment (CPE) to use for the BGP peerings. You should allow around five working days for Cloudflare to add this to our Route Reflectors.</p>
   </>
   )
 }
