@@ -14,7 +14,7 @@ entries:
     description: |-
       Workflows can now be deleted (from the Dashboard/UI or via API), and the maximum length limit for event types and instance IDs was increased to 100 characters.
 
-      Also, this release fixes a bug where delay in step config retries set to 0 would fail.
+      Also, this release fixes a bug where a delay of `0` in step config retries would fail.
   - publish_date: "2025-04-07"
     title: "Workflows is now Generally Available"
     description: |-
