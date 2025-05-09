@@ -9,7 +9,7 @@ sidebar:
 
 ### Devices within the Magic Transit prefix are unable to reach any remote IPs on the Internet after the prefix was cut over to Cloudflare, regardless of traffic type (UDP, TCP, or ICMP)
 
-**Check**:
+**Potential solutions**:
 - Run a traceroute from the Magic Transit prefix out to the destination IP on the Internet.
 - Verify on your CPE there is no uRPF strict mode or anti-spoofing which would drop this traffic.
 - Verify that your CPE is not enforcing uRPF strict mode or other anti-spoofing mechanisms that could drop this traffic.. If they do, ask them to change this to loose mode.
@@ -19,7 +19,7 @@ sidebar:
 
 ### Devices connected to the Magic Transit prefix cannot access Internet websites via TCP on ports `443` or `80` (HTTPS/HTTP)
 
-**Check**:
+**Potential solutions**:
 - The MSS clamp is configured on all your CPE egress ports at the location where the Magic Transit prefix is configured.
 - Confirm the MSS values advertised in the TCP SYN-ACK by capturing packets at both ends of the traffic flow — for example, on the remote Internet IP and on your Magic Transit device.
 - To quickly test whether the issue is related to MTU or MSS settings, you can temporarily lower the MSS clamp on the LAN interface of a test device within the Magic Transit prefix. If this resolves the issue, it confirms that the MSS clamp setting needs to be fine-tuned for your prefix. Be sure to verify that the correct MSS clamp is applied on all egress interfaces of your edge CPE(s).
@@ -27,14 +27,14 @@ sidebar:
 
 ### Devices on the Internet cannot access a TCP service on your Magic Transit prefix — for example, browsing to a server which is hosted on the Magic Transit prefix
 
-**Check**:
+**Potential solutions**:
 - The MSS clamp is configured on all your CPE egress ports at the location where the Magic Transit prefix is configured.
 - Confirm the MSS values advertised in the TCP SYN-ACK by capturing packets at both ends of the traffic flow — for example, on the remote Internet IP and on your Magic Transit device.
 - To quickly test whether the issue is related to MTU or MSS settings, you can temporarily lower the MSS clamp on the LAN interface of a test device within the Magic Transit prefix. If this resolves the issue, it confirms that the MSS clamp setting needs to be fine-tuned for your prefix. Be sure to verify that the correct MSS clamp is applied on all egress interfaces of your edge CPE(s).
 
 ### Users with traffic passing via IPsec or GRE tunnels between the Magic Transit prefix and third parties are reporting issues
 
-**Check**:
+**Potential solutions**:
 - The MSS clamp is properly applied to traffic traversing the IPsec/GRE tunnel. Use packet captures at both tunnel endpoints to inspect the MSS values advertised in the TCP SYN-ACK.
 - Verify the MSS setting on your firewall's IPsec internal tunnel interface connected to the Magic Transit prefix. Set it to approximately 1300 bytes to avoid fragmentation of inbound packets traversing the Magic Transit GRE tunnel (MTU 1476 bytes). For GRE tunnels, adjust the MSS by subtracting 24 bytes from the original value to account for GRE encapsulation overhead.
 - If this does not work, then you can reach out to Cloudflare to ask that we enable the `clear don't fragment` bit for a specific endpoint IP on your prefix which is having the problem, to see if that resolves the issue.
@@ -62,7 +62,7 @@ sidebar:
 
 ### Devices using your Magic Transit IP cannot reach any Internet sites via TCP, UDP, or ICMP.
 
-**Check**:
+**Potential solutions**:
 - If you are using Cloudflare Magic Transit leased IPs, ensure your CPE is correctly NATing to the Cloudflare leased IP and has policy-based Routing configured properly to forward egress traffic via the Magic Transit IPsec/GRE tunnel.
 - Check that the Magic Firewall rules are configured to allow the egress traffic. As a reminder, Magic Firewall is stateless, and configured rules will apply for both ingress and egress traffic.
 - Check that the egress traffic flow is visible inside Network Analytics. Also, check for the inbound traffic flow returning to the Magic Transit prefix. Verify if any mitigations are applied on the traffic.
