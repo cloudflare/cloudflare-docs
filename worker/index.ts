@@ -23,8 +23,10 @@ export default class extends WorkerEntrypoint<Env> {
 		}
 
 		if (request.url.endsWith("/index.md")) {
-			const htmlUrl = request.url.replace("index.md", "");
-			const res = await this.env.ASSETS.fetch(htmlUrl, request);
+			const res = await this.env.ASSETS.fetch(
+				request.url.replace("index.md", ""),
+				request,
+			);
 
 			if (res.status === 404) {
 				return res;
@@ -36,7 +38,7 @@ export default class extends WorkerEntrypoint<Env> {
 			) {
 				const html = await res.text();
 
-				const markdown = await htmlToMarkdown(html, request.url);
+				const markdown = await htmlToMarkdown(html);
 
 				if (!markdown) {
 					return new Response("Not Found", { status: 404 });

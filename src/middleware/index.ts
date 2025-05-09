@@ -18,7 +18,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
 			const htmlUrl = new URL(pathname.replace("index.md", ""), context.url);
 			const html = await (await fetch(htmlUrl)).text();
 
-			const markdown = await htmlToMarkdown(html, context.url.toString());
+			const markdown = await htmlToMarkdown(html);
 
 			if (!markdown) {
 				return new Response("Not Found", { status: 404 });

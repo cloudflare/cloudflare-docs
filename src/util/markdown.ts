@@ -10,10 +10,8 @@ import remarkStringify from "remark-stringify";
 
 export async function htmlToMarkdown(
 	html: string,
-	url: string,
 ): Promise<string | undefined> {
-	const dom = parse(html);
-	const content = dom.querySelector(".sl-markdown-content");
+	const content = parse(html).querySelector(".sl-markdown-content");
 
 	if (!content) {
 		return;
@@ -28,6 +26,7 @@ export async function htmlToMarkdown(
 		remarkStringify,
 	]);
 
+<<<<<<< HEAD
 	const title = dom.querySelector("title")?.textContent;
 	const description = dom.querySelector("meta[name='description']")?.attributes
 		.content;
@@ -48,4 +47,7 @@ export async function htmlToMarkdown(
 		.join("\n");
 
 	return withFrontmatter;
+=======
+	return markdown;
+>>>>>>> parent of 27aa5ce724 ([Docs Site] Add frontmatter to index.md output (#21980))
 }
