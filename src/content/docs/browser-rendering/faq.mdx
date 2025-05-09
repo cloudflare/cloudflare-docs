@@ -18,8 +18,6 @@ This error occurs because your Puppeteer launch is not receiving the Browser bin
 
 1. Pass your Browser binding into `puppeteer.launch`, for example:
 
-2. Ensure your account is on a [Workers Paid plan](/workers/platform/pricing/) so that Browser Rendering is enabled.
-
 ### Will Browser Rendering bypass Cloudflare's Bot Protection?
 
 No, Browser Rendering requests are always identified as bots by Cloudflare and do not bypass Bot Protection. Additionally, Browser Rendering respects the robots.txt protocol, ensuring that any disallowed paths specified for user agents are not accessed during rendering.
@@ -71,6 +69,4 @@ No. Browser Rendering requests originate from Cloudflares global network, but yo
 
 This error indicates you have hit the daily browser-instance limit on the Workers Free plan. [Free-plan accounts are capped at 2 new browser instances per minute and 2 concurrent browsers;](/browser-rendering/platform/limits/#workers-free) once you exceed those, further creation attempts return a 429 until the next UTC day. To resolve:
 
-1. [Upgrade to a Workers Paid plan](/workers/platform/pricing/) - Paid accounts raise these limits to 10 concurrent browsers and 10 new instances per minute.
-2. Request a higher limit - If you need elevated quotas before billing begins, complete the [Limit Increase Request Form](/browser-rendering/platform/limits/#workers-paid).
-3. [Optimize session reuse](/browser-rendering/platform/puppeteer/#keep-alive) - Reconnect to existing browser sessions rather than launching new ones to stay within your limits.
+1. [Upgrade to a Workers Paid plan](/workers/platform/pricing/) - Paid accounts raise these limits to [10 concurrent browsers and 10 new instances per minute](https://developers.cloudflare.com/browser-rendering/platform/limits/#workers-paid).
