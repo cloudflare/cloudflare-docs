@@ -7,4 +7,11 @@ sidebar:
 
 import { Render } from "~/components"
 
-<Render file="magic-transit/cloudflare-ips" product="networking-services" params={{magicWord: "Magic Transit"}} />
+<Render
+	file="magic-transit/cloudflare-ips"
+	product="networking-services"
+	params={{
+		mtLpCreateTunnel: "/magic-transit/how-to/configure-tunnels/",
+		mtLpStaticRoute: "/magic-transit/how-to/configure-routes/#configure-static-routes",
+		mtLpBgpPeering: "/magic-transit/how-to/configure-routes/#configure-bgp-routes"
+		}} />

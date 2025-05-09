@@ -1,5 +1,6 @@
 ---
-{}
+params:
+  - magicWord
 ---
 
 import { GlossaryTooltip, Render } from "~/components";
@@ -12,7 +13,20 @@ Magic Transit is not a self-serve product, and as such you need to start by [eng
 
 ## IPs
 
-<Render file="magic-transit/cloudflare-ips" product="networking-services" params={{magicWord: "Learning Path"}} />
+{ props.magicWord === "Magic Transit" && (
+  <>
+<Render
+	file="magic-transit/cloudflare-ips"
+	product="networking-services"
+	params={{
+		mtLpCreateTunnel: "/magic-transit/how-to/configure-tunnels/",
+		mtLpStaticRoute: "/magic-transit/how-to/configure-routes/#configure-static-routes",
+		mtLpBgpPeering: "/magic-transit/how-to/configure-routes/#configure-bgp-routes"
+		}} />
+  </>
+  )
+}
+
 
 ### Verify router compatibility
 
