@@ -67,11 +67,19 @@ if (extraneousParameters.length > 0) {
 }
 
 for (const parameter of endpointParameters) {
-	if (parameter.in === "path") {
-		const encoded = encodeURIComponent(`{${parameter.name}}`);
-
-		if (parameters?.[parameter.name]) {
-			url.pathname = url.pathname.replace(encoded, parameters[parameter.name]);
+	const value = parameters?.[parameter.name];
+	if (value) {
+		if (parameter.in === "path") {
+			const encoded = encodeURIComponent(`{${parameter.name}}`);
+			url.pathname = url.pathname.replace(encoded, value);
+		} else if (parameter.in === "query") {
+			if (Array.isArray(value)) {
+				for (const v of value) {
+					url.searchParams.append(parameter.name, v);
+				}
+			} else {
+				url.searchParams.set(parameter.name, value);
+			}
 		}
 	}
 }

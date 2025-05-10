@@ -55,14 +55,14 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 
 #### Identities
 
-| Field                  | Description                                                                                                                                                                                                                                                    |
-| ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Email**              | Email address of the user who registered the WARP client where traffic originated from.                                                                                                                                                                        |
-| **User ID**            | UUID of the user. Each unique email address in your organization will have a UUID associated with it.                                                                                                                                                          |
-| **Registration ID** | UUID of the user's WARP client registration. A unique registration ID is generated each time a device is registered for a particular email. The same physical device may have multiple registration IDs. |
-| **Device name**        | Display name of the device returned by the operating system to the WARP client. Typically this is the hostname of a device. Not all devices will have a device name. Device names are not guaranteed to be unique.                                             |
-| **Device ID**          | UUID of the device connected with the WARP client. Each physical device in your organization will have a UUID. |
-| **Last authenticated** | Date and time the user last authenticated their Zero Trust session.                                                                                                                                                                                            |
+| Field                  | Description                                                                                                                                                                                                        |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Email**              | Email address of the user who registered the WARP client where traffic originated from.                                                                                                                            |
+| **User ID**            | UUID of the user. Each unique email address in your organization will have a UUID associated with it.                                                                                                              |
+| **Registration ID**    | UUID of the user's WARP client registration. A unique registration ID is generated each time a device is registered for a particular email. The same physical device may have multiple registration IDs.           |
+| **Device name**        | Display name of the device returned by the operating system to the WARP client. Typically this is the hostname of a device. Not all devices will have a device name. Device names are not guaranteed to be unique. |
+| **Device ID**          | UUID of the device connected with the WARP client. Each physical device in your organization will have a UUID.                                                                                                     |
+| **Last authenticated** | Date and time the user last authenticated their Zero Trust session.                                                                                                                                                |
 
 #### DNS query details
 
@@ -123,9 +123,9 @@ These settings will only apply to logs displayed in Zero Trust. Logpush data is 
 ## Network logs
 
 :::caution[Failed connection logs]
+Gateway will only log TCP traffic with completed connections. If a connection is not complete (such as a TCP SYN with no SYN ACK), Gateway will not log this traffic in network logs.
 
-Gateway will only log failed connections in [network session logs](/logs/reference/log-fields/account/zero_trust_network_sessions/). These logs are available for Enterprise users via [Logpush](/cloudflare-one/insights/logs/logpush/) or [GraphQL](/cloudflare-one/insights/analytics/gateway/#graphql-queries).
-
+Gateway can log failed connections in [network session logs](/logs/reference/log-fields/account/zero_trust_network_sessions/). These logs are available for Enterprise users via [Logpush](/cloudflare-one/insights/logs/logpush/) or [GraphQL](/cloudflare-one/insights/analytics/gateway/#graphql-queries).
 :::
 
 ### Explanation of the fields
@@ -152,14 +152,14 @@ Gateway will only log failed connections in [network session logs](/logs/referen
 
 #### Identities
 
-| Field                  | Description                                                                         |
-| ---------------------- | ----------------------------------------------------------------------------------- |
-| **Email**              | Email address of the user sending the packet. This is generated by the WARP client. |
-| **User ID**            | ID of the user sending the packet. This is generated by the WARP client.            |
-| **Registration ID**    | ID of the user's device registration. This is generated by the WARP client.        |
-| **Device name**        | Name of the device that sent the packet.                                            |
-| **Device ID**          | ID of the physical device that sent the packet. This is generated by the WARP client.        |
-| **Last authenticated** | Date and time the user last authenticated with Zero Trust.                          |
+| Field                  | Description                                                                           |
+| ---------------------- | ------------------------------------------------------------------------------------- |
+| **Email**              | Email address of the user sending the packet. This is generated by the WARP client.   |
+| **User ID**            | ID of the user sending the packet. This is generated by the WARP client.              |
+| **Registration ID**    | ID of the user's device registration. This is generated by the WARP client.           |
+| **Device name**        | Name of the device that sent the packet.                                              |
+| **Device ID**          | ID of the physical device that sent the packet. This is generated by the WARP client. |
+| **Last authenticated** | Date and time the user last authenticated with Zero Trust.                            |
 
 #### Network query details
 
@@ -222,14 +222,14 @@ When an HTTP request results in an error, Gateway logs the first 512 bytes of th
 
 #### Identities
 
-| Field                  | Description                                                                                                          |
-| ---------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| **Email**              | Email address of the user who made the HTTP request. This is generated by the WARP client.                           |
-| **User ID**            | ID of the user who made the request. This is generated by the WARP client.                                           |
-| **Registration ID**     | ID of the user's device registration. This is generated by the WARP client.    |
-| **Device name**        | Name of the device that made the request.                                                                            |
+| Field                  | Description                                                                                                                   |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| **Email**              | Email address of the user who made the HTTP request. This is generated by the WARP client.                                    |
+| **User ID**            | ID of the user who made the request. This is generated by the WARP client.                                                    |
+| **Registration ID**    | ID of the user's device registration. This is generated by the WARP client.                                                   |
+| **Device name**        | Name of the device that made the request.                                                                                     |
 | **Device ID**          | ID of the physical device that made the request. This is generated by the WARP client on the device that created the request. |
-| **Last authenticated** | Date and time the user last authenticated with Zero Trust.                                                           |
+| **Last authenticated** | Date and time the user last authenticated with Zero Trust.                                                                    |
 
 #### HTTP query details
 
@@ -237,7 +237,7 @@ When an HTTP request results in an error, Gateway logs the first 512 bytes of th
 | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **HTTP Version**             | HTTP version of the origin that Gateway connected to on behalf of the user.                                                                       |
 | **HTTP Method**              | HTTP method used for the request (such as `GET` or `POST`).                                                                                       |
-| **HTTP Status Code**         | [HTTP status code](/support/troubleshooting/http-status-codes/) returned in the response.                                       |
+| **HTTP Status Code**         | [HTTP status code](/support/troubleshooting/http-status-codes/) returned in the response.                                                         |
 | **URL**                      | Full URL of the HTTP request.                                                                                                                     |
 | **Referer**                  | Referer request header containing the address of the page making the request.                                                                     |
 | **Source IP**                | Public source IP address of the HTTP request.                                                                                                     |

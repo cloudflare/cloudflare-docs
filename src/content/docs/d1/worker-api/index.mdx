@@ -40,25 +40,43 @@ const result = await env.MY_DB.prepare(
 
 ## Type conversion
 
-D1 automatically converts supported JavaScript (including TypeScript) types passed as parameters via the Workers Binding API to their associated D1 types. The type conversion is as follows:
+D1 automatically converts supported JavaScript (including TypeScript) types passed as parameters via the Workers Binding API to their associated D1 types <sup>1</sup>.
+This conversion is permanent and one-way only. This means that when reading the written values back in your code, you will get the converted values rather than the originally inserted values.
 
-| JavaScript           | D1                                                                           |
-| -------------------- | ---------------------------------------------------------------------------- |
-| null                 | `NULL`                                                                       |
-| Number               | `REAL`                                                                       |
-| Number <sup>1</sup>  | `INTEGER`                                                                    |
-| String               | `TEXT`                                                                       |
-| Boolean <sup>2</sup> | `INTEGER`                                                                    |
-| ArrayBuffer          | `BLOB`                                                                       |
-| undefined            | Not supported. Queries with `undefined` values will return a `D1_TYPE_ERROR` |
+:::note
+We recommend using [STRICT tables](https://www.sqlite.org/stricttables.html) in your SQL schema to avoid issues with mismatched types between values that are actually stored in your database compared to values defined by your schema.
+:::
 
-<sup>1</sup> D1 supports 64-bit signed `INTEGER` values internally, however
+The type conversion during writes is as follows:
+
+| JavaScript (write)   | D1                          | JavaScript (read)  |
+| -------------------- | --------------------------- | ------------------ |
+| null                 | `NULL`                      | null               |
+| Number               | `REAL`                      | Number             |
+| Number <sup>2</sup>  | `INTEGER`                   | Number             |
+| String               | `TEXT`                      | String             |
+| Boolean <sup>3</sup> | `INTEGER`                   | Number (`0`,`1`)   |
+| ArrayBuffer          | `BLOB`                      | Array <sup>4</sup> |
+| ArrayBuffer View     | `BLOB`                      | Array <sup>4</sup> |
+| undefined            | Not supported. <sup>5</sup> | -                  |
+
+<sup>1</sup> D1 types correspond to the underlying [SQLite
+types](https://www.sqlite.org/datatype3.html).
+
+<sup>2</sup> D1 supports 64-bit signed `INTEGER` values internally, however
 [BigInts](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt)
 are not currently supported in the API yet. JavaScript integers are safe up to
 [`Number.MAX_SAFE_INTEGER`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER).
 
-<sup>2</sup> Booleans will be cast to an `INTEGER` type where `1` is `TRUE` and
+<sup>3</sup> Booleans will be cast to an `INTEGER` type where `1` is `TRUE` and
 `0` is `FALSE`.
+
+<sup>4</sup> `ArrayBuffer` and [`ArrayBuffer`
+views](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer/isView)
+are converted using
+[`Array.from`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from).
+
+<sup>5</sup> Queries with `undefined` values will return a `D1_TYPE_ERROR`.
 
 ## API playground
 

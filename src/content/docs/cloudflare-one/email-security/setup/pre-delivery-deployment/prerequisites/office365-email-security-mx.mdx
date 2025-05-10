@@ -9,7 +9,9 @@ import { Render, Markdown, GlossaryTooltip } from "~/components"
 
 ![A schematic showing where Email Security is in the life cycle of an email received](src/assets/email-security/Email_Security_O365_MXInline.png)
 
-In this tutorial, you will learn how to configure Microsoft Office 365 with Email Security as its MX record. 
+In this tutorial, you will learn how to configure Microsoft Office 365 with Email Security as its MX record.
+
+<Render file="email-security/deployment/mx-deployment-prerequisites"/>
 
 ## 1. Add Email Security IP addresses to Allow List
 
@@ -89,7 +91,7 @@ To create the transport rules that will send emails with certain [dispositions](
 9. Select **Add a Rule** > **Create a new rule**.
 10. Set the following rule conditions:
 
-    - **Name**: *{props.five}*.
+    - **Name**: `Email Security Deliver to Junk Email folder`.
     - **Apply this rule if**: *The message headers* > *includes any of these words*.
       - **Enter text**: `X-CFEmailSecurity-Disposition` > **Save**.
       - **Enter words**: `MALICIOUS`, `UCE`, `SPOOF` > **Add** > **Save**.
@@ -99,7 +101,7 @@ To create the transport rules that will send emails with certain [dispositions](
 11. Select **Next**.
 12. You can use the default values on this screen. Select **Next**.
 13. Review your settings and select **Finish** > **Done**.
-14. Select the rule *{props.five}* you have just created, and select **Enable**.
+14. Select the rule you have just created, and select **Enable**.
 
 ## Next steps
 

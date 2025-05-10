@@ -23,8 +23,12 @@ import { CURL } from "~/components";
 	json={{
 		key: "va'l'ue",
 	}}
+	query={{
+		foo: "bar",
+		bar: ["baz", "qux"],
+	}}
 	code={{
-		mark: "value"
+		mark: "value",
 	}}
 />
 
@@ -35,7 +39,7 @@ import { CURL } from "~/components";
 		key: "value",
 	}}
 	code={{
-		mark: "value"
+		mark: "value",
 	}}
 />
 ```
@@ -75,6 +79,12 @@ JSON data to include in the request.
 **type:** `Record<string, any>`
 
 The FormData payload to send.
+
+### `query`
+
+**type:** `Record<string, string | string[]>`
+
+URL query parameters to append to the request URL.
 
 ### `code`
 

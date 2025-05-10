@@ -7,6 +7,11 @@ head:
   - tag: title
     content: Get started | Full-stack (SSR) | Next.js apps
 description: Deploy a full-stack Next.js app to Cloudflare Pages
+banner:
+  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
+  type: note
+  dismissible:
+    id: pages-migrate-to-workers
 ---
 
 import { PackageManagers, WranglerConfig } from "~/components";
@@ -25,8 +30,8 @@ To create a new Next.js app, pre-configured to run on Cloudflare, run:
 
 <PackageManagers
 	type="create"
-	pkg="cloudflare@latest my-next-app"
-	args="--framework=next --platform=pages"
+	pkg="cloudflare@latest"
+	args="my-next-app --framework=next --platform=pages"
 />
 
 For more guidance on developing your app, refer to [Bindings](/pages/framework-guides/nextjs/ssr/bindings/) or the [Next.js documentation](https://nextjs.org).

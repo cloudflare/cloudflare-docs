@@ -5,9 +5,13 @@ sidebar:
   order: 4
 ---
 
+import { Render } from "~/components"
+
 ![A schematic showing where Email Security is in the life cycle of an email received](src/assets/email-security/Email_Security_Gmail_MX_Inline.png)
 
 In this tutorial, you will learn how to configure Google Workspace with Email Security as MX record.
+
+<Render file="email-security/deployment/mx-deployment-prerequisites"/>
 
 ## Requirements
 
@@ -51,10 +55,10 @@ Go to **Compliance**, and create a [content compliance filter](https://support.g
 
 If you would like to quarantine the other dispositions, repeat the above steps and use the following strings for the other dispositions:
 
-- `X-EmailSecurity-Disposition: MALICIOUS`
+- `X-EmailSecurity-Disposition: BULK`
 - `X-EmailSecurity-Disposition: SUSPICIOUS`
 - `X-EmailSecurity-Disposition: SPOOF`
-- `X-EmailSecurity-Disposition: UCE`
+- `X-EmailSecurity-Disposition: UCE` (`UCE` is the equivalent of `SPAM`)
 
 If desired, you can create a separate quarantine for each of the dispositions.
 

@@ -72,7 +72,7 @@ You can combine the previous expression with other [fields](/ruleset-engine/rule
 
 </Details>
 
-For additional examples, refer to [Mitigation examples](/waf/detections/leaked-credentials/examples/).
+For additional examples, refer to [Example mitigation rules](/waf/detections/leaked-credentials/examples/).
 
 ### Handle detected leaked credentials at the origin server
 
@@ -84,22 +84,27 @@ Additionally, you may want to handle leaked credentials detected by Cloudflare a
 
 ## 4. (Optional) Configure a custom detection location
 
-To check for leaked credentials in a way that is not covered by the default configuration, add a custom detection location.
+To check for leaked credentials in a way that is not covered by the default configuration, add a [custom detection location](/waf/detections/leaked-credentials/#custom-detection-locations).
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **Settings**.
 3. Under **Incoming traffic detections**, select **Leaked credentials** and then select **Add custom username and password location**.
-4. In **Username location** and **Password location** (optional), enter expressions for obtaining the username and the password from the HTTP request. Refer to the following example expressions:
+4. In **Username location** and **Password location** (optional), enter expressions for obtaining the username and the password from the HTTP request. For example, you could use the following expressions:
 
-   | Request type     | Username location / Password location                                                                           |
-   | ---------------- | --------------------------------------------------------------------------------------------------------------- |
-   | JSON body        | `lookup_json_string(http.request.body.raw, "user")`<br/>`lookup_json_string(http.request.body.raw, "secret")`   |
-   | URL-encoded form | `url_decode(http.request.body.form["user"][0])`<br/>`url_decode(http.request.body.form["secret"][0])`           |
-   | Multipart form   | `url_decode(http.request.body.multipart["user"][0])`<br/>`url_decode(http.request.body.multipart["secret"][0])` |
+   - Username location:<br/>
+     `lookup_json_string(http.request.body.raw, "user")`
+   - Password location:<br/>
+     `lookup_json_string(http.request.body.raw, "secret")`
 
-   Refer to the [`lookup_json_string()`](/ruleset-engine/rules-language/functions/#lookup_json_string) and [`url_decode()`](/ruleset-engine/rules-language/functions/#url_decode) documentation for more information on these functions.
+   This configuration will scan incoming HTTP requests containing a JSON body with a structure similar to the following:
+
+   ```js
+   {"user": "<USERNAME>", "secret": "<PASSWORD>"}
+   ```
+
+   Refer to the [`lookup_json_string()`](/ruleset-engine/rules-language/functions/#lookup_json_string) documentation for more information on this function.
 
 5. Select **Save**.
 
@@ -126,21 +131,15 @@ Refer to the [`lookup_json_string()`](/ruleset-engine/rules-language/functions/#
 
 </TabItem> <TabItem label="Terraform">
 
-Use the `cloudflare_leaked_credential_check_rule` resource to add a custom detection location. For example:
+<Render file="detections/leaked-credentials-configure-location-terraform" />
 
-```terraform
-resource "cloudflare_leaked_credential_check_rule" "custom_location_example" {
-	zone_id = "<ZONE_ID>"
-	username = "lookup_json_string(http.request.body.raw, \"user\")"
-	password = "lookup_json_string(http.request.body.raw, \"secret\")"
-}
-```
-
-For more information, refer to the [Terraform Cloudflare provider documentation](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs).
+Refer to the [`lookup_json_string()`](/ruleset-engine/rules-language/functions/#lookup_json_string) documentation for more information on this function.
 
 </TabItem> </Tabs>
 
 You only need to provide an expression for the username in custom detection locations.
+
+For more examples of custom detection locations for different request types, refer to [Custom detection locations](/waf/detections/leaked-credentials/#custom-detection-locations).
 
 ---
 

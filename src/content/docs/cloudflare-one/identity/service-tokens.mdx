@@ -5,7 +5,7 @@ sidebar:
   order: 6
 ---
 
-import { AvailableNotifications, Render } from "~/components";
+import { AvailableNotifications, Render, APIRequest } from "~/components";
 
 You can provide automated systems with service tokens to authenticate against your Zero Trust policies. Cloudflare Access will generate service tokens that consist of a Client ID and a Client Secret. Automated systems or applications can then use these values to reach an application protected by Access.
 
@@ -34,6 +34,37 @@ curl -H "CF-Access-Client-Id: <CLIENT_ID>" -H "CF-Access-Client-Secret: <CLIENT_
 ```
 
 If the service token is valid, Access generates a JWT scoped to the application in the form of a [`CF_Authorization` cookie](/cloudflare-one/identity/authorization-cookie/). You can use this cookie to authenticate [subsequent requests](#subsequent-requests) to the application.
+
+#### Authenticate with a single header
+
+You can configure a self-hosted Access application to accept a service token in a single HTTP header, as an alternative to the `CF-Access-Client-Id` and `CF-Access-Client-Secret` pair of headers. This is useful for authenticating SaaS services that only support sending one custom header in a request (for example, the `Authorization` header).
+
+To authenticate using a single header:
+
+1. Get your existing Access application configuration:
+
+	<APIRequest
+		path="/accounts/{account_id}/access/apps/{app_id}"
+		method="GET"
+	/>
+
+2. Make a `PUT` request with the name of the header you want to use for service token authentication. To avoid overwriting your existing configuration, the `PUT` request body should contain all fields returned by the previous `GET` request.
+
+	<APIRequest
+		path="/accounts/{account_id}/access/apps/{app_id}"
+		method="PUT"
+		json={{
+			"domain": "app.example.com",
+			"type": "self_hosted",
+			"read_service_tokens_from_header": "Authorization"
+		}}
+	/>
+
+2. Add the header to any HTTP request. For example,
+
+	```sh
+	curl -H "Authorization: {"CF-Access-Client-Id": "<CLIENT_ID>", "CF_Access-Client-Secret": "<CLIENT_SECRET>"}" https://app.example.com
+	```
 
 ### Subsequent requests
 

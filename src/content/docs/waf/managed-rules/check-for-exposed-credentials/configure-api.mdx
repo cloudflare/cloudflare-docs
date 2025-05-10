@@ -13,14 +13,16 @@ import { Render, APIRequest } from "~/components";
 Configure exposed credentials checks using the [Rulesets API](/ruleset-engine/rulesets-api/). You can do the following:
 
 - [Deploy the Cloudflare Exposed Credentials Check Managed Ruleset](/waf/managed-rules/reference/exposed-credentials-check/#configure-via-api).
-- Create custom rules that check for exposed credentials.
+- [Create custom rules that check for exposed credentials](#create-a-custom-rule-checking-for-exposed-credentials).
+
+If you are using Terraform, refer to [Configure using Terraform](/waf/managed-rules/check-for-exposed-credentials/configure-terraform/).
 
 <Render file="leaked-credentials-recommend-detection" />
 
 ## Create a custom rule checking for exposed credentials
 
 :::note
-This feature requires account-level WAF, which is available to Enterprise customers with a paid add-on.
+This feature requires [account-level WAF configuration](/waf/account/), which is available to Enterprise customers with a paid add-on.
 :::
 
 You can create rules that check for exposed credentials using the [Rulesets API](/ruleset-engine/rulesets-api/). Include these rules in a custom ruleset, which you must create at the account level, and then deploy the custom ruleset to a phase.
@@ -112,7 +114,7 @@ The response returns the created ruleset. Note the presence of the `exposed_cred
 
 The example uses the `url_decode()` function because fields in the request body (available in `http.request.body.form`) are URL-encoded when the content type is `application/x-www-form-urlencoded`.
 
-After creating a custom ruleset, deploy it to a phase so that it executes. Refer to [Deploy a custom ruleset](/ruleset-engine/custom-rulesets/deploy-custom-ruleset/) for more information.
+After creating the custom ruleset, deploy it to a phase so that it executes. You will need the ruleset ID to deploy the custom ruleset. For more information, refer to [Deploy a custom ruleset](/ruleset-engine/custom-rulesets/deploy-custom-ruleset/).
 
 ### Example B
 
@@ -200,6 +202,4 @@ The response returns the created ruleset. Note the presence of the following ele
 }
 ```
 
-## Next steps
-
-After creating a custom ruleset, deploy it to the `http_request_firewall_custom` phase at the account level so that it executes. You will need the ruleset ID to deploy the custom ruleset. For more information, refer to [Deploy a custom ruleset](/ruleset-engine/custom-rulesets/deploy-custom-ruleset/).
+After creating the custom ruleset, deploy it to a phase so that it executes. You will need the ruleset ID to deploy the custom ruleset. For more information, refer to [Deploy a custom ruleset](/ruleset-engine/custom-rulesets/deploy-custom-ruleset/).

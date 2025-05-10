@@ -14,6 +14,12 @@ sidebar:
 description: Fetch weather data from an API using the user's geolocation data.
 ---
 
+If you want to get started quickly, click on the button below.
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/docs-examples/tree/main/workers/geolocation-app-weather)
+
+This creates a repository in your GitHub account and deploys the application to Cloudflare Workers.
+
 import { TabItem, Tabs } from "~/components";
 
 <Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
@@ -149,18 +155,18 @@ app.get('*', async (c) => {
   // Get API endpoint
   let endpoint = "https://api.waqi.info/feed/geo:";
   const token = ""; // Use a token from https://aqicn.org/api/
-  
+
   // Define styles
   const html_style = `body{padding:6em; font-family: sans-serif;} h1{color:#f6821f}`;
-  
+
   // Get geolocation from Cloudflare request
   const req = c.req.raw;
   const latitude = req.cf?.latitude;
   const longitude = req.cf?.longitude;
-  
+
   // Create complete API endpoint with coordinates
   endpoint += `${latitude};${longitude}/?token=${token}`;
-  
+
   // Fetch weather data
   const init = {
     headers: {
@@ -169,7 +175,7 @@ app.get('*', async (c) => {
   };
   const response = await fetch(endpoint, init);
   const content = await response.json() as WeatherApiResponse;
-  
+
   // Build HTML content
   const weatherContent = html`
     <h1>Weather 🌦</h1>
@@ -181,7 +187,7 @@ app.get('*', async (c) => {
     <p>The O3 level is: ${content.data.iaqi.o3?.v}.</p>
     <p>The temperature is: ${content.data.iaqi.t?.v}°C.</p>
   `;
-  
+
   // Complete HTML document
   const htmlDocument = html`
     <!DOCTYPE html>
@@ -195,7 +201,7 @@ app.get('*', async (c) => {
       </div>
     </body>
   `;
-  
+
   // Return HTML response
   return c.html(htmlDocument);
 });

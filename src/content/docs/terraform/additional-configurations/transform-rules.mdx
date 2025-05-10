@@ -16,6 +16,14 @@ This page provides examples of creating [Transform Rules](/rules/transform/) in 
 - [Create a URL rewrite rule](#create-a-url-rewrite-rule)
 - [Create a request header transform rule](#create-a-request-header-transform-rule)
 - [Create a response header transform rule](#create-a-response-header-transform-rule)
+- [Configure Managed Transforms](#configure-managed-transforms)
+
+If you are using the Cloudflare API, refer to the following resources:
+
+- [Create a URL rewrite rule via API](/rules/transform/url-rewrite/create-api/)
+- [Create a request header transform rule via API](/rules/transform/request-header-modification/create-api/)
+- [Create a response header transform rule via API](/rules/transform/response-header-modification/create-api/)
+- [Configure Managed Transforms](/rules/transform/managed-transforms/configure/)
 
 ## Before you start
 
@@ -164,3 +172,11 @@ resource "cloudflare_ruleset" "transform_modify_response_headers" {
 <br />
 
 For more information on modifying response headers, refer to [Response Header Transform Rules](/rules/transform/response-header-modification/).
+
+## Configure Managed Transforms
+
+<Render file="v4-code-snippets" />
+
+<Render file="transform/terraform-managed-transforms-example" product="rules" />
+
+For more information on Managed Transforms, refer to [Managed Transforms](/rules/transform/managed-transforms/).

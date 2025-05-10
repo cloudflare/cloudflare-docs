@@ -109,7 +109,7 @@ app.use('*', async (c, next) => {
    */
   const PRESHARED_AUTH_HEADER_KEY = "X-Custom-PSK";
   const PRESHARED_AUTH_HEADER_VALUE = "mypresharedkey";
-  
+
   // Get the pre-shared key from the request header
   const psk = c.req.header(PRESHARED_AUTH_HEADER_KEY);
 

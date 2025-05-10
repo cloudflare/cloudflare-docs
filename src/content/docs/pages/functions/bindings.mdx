@@ -3,6 +3,11 @@ pcx_content_type: how-to
 title: Bindings
 sidebar:
   order: 7
+banner:
+  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
+  type: note
+  dismissible:
+    id: pages-migrate-to-workers
 ---
 
 import { Render, TabItem, Tabs, WranglerConfig } from "~/components";
@@ -637,6 +642,7 @@ compatibility_date = "2024-09-23"
 To bind your Hyperdrive config to your Pages Function, you can configure a Hyperdrive binding in the [Wrangler configuration file](/pages/functions/wrangler-configuration/#hyperdrive) or the Cloudflare dashboard.
 
 To configure a Hyperdrive binding via the Cloudflare dashboard:
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. In **Account Home**, select **Workers & Pages**.
 3. Select your Pages project > **Settings**.
@@ -837,4 +843,5 @@ To add secrets to your Pages project:
 You use secrets the same way as environment variables. When setting secrets with Wrangler or in the Cloudflare dashboard, it needs to be done before a deployment that uses those secrets. For more guidance, refer to [Environment variables](#environment-variables).
 
 ### Local development with secrets
+
 <Render file="secrets-in-dev" product="workers" />

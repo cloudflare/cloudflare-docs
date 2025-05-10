@@ -21,8 +21,8 @@ import { Markdown } from "~/components"
 	- _Group membership change reauthentication_: [Revoke a user's active session](/cloudflare-one/identity/users/session-management/#per-user) when their group membership changes in {props.idp}. This will invalidate all active Access sessions and prompt for reauthentication for any [WARP session policies](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/). Access will read the user's updated group membership when they reauthenticate.
 	- _No action_: Update the user's identity the next time they reauthenticate to Access or WARP.
 
-5. Select **Save**.
+5. Select **Regenerate Secret**. Copy the **SCIM Endpoint** and **SCIM Secret**. You will need to enter these values into {props.idp}.
 
-6. Copy the **SCIM Endpoint** and **SCIM Secret**. You will need to enter these values into {props.idp}.
+6. Select **Save**. 
 
 The SCIM secret never expires, but you can manually regenerate the secret at any time.

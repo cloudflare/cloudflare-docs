@@ -7,12 +7,12 @@ sidebar:
 
 import { GlossaryTooltip } from "~/components";
 
-The WAF allows you to log the request information that triggered a specific rule of a managed ruleset. This information is known as the payload. Payload logging is especially useful when diagnosing the behavior of WAF rules. Since the values that triggered a rule may contain sensitive data, they are encrypted with a customer-provided public key so that only you can examine them later.
+The WAF allows you to log the request information that triggered a specific rule of a managed ruleset. This information is known as the payload. Payload information includes the specific string that triggered the rule, along with the text that appears immediately before and after the match.
+
+Payload logging is especially useful when diagnosing the behavior of WAF rules. Since the values that triggered a rule may contain sensitive data, they are encrypted with a customer-provided public key so that only you can examine them later.
 
 :::note
-
 This feature is only available for customers on an Enterprise plan.
-
 :::
 
 ## Turn on payload logging

@@ -125,7 +125,7 @@ You can set the `Cloudflare-Workers-Version-Key` header both when making an exte
 
 You may want to extract a version key from certain properties of your request such as the URL, headers or cookies. You can configure a [Ruleset Engine](/ruleset-engine/) rule on your zone to do this. This allows you to specify version affinity based on these properties without having to modify the external client that makes the request.
 
-For example, if your worker serves video assets under the URI path `/assets/` and you wanted requests to each unique asset to be handled by a consistent version, you could define the following [request header modification](/rules/transform/request-header-modification/) rule:
+For example, if your worker serves video assets under the URI path `/assets/` and you wanted requests to each unique asset to be handled by a consistent version, you could define the following [request header transform rule](/rules/transform/request-header-modification/):
 
 <Example>
 

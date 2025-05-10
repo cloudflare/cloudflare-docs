@@ -12,30 +12,33 @@ title: Maintenance page
 description: Serve a custom maintenance page instead of fetching content from the origin server or cache. Ideal for downtime notifications, planned maintenance, or emergency messages.
 ---
 
+## Snippet code
+
 ```js
 // Define your customizable inputs
 const statusCode = 503;
 const title = "We'll Be Right Back!";
-const message = "Our site is currently undergoing scheduled maintenance. We’re working hard to bring you a better experience. Thank you for your patience and understanding.";
+const message =
+	"Our site is currently undergoing scheduled maintenance. We’re working hard to bring you a better experience. Thank you for your patience and understanding.";
 const estimatedTime = "1 hour";
 const contactEmail = "support@example.com";
 const contactPhone = "+1 234 567 89";
 
 export default {
-    async fetch(request) {
-        // Serve the maintenance page as a response
-        return new Response(generateMaintenancePage(), {
-            status: statusCode,
-            headers: {
-                "Content-Type": "text/html",
-                "Retry-After": "3600", // Suggest retry after 1 hour
-            },
-        });
-    },
+	async fetch(request) {
+		// Serve the maintenance page as a response
+		return new Response(generateMaintenancePage(), {
+			status: statusCode,
+			headers: {
+				"Content-Type": "text/html",
+				"Retry-After": "3600", // Suggest retry after 1 hour
+			},
+		});
+	},
 };
 
 function generateMaintenancePage() {
-    return `
+	return `
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -105,3 +108,19 @@ function generateMaintenancePage() {
     `;
 }
 ```
+
+## Snippet rule
+
+Configure a custom filter expression:
+
+| Field             | Operator       | Value       |
+| ----------------- | -------------- | ----------- |
+| IP Source Address | is not in list | `admin_ips` |
+
+If you are using the Expression Editor, enter the following expression:
+
+```txt
+(not ip.src in $admin_ips)
+```
+
+The [IP list](/waf/tools/lists/custom-lists/#ip-lists) `admin_ips` was previously created and contains the list of IP addresses of the site administrators, which will be able to access the site during the maintenance period.

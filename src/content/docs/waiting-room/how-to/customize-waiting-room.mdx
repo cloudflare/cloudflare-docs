@@ -96,6 +96,35 @@ The following script within the `<body>` section after `<main>` fetches the wait
 </script>
 ```
 
+#### Turnstile variable
+
+If you are using Turnstile for your customized waiting room, you will need to ensure the `turnstile` variable is added. The default queuing page template and any newly created custom templates already include this variable. If you have an existing custom HTML template and wish to enable the Turnstile integration, you will need to add `{{{turnstile}}}` somewhere in the template to let Waiting Room know where the widget should be placed. Waiting Room uses Mustache templates, so including raw HTML within your template without escaping requires three curly braces instead of two.
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Waiting Room</title>
+  </head>
+  <body>
+    <h1>You are currently in the queue.</h1>
+    {{#waitTimeKnown}}
+      <h2>Your estimated wait time is {{waitTimeFormatted}}.</h2>
+    {{/waitTimeKnown}}
+    {{^waitTimeKnown}}
+      <h2>Your estimated wait time is unknown.</h2>
+    {{/waitTimeKnown}}
+    {{#turnstile}}
+      <!-- for a managed (and potentially interactive) challenge, you may want to instruct the user to complete the challenge -->
+      <p>Please complete this challenge so we know you're a human:</p>
+      {{{turnstile}}} <!-- include the turnstile widget -->
+    {{/turnstile}}
+  </body>
+</html>
+```
+
+When using Infinite Queue (especially with managed challenges which may be interactive), you may want to let users know that they will not be in the queue until they complete the challenge.
+
 #### Available variables
 
 When you create a waiting room with custom HTML, you can have access to several variables to customize your response. For a full list of variables, refer to the `json_response_enabled` parameter in the [Cloudflare API docs](/api/resources/waiting_rooms/methods/create/).

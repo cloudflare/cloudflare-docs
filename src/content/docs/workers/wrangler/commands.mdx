@@ -268,7 +268,7 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
 - `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Develop against remote resources and data stored on Cloudflare's network.
 - `--test-scheduled` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
-  - Exposes a `/__scheduled` fetch route which will trigger a scheduled event (Cron Trigger) for testing during development. To simulate different cron patterns, a `cron` query parameter can be passed in: `/__scheduled?cron=*+*+*+*+*`.
+  - Exposes a `/__scheduled` fetch route which will trigger a scheduled event (Cron Trigger) for testing during development. To simulate different cron patterns, a `cron` query parameter can be passed in: `/__scheduled?cron=*+*+*+*+*` or `/cdn-cgi/handler/scheduled?cron=*+*+*+*+*`.
 - `--log-level` <Type text="'debug'|'info'|'log'|'warn'|'error|'none'" /> <MetaInfo text="(default: log) optional" />
   - Specify Wrangler's logging level.
 - `--show-interactive-dev-session` <Type text="boolean" /> <MetaInfo text="(default: true if the terminal supports interactivity) optional" />
@@ -517,81 +517,6 @@ Finished processing secrets JSON file:
 🚨 1 secrets failed to upload
 ```
 
-## `secrets-store store`
-
-You can use the following commands to manage your store.
-
-:::note[Store limitation]
-Each account only supports one store in beta.
-:::
-
-### create
-
-Create a store within Secrets Store.
-
-```txt
-wrangler secerets-store store create <name>
-```
-
-- `name` <Type text="string" /> <MetaInfo text="required" />
-  - A descriptive name for the account-level secret. Cannot contain spaces.
-
-The following is an example of using the `create` command to create a store.
-
-```txt
-wrangler secrets-store store create default --remote
-```
-
-```sh output
-🔐 Creating store... (Name: default)
-✅ Created store! (Name: default, ID: 2e2a82d317134506b58defbe16982d54)
-```
-
-### delete
-
-Delete a store within Secrets Store.
-
-```txt
-wrangler secerets-store store delete <STORE_ID>
-```
-
-- `STORE_ID` <Type text="string" /> <MetaInfo text="required" />
-  - The secret store public ID. You can find it and copy from the [Secrets Store tab](https://dash.cloudflare.com/?to=/:account/secrets-store/) on the dashboard.
-
-The following is an example of using the `delete` command to delete a store.
-
-```sh
-npx wrangler secrets-store store delete d2dafaeac9434de2b6d08b292ce08211
-```
-
-```sh output
-🔐 Deleting store... (Name: d2dafaeac9434de2b6d08b292ce08211)
-✅ Deleted store! (ID: d2dafaeac9434de2b6d08b292ce08211)
-```
-
-### list
-
-List the stores within an account.
-
-```txt
-wrangler secrets-store store list
-```
-
-The following is an example of using the `list` command to list stores.
-
-```sh
-npx wrangler secrets-store store list
-```
-
-```sh output
-🔐 Listing stores...
-┌─────────┬──────────────────────────────────┬──────────────────────────────────┬──────────────────────┬──────────────────────┐
-│ Name    │ ID                               │ AccountID                        │ Created              │ Modified             │
-├─────────┼──────────────────────────────────┼──────────────────────────────────┼──────────────────────┼──────────────────────┤
-│ default │ 8876bad33f164462bf0743fe8adf98f4 │ REDACTED │ 4/9/2025, 1:11:48 PM  │ 4/9/2025, 1:11:48 PM │
-└─────────┴──────────────────────────────────┴──────────────────────────────────┴──────────────────────┴──────────────────────┘
-```
-
 ## `secrets-store secret`
 
 With the release of [Secrets Store](/secrets-store/) in open beta, you can use the following commands to manage your account secrets.
@@ -614,9 +539,9 @@ wrangler secrets-store secret create <STORE_ID> [OPTIONS]
   - A descriptive name for the account-level secret. Cannot contain spaces.
 - `--value` <Type text="string" /> <MetaInfo text="test only" />
   - Value of the secret.
-	:::caution[Only use for testing]
-	This will leave the secret value in plain-text in terminal history. For real secret values, use the automatic prompt instead. Find an example below.
-	:::
+    :::caution[Only use for testing]
+    This will leave the secret value in plain-text in terminal history. For real secret values, use the automatic prompt instead. Find an example below.
+    :::
 - `--scopes` <Type text="string" /> <MetaInfo text="required" />
   - Which services will have access to the account-level secret. Currently, only `workers` is available.
 - `--comment` <Type text="string" /> <MetaInfo text="optional" />
@@ -627,13 +552,13 @@ wrangler secrets-store secret create <STORE_ID> [OPTIONS]
 The following is an example of using the `create` command to create an account-level secret.
 
 ```sh
-npx wrangler secrets-store secret create 8f7a1cdced6342c18d223ece462fd88d --name MY_SECRETS_STORE_SECRET --scopes workers --remote
+npx wrangler secrets-store secret create 8f7a1cdced6342c18d223ece462fd88d --name ServiceA_key-1 --scopes workers --remote
 ```
 
 ```sh output
 ✓ Enter a secret value: › ***
 
-🔐 Creating secret... (Name: MY_SECRETS_STORE_SECRET, Value: REDACTED, Scopes: workers, Comment: undefined)
+🔐 Creating secret... (Name: ServiceA_key-1, Value: REDACTED, Scopes: workers, Comment: undefined)
 ✓ Select an account: › My account
 ✅ Created secret! (ID: 13bc7498c6374a4e9d13be091c3c65f1)
 ```
@@ -652,9 +577,9 @@ wrangler secrets-store secret update <STORE_ID> [OPTIONS]
   - The ID of the secret to update.
 - `--value` <Type text="string" /> <MetaInfo text="test only" />
   - Updated value of the secret.
-	:::caution[Only use for testing]
-	This will leave the secret value in plain-text in terminal history. For real secret values, use the automatic prompt instead.
-	:::
+    :::caution[Only use for testing]
+    This will leave the secret value in plain-text in terminal history. For real secret values, use the automatic prompt instead.
+    :::
 - `--scopes` <Type text="string" /> <MetaInfo text="required" />
   - Which services will have access to the account-level secret. Currently, only `workers` is available.
 - `--comment` <Type text="string" /> <MetaInfo text="optional" />
@@ -709,7 +634,7 @@ npx wrangler secrets-store secret get 8f7a1cdced6342c18d223ece462fd88d --secret-
 ✓ Select an account: › My account
 | Name                        | ID                                  | StoreID                             | Comment | Scopes  | Status  | Created                | Modified               |
 |-----------------------------|-------------------------------------|-------------------------------------|---------|---------|---------|------------------------|------------------------|
-| MY_SECRETS_STORE_SECRET     | 13bc7498c6374a4e9d13be091c3c65f1    | 8f7a1cdced6342c18d223ece462fd88d    |         | workers | active  | 4/9/2025, 10:06:01 PM  | 4/15/2025, 09:13:05 AM |
+| ServiceA_key-1          | 13bc7498c6374a4e9d13be091c3c65f1    | 8f7a1cdced6342c18d223ece462fd88d    |         | workers | active  | 4/9/2025, 10:06:01 PM  | 4/15/2025, 09:13:05 AM |
 ```
 
 ### `delete`
@@ -741,6 +666,88 @@ wrangler secrets-store secret list <STORE_ID>
 
 - `STORE_ID` <Type text="string" /> <MetaInfo text="required" />
   - The secret store public ID. You can find it and copy from the [Secrets Store tab](https://dash.cloudflare.com/?to=/:account/secrets-store/) on the dashboard.
+
+## `secrets-store store`
+
+Use the following commands to manage your store.
+
+:::note[Store limitation]
+[Secrets Store](/secrets-store/) is in open beta. Currently, you can only have one store per Cloudflare account.
+:::
+
+### `create`
+
+Create a store within Secrets Store.
+
+```txt
+wrangler secrets-store store create <name>
+```
+
+- `name` <Type text="string" /> <MetaInfo text="required" />
+  - A descriptive name for the account-level secret. Cannot contain spaces.
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) required" />
+  - Execute the command against the remote Secrets Store.
+
+The following is an example of using the `create` command to create a store.
+
+```sh
+npx wrangler secrets-store store create default --remote
+```
+
+```sh output
+🔐 Creating store... (Name: default)
+✅ Created store! (Name: default, ID: 2e2a82d317134506b58defbe16982d54)
+```
+
+### `delete`
+
+Delete a store within Secrets Store.
+
+```txt
+wrangler secrets-store store delete <STORE_ID>
+```
+
+- `STORE_ID` <Type text="string" /> <MetaInfo text="required" />
+  - The secret store public ID. You can find it and copy from the [Secrets Store tab](https://dash.cloudflare.com/?to=/:account/secrets-store/) on the dashboard.
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) required" />
+  - Execute the command against the remote Secrets Store.
+
+The following is an example of using the `delete` command to delete a store.
+
+```sh
+npx wrangler secrets-store store delete d2dafaeac9434de2b6d08b292ce08211 --remote
+```
+
+```sh output
+🔐 Deleting store... (Name: d2dafaeac9434de2b6d08b292ce08211)
+✅ Deleted store! (ID: d2dafaeac9434de2b6d08b292ce08211)
+```
+
+### `list`
+
+List the stores within an account.
+
+```txt
+wrangler secrets-store store list
+```
+
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) required" />
+  - Execute the command against the remote Secrets Store.
+
+The following is an example of using the `list` command to list stores.
+
+```sh
+npx wrangler secrets-store store list --remote
+```
+
+```sh output
+🔐 Listing stores...
+┌─────────┬──────────────────────────────────┬──────────────────────────────────┬──────────────────────┬──────────────────────┐
+│ Name    │ ID                               │ AccountID                        │ Created              │ Modified             │
+├─────────┼──────────────────────────────────┼──────────────────────────────────┼──────────────────────┼──────────────────────┤
+│ default │ 8876bad33f164462bf0743fe8adf98f4 │ REDACTED │ 4/9/2025, 1:11:48 PM  │ 4/9/2025, 1:11:48 PM │
+└─────────┴──────────────────────────────────┴──────────────────────────────────┴──────────────────────┴──────────────────────┘
+```
 
 ## `workflows`
 
@@ -1198,6 +1205,7 @@ wrangler pages functions build [<DIRECTORY>] [OPTIONS]
 ---
 
 ## `pipelines`
+
 Manage your [Pipelines](/pipelines/).
 
 <Render file="wrangler-commands/pipelines" product="workers" />
@@ -1365,16 +1373,20 @@ wrangler login [OPTIONS]
 
 - `--scopes-list` <Type text="string" /> <MetaInfo text="optional" />
   - List all the available OAuth scopes with descriptions.
-- `--scopes $SCOPES` <Type text="string" /> <MetaInfo text="optional" />
+- `--scopes` <Type text="string" /> <MetaInfo text="optional" />
   - Allows to choose your set of OAuth scopes. The set of scopes must be entered in a whitespace-separated list,
     for example, `npx wrangler login --scopes account:read user:read`.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+- `--callback-host` <Type text="string" /> <MetaInfo text="optional" />
+  - Defaults to `localhost`. Sets the IP or hostname where Wrangler should listen for the OAuth callback.
+- `--callback-port` <Type text="string" /> <MetaInfo text="optional" />
+  - Defaults to `8976`. Sets the port where Wrangler should listen for the OAuth callback.
 
 :::note
 
 `wrangler login` uses all the available scopes by default if no flags are provided.
 :::
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 If Wrangler fails to open a browser, you can copy and paste the URL generated by `wrangler login` in your terminal into a browser and log in.
 

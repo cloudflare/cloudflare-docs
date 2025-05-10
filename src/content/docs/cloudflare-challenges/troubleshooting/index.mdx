@@ -1,0 +1,30 @@
+---
+pcx_content_type: troubleshooting
+title: Troubleshooting
+sidebar:
+  order: 5
+  label: Common issues
+---
+
+import { Render } from "~/components"
+
+## Common issues
+
+### Proxied hostnames
+
+<Render file="proxied-hostnames" product="turnstile" />
+<Render file="challenge-behavior" product="turnstile" />
+
+### Deprecated browser support
+
+Challenges are not supported by Microsoft Internet Explorer. If you are currently using Internet Explorer, try using another modern web browser (Chrome, Safari, Firefox). If you are already using a modern web browser, make sure it is using the latest version.
+
+### Referer header
+
+When a request is sent with a referer header, the user will receive a challenge page as a response. Upon solving the challenge page, the request with the referer is sent to the origin, and the response to the request is served to the user. The JavaScript on the response page may read the value of `document.referer`, but it will be inaccurate. This affects tools such as Google Analytics, which reads the referer from JavaScript.
+
+You can add tracking scripts to challenge pages to capture the correct referer header on the initial request.
+
+### Cross-origin resource sharing (CORS) preflight requests
+
+Cross-origin resource sharing (CORS) preflight requests, or `OPTIONS`, exclude user credentials that include cookies. As a result, the `cf_clearance` cookie will not be sent with the request, causing it to fail to bypass a challenge page (non-interactive, managed, or interactive challenge).

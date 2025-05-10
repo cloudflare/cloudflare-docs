@@ -88,3 +88,5 @@ Refer to [WARP diagnostic logs](/cloudflare-one/connections/connect-devices/warp
 - Windows devices do not support concurrent remote captures. If you start a remote capture while another is in progress, the second capture will fail immediately.
 
 - PCAPs will fail on Windows if you have another third-party packet capture tool (such as, Packet Monitor `pktmon`) running.
+
+- On Windows, packet captures may fail on devices configured with a non-English language due to limitations with the underlying `PktMon` tool.

@@ -80,11 +80,7 @@ Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you inte
 		}'
 		```
 
-</TabItem> <TabItem label="Terraform">
-
-:::note[Provider versions]
-The following example requires Cloudflare provider version `>=4.40.0`.
-:::
+</TabItem> <TabItem label="Terraform (v5)">
 
 1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
 	- `Access: Organizations, Identity Providers, and Groups Write`
@@ -96,7 +92,7 @@ The following example requires Cloudflare provider version `>=4.40.0`.
 			account_id = var.cloudflare_account_id
 			name       = "Generic OIDC example"
 			type       = "oidc"
-			config {
+			config 		 = {
 				client_id = "<your client id>"
 				client_secret = "<your client secret>"
 				auth_url = "https://accounts.google.com/o/oauth2/auth"

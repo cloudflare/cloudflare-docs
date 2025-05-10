@@ -12,6 +12,8 @@ sidebar:
 
 ---
 
+import { Render } from "~/components";
+
 This tutorial will explore the two primary methods of implementing Turnstile to your website via **implicit or explicit rendering** using a detailed explanation, a step by step implementation guide, and examples on how to help you protect your web application security while maintaining a good user experience.
 
 ## Before you begin
@@ -235,6 +237,8 @@ export default {
 };
 ```
 
+<Render file="request-dot-clone-warning" product="workers" />
+
 ## Choose between implicit and explicit rendering
 
 Choosing the appropriate rendering method for Turnstile is important and effectively helps you to add it to your website while ensuring optimal performance and user experience. Both implicit and explicit rendering have their own advantages and are suited to different types of web applications. Refer to the table below that highlights the ideal use case for each of these rendering methods:
@@ -264,5 +268,5 @@ Remember to perform server-side validation of the response token to complete the
 ## Additional resources
 
 - [Server-side validation](/turnstile/get-started/server-side-validation/): A guide on how to implement server-side validation to ensure that only valid, human-generated responses are accepted by your application.
-- [Turnstile Analytics](/turnstile/turnstile-analytics/): A guide on how to access and interpret Turnstile Analytics data, allowing you to monitor key metrics, access the number of challenges issued, and evaluate the [challenge solve rate (CSR)](/fundamentals/security/cloudflare-challenges/challenge-solve-rate/).
+- [Turnstile Analytics](/turnstile/turnstile-analytics/): A guide on how to access and interpret Turnstile Analytics data, allowing you to monitor key metrics, access the number of challenges issued, and evaluate the [challenge solve rate (CSR)](/cloudflare-challenges/reference/challenge-solve-rate/).
 - [Turnstile API Reference](/api/resources/turnstile/subresources/widgets/methods/list/): Comprehensive documentation for the Turnstile API, providing detailed information on API operations for managing Turnstile widgets, including how to list, create, and update widgets via API calls.

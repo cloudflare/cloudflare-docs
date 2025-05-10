@@ -54,9 +54,42 @@ import { APIRequest, Aside, AnchorHeading, CURL, Markdown, Render, TabItem, Tabs
 	)
 }
 
-## Add an application
+## Add an application to your account
 
-You need to configure {props.featureName} for each of your existing sites, as it is a per-site configuration.
+Before you can add or remove {props.featureName} applications to your Connector, you need to create an account-level list with the applications that you want to configure. Currently, adding to or modifying this list is only possible via API, through the [`managed_app_id`](/api/resources/magic_transit/subresources/apps/methods/create/) endpoint.
+
+To add applications to your account:
+
+Send a `POST` request to add new apps to your account.
+
+	<APIRequest
+	path="/accounts/{account_id}/magic/apps"
+	method="POST"
+	json={{
+    "managed_app_id": "<APP_ID>",
+    "name": "<APP_NAME>",
+    "type": "<APP_TYPE>",
+	}}
+	/>
+
+	```json output
+	{
+		"result": {
+			"account_app_id": "eb09v665c0784618a3e4ba9809258fd4",
+			"name": "<APP_NAME>",
+			"type": "<APP_TYPE>",
+		},
+		"success": true,
+		"errors": [],
+		"messages": []
+	}
+	```
+
+You can now add this new app to the {props.featureName} list in your Connector.
+
+### Add an application to Connector
+
+You need to configure {props.featureName} applications for each of your existing sites, as this is a per-site configuration.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -99,7 +132,7 @@ The traffic for the application you chose {props.whatHappensApp}.
 
 	Take note of the `"managed_app_id"` value for any application you want to add.
 
-2.  Send a [`POST` request](/api/resources/magic_transit/subresources/apps/methods/create/) to add new apps to the breakout traffic policy.
+2. Send a `POST` request to add new apps to the {props.featureName} policy.
 
 	<APIRequest
 	path="/accounts/{account_id}/magic/sites/{site_id}/app_configs"
@@ -125,7 +158,7 @@ The traffic for the application you chose {props.whatHappensApp}.
 
 </TabItem> </Tabs>
 
-## Delete an application
+### Delete an application from Connector
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -140,6 +173,8 @@ The traffic for the application you chose {props.whatHappensApp}.
 </TabItem> <TabItem label="API">
 
 <Render file="account-id-api-key" product="networking-services" />
+
+You need to delete {props.featureName} applications for each of your existing sites, as this is a per-site configuration.
 
 1. Send a [`GET` request](/api/resources/magic_transit/subresources/apps/methods/list/) to list the applications associated with a site.
 
@@ -163,7 +198,7 @@ The traffic for the application you chose {props.whatHappensApp}.
 
 	Take note of the `"id"` value for the application that want to delete.
 
-2. Send a [`DELETE` request](/api/resources/magic_transit/subresources/apps/methods/delete/) to delete an application from the breakout traffic policy.
+2. Send a `DELETE` request to delete an application from the {props.featureName} policy.
 
 	<CURL
 	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/app_configs/{id}"

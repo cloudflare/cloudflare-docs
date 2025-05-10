@@ -5,6 +5,8 @@ sidebar:
   order: 4
 ---
 
+import { Render } from "~/components";
+
 DEX rules allow you to create and manage testing policies for targeted user groups within your [fleet](/cloudflare-one/insights/dex/tests/). After creating a rule, you can use it to define the scope of a [test](/cloudflare-one/insights/dex/tests/) to specific groups such as departments (like finance or sales), devices, and/or users. You can apply and reuse rules on your desired tests.
 
 DEX rules are ideal for admins who want to define the scope of a test to a specific group within their fleet to allow for more precise problem detection and resolution.
@@ -48,7 +50,7 @@ To add a rule to a test:
 4. Select **Save test** for an existing rule or **Add rule** for the new test.
 
 :::note
-When applying or removing rules from an existing test, your change can take up to 24 hours to propagate.
+<Render file="warp/client-notification-lag" product="cloudflare-one" />
 :::
 
 To view which tests a rule is being applied to:

@@ -1,0 +1,40 @@
+---
+pcx_content_type: concept
+title: Single Page Application (SPA)
+description: How to configure and use a Single Page Application (SPA) with Workers.
+sidebar:
+  order: 2
+---
+
+import { WranglerConfig, Aside, TypeScriptExample, Render } from "~/components";
+
+Single Page Applications (SPAs) are web applications which are client-side rendered (CSR). They are often built with a framework such as [React](/workers/frameworks/framework-guides/react/), [Vue](/workers/frameworks/framework-guides/vue/) or [Svelte](/workers/frameworks/framework-guides/svelte/). The build process of these frameworks will produce a single `/index.html` file and accompanying client-side resources (e.g. JavaScript bundles, CSS stylesheets, images, fonts, etc.). Typically, data is fetched by the client from an API with client-side requests.
+
+## Configuration
+
+In order to deploy a Single Page Application to Workers, you must configure the `assets.directory` and `assets.not_found_handling` options in your [Wrangler configuration file](/workers/wrangler/configuration/#assets):
+
+<WranglerConfig>
+
+```json
+{
+	"name": "my-worker",
+	"compatibility_date": "$today",
+	"assets": {
+		"directory": "./dist/",
+		"not_found_handling": "single-page-application"
+	}
+}
+```
+
+</WranglerConfig>
+
+Configuring `assets.not_found_handling` to `single-page-application` overrides the default serving behavior of Workers for static assets. When an incoming request does not match a file in the `assets.directory`, Workers will serve the contents of the `/index.html` file with a `200 OK` status.
+
+<Render file="navigation_requests" />
+
+## Local Development
+
+If you are using a Vite-powered SPA framework, you might be interested in using our [Vite plugin](/workers/vite-plugin/) which offers a Vite-native developer experience.
+
+<Render file="static_asset_routing_reference" params={{ not_found_handling: "single-page-application" }} />

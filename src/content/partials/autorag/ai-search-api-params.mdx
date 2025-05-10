@@ -27,6 +27,10 @@ Configurations for customizing result ranking. Defaults to `{}`.
 - `score_threshold` <Type text="number" /> <MetaInfo text="optional" />
   - The minimum match score required for a result to be considered a match. Defaults to `0`. Must be between `0` and `1`.
 
-`streaming` <Type text="object" /> <MetaInfo text="optional" />
+`stream` <Type text="boolean" /> <MetaInfo text="optional" />
 
 Returns a stream of results as they are available. Defaults to `false`.
+
+`filters` <Type text="object" /> <MetaInfo text="optional" />
+
+Narrow down search results based on metadata, like folder and date, so only relevant content is retrieved. For more details, refer to [Metadata filtering](/autorag/configuration/metadata-filtering).

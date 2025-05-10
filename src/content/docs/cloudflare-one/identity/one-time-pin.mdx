@@ -40,11 +40,7 @@ For example, if your team uses Okta but you are collaborating with someone outsi
 		}'
 		```
 
-</TabItem> <TabItem label="Terraform">
-
-:::note[Provider versions]
-The following example requires Cloudflare provider version `>=4.40.0`.
-:::
+</TabItem> <TabItem label="Terraform (v5)">
 
 1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
 	- `Access: Organizations, Identity Providers, and Groups Write`
@@ -56,9 +52,10 @@ The following example requires Cloudflare provider version `>=4.40.0`.
 			account_id = var.cloudflare_account_id
 			name       = "One-time PIN login"
 			type       = "onetimepin"
+			config 		 = {}
 		}
 		```
-</TabItem> </Tabs>
+</TabItem></Tabs>
 
 :::tip
 If your organization uses a third-party email scanning service (for example, Mimecast or Barracuda), add `noreply@notify.cloudflare.com` to the email scanning allowlist.

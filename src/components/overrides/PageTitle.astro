@@ -96,7 +96,7 @@ const hideBreadcrumbs = Astro.locals.starlightRoute.hideBreadcrumbs;
 	)
 }
 
-{!hideTitle && <Default  />}
+{!hideTitle && <Default />}
 
 {updated && <LastReviewed date={updated} />}
 
@@ -112,17 +112,49 @@ const hideBreadcrumbs = Astro.locals.starlightRoute.hideBreadcrumbs;
 
 {summary && <Description set:html={marked.parse(summary)} />}
 
-{component && <Aside>To see a list of pages this component is used on, please visit the <a href={`/style-guide/components/usage/#${component.toLowerCase()}`}>usage page</a>.</Aside>}
+{
+	component && (
+		<Aside>
+			To see a list of pages this component is used on, please visit the{" "}
+			<a href={`/style-guide/components/usage/#${component.toLowerCase()}`}>
+				usage page
+			</a>
+			.
+		</Aside>
+	)
+}
 
-{frontmatter.template !== "splash" && (
-	<div class="flex justify-end items-center">
-		<CopyPageButton client:idle />
-	</div>
-)}
+{
+	frontmatter.template !== "splash" && (
+		<div class="flex items-center justify-end">
+			<CopyPageButton client:idle />
+		</div>
+	)
+}
 
 <style>
 	:root {
 		--color-link-breadcrumbs: var(--sl-color-text-accent);
+
+		.c-breadcrumbs {
+			--spacing-vertical-separator-breadcrumbs: 0.625rem;
+
+			padding: 0.5rem 0;
+
+			.c-breadcrumbs__link {
+				font-size: 0.75rem;
+				line-height: 1.25rem;
+				font-weight: 600;
+			}
+
+			.c-breadcrumbs__separator {
+				color: var(--color-cl1-brand-orange);
+			}
+
+			.c-breadcrumbs__truncated-button {
+				color: var(--color-cl1-brand-orange);
+			}
+		}
 	}
 </style>
 

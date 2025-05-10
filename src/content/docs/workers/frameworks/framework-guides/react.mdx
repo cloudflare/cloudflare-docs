@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: React
-head: []
+tags: ["spa"]
 description: Create a React application and deploy it to Cloudflare Workers with Workers Assets.
 ---
 
@@ -20,12 +20,12 @@ import {
 
 <PackageManagers
 	type="create"
-	pkg="cloudflare@latest my-react-app"
-	args="--framework=react --platform=workers"
+	pkg="cloudflare@latest"
+	args="my-react-app --framework=react"
 />
 ---
 
-**Or just deploy** - create a full-stack app using React, Hono API And Vite, with CI/CD and previews all set up for you.
+**Or just deploy** - create a full-stack app using React, Hono API and Vite, with CI/CD and previews all set up for you.
 
 [![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://dash.cloudflare.com/?to=/:account/workers-and-pages/create/deploy-to-workers&repository=https://github.com/cloudflare/templates/tree/staging/vite-react-template)
 
@@ -40,8 +40,8 @@ import {
 
     	<PackageManagers
     		type="create"
-    		pkg="cloudflare@latest my-react-app"
-    		args="--framework=react --platform=workers"
+    		pkg="cloudflare@latest"
+    		args="my-react-app --framework=react"
     	/>
     		 <Details header="How is this project set up?">
         			Below is a simplified file tree of the project.

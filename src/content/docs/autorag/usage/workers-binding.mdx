@@ -40,8 +40,9 @@ const answer = await env.AI.autorag("my-autorag").aiSearch({
 	rewrite_query: true,
 	max_num_results: 2,
 	ranking_options: {
-		score_threshold: 0.7,
+		score_threshold: 0.3,
 	},
+	stream: true,
 });
 ```
 
@@ -61,9 +62,12 @@ This is the response structure without `stream` enabled.
     "data": [
       {
         "file_id": "llama001",
-        "filename": "docs/llama-logistics.md",
-        "score": 0.98,
-        "attributes": {},
+        "filename": "llama/logistics/llama-logistics.md",
+        "score": 0.45,
+        "attributes": {
+          "modified_date": 1735689600000,   // unix timestamp for 2025-01-01
+          "folder": "llama/logistics/",
+        },
         "content": [
           {
             "id": "llama001",
@@ -74,9 +78,12 @@ This is the response structure without `stream` enabled.
       },
       {
         "file_id": "llama042",
-        "filename": "docs/llama-commands.md",
-        "score": 0.95,
-        "attributes": {},
+        "filename": "llama/llama-commands.md",
+        "score": 0.4,
+        "attributes": {
+          "modified_date": 1735689600000,   // unix timestamp for 2025-01-01
+          "folder": "llama/",
+        },
         "content": [
           {
             "id": "llama042",
@@ -102,7 +109,7 @@ const answer = await env.AI.autorag("my-autorag").search({
 	rewrite_query: true,
 	max_num_results: 2,
 	ranking_options: {
-		score_threshold: 0.7,
+		score_threshold: 0.3,
 	},
 });
 ```
@@ -120,9 +127,12 @@ const answer = await env.AI.autorag("my-autorag").search({
     "data": [
       {
         "file_id": "llama001",
-        "filename": "docs/llama-logistics.md",
-        "score": 0.98,
-        "attributes": {},
+        "filename": "llama/logistics/llama-logistics.md",
+        "score": 0.45,
+        "attributes": {
+          "modified_date": 1735689600000,   // unix timestamp for 2025-01-01
+          "folder": "llama/logistics/",
+        },
         "content": [
           {
             "id": "llama001",
@@ -133,9 +143,12 @@ const answer = await env.AI.autorag("my-autorag").search({
       },
       {
         "file_id": "llama042",
-        "filename": "docs/llama-commands.md",
-        "score": 0.95,
-        "attributes": {},
+        "filename": "llama/llama-commands.md",
+        "score": 0.4,
+        "attributes": {
+          "modified_date": 1735689600000,   // unix timestamp for 2025-01-01
+          "folder": "llama/",
+        },
         "content": [
           {
             "id": "llama042",

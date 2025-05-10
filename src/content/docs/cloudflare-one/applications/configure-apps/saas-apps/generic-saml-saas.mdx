@@ -113,7 +113,7 @@ JSONata transformations are not compatible with [SAML attribute statements](#sam
 
 For example, the following JSONata script merges group names into a list and adds an `eduPersonPrincipalName` field which maps to the user email.
 
-```jsonata title = "JSONata expression"
+```txt title = "JSONata expression"
 $merge([$, {"groups": groups.name, 'eduPersonPrincipalName': email}])
 ```
 
@@ -217,7 +217,7 @@ For more JSONata transform use cases, refer to the following examples.
 
 The following JSONata script removes the `groups` SAML attribute. This can be useful if your SaaS application does not need to receive user group information.
 
-```jsonata title="JSONata expression"
+```txt title="JSONata expression"
 $ ~> |$|{}, ['groups']|
 ```
 
@@ -262,7 +262,7 @@ Result after applying the JSONata transform:
 
 The following JSONata script changes the `groups.name` field from `name` to `group_name` and removes the `groups.id` field:
 
-```jsonata title="JSONata expression"
+```txt title="JSONata expression"
 {
   "account_id": account_id,
   "amr": amr,
@@ -336,7 +336,7 @@ Result after applying the JSONata transform:
 
 The following JSONata script filters groups to those that match a regular expression.
 
-```jsonata title="JSONata expression"
+```txt title="JSONata expression"
 $merge([$, { "groups": $filter(groups, function($v) { $contains($v.name, /Administrator/) }) }])
 ```
 

@@ -21,7 +21,7 @@ In single-tenant applications, this can be used to route requests to various ori
 
 In multi-tenant applications, requests can be routed to the tenant's respective origin resources (for example, requests to `tenantA.your-worker-hostname.com` routed to server for Tenant A, `tenantB.your-worker-hostname.com` routed to server for Tenant B).
 
-Routing can also be used to implement [A/B testing](/reference-architecture/diagrams/serverless/a-b-testing-using-workers/), canary deployments, or blue-green deployments for your own external applications.
+Routing can also be used to implement [A/B testing](/reference-architecture/diagrams/serverless/a-b-testing-using-workers/), canary deployments, or [blue-green deployments](https://en.wikipedia.org/wiki/Blue%E2%80%93green_deployment) for your own external applications.
 If you are looking to implement canary or blue-green deployments of applications built fully on Cloudflare Workers, see [Workers gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/).
 
 ## Route requests with Workers KV

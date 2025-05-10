@@ -16,7 +16,15 @@ Wrangler optionally uses a configuration file to customize the development and d
 
 :::note
 
-As of Wrangler v3.91.0 Wrangler supports both JSON (`wrangler.json` or `wrangler.jsonc`) and TOML (`wrangler.toml`) for its configuration file. Prior to that version, only `wrangler.toml` was supported. The format of Wrangler's configuration file is exactly the same across both languages, except that the syntax is `JSON` rather than `TOML`. Throughout this page and the rest of Cloudflare's documentation config snippets are provided as both JSON and TOML.
+As of Wrangler v3.91.0 Wrangler supports both JSON (`wrangler.json` or `wrangler.jsonc`) and TOML (`wrangler.toml`) for its configuration file.
+
+Prior to that version, only `wrangler.toml` was supported.
+
+The format of Wrangler's configuration file is exactly the same across both languages, only the syntax differs.
+
+You can use one of the many available online converters to easily switch between the two.
+
+Throughout this page and the rest of Cloudflare's documentation, configuration snippets are provided as both JSON and TOML.
 
 :::
 
@@ -178,6 +186,11 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
   - Minify the Worker script before uploading.
   - If you're using the [Cloudflare Vite plugin](/workers/vite-plugin/), `minify` is replaced by Vite's [`build.minify`](https://vite.dev/config/build-options.html#build-minify).
 
+- `keep_names` <Type text="boolean" /> <MetaInfo text="optional" />
+
+  - Wrangler uses esbuild to process the Worker code for development and deployment. This option allows
+    you to specify whether esbuild should apply its [keepNames](https://esbuild.github.io/api/#keep-names) logic to the code or not. Defaults to `true`.
+
 - `logpush` <Type text="boolean" /> <MetaInfo text="optional" />
 
   - Enables Workers Trace Events Logpush for a Worker. Any scripts with this property will automatically get picked up by the Workers Logpush job configured for your account. Defaults to `false`. Refer to [Workers Logpush](/workers/observability/logs/logpush/).
@@ -191,6 +204,7 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
   - Configures automatic observability settings for telemetry data emitted from your Worker. Refer to [Observability](#observability).
 
 * `assets` <Type text="Assets" /> <MetaInfo text="optional" />
+
   - Configures static assets that will be served. Refer to [Assets](/workers/static-assets/binding/) for more details.
 
 * `migrations` <Type text="object"/> <MetaInfo text="optional"/>
@@ -680,8 +694,8 @@ To bind Images to your Worker, assign an array of the below object to the `image
 ```jsonc
 {
 	"images": {
-		"binding": "IMAGES", // i.e. available in your Worker on env.IMAGES
-	},
+		"binding": "IMAGES" // i.e. available in your Worker on env.IMAGES
+	}
 }
 ```
 
@@ -1015,15 +1029,15 @@ The following options are available under the `assets` key.
 
 - `run_worker_first` <Type text="boolean" /> <MetaInfo text="optional, defaults to false" />
 
-  - Controls whether static assets are fetched directly, or a Worker script is invoked. Learn more about fetching assets when using [`run_worker_first`](/workers/static-assets/routing/#invoking-worker-script-ahead-of-assets).
+  - Controls whether static assets are fetched directly, or a Worker script is invoked. Learn more about fetching assets when using [`run_worker_first`](/workers/static-assets/routing/worker-script/#run-your-worker-script-first).
 
 - `html_handling`: <Type text={'"auto-trailing-slash" | "force-trailing-slash" | "drop-trailing-slash" | "none"'} /> <MetaInfo text={'optional, defaults to "auto-trailing-slash"'} />
 
-  - Determines the redirects and rewrites of requests for HTML content. Learn more about the various options in [assets routing](/workers/static-assets/routing/#html_handling).
+  - Determines the redirects and rewrites of requests for HTML content. Learn more about the various options in [assets routing](/workers/static-assets/routing/advanced/html-handling/).
 
 - `not_found_handling`: <Type text={'"single-page-application" | "404-page" | "none"'} /> <MetaInfo text={'optional, defaults to "none"'} />
 
-  - Determines the handling of requests that do not map to an asset. Learn more about the various options in [assets routing](/workers/static-assets/routing/#not_found_handling).
+  - Determines the handling of requests that do not map to an asset. Learn more about the various options for [routing behavior](/workers/static-assets/#routing-behavior).
 
 Example:
 
@@ -1099,7 +1113,7 @@ See https://developers.cloudflare.com/workers/wrangler/bundling/ for more detail
 ## Local development settings
 
 :::note
-If you're using the [Cloudflare Vite plugin](/workers/vite-plugin/), you should use Vite's [server options]](https://vite.dev/config/server-options.html) instead.
+If you're using the [Cloudflare Vite plugin](/workers/vite-plugin/), you should use Vite's [server options](https://vite.dev/config/server-options.html) instead.
 :::
 
 You can configure various aspects of local development, such as the local protocol or port.
@@ -1270,7 +1284,7 @@ exclude = ["ignore_dir"]
 
 ## Proxy support
 
-Corporate networks will often have proxies on their networks and this can sometimes cause connectivity issues. To configure Wrangler with the appropriate proxy details, use the below environmental variables:
+Corporate networks will often have proxies on their networks and this can sometimes cause connectivity issues. To configure Wrangler with the appropriate proxy details, [add the following environmental variables](/workers/configuration/environment-variables/):
 
 - `https_proxy`
 - `HTTPS_PROXY`

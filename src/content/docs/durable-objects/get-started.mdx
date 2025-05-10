@@ -1,11 +1,11 @@
 ---
-title: Get started
+title: Getting started
 pcx_content_type: get-started
 sidebar:
   order: 2
 ---
 
-import { Render, TabItem, Tabs, PackageManagers, WranglerConfig } from "~/components";
+import { Render, TabItem, Tabs, PackageManagers, WranglerConfig, TypeScriptExample } from "~/components";
 
 This guide will instruct you through:
 
@@ -72,56 +72,30 @@ If you do not use JavaScript or TypeScript, you will need a [shim](https://devel
 
 Your `MyDurableObject` class will have a constructor with two parameters. The first parameter, `ctx`, passed to the class constructor contains state specific to the Durable Object, including methods for accessing storage. The second parameter, `env`, contains any bindings you have associated with the Worker when you uploaded it.
 
-<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
-
-```js
-export class MyDurableObject extends DurableObject {
-	constructor(ctx, env) {}
-}
-```
-
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-
+<TypeScriptExample>
 ```ts
-export class MyDurableObject extends DurableObject {
+export class MyDurableObject extends DurableObject<Env> {
 	constructor(ctx: DurableObjectState, env: Env) {
 		// Required, as we're extending the base class.
 		super(ctx, env)
 	}
 }
 ```
-
-</TabItem> </Tabs>
+</TypeScriptExample>
 
 Workers communicate with a Durable Object using [remote-procedure call](/workers/runtime-apis/rpc/#_top). Public methods on a Durable Object class are exposed as [RPC methods](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/) to be called by another Worker.
 
 Your file should now look like:
 
-<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
-
-```js
-export class MyDurableObject extends DurableObject {
-	constructor(ctx: DurableObjectState, env: Env) {}
-
-	async sayHello() {
-		let result = this.ctx.storage.sql
-			.exec("SELECT 'Hello, World!' as greeting")
-			.one();
-		return result.greeting;
-	}
-}
-```
-
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-
+<TypeScriptExample>
 ```ts
-export class MyDurableObject extends DurableObject {
+export class MyDurableObject extends DurableObject<Env> {
 	constructor(ctx: DurableObjectState, env: Env) {
 		// Required, as we're extending the base class.
 		super(ctx, env)
 	}
 
-	async sayHello() {
+	async sayHello():Promise<string> {
 		let result = this.ctx.storage.sql
 			.exec("SELECT 'Hello, World!' as greeting")
 			.one();
@@ -129,8 +103,7 @@ export class MyDurableObject extends DurableObject {
 	}
 }
 ```
-
-</TabItem> </Tabs>
+</TypeScriptExample>
 
 In the code above, you have:
 
@@ -151,39 +124,21 @@ A Worker is used to [access Durable Objects](/durable-objects/best-practices/cre
 
 To communicate with a Durable Object, the Worker's fetch handler should look like the following:
 
-<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
-
-```js
-export default {
-	async fetch(request, env) {
-		let id = env.MY_DURABLE_OBJECT.idFromName(new URL(request.url).pathname);
-
-		let stub = env.MY_DURABLE_OBJECT.get(id);
-
-		let greeting = await stub.sayHello();
-
-		return new Response(greeting);
-	},
-};
-```
-
-</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-
+<TypeScriptExample>
 ```ts
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
-		let id = env.MY_DURABLE_OBJECT.idFromName(new URL(request.url).pathname);
+		const id:DurableObjectId = env.MY_DURABLE_OBJECT.idFromName(new URL(request.url).pathname);
 
-		let stub = env.MY_DURABLE_OBJECT.get(id);
+		const stub = env.MY_DURABLE_OBJECT.get(id);
 
-		let greeting = await stub.sayHello();
+		const greeting = await stub.sayHello();
 
 		return new Response(greeting);
 	},
 } satisfies ExportedHandler<Env>;
 ```
-
-</TabItem> </Tabs>
+</TypeScriptExample>
 
 In the code above, you have:
 
@@ -258,7 +213,45 @@ Once deployed, you should be able to see your newly created Durable Object Worke
 
 Preview your Durable Object Worker at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`.
 
-By finishing this tutorial, you have successfully created, tested and deployed a Durable Object.
+## Summary and final code
+
+Your final code should look like this:
+
+<TypeScriptExample>
+```ts title="index.ts"
+import { DurableObject } from "cloudflare:workers";
+export class MyDurableObject extends DurableObject<Env> {
+	constructor(ctx: DurableObjectState, env: Env) {
+		// Required, as we are extending the base class.
+		super(ctx, env)
+	}
+
+	async sayHello():Promise<string> {
+		let result = this.ctx.storage.sql
+			.exec("SELECT 'Hello, World!' as greeting")
+			.one();
+		return result.greeting;
+	}
+}
+export default {
+	async fetch(request, env, ctx):Promise<Response> {
+		const id:DurableObjectId = env.MY_DURABLE_OBJECT.idFromName(new URL(request.url).pathname);
+
+		const stub = env.MY_DURABLE_OBJECT.get(id);
+
+		const greeting = await stub.sayHello();
+
+		return new Response(greeting);
+	},
+} satisfies ExportedHandler<Env>;
+```
+</TypeScriptExample>
+
+By finishing this tutorial, you have:
+
+- Successfully created a Durable Object
+- Called the Durable Object by invoking a [RPC method](/workers/runtime-apis/rpc/)
+- Deployed the Durable Object globally
 
 ## Related resources
 

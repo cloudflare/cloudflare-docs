@@ -1,0 +1,143 @@
+---
+import type { StarlightIcon } from "@astrojs/starlight/types";
+import { Dismissible, Dismisser } from "../Dismissible";
+import { Icon } from "@astrojs/starlight/components";
+
+const { banner } = Astro.locals.starlightRoute.entry.data;
+---
+
+{
+	() => {
+		if (!banner) return;
+
+		let icon: StarlightIcon | undefined = undefined;
+		switch (banner.type) {
+			case "note":
+				icon = "information";
+				break;
+			case "tip":
+				icon = "rocket";
+				break;
+			case "caution":
+				icon = "warning";
+				break;
+			case "danger":
+				icon = "error";
+				break;
+		}
+
+		if (banner.dismissible) {
+			return (
+				<Dismissible
+					id={banner.dismissible.id}
+					defaultDisplay="none"
+					client:load
+				>
+					<div
+						class={`sl-banner dismissible relative ${banner.type !== "default" ? `alert ${banner.type}` : ""}`}
+					>
+						<div class={`leading-6 ${icon ? "flex gap-2" : ""}`}>
+							{icon && (
+								<Icon name={icon} size="1.333em" class="min-w-[1.333em]" />
+							)}
+							<span set:html={banner.content} />
+						</div>
+						<Dismisser
+							id={banner.dismissible.id}
+							days={banner.dismissible.days}
+							client:load
+						>
+							<span class="absolute top-0 right-0 bottom-0 px-4 py-3">
+								<svg
+									class="h-6 w-6 fill-current"
+									role="button"
+									xmlns="http://www.w3.org/2000/svg"
+									viewBox="0 0 20 20"
+								>
+									<title>Close</title>
+									<path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
+								</svg>
+							</span>
+						</Dismisser>
+					</div>
+				</Dismissible>
+			);
+		}
+
+		return (
+			<div
+				class={`sl-banner relative ${banner.type !== "default" ? `alert ${banner.type}` : ""}`}
+			>
+				<div class={`leading-6 ${icon ? "flex gap-2" : ""}`}>
+					{icon && <Icon name={icon} size="1.333em" />}
+					<span set:html={banner.content} />
+				</div>
+			</div>
+		);
+	}
+}
+
+<style>
+	@layer starlight.core {
+		.sl-banner {
+			--__sl-banner-text: var(
+				--sl-color-banner-text,
+				var(--sl-color-text-invert)
+			);
+			padding: var(--sl-nav-pad-y) var(--sl-nav-pad-x);
+			background-color: var(--sl-color-banner-bg, var(--sl-color-bg-accent));
+			color: var(--__sl-banner-text);
+			line-height: var(--sl-line-height-headings);
+			text-align: center;
+			text-wrap: balance;
+			box-shadow: var(--sl-shadow-sm);
+		}
+		.sl-banner :global(a) {
+			color: var(--__sl-banner-text);
+		}
+
+		.alert {
+			--__sl-banner-text: var(--sl-color-white);
+			text-align: left;
+			text-wrap: wrap;
+		}
+
+		.alert :global(a) {
+			color: var(--sl-color-banner-text-accent);
+		}
+
+		.note {
+			--sl-color-banner-text-accent: var(--sl-color-blue-high);
+			background-color: var(--sl-color-blue-low);
+		}
+		.tip {
+			--sl-color-banner-text-accent: var(--sl-color-purple-high);
+			background-color: var(--sl-color-purple-low);
+		}
+		.caution {
+			--sl-color-banner-text-accent: var(--sl-color-orange-high);
+			background-color: var(--sl-color-orange-low);
+		}
+		.danger {
+			--sl-color-banner-text-accent: var(--sl-color-red-high);
+			background-color: var(--sl-color-red-low);
+		}
+
+		.note {
+			background-color: rgb(236, 244, 255);
+		}
+		.caution {
+			background-color: rgb(255, 248, 228);
+		}
+
+		:root[data-theme="dark"] {
+			.note {
+				background-color: rgb(0, 28, 67);
+			}
+
+			.caution {
+				background-color: rgb(98, 73, 10);
+			}
+		}
+	}
+</style>

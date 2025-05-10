@@ -4,7 +4,7 @@ styleGuide:
   component: WranglerConfig
 ---
 
-This component can be used to automatically generate a `jsonc` version of the `toml` (or vice versa) for a Cloudflare [Wrangler configuration file](/workers/wrangler/configuration/).
+This component can be used to automatically generate a `jsonc` version of the `toml` file (or vice versa) of the Cloudflare [Wrangler configuration file](/workers/wrangler/configuration/).
 
 ## Import
 
@@ -23,6 +23,23 @@ import { WranglerConfig } from "~/components";
 binding = "DB" # available in your Worker on env.DB
 database_name = "prod-d1-tutorial"
 database_id = "<unique-ID-for-your-database>"
+```
+</WranglerConfig>
+
+````
+
+A `$today` value can be used in this component to automatically insert the today's date. This is useful for suggesting that users set the latest compatibility date.
+
+
+````mdx live
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+```jsonc
+{
+	"name": "my-worker",
+	"compatibility_date": "$today"
+}
 ```
 </WranglerConfig>
 

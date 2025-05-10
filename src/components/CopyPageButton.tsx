@@ -123,7 +123,7 @@ export default function CopyPageButton() {
 			<button
 				ref={refs.setReference}
 				{...getReferenceProps()}
-				className="inline-flex h-8 min-w-32 cursor-pointer items-center justify-center gap-2 rounded border border-[--sl-color-hairline] bg-transparent px-3 text-sm text-black hover:bg-[--sl-color-bg-nav]"
+				className="inline-flex h-8 min-w-32 cursor-pointer items-center justify-center gap-2 rounded-sm border border-(--sl-color-hairline) bg-transparent px-3 text-sm text-black hover:bg-(--sl-color-bg-nav)"
 			>
 				{getButtonContent()}
 			</button>
@@ -133,19 +133,19 @@ export default function CopyPageButton() {
 						ref={refs.setFloating}
 						style={floatingStyles}
 						{...getFloatingProps()}
-						className="list-none rounded border border-[--sl-color-hairline] bg-[--sl-color-bg] pl-0 shadow-md"
+						className="list-none rounded-sm border border-(--sl-color-hairline) bg-(--sl-color-bg) pl-0 shadow-md"
 					>
 						{options.map(({ label, description, icon: Icon, onClick }) => (
 							<li key={label}>
 								<button
 									onClick={onClick}
-									className="relative block w-full cursor-pointer bg-transparent px-3 py-2 text-left text-black no-underline hover:bg-[--sl-color-bg-nav]"
+									className="relative block w-full cursor-pointer bg-transparent px-3 py-2 text-left text-black no-underline hover:bg-(--sl-color-bg-nav)"
 								>
 									<div className="flex items-center gap-2 text-sm">
 										<Icon />
 										{label}
 									</div>
-									<div className="ml-6 mt-0.5 text-xs text-[--sl-color-gray-3]">
+									<div className="mt-0.5 ml-6 text-xs text-(--sl-color-gray-3)">
 										{description}
 									</div>
 								</button>

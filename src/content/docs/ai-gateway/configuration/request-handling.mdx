@@ -28,7 +28,7 @@ A timeout is set in milliseconds. Additionally, the timeout is based on when the
 
 #### Universal Endpoint
 
-If set on a [Universal Endpoint](/ai-gateway/providers/universal/), a request timeout specifies the timeout duration for requests and triggers a fallback.
+If set on a [Universal Endpoint](/ai-gateway/universal/), a request timeout specifies the timeout duration for requests and triggers a fallback.
 
 For a Universal Endpoint, configure the timeout value by setting a `requestTimeout` property within the provider-specific `config` object. Each provider can have a different `requestTimeout` value for granular customization.
 
@@ -123,7 +123,7 @@ On the final retry attempt, your gateway will wait until the request completes, 
 
 #### Universal endpoint
 
-If set on a [Universal Endpoint](/ai-gateway/providers/universal/), a request retry will automatically retry failed requests up to five times before triggering any configured fallbacks.
+If set on a [Universal Endpoint](/ai-gateway/universal/), a request retry will automatically retry failed requests up to five times before triggering any configured fallbacks.
 
 For a Universal Endpoint, configure the retry settings with the following properties in the provider-specific `config`:
 
@@ -196,7 +196,7 @@ curl 'https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}' \
 
 #### Direct provider
 
-If set on a [provider](/ai-gateway/providers/) request, a request retry will automatically retry failed requests up to five times. On the final retry attempt, your gateway will wait until the request completes, regardless of how long it takes.
+If set on a [provider](/ai-gateway/universal/) request, a request retry will automatically retry failed requests up to five times. On the final retry attempt, your gateway will wait until the request completes, regardless of how long it takes.
 
 For a provider-specific endpoint, configure the retry settings by adding different header values:
 
