@@ -61,7 +61,7 @@ async function run(): Promise<void> {
 			"| ------- | ------ |",
 			...matchedPatterns.map(
 				(pattern) =>
-					`| ${pattern.pattern} | ${pattern.owners.map((owner) => "`" + owner + "`").join(", ")} |`,
+					`| \`${pattern.pattern}\` | ${pattern.owners.map((owner) => `\`${owner}\``).join(", ")} |`,
 			),
 		].join("\n");
 
