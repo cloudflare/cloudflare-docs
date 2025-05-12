@@ -153,6 +153,10 @@ Removes the `X-Powered-By` HTTP response header that provides information about 
 
 ### Add security headers
 
+:::note
+The security headers improve protection but may inadvertently block resources (e.g., due to MIME type mismatches), disrupt legacy scripts, prevent external content embeds, omit cross-origin referrer headers, or trigger certificate errors. Before enabling, ensure thorough testing in staging and a clear understanding of each header’s functionality. If issues arise, consider disabling the managed transform rule to isolate the cause. Proceed cautiously to balance security and compatibility.
+:::
+
 Adds several security-related HTTP response headers. The added response headers and values are the following:
 
 - `x-content-type-options: nosniff`
