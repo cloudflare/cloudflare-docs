@@ -21,6 +21,9 @@ import { APIRequest } from "~/components";
 	json={{
 		validation_default_mitigation_action: "block",
 	}}
+	code={{
+		mark: [5, "block"]
+	}}
 />
 
 <APIRequest
@@ -116,3 +119,13 @@ If required properties are missing, the component will throw an error.
 The FormData payload to send.
 
 This field is not currently validated against the schema.
+
+### `code`
+
+**type:** `object`
+
+An object of Expressive Code props, the following props are available:
+
+- [Base Props](https://expressive-code.com/key-features/code-component/#available-props)
+- [Line Marker Props](https://expressive-code.com/key-features/text-markers/#props)
+- [Collapsible Sections Props](https://expressive-code.com/plugins/collapsible-sections/#props)

@@ -1,5 +1,7 @@
 ---
 import { z } from "astro:schema";
+import type { ComponentProps } from "astro/types";
+import { Code } from "@astrojs/starlight/components";
 import { getProperty } from "dot-prop";
 import { getSchema } from "~/util/api.ts";
 import type { OpenAPIV3 } from "openapi-types";
@@ -17,10 +19,11 @@ const props = z
 		parameters: z.record(z.string(), z.any()).optional(),
 		json: z.union([Record, z.array(Record)]).optional(),
 		form: Record.optional(),
+		code: z.custom<Omit<ComponentProps<typeof Code>, "title">>().optional(),
 	})
 	.strict();
 
-let { path, method, parameters, json, form } = props.parse(Astro.props);
+let { path, method, parameters, json, form, code } = props.parse(Astro.props);
 
 if (json && form) {
 	throw new Error(`[APIRequest] Cannot use both "json" and "form" properties.`);
@@ -171,7 +174,5 @@ const tokenGroups = operation["x-api-token-group"];
 	headers={headers}
 	json={json}
 	form={form}
-	code={{
-		title: operation.summary,
-	}}
+	code={{ ...code, title: operation.summary }}
 />
