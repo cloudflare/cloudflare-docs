@@ -27,9 +27,10 @@ jobs:
             node_modules/.astro/assets
           key: static
 
+      - run: npm ci
+
       - run: npx tsx bin/post-codeowners-comment/index.ts
 
-      - run: npm ci
       - run: npm run check
 
       - uses: reviewdog/action-eslint@v1
