@@ -27,6 +27,8 @@ jobs:
             node_modules/.astro/assets
           key: static
 
+      - run: npx tsx bin/post-codeowners-comment/index.ts
+
       - run: npm ci
       - run: npm run check
 
