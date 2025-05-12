@@ -19,6 +19,10 @@ WARP settings define the WARP client modes and permissions available to end user
 - [Global settings](#global-settings) apply to all devices enrolled in your Zero Trust organization.
 - [Device settings](#device-settings) may vary across devices depending on which [device profile](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) is applied.
 
+:::note
+<Render file="warp/client-notification-lag" product="cloudflare-one" />
+:::
+
 ## Global settings
 
 ### Admin override
@@ -107,7 +111,7 @@ This setting is primarily used as a prerequisite for [WARP Connector](/cloudflar
 
 - `Disabled`: (default) Sets the local interface IP to `172.16.0.2` on all devices. This configuration is only respected by devices using [WireGuard](#device-tunnel-protocol) and does not affect devices using [MASQUE](#device-tunnel-protocol).
 
-- `Enabled`: Sets the local interface IP on each device to its <GlossaryTooltip term="CGNAT IP">CGNAT IP</GlossaryTooltip>. The change takes effect within 24 hours.
+- `Enabled`: Sets the local interface IP on each device to its <GlossaryTooltip term="CGNAT IP">CGNAT IP</GlossaryTooltip>.
 
 The CGNAT IP assigned to a WARP device is permanent until the device unregisters from your Zero Trust organization. Disconnects and reconnects do not change the IP address assignment.
 
@@ -181,7 +185,7 @@ When `Enabled`, users have the option to switch between [Gateway with WARP](/clo
 
 </Details>
 
-Configures the protocol used to route IP traffic from the device to Cloudflare Gateway. It may take up to 24 hours for all devices to switch to the new protocol. To check the active protocol on a device, open a terminal and run `warp-cli settings | grep protocol`.
+Configures the protocol used to route IP traffic from the device to Cloudflare Gateway. To check the active protocol on a device, open a terminal and run `warp-cli settings | grep protocol`.
 
 **Value**:
 

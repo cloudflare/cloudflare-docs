@@ -36,7 +36,7 @@ To customize the default settings:
 
 4. Save the profile.
 
-5. Under **Global settings**,
+5. Under [**Global settings**](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#global-settings),
    1. (Recommended) Enable **Admin override code** if you turned on **Lock WARP switch**.
    2. Enable **Install CA to system certificate store** if you want users to see a [custom block page](/cloudflare-one/policies/gateway/block-page/).
 
@@ -80,7 +80,35 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/devices/settings \
 }'
 ```
 
-</TabItem> </Tabs>
+</TabItem>
+<TabItem label="Terraform (v5)">
+
+1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
+	- `Zero Trust Write`
+
+2. Configure default profile settings using the [`cloudflare_zero_trust_device_default_profile`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_device_default_profile) resource:
+
+	```tf
+	resource "cloudflare_zero_trust_device_default_profile" "default_profile" {
+		account_id            = var.cloudflare_account_id
+		allow_mode_switch     = false
+		allow_updates         = false
+		allowed_to_leave      = false
+		auto_connect          = 600
+		captive_portal        = 180
+		disable_auto_fallback = true
+		exclude_office_ips    = false
+		service_mode_v2       = {mode = "warp"}
+		support_url           = "https://support.example.com"
+		switch_locked         = true
+		tunnel_protocol       = "wireguard"
+	}
+	```
+
+3. [Global settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#global-settings) are not currently supported by the Terraform v5 provider (as of version 5.3.0). To turn on **Admin override code** and **Install CA to system certificate store**, use the dashboard or API.
+
+</TabItem>
+</Tabs>
 
 ## (Optional) Create an office profile
 

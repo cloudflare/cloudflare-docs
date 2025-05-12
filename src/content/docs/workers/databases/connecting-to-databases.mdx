@@ -26,7 +26,7 @@ D1 is Cloudflare's own SQL-based, serverless database. It is optimized for globa
 Traditional databases use SQL drivers that use [TCP sockets](/workers/runtime-apis/tcp-sockets/) to connect to the database. TCP is the de-facto standard protocol that many databases, such as PostgreSQL and MySQL, use for client connectivity.
 These drivers are also widely compatible with your preferred ORM libraries and query builders.
 
-This also includes serverless databases that are PostgreSQL or MySQL-compatible like [Supabase](/hyperdrive/examples/connect-to-postgres/neon/), [Neon](/hyperdrive/examples/connect-to-postgres/neon/) or [PlanetScale](/hyperdrive/examples/connect-to-mysql/planetscale/),
+This also includes serverless databases that are PostgreSQL or MySQL-compatible like [Supabase](/hyperdrive/examples/connect-to-postgres/postgres-database-providers/supabase/), [Neon](/hyperdrive/examples/connect-to-postgres/postgres-database-providers/neon/) or [PlanetScale](/hyperdrive/examples/connect-to-mysql/mysql-database-providers/planetscale/),
 which can be connected to using both native [TCP sockets and Hyperdrive](/hyperdrive/) or [serverless HTTP-based drivers](/workers/databases/connecting-to-databases/#serverless-databases) (detailed below).
 
 | Database                                 | Integration       | Library or Driver                                                                               | Connection Method                                                                                                                                      |

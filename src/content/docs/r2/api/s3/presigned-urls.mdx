@@ -3,6 +3,8 @@ title: Presigned URLs
 pcx_content_type: concept
 ---
 
+import {Tabs, TabItem } from "~/components";
+
 Presigned URLs are an [S3 concept](https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-presigned-url.html) for sharing direct access to your bucket without revealing your token secret. A presigned URL authorizes anyone with the URL to perform an action to the S3 compatibility endpoint for an R2 bucket. By default, the S3 endpoint requires an `AUTHORIZATION` header signed by your token. Every presigned URL has S3 parameters and search parameters containing the signature information that would be present in an `AUTHORIZATION` header. The performable action is restricted to a specific resource, an [operation](/r2/api/s3/api/), and has an associated timeout.
 
 There are three kinds of resources in R2:
@@ -50,16 +52,6 @@ R2 currently supports the following methods when generating a presigned URL:
 
 `POST`, which performs uploads via native HTML forms, is not currently supported.
 
-## Generate presigned URLs
-
-Generate a presigned URL by referring to the following examples:
-
-- [AWS SDK for Go](/r2/examples/aws/aws-sdk-go/#generate-presigned-urls)
-- [AWS SDK for JS v3](/r2/examples/aws/aws-sdk-js-v3/#generate-presigned-urls)
-- [AWS SDK for JS](/r2/examples/aws/aws-sdk-js/#generate-presigned-urls)
-- [AWS SDK for PHP](/r2/examples/aws/aws-sdk-php/#generate-presigned-urls)
-- [AWS CLI](/r2/examples/aws/aws-cli/#generate-presigned-urls)
-
 ## Presigned URL alternative with Workers
 
 A valid alternative design to presigned URLs is to use a Worker with a [binding](/workers/runtime-apis/bindings/) that implements your security policy.
@@ -72,14 +64,33 @@ A binding is defined in the Wrangler file of your Worker project's directory.
 
 :::
 
-A possible use case may be restricting an application to only be able to upload to a specific URL. With presigned URLs, your central signing application might look like the following JavaScript code running on Cloudflare Workers, workerd, or another platform.
+Refer to [Use R2 from Workers](/r2/api/workers/workers-api-usage/) to learn how to bind a bucket to a Worker and use the binding to interact with your bucket.
 
-If the Worker received a request for `https://example.com/uploads/dog.png`, it would respond with a presigned URL allowing a user to upload to your R2 bucket at the `/uploads/dog.png` path.
+## Generate presigned URLs
+
+Generate a presigned URL by referring to the following examples:
+
+- [AWS SDK for Go](/r2/examples/aws/aws-sdk-go/#generate-presigned-urls)
+- [AWS SDK for JS v3](/r2/examples/aws/aws-sdk-js-v3/#generate-presigned-urls)
+- [AWS SDK for JS](/r2/examples/aws/aws-sdk-js/#generate-presigned-urls)
+- [AWS SDK for PHP](/r2/examples/aws/aws-sdk-php/#generate-presigned-urls)
+- [AWS CLI](/r2/examples/aws/aws-cli/#generate-presigned-urls)
+
+### Example of generating presigned URLs
+
+A possible use case may be restricting an application to only be able to upload to a specific URL. With presigned URLs, your central signing application might look like the following JavaScript code running on Cloudflare Workers, `workerd`, or another platform (you might have to update the code based on the platform you are using).
+
+If the application received a request for `https://example.com/uploads/dog.png`, it would respond with a presigned URL allowing a user to upload to your R2 bucket at the `/uploads/dog.png` path.
+
+To create a presigned URL, you will need to either use a package that implements the signing algorithm, or implement the signing algorithm yourself. In this example, the `aws4fetch` package is used. You also need to have an access key ID and a secret access key. Refer to [R2 API tokens](/r2/api/tokens/) for more information.
 
 ```ts
 import { AwsClient } from "aws4fetch";
 
-const r2 = new AwsClient({
+// Create a new client
+// Replace with your own access key ID and secret access key
+// Make sure to store these securely and not expose them
+const client = new AwsClient({
 	accessKeyId: "",
 	secretAccessKey: "",
 });
@@ -98,6 +109,7 @@ export default {
 			return new Response("Missing a filepath", { status: 400 });
 		}
 
+		// Replace with your bucket name and account ID
 		const bucketName = "";
 		const accountId = "";
 
@@ -111,7 +123,7 @@ export default {
 		// Specify a custom expiry for the presigned URL, in seconds
 		url.searchParams.set("X-Amz-Expires", "3600");
 
-		const signed = await r2.sign(
+		const signed = await client.sign(
 			new Request(url, {
 				method: "PUT",
 			}),
@@ -128,12 +140,47 @@ export default {
 } satisfies ExportedHandler;
 ```
 
-Notice the total absence of any configuration or token secrets present in the Worker code. Instead, in your [Wrangler configuration file](/workers/wrangler/configuration/), you would create a [binding](/r2/api/workers/workers-api-usage/#3-bind-your-bucket-to-a-worker) to whatever bucket represents the bucket you will upload to. Additionally, authorization is handled in-line with the upload which can reduce latency.
+## Differences between presigned URLs and R2 binding
 
-In some cases, Workers lets you implement certain functionality more easily. For example, if you wanted to offer a write-once guarantee so that users can only upload to a path once, with pre-signed URLs, you would need to sign specific headers and require the sender to send them. You can modify the previous Worker to sign additional headers:
+- When using an R2 binding, you will not need any token secrets in your Worker code. Instead, in your [Wrangler configuration file](/workers/wrangler/configuration/), you will create a [binding](/r2/api/workers/workers-api-usage/#3-bind-your-bucket-to-a-worker) to your R2 bucket. Additionally, authorization is handled in-line, which can reduce latency.
+- When using presigned URLs, you will need to create and use the token secrets in your Worker code.
+
+In some cases, R2 bindings let you implement certain functionality more easily. For example, if you wanted to offer a write-once guarantee so that users can only upload to a path once:
+
+- With R2 binding: You only need to pass the header once.
+- With presigned URLs: You need to first sign specific headers, then request the user to send the same headers.
+
+<Tabs>
+<TabItem label="R2 binding example">
+
+If you are using R2 bindings, you would change your upload to:
 
 ```ts
-const signed = await r2.sign(
+const existingObject = await env.R2_BUCKET.put(key, request.body, {
+	onlyIf: {
+		// No objects will have been uploaded before September 28th, 2021 which
+		// is the initial R2 announcement.
+		uploadedBefore: new Date(1632844800000),
+	},
+});
+if (existingObject?.etag !== request.headers.get("etag")) {
+	return new Response("attempt to overwrite object", { status: 400 });
+}
+```
+
+When using R2 bindings, you may need to consider the following limitations:
+
+- You cannot upload more than 100 MiB (200 MiB for Business customers) when using R2 bindings.
+- Enterprise customers can upload 500 MiB by default and can ask their account team to raise this limit.
+- Detecting [precondition failures](/r2/api/s3/extensions/#conditional-operations-in-putobject) is currently easier with presigned URLs as compared with R2 bindings.
+
+Note that these limitations depend on R2's extension for conditional uploads. Amazon's S3 service does not offer such functionality at this time.
+</TabItem>
+<TabItem label="Presigned URL example">
+You can modify the previous example to sign additional headers:
+
+```ts
+const signed = await client.sign(
 	new Request(url, {
 		method: "PUT",
 	}),
@@ -146,34 +193,21 @@ const signed = await r2.sign(
 );
 ```
 
-Note that the caller has to add the same `If-Unmodified-Since` header to use the URL. The caller cannot omit the header or use a different header. If the caller uses a different header, the presigned URL signature would not match, and they would receive a `403/SignatureDoesNotMatch`.
-
-In a Worker, you would change your upload to:
-
 ```ts
-const existingObject = await env.DROP_BOX_BUCKET.put(
-	url.toString().substring(1),
-	request.body,
-	{
-		onlyIf: {
-			// No objects will have been uploaded before September 28th, 2021 which
-			// is the initial R2 announcement.
-			uploadedBefore: new Date(1632844800000),
-		},
+// Use the presigned URL to upload the file
+const response = await fetch(signed.url, {
+	method: "PUT",
+	body: file,
+	headers: {
+		"If-Unmodified-Since": "Tue, 28 Sep 2021 16:00:00 GMT",
 	},
-);
-if (existingObject?.etag !== request.headers.get("etag")) {
-	return new Response("attempt to overwrite object", { status: 400 });
-}
+});
 ```
 
-Cloudflare Workers currently have some limitations that you may need to consider:
+Note that the caller has to add the same `If-Unmodified-Since` header to use the URL. The caller cannot omit the header or use a different header, since the signature covers the headers. If the caller uses a different header, the presigned URL signature would not match, and they would receive a `403/SignatureDoesNotMatch`.
 
-- You cannot upload more than 100 MiB (200 MiB for Business customers) to a Worker.
-- Enterprise customers can upload 500 MiB by default and can ask their account team to raise this limit.
-- Detecting [precondition failures](/r2/api/s3/extensions/#conditional-operations-in-putobject) is currently easier with presigned URLs as compared with R2 bindings.
-
-Note that these limitations depends on R2's extension for conditional uploads. Amazon's S3 service does not offer such functionality at this time.
+</TabItem>
+</Tabs>
 
 ## Differences between presigned URLs and public buckets
 

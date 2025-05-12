@@ -21,12 +21,12 @@ Multiple attributes can be used together, added one after each other like this:
 
 * `autoplay` boolean
 
-  * Tells the browser to immediately start downloading the video and play it as soon as it can. Note that mobile browsers generally do not support this attribute, the user must tap the screen to begin video playback. Please consider mobile users or users with Internet usage limits as some users don't have unlimited Internet access before using this attribute.
+  * Tells the browser to immediately start downloading the video and play it as soon as it can. Note that mobile browsers generally do not support this attribute, the user must tap the screen to begin video playback. Please consider mobile users or users with Internet usage limits as some users do not have unlimited Internet access before using this attribute.
 
   :::note
   To disable video autoplay, the `autoplay` attribute needs to be removed altogether as this attribute. Setting `autoplay="false"` will not work; the video will autoplay if the attribute is there in the `<stream>` tag.
 
-  In addition, some browsers now prevent videos with audio from playing automatically. You may add the `mute` attribute to allow your videos to autoplay. For more information, go [here](https://webkit.org/blog/6784/new-video-policies-for-ios/).
+In addition, some browsers now prevent videos with audio from playing automatically. You may add the `mute` attribute to allow your videos to autoplay. For more information, see [new video policies for iOS](https://webkit.org/blog/6784/new-video-policies-for-ios/).
   :::
 
 * `controls` boolean
@@ -55,7 +55,7 @@ Multiple attributes can be used together, added one after each other like this:
 
 * `poster` string
 
-  * A URL for an image to be shown before the video is started or while the video is downloading. If this attribute isn't specified, a thumbnail image of the video is shown.
+  * A URL for an image to be shown before the video is started or while the video is downloading. If this attribute is not specified, a thumbnail image of the video is shown.
 
 * `src` string
 
@@ -145,7 +145,7 @@ Stream supports most of the [standardized media element events](https://develope
 
 * `error`
 
-  * Sent when an error occurs. (e.g. the video has not finished encoding yet, or the video fails to load due to an incorrect signed URL)
+  * Sent when an error occurs. (for example, the video has not finished encoding yet, or the video fails to load due to an incorrect signed URL)
 
 * `loadeddata`
 
@@ -153,7 +153,7 @@ Stream supports most of the [standardized media element events](https://develope
 
 * `loadedmetadata`
 
-  * The media's metadata has finished loading; all attributes now contain as much useful information as they're going to.
+   * The media's metadata has finished loading; all attributes now contain as much useful information as they are going to.
 
 * `loadstart`
 

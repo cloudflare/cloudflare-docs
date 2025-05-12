@@ -2,6 +2,10 @@
 {}
 ---
 
+import { TabItem, Tabs } from "~/components";
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Resolver policies**.
 2. Select **Add a policy**.
 3. Create an expression for your desired traffic. For example, you can resolve a hostname for an internal service:
@@ -22,6 +26,48 @@
 8. Select **Create policy**.
 
 Custom resolvers are saved to your account for future use. You can add up to 10 IPv4 and 10 IPv6 addresses to a policy.
+
+</TabItem>
+<TabItem label="Terraform (v5)">
+
+1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
+	- `Zero Trust Write`
+
+2. Create a resolver policy using the [`cloudflare_zero_trust_gateway_policy`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_gateway_policy) resource:
+
+	```tf
+	resource "cloudflare_zero_trust_gateway_policy" "resolver_policy" {
+		name        = "Example resolver policy"
+		enabled     = true
+		account_id  = var.cloudflare_account_id
+		description = "TERRAFORM MANAGED resolver policy"
+		action      = "resolve"
+		traffic     = "dns.fqdn in {\"internal.example.com\"}"
+		identity    = "identity.email in {\"jdoe@example.com\"}"
+		precedence  = 1
+		rule_settings = {
+				dns_resolvers = {
+				# You can add up to 10 IPv4 and 10 IPv6 addresses to a policy.
+					ipv4 = [{
+						ip = "192.0.2.24"
+						port = 53
+						route_through_private_network = true
+						vnet_id = cloudflare_zero_trust_tunnel_cloudflared_virtual_network.staging_vnet.id
+					}]
+					ipv6 = [{
+						ip = "2001:DB8::"
+						port = 53
+						route_through_private_network = true
+						vnet_id = cloudflare_zero_trust_tunnel_cloudflared_virtual_network.staging_vnet.id
+					}]
+				}
+		}
+	}
+	```
+
+
+</TabItem>
+</Tabs>
 
 When a user's query matches a resolver policy, Gateway will send the query to your listed resolvers in the following order:
 

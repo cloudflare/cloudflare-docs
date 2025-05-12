@@ -3,9 +3,21 @@ pcx_content_type: how-to
 title: Configuration
 sidebar:
   order: 6
+banner:
+  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
+  type: note
+  dismissible:
+    id: pages-migrate-to-workers
 ---
 
-import { Render, TabItem, Tabs, Type, MetaInfo, WranglerConfig } from "~/components";
+import {
+	Render,
+	TabItem,
+	Tabs,
+	Type,
+	MetaInfo,
+	WranglerConfig,
+} from "~/components";
 
 :::caution
 
@@ -151,8 +163,6 @@ With a Wrangler configuration file, you can quickly set configuration across you
 
 The Wrangler configuration file applies locally when using `wrangler pages dev`. This means that you can test out configuration changes quickly without a need to login to the Cloudflare dashboard. Refer to the following config file for an example:
 
-
-
 <WranglerConfig>
 
 ```toml
@@ -218,8 +228,6 @@ Unlike [Workers Environments](/workers/wrangler/configuration/#environments), `p
 
 Refer to the following Wrangler configuration file for an example of how to override preview deployment configuration:
 
-
-
 <WranglerConfig>
 
 ```toml
@@ -247,8 +255,6 @@ If you deployed this file via `wrangler pages deploy`, `name`, `pages_build_outp
 
 If you wanted to have configuration values apply to local and preview, but override production, your file would look like this:
 
-
-
 <WranglerConfig>
 
 ```toml
@@ -273,8 +279,6 @@ API_KEY = "8901234bfgd"
 </WranglerConfig>
 
 You can always be explicit and override both preview and production:
-
-
 
 <WranglerConfig>
 
@@ -347,8 +351,6 @@ Inheritable keys are configurable at the top-level, and can be inherited (or ove
 Non-inheritable keys are configurable at the top-level, but, if any one non-inheritable key is overridden for any environment (for example,`[[env.production.kv_namespaces]]`), all non-inheritable keys must also be specified in the environment configuration and overridden.
 
 For example, this configuration will not work:
-
-
 
 <WranglerConfig>
 
@@ -446,7 +448,9 @@ When using Wrangler in the default local development mode, files will be written
 
 :::caution
 
-<Render file="do-note" product="pages" /> Durable Object bindings configured in a Pages project's Wrangler configuration file require the `script_name` key. For Workers, the `script_name` key is optional.
+<Render file="do-note" product="pages" /> Durable Object bindings configured in
+a Pages project's Wrangler configuration file require the `script_name` key. For
+Workers, the `script_name` key is optional.
 
 :::
 

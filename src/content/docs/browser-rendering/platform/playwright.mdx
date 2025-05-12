@@ -9,9 +9,9 @@ sidebar:
 
 import { Render, WranglerConfig, TabItem, Tabs } from "~/components";
 
-[Playwright](https://playwright.dev/) is an open-source package developed by Microsoft that can do browser automation tasks; it's commonly used to write frontend tests, create screenshots, or crawl pages.
+[Playwright](https://playwright.dev/) is an open-source package developed by Microsoft that can do browser automation tasks; it is commonly used to write frontend tests, create screenshots, or crawl pages.
 
-The Workers team forked a [version of Playwright](https://github.com/cloudflare/playwright) that was modified to be compatible with [Cloudflare Workers](https://developers.cloudflare.com/workers/) and [Browser Rendering](https://developers.cloudflare.com/browser-rendering/).
+The Workers team forked a [version of Playwright](https://github.com/cloudflare/playwright) that was modified to be compatible with [Cloudflare Workers](/workers/) and [Browser Rendering](/browser-rendering/).
 
 Our version is open sourced and can be found in [Cloudflare's fork of Playwright](https://github.com/cloudflare/playwright). The npm package can be installed from [npmjs](https://www.npmjs.com/) as [@cloudflare/playwright](https://www.npmjs.com/package/@cloudflare/playwright):
 
@@ -195,7 +195,7 @@ Using the above, the browser will stay open for up to 10 minutes, even if inacti
 
 ## Session management
 
-In order to facilitate browser session management, we've extended the Playwright API with new methods:
+In order to facilitate browser session management, we have extended the Playwright API with new methods:
 
 ### List open sessions
 
@@ -220,7 +220,7 @@ Notice that the session `478f4d7d-e943-40f6-a414-837d3736a1dc` has an active wor
 
 ### List recent sessions
 
-`playwright.history()` lists recent sessions, both open and closed. It's useful to get a sense of your current usage.
+`playwright.history()` lists recent sessions, both open and closed. It is useful to get a sense of your current usage.
 
 ```json
 [
@@ -268,7 +268,7 @@ You should also be able to access this information in the dashboard, albeit with
 
 ## Playwright API
 
-The full Playwright API can be found [here](https://playwright.dev/docs/api/class-playwright).
+The full Playwright API can be found at the [Playwright API documentation](https://playwright.dev/docs/api/class-playwright).
 
 Note that `@cloudflare/playwright` is in beta. The following capabilities are not yet fully supported, but we’re actively working on them:
 

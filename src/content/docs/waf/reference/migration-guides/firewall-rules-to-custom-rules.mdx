@@ -272,3 +272,7 @@ For details on importing Cloudflare resources to Terraform and using the `cf-ter
 
 - [Import Cloudflare resources](/terraform/advanced-topics/import-cloudflare-resources/)
 - [`cf-terraforming` GitHub repository](https://github.com/cloudflare/cf-terraforming)
+
+## Final remarks
+
+Any unpaused firewall rules with paused [filters](/firewall/api/cf-filters/what-is-a-filter/) will become enabled when converted to custom rules.

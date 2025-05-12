@@ -7,13 +7,21 @@ sidebar:
 
 To enable Gmail BCC integration:
 
-1. Log in to [Zero Trust](https://one.dash.cloudflare.com/), select **Email Security**, then select **Settings**.
-2. Go to **Integrated domains** and select **View**.
-3. Select **Connect a domain**.
-4. Select **BCC/Journaling**.
-5. Choose **Integrate with Google**, and select **Authorize**.
+1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
+2. Select **Email Security**.
+3. Select **Overview**. Select one of the following options:
+- If you have not purchased Email Security, select **Contact sales**. 
+- If you have not associated any integration:
+  - Select **Set up**, then choose **BCC/Journaling**.
+  - Select **Integrate with Google** > **Authorize**. 
+  - Name your integration, then select **Next**.
+  - Go to [step 1](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/bcc-setup/gmail-bcc-setup/enable-gmail-integration/#1-create-a-service-account-in-your-gcp-project) to continue the process of associating an integration.
+- If you have associated an integration, but have not connected a domain:
+    - Select **Connect a domain**.
+    - Choose **BCC/Journaling** > **Integrate with Google**. 
+    - Refer to [Connect your domains](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/bcc-setup/gmail-bcc-setup/connect-domains/) to connect your domain(s).
 
-Name your integration, then select **Next**.
+
 
 ### 1. Create a Service Account in your GCP Project
 

@@ -6,7 +6,7 @@
 # For a list of all options, see https://vale.sh/docs/topics/styles/
 
 extends: substitution
-message: "**Warning**: Use inclusive language. Consider '%s' instead of '%s'."
+message: "**Warning**: Use inclusive language. Consider '%s' instead of '%s'. Only change the words specified, nothing else."
 level: warning
 ignorecase: true
 swap:

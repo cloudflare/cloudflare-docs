@@ -47,7 +47,7 @@ To retrieve those values:
 
     ![Viewing the Application ID and Directory ID in Azure](~/assets/images/cloudflare-one/identity/azure/azure-values.png)
 
-10. Under **Client credentials**, go to **Add a certificate or secret**. Select **New client secret**.
+10. On the same page, under **Client credentials**, go to **Add a certificate or secret**. Select **New client secret**.
 
 11. Name the client secret and choose an expiration period.
 
@@ -61,7 +61,7 @@ To retrieve those values:
 
 ### 2. Configure API permissions in Entra ID
 
-1. From the **App registrations** page for your application, go to **API permissions**.
+1. Go to **App registrations** > **All applications** > select your application > **API permissions**.
 
 2. Select **Add a permission**.
 
@@ -161,7 +161,7 @@ By default, Cloudflare will first look for the unique claim name you created and
 
 To receive an email claim in the `id_token` from Microsoft Entra, you must:
 
-1. In the [Microsoft Entra admin center](https://entra.microsoft.com/), go to **Application** > **App registration** > select the relevant application > **Manage** > **Token configuration**.
+1. In the [Microsoft Entra admin center](https://entra.microsoft.com/), go to **Application** > **App registration** > **All applications** > select the relevant application > under **Manage**, select **Token configuration**.
 2. Add a claim for email.
 
    ![Email claim for Entra](~/assets/images/cloudflare-one/identity/azure/entra-email-claim.png)

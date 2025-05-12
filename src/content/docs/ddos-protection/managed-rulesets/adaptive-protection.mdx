@@ -48,7 +48,7 @@ Cloudflare’s network is built to automatically monitor and mitigate large DDoS
 - For zones on any plan, Cloudflare will apply mitigations when the HTTP error rate is above the _High_ (default) sensitivity level of 1,000 errors-per-second rate threshold. You can decrease the sensitivity level by [configuring the HTTP DDoS Attack Protection managed ruleset](/ddos-protection/managed-rulesets/http/configure-dashboard/).
 - For zones on Pro, Business, and Enterprise plans, Cloudflare performs an additional check for better detection accuracy: the errors-per-second rate must also be at least five times the normal origin traffic levels before applying DDoS mitigations.
 
-Cloudflare determines the error rate based on all HTTP errors in the 52X range (Internal Server Error) and in the 53X range, except for [error 530](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/#error-530). Currently, for DDoS mitigations based on HTTP error rate, you cannot exclude specific HTTP error codes.
+Cloudflare determines the error rate based on all HTTP errors in the 52X range (Internal Server Error) and in the 53X range, except for [error 530](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-530). Currently, for DDoS mitigations based on HTTP error rate, you cannot exclude specific HTTP error codes.
 
 For more information on the types of DDoS attacks covered by Cloudflare's DDoS protection, refer to [DDoS attack coverage](/ddos-protection/about/attack-coverage/).
 
@@ -78,7 +78,7 @@ You may not see any traffic matching the adaptive rules. This can be because the
 
 If you do see traffic that was _Logged_ by the adaptive rules, use the dashboard to determine if the traffic matches the characteristics of legitimate users or that of attack traffic. As each Internet property is unique, understanding if the traffic is legitimate requires your understanding of how your legitimate traffic looks. For example, the user agent, source country, headers, query string for HTTP requests, and protocols and ports for L3/4 traffic. 
 
-- In cases where you are certain that the rule is only flagging attack traffic, you should consider creating an override and enabling that rule with a [Managed Challenge](/fundamentals/security/cloudflare-challenges/#managed-challenge-recommended) or `Block` action.
+- In cases where you are certain that the rule is only flagging attack traffic, you should consider creating an override and enabling that rule with a [Managed Challenge](/cloudflare-challenges/challenge-types/challenge-pages/#managed-challenge-recommended) or `Block` action.
 - In cases where you see legitimate traffic being flagged, you should lower the sensitivity level of the rule and observe the flagged traffic. You can continue reducing the sensitivity level until you reach a point where legitimate traffic is not flagged. Then, you should create an override to enable the rule with a mitigation action.
 - If the rule is still flagging legitimate traffic you can consider using the expression filters to condition the rules to exclude certain types of traffic.
 

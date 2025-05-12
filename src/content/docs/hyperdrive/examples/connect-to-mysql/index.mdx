@@ -32,19 +32,7 @@ npx wrangler hyperdrive create my-first-hyperdrive --connection-string="mysql://
 
 The command above will output the ID of your Hyperdrive, which you will need to set in the [Wrangler configuration file](/workers/wrangler/configuration/) for your Workers project:
 
-<WranglerConfig>
-
-```toml
-# required for database drivers to function
-compatibility_flags = ["nodejs_compat"]
-compatibility_date = "2024-09-23"
-
-[[hyperdrive]]
-binding = "HYPERDRIVE"
-id = "<your-hyperdrive-id-here>"
-```
-
-</WranglerConfig>
+<Render file="hyperdrive-node-compatibility-requirement" product="hyperdrive" />
 
 This will allow Hyperdrive to generate a dynamic connection string within your Worker that you can pass to your existing database driver. Refer to [Driver examples](#driver-examples) to learn how to set up a database driver with Hyperdrive.
 
@@ -105,57 +93,9 @@ The following Workers code shows you how to use [mysql2](https://github.com/sido
 
 ### `mysql`
 
-Install the `mysql` driver:
+The following Workers code shows you how to use [mysql](https://github.com/mysqljs/mysql) with Hyperdrive.
 
-```sh
-npm install mysql
-```
-
-**Ensure you have `compatibility_flags` and `compatibility_date` set in your [Wrangler configuration file](/workers/wrangler/configuration/)** as shown below:
-
-<Render file="nodejs-compat-wrangler-toml" product="workers" />
-
-Create a new connection and pass the Hyperdrive parameters:
-
-```ts
-import { createConnection } from "mysql";
-
-export interface Env {
-	HYPERDRIVE: Hyperdrive;
-}
-
-export default {
-	async fetch(request, env, ctx): Promise<Response> {
-		const result = await new Promise<any>((resolve) => {
-			const connection = createConnection({
-				host: env.HYPERDRIVE.host,
-				user: env.HYPERDRIVE.user,
-				password: env.HYPERDRIVE.password,
-				database: env.HYPERDRIVE.database,
-				port: env.HYPERDRIVE.port,
-			});
-
-			connection.connect((error: { message: string }) => {
-				if (error) {
-					throw new Error(error.message);
-				}
-
-				connection.query("SHOW tables;", [], (error, rows, fields) => {
-					connection.end();
-
-					resolve({ fields, rows });
-				});
-			});
-		});
-
-		return new Response(JSON.stringify(result), {
-			headers: {
-				"Content-Type": "application/json",
-			},
-		});
-	},
-} satisfies ExportedHandler<Env>;
-```
+<Render file="use-mysql-to-make-query" product="hyperdrive" />
 
 ## Identify connections from Hyperdrive
 

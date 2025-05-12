@@ -7,20 +7,35 @@ sidebar:
 head:
   - tag: title
     content: Overview
+banner:
+  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
+  type: note
+  dismissible:
+    id: pages-migrate-to-workers
 ---
 
-import { CardGrid, Description, Feature, LinkTitleCard, Plan, RelatedProduct, Render } from "~/components"
+import {
+	CardGrid,
+	Description,
+	Feature,
+	LinkTitleCard,
+	Plan,
+	RelatedProduct,
+	Render,
+	Aside,
+} from "~/components";
 
 <Description>
 
 Create full-stack applications that are instantly deployed to the Cloudflare global network.
+
 </Description>
 
 <Plan type="all" />
 
 Deploy your Pages project by connecting to [your Git provider](/pages/get-started/git-integration/), uploading prebuilt assets directly to Pages with [Direct Upload](/pages/get-started/direct-upload/) or using [C3](/pages/get-started/c3/) from the command line.
 
-***
+---
 
 ## Features
 
@@ -28,13 +43,11 @@ Deploy your Pages project by connecting to [your Git provider](/pages/get-starte
 
 Use Pages Functions to deploy server-side code to enable dynamic functionality without running a dedicated server.
 
-
 </Feature>
 
 <Feature header="Rollbacks" href="/pages/configuration/rollbacks/">
 
 Rollbacks allow you to instantly revert your project to a previous production deployment.
-
 
 </Feature>
 
@@ -42,10 +55,9 @@ Rollbacks allow you to instantly revert your project to a previous production de
 
 Set up redirects for your Cloudflare Pages project.
 
-
 </Feature>
 
-***
+---
 
 ## Related products
 
@@ -53,13 +65,11 @@ Set up redirects for your Cloudflare Pages project.
 
 Cloudflare Workers provides a serverless execution environment that allows you to create new applications or augment existing ones without configuring or maintaining infrastructure.
 
-
 </RelatedProduct>
 
 <RelatedProduct header="R2" href="/r2/" product="r2">
 
 Cloudflare R2 Storage allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
-
 
 </RelatedProduct>
 
@@ -67,40 +77,49 @@ Cloudflare R2 Storage allows developers to store large amounts of unstructured d
 
 D1 is Cloudflare’s native serverless database. Create a database by importing data or defining your tables and writing your queries within a Worker or through the API.
 
-
 </RelatedProduct>
 
 <RelatedProduct header="Zaraz" href="/zaraz/" product="zaraz">
 
 Offload third-party tools and services to the cloud and improve the speed and security of your website.
 
-
 </RelatedProduct>
 
-***
+---
 
 ## More resources
 
 <CardGrid>
 
 <LinkTitleCard title="Limits" href="/pages/platform/limits/" icon="document">
-Learn about limits that apply to your Pages project (500 deploys per month on the Free plan).
+	Learn about limits that apply to your Pages project (500 deploys per month on
+	the Free plan).
 </LinkTitleCard>
 
-<LinkTitleCard title="Migration guides" href="/pages/migrations/" icon="pen">
-Migrate to Pages from your existing hosting provider.
+<LinkTitleCard
+	title="Framework guides"
+	href="/pages/framework-guides/"
+	icon="open-book"
+>
+	Deploy popular frameworks such as React, Hugo, and Next.js on Pages.
 </LinkTitleCard>
 
-<LinkTitleCard title="Framework guides" href="/pages/framework-guides/" icon="open-book">
-Deploy popular frameworks such as React, Hugo, and Next.js on Pages.
+<LinkTitleCard
+	title="Developer Discord"
+	href="https://discord.cloudflare.com"
+	icon="discord"
+>
+	Connect with the Workers community on Discord to ask questions, show what you
+	are building, and discuss the platform with other developers.
 </LinkTitleCard>
 
-<LinkTitleCard title="Developer Discord" href="https://discord.cloudflare.com" icon="discord">
-Connect with the Workers community on Discord to ask questions, show what you are building, and discuss the platform with other developers.
-</LinkTitleCard>
-
-<LinkTitleCard title="@CloudflareDev" href="https://x.com/cloudflaredev" icon="x.com">
-Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Workers.
+<LinkTitleCard
+	title="@CloudflareDev"
+	href="https://x.com/cloudflaredev"
+	icon="x.com"
+>
+	Follow @CloudflareDev on Twitter to learn about product announcements, and
+	what is new in Cloudflare Workers.
 </LinkTitleCard>
 
 </CardGrid>
