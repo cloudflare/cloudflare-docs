@@ -30,6 +30,8 @@ jobs:
       - run: npm ci
 
       - run: npx tsx bin/post-codeowners-comment/index.ts
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - run: npm run check
 
