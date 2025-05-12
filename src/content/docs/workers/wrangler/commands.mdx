@@ -966,6 +966,9 @@ wrangler pages dev [<DIRECTORY>] [OPTIONS]
   - IP address to listen on, defaults to `localhost`.
 - `--port` <Type text="number" /> <MetaInfo text="optional (default: 8788)" />
   - The port to listen on (serve from).
+- `--config`, `-c` <Type text="string[]" /> <MetaInfo text="optional" />
+  - Path(s) to [Wrangler configuration file](/workers/wrangler/configuration/). If not provided, Wrangler will use the nearest config file based on your current working directory.
+  - You can provide additional configuration files in order to run Workers alongside your Pages project, like this: `wrangler pages dev -c ./wrangler.toml -c ../other-worker/wrangler.toml`. The first argument must point to your Pages configuration file, and the subsequent configurations will be accessible via a Service binding from your Pages project.
 - `--binding` <Type text="string[]" /> <MetaInfo text="optional" />
   - Bind an environment variable or secret (for example, `--binding <VARIABLE_NAME>=<VALUE>`).
 - `--kv` <Type text="string[]" /> optional
