@@ -59,7 +59,7 @@ You cannot delete or archive a user record. You can [remove a user](#remove-a-us
 
 ### Enable seat expiration
 
-Cloudflare Zero Trust can automatically remove any user who does not log in to an Access application or whose device does not show any Gateway activity for the specified period (between one month and one year). To determine if a user will be removed, the system looks for any authentication events as well as the user's "last seen value," if both of those are outside the expiration window, their seat will be removed. This process occurs once daily for an account. These users will no longer count against your number of seats.
+Cloudflare Zero Trust can automatically remove any user who does not log in to an Access application or whose device does not show any Gateway activity for the specified period (between one month and one year). To determine if a user will be removed, the system looks for any authentication events as well as the user's "last seen value" for all their associated devices, if both of those are outside the expiration window, their seat will be removed. This process occurs once daily for an account. These users will no longer count against your number of seats.
 
 To enable user seat expiration:
 
