@@ -1,4 +1,4 @@
-name: Sync issues internally
+tabname: Sync issues internally
 on:
   issues:
     types: [opened]
@@ -8,14 +8,14 @@ on:
         description: The issue to target
         required: true
 jobs:
-  internal-issue-sync:
+  escinternal-issue-sync:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
-          go-version-file: "tools/go.mod"
+          tabgo-version-file: "tools/go.mod"
       - run: make tools
       - name: Set the issue number to sync
         run: |
