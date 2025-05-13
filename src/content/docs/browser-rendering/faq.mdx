@@ -14,19 +14,19 @@ Below you will find answers to our most commonly asked questions. If you cannot 
 
 ##### Uncaught (in response) TypeError: Cannot read properties of undefined (reading 'fetch')
 
-Make sure that you are passing your Browser binding to the `puppeteer.launch` api and that you have [Workers for Platforms Paid plan](/cloudflare-for-platforms/workers-for-platforms/platform/pricing/).
+Make sure that you are passing your Browser binding to the `puppeteer.launch` api and that you have [Workers Paid plan](/workers/platform/pricing/).
 
 ##### Will browser rendering bypass Cloudflare's Bot Protection?
 
-Browser rendering requests are always identified as bots by Cloudflare.
+No, Browser Rendering requests are always identified as bots by Cloudflare and do not bypass Bot Protection. Additionally, Browser Rendering respects the robots.txt protocol, ensuring that any disallowed paths specified for user agents are not accessed during rendering.
 
-If you are trying to **scan** your **own zone**, you can create a [WAF skip rule](/waf/custom-rules/skip/) to bypass the bot protection using a header or a custom user agent.
+If you are attempting to scan your **own zone** and need Browser Rendering to access areas protected by Cloudflare’s Bot Protection, you can create a [WAF skip rule](/waf/custom-rules/skip/) to bypass the bot protection using a header or a custom user agent.
 
 ## Puppeteer
 
 ##### Code generation from strings disallowed for this context while using an Xpath selector
 
-Currently it's not possible to use Xpath to select elements since this poses a security risk to Workers.
+Currently it is not possible to use Xpath to select elements since this poses a security risk to Workers.
 
 As an alternative try to use a css selector or `page.evaluate` for example:
 

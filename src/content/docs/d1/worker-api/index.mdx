@@ -2,7 +2,7 @@
 pcx_content_type: navigation
 title: Workers Binding API
 sidebar:
-  order: 4
+  order: 5
 ---
 
 import { DirectoryListing, Details, Steps } from "~/components";
@@ -40,25 +40,43 @@ const result = await env.MY_DB.prepare(
 
 ## Type conversion
 
-D1 automatically converts supported JavaScript (including TypeScript) types passed as parameters via the Workers Binding API to their associated D1 types. The type conversion is as follows:
+D1 automatically converts supported JavaScript (including TypeScript) types passed as parameters via the Workers Binding API to their associated D1 types <sup>1</sup>.
+This conversion is permanent and one-way only. This means that when reading the written values back in your code, you will get the converted values rather than the originally inserted values.
 
-| JavaScript           | D1                                                                           |
-| -------------------- | ---------------------------------------------------------------------------- |
-| null                 | `NULL`                                                                       |
-| Number               | `REAL`                                                                       |
-| Number <sup>1</sup>  | `INTEGER`                                                                    |
-| String               | `TEXT`                                                                       |
-| Boolean <sup>2</sup> | `INTEGER`                                                                    |
-| ArrayBuffer          | `BLOB`                                                                       |
-| undefined            | Not supported. Queries with `undefined` values will return a `D1_TYPE_ERROR` |
+:::note
+We recommend using [STRICT tables](https://www.sqlite.org/stricttables.html) in your SQL schema to avoid issues with mismatched types between values that are actually stored in your database compared to values defined by your schema.
+:::
 
-<sup>1</sup> D1 supports 64-bit signed `INTEGER` values internally, however
+The type conversion during writes is as follows:
+
+| JavaScript (write)   | D1                          | JavaScript (read)  |
+| -------------------- | --------------------------- | ------------------ |
+| null                 | `NULL`                      | null               |
+| Number               | `REAL`                      | Number             |
+| Number <sup>2</sup>  | `INTEGER`                   | Number             |
+| String               | `TEXT`                      | String             |
+| Boolean <sup>3</sup> | `INTEGER`                   | Number (`0`,`1`)   |
+| ArrayBuffer          | `BLOB`                      | Array <sup>4</sup> |
+| ArrayBuffer View     | `BLOB`                      | Array <sup>4</sup> |
+| undefined            | Not supported. <sup>5</sup> | -                  |
+
+<sup>1</sup> D1 types correspond to the underlying [SQLite
+types](https://www.sqlite.org/datatype3.html).
+
+<sup>2</sup> D1 supports 64-bit signed `INTEGER` values internally, however
 [BigInts](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt)
 are not currently supported in the API yet. JavaScript integers are safe up to
 [`Number.MAX_SAFE_INTEGER`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER).
 
-<sup>2</sup> Booleans will be cast to an `INTEGER` type where `1` is `TRUE` and
+<sup>3</sup> Booleans will be cast to an `INTEGER` type where `1` is `TRUE` and
 `0` is `FALSE`.
+
+<sup>4</sup> `ArrayBuffer` and [`ArrayBuffer`
+views](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer/isView)
+are converted using
+[`Array.from`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from).
+
+<sup>5</sup> Queries with `undefined` values will return a `D1_TYPE_ERROR`.
 
 ## API playground
 
@@ -81,16 +99,17 @@ Replace the contents of your `index.js` file with the code below to view the eff
 export default {
 	async fetch(request, env) {
 	  const { pathname } = new URL(request.url);
-
 	//   if (pathname === "/api/beverages") {
 	// 	// If you did not use `DB` as your binding name, change it here
 	// 	const { results } = await env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?",).bind("Bs Beverages").all();
 	// 	return Response.json(results);
 	//   }
-
 		const companyName1 = `Bs Beverages`;
 		const companyName2 = `Around the Horn`;
 		const stmt = env.DB.prepare(`SELECT * FROM Customers WHERE CompanyName = ?`);
+		const stmtMulti = env.DB.prepare(`SELECT * FROM Customers; SELECT * FROM Customers WHERE CompanyName = ?`);
+		const session = env.DB.withSession("first-primary")
+		const sessionStmt = session.prepare(`SELECT * FROM Customers WHERE CompanyName = ?`);
 
 	  if (pathname === `/RUN`){
 		const returnValue = await stmt.bind(companyName1).run();
@@ -114,6 +133,11 @@ export default {
 	} else if (pathname === `/EXEC`){
 		const returnValue = await env.DB.exec(`SELECT * FROM Customers WHERE CompanyName = "Bs Beverages"`);
 		return Response.json(returnValue);
+
+	} else if (pathname === `/WITHSESSION`){
+		const returnValue = await sessionStmt.bind(companyName1).run();
+		console.log("You're now using D1 Sessions!")
+		return Response.json(returnValue);
 	}
 
 	  return new Response(
@@ -121,8 +145,7 @@ export default {
 		\nChange the URL to test the various methods inside your index.js file.`,
 	  );
 	},
-};
-
+  };
 ```
 </Details>
 
@@ -130,26 +153,22 @@ export default {
 
 <Steps>
 1. Navigate to your tutorial directory you created by following step 1.
-2. Run `npx wrangler dev`.
+2. Run `npx wrangler deploy`.
 	```sh
-	npx wrangler dev
+	npx wrangler deploy
 	```
 	```sh output
-	 ⛅️ wrangler 3.85.0 (update available 3.86.1)
-	-------------------------------------------------------
+	⛅️ wrangler 3.112.0
+	--------------------
 
+	Total Upload: 1.90 KiB / gzip: 0.59 KiB
 	Your worker has access to the following bindings:
 	- D1 Databases:
-		- DB: <DATABASE_NAME> (DATABASE_ID) (local)
-	⎔ Starting local server...
-	[wrangler:inf] Ready on http://localhost:8787
-	╭───────────────────────────╮
-	│  [b] open a browser       │
-	│  [d] open devtools        │
-	│  [l] turn off local mode  │
-	│  [c] clear console        │
-	│  [x] to exit              │
-	╰───────────────────────────╯
+		- DB: DATABASE_NAME (<DATABASE_ID>)
+	Uploaded WORKER_NAME (7.01 sec)
+	Deployed WORKER_NAME triggers (1.25 sec)
+		https://jun-d1-rr.d1-sandbox.workers.dev
+	Current Version ID: VERSION_ID
 	```
 3. Open a browser at the specified address.
 </Steps>

@@ -1608,7 +1608,7 @@ entries:
     data_type: Array<String>
     categories: [Request, Headers]
     keywords: [request, client, visitor]
-    summary: List of language tags provided in the [`Accept-Language`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language) HTTP request header.
+    summary: List of language tags provided in the [`Accept-Language`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Accept-Language) HTTP request header.
     description: |-
       Language tags are sorted by weight (`;q=<weight>`, with a default weight of `1`) in descending order.
 
@@ -1938,9 +1938,9 @@ entries:
     description: |-
       Use this field to differentiate between 1XXX errors associated with the same HTTP status code. The default value is `0`.
 
-      For a list of 1XXX errors, refer to [Troubleshooting Cloudflare 1XXX errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/).
+      For a list of 1XXX errors, refer to [Troubleshooting Cloudflare 1XXX errors](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/).
 
-      **Note**: This field is only available in [HTTP response header modifications](/rules/transform/response-header-modification/) and [Custom Errors](/rules/custom-errors/).
+      **Note**: This field is only available in [Response Header Transform Rules](/rules/transform/response-header-modification/) and [Custom Errors](/rules/custom-errors/).
     example_value: |-
       1020
 
@@ -1967,4 +1967,4 @@ entries:
 
       You can use this field to customize the response for a specific type of error (for example, all 1XXX errors or all WAF block actions).
 
-      **Note**: This field is only available in [HTTP response header modifications](/rules/transform/response-header-modification/) and [Custom Errors](/rules/custom-errors/).
+      **Note**: This field is only available in [Response Header Transform Rules](/rules/transform/response-header-modification/) and [Custom Errors](/rules/custom-errors/).

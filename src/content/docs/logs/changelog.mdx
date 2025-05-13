@@ -1,14 +1,20 @@
 ---
 pcx_content_type: changelog
 title: Changelog
-release_notes_file_name:
-  - logs
 sidebar:
   order: 140
 ---
 
-import { ProductReleaseNotes } from "~/components";
+import { ProductChangelog } from "~/components";
 
-{/* <!-- Actual content lives in /src/content/release-notes/logs.yaml. Update the file there for new entries to appear here. For more details, refer to https://developers.cloudflare.com/style-guide/documentation-content-strategy/content-types/changelog/#yaml-file --> */}
+{/* <!-- Actual content lives in /src/content/changelog/logs. Update the file there for new entries to appear here. */}
 
-<ProductReleaseNotes />
+<ProductChangelog product="logs" />
+
+## 2024-10-08
+
+Cloudflare has introduced new fields two Gateway-related datasets in Cloudflare Logs:
+
+  * **Gateway HTTP**: `ApplicationIDs`, `ApplicationNames`, `CategoryIDs`, `CategoryNames`, `DestinationIPContinentCode`, `DestinationIPCountryCode`, `ProxyEndpoint`, `SourceIPContinentCode`, `SourceIPCountryCode`, `VirtualNetworkID`, and `VirtualNetworkName`.
+
+  * **Gateway Network**: `ApplicationIDs`, `ApplicationNames`, `DestinationIPContinentCode`, `DestinationIPCountryCode`, `ProxyEndpoint`, `SourceIPContinentCode`, `SourceIPCountryCode`, `TransportProtocol`, `VirtualNetworkID`, and `VirtualNetworkName`.

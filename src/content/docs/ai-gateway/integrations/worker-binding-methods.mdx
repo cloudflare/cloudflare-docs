@@ -34,13 +34,17 @@ This configuration sets up the AI binding accessible in your Worker code as `env
 To perform an inference task using Workers AI and an AI Gateway, you can use the following code:
 
 ```typescript title="src/index.ts"
-const resp = await env.AI.run("@cf/meta/llama-3.1-8b-instruct", {
-  prompt: "tell me a joke"
-}, {
-  gateway: {
-    id: "my-gateway"
-  }
-});
+const resp = await env.AI.run(
+	"@cf/meta/llama-3.1-8b-instruct",
+	{
+		prompt: "tell me a joke",
+	},
+	{
+		gateway: {
+			id: "my-gateway",
+		},
+	},
+);
 ```
 
 Additionally, you can access the latest request log ID with:
@@ -64,12 +68,12 @@ Once you have the gateway instance, you can use the following methods:
 The `patchLog` method allows you to send feedback, score, and metadata for a specific log ID. All object properties are optional, so you can include any combination of the parameters:
 
 ```typescript
-gateway.patchLog('my-log-id', {
-  feedback: 1,
-  score: 100,
-  metadata: {
-    user: "123"
-  }
+gateway.patchLog("my-log-id", {
+	feedback: 1,
+	score: 100,
+	metadata: {
+		user: "123",
+	},
 });
 ```
 
@@ -97,7 +101,7 @@ const baseUrl = await gateway.getUrl();
 // Output: https://gateway.ai.cloudflare.com/v1/my-account-id/my-gateway/
 
 // Get a provider-specific URL
-const openaiUrl = await gateway.getUrl('openai');
+const openaiUrl = await gateway.getUrl("openai");
 // Output: https://gateway.ai.cloudflare.com/v1/my-account-id/my-gateway/openai
 ```
 
@@ -110,30 +114,33 @@ const openaiUrl = await gateway.getUrl('openai');
 The `getUrl` method is particularly useful for integrating with popular AI SDKs:
 
 **OpenAI SDK:**
+
 ```typescript
 import OpenAI from "openai";
 
 const openai = new OpenAI({
-  apiKey: "my api key", // defaults to process.env["OPENAI_API_KEY"]
-  baseURL: await env.AI.gateway('my-gateway').getUrl('openai'),
+	apiKey: "my api key", // defaults to process.env["OPENAI_API_KEY"]
+	baseURL: await env.AI.gateway("my-gateway").getUrl("openai"),
 });
 ```
 
 **Vercel AI SDK with OpenAI:**
+
 ```typescript
 import { createOpenAI } from "@ai-sdk/openai";
 
 const openai = createOpenAI({
-  baseURL: await env.AI.gateway('my-gateway').getUrl('openai'),
+	baseURL: await env.AI.gateway("my-gateway").getUrl("openai"),
 });
 ```
 
 **Vercel AI SDK with Anthropic:**
+
 ```typescript
 import { createAnthropic } from "@ai-sdk/anthropic";
 
 const anthropic = createAnthropic({
-  baseURL: await env.AI.gateway('my-gateway').getUrl('anthropic'),
+	baseURL: await env.AI.gateway("my-gateway").getUrl("anthropic"),
 });
 ```
 
@@ -141,23 +148,23 @@ const anthropic = createAnthropic({
 
 The `run` method allows you to execute universal requests. Users can pass either a single universal request object or an array of them. This method supports all AI Gateway providers.
 
-Refer to the [Universal endpoint documentation](/ai-gateway/providers/universal/) for details about the available inputs.
+Refer to the [Universal endpoint documentation](/ai-gateway/universal/) for details about the available inputs.
 
 ```typescript
 const resp = await gateway.run({
-  provider: "workers-ai",
-  endpoint: "@cf/meta/llama-3.1-8b-instruct",
-  headers: {
-    authorization: "Bearer my-api-token"
-  },
-  query: {
-    prompt: "tell me a joke"
-  }
+	provider: "workers-ai",
+	endpoint: "@cf/meta/llama-3.1-8b-instruct",
+	headers: {
+		authorization: "Bearer my-api-token",
+	},
+	query: {
+		prompt: "tell me a joke",
+	},
 });
 ```
 
 - **Returns**: `Promise<Response>`
-- **Example Use Case**: Perform a [universal request](/ai-gateway/providers/universal/) to any supported provider.
+- **Example Use Case**: Perform a [universal request](/ai-gateway/universal/) to any supported provider.
 
 ## Conclusion
 

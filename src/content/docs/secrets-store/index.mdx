@@ -1,0 +1,28 @@
+---
+title: Cloudflare Secrets Store
+pcx_content_type: overview
+sidebar:
+  badge:
+    text: Beta
+  order: 1
+description: Use Secrets Store to encrypt and store sensitive information as secrets that are securely reusable across your Cloudflare account.
+head:
+  - tag: title
+    content: Overview
+---
+
+import { Description, Plan } from "~/components";
+
+<Description>
+Encrypt and store sensitive information as secrets that are securely reusable across your account.
+</Description>
+
+<Plan id="secrets_store.properties.availability.summary" />
+
+Cloudflare Secrets Store is a secure, centralized location in which account-level secrets are stored and managed. The secrets are securely encrypted and stored across all Cloudflare data centers.
+
+Secrets Store is currently [compatible with Cloudflare Workers](/secrets-store/integrations/workers/). Integrations with other products will be added in the future.
+
+:::note[China availability]
+Secrets Store is unavailable in the [Cloudflare China Network](/china-network/), operated by Cloudflare's partner JD Cloud.
+:::

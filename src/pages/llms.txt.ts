@@ -31,6 +31,9 @@ export const GET: APIRoute = async () => {
 		Easily build and deploy full-stack applications everywhere,
 		thanks to integrated compute, storage, and networking.
 
+		> [!TIP]
+		> An archive of Markdown files is available at https://developers.cloudflare.com/markdown.zip
+
 		${grouped
 			.map(([product, entries]) => {
 				return dedent(`
@@ -38,7 +41,7 @@ export const GET: APIRoute = async () => {
 
 				${entries
 					?.map((e) => {
-						const line = `- [${e.data.title}](https://developers.cloudflare.com/${e.id}/)`;
+						const line = `- [${e.data.title}](https://developers.cloudflare.com/${e.id}/index.md)`;
 
 						const description = e.data.description;
 

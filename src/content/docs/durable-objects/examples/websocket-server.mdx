@@ -198,6 +198,7 @@ Finally, configure your Wrangler file to include a Durable Object [binding](/dur
 
 ```toml title="wrangler.toml"
 name = "websocket-server"
+main = "src/index.ts"
 
 [[durable_objects.bindings]]
 name = "WEBSOCKET_SERVER"

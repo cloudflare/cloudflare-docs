@@ -51,7 +51,7 @@ sudo launchctl start com.cloudflare.cloudflared
 1. Update the `cloudflared` package:
 
 ```sh
-sudo apt-get upgrade cloudflared
+sudo apt-get update && sudo apt-get upgrade cloudflared
 ```
 
 2. Restart the service:
@@ -60,9 +60,9 @@ sudo apt-get upgrade cloudflared
 sudo systemctl restart cloudflared.service
 ```
 
-**If installed manually via `dpkg -i`:**
+**If installed via `dpkg -i`:**
 
-<Render file="tunnel/package-manager" product="cloudflare-one" />
+Use the following commands if you installed `cloudflared` using the `dpkg` package manager. <Render file="tunnel/package-manager" product="cloudflare-one" />
 
 1. Update the `cloudflared` package:
 

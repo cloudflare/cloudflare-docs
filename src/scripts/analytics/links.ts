@@ -20,6 +20,11 @@ export function registerLinks() {
 			continue;
 		}
 
+		if (hostname === "deploy.workers.cloudflare.com") {
+			registerLink("deploy button click", el);
+			continue;
+		}
+
 		if (
 			hostname === "workers.cloudflare.com" &&
 			pathname.startsWith("/playground#")

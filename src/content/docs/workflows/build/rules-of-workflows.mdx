@@ -380,7 +380,7 @@ export class MyWorkflow extends WorkflowEntrypoint {
 
 ### Instance IDs are unique
 
-Workflow [instance IDs](/workflows/build/workers-api/#workflowinstance) are unique per Workflow. The ID is the unique identifier that associates logs, metrics, state and status of a run to a specific an instance, even after completion. Allowing ID re-use would make it hard to understand if a Workflow instance ID referred to an instance that run yesterday, last week or today.
+Workflow [instance IDs](/workflows/build/workers-api/#workflowinstance) are unique per Workflow. The ID is the unique identifier that associates logs, metrics, state and status of a run to a specific instance, even after completion. Allowing ID re-use would make it hard to understand if a Workflow instance ID referred to an instance that run yesterday, last week or today.
 
 It would also present a problem if you wanted to run multiple different Workflow instances with different [input parameters](/workflows/build/events-and-parameters/) for the same user ID, as you would immediately need to determine a new ID mapping.
 

@@ -615,34 +615,34 @@ class AgentClient extends PartySocket {
 import { AgentClient } from "agents/client";
 
 // Connect to an Agent instance
-const socket = new AgentClient({
+const client = new AgentClient({
   agent: "chat-agent", // Name of your Agent class in kebab-case
   name: "support-room-123", // Specific instance name
-
-  // Optional event handlers
-  onOpen: () => {
-    console.log("Connected to agent");
-    // Send an initial message
-    socket.send(JSON.stringify({ type: "join", user: "user123" }));
-  },
-
-  onMessage: (event) => {
-    // Handle incoming messages
-    const data = JSON.parse(event.data);
-    console.log("Received:", data);
-
-    if (data.type === "state_update") {
-      // Update local UI with new state
-      updateUI(data.state);
-    }
-  },
-
-  onClose: () => console.log("Disconnected from agent")
+  host: window.location.host, // Using same host
 });
+
+client.onopen = () => {
+  console.log("Connected to agent");
+  // Send an initial message
+  client.send(JSON.stringify({ type: "join", user: "user123" }));
+};
+
+client.onmessage = (event) => {
+	// Handle incoming messages
+	const data = JSON.parse(event.data);
+	console.log("Received:", data);
+
+	if (data.type === "state_update") {
+		// Update local UI with new state
+		updateUI(data.state);
+	}
+};
+
+client.onclose = () => console.log("Disconnected from agent");
 
 // Send messages to the Agent
 function sendMessage(text) {
-  socket.send(JSON.stringify({
+  client.send(JSON.stringify({
     type: "message",
     text,
     timestamp: Date.now()

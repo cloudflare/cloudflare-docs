@@ -56,3 +56,20 @@ export default {
 	},
 };
 ```
+
+:::note
+
+If you construct a new request manually, rather than forwarding an existing one, ensure that you provide a valid and fully-qualified URL with a hostname. For example:
+
+```js
+export default {
+  async fetch(request, env) {
+    // provide a valid URL
+    let newRequest = new Request("https://valid-url.com", { method: "GET" });
+    let response = await env.WORKER_B.fetch(newRequest);
+    return response;
+  }
+};
+```
+
+:::

@@ -27,6 +27,10 @@
             ]
         },
         {
+            "property_id": "lora",
+            "value": "true"
+        },
+        {
             "property_id": "terms",
             "value": "https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/LICENSE"
         }

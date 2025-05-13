@@ -1,7 +1,11 @@
 ---
 pcx_content_type: how-to
 title: Use Direct Upload with continuous integration
-
+banner:
+  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
+  type: note
+  dismissible:
+    id: pages-migrate-to-workers
 ---
 
 Cloudflare Pages supports directly uploading prebuilt assets, allowing you to use custom build steps for your applications and deploy to Pages with [Wrangler](/workers/wrangler/install-and-update/). This guide will teach you how to deploy your application to Pages, using continuous integration.
@@ -26,7 +30,7 @@ To generate an API token:
 3. Select **API Tokens** > **Create Token**.
 4. Under **Custom Token**, select **Get started**.
 5. Name your API Token in the **Token name** field.
-6. Under **Permissions**, select *Account*, *Cloudflare Pages* and *Edit*:
+6. Under **Permissions**, select _Account_, _Cloudflare Pages_ and _Edit_:
 7. Select **Continue to summary** > **Create Token**.
 
 ![Follow the instructions above to create an API token for Cloudflare Pages](~/assets/images/pages/how-to/select-api-token-for-pages.png)
@@ -50,8 +54,8 @@ In the GitHub Action you have set up, environment variables are needed to push y
 1. Go to your project's repository in GitHub.
 2. Under your repository's name, select **Settings**.
 3. Select **Secrets** > **Actions** > **New repository secret**.
-4. Create one secret and put **CLOUDFLARE\_ACCOUNT\_ID** as the name with the value being your Cloudflare account ID.
-5. Create another secret and put **CLOUDFLARE\_API\_TOKEN** as the name with the value being your Cloudflare API token.
+4. Create one secret and put **CLOUDFLARE_ACCOUNT_ID** as the name with the value being your Cloudflare account ID.
+5. Create another secret and put **CLOUDFLARE_API_TOKEN** as the name with the value being your Cloudflare API token.
 
 Add the value of your Cloudflare account ID and Cloudflare API token as `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN`, respectively. This will ensure that these secrets are secure, and each time your Action runs, it will access these secrets.
 
@@ -92,9 +96,7 @@ The `${{ secrets.GITHUB_TOKEN }}` will be automatically provided by GitHub Actio
 
 :::note
 
-
 This workflow automatically triggers on the current git branch, unless you add a `branch` option to the `with` section.
-
 
 :::
 
@@ -125,30 +127,28 @@ Create a `.circleci/config.yml` file at the root of your project. This file cont
 ```yaml
 version: 2.1
 jobs:
- Publish-to-Pages:
-   docker:
-     - image: cimg/node:18.7.0
+  Publish-to-Pages:
+    docker:
+      - image: cimg/node:18.7.0
 
-   steps:
-     - checkout
-     # Run your project's build step
-     - run: npm install && npm run build
-     # Publish with wrangler
-     - run: npx wrangler pages deploy dist --project-name=<PROJECT NAME> # Replace dist with the name of your build folder and input your project name
+    steps:
+      - checkout
+      # Run your project's build step
+      - run: npm install && npm run build
+      # Publish with wrangler
+      - run: npx wrangler pages deploy dist --project-name=<PROJECT NAME> # Replace dist with the name of your build folder and input your project name
 
 workflows:
- Publish-to-Pages-workflow:
-   jobs:
-     - Publish-to-Pages
+  Publish-to-Pages-workflow:
+    jobs:
+      - Publish-to-Pages
 ```
 
 Your continuous integration workflow is broken down into jobs when using CircleCI. From the code block above, you can see that you first define a list of jobs that run on each commit. For example, your repository will run on a prebuilt docker image `cimg/node:18.7.0`. It first checks out the repository with the Node version specified in the image.
 
 :::note[Note]
 
-
 Wrangler requires a Node version of at least `16.17.0`. You must upgrade your Node.js version if your version is lower than `16.17.0`.
-
 
 :::
 

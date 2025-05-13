@@ -3,7 +3,11 @@ pcx_content_type: how-to
 title: Middleware
 sidebar:
   order: 5
-
+banner:
+  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
+  type: note
+  dismissible:
+    id: pages-migrate-to-workers
 ---
 
 Middleware is reusable logic that can be run before your [`onRequest`](/pages/functions/api-reference/#onrequests) function. Middlewares are typically utility functions. Error handling, user authentication, and logging are typical candidates for middleware within an application.
@@ -18,11 +22,11 @@ In `_middleware.js` files, you may export an `onRequest` handler or any of its m
 
 ```js
 export async function onRequest(context) {
-  try {
-    return await context.next();
-  } catch (err) {
-    return new Response(`${err.message}\n${err.stack}`, { status: 500 });
-  }
+	try {
+		return await context.next();
+	} catch (err) {
+		return new Response(`${err.message}\n${err.stack}`, { status: 500 });
+	}
 }
 ```
 
@@ -32,19 +36,19 @@ You can export an array of Pages Functions as your middleware handler. This allo
 
 ```js
 async function errorHandling(context) {
-  try {
-    return await context.next();
-  } catch (err) {
-    return new Response(`${err.message}\n${err.stack}`, { status: 500 });
-  }
+	try {
+		return await context.next();
+	} catch (err) {
+		return new Response(`${err.message}\n${err.stack}`, { status: 500 });
+	}
 }
 
 function authentication(context) {
-  if (context.request.headers.get("x-email") != "admin@example.com") {
-    return new Response("Unauthorized", { status: 403 });
-  }
+	if (context.request.headers.get("x-email") != "admin@example.com") {
+		return new Response("Unauthorized", { status: 403 });
+	}
 
-  return context.next();
+	return context.next();
 }
 
 export const onRequest = [errorHandling, authentication];

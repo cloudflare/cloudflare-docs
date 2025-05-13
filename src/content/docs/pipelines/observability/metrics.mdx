@@ -1,0 +1,99 @@
+---
+pcx_content_type: concept
+title: Metrics and analytics
+sidebar:
+  order: 10
+
+---
+
+Pipelines expose metrics which allow you to measure data ingested, requests made, and data delivered.
+
+The metrics displayed in the [Cloudflare dashboard](https://dash.cloudflare.com/) are queried from Cloudflare’s [GraphQL Analytics API](/analytics/graphql-api/). You can access the metrics [programmatically](#query-via-the-graphql-api) via GraphQL or HTTP client.
+
+## Metrics
+### Ingestion
+Pipelines export the below metrics within the `pipelinesIngestionAdaptiveGroups` dataset.
+
+| Metric                 | GraphQL Field Name        | Description 																										|
+| ---------------------- | ------------------------- | ---------------------------------------------------------------|
+| Ingestion Events       | `count`        					 | Number of ingestion events, or requests made, to a pipeline. 	|
+| Ingested Bytes       	 | `ingestedBytes`        	 | Total number of bytes ingested 																|
+| Ingested Records       | `ingestedRecords`         | Total number of records ingested 															|
+
+The `pipelinesIngestionAdaptiveGroups` dataset provides the following dimensions for filtering and grouping queries:
+* `pipelineId` - ID of the pipeline
+* `datetime` - Timestamp of the ingestion event
+* `date` - Timestamp of the ingestion event, truncated to the start of a day
+* `datetimeHour` - Timestamp of the ingestion event, truncated to the start of an hour
+* `datetimeMinute` - Timestamp of the ingestion event, truncated to the start of a minute
+
+### Delivery
+Pipelines export the below metrics within the `pipelinesDeliveryAdaptiveGroups` dataset.
+
+| Metric                 | GraphQL Field Name        | Description 																										|
+| ---------------------- | ------------------------- | ---------------------------------------------------------------|
+| Ingestion Events       | `count`        					 | Number of delivery events to an R2 bucket 											|
+| Delivered Bytes        | `deliveredBytes`        	 | Total number of bytes ingested 																|
+
+The `pipelinesDeliverynAdaptiveGroups` dataset provides the following dimensions for filtering and grouping queries:
+* `pipelineId` - ID of the pipeline
+* `datetime` - Timestamp of the delivery event
+* `date` - Timestamp of the delivery event, truncated to the start of a day
+* `datetimeHour` - Timestamp of the delivery event, truncated to the start of an hour
+* `datetimeMinute` - Timestamp of the delivery event, truncated to the start of a minute
+
+
+## Query via the GraphQL API
+
+You can programmatically query analytics for your pipelines via the [GraphQL Analytics API](/analytics/graphql-api/). This API queries the same datasets as the Cloudflare dashboard and supports GraphQL [introspection](/analytics/graphql-api/features/discovery/introspection/).
+
+Pipelines GraphQL datasets require an `accountTag` filter with your Cloudflare account ID.
+
+### Measure total bytes & records ingested over time period
+
+```graphql
+query PipelineIngestion($accountTag: string!, $pipelineId: string!, $datetimeStart: Time!, $datetimeEnd: Time!) {
+  viewer {
+    accounts(filter: {accountTag: $accountTag}) {
+      pipelinesIngestionAdaptiveGroups(
+        limit: 10000
+        filter: {
+          pipelineId: $pipelineId
+          datetime_geq: $datetimeStart
+          datetime_leq: $datetimeEnd
+          }
+
+        )
+      {
+        sum {
+          ingestedBytes,
+          ingestedRecords,
+        }
+      }
+    }
+  }
+}
+```
+
+### Measure volume of data delivered
+
+```graphql
+query PipelineDelivery($accountTag: string!, $pipelineId: string!, $datetimeStart: Time!, $datetimeEnd: Time!) {
+  viewer {
+    accounts(filter: {accountTag: $accountTag}) {
+      pipelinesDeliveryAdaptiveGroups(
+        limit: 10000
+        filter: {
+          pipelineId: $pipelineId
+          datetime_geq: $datetimeStart
+          datetime_leq: $datetimeEnd
+        }
+      ) {
+        sum {
+          deliveredBytes,
+        }
+      }
+    }
+  }
+}
+```

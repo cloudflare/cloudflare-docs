@@ -275,22 +275,8 @@ transferred_classes = [{from = "DurableObjectExample", from_script = "OldWorkerS
 Note that `.toml` files do not allow line breaks in inline tables (the `{key = "value"}` syntax), but line breaks in the surrounding inline array are acceptable.
 :::
 
-{/* ## Examples of Durable Object migration
-
-To illustrate an example migrations workflow, the `DurableObjectExample` class can be initially defined with:
-
-<WranglerConfig>
-
-```toml
-# Creating a new Durable Object class
-[[migrations]]
-tag = "v1" # Migration identifier. This should be unique for each migration entry
-new_sqlite_classes = ["DurableObjectExample"] # Array of new classes
-```
-
-</WranglerConfig>
-
-You can rename the `DurableObjectExample` class to `UpdatedName` and delete an outdated `DeprecatedClass` entirely. You can create separate migrations for each operation, or combine them into a single migration as shown below. */}
-
-
 You cannot enable a SQLite storage backend on an existing, deployed Durable Object class, so setting `new_sqlite_classes` on later migrations will fail with an error. Automatic migration of deployed classes from their key-value storage backend to SQLite storage backend will be available in the future.
+
+:::caution[Important]
+Durable Object migrations are atomic operations and cannot be gradually deployed. To provide early feedback to developers, new Worker versions with new migrations cannot be uploaded. Refer to [Gradual deployments for Durable Objects](/workers/configuration/versions-and-deployments/gradual-deployments/#gradual-deployments-for-durable-objects) for more information.
+:::

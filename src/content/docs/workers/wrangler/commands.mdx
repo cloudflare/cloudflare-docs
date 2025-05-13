@@ -33,9 +33,12 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`r2 object`](#r2-object) - Manage Workers R2 objects.
 - [`secret`](#secret) - Manage the secret variables for a Worker.
 - [`secret bulk`](#secret-bulk) - Manage multiple secret variables for a Worker.
+- [`secrets-store secret`](#secrets-store-secret) - Manage account secrets within a secrets store.
+- [`secrets-store store`](#secrets-store-store) - Manage your store within secrets store.
 - [`workflows`](#workflows) - Manage and configure Workflows.
 - [`tail`](#tail) - Start a session to livestream logs from a deployed Worker.
 - [`pages`](#pages) - Configure Cloudflare Pages.
+- [`pipelines`](#pipelines) - Configure Cloudflare Pipelines.
 - [`queues`](#queues) - Configure Workers Queues.
 - [`login`](#login) - Authorize Wrangler with your Cloudflare account using OAuth.
 - [`logout`](#logout) - Remove Wrangler’s authorization for accessing your account.
@@ -178,222 +181,7 @@ Manage [Hyperdrive](/hyperdrive/) database configurations.
 
 Interact with a [Vectorize](/vectorize/) vector database.
 
-### `create`
-
-Creates a new vector index, and provides the binding and name that you will put in your Wrangler file.
-
-```sh
-npx wrangler vectorize create <INDEX_NAME> [--dimensions=<NUM_DIMENSIONS>] [--metric=<DISTANCE_METRIC>] [--description=<DESCRIPTION>]
-```
-
-- `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the new index to create. Must be unique for an account and cannot be changed after creation.
-- `--dimensions` <Type text="number" /> <MetaInfo text="required" />
-  - The vector dimension width to configure the index for. Cannot be changed after creation.
-- `--metric` <Type text="string" /> <MetaInfo text="required" />
-  - The distance metric to use for calculating vector distance. Must be one of `cosine`, `euclidean`, or `dot-product`.
-- `--description` <Type text="string" /> <MetaInfo text="optional" />
-  - A description for your index.
-- `--deprecated-v1` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Create a legacy Vectorize index. Please note that legacy Vectorize indexes are on a [deprecation path](/vectorize/reference/transition-vectorize-legacy).
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `list`
-
-List all Vectorize indexes in your account, including the configured dimensions and distance metric.
-
-```sh
-npx wrangler vectorize list
-```
-
-- `--deprecated-v1` <Type text="boolean" /> <MetaInfo text="optional" />
-  - List legacy Vectorize indexes. Please note that legacy Vectorize indexes are on a [deprecation path](/vectorize/reference/transition-vectorize-legacy).
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `get`
-
-Get details about an individual index, including its configuration.
-
-```sh
-npx wrangler vectorize get <INDEX_NAME>
-```
-
-- `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the index to fetch details for.
-- `--deprecated-v1` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Get a legacy Vectorize index. Please note that legacy Vectorize indexes are on a [deprecation path](/vectorize/reference/transition-vectorize-legacy).
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `info`
-
-Get some additional information about an individual index, including the vector count and details about the last processed mutation.
-
-```sh
-npx wrangler vectorize info <INDEX_NAME>
-```
-
-- `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the index to fetch details for.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `delete`
-
-Delete a Vectorize index.
-
-```sh
-npx wrangler vectorize delete <INDEX_NAME> [OPTIONS]
-```
-
-- `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the Vectorize index to delete.
-- `--force` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Skip confirmation when deleting the index (Note: This is not a recoverable operation).
-- `--deprecated-v1` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Delete a legacy Vectorize index. Please note that legacy Vectorize indexes are on a [deprecation path](/vectorize/reference/transition-vectorize-legacy).
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `insert`
-
-Insert vectors into an index.
-
-```sh
-npx wrangler vectorize insert <INDEX_NAME> [OPTIONS]
-```
-
-- `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the Vectorize index to upsert vectors in.
-- `--file` <Type text="string" /> <MetaInfo text="required" />
-  - A file containing the vectors to insert in newline-delimited JSON (JSON) format.
-- `--batch-size` <Type text="number" /> <MetaInfo text="optional" />
-  - The number of vectors to insert at a time (default: `1000`).
-- `--deprecated-v1` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Insert into a legacy Vectorize index. Please note that legacy Vectorize indexes are on a [deprecation path](/vectorize/reference/transition-vectorize-legacy).
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `upsert`
-
-Upsert vectors into an index. Existing vectors in the index would be overwritten.
-
-```sh
-npx wrangler vectorize upsert <INDEX_NAME> [OPTIONS]
-```
-
-- `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the Vectorize index to upsert vectors in.
-- `--file` <Type text="string" /> <MetaInfo text="required" />
-  - A file containing the vectors to insert in newline-delimited JSON (JSON) format.
-- `--batch-size` <Type text="number" /> <MetaInfo text="optional" />
-  - The number of vectors to insert at a time (default: `5000`).
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `query`
-
-Query a Vectorize index for similar vectors.
-
-```sh
-npx wrangler vectorize query <INDEX_NAME> [OPTIONS]
-```
-
-- `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the Vectorize index to query.
-- `--vector` <Type text="array" /> <MetaInfo text="optional" />
-  - Vector against which the Vectorize index is queried. Either this or the `vector-id` param must be provided.
-- `--vector-id` <Type text="string" /> <MetaInfo text="optional" />
-  - Identifier for a vector that is already present in the index against which the index is queried. Either this or the `vector` param must be provided.
-- `--top-k` <Type text="number" /> <MetaInfo text="optional" />
-  - The number of vectors to query (default: `5`).
-- `--return-values` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Enable to return vector values in the response (default: `false`).
-- `--return-metadata` <Type text="string" /> <MetaInfo text="optional" />
-  - Enable to return vector metadata in the response. Must be one of `none`, `indexed`, or `all` (default: `none`).
-- `--namespace` <Type text="string" /> <MetaInfo text="optional" />
-  - Query response to only include vectors from this namespace.
-- `--filter` <Type text="string" /> <MetaInfo text="optional" />
-  - Filter vectors based on this metadata filter. Example: `'{ 'p1': 'abc', 'p2': { '$ne': true }, 'p3': 10, 'p4': false, 'nested.p5': 'abcd' }'`
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `get-vectors`
-
-Fetch vectors from a Vectorize index using the provided ids.
-
-```sh
-npx wrangler vectorize get-vectors <INDEX_NAME> [OPTIONS]
-```
-
-- `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the Vectorize index from which vectors need to be fetched.
-- `--ids` <Type text="array" /> <MetaInfo text="required" />
-  - List of ids for which vectors must be fetched.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `delete-vectors`
-
-Delete vectors in a Vectorize index using the provided ids.
-
-```sh
-npx wrangler vectorize delete-vectors <INDEX_NAME> [OPTIONS]
-```
-
-- `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the Vectorize index from which vectors need to be deleted.
-- `--ids` <Type text="array" /> <MetaInfo text="required" />
-  - List of ids corresponding to the vectors that must be deleted.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `create-metadata-index`
-
-Enable metadata filtering on the specified property.
-
-```sh
-npx wrangler vectorize create-metadata-index <INDEX_NAME> [OPTIONS]
-```
-
-- `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the Vectorize index for which metadata index needs to be created.
-- `--property-name` <Type text="string" /> <MetaInfo text="required" />
-  - Metadata property for which metadata filtering should be enabled.
-- `--type` <Type text="string" /> <MetaInfo text="required" />
-  - Data type of the property. Must be one of `string`, `number`, or `boolean`.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `list-metadata-index`
-
-List metadata properties on which metadata filtering is enabled.
-
-```sh
-npx wrangler vectorize list-metadata-index <INDEX_NAME> [OPTIONS]
-```
-
-- `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the Vectorize index for which metadata indexes needs to be fetched.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `delete-metadata-index`
-
-Disable metadata filtering on the specified property.
-
-```sh
-npx wrangler vectorize delete-metadata-index <INDEX_NAME> [OPTIONS]
-```
-
-- `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the Vectorize index for which metadata index needs to be disabled.
-- `--property-name` <Type text="string" /> <MetaInfo text="required" />
-  - Metadata property for which metadata filtering should be disabled.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+<Render file="wrangler-commands/vectorize" product="workers" />
 
 ---
 
@@ -480,7 +268,7 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
 - `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Develop against remote resources and data stored on Cloudflare's network.
 - `--test-scheduled` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
-  - Exposes a `/__scheduled` fetch route which will trigger a scheduled event (Cron Trigger) for testing during development. To simulate different cron patterns, a `cron` query parameter can be passed in: `/__scheduled?cron=*+*+*+*+*`.
+  - Exposes a `/__scheduled` fetch route which will trigger a scheduled event (Cron Trigger) for testing during development. To simulate different cron patterns, a `cron` query parameter can be passed in: `/__scheduled?cron=*+*+*+*+*` or `/cdn-cgi/handler/scheduled?cron=*+*+*+*+*`.
 - `--log-level` <Type text="'debug'|'info'|'log'|'warn'|'error|'none'" /> <MetaInfo text="(default: log) optional" />
   - Specify Wrangler's logging level.
 - `--show-interactive-dev-session` <Type text="boolean" /> <MetaInfo text="(default: true if the terminal supports interactivity) optional" />
@@ -727,6 +515,238 @@ npx wrangler secret bulk < secrets.json
 Finished processing secrets JSON file:
 ✨ 1 secrets successfully uploaded
 🚨 1 secrets failed to upload
+```
+
+## `secrets-store secret`
+
+With the release of [Secrets Store](/secrets-store/) in open beta, you can use the following commands to manage your account secrets.
+
+:::note[`--remote` option]
+In order to interact with Secrets Store in production, you should append `--remote` to your command. Without it, your command will default to [local development mode](/workers/local-development/).
+:::
+
+### `create`
+
+Create a secret within a store.
+
+```txt
+wrangler secrets-store secret create <STORE_ID> [OPTIONS]
+```
+
+- `STORE_ID` <Type text="string" /> <MetaInfo text="required" />
+  - The secret store public ID. You can find it and copy from the [Secrets Store tab](https://dash.cloudflare.com/?to=/:account/secrets-store/) on the dashboard.
+- `--name` <Type text="string" /> <MetaInfo text="required" />
+  - A descriptive name for the account-level secret. Cannot contain spaces.
+- `--value` <Type text="string" /> <MetaInfo text="test only" />
+  - Value of the secret.
+    :::caution[Only use for testing]
+    This will leave the secret value in plain-text in terminal history. For real secret values, use the automatic prompt instead. Find an example below.
+    :::
+- `--scopes` <Type text="string" /> <MetaInfo text="required" />
+  - Which services will have access to the account-level secret. Currently, only `workers` is available.
+- `--comment` <Type text="string" /> <MetaInfo text="optional" />
+  - Additional information about the account-level secret.
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Execute the command against the remote Secrets Store. To interact with account-level secrets in production, make sure to append `--remote` to your commands.
+
+The following is an example of using the `create` command to create an account-level secret.
+
+```sh
+npx wrangler secrets-store secret create 8f7a1cdced6342c18d223ece462fd88d --name ServiceA_key-1 --scopes workers --remote
+```
+
+```sh output
+✓ Enter a secret value: › ***
+
+🔐 Creating secret... (Name: ServiceA_key-1, Value: REDACTED, Scopes: workers, Comment: undefined)
+✓ Select an account: › My account
+✅ Created secret! (ID: 13bc7498c6374a4e9d13be091c3c65f1)
+```
+
+### `update`
+
+Update a secret within a store.
+
+```txt
+wrangler secrets-store secret update <STORE_ID> [OPTIONS]
+```
+
+- `STORE_ID` <Type text="string" /> <MetaInfo text="required" />
+  - The ID of the secrets store that contains the secret you are updating.
+- `--secret-id` <Type text="string" /> <MetaInfo text="required" />
+  - The ID of the secret to update.
+- `--value` <Type text="string" /> <MetaInfo text="test only" />
+  - Updated value of the secret.
+    :::caution[Only use for testing]
+    This will leave the secret value in plain-text in terminal history. For real secret values, use the automatic prompt instead.
+    :::
+- `--scopes` <Type text="string" /> <MetaInfo text="required" />
+  - Which services will have access to the account-level secret. Currently, only `workers` is available.
+- `--comment` <Type text="string" /> <MetaInfo text="optional" />
+  - Updated comment for the account-level secret.
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Execute the command against the remote Secrets Store. To interact with account-level secrets in production, make sure to append `--remote` to your commands.
+
+### `duplicate`
+
+Duplicate a secret within a store. Use this command to create a new secret that holds the same secret value as an existing secret.
+
+```txt
+wrangler secrets-store secret duplicate <STORE_ID> [OPTIONS]
+```
+
+- `STORE_ID` <Type text="string" /> <MetaInfo text="required" />
+  - The ID of the secrets store that contains the secret you are duplicating.
+- `--secret-id` <Type text="string" /> <MetaInfo text="required" />
+  - The ID of the secret you are duplicating.
+- `--name` <Type text="string" /> <MetaInfo text="required" />
+  - A name for the new secret. Cannot contain spaces.
+- `--scopes` <Type text="string" /> <MetaInfo text="required" />
+  - Which services will have access to the new account-level secret. Currently, only `workers` is available.
+- `--comment` <Type text="string" /> <MetaInfo text="optional" />
+  - Additional information about the new account-level secret.
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Execute the command against the remote Secrets Store. To interact with account-level secrets in production, make sure to append `--remote` to your commands.
+
+### `get`
+
+Get information on a secret within a store.
+
+```txt
+wrangler secrets-store secret get <STORE_ID> [OPTIONS]
+```
+
+- `STORE_ID` <Type text="string" /> <MetaInfo text="required" />
+  - The ID of the secrets store that contains the secret you want to get.
+- `--secret-id` <Type text="string" /> <MetaInfo text="required" />
+  - The ID of the secret you want to get.
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Execute the command against the remote Secrets Store. To interact with account-level secrets in production, make sure to append `--remote` to your commands.
+
+The following is an example with the expected output:
+
+```sh
+npx wrangler secrets-store secret get 8f7a1cdced6342c18d223ece462fd88d --secret-id 13bc7498c6374a4e9d13be091c3c65f1 --remote
+```
+
+```sh output
+🔐 Getting secret... (ID: 13bc7498c6374a4e9d13be091c3c65f1)
+✓ Select an account: › My account
+| Name                        | ID                                  | StoreID                             | Comment | Scopes  | Status  | Created                | Modified               |
+|-----------------------------|-------------------------------------|-------------------------------------|---------|---------|---------|------------------------|------------------------|
+| ServiceA_key-1          | 13bc7498c6374a4e9d13be091c3c65f1    | 8f7a1cdced6342c18d223ece462fd88d    |         | workers | active  | 4/9/2025, 10:06:01 PM  | 4/15/2025, 09:13:05 AM |
+```
+
+### `delete`
+
+Delete a secret within a store.
+
+:::caution
+Before deleting a secret, make sure it is not deployed in any Workers application.
+:::
+
+```txt
+wrangler secrets-store secret delete <STORE_ID> [OPTIONS]
+```
+
+- `STORE_ID` <Type text="string" /> <MetaInfo text="required" />
+  - The ID of the secrets store that contains the secret you are deleting.
+- `--secret-id` <Type text="string" /> <MetaInfo text="required" />
+  - The ID of the secret you are deleting.
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Execute the command against the remote Secrets Store. To interact with account-level secrets in production, make sure to append `--remote` to your commands.
+
+### `list`
+
+List secrets within a store.
+
+```txt
+wrangler secrets-store secret list <STORE_ID>
+```
+
+- `STORE_ID` <Type text="string" /> <MetaInfo text="required" />
+  - The secret store public ID. You can find it and copy from the [Secrets Store tab](https://dash.cloudflare.com/?to=/:account/secrets-store/) on the dashboard.
+
+## `secrets-store store`
+
+Use the following commands to manage your store.
+
+:::note[Store limitation]
+[Secrets Store](/secrets-store/) is in open beta. Currently, you can only have one store per Cloudflare account.
+:::
+
+### `create`
+
+Create a store within Secrets Store.
+
+```txt
+wrangler secrets-store store create <name>
+```
+
+- `name` <Type text="string" /> <MetaInfo text="required" />
+  - A descriptive name for the account-level secret. Cannot contain spaces.
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) required" />
+  - Execute the command against the remote Secrets Store.
+
+The following is an example of using the `create` command to create a store.
+
+```sh
+npx wrangler secrets-store store create default --remote
+```
+
+```sh output
+🔐 Creating store... (Name: default)
+✅ Created store! (Name: default, ID: 2e2a82d317134506b58defbe16982d54)
+```
+
+### `delete`
+
+Delete a store within Secrets Store.
+
+```txt
+wrangler secrets-store store delete <STORE_ID>
+```
+
+- `STORE_ID` <Type text="string" /> <MetaInfo text="required" />
+  - The secret store public ID. You can find it and copy from the [Secrets Store tab](https://dash.cloudflare.com/?to=/:account/secrets-store/) on the dashboard.
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) required" />
+  - Execute the command against the remote Secrets Store.
+
+The following is an example of using the `delete` command to delete a store.
+
+```sh
+npx wrangler secrets-store store delete d2dafaeac9434de2b6d08b292ce08211 --remote
+```
+
+```sh output
+🔐 Deleting store... (Name: d2dafaeac9434de2b6d08b292ce08211)
+✅ Deleted store! (ID: d2dafaeac9434de2b6d08b292ce08211)
+```
+
+### `list`
+
+List the stores within an account.
+
+```txt
+wrangler secrets-store store list
+```
+
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) required" />
+  - Execute the command against the remote Secrets Store.
+
+The following is an example of using the `list` command to list stores.
+
+```sh
+npx wrangler secrets-store store list --remote
+```
+
+```sh output
+🔐 Listing stores...
+┌─────────┬──────────────────────────────────┬──────────────────────────────────┬──────────────────────┬──────────────────────┐
+│ Name    │ ID                               │ AccountID                        │ Created              │ Modified             │
+├─────────┼──────────────────────────────────┼──────────────────────────────────┼──────────────────────┼──────────────────────┤
+│ default │ 8876bad33f164462bf0743fe8adf98f4 │ REDACTED │ 4/9/2025, 1:11:48 PM  │ 4/9/2025, 1:11:48 PM │
+└─────────┴──────────────────────────────────┴──────────────────────────────────┴──────────────────────┴──────────────────────┘
 ```
 
 ## `workflows`
@@ -1184,6 +1204,12 @@ wrangler pages functions build [<DIRECTORY>] [OPTIONS]
 
 ---
 
+## `pipelines`
+
+Manage your [Pipelines](/pipelines/).
+
+<Render file="wrangler-commands/pipelines" product="workers" />
+
 ## `queues`
 
 Manage your Workers [Queues](/queues/) configurations.
@@ -1347,16 +1373,20 @@ wrangler login [OPTIONS]
 
 - `--scopes-list` <Type text="string" /> <MetaInfo text="optional" />
   - List all the available OAuth scopes with descriptions.
-- `--scopes $SCOPES` <Type text="string" /> <MetaInfo text="optional" />
+- `--scopes` <Type text="string" /> <MetaInfo text="optional" />
   - Allows to choose your set of OAuth scopes. The set of scopes must be entered in a whitespace-separated list,
     for example, `npx wrangler login --scopes account:read user:read`.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+- `--callback-host` <Type text="string" /> <MetaInfo text="optional" />
+  - Defaults to `localhost`. Sets the IP or hostname where Wrangler should listen for the OAuth callback.
+- `--callback-port` <Type text="string" /> <MetaInfo text="optional" />
+  - Defaults to `8976`. Sets the port where Wrangler should listen for the OAuth callback.
 
 :::note
 
 `wrangler login` uses all the available scopes by default if no flags are provided.
 :::
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 If Wrangler fails to open a browser, you can copy and paste the URL generated by `wrangler login` in your terminal into a browser and log in.
 

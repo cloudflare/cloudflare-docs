@@ -18,9 +18,11 @@ The WARP client allows organizations to have granular control over the applicati
 
 | Connection                                                                                                                                     | Protocol | Purpose                                                                                                         |
 | ---------------------------------------------------------------------------------------------------------------------------------------------- | -------- | --------------------------------------------------------------------------------------------------------------- |
-| Device orchestration                                                                                                                           | HTTPS    | Perform user registration, check device posture, apply WARP profile settings.                                   |
-| [DoH](https://www.cloudflare.com/learning/dns/dns-over-tls/)                                                                                   | HTTPS    | Send DNS requests to Gateway for DNS policy enforcement.                                                        |
 | WARP tunnel ([via WireGuard or MASQUE](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#device-tunnel-protocol)) | UDP      | Send IP packets to Gateway for network policy enforcement, HTTP policy enforcement, and private network access. |
+| [DoH](https://www.cloudflare.com/learning/dns/dns-over-tls/)                                                                                   | HTTPS    | Send DNS requests to Gateway for DNS policy enforcement. The DoH connection is maintained inside of the WARP tunnel.[^1]      |
+| Device orchestration                                                                                                                           | HTTPS    | Perform user registration, check device posture, apply WARP profile settings.                                   |
+
+[^1]: DoH is currently outside of the tunnel on iOS and Android/ChromeOS.
 
 ```mermaid
 flowchart LR
@@ -32,17 +34,22 @@ end
 subgraph Cloudflare
 A[Zero Trust account]
 subgraph Gateway
-G[DNS resolver]
 N[L3/L4 firewall]
+G[DNS resolver]
 end
 end
-W<--Device orchestration-->A
-D<--DoH-->G
-V<--WARP tunnel-->N
+W<--"Device
+orchestration"-->A
+subgraph tunnel["WARP tunnel"]
+ ip@{ shape: text, label: "Network traffic" }
+  dns@{ shape: text, label: "DNS traffic" }
+end
+V --- ip-->N
+D --- dns-->G
 N --> O[(Application)]
 ```
 
-Your [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) configuration determines what traffic is sent down the WARP tunnel. Your [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) configuration determines which DNS requests are sent to Gateway via DoH. Traffic to the [DoH endpoint](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#doh-ip) and [device orchestration API](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#client-orchestration-api) endpoint do not obey Split Tunnel rules, since those connections always operate outside of the WARP tunnel.
+Your [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) configuration determines what IP traffic is sent down the WARP tunnel. Your [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) configuration determines which DNS requests are sent to Gateway via DoH. Traffic to the [device orchestration API](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#client-orchestration-api) endpoint does not obey Split Tunnel rules since the connection always operates outside of the WARP tunnel.
 
 Next, you will learn how WARP configures your operating system to apply your Local Domain Fallback and Split Tunnel routing rules. Implementation details differ between desktop and mobile clients.
 
@@ -68,7 +75,7 @@ Browsers with DoH configured will bypass the local DNS proxy. You may need to di
 
 Based on your Local Domain Fallback configuration, WARP will either forward the request to Gateway for DNS policy enforcement or forward the request to your private DNS resolver.
 
-- Requests to Gateway are sent over our [DoH connection](#overview) (outside of the WARP tunnel).
+- Requests to Gateway are sent over our [DoH connection](#overview) inside the WARP tunnel.
 - Requests to your private DNS resolver are sent either inside or outside of the tunnel depending on your Split Tunnel configuration. For more information, refer to [How the WARP client handles DNS requests](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/#how-the-warp-client-handles-dns-requests).
 
 ```mermaid

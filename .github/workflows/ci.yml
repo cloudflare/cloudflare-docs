@@ -28,6 +28,12 @@ jobs:
           key: static
 
       - run: npm ci
+
+      - run: npx tsx bin/post-codeowners-comment/index.ts
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - run: npm run check
 
       - uses: reviewdog/action-eslint@v1

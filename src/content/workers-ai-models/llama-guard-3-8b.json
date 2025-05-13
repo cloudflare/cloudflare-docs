@@ -25,6 +25,10 @@
                     "currency": "USD"
                 }
             ]
+        },
+        {
+            "property_id": "lora",
+            "value": "true"
         }
     ],
     "schema": {

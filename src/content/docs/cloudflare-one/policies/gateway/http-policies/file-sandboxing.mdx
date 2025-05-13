@@ -85,4 +85,7 @@ Gateway executes quarantined files in a sandboxed Windows operating system envir
 
 ### Non-scannable files
 
-<Render file="gateway/nonscannable-files" params={{ fileSizeLimitMB: "100" }} />
+Gateway cannot scan requests containing the following files:
+
+- Files larger than 100 MB
+- PGP encrypted files

@@ -15,6 +15,12 @@ sidebar:
 description: Cache POST requests using the Cache API.
 ---
 
+If you want to get started quickly, click on the button below.
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/docs-examples/tree/main/workers/cache-post-request)
+
+This creates a repository in your GitHub account and deploys the application to Cloudflare Workers.
+
 import { TabItem, Tabs } from "~/components";
 
 <Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
@@ -145,6 +151,60 @@ async def on_fetch(request, _, ctx):
         return response
 
     return fetch(request)
+```
+
+</TabItem> <TabItem label="Hono" icon="seti:typescript">
+
+```ts
+import { Hono } from "hono";
+import { sha256 } from "hono/utils/crypto";
+
+const app = new Hono();
+
+// Middleware for caching POST requests
+app.post("*", async (c) => {
+	try {
+		// Get the request body
+		const body = await c.req.raw.clone().text();
+
+		// Hash the request body to use it as part of the cache key
+		const hash = await sha256(body);
+
+		// Create the cache URL
+		const cacheUrl = new URL(c.req.url);
+
+		// Store the URL in cache by prepending the body's hash
+		cacheUrl.pathname = "/posts" + cacheUrl.pathname + hash;
+
+		// Convert to a GET to be able to cache
+		const cacheKey = new Request(cacheUrl.toString(), {
+			headers: c.req.raw.headers,
+			method: "GET",
+		});
+
+		const cache = caches.default;
+
+		// Find the cache key in the cache
+		let response = await cache.match(cacheKey);
+
+		// If not in cache, fetch response to POST request from origin
+		if (!response) {
+			response = await fetch(c.req.raw);
+			c.executionCtx.waitUntil(cache.put(cacheKey, response.clone()));
+		}
+
+		return response;
+	} catch (e) {
+		return c.text("Error thrown " + e.message, 500);
+	}
+});
+
+// Handle all other HTTP methods
+app.all("*", (c) => {
+	return fetch(c.req.raw);
+});
+
+export default app;
 ```
 
 </TabItem> </Tabs>

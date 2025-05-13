@@ -92,7 +92,7 @@ Objects that include `Function` or `Symbol` types, and objects with circular ref
 
   * `name` - the name of the step.
   * `duration` - the duration to sleep until, in either seconds or as a `WorkflowDuration` compatible string.
-  * Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-and-retrying/) to learn more about how how Workflows are retried.
+  * Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-and-retrying/) to learn more about how Workflows are retried.
 
 * <code>step.sleepUntil(name: string, timestamp: Date | number): Promise&lt;void&gt;</code>
 
@@ -143,14 +143,14 @@ export type WorkflowStepConfig = {
 
 * A `WorkflowStepConfig` is an optional argument to the `do` method of a `WorkflowStep` and defines properties that allow you to configure the retry behaviour of that step.
 
-Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-and-retrying/) to learn more about how how Workflows are retried.
+Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-and-retrying/) to learn more about how Workflows are retried.
 
 ## NonRetryableError
 
 * <code>throw new NonRetryableError(message: <Type text='string' />, name <Type text='string' /> <MetaInfo text='optional' />)</code>: <Type text='NonRetryableError' />
 
   * Throws an error that forces the current Workflow instance to fail and not be retried.
-  * Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-and-retrying/) to learn more about how how Workflows are retried.
+  * Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-and-retrying/) to learn more about how Workflows are retried.
 
 ## Call Workflows from Workers
 

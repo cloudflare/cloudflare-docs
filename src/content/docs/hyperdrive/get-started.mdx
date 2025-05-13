@@ -107,7 +107,7 @@ Hyperdrive accepts the combination of these parameters in the common connection 
 <Tabs>
 	<TabItem label="PostgreSQL">
 		```txt
-		
+
 		postgres://USERNAME:PASSWORD@HOSTNAME_OR_IP_ADDRESS:PORT/database_name
 
     	```
@@ -292,11 +292,11 @@ export default {
 		// Create a connection using the mysql2 driver (or any support driver, ORM or query builder)
 		// with the Hyperdrive credentials. These credentials are only accessible from your Worker.
 		const connection = await createConnection({
-			host: env.DB_HOST,
-			user: env.DB_USER,
-			password: env.DB_PASSWORD,
-			database: env.DB_NAME,
-			port: env.DB_PORT
+			host: env.HYPERDRIVE.host,
+			user: env.HYPERDRIVE.user,
+			password: env.HYPERDRIVE.password,
+			database: env.HYPERDRIVE.database,
+			port: env.HYPERDRIVE.port
 
 			// The following line is needed for mysql2 compatibility with Workers
 			// mysql2 uses eval() to optimize result parsing for rows with > 100 columns

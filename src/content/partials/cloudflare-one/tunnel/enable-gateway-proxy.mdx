@@ -4,10 +4,20 @@
 
 import { Tabs, TabItem } from "~/components";
 
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
 1. Go to **Settings** > **Network**.
 2. In **Firewall**, turn on **Proxy**.
 3. Select **TCP**.
 4. (Recommended) To proxy traffic to internal DNS resolvers, select **UDP**.
 5. (Recommended) To proxy traffic for diagnostic tools such as `ping` and `traceroute`, select **ICMP**. You may also need to [update your system](/cloudflare-one/connections/connect-networks/troubleshoot-tunnels/common-errors/#ping-and-traceroute-commands-do-not-work) to allow ICMP traffic through `cloudflared`.
+
+</TabItem>
+<TabItem label="Terraform (v5)">
+
+Proxy settings are not currently supported by the Terraform v5 provider (as of version 5.3.0). To turn on the Gateway proxy, use the dashboard or API.
+
+</TabItem>
+</Tabs>
 
 Cloudflare will now proxy traffic from enrolled devices, except for the traffic excluded in your [split tunnel settings](/cloudflare-one/connections/connect-networks/private-net/cloudflared/#3-route-private-network-ips-through-warp). For more information on how Gateway forwards traffic, refer to [Gateway proxy](/cloudflare-one/policies/gateway/proxy/).

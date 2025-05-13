@@ -16,6 +16,13 @@ const ModelBadges = ({ model }: { model: WorkersAIModelsSchema }) => {
 			};
 		}
 
+		if (property_id === "async_queue" && value === "true") {
+			return {
+				variant: "note",
+				text: "Batch",
+			};
+		}
+
 		if (property_id === "planned_deprecation_date") {
 			const timestamp = Math.floor(new Date(value as string).getTime() / 1000);
 

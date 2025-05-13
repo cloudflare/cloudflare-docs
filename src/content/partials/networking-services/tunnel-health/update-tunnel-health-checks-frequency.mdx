@@ -64,7 +64,19 @@ Below is an example of how to adjust tunnel health check frequency to `low`. Not
 { props.magicProduct === "Magic WAN" && (
   <>
 		<AnchorHeading depth={2} title="Configure Connector" />
-		<ol><li>Log in to the <a href='https://dash.cloudflare.com/'>Cloudflare dashboard</a> and select your account.</li><li>Go to <strong>Magic WAN</strong> {'>'} <strong>Sites</strong>.</li><li>Select your site {'>'} <strong>Edit</strong>.</li><li>In <strong>Network</strong> {'>'} <strong>WAN configuration</strong> {'>'} select your WAN {'>'} <strong>Edit</strong>.</li><li>Change the <strong>Health check rate</strong> to your desire rate.</li><li>Select <strong>Save</strong>.</li></ol>
+
+		<Markdown
+		text={`
+		1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+		2. Go to **Magic WAN** > **Sites**.
+		3. Select your site > **Edit**.
+		4. In **Network** > **WAN configuration** > select your WAN > **Edit**
+		5. Change the **Health check rate** to your desire rate.
+		6. Select **Save**.
+		`}
+		inline={false}
+		/>
+
   </>
   )
 }

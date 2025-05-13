@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Nuxt
-head: []
+tags: ["full-stack"]
 description: Create a Nuxt application and deploy it to Cloudflare Workers with Workers Assets.
 ---
 
@@ -13,18 +13,18 @@ import {
 	PackageManagers,
 } from "~/components";
 
-In this guide, you will create a new [Nuxt](https://nuxt.com/) application and deploy to Cloudflare Workers (with the new [<InlineBadge preset="beta" /> Workers Assets](/workers/static-assets/)).
+In this guide, you will create a new [Nuxt](https://nuxt.com/) application and deploy to Cloudflare Workers (with the new [Workers Assets](/workers/static-assets/)).
 
 ## 1. Set up a new project
 
 Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up a new project. C3 will create a new project directory, initiate Nuxt's official setup tool, and provide the option to deploy instantly.
 
-To use `create-cloudflare` to create a new Nuxt project with <InlineBadge preset="beta" /> Workers Assets, run the following command:
+To use `create-cloudflare` to create a new Nuxt project with Workers Assets, run the following command:
 
 <PackageManagers
 	type="create"
-	pkg="cloudflare@latest my-nuxt-app"
-	args={"--framework=nuxt --platform=workers"}
+	pkg="cloudflare@latest"
+	args="my-nuxt-app --framework=nuxt"
 />
 
 After setting up your project, change your directory by running the following command:

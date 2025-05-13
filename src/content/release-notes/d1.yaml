@@ -5,6 +5,13 @@ productLink: "/d1/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-05-02"
+    title: D1 HTTP API permissions bug fix
+    description: |-
+      A permissions bug that allowed Cloudflare account and user [API tokens](/fundamentals/api/get-started/account-owned-tokens/) with `D1:Read` permission and `Edit` permission on another Cloudflare product to perform D1 database writes is fixed. `D1:Edit` permission is required for any database writes via HTTP API.
+
+      If you were using an existing API token without `D1:Edit` permission to make edits to a D1 database via the HTTP API, then you will need to [create or edit API tokens](/fundamentals/api/get-started/create-token/) to explicitly include `D1:Edit` permission. 
+
   - publish_date: "2025-02-19"
     title: D1 supports `PRAGMA optimize`
     description: |-

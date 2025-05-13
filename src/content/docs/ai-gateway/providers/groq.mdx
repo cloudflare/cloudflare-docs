@@ -39,7 +39,7 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/groq/chat/co
         "content": "What is Cloudflare?"
       }
     ],
-    "model": "mixtral-8x7b-32768"
+    "model": "llama3-8b-8192"
 }'
 ```
 
@@ -61,7 +61,7 @@ const groq = new Groq({
 });
 
 const messages = [{ role: "user", content: "What is Cloudflare?" }];
-const model = "mixtral-8x7b-32768";
+const model = "llama3-8b-8192";
 
 const chatCompletion = await groq.chat.completions.create({
 	messages,

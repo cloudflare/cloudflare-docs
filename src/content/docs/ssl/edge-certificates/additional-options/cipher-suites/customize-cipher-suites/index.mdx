@@ -17,8 +17,8 @@ You may want to do this to follow specific [recommendations](/ssl/edge-certifica
 
 Customizing cipher suites will not lead to any downtime in your SSL/TLS protection.
 
-:::note
-This documentation only refers to connections [between clients and the Cloudflare network](/ssl/concepts/#edge-certificate). For connections between Cloudflare and your origin server, refer to [Origin server > Cipher suites](/ssl/origin-configuration/cipher-suites/).
+:::note[Cloudflare for SaaS]
+If you are a SaaS provider looking to restrict cipher suites for connections to [custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/), this can be configured with a [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) subscription. Refer to [TLS management](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/enforce-mtls/#cipher-suites) instead.
 :::
 
 ## How it works
@@ -36,11 +36,9 @@ Currently, you have the following options:
 - Set custom cipher suites for a zone: either [via API](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/api/) or [on the dashboard](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/dashboard/).
 - Set custom cipher suites per-hostname: only available [via API](/api/resources/hostnames/subresources/settings/subresources/tls/methods/update/). Refer to the [how-to](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/api/) for details.
 
-### Cloudflare for SaaS
-
-If you are a SaaS provider looking to restrict cipher suites for connections to your custom hostnames, refer to [TLS settings - Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/enforce-mtls/#cipher-suites).
-
-To restrict cipher suites for connections to your own zone, continue on this guide. In this case, you must also have purchased [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/).
+:::note
+This documentation only refers to connections [between clients and the Cloudflare network](/ssl/concepts/#edge-certificate). For connections between Cloudflare and your origin server, refer to [Origin server > Cipher suites](/ssl/origin-configuration/cipher-suites/).
+:::
 
 ## Settings priority and ciphers order
 

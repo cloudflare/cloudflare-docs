@@ -133,10 +133,10 @@ API Shield customers now have three new fields available in custom rules:
 - `cf.api_gateway.graphql.parsed_successfully` describes whether Cloudflare was able to parse the query. Presently, we run best-effort parsing, meaning we might not be able to parse some valid queries. This means that you must use a `and cf.api_gateway.graphql.parsed_successfully` filter in your custom rules when deploying GraphQL security rules.
   <br />
 
-For example, you can deploy the following rule via the API or the dashboard to block queries that are deeply nested but ask for a few fields.
+For example, you can deploy the following rule via the API or the dashboard to block queries that are deeply nested and ask for over 30 fields.
 
-```
-(cf.api_gateway.graphql.query_size < 3 and cf.api_gateway.graphql.query_depth > 15 and cf.api_gateway.graphql.parsed_successfully)
+```txt wrap
+(cf.api_gateway.graphql.query_size > 30 and cf.api_gateway.graphql.query_depth > 7 and cf.api_gateway.graphql.parsed_successfully)
 ```
 
 :::note

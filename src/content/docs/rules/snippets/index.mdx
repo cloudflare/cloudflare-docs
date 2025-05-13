@@ -1,19 +1,18 @@
 ---
 pcx_content_type: concept
-title: Snippets
+title: Cloudflare Snippets
 sidebar:
   order: 4
   group:
-    badge:
-      text: Beta
+    label: Snippets
 head:
   - tag: title
-    content: Cloudflare Snippets (beta)
+    content: Cloudflare Snippets
 ---
 
 import { FeatureTable, GlossaryTooltip, Render, Card } from "~/components";
 
-Cloudflare Snippets (beta) provide a powerful and flexible way to customize the behavior of your website or application using short pieces of JavaScript code. With Snippets, you can modify HTTP response headers, implement <GlossaryTooltip term="JSON web token (JWT)" prepend="JSON web token (JWT) is ">JWT</GlossaryTooltip> validation, perform complex <GlossaryTooltip term="redirect">redirects</GlossaryTooltip>, and much more.
+Cloudflare Snippets provide a powerful and flexible way to customize the behavior of your website or application using short pieces of JavaScript code. With Snippets, you can modify HTTP response headers, implement <GlossaryTooltip term="JSON web token (JWT)" prepend="JSON web token (JWT) is ">JWT</GlossaryTooltip> validation, perform complex <GlossaryTooltip term="redirect">redirects</GlossaryTooltip>, and much more.
 
 For code samples addressing common use cases, please refer to the [Examples](/rules/snippets/examples/) section.
 
@@ -46,6 +45,8 @@ If you have used the Cloudflare API to create a code snippet that is not associa
 <FeatureTable id="rules.snippets" />
 
 Each <GlossaryTooltip term="Snippets subrequest" prepend="A subrequest is ">subrequest</GlossaryTooltip> in a redirect chain counts against the subrequest limit. This means that if a subrequest was redirected it would count as two subrequests. To avoid issues, ensure that you make a subrequest to the end location of the redirect chain.
+
+Currently, [Version Management](/version-management/) does not support Snippets.
 
 ## Limits
 
