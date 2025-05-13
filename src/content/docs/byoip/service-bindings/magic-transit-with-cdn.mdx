@@ -72,9 +72,8 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/addressing/prefi
 ```
 
 <APIRequest
-  path=""
-  method=""
-  json={{}}
+  path="/accounts/{account_id}/addressing/prefixes/{prefix_id}/bindings"
+  method="GET"
 />
 
 </Example>
@@ -105,9 +104,12 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/addressing/prefi
 ```
 
 <APIRequest
-  path=""
-  method=""
-  json={{}}
+  path="/accounts/{account_id}/addressing/prefixes/{prefix_id}/bindings"
+  method="POST"
+  json={{
+		  "cidr": "203.0.113.100/32",
+			"service_id": "<SERVICE_ID>",
+	}}
 />
 
 In the response body, the initial provisioning state should be `provisioning`.

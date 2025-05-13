@@ -81,7 +81,13 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/addressing/addres
 ```
 
 <APIRequest
-  path=""
-  method=""
-  json={{}}
+  path="/accounts/{account_id}/addressing/address_maps"
+  method="POST"
+  json={{
+		"description": "default_sni",
+		"default_sni": "sni.example.com",
+		"enabled": false,
+		"ips": ["192.0.0.1"],
+		"memberships": [],
+	}}
 />

@@ -38,7 +38,16 @@ Cloudflare Aegis is available in early access to Enterprise customers. Contact y
 ```
 
 <APIRequest
-  path=""
-  method=""
-  json={{}}
+  path="/zones/{zone_id}/settings/{setting_id}"
+  method="PATCH"
+  json={{
+		  "id": "aegis",
+			"value": {
+				"enabled": true,
+				"pool_id": "<YOUR_EGRESS_POOL_ID>",
+				},
+	}}
+	parameters={{
+    setting_id: "aegis",
+  }}
 />
