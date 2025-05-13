@@ -53,7 +53,7 @@ For more details on the differences between old and new rate limiting rules, ref
   For example, if you had a rate limiting rule with a mitigation timeout of 55 seconds, this timeout will be rounded up to one minute (nearest value).<br/>
   Enterprise customers will be able to set a custom mitigation timeout for a rule after the upgrade, but this configuration is only available via API.
 
-- **Customers on a Business plan (or higher) will have access to the IP with NAT support characteristic.** This characteristic is used to handle situations such as requests under NAT sharing the same IP address.
+- **Customers on a Business plan (or higher) will have access to the [IP with NAT support](/waf/rate-limiting-rules/parameters/#use-cases-of-ip-with-nat-support) characteristic.** This characteristic is used to handle situations such as requests under NAT sharing the same IP address.
 
 ---
 
@@ -63,9 +63,9 @@ If you had access to the previous version of Cloudflare Rate Limiting, you will 
 
 If you are using the new [application security dashboard](/security/) (currently in beta), all the rate limiting rules for your zone will be available at **Security** > **Security rules**.
 
-Rate limiting rules created in the previous version will be tagged with `previous version` in the Cloudflare dashboard.
+Rate limiting rules created in the previous version will be tagged with `Previous version` in the Cloudflare dashboard.
 
-TODO: NEW_IMAGE_HERE
+![Rate limiting rules user interface showing two rules created in the previous version.](~/assets/images/waf/reference/rate-limiting-rules-upgrade-ui.png)
 
 If you edit a rule with this tag in the dashboard, you will no longer be able to edit the rule using the API and Terraform resource for the previous version of rate limiting rules. In this case, you will need to start using the [Rulesets API](/ruleset-engine/rulesets-api/) or the [`cloudflare_ruleset`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/ruleset) Terraform resource for this purpose. Refer to [Relevant changes for API users](#relevant-changes-for-api-users) and [Relevant changes for Terraform users](#relevant-changes-for-terraform-users) for more information.
 
