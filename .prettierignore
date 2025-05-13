@@ -5,3 +5,4 @@ dist
 public/__redirects
 public/analytics/static/downloads/main.css
 src/content/workers-ai-models/*.json
+src/content/partials/images/*.mdx
