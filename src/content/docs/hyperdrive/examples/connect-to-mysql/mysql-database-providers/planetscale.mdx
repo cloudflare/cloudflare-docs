@@ -27,3 +27,11 @@ With the host, database name, username and password, you can now create a Hyperd
 ## 2. Create a database configuration
 
 <Render file="create-hyperdrive-config-mysql" />
+
+:::note
+
+When connecting to a Planetscale database with Hyperdrive, you should use a driver like [node-postgres (pg)](/hyperdrive/examples/connect-to-postgres/postgres-drivers-and-libraries/node-postgres/) or [Postgres.js](/hyperdrive/examples/connect-to-postgres/postgres-drivers-and-libraries/postgres-js/) to connect directly to the underlying database instead of the [Planetscale serverless driver](https://planetscale.com/docs/tutorials/planetscale-serverless-driver). Hyperdrive is optimized for database access for Workers and will perform global connection pooling and fast query routing by connecting directly to your database.
+
+:::
+
+<Render file="create-hyperdrive-config-mysql-next-steps" />

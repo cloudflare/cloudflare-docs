@@ -129,6 +129,10 @@ function setSidebarCurrentEntry(
 ): boolean {
 	for (const entry of sidebar) {
 		if (entry.type === "link") {
+			if (entry.attrs["data-external-link"]) {
+				continue;
+			}
+
 			const href = entry.href;
 
 			// Compare with and without trailing slash
@@ -293,6 +297,9 @@ async function handleLink(link: Link): Promise<Link> {
 						variant: "note",
 					}
 				: undefined,
+			attrs: {
+				"data-external-link": true,
+			},
 		};
 	}
 

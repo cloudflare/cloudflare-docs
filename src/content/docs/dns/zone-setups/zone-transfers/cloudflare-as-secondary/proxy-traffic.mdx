@@ -8,7 +8,7 @@ head:
     content: Proxy traffic with Secondary DNS override
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, APIRequest } from "~/components";
 
 When you set up [incoming zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/) on a secondary zone, you cannot enable the proxy on any transferred DNS records by default.
 
@@ -47,16 +47,13 @@ Before you set up Secondary DNS override, make sure that you have:
 
 1. To enable Secondary DNS override on a zone, use the following PATCH request:
 
-```bash
-curl --request PATCH \
-https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_settings \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "secondary_overrides": true
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/dns_settings"
+	method="PATCH"
+	json={{
+		"secondary_overrides": true,
+	}}
+/>
 
 2. For specific A, AAAA, or CNAME records, send a [POST](/api/resources/dns/subresources/records/methods/create/) request with the `proxied` status as `true`.
    - Make sure the added record has the same name as the transferred record you intend to proxy. Cloudflare only looks at the name and the proxy status, so the record content does not matter.

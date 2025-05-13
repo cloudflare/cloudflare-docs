@@ -8,7 +8,7 @@ head:
     content: DNSSEC for Secondary DNS
 ---
 
-import { Render, TabItem, Tabs, GlossaryTooltip } from "~/components";
+import { Render, TabItem, Tabs, GlossaryTooltip, APIRequest } from "~/components";
 
 [DNS Security Extensions (DNSSEC)](https://www.cloudflare.com/learning/dns/dns-security/) increase security by adding cryptographic signatures to DNS records. When you use multiple providers and Cloudflare is secondary, you have a few options to enable DNSSEC for records served by Cloudflare.
 
@@ -44,16 +44,13 @@ In this setup, DNSSEC on your pirmary DNS provider does not need to be enabled.
 
 1. Use the [Edit DNSSEC Status endpoint](/api/resources/dns/subresources/dnssec/methods/edit/) and set a `status` of `active` for your zone.
 
-```bash
-curl --request PATCH \
-https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "status": "active"
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/dnssec"
+	method="PATCH"
+	json={{
+		"status": "active",
+	}}
+/>
 
 2. Use the [DNSSEC Details endpoint](/api/resources/dns/subresources/dnssec/methods/get/) to get the necessary values to create a **DS** record at your registrar.
 
@@ -95,16 +92,13 @@ b. Under **DNSSEC with Secondary DNS** select **Pre-signed**.
 
 Use the [Edit DNSSEC Status endpoint](/api/resources/dns/subresources/dnssec/methods/edit/) and set the `dnssec_presigned` value to `true`.
 
-```bash
-curl --request PATCH \
-https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "dnssec_presigned": true
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/dnssec"
+	method="PATCH"
+	json={{
+		"dnssec_presigned": true,
+	}}
+/>
 
 </TabItem> </Tabs>
 
