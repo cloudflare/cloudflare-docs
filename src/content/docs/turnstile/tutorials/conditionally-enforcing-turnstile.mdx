@@ -20,12 +20,11 @@ You may have setups such as automation that cannot load or run the Turnstile cha
 :::note
 While this tutorial removes Turnstile client-side elements when specific criteria are met, you could instead conditionally insert them.
 :::
-:::caution
 
+:::caution
 It is critical to make sure you are validating tokens with the siteverify API when your criteria for enforcing Turnstile are not met.
 
 It is not sufficient to only remove the client-side widget from the page, as an attacker can forge the request to your API.
-
 :::
 
 ## Implementation
