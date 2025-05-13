@@ -191,6 +191,8 @@ The [Application](#application), [Content Categories](#content-categories), [Dom
 | [Magic WAN](/magic-wan/zero-trust/cloudflare-gateway/)                                     | ❌            |
 | [WARP-to-WARP](/cloudflare-one/connections/connect-networks/private-net/warp-to-warp/)     | ❌            |
 
+Gateway will not apply egress policies with these selectors to DNS queries sent outside of the supported on-ramps. Unsupported traffic will be resolved with your default settings. Gateway will only overwrite the DNS response when the query matches a condition in the egress policy. call out we won't return this DNS location on-ramps
+
 To turn on the selectors for your account, use the [Patch Zero Trust account configuration](/api/resources/zero_trust/subresources/gateway/subresources/configurations/methods/edit/) endpoint. For example:
 
 ```sh title="Turn on selectors for egress policies"
