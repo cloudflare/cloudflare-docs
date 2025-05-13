@@ -16,7 +16,7 @@ Running [`wrangler types`](/workers/languages/typescript/#generate-types) genera
 
 Using higher-order types, we automatically generate client-side stub types (e.g., forcing all methods to be async).
 
-[`wrangler types`](/workers/languages/typescript/#generate-types) also generates types for the `env` object. You can pass in the path to the config files of your callee Worker or Durable Object so that the generated types include the type parameters for the `Service` and `DurableObjectNamespace` types.
+[`wrangler types`](/workers/languages/typescript/#generate-types) also generates types for the `env` object. You can pass in the path to the config files of the Worker or Durable Object being called so that the generated types include the type parameters for the `Service` and `DurableObjectNamespace` types.
 
 For example, if your client Worker had bindings to a Worker in `../sum-worker/` and a Durable Object in `../counter/`, you should generate types for the client Worker's `env` by running:
 
