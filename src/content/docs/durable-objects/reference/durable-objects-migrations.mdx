@@ -57,7 +57,7 @@ To apply a Create migration:
 
 2. Ensure you reference the correct name of the Durable Object class in your Worker code.
 3. Deploy the Worker.
-   </Steps>
+</Steps>
 
 <Details header="Create migration example">
 
@@ -131,7 +131,7 @@ To apply a Delete migration:
     - The array `deleted_classes`, which contains the deleted Durable Object classes.
 
 4. Deploy the Worker.
-   </Steps>
+</Steps>
 
 <Details header = "Delete migration example">
 To delete a Durable Object binding `DEPRECATED_OBJECT`, your `wrangler.toml / wrangler.json` file should look like the following:
@@ -238,7 +238,7 @@ To apply a Transfer migration:
 
 2. Ensure you reference the name of the new, destination Durable Object class in your Worker code.
 3. Deploy the Worker.
-   </Steps>
+</Steps>
 
 <Details header = "Transfer migration example">
 
@@ -294,4 +294,4 @@ You cannot enable a SQLite storage backend on an existing, deployed Durable Obje
 :::caution[Important]
 Durable Object migrations are atomic operations and cannot be gradually deployed. To provide early feedback to developers, new Worker versions with new migrations cannot be uploaded. Refer to [Gradual deployments for Durable Objects](/workers/configuration/versions-and-deployments/gradual-deployments/#gradual-deployments-for-durable-objects) for more information.
 :::
-```
+
