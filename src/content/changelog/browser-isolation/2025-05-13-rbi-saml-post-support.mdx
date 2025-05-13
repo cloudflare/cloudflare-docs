@@ -4,6 +4,6 @@ description: Enable secure access to SSO-enabled applications in the remote brow
 date: 2025-05-13
 ---
 
-Remote Browser Isolation now supports SAML HTTP-POST bindings, enabling seamless authentication for SSO-enabled applications using POST-based SAML responses from Identity Providers (IDPs) within a Remote Browser Isolation session. This update removes a previous limitation causing 405 errors and increases support for multi-factor authentication flows.
+Remote Browser Isolation (RBI) now supports SAML HTTP-POST bindings, enabling seamless authentication for SSO-enabled applications that rely on POST-based SAML responses from Identity Providers (IdPs) within a Remote Browser Isolation session. This update resolves a previous limitation that caused `405` errors during login and improves compatibility with multi-factor authentication (MFA) flows.
 
-This enhancement broadens compatibility with various Identity Providers like Okta and Azure AD, providing a more complete and user-friendly experience. Learn more about setting up [Remote Browser Isolation](https://developers.cloudflare.com/cloudflare-one/policies/browser-isolation/setup/).
+With expanded support for major IdPs like Okta and Azure AD, this enhancement delivers a more consistent and user-friendly experience across authentication workflows. Learn how to [set up Remote Browser Isolation](/cloudflare-one/policies/browser-isolation/setup/).
