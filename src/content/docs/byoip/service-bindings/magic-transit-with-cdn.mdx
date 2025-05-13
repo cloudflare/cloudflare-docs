@@ -6,7 +6,7 @@ sidebar:
   label: Magic Transit with CDN
 ---
 
-import { Details, Example, TabItem, Tabs, GlossaryTooltip } from "~/components";
+import { Details, Example, TabItem, Tabs, GlossaryTooltip, APIRequest } from "~/components";
 
 [Magic Transit](/magic-transit/) customers using BYOIP can also benefit from the performance, reliability, and security that Cloudflare offers for HTTP-based applications.
 
@@ -71,6 +71,12 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/addressing/prefi
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
+<APIRequest
+  path=""
+  method=""
+  json={{}}
+/>
+
 </Example>
 
 ## 2. Create service binding
@@ -97,6 +103,12 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/addressing/prefi
   "service_id": <SERVICE_ID>
 }'
 ```
+
+<APIRequest
+  path=""
+  method=""
+  json={{}}
+/>
 
 In the response body, the initial provisioning state should be `provisioning`.
 
