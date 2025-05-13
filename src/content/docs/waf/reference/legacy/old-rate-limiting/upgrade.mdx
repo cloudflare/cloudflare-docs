@@ -49,11 +49,11 @@ For more details on the differences between old and new rate limiting rules, ref
 
 - **After the upgrade, you will not be able to create or edit rate limiting rules while you are above the new rules quota for your Cloudflare plan.** The number of rate limiting rules included in your Cloudflare plan can be lower than before. If you are over the new limit, you will need to either upgrade to a plan that gives you more rules, or delete existing rules until the number of rules is less or equal to the new maximum number of rules for your plan.
 
-- **Custom timeouts will be rounded to the nearest supported timeout.** Both custom counting periods and custom mitigation timeouts will be rounded up or down to the nearest counting period and mitigation timeout supported in the new version (refer to [Availability](/waf/rate-limiting-rules/#availability) for details on the available values per plan).
-
-  For example, if you had a rate limiting rule with a mitigation timeout of 55 seconds, this timeout will be rounded up to one minute (nearest value).
-
+- **Custom timeouts will be rounded to the nearest supported timeout.** Both custom counting periods and custom mitigation timeouts will be rounded up or down to the nearest counting period and mitigation timeout supported in the new version (refer to [Availability](/waf/rate-limiting-rules/#availability) for details on the available values per plan).<br/>
+  For example, if you had a rate limiting rule with a mitigation timeout of 55 seconds, this timeout will be rounded up to one minute (nearest value).<br/>
   Enterprise customers will be able to set a custom mitigation timeout for a rule after the upgrade, but this configuration is only available via API.
+
+- **Customers on a Business plan (or higher) will have access to the IP with NAT support characteristic.** This characteristic is used to handle situations such as requests under NAT sharing the same IP address.
 
 ---
 
