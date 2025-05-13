@@ -464,7 +464,7 @@ Create a new `public/product-details.html` file to display a single product.
 
 </html>
 
-````
+```
 </Details>
 
 You now have a frontend that lists products and displays a single product. However, the frontend is not yet connected to the D1 database. If you start the development server now, you will see no products. In the next steps, you will create a D1 database and create APIs to fetch products and display them on the frontend.
@@ -475,7 +475,7 @@ Create a new D1 database by running the following command:
 
 ```sh
 npx wrangler d1 create fast-commerce
-````
+```
 
 Add the D1 bindings returned in the terminal to the `wrangler` file:
 
@@ -625,6 +625,14 @@ export async function withRetry<T>(
 ```
 
 The `withRetry` function is a utility function that retries a given operation with exponential backoff. It takes a configuration object as an argument, which allows you to customize the number of retries, initial delay, maximum delay, and backoff factor. It will only retry the operation if the error is due to a network connection loss, storage reset, or code update.
+
+:::caution
+
+In a distrubed system, retry mechanisms can have certain risks. Read the article [Retry Strategies in Distributed Systems: Identifying and Addressing Key Pitfalls](https://www.computer.org/publications/tech-news/trends/retry-strategies-avoiding-pitfalls) to learn more about the risks of retry mechanisms and how to avoid them.
+
+Retries can sometimes lead to data inconsistency. Make sure to handle the retry logic carefully.
+
+:::
 
 Next, update the `src/index.ts` file to import the `withRetry` function and use it in the API routes.
 
