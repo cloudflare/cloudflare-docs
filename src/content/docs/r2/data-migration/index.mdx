@@ -54,3 +54,10 @@ Quickly and easily migrate data from other cloud providers to R2. Explore each o
 		</tr>
 	</tbody>
 </table>
+
+## Migration strategies
+
+You can use a combination of Super Slurper and Sippy to effectively migrate all objects without any downtime.
+
+1. Activate Sippy to gradually copy objects from the previous bucket to an R2 bucket when they are requested (on-demand).
+2. Use Super Slurper to trigger a one-off migration to copy the remaining objects into the R2 bucket.
