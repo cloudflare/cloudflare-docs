@@ -25,8 +25,23 @@ async function getWARPReleases(): Promise<Array<CollectionEntry<"changelog">>> {
 		const { platformName, version, releaseNotes, releaseDate } = release.data;
 		const title = `WARP client for ${platformName} (version ${version})`;
 
+		const [platform, track] = release.id.split("/");
+
+		const prettyTrack = track === "ga" ? "GA" : "Beta";
+		const prettyPlatform =
+			platform === "macos"
+				? "macOS"
+				: platform.charAt(0).toUpperCase() + platform.slice(1);
+
+		const link =
+			track === "ga"
+				? "[stable releases downloads page](/cloudflare-one/connections/connect-devices/warp/download-warp/)"
+				: "[beta releases downloads page](/cloudflare-one/connections/connect-devices/warp/download-warp/beta-releases/)";
+
+		const prefix = `A new ${prettyTrack} release for the ${prettyPlatform} WARP client is now available on the ${link}.`;
+
 		return {
-			id: release.id,
+			id: `${releaseDate.toISOString().slice(0, 10)}-warp-${platform}-${track}`,
 			collection: "changelog",
 			body: releaseNotes,
 			data: {
@@ -37,7 +52,9 @@ async function getWARPReleases(): Promise<Array<CollectionEntry<"changelog">>> {
 				products: [{ id: "zero-trust-warp", collection: "products" }],
 			},
 			rendered: {
-				html: marked.parse(releaseNotes, { async: false }),
+				html: marked.parse([prefix, releaseNotes].join("\n\n"), {
+					async: false,
+				}),
 			},
 		};
 	});
