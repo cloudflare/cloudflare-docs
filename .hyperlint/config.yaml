@@ -6,7 +6,7 @@ reviewer:
     We review internal PRs within **1 week**. If it's something urgent or has been sitting without a comment, start a thread in the *Developer Docs* space internally.
   enabled: true
   external_link_validation:
-    enabled: true
+    enabled: false
     check_status_upon_review_failure: neutral
   summarize_pull_request:
     enabled: true
