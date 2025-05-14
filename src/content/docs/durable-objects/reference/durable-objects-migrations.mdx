@@ -76,7 +76,7 @@ class_name = "DurableObjectAClass"
 tag = "v1"
 new_sqlite_classes = ["DurableObjectAClass"]
 
-````
+```
 </WranglerConfig>
 
 </Details>
@@ -97,7 +97,7 @@ Use `new_classes` on the migration in your Worker's Wrangler file to create a Du
 [[migrations]]
 tag = "v1" # Should be unique for each entry
 new_classes = ["MyDurableObject"] # Array of new classes
-````
+```
 
 </WranglerConfig>
 
@@ -147,7 +147,7 @@ To delete a Durable Object binding `DEPRECATED_OBJECT`, your `wrangler.toml / wr
 tag = "v3" # Should be unique for each entry
 deleted_classes = ["DeprecatedObjectClass"] # Array of deleted classes
 
-````
+```
 </WranglerConfig>
 </Details>
 
@@ -197,7 +197,7 @@ class_name = "UpdatedName"
 [[migrations]]
 tag = "v3"
 renamed_classes = [{from = "OldName", to = "UpdatedName" }] # Array of rename directives
-````
+```
 
 </WranglerConfig>
 
