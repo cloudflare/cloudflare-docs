@@ -23,13 +23,21 @@ const dirs = contents.filter((ent: any) => ent.type === "dir");
 		.map(async (dir: any) => {
 			const packageJson = await fetch(
 				`https://gh-code.developers.cloudflare.com/${REPO}/${latestCommit}/${dir.path}/package.json`,
-			).then((r) => r.json());
+			)
+				.then((r) => r.json())
+				.catch((reason) => {
+					console.warn(
+						`[WorkersTemplates] Failed to parse JSON for ${dir.path}`,
+						reason,
+					);
+				});
+
+			if (!packageJson) return;
 
 			return (
 				<div>
-					<AnchorHeading depth={3} title={dir.name} />
 					<div class="flex items-center justify-between gap-4">
-						<p>{packageJson.description}</p>
+						<AnchorHeading depth={3} title={dir.name} />
 						<a
 							href={`https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/${dir.path}`}
 						>
@@ -39,6 +47,7 @@ const dirs = contents.filter((ent: any) => ent.type === "dir");
 							/>
 						</a>
 					</div>
+					<p>{packageJson.description}</p>
 					<PackageManagers
 						type="create"
 						pkg="cloudflare@latest"
