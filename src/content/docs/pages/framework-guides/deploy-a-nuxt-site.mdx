@@ -125,17 +125,11 @@ In order to access bindings in a deployed application, you will need to [configu
 
 ### Add bindings to TypeScript projects
 
-To get proper type support, you need to create a new `env.d.ts` file in the root of your project and declare a [binding](/pages/functions/bindings/).
+To get proper type support, you need to create a new `env.d.ts` file in the root of your project and declare a [binding](/pages/functions/bindings/). Make sure you have generated Cloudflare runtime types by running [`wrangler types`](/pages/functions/typescript/).
 
 The following is an example of adding a `KVNamespace` binding:
 
 ```ts null {9}
-import {
-	CfProperties,
-	Request,
-	ExecutionContext,
-	KVNamespace,
-} from "@cloudflare/workers-types";
 
 declare module "h3" {
 	interface H3EventContext {

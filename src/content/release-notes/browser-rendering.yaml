@@ -6,9 +6,9 @@ productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
   - publish_date: "2025-04-30"
-    title: Automatic Request headers
+    title: Automatic Request Headers
     description: |-
-      * [Clarified Automatic Request headers](/browser-rendering/reference/automatic-request-headers/) in Browser Rendering. These headers are unique to Browser Rendering and are automatically included and cannot be removed or overridden.
+      * [Clarified Automatic Request headers](/browser-rendering/reference/automatic-request-headers/) in Browser Rendering. These headers are unique to Browser Rendering, and are automatically included and cannot be removed or overridden.
   - publish_date: "2025-04-07"
     title: New free tier and REST API GA with additional endpoints
     description: |-

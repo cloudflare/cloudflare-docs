@@ -38,11 +38,11 @@ For an introduction to GraphQL querying, refer to [Querying basics](/analytics/g
 
 ### Example
 
-```graphql title="Example GraphQL query"
+```graphql graphql-api-explorer title="Example GraphQL query"
 query PageShieldReports(
 	$zoneTag: string
-	$datetimeStart: string
-	$datetimeEnd: string
+	$datetimeStart: Time
+	$datetimeEnd: Time
 ) {
 	viewer {
 		zones(filter: { zoneTag: $zoneTag }) {

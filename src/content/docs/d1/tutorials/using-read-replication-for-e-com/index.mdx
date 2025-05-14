@@ -70,7 +70,6 @@ Navigate to the newly created Worker project folder.
 cd fast-commerce
 ```
 
-
 Update the `public/index.html` file to list the products. Use the below code as a reference.
 
 <Details open={false} header="public/index.html">
@@ -89,142 +88,142 @@ Update the `public/index.html` file to list the products. Use the below code as 
 				font-family: Arial, sans-serif;
 			}
 
-			body {
-				background-color: #f9fafb;
-				min-height: 100vh;
-				display: flex;
-				flex-direction: column;
-			}
+    		body {
+    			background-color: #f9fafb;
+    			min-height: 100vh;
+    			display: flex;
+    			flex-direction: column;
+    		}
 
-			header {
-				background-color: white;
-				padding: 1rem 2rem;
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				border-bottom: 1px solid #e5e7eb;
-			}
+    		header {
+    			background-color: white;
+    			padding: 1rem 2rem;
+    			display: flex;
+    			justify-content: space-between;
+    			align-items: center;
+    			border-bottom: 1px solid #e5e7eb;
+    		}
 
-			.store-title {
-				font-weight: bold;
-				font-size: 1.25rem;
-			}
+    		.store-title {
+    			font-weight: bold;
+    			font-size: 1.25rem;
+    		}
 
-			.cart-button {
-				padding: 0.5rem 1rem;
-				cursor: pointer;
-				background: none;
-				border: none;
-			}
+    		.cart-button {
+    			padding: 0.5rem 1rem;
+    			cursor: pointer;
+    			background: none;
+    			border: none;
+    		}
 
-			.products-grid {
-				display: grid;
-				grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-				gap: 1.5rem;
-				padding: 2rem;
-			}
+    		.products-grid {
+    			display: grid;
+    			grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    			gap: 1.5rem;
+    			padding: 2rem;
+    		}
 
-			.product-card {
-				background-color: white;
-				border-radius: 0.5rem;
-				overflow: hidden;
-				box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-			}
+    		.product-card {
+    			background-color: white;
+    			border-radius: 0.5rem;
+    			overflow: hidden;
+    			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    		}
 
-			.product-info {
-				padding: 1rem;
-			}
+    		.product-info {
+    			padding: 1rem;
+    		}
 
-			.product-title {
-				font-size: 1.125rem;
-				font-weight: 600;
-				margin-bottom: 0.5rem;
-			}
+    		.product-title {
+    			font-size: 1.125rem;
+    			font-weight: 600;
+    			margin-bottom: 0.5rem;
+    		}
 
-			.product-description {
-				color: #4b5563;
-				font-size: 0.875rem;
-				margin-bottom: 1rem;
-			}
+    		.product-description {
+    			color: #4b5563;
+    			font-size: 0.875rem;
+    			margin-bottom: 1rem;
+    		}
 
-			.product-price {
-				font-size: 1.25rem;
-				font-weight: bold;
-				margin-bottom: 0.5rem;
-			}
+    		.product-price {
+    			font-size: 1.25rem;
+    			font-weight: bold;
+    			margin-bottom: 0.5rem;
+    		}
 
-			.product-stock {
-				color: #4b5563;
-				font-size: 0.875rem;
-				margin-bottom: 1rem;
-			}
+    		.product-stock {
+    			color: #4b5563;
+    			font-size: 0.875rem;
+    			margin-bottom: 1rem;
+    		}
 
-			.view-details-btn {
-				display: block;
-				width: 100%;
-				padding: 0.5rem 0;
-				background-color: #2563eb;
-				color: white;
-				border: none;
-				border-radius: 0.375rem;
-				cursor: pointer;
-				text-align: center;
-				text-decoration: none;
-				font-size: 0.875rem;
-			}
+    		.view-details-btn {
+    			display: block;
+    			width: 100%;
+    			padding: 0.5rem 0;
+    			background-color: #2563eb;
+    			color: white;
+    			border: none;
+    			border-radius: 0.375rem;
+    			cursor: pointer;
+    			text-align: center;
+    			text-decoration: none;
+    			font-size: 0.875rem;
+    		}
 
-			.view-details-btn:hover {
-				background-color: #1d4ed8;
-			}
+    		.view-details-btn:hover {
+    			background-color: #1d4ed8;
+    		}
 
-			footer {
-				background-color: white;
-				padding: 1rem 2rem;
-				text-align: center;
-				border-top: 1px solid #e5e7eb;
-				color: #4b5563;
-				font-size: 0.875rem;
-			}
+    		footer {
+    			background-color: white;
+    			padding: 1rem 2rem;
+    			text-align: center;
+    			border-top: 1px solid #e5e7eb;
+    			color: #4b5563;
+    			font-size: 0.875rem;
+    		}
 
-			/* Basic Responsiveness */
-			@media (max-width: 768px) {
-				.products-grid {
-					grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-				}
-			}
+    		/* Basic Responsiveness */
+    		@media (max-width: 768px) {
+    			.products-grid {
+    				grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    			}
+    		}
 
-			@media (max-width: 480px) {
-				.products-grid {
-					grid-template-columns: 1fr;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<header>
-			<h1 class="store-title">E-commerce Store</h1>
-			<button class="cart-button">Cart</button>
-		</header>
+    		@media (max-width: 480px) {
+    			.products-grid {
+    				grid-template-columns: 1fr;
+    			}
+    		}
+    	</style>
+    </head>
+    <body>
+    	<header>
+    		<h1 class="store-title">E-commerce Store</h1>
+    		<button class="cart-button">Cart</button>
+    	</header>
 
-		<main class="products-grid" id="products-container">
-			<!-- Products will be loaded here by JavaScript -->
-		</main>
+    	<main class="products-grid" id="products-container">
+    		<!-- Products will be loaded here by JavaScript -->
+    	</main>
 
-		<footer>
-			<p>© 2025 E-commerce Store. All rights reserved.</p>
-		</footer>
+    	<footer>
+    		<p>© 2025 E-commerce Store. All rights reserved.</p>
+    	</footer>
 
-		<script>
-			document.addEventListener('DOMContentLoaded', () => {
-				let products = [];
-				let d1Duration,
-					queryDuration = 0;
-				let dbLocation;
-				let isPrimary = true;
+    	<script>
+    		document.addEventListener('DOMContentLoaded', () => {
+    			let products = [];
+    			let d1Duration,
+    				queryDuration = 0;
+    			let dbLocation;
+    			let isPrimary = true;
 
-				// Function to create product HTML
-				function createProductCard(product) {
-					return `
+    			// Function to create product HTML
+    			function createProductCard(product) {
+    				return `
                 <div class="product-card" data-category="${product.category}">
                     <div class="product-info">
                         <h3 class="product-title">${product.name}</h3>
@@ -235,34 +234,35 @@ Update the `public/index.html` file to list the products. Use the below code as 
                     </div>
                 </div>
             `;
-				}
+    			}
 
-				// Function to render content
-				function renderContent() {
-					try {
-						const productsContainer = document.getElementById('products-container');
-						if (!productsContainer) return;
-						productsContainer.innerHTML = '';
+    			// Function to render content
+    			function renderContent() {
+    				try {
+    					const productsContainer = document.getElementById('products-container');
+    					if (!productsContainer) return;
+    					productsContainer.innerHTML = '';
 
-						products.forEach((product) => {
-							productsContainer.innerHTML += createProductCard(product);
-						});
-					} catch (error) {
-						console.error('Error rendering content:', error);
-					}
-				}
+    					products.forEach((product) => {
+    						productsContainer.innerHTML += createProductCard(product);
+    					});
+    				} catch (error) {
+    					console.error('Error rendering content:', error);
+    				}
+    			}
 
-				// Fetch products
-				fetch('/api/products')
-					.then((response) => response.json())
-					.then((data) => {
-						products = data;
-						renderContent();
-					})
-					.catch((error) => console.error('Error fetching products:', error));
-			});
-		</script>
-	</body>
+    			// Fetch products
+    			fetch('/api/products')
+    				.then((response) => response.json())
+    				.then((data) => {
+    					products = data;
+    					renderContent();
+    				})
+    				.catch((error) => console.error('Error fetching products:', error));
+    		});
+    	</script>
+    </body>
+
 </html>
 ```
 </Details>
@@ -285,182 +285,183 @@ Create a new `public/product-details.html` file to display a single product.
 				font-family: Arial, sans-serif;
 			}
 
-			body {
-				background-color: #f9fafb;
-				min-height: 100vh;
-				display: flex;
-				flex-direction: column;
-			}
+    		body {
+    			background-color: #f9fafb;
+    			min-height: 100vh;
+    			display: flex;
+    			flex-direction: column;
+    		}
 
-			header {
-				background-color: white;
-				padding: 1rem 2rem;
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				border-bottom: 1px solid #e5e7eb;
-			}
+    		header {
+    			background-color: white;
+    			padding: 1rem 2rem;
+    			display: flex;
+    			justify-content: space-between;
+    			align-items: center;
+    			border-bottom: 1px solid #e5e7eb;
+    		}
 
-			.store-title {
-				font-weight: bold;
-				font-size: 1.25rem;
-				text-decoration: none;
-				color: black;
-			}
+    		.store-title {
+    			font-weight: bold;
+    			font-size: 1.25rem;
+    			text-decoration: none;
+    			color: black;
+    		}
 
-			.cart-button {
-				padding: 0.5rem 1rem;
-				cursor: pointer;
-				background: none;
-				border: none;
-			}
+    		.cart-button {
+    			padding: 0.5rem 1rem;
+    			cursor: pointer;
+    			background: none;
+    			border: none;
+    		}
 
-			.product-container {
-				max-width: 800px;
-				margin: 2rem auto;
-				background-color: white;
-				border-radius: 0.5rem;
-				box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-				padding: 2rem;
-			}
+    		.product-container {
+    			max-width: 800px;
+    			margin: 2rem auto;
+    			background-color: white;
+    			border-radius: 0.5rem;
+    			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    			padding: 2rem;
+    		}
 
-			.product-title {
-				font-size: 1.875rem;
-				font-weight: bold;
-				margin-bottom: 0.5rem;
-			}
+    		.product-title {
+    			font-size: 1.875rem;
+    			font-weight: bold;
+    			margin-bottom: 0.5rem;
+    		}
 
-			.product-description {
-				color: #4b5563;
-				margin-bottom: 1.5rem;
-			}
+    		.product-description {
+    			color: #4b5563;
+    			margin-bottom: 1.5rem;
+    		}
 
-			.product-price {
-				font-size: 1.875rem;
-				font-weight: bold;
-				margin-bottom: 0.5rem;
-			}
+    		.product-price {
+    			font-size: 1.875rem;
+    			font-weight: bold;
+    			margin-bottom: 0.5rem;
+    		}
 
-			.product-stock {
-				font-size: 0.875rem;
-				color: #4b5563;
-				text-align: right;
-			}
+    		.product-stock {
+    			font-size: 0.875rem;
+    			color: #4b5563;
+    			text-align: right;
+    		}
 
-			.add-to-cart-btn {
-				display: block;
-				width: 100%;
-				padding: 0.75rem;
-				background-color: #2563eb;
-				color: white;
-				border: none;
-				border-radius: 0.375rem;
-				cursor: pointer;
-				text-align: center;
-				font-size: 1rem;
-				margin-top: 1.5rem;
-			}
+    		.add-to-cart-btn {
+    			display: block;
+    			width: 100%;
+    			padding: 0.75rem;
+    			background-color: #2563eb;
+    			color: white;
+    			border: none;
+    			border-radius: 0.375rem;
+    			cursor: pointer;
+    			text-align: center;
+    			font-size: 1rem;
+    			margin-top: 1.5rem;
+    		}
 
-			.add-to-cart-btn:hover {
-				background-color: #1d4ed8;
-			}
+    		.add-to-cart-btn:hover {
+    			background-color: #1d4ed8;
+    		}
 
-			.price-stock-container {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				margin-bottom: 1rem;
-			}
+    		.price-stock-container {
+    			display: flex;
+    			justify-content: space-between;
+    			align-items: center;
+    			margin-bottom: 1rem;
+    		}
 
-			footer {
-				background-color: white;
-				padding: 1rem 2rem;
-				text-align: center;
-				border-top: 1px solid #e5e7eb;
-				color: #4b5563;
-				font-size: 0.875rem;
-				margin-top: auto;
-			}
+    		footer {
+    			background-color: white;
+    			padding: 1rem 2rem;
+    			text-align: center;
+    			border-top: 1px solid #e5e7eb;
+    			color: #4b5563;
+    			font-size: 0.875rem;
+    			margin-top: auto;
+    		}
 
-			/* Back button */
-			.back-button {
-				display: inline-block;
-				margin-bottom: 1.5rem;
-				color: #2563eb;
-				text-decoration: none;
-				font-size: 0.875rem;
-			}
+    		/* Back button */
+    		.back-button {
+    			display: inline-block;
+    			margin-bottom: 1.5rem;
+    			color: #2563eb;
+    			text-decoration: none;
+    			font-size: 0.875rem;
+    		}
 
-			.back-button:hover {
-				text-decoration: underline;
-			}
+    		.back-button:hover {
+    			text-decoration: underline;
+    		}
 
-			/* Notification */
-			.notification {
-				position: fixed;
-				top: 1rem;
-				right: 1rem;
-				background-color: #10b981;
-				color: white;
-				padding: 0.75rem 1rem;
-				border-radius: 0.375rem;
-				box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-				transform: translateX(150%);
-				transition: transform 0.3s ease;
-			}
+    		/* Notification */
+    		.notification {
+    			position: fixed;
+    			top: 1rem;
+    			right: 1rem;
+    			background-color: #10b981;
+    			color: white;
+    			padding: 0.75rem 1rem;
+    			border-radius: 0.375rem;
+    			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    			transform: translateX(150%);
+    			transition: transform 0.3s ease;
+    		}
 
-			.notification.show {
-				transform: translateX(0);
-			}
-		</style>
-	</head>
-	<body>
-		<header>
-			<a href="index.html" class="store-title">E-commerce Store</a>
-			<button class="cart-button">Cart</button>
-		</header>
+    		.notification.show {
+    			transform: translateX(0);
+    		}
+    	</style>
+    </head>
+    <body>
+    	<header>
+    		<a href="index.html" class="store-title">E-commerce Store</a>
+    		<button class="cart-button">Cart</button>
+    	</header>
 
-		<main class="product-container">
-			<a href="index.html" class="back-button">← Back to products</a>
-			<h1 class="product-title" id="product-title">Product Name</h1>
-			<p class="product-description" id="product-description">Product description goes here.</p>
+    	<main class="product-container">
+    		<a href="index.html" class="back-button">← Back to products</a>
+    		<h1 class="product-title" id="product-title">Product Name</h1>
+    		<p class="product-description" id="product-description">Product description goes here.</p>
 
-			<div class="price-stock-container">
-				<p class="product-price" id="product-price">$0.00</p>
-				<p class="product-stock" id="product-stock">0 in stock</p>
-			</div>
+    		<div class="price-stock-container">
+    			<p class="product-price" id="product-price">$0.00</p>
+    			<p class="product-stock" id="product-stock">0 in stock</p>
+    		</div>
 
-			<button class="add-to-cart-btn" id="add-to-cart">Add to Cart</button>
-		</main>
+    		<button class="add-to-cart-btn" id="add-to-cart">Add to Cart</button>
+    	</main>
 
-		<div class="notification" id="notification">Added to cart!</div>
+    	<div class="notification" id="notification">Added to cart!</div>
 
-		<footer>
-			<p>© 2025 E-commerce Store. All rights reserved.</p>
-		</footer>
+    	<footer>
+    		<p>© 2025 E-commerce Store. All rights reserved.</p>
+    	</footer>
 
-		<script>
-			// Get query parameter from URL
-			const url = new URL(window.location.href);
-			const searchParams = new URLSearchParams(url.search);
-			const productId = searchParams.get('id');
+    	<script>
+    		// Get query parameter from URL
+    		const url = new URL(window.location.href);
+    		const searchParams = new URLSearchParams(url.search);
+    		const productId = searchParams.get('id');
 
-			// Fetch product details
-			fetch(`/api/products/${productId}`)
-				.then((response) => response.json())
-				.then((product) => displayContent(product))
-				.catch((error) => console.error('Error fetching product details:', error));
+    		// Fetch product details
+    		fetch(`/api/products/${productId}`)
+    			.then((response) => response.json())
+    			.then((product) => displayContent(product))
+    			.catch((error) => console.error('Error fetching product details:', error));
 
-			// Function to display product details
-			function displayContent(product) {
-				document.title = `${product[0].name} - E-commerce Store`;
-				document.getElementById('product-title').textContent = product[0].name;
-				document.getElementById('product-description').textContent = product[0].description;
-				document.getElementById('product-price').textContent = `$${product[0].price.toFixed(2)}`;
-				document.getElementById('product-stock').textContent = `${product[0].inventory} in stock`;
-			}
-		</script>
-	</body>
+    		// Function to display product details
+    		function displayContent(product) {
+    			document.title = `${product[0].name} - E-commerce Store`;
+    			document.getElementById('product-title').textContent = product[0].name;
+    			document.getElementById('product-description').textContent = product[0].description;
+    			document.getElementById('product-price').textContent = `$${product[0].price.toFixed(2)}`;
+    			document.getElementById('product-stock').textContent = `${product[0].inventory} in stock`;
+    		}
+    	</script>
+    </body>
+
 </html>
 
 ```
@@ -479,12 +480,13 @@ npx wrangler d1 create fast-commerce
 Add the D1 bindings returned in the terminal to the `wrangler` file:
 
 <WranglerConfig>
-```toml
-[[d1_databases]]
-binding = "DB"
-database_name = "fast-commerce"
-database_id = "YOUR_DATABASE_ID"
-```
+	
+	```toml 
+	[[d1_databases]]
+	binding = "DB" 
+	database_name = "fast-commerce"
+	database_id = "YOUR_DATABASE_ID" 
+	```
 </WranglerConfig>
 
 Run the following command to update the `Env` interface in the `worker-congifuration.d.ts` file.
@@ -500,25 +502,25 @@ Next, enable read replication for the D1 database. Navigate to [**Workers & Page
 Update the `src/index.ts` file to import the Hono library and create the API routes.
 
 ```ts
-import { Hono } from 'hono';
+import { Hono } from "hono";
 // Set db session bookmark in the cookie
-import { getCookie, setCookie } from 'hono/cookie';
+import { getCookie, setCookie } from "hono/cookie";
 
 const app = new Hono<{ Bindings: Env }>();
 
 // Get all products
-app.get('/api/products', async (c) => {
-	return c.json({ message: 'get list of products' });
+app.get("/api/products", async (c) => {
+	return c.json({ message: "get list of products" });
 });
 
 // Get a single product
-app.get('/api/products/:id', async (c) => {
-	return c.json({ message: 'get a single product' });
+app.get("/api/products/:id", async (c) => {
+	return c.json({ message: "get a single product" });
 });
 
 // Upsert a product
-app.post('/api/product', async (c) => {
-	return c.json({ message: 'create or update a product' });
+app.post("/api/product", async (c) => {
+	return c.json({ message: "create or update a product" });
 });
 
 export default app;
@@ -552,77 +554,166 @@ For development purposes, you can also execute the insert statements on the loca
 npx wrangler d1 execute fast-commerce --command "INSERT INTO products (id, name, description, price, inventory, category) VALUES (1, 'Fast Ergonomic Chair', 'A comfortable chair for your home or office', 100.00, 10, 'Furniture'), (2, 'Fast Organic Cotton T-shirt', 'A comfortable t-shirt for your home or office', 20.00, 100, 'Clothing'), (3, 'Fast Wooden Desk', 'A wooden desk for your home or office', 150.00, 5, 'Furniture'), (4, 'Fast Leather Sofa', 'A leather sofa for your home or office', 300.00, 3, 'Furniture'), (5, 'Fast Organic Cotton T-shirt', 'A comfortable t-shirt for your home or office', 20.00, 100, 'Clothing')"
 ```
 
+## Step 6: Add retry logic
 
+To make the application more resilient, you can add retry logic to the API routes. Create a new file called `retry.ts` in the `src` directory.
 
-## Step 6: Update the API routes
+```ts
+export interface RetryConfig {
+  maxRetries: number;
+  initialDelay: number;
+  maxDelay: number;
+  backoffFactor: number;
+}
+
+const shouldRetry = (error: unknown): boolean => {
+  const errMsg = error instanceof Error ? error.message : String(error);
+  return (
+    errMsg.includes("Network connection lost") ||
+    errMsg.includes("storage caused object to be reset") ||
+    errMsg.includes("reset because its code was updated")
+  );
+};
+
+// Helper function for sleeping
+const sleep = (ms: number): Promise<void> => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};
+
+export const defaultRetryConfig: RetryConfig = {
+  maxRetries: 3,
+  initialDelay: 100,
+  maxDelay: 1000,
+  backoffFactor: 2,
+};
+
+export async function withRetry<T>(
+  operation: () => Promise<T>,
+	config: Partial<RetryConfig> = defaultRetryConfig,
+): Promise<T> {
+	const maxRetries = config.maxRetries ?? defaultRetryConfig.maxRetries;
+	const initialDelay = config.initialDelay ?? defaultRetryConfig.initialDelay;
+	const maxDelay = config.maxDelay ?? defaultRetryConfig.maxDelay;
+	const backoffFactor =
+		config.backoffFactor ?? defaultRetryConfig.backoffFactor;
+
+  let lastError: Error | unknown;
+  let delay = initialDelay;
+
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    try {
+      const result = await operation();
+      return result;
+    } catch (error) {
+      lastError = error;
+
+      if (!shouldRetry(error) || attempt === maxRetries) {
+        throw error;
+      }
+
+      // Add randomness to avoid synchronizing retries
+      // Wait for a random delay between delay and delay*2
+      await sleep(delay * (1 + Math.random()));
+
+      // Calculate next delay with exponential backoff
+      delay = Math.min(delay * backoffFactor, maxDelay);
+    }
+  }
+
+  throw lastError;
+}
+```
+
+The `withRetry` function is a utility function that retries a given operation with exponential backoff. It takes a configuration object as an argument, which allows you to customize the number of retries, initial delay, maximum delay, and backoff factor. It will only retry the operation if the error is due to a network connection loss, storage reset, or code update.
+
+:::caution
+
+In a distrubed system, retry mechanisms can have certain risks. Read the article [Retry Strategies in Distributed Systems: Identifying and Addressing Key Pitfalls](https://www.computer.org/publications/tech-news/trends/retry-strategies-avoiding-pitfalls) to learn more about the risks of retry mechanisms and how to avoid them.
+
+Retries can sometimes lead to data inconsistency. Make sure to handle the retry logic carefully.
+
+:::
+
+Next, update the `src/index.ts` file to import the `withRetry` function and use it in the API routes.
+
+```ts
+import { withRetry } from "./retry";
+```
+
+## Step 7: Update the API routes
 
 Update the API routes to connect to the D1 database.
-
 
 ### 1. POST /api/product
 
 ```ts
-app.post('/api/product', async (c) => {
-	const product = await c.req.json();
+app.post("/api/product", async (c) => {
+  const product = await c.req.json();
 
-	if (!product) {
-		return c.json({ message: 'No data passed' }, 400);
-	}
+  if (!product) {
+    return c.json({ message: "No data passed" }, 400);
+  }
 
-	const db = c.env.DB;
-	const session = db.withSession('first-primary');
+  const db = c.env.DB;
+  const session = db.withSession("first-primary");
 
-	const { id } = product;
+  const { id } = product;
 
-	try {
-		// Check if the product exists
-		const { results } = await session.prepare('SELECT * FROM products where id = ?').bind(id).run();
-		if (results.length === 0) {
-			const fields = [...Object.keys(product)];
-			const values = [...Object.values(product)];
-			// Insert the product
-			await session
-				.prepare(`INSERT INTO products (${fields.join(', ')}) VALUES (${fields.map(() => '?').join(', ')})`)
-				.bind(...values)
-				.run();
-			const latestBookmark = session.getBookmark();
-			latestBookmark &&
-				setCookie(c, 'product_bookmark', latestBookmark, {
-					maxAge: 60 * 60, // 1 hour
-				});
-			return c.json({ message: 'Product inserted' });
-		}
+  try {
+    return await withRetry(async () => {
+      // Check if the product exists
+      const { results } = await session
+        .prepare("SELECT * FROM products where id = ?")
+        .bind(id)
+        .run();
+      if (results.length === 0) {
+        const fields = [...Object.keys(product)];
+        const values = [...Object.values(product)];
+        // Insert the product
+        await session
+          .prepare(
+            `INSERT INTO products (${fields.join(", ")}) VALUES (${fields.map(() => "?").join(", ")})`
+          )
+          .bind(...values)
+          .run();
+        const latestBookmark = session.getBookmark();
+        latestBookmark &&
+          setCookie(c, "product_bookmark", latestBookmark, {
+            maxAge: 60 * 60, // 1 hour
+          });
+        return c.json({ message: "Product inserted" });
+      }
 
-		// Update the product
-		const updates = Object.entries(product)
-			.filter(([_, value]) => value !== undefined)
-			.map(([key, _]) => `${key} = ?`)
-			.join(', ');
+      // Update the product
+      const updates = Object.entries(product)
+        .filter(([_, value]) => value !== undefined)
+        .map(([key, _]) => `${key} = ?`)
+        .join(", ");
 
-		if (!updates) {
-			throw new Error('No valid fields to update');
-		}
+      if (!updates) {
+        throw new Error("No valid fields to update");
+      }
 
-		const values = Object.entries(product)
-			.filter(([_, value]) => value !== undefined)
-			.map(([_, value]) => value);
+      const values = Object.entries(product)
+        .filter(([_, value]) => value !== undefined)
+        .map(([_, value]) => value);
 
-		await session
-			.prepare(`UPDATE products SET ${updates} WHERE id = ?`)
-			.bind(...[...values, id])
-			.run();
-		const latestBookmark = session.getBookmark();
-		latestBookmark &&
-			setCookie(c, 'product_bookmark', latestBookmark, {
-				maxAge: 60 * 60, // 1 hour
-			});
-		return c.json({ message: 'Product updated' });
-	} catch (e) {
-		console.error(e);
-		return c.json({ message: 'Error upserting product' }, 500);
-	}
+      await session
+        .prepare(`UPDATE products SET ${updates} WHERE id = ?`)
+        .bind(...[...values, id])
+        .run();
+      const latestBookmark = session.getBookmark();
+      latestBookmark &&
+        setCookie(c, "product_bookmark", latestBookmark, {
+          maxAge: 60 * 60, // 1 hour
+        });
+      return c.json({ message: "Product updated" });
+    });
+  } catch (e) {
+    console.error(e);
+    return c.json({ message: "Error upserting product" }, 500);
+  }
 });
-
 ```
 
 In the above code:
@@ -643,32 +734,33 @@ If you are using an external platform to manage your products, you can connect t
 ### 2. GET /api/products
 
 ```ts
-app.get('/api/products', async (c) => {
-	const db = c.env.DB;
+app.get("/api/products", async (c) => {
+  const db = c.env.DB;
 
-	// Get bookmark from the cookie
-	const bookmark = getCookie(c, 'product_bookmark') || 'first-unconstrained';
+  // Get bookmark from the cookie
+  const bookmark = getCookie(c, "product_bookmark") || "first-unconstrained";
 
-	const session = db.withSession(bookmark);
+  const session = db.withSession(bookmark);
 
-	try {
-		const { results } = await session.prepare('SELECT * FROM products').all();
+  try {
+      return await withRetry(async () => {
+      const { results } = await session.prepare("SELECT * FROM products").all();
 
-		const latestBookmark = session.getBookmark();
+      const latestBookmark = session.getBookmark();
 
-		// Set the bookmark in the cookie
-		latestBookmark &&
-			setCookie(c, 'product_bookmark', latestBookmark, {
-				maxAge: 60 * 60, // 1 hour
-			});
+      // Set the bookmark in the cookie
+      latestBookmark &&
+        setCookie(c, "product_bookmark", latestBookmark, {
+          maxAge: 60 * 60, // 1 hour
+        });
 
-		return c.json(results);
-	} catch (e) {
-		console.error(e);
-		return c.json([]);
-	}
+      return c.json(results);
+    });
+  } catch (e) {
+    console.error(e);
+    return c.json([]);
+  }
 });
-
 ```
 
 In the above code:
@@ -683,51 +775,55 @@ In the above code:
 ### 3. GET /api/products/:id
 
 ```ts
-app.get('/api/products/:id', async (c) => {
-	const id = c.req.param('id');
+app.get("/api/products/:id", async (c) => {
+  const id = c.req.param("id");
 
-	if (!id) {
-		return c.json({ message: 'Invalid id' }, 400);
-	}
+  if (!id) {
+    return c.json({ message: "Invalid id" }, 400);
+  }
 
-	const db = c.env.DB;
+  const db = c.env.DB;
 
-	// Get bookmark from the cookie
-	const bookmark = getCookie(c, 'product_bookmark') || 'first-unconstrained';
+  // Get bookmark from the cookie
+  const bookmark = getCookie(c, "product_bookmark") || "first-unconstrained";
 
-	const session = db.withSession(bookmark);
+  const session = db.withSession(bookmark);
 
-	try {
-		const { results } = await session.prepare('SELECT * FROM products where id = ?').bind(id).run();
+  try {
+    return await withRetry(async () => {
+      const { results } = await session
+        .prepare("SELECT * FROM products where id = ?")
+        .bind(id)
+        .run();
 
-		const latestBookmark = session.getBookmark();
+      const latestBookmark = session.getBookmark();
 
-		// Set the bookmark in the cookie
-		latestBookmark &&
-			setCookie(c, 'product_bookmark', latestBookmark, {
-				maxAge: 60 * 60, // 1 hour
-			});
+      // Set the bookmark in the cookie
+      latestBookmark &&
+        setCookie(c, "product_bookmark", latestBookmark, {
+          maxAge: 60 * 60, // 1 hour
+        });
 
-		console.log(results);
+      console.log(results);
 
-		return c.json(results);
-	} catch (e) {
-		console.error(e);
-		return c.json([]);
-	}
+      return c.json(results);
+    });
+  } catch (e) {
+    console.error(e);
+    return c.json([]);
+  }
 });
-
 ```
 
 In the above code:
+
 - You get the product ID from the request parameters.
 - You then create a database session with the bookmark.
 - You fetch the product from the database and get the latest bookmark.
 - You then set this bookmark in the cookie.
 - Finally, you return the results.
 
-
-## Step 7: Test the application
+## Step 8: Test the application
 
 You have now updated the API routes to connect to the D1 database. You can now test the application by starting the development server and navigating to the frontend.
 
@@ -756,10 +852,10 @@ curl -X POST http://localhost:8787/api/product \
 ```
 
 :::note
-Read replication is only used when the application has been [deployed](/d1/tutorials/using-read-replication-for-e-com/#step-8-deploy-the-application). D1 does not create read replicas when you develop locally. To test it locally, you can start the development server with the `--remote` flag.
+Read replication is only used when the application has been [deployed](/d1/tutorials/using-read-replication-for-e-com/#step-9-deploy-the-application). D1 does not create read replicas when you develop locally. To test it locally, you can start the development server with the `--remote` flag.
 :::
 
-## Step 8: Deploy the application
+## Step 9: Deploy the application
 
 Since the database you used in the previous steps is local, you need to create the products table in the remote database. Execute the following D1 commands to create the products table in the remote database.
 
@@ -796,5 +892,3 @@ You then created the products table in the remote database and deployed the appl
 You can use the same approach for your existing read heavy application to reduce read latencies and improve read throughput. If you are using an external platform to manage the content, you can connect the external platform to the D1 database, so that the content is automatically updated in the database.
 
 You can find the complete code for this tutorial in the [GitHub repository](https://github.com/harshil1712/e-com-d1-hono).
-
-

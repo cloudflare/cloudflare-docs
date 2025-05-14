@@ -2730,7 +2730,7 @@
 					"free": "$0.10",
 					"pro": "$0.10",
 					"biz": "$0.10",
-					"ent": "$0.10"
+					"ent": "Custom pricing"
 				},
 				"custom_analytics": {
 					"title": "[Custom analytics](/cloudflare-for-platforms/cloudflare-for-saas/hostname-analytics/)",

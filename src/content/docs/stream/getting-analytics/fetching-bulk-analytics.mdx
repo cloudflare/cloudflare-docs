@@ -3,7 +3,6 @@ pcx_content_type: reference
 title: GraphQL Analytics API
 sidebar:
   order: 1
-
 ---
 
 Stream provides analytics about both live video and video uploaded to Stream, via the GraphQL API described below, as well as in the [Stream dashboard](https://dash.cloudflare.com/?to=/:account/stream/analytics).
@@ -43,73 +42,68 @@ Some filters, like `date`, can be used with operators, such as `gt` (greater tha
 
 #### Get minutes viewed by country
 
-```graphql title="GraphQL request"
-query {
-  viewer {
-    accounts(filter:{
-      accountTag:"<ACCOUNT_ID>"
-    }) {
-      streamMinutesViewedAdaptiveGroups(
-        filter: {
-          date_geq: "2022-02-01"
-          date_lt: "2022-03-01"
-        }
-        orderBy:[sum_minutesViewed_DESC]
-        limit: 100
-      ) {
-        sum {
-          minutesViewed
-        }
-        dimensions{
-          uid
-          clientCountryName
-        }
-      }
-    }
-  }
+```graphql graphql-api-explorer title="GraphQL request"
+query StreamGetMinutesExample($accountTag: string!, $start: Date, $end: Date) {
+	viewer {
+		accounts(filter: { accountTag: $accountTag }) {
+			streamMinutesViewedAdaptiveGroups(
+				filter: { date_geq: $start, date_lt: $end }
+				orderBy: [sum_minutesViewed_DESC]
+				limit: 100
+			) {
+				sum {
+					minutesViewed
+				}
+				dimensions {
+					uid
+					clientCountryName
+				}
+			}
+		}
+	}
 }
 ```
 
 ```json title="GraphQL response"
 {
-    "data": {
-        "viewer": {
-            "accounts": [
-                {
-                    "streamMinutesViewedAdaptiveGroups": [
-                        {
-                            "dimensions": {
-                                "clientCountryName": "US",
-                                "uid": "73c514082b154945a753d0011e9d7525"
-                            },
-                            "sum": {
-                                "minutesViewed": 2234
-                            }
-                        },
-                        {
-                            "dimensions": {
-                                "clientCountryName": "CN",
-                                "uid": "73c514082b154945a753d0011e9d7525"
-                            },
-                            "sum": {
-                                "minutesViewed": 700
-                            }
-                        },
-                        {
-                            "dimensions": {
-                                "clientCountryName": "IN",
-                                "uid": "73c514082b154945a753d0011e9d7525"
-                            },
-                            "sum": {
-                                "minutesViewed": 553
-                            }
-                        }
-                    ]
-                }
-            ]
-        }
-    },
-    "errors": null
+	"data": {
+		"viewer": {
+			"accounts": [
+				{
+					"streamMinutesViewedAdaptiveGroups": [
+						{
+							"dimensions": {
+								"clientCountryName": "US",
+								"uid": "73c514082b154945a753d0011e9d7525"
+							},
+							"sum": {
+								"minutesViewed": 2234
+							}
+						},
+						{
+							"dimensions": {
+								"clientCountryName": "CN",
+								"uid": "73c514082b154945a753d0011e9d7525"
+							},
+							"sum": {
+								"minutesViewed": 700
+							}
+						},
+						{
+							"dimensions": {
+								"clientCountryName": "IN",
+								"uid": "73c514082b154945a753d0011e9d7525"
+							},
+							"sum": {
+								"minutesViewed": 553
+							}
+						}
+					]
+				}
+			]
+		}
+	},
+	"errors": null
 }
 ```
 
@@ -119,44 +113,42 @@ GraphQL API supports seek pagination: using filters, you can specify the last vi
 
 The query below will return data for 2 videos that follow video UID `5646153f8dea17f44d542a42e76cfd`:
 
-```graphql title="GraphQL query"
-query {
-  viewer {
-    accounts(filter:{
-      accountTag:"6c04ee5623f70a112c8f488e4c7a2409"
-
-    }) {
-      videoPlaybackEventsAdaptiveGroups(
-        filter: {
-          date_geq: "2020-09-01"
-          date_lt: "2020-09-25"
-          uid_gt:"5646153f8dea17f44d542a42e76cfd"
-        }
-        orderBy:[uid_ASC]
-        limit: 2
-      ) {
-        count
-        sum {
-          timeViewedMinutes
-        }
-        dimensions{
-          uid
-        }
-      }
-    }
-  }
+```graphql graphql-api-explorer='{"uId": "5646153f8dea17f44d542a42e76cfd"}' title="GraphQL query"
+query StreamPaginationExample(
+	$accountTag: string!
+	$start: Date
+	$end: Date
+	$uId: string
+) {
+	viewer {
+		accounts(filter: { accountTag: $accountTag }) {
+			videoPlaybackEventsAdaptiveGroups(
+				filter: { date_geq: $start, date_lt: $end, uid_gt: $uId }
+				orderBy: [uid_ASC]
+				limit: 2
+			) {
+				count
+				sum {
+					timeViewedMinutes
+				}
+				dimensions {
+					uid
+				}
+			}
+		}
+	}
 }
 ```
 
 Here are the steps to implementing pagination:
 
-1. Call the first query without uid\_gt filter to get the first set of videos
+1. Call the first query without uid_gt filter to get the first set of videos
 2. Grab the last video UID from the response from the first query
-3. Call next query by specifying uid\_gt property and set it to the last video UID. This will return the next set of videos
+3. Call next query by specifying uid_gt property and set it to the last video UID. This will return the next set of videos
 
 For more on pagination, refer to the [Cloudflare GraphQL Analytics API docs](/analytics/graphql-api/features/pagination/).
 
 ## Limitations
 
-* The maximum query interval in a single query is 31 days
-* The maximum data retention period is 90 days
+- The maximum query interval in a single query is 31 days
+- The maximum data retention period is 90 days

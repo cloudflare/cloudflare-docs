@@ -5,6 +5,11 @@ productLink: "/hyperdrive/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-05-05"
+    title: Hyperdrive improves regional caching for prepared statements for faster cache hits
+    description: |-
+      Hyperdrive now better caches prepared statements closer to your Workers. This results in up to 5x faster cache hits by
+      reducing the roundtrips needed between your Worker and Hyperdrive's connection pool.
   - publish_date: "2025-03-07"
     title: Hyperdrive connects to your database using Cloudflare's IP address ranges
     description: |-
