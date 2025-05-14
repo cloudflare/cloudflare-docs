@@ -26,7 +26,7 @@ Before sending your Cloudflare log data to Looker, make sure that you:
 :::note[Note]
 
 
-Cloudflare logs are HTTP/HTTPS request logs in JSON format and are gathered from our 200+ data centers globally. By default, timestamps are returned as Unix nanosecond integers. We recommend using the RFC 3339 format for sending logs to Looker.
+Cloudflare logs are HTTP/HTTPS request logs in JSON format and are gathered from our 200+ data centers globally. By default, timestamps are returned as UNIX nanosecond integers. We recommend using the RFC 3339 format for sending logs to Looker.
 
 
 :::
@@ -147,8 +147,8 @@ Available Filters:
 
 With the following pre-set filter values in the Looker dashboards all workers subrequests and client request method PURGE are excluded from the calculations:
 
-* **WorkerSubrequet** set to value *False*
+* **WorkerSubrequest** set to value *False*
 
-* **ClientRequestMethod** doesn’t equal to *PURGE*
+* **ClientRequestMethod** doesn't equal to *PURGE*
 
 You can always adjust your default filters values according to your needs.
