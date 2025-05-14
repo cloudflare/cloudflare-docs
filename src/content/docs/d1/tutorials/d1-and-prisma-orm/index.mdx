@@ -224,14 +224,15 @@ npx wrangler d1 execute prisma-demo-db --command "INSERT INTO  \"User\" (\"email
 ('jane@prisma.io', 'Jane Doe (Remote)');" --remote
 ```
 
-If you're getting an error like `Unknown arguments: (\email\,, \name\)...`, you may need to escape the double quotes with `\``.
+:::note
+If you receive an error to the effect of `Unknown arguments: (\email\,, \name\)...`, you may need to escape the double quotes with `\``.
 
 ```sh
 # Escape with ` instead of \
 npx wrangler d1 execute prisma-demo-db --command "INSERT INTO `"User`" (`"email`", `"name`") VALUES
 ('jane@prisma.io', 'Jane Doe (Local)');" --local
 ```
-
+:::
 ### 5. Query your database from the Worker
 
 To query your database from the Worker using Prisma ORM, you need to:
