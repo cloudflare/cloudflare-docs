@@ -66,10 +66,10 @@ At this point, continuing the [example](#before-you-begin), you should have a ma
 
 <Example>
 
-<APIRequest
-  path="/accounts/{account_id}/addressing/prefixes/{prefix_id}/bindings"
-  method="GET"
-/>
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/addressing/prefixes/{prefix_id}/bindings \
+--header "Authorization: Bearer <API_TOKEN>"
+```
 
 </Example>
 
@@ -87,15 +87,16 @@ Continuing the example, `203.0.113.100/32` designates an IP address that is with
 
 Replace the `{prefix_id}` in the URI with your prefix ID from previous steps. Within the request body, the `cidr` value should correspond to the IP address or subnet that you are configuring for use with CDN.
 
+```bash
 
-<APIRequest
-  path="/accounts/{account_id}/addressing/prefixes/{prefix_id}/bindings"
-  method="POST"
-  json={{
-		  "cidr": "203.0.113.100/32",
-			"service_id": "<SERVICE_ID>",
-	}}
-/>
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/addressing/prefixes/{prefix_id}/bindings \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "cidr": "203.0.113.100/32",
+  "service_id": "<SERVICE_ID>"
+}'
+```
 
 In the response body, the initial provisioning state should be `provisioning`.
 
