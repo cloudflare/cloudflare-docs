@@ -28,7 +28,7 @@ Computers are configured to talk to specific DNS resolvers, identified by IP add
 Visit [1.1.1.1/help](https://one.one.one.one/help) to make sure your system is connected to 1.1.1.1 and that it is working.
 
 
-## What do DNS resolvers do
+## What do DNS resolvers do?
 
 DNS resolvers are like address books for the Internet. They translate the name of places to addresses so that your browser can figure out how to get there. DNS resolvers do this by working backwards from the top until they find the website you are looking for.
 
@@ -52,7 +52,7 @@ Cloudflare [stopped supporting the ANY query](https://blog.cloudflare.com/deprec
 1.1.1.1 is a DNSSEC validating resolver. 1.1.1.1 sends the `DO` (`DNSSEC OK`) bit on every query to convey to the authoritative server that it wishes to receive signed answers if available. 1.1.1.1 supports the signature algorithms specified in [Supported DNSKEY signature algorithms](/1.1.1.1/encryption/dnskey/).
 
 
-## ​Does 1.1.1.1 send EDNS Client Subnet header
+## ​Does 1.1.1.1 send EDNS Client Subnet header?
 
 1.1.1.1 is a privacy centric resolver so it does not send any client IP information and does not send the <GlossaryTooltip term="EDNS Client Subnet (ECS)">EDNS Client Subnet (ECS)</GlossaryTooltip> header to authoritative servers. The exception is the single Akamai debug domain `whoami.ds.akahelp.net` to aid in cross-provider debugging. However, Cloudflare does not send ECS to any of Akamai's production domains, such as `akamaihd.net` or similar.
 
@@ -62,22 +62,22 @@ Cloudflare [stopped supporting the ANY query](https://blog.cloudflare.com/deprec
 1.1.1.1 has full IPv6 support.
 
 
-## What is Purge Cache
+## What is Purge Cache?
 
 
 1.1.1.1's Purge Cache tool allows you to refresh 1.1.1.1's DNS cache for domain names. To refresh the cache for a domain name, visit the [Purge Cache page](https://one.one.one.one/purge-cache/).
 
 
-## What is query name minimization
+## What is query name minimization?
 
 Cloudflare minimizes privacy leakage by only sending minimal query name to authoritative DNS servers. For example, if a client is looking for foo.bar.example.com, the only part of the query 1.1.1.1 discloses to .com is that we want to know who's responsible for example.com and the zone internals stay hidden.
 
 
-## What are root hints
+## What are root hints?
 
 For decreased latency, reduced privacy leakage of queries and lower load on the DNS system, 1.1.1.1 upstreams to [locally hosted root zone files](https://blog.cloudflare.com/f-root/).
 
-## Can IPs used by 1.1.1.1 be allowlisted
+## Can IPs used by 1.1.1.1 be allowlisted?
 
 Authoritative DNS providers may want to allowlist IP's 1.1.1.1 uses to query upstream DNS providers. The comprehensive list of IP's to allowlist is available at [https://www.cloudflare.com/ips/](https://www.cloudflare.com/ips/).
 
