@@ -52,7 +52,7 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames" \
   path="/zones/{zone_id}/custom_hostnames"
   method="POST"
   json={{
-		"hostname": "{hostname}",
+		"hostname": "<CUSTOM_HOSTNAME>",
 		"ssl": {
 			"method": "http",
 			"type": "dv",
@@ -80,7 +80,7 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames?host
   path="/zones/{zone_id}/custom_hostnames"
   method="GET"
   parameters={{
-		hostname:{hostname}
+		hostname:"{hostname}"
 	}}
 />
 
