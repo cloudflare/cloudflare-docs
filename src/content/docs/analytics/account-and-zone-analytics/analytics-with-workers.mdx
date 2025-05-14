@@ -7,9 +7,9 @@ title: Cloudflare analytics with Workers
 
 Learn how Cloudflare analytics tracks requests made by [Cloudflare Workers](/workers/).
 
-## What is a subrequest?
+## What is a subrequest
 
-With a no-op Worker (a Worker that simply proxies traffic by passing on the original client request to the origin and proxying the response) running on a particular route, the request to the origin is counted as a “subrequest”, separate from initial client to edge request. Thus, unless the Worker responds with a static response and never hits an origin, the eyeball → edge request, and edge → origin request will each be counted separately towards the request or bandwidth count in Analytics.  Subrequests are not included in the **Requests** or **Bandwidth** graphs of the Cloudflare **Analytics** app.
+With a no-op Worker (a Worker that simply proxies traffic by passing on the original client request to the origin and proxying the response) running on a particular route, the request to the origin is counted as a 'subrequest', separate from initial client to edge request. Thus, unless the Worker responds with a static response and never hits an origin, the eyeball → edge request, and edge → origin request will each be counted separately towards the request or bandwidth count in Analytics. Subrequests are not included in the **Requests** or **Bandwidth** graphs of the Cloudflare **Analytics** app.
 
 ***
 
@@ -29,7 +29,7 @@ For a breakdown of subrequest traffic (origin facing traffic), you may go to the
 
 ## FAQ
 
-**Why don’t I have any analytics for Workers?**
+**Why don't I have any analytics for Workers?**
 
 * If you are not currently using Workers (don’t have Workers deployed on any routes or filters), we will not have any information to show you.
 * If your Worker sends a static response back to the client without ever calling fetch() to an origin, you are not making any subrequests, thus, all traffic will be shown in zone Analytics
