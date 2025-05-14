@@ -271,9 +271,24 @@ transferred_classes = [{from = "DurableObjectExample", from_script = "OldWorkerS
 
 - The migration list is an ordered array of tables, specified as a key in your Wrangler configuration file. You can define the migration for each environment, as well as at the top level.
 
-- If a migration is only specified at the top-level, but not at the environment-level, the environment will inherit the top-level migration.
-
-- Migrations at at the environment-level can override migrations at the top level.
+- You can define the migration for each environment, as well as at the top level.
+  - Top-level migration is specified at the top-level `migrations` key in the Wrangler configuration file.
+  - Environment-level migration is specified by a `migrations` key inside the `env` key of the Wrangler configuration file (`[env.<environment_name>.migrations]`).
+    - Example Wrangler file:
+    ```jsonc title="wrangler.jsonc"
+    {
+    // top-level default migrations
+    "migrations": [{ ... }],
+    "env": {
+    "staging": {
+      // migration override for staging
+      "migrations": [{...}]
+      }
+     }
+    }
+    ```
+  - If a migration is only specified at the top-level, but not at the environment-level, the environment will inherit the top-level migration.
+  - Migrations at at the environment-level override migrations at the top level.
 
 - All migrations are applied at deployment. Each migration can only be applied once per [environment](/durable-objects/reference/environments/).
 
