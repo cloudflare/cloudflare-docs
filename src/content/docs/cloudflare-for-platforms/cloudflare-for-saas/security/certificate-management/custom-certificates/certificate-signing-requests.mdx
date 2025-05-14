@@ -82,6 +82,12 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_csrs \
 }
 ```
 
+<APIRequest
+  path=""
+  method=""
+  json={{}}
+/>
+
 Replace the `\n` characters with actual newlines before passing to your customer. This can be accomplished by piping the output of the prior call to a tool like jq and perl, such as:
 
 ```bash
@@ -91,6 +97,12 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_csrs \
 --header "Content-Type: application/json" \
 --data "$request_body" | jq .result.csr | perl -npe s'/\\n/\n/g; s/"//g' > csr.txt
 ```
+
+<APIRequest
+  path=""
+  method=""
+  json={{}}
+/>
 
 ### 3. Customer obtains certificate
 
@@ -132,5 +144,11 @@ You can request the (paginated) collection of all previously generated custom CS
 ### Delete a CSR
 
 Delete one or more of the CSRs to delete the underlying private key by making a `DELETE` request to `https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_csrs/{csr_id}`.
+
+<APIRequest
+  path=""
+  method=""
+  json={{}}
+/>
 
 You may delete a CSR provided there are no custom certificates using the private key that was generated for the CSR. If you attempt to delete a CSR whose private key is still in use, you will receive an error.

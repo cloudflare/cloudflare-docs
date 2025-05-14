@@ -28,6 +28,12 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames" \
 --data '{"Hostname":"example.com"}, "Ssl":{wildcard:false}}'
 ```
 
+<APIRequest
+  path=""
+  method=""
+  json={{}}
+/>
+
 ## 1. Associate custom metadata to a custom hostname
 
 To apply WAF to your custom hostname, you need to create an association between your customer's domain and the WAF configuration that you would like to attach to it. Cloudflare's product, [custom metadata](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/custom-metadata/) allows you to do this via the API.
@@ -43,6 +49,12 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames" \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>"
 ```
+
+<APIRequest
+  path=""
+  method=""
+  json={{}}
+/>
 
 4. Plan your [custom metadata](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/custom-metadata/). It is fully customizable. In the example below, we have chosen the tag `"security_level"` to which we expect to assign three values (low, medium, and high).
 
@@ -67,6 +79,12 @@ curl --request PATCH \
   }
 }'
 ```
+
+<APIRequest
+  path=""
+  method=""
+  json={{}}
+/>
 
 This assigns custom metadata to your custom hostname so that it has a security tag associated with its ID.
 
@@ -99,6 +117,12 @@ curl --request PUT \
   ]
 }'
 ```
+
+<APIRequest
+  path=""
+  method=""
+  json={{}}
+/>
 
 To build rules through the dashboard:
 

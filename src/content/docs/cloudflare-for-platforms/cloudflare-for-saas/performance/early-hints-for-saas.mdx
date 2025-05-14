@@ -48,6 +48,12 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames" \
 }'
 ```
 
+<APIRequest
+  path=""
+  method=""
+  json={{}}
+/>
+
 4. For an existing custom hostname, locate the `id` of that hostname via a `GET` call:
 
 ```bash
@@ -55,6 +61,12 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames?host
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>"
 ```
+
+<APIRequest
+  path=""
+  method=""
+  json={{}}
+/>
 
 5. Then make an API call such as the example below, specifying `"early_hints": "on"`:
 
@@ -77,5 +89,11 @@ curl --request PATCH \
   }
 }'
 ```
+
+<APIRequest
+  path=""
+  method=""
+  json={{}}
+/>
 
 Currently, all options within `settings` are required in order to prevent those options from being set to default. You can pull the current settings state prior to updating Early Hints by leveraging the output that returns the `id` for the hostname.
