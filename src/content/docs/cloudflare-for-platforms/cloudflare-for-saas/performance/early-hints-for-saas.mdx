@@ -26,28 +26,6 @@ Before you can employ Early Hints for SaaS, you need to create a custom hostname
 
 3. If you are [creating a new custom hostname](/api/resources/custom_hostnames/methods/create/), make an API call such as the example below, specifying `"early_hints": "on"`:
 
-```bash
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "hostname": "{hostname}",
-  "ssl": {
-    "method": "http",
-    "type": "dv",
-    "settings": {
-      "http2": "on",
-      "min_tls_version": "1.2",
-      "tls_1_3": "on",
-      "early_hints": "on"
-    },
-    "bundle_method": "ubiquitous",
-    "wildcard": false
-  }
-}'
-```
-
 <APIRequest
   path="/zones/{zone_id}/custom_hostnames"
   method="POST"
@@ -70,12 +48,6 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames" \
 
 4. For an existing custom hostname, locate the `id` of that hostname via a `GET` call:
 
-```bash
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames?hostname={hostname}" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>"
-```
-
 <APIRequest
   path="/zones/{zone_id}/custom_hostnames"
   method="GET"
@@ -85,26 +57,6 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames?host
 />
 
 5. Then make an API call such as the example below, specifying `"early_hints": "on"`:
-
-```bash
-curl --request PATCH \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/{id}" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "ssl": {
-    "method": "http",
-    "type": "dv",
-    "settings": {
-      "http2": "on", // Note: These settings will be set to default if not included when updating early hints
-      "min_tls_version": "1.2",
-      "tls_1_3": "on",
-      "early_hints": "on"
-    }
-  }
-}'
-```
 
 <APIRequest
   path="/zones/{zone_id}/custom_hostnames/{custom_hostname_id}"
