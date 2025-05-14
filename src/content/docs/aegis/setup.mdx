@@ -27,16 +27,6 @@ Cloudflare Aegis is available in early access to Enterprise customers. Contact y
 - Specify `aegis` as the setting ID in the URL.
 - In the request body, set `enabled` to `true` and use the ID from the previous step as `pool_id`.
 
-```bash
---data '{
-  "id": "aegis",
-  "value": {
-    "enabled": true,
-    "pool_id": "<YOUR_EGRESS_POOL_ID>"
-  },
-}'
-```
-
 <APIRequest
   path="/zones/{zone_id}/settings/{setting_id}"
   method="PATCH"
