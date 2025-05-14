@@ -6,7 +6,7 @@ date: 2025-05-12T11:00:00Z
 
 A new GA release for the Linux WARP client is now available on the [Stable release downloads page](/cloudflare-one/connections/connect-devices/warp/download-warp/).   This release contains two significant changes all customers should be aware of:
 
-1. All DNS traffic now flows inside the WARP tunnel. Customers are no longer required to configure their local Firewall rules to allow our DoH IP Address or domains.
+1. All DNS traffic now flows inside the WARP tunnel. Customers are no longer required to configure their local Firewall rules to allow our [DoH IP Address or domains](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#doh-ip).
 2. When using MASQUE, the connection will fall back to HTTP/2 (TCP) when we detect that HTTP/3 traffic is blocked. This allows for a much more reliable connection on some public WiFi networks.
 
 **Changes and improvements**
