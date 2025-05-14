@@ -1,9 +1,9 @@
 ---
-link: "/fundamentals/new-features/available-rss-feeds/"
+link: "/waf/change-log/"
 productName: WAF
-productLink: "/WAF/"
+productLink: "/waf/"
 productArea: Application security
-productAreaLink: /fundamentals/reference/changelog/platform/
+productAreaLink: /fundamentals/reference/changelog/security/
 entries:
   - publish_date: "2025-05-14"
     title: "Final notice - Move to Changelog RSS feed"

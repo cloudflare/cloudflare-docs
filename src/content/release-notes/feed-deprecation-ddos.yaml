@@ -1,9 +1,9 @@
 ---
-link: "/fundamentals/new-features/available-rss-feeds/"
+link: "/ddos-protection/change-log/"
 productName: DDoS protection
 productLink: "/ddos-protection/"
 productArea: Application security
-productAreaLink: /fundamentals/reference/changelog/platform/
+productAreaLink: /fundamentals/reference/changelog/security/
 entries:
   - publish_date: "2025-05-14"
     title: "Final notice - Move to Changelog RSS feed"
