@@ -52,7 +52,7 @@ Cloudflare [stopped supporting the ANY query](https://blog.cloudflare.com/deprec
 1.1.1.1 is a DNSSEC validating resolver. 1.1.1.1 sends the `DO` (`DNSSEC OK`) bit on every query to convey to the authoritative server that it wishes to receive signed answers if available. 1.1.1.1 supports the signature algorithms specified in [Supported DNSKEY signature algorithms](/1.1.1.1/encryption/dnskey/).
 
 
-## ​Does 1.1.1.1 send EDNS Client Subnet header
+## ​Does 1.1.1.1 send EDNS Client Subnet header?
 
 1.1.1.1 is a privacy centric resolver so it does not send any client IP information and does not send the <GlossaryTooltip term="EDNS Client Subnet (ECS)">EDNS Client Subnet (ECS)</GlossaryTooltip> header to authoritative servers. The exception is the single Akamai debug domain `whoami.ds.akahelp.net` to aid in cross-provider debugging. However, Cloudflare does not send ECS to any of Akamai's production domains, such as `akamaihd.net` or similar.
 
