@@ -8,6 +8,6 @@ action:
   name: edit
   params:
     - trim_right
-    - ".?!"
+    - ".!"
 tokens:
-  - "[a-z][.?!]$"
+  - "[a-z][.!]$"
