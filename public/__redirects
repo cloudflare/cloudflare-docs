@@ -36,6 +36,7 @@
 
 ## legacy
 /changelog/index.xml /release-notes/index.xml 301
+/release-notes/ /changelog/ 301
 
 # 1dot1_redirect
 /1.1.1.1/1.1.1.1-for-families/ /1.1.1.1/setup/ 301
