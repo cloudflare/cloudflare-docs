@@ -61,7 +61,7 @@
 		"cidr-tools": "11.0.3",
 		"codeowners-utils": "1.0.2",
 		"date-fns": "4.1.0",
-		"dedent": "1.5.3",
+		"dedent": "1.6.0",
 		"dompurify": "3.2.5",
 		"dot-prop": "9.0.0",
 		"eslint": "9.26.0",
