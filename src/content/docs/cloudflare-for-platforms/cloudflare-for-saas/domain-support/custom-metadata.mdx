@@ -52,12 +52,22 @@ curl --request PATCH \
 ```
 
 <APIRequest
-  path=""
-  method=""
-  json={{}}
+  path="/zones/{zone_id}/custom_hostnames/{hostname_id}"
+  method="PATCH"
+  json={{
+		"ssl": {
+    "method": "http",
+    "type": "dv"
+  },
+  "custom_metadata": {
+    "customer_id": "12345",
+    "redirect_to_https": true,
+    "security_tag": "low"
+  },
+	}}
 />
 
-Changes to metadata will propagate across Cloudflare’s edge within 30 seconds.
+Changes to metadata will propagate across Cloudflare's edge within 30 seconds.
 
 ---
 
@@ -109,7 +119,7 @@ lookup_json_string(cf.hostname.metadata, "security_tag") eq "low"
 - Define fallback behaviour in the non-presence of metadata
 - Define fallback behaviour if a key or value in the metadata are unknown
 
-General guidance is to follow [Google’s JSON Style guide](https://google.github.io/styleguide/jsoncstyleguide.xml) where appropriate.
+General guidance is to follow [Google's JSON Style guide](https://google.github.io/styleguide/jsoncstyleguide.xml) where appropriate.
 
 ---
 
@@ -118,7 +128,7 @@ General guidance is to follow [Google’s JSON Style guide](https://google.githu
 There are some limitations to the metadata that can be provided to Cloudflare:
 
 - It must be valid JSON.
-- Any origin resolution — for example, directing requests for a given hostname to a specific backend — must be provided as a hostname that exists within Cloudflare’s DNS (even for non-authoritative setups). Providing an IP address directly will cause requests to error.
+- Any origin resolution — for example, directing requests for a given hostname to a specific backend — must be provided as a hostname that exists within Cloudflare's DNS (even for non-authoritative setups). Providing an IP address directly will cause requests to error.
 - The total payload must not exceed 4 KB.
 - It requires a Cloudflare Worker that knows how to process the schema and trigger logic based on the contents.
 - Custom metadata cannot be set on custom hostnames that contain wildcards.

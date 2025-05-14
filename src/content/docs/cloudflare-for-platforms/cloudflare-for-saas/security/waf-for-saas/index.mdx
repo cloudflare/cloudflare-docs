@@ -29,9 +29,14 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames" \
 ```
 
 <APIRequest
-  path=""
-  method=""
-  json={{}}
+  path="/zones/{zone_id}/custom_hostnames"
+  method="POST"
+  json={{
+		"hostname": "<CUSTOM_HOSTNAME>",
+		"ssl": {
+			wildcard: false
+		},
+	}}
 />
 
 ## 1. Associate custom metadata to a custom hostname
@@ -51,9 +56,8 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames" \
 ```
 
 <APIRequest
-  path=""
-  method=""
-  json={{}}
+  path="/zones/{zone_id}/custom_hostnames"
+  method="GET"
 />
 
 4. Plan your [custom metadata](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/custom-metadata/). It is fully customizable. In the example below, we have chosen the tag `"security_level"` to which we expect to assign three values (low, medium, and high).
@@ -81,9 +85,14 @@ curl --request PATCH \
 ```
 
 <APIRequest
-  path=""
-  method=""
-  json={{}}
+  path="/zones/{zone_id}/custom_hostnames/{custom_hostname_id}"
+  method="PATCH"
+  json={{
+		"custom_metadata": {
+    "customer_id": "12345",
+    "security_level": "low"
+		},
+	}}
 />
 
 This assigns custom metadata to your custom hostname so that it has a security tag associated with its ID.
@@ -119,9 +128,28 @@ curl --request PUT \
 ```
 
 <APIRequest
-  path=""
-  method=""
-  json={{}}
+  path="/zones/{zone_id}/rulesets/phases/{ruleset_phase}/entrypoint"
+  method="PUT"
+  json={{
+		"rules": [
+			{
+				"action": "block",
+				"ratelimit": {
+					"characteristics": [
+						"cf.colo.id",
+						"ip.src"
+					],
+					"period": 10,
+					"requests_per_period": 2,
+					"mitigation_timeout": 60
+				},
+				"expression": "lookup_json_string(cf.hostname.metadata, \"security_level\") eq \"low\" and http.request.uri contains \"login\""
+			}
+		]
+	}}
+	parameter={{
+		ruleset_phase: "http_ratelimit"
+	}}
 />
 
 To build rules through the dashboard:
