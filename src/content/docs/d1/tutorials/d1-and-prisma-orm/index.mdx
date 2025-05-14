@@ -39,9 +39,7 @@ npm create cloudflare@latest prisma-d1-example -- --type hello-world
 In your terminal, you will be asked a series of questions related your project:
 
 1. Answer `yes` to using TypeScript.
-2. Answer `yes` to deploying your Worker.
-
-Once you deploy your Worker, you should be able to preview your Worker at `https://prisma-d1-example.USERNAME.workers.dev`, which displays "Hello World" in the browser.
+2. Answer `no` to deploying your Worker.
 
 ### 2. Initialize Prisma ORM
 
@@ -102,14 +100,18 @@ npx wrangler d1 create prisma-demo-db
 You should receive the following output on your terminal:
 
 ```
-✅ Successfully created DB 'prisma-demo-db' in region EEUR
-Created your database using D1's new storage backend. The new storage backend is not yet recommended for production workloads, but backs up your data via
-point-in-time restore.
+✅ Successfully created DB 'prisma-demo-db' in region WEUR
+Created your new D1 database.
 
-[[d1_databases]]
-binding = "DB" # i.e. available in your Worker on env.DB
-database_name = "prisma-demo-db"
-database_id = "__YOUR_D1_DATABASE_ID__"
+{
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "prisma-demo-db",
+      "database_id": "<DATABASE_ID>"
+    }
+  ]
+}
 ```
 
 You now have a D1 database in your Cloudflare account with a binding to your Cloudflare Worker.
