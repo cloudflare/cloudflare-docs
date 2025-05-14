@@ -32,10 +32,10 @@ UNIX
 URI
 URL
 WebRTC
-WebSocket
+WebSocket[s]
 Wi-Fi
 WordPress
-Wrangler
+[Ww]rangler
 VMware
 VPN
 YubiKey
