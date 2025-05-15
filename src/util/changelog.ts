@@ -19,7 +19,9 @@ import remarkStringify from "remark-stringify";
 import { marked } from "marked";
 
 async function getWARPReleases(): Promise<Array<CollectionEntry<"changelog">>> {
-	const releases = await getCollection("warp-releases");
+	const releases = await getCollection("warp-releases", (e) => {
+		return !e.id.startsWith("linux/beta/");
+	});
 
 	return releases.map((release) => {
 		const { platformName, version, releaseNotes, releaseDate } = release.data;
