@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Details, GlossaryTooltip, Render, TabItem, Tabs } from "~/components";
+import { Details, GlossaryTooltip, Render, TabItem, Tabs, APIRequest } from "~/components";
 
 This page lists Cloudflare requirements for custom certificates and explains how to upload and update these certificates using Cloudflare dashboard or API.
 
@@ -148,6 +148,12 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_certificates \
 --header "Content-Type: application/json" \
 --data "$request_body"
 ```
+
+<APIRequest
+  path=""
+  method=""
+  json={{}}
+/>
 
 3. (Optional) Add a CAA record.
 

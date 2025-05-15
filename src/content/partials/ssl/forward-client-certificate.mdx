@@ -3,6 +3,8 @@
 
 ---
 
+import { APIRequest } from "~/components";
+
 ## Forward a client certificate
 
 In addition to enforcing mTLS authentication for your host, you can also forward a client certificate to your origin server as an HTTP header. This setup is often helpful for server logging.
@@ -33,6 +35,13 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/access/certificates/setting
   ]
 }'
 ```
+
+<APIRequest
+  path=""
+  method=""
+  json={{}}
+/>
+
 
 Once `client_certificate_forwarding` is set to `true`, the first request of an mTLS connection will now include the following headers:
 

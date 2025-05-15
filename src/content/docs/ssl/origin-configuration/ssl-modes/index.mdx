@@ -9,7 +9,7 @@ description: Encryption modes allow you to control how Cloudflare connects to
   validated.
 ---
 
-import { DirectoryListing, Render, TabItem, Tabs } from "~/components";
+import { DirectoryListing, Render, TabItem, Tabs, APIRequest } from "~/components";
 
 <Render file="encryption-mode-definition" /> <br />
 
@@ -60,6 +60,14 @@ If you want to opt a zone out via the API, you can make this API call on or befo
   --data '{"value":"custom"}'
 ```
 
+
+<APIRequest
+  path=""
+  method=""
+  json={{}}
+/>
+
+
 #### Opt out multiple zones
 
 If you wanted to opt out multiple zones:
@@ -75,6 +83,14 @@ If you wanted to opt out multiple zones:
    --header 'Authorization: Bearer <CF_API_TOKEN>' \
    --header 'Content-Type: application/json'
    ```
+
+
+<APIRequest
+  path=""
+  method=""
+  json={{}}
+/>
+
 
 3. Create a list of zone IDs you want to opt-out with each zone ID on a separate line (newline separate), stored in a file such as `zones.txt`.
 4. Create a bash script for `opt-out-multiple-zones.sh` and add the following. Add `zones.txt` to the same directory or update the path accordingly.
@@ -92,6 +108,14 @@ If you wanted to opt out multiple zones:
      printf "\n\n"
    done
    ```
+
+
+<APIRequest
+  path=""
+  method=""
+  json={{}}
+/>
+
 
 5. Open your command line and run:
 

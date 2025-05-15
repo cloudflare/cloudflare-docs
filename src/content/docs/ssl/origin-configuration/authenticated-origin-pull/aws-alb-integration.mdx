@@ -9,7 +9,7 @@ description: Learn how to set up Cloudflare Authenticated Origin Pulls with the
 
 ---
 
-import { Render } from "~/components";
+import { Render, APIRequest } from "~/components";
 
 This guide will walk you through how to set up [per-hostname](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/) authenticated origin pulls to securely connect to an AWS Application Load Balancer using [mutual TLS verify](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/mutual-authentication.html).
 
@@ -88,6 +88,13 @@ curl --silent --request PUT \
 }'
 ```
 
+<APIRequest
+  path=""
+  method=""
+  json={{}}
+/>
+
+
 3. [Enable the Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/#3-enable-authenticated-origin-pulls-globally) feature on your zone.
 
 ```bash
@@ -100,6 +107,13 @@ curl --request PATCH \
   "value": "on"
 }'
 ```
+
+<APIRequest
+  path=""
+  method=""
+  json={{}}
+/>
+
 
 :::note
 
@@ -129,6 +143,13 @@ curl -s --request PUT \
 }'
 ```
 
+<APIRequest
+  path=""
+  method=""
+  json={{}}
+/>
+
+
 2. (Optional) Use a [`GET` request](/api/resources/origin_tls_client_auth/subresources/hostnames/subresources/certificates/methods/list/) to obtain a list of the client certificate IDs. You will need the ID of the certificate you want to remove for the following step.
 
 ```bash
@@ -136,6 +157,13 @@ curl "https://api.cloudflare.com/client/v4/zones/$ZONEID/origin_tls_client_auth/
 --header "X-Auth-Email: $MYAUTHEMAIL" \
 --header "X-Auth-Key: $MYAUTHKEY"
 ```
+
+<APIRequest
+  path=""
+  method=""
+  json={{}}
+/>
+
 
 3. Use the [Delete hostname client certificate](/api/resources/origin_tls_client_auth/subresources/hostnames/subresources/certificates/methods/delete/) endpoint to remove the certificate you had uploaded.
 
@@ -145,3 +173,10 @@ curl --request DELETE \
 --header "X-Auth-Email: $MYAUTHEMAIL" \
 --header "X-Auth-Key: $MYAUTHKEY"
 ```
+
+<APIRequest
+  path=""
+  method=""
+  json={{}}
+/>
+

@@ -10,7 +10,7 @@ description: Cloudflare mTLS now supports client certificates that have not been
 
 ---
 
-import { Render } from "~/components"
+import { Render, APIRequest } from "~/components"
 
 This page explains how you can manage mTLS using client certificates that have not been issued by Cloudflare CA.
 
@@ -100,3 +100,9 @@ curl "https://api.cloudflare.com/client/v4/zones/zone_id/certificate_authorities
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>"
 ```
+
+<APIRequest
+  path=""
+  method=""
+  json={{}}
+/>

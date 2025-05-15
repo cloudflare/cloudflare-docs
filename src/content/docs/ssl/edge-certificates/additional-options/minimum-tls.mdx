@@ -5,7 +5,7 @@ sidebar:
   order: 13
 ---
 
-import { FeatureTable, TabItem, Tabs } from "~/components";
+import { FeatureTable, TabItem, Tabs, APIRequest } from "~/components";
 
 Minimum TLS Version only allows HTTPS connections from visitors that support the selected TLS protocol version or newer.
 
@@ -65,6 +65,12 @@ curl --request PATCH \
   }'
 ```
 
+<APIRequest
+  path=""
+  method=""
+  json={{}}
+/>
+
 </TabItem> </Tabs>
 
 ### Per-hostname
@@ -89,6 +95,12 @@ curl --request PUT \
     "value": "1.2"
   }'
 ```
+
+<APIRequest
+  path=""
+  method=""
+  json={{}}
+/>
 
 ## Test supported TLS versions
 

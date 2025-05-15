@@ -10,7 +10,7 @@ description: Learn how to set up Geo Key Manager and choose the geographical
   boundaries of where your private encryption keys are stored.
 ---
 
-import { Render, TabItem, Tabs, InlineBadge } from "~/components";
+import { Render, TabItem, Tabs, InlineBadge, APIRequest } from "~/components";
 
 ## Geo Key Manager v2 <InlineBadge preset="beta" />
 
@@ -49,6 +49,12 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_certificates" 
 }'
 ```
 
+<APIRequest
+  path=""
+  method=""
+  json={{}}
+/>
+
 ```bash title="Store private keys in the E.U., but not in France"
 curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_certificates" \
 --header "X-Auth-Email: <EMAIL>" \
@@ -61,6 +67,12 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_certificates" 
   "type": "sni_custom"
 }'
 ```
+
+<APIRequest
+  path=""
+  method=""
+  json={{}}
+/>
 
 :::note
 
