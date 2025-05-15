@@ -12,6 +12,8 @@ entries:
     categories: [Request, URI]
     keywords: [request, uri, url, domain, client, visitor]
     summary: The hostname used in the full request URI.
+    description: |-
+      `http.host` contains the host header from the original request. **If** you have **origin rules** that change the hostname, they will not be reflected in the `http.host` value
     example_value: |-
       "www.example.org"
 
