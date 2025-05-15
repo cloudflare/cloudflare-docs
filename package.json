@@ -57,7 +57,7 @@
 		"astro": "5.7.12",
 		"astro-breadcrumbs": "3.3.1",
 		"astro-icon": "1.1.5",
-		"astro-live-code": "0.0.5",
+		"astro-live-code": "0.0.6",
 		"cidr-tools": "11.0.3",
 		"codeowners-utils": "1.0.2",
 		"date-fns": "4.1.0",
