@@ -9,14 +9,13 @@ description: Override caching settings on a per-request basis.
 
 import { TabItem, Tabs } from "~/components";
 
-AI Gateway can cache responses from your AI model providers, serving them directly from Cloudflare's edge network for identical requests. This can significantly improve response times and reduce costs.
+AI Gateway can cache responses from your AI model providers, serving them directly from Cloudflare's cache for identical requests.
 
 ## Benefits of Using Caching
 
 - **Reduced Latency:** Serve responses faster to your users by avoiding a round trip to the origin AI provider for repeated requests.
 - **Cost Savings:** Minimize the number of paid requests made to your AI provider, especially for frequently accessed or non-dynamic content.
 - **Increased Throughput:** Offload repetitive requests from your AI provider, allowing it to handle unique requests more efficiently.
-
 
 :::note
 
@@ -58,12 +57,7 @@ To check whether a response comes from cache or not, **cf-aig-cache-status** wil
 
 ## Per-request caching
 
-While your gateway's default cache settings provide a good baseline, you might encounter scenarios where:
-
-- **Freshness is critical:** Some API calls must always fetch the absolute latest data from the origin provider, irrespective of global caching rules.
-- **Content has varying lifespans:** A global Time To Live (TTL) might be too long for frequently updated information or too short for highly static content, leading to either stale data or reduced cache effectiveness.
-- **Responses are dynamic or personalized:** Caching user-specific or highly dynamic responses with a generic cache key could lead to incorrect data being served.
-- **Specific caching strategies are needed:** You might want to define exactly how a particular piece of content is cached, separate from other requests.
+While your gateway's default cache settings provide a good baseline, you might encounter scenarios requiring more granular control. For example, instances where when data freshness is needed, content has varying lifespans, or responses are dynamic or personalized.
 
 To address these needs, AI Gateway allows you to override default cache behaviors on a per-request basis using specific HTTP headers. This gives you the precision to optimize caching for individual API calls, ensuring the right balance of performance, cost-efficiency, and data accuracy.
 
