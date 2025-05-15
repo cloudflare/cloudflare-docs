@@ -48,12 +48,23 @@ const dirs = contents.filter((ent: any) => ent.type === "dir");
 						</a>
 					</div>
 					<p>{packageJson.description}</p>
+					<p>
+						Explore on{" "}
+						<a
+							href={`https://github.com/cloudflare/templates/tree/main/${dir.path}`}
+						>
+							GitHub ↗
+						</a>
+					</p>
 					<PackageManagers
 						type="create"
 						pkg="cloudflare@latest"
 						args={`--template=cloudflare/templates/${dir.path}`}
 					/>
 				</div>
+				<br/>
+				<hr>
+				<br/>
 			);
 		})
 }
