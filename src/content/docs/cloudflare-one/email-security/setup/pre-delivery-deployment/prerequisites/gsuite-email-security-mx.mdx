@@ -48,17 +48,17 @@ Go to **Compliance**, and create a [content compliance filter](https://support.g
         - In **Simple content match**, select **Advanced content match**.
         - In **Location**, select **Full headers**.
         - In **Match type**, select **Contains text**.
-        - In **Content**, enter `X-EmailSecurity-Disposition: MALICIOUS`.
+        - In **Content**, enter `X-CFEmailSecurity-Disposition: MALICIOUS`.
         - Select **SAVE** to save the condition.
     - If the above expression match, do the following, select **Quarantine message** and the **Email Security Malicious** quarantine that was created in the previous step.
         - Select **SAVE**.
 
 If you would like to quarantine the other dispositions, repeat the above steps and use the following strings for the other dispositions:
 
-- `X-EmailSecurity-Disposition: BULK`
-- `X-EmailSecurity-Disposition: SUSPICIOUS`
-- `X-EmailSecurity-Disposition: SPOOF`
-- `X-EmailSecurity-Disposition: UCE` (`UCE` is the equivalent of `SPAM`)
+- `X-CFEmailSecurity-Disposition: BULK`
+- `X-CFEmailSecurity-Disposition: SUSPICIOUS`
+- `X-CFEmailSecurity-Disposition: SPOOF`
+- `X-CFEmailSecurity-Disposition: UCE` (`UCE` is the equivalent of `SPAM`)
 
 If desired, you can create a separate quarantine for each of the dispositions.
 
