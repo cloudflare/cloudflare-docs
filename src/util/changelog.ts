@@ -33,7 +33,6 @@ export async function getChangelogs({
 			const product = { collection: "products", id: folder } as const;
 
 			const isValidProduct = await getEntry(product);
-			console.log(isValidProduct);
 
 			if (!isValidProduct) {
 				throw new Error(
