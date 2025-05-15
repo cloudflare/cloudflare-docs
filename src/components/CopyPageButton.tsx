@@ -53,6 +53,7 @@ export default function CopyPageButton() {
 			const clipboardItem = new ClipboardItem({
 				["text/plain"]: fetch(markdownUrl)
 					.then((r) => r.text())
+					.then((t) => new Blob([t], { type: "text/plain" }))
 					.catch((e) => {
 						throw new Error(`Received ${e.message} for ${markdownUrl}`);
 					}),
