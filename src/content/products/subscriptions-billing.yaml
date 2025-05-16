@@ -1,9 +1,0 @@
-name: Subscriptions and Billing
-
-product:
-  title: Subscriptions and Billing
-  url: /subscriptions-billing/
-  group: Core platform
-
-meta:
-  description: Manage subscriptions and billing.
