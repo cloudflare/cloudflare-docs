@@ -50,14 +50,16 @@ export default function CopyPageButton() {
 	const handleCopyMarkdown = async () => {
 		const markdownUrl = new URL("index.md", window.location.href).toString();
 		try {
-			const response = await fetch(markdownUrl);
+			const clipboardItem = new ClipboardItem({
+				["text/plain"]: fetch(markdownUrl)
+					.then((r) => r.text())
+					.then((t) => new Blob([t], { type: "text/plain" }))
+					.catch((e) => {
+						throw new Error(`Received ${e.message} for ${markdownUrl}`);
+					}),
+			});
 
-			if (!response.ok) {
-				throw new Error(`Received ${response.status} on ${response.url}`);
-			}
-
-			const markdown = await response.text();
-			await navigator.clipboard.writeText(markdown);
+			await navigator.clipboard.write([clipboardItem]);
 			track("clicked copy page button", {
 				value: "copy markdown",
 			});

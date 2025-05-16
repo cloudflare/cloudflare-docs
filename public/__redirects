@@ -17,7 +17,8 @@
 /cloudflare-one/changelog/casb/index.xml /changelog/rss/casb.xml 301
 /cloudflare-one/changelog/dex/index.xml /changelog/rss/dex.xml 301
 /cloudflare-one/changelog/dlp/index.xml /changelog/rss/dlp.xml 301
-/cloudflare-one/changelog/email-security/index.xml /changelog/rss/email-security.xml 301
+/cloudflare-one/changelog/email-security/index.xml /changelog/rss/email-security-cf1.xml 301
+/changelog/rss/email-security.xml /changelog/rss/email-security-cf1.xml 301
 /cloudflare-one/changelog/gateway/index.xml /changelog/rss/gateway.xml 301
 /cloudflare-one/changelog/risk-score/index.xml /changelog/rss/risk-score.xml 301
 /cloudflare-one/changelog/tunnel/index.xml /changelog/rss/cloudflare-tunnel.xml 301

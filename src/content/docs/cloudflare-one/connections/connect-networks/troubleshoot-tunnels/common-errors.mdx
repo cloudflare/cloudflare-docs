@@ -92,6 +92,8 @@ There are a few different possible root causes behind the `websocket: bad handsh
 
 - Your SSH or RDP Access application has the [Binding Cookie](/cloudflare-one/identity/authorization-cookie/#binding-cookie) enabled. To disable the cookie, go to **Access** > **Applications** and edit the application settings.
 
+- One or more [Workers routes](/workers/configuration/routing/routes/) are overlapping with the tunnel hostname, and the Workers do not properly handle the traffic. To resolve, you could either exclude your tunnel from the Worker route by not defining a route that includes the tunnel's hostname or update your Worker to only handle specific paths and forward all other requests to the origin, for example, by using `return fetch(req)`.
+
 ## My tunnel randomly disconnects.
 
 Long-lived connections initiated through the Cloudflare Zero Trust platform, such as SSH sessions, can last up to eight hours. However, disruptions along the service path may result in more frequent disconnects. Often, these disconnects are caused by regularly scheduled maintenance events such as data center, server, or service updates and restarts. If you believe these events are not the cause of disconnects in your environment, collect the relevant [WARP logs](/cloudflare-one/connections/connect-devices/warp/troubleshooting/warp-logs/) and [Tunnel logs](/cloudflare-one/connections/connect-networks/monitor-tunnels/logs/) and contact Support.

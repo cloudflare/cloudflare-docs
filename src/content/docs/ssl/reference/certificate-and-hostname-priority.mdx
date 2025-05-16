@@ -77,7 +77,7 @@ If a hostname resource record is not proxied (gray-clouded) for a zone on Cloudf
 
 Customer1 uses Cloudflare as authoritative DNS for the zone `shop.example.com`. Customer2 is a SaaS provider that creates and successfully [verifies the new custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/) `shop.example.com`. Afterward, traffic starts routing over Customer2's zone:
 
-* If Customer1 wants to regain control of their zone, Customer1 contacts Customer2 and requests them to delete the custom hostname record. Customer1 should make sure to have their record target updated to something other than the SaaS provider target, otherwise Customer1 would get a [`1014` error](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/#error-1014-cname-cross-user-banned).
+* If Customer1 wants to regain control of their zone, Customer1 contacts Customer2 and requests them to delete the custom hostname record. Customer1 should make sure to have their record target updated to something other than the SaaS provider target, otherwise Customer1 would get a [`1014` error](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1014/).
 * If Customer1 already has a proxied record for `www.example.com` when Customer2 creates and verifies a new custom hostname `www.example.com`, [Orange-to-Orange](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/how-it-works/) applies.
 * If Customer1 already has a proxied record for `www.example.com` in a legacy custom hostname setup (with another SaaS provider, Customer3) and Customer2 creates and verifies a new wildcard custom hostname for `*.example.com`, legacy custom hostname on Customer3 platform takes precedence due to exact hostname match.
 

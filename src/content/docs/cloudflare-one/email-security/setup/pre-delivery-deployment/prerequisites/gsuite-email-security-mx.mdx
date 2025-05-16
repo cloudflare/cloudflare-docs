@@ -25,6 +25,7 @@ Set up [Inbound Email Configuration](https://support.google.com/a/answer/60730?h
     - In **Gateway IPs**, select the **Add** link, and add the IPs mentioned in [Egress IPs](/cloudflare-one/email-security/setup/pre-delivery-deployment/egress-ips/).
     - Select **Automatically detect external IP (recommended)**.
     - Select **Require TLS for connections from the email gateways listed above**.
+    - Do not select **Reject all mail not from gateway IPs**. You will enable this option at a later time to ensure your mail flows.
     - Select **SAVE**.
 
 ## 2. (Optional) Set up an email quarantine

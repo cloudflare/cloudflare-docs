@@ -886,6 +886,23 @@ wrangler workflows describe <WORKFLOW_NAME> [OPTIONS]
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
+### `delete`
+
+Delete a Workflow and all its instances.
+
+```sh
+wrangler workflows delete <WORKFLOW_NAME> [OPTIONS]
+```
+
+- `WORKFLOW_NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of a registered Workflow.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+```sh
+wrangler workflows instances delete my-workflow
+```
+
 ### `trigger`
 
 Trigger (create) a Workflow instance.
