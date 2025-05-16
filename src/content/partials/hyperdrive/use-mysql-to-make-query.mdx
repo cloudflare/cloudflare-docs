@@ -2,17 +2,15 @@
 {}
 ---
 
-import { Render } from "~/components";
+import { Render, PackageManagers } from "~/components";
 
 Install the [mysql](https://github.com/mysqljs/mysql) driver:
 
-```sh
-npm install mysql
-```
+<PackageManagers pkg="mysql" />
 
 Add the required Node.js compatibility flags and Hyperdrive binding to your `wrangler.jsonc` file:
 
-<Render file="hyperdrive-node-compatibility-requirement" product="hyperdrive"/>
+<Render file="hyperdrive-node-compatibility-requirement" product="hyperdrive" />
 
 Create a new connection and pass the Hyperdrive parameters:
 

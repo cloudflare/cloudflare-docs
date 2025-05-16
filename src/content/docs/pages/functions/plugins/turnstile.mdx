@@ -10,7 +10,7 @@ banner:
     id: pages-migrate-to-workers
 ---
 
-import { Render } from "~/components";
+import { Render, PackageManagers } from "~/components";
 
 [Turnstile](/turnstile/) is Cloudflare's smart CAPTCHA alternative.
 
@@ -18,9 +18,7 @@ The Turnstile Pages Plugin validates Cloudflare Turnstile tokens.
 
 ## Installation
 
-```sh
-npm install @cloudflare/pages-plugin-turnstile
-```
+<PackageManagers pkg="@cloudflare/pages-plugin-turnstile" />
 
 ## Usage
 

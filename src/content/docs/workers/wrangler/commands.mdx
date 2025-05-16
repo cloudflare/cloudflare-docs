@@ -14,6 +14,7 @@ import {
 	Type,
 	MetaInfo,
 	WranglerConfig,
+	PackageManagers,
 } from "~/components";
 
 Wrangler offers a number of commands to manage your Cloudflare Workers.
@@ -71,25 +72,11 @@ wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
 
 Since Cloudflare recommends [installing Wrangler locally](/workers/wrangler/install-and-update/) in your project(rather than globally), the way to run Wrangler will depend on your specific setup and package manager.
 
-<Tabs> <TabItem label="npm">
-
-```sh
-npx wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
-```
-
-</TabItem> <TabItem label="yarn">
-
-```sh
-yarn wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
-```
-
-</TabItem> <TabItem label="pnpm">
-
-```sh
-pnpm wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
-```
-
-</TabItem> </Tabs>
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="<COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]"
+/>
 
 You can add Wrangler commands that you use often as scripts in your project's `package.json` file:
 
@@ -106,25 +93,7 @@ You can add Wrangler commands that you use often as scripts in your project's `p
 
 You can then run them using your package manager of choice:
 
-<Tabs> <TabItem label="npm">
-
-```sh
-npm run deploy
-```
-
-</TabItem> <TabItem label="yarn">
-
-```sh
-yarn run deploy
-```
-
-</TabItem> <TabItem label="pnpm">
-
-```sh
-pnpm run deploy
-```
-
-</TabItem> </Tabs>
+<PackageManagers type="run" args="deploy" />
 
 ---
 

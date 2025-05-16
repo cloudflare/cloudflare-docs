@@ -67,9 +67,7 @@ export default {
 
 With your Worker project created, we can learn how to make your first request to OpenAI. You will use the OpenAI node library to interact with the OpenAI API. Install the OpenAI node library with `npm`:
 
-```sh title="Install the OpenAI node library"
-npm install openai
-```
+<PackageManagers pkg="openai" />
 
 In your `src/index.js` file, add the import for `openai` above `export default`:
 
@@ -95,9 +93,7 @@ export default {
 
 To make this work, you need to use [`wrangler secret put`](/workers/wrangler/commands/#put) to set your `OPENAI_API_KEY`. This will save the API key to your environment so your Worker can access it when deployed. This key is the API key you created earlier in the OpenAI dashboard:
 
-```sh title="Save your API key to your Workers env"
-npx wrangler secret put OPENAI_API_KEY
-```
+<PackageManagers type="exec" pkg="wrangler" args="secret put OPENAI_API_KEY" />
 
 To make this work in local development, create a new file `.dev.vars` in your Worker project and add this line. Make sure to replace `OPENAI_API_KEY` with your own OpenAI API key:
 
@@ -143,9 +139,7 @@ export default {
 
 To deploy your application, run the `npx wrangler deploy` command to deploy your Worker application:
 
-```sh title="Deploy your Worker"
-npx wrangler deploy
-```
+<PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
 You can now preview your Worker at \<YOUR_WORKER>.\<YOUR_SUBDOMAIN>.workers.dev.
 
