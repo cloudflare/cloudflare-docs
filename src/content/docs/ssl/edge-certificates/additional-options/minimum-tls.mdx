@@ -66,9 +66,15 @@ curl --request PATCH \
 ```
 
 <APIRequest
-  path=""
-  method=""
-  json={{}}
+  path="/zones/{zone_id}/settings/{setting_id}"
+  method="PATCH"
+  json={{
+		"id": "min_tls_version",
+		"value": "1.2",
+	}}
+	parameters={{
+		setting_id: "min_tls_version"
+	}}
 />
 
 </TabItem> </Tabs>
@@ -97,9 +103,14 @@ curl --request PUT \
 ```
 
 <APIRequest
-  path=""
-  method=""
-  json={{}}
+  path="/zones/{zone_id}/hostnames/settings/{setting_id}/{hostname}"
+  method="PUT"
+  json={{
+		"value": "1.2"
+	}}
+	parameters={{
+		setting_id: "min_tls_version"
+	}}
 />
 
 ## Test supported TLS versions
