@@ -62,9 +62,14 @@ If you want to opt a zone out via the API, you can make this API call on or befo
 
 
 <APIRequest
-  path=""
-  method=""
-  json={{}}
+  path="/zones/{zone_id}/settings/{setting_id}"
+  method="PATCH"
+  json={{
+		"value":"custom"
+	}}
+		parameters={{
+		setting_id: "ssl_automatic_mode"
+	}}
 />
 
 
@@ -84,14 +89,6 @@ If you wanted to opt out multiple zones:
    --header 'Content-Type: application/json'
    ```
 
-
-<APIRequest
-  path=""
-  method=""
-  json={{}}
-/>
-
-
 3. Create a list of zone IDs you want to opt-out with each zone ID on a separate line (newline separate), stored in a file such as `zones.txt`.
 4. Create a bash script for `opt-out-multiple-zones.sh` and add the following. Add `zones.txt` to the same directory or update the path accordingly.
 
@@ -108,13 +105,6 @@ If you wanted to opt out multiple zones:
      printf "\n\n"
    done
    ```
-
-
-<APIRequest
-  path=""
-  method=""
-  json={{}}
-/>
 
 
 5. Open your command line and run:
