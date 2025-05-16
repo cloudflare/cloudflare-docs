@@ -36,16 +36,6 @@ It is also possible to opt out of PQC using the same API endpoint.
 This setting affects all outbound connections from the zone you specify in the API call, including `fetch()` requests made by [Workers](/workers/) on your zone.
 :::
 
-```bash
-curl --request PUT \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/cache/origin_post_quantum_encryption" \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "value": "<YOUR_CHOSEN_SETTING>"
-}'
-```
-
 <APIRequest
   path="/zones/{zone_id}/cache/origin_post_quantum_encryption"
   method="PUT"

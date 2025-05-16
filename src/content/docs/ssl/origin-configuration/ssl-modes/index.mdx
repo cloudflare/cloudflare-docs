@@ -52,15 +52,6 @@ Automatic SSL/TLS will not change your setting to a less secure encryption mode.
 
 If you want to opt a zone out via the API, you can make this API call on or before the grace period expiration date.
 
-```bash
- curl --request PATCH \
-  --url https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/settings/ssl_automatic_mode \
-  --header 'Authorization: Bearer <CF_API_TOKEN>' \
-  --header 'Content-Type: application/json' \
-  --data '{"value":"custom"}'
-```
-
-
 <APIRequest
   path="/zones/{zone_id}/settings/{setting_id}"
   method="PATCH"
@@ -71,7 +62,6 @@ If you want to opt a zone out via the API, you can make this API call on or befo
 		setting_id: "ssl_automatic_mode"
 	}}
 />
-
 
 #### Opt out multiple zones
 
