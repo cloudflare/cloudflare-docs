@@ -89,9 +89,17 @@ curl --silent --request PUT \
 ```
 
 <APIRequest
-  path=""
-  method=""
-  json={{}}
+  path="/zones/{zone_id}/origin_tls_client_auth/hostnames"
+  method="PUT"
+  json={{
+		"config": [
+    {
+      "enabled": true,
+      "cert_id": "<CERT_ID>",
+      "hostname": "<YOUR_HOSTNAME>"
+    }
+  ]
+	}}
 />
 
 
@@ -109,9 +117,14 @@ curl --request PATCH \
 ```
 
 <APIRequest
-  path=""
-  method=""
-  json={{}}
+  path="/zones/{zone_id}/settings/{setting_id}"
+  method="PATCH"
+  json={{
+		  "value": "on"
+	}}
+	parameters={{
+		setting_id: "tls_client_auth"
+	}}
 />
 
 
@@ -144,9 +157,17 @@ curl -s --request PUT \
 ```
 
 <APIRequest
-  path=""
-  method=""
-  json={{}}
+  path="/zones/{zone_id}/origin_tls_client_auth/hostnames"
+  method="PUT"
+  json={{
+		  "config": [
+    {
+      "enabled": false,
+      "cert_id": "<CERT_ID>",
+      "hostname": "<YOUR_HOSTNAME>"
+    }
+  ]
+	}}
 />
 
 
@@ -159,9 +180,8 @@ curl "https://api.cloudflare.com/client/v4/zones/$ZONEID/origin_tls_client_auth/
 ```
 
 <APIRequest
-  path=""
-  method=""
-  json={{}}
+  path="/zones/{zone_id}/origin_tls_client_auth/hostnames/certificates"
+  method="GET"
 />
 
 
@@ -175,8 +195,7 @@ curl --request DELETE \
 ```
 
 <APIRequest
-  path=""
-  method=""
-  json={{}}
+  path="/zones/{zone_id}/origin_tls_client_auth/hostnames/certificates/{certificate_id}"
+  method="DELETE"
 />
 
