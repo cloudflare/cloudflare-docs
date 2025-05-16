@@ -37,9 +37,20 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/access/certificates/setting
 ```
 
 <APIRequest
-  path=""
-  method=""
-  json={{}}
+  path="/zones/{zone_id}/access/certificates/settings"
+  method="PUT"
+  json={{
+		  "settings": [
+    {
+      "hostname": "<HOSTNAME>",
+      "china_network": false,
+      "client_certificate_forwarding": true
+    }
+  ]
+	}}
+	code={{
+		mark: [10]
+	}}
 />
 
 

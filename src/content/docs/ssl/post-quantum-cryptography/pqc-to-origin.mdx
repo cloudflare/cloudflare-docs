@@ -47,9 +47,11 @@ curl --request PUT \
 ```
 
 <APIRequest
-  path=""
-  method=""
-  json={{}}
+  path="/zones/{zone_id}/cache/origin_post_quantum_encryption"
+  method="PUT"
+  json={{
+		"value": "<YOUR_CHOSEN_SETTING>"
+	}}
 />
 
 The possible values are:
