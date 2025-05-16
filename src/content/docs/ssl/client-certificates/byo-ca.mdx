@@ -102,7 +102,9 @@ curl "https://api.cloudflare.com/client/v4/zones/zone_id/certificate_authorities
 ```
 
 <APIRequest
-  path=""
-  method=""
-  json={{}}
+  path="/zones/{zone_id}/certificate_authorities/hostname_associations"
+  method="GET"
+  parameters={{
+		mtls_certificate_id: "ID_FROM_STEP_2"
+	}}
 />
