@@ -50,9 +50,14 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_certificates" 
 ```
 
 <APIRequest
-  path=""
-  method=""
-  json={{}}
+  path="/zones/{zone_id}/custom_certificates"
+  method="POST"
+  json={{
+		"certificate":"certificate",
+		"private_key":"<PRIVATE_KEY>",
+		"policy":"(country: US) and (region: EU)",
+		"type": "sni_custom"
+	}}
 />
 
 ```bash title="Store private keys in the E.U., but not in France"
@@ -69,9 +74,14 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_certificates" 
 ```
 
 <APIRequest
-  path=""
-  method=""
-  json={{}}
+  path="/zones/{zone_id}/custom_certificates"
+  method="POST"
+  json={{
+		  "certificate":"certificate",
+			"private_key":"<PRIVATE_KEY>",
+			"policy":"(region: EU) and (not country: FR)",
+			"type": "sni_custom"
+	}}
 />
 
 :::note
