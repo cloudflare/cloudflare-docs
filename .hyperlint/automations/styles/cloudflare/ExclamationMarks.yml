@@ -1,0 +1,12 @@
+extends: existence
+message: "Do not use exclamation points in text. Only replace the exclamation point and no other text."
+link: "https://developers.google.com/style/exclamation-points"
+nonword: true
+level: error
+action:
+  name: edit
+  params:
+    - trim_right
+    - "!"
+tokens:
+  - '\w+!(?:\s|$)'

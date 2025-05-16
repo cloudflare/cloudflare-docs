@@ -5,8 +5,8 @@ productLink: "/waf/"
 productArea: Application security
 productAreaLink: /fundamentals/reference/changelog/security/
 entries:
-  - publish_date: "2025-04-29"
-    scheduled_date: "2025-05-05"
+  - publish_date: "2025-05-13"
+    scheduled_date: "2025-05-19"
     individual_page: true
     scheduled: true
     link: "/waf/change-log/scheduled-changes/"

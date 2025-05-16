@@ -43,7 +43,7 @@ Custom block response configurations will not be returned by the Firewall Rules 
 
 ### Different error page for blocked requests
 
-Requests blocked by a firewall rule with a _Block_ action would get a Cloudflare [1020 error code](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/#error-1020-access-denied) response. Cloudflare users could customize this error page for a zone in **Error Pages** > **1000 class errors**.
+Requests blocked by a firewall rule with a _Block_ action would get a Cloudflare [1020 error code](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1020/) response. Cloudflare users could customize this error page for a zone in **Error Pages** > **1000 class errors**.
 
 Requests blocked by a WAF custom rule will get a different response: the WAF block response. To customize the default block response, you can either:
 

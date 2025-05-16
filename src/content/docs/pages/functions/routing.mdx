@@ -15,15 +15,17 @@ import { FileTree } from "~/components";
 Functions utilize file-based routing. Your `/functions` directory structure determines the designated routes that your Functions will run on. You can create a `/functions` directory with as many levels as needed for your project's use case. Review the following directory:
 
 <FileTree>
+
 - ...
 - functions
-	- index.js
-	- helloworld.js
-	- howdyworld.js
-	- fruits
-		- index.js
-		- apple.js
-		- banana.js
+  - index.js
+  - helloworld.js
+  - howdyworld.js
+  - fruits
+    - index.js
+    - apple.js
+    - banana.js
+
 </FileTree>
 
 The following routes will be generated based on the above file structure. These routes map the URL pattern to the `/functions` file that will be invoked when a visitor goes to the URL:
@@ -85,13 +87,15 @@ More specific routes (routes with fewer wildcards) take precedence over less spe
 Review the following `/functions/` directory structure:
 
 <FileTree>
+
 - ...
 - functions
-	- date.js
-	- users
-		- special.js
-		- [user].js
-		- [[catchall]].js
+  - date.js
+  - users
+    - special.js
+    - [user].js
+    - [[catchall]].js
+
 </FileTree>
 
 The following requests will match the following files:
@@ -176,6 +180,19 @@ Below is another example of a `_routes.json` file. Any route inside the `/build`
 	"exclude": ["/build/*"]
 }
 ```
+
+## Fail open / closed
+
+If on the Workers Free plan, you can configure how Pages behaves when your daily free tier allowance of Pages Functions requests is exhausted. If, for example, you are performing authentication checks or other critical functionality in your Pages Functions, you may wish to disable your Pages project when the allowance is exhausted.
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. From **Account Home**, go to **Workers & Pages**.
+3. In **Overview**, select your Pages project.
+4. Go to **Settings** > **Runtime** > **Fail open / closed**.
+
+"Fail open" means that static assets will continue to be served, even if Pages Functions would ordinarily have run first. "Fail closed" means an error page will be returned, rather than static assets.
+
+The daily request limit for Pages Functions can be removed entirely by upgrading to [Workers Standard](/workers/platform/pricing/#workers).
 
 ### Limits
 
