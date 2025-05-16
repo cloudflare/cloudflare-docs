@@ -128,13 +128,13 @@ Rate limit actions are based on the domain plan as mentioned in [Availability](#
 - **Interactive Challenge**: Visitor must pass an Interactive Challenge. If passed, Cloudflare allows the request.
 - **Log**: Requests are logged in [Cloudflare Logs](/logs/). This helps test rules before applying to production.
 
-For more information on challenge actions, refer to [Cloudflare challenges](/fundamentals/security/cloudflare-challenges/).
+For more information on challenge actions, refer to [Cloudflare challenges](/cloudflare-challenges/).
 
 #### Ban duration
 
 Setting a timeout shorter than the threshold causes the API to automatically increase the timeout to equal the threshold.
 
-Visitors hitting a rate limit receive a default HTML page if a [custom error page](/support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/) is not specified. In addition, Business and Enterprise customers can specify a response in the rule itself. Refer to [Configure Advanced Response](#task-3-configure-advanced-response-only-business-and-enterprise-plans) for details.
+Visitors hitting a rate limit receive a default HTML page if a custom [error page](/rules/custom-errors/) is not specified. In addition, Business and Enterprise customers can specify a response in the rule itself. Refer to [Configure Advanced Response](#task-3-configure-advanced-response-only-business-and-enterprise-plans) for details.
 
 ---
 

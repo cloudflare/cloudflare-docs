@@ -17,9 +17,11 @@ You can check the [Notification History](/notifications/notification-history/) u
 
 To create a notification via the Cloudflare dashboard, you will need to have the Super Administrator or Administrator role.
 
-You can also create a notification if you have an edit role for the feature that you want to create an alert for. For example, if you want to create a Load Balancing Pool Enablement notification, you will need to have the Load Balancer role.
+You can also create a notification if you have the account edit role, which allows you create any type of notification.
 
 An API token needs to have the [Notifications Read/Write permission](https://developers.cloudflare.com/fundamentals/api/reference/permissions/) to create a notification,
+
+Some notifications can only be created if you have a Professional, Business or Enterprise account or if you are using a particular Cloudflare product.
 
 ## Configure notifications
 
@@ -38,7 +40,7 @@ You can create a notification via the Cloudflare dashboard.
 
 :::note
 
-Professional and Business plans will have access to other options such as configuring PagerDuty or accessing webhooks. 
+Professional and Business plans will have access to more notifications and PagerDuty. Accounts with a paid service will additionally have access to webhooks. 
 :::
 
 6. (Optional) Specify any additional options for the notification, if required. For example, some notifications require that you select one or more domains or services.

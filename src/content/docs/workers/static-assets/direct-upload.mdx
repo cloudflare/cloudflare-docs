@@ -2,7 +2,7 @@
 pcx_content_type: concept
 title: Direct Uploads
 sidebar:
-  order: 11
+  order: 6
 head: []
 description: Upload assets through the Workers API.
 ---
@@ -15,6 +15,7 @@ import {
 	Render,
 	TabItem,
 	Tabs,
+	TypeScriptExample,
 } from "~/components";
 import { Icon } from "astro-icon/components";
 
@@ -114,7 +115,7 @@ curl -X POST https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/
 
 The resulting response will contain a JWT, which provides authentication during file upload. The JWT is valid for one hour.
 
-In addition to the JWT, the response instructs users how to optimally batch upload their files. These instructions are encoded in the `buckets` field. Each array in `buckets` contains a list of file hashes which should be uploaded together. Hashes of files that have been recently uploaded may not be returned in the API response; they do not need to be re-uploaded.
+In addition to the JWT, the response instructs users how to optimally batch upload their files. These instructions are encoded in the `buckets` field. Each array in `buckets` contains a list of file hashes which should be uploaded together. Unmodified files will not be returned in the `buckets` field (as they do not need to be re-uploaded) if they have recently been uploaded in previous versions of your Worker.
 
 ```json
 {
@@ -176,7 +177,7 @@ If this is a Worker which already has assets, and you wish to just re-use the ex
 }
 ```
 
-Asset [routing configuration](/workers/static-assets/routing/#routing-configuration) can be provided in the `assets` object, such as `html_handling` and `not_found_handling`.
+Asset [routing configuration](/workers/wrangler/configuration/#assets) can be provided in the `assets` object, such as `html_handling` and `not_found_handling`.
 
 ```bash title="Example Worker Metadata Specifying Asset Configuration"
 {
@@ -213,7 +214,7 @@ Optionally, an assets binding can be provided if you wish to fetch and serve ass
 
 ## Programmatic Example
 
-<Tabs> <TabItem label="TypeScript" icon="seti:typescript">
+<TypeScriptExample>
 
 ```ts
 import * as fs from "fs";
@@ -427,4 +428,4 @@ if (buckets.length > 0) {
 await scriptUpload(completionToken);
 ```
 
-</TabItem> </Tabs>
+</TypeScriptExample>

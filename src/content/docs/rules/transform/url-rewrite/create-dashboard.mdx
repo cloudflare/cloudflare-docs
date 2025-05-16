@@ -1,11 +1,9 @@
 ---
-title: Create a rule in the dashboard
+title: Create a URL rewrite rule in the dashboard
 pcx_content_type: how-to
 sidebar:
   order: 2
-head:
-  - tag: title
-    content: Create a rewrite URL rule in the dashboard
+  label: Create a rule in the dashboard
 ---
 
 import { Render } from "~/components";
@@ -24,7 +22,7 @@ To create a rule:
 
 5. Enter a descriptive name for the rule in **Rule name**.
 
-   ![The rewrite URL rule creation page in the Cloudflare dashboard.](~/assets/images/rules/transform/create-url-rewrite-rule.png)
+   ![The URL rewrite rule creation page in the Cloudflare dashboard.](~/assets/images/rules/transform/create-url-rewrite-rule.png)
 
 6. Under **If incoming requests match**, select one of the following options:
 
@@ -33,12 +31,12 @@ To create a rule:
    - **Custom filter expression**: The rule will only apply to traffic matching a custom expression. Define the [rule expression](/ruleset-engine/rules-language/expressions/edit-expressions/) to configure which requests should be rewritten. Use either the Expression Builder or the Expression Editor to define the custom expression. For more information, refer to [Edit expressions in the dashboard](/ruleset-engine/rules-language/expressions/edit-expressions/).
 
      :::note
-     Check the [fields and functions](/rules/transform/url-rewrite/reference/fields-functions/) you can use in filter expressions of rewrite URL rules.
+     Check the [fields and functions](/rules/transform/url-rewrite/reference/fields-functions/) you can use in filter expressions of URL rewrite rules.
      :::
 
    - **All incoming requests**: The rule will apply to all traffic.
 
-7. (Optional) Define the action for your rewrite URL rule by selecting one of the available options displayed as radio buttons, and then a value from the drop-down list, depending on the action:
+7. (Optional) Define the action for your URL rewrite rule by selecting one of the available options displayed as radio buttons, and then a value from the drop-down list, depending on the action:
 
    - If you select **Rewrite to** > _Static_, enter the string that will replace the original URL path (or query string). For example, enter `welcome-gb.html` to rewrite the original URL path to `/welcome-gb.html`.
 
@@ -72,6 +70,6 @@ Refer to [URL rewrite parameters](/rules/transform/url-rewrite/reference/paramet
 
 The **Request URL** value is only used to match the incoming request with a rule. It will not be used for capturing URL patterns for rewrites. If you are matching the URL path or query string in **Target path** or **Target query**, respectively, make sure that the **Request URL** pattern also matches the incoming request, or else the rule will not trigger.
 
-To validate rewrite URL rule matches, use [Cloudflare Trace](/fundamentals/trace-request/). To validate rewritten URLs, check your origin server.
+To validate URL rewrite rule matches, use [Cloudflare Trace](/fundamentals/trace-request/). To validate rewritten URLs, check your origin server.
 
 :::

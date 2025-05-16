@@ -47,13 +47,13 @@ Response:
 
 You can program your app to generate token in two ways:
 
-- **Using the /token endpoint to generate signed tokens:** The simplest way to create a signed url token is by calling the /token endpoint. This is recommended for testing purposes or if you are generating less than 10,000 tokens per day.
+- **Low-volume or testing: Use the `/token` endpoint to generate a short-lived signed token.** This is recommended for testing purposes or if you are generating less than 1,000 tokens per day. It requires making an API call to Cloudflare for each token. The default result is valid for 1 hour.
 
-- **Using an open-source library:** If you have tens of thousands of daily users and need to generate a high-volume of tokens without calling the /token endpoint _each time_, you can create tokens yourself. This way, you do not need to call a Stream endpoint each time you need to generate a token.
+- **Recommended: Use a signing key to create tokens.** If you have thousands of daily users or need to generate a high volume of tokens, you can create tokens yourself using a signing key. This way, you do not need to call a Stream API each time you need to generate a token.
 
 ## Option 1: Using the /token endpoint
 
-You can call the `/token` endpoint for any video that is marked private to get a signed URL token which expires in one hour:
+You can call the `/token` endpoint for any video that is marked private to get a signed URL token which expires in one hour. This method does not support [Live WebRTC](/stream/webrtc-beta/).
 
 ```bash
 curl --request POST \
@@ -168,9 +168,9 @@ export default {
 };
 ```
 
-## Option 2: Generating signed tokens without calling the `/token` endpoint
+## Option 2: Using a signing key to create signed tokens
 
-If you are generating a high-volume of tokens, it is best to generate new tokens without needing to call the Stream API each time.
+If you are generating a high-volume of tokens, using [Live WebRTC](/stream/webrtc-beta/), or need to customize the access rules, generate new tokens using a signing key so you do not need to call the Stream API each time.
 
 ### Step 1: Call the `/stream/key` endpoint _once_ to obtain a key
 

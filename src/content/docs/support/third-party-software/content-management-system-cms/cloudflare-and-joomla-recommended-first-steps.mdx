@@ -34,29 +34,28 @@ While there is not always an issue, we have seen instances where optional perfor
 
 ---
 
-## Allow IP addresses via Cloudflare Threat Control panel
+## Skip security features for specific IP addresses
 
-Log in to your Cloudflare Threat Control panel and allow IP addresses you want traffic from or expect traffic from. Some common services you probably want to allow include:
+You can use WAF custom rules to [skip certain security features](/waf/custom-rules/skip/) for IP addresses you want traffic from or expect traffic from. Some common services you probably want to allow include:
 
-- APIs you are pulling from
+- APIs you are getting data from
 - Monitoring services you use to monitor your site's uptime
 - Security services
-- IP addresses you frequently login from
+- IP addresses you frequently log in from
 
 Why do this?
 
-If Cloudflare has an IP address with a high threat score going to your site, or if you have [Cloudflare's Web Application Firewall](https://cloudflare.com/waf) turned on, you may get challenged working in your back end and/or services you want to access your site may get challenged. Taking the steps to allow in the beginning will help prevent future surprises on your site.
+If you have enabled and configured [Cloudflare's Web Application Firewall](/waf/), legitimate services and/or you may get challenged while accessing your backend. To prevent issues on your site, consider skipping certain security features for requests coming from known IP addresses.
 
 :::note
-
-We allow all known search engine and social media crawlers in our macro list. If you decide to block specific countries, you must use care because you may end up inadvertently blocking their crawlers (blocking the USA, for example, could mean that their crawler gets challenged).
+Cloudflare allows known search engine and social media crawlers. If you decide to block specific countries, you must use care because you may end up inadvertently blocking their crawlers (blocking the USA, for example, could mean that their crawler gets challenged).
 :::
 
 ---
 
 ## Ensure requests from Cloudflare's IP ranges aren't blocked or limited
 
-If you are using services like .htaccess, firewalls or server mods to manage access to your site from visitors, it is vitally important to make sure requests from Cloudflare’s IP ranges are not being blocked or limited in any way. The number one cause of site offline issues in our support channel is something blocking or restricting requests from our IPs, so please take the time to make sure that all of Cloudflare’s IPs are allowed on your server.
+If you are using services like `.htaccess`, firewalls or server mods to manage access to your site from visitors, you must ensure that requests from [Cloudflare's IP ranges](https://www.cloudflare.com/ips/) are not being blocked or limited in any way. The number one cause of "site offline" issues in Cloudflare's support channel is something blocking or restricting requests from Cloudflare IPs. To prevent this, ensure that all of Cloudflare's IPs are allowed on your server.
 
 Why do this?
 

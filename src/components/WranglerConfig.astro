@@ -25,6 +25,7 @@ if (!code) {
 }
 
 code = code.replace(/\u007f/g, "\n");
+code = code.replaceAll(/\$today/gi, new Date().toISOString().split("T")[0]);
 
 const language =
 	html.querySelector("[data-language]")?.attributes["data-language"];

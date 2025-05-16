@@ -15,16 +15,16 @@ These examples use:
 
 - [`cf.bot_management.score`](/ruleset-engine/rules-language/fields/reference/cf.bot_management.score/) to target requests from bots
 - [`cf.bot_management.verified_bot`](/ruleset-engine/rules-language/fields/reference/cf.bot_management.verified_bot/) to identify requests from [known good bots](https://radar.cloudflare.com/verified-bots)
-- [`cf.bot_management.ja3_hash`](/ruleset-engine/rules-language/fields/reference/cf.bot_management.ja3_hash/) to target specific [JA3 Fingerprints](/bots/concepts/ja3-ja4-fingerprint/)
+- [`cf.bot_management.ja3_hash`](/ruleset-engine/rules-language/fields/reference/cf.bot_management.ja3_hash/) to target specific [JA3 Fingerprints](/bots/additional-configurations/ja3-ja4-fingerprint/)
 
 ## Suggested rules
 
 For best results:
 
-- Use [Bot Analytics](/bots/bot-analytics/bm-subscription/) to learn about your traffic before applying rules.
+- Use [Bot Analytics](/bots/bot-analytics/#enterprise-bot-management) to learn about your traffic before applying rules.
 - Start small and increase your bot threshold over time.
 
-Your rules may also vary based on the [nature of your site](/bots/get-started/bm-subscription/) and your tolerance for false positives.
+Your rules may also vary based on the [nature of your site](/bots/get-started/bot-management/) and your tolerance for false positives.
 
 ### General protection
 
@@ -68,7 +68,7 @@ This example offers the same protection as the browser-only rule, but allows aut
 
 Since Bot Management can be more sensitive to mobile traffic, you may want to add in additional logic to avoid blocking legitimate requests.
 
-If you are handling requests from your own mobile application, you could potentially allow it based on its specific [JA3 fingerprint](/bots/concepts/ja3-ja4-fingerprint/).
+If you are handling requests from your own mobile application, you could potentially allow it based on its specific [JA3 fingerprint](/bots/additional-configurations/ja3-ja4-fingerprint/).
 
 - **Expression**: `(cf.bot_management.ja3_hash eq "df669e7ea913f1ac0c0cce9a201a2ec1")`
 - **Action**: _Skip:_
@@ -98,13 +98,13 @@ If your domain handles mobile, browser, and API traffic, you would want to arran
 
 Static resources are protected by default when you create custom rules using the `cf.bot_management.score` field.
 
-To exclude static resources, include `not (cf.bot_management.static_resource)` in your rule expression. For details, refer to [Static resource protection](/bots/reference/static-resources/).
+To exclude static resources, include `not (cf.bot_management.static_resource)` in your rule expression. For details, refer to [Static resource protection](/bots/additional-configurations/static-resources/).
 
 ### Additional considerations
 
 From there, you could customize your custom rules based on specific request paths (`/login` or `/signup`), common traffic patterns, or many other characteristics.
 
-Make sure you review [Bot Analytics](/bots/bot-analytics/bm-subscription/) and [Security Events](/waf/analytics/security-events/) to check if your rules need more tuning.
+Make sure you review [Bot Analytics](/bots/bot-analytics/#enterprise-bot-management) and [Security Events](/waf/analytics/security-events/) to check if your rules need more tuning.
 
 ---
 

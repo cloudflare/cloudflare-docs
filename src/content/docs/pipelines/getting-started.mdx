@@ -1,0 +1,137 @@
+---
+title: Getting started
+pcx_content_type: get-started
+sidebar:
+  order: 1
+head:
+  - tag: title
+    content: Getting started wih Pipelines
+---
+
+import { Render, PackageManagers, Details } from "~/components";
+
+Cloudflare Pipelines allows you to ingest load high volumes of real time streaming data, and load into [R2 Object Storage](/r2/), without managing any infrastructure.
+
+By following this guide, you will:
+1. Setup an R2 bucket.
+2. Create a pipeline, with HTTP as a source, and an R2 bucket as a sink.
+3. Send data to your pipeline's HTTP ingestion endpoint.
+4. Verify the output delivered to R2.
+
+:::note
+
+Pipelines is in **public beta**, and any developer with a [paid Workers plan](/workers/platform/pricing/#workers) can start using Pipelines immediately.
+
+:::
+
+***
+
+## Prerequisites
+
+To use Pipelines, you will need:
+
+<Render file="prereqs" product="workers" />
+
+## 1. Set up an R2 bucket
+
+Create a bucket by following the [get started guide for R2](/r2/get-started/), or by running the command below:
+
+```sh
+npx wrangler r2 bucket create my-bucket
+```
+
+Save the bucket name for the next step.
+
+## 2. Create a Pipeline
+
+To create a pipeline using Wrangler, run the following command in a terminal, and specify:
+
+- The name of your pipeline
+- The name of the R2 bucket you created in step 1
+
+```sh
+npx wrangler pipelines create my-clickstream-pipeline --r2-bucket my-bucket --batch-max-seconds 5 --compression none
+```
+
+After running this command, you will be prompted to authorize Cloudflare Workers Pipelines to create an R2 API token on your behalf. These tokens used by your pipeline when loading data into your bucket. You can approve the request through the browser link which will open automatically.
+
+<details>
+	<summary> Choosing a pipeline name </summary>
+When choosing a name for your pipeline:
+
+- Ensure it is descriptive and relevant to the type of events you intend to ingest. You cannot change the name of the pipeline after creating it.
+- The pipeline name must be between 1 and 63 characters long.
+- The name cannot contain special characters outside dashes (`-`).
+- The name must start and end with a letter or a number.
+</details>
+
+You will notice two optional flags are set while creating the pipeline: `--batch-max-seconds` and `--compression`. These flags are added to make it faster for you to see the output of your first pipeline. For production use cases, we recommend keeping the default settings.
+
+Once you create your pipeline, you will receive a summary of your pipeline's configuration, as well as an HTTP endpoint which you can post data to:
+
+```sh
+🌀 Authorizing R2 bucket "my-bucket"
+🌀 Creating pipeline named "my-clickstream-pipeline"
+✅ Successfully created pipeline my-clickstream-pipeline
+
+Id:    [PIPELINE-ID]
+Name:  my-clickstream-pipeline
+Sources:
+  HTTP:
+    Endpoint:        https://[PIPELINE-ID].pipelines.cloudflare.com/
+    Authentication:  off
+    Format:          JSON
+  Worker:
+    Format:  JSON
+Destination:
+  Type:         R2
+  Bucket:       my-bucket
+  Format:       newline-delimited JSON
+  Compression:  GZIP
+Batch hints:
+  Max bytes:     100 MB
+  Max duration:  300 seconds
+  Max records:   100,000
+
+🎉 You can now send data to your Pipeline!
+
+Send data to your Pipeline's HTTP endpoint:
+curl "https://[PIPELINE-ID].pipelines.cloudflare.com/" -d '[{ ...JSON_DATA... }]'
+
+To send data to your Pipeline from a Worker, add the following configuration to your config file:
+{
+  "pipelines": [
+    {
+      "pipeline": "my-clickstream-pipeline",
+      "binding": "PIPELINE"
+    }
+  ]
+}
+```
+
+## 3. Post data to your pipeline
+
+Use a curl command in your terminal to post an array of JSON objects to the endpoint you received in step 1.
+
+```sh
+curl -H "Content-Type:application/json" \
+    -d '[{"event":"viewedCart", "timestamp": "2025-04-03T15:42:30Z"},{"event":"cartAbandoned", "timestamp": "2025-04-03T15:42:37Z"}]' \
+    <HTTP-ENDPOINT>
+```
+
+Once the pipeline successfully accepts the data, you will receive a success message.
+
+You can continue posting data to the pipeline. The pipeline will automatically buffer ingested data. Based on the batch settings (`--batch-max-seconds`) specified in step 2, a batch will be generated every 5 seconds, turned into a file, and written out to your R2 bucket.
+
+## 4. Verify in R2
+
+Open the [R2 dashboard](https://dash.cloudflare.com/?to=/:account/r2/overview), and navigate to the R2 bucket you created in step 1. You will see a directory, labeled with today's date (such as `event_date=2025-04-05`). Click on the directory, and you'll see a sub-directory with the current hour (such as `hr=04`). You should see a newline delimited JSON file, containing the data you posted in step 3. Download the file, and open it in a text editor of your choice, to verify that the data posted in step 2 is present.
+
+***
+
+## Next steps
+
+* Learn about how to [setup authentication, or CORS settings](/pipelines/build-with-pipelines/sources/http), on your HTTP endpoint.
+* Send data to your Pipeline from a Cloudflare Worker using the [Workers API documentation](/pipelines/build-with-pipelines/sources/workers-apis).
+
+If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.cloudflare.com).

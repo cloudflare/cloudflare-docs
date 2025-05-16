@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Metrics and analytics
-
 ---
 
 R2 exposes analytics that allow you to inspect the requests and storage of the buckets in your account.
@@ -12,21 +11,21 @@ The metrics displayed for a bucket in the [Cloudflare dashboard](https://dash.cl
 
 R2 currently has two datasets:
 
-| <div style="width:100px">Dataset  </div> | <div style="width:235px">GraphQL Dataset Name </div> | Description                                                          |
-| ---------------------------------------- | ---------------------------------------------------- | -------------------------------------------------------------------- |
-| Operations                               | `r2OperationsAdaptiveGroups`                         | This dataset consists of the operations taken buckets of an account. |
-| Storage                                  | `r2StorageAdaptiveGroups`                            | This dataset consists of the storage of buckets an account.          |
+| <div style="width:100px">Dataset </div> | <div style="width:235px">GraphQL Dataset Name </div> | Description                                                          |
+| --------------------------------------- | ---------------------------------------------------- | -------------------------------------------------------------------- |
+| Operations                              | `r2OperationsAdaptiveGroups`                         | This dataset consists of the operations taken buckets of an account. |
+| Storage                                 | `r2StorageAdaptiveGroups`                            | This dataset consists of the storage of buckets an account.          |
 
 ### Operations Dataset
 
-| <div style="width:175px"> Field  </div> | Description                                                                                                                                                                                                                |
-| --------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| actionType                              | The name of the operation performed.                                                                                                                                                                                       |
-| actionStatus                            | The status of the operation. Can be `success`, `userError`, or `internalError`.                                                                                                                                            |
-| bucketName                              | The bucket this operation was performed on if applicable. For buckets with a jurisdiction specified, you must include the jurisdiction followed by an underscore before the bucket name. For example: eu\_your-bucket-name |
-| objectName                              | The object this operation was performed on if applicable.                                                                                                                                                                  |
-| responseStatusCode                      | The http status code returned by this operation.                                                                                                                                                                           |
-| datetime                                | The time of the request.                                                                                                                                                                                                   |
+| <div style="width:175px"> Field </div> | Description                                                                                                                                                                                                               |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| actionType                             | The name of the operation performed.                                                                                                                                                                                      |
+| actionStatus                           | The status of the operation. Can be `success`, `userError`, or `internalError`.                                                                                                                                           |
+| bucketName                             | The bucket this operation was performed on if applicable. For buckets with a jurisdiction specified, you must include the jurisdiction followed by an underscore before the bucket name. For example: eu_your-bucket-name |
+| objectName                             | The object this operation was performed on if applicable.                                                                                                                                                                 |
+| responseStatusCode                     | The http status code returned by this operation.                                                                                                                                                                          |
+| datetime                               | The time of the request.                                                                                                                                                                                                  |
 
 ### Storage Dataset
 
@@ -61,10 +60,15 @@ You can programmatically query analytics for your R2 buckets via the [GraphQL An
 
 To query the volume of each operation type on a bucket for a given time period you can run a query as such
 
-```graphql
-query {
+```graphql graphql-api-explorer
+query R2VolumeExample(
+	$accountTag: string!
+	$startDate: Time
+	$endDate: Time
+	$bucketName: string
+) {
 	viewer {
-		accounts(filter: { accountTag: $accountId }) {
+		accounts(filter: { accountTag: $accountTag }) {
 			r2OperationsAdaptiveGroups(
 				limit: 10000
 				filter: {
@@ -91,10 +95,15 @@ The `bucketName` field can be removed to get an account level overview of operat
 
 To query the storage of a bucket over a given time period you can run a query as such.
 
-```graphql
-query {
+```graphql graphql-api-explorer
+query R2StorageExample(
+	$accountTag: string!
+	$startDate: Time
+	$endDate: Time
+	$bucketName: string
+) {
 	viewer {
-		accounts(filter: { accountTag: $accountId }) {
+		accounts(filter: { accountTag: $accountTag }) {
 			r2StorageAdaptiveGroups(
 				limit: 10000
 				filter: {
@@ -105,9 +114,9 @@ query {
 				orderBy: [datetime_DESC]
 			) {
 				max {
-					objectCount,
-					uploadCount,
-					payloadSize,
+					objectCount
+					uploadCount
+					payloadSize
 					metadataSize
 				}
 				dimensions {

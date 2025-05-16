@@ -14,7 +14,7 @@ description: With tenant-level custom nameservers, you can use the same custom
 
 ---
 
-import { Example, Render } from "~/components"
+import { Example, Render, APIRequest } from "~/components"
 
 <Render file="acns-tcns-intro" params={{ one: "Tenant", two: "T", three: "tenant", four: "accounts", five: "tenant " }} />
 
@@ -38,17 +38,15 @@ If you are an account owner and your account is part of a tenant that has custom
 
 1. Use a [PUT command](/api/resources/zones/subresources/custom_nameservers/methods/update/) and specify `ns_type` and `ns_set`.
 
-```bash
-curl --request PUT https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_ns \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "enabled": true,
-  "ns_type": "tenant",
-  "ns_set": <SET>
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/custom_ns"
+	method="PUT"
+  json={{
+    "enabled": true,
+		"ns_type": "tenant",
+		"ns_set": "<SET>",
+		}}
+/>
 
 :::note
 

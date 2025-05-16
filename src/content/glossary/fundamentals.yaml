@@ -112,7 +112,7 @@ entries:
   - term: protocol
     general_definition: |-
       a protocol is a set of rules governing the exchange or transmission of data between devices.
-  
+
   - term: proxy server
     general_definition: |-
       the server that sits between the origin server and the client. Cloudflare is a proxy server for example.

@@ -40,11 +40,23 @@ const anthropic = createAnthropic({
 If you're using the Google AI Studio provider in AI SDK, you need to append `/v1beta` to your Google AI Studio-compatible AI Gateway URL to avoid errors. The `/v1beta` path is required because Google AI Studio's API includes this in its endpoint structure, and the AI SDK sets the model name separately. This ensures compatibility with Google's API versioning.
 
 ```typescript
-import { createGoogleGenerativeAI } from '@ai-sdk/google';
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
 
 const google = createGoogleGenerativeAI({
 	baseURL: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/google-ai-studio/v1beta`,
 });
+```
+
+### Retrieve `log id` from AI SDK
+
+You can access the AI Gateway `log id` from the response headers when invoking the SDK.
+
+```typescript
+const result = await generateText({
+	model: anthropic("claude-3-sonnet-20240229"),
+	messages: [],
+});
+console.log(result.response.headers["cf-aig-log-id"]);
 ```
 
 ### Other providers

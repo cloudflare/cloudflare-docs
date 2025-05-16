@@ -1,0 +1,43 @@
+---
+pcx_content_type: how-to
+title: Configure IPv6 (beta)
+sidebar:
+  order: 4
+  badge:
+    text: Beta
+---
+
+IPv6 (beta) for Magic Transit allows customers with existing IPv4 tunnels to enable and test IPv6 functionality with minimal configuration changes. This beta provides an opportunity to evaluate IPv6 addressing, routing, and security within Magic Transit while maintaining the existing IPv4 setup.
+
+As this is a beta release, we encourage customers to contact their account team to enable the feature and provide feedback to help refine the IPv6 functionality before general availability.
+
+## Cloudflare support for IPv6 in Magic Transit
+
+Cloudflare transports IPv6 traffic over an IPv6-over-IPv4 GRE tunnel. Here is how it works:
+
+1. The IPv6 packet is encapsulated into an IPv4 GRE packet, with the IP protocol field set to `47` (indicating it is a GRE packet) along with a GRE header.
+2. The IPv4 packet header and GRE header are the additional headers (or encapsulation overhead) that ensure the correct routing of the IPv6 traffic.
+3. On most routers that support this tunneling method, the tunnel mode is set to `gre`.
+
+![The IPv4 packet header and GRE header are the additional headers (or encapsulation overhead) that ensure the correct routing of the IPv6 traffic.](~/assets/images/magic-transit/ipv6.png)
+
+## Current known limitations
+
+- The IPv6 beta is not available for accounts with CNI links configured.
+- MTU is 1420 bytes for egress traffic (does not impact Direct Server Return).
+- Magic Firewall currently does not support IPv6.
+- Cloudflare supports the advertisement of IPv6 prefixes ranging from `/48` to `/32`.
+- Limited to IPv4-based [tunnel health checks](/magic-transit/reference/tunnel-health-checks/) only.
+- Supports only IPv4-based endpoint health checks.
+
+## How to configure IPv6
+
+Since IPv6 works over an existing IPv4 tunnel you will need to choose either an existing IPv4 GRE tunnel or create a new one to test IPv6. All settings that apply to the IPv4 GRE tunnel apply to the IPv6 tunnel as well, and there is only one new field you need to fill out: **IPv6 Interface address**. Here, you enter one of the two IPv6 addresses from the `/127` subnet that Cloudflare automatically allocates for the GRE tunnel. The other, you need to enter in your router.
+
+To configure IPv6:
+
+1. Follow the instructions on how to [add a GRE tunnel](/magic-transit/how-to/configure-tunnels/#add-tunnels).
+2. In **IPv6 Interface address** enter the IPv6 address assigned to you by Cloudflare for the Cloudflare side of the GRE tunnel. This address is part of a `/127` subnet that is provided to you by your Cloudflare team.
+3. Use the other IPv6 address you received from your team to configure your router.
+
+For IPv6 traffic over IPv4 tunnels, the same [MSS clamping](/magic-transit/reference/mtu-mss/#mss-clamping) recommendations apply.

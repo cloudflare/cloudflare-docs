@@ -2,18 +2,18 @@
 title: Writing tests
 pcx_content_type: concept
 sidebar:
-  order: 1
+  order: 3
 head: []
 description: Write integration tests against Workers using Miniflare.
 ---
 
-:::note
-For most users, Cloudflare recommends using the Workers Vitest integration for testing Workers and [Pages Functions](/pages/functions/) projects. [Vitest](https://vitest.dev/) is a popular JavaScript testing framework featuring a very fast watch mode, Jest compatibility, and out-of-the-box support for TypeScript.
-:::
-
 import { TabItem, Tabs, Details } from "~/components";
 
 import { FileTree } from "@astrojs/starlight/components";
+
+:::note
+For most users, Cloudflare recommends using the Workers Vitest integration. If you have been using test environments from Miniflare, refer to the [Migrate from Miniflare 2 guide](/workers/testing/vitest-integration/migration-guides/migrate-from-miniflare-2/).
+:::
 
 This guide will show you how to set up [Miniflare](/workers/testing/miniflare) to test your Workers. Miniflare is a low-level API that allows you to fully control how your Workers are run and tested.
 

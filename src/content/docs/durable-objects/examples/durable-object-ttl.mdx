@@ -96,12 +96,13 @@ export default {
 
 </TabItem> </Tabs>
 
-To test and deploy this example, configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/tutorial/#5-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the namespace and class name chosen previously.
+To test and deploy this example, configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/#4-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the namespace and class name chosen previously.
 
 <WranglerConfig>
 
 ```toml title="wrangler.toml"
 name = "durable-object-ttl"
+main = "src/index.ts"
 
 [[durable_objects.bindings]]
 name = "MY_DURABLE_OBJECT"
@@ -109,7 +110,7 @@ class_name = "MyDurableObject"
 
 [[migrations]]
 tag = "v1"
-new_classes = ["MyDurableObject"]
+new_sqlite_classes = ["MyDurableObject"]
 ```
 
 </WranglerConfig>

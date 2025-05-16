@@ -20,11 +20,11 @@ When setting up DNS views, observe the following conditions:
 
 ## Create a view
 
-Use the [Create Internal DNS View](/api/resources/dns/subresources/settings/subresources/views/methods/create/) endpoint. For each view you create, list all the internal zones that should be grouped under that view.
+Use the [Create Internal DNS View](/api/resources/dns/subresources/settings/subresources/account/subresources/views/methods/create/) endpoint. For each view you create, list all the internal zones that should be grouped under that view.
 
 ## Delete a view
 
-Use the [Delete Internal DNS View](/api/resources/dns/subresources/settings/subresources/views/methods/delete/) endpoint.
+Use the [Delete Internal DNS View](/api/resources/dns/subresources/settings/subresources/account/subresources/views/methods/delete/) endpoint.
 
 DNS views can be deleted even if they still have internal zones linked to them. The internal DNS zones will continue to exist but will be unlinked once the view is deleted.
 
@@ -32,6 +32,6 @@ It is also possible to delete a DNS view that is being referenced by a Gateway r
 
 ## Other actions
 
-- [Update a DNS view](/api/resources/dns/subresources/settings/subresources/views/methods/edit/) (`PATCH`)
-- [Get view details](/api/resources/dns/subresources/settings/subresources/views/methods/get/) (`GET`)
-- [List DNS views](/api/resources/dns/subresources/settings/subresources/views/methods/list/) (`GET`)
+- [Update a DNS view](/api/resources/dns/subresources/settings/subresources/account/subresources/views/methods/edit/) (`PATCH`)
+- [Get view details](/api/resources/dns/subresources/settings/subresources/account/subresources/views/methods/get/) (`GET`)
+- [List DNS views](/api/resources/dns/subresources/settings/subresources/account/subresources/views/methods/list/) (`GET`)

@@ -1,0 +1,23 @@
+---
+link: "/realtime/changelog/"
+productName: Realtime
+productLink: "/realtime/"
+productArea: Developer platform
+productAreaLink: /workers/platform/changelog/platform/
+entries:
+  - publish_date: "2024-09-25"
+    title: TURN service is generally available (GA)
+    description: |-
+      Cloudflare Realtime TURN service is generally available and helps address common challenges with real-time communication. For more information, refer to the [blog post](https://blog.cloudflare.com/webrtc-turn-using-anycast/) or [TURN documentation](/realtime/turn/).
+  - publish_date: "2024-04-04"
+    title: Orange Meets availability
+    description: |-
+      Orange Meets, Cloudflare's internal video conferencing app, is open source and available for use from [Github](https://github.com/cloudflare/orange?cf_target_id=40DF7321015C5928F9359DD01303E8C2).
+  - publish_date: "2024-04-04"
+    title: Cloudflare Realtime open beta
+    description: |-
+      Cloudflare Realtime is in open beta and available from the Cloudflare Dashboard.
+  - publish_date: "2022-09-27"
+    title: Cloudflare Realtime closed beta
+    description: |-
+      Cloudflare Realtime is available as a closed beta for users who request an invitation. Refer to the [blog post](https://blog.cloudflare.com/announcing-cloudflare-calls/) for more information.

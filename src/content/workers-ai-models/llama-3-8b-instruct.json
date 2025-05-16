@@ -8,8 +8,24 @@
         "name": "Text Generation",
         "description": "Family of generative text models, such as large language models (LLM), that can be adapted for a variety of natural language tasks."
     },
+    "created_at": "2024-04-18 20:31:47.273",
     "tags": [],
     "properties": [
+        {
+            "property_id": "price",
+            "value": [
+                {
+                    "unit": "per M input tokens",
+                    "price": 0.28,
+                    "currency": "USD"
+                },
+                {
+                    "unit": "per M output tokens",
+                    "price": 0.83,
+                    "currency": "USD"
+                }
+            ]
+        },
         {
             "property_id": "context_window",
             "value": "7968"
@@ -382,7 +398,6 @@
             "oneOf": [
                 {
                     "type": "object",
-                    "contentType": "application/json",
                     "properties": {
                         "response": {
                             "type": "string",
@@ -433,7 +448,6 @@
                 },
                 {
                     "type": "string",
-                    "contentType": "text/event-stream",
                     "format": "binary"
                 }
             ]

@@ -1,5 +1,7 @@
 ---
 import { z } from "astro:schema";
+import type { ComponentProps } from "astro/types";
+import { Code } from "@astrojs/starlight/components";
 import { getProperty } from "dot-prop";
 import { getSchema } from "~/util/api.ts";
 import type { OpenAPIV3 } from "openapi-types";
@@ -8,17 +10,20 @@ import Details from "./Details.astro";
 
 type Props = z.input<typeof props>;
 
+const Record = z.record(z.string(), z.any());
+
 const props = z
 	.object({
 		path: z.string(),
 		method: z.enum(["GET", "HEAD", "POST", "PUT", "DELETE", "PATCH"]),
 		parameters: z.record(z.string(), z.any()).optional(),
-		json: z.record(z.string(), z.any()).optional(),
-		form: z.record(z.string(), z.any()).optional(),
+		json: z.union([Record, z.array(Record)]).optional(),
+		form: Record.optional(),
+		code: z.custom<Omit<ComponentProps<typeof Code>, "title">>().optional(),
 	})
 	.strict();
 
-let { path, method, parameters, json, form } = props.parse(Astro.props);
+let { path, method, parameters, json, form, code } = props.parse(Astro.props);
 
 if (json && form) {
 	throw new Error(`[APIRequest] Cannot use both "json" and "form" properties.`);
@@ -65,11 +70,19 @@ if (extraneousParameters.length > 0) {
 }
 
 for (const parameter of endpointParameters) {
-	if (parameter.in === "path") {
-		const encoded = encodeURIComponent(`{${parameter.name}}`);
-
-		if (parameters?.[parameter.name]) {
-			url.pathname = url.pathname.replace(encoded, parameters[parameter.name]);
+	const value = parameters?.[parameter.name];
+	if (value) {
+		if (parameter.in === "path") {
+			const encoded = encodeURIComponent(`{${parameter.name}}`);
+			url.pathname = url.pathname.replace(encoded, value);
+		} else if (parameter.in === "query") {
+			if (Array.isArray(value)) {
+				for (const v of value) {
+					url.searchParams.append(parameter.name, v);
+				}
+			} else {
+				url.searchParams.set(parameter.name, value);
+			}
 		}
 	}
 }
@@ -109,17 +122,27 @@ const jsonSchema = requestBody?.content?.["application/json"]?.schema as
 	| undefined;
 
 if (jsonSchema?.required) {
-	const providedProperties = Object.keys(json ?? {});
-	const requiredProperties = jsonSchema.required;
+	const checkProperties = (obj?: object) => {
+		const providedProperties = Object.keys(obj ?? {});
+		const requiredProperties = jsonSchema.required!;
 
-	const missingProperties = requiredProperties.filter(
-		(property) => !providedProperties.includes(property),
-	);
-
-	if (missingProperties.length > 0) {
-		throw new Error(
-			`[APIRequest] Missing the following required properties for ${method} ${path}: ${missingProperties.join(", ")}`,
+		const missingProperties = requiredProperties.filter(
+			(property) => !providedProperties.includes(property),
 		);
+
+		if (missingProperties.length > 0) {
+			throw new Error(
+				`[APIRequest] Missing the following required properties for ${method} ${path}: ${missingProperties.join(", ")}`,
+			);
+		}
+	};
+
+	if (Array.isArray(json)) {
+		for (const obj of json) {
+			checkProperties(obj);
+		}
+	} else {
+		checkProperties(json);
 	}
 }
 
@@ -136,7 +159,9 @@ const tokenGroups = operation["x-api-token-group"];
 			</span>
 			<ul>
 				{tokenGroups.map((group) => (
-					<li><code>{group}</code></li>
+					<li>
+						<code>{group}</code>
+					</li>
 				))}
 			</ul>
 		</Details>
@@ -149,7 +174,5 @@ const tokenGroups = operation["x-api-token-group"];
 	headers={headers}
 	json={json}
 	form={form}
-	code={{
-		title: operation.summary,
-	}}
+	code={{ ...code, title: operation.summary }}
 />

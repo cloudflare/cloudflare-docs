@@ -33,15 +33,7 @@ Create a new Worker project named `browser-worker` by running:
 	args={"browser-worker"}
 />
 
-## 2. Enable Durable Objects in the dashboard
-
-To enable Durable Objects, you will need to purchase the Workers Paid plan:
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
-2. Go to **Workers & Pages** > **Plans**.
-3. Select **Purchase Workers Paid** and complete the payment process to enable Durable Objects.
-
-## 3. Install Puppeteer
+## 2. Install Puppeteer
 
 In your `browser-worker` directory, install Cloudflare’s [fork of Puppeteer](/browser-rendering/platform/puppeteer/):
 
@@ -49,7 +41,7 @@ In your `browser-worker` directory, install Cloudflare’s [fork of Puppeteer](/
 npm install @cloudflare/puppeteer --save-dev
 ```
 
-## 4. Create a R2 bucket
+## 3. Create a R2 bucket
 
 Create two R2 buckets, one for production, and one for development.
 
@@ -68,7 +60,7 @@ wrangler r2 bucket list
 
 After running the `list` command, you will see all bucket names, including the ones you have just created.
 
-## 5. Configure your Wrangler configuration file
+## 4. Configure your Wrangler configuration file
 
 Configure your `browser-worker` project's [Wrangler configuration file](/workers/wrangler/configuration/) by adding a browser [binding](/workers/runtime-apis/bindings/) and a [Node.js compatibility flag](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag). Browser bindings allow for communication between a Worker and a headless browser which allows you to do actions such as taking a screenshot, generating a PDF and more.
 
@@ -100,13 +92,13 @@ class_name = "Browser"
 
 [[migrations]]
 tag = "v1" # Should be unique for each entry
-new_classes = ["Browser"] # Array of new classes
+new_sqlite_classes = ["Browser"] # Array of new classes
 
 ```
 
 </WranglerConfig>
 
-## 6. Code
+## 5. Code
 
 The code below uses Durable Object to instantiate a browser using Puppeteer. It then opens a series of web pages with different resolutions, takes a screenshot of each, and uploads it to R2.
 
@@ -219,11 +211,11 @@ export class Browser {
 }
 ```
 
-## 7. Test
+## 6. Test
 
 Run [`npx wrangler dev --remote`](/workers/wrangler/commands/#dev) to test your Worker remotely before deploying to Cloudflare's global network. Local mode support does not exist for Browser Rendering so `--remote` is required.
 
-## 8. Deploy
+## 7. Deploy
 
 Run [`npx wrangler deploy`](/workers/wrangler/commands/#deploy) to deploy your Worker to the Cloudflare global network.
 

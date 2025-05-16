@@ -183,6 +183,12 @@ Type: `string`
 
 Network protocol used for this network session. <br />Possible values are <em>TCP</em> \| <em>UDP</em> \| <em>ICMP</em> \| <em>ICMPV6</em>.
 
+## RegistrationID
+
+Type: `string`
+
+Identifier of the client registration which initiated the network session, if applicable (for example, WARP Registration ID).
+
 ## RuleEvaluationDurationMs
 
 Type: `int`

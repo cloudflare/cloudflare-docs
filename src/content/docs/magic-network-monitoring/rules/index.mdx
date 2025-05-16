@@ -2,12 +2,26 @@
 title: Rules
 pcx_content_type: how-to
 sidebar:
-  label: Manage rules
+  label: Overview
   order: 4
 
 ---
 
-Magic Network Monitoring rules will allow you to monitor the traffic volume destined for IP addresses or IP prefixes on your network. You can also receive alerts if the volume of traffic arriving at specific destinations exceeds a defined threshold.
+Magic Network Monitoring rules allow you to monitor your network traffic for DDoS attacks on specific IP addresses or IP prefixes within your network. If the network traffic that is monitored by a rule exceeds the rule's threshold or contains a DDoS attack fingerprint, then you will receive an alert.
+
+## Rule types
+
+There are three different types of rules that can be configured within Magic Network Monitoring. You can refer to the linked documentation page for each rule type to learn more.
+
+| Rule Type | Rule Description | Rule Availability |
+| :---- | :---- | :---- |
+| [Dynamic threshold](/magic-network-monitoring/rules/dynamic-threshold/) (recommended) | A dynamic threshold rule will analyze a network's traffic patterns over time and automatically adjust the rule's DDoS threshold, in terms of bits or packets, based on traffic history. | API configuration only |
+| [Static threshold](/magic-network-monitoring/rules/static-threshold/) | A static threshold rule allows you to define a constant numeric threshold, in terms of bits or packets, for DDoS traffic monitoring. | API configuration and dashboard configuration |
+| [sFlow DDoS attack](/magic-network-monitoring/rules/s-flow-ddos-attack/) | Magic Network Monitoring customers that send sFlow data to Cloudflare can receive alerts when a specific type of distributed denial-of-service (DDoS) attack is detected within their network traffic. | API configuration only. Only applicable to sFlow data sets |
+
+## Create rules in the dashboard
+
+You can only configure static traffic threshold rules in the Cloudflare dashboard.
 
 :::caution[Invalid account settings error when trying to create a rule]
 If you get the following error when trying to create a rule:
@@ -19,88 +33,67 @@ Make sure the name for your Cloudflare account does not contain unsupported char
 Refer to [Account name](/fundamentals/setup/account/customize-account/account-name/) to learn how to change your account name.
 :::
 
-
-## Create rules
-
-Refer to [Recommended rule configuration](/magic-network-monitoring/rules/recommended-rule-configuration/) for more details on the settings we recommend to create appropriate Magic Network Monitoring rules.
+To create a new rule:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Go to **Analytics & Logs** > **Magic Monitoring**.
 3. Select **Configure Magic Network Monitoring** > **Add new rule**.
-4. Create your rule according to your needs. Refer to [Rule fields](#rule-fields) for more information on what each field does.
+4. Create a new static traffic threshold rule according to your needs. Refer to the documentation on [static threshold](/magic-network-monitoring/rules/static-threshold/) rules for more information on each field in the static threshold rule's configuration.
 5. Select **Create a new rule** when you are finished.
 
-## Edit or delete rules
+## Edit rules in the dashboard
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Go to **Analytics & Logs** > **Magic Monitoring**.
 3. Select **Configure Magic Network Monitoring**.
-4. Find the rule you want to edit, and select **Edit**. Optionally, you can also select **Delete** to delete a rule.
-5. Edit the appropriate fields. Refer to [Rule fields](#rule-fields) for more information on what each field does.
+4. Find the static threshold rule you want to edit, and select **Edit**.
+5. Edit the appropriate fields. Refer to [Rule configuration fields](/magic-network-monitoring/rules/static-threshold/#rule-configuration-fields) for more information on what each field does.
 6. Select **Save** when you are finished.
 
-## Rule Auto-Advertisement
+## Delete rules in the dashboard
 
-If you are an Enterprise customer using [Magic Transit On Demand](/magic-transit/on-demand), enable **Auto-Advertisement** if you want to automatically activate Magic Transit when a certain threshold is exceeded.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+2. Go to **Analytics & Logs** > **Magic Monitoring**.
+3. Select **Configure Magic Network Monitoring**.
+4. Find the static threshold rule you want to delete, and select **Delete**.
+5. Select **I understand that deleting a rule is permanent**, and select **Delete** again.
 
-Follow the previous steps to [create](#create-rules) or [edit](#edit-or-delete-rules) a rule. Then, make sure you enable **Auto-Advertisement**.
+## Common settings that apply to all rule types
 
-## Rule fields
+### Rule Auto-Advertisement
 
-| Field  									| Description |
-| ----------------------- | ----------- |
-| **Rule name** 					| Must be unique and cannot contain spaces. Supports characters `A-Z`, `a-z`, `0-9`, underscore (`_`), dash (`-`), period (`.`), and tilde (`~`).  Max 256 characters. |
-| **Rule threshold type** | Can be defined in either bits per second or packets per second. |
-| **Rule threshold**  		| The number of bits per second or packets per second for the rule alert. When this value is exceeded for the rule duration, an alert notification is sent. Minimum of `1` and no maximum. |
-| **Rule duration**  			| The amount of time in minutes the rule threshold must exceed to send an alert notification. Choose from the following values: `1`, `5`, `10`, `15`, `20`, `30`, `45`, or `60` minutes. |
-| **Auto-advertisement**  | If you are a [Magic Transit On Demand](/magic-transit/on-demand) customer, you can enable this feature to automatically enable Magic Transit if the rule alert is triggered.|
-| **Rule IP prefix** 			| The IP prefix associated with the rule for monitoring traffic volume. Must be a CIDR range such as `160.168.0.1/24`. Max is 5,000 unique CIDR entries.                                   |
+If you are an Enterprise customer using [Magic Transit On Demand](/magic-transit/on-demand), you can enable **Auto-Advertisement** for any dynamic threshold, static threshold, and sFlow DDoS attack rule. The Auto-Advertisement feature will automatically activate Magic Transit when a static or dynamic rule threshold is exceeded or a DDoS attack fingerprint is identified in sFlow traffic logs.
 
-## Enable per-prefix thresholds with the API
+Follow the previous steps to [create](#create-rules-in-the-dashboard) or [edit](#edit-rules-in-the-dashboard) a rule. Then, enable **Auto-Advertisement**.
 
-You can also use the [Magic Network Monitoring API](/api/resources/magic_network_monitoring/subresources/rules/methods/list/) to configure custom thresholds for specific prefixes.
+### Rule IP prefixes
 
-The system uses the concept of rules, and each rule consists of a group of prefixes. All prefixes inside a rule are evaluated as a whole, and you should set up a rule if you want the prefixes' aggregated traffic to trigger an alert or advertisement. For thresholds on singular prefixes or IPs, you can create an individual rule with one prefix and the desired threshold.
+Each rule must include a group of IP prefixes in its definition. All IP prefixes inside a rule are evaluated as a whole, and you should set up a rule with multiple IP prefixes when you want the IP prefixes' aggregated traffic to trigger an alert or advertisement. For thresholds on singular IP prefixes or IP addresses, you can create an individual rule with one prefix and the desired rule parameters.
 
-### Example
+### Rule IP prefixes example
 
-For a rule with two prefix CIDRs and a `packet_threshold` of `10000` as shown below, the rule will be flagged if the joint packet traffic of `192.168.0.0/24` and `172.118.0.0/24` is greater than `10000`. This also means that Cloudflare attempts to auto advertise both CIDRs in case the flag is turned on.
+For a rule with two prefix CIDRs and a `packet_threshold` of `10000` as shown below, the rule will be flagged if the joint packet traffic of `192.168.0.0/24` and `172.118.0.0/24` is greater than `10000`. This also means that Cloudflare attempts to auto advertise both CIDRs if the rule has the auto advertisement flag enabled. Customers can also [configure Rule IP prefixes at scale via Cloudflare's API](https://developers.cloudflare.com/api/resources/magic_network_monitoring/subresources/rules/).
 
-```bash
+```json
 "rules":[
         "name": "Too many packets",
         "prefixes": ["192.168.0.0/24", "172.118.0.0/24"],
         "packet_threshold": 10000,
         "automatic_advertisement": true,
         "duration": "1m0s",
+	 "type": "threshold"
         ]
 ```
 
 For more granular thresholds, create a more focused rule as shown below.
 
-```bash
+```json
 "rules":[
         "name": "Too many packets",
         "prefixes": ["172.118.0.0/24"],
         "packet_threshold": 1000,
         "automatic_advertisement": true,
         "duration": "1m0s",
+ "type": "threshold"
        ]
 ```
-
-Refer to the [Magic Network Monitoring API documentation](/api/resources/magic_network_monitoring/subresources/rules/methods/list/) for more information.
-
-## Notifications
-
-Webhook, PagerDuty, and email notifications are sent following an auto-advertisement attempt for all prefixes inside the flagged rule.
-
-You will receive the status of the advertisement for each prefix with the following available statuses:
-
-- **Advertised**: The prefix was successfully advertised.
-- **Already Advertised**: The prefix was advertised prior to the auto advertisement attempt.
-- **Delayed**: The prefix cannot currently be advertised but will attempt advertisement. After the prefix can be advertised, a new notification is sent with the updated status.
-- **Locked**: The prefix is locked and cannot be advertised.
-- **Could not Advertise**: Cloudflare was unable to advertise the prefix. This status can occur for multiple reasons, but usually occurs when you are not allowed to advertise a prefix.
-- **Error**: A general error occurred during prefix advertisement.
-
-Refer to [Notifications](/magic-network-monitoring/notifications/) to learn how to create one.

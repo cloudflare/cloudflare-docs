@@ -68,7 +68,7 @@ The time it takes for Azure to fully provision the Virtual Network Gateway depen
 3. If you are using the Active/Active configuration, select **Add IPsec tunnel** and repeat step 2 to create the second Magic WAN IPsec tunnel. Use the same **Cloudflare endpoint** as for the first tunnel.
 4. Select **Add Tunnels** when you are finished.
 5.The Cloudflare dashboard will show you a list of your tunnels. Edit the tunnel(s) you have created > select **Generate a new pre-shared key** > copy the generated key. If using the Active/Active configuration, select **Change to a new custom pre-shared key** on the second tunnel and use the PSK generated for the first tunnel.
-6. Create [static routes](/magic-wan/configuration/manually/how-to/configure-static-routes/) for your Azure Virtual Network subnets, specifying the newly created tunnel as the next hop.
+6. Create [static routes](/magic-wan/configuration/manually/how-to/configure-routes/#create-a-static-route) for your Azure Virtual Network subnets, specifying the newly created tunnel as the next hop.
 
 :::note
 Both tunnels in an Active/Active configuration must use the same **Cloudflare endpoint**, because an Active/Active Azure VPN connection creates two tunnels to the same remote address.

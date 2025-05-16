@@ -35,7 +35,7 @@ This example static redirect will redirect requests for the current zone (`examp
 Notes about this example:
 
 - The `not http.host in {"m.example.com"}` condition prevents redirect loops.
-- The user agent condition follows [Mozilla's recommendation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent/Firefox#device-specific_user_agent_strings) for identifying mobile devices.
+- The user agent condition follows [Mozilla's recommendation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/User-Agent/Firefox#device-specific_user_agent_strings) for identifying mobile devices.
 - The **Then** > **URL** value should be the same as the one you entered in the `http.host` condition of the rule's filter expression.
 - You can redirect users to other zones on Cloudflare or to other hostnames not on Cloudflare.
 
@@ -61,7 +61,7 @@ This example single redirect will redirect requests for the current zone (`examp
 Notes about this example:
 
 - The `not http.host in {"m.example.com"}` condition prevents redirect loops.
-- The user agent condition follows [Mozilla's recommendation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent/Firefox#device-specific_user_agent_strings) for identifying mobile devices.
+- The user agent condition follows [Mozilla's recommendation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/User-Agent/Firefox#device-specific_user_agent_strings) for identifying mobile devices.
 - The hostname in **Then** > **Expression** should be the same as the one you entered in the `http.host` condition of the rule's filter expression.
 - Depending on your use case, you may want to enable **Then** > **Preserve query string** to also keep the query string of the original request.
 - You can redirect users to other zones on Cloudflare or to other hostnames not on Cloudflare.

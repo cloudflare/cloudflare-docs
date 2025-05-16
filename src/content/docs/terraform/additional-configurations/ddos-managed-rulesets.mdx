@@ -19,6 +19,11 @@ This page provides examples of configuring [DDoS managed rulesets](/ddos-protect
 
 DDoS managed rulesets are always enabled. Depending on your Cloudflare services, you may be able to adjust their behavior.
 
+If you are using the Cloudflare API, refer to the following resources:
+
+- [Configure HTTP DDoS Attack Protection via API](/ddos-protection/managed-rulesets/http/configure-api/)
+- [Configure Network-layer DDoS Attack Protection via API](/ddos-protection/managed-rulesets/network/configure-api/)
+
 For more information on deploying and configuring rulesets using the Rulesets API, refer to [Work with managed rulesets](/ruleset-engine/managed-rulesets/) in the Ruleset Engine documentation.
 
 ## Before you start
@@ -58,14 +63,14 @@ resource "cloudflare_ruleset" "zone_level_http_ddos_config" {
         rules {
           # Adaptive DDoS Protection based on Locations (Available only to Enterprise zones with Advanced DDoS service)
           id = "a8c6333711ff4b0a81371d1c444be2c3"
-          sensitivity_level = "default"    
-          action = "managed_challenge"      
+          sensitivity_level = "default"
+          action = "managed_challenge"
         }
         rules {
           # Adaptive DDoS Protection based on User-Agents (Available only to Enterprise zones with Advanced DDoS service)
           id = "7709d496081e458899c1e3a6e4fe8e55"
-          sensitivity_level = "default"  
-          action = "managed_challenge"        
+          sensitivity_level = "default"
+          action = "managed_challenge"
         }
         rules {
           # HTTP requests causing a high number of origin errors.

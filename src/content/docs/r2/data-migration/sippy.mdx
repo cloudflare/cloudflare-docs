@@ -38,13 +38,13 @@ Before getting started, you will need:
 
 - An existing R2 bucket. If you don't already have one, refer to [Create buckets](/r2/buckets/create-buckets/).
 - [API credentials](/r2/data-migration/sippy/#create-credentials-for-storage-providers) for your source object storage bucket.
-- (Wrangler only) Cloudflare R2 Access Key ID and Secret Access Key with read and write permissions. For more information, refer to [Authentication](/r2/api/s3/tokens/).
+- (Wrangler only) Cloudflare R2 Access Key ID and Secret Access Key with read and write permissions. For more information, refer to [Authentication](/r2/api/tokens/).
 
 ### Enable Sippy via the Dashboard
 
 1. From the Cloudflare dashboard, select **R2** from the sidebar.
 2. Select the bucket you'd like to migrate objects to.
-3. Switch to the **Settings** tab, then scroll down to the **Incremental migration** card.
+3. Switch to the **Settings** tab, then scroll down to the **On Demand Migration** card.
 4. Select **Enable** and enter details for the AWS / GCS bucket you'd like to migrate objects from. The credentials you enter must have permissions to read from this bucket. Cloudflare also recommends scoping your credentials to only allow reads from this bucket.
 5. Select **Enable**.
 
@@ -122,7 +122,7 @@ You can optionally select a time window to query. This defaults to the last 24 h
 
 1. From the Cloudflare dashboard, select **R2** from the sidebar.
 2. Select the bucket you'd like to disable Sippy for.
-3. Switch to the **Settings** tab and scroll down to the **Incremental migration** card.
+3. Switch to the **Settings** tab and scroll down to the **On Demand Migration** card.
 4. Press **Disable**.
 
 ### Wrangler
@@ -180,10 +180,13 @@ When Sippy is enabled, it changes the behavior of certain actions on your R2 buc
 						Remaining metadata will be omitted.
 					</li>
 					<li>
-						For larger objects (greater than 199 MiB), multiple GET requests may be required to fully copy the object to R2.
+						For larger objects (greater than 199 MiB), multiple GET requests may
+						be required to fully copy the object to R2.
 					</li>
 					<li>
-						If there are multiple simultaneous GET requests for an object which has not yet been fully copied to R2, Sippy may fetch the object from the source storage bucket multiple times to serve those requests.
+						If there are multiple simultaneous GET requests for an object which
+						has not yet been fully copied to R2, Sippy may fetch the object from
+						the source storage bucket multiple times to serve those requests.
 					</li>
 				</ul>
 			</td>

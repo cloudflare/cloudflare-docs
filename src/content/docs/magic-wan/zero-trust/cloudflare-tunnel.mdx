@@ -10,7 +10,11 @@ Magic WAN can be used together with [Cloudflare Tunnel](/cloudflare-one/connecti
 
 By default, TCP, UDP, and ICMP traffic routed through Magic WAN tunnels and destined to routes behind Cloudflare Tunnel will be proxied/filtered through [Cloudflare Gateway](/cloudflare-one/policies/gateway/).
 
-Cloudflare does not recommend that you overlap Magic WAN and Cloudflare Tunnel routes. If you must, ensure that every Cloudflare Tunnel route has a prefix length at least as long as that of any Magic WAN route. Failing to meet this condition will likely result in loss of connectivity.
+## Cloudflare Tunnel and Magic Networking Route interactions
+
+[Private network routes](/cloudflare-one/connections/connect-networks/private-net/cloudflared/#3-route-private-network-ips-through-warp) are evaluated together across Cloudflare Tunnel and Magic Networking routing tables. If traffic matches either a Cloudflare Tunnel route (in any virtual network) or a Magic Networking route, then the matched route will determine the next-hop.
+
+To design solutions where a destination IP may match both a Cloudflare Tunnel private network route and a Magic Networking route, consult your solutions engineer for guidance.
 
 ## Test `cloudflared` tunnel integration
 

@@ -15,7 +15,7 @@ When this flag is enabled, and you specify a port when making a subrequest with 
 
 When you make a subrequest to a website that uses Cloudflare ("Orange Clouded") — only [ports supported by Cloudflare's reverse proxy](/fundamentals/reference/network-ports/#network-ports-compatible-with-cloudflares-proxy) can be specified. If you attempt to specify an unsupported port, it will be ignored.
 
-When you make a subrequest to a website that doesn't use Cloudflare ("Grey Clouded") - any port can be specified.
+When you make a subrequest to a website that does not use Cloudflare ("Grey Clouded") - any port can be specified.
 
 For example:
 

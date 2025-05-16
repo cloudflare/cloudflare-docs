@@ -39,6 +39,12 @@ Type: `string`
 
 The user action type ('copy', 'paste', 'download', etc.).
 
+## URL
+
+Type: `string`
+
+The URL of the webpage where a user action was performed.
+
 ## UserID
 
 Type: `string`
