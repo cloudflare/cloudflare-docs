@@ -100,7 +100,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
   "rules": [
     {
       "action": "block",
-      "expression": "ip.geoip.country == \"BR\"",
+      "expression": "ip.src.country == \"BR\"",
       "description": "Block traffic from Brazil"
     }
   ]
