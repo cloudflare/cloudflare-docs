@@ -31,7 +31,7 @@
 		"@astrojs/check": "0.9.4",
 		"@astrojs/react": "4.2.5",
 		"@astrojs/rss": "4.0.11",
-		"@astrojs/sitemap": "3.3.1",
+		"@astrojs/sitemap": "3.4.0",
 		"@astrojs/starlight": "0.34.1",
 		"@astrojs/starlight-docsearch": "0.6.0",
 		"@astrojs/starlight-tailwind": "4.0.1",
