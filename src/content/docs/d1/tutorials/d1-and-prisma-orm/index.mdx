@@ -234,6 +234,14 @@ npx wrangler d1 execute prisma-demo-db --command "INSERT INTO  \"User\" (\"email
 
 :::note
 If you receive an error to the effect of `Unknown arguments: (\email\,, \name\)...`, you may need to escape the double quotes with backticks (`) instead of backslashes (\\).
+
+Your Wrangler command will then look like:
+
+```sh
+# Escape with ` instead of \
+npx wrangler d1 execute prisma-demo-db --command "INSERT INTO  `"User`" (`"email`", `"name`") VALUES
+('jane@prisma.io', 'Jane Doe (Local)');" --<FLAG>
+```
 :::
 
 ### 5. Query your database from the Worker
