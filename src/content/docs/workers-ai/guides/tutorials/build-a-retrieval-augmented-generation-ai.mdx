@@ -243,9 +243,7 @@ env.RAG_WORKFLOW.create({ params: { text } });
 
 To expand on your Workers function in order to handle multiple routes, we will add `hono`, a routing library for Workers. This will allow us to create a new route for adding notes to our database. Install `hono` using `npm`:
 
-```sh
-npm install hono
-```
+<PackageManagers pkg="hono" />
 
 Then, import `hono` into your `src/index.js` file. You should also update the `fetch` handler to use `hono`:
 
@@ -408,9 +406,7 @@ If you are working with larger documents, you have the option to use Anthropic's
 
 To begin, install the `@anthropic-ai/sdk` package:
 
-```sh
-npm install @anthropic-ai/sdk
-```
+<PackageManagers pkg="@anthropic-ai/sdk" />
 
 In `src/index.js`, you can update the `GET /` route to check for the `ANTHROPIC_API_KEY` environment variable. If it's set, we can generate text using the Anthropic SDK. If it isn't set, we'll fall back to the existing Workers AI code:
 
@@ -498,9 +494,7 @@ For large pieces of text, it is recommended to split the text into smaller chunk
 
 To implement this, we'll add a new NPM package to our project, `@langchain/textsplitters':
 
-```sh
-npm install @langchain/textsplitters
-```
+<PackageManagers pkg="@langchain/textsplitters" />
 
 The `RecursiveCharacterTextSplitter` class provided by this package will split the text into smaller chunks. It can be customized to your liking, but the default config works in most cases:
 

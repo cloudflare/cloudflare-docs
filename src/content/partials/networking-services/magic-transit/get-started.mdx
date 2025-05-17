@@ -127,13 +127,21 @@ Refer to [Maximum transmission unit and maximum segment size](/magic-transit/ref
 { props.magicWord === "Magic Transit" && (
   <>
 	<AnchorHeading title="Configure tunnels" depth={2} />
-	<a href="/magic-transit/how-to/configure-tunnels/">Configure the tunnels</a>on both the Cloudflare side and your router side to connect to your origin infrastructure.
+	<a href="/magic-transit/how-to/configure-tunnels/">Configure the tunnels</a> on both the Cloudflare side and your router side to connect to your origin infrastructure.
 
 	<AnchorHeading title="Configure static routes or BGP peering" depth={2} />
-	<p>Configure <a href="/magic-transit/how-to/configure-routes/#configure-static-routes">static routes</a> or <a href="/magic-transit/how-to/configure-routes/#configure-bgp-routes">BGP peering</a>to route traffic from Cloudflare's global network to your locations.</p>
+	<p>Configure <a href="/magic-transit/how-to/configure-routes/#configure-static-routes">static routes</a> or <a href="/magic-transit/how-to/configure-routes/#configure-bgp-routes">BGP peering</a> to route traffic from Cloudflare's global network to your locations.</p>
 
 	<AnchorHeading title="Run pre-flight checks" depth={2} />
-	<p>After setting up your tunnels and routes, Cloudflare validates tunnel connectivity, tunnel and endpoint <a href="/magic-transit/reference/tunnel-health-checks/#tunnel-health-checks">health checks</a>, <GlossaryTooltip term="letter of agency">Letter of Agency (LOA)</GlossaryTooltip>, Internet Routing Registry (IRR), and <GlossaryTooltip term="maximum segment size (MSS)">maximum segment size (MSS) configurations</GlossaryTooltip>. Configurations for Cloudflare global network are applied and take around one day to rollout.</p>
+	<p>After setting up your tunnels and routes, Cloudflare validates:</p>
+	<ul>
+		<li>Tunnel connectivity</li>
+		<li>Tunnel and endpoint <a href="/magic-transit/reference/tunnel-health-checks/#tunnel-health-checks">health checks</a></li>
+		<li><GlossaryTooltip term="letter of agency">Letter of Agency (LOA)</GlossaryTooltip></li>
+		<li>Internet Routing Registry (IRR)</li>
+		<li><GlossaryTooltip term="maximum segment size (MSS)">Maximum segment size (MSS) configurations</GlossaryTooltip></li>
+	</ul>
+	<p>Configurations for Cloudflare global network are applied and take around one day to rollout.</p>
 
 	<AnchorHeading title="Advertise prefixes" depth={2} />
 	<Render file="magic-transit/advertise-prefixes"	product="networking-services" />
