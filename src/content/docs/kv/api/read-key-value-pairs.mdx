@@ -255,9 +255,9 @@ The effective `cacheTtl` of an already cached item can be reduced by getting it 
 
 ### Requesting more keys per Worker invocation with bulk requests
 
-Workers are limited to 1000 operations to external services per invocation. This applies to Workers KV, as documented in [Workers KV limits](/kv/platform/limits/).
+Workers are limited to 1,000 operations to external services per invocation. This applies to Workers KV, as documented in [Workers KV limits](/kv/platform/limits/).
 
-To read more than 1000 keys per operation, you can use the bulk read operations to read multiple keys in a single operation. These count as a single operation against the 1000 operation limit.
+To read more than 1,000 keys per operation, you can use the bulk read operations to read multiple keys in a single operation. These count as a single operation against the 1,000 operation limit.
 
 ### Reducing cardinality by coalescing keys
 
