@@ -288,7 +288,7 @@ By coalescing the values, the cold keys benefit from being kept alive in the cac
 This works best if you are not expecting the need to update the values independently of each other, which can pose race conditions unless you are careful about how you synchronize.
 
 - **Advantage**: Infrequently accessed keys are kept in the cache.
-- **Disadvantage**: Size of the resultant value can push your worker out of its memory limits. Safely updating the value requires a [locking mechanism](#concurrent-writers) of some kind.
+- **Disadvantage**: Size of the resultant value can push your worker out of its memory limits. Safely updating the value requires a [locking mechanism](/kv/api/write-key-value-pairs/#concurrent-writes-to-the-same-key) of some kind.
 
 #### Storing in metadata and shared prefix
 
