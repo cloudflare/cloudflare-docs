@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import ModelInfo from "./models/ModelInfo";
 import ModelBadges from "./models/ModelBadges";
 import { authorData } from "./models/data";
@@ -19,7 +19,55 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 		capabilities: [],
 	});
 
-	const mapped = models.map((model) => ({
+	// List of model names to pin at the top
+	const pinnedModelNames = [
+		"@cf/meta/llama-4-scout-17b-16e-instruct",
+		"@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+		"@cf/meta/llama-3.1-8b-instruct-fast",
+	];
+
+	// Sort models by pinned status first, then by created_at date
+	const sortedModels = useMemo(() => {
+		return [...models].sort((a, b) => {
+			// First check if either model is pinned
+			const isPinnedA = pinnedModelNames.includes(a.name);
+			const isPinnedB = pinnedModelNames.includes(b.name);
+
+			// If pinned status differs, prioritize pinned models
+			if (isPinnedA && !isPinnedB) return -1;
+			if (!isPinnedA && isPinnedB) return 1;
+
+			// If both are pinned, sort by position in pinnedModelNames array (for manual ordering)
+			if (isPinnedA && isPinnedB) {
+				return (
+					pinnedModelNames.indexOf(a.name) - pinnedModelNames.indexOf(b.name)
+				);
+			}
+
+			// If neither is pinned, sort by created_at date (newest first)
+			const dateA = a.created_at ? new Date(a.created_at) : new Date(0);
+			const dateB = b.created_at ? new Date(b.created_at) : new Date(0);
+			return dateB.getTime() - dateA.getTime();
+		});
+	}, [models]);
+
+	useEffect(() => {
+		const params = new URLSearchParams(window.location.search);
+
+		const search = params.get("search") ?? "";
+		const authors = params.getAll("authors");
+		const tasks = params.getAll("tasks");
+		const capabilities = params.getAll("capabilities");
+
+		setFilters({
+			search,
+			authors,
+			tasks,
+			capabilities,
+		});
+	}, []);
+
+	const mapped = sortedModels.map((model) => ({
 		model: {
 			...model,
 			capabilities: model.properties
@@ -30,6 +78,10 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 
 					if (property_id === "function_calling" && value === "true") {
 						return "Function calling";
+					}
+
+					if (property_id === "async_queue" && value === "true") {
+						return "Batch";
 					}
 
 					return [];
@@ -43,21 +95,25 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 	const authors = [...new Set(models.map((model) => model.name.split("/")[1]))];
 	const capabilities = [
 		...new Set(
-			models
-				.map((model) =>
-					model.properties
-						.flatMap(({ property_id, value }) => {
-							if (property_id === "lora" && value === "true") {
-								return "LoRA";
-							}
+			models.flatMap((model) =>
+				model.properties
+					.flatMap(({ property_id, value }) => {
+						if (property_id === "lora" && value === "true") {
+							return "LoRA";
+						}
 
-							if (property_id === "function_calling" && value === "true") {
-								return "Function calling";
-							}
-						})
-						.filter((p) => Boolean(p)),
-				)
-				.flat(),
+						if (property_id === "function_calling" && value === "true") {
+							return "Function calling";
+						}
+
+						if (property_id === "async_queue" && value === "true") {
+							return "Batch";
+						}
+
+						return [];
+					})
+					.filter((p) => Boolean(p)),
+			),
 		),
 	];
 
@@ -100,18 +156,19 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 					onChange={(e) => setFilters({ ...filters, search: e.target.value })}
 				/>
 
-				<div className="!mb-8 hidden md:block">
-					<span className="text-sm font-bold uppercase text-gray-600 dark:text-gray-200">
-						▼ Model Types
+				<div className="mb-8! hidden md:block">
+					<span className="text-sm font-bold text-gray-600 uppercase dark:text-gray-200">
+						▼ Tasks
 					</span>
 
 					{tasks.map((task) => (
-						<label key={task} className="!my-2 block">
+						<label key={task} className="my-2! block">
 							<input
 								type="checkbox"
 								className="mr-2"
 								value={task}
-								onClick={(e) => {
+								checked={filters.tasks.includes(task)}
+								onChange={(e) => {
 									const target = e.target as HTMLInputElement;
 
 									if (target.checked) {
@@ -132,18 +189,19 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 					))}
 				</div>
 
-				<div className="!mb-8 hidden md:block">
-					<span className="text-sm font-bold uppercase text-gray-600 dark:text-gray-200">
+				<div className="mb-8! hidden md:block">
+					<span className="text-sm font-bold text-gray-600 uppercase dark:text-gray-200">
 						▼ Capabilities
 					</span>
 
 					{capabilities.map((capability) => (
-						<label key={capability} className="!my-2 block">
+						<label key={capability} className="my-2! block">
 							<input
 								type="checkbox"
 								value={capability}
+								checked={filters.capabilities.includes(capability)}
 								className="mr-2"
-								onClick={(e) => {
+								onChange={(e) => {
 									const target = e.target as HTMLInputElement;
 
 									if (target.checked) {
@@ -167,17 +225,18 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 				</div>
 
 				<div className="hidden md:block">
-					<span className="text-sm font-bold uppercase text-gray-600 dark:text-gray-200">
+					<span className="text-sm font-bold text-gray-600 uppercase dark:text-gray-200">
 						▼ Authors
 					</span>
 
 					{authors.map((author) => (
-						<label key={author} className="!my-2 block">
+						<label key={author} className="my-2! block">
 							<input
 								type="checkbox"
 								className="mr-2"
 								value={author}
-								onClick={(e) => {
+								checked={filters.authors.includes(author)}
+								onChange={(e) => {
 									const target = e.target as HTMLInputElement;
 
 									if (target.checked) {
@@ -200,10 +259,10 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 					))}
 				</div>
 			</div>
-			<div className="!mt-0 flex w-full flex-wrap items-stretch gap-[1%] self-start md:w-3/4">
+			<div className="mt-0! flex w-full flex-wrap items-stretch gap-[1%] self-start md:w-3/4">
 				{modelList.length === 0 && (
 					<div className="flex w-full flex-col justify-center rounded-md border bg-gray-50 py-6 text-center align-middle dark:border-gray-500 dark:bg-gray-800">
-						<span className="text-lg !font-bold">No models found</span>
+						<span className="text-lg font-bold!">No models found</span>
 						<p>
 							Try a different search term, or broaden your search by removing
 							filters.
@@ -218,13 +277,19 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 
 					const author = model.model.name.split("/")[1];
 					const authorInfo = authorData[author];
+					const isPinned = pinnedModelNames.includes(model.model.name);
 
 					return (
 						<a
 							key={model.model.id}
-							className="mb-3 block w-full self-start rounded-md border border-solid border-gray-200 p-3 !text-inherit no-underline hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800 lg:w-[48%]"
+							className="relative mb-3 block w-full self-start rounded-md border border-solid border-gray-200 p-3 text-inherit! no-underline hover:bg-gray-50 lg:w-[48%] dark:border-gray-700 dark:hover:bg-gray-800"
 							href={`/workers-ai/models/${model.model_display_name}`}
 						>
+							{isPinned && (
+								<span className="absolute top-1 right-2" title="Pinned model">
+									📌
+								</span>
+							)}
 							<div className="-mb-1 flex items-center">
 								{authorInfo?.logo ? (
 									<img
@@ -233,26 +298,22 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 										alt={`${authorInfo.name} logo`}
 									/>
 								) : (
-									<div className="mr-2 flex h-6 w-6 items-center justify-center rounded-md bg-gray-100 text-sm font-black uppercase text-gray-400">
+									<div className="mr-2 flex h-6 w-6 items-center justify-center rounded-md bg-gray-100 text-sm font-black text-gray-400 uppercase">
 										{author.slice(0, 1)}
 									</div>
 								)}
-								<span className="overflow-hidden text-ellipsis whitespace-nowrap text-lg font-semibold">
+								<span className="overflow-hidden text-lg font-semibold text-ellipsis whitespace-nowrap">
 									{model.model_display_name}
 								</span>
-								{isBeta && (
-									<span className="ml-1 rounded-full bg-orange-200 px-2 py-0.5 text-xs text-orange-900">
-										Beta
-									</span>
-								)}
+								{isBeta && <span className="sl-badge caution ml-1">Beta</span>}
 							</div>
-							<div className="!m-0 text-xs">
+							<div className="m-0! text-xs">
 								<ModelInfo model={model.model} />
 							</div>
-							<p className="!mt-2 line-clamp-2 text-sm leading-6">
+							<p className="mt-2! line-clamp-2 text-sm leading-6">
 								{model.model.description}
 							</p>
-							<div className="!mt-2 text-xs">
+							<div className="mt-2! text-xs">
 								<ModelBadges model={model.model} />
 							</div>
 						</a>

@@ -1,9 +1,4 @@
 ---
-_build:
-	publishResources: false
-	render: never
-	list: never
-
 name: "Enable `cache: no-store` HTTP standard API"
 sort_date: "2024-11-11"
 enable_date: "2024-11-11"
@@ -21,19 +16,20 @@ The only cache option enabled with `cache_option_enabled` is `'no-store'`.
 Specifying any other value will cause the Workers runtime to throw a `TypeError` with the message `Unsupported cache mode: <the-mode-you-specified>`.
 
 When `no-store` is specified:
-* All requests have the headers `Pragma: no-cache` and `Cache-Control: no-cache` are set on them.
 
-* Subrequests to origins not hosted by Cloudflare bypass Cloudflare's cache.
+- All requests have the headers `Pragma: no-cache` and `Cache-Control: no-cache` are set on them.
+
+- Subrequests to origins not hosted by Cloudflare bypass Cloudflare's cache.
 
 Examples using `cache: 'no-store'`:
 
 ```js
-const response = await fetch("https://example.com", { cache: 'no-store'});
+const response = await fetch("https://example.com", { cache: "no-store" });
 ```
 
 The cache value can also be set on a `Request` object.
 
 ```js
-const request = new Request("https://example.com", { cache: 'no-store'});
+const request = new Request("https://example.com", { cache: "no-store" });
 const response = await fetch(request);
 ```

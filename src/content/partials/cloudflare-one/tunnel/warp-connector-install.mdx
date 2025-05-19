@@ -17,9 +17,9 @@ To install WARP Connector on a host machine:
     :::note[Remote SSH connections]
 
     If you are managing the deployment remotely over SSH, your connection may drop when you install the WARP Connector. Because the WARP connector immediately starts forwarding traffic to Cloudflare, the remote SSH server's traffic will now route via Cloudflare instead of via the server's public IP. To work around the issue:
-    - **Option 1**: In your WARP Connector [device profile](#3-recommended-create-a-device-profile), temporarily add the public IP of your local machine to the [Split Tunnel Exclude list](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/).
+    - **Option 1**: In your WARP Connector [device profile](#2-recommended-create-a-device-profile), temporarily add the public IP of your local machine to the [Split Tunnel Exclude list](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/).
 
-    - **Option 2**: If your local machine is connected to Zero Trust (for example, via the WARP client), you can SSH to the <GlossaryTooltip term="CGNAT IP">CGNAT IP</GlossaryTooltip> of the WARP Connector. Traffic to the CGNAT IP must [route through the WARP tunnel](#4-configure-split-tunnels).
+    - **Option 2**: If your local machine is connected to Zero Trust (for example, via the WARP client), you can SSH to the <GlossaryTooltip term="CGNAT IP">CGNAT IP</GlossaryTooltip> of the WARP Connector. Traffic to the CGNAT IP must route through the WARP tunnel.
     :::
 
 8. (Optional) Configure IP forwarding:

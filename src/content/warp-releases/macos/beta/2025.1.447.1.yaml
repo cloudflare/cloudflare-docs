@@ -1,0 +1,38 @@
+releaseNotes: >-
+  This release contains only improvements.
+
+
+  Note: If using macOS Sequoia, Cloudflare recommends the use of macOS 15.2 or
+  later. With macOS 15.2, Apple addressed several issues that may have caused
+  the WARP client to not behave as expected when used with macOS 15.0.x.
+
+
+  **Changes and improvements**
+
+  - Improved command line interface for Access for Infrastructure
+  with added function for filtering and ordering.
+
+  - Fixed client connectivity issues when switching between managed network
+  profiles that use different WARP protocols.
+
+  - Improved OS version posture checks on macOS for greater reliability and
+  availability.
+
+  - Added support for WARP desktop to use additional DoH endpoints to help
+  reduce NAT congestion.
+
+  - Improved Wireguard connection stability on reconnections.
+
+  - Added additional HTTP/3 QUIC connectivity test to `warp-diag`.
+
+
+  **Known issues**
+
+  - macOS Sequoia: Due to changes Apple introduced in macOS 15.0.x, the WARP
+  client may not behave as expected. Cloudflare recommends the use of macOS 15.2
+  or later.
+version: 2025.1.447.1
+releaseDate: 2025-01-28T20:05:20.685Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2025.1.447.1
+packageSize: 92316456
+platformName: macOS

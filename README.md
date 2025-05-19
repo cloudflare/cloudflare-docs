@@ -33,14 +33,6 @@ $ npm run dev
 
 This spawns a server that will be accessible via `http://localhost:1111` in your browser. Additionally, any changes made within the project – including `content/**` changes – will automatically reload your browser tab(s), allowing you to instantly preview your changes.
 
-### Recommendations
-
-Part of our application accesses the GitHub API (to populate the [Wrangler changelog](https://developers.cloudflare.com/workers/platform/changelog/wrangler/)).
-
-<!--
-Since GitHub gives a higher request limit to authenticated requests, you may want to add a [classic token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#personal-access-tokens-classic) with permissions for `repos:public_repo` to `/assets/secrets/github_token.txt`. The token value should be the only thing in your file.
--->
-
 ## Deployment
 
 Our docs are deployed using [Cloudflare Pages](https://pages.cloudflare.com). Every commit pushed to production will automatically deploy to [developers.cloudflare.com](https://developers.cloudflare.com), and any pull requests opened will have a corresponding staging URL available in the pull request comments.

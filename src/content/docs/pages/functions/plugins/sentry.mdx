@@ -3,7 +3,14 @@ pcx_content_type: concept
 title: Sentry
 sidebar:
   order: 1
+banner:
+  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
+  type: note
+  dismissible:
+    id: pages-migrate-to-workers
 ---
+
+import { PackageManagers } from "~/components";
 
 :::note
 
@@ -15,9 +22,7 @@ The Sentry Pages Plugin captures and logs all exceptions which occur below it in
 
 ## Installation
 
-```sh
-npm install @cloudflare/pages-plugin-sentry
-```
+<PackageManagers pkg="@cloudflare/pages-plugin-sentry" />
 
 ## Usage
 

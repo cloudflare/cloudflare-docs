@@ -8,7 +8,7 @@ import { Render } from "~/components";
 
 <Render
   file="casb/integration-description"
-  params={{ one: "Slack", two: "Slack Workspace" }}
+  params={{ integrationName: "Slack", integrationAccountType: "Slack Workspace" }}
 />
 
 ## Integration prerequisites
@@ -30,7 +30,7 @@ These permissions follow the principle of least privilege to ensure that only th
 
 ## Security findings
 
-<Render file="casb/security-findings" params={{ one: "Slack", two: "slack" }} />
+<Render file="casb/security-findings" params={{ integrationName: "Slack", slugRelativePath: "slack" }} />
 
 ### User account settings
 

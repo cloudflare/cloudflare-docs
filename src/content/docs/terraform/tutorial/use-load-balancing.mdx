@@ -8,7 +8,11 @@ head:
     content: Improve performance and reliability
 ---
 
+import { Render } from "~/components";
+
 In this tutorial, you will add a second origin for some basic round robining, and then use the [Cloudflare Load Balancing](/load-balancing/) product to fail traffic over as needed. You will also enhance your load balancing configuration through the use of "geo steering" to serve results from an origin server that is geographically closest to your end users.
+
+<Render file="v4-code-snippets" />
 
 ## 1. Add another DNS record for `www`
 
@@ -192,7 +196,7 @@ As noted above, there is no discernible pattern for which origin receives the re
 Before proceeding, ensure [Load Balancing is enabled for your account](/load-balancing/get-started/enable-load-balancing/).
 :::
 
-As described in the [Load Balancing tutorial](/learning-paths/load-balancing/), you will need to complete three tasks:
+As described in the [Load Balancing tutorial](/learning-paths/load-balancing/concepts/), you will need to complete three tasks:
 
 1. Create a monitor to run health checks against your origin servers.
 2. Create a pool of one or more origin servers that will receive load balanced traffic.

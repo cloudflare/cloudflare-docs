@@ -1,0 +1,54 @@
+---
+pcx_content_type: concept
+title: How challenges work
+sidebar:
+  order: 1
+---
+
+Challenges can be issued in three primary ways depending on which Cloudflare products or features are in use. Each method is designed to balance security with seamless visitor experience. 
+
+| Product | Challenge type(s) |
+| --- | --- |
+| [WAF](/waf/) ([custom rules](/waf/custom-rules/), [rate limiting rules](/waf/rate-limiting-rules/), [IP access rules](/waf/tools/ip-access-rules/)) | [Interstitial challenge page](#interstitial-challenge-pages) |
+| [Bot Management](/bots/get-started/bot-management/) | [JavaScript detection](/bots/additional-configurations/javascript-detections/) |
+| [Bot Fight Mode](/bots/get-started/bot-fight-mode/), [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/) | [Interstitial challenge page](#interstitial-challenge-pages) |
+| [Turnstile](/turnstile/) | Embedded widget |
+| [HTTP DDoS attack protection](/ddos-protection/managed-rulesets/http/) | Any challenge |
+| [Under Attack Mode](/fundamentals/reference/under-attack-mode/) | [Managed challenge](/cloudflare-challenges/challenge-types/challenge-pages/#managed-challenge-recommended) |
+
+### Turnstile
+
+[Turnstile](/turnstile/) is Cloudflare’s CAPTCHA-alternative solution. You can embed Turnstile as a widget on your site, where it runs a challenge directly in the visitor’s browser.
+
+Turnstile does not pause the request or interrupt the user’s experience. Instead, the widget runs a client-side challenge in the background. In most cases, nothing further is required from the visitor. When needed, Turnstile may display a simple checkbox that the visitor must click to proceed. 
+
+After the challenge passes, Turnstile issues a token that you must validate using the [siteverify API](/turnstile/get-started/server-side-validation/) before completing a sensitive action like login, sign up, or other form submissions.
+
+### Interstitial challenge pages
+
+When a challenge is triggered by a rule in the [Web Application Firewall (WAF)](/waf/), [Bot Management](/bots/), or [Rate Limiting](/waf/rate-limiting-rules/), Cloudflare presents a full-page interstitial challenge page. The request is paused while Cloudflare evaluates the browser environment. In some cases, the visitor may be asked to check a box for further probing. 
+
+If the challenge passes, the original request continues to your origin. If the challenge fails or cannot be completed, the visitor is presented with another interstitial challenge page.
+
+### JavaScript detection in Bot Management
+
+In Bot Management, [JavaScript detections](/bots/additional-configurations/javascript-detections/) run silently in the browser to validate that the visitor supports and executes standard browser JavaScript, and provides a lightweight and privacy-preserving way to distinguish between bots and real users without adding friction to the experience.
+
+:::note
+If the check fails, the bot score is set to 1.
+:::
+
+The script runs a short set of tasks and, if successful, sets a `cf_clearance` cookie indicating that the visitor passed the check. This is exposed as the `cf.bot_management.js_detection.passed` field that you can use in [WAF custom rules](/waf/custom-rules/) to take further action — such as issuing an interstitial challenge page. 
+
+If a visitor was unable to run JavaScript detection, the `cf.bot_management.js_detection.passed` field is set to `False`. Cloudflare advises that you should never block a request based on this field unless you are certain that the visitor has run JavaScript detections.
+
+---
+
+## Limitations
+
+Cloudflare challenges cannot support the following:
+
+- [Browser extensions](/cloudflare-challenges/reference/supported-browsers/#browser-extensions) that modify the browser's `User-Agent` value or Web APIs such as `Canvas` and `WebGL`.
+- Implementations where a domain serves a challenge page originally requested for another domain.
+- Challenge pages cannot be embedded in cross-origin iframes.
+- Client software where the solve request of a Managed Challenge comes from a different IP than the original IP a challenge request was issued to. For example, if you receive the challenge from one IP and solve it using another IP, the solve is not valid and you may encounter a challenge loop.

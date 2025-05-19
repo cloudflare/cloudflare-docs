@@ -18,7 +18,7 @@ sidebar:
 updated: 2024-09-07
 ---
 
-import { Render } from "~/components";
+import { Render, PublicStats } from "~/components";
 
 Download a [PDF version](/reference-architecture/static/cloudflare-evolving-to-a-sase-architecture.pdf) of this reference architecture.
 
@@ -31,7 +31,7 @@ Cloudflare One is a secure access service edge (SASE) platform that protects ent
 - Protecting data in order to comply with regulations and prevent leaks
 - Simplifying connectivity across offices, data centers, and cloud environments
 
-Cloudflare One is built on Cloudflare's [connectivity cloud](https://www.cloudflare.com/connectivity-cloud/), ​​a unified, intelligent platform of programmable cloud-native services that enable any-to-any connectivity between all networks (enterprise and Internet), cloud environments, applications, and users. It is one of the [largest global networks](https://www.cloudflare.com/network/), with data centers spanning [hundreds of cities worldwide](https://www.cloudflare.com/network/) and interconnection with over 12,500 other networks. It also has a greater presence in [core Internet exchanges](https://bgp.he.net/report/exchanges#_participants) than many other large technology companies.
+Cloudflare One is built on Cloudflare's [connectivity cloud](https://www.cloudflare.com/connectivity-cloud/), ​​a unified, intelligent platform of programmable cloud-native services that enable any-to-any connectivity between all networks (enterprise and Internet), cloud environments, applications, and users. It is one of the [largest global networks](https://www.cloudflare.com/network/), with data centers spanning [hundreds of cities worldwide](https://www.cloudflare.com/network/) and interconnection with <PublicStats id="network_peers" />. It also has a greater presence in [core Internet exchanges](https://bgp.he.net/report/exchanges#_participants) than many other large technology companies.
 
 As a result, Cloudflare operates within \~50 ms of \~95% of the world's Internet-connected population. And since all Cloudflare services are designed to run across every network location, all traffic is connected, inspected, and filtered close to the source for the best performance and consistent user experience.
 
@@ -468,7 +468,7 @@ But, before organizations define policies to manage that access, they need to kn
 
 The first step in any access decision is to determine who is making the request – i.e., to authenticate the user.
 
-Cloudflare integrates with identity providers that manage secure access to resources for organizations' employees, contractors, partners, and other users. This includes support for integrations with any [SAML](/cloudflare-one/identity/idp-integration/generic-saml/) - or OpenID Connect ([OIDC](/cloudflare-one/identity/idp-integration/generic-oidc/)) - compliant service; Cloudflare One also includes pre-built integrations with [Okta](/cloudflare-one/identity/idp-integration/okta/), [Microsoft Entra ID (formerly Azure Active Directory)](/cloudflare-one/identity/idp-integration/entra-id/), [Google Workspace](/cloudflare-one/identity/idp-integration/gsuite/), as well as consumer IdPs such as [Facebook](/cloudflare-one/identity/idp-integration/facebook-login/), [GitHub](/cloudflare-one/identity/idp-integration/github/) and [LinkedIn](/cloudflare-one/identity/idp-integration/linkedin/).
+Cloudflare integrates with identity providers that manage secure access to resources for organizations' employees, contractors, partners, and other users. This includes support for integrations with any [SAML](/cloudflare-one/identity/idp-integration/generic-saml/) - or OpenID Connect ([OIDC](/cloudflare-one/identity/idp-integration/generic-oidc/)) - compliant service; Cloudflare One also includes pre-built integrations with [Okta](/cloudflare-one/identity/idp-integration/okta/), [Microsoft Entra ID (formerly Azure Active Directory)](/cloudflare-one/identity/idp-integration/entra-id/), [Google Workspace](/cloudflare-one/identity/idp-integration/google-workspace/), as well as consumer IdPs such as [Facebook](/cloudflare-one/identity/idp-integration/facebook-login/), [GitHub](/cloudflare-one/identity/idp-integration/github/) and [LinkedIn](/cloudflare-one/identity/idp-integration/linkedin/).
 
 Multiple IdPs can be integrated, allowing organizations to apply policies to a wide range of both internal and external users. When a user attempts to access a Cloudflare secured application or service, they are redirected to authenticate via one of the integrated IdPs. When using the device agent, users must also authenticate to one of their organization's configured IdPs.
 
@@ -680,6 +680,6 @@ It's worth noting that many of the capabilities described in this document can b
 | Remote Browser Isolation  | [Understanding browser isolation](/cloudflare-one/policies/browser-isolation/)                                                                                           |
 | API-Driven CASB           | [Scanning SaaS applications](/cloudflare-one/applications/casb/)                                                                                                         |
 | Email Security            | [Understanding Cloudflare Email Security](/email-security/)                                                                                                              |
-| Replacing your VPN        | [Using Cloudflare to replace your VPN](/learning-paths/replace-vpn/)                                                                                                     |
+| Replacing your VPN        | [Using Cloudflare to replace your VPN](/learning-paths/replace-vpn/concepts/)                                                                                            |
 
 If you would like to discuss your SASE requirements in greater detail and connect with one of our architects, please visit [https://www.cloudflare.com/cloudflare-one/](https://www.cloudflare.com/cloudflare-one/) and request a consultation.

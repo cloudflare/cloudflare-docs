@@ -1,122 +1,78 @@
 ---
-import { getEntry, type CollectionEntry } from "astro:content";
-import { marked } from "marked";
-import { getChangelogs } from "~/util/changelogs";
+import { getChangelogs, type GetChangelogsOptions } from "~/util/changelog";
+import { reference } from "astro:content";
+import { z } from "astro:schema";
+import { getCollection, render } from "astro:content";
+import { slug } from "github-slugger";
+import { format } from "date-fns";
+
+import RSSButton from "~/components/RSSButton.astro";
 import AnchorHeading from "~/components/AnchorHeading.astro";
-import { entryToString } from "~/util/container";
+import ProductPills from "~/components/changelog/ProductPills.astro";
 
-const page = await getEntry("docs", Astro.params.slug!);
-
-if (!page) {
-	throw new Error(
-		`[ProductChangelog] Failed to find entry for ${Astro.params.slug}.`,
+const props = z
+	.object({
+		product: reference("products"),
+	})
+	.or(
+		z.object({
+			area: z.string(),
+		}),
+	)
+	.and(
+		z.object({
+			hideEntry: z.string().optional(),
+		}),
 	);
-}
 
-if (!page.data.changelog_file_name && !page.data.changelog_product_area_name) {
-	throw new Error(
-		`[ProductChangelog] ${Astro.params.slug} does not have a 'changelog_file_name' or 'changaelog_product_area_name' frontmatter property.`,
-	);
-}
+const input = await props.parseAsync(Astro.props);
 
-if (page.data.changelog_file_name && page.data.changelog_file_name.length > 1) {
-	throw new Error(
-		`[ProductChangelog] This component cannot be used on files that have more than 1 entry in their 'changelog_file_name' frontmatter property.`,
-	);
-}
+let filter: GetChangelogsOptions["filter"];
+let rss: string;
 
-const name =
-	page.data.changelog_product_area_name ?? page.data.changelog_file_name?.[0];
+if ("product" in input) {
+	rss = `/changelog/rss/${input.product.id}.xml`;
 
-let changelogs;
-
-if (page.data.changelog_product_area_name) {
-	const opts = {
-		filter: (entry: CollectionEntry<"changelogs">) => {
-			return entry.data.productArea === name;
-		},
+	filter = (e) => {
+		return (
+			!e.data.hidden &&
+			e.data.products.some(({ id }) => id === input.product.id) &&
+			input.hideEntry !== e.id
+		);
 	};
-	({ changelogs } = await getChangelogs(opts));
 } else {
-	if (name === "wrangler") {
-		const opts = {
-			wranglerOnly: true,
-		};
-		({ changelogs } = await getChangelogs(opts));
-	} else if (name === "api-deprecations") {
-		const opts = {
-			deprecationsOnly: true,
-		};
-		({ changelogs } = await getChangelogs(opts));
-	} else {
-		const opts = {
-			filter: (entry: CollectionEntry<"changelogs">) => {
-				return entry.id === name;
-			},
-		};
-		({ changelogs } = await getChangelogs(opts));
-	}
+	rss = `/changelog/rss/${slug(input.area)}.xml`;
+
+	const products = await getCollection("products", (e) => {
+		return e.data.product.group === input.area && input.hideEntry !== e.id;
+	});
+
+	filter = (e) => {
+		return e.data.products.some((x) => products.some((y) => x.id === y.id));
+	};
 }
 
-if (!changelogs) {
-	throw new Error(
-		`[ProductChangelog] Failed to find changelog called ${name}.`,
-	);
-}
+const changelogs = await getChangelogs({ filter });
 ---
 
+<RSSButton href={rss} />
+
 {
-	changelogs.map(([date, entries]) => (
-		<div data-date={date}>
-			{(entries ?? []).map(async (entry) => {
-				let description;
-				if (entry.individual_page) {
-					const link = entry.individual_page;
+	changelogs.map(async (entry) => {
+		const { Content } = await render(entry);
 
-					if (!link)
-						throw new Error(
-							`Changelog entry points to individual page but no link is provided`,
-						);
-
-					const page = await getEntry("docs", link.slice(1, -1));
-
-					if (!page)
-						throw new Error(
-							`Changelog entry points to ${link.slice(1, -1)} but unable to find entry with that slug`,
-						);
-
-					description = (await entryToString(page, Astro.locals)) ?? page.body;
-
-					return (
-						<div data-product={entry.product.toLowerCase()}>
-							<a href={entry.individual_page} class="no-underline">
-								<AnchorHeading depth={2} title={page.data.title} />
-							</a>
-							<p class="text-xs">{entry.date}</p>
-							{page.data.changelog_product_area_name && (
-								<h3 class="!mt-4">
-									<a href={entry.productLink}>{entry.product}</a>
-								</h3>
-							)}
-							{<Fragment set:html={description} />}
-						</div>
-					);
-				} else {
-					description = marked.parse(entry.description as string);
-					return (
-						<AnchorHeading depth={2} title={date} />
-						<div data-product={entry.product.toLowerCase()}>
-							{page.data.changelog_product_area_name && (
-								<h3 class="!mt-4">
-									<a href={entry.productLink}>{entry.product}</a>
-								</h3>
-							)}
-							{entry.title && <strong>{entry.title}</strong>}
-							{<Fragment set:html={description} />}
-						</div>
-					);
-				}
-			})}
-		</div>
-	))
+		return (
+			<>
+				<AnchorHeading
+					depth={2}
+					title={format(entry.data.date, "yyyy-MM-dd")}
+				/>
+				{"area" in input && <ProductPills products={entry.data.products} />}
+				<br />
+				<strong>{entry.data.title}</strong>
+				<br />
+				<Content />
+			</>
+		);
+	})
 }

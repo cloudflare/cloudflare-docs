@@ -8,11 +8,16 @@
         "name": "Text Generation",
         "description": "Family of generative text models, such as large language models (LLM), that can be adapted for a variety of natural language tasks."
     },
+    "created_at": "2024-02-27 18:26:21.126",
     "tags": [],
     "properties": [
         {
             "property_id": "beta",
             "value": "true"
+        },
+        {
+            "property_id": "context_window",
+            "value": "2048"
         },
         {
             "property_id": "info",
@@ -29,8 +34,25 @@
                         "prompt": {
                             "type": "string",
                             "minLength": 1,
-                            "maxLength": 131072,
                             "description": "The input text prompt for the model to generate a response."
+                        },
+                        "lora": {
+                            "type": "string",
+                            "description": "Name of the LoRA (Low-Rank Adaptation) model to fine-tune the base model."
+                        },
+                        "response_format": {
+                            "title": "JSON Mode",
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "type": "string",
+                                    "enum": [
+                                        "json_object",
+                                        "json_schema"
+                                    ]
+                                },
+                                "json_schema": {}
+                            }
                         },
                         "raw": {
                             "type": "boolean",
@@ -89,10 +111,6 @@
                             "minimum": 0,
                             "maximum": 2,
                             "description": "Increases the likelihood of the model introducing new topics."
-                        },
-                        "lora": {
-                            "type": "string",
-                            "description": "Name of the LoRA (Low-Rank Adaptation) model to fine-tune the base model."
                         }
                     },
                     "required": [
@@ -114,7 +132,6 @@
                                     },
                                     "content": {
                                         "type": "string",
-                                        "maxLength": 131072,
                                         "description": "The content of the message as a string."
                                     }
                                 },
@@ -283,10 +300,29 @@
                                 ]
                             }
                         },
+                        "response_format": {
+                            "title": "JSON Mode",
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "type": "string",
+                                    "enum": [
+                                        "json_object",
+                                        "json_schema"
+                                    ]
+                                },
+                                "json_schema": {}
+                            }
+                        },
+                        "raw": {
+                            "type": "boolean",
+                            "default": false,
+                            "description": "If true, a chat template is not applied and you must adhere to the specific model's expected formatting."
+                        },
                         "stream": {
                             "type": "boolean",
                             "default": false,
-                            "description": "If true, the response will be streamed back incrementally."
+                            "description": "If true, the response will be streamed back incrementally using SSE, Server Sent Events."
                         },
                         "max_tokens": {
                             "type": "integer",
@@ -304,7 +340,7 @@
                             "type": "number",
                             "minimum": 0,
                             "maximum": 2,
-                            "description": "Controls the creativity of the AI's responses by adjusting how many possible words it considers. Lower values make outputs more predictable; higher values allow for more varied and creative responses."
+                            "description": "Adjusts the creativity of the AI's responses by controlling how many possible words it considers. Lower values make outputs more predictable; higher values allow for more varied and creative responses."
                         },
                         "top_k": {
                             "type": "integer",
@@ -347,11 +383,31 @@
             "oneOf": [
                 {
                     "type": "object",
-                    "contentType": "application/json",
                     "properties": {
                         "response": {
                             "type": "string",
                             "description": "The generated text response from the model"
+                        },
+                        "usage": {
+                            "type": "object",
+                            "description": "Usage statistics for the inference request",
+                            "properties": {
+                                "prompt_tokens": {
+                                    "type": "number",
+                                    "description": "Total number of tokens in input",
+                                    "default": 0
+                                },
+                                "completion_tokens": {
+                                    "type": "number",
+                                    "description": "Total number of tokens in output",
+                                    "default": 0
+                                },
+                                "total_tokens": {
+                                    "type": "number",
+                                    "description": "Total number of input and output tokens",
+                                    "default": 0
+                                }
+                            }
                         },
                         "tool_calls": {
                             "type": "array",
@@ -370,11 +426,13 @@
                                 }
                             }
                         }
-                    }
+                    },
+                    "required": [
+                        "response"
+                    ]
                 },
                 {
                     "type": "string",
-                    "contentType": "text/event-stream",
                     "format": "binary"
                 }
             ]

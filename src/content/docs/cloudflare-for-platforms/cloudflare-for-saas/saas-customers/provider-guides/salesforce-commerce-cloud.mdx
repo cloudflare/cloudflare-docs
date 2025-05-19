@@ -29,7 +29,9 @@ For additional detail about how traffic routes when O2O is enabled, refer to [Ho
 
 To enable O2O requires the following:
 
-1. Your SFCC environment must be configured as an "SFCC Proxy Zone". If you currently have an "SFCC Legacy Zone", you cannot enable O2O. More details on the different types of SFCC configurations can be found in the [Salesforce FAQ on SFCC Proxy Zones](https://help.salesforce.com/s/articleView?id=cc.b2c_ecdn_proxy_zone_faq.htm&type=5).
+1. You must configure your SFCC environment as an "SFCC Proxy Zone". If you currently have an "SFCC Legacy Zone", you cannot enable O2O.
+    - For more details on the different types of SFCC configurations, refer to the [Salesforce FAQ on SFCC Proxy Zones](https://help.salesforce.com/s/articleView?id=cc.b2c_ecdn_proxy_zone_faq.htm&type=5).
+    - For instructions on how to migrate your SFCC environment to an "SFCC Proxy Zone", refer to the [SFCC Legacy Zone to SFCC Proxy Zone migration guide](https://help.salesforce.com/s/articleView?id=cc.b2c_migrate_legacy_zone_to_proxy_zone.htm&type=5).
 2. Your own Cloudflare zone on an Enterprise plan.
 
 If you meet the above requirements, O2O can then be enabled per hostname. To enable O2O for a specific hostname within your Cloudflare zone, [create](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) a Proxied CNAME DNS record with a target of the CNAME provided by SFCC Business Manager, which is the dashboard used by SFCC customers to configure their storefront environment.

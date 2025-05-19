@@ -1,0 +1,15 @@
+---
+link: "/autorag/platform/release-note/"
+productName: AutoRAG
+productLink: "/autorag/"
+productArea: Developer platform
+productAreaLink: /workers/platform/changelog/platform/
+entries:
+  - publish_date: "2025-04-23"
+    title: Response streaming in AutoRAG binding added
+    description: |-
+      AutoRAG now supports response streaming in the `AI Search` method of the [Workers binding](/autorag/usage/workers-binding/), allowing you to stream results as they’re retrieved by setting `stream: true`.
+  - publish_date: "2025-04-07"
+    title: AutoRAG is now in open beta!
+    description: |-
+      AutoRAG allows developers to create fully-managed retrieval-augmented generation (RAG) pipelines powered by Cloudflare allowing developers to integrate context-aware AI into their applications without managing infrastructure. Get started today on the [Cloudflare Dashboard](https://dash.cloudflare.com/?to=/:account/ai/autorag).

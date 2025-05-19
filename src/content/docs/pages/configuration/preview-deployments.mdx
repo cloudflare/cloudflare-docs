@@ -1,6 +1,11 @@
 ---
 pcx_content_type: concept
 title: Preview deployments
+banner:
+  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
+  type: note
+  dismissible:
+    id: pages-migrate-to-workers
 ---
 
 Preview deployments allow you to preview new versions of your project without deploying it to production. To view preview deployments:
@@ -10,6 +15,8 @@ Preview deployments allow you to preview new versions of your project without de
 3. Select your project and find the deployment you would like to view.
 
 Every time you open a new pull request on your GitHub repository, Cloudflare Pages will create a unique preview URL, which will stay updated as you continue to push new commits to the branch. This is only true when pull requests originate from the repository itself.
+
+![GitHub Preview URLs](~/assets/images/pages/configuration/ghpreviewurls.png)
 
 For example, if you have a repository called `user-example` connected to Pages, this will give you a `user-example.pages.dev` subdomain. If `main` is your default branch, then any commits to the `main` branch will update your `user-example.pages.dev` content, as well as any [custom domains](/pages/configuration/custom-domains/) attached to the project.
 

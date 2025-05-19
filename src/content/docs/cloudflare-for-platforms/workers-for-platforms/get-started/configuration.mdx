@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { Render, PackageManagers } from "~/components";
+import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 ## Prerequisites:
 
@@ -102,7 +102,7 @@ Create your dynamic dispatch Worker. In this example, the dispatch Worker is cal
 	product="workers"
 	params={{
 		category: "hello-world",
-		type: "Hello World Worker",
+		type: "Worker only",
 		lang: "JavaScript",
 	}}
 />
@@ -113,9 +113,7 @@ Change to your project's directory:
 cd my-dispatcher
 ```
 
-Open the `wrangler.toml` file in your project directory, and add the dispatch namespace binding:
-
-import { WranglerConfig } from "~/components";
+Open the Wrangler file in your project directory, and add the dispatch namespace binding:
 
 <WranglerConfig>
 
@@ -137,6 +135,7 @@ export default {
 	},
 };
 ```
+
 This example shows a simple dynamic dispatch Worker that routes all requests to a single user Worker. For more advanced routing patterns, you could route based on hostname, path, custom metadata, or other request properties.
 
 Deploy your dynamic dispatch Worker:

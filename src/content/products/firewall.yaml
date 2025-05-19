@@ -5,6 +5,7 @@ product:
   url: /firewall/
   wrap: true
   group: Application security
+  show: false
 
 meta:
   title: Cloudflare Firewall Rules (deprecated) docs
@@ -17,7 +18,3 @@ resources:
   community: https://community.cloudflare.com/c/security/6
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/security/waf/firewall-rules
   learning_center: https://www.cloudflare.com/learning/ddos/glossary/web-application-firewall-waf/
-
-externals:
-  - title: Cloudflare homepage
-    url: https://cloudflare.com

@@ -5,6 +5,7 @@ sidebar:
   order: 9
   badge:
     text: Beta
+description: Learn how Speed Brain enhances web performance by prefetching likely next pages, improving metrics like LCP and TTFB.
 ---
 
 import { FeatureTable, TabItem, Tabs } from "~/components";
@@ -114,6 +115,6 @@ You can also configure Speed Brain using Terraform. For more details, refer to t
 
 - If origin server responses include the `Speculation-Rules` header, it will not be overridden.
 
-- Speed Brain will not work with restrictive [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src) configurations using `strict-dynamic` or `nonce-{hash}` attributes.
+- Speed Brain will not work with restrictive [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/script-src) configurations using `strict-dynamic` or `nonce-{hash}` attributes.
 
 - Currently, Speed Brain is not compatible with websites that use or rely on `pages.dev`.

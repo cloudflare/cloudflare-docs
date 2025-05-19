@@ -12,7 +12,3 @@ meta:
     world a given client is located, even if their true client IP address is
     obscured by our proxy systems.
   author: "@cloudflare"
-
-externals:
-  - title: Cloudflare home
-    url: https://www.cloudflare.com/

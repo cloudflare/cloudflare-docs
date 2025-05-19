@@ -1,0 +1,27 @@
+---
+title: Sources
+pcx_content_type: concept
+sidebar:
+  order: 1
+  group:
+    hideIndex: false
+---
+
+Pipelines let you ingest data from the following sources:
+* [HTTP Clients](/pipelines/build-with-pipelines/sources/http), with optional authentication and CORS settings
+* [Cloudflare Workers](/workers/), using the [Pipelines Workers API](/pipelines/build-with-pipelines/sources/workers-apis)
+
+Multiple sources can be active on a single pipeline simultaneously. For example, you can create a pipeline which accepts data from Workers and via HTTP. There is no limit to the number of source clients. Multiple Workers can be configured to send data to the same pipeline.
+
+Each pipeline can ingest up to 100 MB/s of data or accept up to 100,000 requests per second, aggregated across all sources.
+
+## Configuring allowed sources
+By default, ingestion via HTTP and from Workers is turned on. You can configure the allowed sources by using the `--source` flag while creating or updating a pipeline.
+
+For example, to create a pipeline which only accepts data via a Worker, you can run this command:
+```sh
+$ npx wrangler pipelines create [PIPELINE-NAME] --r2-bucket [R2-BUCKET-NAME] --source worker
+```
+
+## Accepted data formats
+Pipelines accept arrays of valid JSON objects. You can send multiple objects in a single request, provided the total data volume is within the [documented limits](/pipelines/platform/limits). Sending data in a different format will result in an error.

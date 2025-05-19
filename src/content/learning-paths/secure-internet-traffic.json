@@ -1,6 +1,6 @@
 {
 	"title": "Secure your Internet traffic and SaaS apps",
-	"path": "/learning-paths/secure-internet-traffic/",
+	"path": "/learning-paths/secure-internet-traffic/concepts/",
 	"priority": 2,
 	"description": "Provide your users and networks with a secure, performant, and flexible path to the Internet.",
 	"products": ["DNS", "Gateway", "CASB", "DLP", "Browser Isolation"],

@@ -10,17 +10,17 @@ head:
 description: Publish to a queue from within a Durable Object.
 ---
 
+import { WranglerConfig } from "~/components";
+
 The following example shows you how to write a Worker script to publish to [Cloudflare Queues](/queues/) from within a [Durable Object](/durable-objects/).
 
 Prerequisites:
 
 - A [queue created](/queues/get-started/#3-create-a-queue) via the Cloudflare dashboard or the [wrangler CLI](/workers/wrangler/install-and-update/).
-- A [configured **producer** binding](/queues/configuration/configure-queues/#producer) in the Cloudflare dashboard or `wrangler.toml` file.
+- A [configured **producer** binding](/queues/configuration/configure-queues/#producer-worker-configuration) in the Cloudflare dashboard or Wrangler file.
 - A [Durable Object namespace binding](/workers/wrangler/configuration/#durable-objects).
 
-Configure your `wrangler.toml` file as follows:
-
-import { WranglerConfig } from "~/components";
+Configure your Wrangler file as follows:
 
 <WranglerConfig>
 
@@ -38,7 +38,7 @@ bindings = [
 
 [[migrations]]
 tag = "v1"
-new_classes = ["YourDurableObject"]
+new_sqlite_classes = ["YourDurableObject"]
 ```
 
 </WranglerConfig>

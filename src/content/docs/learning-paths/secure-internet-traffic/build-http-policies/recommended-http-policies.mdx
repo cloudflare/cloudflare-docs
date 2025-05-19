@@ -3,121 +3,437 @@ title: Recommended HTTP policies
 pcx_content_type: learning-unit
 sidebar:
   order: 5
-
 ---
 
-import { Details, Render } from "~/components"
+import { Render, Tabs, TabItem } from "~/components";
 
 We recommend you add the following HTTP policies to build an Internet and SaaS app security strategy for your organization.
 
-
-<Details header="All-HTTP-Application-InspectBypass">
+## All-HTTP-Application-InspectBypass
 
 Bypass HTTP inspection for applications that use embedded certificates. This will help avoid any certificate pinning errors that may arise from an initial rollout.
 
-<Render file="gateway/policies/do-not-inspect-applications" product="cloudflare-one" />
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
+<Render
+	file="gateway/policies/do-not-inspect-applications"
+	product="cloudflare-one"
+/>
 
-</Details>
+</TabItem>
+<TabItem label="API">
 
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "All-HTTP-Application-InspectBypass",
+  "description": "Bypass HTTP inspection for applications that use embedded certificates",
+  "precedence": 0,
+  "enabled": true,
+  "action": "block",
+  "filters": [
+    "http"
+  ],
+  "traffic": "any(app.type.ids[*] in {16})"
+}'
+```
 
-<Details header="Android-HTTP-Application-InspectionBypass">
+</TabItem>
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "all_http_application_inspect_bypass" {
+  account_id  = var.cloudflare_account_id
+  name        = "All-HTTP-Application-InspectBypass"
+  description = "Bypass HTTP inspection for applications that use embedded certificates"
+  precedence  = 0
+  enabled     = true
+  action      = "block"
+  filters     = ["http"]
+  traffic     = "any(app.type.ids[*] in {16})"
+}
+```
+
+</TabItem>
+</Tabs>
+
+## Android-HTTP-Application-InspectionBypass
 
 Bypass HTTPS inspection for Android applications (such as Google Drive) that use certificate pinning, which is incompatible with Gateway inspection.
 
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
 | Selector                     | Operator | Value                             | Logic | Action         |
 | ---------------------------- | -------- | --------------------------------- | ----- | -------------- |
-| Application                  | in       | *Google Drive*                    | And   | Do Not Inspect |
-| Passed Device Posture Checks | in       | *OS Version Android (OS version)* |       |                |
+| Application                  | in       | _Google Drive_                    | And   | Do Not Inspect |
+| Passed Device Posture Checks | in       | _OS Version Android (OS version)_ |       |                |
 
+</TabItem>
+<TabItem label="API">
 
-</Details>
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "Android-HTTP-Application-InspectionBypass",
+  "description": "Bypass HTTPS inspection for Android applications with certificate pinning",
+  "precedence": 10,
+  "enabled": true,
+  "action": "off",
+  "filters": [
+    "http"
+  ],
+  "traffic": "any(app.ids[*] in {554})",
+  "device_posture": "any(device_posture.checks.passed[*] in {\"<ANDROID_VERSION_POSTURE_CHECK_UUID>\"})"
+}'
+```
 
+</TabItem>
+<TabItem label="Terraform">
 
-<Details header="All-HTTP-Domain-Inspection-Bypass">
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "android_http_application_inspection_bypass" {
+  account_id  = var.cloudflare_account_id
+  name        = "Android-HTTP-Application-InspectionBypass"
+  description = "Bypass HTTPS inspection for Android applications with certificate pinning"
+  precedence  = 10
+  enabled     = true
+  action      = "off"
+  filters     = ["http"]
+  traffic     = "any(app.ids[*] in {554})"
+  device_posture = "any(device_posture.checks.passed[*] in {\"${"$"}{cloudflare_zero_trust_list.android_version_posture_check.id}\"})"
+}
+```
+
+</TabItem>
+</Tabs>
+
+## All-HTTP-Domain-Inspection-Bypass
 
 Bypass HTTP inspection for a custom list of domains identified as incompatible with TLS inspection.
 
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
 | Selector | Operator | Value                    | Logic | Action         |
 | -------- | -------- | ------------------------ | ----- | -------------- |
-| Domain   | in list  | *DomainInspectionBypass* | Or    | Do Not Inspect |
-| Domain   | in list  | *Known Domains*          |       |                |
+| Domain   | in list  | _DomainInspectionBypass_ | Or    | Do Not Inspect |
+| Domain   | in list  | _Known Domains_          |       |                |
 
+</TabItem>
+<TabItem label="API">
 
-</Details>
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "All-HTTP-Domain-Inspection-Bypass",
+  "description": "Bypass HTTP inspection for a custom list of domains identified as incompatible with TLS inspection",
+  "precedence": 20,
+  "enabled": true,
+  "action": "off",
+  "filters": [
+    "http"
+  ],
+  "traffic": "any(http.conn.domains[*] in $<DOMAIN_INSPECTION_BYPASS_LIST_UUID>) or any(http.conn.domains[*] in $<KNOWN_DOMAINS_LIST_UUID>)"
+}'
+```
 
+</TabItem>
+<TabItem label="Terraform">
 
-<Details header="All-HTTP-SecurityRisks-Blocklist">
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "android_http_application_inspection_bypass" {
+  account_id  = var.cloudflare_account_id
+  name        = "All-HTTP-Domain-Inspection-Bypass"
+  description = "Bypass HTTP inspection for a custom list of domains identified as incompatible with TLS inspection"
+  precedence  = 20
+  enabled     = true
+  action      = "off"
+  filters     = ["http"]
+  traffic     = "any(http.conn.domains[*] in ${"$"}{cloudflare_zero_trust_list.domain_inspection_bypass_list.id}) or any(http.conn.domains[*] in ${"$"}{cloudflare_zero_trust_list.known_domains_list.id})"
+}
+```
+
+</TabItem>
+</Tabs>
+
+## All-HTTP-SecurityRisks-Blocklist
 
 <Render file="zero-trust/blocklist-security-categories" />
 
-| Selector       | Operator | Value                | Action |
-| -------------- | -------- | -------------------- | ------ |
-| Security Risks | in       | *All security risks* | Block  |
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
+| Selector            | Operator | Value                | Action |
+| ------------------- | -------- | -------------------- | ------ |
+| Security Categories | in       | _All security risks_ | Block  |
 
-</Details>
+</TabItem>
+<TabItem label="API">
 
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "All-HTTP-SecurityRisks-Blocklist",
+  "description": "Block security categories based on Cloudflare's threat intelligence",
+  "precedence": 30,
+  "enabled": true,
+  "action": "block",
+  "filters": [
+    "http"
+  ],
+  "traffic": "any(http.request.uri.security_category[*] in {68 178 80 83 176 175 117 131 134 151 153})"
+}'
+```
 
-<Details header="All-HTTP-ContentCategories-Blocklist">
+</TabItem>
+<TabItem label="Terraform">
 
-<Render file="zero-trust/blocklist-content-categories" params={{ one: "HTTP", two: "Questionable Content, Security Risks, Miscellaneous, Adult Themes, Gambling" }} />
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "all_http_security_risks_blocklist" {
+  account_id  = var.cloudflare_account_id
+  name        = "All-HTTP-SecurityRisks-Blocklist"
+  description = "Block security categories based on Cloudflare's threat intelligence"
+  precedence  = 30
+  enabled     = true
+  action      = "block"
+  filters     = ["http"]
+  traffic     = "any(http.request.uri.security_category[*] in {68 178 80 83 176 175 117 131 134 151 153})"
+}
+```
 
+</TabItem>
+</Tabs>
 
-</Details>
+## All-HTTP-ContentCategories-Blocklist
 
+<Render
+	file="zero-trust/content-categories-description"
+	params={{ policyType: "HTTP" }}
+/>
 
-<Details header="All-HTTP-DomainHost-Blocklist">
+<Render
+	file="gateway/policies/dash-plus-api/http/block-content-categories"
+	product="cloudflare-one"
+/>
 
-<Render file="zero-trust/blocklist-domain-host" params={{ one: "HTTP" }} />
+## All-HTTP-DomainHost-Blocklist
 
+<Render
+	file="zero-trust/blocklist-domain-host"
+	params={{ blocklistPolicyType: "HTTP" }}
+/>
 
-</Details>
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
+| Selector | Operator      | Value              | Logic | Action |
+| -------- | ------------- | ------------------ | ----- | ------ |
+| Domain   | in list       | _Domain Blocklist_ | Or    | Block  |
+| Host     | in list       | _Host Blocklist_   | Or    |        |
+| Host     | matches regex | `.*example\.com`   |       |        |
 
-<Details header="All-HTTP-Application-Blocklist">
+</TabItem>
+<TabItem label="API">
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "All-HTTP-DomainHost-Blocklist",
+  "description": "Block specific domains or hosts that are malicious or pose a threat to your organization",
+  "precedence": 50,
+  "enabled": true,
+  "action": "block",
+  "filters": [
+    "http"
+  ],
+  "traffic": "any(http.request.domains[*] in $<DOMAIN_BLOCKLIST_UUID>) or http.request.host in $<HOST_BLOCKLIST_UUID> or http.request.host matches \".*example\\.com\""
+}'
+```
+
+</TabItem>
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "all_http_domainhost_blocklist" {
+  account_id  = var.cloudflare_account_id
+  name        = "All-HTTP-DomainHost-Blocklist"
+  description = "Block specific domains or hosts that are malicious or pose a threat to your organization"
+  precedence  = 50
+  enabled     = true
+  action      = "block"
+  filters     = ["http"]
+  traffic     = "any(http.request.domains[*] in ${"$"}{cloudflare_zero_trust_list.domain_blocklist.id}) or http.request.host in ${"$"}{cloudflare_zero_trust_list.host_blocklist.id} or http.request.host matches \".*example\\.com\""
+}
+```
+
+</TabItem>
+</Tabs>
+
+## All-HTTP-Application-Blocklist
 
 <Render file="zero-trust/blocklist-application" />
 
+<Render
+	file="gateway/policies/dash-plus-api/http/block-applications"
+	product="cloudflare-one"
+/>
 
-</Details>
-
-
-<Details header="PrivilegedUsers-HTTP-Any-Isolate">
+## PrivilegedUsers-HTTP-Any-Isolate
 
 Isolate traffic for privileged users who regularly access critical systems or execute actions such as threat analysis and malware testing.
 
 Security teams often need to perform threat analysis or malware testing that could trigger malware detection. Likewise, privileged users could be the target of attackers trying to gain access to critical systems.
 
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
 | Selector         | Operator | Value              | Action  |
 | ---------------- | -------- | ------------------ | ------- |
-| User Group Names | in       | *Privileged Users* | Isolate |
+| User Group Names | in       | _Privileged Users_ | Isolate |
 
+</TabItem>
+<TabItem label="API">
 
-</Details>
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "PrivilegedUsers-HTTP-Any-Isolate",
+  "description": "Isolate traffic for privileged users who regularly access critical or testing systems",
+  "precedence": 70,
+  "enabled": true,
+  "action": "isolate",
+  "filters": [
+    "http"
+  ],
+  "identity": "any(identity.groups.name[*] in {\"Privileged Users\"})"
+}'
+```
 
+</TabItem>
+<TabItem label="Terraform">
 
-<Details header="Quarantined-Users-HTTP-Restricted-Access">
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "privileged_users_http_any_isolate" {
+  account_id  = var.cloudflare_account_id
+  name        = "PrivilegedUsers-HTTP-Any-Isolate"
+  description = "Isolate traffic for privileged users who regularly access critical or testing systems"
+  precedence  = 70
+  enabled     = true
+  action      = "isolate"
+  filters     = ["http"]
+  identity    = "any(identity.groups.name[*] in {\"Privileged Users\"})"
+}
+```
+
+</TabItem>
+</Tabs>
+
+## Quarantined-Users-HTTP-Restricted-Access
 
 <Render file="zero-trust/blocklist-restricted-users" />
 
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
 | Selector         | Operator    | Value                           | Logic | Action |
 | ---------------- | ----------- | ------------------------------- | ----- | ------ |
-| Destination IP   | not in list | *Quarantined-Users-IPAllowlist* | And   | Block  |
-| User Group Names | in          | *Quarantined Users*             |       |        |
+| Destination IP   | not in list | _Quarantined-Users-IPAllowlist_ | And   | Block  |
+| User Group Names | in          | _Quarantined Users_             |       |        |
 
+</TabItem>
+<TabItem label="API">
 
-</Details>
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "Quarantined-Users-HTTP-Restricted-Access",
+  "description": "Restrict access for users included in an identity provider (IdP) user group for risky users",
+  "precedence": 80,
+  "enabled": true,
+  "action": "block",
+  "filters": [
+    "http"
+  ],
+  "traffic": "not(any(http.conn.dst_ip[*] in $<QUARANTINED_USERS_IP_ALLOWLIST_UUID>))",
+  "identity": "any(identity.groups.name[*] in {\"Quarantined Users\"})"
+}'
+```
 
+</TabItem>
+<TabItem label="Terraform">
 
-<Details header="All-HTTP-Domain-Isolate">
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "quarantined_users_http_restricted_access" {
+  account_id  = var.cloudflare_account_id
+  name        = "Quarantined-Users-HTTP-Restricted-Access"
+  description = "Restrict access for users included in an identity provider (IdP) user group for risky users"
+  precedence  = 80
+  enabled     = true
+  action      = "block"
+  filters     = ["http"]
+  traffic     = "not(any(http.conn.dst_ip[*] in ${"$"}{cloudflare_zero_trust_list.quarantined_users_ip_allowlist.id}))"
+  identity    = "any(identity.groups.name[*] in {\"Quarantined Users\"})"
+}
+```
+
+</TabItem>
+</Tabs>
+
+## All-HTTP-Domain-Isolate
 
 Isolate high risk domains or create a custom list of known risky domains to avoid data exfiltration or malware infection. Ideally, your incident response teams can update the blocklist with an [API automation](/security-center/intel-apis/) to provide real-time threat protection.
 
-| Selector           | Operator | Value                              | Logic | Action  |
-| ------------------ | -------- | ---------------------------------- | ----- | ------- |
-| Content Categories | in       | *New Domain*, *Newly Seen Domains* | Or    | Isolate |
-| Domain             | in list  | *Domain Isolation*                 |       |         |
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
+| Selector           | Operator | Value                               | Logic | Action  |
+| ------------------ | -------- | ----------------------------------- | ----- | ------- |
+| Content Categories | in       | _New Domains_, _Newly Seen Domains_ | Or    | Isolate |
+| Domain             | in list  | _Domain Isolation_                  |       |         |
 
-</Details>
+</TabItem>
+<TabItem label="API">
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "All-HTTP-Domain-Isolate",
+  "description": "Isolate high risk domains or create a custom list of known risky domains to avoid data exfiltration or malware infection",
+  "precedence": 90,
+  "enabled": true,
+  "action": "isolate",
+  "filters": [
+    "http"
+  ],
+  "traffic": "any(http.request.uri.content_category[*] in {169 177}) or any(http.request.domains[*] in $<DOMAIN_ISOLATE_LIST_UUID>)"
+}'
+```
+
+</TabItem>
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "all_http_domain_isolate" {
+  account_id  = var.cloudflare_account_id
+  name        = "All-HTTP-Domain-Isolate"
+  description = "Isolate high risk domains or create a custom list of known risky domains to avoid data exfiltration or malware infection"
+  precedence  = 90
+  enabled     = true
+  action      = "isolate"
+  filters     = ["http"]
+  traffic     = "any(http.request.uri.content_category[*] in {169 177}) or any(http.request.domains[*] in ${"$"}{cloudflare_zero_trust_list.domain_isolate_list.id})"
+}
+```
+
+</TabItem>
+</Tabs>

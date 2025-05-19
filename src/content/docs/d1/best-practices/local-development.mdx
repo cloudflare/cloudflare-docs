@@ -5,6 +5,8 @@ sidebar:
   order: 8
 ---
 
+import { WranglerConfig } from "~/components";
+
 D1 has fully-featured support for local development, running the same version of D1 as Cloudflare runs globally. Local development uses [Wrangler](/workers/wrangler/install-and-update/), the command-line interface for Workers, to manage local development sessions and state.
 
 ## Start a local development session
@@ -52,13 +54,11 @@ To start a local development session:
    [b] open a browser, [d] open Devtools, [l] turn off local mode, [c] clear console, [x] to exit
    ```
 
-In this example, the Worker has access to local-only D1 database. The corresponding D1 binding in your `wrangler.toml` configuration file would resemble the following:
-
-import { WranglerConfig } from "~/components";
+In this example, the Worker has access to local-only D1 database. The corresponding D1 binding in your [Wrangler configuration file](/workers/wrangler/configuration/) would resemble the following:
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
+```toml
 [[d1_databases]]
 binding = "DB"
 database_name = "test-db"
@@ -73,21 +73,19 @@ Refer to the [`wrangler dev` documentation](/workers/wrangler/commands/#dev) to 
 
 ## Develop locally with Pages
 
-You can only develop against a _local_ D1 database when using [Cloudflare Pages](/pages/) by creating a minimal `wrangler.toml` in the root of your Pages project. This can be useful when creating schemas, seeding data or otherwise managing a D1 database directly, without adding to your application logic.
+You can only develop against a _local_ D1 database when using [Cloudflare Pages](/pages/) by creating a minimal [Wrangler configuration file](/workers/wrangler/configuration/) in the root of your Pages project. This can be useful when creating schemas, seeding data or otherwise managing a D1 database directly, without adding to your application logic.
 
 :::caution[Local development for remote databases]
 
 It is currently not possible to develop against a _remote_ D1 database when using [Cloudflare Pages](/pages/).
 :::
 
-Your `wrangler.toml` should resemble the following:
-
-
+Your [Wrangler configuration file](/workers/wrangler/configuration/) should resemble the following:
 
 <WranglerConfig>
 
 ```toml
-# If you are only using Pages + D1, you only need the below in your wrangler.toml to interact with D1 locally.
+# If you are only using Pages + D1, you only need the below in your Wrangler config file to interact with D1 locally.
 [[d1_databases]]
 binding = "DB" # Should match preview_database_id
 database_name = "YOUR_DATABASE_NAME"
@@ -160,11 +158,9 @@ console.log(results);
 
 ### `unstable_dev`
 
-Wrangler exposes an [`unstable_dev()`](/workers/wrangler/api/) that allows you to run a local HTTP server for testing Workers and D1. Run [migrations](/d1/reference/migrations/) against a local database by setting a `preview_database_id` in your `wrangler.toml` configuration.
+Wrangler exposes an [`unstable_dev()`](/workers/wrangler/api/) that allows you to run a local HTTP server for testing Workers and D1. Run [migrations](/d1/reference/migrations/) against a local database by setting a `preview_database_id` in your Wrangler configuration.
 
-Given the below `wrangler.toml` configuration:
-
-
+Given the below Wrangler configuration:
 
 <WranglerConfig>
 

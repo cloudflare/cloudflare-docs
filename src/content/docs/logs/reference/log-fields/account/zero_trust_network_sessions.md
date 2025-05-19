@@ -91,7 +91,7 @@ Name of the client device which initiated the network session, if applicable, (f
 
 Type: `string`
 
-The name of the Cloudflare colo from which traffic egressed to the origin.
+The name of the Cloudflare data center from which traffic egressed to the origin.
 
 ## EgressIP
 
@@ -127,7 +127,7 @@ Email address associated with the user identity which initiated the network sess
 
 Type: `string`
 
-The name of the Cloudflare colo to which traffic ingressed.
+The name of the Cloudflare data center to which traffic ingressed.
 
 ## Offramp
 
@@ -182,6 +182,12 @@ TLS protocol version used in the connection between Cloudflare and the origin.
 Type: `string`
 
 Network protocol used for this network session. <br />Possible values are <em>TCP</em> \| <em>UDP</em> \| <em>ICMP</em> \| <em>ICMPV6</em>.
+
+## RegistrationID
+
+Type: `string`
+
+Identifier of the client registration which initiated the network session, if applicable (for example, WARP Registration ID).
 
 ## RuleEvaluationDurationMs
 

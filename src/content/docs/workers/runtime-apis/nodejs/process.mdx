@@ -26,7 +26,10 @@ nextTick(() => {
 
 ## `process.env`
 
-In the Node.js implementation of `process.env`, the `env` object is a copy of the environment variables at the time the process was started. In the Workers implementation, there is no process-level environment, so `env` is an empty object. You can still set and get values from `env`, and those will be globally persistent for all Workers running in the same isolate and context (for example, the same Workers entry point).
+In the Node.js implementation of `process.env`, the `env` object is a copy of the environment variables at the time the process was started. In the Workers implementation, there is no process-level environment, so by default `env` is an empty object. You can still set and get values from `env`, and those will be globally persistent for all Workers running in the same isolate and context (for example, the same Workers entry point).
+
+When [Node.js compatability](/workers/runtime-apis/nodejs/) is turned on and the [`nodejs_compat_populate_process_env`](/workers/configuration/compatibility-flags/#enable-auto-populating-processenv) compatability flag is set, `process.env` will contain any [environment variables](/workers/configuration/environment-variables/),
+[secrets](/workers/configuration/secrets/), or [version metadata](/workers/runtime-apis/bindings/version-metadata/) metadata that has been configured on your Worker.
 
 ### Relationship to per-request `env` argument in `fetch()` handlers
 

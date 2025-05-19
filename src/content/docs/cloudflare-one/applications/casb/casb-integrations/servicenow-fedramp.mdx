@@ -1,0 +1,23 @@
+---
+pcx_content_type: reference
+title: ServiceNow (FedRAMP)
+rss: file
+---
+
+import { Render } from "~/components";
+
+<Render
+	file="casb/fedramp-availability"
+	params={{
+		integrationName: "ServiceNow (FedRAMP)",
+	}}
+/>
+
+<Render
+	file="casb/servicenow-integration"
+	params={{
+		integrationName: "ServiceNow (FedRAMP)",
+		environmentName: "ServiceNow (FedRAMP) instance",
+		slugifiedName: "servicenow-fedramp",
+	}}
+/>

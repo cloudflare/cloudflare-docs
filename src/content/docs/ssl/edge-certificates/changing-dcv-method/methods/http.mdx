@@ -25,13 +25,11 @@ If you encounter issues with HTTP DCV, refer to the [troubleshooting guide](/ssl
 
 ## Limitations
 
-HTTP DCV is only available for [proxied domains](/dns/manage-dns-records/reference/proxied-dns-records/).
+HTTP DCV is only available for [proxied domains](/dns/proxy-status/). It is possible to manually add the DCV token to the `.well-known/pki-validation/` directory on your origin web server to pre-validate your certificates.
 
-HTTP DCV validation also does not work for wildcard certificates.
+HTTP DCV validation does not work for wildcard certificates. If you want to use wildcard certificates, use [TXT validation](/ssl/edge-certificates/changing-dcv-method/methods/txt/).
 
-If you want to use wildcard certificates or pre-validate your certificate — either to avoid downtime or prevent any issuance errors — use [TXT validation](/ssl/edge-certificates/changing-dcv-method/methods/txt/).
-
-Based on your chosen Certificate Authority, you may also not be able to use HTTP verification with [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/).
+Based on your chosen certificate authority (CA), you may also not be able to use HTTP verification with [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/).
 
 ## Setup
 
@@ -47,9 +45,9 @@ To make sure your domain does not accidentally block HTTP DCV, review your Cloud
 
 ### Complete DCV
 
-Your HTTP token will be available for the Certificate Authority as soon as you finish your [partial domain setup](/dns/zone-setups/partial-setup/setup/#3-add-dns-records).
+Your HTTP token will be available for the certificate authority as soon as you finish your [partial domain setup](/dns/zone-setups/partial-setup/setup/#3-add-dns-records).
 
-This means that you need to add a CNAME record to Cloudflare in your authoritative DNS and create [proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/) for your hostname within Cloudflare.
+This means that you need to add a CNAME record to Cloudflare in your authoritative DNS and create [proxied DNS records](/dns/proxy-status/) for your hostname within Cloudflare.
 
 This process may involve a few minutes of downtime.
 

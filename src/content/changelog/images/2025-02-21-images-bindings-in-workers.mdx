@@ -1,0 +1,47 @@
+---
+title: "Bind the Images API to your Worker"
+description: >
+  You can now interact with the Images API directly in your Worker with Image Bindings.
+date: 2025-02-24T12:00:00Z
+---
+
+import { WranglerConfig } from "~/components";
+
+You can now [interact with the Images API](/images/transform-images/bindings/) directly in your Worker.
+
+This allows more fine-grained control over transformation request flows and cache behavior. For example, you can resize, manipulate, and overlay images without requiring them to be accessible through a URL.
+
+The Images binding can be configured in the Cloudflare dashboard for your Worker or in the `wrangler.toml` file in your project's directory:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"images": {
+		"binding": "IMAGES", // i.e. available in your Worker on env.IMAGES
+	},
+}
+```
+
+</WranglerConfig>
+
+Within your Worker code, you can interact with this binding by using `env.IMAGES`.
+
+Here's how you can rotate, resize, and blur an image, then output the image as AVIF:
+
+```ts
+const info = await env.IMAGES.info(stream);
+// stream contains a valid image, and width/height is available on the info object
+
+const response = (
+	await env.IMAGES.input(stream)
+		.transform({ rotate: 90 })
+		.transform({ width: 128 })
+		.transform({ blur: 20 })
+		.output({ format: "image/avif" })
+).response();
+
+return response;
+```
+
+For more information, refer to [Images Bindings](/images/transform-images/bindings/).

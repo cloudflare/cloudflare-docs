@@ -120,7 +120,7 @@ Decodes a Base64-encoded String specified in `source`.
 For example, with the following HTTP request header: `client_id: MTIzYWJj`, `(any(decode_base64(http.request.headers["client_id"][*])[*] eq "123abc"))` would return `true`.
 
 :::caution
-You can only use the `decode_base64()` function in [header modification rules](/rules/transform/), [custom rules](/waf/custom-rules/), and [rate limiting rules](/waf/rate-limiting-rules/).
+You can only use the `decode_base64()` function in [header transform rules](/rules/transform/), [custom rules](/waf/custom-rules/), and [rate limiting rules](/waf/rate-limiting-rules/).
 :::
 
 ### `ends_with`
@@ -135,11 +135,11 @@ For example, if `http.request.uri.path` is `"/welcome.html"`, then `ends_with(ht
 ### `len`
 
 {/* prettier-ignore */}
-<code>len(<Type text="String | Bytes" />)</code>: <Type text="Integer" />
+<code>len(<Type text="String | Bytes | Array" />)</code>: <Type text="Integer" />
 
-Returns the byte length of a String or Bytes field.
+Returns the byte length of a String or Bytes value, or the number of elements in an array.
 
-For example, if `http.host` is `"example.com"`, then `len(http.host)` will return `11`.
+For example, if the value of `http.host` is `"example.com"`, then `len(http.host)` will return `11`.
 
 ### `lookup_json_integer`
 
@@ -347,6 +347,9 @@ url_decode("%2520", "r")   will return " "
 
 // Using url_decode() with the any() function:
 any(url_decode(http.request.body.form.values[*])[*] contains "an xss attack")
+
+// Using the u option to match a specific alphabet
+url_decode(http.request.uri.path) matches "(?u)\p{Hangul}+"
 ```
 
 ### `uuidv4`

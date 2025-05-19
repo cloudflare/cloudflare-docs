@@ -9,7 +9,7 @@ head:
 
 If you encounter issues [adding a domain](/fundamentals/setup/manage-domains/add-site/) to Cloudflare, follow these troubleshooting steps.
 
-## 1. Disable DNSSEC
+## Disable DNSSEC
 
 Cloudflare cannot provide authoritative DNS resolution for a domain — a [full setup domain](/dns/zone-setups/full-setup/) — when **DNSSEC** is enabled at your domain registrar.
 
@@ -23,7 +23,7 @@ If you experience these issues, refer to [Configuring DNSSEC](/dns/dnssec) and [
 
 ---
 
-## 2. Register the domain
+## Register the domain
 
 If the issue is with your registrar, you may receive the following error messages:
 
@@ -39,7 +39,7 @@ If you receive these error messages, make sure that:
 
 ---
 
-## 3. Resolve DNS for apex domain
+## Resolve DNS for apex domain
 
 Before a domain can be added to Cloudflare, the domain must return `NS` records for valid, working nameservers. `NS` records can be checked via third-party online tools such as [https://www.whatsmydns.net](https://www.whatsmydns.net/) or via a command-line terminal using a dig command:
 
@@ -69,7 +69,7 @@ ns3.cloudflare.com. dns.cloudflare.com. 2029202248 10000 2400 604800 300
 
 ---
 
-## 4. Check if the domain is restricted at Cloudflare
+## Check if the domain is restricted at Cloudflare
 
 If Cloudflare has temporary or permanent restrictions on a domain, you will receive the following errors:
 
@@ -77,13 +77,35 @@ If Cloudflare has temporary or permanent restrictions on a domain, you will rece
   - **Message**: `Error with Cloudflare request: [1105] This zone is temporarily restricted and cannot be added to Cloudflare at this time, please contact Cloudflare Support.`
   - **Cause**: We have seen too many attempts to add a domain to Cloudflare
   - **Resolution**: Wait 3 hours before attempting to re-add the domain to Cloudflare. Support cannot speed up this process.
-- \_**Error 1093 or 1116**
+- **Error 1093 or 1116**
   - **Message**: `This zone cannot be added to Cloudflare at this time, please contact Cloudflare Support. (Code: 1093)`
   - **Cause**: You may have entered a subdomain (`www.example.com`) instead of the apex domain (also known as "root domain", e.g. `example.com`).
   - **Resolution**: Verify that you are entering the apex domain. If you are and still experience issues, contact [Cloudflare Support](/support/contacting-cloudflare-support/).
-- \_**Error 1097**
+- _**Error 1097**
   - **Message**: `This web property cannot be added to Cloudflare at this time. If you are an Enterprise customer, contact your Customer Success Manager. Otherwise, email abusereply@cloudflare.com with a detailed explanation of your association with this zone. (Code: 1097)`
   - **Resolution**: Contact [abusereply@cloudflare.com](mailto:abusereply@cloudflare.com) with a detailed explanation of your association with this zone.
 - **Error: Cannot be found** OR **`<your domain>` is not a registered domain (code: 1049)**
   - This can happen if the domain has not been registered yet. Some domains, like `.gov` domains, have special requirements that require the domain be added first.
   - **Resolution:** Please contact [Cloudflare Support](/support/contacting-cloudflare-support/) if you require assistance adding a `.gov` and/or other domains that require manual registration.
+
+---
+
+## Contact the zone owner in case of zone hold error
+
+Enterprise customers can use the [zone hold](/fundamentals/setup/account/account-security/zone-holds/) feature to prevent domains to be added in any other account.
+If you get the following error when adding your domain, it means that a zone hold is active:
+
+```
+The zone name provided is subject to a hold which disallows the creation of this zone. 
+Please contact the owner of the Cloudflare account that manages this domain to have this hold removed.
+```
+
+In this case you'll need to remove the zone hold if you own the Cloudflare account in which the zone is active, or contact the owner of the Cloudflare account which has the zone active.
+
+If you are not the owner of the Cloudflare account that has the hold on the zone, using an online WHOIS tool might help you finding the owner of a website.
+
+See this [external WHOIS tool](https://www.godaddy.com/whois) or this [other external tool](https://www.whois.com/whois/).
+
+The owner might be your hosting provider, or a SaaS service provider.
+
+You can also use the [Cloudflare Forgot Email?](https://dash.cloudflare.com/forgot-email) page, and check the documentation related to the [Forgot Email? feature](/fundamentals/setup/account/account-security/login-and-account-issues/#forgot-your-email).

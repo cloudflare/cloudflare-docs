@@ -13,7 +13,11 @@ With the [`aws`](https://docs.aws.amazon.com/cli/latest/userguide/getting-starte
 :::note[Compatibility]
 Client versions `2.23.0` and `1.37.0` introduced a modification to the default checksum behavior from the client that is currently incompatible with R2 APIs.
 
-To mitigate, users can use `2.22.35` or `1.36.40` as the documented overrides do not work consistently for all subcommands.
+To mitigate, users can use `2.22.35` or `1.36.40`, or alternatively, add the CRC32 checksum flag to the cli command:
+
+```sh
+aws s3api put-object --bucket sdk-example --key sdk.png --body file/path --checksum-algorithm CRC32
+```
 
 :::
 

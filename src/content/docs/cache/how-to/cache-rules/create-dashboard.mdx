@@ -8,6 +8,8 @@ head:
     content: Create a cache rule in the dashboard
 ---
 
+import { Render } from "~/components";
+
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2.  Go to **Rules** > **Overview**.
 3.  Next to **Cache Rules**, select **Create rule**.
@@ -41,3 +43,5 @@ head:
 11. Under **Place at**, from the dropdown, you can select the order of your rule. From the main page, you can also change the order of the rules you have created.
 
 12. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
+
+    <Render file="rules-creation-dash-dns-popup" product="rules" />

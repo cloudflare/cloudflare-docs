@@ -1,0 +1,145 @@
+---
+type: example
+summary: Cache data or API responses in Workers KV to improve application performance
+tags:
+  - KV
+pcx_content_type: configuration
+title: Cache data with Workers KV
+sidebar:
+  order: 5
+description: Example of how to use Workers KV to build a distributed application configuration store.
+---
+
+import { Render, PackageManagers, Tabs, TabItem } from "~/components";
+
+Workers KV can be used as a persistent, single, global cache accessible from Cloudflare Workers to speed up your application.
+Data cached in Workers KV is accessible from all other Cloudflare locations as well, and persists until expiry or deletion.
+
+After fetching data from external resources in your Workers application, you can write the data to Workers KV.
+On subsequent Worker requests (in the same region or in other regions), you can read the cached data from Workers KV instead of calling the external API.
+This improves your Worker application's performance and resilience while reducing load on external resources.
+
+This example shows how you can cache data in Workers KV and read cached data from Workers KV in a Worker application.
+
+:::note[Note]
+
+You can also cache data in Workers with the [Cache API](/workers/runtime-apis/cache/). With the Cache API,
+the contents of the cache do not replicate outside of the originating data center and the cache is ephemeral (can be evicted).
+
+With Workers KV, the data is persisted by default to [central stores](/kv/concepts/how-kv-works/) (or can be set to [expire](/kv/api/write-key-value-pairs/#expiring-keys), and can be accessed from other Cloudflare locations.
+:::
+
+## Cache data in Workers KV from your Worker application
+
+In the following `index.ts` file, the Worker fetches data from an external server and caches the response in Workers KV. If the data is already cached in Workers KV, the Worker reads the cached data from Workers KV instead of calling the external API.
+
+<Tabs>
+<TabItem label="index.ts">
+```js title="index.ts" collapse={42-1000}
+interface Env {
+  CACHE_KV: KVNamespace;
+}
+
+export default {
+  async fetch(request, env, ctx): Promise<Response> {
+
+    const EXPIRATION_TTL = 60; // Cache expiration in seconds
+    const url = 'https://example.com';
+    const cacheKey = "cache-json-example";
+
+    // Try to get data from KV cache first
+    let data = await env.CACHE_KV.get(cacheKey, { type: 'json' });
+    let fromCache = true;
+
+    // If data is not in cache, fetch it from example.com
+    if (!data) {
+      console.log('Cache miss. Fetching fresh data from example.com');
+      fromCache = false;
+
+    		// In this example, we are fetching HTML content but it can also be API responses or any other data
+      const response = await fetch(url);
+    		const htmlData = await response.text();
+
+    		// In this example, we are converting HTML to JSON to demonstrate caching JSON data with Workers KV
+    		// You could cache any type of data, or even cache the HTML data directly
+    		data = helperConvertToJSON(htmlData);
+    		// The expirationTtl option is used to set the expiration time for the cache entry (in seconds), otherwise it will be stored indefinitely
+    		await env.CACHE_KV.put(cacheKey, JSON.stringify(data), { expirationTtl: EXPIRATION_TTL });
+    }
+
+    // Return the appropriate response format
+    	return new Response(JSON.stringify({
+    		data,
+    		fromCache
+    	}), {
+    		headers: { 'Content-Type': 'application/json' }
+    	});
+
+}
+} satisfies ExportedHandler<Env>;
+
+// Helper function to convert HTML to JSON
+function helperConvertToJSON(html: string) {
+// Parse HTML and extract relevant data
+const title = helperExtractTitle(html);
+const content = helperExtractContent(html);
+const lastUpdated = new Date().toISOString();
+
+    return { title, content, lastUpdated };
+
+}
+
+// Helper function to extract title from HTML
+function helperExtractTitle(html: string) {
+const titleMatch = html.match(/<title>(.\*?)<\/title>/i);
+return titleMatch ? titleMatch[1] : 'No title found';
+}
+
+// Helper function to extract content from HTML
+function helperExtractContent(html: string) {
+const bodyMatch = html.match(/<body>(.\*?)<\/body>/is);
+if (!bodyMatch) return 'No content found';
+
+    // Strip HTML tags for a simple text representation
+    const textContent = bodyMatch[1].replace(/<[^>]*>/g, ' ')
+    	.replace(/\s+/g, ' ')
+    	.trim();
+
+    return textContent;
+
+}
+
+````
+</TabItem>
+<TabItem label="wrangler.jsonc">
+```json
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "<ENTER_WORKER_NAME>",
+	"main": "src/index.ts",
+	"compatibility_date": "2025-03-03",
+	"observability": {
+		"enabled": true
+	},
+	"kv_namespaces": [
+		{
+			"binding": "CACHE_KV",
+			"id": "<YOUR_BINDING_ID>"
+		}
+	]
+}
+````
+
+</TabItem>
+</Tabs>
+
+This code snippet demonstrates how to read and update cached data in Workers KV from your Worker.
+If the data is not in the Workers KV cache, the Worker fetches the data from an external server and caches it in Workers KV.
+
+In this example, we convert HTML to JSON to demonstrate how to cache JSON data with Workers KV, but any type of data
+can be cached in Workers KV. For instance, you could cache API responses, HTML content, or any other data that you want to persist across requests.
+
+## Related resources
+
+- [Rust support in Workers](/workers/languages/rust/).
+- [Using KV in Workers](/kv/get-started/).

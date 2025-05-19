@@ -20,6 +20,12 @@ description: Set common security headers (X-XSS-Protection, X-Frame-Options,
   Strict-Transport-Security, Content-Security-Policy).
 ---
 
+If you want to get started quickly, click on the button below.
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/docs-examples/tree/main/workers/security-headers)
+
+This creates a repository in your GitHub account and deploys the application to Cloudflare Workers.
+
 import { TabItem, Tabs } from "~/components";
 
 <Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
@@ -31,7 +37,7 @@ export default {
 			/*
     Secure your application with Content-Security-Policy headers.
     Enabling these headers will permit content from a trusted domain and all its subdomains.
-    @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
+    @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy
     "Content-Security-Policy": "default-src 'self' example.com *.example.com",
     */
 			/*
@@ -46,17 +52,17 @@ export default {
     */
 			/*
     X-XSS-Protection header prevents a page from loading if an XSS attack is detected.
-    @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection
+    @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-XSS-Protection
     */
 			"X-XSS-Protection": "0",
 			/*
     X-Frame-Options header prevents click-jacking attacks.
-    @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options
+    @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Frame-Options
     */
 			"X-Frame-Options": "DENY",
 			/*
     X-Content-Type-Options header prevents MIME-sniffing.
-    @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options
+    @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Content-Type-Options
     */
 			"X-Content-Type-Options": "nosniff",
 			"Referrer-Policy": "strict-origin-when-cross-origin",
@@ -119,7 +125,7 @@ export default {
 			/*
     Secure your application with Content-Security-Policy headers.
     Enabling these headers will permit content from a trusted domain and all its subdomains.
-    @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
+    @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy
     "Content-Security-Policy": "default-src 'self' example.com *.example.com",
     */
 			/*
@@ -134,17 +140,17 @@ export default {
     */
 			/*
     X-XSS-Protection header prevents a page from loading if an XSS attack is detected.
-    @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection
+    @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-XSS-Protection
     */
 			"X-XSS-Protection": "0",
 			/*
     X-Frame-Options header prevents click-jacking attacks.
-    @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options
+    @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Frame-Options
     */
 			"X-Frame-Options": "DENY",
 			/*
     X-Content-Type-Options header prevents MIME-sniffing.
-    @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options
+    @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Content-Type-Options
     */
 			"X-Content-Type-Options": "nosniff",
 			"Referrer-Policy": "strict-origin-when-cross-origin",
@@ -201,13 +207,13 @@ export default {
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py
-from js import Response, fetch, Headers
+from workers import Response, fetch
 
 async def on_fetch(request):
     default_security_headers = {
         # Secure your application with Content-Security-Policy headers.
         #Enabling these headers will permit content from a trusted domain and all its subdomains.
-        #@see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
+        #@see https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy
         "Content-Security-Policy": "default-src 'self' example.com *.example.com",
         #You can also set Strict-Transport-Security headers.
         #These are not automatically set because your website might get added to Chrome's HSTS preload list.
@@ -216,13 +222,13 @@ async def on_fetch(request):
         #Permissions-Policy header provides the ability to allow or deny the use of browser features, such as opting out of FLoC - which you can use below:
         "Permissions-Policy": "interest-cohort=()",
         #X-XSS-Protection header prevents a page from loading if an XSS attack is detected.
-        #@see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection
+        #@see https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-XSS-Protection
         "X-XSS-Protection": "0",
         #X-Frame-Options header prevents click-jacking attacks.
-        #@see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options
+        #@see https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Frame-Options
         "X-Frame-Options": "DENY",
         #X-Content-Type-Options header prevents MIME-sniffing.
-        #@see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options
+        #@see https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Content-Type-Options
         "X-Content-Type-Options": "nosniff",
         "Referrer-Policy": "strict-origin-when-cross-origin",
         "Cross-Origin-Embedder-Policy": 'require-corp; report-to="default";',
@@ -232,23 +238,23 @@ async def on_fetch(request):
     blocked_headers = ["Public-Key-Pins", "X-Powered-By" ,"X-AspNet-Version"]
 
     res = await fetch(request)
-    new_headers = Headers.new(res.headers)
+    new_headers = res.headers
 
     # This sets the headers for HTML responses
     if "text/html" in new_headers["Content-Type"]:
-        return Response.new(res.body, status=res.status, statusText=res.statusText, headers=new_headers)
+        return Response(res.body, status=res.status, statusText=res.statusText, headers=new_headers)
 
     for name in default_security_headers:
-        new_headers.set(name, default_security_headers[name])
+        new_headers[name] = default_security_headers[name]
 
     for name in blocked_headers:
-        new_headers.delete(name)
+        del new_headers["name"]
 
     tls = request.cf.tlsVersion
 
     if not tls in ("TLSv1.2", "TLSv1.3"):
-        return Response.new("You need to use TLS version 1.2 or higher.", status=400)
-    return Response.new(res.body, status=res.status, statusText=res.statusText, headers=new_headers)
+        return Response("You need to use TLS version 1.2 or higher.", status=400)
+    return Response(res.body, status=res.status, statusText=res.statusText, headers=new_headers)
 ```
 
 </TabItem> <TabItem label="Rust" icon="seti:rust">
@@ -261,7 +267,7 @@ async fn fetch(req: Request, _env: Env, _ctx: Context) -> Result<Response> {
     let default_security_headers = HashMap::from([
         //Secure your application with Content-Security-Policy headers.
         //Enabling these headers will permit content from a trusted domain and all its subdomains.
-        //@see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
+        //@see https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy
         (
             "Content-Security-Policy",
             "default-src 'self' example.com *.example.com",
@@ -276,13 +282,13 @@ async fn fetch(req: Request, _env: Env, _ctx: Context) -> Result<Response> {
         //Permissions-Policy header provides the ability to allow or deny the use of browser features, such as opting out of FLoC - which you can use below:
         ("Permissions-Policy", "interest-cohort=()"),
         //X-XSS-Protection header prevents a page from loading if an XSS attack is detected.
-        //@see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection
+        //@see https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-XSS-Protection
         ("X-XSS-Protection", "0"),
         //X-Frame-Options header prevents click-jacking attacks.
-        //@see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options
+        //@see https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Frame-Options
         ("X-Frame-Options", "DENY"),
         //X-Content-Type-Options header prevents MIME-sniffing.
-        //@see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options
+        //@see https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Content-Type-Options
         ("X-Content-Type-Options", "nosniff"),
         ("Referrer-Policy", "strict-origin-when-cross-origin"),
         (
@@ -320,6 +326,25 @@ async fn fetch(req: Request, _env: Env, _ctx: Context) -> Result<Response> {
     Ok(Response::from_body(res.body().clone())?
         .with_headers(new_headers)
         .with_status(res.status_code()))
+
 }
-```
+
+````
+</TabItem> <TabItem label="Hono" icon="seti:typescript">
+
+```ts
+import { Hono } from 'hono';
+import { secureHeaders } from 'hono/secure-headers';
+
+const app = new Hono();
+app.use(secureHeaders());
+
+// Handle all other requests by passing through to origin
+app.all('*', async (c) => {
+  return fetch(c.req.raw);
+});
+
+export default app;
+````
+
 </TabItem> </Tabs>

@@ -2,16 +2,47 @@
 pcx_content_type: concept
 title: Proxy
 sidebar:
-  order: 14
+  order: 12
 ---
 
 import { Badge } from "~/components";
 
-You can forward [HTTP](/cloudflare-one/policies/gateway/initial-setup/http/) and [network](/cloudflare-one/policies/gateway/initial-setup/network/) traffic to Gateway for logging and filtering. Gateway can proxy both outbound traffic and traffic directed to resources connected via a Cloudflare Tunnel, GRE tunnel, or IPsec tunnel.
+You can forward [HTTP](/cloudflare-one/policies/gateway/initial-setup/http/) and [network](/cloudflare-one/policies/gateway/initial-setup/network/) traffic to Gateway for logging and filtering. Gateway can proxy both outbound traffic and traffic directed to resources connected via a Cloudflare Tunnel, GRE tunnel, or IPsec tunnel. When a user connects to the Gateway proxy, Gateway will accept the connection and establish a new, separate connection to the origin server.
 
 The Gateway proxy is required for filtering HTTP and network traffic via the WARP client in Gateway with WARP mode. To proxy HTTP traffic without deploying the WARP client, you can configure [PAC files](/cloudflare-one/connections/connect-devices/agentless/pac-files/) on your devices.
 
-## Proxy protocols
+## Proxy algorithm
+
+Gateway uses the [Happy Eyeballs algorithm](https://datatracker.ietf.org/doc/html/rfc6555) to proxy traffic in the following order:
+
+1. The user's browser initiates the TCP handshake by sending Gateway a TCP SYN segment.
+2. Gateway sends a SYN segment to the origin server.
+3. If the origin server sends a SYN-ACK segment back, Gateway establishes separate TCP connections between the user and Gateway and between Gateway and the origin server.
+4. Gateway inspects and filters traffic received from the user.
+5. If the traffic passes inspection, Gateway proxies traffic bidirectionally between the user and the origin server.
+
+```mermaid
+flowchart TD
+    %% Accessibility
+    accTitle: How Gateway proxy works
+    accDescr: Flowchart describing how the Gateway proxy uses the Happy Eyeballs algorithm to establish TCP connections and proxy user traffic.
+
+    %% Flowchart
+    A[User's device sends TCP SYN to Gateway] --> B[Gateway sends TCP SYN to origin server]
+    B --> C{{Origin server responds with TCP SYN-ACK?}}
+    C -->|Yes| E[TCP handshakes completed]
+    C -->|No| D[Connection fails]
+    E --> F{{Connection allowed?}}
+    F -->|Yes| G[Gateway proxies traffic bidirectionally]
+    F -->|No| H[Connection blocked by firewall policies]
+
+    %% Styling
+    style D stroke:#D50000
+    style G stroke:#00C853
+    style H stroke:#D50000
+```
+
+## Supported protocols
 
 Gateway supports proxying TCP, UDP, and ICMP traffic.
 

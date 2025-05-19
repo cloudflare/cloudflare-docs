@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { Render, PackageManagers } from "~/components";
+import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 To test your [Dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dynamic-dispatch-worker), [user Worker](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#user-workers) and [Outbound Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) before deploying to production, you can use [Wrangler](/workers/wrangler) for development and testing.
 
@@ -27,7 +27,7 @@ Support for Workers for Platforms with `wrangler dev` in local mode is experimen
 	product="workers"
 	params={{
 		category: "hello-world",
-		type: "Hello World Worker",
+		type: "Worker only",
 		lang: "JavaScript",
 	}}
 />
@@ -52,9 +52,7 @@ export default {
 };
 ```
 
-Update the `wrangler.toml` file for customer-worker-1 and add the dispatch namespace:
-
-import { WranglerConfig } from "~/components";
+Update the Wrangler file for customer-worker-1 and add the dispatch namespace:
 
 <WranglerConfig>
 
@@ -79,7 +77,7 @@ dispatch_namespace = "my-namespace"
 	product="workers"
 	params={{
 		category: "hello-world",
-		type: "Hello World Worker",
+		type: "Worker only",
 		lang: "JavaScript",
 	}}
 />
@@ -111,9 +109,7 @@ export default {
 };
 ```
 
-Update the `wrangler.toml` file for dispatch-worker and add the dispatch namespace binding:
-
-
+Update the Wrangler file for dispatch-worker and add the dispatch namespace binding:
 
 <WranglerConfig>
 
@@ -141,7 +137,7 @@ outbound = { service = "outbound-worker", parameters = ["paramCustomerName"] }
 	product="workers"
 	params={{
 		category: "hello-world",
-		type: "Hello World Worker",
+		type: "Worker only",
 		lang: "JavaScript",
 	}}
 />

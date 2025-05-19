@@ -12,22 +12,29 @@ Be aware that if you enable CMB for a dataset that does not support your region,
 
 | Dataset name           | Level   | Respects CMB | Available with US CMB region | Available with EU CMB region |
 | ---------------------- | ------- | ------------ | ---------------------------- | ---------------------------- |
-| HTTP requests          | Zone    | ✅            | ✅                            | ✅                            |
-| Firewall events        | Zone    | ✅            | ✅                            | ✅                            |
-| DNS logs               | Zone    | ✅            | ✅                            | ✅                            |
-| NEL reports            | Zone    | ✘            | ✅                            | ✘                            |
-| Spectrum events        | Zone    | ✅            | ✅                            | ✅                            |
-| Page Shield            | Zone    | ✅            | ✅                            | ✅                            |
-| Access Requests        | Account | ✅            | ✅                            | ✘                            |
-| Audit Logs             | Account | ✘            | ✅                            | ✘                            |
-| CASB Findings          | Account | ✘            | ✅                            | ✘                            |
+| HTTP requests          | Zone    | ✅            | ✅                            | ✅                          |
+| Firewall events        | Zone    | ✅            | ✅                            | ✅                          |
+| DNS logs               | Zone    | ✅            | ✅                            | ✅                          |
+| DNS Firewall logs      | Account | ✅            | ✅                            | ✅                          |
+| Spectrum events        | Zone    | ✅            | ✅                            | ✅                          |
+| Magic IDS Detections   | Account | ✅            | ✅                            | ✅                          |
+| Workers Trace Events   | Account | ✅            | ✅                            | ✅                          |
+| Zero Trust Sessions    | Account | ✅            | ✅                            | ✅                          |
+| Gateway DNS            | Account | ✅            | ✅                            | ✅                          |
+| Gateway Network        | Account | ✅            | ✅                            | ✅                          |
+| Gateway HTTP           | Account | ✅            | ✅                            | ✅                          |
+| Page Shield            | Zone    | ✅            | ✅                            | ✅                          |
+| Sinkhole Events        | Account | ✅            | ✅                            | ✅                          |
+| AI Gateway Events      | Account | ✅            | ✅                            | ✅                          |
+| DLP Forensic Copies    | Account | N/A[^1]       | ✘                             | ✘                          |
+| Email Security Alerts  | Account | ✅            | ✅                            | ✅                          |
+| Zaraz Events           | Zone    | ✅            | ✅                            | ✅                          |
+| Browser Isolation User Actions | Account | ✅    | ✅                            | ✅                          |
+| NEL reports            | Zone    | ✘             | ✅                            | ✘                           |
+| CASB Findings          | Account | ✘             | ✅                            | ✘                           |
+| Network Analytics Logs | Account | ✅            | ✅                            | ✅                           |
 | Device Posture Results | Account | ✘            | ✅                            | ✘                            |
-| DNS Firewall logs      | Account | ✅            | ✅                            | ✅                            |
-| Gateway DNS            | Account | ✅            | ✅                            | ✅                            |
-| Gateway HTTP           | Account | ✅            | ✅                            | ✅                            |
-| Gateway Network        | Account | ✅            | ✅                            | ✅                            |
-| Magic IDS Detections   | Account | ✅            | ✅                            | ✅                            |
-| Network Analytics Logs | Account | ✅            | ✅                            | ✅                            |
-| Workers Trace Events   | Account | ✅            | ✅                            | ✅                            |
-| Zero Trust Sessions    | Account | ✅            | ✅                            | ✅                            |
-| Sinkhole Events        | Account | ✅            | ✅                            | ✅                            |
+| Audit Logs             | Account | ✘            | ✅                            | ✘                            |
+| Access Requests        | Account | ✅            | ✅                            | ✘                           |
+
+[^1]: Customer Metadata Boundary does not apply in this case, as these logs are sent directly from the processing location to your configured destination.

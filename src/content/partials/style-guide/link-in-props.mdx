@@ -1,0 +1,16 @@
+---
+params:
+  - link
+---
+
+**Don't do this!**
+
+This will link to `/style-guide/components/%7Bprops.link%7D`.
+
+[Markdown link]({props.link})
+
+**Do this!**
+
+This will link to `style-guide/components/render/#links`.
+
+<p><a href={props.link}>JSX link</a></p>

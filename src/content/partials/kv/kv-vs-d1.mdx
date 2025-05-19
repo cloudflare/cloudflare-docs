@@ -8,7 +8,7 @@ Cloudflare Workers KV provides an eventually consistent global key-value store t
 low read latency for hot reads to keys. This is ideal for storing data that is repeatedly read by your Workers, such as configuration data, user preferences, cached values, etc. Workers KV can sustain high read throughput (unlimited requests per second per key) with \<5ms latency globally for hot reads. Workers KV is eventually consistent, so writes may take up to 60 seconds to propagate through Cloudflare's network by default.
 
 Cloudflare D1 provides a SQL database that supports relational data modeling and querying. D1 supports snapshot isolation consistency and is ideal for
-workloads that store user data or general web application data. 
+workloads that store user data or general web application data.
 
 - Use Workers KV if you need to store and access configuration data that will be read by Workers frequently, is written infrequently (\<1 RPS per key) and can tolerate eventual consistency.
 - Use D1 if you need to store general application data, need SQL access to your data, and require strong consistency (writes are immediately visible after being committed).

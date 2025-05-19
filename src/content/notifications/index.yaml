@@ -19,6 +19,25 @@ entries:
       * Argo Smart Routing has **Notify when total bytes of traffic exceeds** as a threshold.
       * Load Balancing has **Notify when total number of DNS Queries exceeds** as a threshold.
 
+  - name: Bot Detection Alert
+    audience: Enterprise customers who want to be notified when Cloudflare detects a spike in bot traffic on their zones.
+    availability: Accounts with at least one Enterprise zone.
+    associatedProducts: Bots
+    nextSteps: Select the [Security Analytics](/waf/analytics/security-analytics/) link enclosed in the alert message. Contact support if additional advice is needed on how to investigate the attack further.
+    otherFilters: None.
+    additional_information: After an alert is created on the dashboard, it may take up to 30 minutes before sufficient data is available to begin detecting traffic anomalies. Verified bot traffic is excluded from bot alerts.
+
+  - name: Custom Bot Detection Alert
+    audience: Enterprise customers who want to be notified when Cloudflare detects a spike in bot traffic on their zones.
+    availability: Accounts with at least one Enterprise zone.
+    associatedProducts: Bots
+    nextSteps: Select the [Security Analytics](/waf/analytics/security-analytics/) link enclosed in the alert message. Contact support if additional advice is needed on how to investigate the attack further.
+    otherFilters: Refer to the [alert logic](/bots/reference/alerts/#alert-logic) for more information on additional filters or groupings.
+    additional_information: |-
+      After an alert is created on the dashboard, it may take up to 30 minutes before sufficient data is available to begin detecting traffic anomalies. Verified bot traffic is excluded from both basic and advanced bot alerts.
+
+      Alerts with grouping could cause potential noise if you set them up for a high-traffic zone. Grouping alerts function as if you set up separate policies with a filter for each value. Alerts may trigger multiple values in the same group as long as the traffic for each value reaches the threshold of 200.
+
   - name: Brand Protection Alerts
     audience: Customers who want a summary of activity related to [Brand Protection](/security-center/brand-protection/).
     availability: Professional plans or higher.
@@ -39,6 +58,13 @@ entries:
     associatedProducts: Security Center
     nextSteps: Review the domains and URLs that are potentially impersonating your brand.
     otherFilters: You can select the query that you want to be alerted on.
+
+  - name: Security Insights
+    audience: Customers who want to receive notifications based on security insights findings.
+    availability: All Cloudflare plans.
+    associatedProducts: Security Center
+    nextSteps: Review the insight and decide whether you want to resolve it, archive it, or export it.
+    otherFilters: You can select the insight(s) you want to be alerted on.
 
   - name: Maintenance Notification
     audience: Customers interested in knowing about planned [Cloudflare maintenance](/support/troubleshooting/disruptive-maintenance/) for specific data centers. The notification lets you know when maintenance has been scheduled, changed, or canceled on an entire point of presence.
@@ -71,7 +97,7 @@ entries:
     otherFilters: None.
 
   - name: Secondary DNS Primaries Failing
-    audience: Enterprise customers who have at least one secondary zone and want to receive a notification if at least one of their primary nameservers is failing.
+    audience: Enterprise customers who have at least one secondary zone and want to receive a notification if at least one of their primary nameservers is failing while transfers from at least one other primary are still successful.
     availability: Purchase of Secondary DNS.
     associatedProducts: DNS
     nextSteps: |-
@@ -88,18 +114,12 @@ entries:
     nextSteps: No action needed. Everything is working correctly.
     otherFilters: None.
 
-  - name: Secondary DNSSEC Validation Warning
-    audience: Customers who are using Cloudflare for Secondary DNS and want to receive notifications about the failure or success of zone transfers from their primary nameservers.
+  - name: Secondary DNS Warning
+    audience: Customers who are using Cloudflare for Secondary DNS and want to receive notifications about warnings issued by the transferred zone.
     availability: Enterprise plans.
     associatedProducts: DNS
     nextSteps: |-
-      Success alerts require no further action. Actions for failure notifications will depend on the type of failure.
-
-      Possible actions include:
-
-      * Checking the Access Control List (ACL) on your primary nameserver.
-      * Checking if Cloudflare IPs have been [configured correctly on your primary nameserver](/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/).
-      * Checking logs on primary nameservers for other errors.
+      Actions for failure notifications will depend on the type of failure.
 
     otherFilters: None.
 
@@ -146,6 +166,8 @@ entries:
       * The minimum packets-per-second rate that will trigger the alert (12,000 pps by default).
       * The minimum megabits-per-second rate that will trigger the alert.
       * The protocols for which you wish to receive notifications (all protocols by default).
+
+      If you specify multiple filters, Cloudflare applies an `AND` logic. This means the alert will only trigger if all filters you set are true. Keep this in mind when setting up this alert with more than one filter.
 
   - name: Health Checks status notification
     audience: Customers who want to be warned about changes to server health as determined by [health checks](/health-checks/).
@@ -216,7 +238,7 @@ entries:
     audience: Magic Transit and Magic WAN customers who wish to receive alerts when the percentage of tunnel states meeting the selected service-level objective (SLO) drops below the defined threshold for a Magic Tunnel.
     availability: Purchase of Magic Transit and Magic WAN.
     associatedProducts: Magic Transit
-    nextSteps: Refer to the [Magic Transit tunnel health](/magic-transit/how-to/check-tunnel-health-dashboard/) or [Magic WAN tunnel health](/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/) for more information on what the issue might be.
+    nextSteps: Refer to the [Magic Transit tunnel health](/magic-transit/network-health/check-tunnel-health-dashboard/) or [Magic WAN tunnel health](/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/) for more information on what the issue might be.
     otherFilters: |-
       * Notification Name: A custom name for the notification.
       * Description (optional): A custom description for the notification.
@@ -396,7 +418,7 @@ entries:
     associatedProducts: Traffic Monitoring
     nextSteps: |-
       1. Use the link in the notification you received to see which error codes Cloudflare is seeing.
-      2. Depending on the statuses you are alerting on, refer to [Troubleshooting Cloudflare 5XX errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/).
+      2. Depending on the statuses you are alerting on, refer to [Troubleshooting Cloudflare 5XX errors](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/).
     otherFilters: |-
       Available filters include:
 
@@ -416,7 +438,7 @@ entries:
     associatedProducts: Traffic Monitoring
     nextSteps: |-
       1. Use the link in the Notification you received to see which error codes Cloudflare is seeing from your origin.
-      2. Refer to [Troubleshooting Cloudflare 5XX errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/) to learn how to troubleshoot these errors.
+      2. Refer to [Troubleshooting Cloudflare 5XX errors](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/) to learn how to troubleshoot these errors.
     otherFilters: |-
       Multiple filters available:
 
@@ -431,7 +453,7 @@ entries:
     audience: Customers who want to receive a notification when Cloudflare is unable to access their origin. Customers will only receive this notification when their origin is returning a `521` error.
     availability: All Cloudflare plans.
     associatedProducts: Traffic Monitoring
-    nextSteps: Refer to [Troubleshooting Cloudflare 5XX errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/) to learn how to troubleshoot these errors.
+    nextSteps: Refer to [Troubleshooting Cloudflare 5XX errors](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/) to learn how to troubleshoot these errors.
     otherFilters: None.
     limitations: |-
       Traffic Monitoring alerts are not sent for each individual events, but only when a spike in traffic reaches the threshold for an alert to be sent.
@@ -486,13 +508,13 @@ entries:
     audience: Customers who want to be warned about changes in health status for their Cloudflare Tunnels.
     availability: All Cloudflare Zero Trust plans.
     associatedProducts: Tunnel
-    nextSteps: Monitor tunnel health over time and consider deploying [`cloudflared` replicas or load balancers](/cloudflare-one/connections/connect-networks/deploy-tunnels/deploy-cloudflared-replicas/).
+    nextSteps: Monitor tunnel health over time and consider deploying [`cloudflared` replicas or load balancers](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/).
     otherFilters: None.
     additional_information: |-
       | <div style="width:75px">Health status</div> | Description  |
       | ------------- | ------------ |
       | Healthy       | The tunnel is active and serving traffic through four connections to the Cloudflare global network. |
-      | Degraded      | The tunnel is active and serving traffic, but at least one individual connection has failed. Further degradation in [tunnel availability](/cloudflare-one/connections/connect-networks/deploy-tunnels/deploy-cloudflared-replicas/) could risk the tunnel going down and failing to serve traffic.|
+      | Degraded      | The tunnel is active and serving traffic, but at least one individual connection has failed. Further degradation in [tunnel availability](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/) could risk the tunnel going down and failing to serve traffic.|
       | Down          | The tunnel cannot serve traffic as it has no connections to the Cloudflare global network.|
       | Inactive      | This value is reserved for tunnels which have been created, but have never been run.|
 
@@ -539,10 +561,10 @@ entries:
         - **Test name**: Choose which DEX test the alert should monitor. You will receive individual notifications for each test.
 
   - name: Advanced Security Events Alert
-    audience: Enterprise customers who want to receive alerts about spikes in specific services that generate log entries in [Security Events](/waf/analytics/security-events/paid-plans/). For more information, refer to [WAF alerts](/waf/reference/alerts/).
+    audience: Enterprise customers who want to receive alerts about spikes in specific services that generate log entries in [Security Events](/waf/analytics/security-events/). For more information, refer to [WAF alerts](/waf/reference/alerts/).
     availability: Enterprise plans.
     associatedProducts: Web Application Firewall (WAF)
-    nextSteps: Review the information in [Security Events](/waf/analytics/security-events/paid-plans/) to identify any possible attack or misconfiguration.
+    nextSteps: Review the information in [Security Events](/waf/analytics/security-events/) to identify any possible attack or misconfiguration.
     otherFilters: |-
       A mandatory [`filters`](/api/resources/alerting/subresources/policies/methods/create/) selection is needed when you create a notification policy which includes the list of services and zones that you want to be alerted on.
 
@@ -559,10 +581,10 @@ entries:
       These thresholds cannot be configured. Z-score is used to determine the threshold.
 
   - name: Security Events Alert
-    audience: Business and Enterprise customers who want to receive alerts about spikes across all services that generate log entries in [Security Events](/waf/analytics/security-events/paid-plans/). For more information, refer to [WAF alerts](/waf/reference/alerts/).
+    audience: Business and Enterprise customers who want to receive alerts about spikes across all services that generate log entries in [Security Events](/waf/analytics/security-events/). For more information, refer to [WAF alerts](/waf/reference/alerts/).
     availability: Business and Enterprise plans.
     associatedProducts: Web Application Firewall (WAF)
-    nextSteps: Review the information in [Security Events](/waf/analytics/security-events/paid-plans/) to identify any possible attack or misconfiguration.
+    nextSteps: Review the information in [Security Events](/waf/analytics/security-events/) to identify any possible attack or misconfiguration.
     otherFilters: |-
       A mandatory [`filters`](/api/resources/alerting/subresources/policies/methods/create/) selection is needed when you create a notification policy which includes the list of zones that you want to be alerted on.
 

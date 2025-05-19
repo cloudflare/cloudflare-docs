@@ -13,7 +13,7 @@ To make it easier to differentiate between Client Certificates, you can generate
 
 In cases of noticing excessive traffic, anomalous traffic (strange sequences of requests), or generally too many attack attempts registered from specific devices using your Client Certificates, it is best to [revoke](/ssl/client-certificates/revoke-client-certificate/) those.
 
-Additionally, ensure to have a WAF [Custom Rule](/waf/custom-rules/) in place to block [revoked](/api-shield/security/mtls/configure/#check-for-revoked-certificates) Client Certificates. Review the available [`cf.tls_*`](/ruleset-engine/rules-language/fields/reference/) fields.
+Additionally, ensure to have a WAF [Custom Rule](/waf/custom-rules/) in place to block [revoked](/api-shield/security/mtls/configure/#check-for-revoked-certificates) Client Certificates. Review the available [`cf.tls_*`](/ruleset-engine/rules-language/fields/reference/?field-category=mTLS&field-category=SSL/TLS) fields.
 
 Example WAF Custom Rule with action block:
 
@@ -100,7 +100,7 @@ Contact your account team for more information.
 [Revoked](/api-shield/security/mtls/configure/#check-for-revoked-certificates) Client Certificates are not automatically blocked unless you have an active WAF Custom Rule specifically checking for and blocking them. This check only applies to Client Certificates issued by the Cloudflare-managed CA. Cloudflare currently does not check certificate revocation lists (CRL) for CAs that have been uploaded by the customer ([BYO CA](/ssl/client-certificates/byo-ca/)). One can opt for Workers to manage a custom business logic and block revoked Client Certificates. See the [Workers section](/learning-paths/mtls/mtls-workers/) for more information.
 :::
 
-In order to effectively implement mTLS with Cloudflare, it is strongly recommended to properly configure the [Cloudflare WAF](/waf/). Review the available [`cf.tls_*`](/ruleset-engine/rules-language/fields/reference/) fields.
+In order to effectively implement mTLS with Cloudflare, it is strongly recommended to properly configure the [Cloudflare WAF](/waf/). Review the available [`cf.tls_*`](/ruleset-engine/rules-language/fields/reference/?field-category=mTLS&field-category=SSL/TLS) fields.
 
 Example WAF Custom Rule with action block:
 

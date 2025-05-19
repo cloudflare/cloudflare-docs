@@ -1,6 +1,6 @@
 {
 	"title": "Replace your VPN",
-	"path": "/learning-paths/replace-vpn/",
+	"path": "/learning-paths/replace-vpn/concepts/",
 	"priority": 1,
 	"description": "Give users secure, auditable network and application access.",
 	"products": ["Cloudflare Gateway", "Cloudflare Tunnel", "WARP"],

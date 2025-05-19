@@ -8,7 +8,7 @@ import { DirectoryListing, GlossaryTooltip, Render } from "~/components";
 
 <Render
   file="casb/integration-description"
-  params={{ one: "Microsoft 365 (M365)", two: "Microsoft 365 account" }}
+  params={{ integrationName: "Microsoft 365 (M365)", integrationAccountType: "Microsoft 365 account" }}
 />
 
 This integration covers the following Microsoft 365 products:
@@ -42,7 +42,7 @@ These permissions follow the principle of least privilege to ensure that only th
 
 <Render
   file="casb/security-findings"
-  params={{ one: "Microsoft 365", two: "microsoft-365" }}
+  params={{ integrationName: "Microsoft 365", slugRelativePath: "microsoft-365" }}
 />
 
 ### User account settings

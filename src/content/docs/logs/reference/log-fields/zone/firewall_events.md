@@ -145,7 +145,7 @@ The description of the rule triggered by this request.
 
 Type: `string`
 
-The airport code of the Cloudflare datacenter that served this request.
+The airport code of the Cloudflare data center that served this request.
 
 ## EdgeResponseStatus
 

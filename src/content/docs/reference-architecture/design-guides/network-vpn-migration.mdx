@@ -138,14 +138,14 @@ Cloudflare offers two types of software connectors:
 
 As discussed in the introduction, `cloudflared` is the preferred method for Zero Trust Network Access, but only supports inbound connectivity to your networks and application servers, any server initiated connection will not go via the tunnel and instead follow the server's default network path. WARP connector is designed to create tunnels that facilitate both inbound and outbound connectivity, but it doesn't currently have the same level of failover support and ease of configuration. For this guide, we will be discussing using `cloudflared` as it supports the internal DNS use case described.
 
-For large remote access use cases, Cloudflare recommends deploying connectors to dedicated hosts. See the [System Requirements documentation](/cloudflare-one/connections/connect-networks/deploy-tunnels/system-requirements/) for more deployment recommendations and server sizing. Where to deploy these servers depends on the access they need and the internal firewall rules and segmentation of the network. Some customers start with their first deployment in their DMZ, while others install it deeper in their network and evolve from there.
+For large remote access use cases, Cloudflare recommends deploying connectors to dedicated hosts. See the [System Requirements documentation](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/system-requirements/) for more deployment recommendations and server sizing. Where to deploy these servers depends on the access they need and the internal firewall rules and segmentation of the network. Some customers start with their first deployment in their DMZ, while others install it deeper in their network and evolve from there.
 
 Installing `cloudflared` is best done in an automated manner, so we recommend deploying using a virtualization technology such as Docker or deploying as VMware guests and configuring via Ansible. Preferably, as traffic using `cloudflared` tunnels increases, such systems can scale the deployment automatically based on real-time metrics collected from the hosts. `cloudflared` instances can be monitored using the [Prometheus metrics endpoint](/cloudflare-one/connections/connect-networks/monitor-tunnels/metrics/). Prometheus is an HTTP-based monitoring and alerting system similar in functionality to SNMP, exposing metrics that can be polled from the resource to be monitored. Most monitoring systems on the market today support Prometheus as a format to collect the metrics needed for alerting and automatically scaling the deployment.
 
 For more information about deploying `cloudflared` connectors at scale:
 
-- [Various guides to deploy and update](/cloudflare-one/connections/connect-networks/deploy-tunnels/deployment-guides/) connectors in environments such as Ansible, Terraform and Kubernetes
-- High availability using [replicas](/cloudflare-one/connections/connect-networks/deploy-tunnels/deploy-cloudflared-replicas/#cloudflared-replicas)
+- [Various guides to deploy and update](/cloudflare-one/connections/connect-networks/deployment-guides/) connectors in environments such as Ansible, Terraform and Kubernetes
+- High availability using [replicas](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/#cloudflared-replicas)
 - [Monitor tunnels with Grafana](/cloudflare-one/tutorials/grafana/)
 
 ### DNS resolution with Resolver Policies

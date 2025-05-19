@@ -8,6 +8,8 @@ head:
     content: Cloudflare Queues - Pull consumers
 ---
 
+import { WranglerConfig } from "~/components";
+
 A pull-based consumer allows you to pull from a queue over HTTP from any environment and/or programming language outside of Cloudflare Workers. A pull-based consumer can be useful when your message consumption rate is limited by upstream infrastructure or long-running tasks.
 
 ## How to choose between push or pull consumer
@@ -34,13 +36,11 @@ To configure a pull-based consumer and receive messages from a queue, you need t
 
 ## 1. Enable HTTP pull
 
-You can enable HTTP pull or change a queue from push-based to pull-based via `wrangler.toml`, the `wrangler` CLI, or via the [Cloudflare dashboard](https://dash.cloudflare.com/).
+You can enable HTTP pull or change a queue from push-based to pull-based via the [Wrangler configuration file](/workers/wrangler/configuration/), the `wrangler` CLI, or via the [Cloudflare dashboard](https://dash.cloudflare.com/).
 
-### wrangler.toml
+### Wrangler configuration file
 
-A HTTP consumer can be configured in `wrangler.toml` by setting `type = "http_pull"` in the consumer configuration:
-
-import { WranglerConfig } from "~/components";
+A HTTP consumer can be configured in the [Wrangler configuration file](/workers/wrangler/configuration/) by setting `type = "http_pull"` in the consumer configuration:
 
 <WranglerConfig>
 
@@ -75,7 +75,7 @@ wrangler queues consumer worker remove $QUEUE-NAME $SCRIPT_NAME
 
 :::note
 
-If you remove the Worker consumer with `wrangler` but do not delete the `[[queues.consumer]]` configuration from `wrangler.toml`, subsequent deployments of your Worker will fail when they attempt to add a conflicting consumer configuration.
+If you remove the Worker consumer with `wrangler` but do not delete the `[[queues.consumer]]` configuration from your [Wrangler configuration file](/workers/wrangler/configuration/), subsequent deployments of your Worker will fail when they attempt to add a conflicting consumer configuration.
 
 Ensure you remove the consumer configuration first.
 
@@ -96,7 +96,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/queues/${QU
 --data '{ "visibility_timeout": 10000, "batch_size": 2 }'
 ```
 
-You may authenticate and run multiple concurrent pull-based consumers against a single queue, noting that all consumers will share the same [rate limit](/queues/platform/limits/) against the Cloudflare API.
+You may authenticate and run multiple concurrent pull-based consumers against a single queue.
 
 ### Create API tokens
 
@@ -127,7 +127,7 @@ let resp = await fetch(
 			authorization: `Bearer ${QUEUES_API_TOKEN}`,
 		},
 		// Optional - you can provide an empty object '{}' and the defaults will apply.
-		body: JSON.stringify({ visibility_timeout: 6000, batch_size: 50 }),
+		body: JSON.stringify({ visibility_timeout_ms: 6000, batch_size: 50 }),
 	},
 );
 ```
@@ -248,7 +248,7 @@ Additionally:
 
 - You should provide every `lease_id` in the request to the `/ack` endpoint if you are processing those messages in your consumer. If you do not acknowledge a message, it will be marked for re-delivery (put back in the queue).
 - You can optionally mark messages to be retried: for example, if there is an error processing the message or you have upstream resource pressure. Explicitly marking a message for retry will place it back into the queue immediately, instead of waiting for a (potentially long) `visibility_timeout` to be reached.
-- You can make multiple calls to the `/ack` endpoint as you make progress through a batch of messages, but we recommend grouping acknowledgements to avoid hitting [API rate limits](/queues/platform/limits/).
+- You can make multiple calls to the `/ack` endpoint as you make progress through a batch of messages, but we recommend grouping acknowledgements to reduce the number of API calls required.
 
 Queues aims to be permissive when it comes to lease IDs: if a consumer acknowledges a message by its lease ID _after_ the visibility timeout is reached, Queues will still accept that acknowledgment. If the message was delivered to another consumer during the intervening period, it will also be able to acknowledge the message without an error.
 

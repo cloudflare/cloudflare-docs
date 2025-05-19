@@ -7,15 +7,7 @@ sidebar:
 
 ---
 
-import { Render, PackageManagers } from "~/components"
-
-:::note
-
-Workflows is in **public beta**, and any developer with a [free or paid Workers plan](/workers/platform/pricing/#workers) can start using Workflows immediately.
-
-To learn more about Workflows and how it works, read [the beta announcement blog](https://blog.cloudflare.com/building-workflows-durable-execution-on-workers).
-
-:::
+import { Render, PackageManagers, WranglerConfig } from "~/components"
 
 Workflows allow you to build durable, multi-step applications using the Workers platform. A Workflow can automatically retry, persist state, run for hours or days, and coordinate between third-party APIs.
 
@@ -182,9 +174,7 @@ The term "Durable Execution" is widely used to describe this programming model.
 
 Before you can deploy a Workflow, you need to configure it.
 
-Open the `wrangler.toml` file at the root of your `workflows-starter` folder, which contains the following `[[workflows]]` configuration:
-
-import { WranglerConfig } from "~/components";
+Open the Wrangler file at the root of your `workflows-starter` folder, which contains the following `[[workflows]]` configuration:
 
 <WranglerConfig>
 

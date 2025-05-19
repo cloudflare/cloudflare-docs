@@ -11,7 +11,7 @@ import { Render, Tabs, TabItem, GlossaryTooltip } from "~/components";
 
 A Durable Object namespace is a set of Durable Objects that are backed by the same <GlossaryTooltip term="Durable Object class">Durable Object class</GlossaryTooltip>. There is only one Durable Object namespace per class. A Durable Object namespace can contain any number of Durable Objects.
 
-The `DurableObjectNamespace` interface is used to obtain a reference to new or existing Durable Objects. The interface is accessible from the fetch handler on a Cloudflare Worker via the `env` parameter, which is the standard interface when referencing bindings declared in `wrangler.toml`.
+The `DurableObjectNamespace` interface is used to obtain a reference to new or existing Durable Objects. The interface is accessible from the fetch handler on a Cloudflare Worker via the `env` parameter, which is the standard interface when referencing bindings declared in the [Wrangler configuration file](/workers/wrangler/configuration/).
 
 This interface defines several [methods](/durable-objects/api/namespace/#methods) that can be used to create an ID for a Durable Object. Note that creating an ID for a Durable Object does not create the Durable Object. The Durable Object is created lazily after calling [`DurableObjectNamespace::get`](/durable-objects/api/namespace/#get) to create a [`DurableObjectStub`](/durable-objects/api/stub) from a `DurableObjectId`. This ensures that objects are not constructed until they are actually accessed.
 

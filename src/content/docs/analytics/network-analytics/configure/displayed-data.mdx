@@ -67,3 +67,18 @@ Note that some filters will not be added to the new Magic Firewall rule definiti
 Enable the **Show annotations** toggle to show or hide annotations for advertised/withdrawn IP prefix events in the **Network Analytics** view. Select each annotation to get more details.
 
 ![Network Analytics chart displaying IP prefix-related annotations.](~/assets/images/analytics/network-analytics/view-annotations.png)
+
+## View logged or monitored traffic
+
+[Network DDoS managed rules](/ddos-protection/managed-rulesets/network/) and [Advanced DDoS Protection systems](/ddos-protection/advanced-ddos-systems/overview/) provide a `log` or `monitoring` mode that does not drop traffic. These `log` and `monitoring` mode events are based on **Verdict** and **Outcome**/**Action** fields.
+
+To filter for these traffic events:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Analytics & Logs** > **Network Analytics** > **DDoS managed rules**.
+3. Select **Add filter**.
+    - Set `Verdict equals drop`.
+    - Set `Action equals pass`.
+4. Select **Apply**. 
+
+By setting `verdict` to `drop` and `outcome` as `pass`, we are filtering for traffic that was marked as a detection (that is, verdict was `drop`) but was not dropped (for example, outcome was `pass`).

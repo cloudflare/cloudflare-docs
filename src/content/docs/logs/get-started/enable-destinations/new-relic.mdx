@@ -63,7 +63,7 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 
   :::note[Note]
 
-  To query Cloudflare logs, New Relic requires fields to be sent as a Unix Timestamp. 
+  To query Cloudflare logs, New Relic requires fields to be sent as a UNIX timestamp.
 
   :::
 
@@ -122,7 +122,6 @@ Response:
       "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
       "timestamp_format": "unix"
     },
-    "logstream": true,
     "max_upload_bytes": 5000000,
     "name": "<DOMAIN_NAME>"
   },
@@ -166,7 +165,6 @@ Response:
        "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
        "timestamp_format": "unix"
      },
-     "logstream": true,
      "max_upload_bytes": 5000000,
      "name": "<DOMAIN_NAME>"
   },
@@ -176,6 +174,6 @@ Response:
 
 :::note[Note]
 
-To analyze and visualize Cloudflare metrics using the Cloudflare Network Logs quickstart, follow the steps in the [New Relic Analytics integration page](/analytics/analytics-integrations/new-relic/). 
+To analyze and visualize Cloudflare metrics using the Cloudflare Network Logs quickstart, follow the steps in the [New Relic Analytics integration page](/analytics/analytics-integrations/new-relic/).
 
 :::

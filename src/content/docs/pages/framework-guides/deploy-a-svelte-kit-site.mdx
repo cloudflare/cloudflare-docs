@@ -1,30 +1,36 @@
 ---
 pcx_content_type: how-to
 title: SvelteKit
+description: Learn how to create and deploy a SvelteKit application to Cloudflare Pages using the create-cloudflare CLI
+banner:
+  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
+  type: note
+  dismissible:
+    id: pages-migrate-to-workers
 ---
 
 import { PagesBuildPreset, Render, PackageManagers } from "~/components";
 
-[Svelte](https://svelte.dev) is an increasingly popular, open-source framework for building user interfaces and web applications. Unlike most frameworks, Svelte is primarily a compiler that converts your component code into efficient JavaScript that surgically updates the DOM when your application state changes.
+SvelteKit is the official framework for building modern web applications with [Svelte](https://svelte.dev), an increasingly popular open-source tool for creating user interfaces. Unlike most frameworks, SvelteKit uses Svelte, a compiler that transforms your component code into efficient JavaScript, enabling SvelteKit to deliver fast, reactive applications that update the DOM surgically as the application state changes.
 
-In this guide, you will create a new Svelte application and deploy it using Cloudflare Pages.
+In this guide, you will create a new SvelteKit application and deploy it using Cloudflare Pages.
 You will use [`SvelteKit`](https://kit.svelte.dev/), the official Svelte framework for building web applications of all sizes.
 
 ## Setting up a new project
 
-Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up a new project. C3 will create a new project directory, initiate Svelte's official setup tool, and provide the option to deploy instantly.
+Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up a new project. C3 will create a new project directory, initiate SvelteKit's official setup tool, and provide the option to deploy instantly.
 
-To use `create-cloudflare` to create a new Svelte project, run the following command:
+To use `create-cloudflare` to create a new SvelteKit project, run the following command:
 
 <PackageManagers
 	type="create"
 	pkg="cloudflare@latest"
-	args="my-svelte-app --framework=svelte"
+	args="my-svelte-app --framework=svelte --platform=pages"
 />
 
 SvelteKit will prompt you for customization choices. For the template option, choose one of the application/project options. The remaining answers will not affect the rest of this guide. Choose the options that suit your project.
 
-`create-cloudflare` will then install dependencies, including the [Wrangler](/workers/wrangler/install-and-update/#check-your-wrangler-version) CLI and the `@sveltejs/adapter-cloudflare` adapter, and ask you setup questions.
+`create-cloudflare` will then install dependencies, including the [Wrangler](/workers/wrangler/install-and-update/#check-your-wrangler-version) CLI and the SvelteKit `@sveltejs/adapter-cloudflare` adapter, and ask you setup questions.
 
 After you have installed your project dependencies, start your application:
 
@@ -119,12 +125,10 @@ If you are using any adapter different from the default SvelteKit adapter, remem
 
 ### Deploy via the Cloudflare dashboard
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
-
-You will be asked to authorize access to your GitHub account if you have not already done so. Cloudflare needs this authorization to deploy your projects from your GitHub account. You may narrow Cloudflare's access to specific repositories. However, you will have to manually update this list [within your GitHub settings](https://github.com/settings/installations) when you want to add more repositories to Cloudflare Pages.
-
-Select the new GitHub repository that you created and, in **Set up builds and deployments**, provide the following information:
+<Render
+	file="deploy-to-pages-steps-with-preset"
+	params={{ name: "SvelteKit" }}
+/>
 
 <div>
 
@@ -138,7 +142,7 @@ After completing configuration, click the **Save and Deploy** button.
 
 You will see your first deploy pipeline in progress. Pages installs all dependencies and builds the project as specified.
 
-Cloudflare Pages will automatically rebuild your project and deploy it on every new pushed commit.
+Cloudflare Pages will automatically rebuild your SvelteKit project and deploy it on every new pushed commit.
 
 Additionally, you will have access to [preview deployments](/pages/configuration/preview-deployments/), which repeat the build-and-deploy process for pull requests. With these, you can preview changes to your project with a real URL before deploying them to production.
 

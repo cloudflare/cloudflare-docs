@@ -1,14 +1,19 @@
 ---
 pcx_content_type: changelog
 title: Changelog
-changelog_file_name:
+release_notes_file_name:
   - pages
 sidebar:
   order: 3
+banner:
+  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
+  type: note
+  dismissible:
+    id: pages-migrate-to-workers
 ---
 
-import { ProductChangelog } from "~/components";
+import { ProductReleaseNotes } from "~/components";
 
-{/* <!-- Actual content lives in /src/content/changelogs/pages.yaml. Update the file there for new entries to appear here. For more details, refer to https://developers.cloudflare.com/style-guide/documentation-content-strategy/content-types/changelog/#yaml-file --> */}
+{/* <!-- Actual content lives in /src/content/release-notes/pages.yaml. Update the file there for new entries to appear here. For more details, refer to https://developers.cloudflare.com/style-guide/documentation-content-strategy/content-types/changelog/#yaml-file --> */}
 
-<ProductChangelog />
+<ProductReleaseNotes />

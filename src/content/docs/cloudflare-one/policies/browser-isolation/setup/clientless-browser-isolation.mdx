@@ -54,6 +54,12 @@ If [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryptio
 | -------- | -------- | ------------ | -------------- |
 | Domain   | is       | `mysite.com` | Do Not Inspect |
 
+:::note
+
+Clientless Web Isolation can function without TLS decryption enabled. However, TLS decryption is required to apply [HTTP policies](/cloudflare-one/policies/gateway/http-policies/) to Clientless Web Isolation traffic.
+
+:::
+
 ### Connect private networks
 
 With Clientless Web Isolation, users can reach any internal web server you have connected through [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/). For more information, refer to [Connect private networks](/cloudflare-one/connections/connect-networks/private-net/cloudflared/).
@@ -106,6 +112,7 @@ To turn on or off the address bar, users can right-click on any isolated page an
 - **Authentication events**: User login events are available in [Access audit logs](/cloudflare-one/insights/logs/audit-logs/).
 - **HTTP requests**: Traffic from the remote browser to the Internet is logged in [Gateway activity logs](/cloudflare-one/insights/logs/gateway-logs/).
 - **DNS queries**: DNS queries from the remote browser are shown in [Gateway activity logs](/cloudflare-one/insights/logs/gateway-logs/).
+- **User actions**: Track copy/paste, download/upload, and print actions initiated by users in the remote browser (only available in [Logpush](/cloudflare-one/insights/logs/logpush/)).
 
 ## Redirect traffic to the remote browser
 
@@ -138,3 +145,9 @@ If you want to isolate a website without Cloudflare WARP installed, you will nee
   </body>
 </html>
 ```
+
+## Troubleshooting
+
+Review troubleshooting guidance related to Clientless Web Isolation.
+
+- [Clientless Web Isolation is loading a blank screen on a Windows device](/cloudflare-one/faq/troubleshooting/#clientless-web-isolation-is-loading-with-a-blank-screen-on-a-windows-device)

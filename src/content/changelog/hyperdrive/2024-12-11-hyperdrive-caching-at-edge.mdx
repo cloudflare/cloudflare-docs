@@ -1,0 +1,21 @@
+---
+title: Up to 10x faster cached queries for Hyperdrive
+description: Hyperdrive now caches queries in all Cloudflare locations decreasing cache hit latency by up to 90%
+products:
+  - hyperdrive
+date: 2024-12-11T18:00:00Z
+---
+
+Hyperdrive now caches queries in all Cloudflare locations, decreasing cache hit latency by up to 90%.
+
+When you make a query to your database and Hyperdrive has cached the query results, Hyperdrive will now return the results from the nearest cache. By caching data closer to your users, the latency for cache hits reduces by up to 90%.
+
+This reduction in cache hit latency is reflected in a reduction of the session duration for all queries (cached and uncached) from Cloudflare Workers to Hyperdrive, as illustrated below.
+
+![Hyperdrive edge caching improves average session duration for database queries](~/assets/images/hyperdrive/changelog/hyperdrive-edge-caching-metrics.png)
+
+_P50, P75, and P90 Hyperdrive session latency for all client connection sessions (both cached and uncached queries) for Hyperdrive configurations with caching enabled during the rollout period._
+
+This performance improvement is applied to all new and existing Hyperdrive configurations that have caching enabled.
+
+For more details on how Hyperdrive performs query caching, refer to the [Hyperdrive documentation](/hyperdrive/configuration/how-hyperdrive-works/#query-caching).

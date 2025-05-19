@@ -35,12 +35,15 @@ Alarms can be used to build distributed primitives, like queues or batching of w
 
   - If there is an alarm set, then return the currently set alarm time as the number of milliseconds elapsed since the UNIX epoch. Otherwise, return `null`.
 
+  - If `getAlarm` is called while an [`alarm`](/durable-objects/api/alarms/#alarm) is already running, it returns `null` unless `setAlarm` has also been called since the alarm handler started running.
+
 ### `setAlarm`
 
 - <code>{" "}setAlarm(scheduledTimeMs <Type text="number" />)</code>
   : <Type text="void" />
 
   - Set the time for the alarm to run. Specify the time as the number of milliseconds elapsed since the UNIX epoch.
+  - If you call `setAlarm` when there is already one scheduled, it will override the existing alarm.
 
 ### `deleteAlarm`
 
@@ -54,7 +57,7 @@ Alarms can be used to build distributed primitives, like queues or batching of w
 
 ### `alarm`
 
-- <code>alarm(`alarmInfo`<Type text="Object"/>)</code>`: <Type text='void' />
+- <code>alarm(`alarmInfo`<Type text="Object"/>)</code>: <Type text='void' />
 
   - Called by the system when a scheduled alarm time is reached.
 
@@ -62,7 +65,8 @@ Alarms can be used to build distributed primitives, like queues or batching of w
     - `retryCount` <Type text="number"/>: The number of times this alarm event has been retried.
     - `isRetry` <Type text="boolean"/>: A boolean value to indicate if the alarm has been retried. This value is `true` if this alarm event is a retry.
 
-  - The `alarm()` handler has guaranteed at-least-once execution and will be retried upon failure using exponential backoff, starting at 2 second delays for up to 6 retries. Retries will be performed if the method fails with an uncaught exception.
+  - Only one instance of `alarm()` will ever run at a given time per Durable Object instance.
+  - The `alarm()` handler has guaranteed at-least-once execution and will be retried upon failure using exponential backoff, starting at 2 second delays for up to 6 retries. This only applies to the most recent `setAlarm()` call. Retries will be performed if the method fails with an uncaught exception.
 
   - This method can be `async`.
 

@@ -60,9 +60,9 @@ entries:
     general_definition: |-
       A Durable Object alarm is a mechanism that allows you to schedule the Durable Object to be woken up at a time in the future.
 
-  - term: "event context"
+  - term: "request context"
     general_definition: |-
-      The duration of time that a Durable Object is processing an event, such as a remote procedure call. [Compute duration charges](/durable-objects/platform/pricing) are incurred for the duration of the event context.
+      The duration of time that a Durable Object is processing a request, such as a remote procedure call. [Compute duration charges](/durable-objects/platform/pricing) are incurred for the duration of the request context. Note that the request context for a Durable Object extends at least 60 seconds after the last client disconnects.
 
   - term: "input gate"
     general_definition: |-
@@ -71,3 +71,8 @@ entries:
   - term: "output gate"
     general_definition: |-
       When a storage write operation is in progress, any new outgoing network messages will be held back until the write has completed. We say that these messages are waiting for the "output gate" to open. If the write ultimately fails, the outgoing network messages will be discarded and replaced with errors, while the Durable Object will be shut down and restarted from scratch.
+
+  - term: "bookmark"
+    general_definition: |-
+      A bookmark is a mostly alphanumeric string like `0000007b-0000b26e-00001538-0c3e87bb37b3db5cc52eedb93cd3b96b` which represents a specific state of a SQLite database at a certain point in time. Bookmarks are designed to be lexically comparable: a bookmark representing an earlier point in time compares less than one representing a later point, using regular string comparison.
+

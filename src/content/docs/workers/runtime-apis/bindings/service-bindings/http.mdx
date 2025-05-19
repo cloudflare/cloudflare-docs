@@ -8,11 +8,11 @@ description: Facilitate Worker-to-Worker communication by forwarding Request obj
 
 ---
 
+import { WranglerConfig } from "~/components";
+
 Worker A that declares a Service binding to Worker B can forward a [`Request`](/workers/runtime-apis/request/) object to Worker B, by calling the `fetch()` method that is exposed on the binding object.
 
 For example, consider the following Worker that implements a [`fetch()` handler](/workers/runtime-apis/handlers/fetch/):
-
-import { WranglerConfig } from "~/components";
 
 <WranglerConfig>
 
@@ -56,3 +56,20 @@ export default {
 	},
 };
 ```
+
+:::note
+
+If you construct a new request manually, rather than forwarding an existing one, ensure that you provide a valid and fully-qualified URL with a hostname. For example:
+
+```js
+export default {
+  async fetch(request, env) {
+    // provide a valid URL
+    let newRequest = new Request("https://valid-url.com", { method: "GET" });
+    let response = await env.WORKER_B.fetch(newRequest);
+    return response;
+  }
+};
+```
+
+:::

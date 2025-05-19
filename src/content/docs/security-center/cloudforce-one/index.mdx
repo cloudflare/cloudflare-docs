@@ -12,22 +12,28 @@ You must have a Cloudforce One subscription to access Cloudforce One on the dash
 
 Cloudforce One is a threat intelligence solution that offers threat research reports, brand protection, Request for Information (RFIs), and more.
 
-## Cloudforce One Requests
-
-Cloudforce One allows you to review and manage Request for Information (RFIs) from the dashboard.
-
-To review and manage Request for Information:
+To access Cloudforce One:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Security Center** > **Cloudforce One Requests**, then populate the required fields.
+2. Go to **Security Center** > **Threat Intelligence**.
 
-### Submit RFIs
+You can also use Cloudforce One via [REST API](https://developers.cloudflare.com/api/resources/cloudforce_one/subresources/requests/subresources/assets/).
+
+Cloudforce One Threat Intelligence displays the following information:
+
+- **Threat Events** to analyze threat intelligence data.
+- **Priority Intelligence Requirements** to review and manage Cloudforce One Priority Intelligence Requirements (PIRs). PIRs are a structured approach to identifying intelligence gaps.
+- **Requests for Information** to submit specific queries and requests directly into Cloudforce One's analysis queue.
+- **Reports** to get the latest Cloudforce One Threat reports.
+
+## Submit RFIs
 
 To submit RFIs (Request for Information):
  
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Select **Cloudforce One Requests** > Select **New Request**.
-3. Fill in the required fields, then select **Save**.
+2. Go to **Security Center** > **Threat Intelligence** > **Requests for Information**.
+3. Select **New Request**.
+4. Fill in the required fields, then select **Save**.
 
 Once you select **Save**, the dashboard will display an overview of the shared information consisting of:
 
@@ -40,6 +46,8 @@ The **Responses** section allows you to add clarifying questions and comments.
 
 To view your RFI, select **Cloudforce One Requests** on the sidebar, locate your RFI, then select **View**. From here, you can also choose to edit your existing RFI by selecting **Edit**.
 
+To delete your RFI, the status must be `Open`. Go to the RFI you want to delete, and select **Delete**. On the pop-up, select **Delete** to confirm deletion. Once Cloudflare accepts and begins processing RFIs, you will not be able to delete RFIs.
+
 ### Upload and download attachment
 
 You can also choose to upload and download an attachment. 
@@ -47,3 +55,30 @@ You can also choose to upload and download an attachment.
 Under **Attachments**, select the file you want to upload, then select **Save**. 
 
 To download an attachment, select **Download** on the attachment.
+
+## Analyze threat events
+
+Threat events allow you to protect your assets and respond to emerging threats.
+
+To access and analyze threat intelligence data on the dashboard:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Select **Security Center** > **Threat Intelligence**.
+
+You can also access threat events via the [API](/api/resources/cloudforce_one/subresources/threat_events/).
+
+You can filter **Threat Events** by:
+
+- Attacker
+- Attacker Country
+- Target Country
+- Target Industry
+- TLP (Traffic Light Protocol)
+- Indicator Type
+- [Kill Chain](https://en.wikipedia.org/wiki/Cyber_kill_chain)
+- Tags
+- Event Category
+
+You can also filter by **Date range**.
+
+Some events will not display **Target Country** and **Target Industry** because they are unknown information. There may be situations where the attacker's information is unknown. When Cloudflare finds a new attacker, the attacker will be assigned a new name.

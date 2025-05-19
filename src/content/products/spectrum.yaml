@@ -14,7 +14,3 @@ meta:
 resources:
   community: https://community.cloudflare.com/c/website-application-performance/spectrum/48
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/spectrum
-
-externals:
-  - title: Cloudflare homepage
-    url: https://cloudflare.com

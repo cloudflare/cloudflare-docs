@@ -40,23 +40,27 @@ This guide covers how to configure [Zendesk](https://support.zendesk.com/hc/en-u
 
 6. To determine who can access Zendesk, [create an Access policy](/cloudflare-one/policies/access/).
 
-7. Copy the values from the Cloudflare IdP fields and add them to the following Zendesk fields:
+7. Copy the **SSO Endpoint** and **Public Key**.
+
+8. Transform the public key into a fingerprint:
+
+	1. Open a [fingerprint calculator](https://www.samltool.com/fingerprint.php).
+
+	2. Paste the **Public Key** into **X.509 cert**.
+
+	3. Wrap the value with `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
+
+	4. Set **Algorithm** to _SHA256_ and select **Calculate Fingerprint**.
+
+	5. Copy the **Formatted FingerPrint** value.
+
+9. Add the Cloudflare values to the following Zendesk fields:
 
    | Cloudflare IdP field                        | Zendesk field               |
    | ------------------------------------------- | --------------------------- |
    | **SSO Endpoint**                            | **SAML SSO URL**            |
    | **Public Key** (transformed to fingerprint) | **Certificate Fingerprint** |
 
-   To transform the public key into a fingerprint, use a [fingerprint calculator](https://www.samltool.com/fingerprint.php):
-
-   1. Copy the public key value and paste it into **X.509 cert**.
-
-   2. Wrap the value with `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
-
-   3. Set **Algorithm** to _SHA256_ and select **Calculate Fingerprint**.
-
-   4. Copy the **Formatted FingerPrint** value.
-
-8. Go to `https://<yourdomain>.zendesk.com/admin/security/staff_members` and enable **External Authentication** > **Single Sign On**.
+10. Go to `https://<yourdomain>.zendesk.com/admin/security/staff_members` and enable **External Authentication** > **Single Sign On**.
 
 Users should now be able to log in to Zendesk if their Email address exists in the Zendesk user list.

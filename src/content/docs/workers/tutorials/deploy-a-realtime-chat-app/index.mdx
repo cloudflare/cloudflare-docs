@@ -1,7 +1,6 @@
 ---
 updated: 2023-09-13
 difficulty: Intermediate
-content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Deploy a real-time chat application
 products:
@@ -10,13 +9,11 @@ languages:
   - JavaScript
 ---
 
-import { Render } from "~/components";
+import { Render, WranglerConfig } from "~/components";
 
 In this tutorial, you will deploy a serverless, real-time chat application that runs using [Durable Objects](/durable-objects/).
 
 This chat application uses a Durable Object to control each chat room. Users connect to the Object using WebSockets. Messages from one user are broadcast to all the other users. The chat history is also stored in durable storage. Real-time messages are relayed directly from one user to others without going through the storage layer.
-
-To continue with this tutorial, you must purchase the [Workers Paid plan](/workers/platform/pricing/#workers) and enable Durable Objects by logging into the [Cloudflare dashboard](https://dash.cloudflare.com) > **Workers & Pages** > select your Worker > **Durable Objects**.
 
 <Render file="tutorials-before-you-start" />
 
@@ -48,11 +45,9 @@ Your application will be deployed to your `*.workers.dev` subdomain.
 
 To deploy your application to a custom domain within the Cloudflare dashboard, go to your Worker > **Triggers** > **Add Custom Domain**.
 
-To deploy your application to a custom domain using Wrangler, open your project's `wrangler.toml`.
+To deploy your application to a custom domain using Wrangler, open your project's [Wrangler configuration file](/workers/wrangler/configuration/).
 
-To configure a route in your `wrangler.toml`, add the following to your environment:
-
-import { WranglerConfig } from "~/components";
+To configure a route in your Wrangler configuration file, add the following to your environment:
 
 <WranglerConfig>
 
@@ -64,11 +59,9 @@ routes = [
 
 </WranglerConfig>
 
-If you have specified your zone ID in the environment of your `wrangler.toml`, you will not need to write it again in object form.
+If you have specified your zone ID in the environment of your Wrangler configuration file, you will not need to write it again in object form.
 
-To configure a subdomain in your `wrangler.toml`, add the following to your environment:
-
-
+To configure a subdomain in your Wrangler configuration file, add the following to your environment:
 
 <WranglerConfig>
 
@@ -89,7 +82,7 @@ To test your live application:
 
 ## Uninstall your application
 
-To uninstall your chat application, modify your `wrangler.toml` file to remove the `durable_objects` bindings and add a `deleted_classes` migration:
+To uninstall your chat application, modify your Wrangler file to remove the `durable_objects` bindings and add a `deleted_classes` migration:
 
 
 
@@ -103,7 +96,7 @@ bindings = [
 # Indicate that you want the ChatRoom and RateLimiter classes to be callable as Durable Objects.
 [[migrations]]
 tag = "v1" # Should be unique for each entry
-new_classes = ["ChatRoom", "RateLimiter"]
+new_sqlite_classes = ["ChatRoom", "RateLimiter"]
 
 [[migrations]]
 tag = "v2"

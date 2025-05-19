@@ -10,6 +10,8 @@ head:
 description: Publish to a Queue directly via HTTP and Workers.
 ---
 
+import { WranglerConfig } from "~/components";
+
 The following example shows you how to publish messages to a queue from any HTTP client, using a shared secret to securely authenticate the client.
 
 This allows you to write to a Queue from any service or programming language that support HTTP, including Go, Rust, Python or even a Bash script.
@@ -17,11 +19,9 @@ This allows you to write to a Queue from any service or programming language tha
 ### Prerequisites
 
 - A [queue created](/queues/get-started/#3-create-a-queue) via the [Cloudflare dashboard](https://dash.cloudflare.com) or the [wrangler CLI](/workers/wrangler/install-and-update/).
-- A [configured **producer** binding](/queues/configuration/configure-queues/#producer) in the Cloudflare dashboard or `wrangler.toml` file.
+- A [configured **producer** binding](/queues/configuration/configure-queues/#producer-worker-configuration) in the Cloudflare dashboard or Wrangler file.
 
-Configure your `wrangler.toml` file as follows:
-
-import { WranglerConfig } from "~/components";
+Configure your Wrangler file as follows:
 
 <WranglerConfig>
 

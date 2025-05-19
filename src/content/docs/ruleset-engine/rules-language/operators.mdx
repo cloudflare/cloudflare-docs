@@ -1,5 +1,6 @@
 ---
 title: Operators and grouping symbols
+description: Learn about comparison, logical operators, and grouping symbols in Cloudflare's Rules language. Understand precedence and how to structure expressions.
 pcx_content_type: reference
 type: overview
 sidebar:
@@ -44,7 +45,7 @@ The Rules language supports these comparison operators:
         <td></td>
         <th>English</th>
         <th>C-like</th>
-        <th>String</th>
+        <th>String<sup>1</sup></th>
         <th>IP</th>
         <th>Number</th>
         <th>Example (operator in bold)</th>
@@ -81,7 +82,7 @@ The Rules language supports these comparison operators:
         <td>❌</td>
         <td>✅</td>
         <td>
-          <code>cf.threat_score <strong>lt</strong> 10</code>
+          <code>cf.waf.score <strong>lt</strong> 10</code>
         </td>
       </tr>
       <tr>
@@ -92,7 +93,7 @@ The Rules language supports these comparison operators:
         <td>❌</td>
         <td>✅</td>
         <td>
-          <code>cf.threat_score <strong>le</strong> 20</code>
+          <code>cf.waf.score <strong>le</strong> 20</code>
         </td>
       </tr>
       <tr>
@@ -103,7 +104,7 @@ The Rules language supports these comparison operators:
         <td>❌</td>
         <td>✅</td>
         <td>
-          <code>cf.threat_score <strong>gt</strong> 25</code>
+          <code>cf.waf.score <strong>gt</strong> 25</code>
         </td>
       </tr>
       <tr>
@@ -114,7 +115,7 @@ The Rules language supports these comparison operators:
         <td>❌</td>
         <td>✅</td>
         <td>
-          <code>cf.threat_score <strong>ge</strong> 60</code>
+          <code>cf.waf.score <strong>ge</strong> 60</code>
         </td>
       </tr>
       <tr>
@@ -129,7 +130,7 @@ The Rules language supports these comparison operators:
         </td>
       </tr>
       <tr>
-        <td>Wildcard<sup>1</sup><br/>(case-insensitive)</td>
+        <td><a href="#wildcard-matching">Wildcard</a><br/>(case-insensitive)</td>
         <td><code>wildcard</code></td>
         <td></td>
         <td>✅</td>
@@ -140,7 +141,7 @@ The Rules language supports these comparison operators:
         </td>
       </tr>
       <tr>
-        <td>Strict wildcard<sup>1</sup><br/>(case-sensitive)</td>
+        <td><a href="#wildcard-matching">Strict wildcard</a><br/>(case-sensitive)</td>
         <td><code>strict wildcard</code></td>
         <td></td>
         <td>✅</td>
@@ -151,7 +152,7 @@ The Rules language supports these comparison operators:
         </td>
       </tr>
       <tr>
-        <td>Matches<br />regex<sup>2</sup></td>
+        <td><a href="#regular-expression-matching">Matches<br />regex</a><sup>2</sup></td>
         <td><code>matches</code></td>
         <td><code>~</code></td>
         <td>✅</td>
@@ -178,8 +179,8 @@ The Rules language supports these comparison operators:
 </div>
 
 {/* prettier-ignore */}
-<sup>1</sup> For more information, refer to [Wildcard matching](#wildcard-matching).<br/>
-<sup>2</sup> Access to the `matches` operator requires a Cloudflare Business or Enterprise plan. For more information, refer to [Regular expression matching](#regular-expression-matching).<br/>
+<sup>1</sup> All string operators are case-sensitive unless explicitly stated as case-insensitive, such as the `wildcard` operator.<br/>
+<sup>2</sup> Access to the `matches` operator requires a Cloudflare Business or Enterprise plan.<br/>
 <sup>3</sup> Currently, not all Cloudflare products support lists in their expressions. For more information on lists, refer to [Inline lists](/ruleset-engine/rules-language/values/#inline-lists) and [Lists](/waf/tools/lists/).
 
 :::caution

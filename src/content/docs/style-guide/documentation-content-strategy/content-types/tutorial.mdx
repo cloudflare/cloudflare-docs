@@ -9,10 +9,6 @@ import { GlossaryDefinition, Render } from "~/components";
 
 <Render file="howto-vs-tutorial" />
 
-## Template
-
-We have a [tutorial template](https://github.com/cloudflare/cloudflare-docs/blob/production/templates/tutorial-template.mdx) that helps you follow our general structure and content guidelines.
-
 ## Guidelines
 
 **A tutorial is:**
@@ -40,11 +36,21 @@ Guiding, straightforward, educational, authoritative
 
 ### content_type
 
-`tutorial`
+```yaml
+pcx_content_type: tutorial
+```
 
-### Structure
+For more details, refer to [`pcx_content_type`](/style-guide/frontmatter/custom-properties/#pcx_content_type).
 
-#### Required components
+### Components
+
+#### Most used
+
+- [`GitHubCode`](/style-guide/components/github-code/)
+- [`LastReviewed`](/style-guide/components/last-reviewed/)
+- [`ListTutorials`](/style-guide/components/list-tutorials/)
+
+#### Required
 
 [**Title**](/style-guide/documentation-content-strategy/component-attributes/titles/): Short verb phrase in second-person imperative.
 
@@ -54,7 +60,7 @@ Guiding, straightforward, educational, authoritative
 
 [**Steps**](/style-guide/documentation-content-strategy/component-attributes/steps-tasks-procedures/): Numbered steps that complete a task.
 
-#### Optional components
+#### Optional
 
 [**Notes/warnings**](/style-guide/documentation-content-strategy/component-attributes/notes-tips-warnings/)
 

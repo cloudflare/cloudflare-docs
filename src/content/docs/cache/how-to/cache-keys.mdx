@@ -34,6 +34,10 @@ Custom cache keys let you precisely set the cacheability setting for any resourc
 7. You can also select settings for **Headers**, **Cookie**, **Host**, and **User**.
 8. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
 
+:::note
+When [URL normalization](/rules/normalization/) is enabled, we recommend also enabling [Normalize URLs to origin](/rules/normalization/manage/), especially if you are setting custom cache keys or using cache by device type, which also modifies the cache key. This helps ensure the URL in the cache key matches the URL sent to the origin, preventing cache poisoning and ensuring consistent behavior.
+:::
+
 ## Cache Key Template
 
 There are a couple of common reasons to change the Cache Key Template. You might change the Cache Key Template to:
@@ -95,7 +99,7 @@ In the **Check if header contains** section, you can add header names and their 
 
 To check for the presence of a header without including its actual value, use the **Check presence of** option.
 
-Currently, you can only exclude the `Origin` header. The `Origin` header is always included unless explicitly excluded. Including the [Origin header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin) in the Cache Key is important to enforce [CORS](https://developer.mozilla.org/en-US/docs/Glossary/CORS).
+Currently, you can only exclude the `Origin` header. The `Origin` header is always included unless explicitly excluded. Including the [Origin header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Origin) in the Cache Key is important to enforce [CORS](https://developer.mozilla.org/en-US/docs/Glossary/CORS).
 
 Additionally, you cannot include the following headers:
 
@@ -119,8 +123,8 @@ Additionally, you cannot include the following headers:
 
 Host determines which host header to include in the Cache Key.
 
-* If `resolved: false`, Cloudflare includes the `Host` header in the HTTP request sent to the origin.
-* If `resolved: true`, Cloudflare includes the `Host` header that was resolved to get the `origin IP` for the request. In this scenario, the `Host` header may be different from the header actually sent if the [Cloudflare Resolve Override](/rules/page-rules/how-to/override-url-or-ip-address/) feature is used.
+* If `Use original host` (`resolved: false` in the API), Cloudflare includes the `Host` header in the HTTP request sent to the origin.
+* If `Resolved host` (`resolved: true` in the API), Cloudflare includes the `Host` header that was resolved to get the `origin IP` for the request. The `Host` header may be different from the header actually sent if it has been changed with an [Origin Rule](/rules/origin-rules/features/#dns-record).
 
 ### Cookie
 

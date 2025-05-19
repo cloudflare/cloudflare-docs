@@ -11,7 +11,7 @@ updated: 2024-12-11
 
 Security perimeters have become less defined compared to the traditional "Castle and Moat" deployments that were popular in the past. Within a fixed perimeter, it was relatively easier to secure multiple applications using a single Web Application Firewall (WAF) deployment inside a datacenter. Today this approach does not provide enough flexibility as applications and services expand beyond the traditional datacenter. There are several good reasons to configure networks and services in a hybrid approach and to adopt SaaS platforms, so it is valuable to update the WAF approach to cover this scenario.
 
-Cloud-based WAF solutions can control the perimeter sprawl with a flexible deployment model that covers applications and services deployed on-premises, on cloud-based IaaS and PaaS environments, and in hybrid environments. 
+Cloud-based WAF solutions can control the perimeter sprawl with a flexible deployment model that covers applications and services deployed on-premises, on cloud-based IaaS and PaaS environments, and in hybrid environments.
 
 At the same time, an incorrect implementation of a cloud-based WAF can lead to security policy fragmentation and duplication, causing increased overheads both in maintenance and in monitoring. Aside from the clear economic impact that such inefficiencies bring, the lower efficiency can also degrade the security posture itself. This ultimately can lead to security incidents of varying degrees of severity depending on the scenario.
 
@@ -23,7 +23,7 @@ Cloudflare offers comprehensive Application Security & Performance solutions, wh
 
 In this guide, you will learn:
 
-* How to implement the Cloudflare WAF and factor common rules. 
+* How to implement the Cloudflare WAF and factor common rules.
 * How to easily implement common configurations across multiple applications.
 * How to deploy exceptions and specific configurations when needed.
 * What are the best practices to follow when deploying the Cloudflare WAF.
@@ -36,7 +36,7 @@ In this setup, Cloudflare is a DNS-based reverse proxy. Each Fully Qualified Dom
 
 Frequently, multiple FQDNs are pointing to the same, shared web infrastructure. This is reached using an IP address or another FQDN, for example. It is also possible that some FQDNs are pointed at dedicated origin infrastructure or to an external SaaS endpoint.
 
-In many cases, Cloudflare customers end up managing many Cloudflare Zones (such as `example.com`,`example.org`, `myappexample.com` and so on) within a single Cloudflare Account, and many FQDNs within each zone. Frequently, many FQDNs across multiple zones are pointing at a shared web infrastrcuture behind the scenes.
+In many cases, Cloudflare customers end up managing many Cloudflare Zones (such as `example.com`,`example.org`, `myappexample.com` and so on) within a single Cloudflare Account, and many FQDNs within each zone. Frequently, many FQDNs across multiple zones are pointing at a shared web infrastructure behind the scenes.
 
 For example, you could be in the following (or similar) scenario:
 * The majority of your web applications run on a newly deployed in-house Content Management System (CMS)
@@ -67,7 +67,7 @@ For the purposes of this guide, we will build on the example scenario and WAF Re
 Let's imagine that there are six applications behind six FQDNs across two domains. For these applications, you want to apply a baseline WAF security posture. However, of these six applications, two will require a more special treatment:
 
 * One is implemented on a legacy application server, prone to false positives.
-* Another is implemented by a third party on their own infrastrcuture.
+* Another is implemented by a third party on their own infrastructure.
 
 Let's visualize the scenario below:
 
@@ -96,7 +96,7 @@ Let's visualize the complete configuration in the below diagram:
 
 ![Diagram depicting the implemented WAF configuration at the account level](~/assets/images/reference-architecture/streamlined-waf-deployment-across-zones-apps/diagram-3.svg "Figure 3: The Account WAF implementation to protect multiple applications across different hostnames with repeatable configurations.")
 
-This setup will provide three instances of the Managed Ruleset, calibrated for each application group. 
+This setup will provide three instances of the Managed Ruleset, calibrated for each application group.
 
 If you have additional applications to be protected in the future, it is sufficient to include the new application FQDN to the filter expression. Generally, most will be added to the standard ruleset instance that is using the recommended Cloudflare configuration. Another common strategy is to add new applications to the `Log` mode instance, so that it can be monitored and eventually transitioned to the `Default` mode ruleset or to a more specific variation if required.
 
@@ -115,7 +115,7 @@ If this is your scenario, you can simplify the above setup in the following way 
 This approach can be simpler when there are few exceptions to the norm, and when the initial calibration confirms that the fine tuning already done by Cloudflare to minimize false positives is appropriate in your situation.
 
 ### Using Lists
-Cloudflare provides the ability to create [lists of hostnames](/waf/tools/lists/create-dashboard/). In this case, the Filter expression can be changed to reference such list variables. 
+Cloudflare provides the ability to create [lists of hostnames](/waf/tools/lists/create-dashboard/). In this case, the Filter expression can be changed to reference such list variables.
 
 You can then update the lists directly and re-use them across multiple rulesets. For example, use the same list for the Cloudflare Managed Rules and also for the OWASP Ruleset and Rate Limiting. Your filters [will reference the lists directly](/waf/tools/lists/use-in-expressions/), meaning a cleaner and maintainable configuration.
 

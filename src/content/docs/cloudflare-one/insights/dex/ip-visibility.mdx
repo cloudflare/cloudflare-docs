@@ -1,0 +1,74 @@
+---
+pcx_content_type: reference
+title: IP visibility
+sidebar:
+  order: 7
+---
+
+import { Render, Details } from "~/components";
+
+<Details header="Feature availability">
+
+| System   | Availability | Minimum WARP version |
+| -------- | ------------ | -------------------- |
+| Windows  | ✅           | 2025.1.861.0         |
+| macOS    | ✅           | 2025.1.861.0         |
+| Linux    | ✅           | 2025.1.861.0         |
+| iOS      | ❌           |                      |
+| Android  | ❌           |                      |
+| ChromeOS | ❌           |                      |
+
+</Details>
+
+DEX's IP visibility gives administrators insight into three different IP types per device:
+
+1. **Device**: The private IP address of an end-user device.
+2. **ISP**: The public IP assigned by the ISP that the end-user device is being routed though.
+3. **Gateway**: The router's private IP (the router the end device is connected to.)
+
+:::note
+
+The ISP IP is only visible to users with the [Zero Trust PII role](/cloudflare-one/roles-permissions/#cloudflare-zero-trust-pii).
+
+:::
+
+DEX's IP visibility supports both IPv6 and IPv4 addresses.
+
+IP information is crucial for IT administrators to accurately troubleshoot network issues and identify user locations. IT administrators face challenges like:
+
+- Pinpointing the exact location of a user experiencing issues ("AP 87 is bad.")
+- Identifying network access control policy violations ("NAC Policies is not applied properly.")
+- Troubleshooting firewall restrictions ("Firewall on VLAN 93 is blocking.")
+- Resolving Layer 2 and DHCP related problems.
+- Indirectly determining user identity and device location.
+
+## View a device's IP information
+
+To view IP information for a user device:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **My team** > **Devices**.
+2. Select a device, then select **View details**.
+3. Under **Details**, scroll down to **IP details**.
+4. Review the IP details for your selected device's most recent session.
+
+## View a device's IP history
+
+DEX's IP visibility allows you to review an event log of a device's IP history for the last seven days. To view a device's IP history:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **My team** > **Devices**.
+2. Select a device > **View details** > under **Details**, scroll down to **IP details**.
+3. Select **View device history**.
+4. View the device's IP history and status from the last seven days.
+5. Select a time to view more information about the device at that time.
+
+Refer to [Available metrics](/cloudflare-one/insights/dex/monitoring/#available-metrics) to review **Status** and **Mode** descriptions.
+
+## Troubleshoot with IP visibility
+
+While IP visibility allows you to inspect a device's IP information, use [DEX's live analytics](/cloudflare-one/insights/dex/monitoring/#available-metrics) to review which Cloudflare data center the device is connected to. When traffic leaves a WARP-connected end-user device, it will hit a [Cloudflare data center](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#identify-the-cloudflare-data-center-serving-your-request).
+
+To find which Cloudflare data center a device is connected to:
+
+1. Follow the steps listed in [View IP information](#view-a-devices-ip-history) to find a device's IP information.
+2. Select **Device Monitoring** above **Device event log**.
+3. Find **Colo** in the **Device details** table to review which Cloudflare data center your selected device's egress traffic is connected to.

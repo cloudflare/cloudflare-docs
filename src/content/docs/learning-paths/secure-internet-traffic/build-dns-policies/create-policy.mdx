@@ -5,10 +5,81 @@ sidebar:
   order: 1
 ---
 
-import { Render } from "~/components";
+import { Render, Tabs, TabItem } from "~/components";
 
 DNS policies determine how Gateway should handle a DNS request. When a user sends a DNS request, Gateway matches the request against your filters and either allows the query to resolve, blocks the query, or responds to the query with a different IP.
 
 You can filter DNS traffic based on query or response parameters (such as domain, source IP, or geolocation). You can also filter by user identity if you connect your devices to Gateway with the [WARP client or Cloudflare One Agent](/learning-paths/secure-internet-traffic/connect-devices-networks/install-agent/).
 
-<Render file="gateway/get-started/create-dns-policy" product="cloudflare-one" />
+To create a new DNS policy:
+
+<Tabs syncKey="dashPlusAPI">
+
+<TabItem label="Dashboard">
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Firewall policies**.
+2. In the **DNS** tab, select **Add a policy**.
+3. Name the policy.
+4. Under **Traffic**, build a logical expression that defines the traffic you want to allow or block.
+5. Choose an **Action** to take when traffic matches the logical expression. For example, we recommend adding a policy to block all [security categories](/cloudflare-one/policies/gateway/domain-categories/#security-categories):
+   <Render
+   	file="gateway/policies/block-security-categories"
+   	product="cloudflare-one"
+   />
+6. Select **Create policy**.
+
+For more information, refer to [DNS policies](/cloudflare-one/policies/gateway/dns-policies/).
+
+</TabItem>
+
+<TabItem label="API">
+
+To create a new DNS policy using cURL:
+
+```sh
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
+  --header 'Content-Type: application/json' \
+  --header "Authorization: Bearer <API_TOKEN>" \
+	--data '{
+		"name": "All-DNS-SecurityCategories-Blocklist",
+		"description": "Block known security risks based on Cloudflare's threat intelligence",
+		"precedence": 0,
+		"enabled": true,
+		"action": "block",
+		"filters": [
+			"dns"
+		],
+		"traffic": "any(dns.security_category[*] in {68 178 80 83 176 175 117 131 134 151 153})",
+		"rule_settings": {
+			"block_page_enabled": true,
+			"block_reason": "This domain was blocked due to being classified as a security risk to your organization"
+		}
+	}'
+```
+
+</TabItem>
+
+<TabItem label="Terraform">
+
+To create a new DNS policy using **Terraform**:
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "security_risks_dns_policy" {
+  account_id  = var.cloudflare_account_id
+  name        = "All-DNS-SecurityCategories-Blocklist"
+  description = "Block known security risks based on Cloudflare's threat intelligence"
+  precedence  = 0
+  enabled     = true
+  action      = "block"
+  filters     = ["dns"]
+  traffic     = "any(dns.security_category[*] in {68 178 80 83 176 175 117 131 134 151 153})"
+  rule_settings {
+      block_page_enabled = true
+      block_page_reason = "This domain was blocked due to being classified as a security risk to your organization"
+    }
+}
+```
+
+</TabItem>
+
+</Tabs>

@@ -8,15 +8,25 @@ import { FeatureTable } from "~/components"
 
 Use Cache Analytics to improve site performance or reduce origin web server traffic. Cache Analytics helps determine if resources are missing from cache, expired, or ineligible for caching. Cache Analytics includes filter by hostname, list of top URLs that miss cache, and a query of up to three days of data.
 
-First, determine whether to focus on Requests or Data Transfer. The default view is Requests, which helps with understanding performance because every cache miss degrades the speed of content delivery. Data Transfer helps with understanding cost because most hosting providers charge for every byte that leaves their network.
-
-You can toggle between Requests and Data Transfer while keeping other analytics filters enabled.
-
-For best practices related to Cache Analytics, refer to [Cache performance](/cache/performance-review/cache-performance/).
-
 ## Availability
 
 <FeatureTable id="cache.cache_analytics" />
+
+## Access Cache Analytics
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
+2. Go to **Caching** > **Overview**.
+
+## Requests vs Data Transfer
+
+You can decide wheter to focus on **Requests** or **Data Transfer**:
+
+- **Requests** (default view) help assess performance, as each cache miss slows down content delivery.
+- **Data Transfer** is useful for cost analysis, since most hosting providers charge for every byte that leaves their network.
+
+You can switch between these views while keeping other analytics filters applied.
+
+For best practices related to Cache Analytics, refer to [Cache performance](/cache/performance-review/cache-performance/).
 
 ## Add filters
 

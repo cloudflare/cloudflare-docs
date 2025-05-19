@@ -2,6 +2,11 @@
 import { getEntry } from "astro:content";
 
 const entry = await getEntry("pages-framework-presets", "index");
+
+if (!entry) {
+	throw new Error("Failed to load data");
+}
+
 const presets = entry.data.build_configs;
 const entries = Object.values(presets);
 ---

@@ -2,6 +2,7 @@ DirectoryPath: "dist"
 EnforceHTTPS: false
 IgnoreURLs:
   - "/api/*"
+  - "#_top"
 CheckLinks: true
 CheckImages: false
 CheckScripts: false

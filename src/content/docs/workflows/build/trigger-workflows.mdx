@@ -6,6 +6,8 @@ sidebar:
 
 ---
 
+import { WranglerConfig } from "~/components";
+
 You can trigger Workflows both programmatically and via the Workflows APIs, including:
 
 1. With [Workers](/workers) via HTTP requests in a `fetch` handler, or bindings from a `queue` or `scheduled` handler
@@ -29,9 +31,7 @@ New to Workflows? Start with the [Workflows tutorial](/workflows/get-started/gui
 
 :::
 
-To bind to a Workflow from your Workers code, you need to define a [binding](/workers/wrangler/configuration/) to a specific Workflow. For example, to bind to the Workflow defined in the [get started guide](/workflows/get-started/guide/), you would configure a `wrangler.toml` with the below:
-
-import { WranglerConfig } from "~/components";
+To bind to a Workflow from your Workers code, you need to define a [binding](/workers/wrangler/configuration/) to a specific Workflow. For example, to bind to the Workflow defined in the [get started guide](/workflows/get-started/guide/), you would configure the [Wrangler configuration file](/workers/wrangler/configuration/) with the below:
 
 <WranglerConfig>
 
@@ -144,14 +144,14 @@ Calling `resume` on an instance that is not currently paused will have no effect
 
 ### Stop a Workflow
 
-You can stop a Workflow instance by calling `abort` against a specific instance ID.
+You can stop/terminate a Workflow instance by calling `terminate` against a specific instance ID.
 
 ```ts
 let instance = await env.MY_WORKFLOW.get("abc-123")
-await instance.abort() // Returns Promise<void>
+await instance.terminate() // Returns Promise<void>
 ```
 
-Once stopped, the Workflow instance *cannot* be resumed.
+Once stopped/terminated, the Workflow instance *cannot* be resumed.
 
 ### Restart a Workflow
 

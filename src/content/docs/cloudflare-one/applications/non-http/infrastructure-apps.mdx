@@ -3,9 +3,6 @@ pcx_content_type: how-to
 title: Add an infrastructure application
 sidebar:
   order: 2
-  badge:
-    variant: tip
-    text: New
 ---
 
 import { Badge, Details, Tabs, TabItem, Render } from "~/components";
@@ -18,19 +15,19 @@ import { Badge, Details, Tabs, TabItem, Render } from "~/components";
 
 | System   | Availability |
 | -------- | ------------ |
-| Windows  | ✅            |
-| macOS    | ✅            |
-| Linux    | ✅            |
-| iOS      | ✅            |
-| Android  | ✅            |
-| ChromeOS | ✅            |
+| Windows  | ✅           |
+| macOS    | ✅           |
+| Linux    | ✅           |
+| iOS      | ✅           |
+| Android  | ✅           |
+| ChromeOS | ✅           |
 
 </Details>
 
 Access for Infrastructure allows you to have granular control over how users access individual servers, clusters, or databases. By adding an infrastructure application to Cloudflare Access, you can configure how users authenticate to the resource as well as control and authorize the ports, protocols, and usernames that they can connect with. Access and command logs ensure regulatory compliance and allow for auditing of user activity in case of a security breach.
 
 :::note
-Access for Infrastructure currently only supports [SSH](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/).
+Access for Infrastructure currently only supports [SSH](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/). To connect using other protocols, [add a self-hosted private application](/cloudflare-one/applications/non-http/self-hosted-private-app/). For browser-based SSH, RDP, or VNC, refer to [browser-rendered terminal](/cloudflare-one/applications/non-http/browser-rendering/).
 :::
 
 ## Prerequisites
@@ -40,19 +37,22 @@ Access for Infrastructure currently only supports [SSH](/cloudflare-one/connecti
 
 ## 1. Add a target
 
-<Render file="access/add-target" />
+<Render file="access/add-target" params={{ protocol: "generic" }} />
 
 ## 2. Add an infrastructure application
 
 <Render file="access/add-infrastructure-app" />
 
-## 3. Configure the server
+## 3. (Recommended) Modify order of precedence in Gateway
+<Render file="access/modify-gateway-policy-precedence" product="cloudflare-one" params={{ selector: "Access Infrastructure Target" }} />
+
+## 4. Configure the server
 
 Certain protocols require configuring the server to trust connections through Access for Infrastructure. For more information, refer to the protocol-specific tutorial:
 
-- [SSH](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/#7-configure-ssh-server)
+- [SSH](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/#6-configure-ssh-server)
 
-## 4. Connect as a user
+## 5. Connect as a user
 
 Users connect to the target's IP address using their preferred client software. The user must be logged into WARP on their device, but no other system configuration is required. You can optionally configure a [private DNS resolver](/cloudflare-one/policies/gateway/resolver-policies/) to allow connections to the target's private hostname.
 
@@ -70,13 +70,12 @@ If a user is connected to a target in VNET-A and needs to connect to a target in
 
 | System   | Availability | Minimum WARP version |
 | -------- | ------------ | -------------------- |
-| Windows  | ✅            | 2024.9.346.0        |
-| macOS    | ✅            | 2024.9.346.0        |
-| Linux    | ✅            | 2024.9.346.0        |
-| iOS      | ❌            |                     |
-| Android  | ❌            |                     |
-| ChromeOS | ❌            |                     |
-
+| Windows  | ✅           | 2024.9.346.0         |
+| macOS    | ✅           | 2024.9.346.0         |
+| Linux    | ✅           | 2024.9.346.0         |
+| iOS      | ❌           |                      |
+| Android  | ❌           |                      |
+| ChromeOS | ❌           |                      |
 
 </Details>
 
@@ -87,14 +86,24 @@ warp-cli target list
 ```
 
 ```sh output
-╭──────────────────────────────────────┬──────────┬──────┬────────────────────────────────┬───────────────────────────────────────────────────┬───────────╮
-│ Target ID                            │ Protocol │ Port │ Attributes                     │ IP (Virtual Network)                              │ Usernames │
-├──────────────────────────────────────┼──────────┼──────┼────────────────────────────────┼───────────────────────────────────────────────────┼───────────┤
-│ 0192027a-ef8a-7966-aff6-4576475db365 │ SSH      │ 22   │ hostname: digital-ocean-target │ 10.116.0.3 (a663a21c-76e5-4e3c-8296-d856682269f9) │ root      │
-├──────────────────────────────────────┼──────────┼──────┼────────────────────────────────┼───────────────────────────────────────────────────┼───────────┤
-│ 0192027a-ef8a-7966-aff6-4576475db365 │ SSH      │ 23   │ hostname: digital-ocean-target │ 10.116.0.3 (a663a21c-76e5-4e3c-8296-d856682269f9) │ root      │
-╰──────────────────────────────────────┴──────────┴──────┴────────────────────────────────┴───────────────────────────────────────────────────┴───────────╯
+╭──────────────────────────────────────┬──────────┬───────┬───────────────────────┬──────────────────────┬────────────╮
+│ Target ID                            │ Protocol │ Port  │ Attributes            │ IP (Virtual Network) │ Usernames  │
+├──────────────────────────────────────┼──────────┼───────┼───────────────────────┼──────────────────────┼────────────┤
+│ 0193f22a-9df3-78e3-b5bb-7ab631903306 │ SSH      │ 22    │ hostname: do-target   │ 10.116.0.3 (a1net)   │ alice      │
+├──────────────────────────────────────┼──────────┼───────┼───────────────────────┼──────────────────────┼────────────┤
+│ 0193f22a-9df3-78e3-b5bb-7ab631903306 │ SSH      │ 23    │ hostname: do-target   │ 10.116.0.3 (a1net)   │ root       │
+├──────────────────────────────────────┼──────────┼───────┼───────────────────────┼──────────────────────┼────────────┤
+│ 01943cff-6130-7989-8bff-cbc02b59a2b1 │ SSH      │ 80    │ hostname: az-target   │ 172.16.0.0 (b1net)   │ alice, bob │
+╰──────────────────────────────────────┴──────────┴───────┴───────────────────────┴──────────────────────┴────────────╯
 ```
+
+You can optionally add flags to filter the output. For example:
+
+```sh
+warp-cli target list --attribute hostname=do-target --username root
+```
+
+To view all available filters, type `warp-cli target list --help`.
 
 ## Revoke a user's session
 

@@ -1,11 +1,12 @@
 ---
 pcx_content_type: how-to
 title: Network segmentation
+description: Define policies to define if traffic should flow between your LANs without leaving your local premises, or if traffic should be forwarded to Cloudflare for additional security configurations.
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { APIRequest, Render, TabItem, Tabs } from "~/components";
 
-You can define policies in your Connector to either allow traffic to flow between your LANs without it leaving your local premises or to forward it via the Cloudflare network where you can add additional security features. The default behavior is to drop all LAN to LAN traffic. These policies can be created for specific subnets, and link two LANs.
+You can define policies in your Connector to either allow traffic to flow between your LANs without it leaving your local premises or to forward it via the Cloudflare network where you can add additional security features. The default behavior is to drop all LAN-to-LAN traffic. These policies can be created for specific subnets, and link two LANs.
 
 ```mermaid
 flowchart LR
@@ -29,9 +30,11 @@ _In the above example, the red path shows traffic that stays in the customer's p
 
 <br />
 
-Creating these policies to segment your network means LAN to LAN traffic can be allowed either locally or via Cloudflare's network. As a best practice for security, we recommend sending all traffic through Cloudflare's network for Zero Trust security filtering. Use these policies with care and only for scenarios where you have a hard requirement for LAN to LAN traffic flows.
+As a best practice for security, we recommend sending all traffic through Cloudflare’s network for Zero Trust security filtering. Use these policies with care and only for scenarios where you have a hard requirement for LAN-to-LAN traffic flows.
 
-Refer to [Magic WAN Connector deployment options](/reference-architecture/diagrams/sase/magic-wan-connector-deployment/) for a high-level explanation of the deployment options for Magic WAN Connector, as well as examples of network segmentation.
+If you enable LAN to LAN traffic flows, communications can only be initiated from origin to destination — for example, LAN 1 to LAN 2 — and not the other way around. This is by design and prevents potential exfiltration of information. This does not mean bidirectional communication on TCP is not possible. It only means that the origin is the only one authorized to initiate communications.
+
+Unidirectional communication can be enabled for UDP and ICMP, but it is not available for TCP, as it would break that protocol.
 
 The following guide assumes you have already created a site and configured your Connector. To learn how to create a site and configure your Connector, refer to [Configure hardware Connector](/magic-wan/configuration/connector/configure-hardware-connector/) or [Configure virtual connector](/magic-wan/configuration/connector/configure-virtual-connector/), depending on the type of Magic WAN Connector you have on your premises.
 
@@ -42,34 +45,38 @@ The following guide assumes you have already created a site and configured your 
 Follow the steps below to create a new LAN policy to segment your network. Only the fields marked **required** are mandatory.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
-2. Select **Magic WAN** > **Sites**.
-3. Select the site you want to configure > **Edit**.
-4. Go to **Network**, and scroll down to **LAN configuration**.
+2. Select **Magic WAN** > **Connector on-ramps (beta)**.
+3. Select the Connector you want to configure > **Edit**.
+4. Go to **Network Configuration**, and scroll down to **LAN configuration**.
 5. Select **LAN policies** > **Create Policy**.
 6. In **Policy name**, enter a descriptive name for the policy you are creating.
-7. From the drop-down menu **LAN 1**, select your origin LAN.
-8. (Optional) Specify a subnet for your first LAN in **Subnets**.
-9. (Optional) In **Ports** specify the TCP/UDP ports you want to use. Add a comma to separate each of the ports.
-10. In **LAN 2**, select the destination LAN and repeat the above process to configure it.
-11. (Optional) Select the type of traffic. You can choose **TCP**, **UDP**, and **ICMP**. You can also select **Any** to choose all types of traffic.
-12. In **Traffic path**, select **Forwarded via Cloudflare** if you want traffic to be forwarded to Cloudflare to be processed. If you do not select this option, traffic will flow locally, in your premises without passing through Cloudflare.
-13. Select **Create policy**.
+7. From the drop-down menu **Origin (required)**, select your origin LAN.
+8. Specify a subnet for your first LAN in **Subnets**.
+9. In **Ports** specify the TCP/UDP ports you want to use. Valid ports range from `1` to `65535`. Zero (`0`) is not a valid port number. Add a comma to separate each of the ports or add a port range. For example, `2,5,6,9-14`.
+10. In **Destination (required)**, select the destination LAN and repeat the above process to configure it.
+11. In **Protocols**, select the type of traffic you want to allow. You can choose **TCP**, **UDP**, and **ICMP**. You can also select **Any** to choose all types of traffic.
+12. In **Traffic direction** you can choose between bidirectional traffic (the default) and unidirectional traffic. What you can choose depends on the protocol that you chose for the policy:
+	1. **Any**: If **Any** is selected and you choose **Unidirectional**, the system will alert you that this will break TCP traffic.
+	2. **TCP**: You can only select **Bidirectional**.
+	3. **UDP**: The system defaults to **Bidirectional** but you can choose **Unidirectional**.
+	4. **ICMP**: The system defaults to **Bidirectional** but you can choose **Unidirectional**.
+13. In **Traffic path**, select **Forwarded via Cloudflare** if you want traffic to be forwarded to Cloudflare to be processed. If you do not select this option, traffic will flow locally, in your premises without passing through Cloudflare.
+14. Select **Create policy**.
+
+The new policy will ensure that traffic between the specified LANs flows locally, bypassing Cloudflare.
 
 </TabItem> <TabItem label="API">
 
-<Render file="connector/account-id-api-key" />
+<Render file="account-id-api-key" product="networking-services" />
 
 Create a `POST` request [using the API](/api/resources/magic_transit/subresources/sites/subresources/acls/methods/create/) to create a network policy.
 
 Example:
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/acls \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "acl": {
+<APIRequest
+  path="/accounts/{account_id}/magic/sites/{site_id}/acls"
+  method="POST"
+	json={{
     "description": "<POLICY_DESCRIPTION>",
     "forward_locally": true,
     "lan_1": {
@@ -96,38 +103,60 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{sit
     "protocols": [
       "tcp"
     ]
-  }
-}'
-```
+  }}
+/>
 
 ```json output
 {
-	"errors": [],
-	"messages": [],
-	"result": {
-		"acls": [
-			{
-				"description": "<POLICY_DESCRIPTION>",
-				"forward_locally": true,
-				"id": "023e105f4ecef8ad9ca31a8372d0c353",
-				"lan_1": {
-					"lan_id": "<LAN_ID>",
-					"lan_name": "<LAN_NAME>",
-					"ports": [1],
-					"subnets": ["192.0.2.1"]
-				},
-				"lan_2": {
-					"lan_id": "<LAN_ID>",
-					"lan_name": "<LAN_NAME>",
-					"ports": [1],
-					"subnets": ["192.0.2.1"]
-				},
-				"name": "<POLICY_NAME>",
-				"protocols": ["tcp"]
-			}
-		]
-	},
-	"success": true
+  "errors": [
+    {
+      "code": 1000,
+      "message": "message"
+    }
+  ],
+  "messages": [
+    {
+      "code": 1000,
+      "message": "message"
+    }
+  ],
+  "result": {
+    "id": "023e105f4ecef8ad9ca31a8372d0c353",
+    "description": "Allows local traffic between PIN pads and cash register.",
+    "forward_locally": true,
+    "lan_1": {
+      "lan_id": "lan_id",
+      "lan_name": "lan_name",
+      "port_ranges": [
+        "8080-9000"
+      ],
+      "ports": [
+        1
+      ],
+      "subnets": [
+        "192.0.2.1"
+      ]
+    },
+    "lan_2": {
+      "lan_id": "lan_id",
+      "lan_name": "lan_name",
+      "port_ranges": [
+        "8080-9000"
+      ],
+      "ports": [
+        1
+      ],
+      "subnets": [
+        "192.0.2.1"
+      ]
+    },
+    "name": "PIN Pad - Cash Register",
+    "protocols": [
+      "tcp"
+    ],
+    "unidirectional": true
+  },
+  "success": true
 }
 ```
 
@@ -142,29 +171,25 @@ The new policy will ensure that traffic between the specified LANs flows locally
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
-2. Select **Magic WAN** > **Sites**.
-3. Select the site you want to configure > **Edit**.
-4. Go to **Network**, and scroll down to **LAN configuration**.
+2. Select **Magic WAN** > **Connector on-ramps (beta)**.
+3. Select the Connector you want to configure > **Edit**.
+4. Go to **Network Configuration**, and scroll down to **LAN configuration**.
 5. Select **LAN policies**.
 6. Select the policy you need to edit > **Edit**.
 7. Make your changes, and select **Update policy**.
 
 </TabItem> <TabItem label="API">
 
-<Render file="connector/account-id-api-key" />
+<Render file="account-id-api-key" product="networking-services" />
 
 Create a `PUT` request [using the API](/api/resources/magic_transit/subresources/sites/subresources/acls/methods/update/) to edit a network policy.
 
 Example:
 
-```bash
-curl --request PUT \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/acls/{acl_id} \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "acl": {
+<APIRequest
+  path="/accounts/{account_id}/magic/sites/{site_id}/acls/{acl_id}"
+  method="PUT"
+  json={{
     "description": "<POLICY_DESCRIPTION>",
     "forward_locally": true,
     "lan_1": {
@@ -191,8 +216,37 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}
     "protocols": [
       "tcp"
     ]
-  }
-}'
+  }}
+/>
+
+```json output
+{
+  "errors": [
+    {
+      "code": 1000,
+      "message": "message"
+    }
+  ],
+  "messages": [
+    {
+      "code": 1000,
+      "message": "message"
+    }
+  ],
+  "result": {
+    "id": "023e105f4ecef8ad9ca31a8372d0c353",
+    "connector_id": "ac60d3d0435248289d446cedd870bcf4",
+    "description": "description",
+    "ha_mode": true,
+    "location": {
+      "lat": "37.6192",
+      "lon": "122.3816"
+    },
+    "name": "site_1",
+    "secondary_connector_id": "8d67040d3835dbcf46ce29da440dc482"
+  },
+  "success": true
+}
 ```
 
 </TabItem> </Tabs>
@@ -202,9 +256,9 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
-2. Select **Magic WAN** > **Sites**.
-3. Select the site you want to configure > **Edit**.
-4. Go to **Network**, and scroll down to **LAN configuration**.
+2. Select **Magic WAN** > **Connector on-ramps (beta)**.
+3. Select the Connector you want to configure > **Edit**.
+4. Go to **Network Configuration**, and scroll down to **LAN configuration**.
 5. Select **LAN policies**.
 6. Select the policy you need to edit > **Edit**.
 7. Select **Delete**.
@@ -212,17 +266,15 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}
 
 </TabItem> <TabItem label="API">
 
-<Render file="connector/account-id-api-key" />
+<Render file="account-id-api-key" product="networking-services" />
 
 Create a `DELETE` request [using the API](/api/resources/magic_transit/subresources/sites/subresources/acls/methods/delete/) to delete a network policy.
 
 Example:
 
-```bash
-curl --request DELETE \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/acls/{acl_identifier} \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>"
-```
+<APIRequest
+  path="/accounts/{account_id}/magic/sites/{site_id}/acls/{acl_id}"
+  method="DELETE"
+/>
 
 </TabItem> </Tabs>

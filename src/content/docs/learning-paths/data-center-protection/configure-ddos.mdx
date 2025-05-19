@@ -1,0 +1,39 @@
+---
+title: Configure DDoS protection
+pcx_content_type: learning-unit
+sidebar:
+  order: 4
+---
+
+import { Render } from "~/components"
+
+Cloudflare DDoS protection automatically detects and mitigates Distributed Denial of Service (DDoS) attacks using its Autonomous Edge. Magic Transit customers have access to additional features, such as:
+
+- [Advanced TCP protection](/ddos-protection/advanced-ddos-systems/overview/advanced-tcp-protection/) (disabled by default)
+- [Advanced DNS protection (beta)](/ddos-protection/advanced-ddos-systems/overview/advanced-dns-protection/)
+
+## Create a DDoS override
+
+<Render file="managed-rulesets/create-override" product="ddos-protection" />
+
+## DDoS advanced protection
+
+### Advanced TCP Protection
+
+<Render file="advanced-ddos/tcp-protection-intro" product="ddos-protection" />
+
+<Render file="advanced-ddos/mt-advanced-ddos-systems-onboarding" product="ddos-protection" />
+
+#### Setup
+
+<Render file="advanced-ddos/tcp-setup" product="ddos-protection" />
+
+### Advanced DNS Protection
+
+<Render file="advanced-ddos/dns-protection-intro" product="ddos-protection" />
+
+<Render file="advanced-ddos/mt-advanced-ddos-systems-onboarding" product="ddos-protection" />
+
+#### Setup
+
+<Render file="advanced-ddos/dns-setup" product="ddos-protection" />

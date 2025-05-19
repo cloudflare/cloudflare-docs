@@ -16,6 +16,11 @@ System environment variables are local environment variables that can change Wra
 
 3. Set the values in your shell environment. For example, if you are using Z shell, adding `export CLOUDFLARE_API_TOKEN=...` to your `~/.zshrc` file will set this token as part of your shell configuration.
 
+:::note
+
+To set different system environment variables for each environment, create files named `.env.<environment-name>`. When you use `wrangler <command> --env <environment-name>`, the corresponding environment-specific file will be loaded instead of the `.env` file, so the two files are not merged.
+:::
+
 ## Supported environment variables
 
 Wrangler supports the following environment variables:

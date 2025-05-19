@@ -7,4 +7,8 @@ import { Markdown } from "~/components"
 
 Order of precedence refers to the priority of individual policies within the {props.one} policy builder (lowest value first, or from top to bottom as shown in the dashboard). You can modify the order of precedence by dragging and dropping individual policies in the dashboard.
 
-In Gateway, the order of precedence follows the first match principle — once a site matches an Allow or Block policy, evaluation stops and no subsequent policies can override the decision. Therefore, we recommend putting the most specific policies and exceptions at the top of the list and the most general policies at the bottom.
+In Gateway, the order of precedence follows the first match principle — once a site matches an Allow or Block policy, evaluation stops and no subsequent policies can override the decision. Therefore, Cloudflare recommends putting the most specific policies and exceptions at the top of the list and the most general policies at the bottom.
+
+If Gateway traffic is headed to a private IP address protected as an Access application, that traffic will still be evaluated by the destination application's Access policies, even if a Gateway Allow rule matched first. Block policies that match traffic will terminate any other policy evaluation.
+
+This is expected behavior. A Gateway Allow policy does not override or bypass Access policies.

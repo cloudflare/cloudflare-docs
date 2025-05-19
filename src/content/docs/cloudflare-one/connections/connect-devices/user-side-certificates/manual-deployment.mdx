@@ -6,24 +6,22 @@ sidebar:
 head: []
 description: Manually add a Cloudflare certificate to mobile devices and
   individual applications.
-banner:
-  content: The default global Cloudflare root certificate will expire on 2025-02-02. If you installed the default Cloudflare certificate before 2024-10-17, you must <a href="#generate-a-cloudflare-root-certificate">generate a new certificate</a> and activate it for your Zero Trust organization to avoid inspection errors.
 ---
 
 import { Details, Render, TabItem, Tabs } from "~/components";
 
 :::note
-
 This procedure is only required to enable specific Cloudflare Zero Trust features, and should only be done at the direction of your IT department. This procedure is not required to enable the WARP client for consumers.
-
 :::
 
 If your device does not support [certificate installation via WARP](/cloudflare-one/connections/connect-devices/user-side-certificates/automated-deployment/), you can manually install a Cloudflare certificate. You must add the certificate to both the [system keychain](#add-the-certificate-to-operating-systems) and to [individual application stores](#add-the-certificate-to-applications). These steps must be performed on each new device that is to be subject to HTTP filtering.
 
+Zero Trust will only inspect traffic using installed certificates set to [**Available** and **In-Use**](/cloudflare-one/connections/connect-devices/user-side-certificates/#activate-a-root-certificate).
+
 ## Download the Cloudflare root certificate
 
 :::note[Download limitation]
-You can only download certificates from the Zero Trust dashboard.
+You can only download Cloudflare-generated certificates from the Zero Trust dashboard or with WARP.
 :::
 
 First, [generate](/cloudflare-one/connections/connect-devices/user-side-certificates/#generate-a-cloudflare-root-certificate) and download a Cloudflare certificate. The certificate is available in both `.pem` and `.crt` file format. Certain applications require the certificate to be in a specific file type, so ensure you download the most appropriate file for your use case.
@@ -32,6 +30,8 @@ First, [generate](/cloudflare-one/connections/connect-devices/user-side-certific
 2. In **Certificates**, select **Manage**.
 3. Select the certificate you want to download.
 4. Depending on which format you want, choose **Download .pem** and/or **Download .crt**.
+
+Alternatively, you can download and install a certificate [using WARP](/cloudflare-one/connections/connect-devices/user-side-certificates/automated-deployment/#install-a-certificate-using-warp). WARP will add the certificates to the device's system certificate store in `installed_certs/<certificate_id>.pem`.
 
 ### Verify the downloaded certificate
 
@@ -174,6 +174,10 @@ Windows offers two locations to install the certificate, each impacting which us
 8. Select **OK**, then select **Finish**.
 
 The root certificate is now installed and ready to be used.
+
+:::caution
+If your certificate is installed in the **Local Machine Store**, the [device posture check](/cloudflare-one/identity/devices/warp-client-checks/) looking for a certificate will fail. Install the certificate in the **Current User Store** to ensure a successful posture device check.
+:::
 
 ### Linux
 
@@ -708,27 +712,33 @@ The file at `~/ca.pem` needs to remain in place in order for the `gcloud` utilit
 
 If you use Kaniko with Google Cloud SDK, you must install a Cloudflare certificate in the [Kaniko CA store](https://docs.gitlab.com/ee/ci/docker/using_kaniko.html#using-a-registry-with-a-custom-certificate). For more information, refer to the [`gcloud` documentation](https://cloud.google.com/sdk/gcloud/reference/builds/submit).
 
-#### Google Drive for desktop
+#### Google Apps Manager (GAM)
+
+Google Apps Manager (GAM) uses its own certificate store. To add a Cloudflare certificate to GAM, refer to the [GAM documentation](https://github.com/GAM-team/GAM/wiki/#using-gam-with-ssl--tls-mitm-inspection).
+
+### Google Drive
 
 To trust a Cloudflare root certificate in the Google Drive desktop application, follow the procedure for your operating system. These steps require you to [download a `.pem` certificate](#download-the-cloudflare-root-certificate).
 
 <Tabs>
 <TabItem label="macOS" icon="apple">
 
-1. In the Finder menu bar, go to **Go** > **Go to Folder**. Enter `/Applications/Google Drive.app/Contents/Resources`.
-
-2. Find `roots.pem` and copy it to a permanent location, such as your Documents folder.
-
-3. Append the contents of `cloudflare.pem` to the end of `roots.pem`.
+1. In a terminal, copy the contents of the Google Drive certificate file to a new certificate file in a permanent location, such as your Documents folder. For example:
 
    ```sh
-   cat ~/Downloads/certificate.pem >> path/to/roots.pem
+   cat /Applications/"Google Drive.app"/Contents/Resources/roots.pem > ~/Documents/gdrivecerts.pem
    ```
 
-4. Apply the newly created root certificate to your Google Drive application.
+2. Append the contents of the downloaded certificate to the end of the new file. For example:
 
    ```sh
-   sudo defaults write /Library/Preferences/com.google.drivefs.settings TrustedRootCertsFile -string "path/to/roots.pem"
+   cat ~/Downloads/certificate.pem >> ~/Documents/gdrivecerts.pem
+   ```
+
+3. Apply the newly created root certificate to your Google Drive application. For example:
+
+   ```sh
+   sudo defaults write /Library/Preferences/com.google.drivefs.settings TrustedRootCertsFile "/Users/$(whoami)/Documents/gdrivecerts.pem"
    ```
 
 You can verify the update with the following command.
@@ -741,36 +751,34 @@ defaults read /Library/Preferences/com.google.drivefs.settings
 
 <TabItem label="Windows" icon="seti:windows">
 
-1. In File Explorer, go to `\Program Files\Google\Drive File Stream\<version>\config\`.
-
-2. Find `roots.pem` and copy it to a permanent location, such as your Documents folder.
-
-3. Append the contents of `cloudflare.pem` to the end of `roots.pem`.
+1. In an administrator PowerShell terminal, copy the contents of the Google Drive certificate file to a new certificate file in a permanent location, such as your Documents folder. For example:
 
    ```powershell
-   cat ~\Downloads\certificate.pem >> path\to\roots.pem
+   Get-Content "C:\Program Files\Google\Drive File Stream\roots.pem" | Set-Content "$HOME\Documents\gdrivecerts.pem"
    ```
 
-4. Update the Google Drive registry key.
+2. Append the contents of the downloaded certificate to the end of the new file. For example:
 
    ```powershell
-   reg ADD "HKEY_LOCAL_MACHINE\Software\Google\DriveFS" /v TrustedRootCertsFile /t REG_SZ /d "path\to\roots.pem"
+   Get-Content "$HOME\Downloads\certificate.pem" | Add-Content "$HOME\Documents\gdrivecerts.pem"
+   ```
+
+3. Apply the newly created root certificate to your Google Drive application. For example:
+
+   ```powershell
+   Set-ItemProperty -Path "HKLM:\SOFTWARE\Google\DriveFS" -Name "TrustedRootCertsFile" -Value "$HOME\Documents\gdrivecerts.pem"
    ```
 
 You can verify the update with the following command.
 
 ```powershell
-reg QUERY "HKEY_LOCAL_MACHINE\Software\Google\DriveFS" /v TrustedRootCertsFile"
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Google\DriveFS" | Select-Object TrustedRootCertsFile
 ```
 
 </TabItem>
 </Tabs>
 
 For more information, refer to the [Google documentation](https://support.google.com/a/answer/7644837) for the `TrustedRootCertsFile` setting.
-
-#### Google Apps Manager (GAM)
-
-Google Apps Manager (GAM) uses its own certificate store. To add a Cloudflare certificate to GAM, refer to the [GAM documentation](https://github.com/GAM-team/GAM/wiki/#using-gam-with-ssl--tls-mitm-inspection).
 
 ### AWS CLI
 

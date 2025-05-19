@@ -3,7 +3,11 @@ pcx_content_type: how-to
 title: Debugging and logging
 sidebar:
   order: 12
-
+banner:
+  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
+  type: note
+  dismissible:
+    id: pages-migrate-to-workers
 ---
 
 Access your Functions logs by using the Cloudflare dashboard or the [Wrangler CLI](/workers/wrangler/commands/#deployment-tail).
@@ -12,11 +16,11 @@ Logs are a powerful debugging tool that can help you test and monitor the behavi
 
 Logs provide detailed information about events and can give insight into:
 
-* Successful or failed requests to your Functions.
-* Uncaught exceptions thrown by your Functions.
-* Custom `console.log`s declared within your Functions.
-* Production issues that cannot be easily reproduced.
-* Real-time view of incoming requests to your application.
+- Successful or failed requests to your Functions.
+- Uncaught exceptions thrown by your Functions.
+- Custom `console.log`s declared within your Functions.
+- Production issues that cannot be easily reproduced.
+- Real-time view of incoming requests to your application.
 
 There are two ways to start a logging session:
 
@@ -27,13 +31,15 @@ There are two ways to start a logging session:
 
 Custom logs are `console.log()` statements that you can add yourself inside your Functions. When streaming logs for deployments that contain these Functions, the statements will appear in both `wrangler pages deployment tail` and dashboard outputs.
 
-Below is an example of a custom `console.log` statement  inside a Pages Function:
+Below is an example of a custom `console.log` statement inside a Pages Function:
 
 ```js
 export async function onRequest(context) {
-  console.log(`[LOGGING FROM /hello]: Request came from ${context.request.url}`);
+	console.log(
+		`[LOGGING FROM /hello]: Request came from ${context.request.url}`,
+	);
 
-  return new Response("Hello, world!");
+	return new Response("Hello, world!");
 }
 ```
 
@@ -98,10 +104,10 @@ Logging is available for all customers (Free, Paid, Enterprise).
 
 The following limits apply to Functions logs:
 
-* Logs are not stored. You can start and stop the stream at any time to view them, but they do not persist.
-* Logs will not display if the Function’s requests per second are over 100 for the last five minutes.
-* Logs from any [Durable Objects](/pages/functions/bindings/#durable-objects) your Functions bind to will show up in the Cloudflare dashboard.
-* A maximum of 10 clients can view a deployment’s logs at one time. This can be a combination of either dashboard sessions or `wrangler pages deployment tail` calls.
+- Logs are not stored. You can start and stop the stream at any time to view them, but they do not persist.
+- Logs will not display if the Function’s requests per second are over 100 for the last five minutes.
+- Logs from any [Durable Objects](/pages/functions/bindings/#durable-objects) your Functions bind to will show up in the Cloudflare dashboard.
+- A maximum of 10 clients can view a deployment’s logs at one time. This can be a combination of either dashboard sessions or `wrangler pages deployment tail` calls.
 
 ## Sourcemaps
 
@@ -109,9 +115,7 @@ If you're debugging an uncaught exception, you might find that the [stack traces
 
 :::note
 
-
 When developing fullstack applications, many build tools (including wrangler for Pages Functions and most fullstack frameworks) will generate source maps for both the client and server, ensure your build step is configured to only emit server sourcemaps or use an additional build step to remove the client source maps. Public source maps might expose the source code of your application to the user.
-
 
 :::
 

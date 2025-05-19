@@ -1,7 +1,3 @@
----
-[]
----
-
 While user tokens act on behalf of a particular user and inherit a subset of that user's permissions, account owned tokens allow you to set up durable integrations that can act as service principals with their own specific set of permissions. This approach is ideal for scenarios like CI/CD, or building integrations with external services like SEIMs where it is important that the integration continues working, even long after the user who configured the integration may have left your organization altogether. User tokens are better for ad hoc tasks like scripting, where acting as the user is ideal and durability is less of a concern.
 
 ## Create an account owned token
@@ -27,7 +23,7 @@ Account owned tokens are generally available for all accounts. Some services may
 | Product                         | Compatibility |
 | ------------------------------- | ------------- |
 | Access                          | ✅            |
-| Account Analytics               | ❌            |
+| Account Analytics               | ✅            |
 | Account Management              | ✅            |
 | AI Gateway                      | ✅            |
 | AMP                             | ✅            |
@@ -35,10 +31,12 @@ Account owned tokens are generally available for all accounts. Some services may
 | Argo                            | ✅            |
 | Billing                         | ✅            |
 | Cache                           | ✅            |
+| Tiered Cache                    | ❌            |
 | Cloud Connector                 | ✅            |
 | Configuration Rules             | ✅            |
 | Custom Lists                    | ❌            |
 | Custom Pages                    | ✅            |
+| D1                              | ✅            |
 | Data Loss Prevention            | ✅            |
 | Digital Experience Monitoring   | ✅            |
 | Distributed Web                 | ✅            |
@@ -51,10 +49,10 @@ Account owned tokens are generally available for all accounts. Some services may
 | Images                          | ✅            |
 | Intel Data Platform             | ❌            |
 | Load Balancing                  | ✅            |
-| Log Explorer                    | ❌            |
+| Log Explorer                    | ✅            |
 | Magic Network Monitoring        | ✅            |
-| Magic Transit                   | ❌            |
-| Magic WAN                       | ❌            |
+| Magic Transit                   | ✅            |
+| Magic WAN                       | ✅            |
 | Managed Rules                   | ✅            |
 | Network Error Logging           | ✅            |
 | Page Shield                     | ✅            |
@@ -72,10 +70,10 @@ Account owned tokens are generally available for all accounts. Some services may
 | Trace                           | ✅            |
 | Tunnels                         | ✅            |
 | Turnstile                       | ❌            |
-| Vectorize                       | ❌            |
+| Vectorize                       | ✅            |
 | Waiting Room                    | ✅            |
 | Workers                         | ✅            |
-| Workers AI                      | ❌            |
+| Workers AI                      | ✅            |
 | Workers KV                      | ✅            |
 | Workers Observability           | ❌            |
 | Workers Queues                  | ✅            |

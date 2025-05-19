@@ -10,7 +10,7 @@ Network layer attacks show [DDoS](https://www.cloudflare.com/en-gb/learning/ddos
 
 :::note
 
-Unlike what happens in [Application Layer Attacks](/radar/investigate/application-layer-attacks/), in network layer attacks location attribution does not use the location associated with the client's IP address. Instead, it uses the location of the data center itself. This is due to [IP spoofing](https://www.cloudflare.com/en-gb/learning/ddos/glossary/ip-spoofing/). 
+Unlike what happens in [Application Layer Attacks](/radar/investigate/application-layer-attacks/), in network layer attacks location attribution does not use the location associated with the client's IP address. Instead, it uses the location of the data center itself. This is due to [IP spoofing](https://www.cloudflare.com/en-gb/learning/ddos/glossary/ip-spoofing/).
 :::
 
 When filtering by location or autonomous system (AS), we are filtering by the source location/AS of the attack
@@ -56,6 +56,7 @@ If we inspect the abbreviated response below, we can conclude that globally, at 
         "endTime": "2022-11-07T13:00:00Z"
       },
       "normalization": "PERCENTAGE",
+			// ...
     }
   }
 }
@@ -92,7 +93,8 @@ curl "https://api.cloudflare.com/client/v4/radar/attacks/layer3/summary?location
         "startTime": "2022-11-06T15:00:00Z",
         "endTime": "2022-11-07T15:00:00Z"
       },
-      "normalization": "PERCENTAGE"
+      "normalization": "PERCENTAGE",
+			// ...
     }
   }
 }

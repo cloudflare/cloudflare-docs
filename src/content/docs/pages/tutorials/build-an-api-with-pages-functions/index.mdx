@@ -1,14 +1,13 @@
 ---
 updated: 2024-10-01
 pcx_content_type: tutorial
-content_type: 🎥 Video
 difficulty: Intermediate
 title: Build an API for your front end using Pages Functions
 languages:
   - JavaScript
 ---
 
-import { Stream } from "~/components";
+import { Stream, PackageManagers } from "~/components";
 
 In this tutorial, you will build a full-stack Pages application. Your application will contain:
 
@@ -20,9 +19,9 @@ If you prefer to work with a headless CMS rather than an API to render your blog
 ## Video Tutorial
 
 <Stream
-	videoId="2d8bbaa18fbd3ffa859a7fb30e9b3dd1"
-	videoTitle="Build an API With Pages Functions"
-	thumbnailTimeOrURL="29s"
+	id="2d8bbaa18fbd3ffa859a7fb30e9b3dd1"
+	title="Build an API With Pages Functions"
+	thumbnail="29s"
 />
 
 ## 1. Build your front end
@@ -36,7 +35,8 @@ In your terminal, create a new React project called `blog-frontend` using the `c
 ```sh title="Create a new React application"
 npx create-vite -t react blog-frontend
 cd blog-frontend
-npm start
+npm install
+npm run dev
 ```
 
 ### Set up your React project
@@ -45,17 +45,7 @@ To set up your React project:
 
 1. Install the [React Router](https://reactrouter.com/en/main/start/tutorial) in the root of your `blog-frontend` directory.
 
-With `npm`:
-
-```sh
-npm install react-router-dom@6
-```
-
-With `yarn`:
-
-```sh
-yarn add react-router-dom@6
-```
+<PackageManagers pkg="react-router-dom@6" />s
 
 2. Clear the contents of `src/App.js`. Copy and paste the following code to import the React Router into `App.js`, and set up a new router with two routes:
 

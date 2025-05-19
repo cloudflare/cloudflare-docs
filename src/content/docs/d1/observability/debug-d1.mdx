@@ -43,7 +43,7 @@ To capture exceptions, log the `Error.message` value. For example, the code belo
 
 ```js
 try {
-    // This is an intentional mispelling
+    // This is an intentional misspelling
     await db.exec("INSERTZ INTO my_table (name, employees) VALUES ()");
 } catch (e: any) {
     console.error({
@@ -94,4 +94,4 @@ You should include as much of the following in any bug report:
 
 * Learn [how to debug Workers](/workers/observability/).
 * Understand how to [access logs](/workers/observability/logs/) generated from your Worker and D1.
-* Use [`wrangler dev`](/workers/wrangler/commands/#dev) to run your Worker and D1 locally and [debug issues before deploying](/workers/testing/local-development/).
+* Use [`wrangler dev`](/workers/wrangler/commands/#dev) to run your Worker and D1 locally and [debug issues before deploying](/workers/local-development/).

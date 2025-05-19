@@ -5,11 +5,13 @@ sidebar:
   order: 2
 ---
 
+import { GlossaryTooltip} from "~/components"
+
 Time Travel is D1's approach to backups and point-in-time-recovery, and allows you to restore a database to any minute within the last 30 days.
 
 - You do not need to enable Time Travel. It is always on.
 - Database history and restoring a database incur no additional costs.
-- Time Travel automatically creates [bookmarks](#terminology) on your behalf. You do not need to manually trigger or remember to initiate a backup.
+- Time Travel automatically creates [bookmarks](#bookmarks) on your behalf. You do not need to manually trigger or remember to initiate a backup.
 
 By not having to rely on scheduled backups and/or manually initiated backups, you can go back in time and restore a database prior to a failed migration or schema change, a `DELETE` or `UPDATE` statement without a specific `WHERE` clause, and in the future, fork/copy a production database directly.
 
@@ -21,15 +23,16 @@ To understand which storage subsystem your database uses, run `wrangler d1 info 
 
 :::
 
-## Terminology
+## Bookmarks
 
-Time Travel introduces the concept of a "bookmark" to D1. A bookmark represents the state of a database at a specific point in time, and is effectively an append-only log.
+Time Travel leverages D1's concept of a <GlossaryTooltip term="bookmark"> bookmark </GlossaryTooltip> to restore to a point in time. 
 
-- Bookmarks are lexicographically sortable. Sorting orders a list of bookmarks from oldest-to-newest.
 - Bookmarks older than 30 days are invalid and cannot be used as a restore point.
 - Restoring a database to a specific bookmark does not remove or delete older bookmarks. For example, if you restore to a bookmark representing the state of your database 10 minutes ago, and determine that you needed to restore to an earlier point in time, you can still do so.
+- Bookmarks are lexicographically sortable. Sorting orders a list of bookmarks from oldest-to-newest.
+- Bookmarks can be derived from a [Unix timestamp](https://en.wikipedia.org/wiki/Unix_time) (seconds since Jan 1st, 1970), and conversion between a specific timestamp and a bookmark is deterministic (stable).
 
-Bookmarks can be derived from a [Unix timestamp](https://en.wikipedia.org/wiki/Unix_time) (seconds since Jan 1st, 1970), and conversion between a specific timestamp and a bookmark is deterministic (stable).
+Bookmarks are also leveraged by [Sessions API](/d1/best-practices/read-replication/#sessions-api-examples) to ensure sequential consistency within a Session.
 
 ## Timestamps
 
@@ -95,7 +98,7 @@ Note that:
 
 - Timestamps are converted to a deterministic, stable bookmark. The same timestamp will always represent the same bookmark.
 - Queries in flight will be cancelled, and an error returned to the client.
-- The restore operation will return a [bookmark](#terminology) that allows you to [undo](#undo-a-restore) and revert the database.
+- The restore operation will return a [bookmark](#bookmarks) that allows you to [undo](#undo-a-restore) and revert the database.
 
 ## Undo a restore
 
@@ -116,6 +119,12 @@ wrangler d1 time-travel info YOUR_DATABASE
 ⚡️ To restore to this specific bookmark, run:
  `wrangler d1 time-travel restore YOUR_DATABASE --bookmark=00000085-0000024c-00004c6d-8e61117bf38d7adb71b934ebbf891683`
 ```
+
+## Export D1 into R2 using Workflows
+
+You can automatically export your D1 database into R2 storage via REST API and Cloudflare Workflows. This may be useful if you wish to store a state of your D1 database for longer than 30 days.
+
+Refer to the guide [Export and save D1 database](/workflows/examples/backup-d1/).
 
 ## Notes
 

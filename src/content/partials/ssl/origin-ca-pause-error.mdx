@@ -1,0 +1,8 @@
+---
+{}
+
+---
+
+import { GlossaryTooltip } from "~/components";
+
+Site visitors may see untrusted certificate errors if you [pause Cloudflare](/fundamentals/setup/manage-domains/pause-cloudflare/) or <GlossaryTooltip term="proxy status">disable proxying</GlossaryTooltip> on subdomains that use Cloudflare origin CA certificates. These certificates only encrypt traffic between Cloudflare and your origin server, not traffic from client browsers to your origin.

@@ -5,7 +5,10 @@
 		"target": "ESNext",
 		"paths": {
 			"~/*": ["src/*"]
-		}
+		},
+		"jsx": "react-jsx",
+		"jsxImportSource": "react"
 	},
-	"exclude": ["dist", "functions", "./worker", "tests"]
+	"include": [".astro/types.d.ts", "**/*"],
+	"exclude": ["dist", "worker"]
 }

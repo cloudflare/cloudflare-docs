@@ -16,7 +16,3 @@ meta:
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/web3
   discord: https://discord.com/channels/595317990191398933/1024792052313096192
-
-externals:
-  - title: Web3 homepage
-    url: https://cloudflare.com/web3/

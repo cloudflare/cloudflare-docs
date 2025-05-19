@@ -1,6 +1,6 @@
 {
 	"title": "Application Security",
-	"path": "/learning-paths/application-security/",
+	"path": "/learning-paths/application-security/account-security/",
 	"priority": 6,
 	"description": "Learn more about the tools Cloudflare offers to protect your website against malicious traffic and bad actors.",
 	"products": [

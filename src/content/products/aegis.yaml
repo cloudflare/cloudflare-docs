@@ -5,7 +5,7 @@ product:
   url: /aegis/
   group: Network security
   additional_groups:
-    [Application performance, Application security, Cloudflare essentials]
+    [Application performance, Application security, Core platform]
 
 meta:
   title: Cloudflare Aegis docs
@@ -16,7 +16,3 @@ resources:
   community: https://community.cloudflare.com/
   dashboard_link: https://dash.cloudflare.com/
   discord: https://discord.gg/cloudflaredev
-
-externals:
-  - title: Cloudflare homepage
-    url: https://cloudflare.com

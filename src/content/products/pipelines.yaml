@@ -1,0 +1,11 @@
+name: Pipelines
+
+product:
+  title: Pipelines
+  url: /pipelines/
+  group: Developer platform
+
+meta:
+  title: Cloudflare Pipelines Docs
+  description: Ingest real time data streams and load into R2.
+  author: '@cloudflare'

@@ -14,12 +14,16 @@ When using Cloudflare DNS, you have a few options for your DNS zone setup:
 * [Subdomain setup](/dns/zone-setups/subdomain-setup/): With your apex domain (`example.com`) on a partial or full setup, independently manage the settings for a specific subdomain (`blog.example.com`) within a separate zone and, potentially, a separate account.
 * [Zone transfers](/dns/zone-setups/zone-transfers/): Use Cloudflare and another DNS provider together across your entire zone to increase availability and fault tolerance. DNS records will be transferred between providers using [AXFR](https://datatracker.ietf.org/doc/html/rfc5936) or [IXFR](https://datatracker.ietf.org/doc/html/rfc1995).
 
-:::note[Note:]
-
-
+:::note
 If you run your own authoritative nameservers but still want to benefit from Cloudflare's global anycast network, check out [DNS Firewall](/dns/dns-firewall/).
+:::
 
+## Zone status
 
+For details on zone status, consider the [Reference page](/dns/zone-setups/reference/domain-status/).
+
+:::caution[Do not use pending zones in production]
+If you have a paid plan, make sure not to use pending zones for production traffic. Cloudflare responds to DNS queries for pending zones on the assigned Cloudflare nameserver IPs but there are associated risks, especially if you do not use [zone holds](/fundamentals/setup/account/account-security/zone-holds/).
 :::
 
 ## Common use cases and availability

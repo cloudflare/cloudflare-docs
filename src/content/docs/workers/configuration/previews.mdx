@@ -8,7 +8,7 @@ sidebar:
 description: Preview URLs allow you to preview new versions of your project without deploying it to production.
 ---
 
-import { Render } from "~/components";
+import { Render, WranglerConfig } from "~/components";
 
 Preview URLs allow you to preview new versions of your Worker without deploying it to production.
 
@@ -20,7 +20,7 @@ Preview URLs can be:
 - Used for collaboration between teams to test code changes in a live environment and verify updates.
 - Used to test new API endpoints, validate data formats, and ensure backward compatibility with existing services.
 
-When testing zone level performance or security featues for a version, we recommended using [version overrides](/workers/configuration/versions-and-deployments/gradual-deployments/#version-overrides) so that your zone's performance and security settings apply.
+When testing zone level performance or security features for a version, we recommend using [version overrides](/workers/configuration/versions-and-deployments/gradual-deployments/#version-overrides) so that your zone's performance and security settings apply.
 
 :::note
 Preview URLs are only available for Worker versions uploaded after 2024-09-25.
@@ -35,7 +35,7 @@ The [`wrangler versions upload`](/workers/wrangler/commands/#upload) command upl
 ## View preview URLs on the Workers dashboard
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers) and select your project.
-2. Head to the "Deployments" tab find the version you would like to view.
+2. Go to the **Deployments** tab, and find the version you would like to view.
 
 ## Manage access to Preview URLs
 
@@ -60,7 +60,7 @@ You must press enter after you input your Application domain for it to save. You
 
 6. Go to the next page.
 7. Add a name for your access policy (for example, "Allow employees access to preview URLs for my-worker").
-8. In the **Configure rules** section create a new rule with the **Emails** selector, or any other attributes which you wish to gate access to previews with. 
+8. In the **Configure rules** section create a new rule with the **Emails** selector, or any other attributes which you wish to gate access to previews with.
 9. Enter the emails you want to authorize. View [access policies](/cloudflare-one/policies/access/#selectors) to learn about configuring alternate rules.
 10. Go to the next page.
 11. Add application.
@@ -77,15 +77,13 @@ To disable Preview URLs for a Worker:
 4. On "Preview URLs" click "Disable".
 5. Confirm you want to disable.
 
-### Disabling Preview URLs in `wrangler.toml`
+### Disabling Preview URLs in the [Wrangler configuration file](/workers/wrangler/configuration/)
 
 :::note
 Wrangler 3.91.0 or higher is required to use this feature.
 :::
 
-To disable Preview URLs for a Worker, include the following in your Worker's `wrangler.toml` file:
-
-import { WranglerConfig } from "~/components";
+To disable Preview URLs for a Worker, include the following in your Worker's Wrangler file:
 
 <WranglerConfig>
 
@@ -99,7 +97,7 @@ When you redeploy your Worker with this change, Preview URLs will be disabled.
 
 :::caution
 
-If you disable Preview URLs in the Cloudflare dashboard but do not update your Worker's `wrangler.toml` file with `preview_urls = false`, then Preview URLs will be re-enabled the next time you deploy your Worker with Wrangler.
+If you disable Preview URLs in the Cloudflare dashboard but do not update your Worker's Wrangler file with `preview_urls = false`, then Preview URLs will be re-enabled the next time you deploy your Worker with Wrangler.
 :::
 
 ## Limitations

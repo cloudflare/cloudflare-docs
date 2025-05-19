@@ -3,16 +3,14 @@ type: example
 summary: Query your D1 database from a Remix application.
 tags:
   - Remix
-  - D1
 pcx_content_type: example
 title: Query D1 from Remix
 sidebar:
   order: 2
 description: Query your D1 database from a Remix application.
-
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TabItem, Tabs } from "~/components";
 
 Remix is a full-stack web framework that operates on both client and server. You can query your D1 database(s) from Remix using Remix's [data loading](https://remix.run/docs/en/main/guides/data-loading) API with the [`useLoaderData`](https://remix.run/docs/en/main/hooks/use-loader-data) hook.
 
@@ -20,12 +18,12 @@ To set up a new Remix site on Cloudflare Pages that can query D1:
 
 1. **Refer to [the Remix guide](/pages/framework-guides/deploy-a-remix-site/)**.
 2. Bind a D1 database to your [Pages Function](/pages/functions/bindings/#d1-databases).
-3. Pass the `--d1 BINDING_NAME=DATABASE_ID` flag to `wrangler dev` when developing locally. `BINDING_NAME` should match what call in your code, and `DATABASE_ID` should match the `database_id` defined in your wrangler.toml: for example, `--d1 DB=xxxx-xxxx-xxxx-xxxx-xxxx`.
+3. Pass the `--d1 BINDING_NAME=DATABASE_ID` flag to `wrangler dev` when developing locally. `BINDING_NAME` should match what call in your code, and `DATABASE_ID` should match the `database_id` defined in your [Wrangler configuration file](/workers/wrangler/configuration/): for example, `--d1 DB=xxxx-xxxx-xxxx-xxxx-xxxx`.
 
 The following example shows you how to define a Remix [`loader`](https://remix.run/docs/en/main/route/loader) that has a binding to a D1 database.
 
-* Bindings are passed through on the `context.env` parameter passed to a `LoaderFunction`.
-* If you configured a [binding](/pages/functions/bindings/#d1-databases) named `DB`, then you would access [D1 Workers Binding API](/d1/worker-api/prepared-statements/) methods via `context.env.DB`.
+- Bindings are passed through on the `context.env` parameter passed to a `LoaderFunction`.
+- If you configured a [binding](/pages/functions/bindings/#d1-databases) named `DB`, then you would access [D1 Workers Binding API](/d1/worker-api/prepared-statements/) methods via `context.env.DB`.
 
 <Tabs> <TabItem label="TypeScript" icon="seti:typescript">
 

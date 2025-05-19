@@ -11,6 +11,10 @@ import FieldBadges from "~/components/fields/FieldBadges.tsx";
 export const getStaticPaths = (async () => {
 	const fields = await getEntry("fields", "index");
 
+	if (!fields) {
+		throw new Error("Failed to load fields");
+	}
+
 	return fields.data.entries.map((entry) => {
 		return {
 			params: {
@@ -45,7 +49,7 @@ const starlightPageProps = {
 		<div>
 			<h1
 				id="_top"
-				class="!-mt-4 !mb-2 flex items-center !text-2xl !font-bold !leading-none"
+				class="-mt-4! mb-2! flex items-center text-2xl! font-bold! leading-none!"
 			>
 				{name}
 			</h1>
@@ -116,7 +120,7 @@ const starlightPageProps = {
 			)
 	}
 
-	<div class="!mt-8">
+	<div class="mt-8!">
 		<span class="text-xs"
 			>Categories: <FieldBadges badges={field.categories as string[]} /></span
 		>

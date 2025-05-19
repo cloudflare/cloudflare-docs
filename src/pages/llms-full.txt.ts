@@ -6,8 +6,8 @@ export const GET: APIRoute = async () => {
 		if (!e.body) return false;
 
 		if (
-			e.slug === "warp-client/legal/3rdparty" ||
-			e.slug === "magic-wan/legal/3rdparty"
+			e.id === "warp-client/legal/3rdparty" ||
+			e.id === "magic-wan/legal/3rdparty"
 		)
 			return false;
 
@@ -17,8 +17,8 @@ export const GET: APIRoute = async () => {
 			entries.map((entry) => {
 				return [
 					`# ${entry.data.title}`,
-					`URL: https://developers.cloudflare.com/${entry.slug}/`,
-					`${entry.body.trim()}`,
+					`URL: https://developers.cloudflare.com/${entry.id}/`,
+					`${entry.body?.trim()}`,
 					"---",
 				].join("\n\n");
 			}),

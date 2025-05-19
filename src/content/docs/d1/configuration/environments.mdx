@@ -6,11 +6,11 @@ sidebar:
 
 ---
 
+import { WranglerConfig } from "~/components";
+
 [Environments](/workers/wrangler/environments/) are different contexts that your code runs in. Cloudflare Developer Platform allows you to create and manage different environments. Through environments, you can deploy the same project to multiple places under multiple names.
 
-To specify different D1 databases for different environments, use the following syntax in your `wrangler.toml` file:
-
-import { WranglerConfig } from "~/components";
+To specify different D1 databases for different environments, use the following syntax in your Wrangler file:
 
 <WranglerConfig>
 
@@ -32,11 +32,9 @@ d1_databases = [
 
 In the code above, the `staging` environment is using a different database (`DATABASE_NAME_1`) than the `production` environment (`DATABASE_NAME_2`).
 
-## Anatomy of `wrangler.toml` file
+## Anatomy of Wrangler file
 
-If you need to specify different D1 databases for different environments, your `wrangler.toml` may contain bindings that resemble the following:
-
-
+If you need to specify different D1 databases for different environments, your [Wrangler configuration file](/workers/wrangler/configuration/) may contain bindings that resemble the following:
 
 <WranglerConfig>
 

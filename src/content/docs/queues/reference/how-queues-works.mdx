@@ -6,6 +6,8 @@ sidebar:
 
 ---
 
+import { WranglerConfig } from "~/components";
+
 Cloudflare Queues is a flexible messaging queue that allows you to queue messages for asynchronous processing. Message queues are great at decoupling components of applications, like the checkout and order fulfillment services for an e-commerce site. Decoupled services are easier to reason about, deploy, and implement, allowing you to ship features that delight your customers without worrying about synchronizing complex deployments. Queues also allow you to batch and buffer calls to downstream services and APIs.
 
 There are four major concepts to understand with Queues:
@@ -135,9 +137,7 @@ export default {
 };
 ```
 
-You then connect that consumer to a queue with `wrangler queues consumer <queue-name> <worker-script-name>` or by defining a `[[queues.consumers]]` configuration in your `wrangler.toml` manually:
-
-import { WranglerConfig } from "~/components";
+You then connect that consumer to a queue with `wrangler queues consumer <queue-name> <worker-script-name>` or by defining a `[[queues.consumers]]` configuration in your [Wrangler configuration file](/workers/wrangler/configuration/) manually:
 
 <WranglerConfig>
 
@@ -190,7 +190,7 @@ export default {
 
 ### Remove a consumer
 
-To remove a queue from your project, run `wrangler queues consumer remove <queue-name> <script-name>` and then remove the desired queue below the `[[queues.consumers]]` in `wrangler.toml` file.
+To remove a queue from your project, run `wrangler queues consumer remove <queue-name> <script-name>` and then remove the desired queue below the `[[queues.consumers]]` in Wrangler file.
 
 ### Pull consumers
 

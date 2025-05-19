@@ -15,11 +15,7 @@ This guide covers how to configure [Grafana](https://grafana.com/docs/grafana/la
 * Admin access to a Grafana account
 
 :::note
-
-
 You can also configure OIDC SSO for Grafana using a [configuration file](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/generic-oauth/#configure-generic-oauth-authentication-client-using-the-grafana-configuration-file) instead of using Grafana's user interface (UI), as documented in this guide.
-
-
 :::
 
 ## 1. Add a SaaS application to Cloudflare Zero Trust
@@ -33,10 +29,9 @@ You can also configure OIDC SSO for Grafana using a [configuration file](https:/
 7. In **Redirect URLs**, enter `https://<your-grafana-domain>/login/generic_oauth`.
 8. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/) if the protocol is supported by your IdP. PKCE will be performed on all login attempts.
 9. Copy the **Client secret**, **Client ID**, **Token endpoint**, and **Authorization endpoint**.
-10. Select **Save configuration**.
-11. (Optional) configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) by turning on **Enable App in App Launcher** and, in **App Launcher URL**, entering `https://<your-grafana-domain>/login`.
-12. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
-13. Select **Done**.
+10. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
+11. (Optional) In **Experience settings**, configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) by turning on **Enable App in App Launcher** and, in **App Launcher URL**, entering `https://<your-grafana-domain>/login`.
+12. Save the application.
 
 ## 2. Add a SSO provider to Grafana
 

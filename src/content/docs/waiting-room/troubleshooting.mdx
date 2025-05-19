@@ -81,6 +81,10 @@ A manual tab refresh has no effect on a user's position in your waiting room.
 However, if they close their tab and then try to access the application again during active queueing, they will lose their spot and have to go to the back of the queue.
 
 
+### What happens if a queued user leaves the queue?
+
+When a user joins the queue, they are placed into a bucket which is their general position in line. When a user leaves the queue (closes the browser or tab), their place in line is held for five minutes after the last refresh. This grace period allows users to keep their position in line if they experience a brief disconnection. After five minutes, the grace period expires and they are no longer counted as waiting in the queue.
+
 
 
 ## Monitor your waiting room
@@ -114,4 +118,21 @@ Your user also might not have [cookies](/waiting-room/reference/waiting-room-coo
 
 ### Why is the estimated wait time increasing for some users?
 
-Estimated wait times may increase if the rate of users leaving your site decreases. The estimated wait time is updated upon each page refresh based on the most recently available information about the rate of slots opening up on your site and the number of users ahead of the user in line. To make this increase less likely, you could limit the amount of time users are allowed to spend on your site by disabling session renewal. Be aware that if you change your traffic settings, estimated wait times will change as well.
+Estimated wait times may increase if the rate of users leaving your site decreases. The estimated wait time is updated upon each page refresh based on the most recently available information about the rate of slots opening up on your site and the number of users ahead of the user in line. To make this increase less likely, you could limit the amount of time users are allowed to spend on your site by disabling session renewal. Be aware that, if you change your traffic settings, estimated wait times will change as well.
+
+
+### Why is `new users per minute` low when there is capacity available?
+
+The `new users per minute` metric tracks how many users were accepted to the origin in the last minute. It is only incremented when a queued user refreshes and is accepted to the origin. If the waiting room queueing method is set to `fifo`, we will wait until all queued users in a minute-based bucket are accepted before moving to the next bucket. If many of the users in a bucket have abandoned the queue, then the waiting room must wait until their place in line expires before moving on to the next bucket. This can cause `new users per minute` to be low when only a small percentage of queued users are actually still waiting.
+
+This is often noticed if there is a large amount of automated traffic which does not handle cookies properly. Since bots usually do not persist cookies from one request to the next, they end up counting as multiple inactive users in the queue and prevent full utilization of available slots. For this reason, we recommend leveraging [Bots Management](/bots/) products to keep bots out of the queue. Waiting Room Advanced customers can try our [Turnstile](/turnstile/) integration, which prevents bots from clogging the line by putting  them in an infinite queue.
+
+### Why are my Waiting Room analytics and Google analytics not matching?
+
+Waiting Room relies on a session cookie to count and keep track of active users. The duration for which a user is considered active depends on the waiting room configuration. The key setting involved in this calculation is [session duration](/waiting-room/reference/configuration-settings/#session-duration). By default, Waiting Room considers a user active from the time of their last request made with a session cookie, until the configured session duration elapses. Customers with an advanced Waiting Room setup can modify this behavior by [disabling session renewal](/waiting-room/how-to/control-user-session/#disable-session-renewal-to-limit-browsing-time) and/or explicitly [revoking sessions](/waiting-room/how-to/control-user-session/#revoke-a-users-session-using-origin-commands) using an origin command.
+
+If the session duration is set to a higher value, a user who makes only a single request will be considered active for longer than they actually were. This can cause the `Total Active Users` metric to appear higher than the active users metric reported by Google Analytics for the same time period, as Google Analytics only counts users who made requests during that specific period.
+
+For example, if the session duration is set to 30 minutes and you look at the last 10 minutes of active users in Google Analytics, the number of active users reported by Waiting Room will be higher, since it includes users from the last 30 minutes.
+
+Another key difference is that Waiting Room runs on requests made to the origin, while Google Analytics requires a user-agent to run JavaScript (via Google Tag). Waiting Room creates new sessions and tracks user metrics based on the HTTP request path, without requiring any additional JavaScript execution by a user-agent. In contrast, Google Analytics requires user-agents to execute JavaScript and make a secondary request to report details to Google Analytics. If a large portion of the traffic is automated, it may not be captured by Google Analytics. However, Waiting Room analytics will count such traffic as new users and consider them active for the configured session duration.

@@ -6,6 +6,6 @@ product:
   url: /cloudflare-one/policies/access/
 
 meta:
-  title: Cloudflare Access
+  title: Cloudflare Access docs
   description: Determine who can reach your application using policies.
   author: "@cloudflare"

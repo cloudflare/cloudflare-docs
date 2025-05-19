@@ -1,0 +1,21 @@
+---
+title: Autofix Worker name configuration errors at build time
+description: Workers Builds automatically creates a pull request to update the name field in the wrangler file if it doesn’t match your Worker's name in the Cloudflare dashboard.
+products:
+  - workers
+date: 2025-02-20T11:00:00Z
+---
+
+![Auto-fixing Workers Name in Git Repo](~/assets/images/workers/platform/ci-cd/gh-auto-pr-name.png)
+
+Small misconfigurations shouldn’t break your deployments. Cloudflare is introducing automatic error detection and fixes in [Workers Builds](/workers/ci-cd/builds/), identifying common issues in your wrangler.toml or wrangler.jsonc and proactively offering fixes, so you spend less time debugging and more time shipping.
+
+Here's how it works:
+
+1. Before running your build, Cloudflare checks your Worker's Wrangler configuration file (wrangler.toml or wrangler.jsonc) for common errors.
+2. Once you submit a build, if Cloudflare finds an error it can fix, it will submit a pull request to your repository that fixes it.
+3. Once you merge this pull request, Cloudflare will run another build.
+
+We're starting with fixing name mismatches between your Wrangler file and the Cloudflare dashboard, a top cause of build failures.
+
+This is just the beginning, we want your feedback on what other errors we should catch and fix next. Let us know in the Cloudflare Developers Discord, [#workers-and-pages-feature-suggestions](https://discord.com/channels/595317990191398933/1064502845061210152).

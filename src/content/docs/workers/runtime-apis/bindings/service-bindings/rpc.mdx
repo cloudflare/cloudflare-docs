@@ -8,7 +8,7 @@ description: Facilitate Worker-to-Worker communication via RPC.
 
 ---
 
-import { DirectoryListing, Render } from "~/components"
+import { DirectoryListing, Render, WranglerConfig } from "~/components"
 
 [Service bindings](/workers/runtime-apis/bindings/service-bindings) allow one Worker to call into another, without going through a publicly-accessible URL.
 
@@ -18,7 +18,7 @@ The [RPC system in Workers](/workers/runtime-apis/rpc) is designed feel as simil
 
 :::note
 
-You can also use RPC to communicate between Workers and [Durable Objects](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/#call-rpc-methods).
+You can also use RPC to communicate between Workers and [Durable Objects](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/#invoke-rpc-methods).
 :::
 
 ## Example
@@ -48,8 +48,6 @@ A new instance of the class is created every time the Worker is called. Note tha
 The [`env`](/workers/runtime-apis/bindings) object is exposed as a class property of the `WorkerEntrypoint` class.
 
 For example, a Worker that declares a binding to the [environment variable](/workers/configuration/environment-variables/) `GREETING`:
-
-import { WranglerConfig } from "~/components";
 
 <WranglerConfig>
 

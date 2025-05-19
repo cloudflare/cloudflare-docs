@@ -5,6 +5,8 @@ sidebar:
   order: 5
 ---
 
+import { WranglerConfig } from "~/components";
+
 Consumer concurrency allows a [consumer Worker](/queues/reference/how-queues-works/#consumers) processing messages from a queue to automatically scale out horizontally to keep up with the rate that messages are being written to a queue.
 
 In many systems, the rate at which you write messages to a queue can easily exceed the rate at which a single consumer can read and process those same messages. This is often because your consumer might be parsing message contents, writing to storage or a database, or making third-party (upstream) API calls.
@@ -58,7 +60,7 @@ If you have a workflow that is limited by an upstream API and/or system, you may
 You can configure the concurrency of your consumer Worker in two ways:
 
 1. Set concurrency settings in the Cloudflare dashboard
-2. Set concurrency settings via `wrangler.toml`
+2. Set concurrency settings via the [Wrangler configuration file](/workers/wrangler/configuration/)
 
 ### Set concurrency settings in the Cloudflare dashboard
 
@@ -74,7 +76,7 @@ To remove a fixed maximum value, select **auto (recommended)**.
 
 Note that if you are writing messages to a queue faster than you can process them, messages may eventually reach the [maximum retention period](/queues/platform/limits/) set for that queue. Individual messages that reach that limit will expire from the queue and be deleted.
 
-### Set concurrency settings via `wrangler.toml`
+### Set concurrency settings in the [Wrangler configuration file](/workers/wrangler/configuration/)
 
 :::note
 
@@ -82,9 +84,7 @@ Ensure you are using the latest version of [wrangler](/workers/wrangler/install-
 
 :::
 
-To set a fixed maximum number of concurrent consumer invocations for a given queue, configure a `max_concurrency` in your `wrangler.toml` file:
-
-import { WranglerConfig } from "~/components";
+To set a fixed maximum number of concurrent consumer invocations for a given queue, configure a `max_concurrency` in your Wrangler file:
 
 <WranglerConfig>
 
@@ -121,7 +121,7 @@ When multiple consumer Workers are invoked, each Worker invocation incurs [CPU t
 - If you intend to process all messages written to a queue, _the effective overall cost is the same_, even with concurrency enabled.
 - Enabling concurrency simply brings those costs forward, and can help prevent messages from reaching the [message retention limit](/queues/platform/limits/).
 
-Billing for consumers follows the [Workers standard usage model](/workers/platform/pricing/#example-pricing-standard-usage-model) meaning a developer is billed for the request and for CPU time used in the request.
+Billing for consumers follows the [Workers standard usage model](/workers/platform/pricing/#example-pricing) meaning a developer is billed for the request and for CPU time used in the request.
 
 ### Example
 

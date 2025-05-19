@@ -5,29 +5,29 @@ sidebar:
   order: 1
 ---
 
-import { Aside } from "~/components";
+import { Aside, WranglerConfig, PackageManagers } from "~/components";
 
-As seen in the [Getting Started guide](/browser-rendering/get-started/screenshots/), Browser Rendering can be used to generate screenshots for any given URL. Alongside screenshots, you can also generate full PDF documents for a given webpage, and can also provide the webpage markup and style ourselves.
+As seen in the [Getting Started guide](/browser-rendering/workers-binding-api/screenshots/), Browser Rendering can be used to generate screenshots for any given URL. Alongside screenshots, you can also generate full PDF documents for a given webpage, and can also provide the webpage markup and style ourselves.
 
 ## Prerequisites
 
 1. Use the `create-cloudflare` CLI to generate a new Hello World Cloudflare Worker script:
 
-```sh
-npm create cloudflare@latest -- browser-worker
-```
+<PackageManagers type="create" pkg="cloudflare@latest" args="browser-worker" />
 
 2. Install `@cloudflare/puppeteer`, which allows you to control the Browser Rendering instance:
 
-```sh
-npm install @cloudflare/puppeteer --save-dev
-```
+<PackageManagers pkg="@cloudflare/puppeteer" dev />
 
-3. Add your Browser Rendering binding to your new `wrangler.toml` configuration:
+3. Add your Browser Rendering binding to your new Wrangler configuration:
 
-```toml
+<WranglerConfig>
+
+```toml title="wrangler.toml"
 browser = { binding = "BROWSER" }
 ```
+
+</WranglerConfig>
 
 4. Replace the contents of `src/index.ts` (or `src/index.js` for JavaScript projects) with the following skeleton script:
 
@@ -69,7 +69,7 @@ Rather than using Browser Rendering to navigate to a user-provided URL, manually
 You can generate your HTML or CSS using any method you like. This example uses string interpolation, but the method is also fully compatible with web frameworks capable of rendering HTML on Workers such as React, Remix, and Vue.
 :::
 
-For this example, we're going to take in user-provided content (via a '?name=' parameter), and have that name output in the final PDF document.
+For this example, we are going to take in user-provided content (via a '?name=' parameter), and have that name output in the final PDF document.
 
 To start, fill out your `generateDocument` function with the following:
 
@@ -236,6 +236,9 @@ export default {
 		// // Step 3: Generate and return PDF
 		const pdf = await page.pdf({ printBackground: true });
 
+		// Close browser since we no longer need it
+		await browser.close();
+
 		return new Response(pdf, {
 			headers: {
 				"content-type": "application/pdf",
@@ -247,9 +250,7 @@ export default {
 
 You can run this script to test it using Wrangler’s `--remote` flag:
 
-```sh
-npx wrangler@latest dev --remote
-```
+<PackageManagers type="exec" pkg="wrangler" args="dev --remote" />
 
 With your script now running, you can pass in a `?name` parameter to the local URL (such as `http://localhost:8787/?name=Harley`) and should see the following:
 

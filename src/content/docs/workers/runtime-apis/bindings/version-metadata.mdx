@@ -13,15 +13,13 @@ sidebar:
 
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TabItem, Tabs, WranglerConfig } from "~/components"
 
 The version metadata binding can be used to access metadata associated with a [version](/workers/configuration/versions-and-deployments/#versions) from inside the Workers runtime.
 
 Worker version ID, version tag and timestamp of when the version was created are available through the version metadata binding. They can be used in events sent to [Workers Analytics Engine](/analytics/analytics-engine/) or to any third-party analytics/metrics service in order to aggregate by Worker version.
 
-To use the version metadata binding, update your Worker's `wrangler.toml` file:
-
-import { WranglerConfig } from "~/components";
+To use the version metadata binding, update your Worker's Wrangler file:
 
 <WranglerConfig>
 

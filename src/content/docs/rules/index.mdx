@@ -3,6 +3,7 @@ title: Cloudflare Rules
 pcx_content_type: overview
 sidebar:
   order: 1
+description: Use Cloudflare Rules to adjust requests and responses, configure settings, and trigger actions for specific requests.
 head:
   - tag: title
     content: Overview
@@ -21,7 +22,7 @@ import {
 
 <Render file="rules-definition" />
 
-Rules features require that you [proxy the DNS records](/dns/manage-dns-records/reference/proxied-dns-records/) of your domain (or subdomain) through Cloudflare.
+Rules features require that you [proxy the DNS records](/dns/proxy-status/) of your domain (or subdomain) through Cloudflare.
 
 ---
 
@@ -78,12 +79,12 @@ Rules features require that you [proxy the DNS records](/dns/manage-dns-records/
 </Feature>
 
 <Feature
-	header="Custom Error Responses"
-	href="/rules/custom-error-responses/"
-	cta="Configure Custom Error Responses"
+	header="Custom Errors"
+	href="/rules/custom-errors/"
+	cta="Configure Custom Errors"
 >
-	Define custom responses for errors returned by an origin server or by a
-	Cloudflare product, including Workers.
+	Define what custom content to serve for errors returned by an origin server
+	or by a Cloudflare product, including Workers.
 </Feature>
 
 ---

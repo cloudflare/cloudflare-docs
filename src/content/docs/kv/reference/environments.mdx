@@ -5,11 +5,11 @@ sidebar:
   order: 3
 ---
 
+import { WranglerConfig } from "~/components";
+
 KV namespaces can be used with [environments](/workers/wrangler/environments/). This is useful when you have code in your Worker that refers to a KV binding like `MY_KV`, and you want to have these bindings point to different KV namespaces (for example, one for staging and one for production).
 
-The following code in the `wrangler.toml` file shows you how to have two environments that have two different KV namespaces but the same binding name:
-
-import { WranglerConfig } from "~/components";
+The following code in the Wrangler file shows you how to have two environments that have two different KV namespaces but the same binding name:
 
 <WranglerConfig>
 
@@ -52,7 +52,7 @@ Most `kv` subcommands also allow you to specify an environment with the optional
 
 Specifying an environment with the optional `--env` flag allows you to publish Workers running the same code but with different KV namespaces.
 
-For example, you could use separate staging and production KV namespaces for KV data in your `wrangler.toml` file:
+For example, you could use separate staging and production KV namespaces for KV data in your Wrangler file:
 
 
 
@@ -78,9 +78,9 @@ kv_namespaces = [
 
 </WranglerConfig>
 
-With the `wrangler.toml` file above, you can specify `--env production` when you want to perform a KV action on the KV namespace `MY_KV` under `env.production`.
+With the Wrangler file above, you can specify `--env production` when you want to perform a KV action on the KV namespace `MY_KV` under `env.production`.
 
-For example, with the `wrangler.toml` file above, you can get a value out of a production KV instance with:
+For example, with the Wrangler file above, you can get a value out of a production KV instance with:
 
 ```sh
 wrangler kv key get --binding "MY_KV" --env=production "<KEY>"

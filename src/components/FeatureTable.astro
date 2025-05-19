@@ -4,12 +4,6 @@ import { indexPlans } from "~/util/plans";
 import { marked } from "marked";
 import GlossaryTooltip from "~/components/GlossaryTooltip.astro";
 
-const markdown = (content: any) => {
-	if (typeof content !== "string") return content;
-
-	return marked.parse(content);
-};
-
 type Props = z.infer<typeof props>;
 
 const props = z
@@ -30,6 +24,12 @@ const hasPro = features.some((x) => x.pro);
 const hasBiz = features.some((x) => x.biz);
 const hasEnt = features.some((x) => x.ent);
 const hasEntPlus = features.some((x) => x.ent_plus);
+
+const markdown = (content: any) => {
+	if (typeof content !== "string") return content;
+
+	return marked.parse(content);
+};
 ---
 
 <table>

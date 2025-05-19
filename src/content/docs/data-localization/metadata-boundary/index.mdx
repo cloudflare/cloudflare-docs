@@ -20,7 +20,7 @@ sequenceDiagram
     participant CloudflarePoP as Closest data center
     participant EUCoreDC as Core data center in EU
     participant CloudflareSuperAdmin as Admin
- 
+
     UserEU->>CloudflarePoP: Connects
     Note right of CloudflarePoP: Customer Logs generated <br> (for example, HTTP requests and Firewall events)
     CloudflarePoP-->>EUCoreDC: Forwards encrypted Customer Logs

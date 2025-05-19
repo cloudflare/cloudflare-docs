@@ -8,8 +8,8 @@ The Bot Management Corporate Proxy field contains identified cloud-based corpora
 You can access the Corporate Proxy field in [custom rules](/waf/custom-rules/), [rate limiting rules](/waf/rate-limiting-rules/), or [Workers](/workers/) to provide different security rules for traffic from these sources. You can also exempt them from rules using Bot Management scores.
 
 ```txt title="Example"
-not cf.bot_management.verified_bot 
-and not cf.bot_management.static_resource 
+not cf.bot_management.verified_bot
+and not cf.bot_management.static_resource
 and not  cf.bot_management.corporate_proxy
 and cf.bot_management.score lt 30
 ```

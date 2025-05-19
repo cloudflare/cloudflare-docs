@@ -1,24 +1,21 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
-import tailwind from "@astrojs/tailwind";
 import starlightDocSearch from "@astrojs/starlight-docsearch";
 import starlightImageZoom from "starlight-image-zoom";
 import liveCode from "astro-live-code";
-import rehypeMermaid from "rehype-mermaid";
-import rehypeAutolinkHeadings, {
-	type Options as rehypeAutolinkHeadingsOptions,
-} from "rehype-autolink-headings";
-import rehypeExternalLinks from "rehype-external-links";
 import starlightLinksValidator from "starlight-links-validator";
-import { h } from "hastscript";
-import { readdir } from "fs/promises";
 import icon from "astro-icon";
 import sitemap from "@astrojs/sitemap";
 import react from "@astrojs/react";
-import rehypeTitleFigure from "rehype-title-figure";
-import rehypeHeadingSlugs from "./plugins/rehype/heading-slugs";
 
-const runLinkCheck = process.env.RUN_LINK_CHECK || false;
+import { readdir } from "fs/promises";
+import { fileURLToPath } from "url";
+
+import rehypeTitleFigure from "rehype-title-figure";
+import rehypeMermaid from "./src/plugins/rehype/mermaid.ts";
+import rehypeAutolinkHeadings from "./src/plugins/rehype/autolink-headings.ts";
+import rehypeExternalLinks from "./src/plugins/rehype/external-links.ts";
+import rehypeHeadingSlugs from "./src/plugins/rehype/heading-slugs.ts";
 
 async function autogenSections() {
 	const sections = (
@@ -38,37 +35,25 @@ async function autogenSections() {
 		};
 	});
 }
-const AnchorLinkIcon = h(
-	"span",
-	{
-		ariaHidden: "true",
-		class: "anchor-icon",
-	},
-	h(
-		"svg",
-		{
-			width: 16,
-			height: 16,
-			viewBox: "0 0 24 24",
-		},
-		h("path", {
-			fill: "currentcolor",
-			d: "m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z",
-		}),
-	),
-);
-const autolinkConfig: rehypeAutolinkHeadingsOptions = {
-	properties: {
-		class: "anchor-link",
-	},
-	behavior: "after",
-	group: ({ tagName }) =>
-		h("div", {
-			tabIndex: -1,
-			class: `heading-wrapper level-${tagName}`,
-		}),
-	content: () => [AnchorLinkIcon],
-};
+
+async function autogenStyles() {
+	const styles = (
+		await readdir("./src/styles/", {
+			withFileTypes: true,
+			recursive: true,
+		})
+	)
+		.filter((x) => x.isFile())
+		.map((x) => x.parentPath + x.name)
+		.sort((a) => (a === "./src/styles/tailwind.css" ? -1 : 1));
+
+	return styles;
+}
+
+const sidebar = await autogenSections();
+const customCss = await autogenStyles();
+
+const runLinkCheck = process.env.RUN_LINK_CHECK || false;
 
 // https://astro.build/config
 export default defineConfig({
@@ -76,35 +61,24 @@ export default defineConfig({
 	markdown: {
 		smartypants: false,
 		rehypePlugins: [
-			[
-				rehypeMermaid,
-				{
-					strategy: "pre-mermaid",
-				},
-			],
-			[
-				rehypeExternalLinks,
-				{
-					content: {
-						type: "text",
-						value: " ↗",
-					},
-					properties: {
-						target: "_blank",
-					},
-					rel: ["noopener"],
-				},
-			],
+			rehypeMermaid,
+			rehypeExternalLinks,
 			rehypeHeadingSlugs,
-			[rehypeAutolinkHeadings, autolinkConfig],
-			// @ts-expect-error TODO: fix types
+			rehypeAutolinkHeadings,
+			// @ts-expect-error plugins types are outdated but functional
 			rehypeTitleFigure,
 		],
 	},
+	image: {
+		service: {
+			entrypoint: "astro/assets/services/sharp",
+			config: {
+				limitInputPixels: false,
+			},
+		},
+	},
 	experimental: {
 		contentIntellisense: true,
-		contentLayer: true,
-		directRenderScript: true,
 	},
 	server: {
 		port: 1111,
@@ -116,64 +90,36 @@ export default defineConfig({
 				src: "./src/assets/logo.svg",
 			},
 			favicon: "/favicon.png",
-			head: [
+			social: [
 				{
-					tag: "meta",
-					attrs: {
-						name: "image",
-						content: "https://developers.cloudflare.com/cf-twitter-card.png",
-					},
+					label: "GitHub",
+					icon: "github",
+					href: "https://github.com/cloudflare/cloudflare-docs",
 				},
+				{ label: "X.com", icon: "x.com", href: "https://x.com/cloudflare" },
 				{
-					tag: "meta",
-					attrs: {
-						name: "og:image",
-						content: "https://developers.cloudflare.com/cf-twitter-card.png",
-					},
-				},
-				{
-					tag: "meta",
-					attrs: {
-						name: "twitter:image",
-						content: "https://developers.cloudflare.com/cf-twitter-card.png",
-					},
+					label: "YouTube",
+					icon: "youtube",
+					href: "https://www.youtube.com/cloudflare",
 				},
 			],
-			social: {
-				github: "https://github.com/cloudflare/cloudflare-docs",
-				"x.com": "https://x.com/cloudflare",
-				youtube: "https://www.youtube.com/cloudflare",
-			},
 			editLink: {
 				baseUrl:
 					"https://github.com/cloudflare/cloudflare-docs/edit/production/",
 			},
 			components: {
+				Banner: "./src/components/overrides/Banner.astro",
 				Footer: "./src/components/overrides/Footer.astro",
 				Head: "./src/components/overrides/Head.astro",
+				Header: "./src/components/overrides/Header.astro",
 				Hero: "./src/components/overrides/Hero.astro",
-				LastUpdated: "./src/components/overrides/LastUpdated.astro",
 				MarkdownContent: "./src/components/overrides/MarkdownContent.astro",
 				Sidebar: "./src/components/overrides/Sidebar.astro",
-				PageSidebar: "./src/components/overrides/PageSidebar.astro",
 				PageTitle: "./src/components/overrides/PageTitle.astro",
-				SocialIcons: "./src/components/overrides/SocialIcons.astro",
-				SkipLink: "./src/components/overrides/SkipLink.astro",
 				TableOfContents: "./src/components/overrides/TableOfContents.astro",
 			},
-			sidebar: await autogenSections(),
-			customCss: [
-				"./src/asides.css",
-				"./src/code.css",
-				"./src/headings.css",
-				"./src/input.css",
-				"./src/littlefoot.css",
-				"./src/mermaid.css",
-				"./src/table.css",
-				"./src/tailwind.css",
-				"./src/title.css",
-				"./src/tooltips.css",
-			],
+			sidebar,
+			customCss,
 			pagination: false,
 			plugins: [
 				...(runLinkCheck
@@ -184,12 +130,11 @@ export default defineConfig({
 								exclude: [
 									"/api/",
 									"/api/**",
-									"/changelog/",
+									"/changelog/**",
 									"/http/resources/**",
 									"{props.*}",
 									"/",
-									"**/glossary/?term=**",
-									"/products/?product-group=*",
+									"/glossary/",
 									"/products/",
 									"/rules/snippets/examples/?operation=*",
 									"/rules/transform/examples/?operation=*",
@@ -202,23 +147,23 @@ export default defineConfig({
 						]
 					: []),
 				starlightDocSearch({
-					appId: "D32WIYFTUF",
-					apiKey: "5cec275adc19dd3bc17617f7d9cf312a",
-					indexName: "prod_devdocs",
-					insights: true,
+					clientOptionsModule: "./src/plugins/docsearch/index.ts",
 				}),
 				starlightImageZoom(),
 			],
 			lastUpdated: true,
+			markdown: {
+				headingLinks: false,
+			},
 		}),
-		tailwind({
-			applyBaseStyles: false,
-		}),
-		liveCode({
-			layout: "~/components/live-code/Layout.astro",
-		}),
+		liveCode({}),
 		icon(),
 		sitemap({
+			filter(page) {
+				return !page.startsWith(
+					"https://developers.cloudflare.com/style-guide/",
+				);
+			},
 			serialize(item) {
 				item.lastmod = new Date().toISOString();
 				return item;
@@ -226,4 +171,16 @@ export default defineConfig({
 		}),
 		react(),
 	],
+	vite: {
+		resolve: {
+			alias: {
+				"./Page.astro": fileURLToPath(
+					new URL("./src/components/overrides/Page.astro", import.meta.url),
+				),
+				"../components/Page.astro": fileURLToPath(
+					new URL("./src/components/overrides/Page.astro", import.meta.url),
+				),
+			},
+		},
+	},
 });

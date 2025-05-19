@@ -6,26 +6,21 @@ sidebar:
 head:
   - tag: title
     content: DDoS analytics
-
 ---
 
 You can view DDoS analytics in different dashboards, depending on your service and plan:
 
-- The [Security Events dashboard](/waf/analytics/security-events/) provides you with visibility into L7 security events that target your zone, including HTTP DDoS attacks and TCP attacks. The dashboard displays mitigations of HTTP DDoS attacks as HTTP DDoS events. These events are also available via [Cloudflare Logs](/logs/).
+- The [Security Events dashboard](/waf/analytics/security-events/) provides you with visibility into L7 security events that target your zone, including HTTP DDoS attacks and TCP attacks. The dashboard displays mitigations of HTTP DDoS attacks as HTTP DDoS events. These events are also available via [Cloudflare Logs](/logs/).
 
 - The [Network Analytics dashboard](/analytics/network-analytics/) provides you with visibility into L3/4 traffic and DDoS attacks that target your IP ranges or Spectrum applications.
 
 ## Availability
 
-
-
-| Service       | Free              | Pro             | Business        | Enterprise        |
-| ------------- | ----------------- | --------------- | --------------- | ----------------- |
-| WAF/CDN       | Activity log only | Security Events | Security Events | Security Events   |
-| Spectrum/BYOIP      | –                 | –               | –               | Network Analytics |
-| Magic Transit | –                 | –               | –               | Network Analytics |
-
-
+| Service        | Free              | Pro             | Business        | Enterprise        |
+| -------------- | ----------------- | --------------- | --------------- | ----------------- |
+| WAF/CDN        | Sampled logs only | Security Events | Security Events | Security Events   |
+| Spectrum/BYOIP | –                 | –               | –               | Network Analytics |
+| Magic Transit  | –                 | –               | –               | Network Analytics |
 
 ## Remarks
 

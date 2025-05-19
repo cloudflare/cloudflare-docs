@@ -3,11 +3,11 @@
 
 ---
 
-You must create a binding for your Worker to connect to your Hyperdrive configuration. [Bindings](/workers/runtime-apis/bindings/) allow your Workers to access resources, like D1, on the Cloudflare developer platform. You create bindings by updating your `wrangler.toml` file.
-
-To bind your Hyperdrive configuration to your Worker, add the following to the end of your `wrangler.toml` file:
-
 import { WranglerConfig } from "~/components";
+
+You must create a binding in your [Wrangler configuration file](/workers/wrangler/configuration/) for your Worker to connect to your Hyperdrive configuration. [Bindings](/workers/runtime-apis/bindings/) allow your Workers to access resources, like Hyperdrive, on the Cloudflare developer platform.
+
+To bind your Hyperdrive configuration to your Worker, add the following to the end of your Wrangler file:
 
 <WranglerConfig>
 
@@ -21,6 +21,27 @@ id = "<YOUR_DATABASE_ID>" # the ID associated with the Hyperdrive you just creat
 
 Specifically:
 
-- The value (string) you set for the `name` (binding name) will be used to reference this database in your Worker. In this tutorial, name your binding `HYPERDRIVE`.
+- The value (string) you set for the `binding` (binding name) will be used to reference this database in your Worker. In this tutorial, name your binding `HYPERDRIVE`.
 - The binding must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "hyperdrive"` or `binding = "productionDB"` would both be valid names for the binding.
 - Your binding is available in your Worker at `env.<BINDING_NAME>`.
+
+
+If you wish to use a local database during development, you can add a `localConnectionString` to your  Hyperdrive configuration with the connection string of your database:
+
+
+<WranglerConfig>
+
+```toml
+[[hyperdrive]]
+binding = "HYPERDRIVE"
+id = "<YOUR_DATABASE_ID>" # the ID associated with the Hyperdrive you just created
+localConnectionString = "<LOCAL_DATABASE_CONNECTION_URI>"
+```
+
+</WranglerConfig>
+
+:::note
+
+Learn more about setting up [Hyperdrive for local development](/hyperdrive/configuration/local-development/).
+
+:::

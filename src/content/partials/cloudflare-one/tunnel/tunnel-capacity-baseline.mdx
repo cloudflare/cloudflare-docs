@@ -3,8 +3,8 @@
 
 ---
 
-* Run a [`cloudflared` replica](/cloudflare-one/connections/connect-networks/deploy-tunnels/deploy-cloudflared-replicas/#cloudflared-replicas) on two dedicated host machines per network location. Using two hosts enables server-side redundancy and traffic balancing.
+* Run a [`cloudflared` replica](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/#cloudflared-replicas) on two dedicated host machines per network location. Using two hosts enables server-side redundancy and traffic balancing.
 * Size each host with minimum 4GB of RAM and 4 CPU cores.
-* Allocate 50,000 [ports](/cloudflare-one/connections/connect-networks/deploy-tunnels/system-requirements/#number-of-ports) to the `cloudflared` process on each host.
+* Allocate 50,000 [ports](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/system-requirements/#number-of-ports) to the `cloudflared` process on each host.
 
 This setup is usually sufficient to handle traffic from 8,000 users (4,000 per host).

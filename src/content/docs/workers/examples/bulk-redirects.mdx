@@ -76,7 +76,8 @@ export default {
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py
-from js import Response, fetch, URL
+from workers import Response, fetch
+from urllib.parse import urlparse
 
 async def on_fetch(request):
     external_hostname = "examples.cloudflareworkers.com"
@@ -88,14 +89,54 @@ async def on_fetch(request):
       "/bulk4": "https://google.com",
       }
 
-    url = URL.new(request.url)
-    location = redirect_map.get(url.pathname, None)
+    url = urlparse(request.url)
+    location = redirect_map.get(url.path, None)
 
     if location:
         return Response.redirect(location, 301)
 
     # If request not in map, return the original request
     return fetch(request)
+```
+
+</TabItem> <TabItem label="Hono" icon="seti:typescript">
+
+```ts
+import { Hono } from "hono";
+
+const app = new Hono();
+
+// Configure your redirects
+const externalHostname = "examples.cloudflareworkers.com";
+
+const redirectMap = new Map([
+	["/bulk1", `https://${externalHostname}/redirect2`],
+	["/bulk2", `https://${externalHostname}/redirect3`],
+	["/bulk3", `https://${externalHostname}/redirect4`],
+	["/bulk4", "https://google.com"],
+]);
+
+// Middleware to handle redirects
+app.use("*", async (c, next) => {
+	const path = c.req.path;
+	const location = redirectMap.get(path);
+
+	if (location) {
+		// If path is in our redirect map, perform the redirect
+		return c.redirect(location, 301);
+	}
+
+	// Otherwise, continue to the next handler
+	await next();
+});
+
+// Default handler for requests that don't match any redirects
+app.all("*", async (c) => {
+	// Pass through to origin
+	return fetch(c.req.raw);
+});
+
+export default app;
 ```
 
 </TabItem> </Tabs>

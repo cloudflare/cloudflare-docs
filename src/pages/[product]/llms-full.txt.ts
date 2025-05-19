@@ -21,21 +21,21 @@ export async function getStaticPaths() {
 export const GET: APIRoute = async ({ props }) => {
 	const markdown = await getCollection("docs", (e) => {
 		if (
-			e.slug === "warp-client/legal/3rdparty" ||
-			e.slug === "magic-wan/legal/3rdparty"
+			e.id === "warp-client/legal/3rdparty" ||
+			e.id === "magic-wan/legal/3rdparty"
 		)
 			return false;
 
 		return (
-			e.slug.startsWith(props.product.data.product.url.slice(1, -1)) && e.body
+			e.id.startsWith(props.product.data.product.url.slice(1, -1)) && e.body
 		);
 	})
 		.then((entries) =>
 			entries.map((entry) => {
 				return [
 					`# ${entry.data.title}`,
-					`URL: https://developers.cloudflare.com/${entry.slug}/`,
-					`${entry.body.trim()}`,
+					`URL: https://developers.cloudflare.com/${entry.id}/`,
+					`${entry.body?.trim()}`,
 					"---",
 				].join("\n\n");
 			}),

@@ -7,7 +7,7 @@ sidebar:
     text: Beta
 ---
 
-import { Render, PackageManagers } from "~/components";
+import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 To access Cloudflare Radar BGP Anomaly Detection results, you will first need to create an API token that includes a `Account:Radar` permission. All the following examples should work with a free-tier Cloudflare account.
 
@@ -187,7 +187,7 @@ First, create a new Workers app in a local directory:
 	product="workers"
 	params={{
 		category: "hello-world",
-		type: "Hello World Worker",
+		type: "Worker only",
 		lang: "JavaScript",
 	}}
 />
@@ -198,10 +198,8 @@ To start developing your Worker, `cd` into your new project directory:
 cd hijack-alerts
 ```
 
-In your `wrangler.toml` file, change the default checking frequency (once per hour) to what you like. Here is an example
+In your Wrangler file, change the default checking frequency (once per hour) to what you like. Here is an example
 of configuring the workers to run the script five minutes.
-
-import { WranglerConfig } from "~/components";
 
 <WranglerConfig>
 
@@ -217,8 +215,6 @@ crons = [ "*/5 * * * *" ]
 </WranglerConfig>
 
 In this example, we will also need to use Cloudflare KV to save the latest checked event IDs which allows us to know what events are new. Once you have created a KV, you can head back to the `wranglers.toml` file and add the following sections:
-
-
 
 <WranglerConfig>
 
@@ -372,9 +368,7 @@ The last step is to deploy the application with command `npx wrangler deploy` an
 
 If you have [Email Routing][email-routing] enabled for your domain, you can also send email alerts directly from Workers. Refer to [Send emails from Workers][email-workers-tutorial] to learn more.
 
-For this alert to work, you will need to configure the proper email bindings in the [`wrangler.toml`][wrangler-send-email] file.
-
-
+For this alert to work, you will need to configure the proper email bindings in the [Wrangler configuration file][wrangler-send-email].
 
 <WranglerConfig>
 

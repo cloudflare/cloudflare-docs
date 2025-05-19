@@ -12,7 +12,3 @@ meta:
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/traffic/health-checks
-
-externals:
-  - title: Cloudflare homepage
-    url: https://cloudflare.com

@@ -18,7 +18,3 @@ resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/images
   learning_center: https://www.cloudflare.com/learning/performance/glossary/what-is-image-compression/
   discord: https://discord.com/channels/595317990191398933/973591562615390228
-
-externals:
-  - title: Cloudflare homepage
-    url: https://cloudflare.com

@@ -11,6 +11,8 @@ sidebar:
 
 ---
 
+import { WranglerConfig } from "~/components";
+
 A Tail Worker receives information about the execution of other Workers (known as producer Workers), such as HTTP statuses, data passed to `console.log()` or uncaught exceptions. Tail Workers can process logs for alerts, debugging, or analytics.
 
 Tail Workers are available to all customers on the Workers Paid and Enterprise tiers. Tail Workers are billed by [CPU time](/workers/platform/pricing/#workers), not by the number of requests.
@@ -24,7 +26,7 @@ A Tail Worker is automatically invoked after the invocation of a producer Worker
 To configure a Tail Worker:
 
 1. [Create a Worker](/workers/get-started/guide) to serve as the Tail Worker.
-2. Add a [`tail()`](/workers/runtime-apis/handlers/tail/) handler to your Worker. The `tail()` handler is invoked every time the producer Worker a Tail Worker is connected to is invoked. The following Worker code is a Tail Worker that sends its data to an HTTP endpoint:
+2. Add a [`tail()`](/workers/runtime-apis/handlers/tail/) handler to your Worker. The `tail()` handler is invoked every time the producer Worker to which a Tail Worker is connected is invoked. The following Worker code is a Tail Worker that sends its data to an HTTP endpoint:
 
 ```js
 export default {
@@ -83,9 +85,7 @@ The following Worker code is an example of what the `events` object may look lik
 ]
 ```
 
-3. Add the following to the `wrangler.toml` file of the producer Worker:
-
-import { WranglerConfig } from "~/components";
+3. Add the following to the Wrangler file of the producer Worker:
 
 <WranglerConfig>
 
@@ -105,5 +105,5 @@ The Worker that you add a `tail_consumers` binding to must have a `tail()` handl
 * [`tail()`](/workers/runtime-apis/handlers/tail/) Handler API docs - Learn how to set up a `tail()` handler in your Worker.
 
 - [Errors and exceptions](/workers/observability/errors/) - Review common Workers errors.
-- [Local development and testing](/workers/testing/local-development/) - Develop and test you Workers locally.
+- [Local development and testing](/workers/local-development/) - Develop and test you Workers locally.
 - [Source maps and stack traces](/workers/observability/source-maps) - Learn how to enable source maps and generate stack traces for Workers.

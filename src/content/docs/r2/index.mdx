@@ -1,22 +1,28 @@
 ---
-title: Overview
+title: Cloudflare R2
 type: overview
 pcx_content_type: overview
 sidebar:
   order: 1
+description: Cloudflare R2 is a cost-effective, scalable object storage solution for cloud-native apps, web content, and data lakes without egress fees.
 head:
   - tag: title
-    content: Cloudflare R2
-
+    content: Overview
 ---
 
-import { CardGrid, Description, Feature, LinkButton, LinkTitleCard, Plan, RelatedProduct } from "~/components"
+import {
+	CardGrid,
+	Description,
+	Feature,
+	LinkButton,
+	LinkTitleCard,
+	Plan,
+	RelatedProduct,
+} from "~/components";
 
 <Description>
 
-
 Object storage for all your data.
-
 
 </Description>
 
@@ -24,16 +30,20 @@ Cloudflare R2 Storage allows developers to store large amounts of unstructured d
 
 You can use R2 for multiple scenarios, including but not limited to:
 
-* Storage for cloud-native applications
-* Cloud storage for web content
-* Storage for podcast episodes
-* Data lakes (analytics and big data)
-* Cloud storage output for large batch processes, such as machine learning model artifacts or datasets
+- Storage for cloud-native applications
+- Cloud storage for web content
+- Storage for podcast episodes
+- Data lakes (analytics and big data)
+- Cloud storage output for large batch processes, such as machine learning model artifacts or datasets
 
- <LinkButton variant="primary" href="/r2/get-started/">Get started</LinkButton> <LinkButton variant="secondary" href="/r2/examples/">Browse the examples</LinkButton>
+<LinkButton variant="primary" href="/r2/get-started/">
+	Get started
+</LinkButton>
+<LinkButton variant="secondary" href="/r2/examples/">
+	Browse the examples
+</LinkButton>
 
-
-***
+---
 
 ## Features
 
@@ -41,13 +51,11 @@ You can use R2 for multiple scenarios, including but not limited to:
 
 Location Hints are optional parameters you can provide during bucket creation to indicate the primary geographical location you expect data will be accessed from.
 
-
 </Feature>
 
 <Feature header="CORS" href="/r2/buckets/cors/">
 
 Configure CORS to interact with objects in your bucket and configure policies on your bucket.
-
 
 </Feature>
 
@@ -55,51 +63,58 @@ Configure CORS to interact with objects in your bucket and configure policies on
 
 Public buckets expose the contents of your R2 bucket directly to the Internet.
 
-
 </Feature>
 
-<Feature header="Bucket scoped tokens" href="/r2/api/s3/tokens/">
+<Feature header="Bucket scoped tokens" href="/r2/api/tokens/">
 
 Create bucket scoped tokens for granular control over who can access your data.
 
-
 </Feature>
 
-***
+---
 
 ## Related products
 
 <RelatedProduct header="Workers" href="/workers/" product="workers">
 
 A [serverless](https://www.cloudflare.com/learning/serverless/what-is-serverless/) execution environment that allows you to create entirely new applications or augment existing ones without configuring or maintaining infrastructure.
+
 </RelatedProduct>
 
 <RelatedProduct header="Stream" href="/stream/" product="stream">
 
 Upload, store, encode, and deliver live and on-demand video with one API, without configuring or maintaining infrastructure.
+
 </RelatedProduct>
 
 <RelatedProduct header="Images" href="/images/" product="images">
 
 A suite of products tailored to your image-processing needs.
+
 </RelatedProduct>
 
-***
+---
 
 ## More resources
 
 <CardGrid>
 
 <LinkTitleCard title="Pricing" href="/r2/pricing" icon="seti:shell">
-&#x20;Understand pricing for free and paid tier rates.
+	&#x20;Understand pricing for free and paid tier rates.
 </LinkTitleCard>
 
-<LinkTitleCard title="Discord" href="https://discord.cloudflare.com" icon="discord">
-&#x20;Ask questions, show off what you are building, and discuss the platform with other developers.
+<LinkTitleCard
+	title="Discord"
+	href="https://discord.cloudflare.com"
+	icon="discord"
+>
+	&#x20;Ask questions, show off what you are building, and discuss the platform
+	with other developers.
 </LinkTitleCard>
 
 <LinkTitleCard title="Twitter" href="https://x.com/cloudflaredev" icon="x.com">
-&#x20;Learn about product announcements, new tutorials, and what is new in Cloudflare Workers.
+	&#x20;Learn about product announcements, new tutorials, and what is new in
+	Cloudflare Workers.
 </LinkTitleCard>
 
 </CardGrid>

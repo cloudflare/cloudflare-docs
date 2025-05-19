@@ -1,8 +1,8 @@
 ---
-inputParameters: ruleType
-
+params:
+  - ruleType
 ---
 
-import { Markdown } from "~/components"
+import { Markdown } from "~/components";
 
-To create another {props.one}, add a new `rules` object to the same `cloudflare_ruleset` resource.
+To create another {props.ruleType}, add a new `rules` object to the same `cloudflare_ruleset` resource.

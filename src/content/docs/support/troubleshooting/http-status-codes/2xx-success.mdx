@@ -2,14 +2,13 @@
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/115003014192-2xx-Success
 title: 2xx Success
-
 ---
 
 2xx status codes indicate success, meaning that the client's request was received, understood, and accepted by the server.
 
 ## 200 OK
 
-A 200 response indicates that the request has succeeded. 
+A 200 response indicates that the request has succeeded.
 
 ### Common use cases
 
@@ -49,7 +48,7 @@ Servers use this response to tell a client that the resource was cached by a pro
 
 ### Cloudlare-specific information
 
-Cloudflare does not cache 203 responses. For details about how Cloudflare handles 203 responses, refer to [HTTP request headers](/fundamentals/reference/http-request-headers/).
+Cloudflare does not cache 203 responses. For details about how Cloudflare handles 203 responses, refer to [Cloudflare HTTP headers](/fundamentals/reference/http-headers/).
 
 ## 204 No content
 
@@ -65,7 +64,7 @@ This response is often used by servers to indicate that a document editor's save
 
 ## 205 Reset content
 
-A 205 response tells the client to return to its previous state after a request. 
+A 205 response tells the client to return to its previous state after a request.
 
 ### Common use cases
 
@@ -88,10 +87,8 @@ A 206 response includes either:
 - Partial payload that contains a `Content-Range` header specifying the requested range and the data provided in the response.
 - Multipart payload that omits the `Content-Range` header at the top level but includes `Content-Type` and `Content-Range` headers for each part of the multipart response body.
 
-For more details, refer to [RFC 7233 Section 4.1](https://tools.ietf.org/html/rfc7233#page-10).
+For more details, refer to [Section 4.1 of RFC 7233](https://tools.ietf.org/html/rfc7233#page-10).
 
 ### Cloudflare-specific information
 
 Cloudflare handles 206 responses for range requests, but caching behavior may vary depending on the file type and origin settings.
-
-

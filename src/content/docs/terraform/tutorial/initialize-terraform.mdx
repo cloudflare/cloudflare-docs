@@ -8,9 +8,13 @@ head:
     content: Introduction to Terraform init
 ---
 
+import { Render } from "~/components";
+
 This tutorial shows you how to get started with Terraform. The tutorial uses an example scenario where you have a web server for your domain, accessible on `203.0.113.10`, and you just signed up your domain (`example.com`) on Cloudflare to manage everything in Terraform.
 
 Before you begin, ensure you have [installed Terraform](/terraform/installing/). You will also need to [create an API Token](/fundamentals/api/get-started/create-token/) with permissions to edit resources for this tutorial.
+
+<Render file="v4-code-snippets" />
 
 ## 1. Define your first Terraform config file
 

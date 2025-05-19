@@ -16,7 +16,7 @@ For a hostname (`blog.example.com`) to resolve, the Domain Name System (DNS) mus
 
 When you set up a load balancer, Cloudflare automatically creates an [LB DNS record](/load-balancing/load-balancers/dns-records/) for the specified hostname. This means that, according to a [priority order](/load-balancing/load-balancers/dns-records/#priority-order), instead of simply returning an IP address, the logic you introduced using the Cloudflare Load Balancing solution will be considered.
 
-Note that you can use the root domain as a Load Balancer hostname. When doing so, make sure you enter the hostname without including the auto-generated dot that typically precedes your zone's name. 
+Note that you can use the root domain as a Load Balancer hostname. When doing so, make sure you enter the hostname without including the auto-generated dot that typically precedes your zone's name.
 
 <Render file="load-balancing-diagram" />
 
@@ -27,6 +27,10 @@ Within Cloudflare, pools represent your endpoints and how they are organized. As
 For example, if you are only using Cloudflare to globally distribute traffic across regions ([global traffic steering](/load-balancing/understand-basics/traffic-steering/steering-policies/)), each pool could represent one region and, within each region, you could have one endpoint that represents the entry point to your data center.
 
 Cloudflare [Private Network Load Balancing](/load-balancing/private-network/) solution and [endpoint steering](/load-balancing/understand-basics/traffic-steering/origin-level-steering/) capabilities enable you to also load balance traffic between your servers within a data center. In this use case, each pool would represent a data center and contain several endpoints that represent your servers.
+
+:::note[Smart Tiered Cache interaction]
+While Smart Tiered Cache selects one Upper Tier per origin, when using Load Balancing, Smart Tiered Cache will select the single best Upper Tier for the entire Load Balancing Pool.
+:::
 
 ## Endpoints
 

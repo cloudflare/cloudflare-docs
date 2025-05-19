@@ -1,0 +1,7 @@
+name: Risk Score
+
+product:
+  title: Risk Score
+  group: Cloudflare One
+  url: /cloudflare-one/insights/risk-score/
+  show: false

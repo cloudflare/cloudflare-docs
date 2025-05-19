@@ -16,6 +16,7 @@ import { Render } from "~/components";
 | Object size                                                         | 5 TiB per object<sup>2</sup> |
 | Maximum upload size<sup>4</sup>                                     | 5 GiB<sup>3</sup>            |
 | Maximum upload parts                                                | 10,000                       |
+| Maximum concurrent writes to the same object name (key) | 1 per second <sup>5</sup> | 
 
 <sup>1</sup> Bucket management operations include creating, deleting, listing,
 and configuring buckets. This limit does _not_ apply to reading or writing objects to a bucket.
@@ -27,6 +28,7 @@ uploading a part of a multipart upload, or copying into a part of a multipart
 upload. If you have a Worker, its inbound request size is constrained by
 [Workers request limits](/workers/platform/limits#request-limits). The max
 upload size limit does not apply to subrequests.
+<br /> <sup>5</sup> Concurrent writes  to the same object name (key) at a higher rate will cause you to see HTTP 429 (rate limited) responses, as you would with other object storage systems.
 <br />
 
 Limits specified in MiB (mebibyte), GiB (gibibyte), or TiB (tebibyte) are storage units of measurement based on base-2. 1 GiB (gibibyte) is equivalent to 2<sup>30</sup> bytes (or 1024<sup>3</sup> bytes). This is distinct from 1 GB (gigabyte), which is 10<sup>9</sup> bytes (or 1000<sup>3</sup> bytes).

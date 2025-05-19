@@ -10,15 +10,68 @@ sidebar:
 
 import { Render } from "~/components"
 
-When an input begins receiving the live stream, a new video with HLS and DASH URLs is automatically created as long as the mode property for the input is set to `automatic`.
+When a [Live Input](/stream/stream-live/start-stream-live/) begins receiving a
+broadcast, a new video is automatically created if the input's `mode` property
+is set to `automatic`.
+
+To watch, Stream offers a built-in Player or you use a custom player with the
+HLS and DASH manifests.
 
 <Render file="chromecast_limitations" />
 
+## View by Live Input ID or Video ID
+
+Whether you use the Stream Player or a custom player with a manifest, you can
+reference the Live Input ID or a specific Video ID. The main difference is what
+happens when a broadcast concludes.
+
+Use a Live Input ID in instances where a player should always show the active
+broadcast, if there is one, or a "Stream has not started" message if the input
+is idle. This option is best for cases where a page is dedicated to a creator, channel, or
+recurring program. The Live Input ID is provisioned for you when you create the
+input; it will not change.
+
+Use a Video ID in instances where a player should be used to display a single
+broadcast or its recording once the broadcast has concluded. This option is best for cases where
+a page is dedicated to a one-time event, specific episode/occurance, or date.
+There is a _new_ Video ID generated for each broadcast _when it starts._
+
+Using DVR mode, explained below, there are additional considerations.
+
+Stream's URLs are all templatized for easy generation:
+
+**Stream built-in Player URL format:**
+
+```
+https://customer-<CODE>.cloudflarestream.com/<INPUT_ID|VIDEO_ID>/iframe
+```
+
+A full embed code can be generated in Dash or with the API.
+
+**HLS Manifest URL format:**
+
+```
+https://customer-<CODE>.cloudflarestream.com/<INPUT_ID|VIDEO_ID>/manifest/video.m3u8
+```
+
+You can also retrieve the embed code or manifest URLs from Dash or the API.
+
+## Use the dashboard
+
+To get the Stream built-in player embed code or HLS Manifest URL for a custom player:
+
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Select **Stream** > **Live Inputs**.
+3. Select a live input from the list.
+4. Locate the **Embed** and **HLS Manifest URL** beneath the video.
+5. Determine which option to use and then select **Click to copy** beneath your choice.
+
+The embed code or manifest URL retrieved in Dash will reference the Live Input ID.
+
 ## Use the API
 
-A live input can have multiple video UIDs associated with it. To get the video UID representing the current live stream for a given input, make a `GET` request to the `/stream` endpoint.
-
-To play the video in your browser, use the URL from the `preview` field. To use your own player, use the `hls` or `dash` URLs.
+To retrieve the player code or manifest URLs via the API, fetch the Live Input's
+list of videos:
 
 ```bash title="Request"
 curl -X GET \
@@ -26,7 +79,21 @@ curl -X GET \
 https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/<LIVE_INPUT_UID>/videos
 ```
 
-The response contains the HLS/DASH URL that can be used to play the current live video as well as any previously recorded live videos. In the example below, the state of the live video is `live-inprogress` and the state for previously recorded video is `ready`.
+A live input will have multiple videos associated with it, one for each broadcast.
+If there is an active broadcast, the first video in the response will have a
+`live-inprogress` status. Other videos in the response represent recordings
+which can be played on-demand.
+
+Each video in the response, including the active broadcast if there is one,
+contains the HLS and DASH URLs and a link to the Stream player. Noteworthy
+properties include:
+
+- `preview` -- Link to the Stream player to watch
+- `playback`.`hls` -- HLS Manifest
+- `playback`.`dash` -- DASH Manifest
+
+In the example below, the state of the live video is `live-inprogress` and the
+state for previously recorded video is `ready`.
 
 ```json title="Response" {4,7,21,28,32,46}
 {
@@ -83,32 +150,19 @@ The response contains the HLS/DASH URL that can be used to play the current live
 }
 ```
 
-## Use the dashboard
+These will reference the Video ID.
 
-To get the embed code or HLS Manifest URL for your video:
+## Live input status
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Click **Stream** > **Live Inputs**.
-3. Click a live input from the list to select it. The page for your live input displays.
-4. Locate the **Embed** and **HLS Manifest URL** beneath the video.
-5. Determine which option to use and then click **Click to copy** beneath your choice.
-
-## View by live input ID
-
-You can use one of the options below to view a live video by input ID:
-
-* Replace the video ID with the input ID.
-* Use the Embed code.
-* Use the Manifest URL.
-
-## Live input ID status
-
-You can check whether a live input ID is currently streaming a video or not by making a request to the `lifecycle` endpoint. The Stream player supports using input IDs to check a live stream status, but third party players may require additional support.
+You can check whether a live input is currently streaming and what its active
+video ID is by making a request to its `lifecycle` endpoint. The Stream player
+does this automatically to show a note when the input is idle. Custom players
+may require additional support.
 
 ```bash
 curl -X GET \
 -H "Authorization: Bearer <API_TOKEN>" \
-https://customer-f33zs165nr7gyfy4.cloudflarestream.com/6b9e68b07dfee8cc2d116e4c51d6a957/lifecycle
+https://customer-<CODE>.cloudflarestream.com/<INPUT_ID>/lifecycle
 ```
 
 In the example below, the response indicates the `ID` is for an input with an active `videoUID`. The `live` status value indicates the input is actively streaming.
@@ -141,4 +195,3 @@ After a live stream ends, a recording is automatically generated and available w
 While the recording of the live stream is generating, the video may report as `not-found` or `not-started`.
 
 If you are not using the Stream player for live stream recordings, refer to [Record and replay live streams](/stream/stream-live/replay-recordings/) for more information on how to replay a live stream recording.
-

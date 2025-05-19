@@ -2,23 +2,18 @@
 pcx_content_type: how-to
 title: Update tunnel health checks frequency
 sidebar:
-  order: 3
+  order: 4
 ---
 
 import { Render } from "~/components";
 
 <Render
 	file="tunnel-health/update-tunnel-health-checks-frequency"
-	product="magic-transit"
+	product="networking-services"
 	params={{
+		magicProduct: "Magic WAN",
 		productName: "Magic WAN",
-		connectorExtraInfo: "For Magic WAN Connector, health checks are sent to IPsec tunnel endpoints.",
 		healthChecksUrl: "/magic-wan/reference/tunnel-health-checks/",
-		addTunnelsPath:
-			"/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels",
-		connectorNote: "<br /> <br /> To configure health checks frequency in Magic WAN Connector, refer to [Configure Connector](#configure-connector).",
-		connectorTitle1: "Manual configuration",
-		connectorTitle2: "Configure Connector",
-		connectorSteps: "<ol><li>Log in to the <a href='https://dash.cloudflare.com/'>Cloudflare dashboard</a> and select your account.</li><li>Go to **Magic WAN** > **Sites**.</li><li>Select your site > **Edit**.</li><li>In **Network** > **WAN configuration** > select your WAN > **Edit**.</li><li>Change the **Health check rate** to your desire rate.</li><li>Select **Save**.</li></ol>",
+		addTunnelsPath: "/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels"
 	}}
 />

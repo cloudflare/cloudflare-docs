@@ -3,8 +3,6 @@ pcx_content_type: how-to
 title: Generic OIDC application
 sidebar:
   order: 1
-  badge:
-    text: Beta
 
 ---
 
@@ -21,7 +19,7 @@ This page provides generic instructions for setting up a SaaS application in Clo
 
 In your SaaS application account, obtain the **Redirect URL** (also known as the callback URL). This is the SaaS endpoint where users are redirected to after they authenticate with Cloudflare Access.
 
-Some SaaS applications provide the Redirect URL after you [configure the SSO provider](#4-configure-sso-in-your-saas-application).
+Some SaaS applications provide the Redirect URL after you [configure the SSO provider](#3-configure-sso-in-your-saas-application).
 
 ## 2. Add your application to Access
 
@@ -37,14 +35,7 @@ Some SaaS applications provide the Redirect URL after you [configure the SSO pro
 
 6. Select **Add application**.
 
-7. In **Scopes**, select the attributes that you want Access to send in the ID token.
-
-   | Scope     | Description                                          |
-   | --------- | ---------------------------------------------------- |
-   | `openid`  | Include a unique identifier for the user (required). |
-   | `email`   | Include the user's email address.                    |
-   | `profile` | Include all custom OIDC claims from the IdP.         |
-   | `groups`  | Include the user's IdP group membership.             |
+7. In **Scopes**, select the user attributes that you want Access to send in the ID token. For more information about configuring OIDC scopes and claims, refer to [OIDC claims](#oidc-claims).
 
 8. In **Redirect URLs**, enter the callback URL obtained from the SaaS application.
 
@@ -62,24 +53,81 @@ Some SaaS applications provide the Redirect URL after you [configure the SSO pro
     | Key endpoint           | Returns the current public keys used to [verify the Access JWT](/cloudflare-one/identity/authorization-cookie/validating-json/) <br/> `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/sso/oidc/<client-id>/jwks`                                   |
     | User info endpoint     | Returns all user claims in JSON format <br/> `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/sso/oidc/<client-id>/userinfo`                                                                                                                        |
 
-11. (Optional) Configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) by turning on **Enable App in App Launcher** and, in **App Launcher URL**, entering the URL that users should be sent to when they select the tile.
+11. <Render file="access/add-access-policies" product="cloudflare-one" />
 
-12. <Render file="access/access-block-page" />
+12. <Render file="access/access-choose-idps" product="cloudflare-one" />
 
-13. <Render file="access/access-choose-idps" />
+13. Select **Next**.
 
-14. Select **Save configuration**.
+14. (Optional) Configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application.
 
-## 3. Add an Access policy
+15. <Render file="access/access-block-page" product="cloudflare-one" />
 
-1. To control who can access the SaaS application, [create an Access policy](/cloudflare-one/policies/access/).
+16. Select **Save application**.
 
-2. Select **Done**.
-
-## 4. Configure SSO in your SaaS application
+## 3. Configure SSO in your SaaS application
 
 Next, configure your SaaS application to require users to log in through Cloudflare Access. Refer to your SaaS application documentation for instructions on how to configure a third-party OIDC SSO provider.
 
-## 5. Test the integration
+## 4. Test the integration
 
 Open an incognito browser window and go to the SaaS application's login URL. You will be redirected to the Cloudflare Access login screen and prompted to sign in with your identity provider.
+
+## OIDC claims
+
+OIDC claims refer to the user identity characteristics that Cloudflare Access shares with your OIDC SaaS application upon successful authentication. An OIDC scope defines a set of OIDC claims. By default, Cloudflare Access passes all [standard claims](https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims) that are included in the `openid`, `email`, `profile`, and `groups` scopes (if available).
+
+   | Scope     | Description                                          |
+   | --------- | ---------------------------------------------------- |
+   | `openid`  | Includes a unique identifier for the user (required). |
+   | `email`   | Includes the user's email address.                    |
+   | `profile` | Includes the user's name and all custom OIDC claims from the IdP.         |
+   | `groups`  | Include the user's IdP group membership.             |
+
+In your Access application, you can configure the OIDC scopes and claims that Access sends to the SaaS provider. For example, you can remove the `groups` scope if your SaaS application does not need to receive user group information.
+
+### Filter groups
+
+In **Group filter regex**, you can enter a regular expression to define the identity provider groups that you want to include in the `groups` scope. For example, if you enter the expression `(^TEAM-Engineering-.$)|(^TEAM-Product-.$)`, only groups with names like TEAM-Engineering-A or TEAM-Product-B would get passed to the SaaS application.
+
+### Add claims
+
+To add additional OIDC claims onto the ID token sent to your SaaS application, configure the following fields for each claim:
+
+	- **Name**: OIDC claim name
+	- **Scope**: Select the OIDC scope where this claim should be included. In most cases, we recommend selecting `profile` since it already includes other custom claims from the IdP.
+	- **IdP claim**: The identity provider value that should map to this OIDC claim. You can select any [SAML attribute](/cloudflare-one/identity/idp-integration/generic-saml/#saml-headers-and-attributes) or [OIDC claim](/cloudflare-one/identity/idp-integration/generic-oidc/#oidc-claims) that was configured in a Zero Trust IdP integration.
+	- **Required**: If a claim is marked as required but is not provided by an IdP, Cloudflare will fail the authentication request and show an error page.
+	- **Add per IdP claim**: (Optional) If you turned on multiple identity providers for the SaaS application, you can choose different attribute mappings for each IdP. These values will override the parent **IdP claim**.
+
+## Advanced settings
+
+### Access token lifetime
+
+The OIDC Access token authorizes users to connect to the SaaS application through Cloudflare Access. You can set an **Access token lifetime** to determine the window in which the token can be used to establish authentication with the SaaS application — if it expires, the user must re-authenticate through Cloudflare Access. To balance security and user convenience, Cloudflare recommends configuring a short Access token lifetime in conjunction with a longer **Refresh token lifetime** (if supported by your application). When the access token expires, Cloudflare will use the refresh token to obtain a new access token after checking the user's identity against your Access policies. When the refresh token expires, the user will need to log back in to the identity provider. The refresh token lifetime should be less than your [global session duration](/cloudflare-one/identity/users/session-management/), otherwise the global session would take precedence.
+
+:::note
+<Render file="access/saas-apps/saas-sessions" params={{ session: "OIDC Access tokens", token: "Access token"}} />
+:::
+
+### OIDC flows
+
+Some SaaS applications require SSO providers to provide tokens to the browser without backend authentication. Access for SaaS supports the following OIDC flows:
+
+- **No additional OIDC flows**: (Default) Recommended unless your application requires additional flows.
+- **Hybrid flows**: Used by applications that require information from the ID token before authenticating the user.
+- **Implicit flows**: (Not recommended) Typically used by frontend applications that cannot store secrets and which do not support **PKCE without client secret**.
+
+Cloudflare allows various `response_type` values in the authorization request depending on the selected flow. For example, the implicit flow allows Cloudflare to return the ID token, Access token, or both the ID token and Access token from the Authorization endpoint.
+
+| `response_type` values | Default flow | Hybrid flow | Implicit flow |
+| -------------- | -- | -- | -- |
+| `code` | ✅ | ✅ | ❌ |
+| `id_token` | ❌ |✅  | ✅ |
+| `token` | ❌| ✅ |✅  |
+
+To include `id_token` in the authorization request, turn on **Return ID Token from Authorization Endpoint**. To include `token`, turn on **Return Access Token from Authorization Endpoint**
+
+:::note
+[Refresh tokens](#access-token-lifetime) are not supported with Hybrid or Implicit flows.
+:::

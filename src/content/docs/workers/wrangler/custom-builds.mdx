@@ -3,41 +3,34 @@ pcx_content_type: configuration
 title: Custom builds
 head: []
 description: Customize how your code is compiled, before being processed by Wrangler.
-
 ---
 
-import { Render, Type, MetaInfo } from "~/components"
+import { Render, Type, MetaInfo, WranglerConfig } from "~/components";
 
 Custom builds are a way for you to customize how your code is compiled, before being processed by Wrangler.
 
 :::note
 
-With the release of Wrangler v2, it is no longer necessary to use custom builds to bundle your code via webpack and similar bundlers. Wrangler runs [esbuild](https://esbuild.github.io/) by default as part of the `dev` and `publish` commands, and bundles your Worker project into a single Worker script. Refer to [Bundling](/workers/wrangler/bundling/).
+Wrangler runs [esbuild](https://esbuild.github.io/) by default as part of the `dev` and `deploy` commands, and bundles your Worker project into a single Worker script. Refer to [Bundling](/workers/wrangler/bundling/).
 :::
 
 ## Configure custom builds
 
-Custom builds are configured by adding a `[build]` section in your `wrangler.toml`, and using the following options for configuring your custom build.
+Custom builds are configured by adding a `[build]` section in your [Wrangler configuration file](/workers/wrangler/configuration/), and using the following options for configuring your custom build.
 
+- `command` <Type text="string" /> <MetaInfo text="optional" />
 
+  - The command used to build your Worker. On Linux and macOS, the command is executed in the `sh` shell and the `cmd` shell for Windows. The `&&` and `||` shell operators may be used. This command will be run as part of `wrangler dev` and `npx wrangler deploy`.
 
-* `command` <Type text="string" /> <MetaInfo text="optional" />
+- `cwd` <Type text="string" /> <MetaInfo text="optional" />
 
-  * The command used to build your Worker. On Linux and macOS, the command is executed in the `sh` shell and the `cmd` shell for Windows. The `&&` and `||` shell operators may be used. This command will be run as part of `wrangler dev` and `npx wrangler deploy`.
+  - The directory in which the command is executed.
 
-* `cwd` <Type text="string" /> <MetaInfo text="optional" />
+- `watch_dir` <Type text="string | string\[]" /> <MetaInfo text="optional" />
 
-  * The directory in which the command is executed.
-
-* `watch_dir` <Type text="string | string\[]" /> <MetaInfo text="optional" />
-
-  * The directory to watch for changes while using `wrangler dev`. Defaults to the current working directory.
-
-
+  - The directory to watch for changes while using `wrangler dev`. Defaults to the current working directory.
 
 Example:
-
-import { WranglerConfig } from "~/components";
 
 <WranglerConfig>
 

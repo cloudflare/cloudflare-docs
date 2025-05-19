@@ -1,0 +1,29 @@
+---
+title: Analytics
+pcx_content_type: reference
+sidebar:
+  order: 7
+---
+
+import { Type } from "~/components";
+
+Use the [GraphQL API](/analytics/graphql-api/) to get aggregate data and monitor your Aegis IPs capacity. As explained in [IPs allocation](/aegis/about/ips-allocation/), each Aegis IP can support 40,000 concurrent connections per origin IP.
+
+Refer to the GraphQL Analytics API documentation to [get started](/analytics/graphql-api/getting-started/). The specific Aegis schema is called `aegisIpUtilizationAdaptiveGroups`.
+
+You can get average (`avg`) or maximum (`max`) utilization values (in percentage), and use the following dimensions:
+
+- `datetimeFiveMinutes` <Type text="time" />
+    - Timestamp truncated to five minutes. For example, `2025-01-10T00:05:00Z`.
+
+- `popName` <Type text="string" />
+    - The Cloudflare point of presence (PoP). For example, `sjc`.
+
+- `egressIp` <Type text="string" />
+    - Your assigned Aegis IP. For example, `192.0.2.1`.
+
+- `origin` <Type text="string" />
+    - Origin IP and port. For example, `203.0.113.150:443`.
+
+- `popUtilizationKey` <Type text="string" />
+    - The Cloudflare point of presence (PoP), the Aegis IP, and the origin IP and port. For example, `sjc 192.0.2.1 203.0.113.150:443`.

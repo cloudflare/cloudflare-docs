@@ -9,7 +9,3 @@ meta:
   title: Cloudflare use cases
   description: Discover what's possible with Cloudflare.
   author: "@cloudflare"
-
-externals:
-  - title: Cloudflare home
-    url: https://www.cloudflare.com/

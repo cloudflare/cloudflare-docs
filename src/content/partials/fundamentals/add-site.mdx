@@ -14,7 +14,7 @@ import { GlossaryTooltip, Render } from "~/components";
    :::
 
 4. Select a [plan](https://www.cloudflare.com/plans/#compare-features).
-5. Make sure we have all of your [DNS records](/dns/manage-dns-records/).
+5. [Review your DNS records](/dns/zone-setups/full-setup/setup/#review-dns-records) to ensure none are missing. Your DNS records must accurate for your domain to work properly.
 
    <Render file="dns-scan-intro" product="dns" /> <br />
 
@@ -23,5 +23,5 @@ import { GlossaryTooltip, Render } from "~/components";
       <Render file="dns-nxdomain-warning" product="dns" />
 
    2. If you find any missing records, [manually add](/dns/manage-dns-records/how-to/create-dns-records/) those records.
-   3. Depending on your site setup, you may want to adjust the [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/) for certain `A`, `AAAA`, or `CNAME` records.
+   3. Depending on your site setup, you may want to adjust the [proxy status](/dns/proxy-status/) for certain `A`, `AAAA`, or `CNAME` records.
    4. Select **Continue**.

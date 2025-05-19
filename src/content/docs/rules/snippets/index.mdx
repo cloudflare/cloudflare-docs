@@ -1,32 +1,38 @@
 ---
 pcx_content_type: concept
-title: Snippets
+title: Cloudflare Snippets
 sidebar:
-  order: 3
+  order: 4
   group:
-    badge:
-      text: Beta
+    label: Snippets
 head:
   - tag: title
-    content: Cloudflare Snippets (beta)
+    content: Cloudflare Snippets
 ---
 
-import { FeatureTable, GlossaryTooltip, Render } from "~/components";
+import { FeatureTable, GlossaryTooltip, Render, Card } from "~/components";
 
-Cloudflare Snippets (beta) provide a powerful and flexible way to customize the behavior of your website or application using short pieces of JavaScript code. With Snippets, you can modify HTTP response headers, implement <GlossaryTooltip term="JSON web token (JWT)" prepend="JSON web token (JWT) is ">JWT</GlossaryTooltip> validation, perform complex <GlossaryTooltip term="redirect">redirects</GlossaryTooltip>, and much more.
+Cloudflare Snippets provide a powerful and flexible way to customize the behavior of your website or application using short pieces of JavaScript code. With Snippets, you can modify HTTP response headers, implement <GlossaryTooltip term="JSON web token (JWT)" prepend="JSON web token (JWT) is ">JWT</GlossaryTooltip> validation, perform complex <GlossaryTooltip term="redirect">redirects</GlossaryTooltip>, and much more.
 
 For code samples addressing common use cases, please refer to the [Examples](/rules/snippets/examples/) section.
 
-<Render file="rules-requirements" params={{ one: "Snippets require" }} />
+<Render
+	file="rules-requirements"
+	params={{ sentenceIntro: "Snippets require" }}
+/>
 
 ## Snippets elements
 
-To create and deploy a Snippet, you need to define the following elements:
+To create and deploy a snippet, you need to define the following elements:
 
 - **Code snippet**: JavaScript code to be executed during the request-handling process.
-- **Snippet rule**: A [filter expression](/ruleset-engine/rules-language/expressions/) that determines which requests the Snippet will be applied to. Each Snippet can only be associated with one Snippet Rule.
+- **Snippet rule**: A [filter expression](/ruleset-engine/rules-language/expressions/) that determines which requests the Snippet will be applied to. Each snippet can only be associated with one snippet rule.
 
-For more information, refer to the [How it works](/rules/snippets/how-it-works/) and [Create in the dashboard](/rules/snippets/create-dashboard/) sections.
+For more information, refer to [How it works](/rules/snippets/how-it-works/) and [Create a snippet in the dashboard](/rules/snippets/create-dashboard/).
+
+:::note
+If you have used the Cloudflare API to create a code snippet that is not associated with a snippet rule, the Cloudflare dashboard will show that code snippet in a separate tab called **Unused Snippets**. You can either edit the snippet code and associate it with a snippet rule, or delete the unused code snippet.
+:::
 
 ## Templates
 
@@ -34,21 +40,29 @@ For more information, refer to the [How it works](/rules/snippets/how-it-works/)
 
 ## Availability
 
+<Render file="rules-new-limits" />
+
 <FeatureTable id="rules.snippets" />
 
-:::caution[Redirects will count as subrequests]
 Each <GlossaryTooltip term="Snippets subrequest" prepend="A subrequest is ">subrequest</GlossaryTooltip> in a redirect chain counts against the subrequest limit. This means that if a subrequest was redirected it would count as two subrequests. To avoid issues, ensure that you make a subrequest to the end location of the redirect chain.
-:::
+
+Currently, [Version Management](/version-management/) does not support Snippets.
 
 ## Limits
 
-Cloudflare Snippets are lightweight compared to [Cloudflare Workers](/workers/). The following limits apply:
+Cloudflare Snippets are designed for fast, lightweight edge logic. The following limits apply:
 
 | Description                | All plans |
 | -------------------------- | --------- |
 | Maximum execution time     | 5 ms      |
 | Maximum memory             | 2 MB      |
 | Maximum total package size | 32 KB     |
+
+<Card title="Need guidance on choosing between Snippets and Workers?" icon="magnifier">
+
+Explore our [detailed guide](/rules/snippets/when-to-use/) for best practices, real-world use cases, and example implementations.
+
+</Card>
 
 ## Execution order
 

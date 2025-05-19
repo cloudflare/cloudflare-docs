@@ -25,11 +25,9 @@ This guide covers how to configure [ServiceNow](https://docs.servicenow.com/bund
 7. In **Redirect URLs**, enter `https://<INSTANCE-NAME>.service-now.com/navpage.do`.
 8. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/) if the protocol is supported by your IdP. PKCE will be performed on all login attempts.
 9. Copy the **Client secret** and **Client ID**.
-10. Select **Save configuration**.
-11. (Optional) configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) by turning on **Enable App in App Launcher** and, in **App Launcher URL**, entering `https://<INSTANCE-NAME>.service-now.com`.
-12. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
-13. Select **Done**.
-
+10. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
+11. (Optional) In **Experience settings**, configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) by turning on **Enable App in App Launcher** and, in **App Launcher URL**, entering `https://<INSTANCE-NAME>.service-now.com`.
+12. Save the application.
 ## 2. Add the Multiple Provider Single Sign-On Installer Plugin to ServiceNow
 
 1. In ServiceNow, select **All**.

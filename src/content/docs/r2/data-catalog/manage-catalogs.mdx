@@ -1,0 +1,125 @@
+---
+pcx_content_type: configuration
+title: Manage catalogs
+description: Understand how to manage Iceberg REST catalogs associated with R2 buckets
+sidebar:
+  order: 3
+---
+
+import {
+	Render,
+	PackageManagers,
+	Steps,
+	FileTree,
+	Tabs,
+	TabItem,
+	TypeScriptExample,
+	WranglerConfig,
+	LinkCard,
+} from "~/components";
+
+Learn how to:
+
+- Enable and disable [R2 Data Catalog](/r2/data-catalog/) on your buckets.
+- Authenticate Iceberg engines using API tokens.
+
+## Enable R2 Data Catalog on a bucket
+
+Enabling the catalog on a bucket turns on the REST catalog interface and provides a **Catalog URI** and **Warehouse name** required by Iceberg clients. Once enabled, you can create and manage Iceberg tables in that bucket.
+
+### Dashboard
+
+<Steps>
+1. From the Cloudflare dashboard, select **R2 Object Storage** from the sidebar.
+2. Select the bucket you want to enable as a data catalog.
+3. Switch to the **Settings** tab, scroll down to **R2 Data Catalog**, and select **Enable**.
+4. Once enabled, note the **Catalog URI** and **Warehouse name**.
+</Steps>
+
+### Wrangler CLI
+
+To enable the catalog on your bucket, run the [`r2 bucket catalog enable command`](/workers/wrangler/commands/#r2-bucket-catalog-enable):
+
+```bash
+npx wrangler r2 bucket catalog enable <BUCKET_NAME>
+```
+
+After enabling, Wrangler will return your catalog URI and warehouse name.
+
+## Disable R2 Data Catalog on a bucket
+
+When you disable the catalog on a bucket, it immediately stops serving requests from the catalog interface. Any Iceberg table references stored in that catalog become inaccessible until you re-enable it.
+
+### Dashboard
+
+<Steps>
+1. From the Cloudflare dashboard, select **R2 Object Storage** from the sidebar.
+2. Select the bucket where you want to disable the data catalog.
+3. Switch to the **Settings** tab, scroll down to **R2 Data Catalog**, and select **Disable**.
+</Steps>
+
+### Wrangler CLI
+
+To disable the catalog on your bucket, run the [`r2 bucket catalog disable command`](/workers/wrangler/commands/#r2-bucket-catalog-disable):
+
+```bash
+npx wrangler r2 bucket catalog disable <BUCKET_NAME>
+```
+
+## Authenticate your Iceberg engine
+
+To connect your Iceberg engine to R2 Data Catalog, you must provide a Cloudflare API token with **both** R2 Data Catalog permissions and R2 storage permissions. Iceberg engines interact with R2 Data Catalog to perform table operations. The catalog also provides engines with SigV4 credentials, which are required to access the underlying data files stored in R2.
+
+### Create API token in the dashboard
+
+Create an [R2 API token](/r2/api/tokens/#permissions) with **Admin Read & Write** or **Admin Read only** permissions. These permissions include both:
+
+- Access to R2 Data Catalog (read-only or read/write, depending on chosen permission)
+- Access to R2 storage (read-only or read/write, depending on chosen permission)
+
+Providing the resulting token value to your Iceberg engine gives it the ability to manage catalog metadata and handle data operations (reads or writes to R2).
+
+### Create API token via API
+
+To create an API token programmatically for use with R2 Data Catalog, you'll need to specify both R2 Data Catalog and R2 storage permission groups in your [Access Policy](/r2/api/tokens/#access-policy).
+
+#### Example Access Policy
+
+```json
+[
+	{
+		"id": "f267e341f3dd4697bd3b9f71dd96247f",
+		"effect": "allow",
+		"resources": {
+			"com.cloudflare.edge.r2.bucket.4793d734c0b8e484dfc37ec392b5fa8a_default_my-bucket": "*",
+			"com.cloudflare.edge.r2.bucket.4793d734c0b8e484dfc37ec392b5fa8a_eu_my-eu-bucket": "*"
+		},
+		"permission_groups": [
+			{
+				"id": "d229766a2f7f4d299f20eaa8c9b1fde9",
+				"name": "Workers R2 Data Catalog Write"
+			},
+			{
+				"id": "2efd5506f9c8494dacb1fa10a3e7d5b6",
+				"name": "Workers R2 Storage Bucket Item Write"
+			}
+		]
+	}
+]
+```
+
+To learn more about how to create API tokens for R2 Data Catalog using the API, including required permission groups and usage examples, refer to the [Create API tokens via API documentation](/r2/api/tokens/#create-api-tokens-via-api).
+
+## Learn more
+
+<LinkCard
+	title="Get started"
+	href="/r2/data-catalog/get-started/"
+	description="Learn how to enable the R2 Data Catalog on your bucket, load sample data, and run your first query."
+/>
+
+<LinkCard
+	title="Connect to Iceberg engines"
+	href="/r2/data-catalog/config-examples/"
+	description="Find detailed setup instructions for Apache Spark and other common query engines."
+/>

@@ -83,6 +83,10 @@ Using a wildcard in the middle of the **Path** field covers multiple segments of
 
 Port numbers are not supported in Access application paths. If a request includes a port number in the URL, Access will strip the port number and redirect the request to the default HTTP/HTTPS port.
 
+### Query strings
+
+Query strings (such as`?foo=bar`) are not supported in Access application paths.
+
 ### Anchor links
 
 Since anchor links are processed by the browser and not the server, Access applications do not support `#` characters in the URL. For example, requests to `dashboard.com/#settings` will redirect to `dashboard.com`.

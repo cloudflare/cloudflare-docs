@@ -1,12 +1,8 @@
 ---
-inputParameters: type1;;example2;;example3
-
+params:
+  - type
+  - example
+  - example2
 ---
 
-import { Markdown } from "~/components"
-
-<div class="special-class" markdown="1">
-
-If a condition in an expression joins a {props.one} attribute (such as *{props.two}*) and a response attribute (such as *{props.three}*), then the condition will be evaluated when the response is received.
-
-</div>
+If a condition in an expression joins a {props.type} attribute (such as _{props.example}_) and a response attribute (such as _{props.example2}_), then the condition will be evaluated when the response is received.

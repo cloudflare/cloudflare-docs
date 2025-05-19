@@ -3,35 +3,41 @@ pcx_content_type: how-to
 title: DHCP relay
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { APIRequest, Render, TabItem, Tabs } from "~/components";
 
 DHCP Relay provides a way for DHCP clients to communicate with DHCP servers that are not available on the same local subnet/broadcast domain. When you enable DHCP Relay, Magic WAN Connector forwards DHCP discover messages to a predefined DHCP server, and routes the responses back to the original device that sent the discover message.
 
 ```mermaid
 flowchart LR
 accTitle: An example of Connector in DHCP Relay mode
-    a(Magic WAN Connector) --> b(Internet) --> c(DHCP server)
+    a(Magic WAN Connector) <--> b(Cloudflare/Magic WAN) <--> c(DHCP server)
 
-    subgraph Customer site
+    subgraph Site A
     d[LAN 1] <--> a
     e[LAN 2] <--> a
     end
 
-    c --> a
+    subgraph Site B
+    c
+    end
     classDef orange fill:#f48120,color: black
-    class a orange
+    class a,b,c orange
 ```
 
 _The above graph shows Connector sending DHCP discover messages to a DHCP server offsite._
+
+:::caution
+DHCP relay will not work if your DHCP server is behind a [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/). To enable DHCP relay functionality, use either a Magic WAN tunnel or a CNI connection.
+:::
 
 To configure DHCP relay:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Magic WAN** > **Sites**.
-3. Select your site > **Edit**.
-4. Select **Network**.
+2. Go to **Magic WAN** > **Connector on-ramps (beta)**.
+3. Select your Connector > **Edit**.
+4. Select **Network Configuration**.
 5. In **LAN configuration**, select the LAN where you need to configure DHCP relay.
 6. Select **Edit**.
 7. Select **This is a DHCP Relay**.
@@ -40,20 +46,17 @@ To configure DHCP relay:
 
 </TabItem> <TabItem label="API">
 
-<Render file="connector/account-id-api-key" />
+<Render file="account-id-api-key" product="networking-services" />
 
 Create a [`PUT` request](/api/resources/magic_transit/subresources/sites/subresources/lans/methods/update/) to update the LAN where you want to enable DHCP relay:
 
 Example:
 
-```bash
-curl --request PUT \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/lans/{lan_id} \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "lan": {
+<APIRequest
+  path="/accounts/{account_id}/magic/sites/{site_id}/lans/{lan_id}"
+  method="PUT"
+  json={{
+    "lan": {
     "static_addressing": {
       "dhcp_relay": {
         "server_addresses": [
@@ -62,7 +65,7 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}
       }
     }
   }
-}'
-```
+  }}
+/>
 
 </TabItem> </Tabs>

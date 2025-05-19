@@ -49,8 +49,8 @@ First, create [virtual networks](/cloudflare-one/connections/connect-networks/pr
 1. Create a [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) corresponding to one of your dedicated egress IPs. We recommend using a name related to the location of the corresponding dedicated egress IP. For example, if your users will egress from the Americas, you can name the virtual network `vnet-AMER`.
 
    ```bash
-   curl https://api.cloudflare.com/client/v4/accounts/{account_id}/teamnet/virtual_networks \
-   --header "Authorization: Bearer <API_TOKEN>" \
+   curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/teamnet/virtual_networks \
+   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
    --header "Content-Type: application/json" \
    --data '{
      "comment": "Virtual network to egress from the Americas",
@@ -90,8 +90,8 @@ After creating your virtual networks, route your private network CIDRs over each
 
    ```bash
    curl --request PATCH \
-   https://api.cloudflare.com/client/v4/accounts/{account_id}/teamnet/routes/{route_id} \
-   --header "Authorization: Bearer <API_TOKEN>" \
+   https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/teamnet/routes/$ROUTE_ID \
+   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
    --header "Content-Type: application/json" \
    --data '{
      "network": "10.0.0.0/8",
@@ -106,8 +106,8 @@ After creating your virtual networks, route your private network CIDRs over each
 
    ```bash
    curl --request PATCH \
-   https://api.cloudflare.com/client/v4/accounts/{account_id}/teamnet/routes/{route_id} \
-   --header "Authorization: Bearer <API_TOKEN>" \
+   https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/teamnet/routes/$ROUTE_ID \
+   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
    --header "Content-Type: application/json" \
    --data '{
      "network": "10.0.0.0/8",
@@ -160,8 +160,8 @@ Next, assign your dedicated egress IPs to each virtual network using Gateway egr
 1. Add a Gateway egress policy that matches the corresponding virtual network. For example:
 
    ```bash
-   curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
-   --header "Authorization: Bearer <API_TOKEN>" \
+   curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
+   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
    --header "Content-Type: application/json" \
    --data '{
      "action": "egress",

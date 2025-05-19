@@ -6,7 +6,7 @@ sidebar:
   label: Setup
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, APIRequest } from "~/components";
 
 Advanced nameservers included with [Foundation DNS](/dns/foundation-dns/) are an opt-in configuration.
 
@@ -27,16 +27,13 @@ To enable advanced nameservers on an existing zone:
 
     Use the [Update DNS Settings](/api/resources/dns/subresources/settings/methods/edit/) endpoint to send a PATCH request like the following:
 
-    ```bash
-    curl --request PATCH \
-    "https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_settings" \
-    --header "X-Auth-Email: <EMAIL>" \
-    --header "X-Auth-Key: <API_KEY>" \
-    --header "Content-Type: application/json" \
-    --data '{
-      "foundation_dns": true
-    }'
-    ```
+  	<APIRequest
+  	path="/zones/{zone_id}/dns_settings"
+  	method="PATCH"
+  	json={{
+  		"foundation_dns": true,
+  	}}
+    />
 
     The response body will contain your assigned namservers in the `nameservers` object. You will use these nameservers in the next step.
 

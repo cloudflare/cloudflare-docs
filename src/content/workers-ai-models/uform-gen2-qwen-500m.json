@@ -8,6 +8,7 @@
         "name": "Image-to-Text",
         "description": "Image to text models output a text from a given image. Image captioning or optical character recognition can be considered as the most common applications of image to text."
     },
+    "created_at": "2024-02-27 18:28:52.485",
     "tags": [],
     "properties": [
         {
@@ -30,10 +31,6 @@
                 {
                     "type": "object",
                     "properties": {
-                        "temperature": {
-                            "type": "number",
-                            "description": "Controls the randomness of the output; higher values produce more random results."
-                        },
                         "prompt": {
                             "type": "string",
                             "description": "The input text prompt for the model to generate a response."
@@ -42,6 +39,30 @@
                             "type": "boolean",
                             "default": false,
                             "description": "If true, a chat template is not applied and you must adhere to the specific model's expected formatting."
+                        },
+                        "top_p": {
+                            "type": "number",
+                            "description": "Controls the creativity of the AI's responses by adjusting how many possible words it considers. Lower values make outputs more predictable; higher values allow for more varied and creative responses."
+                        },
+                        "top_k": {
+                            "type": "number",
+                            "description": "Limits the AI to choose from the top 'k' most probable words. Lower values make responses more focused; higher values introduce more variety and potential surprises."
+                        },
+                        "seed": {
+                            "type": "number",
+                            "description": "Random seed for reproducibility of the generation."
+                        },
+                        "repetition_penalty": {
+                            "type": "number",
+                            "description": "Penalty for repeated tokens; higher values discourage repetition."
+                        },
+                        "frequency_penalty": {
+                            "type": "number",
+                            "description": "Decreases the likelihood of the model repeating the same lines verbatim."
+                        },
+                        "presence_penalty": {
+                            "type": "number",
+                            "description": "Increases the likelihood of the model introducing new topics."
                         },
                         "image": {
                             "oneOf": [

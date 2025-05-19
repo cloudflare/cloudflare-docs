@@ -232,3 +232,5 @@ Queue consumers receive notifications as [Messages](/queues/configuration/javasc
 ## Notes
 
 - Queues [per-queue message throughput](/queues/platform/limits/) is currently 5,000 messages per second. If your workload produces more than 5,000 notifications per second, we recommend splitting notification rules across multiple queues.
+- Rules without prefix/suffix apply to all objects in the bucket.
+- Overlapping or conflicting rules that could trigger multiple notifications for the same event are not allowed. For example, if you have an `object-create` (or `PutObject` action) rule without a prefix and suffix, then adding another `object-create` (or `PutObject` action) rule with a prefix like `images/` could trigger more than one notification for a single upload, which is invalid.

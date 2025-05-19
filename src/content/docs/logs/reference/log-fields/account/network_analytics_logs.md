@@ -31,31 +31,31 @@ Descriptive name of the type of attack that this packet was a part of, if any. O
 
 Type: `string`
 
-The city where the Cloudflare datacenter that received the packet is located.
+The city where the Cloudflare data center that received the packet is located.
 
 ## ColoCode
 
 Type: `string`
 
-The Cloudflare datacenter that received the packet (nearest IATA airport code).
+The Cloudflare data center that received the packet (nearest IATA airport code).
 
 ## ColoCountry
 
 Type: `string`
 
-The country where the Cloudflare datacenter that received the packet is located (ISO 3166-1 alpha-2).
+The country where the Cloudflare data center that received the packet is located (ISO 3166-1 alpha-2).
 
 ## ColoGeoHash
 
 Type: `string`
 
-The latitude and longitude where the colo that received the packet is located (Geohash encoding).
+The latitude and longitude where the Cloudflare data center that received the packet is located (Geohash encoding).
 
 ## ColoName
 
 Type: `string`
 
-The unique site identifier of the Cloudflare datacenter that received the packet (for example, 'ams01', 'sjc01', 'lhr01').
+The unique site identifier of the Cloudflare data center that received the packet (for example, 'ams01', 'sjc01', 'lhr01').
 
 ## Datetime
 

@@ -21,8 +21,10 @@ When creating a DNS policy, you can select as many security risk categories and 
 
 <Render
 	file="gateway/response"
-	params={{ one: "query", two: "Source IP", three: "Resolved IP" }}
+	params={{ type: "query", example: "Source IP", example2: "Resolved IP" }}
 />
+
+<Render file="gateway/terraform-precedence-warning" product="cloudflare-one" />
 
 ## Actions
 
@@ -61,6 +63,7 @@ API value: `allow`
 - [Resolved Continent IP Geolocation](#resolved-continent)
 - [Resolved Country IP Geolocation](#resolved-country)
 - [Resolved IP](#resolved-ip)
+- [Request Context Categories](#request-context-categories)
 - [Security Categories](#security-categories)
 - [Source Continent IP Geolocation](#source-continent)
 - [Source Country IP Geolocation](#source-country)
@@ -79,9 +82,9 @@ API value: `allow`
 
 Policies with Allow actions allow DNS queries to reach destinations you specify within the Selector and Value fields. For example, the following configuration allows DNS queries to reach domains we categorize as belonging to the Education content category:
 
-| Selector           | Operator | Value     | Action |
-| ------------------ | -------- | --------- | ------ |
-| Content Categories | in       | Education | Allow  |
+| Selector           | Operator | Value       | Action |
+| ------------------ | -------- | ----------- | ------ |
+| Content Categories | in       | _Education_ | Allow  |
 
 #### Disable DNSSEC validation
 
@@ -112,6 +115,7 @@ API value: `block`
 - [Resolved Continent IP Geolocation](#resolved-continent)
 - [Resolved Country IP Geolocation](#resolved-country)
 - [Resolved IP](#resolved-ip)
+- [Request Context Categories](#request-context-categories)
 - [Security Categories](#security-categories)
 - [Source Continent IP Geolocation](#source-continent)
 - [Source Country IP Geolocation](#source-country)
@@ -130,17 +134,23 @@ API value: `block`
 
 Policies with Block actions block DNS queries to reach destinations you specify within the Selector and Value fields. For example, the following configuration blocks DNS queries from reaching domains we categorize as belonging to the Adult Themes content category:
 
-| Selector           | Operator | Value        | Action |
-| ------------------ | -------- | ------------ | ------ |
-| Content Categories | in       | Adult Themes | Block  |
+| Selector           | Operator | Value          | Action |
+| ------------------ | -------- | -------------- | ------ |
+| Content Categories | in       | _Adult Themes_ | Block  |
 
 #### Custom block page
 
-When choosing the Block action, turn on **Display custom block page** to respond to queries with a block page and to specify the message you want to display to users who go to blocked websites. If the block page is disabled, Gateway will respond to blocked queries with an `A` record of `0.0.0.0` for IPv4 destinations, or with an `AAAA` record of `::` for IPv6 destinations. For more information, refer to the dedicated documentation on [customizing the block page](/cloudflare-one/policies/gateway/block-page/).
+When choosing the Block action, turn on **Modify Gateway block behavior** to respond to queries with a block page to display to users who go to blocked websites. Optionally, you can override your global block page setting with a URL redirect for the specific DNS policy. For more information, refer to [Block page](/cloudflare-one/policies/gateway/block-page/).
+
+If the block page is turned off for a policy, Gateway will respond to queries blocked at the DNS level with an `A` record of `0.0.0.0` for IPv4 destinations, or with an `AAAA` record of `::` for IPv6 destinations. The browser will display its default connection error page.
 
 #### WARP client block notifications
 
-<Render file="gateway/client-notifications" />
+<Render
+	file="gateway/client-notifications"
+	product="cloudflare-one"
+	params={{ toggleName: "**Display block notification for WARP Client**" }}
+/>
 
 ### Override
 
@@ -274,7 +284,7 @@ Gateway matches DNS queries against the following selectors, or criteria:
 
 ### Application
 
-<Render file="gateway/selectors/application" params={{ one: "DNS" }} />
+<Render file="gateway/selectors/application" params={{ policyType: "DNS" }} />
 
 ### Authoritative Nameserver IP
 
@@ -337,15 +347,20 @@ Use this selector to filter DNS responses by their `TXT` records.
 
 ### Domain
 
-<Render file="gateway/selectors/domain" />
+<Render
+	file="gateway/selectors/domain"
+	params={{ APIendpoint: "dns.domains" }}
+/>
 
 ### Host
 
-<Render file="gateway/selectors/host" />
+<Render file="gateway/selectors/host" params={{ APIendpoint: "dns.fqdn" }} />
 
 ### Indicator Feeds
 
 <Render file="gateway/selectors/indicator-feeds" params={{ one: "dns" }} />
+
+<Render file="gateway/selectors/category-options" />
 
 ### Location
 
@@ -387,6 +402,14 @@ Use this selector to filter based on the IP addresses that the query resolves to
 | UI name     | API example                                | Evaluation phase     |
 | ----------- | ------------------------------------------ | -------------------- |
 | Resolved IP | `any(dns.resolved_ips[*] == 198.51.100.0)` | After DNS resolution |
+
+### Request Context Categories
+
+Use this selector to match a dynamic list of [category IDs](/cloudflare-one/policies/gateway/domain-categories/#category-and-subcategory-ids) sent in the [EDNS](https://datatracker.ietf.org/doc/html/rfc6891) portion of a DNS query. Gateway includes request context with the OPT code `65050`.
+
+| UI name                    | API example                                 | Evaluation phase      |
+| -------------------------- | ------------------------------------------- | --------------------- |
+| Request Context Categories | `dns.categories_in_request_context_matches` | Before DNS resolution |
 
 ### Security Categories
 

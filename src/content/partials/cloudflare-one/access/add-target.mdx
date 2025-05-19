@@ -1,13 +1,18 @@
 ---
-{}
-
+params:
+  - protocol
 ---
 
-import { Tabs, TabItem, Render, Details } from "~/components"
+import { Tabs, TabItem, Render, Details } from "~/components";
 
-A target represents a single resource in your infrastructure (such as a server, Kubernetes cluster, database, or container) that users will connect to through Cloudflare. Targets are protocol-agnostic, meaning that you do not need to define a new target for each protocol that runs on the server.
+A target represents a single resource in your infrastructure (such as a server, Kubernetes cluster, database, or container) that users will connect to through Cloudflare.
 
-To create a new target:
+{
+  props.protocol === "rdp" ? (
+		<p> Create a target for each Windows machine that requires RDP access.
+To create a new target:</p>) :
+	(<p>Targets are protocol-agnostic, meaning that you do not need to define a new target for each protocol that runs on the server. To create a new target: </p>)
+}
 
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
@@ -30,6 +35,7 @@ If the target IP does not appear in the dropdown, go to **Networks** > **Routes*
 <TabItem label="API">
 
 1. [Create an API token](/fundamentals/api/get-started/create-token/) with the following permissions:
+
 		| Type    | Item             | Permission |
 		| ------- | ---------------- | ---------- |
 		| Account | Zero Trust       | Edit       |
@@ -37,8 +43,8 @@ If the target IP does not appear in the dropdown, go to **Networks** > **Routes*
 2. Make a `POST` request to the [Infrastructure Access Targets](/api/resources/zero_trust/subresources/access/subresources/infrastructure/subresources/targets/methods/create/) endpoint:
 
 		```sh
-		curl https://api.cloudflare.com/client/v4/accounts/{account_id}/infrastructure/targets \
-		--header "Authorization: Bearer <API_TOKEN>" \
+		curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/infrastructure/targets \
+		--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 		--data '{
 			"hostname": "infra-access-target",
 			"ip": {
@@ -57,8 +63,12 @@ If the target IP does not appear in the dropdown, go to **Networks** > **Routes*
 </TabItem>
 <TabItem label="Terraform">
 
-1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.40.0/docs/resources/api_token):
-	- `Teams Write`
+:::note[Provider versions]
+The following example requires Cloudflare provider version `>=4.45.0`.
+:::
+
+1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.45.0/docs/resources/api_token):
+	- `Zero Trust Write`
 
 2. Configure the [`cloudflare_zero_trust_infrastructure_access_target`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.45.0/docs/resources/zero_trust_infrastructure_access_target) resource:
 
@@ -82,4 +92,4 @@ If the target IP does not appear in the dropdown, go to **Networks** > **Routes*
 </TabItem>
 </Tabs>
 
-Next, create an infrastructure application to secure the target.
+Next, create an Access application to secure the target.

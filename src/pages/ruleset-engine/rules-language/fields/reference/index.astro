@@ -3,8 +3,13 @@ import { getEntry } from "astro:content";
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
 import FieldCatalog from "~/components/FieldCatalog.tsx";
 
-const fieldData = await getEntry("fields", "index");
-const fields = fieldData.data.entries;
+const entry = await getEntry("fields", "index");
+
+if (!entry) {
+	throw new Error(`Failed to load fields data`);
+}
+
+const fields = entry.data.entries;
 ---
 
 <StarlightPage

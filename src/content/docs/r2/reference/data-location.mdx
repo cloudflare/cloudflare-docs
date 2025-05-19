@@ -5,6 +5,8 @@ sidebar:
   order: 7
 ---
 
+import { WranglerConfig } from "~/components";
+
 Learn how the location of data stored in R2 is determined and about the different available inputs that control the physical location where objects in your buckets are stored.
 
 ## Automatic (recommended)
@@ -77,9 +79,7 @@ Use Jurisdictional Restrictions when you need to ensure data is stored and proce
 
 ### Using jurisdictions from Workers
 
-To access R2 buckets that belong to a jurisdiction from [Workers](/workers/), you will need to specify the jurisdiction as well as the bucket name as part of your [bindings](/r2/api/workers/workers-api-usage/#3-bind-your-bucket-to-a-worker) in your `wrangler.toml`:
-
-import { WranglerConfig } from "~/components";
+To access R2 buckets that belong to a jurisdiction from [Workers](/workers/), you will need to specify the jurisdiction as well as the bucket name as part of your [bindings](/r2/api/workers/workers-api-usage/#3-bind-your-bucket-to-a-worker) in your [Wrangler configuration file](/workers/wrangler/configuration/):
 
 <WranglerConfig>
 
@@ -107,12 +107,10 @@ The example below shows how to create an R2 bucket in the `eu` jurisdiction usin
 ```js
 import { S3Client, CreateBucketCommand } from "@aws-sdk/client-s3";
 const S3 = new S3Client({
-	endpoint:
-		"https://4893d737c0b9e484dfc37ec392b5fa8a.eu.r2.cloudflarestorage.com",
+	endpoint: "https://<account_id>.eu.r2.cloudflarestorage.com",
 	credentials: {
-		accessKeyId: "7dc27c125a22ad808cd01df8ec309d41",
-		secretAccessKey:
-			"1aa5c5b0c43defdb88f567487c071d17e234126133444770a706ae09336c57a4",
+		accessKeyId: "<access_key_id",
+		secretAccessKey: "<access_key_secret>",
 	},
 	region: "auto",
 });

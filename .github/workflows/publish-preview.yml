@@ -9,9 +9,11 @@ concurrency:
 
 jobs:
   publish:
+    if: github.repository == 'cloudflare/cloudflare-docs'
     runs-on: ubuntu-22.04
     permissions:
       contents: read
+      pull-requests: write
     name: Publish Preview
     steps:
       - uses: actions/checkout@v4
@@ -25,24 +27,29 @@ jobs:
       - uses: actions/cache/restore@v4
         with:
           path: |
-            node_modules/.astro
+            node_modules/.astro/assets
           key: static
       - run: npm run build
         name: Build
         env:
           NODE_OPTIONS: --max-old-space-size=4096
-      - run: npx wrangler pages deploy --project-name cloudflare-docs dist
-        name: Deploy to Cloudflare Pages
-        env:
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      - run: npx wrangler versions upload -c ./wrangler-workers.toml
-        name: Deploy to Cloudflare Workers
+      - name: Deploy to Cloudflare Workers
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          SHORT_SHA=$(git rev-parse --short=8 HEAD)
+          BRANCH_SLUG=$(git rev-parse --abbrev-ref HEAD | iconv -c -t ascii//TRANSLIT | sed -E 's/[~^]+//g' | sed -E 's/[^a-zA-Z0-9]+/-/g' | sed -E 's/^-+|-+$//g' | tr A-Z a-z)
+
+          npx wrangler deploy --dispatch-namespace preview-deployments --name $SHORT_SHA
+          npx wrangler deploy --dispatch-namespace preview-deployments --name $BRANCH_SLUG
+      - name: Post preview URL on PR
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx tsx bin/post-preview-url-comment/index.ts
+        continue-on-error: true
       - uses: actions/cache/save@v4
         if: always()
         with:
           path: |
-            node_modules/.astro
+            node_modules/.astro/assets
           key: static

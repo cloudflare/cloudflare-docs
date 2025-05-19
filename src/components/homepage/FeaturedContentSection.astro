@@ -32,7 +32,7 @@ const { title, text, image, cards, imagePosition } = props.parse(Astro.props);
 <div class="flex h-1/3 items-center">
 	{
 		imagePosition === "before" && (
-			<div class="w-full m-8">
+			<div class="m-8 w-full">
 				<Image
 					src={image.light}
 					alt={`${title} section image`}
@@ -55,13 +55,16 @@ const { title, text, image, cards, imagePosition } = props.parse(Astro.props);
 				<div class="[&>article]:gap-0">
 					<Card title="">
 						<Stream
-							videoId="d89f290431f98e551f2b1467f85d6561"
-							videoTitle="foo"
-							thumbnailTimeOrURL="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/cloudflare-stack.jpg"
-							moreVideosLink="false"
+							id="d89f290431f98e551f2b1467f85d6561"
+							title="foo"
+							thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/cloudflare-stack.jpg"
+							showMoreVideos={false}
 						/>
 
-						<LinkCard title={"Explore our Developer Platform"} href={"/products/?product-group=Developer+platform"} />
+						<LinkCard
+							title={"Explore our Developer Platform"}
+							href={"/products/?product-group=Developer+platform"}
+						/>
 					</Card>
 				</div>
 			) : (
@@ -80,7 +83,7 @@ const { title, text, image, cards, imagePosition } = props.parse(Astro.props);
 
 	{
 		imagePosition === "after" && (
-			<div class="w-full m-8">
+			<div class="m-8 w-full">
 				<Image
 					src={image.light}
 					alt={`${title} section image`}

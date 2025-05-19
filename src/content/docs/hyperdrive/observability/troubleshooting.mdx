@@ -3,7 +3,6 @@ pcx_content_type: concept
 title: Troubleshoot and debug
 sidebar:
   order: 10
-
 ---
 
 Troubleshoot and debug errors commonly associated with connecting to a database with Hyperdrive.
@@ -26,6 +25,15 @@ Hyperdrive will also issue an empty test query, a `;` in PostgreSQL, to validate
 | `2015`     | Generic error.                                                                                   | Hyperdrive failed to connect and could not determine a reason. Open a support ticket so Cloudflare can investigate.                                            |
 | `2016`     | Test query failed.                                                                               | Confirm that the user Hyperdrive is connecting as has permissions to issue read and write queries to the given database.                                       |
 
+### Failure to connect
+
+Hyperdrive may also emit `Failed to connect to the provided database` when it fails to connect to the database when attempting to create a Hyperdrive configuration. This is possible when the TLS (SSL) certificates are misconfigured. Here is a non-exhaustive table of potential failure to connect errors:
+
+| Error message | Details               | Recommended fixes |
+| ---------- | -------------------- | --------------------- |
+| Server return error and closed connection. | This message occurs when you attempt to connect to a database that has client certificate verification enabled. | Ensure you are configuring your Hyperdrive with [client certificates](/hyperdrive/configuration/tls-ssl-certificates-for-hyperdrive/) if your database requires them. |
+| TLS handshake failed: cert validation failed. | This message occurs when Hyperdrive has been configured with server CA certificates and is indicating that the certificate provided by the server has not been signed by the expected CA certificate. | Ensure you are using the expected the correct CA certificate for Hyperdrive, or ensure you are connecting to the right database. |
+
 ## Connection errors
 
 Hyperdrive may also return errors at runtime. This can happen during initial connection setup, or in response to a query or other wire-protocol command sent by your driver.
@@ -35,13 +43,25 @@ Hyperdrive errors that do not map 1:1 with an error message code [documented by 
 
 Hyperdrive may also encounter `ErrorResponse` wire protocol messages sent by your database. Hyperdrive will pass these errors through unchanged when possible.
 
+
+
 ### Hyperdrive specific errors
 
 | Error Message                                          | Details                                                                                         | Recommended fixes                                                                                                                                                                                                                                                                              |
 | ------------------------------------------------------ | ----------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `Internal error.`                                      | Something is broken on our side.                                                                | Check for an ongoing incident affecting Hyperdrive, and contact Cloudflare Support.                                                                                                                                                                                                            |
+| `Internal error.`                                      | Something is broken on our side.                                                                | Check for an ongoing incident affecting Hyperdrive, and contact Cloudflare Support. Retrying the query is appropriate, if it makes sense for your usage pattern.                                                                                                                               |
 | `Failed to acquire a connection from the pool.`        | Hyperdrive timed out while waiting for a connection to your database, or cannot connect at all. | If you are seeing this error intermittently, your Hyperdrive pool is being exhausted because too many connections are being held open for too long by your worker. This can be caused by a myriad of different issues, but long-running queries/transactions are a common offender.            |
 | `Server connection attempt failed: connection_refused` | Hyperdrive is unable to create new connections to your origin database.                         | A network firewall or access control list (ACL) is likely rejecting requests from Hyperdrive. Ensure you have allowed connections from the public Internet. Sometimes, this can be caused by your database host provider refusing incoming connections when you go over your connection limit. |
+
+### Node errors
+
+| Error Message                                    | Details                                                                                                               | Recommended fixes                                                                                                            |
+| ------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `Uncaught Error: No such module "node:<module>"` | Your Cloudflare Workers project or a library that it imports is trying to access a Node module that is not available. | Enable [Node.js compatibility](/workers/runtime-apis/nodejs/) for your Cloudflare Workers project to maximize compatibility. |
+
+### Driver errors
+
+If your queries are not getting cached despite Hyperdrive having caching enabled, your driver may be configured such that your queries are not cacheable by Hyperdrive. This may happen if you are using the [Postgres.js](https://github.com/porsager/postgres) driver with [`prepare: false:`](https://github.com/porsager/postgres?tab=readme-ov-file#prepared-statements). To resolve this, enable prepared statements with `prepare: true`.
 
 ### Improve performance
 
