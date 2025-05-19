@@ -261,7 +261,7 @@ To read more than 1000 keys per operation, you can use the bulk read operations 
 
 ### Reducing cardinality by coalescing keys
 
-If you have a set of related key-value pairs that have a mixed usage pattern (some hot keys and some cold keys), consider coalescing the need to fetch them, so that a single cached fetch retrieves all the values even if you only need one of the values. This is useful because the cooler keys share access patterns with the hotter keys, and are therefore more likely to be present in the cache. Some approaches to accomplishing this are described below.
+If you have a set of related key-value pairs that have a mixed usage pattern (some hot keys and some cold keys), consider coalescing them. By coalescing cold keys with hot keys, cold keys will be cached alongside hot keys which can provide faster reads than if they were uncached as individual keys.
 
 #### Merging into a "super" KV entry
 
@@ -283,24 +283,13 @@ coalesced: {
 }
 ```
 
-By coalescing the values, the cold keys benefit from being kept alive in the cache because of access patterns of the warmer keys.
+By coalescing the values, the cold keys benefit from being kept warm in the cache because of access patterns of the warmer keys.
 
-This works best if you are not expecting the need to update the values independently of each other, which can pose race conditions unless you are careful about how you synchronize.
+This works best if you are not expecting the need to update the values independently of each other, which can pose race conditions.
 
 - **Advantage**: Infrequently accessed keys are kept in the cache.
 - **Disadvantage**: Size of the resultant value can push your worker out of its memory limits. Safely updating the value requires a [locking mechanism](/kv/api/write-key-value-pairs/#concurrent-writes-to-the-same-key) of some kind.
 
-#### Storing in metadata and shared prefix
-
-If you do not want to merge into a single KV entry as described above, and your associated values fit within the [metadata limit](/workers/platform/limits/#kv-limits), then you can store the values within the metadata instead of the body. If you then name the keys with a shared unique prefix, your list operation will contain the value, letting you bulk read multiple keys at once through a single, cacheable list operation.
-
-:::note[List performance]
-List operations are not "write aware". This means that while they are subject to tiering, they only stay cached for up to one minute past when it was last read, even at upper tiers.
-
-By comparison, `get` operations are cached at the upper tiers for a service managed duration that is always longer than your cacheTtl. Additionally, the cacheTtl lets you extend the duration of a single key lookup at the data center closest to the request.
-:::
-
-Since list operations are not "write aware" as described above, they are only ever cached for 1 minute. They are still subject to [tiered caching](https://blog.cloudflare.com/faster-workers-kv-architecture#a-new-horizontally-scaled-tiered-cache) as described in our blog post, so requests within the region and globally are amortized to keep the asset closer to your request. However, you still need to be reading the value about once every 30 seconds to make sure it is always present within Cloudflare's caches.
 
 ## Other methods to access KV
 
