@@ -27,7 +27,7 @@ This does not apply to [Wrangler Environments](/workers/wrangler/environments/) 
 
 For example, a Worker named `my-worker-staging` on the dashboard can be deployed from a repository that contains a wrangler.toml with the arguments `name = my-worker` and `[env.staging]` using the deploy command `npx wrangler deploy --env staging`.
 
-Additionally, on Wrangler versions greater than 3.xx, Workers Builds will automatically override the name to match the Worker it is connected to using the `WRANGLER_CI_OVERRIDE_NAME` environment variable.
+On Wrangler v3 and up, Workers Builds automatically matches the name of the connected Worker by overriding it with the `WRANGLER_CI_OVERRIDE_NAME` environment variable.
 :::
 
 ### Missing wrangler.toml
