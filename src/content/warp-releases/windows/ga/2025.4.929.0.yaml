@@ -27,7 +27,7 @@ releaseNotes: |-
 
     To work around this issue, reconnect the WARP client by toggling off and back on.
   - We have received reports of performance issues from some customers that have upgraded to 24H2 with the Windows Filtering Platform and local device firewall rules. Before rolling out this Windows version, we highly encourage customers to test thoroughly as we continue to debug with Microsoft.
-  - Devices with `KB5055523` installed may receive a warning about `Win32/ClickFix.ABA` being present in the installer. We are working with Microsoft to correct this issue.
+  - Devices with `KB5055523` installed may receive a warning about `Win32/ClickFix.ABA` being present in the installer. To resolve this false positive, update Microsoft Security Intelligence to [version 1.429.19.0](https://www.microsoft.com/en-us/wdsi/definitions/antimalware-definition-release-notes?requestVersion=1.429.19.0) or later.
 version: 2025.4.929.0
 releaseDate: 2025-05-14T21:32:45.903Z
 packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2025.4.929.0
