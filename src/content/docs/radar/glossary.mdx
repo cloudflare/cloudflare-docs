@@ -70,20 +70,22 @@ You can also access the detection result programmatically via our [public API](/
 
 ## BGP real-time routes
 
-Radar's prefix routing page displays real-time BGP routes as a Sankey diagram. This visualization is built using MRT data from [RouteViews][route-views] and [RIPE RIS][ripe-ris], combined with real-time streams from RouteViews' Kafka instance and [RIS Live][ris-live].
+Cloudflare Radar's prefix routing page displays real-time BGP routes as a [Sankey diagram][sankey]. This visualization is built using MRT data from [RouteViews][route-views] and [RIPE RIS][ripe-ris], combined with real-time streams from RouteViews' Kafka instance and [RIS Live][ris-live].
 
-By default, the route visualization shows paths from the originating AS to [tier-1 networks][tier-1], omitting the segments from tier-1 networks to BGP route collectors for clarity. Users can choose to see the complete paths using the "Show full paths" toggle.
+By default, the route visualization shows paths from the originating AS to [Tier-1 networks][tier-1], omitting the segments from Tier-1 networks to BGP route collectors for clarity. Users can choose to see the complete paths using the "Show full paths" toggle.
 
-Above the visualization, a table details the prefix origin, including the originating AS, its visibility percentage across route collectors, and RPKI validation status (`valid`, `invalid`, `unknown`).
+Above the visualization, a table details the prefix origin, including the originating AS, its visibility percentage across route collectors, and [RPKI][rpki] validation status (`valid`, `invalid`, `unknown`).
 
 Hovering over a link in the diagram reveals a tooltip with the connected ASNs, the observing BGP route collectors (from [RIPE RIS][ris-collectors] and [RouteViews][route-views-collectors]), and the last update timestamp.
 
-[tier-1]: https://en.wikipedia.org/wiki/Tier_1_network
 [route-views]: https://www.routeviews.org/routeviews/
+[route-views-collectors]: https://www.routeviews.org/routeviews/collectors/
 [ripe-ris]: https://www.ripe.net/analyse/internet-measurements/routing-information-service-ris/
 [ris-live]: https://ris-live.ripe.net/
 [ris-collectors]: https://ris.ripe.net/docs/route-collectors/
-[route-views-collectors]: https://www.routeviews.org/routeviews/collectors/
+[sankey]: https://en.wikipedia.org/wiki/Sankey_diagram
+[rpki]: https://blog.cloudflare.com/rpki-details/
+[tier-1]: https://en.wikipedia.org/wiki/Tier_1_network
 
 ## Certificates
 
