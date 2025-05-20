@@ -449,7 +449,7 @@ entries:
 
       These thresholds cannot be configured. Service level objectives (SLOs) are used to determine the threshold.
 
-  - name: Passive Origin Monitoring
+  - name: Passive Origin Monitoring [Deprecated]
     audience: Customers who want to receive a notification when Cloudflare is unable to access their origin. Customers will only receive this notification when their origin is returning a `521` error.
     availability: All Cloudflare plans.
     associatedProducts: Traffic Monitoring
