@@ -17,10 +17,23 @@ import remarkGfm from "remark-gfm";
 import rehypeRemark from "rehype-remark";
 import remarkStringify from "remark-stringify";
 import { marked } from "marked";
+import { sub } from "date-fns";
 
 async function getWARPReleases(): Promise<Array<CollectionEntry<"changelog">>> {
 	const releases = await getCollection("warp-releases", (e) => {
-		return !e.id.startsWith("linux/beta/");
+		if (e.id.startsWith("linux/beta/")) {
+			return false;
+		}
+
+		const oneYearAgo = sub(new Date(), {
+			years: 1,
+		});
+
+		if (e.data.releaseDate.getTime() < oneYearAgo.getTime()) {
+			return false;
+		}
+
+		return true;
 	});
 
 	return releases.map((release) => {
