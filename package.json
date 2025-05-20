@@ -46,7 +46,7 @@
 		"@nanostores/react": "1.0.0",
 		"@octokit/webhooks-types": "7.6.1",
 		"@stoplight/json-schema-tree": "4.0.0",
-		"@tailwindcss/postcss": "4.1.4",
+		"@tailwindcss/postcss": "4.1.7",
 		"@types/hast": "3.0.4",
 		"@types/he": "1.2.3",
 		"@types/node": "22.15.19",
