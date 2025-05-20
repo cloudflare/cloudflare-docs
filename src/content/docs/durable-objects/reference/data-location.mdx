@@ -28,30 +28,38 @@ const euId = euSubnamespace.newUniqueId();
 
 This approach works with all of the [ID methods](/durable-objects/api/id/).
 
-Methods on a [`DurableObjectNamespace`](/durable-objects/api/namespace/) that take a [`DurableObjectId`](/durable-objects/api/id) as a parameter will throw an exception if the parameter is associated with a different jurisdiction. To achieve this, a [`DurableObjectId`](/durable-objects/api/id) encodes its jurisdiction. As a consequence, it is possible to have the same name represent different IDs in different jurisdictions.
+:::caution[Do not use `newUniqueId(jurisdiction)`]
+
+When specifying a jurisdiction, Cloudflare recommends you first create a namespace restricted to a jurisdiction, as explained above.
+
+Note that it is possible to specify a jurisdiction by creating an individual [`DurableObjectId`](/durable-objects/api/id) restricted to a jurisdiction.
+
+**However, Cloudflare does not recommend this approach.**
+
+This approach is only documented for completeness.
+
+```sh
+const euId = env.MY_DURABLE_OBJECT.newUniqueId({ jurisdiction: "eu" });
+```
+
+- As a consequence, it is possible to have the same name represent different IDs in different jurisdictions.
+- You will run into an error if the jurisdiction on your [`DurableObjectNamespace`](/durable-objects/api/namespace/) and the jurisdiction on [`DurableObjectId`](/durable-objects/api/id) are different.
+- You will not run into an error if the [`DurableObjectNamespace`](/durable-objects/api/namespace/) is not associated with a jurisdiction.
 
 ```js
 const euId1 = env.MY_DURABLE_OBJECT.idFromName("my-name");
 const euId2 = env.MY_DURABLE_OBJECT.jurisdiction("eu").idFromName("my-name");
 console.assert(!euId1.equal(euId2), "This should always be true");
 ```
-However, these methods will not throw an exception if the [`DurableObjectNamespace`](/durable-objects/api/namespace/) is not associated with a jurisdiction. The common case is that any valid [`DurableObjectId`](/durable-objects/api/id) can be used in the top-level namespace's methods.
+:::
+
+The common case is that any valid [`DurableObjectId`](/durable-objects/api/id) can be used in the top-level namespace's methods.
 
 ```js
 const euSubnamespace = env.MY_DURABLE_OBJECT.jurisdiction("eu");
 const euId = euSubnamespace.idFromName(name);
 const stub = env.MY_DURABLE_OBJECT.get(euId);
 ```
-
-:::caution[Do not use `newUniqueId(jurisdiction)`]
-Note that it is possible to specify a jurisdiction by creating an individual [`DurableObjectId`](/durable-objects/api/id) restricted to a jurisdiction:
-
-```sh
-const euId = env.MY_DURABLE_OBJECT.newUniqueId({ jurisdiction: "eu" });
-```
-
-**However, we do not recommend this approach.** Instead, first create a namespace restricted to a jurisdiction, as explained above.
-:::
 
 ### Supported locations
 
