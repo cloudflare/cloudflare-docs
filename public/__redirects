@@ -544,7 +544,7 @@
 /support/account-management-billing/account-management/adding-multiple-sites-to-cloudflare-via-automation/ /fundamentals/setup/manage-domains/add-multiple-sites-automation/ 301
 /support/account-management-billing/account-privacy-and-security/securing-user-access-with-two-factor-authentication-2fa/ /fundamentals/setup/account/account-security/2fa/ 301
 /support/account-management-billing/account-privacy-and-security/multi-factor-email-authentication/ /fundamentals/setup/account/account-security/multi-factor-email-authentication/ 301
-/support/account-management-billing/billing-cloudflare-plans/troubleshooting-failed-payments/ /fundamentals/subscriptions-and-billing/troubleshooting-failed-payments/ 301
+/support/account-management-billing/billing-cloudflare-plans/troubleshooting-failed-payments/ /billing/troubleshoot-failed-payments/ 301
 /support/account-management-billing/common-account-questions/login-and-account-issues/ /fundamentals/setup/account/account-security/login-and-account-issues 301
 /support/other-languages/deutsch/mehrere-websites-automatisch-in-cloudflare-aufnehmen-/ /fundamentals/setup/manage-domains/add-multiple-sites-automation/ 301
 /support/firewall/settings/ /waf/tools/ 301
@@ -562,8 +562,8 @@
 /fundamentals/glossary/ /fundamentals/reference/glossary/ 301
 /fundamentals/account-and-billing/login/ /fundamentals/setup/account/login/ 301
 /fundamentals/account-and-billing/account-maintenance/delete-account/ /fundamentals/subscriptions-and-billing/delete-account/ 301
-/fundamentals/account-and-billing/account-maintenance/updating-billing-info/ /fundamentals/subscriptions-and-billing/update-billing-info/ 301
-/fundamentals/account-and-billing/account-maintenance/understand-invoices/ /fundamentals/subscriptions-and-billing/understand-invoices/ 301
+/fundamentals/account-and-billing/account-maintenance/updating-billing-info/ /billing/update-billing-info/ 301
+/fundamentals/account-and-billing/account-maintenance/understand-invoices/ /billing/invoices/ 301
 /fundamentals/account-and-billing/account-maintenance/cancel-subscription/ /fundamentals/subscriptions-and-billing/cancel-subscription/ 301
 /fundamentals/account-and-billing/account-maintenance/change-plan/ /fundamentals/subscriptions-and-billing/change-plan/ 301
 /fundamentals/account-and-billing/account-maintenance/change-password-or-email/ /fundamentals/subscriptions-and-billing/change-password-or-email/ 301
@@ -573,7 +573,7 @@
 /fundamentals/account-and-billing/non-contract-products/ /fundamentals/subscriptions-and-billing/preview-services/ 301
 /fundamentals/account-and-billing/account-setup/create-account/ /fundamentals/setup/account/create-account/ 301
 /fundamentals/account-and-billing/account-setup/verify-email-address/ /fundamentals/setup/account/verify-email-address/ 301
-/fundamentals/account-and-billing/account-setup/create-billing-profile/ /fundamentals/subscriptions-and-billing/create-billing-profile/ 301
+/fundamentals/account-and-billing/account-setup/create-billing-profile/ /billing/create-billing-profile/ 301
 /fundamentals/account-and-billing/account-setup/customize-account/language-preference/ /fundamentals/setup/account/customize-account/language-preference/ 301
 /fundamentals/account-and-billing/account-setup/customize-account/account-name/ /fundamentals/setup/account/customize-account/account-name/ 301
 /fundamentals/account-and-billing/account-setup/customize-account/communication-preference/ /fundamentals/setup/account/customize-account/communication-preference/ 301
@@ -638,11 +638,11 @@
 /fundamentals/account-and-billing/ /fundamentals/subscriptions-and-billing/ 301
 /fundamentals/account-and-billing/account-billing/ /fundamentals/subscriptions-and-billing/ 301
 /fundamentals/account-and-billing/account-billing/change-plan/ /fundamentals/subscriptions-and-billing/change-plan/ 301
-/fundamentals/account-and-billing/account-billing/troubleshooting-failed-payments/ /fundamentals/subscriptions-and-billing/troubleshooting-failed-payments/ 301
+/fundamentals/account-and-billing/account-billing/troubleshooting-failed-payments/ /billing/troubleshoot-failed-payments/ 301
 /fundamentals/account-and-billing/account-billing/cancel-subscription/ /fundamentals/subscriptions-and-billing/cancel-subscription/ 301
 /fundamentals/account-and-billing/account-billing/change-password-or-email/ /fundamentals/subscriptions-and-billing/change-password-or-email/ 301
-/fundamentals/account-and-billing/account-billing/understand-invoices/ /fundamentals/subscriptions-and-billing/understand-invoices/ 301
-/fundamentals/account-and-billing/account-billing/updating-billing-info/ /fundamentals/subscriptions-and-billing/update-billing-info/ 301
+/fundamentals/account-and-billing/account-billing/understand-invoices/ /billing/invoices/ 301
+/fundamentals/account-and-billing/account-billing/updating-billing-info/ /billing/update-billing-info/ 301
 /fundamentals/account-and-billing/account-security/ /fundamentals/setup/account/account-security/ 301
 /fundamentals/account-and-billing/account-security/2fa/ /fundamentals/setup/account/account-security/2fa/ 301
 /fundamentals/account-and-billing/account-security/login-and-account-issues/ /fundamentals/setup/account/account-security/login-and-account-issues/ 301
@@ -656,7 +656,7 @@
 /fundamentals/setup/account-setup/ /fundamentals/setup/account/ 301
 /fundamentals/setup/account-setup/add-site/ /fundamentals/setup/manage-domains/add-site/ 301
 /fundamentals/setup/account-setup/create-account/ /fundamentals/setup/account/create-account/ 301
-/fundamentals/setup/account-setup/create-billing-profile/ /fundamentals/subscriptions-and-billing/create-billing-profile/ 301
+/fundamentals/setup/account-setup/create-billing-profile/ /billing/create-billing-profile/ 301
 /fundamentals/setup/account-setup/verify-email-address/ /fundamentals/setup/account/verify-email-address/ 301
 /fundamentals/setup/allow-cloudflare-ip-addresses/ /fundamentals/concepts/cloudflare-ip-addresses/ 301
 /fundamentals/basic-tasks/login/ /fundamentals/setup/account/login/ 301
@@ -675,12 +675,19 @@
 /fundamentals/security/trace-request/changelog/ /fundamentals/trace-request/changelog/ 301
 /fundamentals/concepts/what-is-cloudflare/ https://www.cloudflare.com/learning/what-is-cloudflare/ 301
 /fundamentals/concepts/the-internet/ https://www.cloudflare.com/learning/network-layer/how-does-the-internet-work/ 301
-/fundamentals/concepts/free-plan/ /fundamentals/subscriptions-and-billing/free-plan/ 301
+/fundamentals/concepts/free-plan/ /billing/ 301
 /fundamentals/setup/manage-domains/connect-your-domain/ /fundamentals/setup/manage-domains/add-site/ 301
 /fundamentals/security/cloudflare-challenges/challenge-passage/ /cloudflare-challenges/challenge-types/challenge-pages/#challenge-passage 301
 /fundamentals/security/cloudflare-challenges/challenge-solve-rate/ /cloudflare-challenges/reference/challenge-solve-rate/ 301
 /fundamentals/security/cloudflare-challenges/challenge-solve-issues/ /cloudflare-challenges/troubleshooting/challenge-solve-issues/ 301
 /fundamentals/security/cloudflare-challenges/ /cloudflare-challenges/ 301
+/fundamentals/subscriptions-and-billing/free-plan/ /billing/ 301
+/fundamentals/subscriptions-and-billing/create-billing-profile/ /billing/create-billing-profile/ 301
+/fundamentals/subscriptions-and-billing/unpaid-invoices-or-balances/ /billing/pay-invoices-overdue-balances/ 301
+/fundamentals/subscriptions-and-billing/troubleshooting-failed-payments/ /billing/troubleshoot-failed-payments/ 301
+/fundamentals/subscriptions-and-billing/understand-invoices/ /billing/invoices/ 301
+/fundamentals/subscriptions-and-billing/update-billing-info/ /billing/update-billing-info/ 301
+
 
 # gateway
 /gateway/about/ /cloudflare-one/policies/gateway/ 301
@@ -1177,7 +1184,7 @@
 # support
 
 /support/about-cloudflare/getting-started/troubleshooting-faq-for-new-cloudflare-customers/ /fundamentals/setup/troubleshooting/ 301
-/support/account-management-billing/billing-cloudflare-add-on-services/ /support/account-management-billing/billing-add-on-service/ 301
+/support/account-management-billing/billing-cloudflare-add-on-services/ /billing/usage-based-billing/ 301
 /support/cloudflare-client-api/ /fundamentals/api/ 301
 /support/firewall/learn-more/understanding-cloudflare-tor-support-and-onion-routing/ /network/onion-routing/ 301
 /support/firewall/managed-rules-web-application-firewall-waf/migrating-from-waf-managed-rules-to-waf-managed-rulesets/ /waf/reference/migration-guides/waf-managed-rules-migration/ 301
@@ -1267,8 +1274,8 @@
 /support/about-cloudflare/enterprise-documentation/customer-incident-management-policy/ /support/customer-incident-management-policy/ 301
 /support/about-cloudflare/cloudflare-status/ /support/cloudflare-status/ 301
 /support/account-management-billing/billing-cloudflare-plans/ /support/account-management-billing/ 301
-/support/account-management-billing/billing-cloudflare-plans/understanding-cloudflare-sales-tax/ /support/account-management-billing/understanding-cloudflare-sales-tax/ 301
-/support/account-management-billing/billing-cloudflare-plans/cloudflare-billing-policy/ /support/account-management-billing/cloudflare-billing-policy/ 301
+/support/account-management-billing/billing-cloudflare-plans/understanding-cloudflare-sales-tax/ /billing/sales-tax/ 301
+/support/account-management-billing/billing-cloudflare-plans/cloudflare-billing-policy/ /billing/billing-policy/ 301
 /support/partners/ /support/ 301
 /support/partners/reduce-data-transfer-egress-costs-between-azure-and-cloudflare/ /support/third-party-software/others/reduce-data-transfer-egress-costs-between-azure-and-cloudflare/ 301
 /support/more-dashboard-apps/cloudflare-stream/ /support/more-dashboard-apps/ 301
@@ -1279,6 +1286,9 @@
 /support/more-dashboard-apps/cloudflare-custom-pages/configuring-custom-pages-error-and-challenge/ /rules/custom-errors/ 301
 /support/more-dashboard-apps/cloudflare-custom-pages/ /rules/custom-errors/ 301
 /support/more-dashboard-apps/ /support/ 301
+/support/account-management-billing/cloudflare-billing-policy/ /billing/billing-policy/ 301
+/support/account-management-billing/billing-add-on-service/ /billing/usage-based-billing/ 301
+/support/account-management-billing/understanding-cloudflare-sales-tax/ /billing/sales-tax/ 301
 
 # r2
 /r2/platform/s3-compatibility/api/ /r2/api/s3/api/ 301

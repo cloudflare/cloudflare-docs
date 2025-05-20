@@ -315,7 +315,7 @@ Proximity steering is a traffic steering algorithm available to enterprise plan 
 Cloudflare determines the requester’s physical location using the following methods, in this order:
 
 1. [EDNS Client Subnet](https://developers.google.com/speed/public-dns/docs/ecs) information, if provided in the DNS request
-2. GeoIP information of the resolver used to reach Cloudflare
+2. Geolocation information of the resolver used to reach Cloudflare
 3. GPS location of the Cloudflare data center handling the request
 
 Proximity steering requires providing GPS coordinates for all endpoint pools, allowing Cloudflare to calculate the closest endpoint pool based on the requesting IP, DNS resolver, or Cloudflare data center.
