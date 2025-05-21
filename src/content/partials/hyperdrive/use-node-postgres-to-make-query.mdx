@@ -2,19 +2,25 @@
 {}
 ---
 
-import { Render } from "~/components";
+import { Render, PackageManagers } from "~/components";
 
 Install the `node-postgres` driver:
 
-```sh
-npm install pg
-# If using TypeScript
-npm i --save-dev @types/pg
-```
+<PackageManagers pkg="pg@>8.13.0" />
+
+:::note
+
+The minimum version of `node-postgres` required for Hyperdrive is `8.13.0`.
+
+:::
+
+If using TypeScript, install the types package:
+
+<PackageManagers pkg="@types/pg" dev />
 
 Add the required Node.js compatibility flags and Hyperdrive binding to your `wrangler.jsonc` file:
 
-<Render file="hyperdrive-node-compatibility-requirement" product="hyperdrive"/>
+<Render file="hyperdrive-node-compatibility-requirement" product="hyperdrive" />
 
 Create a new `Client` instance and pass the Hyperdrive `connectionString`:
 
@@ -56,9 +62,3 @@ export default {
 	},
 };
 ```
-
-:::note
-
-The minimum version of `node-postgres` required for Hyperdrive is `8.13.0`.
-
-:::

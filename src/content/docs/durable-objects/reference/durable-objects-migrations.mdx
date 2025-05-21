@@ -83,11 +83,7 @@ new_sqlite_classes = ["DurableObjectAClass"]
 
 ### Create Durable Object class with key-value storage
 
-:::note[Recommended SQLite-backed Durable Objects]
-Cloudflare recommends all new Durable Object classes use the [SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class).
-
-The key-value storage backend remains for backwards compatibility.
-:::
+<Render file="recommend-sqlite-do" product="durable-objects"/>
 
 Use `new_classes` on the migration in your Worker's Wrangler file to create a Durable Object class with the key-value storage backend:
 
@@ -269,7 +265,7 @@ transferred_classes = [{from = "DurableObjectExample", from_script = "OldWorkerS
 
 - Migration tags are treated like unique names and are used to determine which migrations have already been applied. Once a given Worker code has a migration tag set on it, all future Worker code deployments must include a migration tag.
 
-- The migration list is an ordered array of tables, specified as a key in your Wrangler configuration file. 
+- The migration list is an ordered array of tables, specified as a key in your Wrangler configuration file.
 
 - You can define the migration for each environment, as well as at the top level.
   - Top-level migration is specified at the top-level `migrations` key in the Wrangler configuration file.

@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { Aside, WranglerConfig } from "~/components";
+import { Aside, WranglerConfig, PackageManagers } from "~/components";
 
 As seen in the [Getting Started guide](/browser-rendering/workers-binding-api/screenshots/), Browser Rendering can be used to generate screenshots for any given URL. Alongside screenshots, you can also generate full PDF documents for a given webpage, and can also provide the webpage markup and style ourselves.
 
@@ -13,15 +13,11 @@ As seen in the [Getting Started guide](/browser-rendering/workers-binding-api/sc
 
 1. Use the `create-cloudflare` CLI to generate a new Hello World Cloudflare Worker script:
 
-```sh
-npm create cloudflare@latest -- browser-worker
-```
+<PackageManagers type="create" pkg="cloudflare@latest" args="browser-worker" />
 
 2. Install `@cloudflare/puppeteer`, which allows you to control the Browser Rendering instance:
 
-```sh
-npm install @cloudflare/puppeteer --save-dev
-```
+<PackageManagers pkg="@cloudflare/puppeteer" dev />
 
 3. Add your Browser Rendering binding to your new Wrangler configuration:
 
@@ -30,6 +26,7 @@ npm install @cloudflare/puppeteer --save-dev
 ```toml title="wrangler.toml"
 browser = { binding = "BROWSER" }
 ```
+
 </WranglerConfig>
 
 4. Replace the contents of `src/index.ts` (or `src/index.js` for JavaScript projects) with the following skeleton script:
@@ -240,7 +237,7 @@ export default {
 		const pdf = await page.pdf({ printBackground: true });
 
 		// Close browser since we no longer need it
-    await browser.close();
+		await browser.close();
 
 		return new Response(pdf, {
 			headers: {
@@ -253,9 +250,7 @@ export default {
 
 You can run this script to test it using Wrangler’s `--remote` flag:
 
-```sh
-npx wrangler@latest dev --remote
-```
+<PackageManagers type="exec" pkg="wrangler" args="dev --remote" />
 
 With your script now running, you can pass in a `?name` parameter to the local URL (such as `http://localhost:8787/?name=Harley`) and should see the following:
 

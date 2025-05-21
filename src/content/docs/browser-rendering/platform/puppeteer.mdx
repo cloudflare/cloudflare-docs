@@ -6,7 +6,7 @@ sidebar:
   order: 10
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, PackageManagers } from "~/components";
 
 [Puppeteer](https://pptr.dev/) is one of the most popular libraries that abstract the lower-level DevTools protocol from developers and provides a high-level API that you can use to easily instrument Chrome/Chromium and automate browsing sessions. Puppeteer is used for tasks like creating screenshots, crawling pages, and testing web applications.
 
@@ -16,9 +16,7 @@ The Workers team forked a version of Puppeteer and patched it to connect to the 
 
 Our version is open sourced and can be found in [Cloudflare's fork of Puppeteer](https://github.com/cloudflare/puppeteer). The npm can be installed from [npmjs](https://www.npmjs.com/) as [@cloudflare/puppeteer](https://www.npmjs.com/package/@cloudflare/puppeteer):
 
-```bash
-npm install @cloudflare/puppeteer --save-dev
-```
+<PackageManagers pkg="@cloudflare/puppeteer" dev />
 
 ## Use Puppeteer in a Worker
 

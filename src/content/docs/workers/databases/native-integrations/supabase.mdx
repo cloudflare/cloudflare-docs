@@ -3,7 +3,7 @@ pcx_content_type: configuration
 title: Supabase
 ---
 
-import { Render } from "~/components";
+import { Render, PackageManagers } from "~/components";
 
 [Supabase](https://supabase.com/) is an open source Firebase alternative and a PostgreSQL database service that offers real-time functionality, database backups, and extensions. With Supabase, developers can quickly set up a PostgreSQL database and build applications.
 
@@ -45,9 +45,7 @@ To set up an integration with Supabase:
 
 5. In your Worker, install the `@supabase/supabase-js` driver to connect to your database and start manipulating data:
 
-   ```sh
-   npm install @supabase/supabase-js
-   ```
+   <PackageManagers pkg="@supabase/supabase-js" />
 
 6. The following example shows how to make a query to your Supabase database in a Worker. The credentials needed to connect to Supabase have been automatically added as secrets to your Worker through the integration.
 

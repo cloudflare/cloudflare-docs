@@ -455,6 +455,42 @@ clientIPDetection:
 
 For more details, refer to [Custom header original IP detection extension](https://www.envoyproxy.io/docs/envoy/latest/api-v3/extensions/http/original_ip_detection/custom_header/v3/custom_header.proto).
 
+### Caddy
+
+If you are running an application behind [Caddy](https://caddyserver.com/) that relies on the `X-Forwarded-For` header, you can configure Caddy to override the header with Cloudflare's [CF-Connecting-IP header](/fundamentals/reference/http-headers/#cf-connecting-ip).
+
+It is advised that you also only accept traffic from [Cloudflare's IP addresses](https://www.cloudflare.com/ips/); otherwise, the header could be spoofed. That's why, in the second example, we handle this as part of the Caddy configuration. Alternatively, you can handle this at the firewall level, which is usually easier to automate. If you already have a firewall or other measure in place to ensure this, your Caddyfile could look like this:
+```txt title="Caddyfile"
+https://example.com {
+    reverse_proxy localhost:8080 {
+				# Sets X-Forwarded-For as the value Cloudflare gives us for CF-Connecting-IP.
+				header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
+		}
+}
+```
+
+If you want Caddy to handle only accepting traffic from [Cloudflare's IP addresses](https://www.cloudflare.com/ips/), you can use a configuration like this one:
+```txt title="Caddyfile"
+https://example.com {
+    # Restrict access to Cloudflare IPs (https://www.cloudflare.com/ips/)
+    @cloudflare {
+        remote_ip 173.245.48.0/20 103.21.244.0/22 103.22.200.0/22 103.31.4.0/22 141.101.64.0/18 108.162.192.0/18 190.93.240.0/20 188.114.96.0/20 197.234.240.0/22 198.41.128.0/17 162.158.0.0/15 104.16.0.0/13 104.24.0.0/14 172.64.0.0/13 131.0.72.0/22 2400:cb00::/32 2606:4700::/32 2803:f800::/32 2405:b500::/32 2405:8100::/32 2a06:98c0::/29 2c0f:f248::/32
+    }
+
+    # Process requests from Cloudflare IPs
+    handle @cloudflare {
+        reverse_proxy localhost:8080 {
+            # Sets X-Forwarded-For as the value Cloudflare gives us for CF-Connecting-IP.
+            header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
+        }
+    }
+
+    # Deny requests from non-Cloudflare IPs
+    handle {
+        respond "Access Denied" 403
+    }
+}
+```
 ---
 
 ## Related Resources

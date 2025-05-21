@@ -12,6 +12,10 @@ entries:
     categories: [Request, URI]
     keywords: [request, uri, url, domain, client, visitor]
     summary: The hostname used in the full request URI.
+    description: |-
+      The `http.host` field contains the `Host` header from the original request.
+      
+      If you have configured [Origin Rules](/rules/origin-rules/) that change the hostname, they will not be reflected in the `http.host` field value.
     example_value: |-
       "www.example.org"
 

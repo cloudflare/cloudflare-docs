@@ -2,18 +2,19 @@
 {}
 ---
 
-import { Render } from "~/components";
+import { Render, PackageManagers } from "~/components";
 
 Install [Postgres.js](https://github.com/porsager/postgres):
 
-```sh
-# Postgres.js 3.4.5 or later is recommended
-npm install postgres
-```
+<PackageManagers pkg="postgres@>3.4.5" />
+
+:::note
+The minimum version of `postgres-js` required for Hyperdrive is `3.4.5`.
+:::
 
 Add the required Node.js compatibility flags and Hyperdrive binding to your `wrangler.jsonc` file:
 
-<Render file="hyperdrive-node-compatibility-requirement" product="hyperdrive"/>
+<Render file="hyperdrive-node-compatibility-requirement" product="hyperdrive" />
 
 Create a Worker that connects to your PostgreSQL database via Hyperdrive:
 
@@ -54,9 +55,3 @@ export default {
 	},
 } satisfies ExportedHandler<Env>;
 ```
-
-:::note
-
-The minimum version of `postgres-js` required for Hyperdrive is `3.4.5`.
-
-:::

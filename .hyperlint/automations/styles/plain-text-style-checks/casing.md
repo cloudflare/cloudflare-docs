@@ -1,4 +1,13 @@
-Correct casings or misspellings for the following words. Ignore this rule if the words are in code blocks, `code fences`, or in HTML or Markdown links.
+Correct casings or misspellings for the following words.
+
+Ignore this rule if the words are in:
+
+- code blocks
+- `code fences`
+- **bold** or _italic_ case
+- HTML or Markdown links
+
+The list of potential casings or misspellings is:
 
 Bitbucket
 cdnjs

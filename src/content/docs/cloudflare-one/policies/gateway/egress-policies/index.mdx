@@ -5,7 +5,7 @@ sidebar:
   order: 5
 ---
 
-import { Render, Badge, Tabs, TabItem } from "~/components";
+import { Render, Badge, Tabs, TabItem, Details } from "~/components";
 
 :::note
 Only available on Enterprise plans.
@@ -180,6 +180,23 @@ Gateway uses Rust to evaluate regular expressions. The Rust implementation is sl
 
 ### Selector prerequisites
 
+<Details header="Feature availability">
+
+| [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| Gateway with WARP                                                                         | Enterprise                                                    |
+
+| System   | Availability | Minimum WARP version |
+| -------- | ------------ | -------------------- |
+| Windows  | ✅           | 2025.4.929.0         |
+| macOS    | ✅           | 2025.4.929.0         |
+| Linux    | ✅           | 2025.4.929.0         |
+| iOS      | ❌           |                      |
+| Android  | ❌           |                      |
+| ChromeOS | ❌           |                      |
+
+</Details>
+
 The [Application](#application), [Content Categories](#content-categories), [Domain](#domain), and [Host](#host) selectors are only available for traffic on-ramped to Gateway with the following methods:
 
 | On-ramp method                                                                             | Compatibility |
@@ -190,7 +207,7 @@ The [Application](#application), [Content Categories](#content-categories), [Dom
 | [WARP Connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/) | ❌            |
 | [Magic WAN](/magic-wan/zero-trust/cloudflare-gateway/)                                     | ❌            |
 
-When you use these selectors in an egress policy for traffic from a supported on-ramp, Gateway will assign initial resolved IPs to the DNS queries, then apply the correct egress IP according to the egress policy. Unsupported traffic will be resolved with your default Gateway settings. Gateway will only overwrite the DNS response when the query matches a condition in the egress policy. If you use [DNS locations](/cloudflare-one/connections/connect-devices/agentless/dns/locations/) to send a DNS query to Gateway with IPv4, IPv6, DoT, or DoH, Gateway will not return the initial resolved IP.
+When you use these selectors in an egress policy for traffic from a supported on-ramp, Gateway will assign initial resolved IPs in the `100.80.0.0/16` range to the DNS queries, then apply the correct egress IP according to the egress policy. Unsupported traffic will be resolved with your default Gateway settings. Gateway will only overwrite the DNS response when the query matches a condition in the egress policy. If you use [DNS locations](/cloudflare-one/connections/connect-devices/agentless/dns/locations/) to send a DNS query to Gateway with IPv4, IPv6, DoT, or DoH, Gateway will not return the initial resolved IP for supported traffic nor resolve unsupported traffic.
 
 To turn on the selectors for your account, use the [Patch Zero Trust account configuration](/api/resources/zero_trust/subresources/gateway/subresources/configurations/methods/edit/) endpoint. For example:
 
