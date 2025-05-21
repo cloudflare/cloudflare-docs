@@ -374,9 +374,9 @@ The code above:
 
 1. Writes a key to your KV namespace using KV's `put()` method.
 2. Reads the same key using KV's `get()` method.
-3. It checks if the key is null, and returns a `404` response if it is.
+3. Checks if the key is null, and returns a `404` response if it is.
 4. If the key is not null, it returns the value of the key.
-5. Uses JavaScript's [`try...catch`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch) exception handling to catch potential errors. When writing or reading from any service, such as Workers KV or external APIs using `fetch()`, you should expect to handle exceptions explicitly.
+5. Uses JavaScript's [`try...catch`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/try...catch) exception handling to catch potential errors. When writing or reading from any service, such as Workers KV or external APIs using `fetch()`, you should expect to handle exceptions explicitly.
 
 </TabItem><TabItem label = 'Dashboard'>
 
