@@ -688,7 +688,7 @@
 /fundamentals/subscriptions-and-billing/troubleshooting-failed-payments/ /billing/troubleshoot-failed-payments/ 301
 /fundamentals/subscriptions-and-billing/understand-invoices/ /billing/invoices/ 301
 /fundamentals/subscriptions-and-billing/update-billing-info/ /billing/update-billing-info/ 301
-
+/fundamentals/changelog/ /changelog/?product=fundamentals 301
 
 # gateway
 /gateway/about/ /cloudflare-one/policies/gateway/ 301
