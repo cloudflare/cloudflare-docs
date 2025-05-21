@@ -291,26 +291,22 @@ To access the value from your KV namespace using Wrangler:
 
 		In this tutorial, you will get the value of the key `user_1` from the KV namespace you created in [step 2](/kv/get-started/#2-create-a-kv-namespace).
 
-    ```sh
-    npx wrangler kv key get --binding=USERS_NOTIFICATION_CONFIG "user_1" --text
-    ```
-
 	:::note
 	To view the value directly within the terminal, you use the `--text` flag.
 	:::
+
+    ```sh
+    npx wrangler kv key get --binding=USERS_NOTIFICATION_CONFIG "user_1" --text
+    ```
 
     Similar to the `put` command, the `get` command can also be used to access a KV namespace in two ways - with `--binding` or `--namespace-id`:
 
 </Steps>
 
-{/* You can add a `--preview` flag to interact with a preview namespace instead of a production namespace. */}
-
 :::caution
 
 Exactly **one** of `--binding` or `--namespace-id` is required.
 :::
-
-
 
 Refer to the [`kv bulk` documentation](/kv/reference/kv-commands/#kv-bulk) to write a file of multiple key-value pairs to a given KV namespace.
 
