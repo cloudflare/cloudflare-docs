@@ -10,10 +10,8 @@ import { Steps } from "~/components";
 import { format } from "date-fns";
 import { getChangelogs } from "~/util/changelog";
 import { productsByGroup } from "~/util/products";
-import { entryToString } from "~/util/container";
-import { process } from "~/util/rehype";
 
-import rehypeShiftHeadings from "~/plugins/rehype/shift-headings.ts";
+import { render } from "astro:content";
 
 const notes = await getChangelogs({
 	filter: (entry) => !entry.data.hidden,
@@ -45,12 +43,11 @@ const props = {
 				.map((group) => group[0])
 				.sort();
 
-			const html = await entryToString(entry, Astro.locals);
-			const processed = await process(html, [[rehypeShiftHeadings]]);
+			const { Content } = await render(entry);
 
 			return (
 				<div
-					class="mt-0! sm:flex"
+					class:list={["mt-0! sm:flex", { "hidden!": idx >= 10 }]}
 					data-products={JSON.stringify(
 						productIds.concat(
 							productGroups.map((group) =>
@@ -58,11 +55,10 @@ const props = {
 							),
 						),
 					)}
-					style={`display: ${idx >= 10 ? "none" : ""}`}
 				>
 					<time
 						datetime={entry.data.date.toISOString()}
-						class="whitespace-nowrap text-xs font-bold leading-6 sm:pr-4 sm:text-right"
+						class="text-xs leading-6 font-bold whitespace-nowrap sm:pr-4 sm:text-right"
 					>
 						{date}
 					</time>
@@ -80,7 +76,7 @@ const props = {
 									</h3>
 									<ProductPills products={entry.data.products} />
 								</div>
-								<p set:html={processed} />
+								<Content />
 							</li>
 						</ol>
 					</Steps>
@@ -91,7 +87,7 @@ const props = {
 	<div class="flex items-center justify-center">
 		<button
 			id="changelogs-next-button"
-			class="h-12 cursor-pointer rounded-sm bg-cl1-brand-orange px-6 font-medium text-cl1-black"
+			class="bg-cl1-brand-orange text-cl1-black h-12 cursor-pointer rounded-sm px-6 font-medium"
 		>
 			Load more items
 		</button>
@@ -134,11 +130,12 @@ const props = {
 			...document.querySelectorAll<HTMLElement>("[data-products]"),
 		]
 			.filter(
-				(e) => e.style.display === "none" && filterByProduct(e, filter!.value),
+				(e) =>
+					e.classList.contains("hidden!") && filterByProduct(e, filter!.value),
 			)
 			.slice(0, 10);
 
-		hidden.forEach((e) => (e.style.display = ""));
+		hidden.forEach((e) => e.classList.remove("hidden!"));
 
 		hideButton();
 	});
@@ -160,9 +157,9 @@ const props = {
 			const show = filtered.includes(entry);
 
 			if (show) {
-				entry.style.display = "";
+				entry.classList.remove("hidden!");
 			} else {
-				entry.style.display = "none";
+				entry.classList.add("hidden!");
 			}
 		}
 
@@ -188,13 +185,13 @@ const props = {
 
 		const filtered = entries.filter((p) => filterByProduct(p, filter!.value));
 
-		const visible = filtered.filter((p) => p.style.display !== "none");
+		const visible = filtered.filter((p) => !p.classList.contains("hidden!"));
 		const hidden = filtered.length - visible.length;
 
 		if (hidden > 0) {
-			button!.style.display = "";
+			button!.classList.remove("hidden!");
 		} else {
-			button!.style.display = "none";
+			button!.classList.add("hidden!");
 		}
 	}
 </script>
