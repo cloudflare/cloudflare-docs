@@ -1290,6 +1290,8 @@
 /support/account-management-billing/cloudflare-billing-policy/ /billing/billing-policy/ 301
 /support/account-management-billing/billing-add-on-service/ /billing/usage-based-billing/ 301
 /support/account-management-billing/understanding-cloudflare-sales-tax/ /billing/sales-tax/ 301
+/support/account-management-billing/ /support/troubleshooting/general-troubleshooting/cannot-locate-dashboard-account/ 301 
+/support/account-management-billing/cannot-locate-dashboard-account/ /support/troubleshooting/general-troubleshooting/cannot-locate-dashboard-account/ 301
 
 # r2
 /r2/platform/s3-compatibility/api/ /r2/api/s3/api/ 301
