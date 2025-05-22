@@ -22,6 +22,7 @@
 /cloudflare-one/changelog/gateway/index.xml /changelog/rss/gateway.xml 301
 /cloudflare-one/changelog/risk-score/index.xml /changelog/rss/risk-score.xml 301
 /cloudflare-one/changelog/tunnel/index.xml /changelog/rss/cloudflare-tunnel.xml 301
+//cloudflare-one/changelog/warp/index.xml /changelog/rss/zero-trust-warp.xml 301
 /dns/changelog/index.xml /changelog/rss/dns.xml 301
 /fundamentals/changelog/index.xml /changelog/rss/fundamentals.xml 301
 /load-balancing/changelog/index.xml /changelog/rss/load-balancing.xml 301
@@ -687,7 +688,7 @@
 /fundamentals/subscriptions-and-billing/troubleshooting-failed-payments/ /billing/troubleshoot-failed-payments/ 301
 /fundamentals/subscriptions-and-billing/understand-invoices/ /billing/invoices/ 301
 /fundamentals/subscriptions-and-billing/update-billing-info/ /billing/update-billing-info/ 301
-
+/fundamentals/changelog/ /changelog/?product=fundamentals 301
 
 # gateway
 /gateway/about/ /cloudflare-one/policies/gateway/ 301
@@ -1289,6 +1290,8 @@
 /support/account-management-billing/cloudflare-billing-policy/ /billing/billing-policy/ 301
 /support/account-management-billing/billing-add-on-service/ /billing/usage-based-billing/ 301
 /support/account-management-billing/understanding-cloudflare-sales-tax/ /billing/sales-tax/ 301
+/support/account-management-billing/ /support/troubleshooting/general-troubleshooting/cannot-locate-dashboard-account/ 301 
+/support/account-management-billing/cannot-locate-dashboard-account/ /support/troubleshooting/general-troubleshooting/cannot-locate-dashboard-account/ 301
 
 # r2
 /r2/platform/s3-compatibility/api/ /r2/api/s3/api/ 301

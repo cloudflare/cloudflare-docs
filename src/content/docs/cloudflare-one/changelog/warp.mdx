@@ -1,19 +1,14 @@
 ---
 pcx_content_type: changelog
 title: Zero Trust WARP Client
-release_notes_file_name:
-  - warp
 head:
   - tag: title
     content: Zero Trust WARP Client Changelog
 description: Review recent changes to the Zero Trust WARP client.
-
 ---
 
-import { ProductReleaseNotes, Render } from "~/components"
+import { ProductChangelog } from "~/components";
 
-<Render file="changelog-note" />
+{/* <!-- All changelog entries live in src/content/warp-releases/. For more details, refer to https://developers.cloudflare.com/style-guide/documentation-content-strategy/content-types/changelog/#yaml-file --> */}
 
-{/* <!-- All changelog entries live in src/content/changelogs/warp.yaml. For more details, refer to https://developers.cloudflare.com/style-guide/documentation-content-strategy/content-types/changelog/#yaml-file --> */}
-
-<ProductReleaseNotes />
+<ProductChangelog product="zero-trust-warp" />

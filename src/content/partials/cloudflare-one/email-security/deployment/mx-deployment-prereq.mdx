@@ -18,8 +18,7 @@ To check your existing TTL, open a terminal window and run the following command
 dig mx <YOUR_DOMAIN>
 ```
 
-```sh output
-
+```txt output
 ; <<>> DiG 9.10.6 <<>> mx <YOUR_DOMAIN>
 ;; global options: +cmd
 ;; Got answer:
@@ -29,12 +28,11 @@ dig mx <YOUR_DOMAIN>
 ;; OPT PSEUDOSECTION:
 ; EDNS: version: 0, flags:; udp: 4096
 ;; QUESTION SECTION:
-;domain.		IN	MX
+;<YOUR_DOMAIN>.		IN	MX
 
 ;; ANSWER SECTION:
-<YOUR_DOMAIN>.	300	IN	MX	5 mailstream-central.mxrecord.mx.
-<YOUR_DOMAIN>.	300	IN	MX	10 mailstream-east.mxrecord.io.
-<YOUR_DOMAIN>.	300	IN	MX	10 mailstream-west.mxrecord.io.
+<YOUR_DOMAIN>.    300    IN    MX    10 mxa.global.inbound.cf-emailsecurity.net.
+<YOUR_DOMAIN>.    300    IN    MX    10 mxb.global.inbound.cf-emailsecurity.net.
 ```
 
 In the above example, TTL is shown in seconds as `300` (or five minutes).
