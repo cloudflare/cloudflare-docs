@@ -1,0 +1,19 @@
+---
+pcx_content_type: troubleshooting
+title: Error 412
+source: null
+---
+
+## 412 Precondition Failed
+
+The `412 Precondition Failed` status code indicates that the server denies the request because the resource does not meet the conditions specified by the client.
+
+For more details, refer to [RFC 7232](https://tools.ietf.org/html/rfc7232).
+
+### Common use cases
+
+One common use case for the `412 Precondition Failed` status code is version control. For example, a client modifying an existing resource may set the `If-Unmodified-Since` header to ensure the resource has not been changed since the client downloaded it for editing. If another client edits the resource after the specified date but before the original client uploads their changes, the server will return a `412` response to prevent overwriting the newer updates.
+
+### Cloudflare-specific information
+
+Cloudflare may serve this response: for more information please refer to [ETag Headers](/cache/reference/etag-headers/).
