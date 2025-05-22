@@ -13,7 +13,7 @@ entries:
   - publish_date: "2025-05-09"
     title: Reports from browser extension injected resources are filtered out
     description: |-
-      Script and connection reports caused by browser extension injections are now filtered out, helping focus on managing application dependencies.
+      Script and connection reports caused by browser extension injections are now filtered out, helping you focus on managing application dependencies.
 
   - publish_date: "2024-12-02"
     title: Alerts based on customer-defined policies
