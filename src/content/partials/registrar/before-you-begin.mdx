@@ -25,7 +25,7 @@ If you are onboarding an existing domain to Cloudflare, make sure DNSSEC **is di
 1. Take note of the <GlossaryTooltip term="time-to-live (TTL)">TTL</GlossaryTooltip> value for the DS record at your current registrar.
 2. Remove DS records at your current registrar.
     <Render file="dnssec-providers" product="dns" />
-3. Wait at least the time corresponding to the DS record TTL. Usually 24 hours, but refer to the value you got at step 1.
+3. Wait at least the time corresponding to the DS record TTL. It is usually 24 hours, but refer to the value you got in step 1.
 4. Follow the steps to [transfer your domain](/registrar/get-started/transfer-domain-to-cloudflare/#set-up-a-domain-transfer) to Cloudflare Registrar.
 5. [Enable DNSSEC](/dns/dnssec/#1-activate-dnssec-in-cloudflare) at Cloudflare. This will automatically add your DS to the zone parent via Cloudflare Registrar.
 
