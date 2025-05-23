@@ -93,7 +93,9 @@ If you use a `dig` command to test, you should only be able see the placed token
 This is because Cloudflare places the tokens when needed and then cleans them up.
 
 ```sh
-dig TXT +noadditional +noquestion +nocomments +nocmd +nostats _acme-challenge.example.com. @1.1.1.1_acme-challenge.example.com. 3600    IN    CNAME    example.com.<COPIED_VALIDATION_URL>
+dig TXT +noadditional +noquestion +nocomments +nocmd +nostats _acme-challenge.example.com. @1.1.1.1
+
+_acme-challenge.example.com. 3600    IN    CNAME    example.com.<COPIED_VALIDATION_URL>
 ```
 
 ### Renewal

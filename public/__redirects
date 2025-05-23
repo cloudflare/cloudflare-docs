@@ -562,12 +562,12 @@
 /fundamentals/security/challenge-passage/ /cloudflare-challenges/challenge-types/challenge-pages/#challenge-passage 301
 /fundamentals/glossary/ /fundamentals/reference/glossary/ 301
 /fundamentals/account-and-billing/login/ /fundamentals/setup/account/login/ 301
-/fundamentals/account-and-billing/account-maintenance/delete-account/ /fundamentals/subscriptions-and-billing/delete-account/ 301
+/fundamentals/account-and-billing/account-maintenance/delete-account/ /fundamentals/setup/account/delete-account/ 301
 /fundamentals/account-and-billing/account-maintenance/updating-billing-info/ /billing/update-billing-info/ 301
 /fundamentals/account-and-billing/account-maintenance/understand-invoices/ /billing/invoices/ 301
 /fundamentals/account-and-billing/account-maintenance/cancel-subscription/ /fundamentals/subscriptions-and-billing/cancel-subscription/ 301
 /fundamentals/account-and-billing/account-maintenance/change-plan/ /fundamentals/subscriptions-and-billing/change-plan/ 301
-/fundamentals/account-and-billing/account-maintenance/change-password-or-email/ /fundamentals/subscriptions-and-billing/change-password-or-email/ 301
+/fundamentals/account-and-billing/account-maintenance/change-password-or-email/ /fundamentals/setup/account/change-password-or-email/ 301
 /fundamentals/account-and-billing/account-maintenance/ /fundamentals/subscriptions-and-billing/ 301
 /fundamentals/account-and-billing/members/scope/ /fundamentals/setup/manage-members/scope/ 301
 /fundamentals/account-and-billing/members/manage/ /fundamentals/setup/manage-members/manage/ 301
@@ -689,6 +689,14 @@
 /fundamentals/subscriptions-and-billing/understand-invoices/ /billing/invoices/ 301
 /fundamentals/subscriptions-and-billing/update-billing-info/ /billing/update-billing-info/ 301
 /fundamentals/changelog/ /changelog/?product=fundamentals 301
+/fundamentals/reference-architecture/ /reference-architecture/ 301
+/fundamentals/subscriptions-and-billing/cancel-subscription/ /billing/cancel-subscription/ 301
+/fundamentals/subscriptions-and-billing/change-plan/ /billing/change-plan/ 301
+/fundamentals/subscriptions-and-billing/preview-services/ /billing/preview-services/ 301
+/fundamentals/subscriptions-and-billing/change-password-or-email/ /fundamentals/setup/account/change-password-or-email/  301
+/fundamentals/subscriptions-and-billing/change-super-admin/ /fundamentals/setup/account/change-super-admin/  301
+/fundamentals/subscriptions-and-billing/delete-account/ /fundamentals/setup/account/delete-account/ 301
+/fundamentals/subscriptions-and-billing/ /fundamentals/setup/account/ 301
 
 # gateway
 /gateway/about/ /cloudflare-one/policies/gateway/ 301

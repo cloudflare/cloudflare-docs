@@ -5,6 +5,16 @@ productLink: "/page-shield/"
 productArea: Application security
 productAreaLink: /fundamentals/reference/changelog/security/
 entries:
+  - publish_date: "2025-05-20"
+    title: Updated machine learning (ML) model
+    description: |-
+      The latest ML model has been deployed to all Page Shield add-on customers with better classification precision. Scripts with false positive classification may have a different pattern than the previous model deployment.
+
+  - publish_date: "2025-05-09"
+    title: Reports from browser extension injected resources are filtered out
+    description: |-
+      Script and connection reports caused by browser extension injections are now filtered out, helping you focus on managing application dependencies.
+
   - publish_date: "2024-12-02"
     title: Alerts based on customer-defined policies
     description: |-
