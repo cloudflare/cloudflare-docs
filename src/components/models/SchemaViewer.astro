@@ -56,7 +56,7 @@ jsonSchemaTree.populate();
 <ul class="pl-0">
 	{
 		(jsonSchemaTree.root.children[0] as RegularNode).children?.map(
-			(node: SchemaNode) => <SchemaRow node={node} root />,
+			(node: SchemaNode) => <SchemaRow node={node} />,
 		)
 	}
 </ul>
