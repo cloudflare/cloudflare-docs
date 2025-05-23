@@ -2741,9 +2741,9 @@
 				},
 				"custom_origin": {
 					"title": "[Custom origin](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/custom-origin/)",
-					"free": "No",
-					"pro": "No",
-					"biz": "No",
+					"free": "Yes",
+					"pro": "Yes",
+					"biz": "Yes",
 					"ent": "Yes"
 				},
 				"custom_certificates": {
