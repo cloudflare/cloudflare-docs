@@ -68,6 +68,40 @@ ws.on("message", function incoming(message) {
 });
 ```
 
+## Workers Binding example
+
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig>
+
+```toml title="wrangler.toml"
+[ai]
+binding = "AI"
+```
+
+</WranglerConfig>
+
+```typescript title="src/index.ts"
+type Env = {
+	AI: Ai;
+};
+
+export default {
+	async fetch(request: Request, env: Env) {
+		return env.AI.gateway('my-gateway').run({
+			provider: "workers-ai",
+			endpoint: "@cf/meta/llama-3.1-8b-instruct",
+			headers: {
+				authorization: "Bearer my-api-token",
+			},
+			query: {
+				prompt: "tell me a joke",
+			},
+		});
+	},
+};
+```
+
 ## Header configuration hierarchy
 
 The Universal Endpoint allows you to set fallback models or providers and customize headers for each provider or request. You can configure headers at three levels:
