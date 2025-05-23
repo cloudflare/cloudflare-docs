@@ -278,18 +278,14 @@ const config = new pulumi.Config();
 const accountId = config.require("accountId");
 const domain = config.require("domain");
 
-const content = `export default {
-  async fetch(request) {
-    const options = { headers: { 'content-type': 'text/plain' } };
-    return new Response("Hello World!", options);
-  },
-};`
+const content = `addEventListener('fetch', event => {
+  event.respondWith(new Response("Hello World!"));
+});`
 
 const worker = new cloudflare.WorkersScript("hello-world-worker", {
 	accountId: accountId,
 	name: "hello-world-worker",
 	content: content,
-  module: true, // ES6 module
 });
 ```
 
@@ -305,18 +301,14 @@ const config = new pulumi.Config();
 const accountId = config.require("accountId");
 const domain = config.require("domain");
 
-const content = `export default {
-  async fetch(request) {
-    const options = { headers: { 'content-type': 'text/plain' } };
-    return new Response("Hello World!", options);
-  },
-};`
+const content = `addEventListener('fetch', event => {
+  event.respondWith(new Response("Hello World!"));
+});`
 
 const worker = new cloudflare.WorkersScript("hello-world-worker", {
   accountId: accountId,
   name: "hello-world-worker",
   content: content,
-  module: true, // ES6 module
 });
 ```
 
@@ -333,19 +325,15 @@ CONFIG = pulumi.Config()
 ACCOUNT_ID = CONFIG.get("accountId")
 DOMAIN = CONFIG.require("domain")
 CONTENT = """
-export default {
-  async fetch(request) {
-    const options = { headers: { 'content-type': 'text/plain' } };
-    return new Response("Hello World!", options);
-  },
-};
+addEventListener('fetch', event => {
+  event.respondWith(new Response("Hello World!"));
+});
 """
 
 worker = cloudflare.WorkersScript("hello-world-worker",
     account_id=ACCOUNT_ID,
     name="hello-world-worker",
     content=CONTENT,
-    module=True  # ES6 module
 )
 ```
 
@@ -368,18 +356,14 @@ func main() {
 		accountID := conf.Get("accountId")
 		domain := conf.Get("domain")
 		content := `
-		export default {
-		  async fetch(request) {
-		    const options = { headers: { 'content-type': 'text/plain' } };
-		    return new Response("Hello World!", options);
-		  },
-		};
+		addEventListener('fetch', event => {
+  event.respondWith(new Response("Hello World!"));
+});
 		`
 		worker, err := cloudflare.NewWorkersScript(ctx, "hello-world-worker", &cloudflare.WorkersScriptArgs{
 			AccountId: pulumi.String(accountID),
 			Name:      pulumi.String("hello-world-worker"),
 			Content:   pulumi.String(content),
-			Module:    pulumi.Bool(true), // ES6 module
 		})
 		if err != nil {
 			return err
@@ -406,12 +390,9 @@ public class App {
     public static void main(String[] args) {
         Pulumi.run(ctx -> {
             var content = """
-              export default {
-                async fetch(request) {
-                  const options = { headers: { 'content-type': 'text/plain' } };
-                  return new Response("Hello World!", options);
-                },
-              };
+              addEventListener('fetch', event => {
+  event.respondWith(new Response("Hello World!"));
+});
             """;
 
             var accountId = ctx.config().require("accountId");
@@ -420,7 +401,6 @@ public class App {
                 .accountId(accountId)
                 .name("hello-world-worker")
                 .content(content)
-                .module(true)
                 .build());
 
             return;
@@ -443,12 +423,9 @@ return await Deployment.RunAsync(() =>
     var accountId = config.Require("accountId");
     var domain = config.Require("domain");
     var content = @"
-            export default {
-                async fetch(request) {
-                    const options = { headers: { 'content-type': 'text/plain' } };
-                    return new Response(""Hello World!"", options);
-                },
-            };
+            addEventListener('fetch', event => {
+  event.respondWith(new Response("Hello World!"));
+});
         ";
 
     var worker = new Cloudflare.WorkersScript("hello-world-worker", new()
@@ -456,7 +433,6 @@ return await Deployment.RunAsync(() =>
         AccountId = accountId,
         Name = "hello-world-worker",
         Content = content,
-        Module = true
     });
     return;
 });
@@ -476,13 +452,9 @@ resources:
       accountId: "${accountId}"
       name: "hello-world-worker"
       content: |
-        export default {
-            async fetch(request) {
-                const options = { headers: { 'content-type': 'text/plain' } };
-                return new Response("Hello World!", options);
-            },
-        };
-      module: true
+        addEventListener('fetch', event => {
+  event.respondWith(new Response("Hello World!"));
+});
 ```
 
 </TabItem> </Tabs>
@@ -788,18 +760,14 @@ const config = new pulumi.Config();
 const accountId = config.require("accountId");
 const domain = config.require("domain");
 
-const content = `export default {
-  async fetch(request) {
-    const options = { headers: { 'content-type': 'text/plain' } };
-    return new Response("Hello World!", options);
-  },
-};`
+const content = `addEventListener('fetch', event => {
+  event.respondWith(new Response("Hello World!"));
+});
 
 const worker = new cloudflare.WorkersScript("hello-world-worker", {
   accountId: accountId,
   name: "hello-world-worker",
   content: content,
-  module: true, // ES6 module
 });
 
 const zone = cloudflare.getZone({
@@ -840,18 +808,14 @@ const config = new pulumi.Config();
 const accountId = config.require("accountId");
 const domain = config.require("domain");
 
-const content = `export default {
-  async fetch(request) {
-    const options = { headers: { 'content-type': 'text/plain' } };
-    return new Response("Hello World!", options);
-  },
-};`
+const content = `addEventListener('fetch', event => {
+  event.respondWith(new Response("Hello World!"));
+});`
 
 const worker = new cloudflare.WorkersScript("hello-world-worker", {
   accountId: accountId,
   name: "hello-world-worker",
   content: content,
-  module: true, // ES6 module
 });
 
 const zone = cloudflare.getZone({
@@ -893,19 +857,15 @@ CONFIG = pulumi.Config()
 ACCOUNT_ID = CONFIG.get("accountId")
 DOMAIN = CONFIG.require("domain")
 CONTENT = """
-export default {
-  async fetch(request) {
-    const options = { headers: { 'content-type': 'text/plain' } };
-    return new Response("Hello World!", options);
-  },
-};
+addEventListener('fetch', event => {
+  event.respondWith(new Response("Hello World!"));
+});
 """
 
 worker = cloudflare.WorkersScript("hello-world-worker",
     account_id=ACCOUNT_ID,
     name="hello-world-worker",
     content=CONTENT,
-    module=True  # ES6 module
 )
 
 zone = cloudflare.get_zone(account_id=ACCOUNT_ID, name=DOMAIN)
@@ -949,18 +909,14 @@ func main() {
 		accountID := conf.Get("accountId")
 		domain := conf.Get("domain")
 		content := `
-		export default {
-		  async fetch(request) {
-		    const options = { headers: { 'content-type': 'text/plain' } };
-		    return new Response("Hello World!", options);
-		  },
-		};
+		addEventListener('fetch', event => {
+  event.respondWith(new Response("Hello World!"));
+});
 		`
 		worker, err := cloudflare.NewWorkersScript(ctx, "hello-world-worker", &cloudflare.WorkersScriptArgs{
 			AccountId: pulumi.String(accountID),
 			Name:      pulumi.String("hello-world-worker"),
 			Content:   pulumi.String(content),
-			Module:    pulumi.Bool(true), // ES6 module
 		})
 		if err != nil {
 			return err
@@ -1024,12 +980,9 @@ public class App {
     public static void main(String[] args) {
         Pulumi.run(ctx -> {
             var content = """
-				export default {
-				  async fetch(request) {
-				    const options = { headers: { 'content-type': 'text/plain' } };
-				    return new Response("Hello World!", options);
-				  },
-				};
+				addEventListener('fetch', event => {
+  event.respondWith(new Response("Hello World!"));
+});
 			""";
 
             var accountId = ctx.config().require("accountId");
@@ -1039,7 +992,6 @@ public class App {
                 .accountId(accountId)
                 .name("hello-world-worker")
                 .content(content)
-                .module(true)
                 .build());
             final var zone = CloudflareFunctions.getZone(GetZoneArgs.builder()
                 .accountId(accountId)
@@ -1082,12 +1034,9 @@ return await Deployment.RunAsync(() =>
     var accountId = config.Require("accountId");
     var domain = config.Require("domain");
     var content = @"
-            export default {
-                async fetch(request) {
-                    const options = { headers: { 'content-type': 'text/plain' } };
-                    return new Response(""Hello World!"", options);
-                },
-            };
+            addEventListener('fetch', event => {
+  event.respondWith(new Response("Hello World!"));
+});
         ";
 
     var worker = new Cloudflare.WorkersScript("hello-world-worker", new()
@@ -1095,7 +1044,6 @@ return await Deployment.RunAsync(() =>
         AccountId = accountId,
         Name = "hello-world-worker",
         Content = content,
-        Module = true
     });
     var zone = Output.Create(Cloudflare.GetZone.InvokeAsync(new()
     {
@@ -1149,13 +1097,9 @@ resources:
       accountId: "${accountId}"
       name: "hello-world-worker"
       content: |
-        export default {
-            async fetch(request) {
-                const options = { headers: { 'content-type': 'text/plain' } };
-                return new Response("Hello World!", options);
-            },
-        };
-      module: true
+        addEventListener('fetch', event => {
+  event.respondWith(new Response("Hello World!"));
+});
   route:
     type: cloudflare:WorkersRoute
     properties:
