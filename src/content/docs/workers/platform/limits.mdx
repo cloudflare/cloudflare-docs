@@ -273,7 +273,7 @@ Each environment variable has a size limitation of 5 KB.
 
 ## Worker size
 
-A Worker can be up to 10 MB in size _after compression_ on the Workers Paid plan, and up to 3 MB on the Workers Free plan.
+A Worker can be up to 10 MB in size _after compression_ on the Workers Paid plan, and up to 3 MB on the Workers Free plan. On either plan, a Worker can be up to 64 MB _before compression_.
 
 You can assess the size of your Worker bundle after compression by performing a dry-run with `wrangler` and reviewing the final compressed (`gzip`) size output by `wrangler`:
 
@@ -286,7 +286,13 @@ wrangler deploy --outdir bundled/ --dry-run
 Total Upload: 259.61 KiB / gzip: 47.23 KiB
 ```
 
-Note that larger Worker bundles can impact the start-up time of the Worker, as the Worker needs to be loaded into memory. You should consider removing unnecessary dependencies and/or using [Workers KV](/kv/), a [D1 database](/d1/) or [R2](/r2/) to store configuration files, static assets and binary data instead of attempting to bundle them within your Worker code.
+Note that larger Worker bundles can impact the start-up time of the Worker, as the Worker needs to be loaded into memory.
+
+To reduce the upload size of a Worker, consider some of the following strategies:
+
+- Removing unnecessary dependencies and packages
+- Storing configuration files, static assets, and binary data using [Workers KV](/kv/), [R2](/r2/), [D1](/d1/), or [Workers Static Assets](/workers/static-assets/) instead of bundling them within your Worker code.
+- Splitng functionality across multiple Workers and connecting them using [Service bindings](/workers/runtime-apis/bindings/service-bindings/).
 
 ---
 

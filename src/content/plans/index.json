@@ -2720,10 +2720,10 @@
 				},
 				"c_max_hostnames": {
 					"title": "Max hostnames",
-					"free": "5,000",
-					"pro": "5,000",
-					"biz": "5,000",
-					"ent": "Unlimited, but contact sales if using over 5,000."
+					"free": "50,000",
+					"pro": "50,000",
+					"biz": "50,000",
+					"ent": "Unlimited, but contact sales if using over 50,000."
 				},
 				"d_cost_per_hostname": {
 					"title": "Price per additional hostname",
@@ -2741,9 +2741,9 @@
 				},
 				"custom_origin": {
 					"title": "[Custom origin](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/custom-origin/)",
-					"free": "No",
-					"pro": "No",
-					"biz": "No",
+					"free": "Yes",
+					"pro": "Yes",
+					"biz": "Yes",
 					"ent": "Yes"
 				},
 				"custom_certificates": {

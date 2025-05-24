@@ -21,8 +21,10 @@ If you exceed this limit, all API calls for the next five minutes will be blocke
 
 Some specific API calls have their own limits and are documented separately, such as the following:
 
-* [Cache Purge APIs](/api/resources/cache/methods/purge/)
-* [GraphQL APIs](/analytics/graphql-api/limits/)
+* [Cache Purge APIs](/cache/how-to/purge-cache/#availability-and-limits)
+* [GraphQL APIs](/analytics/graphql-api/limits/): 300 GraphQL queries over 5-minute window
 * [Rulesets APIs](/ruleset-engine/rulesets-api/#limits)
+* [Lists API](/waf/tools/lists/lists-api/#rate-limiting-for-lists-api-requests): 10,000 list changes in five minutes
+* Gateway Lists API: 60 list updates per minute
 
 Enterprise customers can also [contact Cloudflare Support](/support/contacting-cloudflare-support/) to raise the Client API per user, GraphQL, or API token limits to a higher value.
