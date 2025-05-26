@@ -9,7 +9,7 @@ description: Create an origin rule to change the HTTP `Host` header and the reso
 
 import { Render, Tabs, TabItem, Example } from "~/components";
 
-The following origin rule overrides the HTTP `Host` header to `eu_server.example.net` for all requests containing `/eu/` in their URI path. It also overrides the DNS record to the same hostname.
+The following origin rule overrides the HTTP `Host` header to `hr-server.example.com` for all requests with a URI path starting with `/hr-app/`. It also overrides the DNS record to the same hostname.
 
 The `Host` header override only updates the header value; the DNS record override will handle the rerouting of incoming requests.
 
@@ -20,26 +20,26 @@ The `Host` header override only updates the header value; the DNS record overrid
 
 Expression when using the Expression Builder:
 
-| Field    | Operator | Value  |
-| -------- | -------- | ------ |
-| URI Path | contains | `/eu/` |
+| Field    | Operator    | Value      |
+| -------- | ----------- | ---------- |
+| URI Path | starts with | `/hr-app/` |
 
 Expression when using the Expression Editor:
 
 ```txt
-(http.request.uri.path contains "/eu/")
+(starts_with(http.request.uri.path, "/hr-app/"))
 ```
 
 Value after **Host Header** > **Rewrite to**:
 
 ```txt
-eu_server.example.net
+hr-server.example.com
 ```
 
 Value after **DNS Record** > **Override to**:
 
 ```txt
-eu_server.example.net
+hr-server.example.com
 ```
 
 </Example>
@@ -47,7 +47,7 @@ eu_server.example.net
 </TabItem>
 <TabItem label="API" no-code="true">
 
-<Render file="origin-rules-api-change-host-header" />
+<Render file="origin-rules-api-change-host-header-dns-record" />
 
 </TabItem>
 </Tabs>
