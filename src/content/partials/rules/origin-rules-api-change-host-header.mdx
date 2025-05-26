@@ -4,7 +4,7 @@
 
 import { APIRequest } from "~/components";
 
-The following example sets the rules of an existing phase ruleset (`$RULESET_ID`) to a single origin rule — overriding the HTTP `Host` header — using the [Update a zone ruleset](/api/resources/rulesets/methods/update/) operation. The response will contain the complete definition of the ruleset you updated.
+The following example sets the rules of an existing phase ruleset (`$RULESET_ID`) to a single origin rule — overriding the HTTP `Host` header and the resolved DNS record — using the [Update a zone ruleset](/api/resources/rulesets/methods/update/) operation. The response will contain the complete definition of the ruleset you updated.
 
 <APIRequest
 	path="/zones/{zone_id}/rulesets/{ruleset_id}"
@@ -17,6 +17,9 @@ The following example sets the rules of an existing phase ruleset (`$RULESET_ID`
 				action: "route",
 				action_parameters: {
 					host_header: "eu_server.example.net",
+					origin: {
+						host: "eu_server.example.net",
+					},
 				},
 			},
 		],
@@ -37,7 +40,10 @@ The following example sets the rules of an existing phase ruleset (`$RULESET_ID`
 				"version": "1",
 				"action": "route",
 				"action_parameters": {
-					"host_header": "eu_server.example.net"
+					"host_header": "eu_server.example.net",
+					"origin": {
+						"host": "eu_server.example.net"
+					}
 				},
 				"expression": "http.request.uri.path contains \"/eu/\"",
 				"description": "My first origin rule",
