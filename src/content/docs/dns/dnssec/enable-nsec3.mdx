@@ -25,6 +25,12 @@ Use the [Edit DNSSEC Status endpoint](/api/resources/dns/subresources/dnssec/met
 	}}
 />
 
+### Pre-signed DNSSEC
+
+If you use Cloudflare as a secondary DNS provider with [pre-signed DNSSEC](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/dnssec-for-secondary/), setting `dnssec_use_nsec3` to `true` means that Cloudflare will use NSEC3 records as transferred in from your primary DNS provider.
+
+Otherwise, NSEC3 records will be generated and signed at request time.
+
 ## Verify NSEC3 is in use
 
 To validate that NSEC3 is being used, consider the following scenarios:
