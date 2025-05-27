@@ -6,24 +6,24 @@ sidebar:
   order: 6
 ---
 
+import { APIRequest } from "~/components";
+
 As explained in [our blog](https://blog.cloudflare.com/black-lies/), Cloudflare's implementation of negative answers with NSEC is protected against zone walking[^1]. This implementation removes the need for NSEC3 and has been [proposed as an IETF standard](https://datatracker.ietf.org/doc/draft-ietf-dnsop-compact-denial-of-existence/).
 
 However, if you must use NSEC3 for compliance reasons, you can enable it as explained below.
 
 ## Enable NSEC3
 
-Use the [Edit DNSSEC Status endpoint](/api/resources/dns/subresources/dnssec/methods/edit/), setting `status` to `active` and `dnssec_use_nsec3` to `true`. You should replace the values started by `$` with your zone ID and API token. To learn more about using the Cloudflare API, refer to [Fundamentals](/fundamentals/api/get-started/).
+Use the [Edit DNSSEC Status endpoint](/api/resources/dns/subresources/dnssec/methods/edit/), setting `status` to `active` and `dnssec_use_nsec3` to `true`. You should replace the values started by `$` with your zone ID and authentication credentials. To learn more about using the Cloudflare API, refer to [Fundamentals](/fundamentals/api/get-started/).
 
-```bash
-curl --request PATCH \
-https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dnssec \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---header "Content-Type: application/json" \
---data '{
-"dnssec_use_nsec3": true,
-"status": "active"
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/dnssec"
+	method="PATCH"
+	json={{
+		"dnssec_use_nsec3": true,
+		"status": "active"
+	}}
+/>
 
 ## Verify NSEC3 is in use
 
