@@ -52,7 +52,7 @@ A common use case is when you are serving an application from the URI (for examp
 
 - You must specify a valid hostname in a DNS record override that is a hostname on the same Cloudflare account (possibly on a different zone). You can [configure a DNS record](/dns/manage-dns-records/how-to/create-dns-records#create-dns-records) (a `CNAME`, `A`, or `AAAA` record) with a hostname pointing to a third-party hostname/IP address, either proxied by Cloudflare or not.
 
-- In most situations, when you configure a DNS record override you also need to configure a [`Host` header override](#dns-record). The DNS record override handles the rerouting of the request; the `Host` header override updates the `Host` HTTP header value in the request. Defining a `Host` header override will also update the Server Name Indication (SNI) value of the original request to the same value. To set an SNI value different from the `Host` header value, add an [SNI override](#server-name-indication-sni) in the same origin rule or create a separate origin rule for this purpose.
+- In most situations, when you configure a DNS record override you also need to configure a [`Host` header override](#host-header). The DNS record override handles the rerouting of the request; the `Host` header override updates the `Host` HTTP header value in the request. Defining a `Host` header override will also update the Server Name Indication (SNI) value of the original request to the same value. To set an SNI value different from the `Host` header value, add an [SNI override](#server-name-indication-sni) in the same origin rule or create a separate origin rule for this purpose.
 
 :::
 
