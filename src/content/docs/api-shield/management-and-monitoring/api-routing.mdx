@@ -24,28 +24,7 @@ Once your Source Endpoints are added to Endpoint Management, use the following s
 
 ### Create a route
 
-#### Via the Cloudflare dashboard
-
 <Render file="routing" params={{ one: "Create", two: "route" }} />
-
-#### Via the API
-
-```bash title="cURL command"
-curl --request PUT "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/operations/{operationID}/route" \
---header "Content-Type: application/json" \
---data '{"route": "https://api.example.com/api/service"}'
-```
-
-```json title="Response"
-{
-  "result": {
-    "route": "https://api.example.com/api/service"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
-}
-```
 
 <Render file="routing-path-variables" />
 
@@ -53,49 +32,13 @@ curl --request PUT "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gate
 
 <Render file="routing" params={{ one: "Edit", two: "routing" }} />
 
-### Verify a Route
-
-```bash title="cURL command"
-curl --request GET "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/operations/{operationID}/route" \
---header "Content-Type: application/json"
-```
-
-```json title="Response"
-{
-  "result": {
-    "route": "https://api.example.com/api/service"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
-}
-```
-
 ### Remove a route
-
-#### Via the Cloudflare dashboard
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Select **Security** > **API Shield**.
 3. In **Endpoint Management**, select an existing endpoint and expand its details.
 4. Under **Routing**, select **Edit routing**.
 5. Select **Delete route**.
-
-#### Via the API
-
-```bash title="cURL command"
-curl --request DELETE "https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/operations/{operationID}/route" \
---header "Content-Type: application/json"
-```
-
-```json title="Response"
-{
-  "result":{},
-  "success":true,
-  "errors":[],
-  "messages":[]
-}
-```
 
 ### Test a route
 
