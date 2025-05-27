@@ -1,17 +1,8 @@
 ---
-{}
+params:
+  - availabilityDetails?
 ---
 
-Once you have activated Page Shield, you can set up one or more alerts informing you of relevant client-side changes on your zones.
+import { Render } from "~/components";
 
-You can configure unscoped or scoped alerts:
-
-- **Unscoped alert**: An alert configured for all zones in your Cloudflare account. Scoped alerts are trigged either daily, hourly, or immediately, depending on the [alert type](/page-shield/reference/alerts/).
-
-- **Scoped alert**: An alert scoped to one or more zones. You must configure [policies](/page-shield/policies/) for the zones you select to receive any notifications. Scoped alerts are triggered immediately. Policy violations will not trigger an alert.
-
-  :::note
-  If you set up a scoped alert for a zone and you do not configure any [allow policy](/page-shield/policies/#policy-actions) for that zone, you will not receive any alerts.
-  :::
-
-For alerts sent at regular intervals, you might experience a delay between adding a new script and receiving an alert.
+Once you have activated Page Shield, you can set up one or more alerts informing you of relevant client-side changes on your zones. {props.availabilityDetails}
