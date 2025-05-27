@@ -6,7 +6,7 @@ sidebar:
   label: Magic Transit with CDN
 ---
 
-import { Details, Example, TabItem, Tabs, GlossaryTooltip } from "~/components";
+import { Details, Example, TabItem, Tabs, GlossaryTooltip, APIRequest } from "~/components";
 
 [Magic Transit](/magic-transit/) customers using BYOIP can also benefit from the performance, reliability, and security that Cloudflare offers for HTTP-based applications.
 
@@ -94,24 +94,24 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/addressing/prefi
 --header "Content-Type: application/json" \
 --data '{
   "cidr": "203.0.113.100/32",
-  "service_id": <SERVICE_ID>
+  "service_id": "<SERVICE_ID>"
 }'
 ```
 
 In the response body, the initial provisioning state should be `provisioning`.
 
-```json
+```json output {9}
 {
   "errors": [],
   "messages": [],
   "success": true,
   "result": {
     "cidr": "203.0.113.100/32",
-    "id": <CDN_SERVICE_BINDING_ID>,
+    "id": "<CDN_SERVICE_BINDING_ID>",
     "provisioning": {
       "state": "provisioning"
       },
-    "service_id": <SERVICE_ID>,
+    "service_id": "<SERVICE_ID>",
     "service_name": "CDN"
   }
 }

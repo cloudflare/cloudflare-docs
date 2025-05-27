@@ -8,7 +8,7 @@ description: Get started by installing Wrangler, and update to newer versions by
   following this guide.
 ---
 
-import { Render } from "~/components";
+import { Render, PackageManagers } from "~/components";
 
 Wrangler is a command-line tool for building with Cloudflare developer products.
 
@@ -29,7 +29,7 @@ Wrangler is installed locally into each of your projects. This allows you and yo
 
 To install Wrangler within your Worker project, run:
 
-<Render file="install_wrangler" />
+<PackageManagers pkg="wrangler@latest" dev />
 
 Since Cloudflare recommends installing Wrangler locally in your project (rather than globally), the way to run Wrangler will depend on your specific setup and package manager. Refer to [How to run Wrangler commands](/workers/wrangler/commands/#how-to-run-wrangler-commands) for more information.
 
@@ -55,9 +55,7 @@ npx wrangler -v
 
 To update the version of Wrangler used in your project, run:
 
-```sh
-npm install wrangler@latest
-```
+<PackageManagers pkg="wrangler@latest" dev />
 
 ## Related resources
 

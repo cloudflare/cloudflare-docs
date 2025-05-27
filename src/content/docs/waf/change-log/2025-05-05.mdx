@@ -9,6 +9,24 @@ tableOfContents: false
 
 import { RuleID } from "~/components";
 
+This week's analysis covers five CVEs with varying impact levels. Four are rated critical, while one is rated high severity. Remote Code Execution vulnerabilities dominate this set.
+
+**Key Findings**
+
+GFI KerioControl (CVE-2024-52875) contains an unauthenticated Remote Code Execution (RCE) vulnerability that targets firewall appliances. This vulnerability can let attackers gain root level system access, making this CVE particularly attractive for threat actors.
+
+The SonicWall SMA vulnerabilities remain concerning due to their continued exploitation since 2021. These critical vulnerabilities in remote access solutions create dangerous entry points to networks.
+
+**Impact**
+
+Customers using the Managed Ruleset will receive rule coverage following this week's release. Below is a breakdown of the recommended prioritization based on current exploitation trends:
+
+- GFI KerioControl (CVE-2024-52875) - Highest priority; unauthenticated RCE
+- SonicWall SMA (Multiple vulnerabilities) - Critical for network appliances
+- XWiki (CVE-2025-24893) - High priority for development environments
+- Langflow (CVE-2025-3248) - Important for AI workflow platforms
+- MinIO (CVE-2025-31489) - Important for object storage implementations
+
 <table style="width: 100%">
 	<thead>
 		<tr>

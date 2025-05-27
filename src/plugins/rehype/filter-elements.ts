@@ -95,6 +95,8 @@ const ALLOWED_ELEMENTS = [
 	"tr",
 	// Images
 	"img",
+	// UI frameworks (i.e React)
+	"astro-island",
 	// Custom elements
 	"rule-id",
 	"starlight-tabs",

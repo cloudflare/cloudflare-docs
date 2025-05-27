@@ -4,7 +4,7 @@ pcx_content_type: configuration
 sidebar:
   group:
     badge: Beta
-  order: 5
+  order: 3
 ---
 
 The AI Gateway WebSockets API provides a persistent connection for AI interactions, eliminating repeated handshakes and reducing latency. This API is divided into two categories:
@@ -27,7 +27,7 @@ WebSockets are long-lived TCP connections that enable bi-directional, real-time 
 | :---------------------- | :---------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------- |
 | **Purpose**             | Enables real-time, multimodal AI interactions for providers that offer dedicated WebSocket endpoints.                   | Supports WebSocket-based AI interactions with providers that do not natively support WebSockets. |
 | **Use Case**            | Streaming responses for voice, video, and live interactions.                                                            | Text-based queries and responses, such as LLM requests.                                          |
-| **AI Provider Support** | [Limited to providers offering real-time WebSocket APIs.](/ai-gateway/websockets-api/realtime-api/#supported-providers) | [All AI providers in AI Gateway.](/ai-gateway/providers/)                                         |
+| **AI Provider Support** | [Limited to providers offering real-time WebSocket APIs.](/ai-gateway/websockets-api/realtime-api/#supported-providers) | [All AI providers in AI Gateway.](/ai-gateway/providers/)                                        |
 | **Streaming Support**   | Providers natively support real-time data streaming.                                                                    | AI Gateway handles streaming via WebSockets.                                                     |
 
 For details on implementation, refer to the next sections:

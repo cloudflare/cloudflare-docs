@@ -5,9 +5,16 @@ productLink: "/fundamentals/"
 productArea: Core platform
 productAreaLink: /fundamentals/reference/changelog/platform/
 entries:
-- publish_date: "2025-04-25"
-  title: "Move to Changelog RSS feed"
-  description: |-
-    Release notes are being deprecated in favor of the [Cloudflare changelog](/changelog/).
+  - publish_date: "2025-05-14"
+    title: "Final notice - Move to Changelog RSS feed"
+    description: |-
+      Release notes are being deprecated in favor of the [Cloudflare changelog](/changelog/) at the end of May 2025.
 
-    To keep up with product updates, subscribe to [the Changelog RSS feed](/changelog/rss/index.xml) instead. Or, review your options at [Available RSS feeds](/fundamentals/new-features/available-rss-feeds/).
+      To keep up with product updates, subscribe to [the Changelog RSS feed](/changelog/rss/index.xml) instead. Or, review your options at [Available RSS feeds](/fundamentals/new-features/available-rss-feeds/).
+
+  - publish_date: "2025-04-25"
+    title: "Move to Changelog RSS feed"
+    description: |-
+      Release notes are being deprecated in favor of the [Cloudflare changelog](/changelog/).
+
+      To keep up with product updates, subscribe to [the Changelog RSS feed](/changelog/rss/index.xml) instead. Or, review your options at [Available RSS feeds](/fundamentals/new-features/available-rss-feeds/).

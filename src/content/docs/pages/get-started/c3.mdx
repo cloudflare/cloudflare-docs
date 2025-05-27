@@ -8,6 +8,11 @@ description: Use C3 (`create-cloudflare` CLI) to set up and deploy new
   applications using framework-specific setup guides to ensure each new
   application follows Cloudflare and any third-party best practices for
   deployment.
+banner:
+  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
+  type: note
+  dismissible:
+    id: pages-migrate-to-workers
 ---
 
 import {
@@ -75,7 +80,11 @@ C3 collects any required input through a series of interactive prompts. You may 
 
 This is the full format of a C3 invocation alongside the possible CLI arguments:
 
-<PackageManagers type="create" pkg="cloudflare@latest" args="--platform=pages [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]"/>
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args="--platform=pages [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]"
+/>
 
 - `DIRECTORY` <Type text="string" /> <MetaInfo text="optional" />
 

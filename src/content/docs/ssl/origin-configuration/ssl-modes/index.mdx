@@ -9,7 +9,7 @@ description: Encryption modes allow you to control how Cloudflare connects to
   validated.
 ---
 
-import { DirectoryListing, Render, TabItem, Tabs } from "~/components";
+import { DirectoryListing, Render, TabItem, Tabs, APIRequest } from "~/components";
 
 <Render file="encryption-mode-definition" /> <br />
 
@@ -52,13 +52,16 @@ Automatic SSL/TLS will not change your setting to a less secure encryption mode.
 
 If you want to opt a zone out via the API, you can make this API call on or before the grace period expiration date.
 
-```bash
- curl --request PATCH \
-  --url https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/settings/ssl_automatic_mode \
-  --header 'Authorization: Bearer <CF_API_TOKEN>' \
-  --header 'Content-Type: application/json' \
-  --data '{"value":"custom"}'
-```
+<APIRequest
+  path="/zones/{zone_id}/settings/{setting_id}"
+  method="PATCH"
+  json={{
+		"value":"custom"
+	}}
+		parameters={{
+		setting_id: "ssl_automatic_mode"
+	}}
+/>
 
 #### Opt out multiple zones
 
@@ -92,6 +95,7 @@ If you wanted to opt out multiple zones:
      printf "\n\n"
    done
    ```
+
 
 5. Open your command line and run:
 

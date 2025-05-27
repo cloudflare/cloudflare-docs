@@ -6,9 +6,11 @@ import { externalLinkArrow } from "~/plugins/rehype/external-links";
 
 type Link = Extract<StarlightRouteData["sidebar"][0], { type: "link" }> & {
 	order?: number;
+	icon?: { lottieLink: string };
 };
 type Group = Extract<StarlightRouteData["sidebar"][0], { type: "group" }> & {
 	order?: number;
+	icon?: { lottieLink: string };
 };
 
 export type SidebarEntry = Link | Group;
@@ -127,6 +129,10 @@ function setSidebarCurrentEntry(
 ): boolean {
 	for (const entry of sidebar) {
 		if (entry.type === "link") {
+			if (entry.attrs["data-external-link"]) {
+				continue;
+			}
+
 			const href = entry.href;
 
 			// Compare with and without trailing slash
@@ -195,6 +201,7 @@ async function handleGroup(group: Group): Promise<SidebarEntry> {
 
 	const frontmatter = entry.data;
 
+	group.icon = frontmatter.sidebar.group?.icon ?? frontmatter.icon;
 	group.label = frontmatter.sidebar.group?.label ?? frontmatter.title;
 	group.order = frontmatter.sidebar.order ?? Number.MAX_VALUE;
 
@@ -206,6 +213,7 @@ async function handleGroup(group: Group): Promise<SidebarEntry> {
 		return {
 			type: "link",
 			href: index.href,
+			icon: group.icon,
 			label: group.label,
 			order: group.order,
 			attrs: {
@@ -280,6 +288,7 @@ async function handleLink(link: Link): Promise<Link> {
 	if (frontmatter.external_link && !frontmatter.sidebar.group?.hideIndex) {
 		return {
 			...link,
+			icon: frontmatter.icon,
 			label: link.label.concat(externalLinkArrow),
 			href: frontmatter.external_link,
 			badge: frontmatter.external_link.startsWith("/api")
@@ -288,6 +297,9 @@ async function handleLink(link: Link): Promise<Link> {
 						variant: "note",
 					}
 				: undefined,
+			attrs: {
+				"data-external-link": true,
+			},
 		};
 	}
 

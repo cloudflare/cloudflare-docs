@@ -289,25 +289,7 @@ This implementation blocks order operations for any requests that Cloudflare ide
 
 To integrate Turnstile with a Stripe payment form, first you will need to install the Stripe SDK:
 
-<Tabs> <TabItem label="npm">
-
-```sh
-npm install stripe
-```
-
-</TabItem> <TabItem label="yarn">
-
-```sh
-yarn add stripe
-```
-
-</TabItem> <TabItem label="pnpm">
-
-```sh
-pnpm add stripe
-```
-
-</TabItem> </Tabs>
+<PackageManagers pkg="stripe@latest" />
 
 Next, implement the code to create a payment form in `src/index.tsx`. The following code creates a [Payment Intent](https://docs.stripe.com/api/payment_intents) on the server side:
 

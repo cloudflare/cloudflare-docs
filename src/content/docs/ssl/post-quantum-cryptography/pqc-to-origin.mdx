@@ -8,7 +8,7 @@ head: []
 description: Learn about post-quantum cryptography in connections from Cloudflare to your origin servers.
 ---
 
-import { Example } from "~/components";
+import { Example, APIRequest } from "~/components";
 
 As explained in [About PQC](/ssl/post-quantum-cryptography/), Cloudflare has deployed support for hybrid key agreements, which includes both the most common key agreement for TLS 1.3, X25519, and the post-quantum secure ML-KEM.
 
@@ -36,15 +36,13 @@ It is also possible to opt out of PQC using the same API endpoint.
 This setting affects all outbound connections from the zone you specify in the API call, including `fetch()` requests made by [Workers](/workers/) on your zone.
 :::
 
-```bash
-curl --request PUT \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/cache/origin_post_quantum_encryption" \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "value": "<YOUR_CHOSEN_SETTING>"
-}'
-```
+<APIRequest
+  path="/zones/{zone_id}/cache/origin_post_quantum_encryption"
+  method="PUT"
+  json={{
+		"value": "<YOUR_CHOSEN_SETTING>"
+	}}
+/>
 
 The possible values are:
 - `supported` (most compatible): Advertise support for post-quantum key agreement, but send a classical keyshare in the first ClientHello.

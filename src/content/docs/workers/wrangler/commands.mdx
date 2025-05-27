@@ -14,6 +14,7 @@ import {
 	Type,
 	MetaInfo,
 	WranglerConfig,
+	PackageManagers,
 } from "~/components";
 
 Wrangler offers a number of commands to manage your Cloudflare Workers.
@@ -71,25 +72,11 @@ wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
 
 Since Cloudflare recommends [installing Wrangler locally](/workers/wrangler/install-and-update/) in your project(rather than globally), the way to run Wrangler will depend on your specific setup and package manager.
 
-<Tabs> <TabItem label="npm">
-
-```sh
-npx wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
-```
-
-</TabItem> <TabItem label="yarn">
-
-```sh
-yarn wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
-```
-
-</TabItem> <TabItem label="pnpm">
-
-```sh
-pnpm wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
-```
-
-</TabItem> </Tabs>
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="<COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]"
+/>
 
 You can add Wrangler commands that you use often as scripts in your project's `package.json` file:
 
@@ -106,25 +93,7 @@ You can add Wrangler commands that you use often as scripts in your project's `p
 
 You can then run them using your package manager of choice:
 
-<Tabs> <TabItem label="npm">
-
-```sh
-npm run deploy
-```
-
-</TabItem> <TabItem label="yarn">
-
-```sh
-yarn run deploy
-```
-
-</TabItem> <TabItem label="pnpm">
-
-```sh
-pnpm run deploy
-```
-
-</TabItem> </Tabs>
+<PackageManagers type="run" args="deploy" />
 
 ---
 
@@ -209,6 +178,9 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
   - The path to an entry point for your Worker. Only required if your [Wrangler configuration file](/workers/wrangler/configuration/) does not include a `main` key (for example, `main = "index.js"`).
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Name of the Worker.
+- `--config`, `-c` <Type text="string[]" /> <MetaInfo text="optional" />
+  - Path(s) to [Wrangler configuration file](/workers/wrangler/configuration/). If not provided, Wrangler will use the nearest config file based on your current working directory.
+  - You can provide multiple configuration files to run multiple Workers in one dev session like this: `wrangler dev -c ./wrangler.toml -c ../other-worker/wrangler.toml`. The first config will be treated as the _primary_ Worker, which will be exposed over HTTP. The remaining config files will only be accessible via a service binding from the primary Worker.
 - `--no-bundle` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Skip Wrangler's build steps. Particularly useful when using custom builds. Refer to [Bundling](https://developers.cloudflare.com/workers/wrangler/bundling/) for more information.
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
@@ -348,6 +320,8 @@ None of the options for this command are required. Also, many can be set in your
   - If you change your environment variables or bindings in the Cloudflare dashboard, Wrangler will override them the next time you deploy. If you want to disable this behaviour set `keep-vars` to `true`.
 - `--dispatch-namespace` <Type text="string" /> <MetaInfo text="optional" />
   - Specify the [Workers for Platforms dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/#2-create-a-dispatch-namespace) to upload this Worker to.
+- `--metafile` <Type text="string" /> <MetaInfo text="optional" />
+  - Specify a file to write the build metadata from esbuild to. If flag is used without a path string, this defaults to `bundle-meta.json` inside the directory specified by `--outdir`. This can be useful for understanding the bundle size.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
@@ -881,6 +855,23 @@ wrangler workflows describe <WORKFLOW_NAME> [OPTIONS]
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
+### `delete`
+
+Delete a Workflow and all its instances.
+
+```sh
+wrangler workflows delete <WORKFLOW_NAME> [OPTIONS]
+```
+
+- `WORKFLOW_NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of a registered Workflow.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+```sh
+wrangler workflows instances delete my-workflow
+```
+
 ### `trigger`
 
 Trigger (create) a Workflow instance.
@@ -963,6 +954,9 @@ wrangler pages dev [<DIRECTORY>] [OPTIONS]
   - IP address to listen on, defaults to `localhost`.
 - `--port` <Type text="number" /> <MetaInfo text="optional (default: 8788)" />
   - The port to listen on (serve from).
+- `--config`, `-c` <Type text="string[]" /> <MetaInfo text="optional" />
+  - Path(s) to [Wrangler configuration file](/workers/wrangler/configuration/). If not provided, Wrangler will use the nearest config file based on your current working directory.
+  - You can provide additional configuration files in order to run Workers alongside your Pages project, like this: `wrangler pages dev -c ./wrangler.toml -c ../other-worker/wrangler.toml`. The first argument must point to your Pages configuration file, and the subsequent configurations will be accessible via a Service binding from your Pages project.
 - `--binding` <Type text="string[]" /> <MetaInfo text="optional" />
   - Bind an environment variable or secret (for example, `--binding <VARIABLE_NAME>=<VALUE>`).
 - `--kv` <Type text="string[]" /> optional
@@ -1199,6 +1193,8 @@ wrangler pages functions build [<DIRECTORY>] [OPTIONS]
   - Date to use for compatibility checks.
 - `--compatibility-flags` <Type text="string[]" /> <MetaInfo text="optional" />
   - Flags to use for compatibility checks.
+- `--metafile` <Type text="string" /> <MetaInfo text="optional" />
+  - Specify a file to write the build metadata from esbuild to. If flag is used without a path string, this defaults to `bundle-meta.json` inside the directory specified by `--outdir`. This can be useful for understanding the bundle size.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
@@ -1982,8 +1978,13 @@ wrangler types [<PATH>] [OPTIONS]
   - Control the types that Wrangler generates for `vars` bindings.
   - If `true`, (the default) Wrangler generates literal and union types for bindings (e.g. `myVar: 'my dev variable' | 'my prod variable'`).
   - If `false`, Wrangler generates generic types (e.g. `myVar: string`). This is useful when variables change frequently, especially when working across multiple environments.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+- `--config`, `-c` <Type text="string[]" /> <MetaInfo text="optional" />
+  - Path(s) to [Wrangler configuration file](/workers/wrangler/configuration/). If the Worker you are generating types for has service bindings or bindings to Durable Objects, you can also provide the paths to those configuration files so that the generated `Env` type will include RPC types. For example, given a Worker with a service binding, `wrangler types -c wrangler.toml -c ../bound-worker/wrangler.toml` will generate an `Env` type like this:
+  ```ts
+  interface Env {
+  	SERVICE_BINDING: Service<import("../bound-worker/src/index").Entrypoint>;
+  }
+  ```
 
 ---
 

@@ -4,16 +4,21 @@ pcx_content_type: navigation
 title: Full-stack (SSR)
 sidebar:
   order: 1
+banner:
+  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
+  type: note
+  dismissible:
+    id: pages-migrate-to-workers
 ---
 
-import { DirectoryListing } from "~/components"
+import { DirectoryListing } from "~/components";
 
 [Next.js](https://nextjs.org) is an open-source React.js framework for building full-stack applications. This section helps you deploy a full-stack Next.js project to Cloudflare Pages using [`@cloudflare/next-on-pages`](https://github.com/cloudflare/next-on-pages/tree/main/packages/next-on-pages/docs).
 
 :::note
 You should consider using [`@opennextjs/cloudflare`](https://opennext.js.org/cloudflare), which allows you to build and deploy Next.js apps to [Cloudflare Workers](/workers/static-assets/), use [Node.js APIs](/workers/runtime-apis/nodejs/) that Cloudflare Workers supports, and supports additional Next.js features.
 
-If you're coming from Vercel, you can easily migrate your Next.js app to Cloudflare by using [Diverce](https://github.com/ygwyg/diverce), which will automatically add OpenNext to your project and create a pull request that makes it deployable to Cloudflare. 
+If you're coming from Vercel, you can easily migrate your Next.js app to Cloudflare by using [Diverce](https://github.com/ygwyg/diverce), which will automatically add OpenNext to your project and create a pull request that makes it deployable to Cloudflare.
 :::
 
 <DirectoryListing />

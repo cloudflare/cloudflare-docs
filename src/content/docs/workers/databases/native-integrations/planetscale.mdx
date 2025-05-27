@@ -3,7 +3,7 @@ pcx_content_type: configuration
 title: PlanetScale
 ---
 
-import { Render } from "~/components";
+import { Render, PackageManagers } from "~/components";
 
 [PlanetScale](https://planetscale.com/) is a MySQL-compatible platform that makes databases infinitely scalable, easier and safer to manage.
 
@@ -44,9 +44,7 @@ To set up an integration with PlanetScale:
 
 5. In your Worker, install the `@planetscale/database` driver to connect to your PlanetScale database and start manipulating data:
 
-   ```sh
-   npm install @planetscale/database
-   ```
+   <PackageManagers pkg="@planetscale/database" />
 
 6. The following example shows how to make a query to your PlanetScale database in a Worker. The credentials needed to connect to PlanetScale have been automatically added as secrets to your Worker through the integration.
 

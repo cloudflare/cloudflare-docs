@@ -43,6 +43,7 @@ Alarms can be used to build distributed primitives, like queues or batching of w
   : <Type text="void" />
 
   - Set the time for the alarm to run. Specify the time as the number of milliseconds elapsed since the UNIX epoch.
+  - If you call `setAlarm` when there is already one scheduled, it will override the existing alarm.
 
 ### `deleteAlarm`
 

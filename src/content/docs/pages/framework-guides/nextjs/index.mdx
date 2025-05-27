@@ -4,19 +4,23 @@ pcx_content_type: navigation
 title: Next.js
 head: []
 description: React framework for building full-stack web applications.
-
+banner:
+  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
+  type: note
+  dismissible:
+    id: pages-migrate-to-workers
 ---
 
-import { DirectoryListing, Stream } from "~/components"
+import { DirectoryListing, Stream } from "~/components";
 
 [Next.js](https://nextjs.org) is an open-source React framework for creating websites and applications.
 
 ### Video Tutorial
 
-<Stream 
-    id="20dcfaa7ec7caa714b2c916d4a430069" 
-    title="Deploy NextJS to your Workers Application" 
-    thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/Deploy-NextJS-Workers.png"
+<Stream
+	id="20dcfaa7ec7caa714b2c916d4a430069"
+	title="Deploy NextJS to your Workers Application"
+	thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/Deploy-NextJS-Workers.png"
 />
 
 <DirectoryListing />

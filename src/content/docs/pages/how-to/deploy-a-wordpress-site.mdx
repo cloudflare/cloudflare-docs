@@ -5,7 +5,11 @@ pcx_content_type: tutorial
 title: Deploy a static WordPress site
 tags:
   - WordPress
-
+banner:
+  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
+  type: note
+  dismissible:
+    id: pages-migrate-to-workers
 ---
 
 ## Overview
@@ -16,8 +20,8 @@ In this guide, you will use a WordPress plugin, [Simply Static](https://wordpres
 
 This guide assumes that you are:
 
-* The Administrator account on your WordPress site.
-* Able to install WordPress plugins on the site.
+- The Administrator account on your WordPress site.
+- Able to install WordPress plugins on the site.
 
 ## Setup
 
@@ -53,9 +57,9 @@ Every time you make a change to your WordPress site, you will need to download a
 
 There are some features available in WordPress sites that will not be supported in a static site environment:
 
-* WordPress Forms.
-* WordPress Comments.
-* Any links to `/wp-admin` or similar internal WordPress routes.
+- WordPress Forms.
+- WordPress Comments.
+- Any links to `/wp-admin` or similar internal WordPress routes.
 
 ## Conclusion
 
@@ -63,8 +67,8 @@ By following this guide, you have successfully deployed a static version of your
 
 With a static version of your site being served, you can:
 
-* Move your WordPress site to a custom domain or subdomain. Refer to [Custom domains](/pages/configuration/custom-domains/) to learn more.
-* Run your WordPress instance locally, or put your WordPress site behind [Cloudflare Access](/pages/configuration/preview-deployments/#customize-preview-deployments-access) to only give access to your contributors. This has a significant effect on the number of attack vectors for your WordPress site and its content.
-* Downgrade your WordPress hosting plan to a cheaper plan. Because the memory and bandwidth requirements for your WordPress instance are now smaller, you can often host it on a cheaper plan, or moving to shared hosting.
+- Move your WordPress site to a custom domain or subdomain. Refer to [Custom domains](/pages/configuration/custom-domains/) to learn more.
+- Run your WordPress instance locally, or put your WordPress site behind [Cloudflare Access](/pages/configuration/preview-deployments/#customize-preview-deployments-access) to only give access to your contributors. This has a significant effect on the number of attack vectors for your WordPress site and its content.
+- Downgrade your WordPress hosting plan to a cheaper plan. Because the memory and bandwidth requirements for your WordPress instance are now smaller, you can often host it on a cheaper plan, or moving to shared hosting.
 
 Connect with the [Cloudflare Developer community on Discord](https://discord.cloudflare.com) to ask questions and discuss the platform with other developers.

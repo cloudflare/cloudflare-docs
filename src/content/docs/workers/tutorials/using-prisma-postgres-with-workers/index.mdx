@@ -10,6 +10,8 @@ languages:
   - PostgreSQL
 ---
 
+import { PackageManagers } from "~/components";
+
 [Prisma Postgres](https://www.prisma.io/postgres) is a managed, serverless PostgreSQL database. It supports features like connection pooling, caching, real-time subscriptions, and query optimization recommendations.
 
 In this tutorial, you will learn how to:
@@ -60,29 +62,21 @@ In this step, you will set up Prisma ORM with a Prisma Postgres database using t
 
 Install Prisma CLI as a dev dependency:
 
-```sh
-npm install prisma --save-dev
-```
+<PackageManagers pkg="prisma" dev />
 
 Install the [Prisma Accelerate client extension](https://www.npmjs.com/package/@prisma/extension-accelerate) as it is required for Prisma Postgres:
 
-```sh
-npm install @prisma/extension-accelerate
-```
+<PackageManagers pkg="@prisma/extension-accelerate" />
 
 Install the [`dotenv-cli` package](https://www.npmjs.com/package/dotenv-cli) to load environment variables from `.dev.vars`:
 
-```sh
-npm install dotenv-cli --save-dev
-```
+<PackageManagers pkg="dotenv-cli" dev />
 
 ### 2.2. Create a Prisma Postgres database and initialize Prisma
 
 Initialize Prisma in your application:
 
-```sh
-npx prisma@latest init --db
-```
+<PackageManagers type="dlx" pkg="prisma@latest" args="init --db" />
 
 If you do not have a [Prisma Data Platform](https://console.prisma.io/) account yet, or if you are not logged in, the command will prompt you to log in using one of the available authentication providers. A browser window will open so you can log in or create an account. Return to the CLI after you have completed this step.
 

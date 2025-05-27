@@ -5,7 +5,11 @@ sidebar:
   order: 3
 head: []
 description: Learn about the APIs used within Pages Functions.
-
+banner:
+  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
+  type: note
+  dismissible:
+    id: pages-migrate-to-workers
 ---
 
 The following methods can be used to configure your Pages Function.
@@ -16,24 +20,37 @@ The following methods can be used to configure your Pages Function.
 
 The `onRequest` method will be called unless a more specific `onRequestVerb` method is exported. For example, if both `onRequest` and `onRequestGet` are exported, only `onRequestGet` will be called for `GET` requests.
 
-* <code>onRequest(context[EventContext](#eventcontext))</code> Response | Promise\<Response>
-  * This function will be invoked on all requests no matter what the request method is, as long as no specific request verb (like one of the methods below) is exported.
-* <code>onRequestGet(context[EventContext](#eventcontext))</code> Response | Promise\<Response>
-  * This function will be invoked on all `GET` requests.
-* <code>onRequestPost(context[EventContext](#eventcontext))</code> Response | Promise\<Response>
-  * This function will be invoked on all `POST` requests.
-* <code>onRequestPatch(context[EventContext](#eventcontext))</code> Response | Promise\<Response>
-  * This function will be invoked on all `PATCH` requests.
-* <code>onRequestPut(context[EventContext](#eventcontext))</code> Response | Promise\<Response>
-  * This function will be invoked on all `PUT` requests.
-* <code>onRequestDelete(context[EventContext](#eventcontext))</code> Response | Promise\<Response>
-  * This function will be invoked on all `DELETE` requests.
-* <code>onRequestHead(context[EventContext](#eventcontext))</code> Response | Promise\<Response>
-  * This function will be invoked on all `HEAD` requests.
-* <code>onRequestOptions(context[EventContext](#eventcontext))</code> Response | Promise\<Response>
-  * This function will be invoked on all `OPTIONS` requests.
+- <code>onRequest(context[EventContext](#eventcontext))</code> Response | Promise\<Response>
 
+  - This function will be invoked on all requests no matter what the request method is, as long as no specific request verb (like one of the methods below) is exported.
 
+- <code>onRequestGet(context[EventContext](#eventcontext))</code> Response | Promise\<Response>
+
+  - This function will be invoked on all `GET` requests.
+
+- <code>onRequestPost(context[EventContext](#eventcontext))</code> Response | Promise\<Response>
+
+  - This function will be invoked on all `POST` requests.
+
+- <code>onRequestPatch(context[EventContext](#eventcontext))</code> Response | Promise\<Response>
+
+  - This function will be invoked on all `PATCH` requests.
+
+- <code>onRequestPut(context[EventContext](#eventcontext))</code> Response | Promise\<Response>
+
+  - This function will be invoked on all `PUT` requests.
+
+- <code>onRequestDelete(context[EventContext](#eventcontext))</code> Response | Promise\<Response>
+
+  - This function will be invoked on all `DELETE` requests.
+
+- <code>onRequestHead(context[EventContext](#eventcontext))</code> Response | Promise\<Response>
+
+  - This function will be invoked on all `HEAD` requests.
+
+- <code>onRequestOptions(context[EventContext](#eventcontext))</code> Response | Promise\<Response>
+
+  - This function will be invoked on all `OPTIONS` requests.
 
 ### `env.ASSETS.fetch()`
 
@@ -45,32 +62,31 @@ You can pass a [Request object](/workers/runtime-apis/request/), URL string, or 
 
 ### `EventContext`
 
-
 The following are the properties on the `context` object which are passed through on the `onRequest` methods:
 
-* `request` [Request](/workers/runtime-apis/request/)
+- `request` [Request](/workers/runtime-apis/request/)
 
   This is the incoming [Request](/workers/runtime-apis/request/).
 
-* `functionPath` string
+- `functionPath` string
 
   This is the path of the request.
 
-* <code>waitUntil(promisePromise\<any>)</code> void
+- <code>waitUntil(promisePromise\<any>)</code> void
 
   Refer to [`waitUntil` documentation](/workers/runtime-apis/context/#waituntil) for more information.
 
-* <code>passThroughOnException()</code> void
+- <code>passThroughOnException()</code> void
 
   Refer to [`passThroughOnException` documentation](/workers/runtime-apis/context/#passthroughonexception) for more information. Note that this will not work on an [advanced mode project](/pages/functions/advanced-mode/).
 
-* <code>next(input?Request | string, init?RequestInit)</code> Promise\<Response>
+- <code>next(input?Request | string, init?RequestInit)</code> Promise\<Response>
 
   Passes the request through to the next Function or to the asset server if no other Function is available.
 
-* `env` [EnvWithFetch](#envwithfetch)
+- `env` [EnvWithFetch](#envwithfetch)
 
-* `params` Params\<P>
+- `params` Params\<P>
 
   Holds the values from [dynamic routing](/pages/functions/routing/#dynamic-routes).
 
@@ -78,7 +94,7 @@ The following are the properties on the `context` object which are passed throug
 
   ```js
   {
-    user: "nevi"
+  	user: "nevi";
   }
   ```
 
@@ -86,15 +102,13 @@ The following are the properties on the `context` object which are passed throug
 
   ```js
   export function onRequest(context) {
-    return new Response(`Hello ${context.params.user}`);
+  	return new Response(`Hello ${context.params.user}`);
   }
   ```
 
   Which would return `"Hello nevi"`.
 
-* `data` Data
-
-
+- `data` Data
 
 ### `EnvWithFetch`
 
