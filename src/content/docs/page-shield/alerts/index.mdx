@@ -1,25 +1,26 @@
 ---
-title: Configure Page Shield alerts
-pcx_content_type: how-to
+title: Page Shield alerts
+pcx_content_type: concept
 sidebar:
   order: 5
-  label: Configure alerts
-description: Configure Page Shield alerts to get notified when new scripts are
-  detected on your domain or when Page Shield detects resources that are likely
+  group:
+    label: Alerting
+description: Page Shield alerts notify you when new scripts are detected
+  on your domain or when Page Shield detects resources that are likely
   malicious.
 ---
 
 import { Render } from "~/components";
 
 :::note
-New resource/domain alerts require a Business plan or higher. Code change and malicious resource alerts require an Enterprise plan with a paid add-on. For details, refer to [Alerts](/page-shield/reference/alerts/).
+New resource/domain alerts require a Business plan or higher. Code change and malicious resource alerts require an Enterprise plan with a paid add-on. For details, refer to [Alert types](/page-shield/alerts/alert-types/).
 :::
 
 <Render file="alerts-intro" />
 
 You can configure unscoped or scoped alerts:
 
-- **Unscoped alert**: An alert configured for all zones in your Cloudflare account. Scoped alerts are trigged either daily, hourly, or immediately, depending on the [alert type](/page-shield/reference/alerts/).
+- **Unscoped alert**: An alert configured for all zones in your Cloudflare account. Scoped alerts are trigged either daily, hourly, or immediately, depending on the [alert type](/page-shield/alerts/alert-types/).
 
 - **Scoped alert**: An alert scoped to one or more zones. You must configure [policies](/page-shield/policies/) for the zones you select to receive any notifications. Scoped alerts are triggered immediately. Policy violations will not trigger an alert. For more information, refer to [Scoped alerts](#scoped-alerts).
 
@@ -29,9 +30,7 @@ You can configure unscoped or scoped alerts:
 
 For alerts sent at regular intervals, you might experience a delay between adding a new script and receiving an alert.
 
-## Set up an alert
-
-<Render file="alerts-configure" />
+For instructions on configuring alerts, refer to [Configure a Page Shield alert](/page-shield/alerts/configure/).
 
 ## Scoped alerts
 
