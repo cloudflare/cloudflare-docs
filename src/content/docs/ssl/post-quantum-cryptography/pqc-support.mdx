@@ -25,7 +25,7 @@ The list below is for reference only. Responsibility for third-party software li
 - [BoringSSL](https://boringssl.googlesource.com/boringssl/)
 - [GnuTLS](https://www.gnutls.org)
     - 3.8.9+ compiled with leancrypto 1.2.0+
-    - 3.8.8+ compiled with liboqs 0.11.0+
+    - 3.8.8-3.8.9 compiled with liboqs 0.11.0+
 - [rustls 0.23.22+](https://crates.io/crates/rustls)
 - Default for [rpxy 0.9.4+](https://github.com/junkurihara/rust-rpxy)
 - [NGINX](https://github.com/nginx/nginx) compiled with OpenSSL 3.5+ ([instructions](https://github.com/nginx/nginx/issues/288))
@@ -33,8 +33,7 @@ The list below is for reference only. Responsibility for third-party software li
     - C library: liboqs 0.10.0+
     - OpenSSL provider: oqs-provider 0.7.0+
 - [Zig 0.14.0+](https://ziglang.org/)
-- [Caddy HTTP server](https://caddyserver.com/)
-    - [2.10-beta.4+](https://github.com/caddyserver/caddy/releases/tag/v2.10.0-beta.4)
+- [Caddy HTTP server 2.10.0+](https://caddyserver.com/)
 - [Botan C++ library 3.7.0+](https://botan.randombit.net/)
 
 ## X25519Kyber768Draft00
@@ -48,12 +47,12 @@ The list below is for reference only. Responsibility for third-party software li
 - Default for [Go 1.23](https://github.com/golang/go/issues/67061)
 - [BoringSSL](https://boringssl.googlesource.com/boringssl/)
 - [GnuTLS](https://www.gnutls.org)
-    - 3.8.8+ compiled with liboqs 0.11.0-0.12.0
-    - 3.8.7 compiled with liboqs 0.10.1-0.12.0
+    - 3.8.8-3.8.9 compiled with liboqs 0.11.0+
+    - 3.8.7 compiled with liboqs 0.10.1+
 - Cloudflare's [fork of QUIC-go](https://github.com/cloudflare/qtls-pq)
 - Goutam Tamvada's [fork of Firefox](https://github.com/xvzcf/firefox-pq-demos)
 - [Open Quantum Safe](https://openquantumsafe.org/)
-    - C library: liboqs 0.5.0-0.12.0
+    - C library: liboqs 0.5.0+
     - OpenSSL provider: oqs-provider 0.5.0-0.8.0
 - [Zig 0.11.0-0.13.0](https://ziglang.org/)
 - [nginx](https://www.nginx.org/) when [compiled with BoringSSL](https://mailman.nginx.org/pipermail/nginx/2023-August/NOISOYU3QTB2DGIYUBGF7CAMQHDI2QLT.html) ([guide](https://blog.centminmod.com/2023/10/03/2860/how-to-enable-cloudflare-post-quantum-x25519kyber768-key-exchange-support-in-centmin-mod-nginx/))
