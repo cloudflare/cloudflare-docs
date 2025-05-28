@@ -127,7 +127,7 @@ entries:
 
   - term: roles
     general_definition: |-
-      authorize which Cloudflare products and features a member is allowed to access in a Cloudflare account. Learn more about [roles](/fundamentals/setup/manage-members/roles/).
+      authorize which Cloudflare products and features a member is allowed to access in a Cloudflare account. Learn more about [roles](/fundamentals/manage-members/roles/).
 
   - term: Service Level Agreement (SLA)
     general_definition: |-

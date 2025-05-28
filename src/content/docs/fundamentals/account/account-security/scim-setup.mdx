@@ -14,13 +14,13 @@ This section covers SCIM provisioning for the Cloudflare dashboard only. If you 
 ## Limitations
 
 - If a user is the only Super Administrator on an Enterprise account, they will not be deprovisioned.
-- Cloudflare currently only supports [Account-scoped Roles](/fundamentals/setup/manage-members/roles/#account-scoped-roles) and does not support Domain-scoped Roles provisioning via SCIM.
+- Cloudflare currently only supports [Account-scoped Roles](/fundamentals/manage-members/roles/#account-scoped-roles) and does not support Domain-scoped Roles provisioning via SCIM.
 - Cloudflare does not allow custom user groups.
 
 ## Prerequisites
 
 - Cloudflare provisioning with SCIM is only available to Enterprise customers using Okta or Microsoft Entra.
-- You must be a [Super Administrator](/fundamentals/setup/manage-members/roles/) on the account.
+- You must be a [Super Administrator](/fundamentals/manage-members/roles/) on the account.
 - In your identity provider, you must have the ability to create applications and groups.
 
 ---
@@ -100,7 +100,7 @@ This will provision all of the users in the group(s) affected to your Cloudflare
 Two options exist for managing user permissions:
 
 * Manage your user permissions on a per-user basis in the Cloudflare dashboard, API, or using Terraform.
-* Map your IdP groups to a Cloudflare built-in [Role](/fundamentals/setup/manage-members/roles/). Groups may only be linked to one role.
+* Map your IdP groups to a Cloudflare built-in [Role](/fundamentals/manage-members/roles/). Groups may only be linked to one role.
 
 1. Go to your SCIM application in the App Integration Catalog, then select **Provisioning**.
 2. Under **To App*, select **Edit**.
@@ -141,7 +141,7 @@ Currently, groups need to match a specific format to provision specific Cloudfla
 
 These permissions work on an exact string match with the form `CF-<your_account_ID> - <Role_Name>`
 
-Refer to the list of [Roles](/fundamentals/setup/manage-members/roles/) for more details.
+Refer to the list of [Roles](/fundamentals/manage-members/roles/) for more details.
 
 1. To ensure that only required groups are provisioned, go to your Microsoft Entra ID instance.
 2. Under Manage on the sidebar menu, select **Provisioning**.
