@@ -698,7 +698,10 @@
 /fundamentals/subscriptions-and-billing/delete-account/ /fundamentals/setup/account/delete-account/ 301
 /fundamentals/subscriptions-and-billing/ /fundamentals/setup/account/ 301
 /fundamentals/api/building-custom-dashboards/ /fundamentals/api/ 301
-
+/fundamentals/trace-request/ /rules/trace-request/ 301
+/fundamentals/trace-request/how-to/ /rules/trace-request/how-to/ 301
+/fundamentals/trace-request/limitations/ /rules/trace-request/limitations/ 301
+/fundamentals/trace-request/changelog/ /rules/trace-request/changelog/ 301
 
 # gateway
 /gateway/about/ /cloudflare-one/policies/gateway/ 301
