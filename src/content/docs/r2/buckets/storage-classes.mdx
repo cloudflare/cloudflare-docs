@@ -94,11 +94,11 @@ Use the `x-amz-storage-class` header to change between `STANDARD` and `STANDARD_
 An example of switching an object from `STANDARD` to `STANDARD_IA` using `aws cli` is shown below:
 
 ```sh
-aws s3api --endpoint-url https://<ACCONUT_ID>.r2.cloudflarestorage.com \
-  --copy-object \
+aws s3api copy-object \
+  --endpoint-url https://<ACCONUT_ID>.r2.cloudflarestorage.com \
   --bucket bucket-name \
   --key path/to/object.txt \
-  --copy-source bucket-name/path/to/object.txt \
+  --copy-source /bucket-name/path/to/object.txt \
   --storage-class STANDARD_IA
 ```
 
