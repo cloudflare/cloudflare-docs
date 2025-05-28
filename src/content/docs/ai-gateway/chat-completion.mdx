@@ -2,15 +2,10 @@
 title: OpenAI Compatibility
 pcx_content_type: configuration
 sidebar:
-  order: 5
+  order: 4
 ---
 
 Cloudflare's AI Gateway offers an OpenAI-compatible `/chat/completions` endpoint, enabling integration with multiple AI providers using a single URL. This feature simplifies the integration process, allowing for seamless switching between different models without significant code modifications.
-
-## Key benefits
-
-- Standardization: Provides a unified format compatible with OpenAI's schema, reducing the need for code refactoring.
-- Ease of Development: Switch between different models and providers quickly using a consistent API structure.
 
 ## Endpoint URL
 
@@ -20,11 +15,9 @@ https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/compl
 
 Replace `{account_id}` and `{gateway_id}` with your Cloudflare account and gateway IDs.
 
-## Using the Unified Interface
+## Parameters
 
 Switch providers by changing the `model` and `apiKey` parameters.
-
-## Model Parameter Format
 
 Specify the model using `{provider}/{model}` format. For example:
 
@@ -32,7 +25,9 @@ Specify the model using `{provider}/{model}` format. For example:
 - `google-ai-studio/gemini-2.0-flash`
 - `anthropic/claude-3-haiku`
 
-## Example with OpenAI JavaScript SDK
+## Examples
+
+### OpenAI SDK
 
 ```js
 import OpenAI from "openai";
@@ -50,7 +45,7 @@ const response = await client.chat.completions.create({
 console.log(response.choices[0].message.content);
 ```
 
-## `curl` Example
+### cURL
 
 ```bash
 curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/completions \
@@ -66,6 +61,10 @@ curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/comp
     ]
   }'
 ```
+
+### Universal provider
+
+TBD
 
 ## Supported Providers
 
