@@ -24,3 +24,11 @@ For information on rate limits, refer to the [Availability and limits](/cache/ho
 ## Resulting cache status
 
 Purge Everything invalidates the resource, resulting in the `CF-Cache-Status` header indicating [`EXPIRED`](/cache/concepts/cache-responses/#expired) for subsequent requests.
+
+:::caution[Warning]
+
+
+Be careful when purging everything. A cache response EXPIRED can cause execution delays by requiring a fetch from your origin server.
+
+
+:::
