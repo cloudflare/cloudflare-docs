@@ -40,14 +40,14 @@ Whether these flags are enabled by default depends on your Worker's compatibilit
   - Enabled by default for compatibility dates **on or after 2025-04-02**.
 - **Cache API (`cache_api_request_cf_overrides_cache_rules`)**
   - Enabled by default for compatibility dates **on or after 2025-05-19**.
-  - **Important:** For this flag to be recognized, you must also enable `cache_api_compat_flags`.
-    - `cache_api_compat_flags` enables the compatibility flag functionality for Workers. If it is not set, then no compatibility flags — even if configured — will be recognized by the Cache API.
+  - **Important:** For `cache_api_request_cf_overrides_cache_rules` to be recognized, you must also enable `cache_api_compat_flags`.
+    - `cache_api_compat_flags` enables the compatibility flag functionality for Workers. If `cache_api_compat_flags` is not set, then no compatibility flags — even if configured — will be recognized by the Cache API.
     - This flag is enabled by default for compatibility dates **on or after 2025-04-19**.
 
 If your Worker has an earlier compatibility date than the ones listed above, the corresponding flags must be manually enabled; otherwise, cache behavior will follow the original cache rules instead of the Worker's settings.
 
 ### Example (Older compatibility date)
 
-If a cache rule is configured to bypass cache for `example.com/foo`, and a Worker with a compatibility date of `2025-04-02` or earlier tries to set `cacheEverything: true`, the cache rule will take effect — and the response will not be cached.
+If a cache rule is configured to bypass cache for `example.com/foo`, and a Worker with a compatibility date of `2025-04-02` or earlier tries to set `cacheEverything: true`, the cache rule will take effect, and the response will not be cached.
 
-Likewise, if using the Cache API without `cache_api_compat_flags` enabled, even if you enable `cache_api_request_cf_overrides_cache_rules`, it will not take effect.
+Likewise, if using the Cache API without `cache_api_compat_flags` enabled, even if you enable `cache_api_request_cf_overrides_cache_rules`, the Cache API will not take effect.
