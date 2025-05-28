@@ -1,9 +1,9 @@
 ---
-link: "/fundamentals/trace-request/changelog/"
+link: "/rules/trace-request/changelog/"
 productName: Trace
-productLink: "/fundamentals/trace-request/"
+productLink: "/rules/trace-request/"
 productArea: Core platform
-productAreaLink: /fundamentals/reference/changelog/platform/
+productAreaLink: /rules/reference/changelog/platform/
 entries:
   - publish_date: "2024-04-15"
     title: Cloudflare Trace now supports Workers
