@@ -42,7 +42,7 @@ Whether these flags are enabled by default depends on your Worker's compatibilit
   - Enabled by default for compatibility dates **on or after 2025-05-19**.
   - **Important:** For `cache_api_request_cf_overrides_cache_rules` to be recognized, you must also enable `cache_api_compat_flags`.
     - `cache_api_compat_flags` enables the compatibility flag functionality for Workers. If `cache_api_compat_flags` is not set, then no compatibility flags — even if configured — will be recognized by the Cache API.
-    - This flag is enabled by default for compatibility dates **on or after 2025-04-19**.
+    - `cache_api_compat_flags` is enabled by default for compatibility dates **on or after 2025-04-19**.
 
 If your Worker has an earlier compatibility date than the ones listed above, the corresponding flags must be manually enabled; otherwise, cache behavior will follow the original cache rules instead of the Worker's settings.
 
