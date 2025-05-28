@@ -37,7 +37,25 @@ For hostname:
 
 1. [Upload the new certificate](/api/resources/origin_tls_client_auth/subresources/hostnames/subresources/certificates/methods/create/).
 
-2. [Enable Authenticated Origin Pulls for that specific hostname](/api/resources/origin_tls_client_auth/subresources/hostnames/methods/update/).
+2. [List your certificates(s)](/api/resources/origin_tls_client_auth/subresources/hostnames/subresources/certificates/methods/list/) and note the ID.
+
+3. [Enable Authenticated Origin Pulls for that specific hostname](/api/resources/origin_tls_client_auth/subresources/hostnames/methods/update/) and enable the certificate you want to be used with the ID obtained in step 2:
+
+```bash
+curl --request PUT \
+  --url https://api.cloudflare.com/client/v4/zones/$ZONEID/origin_tls_client_auth/hostnames \
+  --header 'authorization: Bearer $MYTOKEN' \
+  --header 'content-type: application/json' \
+  --data '{
+  "config": [
+    {
+      "enabled": true,
+      "hostname": "example.com",
+      "cert_id": "$CERTID"
+    }
+  ]
+}'
+```
 
 For global:
 
