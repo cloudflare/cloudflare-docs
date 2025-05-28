@@ -8,7 +8,7 @@ import { FeatureTable, TabItem, Tabs } from "~/components";
 
 IP geolocation adds the [`CF-IPCountry` header](/fundamentals/reference/http-headers/#cf-ipcountry) to all requests to your origin server.
 
-Cloudflare automatically updates its IP geolocation database using MaxMind and other data sources, typically twice a week.
+Cloudflare automatically updates its IP geolocation database from several data sources, typically twice a week.
 
 ## Availability
 
@@ -25,8 +25,8 @@ If you only want the request header for the visitor's country, you can enable **
 To enable **IP Geolocation** in the dashboard:
 
 1. Log in to your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
-2. Go to **Network**.
-3. For **IP Geolocation**, switch the toggle to **On**.
+2. Go to **Network**.
+3. For **IP Geolocation**, switch the toggle to **On**.
 
 </TabItem> <TabItem label="API">
 
@@ -46,5 +46,5 @@ In order to use this data, you will need to then retrieve it from the [`CF-IPCou
 
 If you find an incorrect IP location, consider the following:
 
-- If the IP is part of the [current Cloudflare IP ranges](https://www.cloudflare.com/ips/), report to `geoip@cloudflare.com`.
+- If the IP is part of the [current Cloudflare IP ranges](https://www.cloudflare.com/ips/), report to `ip-corrections@cloudflare.com`.
 - If the IP is **not** listed within the [current Cloudflare IP ranges](https://www.cloudflare.com/ips/), [report to MaxMind](https://www.maxmind.com/en/geoip-data-correction-request).

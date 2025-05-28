@@ -9,7 +9,13 @@ description: Override caching settings on a per-request basis.
 
 import { TabItem, Tabs } from "~/components";
 
-Enable and customize your gateway cache to serve requests directly from Cloudflare's cache, instead of the original model provider, for faster requests and cost savings.
+AI Gateway can cache responses from your AI model providers, serving them directly from Cloudflare's cache for identical requests.
+
+## Benefits of Using Caching
+
+- **Reduced Latency:** Serve responses faster to your users by avoiding a round trip to the origin AI provider for repeated requests.
+- **Cost Savings:** Minimize the number of paid requests made to your AI provider, especially for frequently accessed or non-dynamic content.
+- **Increased Throughput:** Offload repetitive requests from your AI provider, allowing it to handle unique requests more efficiently.
 
 :::note
 
@@ -51,7 +57,11 @@ To check whether a response comes from cache or not, **cf-aig-cache-status** wil
 
 ## Per-request caching
 
-In order to override the default cache behavior defined on the settings tab, you can, on a per-request basis, set headers for the following options:
+While your gateway's default cache settings provide a good baseline, you might need more granular control. These situations could be data freshness, content with varying lifespans, or dynamic or personalized responses.
+
+To address these needs, AI Gateway allows you to override default cache behaviors on a per-request basis using specific HTTP headers. This gives you the precision to optimize caching for individual API calls.
+
+The following headers allow you to define this per-request cache behavior:
 
 :::note
 

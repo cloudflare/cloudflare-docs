@@ -1,0 +1,17 @@
+---
+pcx_content_type: troubleshooting
+title: Error 10053
+source: null
+---
+
+## Error 10053: Invalid redirect source URL with query string
+
+This error indicates that the source URL contains an unsupported query string component.
+
+### Common causes
+
+This error occurs when the source URL of a URL redirect includes a query string component, which is not supported. Possible causes include copying a URL with query parameters, misconfiguration during setup, or attempting to redirect based on query parameters instead of the path.
+
+### Resolution
+
+Remove the query string from the redirect source URL. Refer to [Supported URL components in Bulk Redirects](/rules/url-forwarding/bulk-redirects/reference/url-components/) for details on the supported URL components for redirect source URLs.

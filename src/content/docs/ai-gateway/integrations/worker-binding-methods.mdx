@@ -8,10 +8,6 @@ import { Render, PackageManagers } from "~/components";
 
 This guide provides an overview of how to use the latest Cloudflare Workers AI Gateway binding methods. You will learn how to set up an AI Gateway binding, access new methods, and integrate them into your Workers.
 
-## Prerequisites
-
-- Install and use the `@cloudflare/workers-types` library, version `4.20250124.3` or above.
-
 ## 1. Add an AI Binding to your Worker
 
 To connect your Worker to Workers AI, add the following to your [Wrangler configuration file](/workers/wrangler/configuration/):
@@ -28,6 +24,8 @@ binding = "AI"
 </WranglerConfig>
 
 This configuration sets up the AI binding accessible in your Worker code as `env.AI`.
+
+<Render file="wrangler-typegen" product="workers" />
 
 ## 2. Basic Usage with Workers AI + Gateway
 
@@ -82,7 +80,7 @@ gateway.patchLog("my-log-id", {
 
 ### 3.2. `getLog`: Read Log Details
 
-The `getLog` method retrieves details of a specific log ID. It returns an object of type `Promise<AiGatewayLog>`. You can import the `AiGatewayLog` type from the `@cloudflare/workers-types` library.
+The `getLog` method retrieves details of a specific log ID. It returns an object of type `Promise<AiGatewayLog>`. If this type is missing, ensure you have run [`wrangler types`](/workers/languages/typescript/#generate-types).
 
 ```typescript
 const log = await gateway.getLog("my-log-id");

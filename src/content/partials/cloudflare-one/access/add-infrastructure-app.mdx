@@ -135,7 +135,3 @@ The following example requires Cloudflare provider version `>=4.45.0`.
 </Tabs>
 
 The targets in this application are now secured by your infrastructure policies.
-
-:::note
-Gateway [network policies](/cloudflare-one/policies/gateway/network-policies/) take precedence over infrastructure policies. For example, if you block port `22` for all users in Gateway, then no one can SSH over port `22` to your targets.
-:::

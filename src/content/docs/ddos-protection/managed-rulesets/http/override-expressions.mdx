@@ -60,9 +60,3 @@ You can use the following fields in override expressions:
 - `ssl`
 
 Refer to the [Fields reference](/ruleset-engine/rules-language/fields/reference/) in the Rules language documentation for more information.
-
-## Important remarks
-
-An expression is not an <GlossaryTooltip term="allowlist">allowlist</GlossaryTooltip> and does not become part of the attack fingerprint. The expression applies to the scope of the override and is used right before applying a mitigation action which determines if the sensitivity level and action need to be adjusted.<br/>
-
-  For example, if you have an expression matching <GlossaryTooltip term="data packet">packets</GlossaryTooltip> with a specific source IP address and the override sets the sensitivity level to low, this override will only lower the sensitivity level for traffic that comes directly from that source IP address. If the DDoS protection system detects an attack coming from many source IP addresses targeted at a single destination IP and port, the generated fingerprint will only match the common criteria of the attack which, in this example, does not include the source IP address. The system will trigger the required mitigation actions at the default high sensitivity level because the traffic did not come from the user-provided source IP address. Therefore, traffic from the source IP in the override expression may still be blocked because the fingerprint only contains the destination IP address and port of the attack.

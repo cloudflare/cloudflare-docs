@@ -15,7 +15,13 @@ languages:
   - JavaScript
 ---
 
-import { Render, PackageManagers, TabItem, Tabs, WranglerConfig } from "~/components";
+import {
+	Render,
+	PackageManagers,
+	TabItem,
+	Tabs,
+	WranglerConfig,
+} from "~/components";
 
 In this tutorial, you will create a [Cloudflare Worker](https://workers.cloudflare.com/) that fetches analytics data about your account from Cloudflare's [GraphQL Analytics API](https://developers.cloudflare.com/analytics/graphql-api/). You will be able to view the account analytics data in your browser and receive a scheduled email report.
 
@@ -71,31 +77,14 @@ cd account-analytics
 
 To continue with this tutorial, install the [`mimetext`](https://www.npmjs.com/package/mimetext) package:
 
-<Tabs> <TabItem label="pnpm">
-
-```sh
-pnpm install mimetext
-```
-
-</TabItem> <TabItem label="npm">
-
-```sh
-npm install mimetext
-```
-
-</TabItem> <TabItem label="yarn">
-
-```sh
-yarn add mimetext
-```
-
-</TabItem> </Tabs>
+<PackageManagers pkg="mimetext@latest" />
 
 ## 2. Update Wrangler configuration file
 
 [`wrangler.jsonc`](/workers/wrangler/configuration/) contains the configuration for your Worker. It was created when you ran `c3` CLI. Open `wrangler.jsonc` in your code editor and update it with the following configuration:
 
 <WranglerConfig>
+
 ```toml
 name = "account-analytics"
 main = "src/index.js"
@@ -105,7 +94,7 @@ compatibility_flags = ["nodejs_compat"]
 
 # Set destination_address to the email address where you want to receive the report
 send_email = [
-    {name = "ANALYTICS_EMAIL", destination_address = "<>"}
+  { name = "ANALYTICS_EMAIL", destination_address = "<>" }
 ]
 
 # Schedule the Worker to run every day at 10:00 AM
@@ -129,6 +118,7 @@ RECIPIENT_EMAIL = "<>"
 # This value will be used as the subject of the email
 EMAIL_SUBJECT = "Cloudflare Analytics Report"
 ```
+
 </WranglerConfig>
 
 Before you continue, update the following:

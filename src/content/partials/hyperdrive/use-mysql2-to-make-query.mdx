@@ -2,18 +2,19 @@
 {}
 ---
 
-import { Render } from "~/components";
+import { Render, PackageManagers } from "~/components";
 
 Install the [mysql2](https://github.com/sidorares/node-mysql2) driver:
 
-```sh
-# mysql2 v3.13.0 or later is required
-npm install mysql2
-```
+<PackageManagers pkg="mysql2@>3.13.0" />
+
+:::note
+`mysql2` v3.13.0 or later is required
+:::
 
 Add the required Node.js compatibility flags and Hyperdrive binding to your `wrangler.jsonc` file:
 
-<Render file="hyperdrive-node-compatibility-requirement" product="hyperdrive"/>
+<Render file="hyperdrive-node-compatibility-requirement" product="hyperdrive" />
 
 Create a new `connection` instance and pass the Hyperdrive parameters:
 
