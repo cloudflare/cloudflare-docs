@@ -69,7 +69,7 @@ If your domain is on the Free plan, it will be deleted automatically if it is no
 Any pending zone with a paid plan (Pro, Business, Enterprise) will remain pending until the plan is removed, or the domain is activated or [removed from Cloudflare](/fundamentals/setup/manage-domains/remove-domain/).
 
 :::caution[Do not use pending zones in production]
-Make sure not to use pending zones for production traffic. Cloudflare responds to DNS queries for pending zones on the assigned Cloudflare nameserver IPs but there are associated risks, especially if you do not use [zone holds](/fundamentals/setup/account/account-security/zone-holds/).
+Make sure not to use pending zones for production traffic. Cloudflare responds to DNS queries for pending zones on the assigned Cloudflare nameserver IPs but there are associated risks, especially if you do not use [zone holds](/fundamentals/account/account-security/zone-holds/).
 :::
 
 For Enterprise zones, if you want to adjust settings before zone activation, Logpush for [DNS logs](/logs/reference/log-fields/zone/dns_logs/) and [DNS Zone Transfer](/dns/zone-setups/zone-transfers/) configuration work as expected in pending state.
