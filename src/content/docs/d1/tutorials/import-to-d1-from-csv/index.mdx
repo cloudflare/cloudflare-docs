@@ -20,7 +20,7 @@ In this tutorial, you will learn how to import a CSV file to D1 using the Wrangl
 
 <Render file="prereqs" product="workers" />
 
-## 1. Install and Verify Wrangler
+## 1. Install and verify Wrangler
 
 You'll use Wrangler to interact with D1. If you don't have it installed, follow the steps in the [Wrangler installation guide](/workers/wrangler/install-and-update/).
 
@@ -30,7 +30,7 @@ If you're unsure if Wrangler is installed, run the following command to verify:
 wrangler --version
 ```
 
-## 2. Set up a D1 Database
+## 2. Set up a D1 database
 
 You can create a D1 database using the [Wrangler CLI](/workers/wrangler/install-and-update/) using the following command:
 
@@ -50,7 +50,7 @@ database_name = "d1-csv-tutorial"
 
 ## 3. Convert CSV to SQL
 
-D1 does not support importing CSV files directly. You need to convert your CSV to a SQL file. If you don't have a CSV file, you can use the NASA meteorite dataset from [here](https://data.nasa.gov/Space-Science/Meteorite-Landings/gh4g-9sfh/about_data).
+D1 does not support importing CSV files directly. You need to convert your CSV to a SQL file. If you don't have a CSV file, you can use the NASA meteorite dataset available on the [NASA data portal](https://data.nasa.gov/Space-Science/Meteorite-Landings/gh4g-9sfh/about_data).
 
 You'll be using SQLite to convert your CSV to a SQL file. For instructions on installing SQLite, refer to the [SQLite installation guide](https://www.sqlite.org/download.html).
 
