@@ -30,7 +30,7 @@ Alternatively, create a WAF custom rule like the one described in the next step 
 
 If you are on a Free plan, deploy the suggested [rate limiting rule](/waf/rate-limiting-rules/) template available in:
 
-- Current dashboard: **WAF** > **Rate limiting rules**
+- Old dashboard: **WAF** > **Rate limiting rules**
 - New security dashboard: **Security** > **Security rules**
 
 When you deploy a rule using this template, you get instant protection against IPs attempting to access your application with a leaked password more than five times per 10 seconds. This rule can delay attacks by blocking them for a period of time. Alternatively, you can create a custom rule.
@@ -91,7 +91,7 @@ Additionally, you may want to handle leaked credentials detected by Cloudflare a
 
 To check for leaked credentials in a way that is not covered by the default configuration, add a [custom detection location](/waf/detections/leaked-credentials/#custom-detection-locations).
 
-<Tabs syncKey="dashNewNav"> <TabItem label="Current dashboard">
+<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **Settings**.
@@ -113,7 +113,7 @@ To check for leaked credentials in a way that is not covered by the default conf
 
 5. Select **Save**.
 
-</TabItem> <TabItem label="New security dashboard" icon="rocket">
+</TabItem> <TabItem label="New dashboard" icon="rocket">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **Settings**.
