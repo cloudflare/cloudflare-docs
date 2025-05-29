@@ -24,7 +24,7 @@ Firewall for AI is available in closed beta to Enterprise customers proxying tra
 
 ### 1. Turn on Firewall for AI
 
-<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+<Tabs syncKey="dashNewNav"> <TabItem label="New security dashboard" icon="rocket">
 
 :::note
 Firewall for AI is only available in the new [application security dashboard](/security/), currently in beta for users that opt in to the new user interface.
@@ -32,8 +32,8 @@ Firewall for AI is only available in the new [application security dashboard](/s
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **Settings**.
-3. Under **Web application exploits**, select **Manage detections**.
-4. In **Firewall for AI**, select **Enable**.
+3. In **Web application exploits**, select **Manage detections**.
+4. Next to **Firewall for AI**, select **Enable**.
 
 </TabItem> <TabItem label="API">
 
@@ -66,7 +66,7 @@ Alternatively, create a WAF custom rule like the one described in the next step 
 
 ### 3. Mitigate requests containing PII
 
-Create a [custom rule](/waf/custom-rules/) that blocks requests where Cloudflare detected personally identifiable information (PII) in the incoming request (as part of an LLM prompt), returning a custom JSON body:
+[Create a custom rule](/waf/custom-rules/create-dashboard/) that blocks requests where Cloudflare detected personally identifiable information (PII) in the incoming request (as part of an LLM prompt), returning a custom JSON body:
 
 - **If incoming requests match**:
 
