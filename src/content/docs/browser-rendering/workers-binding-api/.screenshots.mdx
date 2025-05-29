@@ -188,3 +188,61 @@ To take your first screenshot, go to the following URL:
 ## Related resources
 
 - Other [Puppeteer examples](https://github.com/cloudflare/puppeteer/tree/main/examples)
+
+
+
+
+luke@HAL-9000:~$ #!/bin/bash
+
+echo "🌀 PlexiBooking Setup Initiated..."
+
+# Prompt for secrets
+read -p "Enter your Telegram Bot Token: " TELEGRAM_BOT_TOKEN
+read -p "Enter your Telegram Admin ID: " TELEGRAM_BOT_ADMIN_ID
+read -p "Enter your Stripe Secret Key: " STRIPE_SECRET_KEY
+
+# Optional: Add support for Coinbase + CashApp in .env
+COINBASE_ETH_ADDRESS="0x73095d1a3c927f897a839c850ca50d94174b89e3"
+CASHAPP_ID="@jofthev"
+
+echo "🔐 Writing local .env file..."
+cat <<EOF > .env
+TELEGRAM_BOT_TOKEN=$TELEGRAM_BOT_TOKEN
+TELEGRAM_BOT_ADMIN_ID=$TELEGRAM_BOT_ADMIN_ID
+STRIPE_SECRET_KEY=$STRIPE_SECRET_KEY
+COINBASE_ETH_ADDRESS=$COINBASE_ETH_ADDRESS
+CASHAPP_ID=$CASHAPP_ID
+EOF
+
+# Install dependencies
+echo "📦 Installing dependencies..."
+echo "✅ All done! PlexiBooking system is LIVE at $DOMAIN"KEN/setWebhook" \: " D
+🌀 PlexiBooking Setup Initiated...
+Enter your Telegram Bot Token: 8142700761:AAFxlrf5jjPcKbiNN64xXB5Rm9GmmmO616g
+Enter your Telegram Admin ID: 6496564814
+Enter your Stripe Secret Key: sk_test_51RU4GMPRqge72HuLuzIOKI4uI7GWHv2VIqL69wsuxpdGGdQB1jg1UrRhQGQlzTSLomxwxOwbuhy2DDphQZAadTTJ00viKEqHC1
+🔐 Writing local .env file...
+📦 Installing dependencies...
+Command 'npm' not found, but can be installed with:
+sudo apt install npm
+☁️ Logging into Cloudflare...
+Command 'npx' not found, but can be installed with:
+sudo apt install npm
+🔐 Injecting secrets to Cloudflare Worker...
+Command 'npx' not found, but can be installed with:
+sudo apt install npm
+Command 'npx' not found, but can be installed with:
+sudo apt install npm
+Command 'npx' not found, but can be installed with:
+sudo apt install npm
+Command 'npx' not found, but can be installed with:
+sudo apt install npm
+Command 'npx' not found, but can be installed with:
+sudo apt install npm
+🚀 Deploying bot backend to Cloudflare Workers...
+Command 'npx' not found, but can be installed with:
+sudo apt install npm
+Enter your live domain (e.g. https://booking-bot.neoncovenant.com): https://booking-bot.neoncovenant.com
+{"ok":false,"error_code":400,"description":"Bad Request: bad webhook: Failed to resolve host: No address associated with hostname"}✅ All done! PlexiBooking system is LIVE at https://booking-bot.neoncovenant.com
+
+
