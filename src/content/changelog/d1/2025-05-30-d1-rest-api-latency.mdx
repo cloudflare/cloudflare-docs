@@ -9,7 +9,7 @@ date: 2025-05-29T00:00:00Z
 
 Users using Cloudflare's [REST API](/api/resources/d1/) to query their D1 database can see lower end-to-end request latency now that D1 authentication is performed at the closest Cloudflare network data center that recieved the request. Previously, authentication required D1 REST API requests to proxy to Cloudflare's core centralized centers, which added network round trips. 
 
-D1 query endpoints like `/query` and `/raw` have the most noticeable improvements since they no longer access Cloudflare's core data centers. D1 control plane endpoints such as those to create and delete databases see smaller improvements, since they still require access to Cloduflare's core data centers for other control plane metadata.
+D1 query endpoints like `/query` and `/raw` have the most noticeable improvements since they no longer access Cloudflare's core data centers. D1 control plane endpoints such as those to create and delete databases see smaller improvements, since they still require access to Cloudflare's core data centers for other control plane metadata.
 
 Performance improvements apply to only the REST API. Users can now expect similar performance querying their database via the REST API and via a [Worker](/d1/best-practices/query-d1/#query-d1-with-workers-binding-api).
 
