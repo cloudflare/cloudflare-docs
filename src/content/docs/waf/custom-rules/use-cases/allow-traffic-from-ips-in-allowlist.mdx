@@ -11,7 +11,7 @@ This example skips WAF rules for requests from IP addresses in an allowlist (def
 1.  [Create an IP list](/waf/tools/lists/create-dashboard/) with the IP addresses for which you want to allow access.<br/>
     For example, create an IP list named `allowed_ips` with one or more IP addresses. For more information on the accepted IP address formats, refer to [IP lists](/waf/tools/lists/custom-lists/#ip-lists).
 
-2.  Create a custom rule skipping all rules for any request from the IPs in the list you created (`allowed_ips` in the current example).
+2.  [Create a custom rule](/waf/custom-rules/create-dashboard/) skipping all rules for any request from the IPs in the list you created (`allowed_ips` in the current example).
 
     - **Expression**: `(ip.src in $allowed_ips)`
     - **Action**: _Skip:_
