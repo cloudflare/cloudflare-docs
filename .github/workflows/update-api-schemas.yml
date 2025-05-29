@@ -1,4 +1,4 @@
-name: Update api-schemas pinned commit
+tabname: Update api-schemas pinned commit
 
 on:
   schedule:
