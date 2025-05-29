@@ -13,14 +13,14 @@ description: Page Shield alerts notify you when new scripts are detected
 import { Render } from "~/components";
 
 :::note
-New resource/domain alerts require a Business plan or higher. Code change and malicious resource alerts require an Enterprise plan with a paid add-on. For details, refer to [Alert types](/page-shield/alerts/alert-types/).
+New resource alerts require a Business plan or higher. Code change and malicious resource alerts require an Enterprise plan with a paid add-on. For details, refer to [Alert types](/page-shield/alerts/alert-types/).
 :::
 
 <Render file="alerts-intro" />
 
 You can configure unscoped or scoped alerts:
 
-- **Unscoped alert**: An alert configured for all zones in your Cloudflare account. Scoped alerts are trigged either daily, hourly, or immediately, depending on the [alert type](/page-shield/alerts/alert-types/).
+- **Unscoped alert**: An alert configured for all zones in your Cloudflare account. Unscoped alerts are trigged either daily, hourly, or immediately, depending on the [alert type](/page-shield/alerts/alert-types/).
 
 - **Scoped alert**: An alert scoped to one or more zones. You must configure [policies](/page-shield/policies/) for the zones you select to receive any notifications. Scoped alerts are triggered immediately. Policy violations will not trigger an alert. For more information, refer to [Scoped alerts](#scoped-alerts).
 
