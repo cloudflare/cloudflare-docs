@@ -9,6 +9,8 @@ head:
 
 ---
 
+import { APIRequest } from "~/components";
+
 Refer to the following sections to learn how to manage certificates used with the different Authenticated Origin Pulls setups.
 
 ## Use specialized certificates
@@ -33,31 +35,29 @@ However, requests are dropped at your origin if your origin only accepts a valid
 
 ## Replace a client cert (without downtime)
 
-For hostname:
+### Per-hostname
 
 1. [Upload the new certificate](/api/resources/origin_tls_client_auth/subresources/hostnames/subresources/certificates/methods/create/).
 
-2. [List your certificates(s)](/api/resources/origin_tls_client_auth/subresources/hostnames/subresources/certificates/methods/list/) and note the ID.
+2. [List your certificates](/api/resources/origin_tls_client_auth/subresources/hostnames/subresources/certificates/methods/list/) and note the ID for the certificate you uploaded.
 
-3. [Enable Authenticated Origin Pulls for that specific hostname](/api/resources/origin_tls_client_auth/subresources/hostnames/methods/update/) and enable the certificate you want to be used with the ID obtained in step 2:
+3. [Enable Authenticated Origin Pulls for the specific hostname](/api/resources/origin_tls_client_auth/subresources/hostnames/methods/update/) and enable the certificate you want to be used with the ID obtained in step 2:
 
-```bash
-curl --request PUT \
-  --url https://api.cloudflare.com/client/v4/zones/$ZONEID/origin_tls_client_auth/hostnames \
-  --header 'authorization: Bearer $MYTOKEN' \
-  --header 'content-type: application/json' \
-  --data '{
-  "config": [
-    {
-      "enabled": true,
-      "hostname": "example.com",
-      "cert_id": "$CERTID"
-    }
-  ]
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/origin_tls_client_auth/hostnames"
+	method="PUT"
+	json={{
+		"config": [
+			{
+				"enabled": true,
+				"hostname": "<HOSTNAME>",
+				"cert_id": "<CERT_ID>"
+			}
+		]
+	}}
+/>
 
-For global:
+### Zone-level
 
 1. [Upload the new certificate](/api/resources/origin_tls_client_auth/methods/create/).
 
