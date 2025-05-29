@@ -701,9 +701,6 @@
 /fundamentals/trace-request/how-to/ /rules/trace-request/how-to/ 301
 /fundamentals/trace-request/limitations/ /rules/trace-request/limitations/ 301
 /fundamentals/trace-request/changelog/ /rules/trace-request/changelog/ 301
-/fundamentals/setup/account/* /fundamentals/account/:splat 301
-/fundamentals/setup/manage-domains/* /fundamentals//manage-domains/:splat 301
-/fundamentals/setup/manage-members/* /fundamentals/manage-members/:splat 301
 /fundamentals/setup/use-cloudflare-without-changing-nameservers/ /fundamentals/manage-domains/add-site/ 301
 /fundamentals/setup/interact-with-cloudflare/ /fundamentals/account/create-account/ 301
 /fundamentals/setup/find-account-and-zone-ids/ /fundamentals/account/find-account-and-zone-ids/ 301
@@ -713,6 +710,9 @@
 /fundamentals/setup/account/customize-account/appearance/ /fundamentals/account/customize-account/ 301
 /fundamentals/setup/account/customize-account/communication-preference/ /fundamentals/account/customize-account/ 301
 /fundamentals/setup/account/customize-account/language-preference/ /fundamentals/account/customize-account/ 301
+/fundamentals/setup/account/* /fundamentals/account/:splat 301
+/fundamentals/setup/manage-domains/* /fundamentals//manage-domains/:splat 301
+/fundamentals/setup/manage-members/* /fundamentals/manage-members/:splat 301
 
 # gateway
 /gateway/about/ /cloudflare-one/policies/gateway/ 301
