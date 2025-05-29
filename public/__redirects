@@ -515,7 +515,7 @@
 /fundamentals/account-and-billing/account-setup/account-roles/ /fundamentals/manage-members/roles/ 301
 /fundamentals/account-and-billing/account-setup/manage-account-members/ /fundamentals/manage-members/ 301
 /fundamentals/account-and-billing/members/roles/ /fundamentals/manage-members/roles/ 301
-/fundamentals/basic-tasks/basic-features/ /fundamentals/basic-tasks/ 301
+/fundamentals/basic-tasks/basic-features/ /fundamentals/concepts/ 301
 /fundamentals/get-started/cdn/ /fundamentals/concepts/how-cloudflare-works/ 301
 /fundamentals/get-started/how-cloudflare-works/ /fundamentals/concepts/how-cloudflare-works/ 301
 /fundamentals/get-started/cloudflare-cookies/ /fundamentals/reference/policies-compliances/cloudflare-cookies/ 301
@@ -592,7 +592,7 @@
 /fundamentals/get-started/task-guides/origin-health/pro/ /fundamentals/security/protect-your-origin-server/ 301
 /fundamentals/get-started/task-guides/origin-health/enterprise/ /fundamentals/security/protect-your-origin-server/ 301
 /fundamentals/get-started/task-guides/origin-health/ /fundamentals/security/protect-your-origin-server/ 301
-/fundamentals/get-started/task-guides/ /fundamentals/basic-tasks/ 301
+/fundamentals/get-started/task-guides/ /fundamentals/concepts/ 301
 /fundamentals/get-started/setup/ /fundamentals/setup/ 301
 /fundamentals/get-started/setup/minimize-downtime/ /fundamentals/performance/minimize-downtime/ 301
 /fundamentals/basic-tasks/maintenance-mode/ /fundamentals/performance/minimize-downtime/ 301
@@ -1286,7 +1286,7 @@
 /support/ssl-tls/faq-and-reference/ /ssl/reference/ 301
 /support/account-management-billing/account-privacy-and-security/understanding-samesite-cookie-interaction-with-cloudflare/ /waf/troubleshooting/samesite-cookie-interaction/ 301
 /support/account-management-billing/account-privacy-and-security/ /support/account-management-billing/ 301
-/support/troubleshooting/general-troubleshooting/troubleshooting-surges-or-spikes-in-web-traffic/ /fundamentals/basic-tasks/preparing-for-surges-or-spikes-in-web-traffic/ 301
+/support/troubleshooting/general-troubleshooting/troubleshooting-surges-or-spikes-in-web-traffic/ /fundamentals/performance/preparing-for-surges-or-spikes-in-web-traffic/ 301
 /support/troubleshooting/general-troubleshooting/preparing-for-surges-or-spikes-in-web-traffic/ /fundamentals/performance/preparing-for-surges-or-spikes-in-web-traffic/ 301
 /fundamentals/basic-tasks/preparing-for-surges-or-spikes-in-web-traffic/ /fundamentals/performance/preparing-for-surges-or-spikes-in-web-traffic/ 301
 /support/third-party-software/others/configuring-an-amazon-web-services-static-site-to-use-cloudflare/ /rules/cloud-connector/providers/ 301
