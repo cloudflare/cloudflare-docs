@@ -31,7 +31,7 @@
 		},
 		"zone_holds": {
 			"title": "Zone holds",
-			"link": "/fundamentals/setup/account/account-security/zone-holds/",
+			"link": "/fundamentals/account/account-security/zone-holds/",
 			"properties": {
 				"availability": {
 					"title": "Availability",
@@ -2117,7 +2117,7 @@
 					"title": "Hostname management",
 					"link": "/turnstile/concepts/hostname-management/",
 					"free": "15 hostnames per widget",
-					"ent": "Maximum of 100 hostnames per widget"
+					"ent": "Maximum of 200 hostnames per widget"
 				},
 				"anyhostname": {
 					"title": "Any hostname widget (no preconfigured hostnames)",

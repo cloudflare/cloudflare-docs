@@ -58,3 +58,7 @@ Lists cannot have duplicate entries. Because hostnames are converted to [Punycod
 ### Extended email addresses
 
 <Render file="gateway/extended-email" />
+
+### API rate limit
+
+You can send 60 requests to the [Gateway Lists](/api/resources/zero_trust/subresources/gateway/subresources/lists/) endpoint per minute. If you exceed the rate limit, Cloudflare will block subsequent requests for 120 seconds.

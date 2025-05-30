@@ -3,7 +3,7 @@ name: Account
 product:
   title: Account
   group: Core platform
-  url: /fundamentals/setup/account/
+  url: /fundamentals/account/
 
 meta:
   description: Manage your Cloudflare account.

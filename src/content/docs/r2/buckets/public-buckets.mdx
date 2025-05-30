@@ -59,7 +59,7 @@ To specify the minimum TLS version of a custom hostname of an R2 bucket, you can
 
 ## Add your domain to Cloudflare
 
-The domain being used must have been added as a [zone](/fundamentals/setup/accounts-and-zones/#zones) in the same account as the R2 bucket.
+The domain being used must have been added as a [zone](/fundamentals/concepts/accounts-and-zones/#zones) in the same account as the R2 bucket.
 
 - If your domain is already managed by Cloudflare, you can proceed to [Connect a bucket to a custom domain](/r2/buckets/public-buckets/#connect-a-bucket-to-a-custom-domain).
 - If your domain is not managed by Cloudflare, you need to set it up using a [partial (CNAME) setup](/dns/zone-setups/partial-setup/) to add it to your account.
@@ -74,7 +74,7 @@ To view the added DNS record, select **...** next to the connected domain and se
 
 :::note
 
-If the zone is on an Enterprise plan, make sure that you [release the zone hold](/fundamentals/setup/account/account-security/zone-holds/#release-zone-holds) before adding the custom domain.
+If the zone is on an Enterprise plan, make sure that you [release the zone hold](/fundamentals/account/account-security/zone-holds/#release-zone-holds) before adding the custom domain.
 
 A zone hold would prevent the custom subdomain from activating.
 
