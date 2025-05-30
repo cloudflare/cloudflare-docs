@@ -76,17 +76,16 @@ jobs:
     name: Deploy to Cloudflare Pages
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       # Run your project's build step
       # - name: Build
       #   run: npm install && npm run build
-      - name: Publish
-        uses: cloudflare/pages-action@v1
+      - name: Deploy
+        uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: YOUR_PROJECT_NAME # e.g. 'my-project'
-          directory: YOUR_DIRECTORY_OF_STATIC_ASSETS # e.g. 'dist'
+          command: pages deploy YOUR_DIRECTORY_OF_STATIC_ASSETS --project-name=YOUR_PROJECT_NAME
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 ```
 

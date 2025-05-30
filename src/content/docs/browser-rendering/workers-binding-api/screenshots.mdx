@@ -5,7 +5,13 @@ sidebar:
   order: 1
 ---
 
-import { Render, TabItem, Tabs, PackageManagers, WranglerConfig } from "~/components";
+import {
+	Render,
+	TabItem,
+	Tabs,
+	PackageManagers,
+	WranglerConfig,
+} from "~/components";
 
 By following this guide, you will create a Worker that uses the Browser Rendering API to take screenshots from web pages. This is a common use case for browser automation.
 
@@ -37,9 +43,7 @@ Create a new Worker project named `browser-worker` by running:
 
 In your `browser-worker` directory, install Cloudflare’s [fork of Puppeteer](/browser-rendering/platform/puppeteer/):
 
-```sh
-npm install @cloudflare/puppeteer --save-dev
-```
+<PackageManagers pkg="@cloudflare/puppeteer" dev />
 
 ## 3. Create a KV namespace
 

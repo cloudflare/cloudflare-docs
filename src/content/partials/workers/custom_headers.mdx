@@ -128,6 +128,15 @@ For example, to prevent your <code>{props.product === 'workers' ? '\*.workers.de
 	}
 />
 
+##### Configure custom browser cache behavior
+
+If you have a folder of fingerprinted assets (assets which have a hash in their filename), you can configure more aggressive caching behavior in the browser to improve performance for repeat visitors:
+
+```txt
+/static/*
+  Cache-Control: public, max-age=31556952, immutable
+```
+
 ##### Harden security for an application
 
 :::caution

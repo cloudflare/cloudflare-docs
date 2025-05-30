@@ -10,8 +10,8 @@ Earlier this year, we announced the launch of the new [Terraform v5 Provider](/c
 
 ### Changes
 
-- Removes the `worker_platforms_script_secret` resource from the provider
-- Removes duplicated fields in `cloudflare_cloud_connector_rules` resource 
+- Removes the `worker_platforms_script_secret` resource from the provider (see [migration guide](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/guides/version-5-upgrade#cloudflare_worker_secret) for alternatives—applicable to both Workers and Workers for Platforms)
+- Removes duplicated fields in `cloudflare_cloud_connector_rules` resource
 - Fixes `cloudflare_workers_route` id issues [#5134](https://github.com/cloudflare/terraform-provider-cloudflare/issues/5134) [#5501](https://github.com/cloudflare/terraform-provider-cloudflare/issues/5501)
 - Fixes issue around refreshing resources that have unsupported response types
   <details>
@@ -68,6 +68,9 @@ Earlier this year, we announced the launch of the new [Terraform v5 Provider](/c
   		<li>`cloudflare_zero_trust_access_group`</li>
   	</ul>
   </details>
+- Fixed defaults that made `cloudflare_workers_script` fail when using Assets
+- Fixed Workers Logpush setting in `cloudflare_workers_script` mistakenly being readonly
+- Fixed `cloudflare_pages_project` broken when using "source"
 
 The detailed [changelog](https://github.com/cloudflare/terraform-provider-cloudflare/releases/tag/v5.4.0) is available on GitHub.
 

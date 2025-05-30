@@ -3,6 +3,8 @@ title: Cohere
 pcx_content_type: get-started
 ---
 
+import { Render } from "~/components";
+
 [Cohere](https://cohere.com/) build AI models designed to solve real-world business challenges.
 
 ## Endpoint
@@ -72,3 +74,17 @@ chat = co.chat(
 print(chat)
 
 ```
+
+<Render
+	file="chat-completions-providers"
+	product="ai-gateway"
+	params={{
+		name: "Cohere",
+		jsonexample: `
+{
+	"model": "cohere/{model}"
+}`
+
+    }}
+
+/>

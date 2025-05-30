@@ -16,6 +16,7 @@ import rehypeMermaid from "./src/plugins/rehype/mermaid.ts";
 import rehypeAutolinkHeadings from "./src/plugins/rehype/autolink-headings.ts";
 import rehypeExternalLinks from "./src/plugins/rehype/external-links.ts";
 import rehypeHeadingSlugs from "./src/plugins/rehype/heading-slugs.ts";
+import rehypeShiftHeadings from "./src/plugins/rehype/shift-headings.ts";
 
 async function autogenSections() {
 	const sections = (
@@ -67,6 +68,7 @@ export default defineConfig({
 			rehypeAutolinkHeadings,
 			// @ts-expect-error plugins types are outdated but functional
 			rehypeTitleFigure,
+			rehypeShiftHeadings,
 		],
 	},
 	image: {

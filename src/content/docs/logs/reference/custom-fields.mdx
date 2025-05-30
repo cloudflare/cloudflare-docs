@@ -189,9 +189,50 @@ Perform the following steps to create the rule:
    }
    ```
 
+#### Record duplicate response header values
+
+Some headers sent from the origin — such as `set-cookie` — may have multiple values that you want to capture. You can use the Rulesets API to specify which headers should have all their values logged.
+
+   ```bash
+curl --request PUT \
+  --url https://api.cloudflare.com/client/v4/zones/{{ZONE_TAG}}/rulesets/{{RULE_ID}} \
+  --header 'content-type: application/json' \
+  --header 'x-auth-email: {{EMAIL}}' \
+  --header 'x-auth-key: {{API_KEY}}' \
+  --data '{
+  "rules": [
+    {
+      "action": "log_custom_field",
+      "expression": "true",
+      "description": "Set Logpush custom fields for HTTP requests",
+      "action_parameters": {
+        "response_fields": [
+          {"name": "set-cookie", "preserve_duplicates": true}
+        ]
+      }
+    }
+  ]
+}'
+```
+
+Note that `preserve_duplicates` applies to both `response_fields` and `raw_response_fields`. If there are no transform rules that affect a header, including `preserve_duplicates` in either `response_fields` or `raw_response_fields` should achieve the same result.
+
+In this example, all values of the `set-cookie` headers will be logged. They will appear as an array of string values under `ResponseFields`, for example: 
+
+   ```json
+{
+  …
+  “ResponseFields”: {
+    “set-cookie”: [“name1=val1”, “name2=val2”...]
+  }
+}
+```
+
+You can use a worker or custom logic at your logpush destination to extract these values.
+
 ### 2. Include the custom fields in your Logpush job
 
-Next, include `Cookies`, `RequestHeaders`, and/or `ResponseHeaders`, depending on your custom field configuration, in the list of fields of the `output_options` job parameter when creating or updating a job. The logs will contain the configured custom fields and their values in the request/response.
+Next, include `Cookies`, `RequestHeaders`, `ResponseHeaders`, and/or `ResponseFields`, depending on your custom field configuration, in the list of fields of the `output_options` job parameter when creating or updating a job. The logs will contain the configured custom fields and their values in the request/response.
 
 For example, consider the following request that creates a job that includes custom fields:
 
@@ -230,6 +271,5 @@ If you are a Cloudflare Access user, as of March 2022 you have to manually add t
 ## Limitations
 
 - Custom fields allow 100 headers per field type — this applies separately to `request_fields`, `transformed_request_fields`, `response_fields`, `raw_response_fields`, and `cookie_fields`.
-- For headers which may be included multiple times (for example, the `set-cookie` response header), a custom field will only log the first instance of the header. Subsequent headers of the same type will be ignored.
 - The request header `Range` is currently not supported by Custom Fields.
 - Transformed and raw values for request and response headers are available only via the API and cannot be set through the UI.
