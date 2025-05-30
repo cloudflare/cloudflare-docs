@@ -23,9 +23,12 @@ When you run `vite`, you'll now see a debug URL in your console:
   ➜  press h + enter to show help
 ```
 
-Open the URL in Chrome, and an instance of Chrome Devtools will open and connect to your Worker running locally. You can use this to:
+Open the URL in Chrome, and an instance of Chrome Devtools will open and connect to your Worker running locally. You can then use Chrome Devtools to debug and introspect performance issues. For example, you can navigate to the Performance tab to understand where CPU time is spent in your Worker:
 
-- View logs directly in the console
+![CPU Profile](~/assets/images/workers/observability/profile.png)
+
+For more information on how to get the most out of Chrome Devtools, refer to the following docs:
+
 - [Debug code by setting breakpoints](/workers/observability/dev-tools/breakpoints/)
 - [Profile CPU usage](/workers/observability/dev-tools/cpu-usage/)
 - [Observe memory usage and debug memory leaks](/workers/observability/dev-tools/memory-usage/)
