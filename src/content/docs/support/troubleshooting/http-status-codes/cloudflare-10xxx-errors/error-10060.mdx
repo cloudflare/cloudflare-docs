@@ -1,0 +1,17 @@
+---
+pcx_content_type: troubleshooting
+title: Error 10060
+source: null
+---
+
+## Error 10060: Missing scheme in redirect target URL
+
+This error indicates that the target URL is missing a scheme.
+
+### Common causes
+
+This error occurs when the target URL of a URL redirect does not include a scheme, which is mandatory. This could have happened due to a typo or the URL was copied from a source that did not include the scheme.
+
+### Resolution
+
+Review the target URL of the URL redirect and ensure that it contains a scheme (for example, `https`). Refer to [Supported URL components in Bulk Redirects](/rules/url-forwarding/bulk-redirects/reference/url-components/) for details on the required URL components for redirect target URLs.

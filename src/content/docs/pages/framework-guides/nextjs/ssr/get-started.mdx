@@ -44,9 +44,7 @@ For more guidance on developing your app, refer to [Bindings](/pages/framework-g
 
 First, install [@cloudflare/next-on-pages](https://github.com/cloudflare/next-on-pages):
 
-```sh
-npm install --save-dev @cloudflare/next-on-pages
-```
+<PackageManagers pkg="@cloudflare/next-on-pages" dev />
 
 ### 2. Add Wrangler file
 
@@ -112,9 +110,7 @@ Add the following to the scripts field of your `package.json` file:
 
 Either deploy via the command line:
 
-```sh
-npm run deploy
-```
+<PackageManagers type="run" args="deploy" />
 
 Or [connect a Github or Gitlab repository](/pages/get-started/git-integration/), and Cloudflare will automatically build and deploy each pull request you merge to your production branch.
 
@@ -122,9 +118,7 @@ Or [connect a Github or Gitlab repository](/pages/get-started/git-integration/),
 
 Optionally, you might want to add `eslint-plugin-next-on-pages`, which lints your Next.js app to ensure it is configured correctly to run on Cloudflare Pages.
 
-```sh
-npm install --save-dev eslint-plugin-next-on-pages
-```
+<PackageManagers pkg="eslint-plugin-next-on-pages" dev />
 
 Once it is installed, add the following to `.eslintrc.json`:
 

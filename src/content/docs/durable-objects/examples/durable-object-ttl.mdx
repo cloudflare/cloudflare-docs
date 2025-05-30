@@ -12,6 +12,12 @@ import { TabItem, Tabs, GlossaryTooltip, WranglerConfig } from "~/components";
 
 A common feature request for Durable Objects is a Time To Live (TTL) for Durable Object instances. Durable Objects give developers the tools to implement a custom TTL in only a few lines of code. This example demonstrates how to implement a TTL making use of <GlossaryTooltip term="alarm">`alarms`</GlossaryTooltip>. While this TTL will be extended upon every new request to the Durable Object, this can be customized based on a particular use case.
 
+:::caution[Be careful when calling `setAlarm` in the Durable Object class constructor]
+
+In this example the TTL is extended upon every new fetch request to the Durable Object. It might be tempting to instead extend the TTL in the constructor of the Durable Object. This is not advised because the Durable Object's constructor will be called before invoking the alarm handler if the alarm wakes the Durable Object up from hibernation. This approach will naively result in the constructor continually extending the TTL without running the alarm handler. If you must call `setAlarm` in the Durable Object class constructor be sure to check that there is no alarm previously set.
+
+:::
+
 <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 
 ```js
@@ -19,21 +25,17 @@ import { DurableObject } from "cloudflare:workers";
 
 // Durable Object
 export class MyDurableObject extends DurableObject {
-    // Time To Live (TTL) in milliseconds
+  // Time To Live (TTL) in milliseconds
   timeToLiveMs = 1000;
 
-    constructor(ctx, env) {
+  constructor(ctx, env) {
     super(ctx, env);
-
-    this.ctx.blockConcurrencyWhile(async () => {
-    await this.ctx.storage.setAlarm(Date.now() + this.timeToLiveMs);
-    });
   }
 
   async fetch(_request) {
-      // Increment the TTL immediately following every request to a Durable Object
+    // Extend the TTL immediately following every fetch request to a Durable Object.
     await this.ctx.storage.setAlarm(Date.now() + this.timeToLiveMs);
-      ...
+    ...
    }
 
   async alarm() {
@@ -62,21 +64,17 @@ export interface Env {
 
 // Durable Object
 export class MyDurableObject extends DurableObject {
-    // Time To Live (TTL) in milliseconds
+  // Time To Live (TTL) in milliseconds
   timeToLiveMs = 1000;
 
-    constructor(ctx: DurableObjectState, env: Env) {
+  constructor(ctx: DurableObjectState, env: Env) {
     super(ctx, env);
-
-    this.ctx.blockConcurrencyWhile(async () => {
-    await this.ctx.storage.setAlarm(Date.now() + this.timeToLiveMs);
-    });
   }
 
   async fetch(_request: Request) {
-      // Increment the TTL immediately following every request to a Durable Object
+    // Extend the TTL immediately following every fetch request to a Durable Object.
     await this.ctx.storage.setAlarm(Date.now() + this.timeToLiveMs);
-      ...
+    ...
    }
 
   async alarm() {

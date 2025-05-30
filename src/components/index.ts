@@ -2,7 +2,6 @@
 export * from "@astrojs/starlight/components";
 export { Icon as StarlightIcon } from "@astrojs/starlight/components";
 // Community packages
-export { PackageManagers } from "starlight-package-managers";
 export { Icon as AstroIcon } from "astro-icon/components";
 // Custom components
 export { default as AnchorHeading } from "./AnchorHeading.astro";
@@ -34,6 +33,7 @@ export { default as ListTutorials } from "./ListTutorials.astro";
 export { default as Markdown } from "./Markdown.astro";
 export { default as MetaInfo } from "./MetaInfo.astro";
 export { default as NetworkMap } from "./NetworkMap.astro";
+export { default as PackageManagers } from "./PackageManagers.astro";
 export { default as PagesBuildEnvironment } from "./PagesBuildEnvironment.astro";
 export { default as PagesBuildEnvironmentLanguages } from "./PagesBuildEnvironmentLanguages.astro";
 export { default as PagesBuildEnvironmentTools } from "./PagesBuildEnvironmentTools.astro";

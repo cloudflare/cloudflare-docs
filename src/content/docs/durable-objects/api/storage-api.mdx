@@ -18,14 +18,6 @@ The Durable Object Storage API allows <GlossaryTooltip term="Durable Object">Dur
 
 The Durable Object Storage API comes with several methods, including SQL, point-in-time recovery (PITR), key-value (KV), and alarm APIs. Available API methods depend on the storage backend for a Durable Objects class, either [SQLite](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class) or [KV](/durable-objects/reference/durable-objects-migrations/#create-durable-object-class-with-key-value-storage).
 
-:::note[Recommended SQLite-backed Durable Objects]
-Cloudflare recommends all new Durable Object classes use the [SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class).
-
-The [key-value storage backend](/durable-objects/reference/durable-objects-migrations/#create-durable-object-class-with-key-value-storage) remains for backwards compatibility, and a migration path from KV storage to SQLite storage for existing Durable Object classes will be available in the future.
-:::
-
-<Render file="do-sqlite-storage-no-bill-note"/>
-
 | Methods <sup>1</sup> | SQLite-backed Durable Object class | KV-backed Durable Object class |
 | ----------------------- | ---------------------------- | ------------------------ |
 | SQL API                 | ✅                           | ❌                       |
@@ -42,6 +34,10 @@ The [key-value storage backend](/durable-objects/reference/durable-objects-migra
 <sup>3</sup> KV methods which were previously asynchronous with KV storage (for example, [`get`](/durable-objects/api/storage-api/#get), [`put`](/durable-objects/api/storage-api/#put), [`delete`](/durable-objects/api/storage-api/#delete), [`deleteAll`](/durable-objects/api/storage-api/#deleteall), [`list`](/durable-objects/api/storage-api/#list)) are synchronous, even though they return promises. These methods will have completed their operations before they return the promise.
 
 </Details>
+
+<Render file="recommend-sqlite-do" product="durable-objects"/>
+
+<Render file="do-sqlite-storage-no-bill-note"/>
 
 ## Access storage
 

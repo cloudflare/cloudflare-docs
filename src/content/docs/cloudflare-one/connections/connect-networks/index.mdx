@@ -14,3 +14,10 @@ Refer to our [reference architecture](/reference-architecture/architectures/sase
 Cloudflared establishes outbound connections (tunnels) between your resources and Cloudflare's global network. Tunnels are persistent objects that route traffic to DNS records. Within the same tunnel, you can run as many 'cloudflared' processes (connectors) as needed. These processes will establish connections to Cloudflare and send traffic to the nearest Cloudflare data center.
 
 ![How an HTTP request reaches a private application connected with Cloudflare Tunnel](~/assets/images/cloudflare-one/connections/connect-apps/handshake.jpg)
+
+## Next steps
+
+- Create a tunnel using the [Cloudflare dashboard](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/) or [API](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel-api/).
+- Learn more about [`cloudflared`](/cloudflare-one/connections/connect-networks/downloads/), the server-side daemon that connects your infrastructure to Cloudflare.
+- Review useful [Tunnel terms](/cloudflare-one/connections/connect-networks/get-started/tunnel-useful-terms/) to familiarize yourself with the concepts used in Tunnel documentation.
+- [Troubleshoot](/cloudflare-one/connections/connect-networks/troubleshoot-tunnels/) your Tunnel by reviewing available logs and common errors.

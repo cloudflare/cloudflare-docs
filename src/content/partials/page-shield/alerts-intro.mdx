@@ -1,8 +1,8 @@
 ---
-{}
-
+params:
+  - availabilityDetails?
 ---
 
-Once you have activated Page Shield, you can set up multiple alerts for your domain.
+import { Render } from "~/components";
 
-Cloudflare sends alerts at regular intervals, so you might experience a delay between adding a new script and receiving an alert.
+Once you have activated Page Shield, you can set up one or more alerts informing you of relevant client-side changes on your zones. {props.availabilityDetails}

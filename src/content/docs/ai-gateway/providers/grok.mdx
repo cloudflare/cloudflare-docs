@@ -3,7 +3,9 @@ title: Grok
 pcx_content_type: get-started
 ---
 
-[Grok](https://docs.x.ai/docs#getting-started) is a general purpose model that can be used for a variety of tasks, including generating and understanding text, code, and function calling.
+import { Render } from "~/components";
+
+[Grok](https://docs.x.ai/docs#getting-started) is s a general purpose model that can be used for a variety of tasks, including generating and understanding text, code, and function calling.
 
 ## Endpoint
 
@@ -156,3 +158,17 @@ message = client.messages.create(
 
 print(message.content)
 ```
+
+<Render
+	file="chat-completions-providers"
+	product="ai-gateway"
+	params={{
+		name: "Grok",
+		jsonexample: `
+{
+	"model": "grok/{model}"
+}`
+
+    }}
+
+/>

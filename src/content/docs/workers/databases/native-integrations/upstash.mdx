@@ -3,7 +3,7 @@ pcx_content_type: configuration
 title: Upstash
 ---
 
-import { Render } from "~/components";
+import { Render, PackageManagers } from "~/components";
 
 [Upstash](https://upstash.com/) is a serverless database with Redis\* and Kafka API. Upstash also offers QStash, a task queue/scheduler designed for the serverless.
 
@@ -54,39 +54,37 @@ To set up an integration with Upstash:
 
 4. In your Worker, install the `@upstash/redis`, a HTTP client to connect to your database and start manipulating data:
 
-   ```sh
-   npm install @upstash/redis
-   ```
+   <PackageManagers pkg="@upstash/redis" />
 
 5. The following example shows how to make a query to your Upstash database in a Worker. The credentials needed to connect to Upstash have been automatically added as secrets to your Worker through the integration.
 
-```js
-import { Redis } from "@upstash/redis/cloudflare";
+   ```js
+   import { Redis } from "@upstash/redis/cloudflare";
 
-export default {
-	async fetch(request, env) {
-		const redis = Redis.fromEnv(env);
+   export default {
+   	async fetch(request, env) {
+   		const redis = Redis.fromEnv(env);
 
-		const country = request.headers.get("cf-ipcountry");
-		if (country) {
-			const greeting = await redis.get(country);
-			if (greeting) {
-				return new Response(greeting);
-			}
-		}
+   		const country = request.headers.get("cf-ipcountry");
+   		if (country) {
+   			const greeting = await redis.get(country);
+   			if (greeting) {
+   				return new Response(greeting);
+   			}
+   		}
 
-		return new Response("Hello What's up!");
-	},
-};
-```
+   		return new Response("Hello What's up!");
+   	},
+   };
+   ```
 
-:::note
+   :::note
 
-`Redis.fromEnv(env)` automatically picks up the default `url` and `token` names created in the integration.
+   `Redis.fromEnv(env)` automatically picks up the default `url` and `token` names created in the integration.
 
-If you have renamed the secrets, you must declare them explicitly like in the [Upstash basic example](https://docs.upstash.com/redis/sdks/redis-ts/getstarted#basic-usage).
+   If you have renamed the secrets, you must declare them explicitly like in the [Upstash basic example](https://docs.upstash.com/redis/sdks/redis-ts/getstarted#basic-usage).
 
-:::
+   :::
 
 To learn more about Upstash, refer to the [Upstash documentation](https://docs.upstash.com/redis).
 
@@ -106,9 +104,7 @@ To set up an integration with Upstash Kafka:
 
 3. In your Worker, install `@upstash/kafka`, a HTTP/REST based Kafka client:
 
-   ```sh
-   npm install @upstash/kafka
-   ```
+   <PackageManagers pkg="@upstash/kafka" />
 
 4. Use the [upstash-kafka](https://github.com/upstash/upstash-kafka/blob/main/README.md) JavaScript SDK to send data to Kafka.
 
@@ -130,9 +126,7 @@ To set up an integration with Upstash QStash:
 
 3. In your Worker, install the `@upstash/qstash`, a HTTP client to connect to your database QStash endpoint:
 
-   ```sh
-   npm install @upstash/qstash
-   ```
+   <PackageManagers pkg="@upstash/qstash" />
 
 4. Refer to the [Upstash documentation on how to receive webhooks from QStash in your Cloudflare Worker](https://docs.upstash.com/qstash/quickstarts/cloudflare-workers#3-use-qstash-in-your-handler).
 

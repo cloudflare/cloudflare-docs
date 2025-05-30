@@ -29,9 +29,9 @@ Make sure your API token has the [required permissions](#required-api-token-perm
 
 ## Example requests
 
-<Details header="Example: Add a rule that overrides the HTTP `Host` header">
+<Details header="Example: Add a rule that overrides the `Host` header of incoming requests and the resolved DNS record">
 
-<Render file="origin-rules-api-change-host-header" />
+<Render file="origin-rules-api-change-host-header-dns-record" />
 
 </Details>
 
@@ -63,66 +63,6 @@ The following example sets the rules of an existing phase ruleset (`$RULESET_ID`
 		],
 	}}
 />
-
-</Details>
-
-<Details header="Example: Add a rule that overrides the resolved DNS record and the `Host` header of incoming requests">
-
-The following example sets the rules of an existing phase ruleset (`$RULESET_ID`) to a single origin rule — overriding the resolved DNS record and the `Host` header of incoming requests — using the [Update a zone ruleset](/api/resources/rulesets/methods/update/) operation. The response will contain the complete definition of the ruleset you updated.
-
-<APIRequest
-	path="/zones/{zone_id}/rulesets/{ruleset_id}"
-	method="PUT"
-	json={{
-		rules: [
-			{
-				expression: 'starts_with(http.request.uri.path, "/hr-app/")',
-				description: "Origin rule for the company HR application",
-				action: "route",
-				action_parameters: {
-					host_header: "hr-server.example.com",
-					origin: {
-						host: "hr-server.example.com",
-					},
-				},
-			},
-		],
-	}}
-/>
-
-```json output
-{
-	"result": {
-		"id": "<RULESET_ID>",
-		"name": "Origin Rules ruleset",
-		"description": "Zone-level ruleset that will execute origin rules.",
-		"kind": "zone",
-		"version": "2",
-		"rules": [
-			{
-				"id": "<RULE_ID>",
-				"version": "1",
-				"action": "route",
-				"action_parameters": {
-					"host_header": "hr-server.example.com",
-					"origin": {
-						"host": "hr-server.example.com"
-					}
-				},
-				"expression": "starts_with(http.request.uri.path, \"/hr-app/\")",
-				"description": "Origin rule for the company HR application",
-				"last_updated": "2022-06-03T14:42:04.219025Z",
-				"ref": "<RULE_REF>"
-			}
-		],
-		"last_updated": "2022-06-03T14:42:04.219025Z",
-		"phase": "http_request_origin"
-	},
-	"success": true,
-	"errors": [],
-	"messages": []
-}
-```
 
 </Details>
 

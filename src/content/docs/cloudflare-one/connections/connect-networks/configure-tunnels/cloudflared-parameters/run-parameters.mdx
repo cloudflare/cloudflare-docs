@@ -123,6 +123,17 @@ Specifies the [account certificate](/cloudflare-one/connections/connect-networks
 
 Writes the application's process identifier (PID) to this file after the first successful connection. Mainly useful for scripting and service integration.
 
+## `post-quantum`
+
+| Syntax                                                   | Environment Variable |
+| -------------------------------------------------------- | -------------------- |
+| `cloudflared tunnel run --post-quantum <UUID or NAME>`   | `TUNNEL_POST_QUANTUM`|
+
+
+By default, Cloudflare Tunnel connections over [`quic`](#protocol) are encrypted using [post-quantum cryptography (PQC)](/ssl/post-quantum-cryptography/) but will fall back to non-PQ if there are issues connecting. If the `--post-quantum` flag is provided, `quic` connections are only allowed to use PQ key agreements, with no fallback to non-PQ.
+
+Post-quantum key agreements are not supported when using `http2` protocol.
+
 ## `protocol`
 
 | Syntax                                                     | Default | Environment Variable        |
