@@ -14,7 +14,7 @@ entries:
     summary: The hostname used in the full request URI.
     description: |-
       The `http.host` field contains the `Host` header from the original request.
-      
+
       If you have configured [Origin Rules](/rules/origin-rules/) that change the hostname, they will not be reflected in the `http.host` field value.
     example_value: |-
       "www.example.org"
@@ -399,8 +399,6 @@ entries:
       | `SI`         | Slovenia        |
       | `SK`         | Slovakia        |
       | `YT`         | Mayotte         |
-
-      The EU country list was obtained from MaxMind's GeoIP2 database on 2023-12-05. For details on obtaining up-to-date country information, refer to the [MaxMind website](https://dev.maxmind.com/geoip/geolite2-free-geolocation-data).
 
       This field has the same value as the `ip.geoip.is_in_european_union` field, which is deprecated. The `ip.geoip.is_in_european_union` field is still available for new and existing rules, but you should use the `ip.src.is_in_european_union` field instead.
 
