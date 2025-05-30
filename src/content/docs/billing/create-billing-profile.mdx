@@ -5,6 +5,8 @@ sidebar:
   order: 2
 ---
 
+import { Render } from "~/components";
+
 ## Add a primary payment method
 
 A primary payment method is required to process payment for Cloudflare products and services. We value your confidentiality and privacy - Cloudflare does not have access to your bank, credit card, pin, or PayPal account password details.
@@ -42,9 +44,7 @@ Enterprise customers must email [ar@cloudflare.com](mailto:ar@cloudflare.com) wi
 
 Optionally, add a backup payment method to use if the primary payment method fails. 
 
-:::warn
-If you already have 2 payment methods, you will not be able to add more. Refer to [Troubleshoot updating payment methods](/billing/troubleshoot-updating-payment-methods) for further details.
-:::
+<Render file="two-payment-methods" />
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. Go to **Manage account** > **Billing**.
