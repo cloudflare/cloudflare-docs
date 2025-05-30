@@ -27,8 +27,6 @@ const euId = euSubnamespace.newUniqueId();
 ```
 
 - It is possible to have the same name represent different IDs in different jurisdictions.
-- You will run into an error if the jurisdiction on your [`DurableObjectNamespace`](/durable-objects/api/namespace/) and the jurisdiction on [`DurableObjectId`](/durable-objects/api/id) are different.
-- You will not run into an error if the [`DurableObjectNamespace`](/durable-objects/api/namespace/) is not associated with a jurisdiction.
 
   ```js
   const euId1 = env.MY_DURABLE_OBJECT.idFromName("my-name");
@@ -36,33 +34,24 @@ const euId = euSubnamespace.newUniqueId();
   console.assert(!euId1.equal(euId2), "This should always be true");
   ```
 
+- You will run into an error if the jurisdiction on your [`DurableObjectNamespace`](/durable-objects/api/namespace/) and the jurisdiction on [`DurableObjectId`](/durable-objects/api/id) are different.
+- You will not run into an error if the [`DurableObjectNamespace`](/durable-objects/api/namespace/) is not associated with a jurisdiction.
+- All [Durable Object ID methods](/durable-objects/api/id/) are valid on IDs within a namespace restricted to a jurisdiction.
+
+  ```js
+  const euSubnamespace = env.MY_DURABLE_OBJECT.jurisdiction("eu");
+  const euId = euSubnamespace.idFromName(name);
+  const stub = env.MY_DURABLE_OBJECT.get(euId);
+  ```
+
 :::caution[Use `DurableObjectNamespace.jurisdiction`]
 
-When specifying a jurisdiction, Cloudflare recommends you first create a namespace restricted to a jurisdiction.
+When specifying a jurisdiction, Cloudflare recommends you first create a namespace restricted to a jurisdiction, using `const euSubnamespace = env.MY_DURABLE_OBJECT.jurisdiction("eu")`.
 
-```js
-const euSubnamespace = env.MY_DURABLE_OBJECT.jurisdiction("eu");
-const euId = euSubnamespace.newUniqueId();
-```
-
-Note that it is possible to specify a jurisdiction by creating an individual [`DurableObjectId`](/durable-objects/api/id) restricted to a jurisdiction.
+Note that it is also possible to specify a jurisdiction by creating an individual [`DurableObjectId`](/durable-objects/api/id) restricted to a jurisdiction, using `const euId = env.MY_DURABLE_OBJECT.newUniqueId({ jurisdiction: "eu" })`.
 
 **However, Cloudflare does not recommend this approach.**
-
-This approach is only shown below for completeness.
-
-```sh
-const euId = env.MY_DURABLE_OBJECT.newUniqueId({ jurisdiction: "eu" });
-```
 :::
-
-The common case is that any valid [`DurableObjectId`](/durable-objects/api/id) can be used in the top-level namespace's methods.
-
-```js
-const euSubnamespace = env.MY_DURABLE_OBJECT.jurisdiction("eu");
-const euId = euSubnamespace.idFromName(name);
-const stub = env.MY_DURABLE_OBJECT.get(euId);
-```
 
 ### Supported locations
 
