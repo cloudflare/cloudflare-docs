@@ -50,6 +50,8 @@ To setup VS Code for breakpoint debugging in your Worker project:
 
 Breakpoint debugging in `wrangler dev` using `--remote` could extend Worker CPU time and incur additional costs since you are testing against actual resources that count against usage limits. It is recommended to use `wrangler dev` without the `--remote` option. This ensures you are developing locally.
 
+If you are debugging using `--remote`, you cannot use code minification as the debugger will be unable to find vars when stopped at a breakpoint. Do not set minify to `true` in your Wrangler configuration file.
+
 :::
 
 :::note

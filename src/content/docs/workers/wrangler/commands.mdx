@@ -1985,6 +1985,7 @@ wrangler types [<PATH>] [OPTIONS]
   	SERVICE_BINDING: Service<import("../bound-worker/src/index").Entrypoint>;
   }
   ```
+  - If your service binding targets a [`WorkerEntrypoint`](/workers/runtime-apis/bindings/service-bindings/rpc/) that is a default export, make sure you set `entrypoint: "default"` in your Wrangler config when you configure your service binding.
 
 ---
 

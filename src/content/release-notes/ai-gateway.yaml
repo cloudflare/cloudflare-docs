@@ -5,6 +5,10 @@ productLink: "/ai-gateway/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-05-28"
+    title: OpenAI Compatibility
+    description: |-
+      * Introduced a new [OpenAI-compatible chat completions endpoint](/ai-gateway/chat-completion/) to simplify switching between different AI providers without major code modifications.
   - publish_date: "2025-04-22"
     description: |-
       * Increased Max Number of Gateways per account: Raised the maximum number of gateways per account from 10 to 20 for paid users. This gives you greater flexibility in managing your applications as you build and scale.

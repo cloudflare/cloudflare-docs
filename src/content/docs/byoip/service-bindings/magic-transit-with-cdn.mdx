@@ -47,7 +47,7 @@ This guide assumes that the prefix is tied to a single Cloudflare account that h
 
 ## 1. Get account information
 
-1. Log in to your Cloudflare account and get your [account ID](/fundamentals/setup/find-account-and-zone-ids/) and [API token](/fundamentals/api/get-started/create-token/). The token permissions should include `Account` - `IP Prefixes` - `Edit`.
+1. Log in to your Cloudflare account and get your [account ID](/fundamentals/account/find-account-and-zone-ids/) and [API token](/fundamentals/api/get-started/create-token/). The token permissions should include `Account` - `IP Prefixes` - `Edit`.
 2. Make a `GET` request to the [List Services](/api/resources/addressing/subresources/services/methods/list/) endpoint and take note of the `id` associated with the CDN service.
 3. Use the [List Prefixes](/api/resources/addressing/subresources/prefixes/methods/list/) endpoint and take note of the `id` associated with the prefix (`cidr`) you will configure.
 

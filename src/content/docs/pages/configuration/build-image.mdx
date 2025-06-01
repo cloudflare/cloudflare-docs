@@ -78,11 +78,11 @@ You can add the following environment variable to disable automatic dependency i
 | ------------------------- | ------------- |
 | `SKIP_DEPENDENCY_INSTALL` | `1` or `true` |
 
-## V2 build system
+## v3 build system
 
-The [v2 build system](https://blog.cloudflare.com/moderizing-cloudflare-pages-builds-toolbox/) announced in May 2023 brings several improvements to project builds.
+The v3 build system updates the default tools, libraries and languages to their LTS versions, as of May 2025.
 
-### V1 to V2 Migration
+### v2 to v3 Migration
 
 To migrate to this new version, configure your Pages project settings in the dashboard:
 
@@ -90,11 +90,11 @@ To migrate to this new version, configure your Pages project settings in the das
 2. Select **Workers & Pages** > in **Overview**, select your Pages project.
 3. Go to **Settings** > **Build & deployments** > **Build system version** and select the latest version.
 
-If you were previously relying on the default versions of any languages or tools in the build system, your build may fail when migrating to v2. To fix this, you must specify the version you wish to use by [overriding](/pages/configuration/build-image/#overriding-default-versions) the default versions.
+If you were previously relying on the default versions of any languages or tools in the build system, your build may fail when migrating to v3. To fix this, you must specify the version you wish to use by [overriding](/pages/configuration/build-image/#overriding-default-versions) the default versions.
 
 ### Limitations
 
-The following features are not currently supported when using the v2 build system:
+The following features are not currently supported when using the v3 build system:
 
 - Specifying Node.js versions as codenames (for example, `hydrogen` or `lts/hydrogen`).
 - Detecting Yarn version from `yarn.lock` file version.
