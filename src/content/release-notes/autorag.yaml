@@ -12,7 +12,7 @@ entries:
   - publish_date: "2025-05-31"
     title: Fixed character cutoff in recursive chunking
     description: |-
-      Resolved an issue where certain characters (e.g., '#') were being cut off during the recursive chunking and embedding process. This ensures complete character processing in the indexing process.
+      Resolved an issue where certain characters (e.g. '#') were being cut off during the recursive chunking and embedding process. This fix ensures complete character processing in the indexing process.
   - publish_date: "2025-05-25"
     title: EU jurisdiction R2 buckets now supported
     description: |-
