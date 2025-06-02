@@ -39,3 +39,34 @@ const response = await env.AI.autorag("my-autorag").search({
 ```
 
 To filter across multiple folders, or to add date-based filtering, you can use a compound filter with an array of [comparison filters](/autorag/configuration/metadata-filtering/#compound-filter).
+
+## Tip: Use "Starts with" filter
+
+While an `eq` filter targets files at the specific folder, you'll often want to retrieve all documents belonging to a tenant regardless if there are files in its subfolders. For example, all files in `customer-a/` with a structure like:
+
+```
+customer-a/profile.md
+customer-a/contracts/property/contract-1.pdf
+```
+
+To achieve this [starts with](/autorag/configuration/metadata-filtering/#starts-with-filter-for-folders) behavior, use a compound filter like:
+
+```js
+filters: {
+    type: "and",
+    filters: [
+      {
+        type: "gt",
+        key: "folder",
+        value: "customer-a//",
+      },
+      {
+        type: "lte",
+        key: "folder",
+        value: "customer-a/z", 
+      },
+    ],
+  },
+```
+
+With this filter you would capture both files `profile.md` and `contract-1.pdf`.
