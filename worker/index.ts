@@ -33,7 +33,13 @@ export default class extends WorkerEntrypoint<Env> {
 				);
 
 				if (redirect) {
-					return new Response(redirect.url + "index.md", redirect);
+					return new Response(null, {
+						...redirect,
+						headers: {
+							...redirect.headers,
+							"Location": redirect.url + "index.md"
+						}
+					});
 				}
 
 				return res;
