@@ -37,7 +37,7 @@
 /ssl/changelog/index.xml /changelog/rss/ssl.xml 301
 
 ## legacy
-/changelog/index.xml /release-notes/index.xml 301
+/release-notes/index.xml /changelog/rss/index.xml 301
 /release-notes/ /changelog/ 301
 
 # 1dot1_redirect
@@ -711,6 +711,7 @@
 /fundamentals/setup/account/customize-account/appearance/ /fundamentals/account/customize-account/ 301
 /fundamentals/setup/account/customize-account/communication-preference/ /fundamentals/account/customize-account/ 301
 /fundamentals/setup/account/customize-account/language-preference/ /fundamentals/account/customize-account/ 301
+/fundamentals/setup/ /fundamentals/account/ 301
 /fundamentals/setup/account/* /fundamentals/account/:splat 301
 /fundamentals/setup/manage-domains/* /fundamentals//manage-domains/:splat 301
 /fundamentals/setup/manage-members/* /fundamentals/manage-members/:splat 301
@@ -1317,7 +1318,7 @@
 /support/account-management-billing/cloudflare-billing-policy/ /billing/billing-policy/ 301
 /support/account-management-billing/billing-add-on-service/ /billing/usage-based-billing/ 301
 /support/account-management-billing/understanding-cloudflare-sales-tax/ /billing/sales-tax/ 301
-/support/account-management-billing/ /support/troubleshooting/general-troubleshooting/cannot-locate-dashboard-account/ 301 
+/support/account-management-billing/ /support/troubleshooting/general-troubleshooting/cannot-locate-dashboard-account/ 301
 /support/account-management-billing/cannot-locate-dashboard-account/ /support/troubleshooting/general-troubleshooting/cannot-locate-dashboard-account/ 301
 
 # r2

@@ -37,11 +37,15 @@ The Domain Joined device posture attribute ensures that a user is a member of a 
 
 Next, go to **Logs** > **Posture** and verify that the Domain Joined check is returning the expected results.
 
-### Validate the domain value on your Windows device
+## Validate the domain value
+
+To check the domain value on your Windows device:
 
 1. Open a PowerShell window.
-2. Run the `(Get-WmiObject Win32_ComputerSystem).Domain` command to determine the value of your domain.
+2. Run the following command:
 
-   ```txt
+   ```powershell
    (Get-WmiObject Win32_ComputerSystem).Domain
    ```
+
+The command will return the Active Directory domain to which your device belongs.

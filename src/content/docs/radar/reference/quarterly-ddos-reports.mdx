@@ -16,6 +16,12 @@ Find the latest quarterly DDoS threat reports in the [**Reports**](https://radar
 
 ## Methodologies
 
+### How we count the number of DDoS attacks
+
+Cloudflare's main DDoS system, the [DDoS Managed Ruleset](/ddos-protection/managed-rulesets/), generates real-time fingerprints for DDoS attacks that it automatically detects and mitigates. While there may be multiple fingerprints generated for a single DDoS attack, or attack campaign, we count unique fingerprints that resulted in mitigation to get an understanding of the number of DDoS attacks for a given period of time. While in some cases, we can see an 'explosion' of fingerprints due to randomized DDoS attacks, for the most part, this figure gives us a reliable indicator to track over time.
+
+Currently, the number of DDoS attacks does not take into consideration the [Advanced TCP Protetion system](/ddos-protection/advanced-ddos-systems/overview/advanced-tcp-protection/) or the [Advanced DNS Protection system](/ddos-protection/advanced-ddos-systems/overview/advanced-dns-protection/). We also don't take into account any mitigations by customer-created rules or configuration.
+
 ### How we calculate ransom DDoS attack insights
 
 Cloudflare’s systems constantly analyze traffic and automatically apply mitigation when DDoS attacks are detected. Each attacked customer is prompted with an automated survey to help Cloudflare better understand the nature of the attack and the success of the mitigation. For over two years, Cloudflare has been surveying attacked customers. One of the questions in the survey asks the respondents if they received a threat or a ransom note. Over the past few years, on average, Cloudflare has been collecting around 200 responses per quarter. The responses of this survey are used to calculate the percentage of ransom DDoS attacks.

@@ -5,6 +5,8 @@ sidebar:
   order: 6
 ---
 
+import { FileTree } from "~/components"
+
 Metadata filtering narrows down search results based on metadata, so only relevant content is retrieved. The filter narrows down results prior to retrieval, so that you only query the scope of documents that matter.
 
 Here is an example of metadata filtering using [Workers Binding](/autorag/usage/workers-binding/) but it can be easily adapted to use the [REST API](/autorag/usage/rest-api/) instead.
@@ -34,13 +36,13 @@ const answer = await env.AI.autorag("my-autorag").search({
 
 You can currently filter by the `folder` and `timestamp` of an R2 object. Currently, custom metadata attributes are not supported.
 
-### `folder`
+### Folder
 
 The directory to the object. For example, the `folder` of the object at `llama/logistics/llama-logistics.mdx` is `llama/logistics/`. Note that the `folder` does not include a leading `/`.
 
 Note that `folder` filter only includes files exactly in that folder, so files in subdirectories are not included. For example, specifying `folder: "llama/"` will match files in `llama/` but does not match files in `llama/logistics`.
 
-### `timestamp`
+### Timestamp
 
 The timestamp indicating when the object was last modified. Comparisons are supported using a 13-digit Unix timestamp (milliseconds), but values will be rounded to 10 digits (seconds). For example, `1735689600999` or `2025-01-01 00:00:00.999 UTC` will be rounded down to `1735689600000`, corresponding to `2025-01-01 00:00:00 UTC`.
 
@@ -90,6 +92,50 @@ Note the following limitations with the compound operators:
 - When using `or`:
   - Only the `eq` operator is allowed.
   - All conditions must filter on the **same key** (for example, all on `folder`)
+
+### "Starts with" filter for folders
+
+You can use "starts with" filtering on the `folder` metadata attribute to search for all files and subfolders within a specific path.
+
+For example, consider this file structure:
+
+<FileTree>
+- customer-a
+  - profile.md
+  - contracts
+    - property
+      - contract-1.pdf
+</FileTree>
+
+If you were to filter using an `eq` (equals) operator with `value: "customer-a/"`, it would only match files directly within that folder, like `profile.md`. It would not include files in subfolders like `customer-a/contracts/`.
+
+To recursively filter for all items starting with the path `customer-a/`, you can use the following compound filter:
+
+```js
+filters: {
+    type: "and",
+    filters: [
+      {
+        type: "gt",
+        key: "folder",
+        value: "customer-a//",
+      },
+      {
+        type: "lte",
+        key: "folder",
+        value: "customer-a/z",
+      },
+    ],
+  },
+```
+
+This filter identifies paths starting with `customer-a/` by using:
+
+- The `and` condition to combine the effects of the `gt` and `lte` conditions.
+- The `gt` condition to include paths greater than the `/` ASCII character.
+- The `lte` condition to include paths less than and including the lower case `z` ASCII character.
+
+Together, these conditions effectively select paths that begin with the provided path value.
 
 ## Response
 

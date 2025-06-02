@@ -85,7 +85,7 @@ Users can use any SSH client to connect to the target, as long as they are logge
 ssh <username>@<target IP>
 ```
 
-SSH with Access for Infrastructure also supports `scp` and `rsync` commands. At this time, `sftp` is not supported. Note that `scp` commands that utilize OpenSSH versions > 9.0 will not work at this time because OpenSSH 9.0+ leverages `sftp` to execute the command.
+Access for Infrastructure also supports `scp` and `rsync` commands. Refer to [Known limitations](#known-limitations) for a list of unsupported SSH commands and features.
 
 To learn more about user connections, refer to the [Access for Infrastructure documentation](/cloudflare-one/applications/non-http/infrastructure-apps/#4-connect-as-a-user).
 
@@ -151,5 +151,14 @@ Only available on Enterprise plans.
 
 Cloudflare allows you to send SSH command logs to storage destinations configured in [Logpush](/logs/about/), including third-party destinations. For a list of available data fields, refer to the [SSH logs dataset](/logs/reference/log-fields/account/ssh_logs/).
 
-
 To set up the Logpush job, refer to [Logpush integration](/cloudflare-one/insights/logs/logpush/).
+
+## Known limitations
+
+The following SSH features are not supported:
+
+- `sftp` commands
+- `scp` commands that utilize OpenSSH versions > 9.0, because OpenSSH 9.0+ leverages `sftp` to execute the command
+- Local and remote port forwarding
+- SSH agent forwarding
+- X11 forwarding
