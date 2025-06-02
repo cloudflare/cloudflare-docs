@@ -7,7 +7,7 @@ sidebar:
 
 import { Details, Render, TabItem, Tabs } from "~/components";
 
-The Client Certificate device posture attribute checks if the device has a valid client certificate signed by a trusted certificate authority (CA). The trusted CA is the signing certifiate you upload to Cloudflare. The client certificate posture check can be used in Gateway and Access policies to ensure that the user is connecting from a managed device.
+The Client Certificate device posture attribute checks if the device has a valid client certificate signed by a trusted certificate. The trusted certificate is uploaded to Cloudflare and specified as part of the posture check rule. The client certificate posture check can be used in Gateway and Access policies to ensure that the user is connecting from a managed device.
 
 <Details header="Feature availability">
 
@@ -31,11 +31,11 @@ The Client Certificate device posture attribute checks if the device has a valid
 
 - A CA that issues client certificates for your devices. WARP does not evaluate the certificate trust chain; this needs to be the issuing certificate.
 
-  :::note[Upload the signing certificate that directly issued the client certificate]
+  :::note[Upload the signing certificate that issued the client certificate]
 
   When uploading a certificate to use in posture checks, Cloudflare does not differentiate between root and intermediate certificates. You must upload the actual signing certificate – the one that directly signed the client certificate.
 
-  The signing certificate might be an intermediate CA, not the root CA. If you upload the wrong certificate (for example, a root that did not sign the client cert), the posture check will fail.
+  If you upload a different certificate, even if it exists higher up in the trust chain (for example, the root that issued the signing certificate), the posture check will fail.
 
   :::
 
