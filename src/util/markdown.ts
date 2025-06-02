@@ -35,6 +35,7 @@ export async function htmlToMarkdown(
 	const chatbotDeprioritize = dom.querySelector(
 		"meta[name='pcx_chatbot_deprioritize']",
 	)?.attributes.content;
+	const tags = dom.querySelector("meta[name='pcx_tags']")?.attributes.content;
 
 	const withFrontmatter = [
 		"---",
@@ -42,6 +43,7 @@ export async function htmlToMarkdown(
 		description ? `description: ${description}` : [],
 		lastUpdated ? `lastUpdated: ${lastUpdated}` : [],
 		chatbotDeprioritize ? `chatbotDeprioritize: ${chatbotDeprioritize}` : [],
+		tags ? `tags: ${tags}` : [],
 		`source_url:`,
 		`  html: ${url.replace("index.md", "")}`,
 		`  md: ${url}`,
