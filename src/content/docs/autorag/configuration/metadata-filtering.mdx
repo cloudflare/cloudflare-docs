@@ -5,6 +5,8 @@ sidebar:
   order: 6
 ---
 
+import { FileTree } from "~/components"
+
 Metadata filtering narrows down search results based on metadata, so only relevant content is retrieved. The filter narrows down results prior to retrieval, so that you only query the scope of documents that matter.
 
 Here is an example of metadata filtering using [Workers Binding](/autorag/usage/workers-binding/) but it can be easily adapted to use the [REST API](/autorag/usage/rest-api/) instead.
@@ -96,12 +98,16 @@ Note the following limitations with the compound operators:
 You can use "starts with" filtering on the `folder` metadata attribute to search for all files and subfolders within a specific path.
 
 For example, consider this file structure:
-```
-customer-a/profile.md
-customer-a/contracts/property/contract-1.pdf
-```
 
-If you were to filter using an `eq` (equals) operator with `value: "customer-a/"`, it would only match files directly within that folder, like `profile.md`. It wouldn't include files in subfolders like `customer-a/contracts/`.
+<FileTree>
+- customer-a
+  - profile.md
+  - contracts
+    - property
+      - contract-1.pdf
+</FileTree>
+
+If you were to filter using an `eq` (equals) operator with `value: "customer-a/"`, it would only match files directly within that folder, like `profile.md`. It would not include files in subfolders like `customer-a/contracts/`.
 
 To recursively filter for all items starting with the path `customer-a/`, you can use the following compound filter:
 
@@ -117,7 +123,7 @@ filters: {
       {
         type: "lte",
         key: "folder",
-        value: "customer-a/z", 
+        value: "customer-a/z",
       },
     ],
   },
@@ -126,8 +132,8 @@ filters: {
 This filter identifies paths starting with `customer-a/` by using:
 
 - The `and` condition to combine the effects of the `gt` and `lte` conditions.
-- The `gt` condition to include pathes greater than the `/` ASCII character.
-- The `lte` condition to include pathes less than and including the lower case `z` ASCII character.
+- The `gt` condition to include paths greater than the `/` ASCII character.
+- The `lte` condition to include paths less than and including the lower case `z` ASCII character.
 
 Together, these conditions effectively select paths that begin with the provided path value.
 
