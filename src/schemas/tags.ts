@@ -38,7 +38,8 @@ const integrations: Array<Tag> = [
 		variants: ["AzureAD", "Azure Active Directory", "MS Entra ID", "Entra ID"],
 	},
 	{ label: "Microsoft" },
-	{ label: "Postgres", variants: ["PostgresSQL"] },
+	{ label: "MotherDuck" },
+	{ label: "Postgres", variants: ["PostgreSQL"] },
 	{ label: "S3" },
 	{ label: "Sentry" },
 	{ label: "Stripe" },
@@ -112,6 +113,7 @@ const use_cases: Array<Tag> = [
 	{ label: "CORS" },
 	{ label: "Debugging", variants: ["debug", "troubleshooting"] },
 	{ label: "Forms" },
+	{ label: "Full stack", variants: ["full-stack"] },
 	{ label: "Geolocation" },
 	{ label: "Headers", variants: ["header"] },
 	{ label: "Localization" },
@@ -124,6 +126,8 @@ const use_cases: Array<Tag> = [
 	{ label: "Response modification", variants: ["response"] },
 	{ label: "RPC" },
 	{ label: "Security" },
+	{ label: "SPA" },
+	{ label: "SSG" },
 	{ label: "URL rewrite", variants: ["rewrite"] },
 ];
 
