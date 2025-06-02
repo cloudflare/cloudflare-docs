@@ -11,6 +11,8 @@ import react from "@astrojs/react";
 import { readdir } from "fs/promises";
 import { fileURLToPath } from "url";
 
+import remarkValidateImages from "./src/plugins/remark/validate-images";
+
 import rehypeTitleFigure from "rehype-title-figure";
 import rehypeMermaid from "./src/plugins/rehype/mermaid.ts";
 import rehypeAutolinkHeadings from "./src/plugins/rehype/autolink-headings.ts";
@@ -61,6 +63,7 @@ export default defineConfig({
 	site: "https://developers.cloudflare.com",
 	markdown: {
 		smartypants: false,
+		remarkPlugins: [remarkValidateImages],
 		rehypePlugins: [
 			rehypeMermaid,
 			rehypeExternalLinks,
