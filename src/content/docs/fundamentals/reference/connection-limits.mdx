@@ -43,17 +43,14 @@ Cloudflare maintains keep-alive connections to improve performance and reduce co
 
 Ensure HTTP keep-alive connections are enabled on your origin. Cloudflare reuses open TCP connections up to the `Proxy Idle Timeout` limit after the last HTTP request. Origin web servers close TCP connections if too many are open. HTTP keep-alive helps avoid connection resets for requests proxied by Cloudflare.
 
-# Other limits
-
 ## Request limits
 
-URLs have a limit of 16 KB.
-Request headers have a total limit of 32 KB, but each header is limited to 16 KB.
+URLs have a limit of 16 KB. Request headers have a total limit of 32 KB, but each header is limited to 16 KB.
 
-##Response limits
+## Response limits
 
 Response headers observe a total limit of 32 KB, but each header is limited to 16 KB.
 
-##Cache limits 
+## Cache limits 
 
-Plese refer to the [Cache documentation](/cache/concepts/default-cache-behavior/#customization-options-and-limits) for more details about the max upload size and the cacheable file size limits.
+Refer to the [Cache documentation](/cache/concepts/default-cache-behavior/#customization-options-and-limits) for more details about the max upload size and the cacheable file size limits.
