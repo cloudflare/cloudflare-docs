@@ -65,6 +65,18 @@ describe("Cloudflare Docs", () => {
 			expect(response.status).toBe(301);
 			expect(response.headers.get("Location")).toBe("/workers/index.md");
 		});
+
+		it("redirects /fundamentals/setup/manage-domains/remove-domain/index.md to /fundamentals/manage-domains/remove-domain/index.md", async () => {
+			const request = new Request(
+				"http://fakehost/fundamentals/setup/manage-domains/remove-domain/index.md",
+			);
+			const response = await SELF.fetch(request, { redirect: "manual" });
+
+			expect(response.status).toBe(301);
+			expect(response.headers.get("Location")).toBe(
+				"/fundamentals/manage-domains/remove-domain/index.md",
+			);
+		});
 	});
 
 	describe("json endpoints", () => {
