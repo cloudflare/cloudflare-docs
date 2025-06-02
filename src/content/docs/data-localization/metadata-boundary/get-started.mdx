@@ -2,11 +2,10 @@
 title: Get started
 pcx_content_type: get-started
 sidebar:
-  order: 1
-
+  order: 2
 ---
 
-import { Details } from "~/components"
+import { Details } from "~/components";
 
 You can configure the Metadata Boundary to select the region where your logs and analytics are stored via API or dashboard.
 
@@ -28,7 +27,6 @@ Currently, only SuperAdmins and Admin roles can edit DLS configurations. Use the
 
 These are some examples of API requests.
 
-
 <Details header="Get current regions">
 
 Here is an example request using cURL to get current regions (if any):
@@ -40,9 +38,7 @@ curl -s -D "/dev/stderr" https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_
 | jq '.'
 ```
 
-
 </Details>
-
 
 <Details header="Setting regions">
 
@@ -51,7 +47,8 @@ Here is an example request using cURL to set regions:
 ```bash
 curl -s -D "/dev/stderr" https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/logs/control/cmb/config -X POST -d '
 {
-    "regions": "eu"
+    "regions": "eu",
+    "allow_out_of_region_access": false
 }
 ' \
 -H "X-Auth-Email: <EMAIL>" \
@@ -63,9 +60,7 @@ curl -s -D "/dev/stderr" https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_
 This will overwrite any previous regions.
 Change will be in effect after several minutes.
 
-
 </Details>
-
 
 <Details header="Delete regions">
 
@@ -77,7 +72,6 @@ curl -s -D "/dev/stderr" https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_
 -H "X-Auth-Key: <KEY>" \
 | jq '.'
 ```
-
 
 </Details>
 
