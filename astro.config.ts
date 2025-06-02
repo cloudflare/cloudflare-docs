@@ -160,6 +160,7 @@ export default defineConfig({
 			markdown: {
 				headingLinks: false,
 			},
+			routeMiddleware: "./src/plugins/starlight/route-data.ts",
 		}),
 		liveCode({}),
 		icon(),
