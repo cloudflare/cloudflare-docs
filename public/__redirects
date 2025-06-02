@@ -711,6 +711,7 @@
 /fundamentals/setup/account/customize-account/appearance/ /fundamentals/account/customize-account/ 301
 /fundamentals/setup/account/customize-account/communication-preference/ /fundamentals/account/customize-account/ 301
 /fundamentals/setup/account/customize-account/language-preference/ /fundamentals/account/customize-account/ 301
+
 /fundamentals/setup/account/* /fundamentals/account/:splat 301
 /fundamentals/setup/manage-domains/* /fundamentals//manage-domains/:splat 301
 /fundamentals/setup/manage-members/* /fundamentals/manage-members/:splat 301
