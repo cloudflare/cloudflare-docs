@@ -69,4 +69,10 @@ filters: {
   },
 ```
 
+This filter identifies paths starting with `customer-a/` by using:
+
+- The `and` condition to combine the effects of the `gt` and `lte` conditions.
+- The `gt` condition to include pathes greater than the `/` ASCII character.
+- The `lte` condition to include pathes less than and including the lower case `z` ASCII character.
+
 With this filter you would capture both files `profile.md` and `contract-1.pdf`.
