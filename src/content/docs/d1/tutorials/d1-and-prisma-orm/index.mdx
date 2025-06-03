@@ -23,14 +23,22 @@ To learn more about Prisma ORM, refer to the [Prisma documentation](https://www.
 
 This tutorial shows you how to set up and deploy a Cloudflare Worker that is accessing a D1 database from scratch.
 
+## Quick start
 
+If you want to skip the steps and get started quickly, click on the button below.
 
-### Prerequisites
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/docs-examples/tree/d1-prisma/d1/query-d1-using-prisma)
+
+This creates a repository in your GitHub account and deploys the application to Cloudflare Workers. Use this option if you are familiar with Cloudflare Workers, and wish to skip the step-by-step guidance.
+
+You may wish to manually follow the steps if you are new to Cloudflare Workers.
+
+## Prerequisites
 
 - [`Node.js`](https://nodejs.org/en/) and [`npm`](https://docs.npmjs.com/getting-started) installed on your machine.
 - A [Cloudflare account](https://dash.cloudflare.com).
 
-### 1. Create a Cloudflare Worker
+## 1. Create a Cloudflare Worker
 
 Open your terminal, and run the following command to create a Cloudflare Worker using Cloudflare's [`hello-world`](https://github.com/cloudflare/workers-sdk/tree/4fdd8987772d914cf50725e9fa8cb91a82a6870d/packages/create-cloudflare/templates/hello-world) template:
 
@@ -43,7 +51,7 @@ In your terminal, you will be asked a series of questions related your project:
 1. Answer `yes` to using TypeScript.
 2. Answer `no` to deploying your Worker.
 
-### 2. Initialize Prisma ORM
+## 2. Initialize Prisma ORM
 
 :::note
 
@@ -93,7 +101,7 @@ generator client {
 Do not specify an `output` destination in the `generator client` block. Instead, allow prisma to generate the files in the default output path.
 :::
 
-### 3. Create your D1 database
+## 3. Create your D1 database
 
 In this step, you will set up your D1 database. You can create a D1 database via the [Cloudflare dashboard](https://dash.cloudflare.com), or via `wrangler`. This tutorial will use the `wrangler` CLI.
 
@@ -144,7 +152,7 @@ Replace `<D1_DATABASE_ID>` with the database ID of your D1 instance. If you were
 
 Next, you will create a database table in the database to send queries to D1 using Prisma ORM.
 
-### 4. Create a table in the database
+## 4. Create a table in the database
 
 [Prisma Migrate](https://www.prisma.io/docs/orm/prisma-migrate/understanding-prisma-migrate/overview) does not support D1 yet, so you cannot follow the default migration workflows using `prisma migrate dev` or `prisma db push`.
 
@@ -252,7 +260,7 @@ npx wrangler d1 execute prisma-demo-db --command "INSERT INTO  `"User`" (`"email
 
 :::
 
-### 5. Query your database from the Worker
+## 5. Query your database from the Worker
 
 To query your database from the Worker using Prisma ORM, you need to:
 
@@ -279,7 +287,7 @@ Before running the Worker, generate Prisma Client with the following command:
 npx prisma generate
 ```
 
-### 6. Run the Worker locally
+## 6. Run the Worker locally
 
 Now that you have the database query in place and Prisma Client generated, run the Worker locally:
 
@@ -293,7 +301,7 @@ Open your browser at [`http://localhost:8787`](http://localhost:8787/) to check 
 [{ "id": 1, "email": "jane@prisma.io", "name": "Jane Doe (Local)" }]
 ```
 
-### 7. Deploy the Worker
+## 7. Deploy the Worker
 
 To deploy the Worker, run the following command:
 
