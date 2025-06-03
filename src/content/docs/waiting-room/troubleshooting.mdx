@@ -143,4 +143,4 @@ Waiting Room is a distributed system, and achieving perfect global counting in r
 
 In the case of a rapid spike — rising to several thousand users within a minute — the global state propagation process takes approximately two minutes, resulting in a delay before all data centers become aware of the spike. If this information is not disseminated quickly enough to other locations, temporary overshooting may occur, particularly when lower limits are in place.
 
-This occurs because the portion of the budget reserved for new users to enter a data center is equally available to all data centers. Until the usage of this budget is synchronized acroos all data centers, each data center may consume a portion that collectively exceeds 100% of the global budget allocated for new users.
+This occurs because the portion of the budget reserved for new users to enter a data center is equally available to all data centers. Until the usage of this budget is synchronized across all data centers, each data center may consume a portion that collectively exceeds 100% of the global budget allocated for new users.
