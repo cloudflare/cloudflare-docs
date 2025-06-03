@@ -6,7 +6,7 @@ params:
 
 import { Details } from "~/components";
 
-Although it is possible to add discrete bindings for non-contiguous CIDR blocks, implementing service bindings through an **aggregated** CIDR block is **strongly** recommended as it is more efficient.
+Cloudflare **strongly** recommends implementing service bindings through an **aggregated** CIDR block, as it is more efficient than adding discrete bindings for non-contiguous CIDR blocks.
 
 <Details header="Example">
 
@@ -27,7 +27,7 @@ Add one discrete {props.added_product} service binding for `203.0.113.16` with a
 
 </Details>
 
-Once a service binding is created (or deleted), it will take **four** to **six** hours to propagate across Cloudflare's global network. Services for the IP addresses in scope will likely be disrupted during this window.
+Once a service binding is created (or deleted), it will take **four to six hours** to propagate across Cloudflare's global network. Services for the IP addresses in scope will likely be disrupted during this window.
 
 :::note
 This guide assumes that the prefix is tied to a single Cloudflare account that has both {props.pre_existing_product} and {props.added_product} properties. If you are using [prefix delegations](/byoip/concepts/prefix-delegations/), the service bindings must be [created](#2-create-service-binding) on the parent account.

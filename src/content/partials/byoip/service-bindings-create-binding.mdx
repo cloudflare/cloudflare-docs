@@ -7,7 +7,7 @@ params:
 import { Example, APIRequest } from "~/components";
 
 :::caution[Caution]
-Once a service binding is created (or deleted), it will take four to six hours to propagate across Cloudflare's global network. Services for the IP addresses in scope will likely be disrupted during this window.
+Once a service binding is created (or deleted), it will take **four to six hours** to propagate across Cloudflare's global network. Services for the IP addresses in scope will likely be disrupted during this window.
 :::
 
 1. Make a `POST` request to the [Create service binding](/api/resources/addressing/subresources/prefixes/subresources/service_bindings/methods/create/) endpoint, indicating the IP address you want to bind to {props.added_product}. Specify the **corresponding network mask** as needed.
