@@ -28,6 +28,10 @@ For example, if your client Worker had bindings to a Worker in `../sum-worker/` 
 	}
 />
 
+:::note
+If your service binding targets a `WorkerEntrypoint` that is a default export, make sure you set `entrypoint: "default"` in your Wrangler config when you configure your service binding.
+:::
+
 This will produce a `worker-configuration.d.ts` file that includes:
 
 ```ts title="worker-configuration.d.ts"

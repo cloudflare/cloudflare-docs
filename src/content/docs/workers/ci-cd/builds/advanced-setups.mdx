@@ -8,6 +8,23 @@ sidebar:
 
 ## Monorepos
 
+A monorepo is a single repository that contains multiple applications. This setup can be useful for a few reasons:
+
+- **Simplified dependency management**: Manage dependencies across all your workers and shared packages from a single place using tools like [pnpm workspaces](https://pnpm.io/workspaces) and [syncpack](https://www.npmjs.com/package/syncpack).
+- **Code sharing and reuse**: Easily create and share common logic, types, and utilities between workers by creating shared packages.
+- **Atomic commits**: Changes affecting multiple workers or shared libraries can be committed together, making the history easier to understand and reducing the risk of inconsistencies.
+- **Consistent tooling**: Apply the same build, test, linting, and formatting configurations (e.g., via [Turborepo](https://turborepo.com) in for task orchestration and shared configs in `packages/`) across all projects, ensuring consistent tooling and code quality across Workers.
+- **Easier refactoring**: Refactoring code that spans multiple Workers or shared packages is significantly easier within a single repository.
+
+#### Example Workers monorepos:
+
+- [cloudflare/mcp-server-cloudflare](https://github.com/cloudflare/mcp-server-cloudflare)
+- [jahands/workers-monorepo-template](https://github.com/jahands/workers-monorepo-template)
+- [cloudflare/templates](https://github.com/cloudflare/templates)
+- [cloudflare/workers-sdk](https://github.com/cloudflare/workers-sdk)
+
+### Getting Started
+
 To set up a monorepo workflow:
 
 1. Find the Workers associated with your project in the [Workers & Pages Dashboard](https://dash.cloudflare.com).
@@ -41,8 +58,8 @@ ecommerce-monorepo/
 │ └── notification-service/
 │ ├── src/
 │ └── wrangler.toml
-├── shared/
-│ └── utils/
+├── packages/
+│ └── schema/
 └── README.md
 ```
 
@@ -59,6 +76,6 @@ When a new commit is detected in the repository, a new build/deploy will trigger
 
 ### Example
 
-Imagine you have a Worker named `my-worker`, and you want to set up two environments `staging` and `production` set in the `wrangler.toml`. If you have not already, you can deploy `my-worker` for each environment using the commands `wrangler deploy --env staging` and `wrangler deploy --env production`.
+Imagine you have a Worker named `my-worker`, and you want to set up two environments `staging` and `production` set in the `wrangler.jsonc`. If you have not already, you can deploy `my-worker` for each environment using the commands `wrangler deploy --env staging` and `wrangler deploy --env production`.
 
 In your Cloudflare Dashboard, you should find the two Workers `my-worker-staging` and `my-worker-production`. Then, connect the Git repository for the Worker, `my-worker`, to both of the environment Workers. In the build configurations of each environment Worker, edit the deploy commands to be `npx wrangler deploy --env staging` and `npx wrangler deploy --env production` and the non-production branch deploy commands to be `npx wrangler versions upload --env staging` and `npx wrangler versions upload --env production` respectively.

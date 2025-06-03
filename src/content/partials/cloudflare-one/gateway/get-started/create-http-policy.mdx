@@ -38,7 +38,7 @@ To create a new HTTP policy:
    | ------- | ---------- | ---------- |
    | Account | Zero Trust | Edit       |
 
-2. (Optional) Configure your API environment variables to include your [account ID](/fundamentals/setup/find-account-and-zone-ids/) and API token.
+2. (Optional) Configure your API environment variables to include your [account ID](/fundamentals/account/find-account-and-zone-ids/) and API token.
 3. Send a `POST` request to the [Create a Zero Trust Gateway rule](/api/resources/zero_trust/subresources/gateway/subresources/rules/methods/create/) endpoint. For example, if you have configured TLS decryption, some applications that use [embedded certificates](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#inspection-limitations) may not support HTTP inspection, such as some Google products. You can create a policy to bypass inspection for these applications:
 
    ```sh title="curl API HTTP policy example"

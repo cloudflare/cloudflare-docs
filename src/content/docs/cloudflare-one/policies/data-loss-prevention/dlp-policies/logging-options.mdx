@@ -75,7 +75,7 @@ Based on your report, DLP's machine learning will adjust its confidence in futur
 Only available on Enterprise plans.
 :::
 
-Gateway allows you to send copies of entire HTTP requests matched in DLP policies to storage destinations configured in [Logpush](/logs/about/), including third-party destinations.
+Gateway allows you to send copies of entire HTTP requests matched in HTTP Allow and Block policies to storage destinations configured in [Logpush](/logs/about/), including third-party destinations.
 
 To set up the DLP Forensic Copy Logpush job:
 
@@ -85,8 +85,8 @@ To set up the DLP Forensic Copy Logpush job:
 4. Choose a [Logpush destination](/logs/get-started/enable-destinations/).
 5. In **Configure logpush job**, choose the _DLP forensic copies_ dataset. Select **Create Logpush job**.
 6. Return to Zero Trust and go to **Gateway** > **Firewall policies** > **HTTP**.
-7. Edit an existing Allow or Block DLP policy, or [create a new policy](/cloudflare-one/policies/data-loss-prevention/dlp-policies/#2-create-a-dlp-policy).
-8. In the policy builder, scroll down to **Configure policy settings** and turn on **Send copy to storage**.
+7. Edit an existing Allow or Block policy, or [create a new policy](/cloudflare-one/policies/data-loss-prevention/dlp-policies/#2-create-a-dlp-policy). Your policy does not need to include a DLP profile.
+8. In the policy builder, scroll down to **Configure policy settings** and turn on **Send DLP forensic copies to storage**.
 9. Select a storage destination. Gateway will list any configured Logpush jobs or integrations that can receive HTTP requests.
 10. Select **Save policy**.
 

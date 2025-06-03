@@ -168,12 +168,6 @@ None of the options for this command are required. Many of these options can be 
 
 :::
 
-:::caution
-
-As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions providing `glibc 2.31` or higher (e.g. Ubuntu 20.04/22.04, Debian 11/12, Fedora 37/38/39), macOS version 11 or higher, and Windows (x86-64 architecture).
-
-:::
-
 - `SCRIPT` <Type text="string" />
   - The path to an entry point for your Worker. Only required if your [Wrangler configuration file](/workers/wrangler/configuration/) does not include a `main` key (for example, `main = "index.js"`).
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
@@ -1985,6 +1979,7 @@ wrangler types [<PATH>] [OPTIONS]
   	SERVICE_BINDING: Service<import("../bound-worker/src/index").Entrypoint>;
   }
   ```
+  - If your service binding targets a [`WorkerEntrypoint`](/workers/runtime-apis/bindings/service-bindings/rpc/) that is a default export, make sure you set `entrypoint: "default"` in your Wrangler config when you configure your service binding.
 
 ---
 

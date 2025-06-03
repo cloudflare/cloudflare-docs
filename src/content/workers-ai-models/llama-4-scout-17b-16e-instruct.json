@@ -12,6 +12,10 @@
     "tags": [],
     "properties": [
         {
+            "property_id": "context_window",
+            "value": "131000"
+        },
+        {
             "property_id": "price",
             "value": [
                 {
@@ -25,10 +29,6 @@
                     "currency": "USD"
                 }
             ]
-        },
-        {
-            "property_id": "context_window",
-            "value": "131000"
         },
         {
             "property_id": "function_calling",
@@ -147,7 +147,7 @@
                                     },
                                     "tool_call_id": {
                                         "type": "string",
-                                        "description": "The tool call id. Must be supplied for tool calls for Mistral-3. If you don't know what to put here you can fall back to 000000001",
+                                        "description": "The tool call id. If you don't know what to put here you can fall back to 000000001",
                                         "pattern": "[a-zA-Z0-9]{9}"
                                     },
                                     "content": {

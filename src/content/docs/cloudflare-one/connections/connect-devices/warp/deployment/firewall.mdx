@@ -52,11 +52,11 @@ WARP connects to the following IP addresses, depending on which [tunnel protocol
 
 ### MASQUE
 
-|                |                                                                                                |
-| -------------- | ---------------------------------------------------------------------------------------------- |
-| IPv4 address   | `162.159.197.0/24`                                                                             |
-| IPv6 address   | `2606:4700:102::/48`                                                                           |
-| Default port   | `UDP 443`                                                                                      |
+|                |                                                                                                                     |
+| -------------- | ------------------------------------------------------------------------------------------------------------------- |
+| IPv4 address   | `162.159.197.0/24`                                                                                                  |
+| IPv6 address   | `2606:4700:102::/48`                                                                                                |
+| Default port   | `UDP 443`                                                                                                           |
 | Fallback ports | `UDP 500` <br/> `UDP 1701` <br/> `UDP 4500` <br/> `UDP 4443` <br/> `UDP 8443` <br/> `UDP 8095` <br/> `TCP 443` [^1] |
 
 [^1]: Required for HTTP/2 fallback
@@ -116,7 +116,19 @@ The WARP client attempts to synchronize the exact time by NTP (`UDP 123`) to [Cl
 If your organization does not currently allow inbound/outbound communication over the IP addresses, ports, and domains described above, you must manually add an exception. The rule at a minimum needs to be scoped to the following process based on your platform:
 
 - Windows: `C:\Program Files\Cloudflare\Cloudflare WARP\warp-svc.exe`
-- macOS: `/Applications/Cloudflare WARP.app/Contents/Resources/CloudflareWARP`
+- macOS: You must explicitly allow both the core networking daemon and GUI component as shown in the following instructions.
+
+  1.  Core networking daemon: `/Applications/Cloudflare WARP.app/Contents/Resources/CloudflareWARP`
+
+      This binary does not have a Bundle ID and must be allowed via full path.
+
+  2.  GUI component, choose one of the following three identifiers depending on your MDM or firewall vendor's preferred format:
+
+      `/Applications/Cloudflare WARP.app` (Path)
+
+      `/Applications/Cloudflare WARP.app/Contents/MacOS/Cloudflare WARP` (Path)
+
+      `com.cloudflare.1dot1dot1dot1dot1.macos` (Bundle ID)
 
 ### Optional scopes
 

@@ -5,6 +5,9 @@ productLink: "/bots/"
 productArea: Application security
 productAreaLink: /fundamentals/reference/changelog/security/
 entries:
+  - publish_date: "2025-05-14"
+    title: Anomaly detection events now receive a bot score of 2
+    description: Events detected by the [anomaly detection engine](/bots/concepts/bot-detection-engines/#anomaly-detection-enterprise) are now given a bot score of 2.
   - publish_date: "2025-05-08"
     title: Machine Learning model v9 is now the default model
     description: |-
