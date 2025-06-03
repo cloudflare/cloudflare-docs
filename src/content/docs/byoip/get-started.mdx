@@ -29,7 +29,7 @@ You are not required to use <GlossaryTooltip term="Resource Public Key Infrastru
 Overall, the steps can be summarized as follows:
 
 1. You revise your [IRRs and ROAs](#requirements) (if applicable) to make sure they are correct.
-2. You prepare a [letter of agency (LOA)](/byoip/concepts/loa/) containing both the prefix you are authorizing Cloudflare to announce and which ASN they will be announced under. Cloudflare will present this to our transit partners as evidence that we are allowed to announce the route.
+2. You prepare a [Letter of Agency (LOA)](/byoip/concepts/loa/) containing both the prefix you are authorizing Cloudflare to announce and which ASN they will be announced under. Cloudflare will present this to our transit partners as evidence that we are allowed to announce the route.
 3. You use the [Upload LOA Document](/api/resources/addressing/subresources/loa_documents/methods/create/) API endpoint to submit the letter under your account and the [Add Prefix](/api/resources/addressing/subresources/prefixes/methods/create/) endpoint to create the prefix in your account with the associated `loa_document_id`.
 4. After receiving the LOA, Cloudflare validates the [requirements](#requirements) and provisions the IPs.
 5. (Optional) You can use [prefix delegations](/byoip/concepts/prefix-delegations/) to share all or part of your prefix with another Cloudflare account.
