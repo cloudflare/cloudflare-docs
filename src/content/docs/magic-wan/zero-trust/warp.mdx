@@ -8,9 +8,9 @@ head:
 :::note
 By default direct Warp to Warp connections are not supported for machines behind MWAN with Warp connected due to double encapsulation and asymmetric routing.
 
-It's recommended to not connect Warp when a device is in a location behind MWAN, and instead connect to their LAN IP from remote devices connected to Warp instead of using Warp to Warp, as the MWAN onramp will route to remote locations private network, but if you do wish to use Warp inside a MWAN connected location, and directly connect to the devices Warp IP (in the 100.96.0.0/12 range) using Warp to Warp from either remote devices or devices in another location you will need to exclude the 100.96.0.0/12 subnet from you on premises Warp profile and include it in your off premises profile. 
+It's recommended to not connect Warp when a device is in a location behind MWAN, and instead connect to their LAN IP from remote devices instead of using Warp to Warp.
 
-This will allow remote devices to route the 100.96.0.0/12 subnet over Warp > Cloudflare Edge > MWAN > Warp connected device on premises, then the return traffic will follow the same flow but in reverse. If 100.96.0.0/12 is included in the Warp tunnel on both ends the traffic flow will be remote Warp > Cloudflare Edge > MWAN > Warp device on premises, but the return traffic will be on premises device Warp tunnel > Cloudflare Edge > Remote device Warp tunnel, which in turn is asymmetric from the remote > on premises flow and will cause the connection to fail.
+If you do wish to use Warp inside a MWAN connected location, and directly connect to the devices Warp IP (in the 100.96.0.0/12 range) by using Warp to Warp you will need to exclude the 100.96.0.0/12 subnet from you on premises Warp profile and include it in your off premises profile.
 :::
 
 import { GlossaryTooltip, Render } from "~/components";
