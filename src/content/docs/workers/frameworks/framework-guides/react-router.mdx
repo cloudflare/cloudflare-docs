@@ -169,6 +169,27 @@ As you have direct access to your Worker entry file (`workers/app.ts`), you can 
     } satisfies ExportedHandler<CloudflareEnvironment>;
     ```
 
+    Configure it in your Wrangler configuration file:
+    
+    <WranglerConfig>
+    
+    ```toml
+    [[workflows]]
+    name = "my-workflow"
+    binding = "MY_WORKFLOW"
+    class_name = "MyWorkflow"
+    ```
+
+    </WranglerConfig>
+
+    And then using it in your application:
+    
+    ```ts title="app/routes/home.tsx"
+    export function action({ context }: Route.LoaderArgs) {
+    	const instance = await env.MY_WORKFLOW.create({ params: { "hello": "world" })
+    	return { id: instance.id, details: instance.status() };
+    }
+    ```
 </Details>
 
 <Render file="frameworks-bindings" />
