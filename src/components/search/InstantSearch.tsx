@@ -34,6 +34,22 @@ function SearchBox(props: UseSearchBoxProps) {
 		}
 	}, []);
 
+	useEffect(() => {
+		const params = new URLSearchParams(window.location.search);
+
+		if (query) {
+			params.set("q", query);
+		} else {
+			params.delete("q");
+		}
+
+		history.pushState(
+			null,
+			"",
+			`${window.location.pathname}?${params.toString()}`,
+		);
+	}, [query]);
+
 	return (
 		<div className="border-cl1-gray-8 dark:border-cl1-gray-2 flex items-center rounded-sm border p-2">
 			<input
