@@ -110,6 +110,10 @@ You can use CNAME records to point to other CNAME records (`www.example2.com` --
 
 Cloudflare uses a process called CNAME flattening to deliver better performance. This process supports a few features and can interact with [different setups that depend on CNAME records](/dns/cname-flattening/#aspects-to-keep-in-mind). Refer to the [CNAME flattening section](/dns/cname-flattening/) to learn more about this.
 
+:::note
+Specific CNAME record values with traffic proxied through Cloudflare will enable Orange-to-Orange (O2O) routing for the Shopify SaaS provider. Refer to the [Shopify provider guide](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/provider-guides/shopify/) for more information.
+:::
+
 #### Example API call
 
 When creating CNAME records [using the API](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records):
