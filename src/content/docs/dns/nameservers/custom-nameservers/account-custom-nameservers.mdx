@@ -148,8 +148,8 @@ To remove ACNS from a zone, first update your nameservers to stop using ACNS:
 </TabItem>
 <TabItem label="API">
 
-* If you are using [Cloudflare Registrar](/registrar/), use the [Update DNS settings endpoint](/api/resources/dns/subresources/settings/methods/edit/) to change the `enabled` parameter to `false`, and then [contact Cloudflare Support](/support/contacting-cloudflare-support/) to set your nameservers back to the regular Cloudflare branded nameservers.
-* If you are not using [Cloudflare Registrar](/registrar/), modify the domain's registrar to use your regular Cloudflare branded nameservers and then use the [Update DNS settings endpoint](/api/resources/dns/subresources/settings/methods/edit/) to set the `enabled` parameter to `false`.
+* If you are using [Cloudflare Registrar](/registrar/), use the [Update DNS settings endpoint](/api/resources/dns/subresources/settings/subresources/zone/methods/edit/) to change the `enabled` parameter to `false`, and then [contact Cloudflare Support](/support/contacting-cloudflare-support/) to set your nameservers back to the regular Cloudflare branded nameservers.
+* If you are not using [Cloudflare Registrar](/registrar/), modify the domain's registrar to use your regular Cloudflare branded nameservers and then use the [Update DNS settings endpoint](/api/resources/dns/subresources/settings/subresources/zone/methods/edit/) to set the `enabled` parameter to `false`.
 
 </TabItem>
 </Tabs>
