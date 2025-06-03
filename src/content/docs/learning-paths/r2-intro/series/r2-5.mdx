@@ -5,6 +5,8 @@ sidebar:
   order: 5
 tableOfContents: false
 description: |
+    In this video, you will set up a Cloudflare Workers project and connect it to an existing or new R2 bucket. You will secure file uploads using authentication tokens, configure the Wrangler settings, and enable Smart Tiered Cache for optimal performance. Finally, you will deploy and test your serverless API to upload and retrieve files such as podcast episodes.
+
 ---
 
 import { Render, Tabs, TabItem, Stream, Card } from "~/components";
@@ -12,6 +14,7 @@ import { Render, Tabs, TabItem, Stream, Card } from "~/components";
 <Tabs>
   <TabItem label="Watch this episode">
 
+    In this video, you will set up a Cloudflare Workers project and connect it to an existing or new R2 bucket. You will secure file uploads using authentication tokens, configure the Wrangler settings, and enable Smart Tiered Cache for optimal performance. Finally, you will deploy and test your serverless API to upload and retrieve files such as podcast episodes.
     
     <Card>
         <Stream
@@ -20,6 +23,10 @@ import { Render, Tabs, TabItem, Stream, Card } from "~/components";
         thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/R2-5%20Access%20R2%20storage%20from%20Worker.jpg"
         showMoreVideos={false}
         chapters={{
+          "Introduction":"3s",
+          "Cloudflare C3 CLI Tool":"1m4s",
+          "Wrangler JSON file":"2m33s",
+          "Deploy the app":"7m26s"
         }}
       />
 
@@ -27,7 +34,9 @@ import { Render, Tabs, TabItem, Stream, Card } from "~/components";
 
       If you want to dive into detail, refer to the following pages:
 
-    - [Cloudflare R2](/r2/)
+    - [C3 CLI](/pages/get-started/c3/)
+    - [AWS CLI example](/r2/examples/aws/aws-cli/)
+    - [Wrangler configuration file](/workers/wrangler/configuration/)
 
     </Card>
   </TabItem>
