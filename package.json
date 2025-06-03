@@ -27,7 +27,7 @@
 	"devDependencies": {
 		"@actions/core": "1.11.1",
 		"@actions/github": "6.0.1",
-		"@apidevtools/swagger-parser": "10.1.1",
+		"@apidevtools/swagger-parser": "11.0.0",
 		"@astrojs/check": "0.9.4",
 		"@astrojs/react": "4.2.5",
 		"@astrojs/rss": "4.0.11",
