@@ -28,7 +28,7 @@ The methods [`D1PreparedStatement::run`](/d1/worker-api/prepared-statements/#run
     served_by_region: string // the region of the database instance that executed the query
     served_by_primary: boolean // true if (and only if) the database instance that executed the query was the primary
     timings: {
-      sql_duration_ms: number // the duration of the SQL query execution by the database instance. It does not include any network time.
+      sql_duration_ms: number // the duration of the SQL query execution by the database instance (not including any network time)
     }
     duration: number, // the duration of the SQL query execution only, in milliseconds
 		changes: number, // the number of changes made to the database
