@@ -17,7 +17,7 @@ export const onRequest = defineRouteMiddleware(({ locals }) => {
 
 			if (!match) {
 				throw new Error(
-					`Invalid tag on ${entry.id}: ${tag}, please refer to the allowlist in /src/schemas/tags.ts`,
+					`Invalid tag on ${entry.id}: ${tag}, please refer to the style guide: https://developers.cloudflare.com/style-guide/frontmatter/tags/`,
 				);
 			}
 
