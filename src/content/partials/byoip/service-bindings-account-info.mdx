@@ -6,7 +6,7 @@ params:
 
 import { Example, APIRequest } from "~/components";
 
-1. Log in to your Cloudflare account and get your [account ID](/fundamentals/setup/find-account-and-zone-ids/) and [authentication key or token](/fundamentals/api/get-started/). If using an [API token](/fundamentals/api/get-started/create-token/), the permissions should include `Account` - `IP Prefixes` - `Edit`.
+1. Log in to your Cloudflare account and get your [account ID](/fundamentals/account/find-account-and-zone-ids/) and [authentication key or token](/fundamentals/api/get-started/). If using an [API token](/fundamentals/api/get-started/create-token/), the permissions should include `Account` - `IP Prefixes` - `Edit`.
 2. Make a `GET` request to the [List Services](/api/resources/addressing/subresources/services/methods/list/) endpoint and take note of the `id` associated with the {props.added_product} service.
 3. Use the [List Prefixes](/api/resources/addressing/subresources/prefixes/methods/list/) endpoint and take note of the `id` associated with the prefix (`cidr`) you will configure.
 
