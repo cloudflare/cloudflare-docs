@@ -14,7 +14,7 @@ import { Markdown } from "~/components";
 
 Before you start the onboarding process, you will have to:
 
-1. Choose a deployment path: Email Security provides two deployment modes, [post-delivery](/cloudflare-one/email-security/setup/) for API and BCC/Journaling and [pre-delivery](/cloudflare-one/email-security/setup/#pre-delivery-deployment) for MX/Inline.
+1. Choose a deployment path: Email Security provides two deployment modes, [post-delivery](/cloudflare-one/email-security/setup/post-delivery-deployment/) for API and BCC/Journaling and [pre-delivery](/cloudflare-one/email-security/setup/pre-delivery-deployment/) for MX/Inline.
 2. Learn about dispositions, impersonation registry, and reclassifications.
 3. Know the steps to configure your email environment correctly.
 
@@ -64,7 +64,7 @@ Refer to [Dispositions](/cloudflare-one/email-security/reference/dispositions-an
 
 ## 3. Set up the impersonation registry
 
-Most [Business email compromise(BEC)](https://www.cloudflare.com/en-gb/learning/email-security/business-email-compromise-bec/) targets executives or finance roles. You must add addresses of roles who are likely to be impersonated. Refer to [Impersonation registry](/cloudflare-one/email-security/detection-settings/impersonation-registry/) to learn how to add a user to the impersonation registry.
+Most [Business email compromise (BEC)](https://www.cloudflare.com/en-gb/learning/email-security/business-email-compromise-bec/) targets executives or finance roles. You must add addresses of roles who are likely to be impersonated. Refer to [Impersonation registry](/cloudflare-one/email-security/detection-settings/impersonation-registry/) to learn how to add a user to the impersonation registry.
 
 Roles you may want to include in the impersonation registry are:
 
@@ -111,7 +111,7 @@ Follow the below checklist to ensure your email environment is set up correctly:
 | Authorize integration ([Graph API](/cloudflare-one/email-security/setup/post-delivery-deployment/api/office365-api/#enable-microsoft-integration) or [Google Workspace](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/bcc-setup/gmail-bcc-setup/enable-gmail-integration/))                                                | Required[^1]      | Required [^2]     |
 | Associate an integration with an MX/Inline domain                                                       |               | Required     |
 | Add/verify domains                                                                                      | Required      | Required     |
-| [Update MX records/connector](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment-setup/), then allow Cloudflare [egress IPs](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment-setup/) on downstream mail server |               | Required     |
+| [Update MX records/connector](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment-setup/), then allow Cloudflare [egress IPs](/cloudflare-one/email-security/setup/pre-delivery-deployment/egress-ips/) on downstream mail server |               | Required     |
 | Enable [Post‑delivery response and Phish submission response](/cloudflare-one/email-security/auto-moves/)                                             | Required      | Required     |
 | Populate [impersonation registry](/cloudflare-one/email-security/detection-settings/impersonation-registry/) and [allow](/cloudflare-one/email-security/detection-settings/allow-policies/)/[block](/cloudflare-one/email-security/detection-settings/blocked-senders/) lists                                                 | Required      | Required     |
 | Configure [partner domain TLS](/cloudflare-one/email-security/setup/pre-delivery-deployment/partner-domain-tls/) and admin quarantine                                                              |               | Required     |
