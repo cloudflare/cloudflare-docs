@@ -190,7 +190,7 @@ These errors occur when a Worker is uploaded or modified.
 | `10016`    | Invalid Worker name.                                                                                                            |
 | `10021`    | Validation Error. Refer to [Validation Errors](/workers/observability/errors/#validation-errors-10021) for details.             |
 | `10026`    | Could not parse request body.                                                                                                   |
-| `10027`    | Your Worker exceeded the size limit of XX MB (for more details see [Worker size limits](/workers/platform/limits/#worker-size)) |
+| `10027`    | The uploaded Worker exceeded the [Worker size limits](/workers/platform/limits/#worker-size). |
 | `10035`    | Multiple attempts to modify a resource at the same time                                                                         |
 | `10037`    | An account has exceeded the number of [Workers allowed](/workers/platform/limits/#number-of-workers).                           |
 | `10052`    | A [binding](/workers/runtime-apis/bindings/) is uploaded without a name.                                                        |
@@ -205,14 +205,6 @@ These errors occur when a Worker is uploaded or modified.
 The 10021 error code includes all errors that occur when you attempt to deploy a Worker, and Cloudflare then attempts to load and run the top-level scope (everything that happens before your Worker's [handler](/workers/runtime-apis/handlers/) is invoked). For example, if you attempt to deploy a broken Worker with invalid JavaScript that would throw a `SyntaxError` — Cloudflare will not deploy your Worker.
 
 Specific error cases include but are not limited to:
-
-#### Worker exceeded the upload size limit
-
-A Worker can be up to 10 MB in size after compression on the Workers Paid plan, and up to 3 MB on the Workers Free plan.
-
-To reduce the upload size of a Worker, you should consider removing unnecessary dependencies and/or using Workers KV, a D1 database or R2 to store configuration files, static assets and binary data instead of attempting to bundle them within your Worker code.
-
-Another method to reduce a Worker's file size is to split its functionality across multiple Workers and connect them using [Service bindings](/workers/runtime-apis/bindings/service-bindings/).
 
 #### Script startup exceeded CPU time limit
 

@@ -32,12 +32,18 @@ export async function htmlToMarkdown(
 	const description = dom.querySelector("meta[name='description']")?.attributes
 		.content;
 	const lastUpdated = dom.querySelector(".meta time")?.attributes.datetime;
+	const chatbotDeprioritize = dom.querySelector(
+		"meta[name='pcx_chatbot_deprioritize']",
+	)?.attributes.content;
+	const tags = dom.querySelector("meta[name='pcx_tags']")?.attributes.content;
 
 	const withFrontmatter = [
 		"---",
 		`title: ${title}`,
 		description ? `description: ${description}` : [],
 		lastUpdated ? `lastUpdated: ${lastUpdated}` : [],
+		chatbotDeprioritize ? `chatbotDeprioritize: ${chatbotDeprioritize}` : [],
+		tags ? `tags: ${tags}` : [],
 		`source_url:`,
 		`  html: ${url.replace("index.md", "")}`,
 		`  md: ${url}`,

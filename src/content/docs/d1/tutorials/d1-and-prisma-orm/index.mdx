@@ -11,7 +11,7 @@ languages:
   - SQL
 ---
 
-import { WranglerConfig, FileTree } from "~/components";
+import { WranglerConfig, FileTree, PackageManagers } from "~/components";
 
 ## What is Prisma ORM?
 
@@ -53,21 +53,21 @@ To set up Prisma ORM, go into your project directory, and install the Prisma CLI
 
 ```sh
 cd prisma-d1-example
-npm install prisma --save-dev
 ```
+
+<PackageManagers pkg="prisma" dev />
 
 Next, install the Prisma Client package and the driver adapter for D1:
 
-```sh
-npm install @prisma/client
-npm install @prisma/adapter-d1
-```
+<PackageManagers pkg="@prisma/client @prisma/adapter-d1" />
 
 Finally, bootstrap the files required by Prisma ORM using the following command:
 
-```sh
-npx prisma init --datasource-provider sqlite
-```
+<PackageManagers
+	type="exec"
+	pkg="prisma"
+	args="init --datasource-provider sqlite"
+/>
 
 The command above:
 
@@ -86,6 +86,7 @@ generator client {
 +	previewFeatures = ["driverAdapters"]
 }
 ```
+
 :::note
 Do not specify an `output` destination in the `generator client` block. Instead, allow prisma to generate the files in the default output path.
 :::
@@ -158,9 +159,11 @@ Answer `yes` to creating a new folder called `migrations`.
 The command has now created a new directory called `migrations` and an empty file called `0001_create_user_table.sql` inside of it:
 
 <FileTree>
+
 - prisma-d1-example
   - migrations
     - **0001_create_user_table.sql**
+
 </FileTree>
 
 Next, you need to add the SQL statement that will create a `User` table to that file.
@@ -242,6 +245,7 @@ Your Wrangler command will then look like:
 npx wrangler d1 execute prisma-demo-db --command "INSERT INTO  `"User`" (`"email`", `"name`") VALUES
 ('jane@prisma.io', 'Jane Doe (Local)');" --<FLAG>
 ```
+
 :::
 
 ### 5. Query your database from the Worker

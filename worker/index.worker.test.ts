@@ -43,13 +43,6 @@ describe("Cloudflare Docs", () => {
 			expect(response.headers.get("Location")).toBe("/products/");
 		});
 
-		it("redirects /changelog/index.xml to /release-notes/index.xml", async () => {
-			const request = new Request("http://fakehost/changelog/index.xml");
-			const response = await SELF.fetch(request, { redirect: "manual" });
-			expect(response.status).toBe(301);
-			expect(response.headers.get("Location")).toBe("/release-notes/index.xml");
-		});
-
 		it("redirects /changelog-next/ to /changelog/", async () => {
 			const request = new Request("http://fakehost/changelog-next/");
 			const response = await SELF.fetch(request, { redirect: "manual" });
@@ -164,27 +157,6 @@ describe("Cloudflare Docs", () => {
 				expect(item.product).toBe("Access");
 				expect(item.category).toBe("Access");
 				expect(item.pubDate).toBe("Mon, 03 Mar 2025 06:00:00 GMT");
-			});
-
-			it("legacy global", async () => {
-				const request = new Request("http://fakehost/release-notes/index.xml");
-				const response = await SELF.fetch(request);
-
-				expect(response.status).toBe(200);
-
-				const xml = await response.text();
-				const parsed = parser.parse(xml);
-				const { channel } = parsed.rss;
-
-				expect(channel.title).toBe("Cloudflare release notes");
-
-				const item = channel.item.find(
-					(item: any) => item.title === "WAF - 2025-02-24",
-				);
-
-				expect(item).toBeDefined();
-				expect(item.product).toBe("WAF");
-				expect(item.pubDate).toBe("Mon, 24 Feb 2025 00:00:00 GMT");
 			});
 
 			it("legacy product-specific", async () => {

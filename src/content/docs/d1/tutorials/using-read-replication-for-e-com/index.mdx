@@ -42,23 +42,21 @@ You can then visit the deployed application.
 
 Create a new Workers project by running the following command:
 
-    <PackageManagers type="create" pkg="cloudflare@latest" args={"fast-commerce"} />
+<PackageManagers type="create" pkg="cloudflare@latest" args={"fast-commerce"} />
 
-    <Render
-    	file="c3-post-run-steps"
-    	product="workers"
-    	params={{
-    	category: "hello-world",
-    	type: "SSR / full-stack app",
-    	lang: "TypeScript",
-    	}}
-    />
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		category: "hello-world",
+		type: "SSR / full-stack app",
+		lang: "TypeScript",
+	}}
+/>
 
 For creating the API routes, you will use [Hono](https://hono.dev/). You need to install Hono by running the following command:
 
-```sh
-npm install hono
-```
+<PackageManagers pkg="hono" />
 
 ## Step 2: Update the frontend
 
@@ -270,6 +268,7 @@ Update the `public/index.html` file to list the products. Use the below code as 
 Create a new `public/product-details.html` file to display a single product.
 
 <Details open={false} header="public/product-details.html">
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -285,186 +284,192 @@ Create a new `public/product-details.html` file to display a single product.
 				font-family: Arial, sans-serif;
 			}
 
-    		body {
-    			background-color: #f9fafb;
-    			min-height: 100vh;
-    			display: flex;
-    			flex-direction: column;
-    		}
+			body {
+				background-color: #f9fafb;
+				min-height: 100vh;
+				display: flex;
+				flex-direction: column;
+			}
 
-    		header {
-    			background-color: white;
-    			padding: 1rem 2rem;
-    			display: flex;
-    			justify-content: space-between;
-    			align-items: center;
-    			border-bottom: 1px solid #e5e7eb;
-    		}
+			header {
+				background-color: white;
+				padding: 1rem 2rem;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				border-bottom: 1px solid #e5e7eb;
+			}
 
-    		.store-title {
-    			font-weight: bold;
-    			font-size: 1.25rem;
-    			text-decoration: none;
-    			color: black;
-    		}
+			.store-title {
+				font-weight: bold;
+				font-size: 1.25rem;
+				text-decoration: none;
+				color: black;
+			}
 
-    		.cart-button {
-    			padding: 0.5rem 1rem;
-    			cursor: pointer;
-    			background: none;
-    			border: none;
-    		}
+			.cart-button {
+				padding: 0.5rem 1rem;
+				cursor: pointer;
+				background: none;
+				border: none;
+			}
 
-    		.product-container {
-    			max-width: 800px;
-    			margin: 2rem auto;
-    			background-color: white;
-    			border-radius: 0.5rem;
-    			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    			padding: 2rem;
-    		}
+			.product-container {
+				max-width: 800px;
+				margin: 2rem auto;
+				background-color: white;
+				border-radius: 0.5rem;
+				box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+				padding: 2rem;
+			}
 
-    		.product-title {
-    			font-size: 1.875rem;
-    			font-weight: bold;
-    			margin-bottom: 0.5rem;
-    		}
+			.product-title {
+				font-size: 1.875rem;
+				font-weight: bold;
+				margin-bottom: 0.5rem;
+			}
 
-    		.product-description {
-    			color: #4b5563;
-    			margin-bottom: 1.5rem;
-    		}
+			.product-description {
+				color: #4b5563;
+				margin-bottom: 1.5rem;
+			}
 
-    		.product-price {
-    			font-size: 1.875rem;
-    			font-weight: bold;
-    			margin-bottom: 0.5rem;
-    		}
+			.product-price {
+				font-size: 1.875rem;
+				font-weight: bold;
+				margin-bottom: 0.5rem;
+			}
 
-    		.product-stock {
-    			font-size: 0.875rem;
-    			color: #4b5563;
-    			text-align: right;
-    		}
+			.product-stock {
+				font-size: 0.875rem;
+				color: #4b5563;
+				text-align: right;
+			}
 
-    		.add-to-cart-btn {
-    			display: block;
-    			width: 100%;
-    			padding: 0.75rem;
-    			background-color: #2563eb;
-    			color: white;
-    			border: none;
-    			border-radius: 0.375rem;
-    			cursor: pointer;
-    			text-align: center;
-    			font-size: 1rem;
-    			margin-top: 1.5rem;
-    		}
+			.add-to-cart-btn {
+				display: block;
+				width: 100%;
+				padding: 0.75rem;
+				background-color: #2563eb;
+				color: white;
+				border: none;
+				border-radius: 0.375rem;
+				cursor: pointer;
+				text-align: center;
+				font-size: 1rem;
+				margin-top: 1.5rem;
+			}
 
-    		.add-to-cart-btn:hover {
-    			background-color: #1d4ed8;
-    		}
+			.add-to-cart-btn:hover {
+				background-color: #1d4ed8;
+			}
 
-    		.price-stock-container {
-    			display: flex;
-    			justify-content: space-between;
-    			align-items: center;
-    			margin-bottom: 1rem;
-    		}
+			.price-stock-container {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-bottom: 1rem;
+			}
 
-    		footer {
-    			background-color: white;
-    			padding: 1rem 2rem;
-    			text-align: center;
-    			border-top: 1px solid #e5e7eb;
-    			color: #4b5563;
-    			font-size: 0.875rem;
-    			margin-top: auto;
-    		}
+			footer {
+				background-color: white;
+				padding: 1rem 2rem;
+				text-align: center;
+				border-top: 1px solid #e5e7eb;
+				color: #4b5563;
+				font-size: 0.875rem;
+				margin-top: auto;
+			}
 
-    		/* Back button */
-    		.back-button {
-    			display: inline-block;
-    			margin-bottom: 1.5rem;
-    			color: #2563eb;
-    			text-decoration: none;
-    			font-size: 0.875rem;
-    		}
+			/* Back button */
+			.back-button {
+				display: inline-block;
+				margin-bottom: 1.5rem;
+				color: #2563eb;
+				text-decoration: none;
+				font-size: 0.875rem;
+			}
 
-    		.back-button:hover {
-    			text-decoration: underline;
-    		}
+			.back-button:hover {
+				text-decoration: underline;
+			}
 
-    		/* Notification */
-    		.notification {
-    			position: fixed;
-    			top: 1rem;
-    			right: 1rem;
-    			background-color: #10b981;
-    			color: white;
-    			padding: 0.75rem 1rem;
-    			border-radius: 0.375rem;
-    			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    			transform: translateX(150%);
-    			transition: transform 0.3s ease;
-    		}
+			/* Notification */
+			.notification {
+				position: fixed;
+				top: 1rem;
+				right: 1rem;
+				background-color: #10b981;
+				color: white;
+				padding: 0.75rem 1rem;
+				border-radius: 0.375rem;
+				box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+				transform: translateX(150%);
+				transition: transform 0.3s ease;
+			}
 
-    		.notification.show {
-    			transform: translateX(0);
-    		}
-    	</style>
-    </head>
-    <body>
-    	<header>
-    		<a href="index.html" class="store-title">E-commerce Store</a>
-    		<button class="cart-button">Cart</button>
-    	</header>
+			.notification.show {
+				transform: translateX(0);
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<a href="index.html" class="store-title">E-commerce Store</a>
+			<button class="cart-button">Cart</button>
+		</header>
 
-    	<main class="product-container">
-    		<a href="index.html" class="back-button">← Back to products</a>
-    		<h1 class="product-title" id="product-title">Product Name</h1>
-    		<p class="product-description" id="product-description">Product description goes here.</p>
+		<main class="product-container">
+			<a href="index.html" class="back-button">← Back to products</a>
+			<h1 class="product-title" id="product-title">Product Name</h1>
+			<p class="product-description" id="product-description">
+				Product description goes here.
+			</p>
 
-    		<div class="price-stock-container">
-    			<p class="product-price" id="product-price">$0.00</p>
-    			<p class="product-stock" id="product-stock">0 in stock</p>
-    		</div>
+			<div class="price-stock-container">
+				<p class="product-price" id="product-price">$0.00</p>
+				<p class="product-stock" id="product-stock">0 in stock</p>
+			</div>
 
-    		<button class="add-to-cart-btn" id="add-to-cart">Add to Cart</button>
-    	</main>
+			<button class="add-to-cart-btn" id="add-to-cart">Add to Cart</button>
+		</main>
 
-    	<div class="notification" id="notification">Added to cart!</div>
+		<div class="notification" id="notification">Added to cart!</div>
 
-    	<footer>
-    		<p>© 2025 E-commerce Store. All rights reserved.</p>
-    	</footer>
+		<footer>
+			<p>© 2025 E-commerce Store. All rights reserved.</p>
+		</footer>
 
-    	<script>
-    		// Get query parameter from URL
-    		const url = new URL(window.location.href);
-    		const searchParams = new URLSearchParams(url.search);
-    		const productId = searchParams.get('id');
+		<script>
+			// Get query parameter from URL
+			const url = new URL(window.location.href);
+			const searchParams = new URLSearchParams(url.search);
+			const productId = searchParams.get("id");
 
-    		// Fetch product details
-    		fetch(`/api/products/${productId}`)
-    			.then((response) => response.json())
-    			.then((product) => displayContent(product))
-    			.catch((error) => console.error('Error fetching product details:', error));
+			// Fetch product details
+			fetch(`/api/products/${productId}`)
+				.then((response) => response.json())
+				.then((product) => displayContent(product))
+				.catch((error) =>
+					console.error("Error fetching product details:", error),
+				);
 
-    		// Function to display product details
-    		function displayContent(product) {
-    			document.title = `${product[0].name} - E-commerce Store`;
-    			document.getElementById('product-title').textContent = product[0].name;
-    			document.getElementById('product-description').textContent = product[0].description;
-    			document.getElementById('product-price').textContent = `$${product[0].price.toFixed(2)}`;
-    			document.getElementById('product-stock').textContent = `${product[0].inventory} in stock`;
-    		}
-    	</script>
-    </body>
-
+			// Function to display product details
+			function displayContent(product) {
+				document.title = `${product[0].name} - E-commerce Store`;
+				document.getElementById("product-title").textContent = product[0].name;
+				document.getElementById("product-description").textContent =
+					product[0].description;
+				document.getElementById("product-price").textContent =
+					`$${product[0].price.toFixed(2)}`;
+				document.getElementById("product-stock").textContent =
+					`${product[0].inventory} in stock`;
+			}
+		</script>
+	</body>
 </html>
-
 ```
+
 </Details>
 
 You now have a frontend that lists products and displays a single product. However, the frontend is not yet connected to the D1 database. If you start the development server now, you will see no products. In the next steps, you will create a D1 database and create APIs to fetch products and display them on the frontend.
@@ -480,13 +485,14 @@ npx wrangler d1 create fast-commerce
 Add the D1 bindings returned in the terminal to the `wrangler` file:
 
 <WranglerConfig>
-	
-	```toml 
-	[[d1_databases]]
-	binding = "DB" 
-	database_name = "fast-commerce"
-	database_id = "YOUR_DATABASE_ID" 
-	```
+
+```toml
+[[d1_databases]]
+binding = "DB"
+database_name = "fast-commerce"
+database_id = "YOUR_DATABASE_ID"
+```
+
 </WranglerConfig>
 
 Run the following command to update the `Env` interface in the `worker-congifuration.d.ts` file.
@@ -560,35 +566,35 @@ To make the application more resilient, you can add retry logic to the API route
 
 ```ts
 export interface RetryConfig {
-  maxRetries: number;
-  initialDelay: number;
-  maxDelay: number;
-  backoffFactor: number;
+	maxRetries: number;
+	initialDelay: number;
+	maxDelay: number;
+	backoffFactor: number;
 }
 
 const shouldRetry = (error: unknown): boolean => {
-  const errMsg = error instanceof Error ? error.message : String(error);
-  return (
-    errMsg.includes("Network connection lost") ||
-    errMsg.includes("storage caused object to be reset") ||
-    errMsg.includes("reset because its code was updated")
-  );
+	const errMsg = error instanceof Error ? error.message : String(error);
+	return (
+		errMsg.includes("Network connection lost") ||
+		errMsg.includes("storage caused object to be reset") ||
+		errMsg.includes("reset because its code was updated")
+	);
 };
 
 // Helper function for sleeping
 const sleep = (ms: number): Promise<void> => {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+	return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
 export const defaultRetryConfig: RetryConfig = {
-  maxRetries: 3,
-  initialDelay: 100,
-  maxDelay: 1000,
-  backoffFactor: 2,
+	maxRetries: 3,
+	initialDelay: 100,
+	maxDelay: 1000,
+	backoffFactor: 2,
 };
 
 export async function withRetry<T>(
-  operation: () => Promise<T>,
+	operation: () => Promise<T>,
 	config: Partial<RetryConfig> = defaultRetryConfig,
 ): Promise<T> {
 	const maxRetries = config.maxRetries ?? defaultRetryConfig.maxRetries;
@@ -597,30 +603,30 @@ export async function withRetry<T>(
 	const backoffFactor =
 		config.backoffFactor ?? defaultRetryConfig.backoffFactor;
 
-  let lastError: Error | unknown;
-  let delay = initialDelay;
+	let lastError: Error | unknown;
+	let delay = initialDelay;
 
-  for (let attempt = 0; attempt <= maxRetries; attempt++) {
-    try {
-      const result = await operation();
-      return result;
-    } catch (error) {
-      lastError = error;
+	for (let attempt = 0; attempt <= maxRetries; attempt++) {
+		try {
+			const result = await operation();
+			return result;
+		} catch (error) {
+			lastError = error;
 
-      if (!shouldRetry(error) || attempt === maxRetries) {
-        throw error;
-      }
+			if (!shouldRetry(error) || attempt === maxRetries) {
+				throw error;
+			}
 
-      // Add randomness to avoid synchronizing retries
-      // Wait for a random delay between delay and delay*2
-      await sleep(delay * (1 + Math.random()));
+			// Add randomness to avoid synchronizing retries
+			// Wait for a random delay between delay and delay*2
+			await sleep(delay * (1 + Math.random()));
 
-      // Calculate next delay with exponential backoff
-      delay = Math.min(delay * backoffFactor, maxDelay);
-    }
-  }
+			// Calculate next delay with exponential backoff
+			delay = Math.min(delay * backoffFactor, maxDelay);
+		}
+	}
 
-  throw lastError;
+	throw lastError;
 }
 ```
 
@@ -648,71 +654,71 @@ Update the API routes to connect to the D1 database.
 
 ```ts
 app.post("/api/product", async (c) => {
-  const product = await c.req.json();
+	const product = await c.req.json();
 
-  if (!product) {
-    return c.json({ message: "No data passed" }, 400);
-  }
+	if (!product) {
+		return c.json({ message: "No data passed" }, 400);
+	}
 
-  const db = c.env.DB;
-  const session = db.withSession("first-primary");
+	const db = c.env.DB;
+	const session = db.withSession("first-primary");
 
-  const { id } = product;
+	const { id } = product;
 
-  try {
-    return await withRetry(async () => {
-      // Check if the product exists
-      const { results } = await session
-        .prepare("SELECT * FROM products where id = ?")
-        .bind(id)
-        .run();
-      if (results.length === 0) {
-        const fields = [...Object.keys(product)];
-        const values = [...Object.values(product)];
-        // Insert the product
-        await session
-          .prepare(
-            `INSERT INTO products (${fields.join(", ")}) VALUES (${fields.map(() => "?").join(", ")})`
-          )
-          .bind(...values)
-          .run();
-        const latestBookmark = session.getBookmark();
-        latestBookmark &&
-          setCookie(c, "product_bookmark", latestBookmark, {
-            maxAge: 60 * 60, // 1 hour
-          });
-        return c.json({ message: "Product inserted" });
-      }
+	try {
+		return await withRetry(async () => {
+			// Check if the product exists
+			const { results } = await session
+				.prepare("SELECT * FROM products where id = ?")
+				.bind(id)
+				.run();
+			if (results.length === 0) {
+				const fields = [...Object.keys(product)];
+				const values = [...Object.values(product)];
+				// Insert the product
+				await session
+					.prepare(
+						`INSERT INTO products (${fields.join(", ")}) VALUES (${fields.map(() => "?").join(", ")})`,
+					)
+					.bind(...values)
+					.run();
+				const latestBookmark = session.getBookmark();
+				latestBookmark &&
+					setCookie(c, "product_bookmark", latestBookmark, {
+						maxAge: 60 * 60, // 1 hour
+					});
+				return c.json({ message: "Product inserted" });
+			}
 
-      // Update the product
-      const updates = Object.entries(product)
-        .filter(([_, value]) => value !== undefined)
-        .map(([key, _]) => `${key} = ?`)
-        .join(", ");
+			// Update the product
+			const updates = Object.entries(product)
+				.filter(([_, value]) => value !== undefined)
+				.map(([key, _]) => `${key} = ?`)
+				.join(", ");
 
-      if (!updates) {
-        throw new Error("No valid fields to update");
-      }
+			if (!updates) {
+				throw new Error("No valid fields to update");
+			}
 
-      const values = Object.entries(product)
-        .filter(([_, value]) => value !== undefined)
-        .map(([_, value]) => value);
+			const values = Object.entries(product)
+				.filter(([_, value]) => value !== undefined)
+				.map(([_, value]) => value);
 
-      await session
-        .prepare(`UPDATE products SET ${updates} WHERE id = ?`)
-        .bind(...[...values, id])
-        .run();
-      const latestBookmark = session.getBookmark();
-      latestBookmark &&
-        setCookie(c, "product_bookmark", latestBookmark, {
-          maxAge: 60 * 60, // 1 hour
-        });
-      return c.json({ message: "Product updated" });
-    });
-  } catch (e) {
-    console.error(e);
-    return c.json({ message: "Error upserting product" }, 500);
-  }
+			await session
+				.prepare(`UPDATE products SET ${updates} WHERE id = ?`)
+				.bind(...[...values, id])
+				.run();
+			const latestBookmark = session.getBookmark();
+			latestBookmark &&
+				setCookie(c, "product_bookmark", latestBookmark, {
+					maxAge: 60 * 60, // 1 hour
+				});
+			return c.json({ message: "Product updated" });
+		});
+	} catch (e) {
+		console.error(e);
+		return c.json({ message: "Error upserting product" }, 500);
+	}
 });
 ```
 
@@ -735,31 +741,31 @@ If you are using an external platform to manage your products, you can connect t
 
 ```ts
 app.get("/api/products", async (c) => {
-  const db = c.env.DB;
+	const db = c.env.DB;
 
-  // Get bookmark from the cookie
-  const bookmark = getCookie(c, "product_bookmark") || "first-unconstrained";
+	// Get bookmark from the cookie
+	const bookmark = getCookie(c, "product_bookmark") || "first-unconstrained";
 
-  const session = db.withSession(bookmark);
+	const session = db.withSession(bookmark);
 
-  try {
-      return await withRetry(async () => {
-      const { results } = await session.prepare("SELECT * FROM products").all();
+	try {
+		return await withRetry(async () => {
+			const { results } = await session.prepare("SELECT * FROM products").all();
 
-      const latestBookmark = session.getBookmark();
+			const latestBookmark = session.getBookmark();
 
-      // Set the bookmark in the cookie
-      latestBookmark &&
-        setCookie(c, "product_bookmark", latestBookmark, {
-          maxAge: 60 * 60, // 1 hour
-        });
+			// Set the bookmark in the cookie
+			latestBookmark &&
+				setCookie(c, "product_bookmark", latestBookmark, {
+					maxAge: 60 * 60, // 1 hour
+				});
 
-      return c.json(results);
-    });
-  } catch (e) {
-    console.error(e);
-    return c.json([]);
-  }
+			return c.json(results);
+		});
+	} catch (e) {
+		console.error(e);
+		return c.json([]);
+	}
 });
 ```
 
@@ -776,42 +782,42 @@ In the above code:
 
 ```ts
 app.get("/api/products/:id", async (c) => {
-  const id = c.req.param("id");
+	const id = c.req.param("id");
 
-  if (!id) {
-    return c.json({ message: "Invalid id" }, 400);
-  }
+	if (!id) {
+		return c.json({ message: "Invalid id" }, 400);
+	}
 
-  const db = c.env.DB;
+	const db = c.env.DB;
 
-  // Get bookmark from the cookie
-  const bookmark = getCookie(c, "product_bookmark") || "first-unconstrained";
+	// Get bookmark from the cookie
+	const bookmark = getCookie(c, "product_bookmark") || "first-unconstrained";
 
-  const session = db.withSession(bookmark);
+	const session = db.withSession(bookmark);
 
-  try {
-    return await withRetry(async () => {
-      const { results } = await session
-        .prepare("SELECT * FROM products where id = ?")
-        .bind(id)
-        .run();
+	try {
+		return await withRetry(async () => {
+			const { results } = await session
+				.prepare("SELECT * FROM products where id = ?")
+				.bind(id)
+				.run();
 
-      const latestBookmark = session.getBookmark();
+			const latestBookmark = session.getBookmark();
 
-      // Set the bookmark in the cookie
-      latestBookmark &&
-        setCookie(c, "product_bookmark", latestBookmark, {
-          maxAge: 60 * 60, // 1 hour
-        });
+			// Set the bookmark in the cookie
+			latestBookmark &&
+				setCookie(c, "product_bookmark", latestBookmark, {
+					maxAge: 60 * 60, // 1 hour
+				});
 
-      console.log(results);
+			console.log(results);
 
-      return c.json(results);
-    });
-  } catch (e) {
-    console.error(e);
-    return c.json([]);
-  }
+			return c.json(results);
+		});
+	} catch (e) {
+		console.error(e);
+		return c.json([]);
+	}
 });
 ```
 

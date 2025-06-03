@@ -97,7 +97,13 @@ export const baseSchema = ({ image }: SchemaContext) =>
 			.boolean()
 			.optional()
 			.describe(
-				"If true, this property adds a `noindex` declaration to the page, which will tell internal / external search crawlers to ignore this page. Helpful for pages that are historically accurate, but no longer recommended, such as [Workers Sites](/workers/configuration/sites/).",
+				"If true, this property adds a `noindex` declaration to the page, which will tell internal / external search crawlers to ignore this page. Helpful for pages that are historically accurate, but no longer recommended, such as [Workers Sites](/workers/configuration/sites/). Companion to the `chatbot_deprioritize` property.",
+			),
+		chatbot_deprioritize: z
+			.boolean()
+			.optional()
+			.describe(
+				"If true, this property will de-prioritize this page in the responses surfaced by Support AI. Helpful for pages that are historically accurate, but no longer recommended, such as [Workers Sites](/workers/configuration/sites/). Companion to the `noindex` property.",
 			),
 		sidebar,
 		hideChildren: z

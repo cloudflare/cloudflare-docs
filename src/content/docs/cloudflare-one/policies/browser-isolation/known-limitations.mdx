@@ -67,58 +67,11 @@ When a user downloads a file within the remote browser, the file is held in memo
 
 ## SAML applications
 
-When Browser Isolation is [deployed in-line](/cloudflare-one/policies/browser-isolation/setup/) (for example, via WARP, Gateway proxy endpoint or Magic WAN) it is possible to configure a subset of traffic to be isolated. Browser Isolation segregates local and remote browsing contexts. Due to this, cross-domain interactions (such as single sign-on) may not function as expected.
+Cloudflare Remote Browser Isolation now [supports SAML applications that use HTTP-POST bindings](/cloudflare-one/changelog/browser-isolation/#2025-05-13). This resolves previous issues such as `405` errors and login loops during SSO authentication flows.
 
-### `POST` request returns `405` error
+You no longer need to isolate both the Identity Provider (IdP) and Service Provider (SP), or switch to HTTP-Redirect bindings, to use Browser Isolation with POST-based SSO. Users can log in to internal or SaaS applications in the isolated browser securely and seamlessly.
 
-This error typically occurs due to SAML HTTP-POST bindings. These are not yet supported between non-isolated Identity Providers (IdP) and isolated Service Providers (SP).
-
-### Workarounds
-
-The following workarounds enable isolating SAML applications with Browser Isolation.
-
-#### Use SAML HTTP-Redirect bindings
-
-Configure your SAML implementation to use HTTP Redirect Bindings. This avoids the HTTP `405` error by using URL parameters to route SAMLResponse data into the isolated SP.
-
-#### Clientless Web Isolation
-
-Direct your users to use access the application via [Clientless Web Isolation](/cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/). Clientless Web Isolation implicitly isolates all traffic (both IdP and SP) and supports HTTP-POST SAML bindings.
-
-For user convenience, [create a bookmark](/cloudflare-one/applications/bookmarks/) in Cloudflare Access for your application (for example, `https://<authdomain>.cloudflareaccess.com/browser/https://example.com`).
-
-:::note
-IdP sessions are not shared between the non-isolated IdP and the Clientless Web Isolation IdP. Users will be prompted to establish an additional session with their IdP.
-:::
-
-#### Add the application to Access
-
-Configure a [self-hosted application](/cloudflare-one/applications/configure-apps/self-hosted-public-app/) in Cloudflare Access and [enable browser isolation](/cloudflare-one/policies/access/isolate-application/) in the application settings.
-
-#### Isolate both identity provider and service provider
-
-The HTTP `405` error does not occur when both the IdP and SP are isolated. For example:
-
-| Precedence | Selector    | Operator | Value             | Action  |
-| ---------- | ----------- | -------- | ----------------- | ------- |
-| 1          | Application | in       | _Okta_, _Zendesk_ | Isolate |
-
-:::note
-SAML HTTP-POST attempts initiated from the remote browser are not forwarded to non-Isolated SPs. All SPs should be isolated to avoid SSO errors.
-:::
-
-#### In-line SSO between Okta and Salesforce
-
-Some applications that use HTTP-POST bindings (such as Salesforce) complete SSO with an internal HTTP redirect. Applying a Do Not Isolate policy to the SAML HTTP-POST endpoint enables the SAML flow to complete, and authenticate the user into the application in the remote browser. For example:
-
-| Precedence | Selector    | Operator | Value                                | Logic | Action         |
-| ---------- | ----------- | -------- | ------------------------------------ | ----- | -------------- |
-| 1          | Host        | in       | `your-salesforce-domain.example.com` | And   | Do Not Isolate |
-|            | HTTP Method | in       | _POST_                               |       |                |
-
-| Precedence | Selector | Operator | Value                                | Action  |
-| ---------- | -------- | -------- | ------------------------------------ | ------- |
-| 2          | Host     | in       | `your-salesforce-domain.example.com` | Isolate |
+[Clientless Web Isolation](/cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/) may still be preferred in some deployment models. Clientless Web Isolation implicitly isolates all traffic (both IdP and SP) and supports HTTP-POST SAML bindings.
 
 ## Browser Isolation is not compatible with private IPs on non-`443` ports
 

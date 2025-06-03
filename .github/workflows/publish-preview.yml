@@ -32,6 +32,7 @@ jobs:
       - run: npm run build
         name: Build
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_OPTIONS: --max-old-space-size=4096
       - name: Deploy to Cloudflare Workers
         env:

@@ -112,7 +112,7 @@ Iceberg clients (including [PyIceberg](https://py.iceberg.apache.org/)) must aut
 
 You need to install a Python package manager. In this guide, use [uv](https://docs.astral.sh/uv/). If you do not already have uv installed, follow the [installing uv guide](https://docs.astral.sh/uv/getting-started/installation/).
 
-## 5. Install marimo
+## 5. Install marimo and set up your project with uv
 
 We will use [marimo](https://github.com/marimo-team/marimo) as a Python notebook.
 
@@ -123,29 +123,23 @@ We will use [marimo](https://github.com/marimo-team/marimo) as a Python notebook
     	mkdir r2-data-catalog-notebook
     	```
 
-2.  Change into our new directory:
+2. Change into our new directory:
 
-        ```
-        cd r2-data-catalog-notebook
-        ```
+      ```
+      cd r2-data-catalog-notebook
+      ```
 
-3.  Create a new Python virtual environment:
+3. Initialize a new uv project (this creates a `.venv` and a `pyproject.toml`):
 
-        ```
-        uv venv
-        ```
+      ```
+      uv init
+      ```
 
-4.  Activate the Python virtual environment:
+4. Add marimo and required dependencies:
 
-        ```
-        source .venv/bin/activate
-        ```
-
-5.  Install marimo with uv:
-
-        ```py
-        uv pip install marimo
-        ```
+      ```py
+      uv add marimo pyiceberg pyarrow pandas
+      ```
 
 </Steps>
 
@@ -154,7 +148,7 @@ We will use [marimo](https://github.com/marimo-team/marimo) as a Python notebook
 <Steps>
 1. Create a file called `r2-data-catalog-tutorial.py`.
 
-2.  Paste the following code snippet into your `r2-data-catalog-tutorial.py` file:
+2. Paste the following code snippet into your `r2-data-catalog-tutorial.py` file:
 
         ```py
         import marimo
@@ -269,7 +263,15 @@ We will use [marimo](https://github.com/marimo-team/marimo) as a Python notebook
         		app.run()
         ```
 
-3.  Replace the `CATALOG_URI`, `WAREHOUSE`, and `TOKEN` variables with your values from sections **2** and **3** respectively.
+3. Replace the `CATALOG_URI`, `WAREHOUSE`, and `TOKEN` variables with your values from sections **2** and **3** respectively.
+
+4. Launch the notebook editor in your browser:
+
+    	```
+    	uv run marimo edit r2-data-catalog-tutorial.py
+    	```
+
+			Once your notebook connects to the catalog, you'll see the catalog along with its namespaces and tables appear in marimo's Datasources panel.
 
 </Steps>
 In the Python notebook above, you:

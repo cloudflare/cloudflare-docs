@@ -34,11 +34,11 @@ The Disk Encryption device posture attribute ensures that disks are encrypted on
 
 Next, go to **Logs** > **Posture** and verify that the disk encryption check is returning the expected results.
 
-## How WARP checks for encryption
+## Validate disk encryption status
 
-Operating systems determine disk encryption in various ways. The following information will allow you to understand how the client determines disk encryption status on various systems.
+The following commands will return the disk encryption status on various operating systems. The results can help you validate if the posture check is working as expected.
 
-### On macOS
+### macOS
 
 1. Open a terminal window.
 
@@ -68,13 +68,13 @@ Operating systems determine disk encryption in various ways. The following infor
     FileVault:                 Yes
    ```
 
-### On Windows
+### Windows
 
 1. Open a PowerShell window.
 2. Run the `Get-BitLockerVolume` command to list all volumes detected on the system.
 3. **Protection Status** must be set to **On** for the disk to be considered encrypted.
 
-### On Linux
+### Linux
 
 List all hard drives on the system:
 
@@ -95,6 +95,6 @@ nvme0n1                     259:0    0 476.9G  0 disk
 
 On Linux, encryption is reported per mounted partition, not physical drive. In the example above, the root and swap partitions are considered encrypted because they are located within a `crypt` container. The `/boot` and `/boot/efi` partitions remain unencrypted.
 
-### On iOS, Android and ChromeOS
+### iOS, Android and ChromeOS
 
 These platforms are always encrypted and so no disk encryption check is supported.

@@ -5,6 +5,15 @@ productLink: "/workers/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-05-22"
+    description: |-
+      - Enabled explicit resource context management and support for Float16Array
+  - publish_date: "2025-05-20"
+    description: |-
+      - Updated v8 to version 13.7.
+  - publish_date: "2025-04-16"
+    description: |-
+      - Updated v8 to version 13.6.
   - publish_date: "2025-04-03"
     description: |-
       - Websocket client exceptions are now JS exceptions rather than internal errors.

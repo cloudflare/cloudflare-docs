@@ -131,19 +131,7 @@ This is a minimal application using Hono. If a GET access comes in on the path `
 
 To run the application on your local machine, execute the following command.
 
-<Tabs> <TabItem label="npm">
-
-```sh title="Run your application locally"
-npm run dev
-```
-
-</TabItem> <TabItem label="yarn">
-
-```sh title="Run your application locally"
-yarn dev
-```
-
-</TabItem> </Tabs>
+<PackageManagers exec="run" args="dev" />
 
 Access to `http://localhost:8787` in your browser after the server has been started, and you can see the message.
 
@@ -738,19 +726,7 @@ By completing the preceding steps, you have finished writing the code for your S
 
 Wrangler has built-in support for bundling, uploading, and releasing your Cloudflare Workers application. To do this, run the following command which will build and deploy your code.
 
-<Tabs> <TabItem label="npm">
-
-```sh title="Deploy your application"
-npm run deploy
-```
-
-</TabItem> <TabItem label="yarn">
-
-```sh title="Deploy your application"
-yarn deploy
-```
-
-</TabItem> </Tabs>
+<PackageManagers exec="run" args="deploy" />
 
 Deploying your Workers application should now cause issue updates to start appearing in your Slack channel, as the GitHub webhook can now successfully reach your Workers webhook route:
 

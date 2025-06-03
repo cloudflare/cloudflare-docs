@@ -5,7 +5,15 @@ sidebar:
   order: 3
 ---
 
-To set up MX/Inline:
+import { Render } from "~/components"
+
+## Prerequisites
+
+To use Email Security, you will need to have:
+
+<Render file="email-security/onboarding-prerequisites" />
+
+## Initiate MX/Inline configuration
 
 1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
 2. Select **Email Security**.
@@ -45,8 +53,8 @@ If you have verified zones on Cloudflare, continue with the following steps:
 
 If you do not have domains with Cloudflare, the dashboard will display two options:
 
-- Add a domain to Cloudflare.
-- Enter domain manually.
+- [Add a domain to Cloudflare](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment-setup/#add-a-domain-to-cloudflare).
+- [Enter domain manually](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment-setup/#enter-domain-manually).
 
 ### Add a domain to Cloudflare
 
@@ -61,4 +69,4 @@ Then, follow the steps to [Set up MX/Inline](/cloudflare-one/email-security/setu
 3. **Verify your domains**: It may take up to 24 hours for your domains to be verified. Select **Done**.
 4. Once your domains have been verified, the dashboard will display a message like this: **You have verified domains ready to connect to Email Security**. This means that you can now set up Email Security via MX/Inline. 
 5. Select **Set up**, then select **MX/Inline**.
-6. Follow the steps to [Set up MX/Inline](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment-setup/).
+6. Follow the steps to [Initiate MX/Inline configuration](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment-setup/#initiate-mxinline-configuration).

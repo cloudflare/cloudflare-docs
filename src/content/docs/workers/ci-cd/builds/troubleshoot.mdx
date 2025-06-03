@@ -26,6 +26,8 @@ The build system uses the `name` argument in the wrangler.toml to determine whic
 This does not apply to [Wrangler Environments](/workers/wrangler/environments/) if the Worker name before the `-<env_name>` suffix matches the name in wrangler.toml.
 
 For example, a Worker named `my-worker-staging` on the dashboard can be deployed from a repository that contains a wrangler.toml with the arguments `name = my-worker` and `[env.staging]` using the deploy command `npx wrangler deploy --env staging`.
+
+On Wrangler v3 and up, Workers Builds automatically matches the name of the connected Worker by overriding it with the `WRANGLER_CI_OVERRIDE_NAME` environment variable.
 :::
 
 ### Missing wrangler.toml
@@ -42,7 +44,7 @@ If you see this error, the wrangler.toml likely has an `account_id` for a differ
 
 ### Stale API token
 
-`	Failed: The build token selected for this build has been deleted or rolled and cannot be used for this build. Please update your build token in the Worker Builds settings and retry the build.`
+` Failed: The build token selected for this build has been deleted or rolled and cannot be used for this build. Please update your build token in the Worker Builds settings and retry the build.`
 
 The API Token dropdown in Build Configuration settings may show stale tokens that were edited, deleted, or rolled. If you encounter an error due to a stale token, create a new API Token and select it for the build.
 

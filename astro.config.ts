@@ -11,11 +11,14 @@ import react from "@astrojs/react";
 import { readdir } from "fs/promises";
 import { fileURLToPath } from "url";
 
+import remarkValidateImages from "./src/plugins/remark/validate-images";
+
 import rehypeTitleFigure from "rehype-title-figure";
 import rehypeMermaid from "./src/plugins/rehype/mermaid.ts";
 import rehypeAutolinkHeadings from "./src/plugins/rehype/autolink-headings.ts";
 import rehypeExternalLinks from "./src/plugins/rehype/external-links.ts";
 import rehypeHeadingSlugs from "./src/plugins/rehype/heading-slugs.ts";
+import rehypeShiftHeadings from "./src/plugins/rehype/shift-headings.ts";
 
 async function autogenSections() {
 	const sections = (
@@ -60,6 +63,7 @@ export default defineConfig({
 	site: "https://developers.cloudflare.com",
 	markdown: {
 		smartypants: false,
+		remarkPlugins: [remarkValidateImages],
 		rehypePlugins: [
 			rehypeMermaid,
 			rehypeExternalLinks,
@@ -67,6 +71,7 @@ export default defineConfig({
 			rehypeAutolinkHeadings,
 			// @ts-expect-error plugins types are outdated but functional
 			rehypeTitleFigure,
+			rehypeShiftHeadings,
 		],
 	},
 	image: {
