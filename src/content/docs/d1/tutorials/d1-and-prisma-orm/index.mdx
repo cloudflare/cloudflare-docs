@@ -11,7 +11,7 @@ languages:
   - SQL
 ---
 
-import { WranglerConfig, FileTree, PackageManagers } from "~/components";
+import { WranglerConfig, FileTree, PackageManagers, GitHubCode } from "~/components";
 
 ## What is Prisma ORM?
 
@@ -21,7 +21,9 @@ To learn more about Prisma ORM, refer to the [Prisma documentation](https://www.
 
 ## Query D1 from a Cloudflare Worker using Prisma ORM
 
-This example shows you how to set up and deploy a Cloudflare Worker that is accessing a D1 database from scratch.
+This tutorial shows you how to set up and deploy a Cloudflare Worker that is accessing a D1 database from scratch.
+
+
 
 ### Prerequisites
 
@@ -80,7 +82,7 @@ Since you will use the [driver adapter](https://www.prisma.io/docs/orm/overview/
 
 Open your `schema.prisma` file and adjust the `generator` block to reflect as follows:
 
-```diff
+```prisma title="schema.prisma"
 generator client {
   provider        = "prisma-client-js"
 +	previewFeatures = ["driverAdapters"]
@@ -170,13 +172,16 @@ Next, you need to add the SQL statement that will create a `User` table to that 
 
 Open the `schema.prisma` file and add the following `User` model to your schema:
 
-```diff
-model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
-}
-```
+<GitHubCode
+    repo="cloudflare/docs-examples"
+    file="d1/query-d1-using-prisma/prisma/schema.prisma"
+    commit="c49d24f86dc2eb06a07b1c0b3ede871a1d8e7e92"
+    lines="15-19"
+		lang="prisma"
+    code={{
+     title: "schema.prisma"
+   }}
+/>
 
 Now, run the following command in your terminal to generate the SQL statement that creates a `User` table equivalent to the `User` model above:
 
@@ -186,17 +191,16 @@ npx prisma migrate diff --from-empty --to-schema-datamodel ./prisma/schema.prism
 
 This stores a SQL statement to create a new `User` table in your migration file from before, here is what it looks like:
 
-```sql
--- CreateTable
-CREATE TABLE "User" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "email" TEXT NOT NULL,
-    "name" TEXT
-);
-
--- CreateIndex
-CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
-```
+<GitHubCode
+    repo="cloudflare/docs-examples"
+    file="d1/query-d1-using-prisma/migrations/0001_create_user_table.sql"
+    commit="c49d24f86dc2eb06a07b1c0b3ede871a1d8e7e92"
+    lang="sql"
+    lines="1-9"
+    code={{
+     title: "0001_create_user_table.sql"
+   }}
+/>
 
 `UNIQUE INDEX` on `email` was created because the `User` model in your Prisma schema is using the [`@unique`](https://www.prisma.io/docs/orm/reference/prisma-schema-reference#unique) attribute on its `email` field.
 
@@ -258,25 +262,16 @@ To query your database from the Worker using Prisma ORM, you need to:
 
 Open `src/index.ts` and replace the entire content with the following:
 
-```ts
-import { PrismaClient } from "@prisma/client";
-import { PrismaD1 } from "@prisma/adapter-d1";
-
-export interface Env {
-	DB: D1Database;
-}
-
-export default {
-	async fetch(request, env, ctx): Promise<Response> {
-		const adapter = new PrismaD1(env.DB);
-		const prisma = new PrismaClient({ adapter });
-
-		const users = await prisma.user.findMany();
-		const result = JSON.stringify(users);
-		return new Response(result);
-	},
-} satisfies ExportedHandler<Env>;
-```
+<GitHubCode
+    repo="cloudflare/docs-examples"
+    file="d1/query-d1-using-prisma/src/index.ts"
+    commit="c49d24f86dc2eb06a07b1c0b3ede871a1d8e7e92"
+    lang="ts"
+    code={{
+     title: "index.ts"
+   }}
+    useTypeScriptExample={true}
+/>
 
 Before running the Worker, generate Prisma Client with the following command:
 
