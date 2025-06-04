@@ -1427,6 +1427,7 @@
 /r2/examples/postman/ /r2/tutorials/postman/ 301
 /r2/examples/cloudflare-access/ /r2/tutorials/cloudflare-access/ 301
 /r2/examples/upload-logs-event-notifications/ /r2/tutorials/upload-logs-event-notifications/ 301
+/r2/examples/demo-worker/ /r2/api/workers/workers-api-usage/ 301
 
 # time-services_redirects
 /time-services/nts/usage/ /time-services/nts/ 301
