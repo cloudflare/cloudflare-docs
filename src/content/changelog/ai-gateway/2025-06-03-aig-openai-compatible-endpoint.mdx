@@ -14,7 +14,7 @@ import OpenAI from "openai";
 const client = new OpenAI({
   apiKey: "YOUR_PROVIDER_API_KEY", // Provider API key
   baseURL:
-    "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/completions",
+    "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat",
 });
 
 const response = await client.chat.completions.create({
