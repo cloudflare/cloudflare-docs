@@ -1,10 +1,12 @@
 ---
-inputParameters: param1
+params:
+  - cert
+  - key?
 ---
 
 import { Markdown } from "~/components";
 
-Use the [Upload mTLS certificate endpoint](/api/resources/mtls_certificates/methods/create/) to upload the certificate and private key to Cloudflare. The certificate must be a {props.cert}, formatted as a single string with `\n` replacing the line breaks. {props.one}
+Use the [Upload mTLS certificate endpoint](/api/resources/mtls_certificates/methods/create/) to upload the certificate and private key to Cloudflare. The certificate must be a {props.cert}, formatted as a single string with `\n` replacing the line breaks. {props.key}
 
 ```sh
 curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/mtls_certificates" \

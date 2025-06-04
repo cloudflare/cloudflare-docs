@@ -78,7 +78,7 @@ openssl x509 -in <CUSTOM-ROOT-CERT>.pem -text
 
 <TabItem label="API">
 
-1. <Render file="upload-mtls-cert" params={{ one: " ", cert: "root CA" }} />
+1. <Render file="upload-mtls-cert" params={{ key: " ", cert: "root CA" }} />
 
 2. Set the certificate as available for use in inspection with the [Activate a Zero Trust certificate endpoint](/api/resources/zero_trust/subresources/gateway/subresources/certificates/methods/activate/). This will deploy the certificate across the Cloudflare global network.
 
