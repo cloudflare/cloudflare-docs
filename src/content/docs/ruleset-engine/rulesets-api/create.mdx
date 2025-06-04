@@ -6,7 +6,7 @@ sidebar:
   order: 5
 ---
 
-import { Description, Type, Render } from "~/components";
+import { Description, Type, Render, APIRequest } from "~/components";
 
 Creates a ruleset of a given kind in the specified phase. Allows you to create phase entry point rulesets.
 
@@ -32,11 +32,11 @@ The following parameters are required:
   - The kind of ruleset the JSON object represents.
   - Allowed values:
     - `custom`: Creates a custom ruleset
-    - `root`: Creates a phase entry point ruleset at the account level
+    - `root`: Creates a phase [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) at the account level
     - `zone`: Creates a phase entry point ruleset at the zone level
 - `phase` <Type text="String" />
   - The name of the [phase](/ruleset-engine/about/phases/) where the ruleset will be created.
-  - Check the specific Cloudflare product documentation for more information on the phases where you can create rulesets for that product.
+  - Check the [phases list](/ruleset-engine/reference/phases-list/) or the specific Cloudflare product documentation for more information on the phases where you can create rulesets for that product.
 
 Use the `rules` parameter to supply a list of rules for the ruleset. For an object definition, refer to [Rulesets API: JSON Object](/ruleset-engine/rulesets-api/json-object/).
 
@@ -44,23 +44,22 @@ Use the `rules` parameter to supply a list of rules for the ruleset. For an obje
 
 The following `POST` request creates a custom ruleset in the `http_request_firewall_custom` phase containing a single rule.
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "name": "Example custom ruleset",
-  "kind": "custom",
-  "description": "Example ruleset description",
-  "rules": [
-    {
-      "action": "log",
-      "expression": "cf.zone.name eq \"example.com\""
-    }
-  ],
-  "phase": "http_request_firewall_custom"
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/rulesets"
+	method="POST"
+	json={{
+		name: "Example custom ruleset",
+		kind: "custom",
+		description: "Example ruleset description",
+		rules: [
+			{
+				action: "log",
+				expression: 'cf.zone.name eq "example.com"',
+			},
+		],
+		phase: "http_request_firewall_custom",
+	}}
+/>
 
 ```json output
 {
@@ -76,31 +75,10 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
 				"version": "1",
 				"action": "log",
 				"expression": "cf.zone.name eq \"example.com\"",
-				"last_updated": "2021-03-17T15:42:37.917815Z"
+				"last_updated": "2025-03-17T15:42:37.917815Z"
 			}
 		],
-		"last_updated": "2021-03-17T15:42:37.917815Z",
-		"phase": "http_request_firewall_custom"
-	},
-	"success": true,
-	"errors": [],
-	"messages": []
-	"result": {
-		"id": "<RULESET_ID>",
-		"name": "Example custom ruleset",
-		"description": "Example ruleset description",
-		"kind": "custom",
-		"version": "1",
-		"rules": [
-			{
-				"id": "<RULE_ID>",
-				"version": "1",
-				"action": "log",
-				"expression": "cf.zone.name eq \"example.com\"",
-				"last_updated": "2021-03-17T15:42:37.917815Z"
-			}
-		],
-		"last_updated": "2021-03-17T15:42:37.917815Z",
+		"last_updated": "2025-03-17T15:42:37.917815Z",
 		"phase": "http_request_firewall_custom"
 	},
 	"success": true,
@@ -114,31 +92,28 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
 The following `POST` request creates a zone-level phase entry point ruleset at the `http_request_firewall_managed` phase with a single rule that executes a managed ruleset.
 
 :::note
-
-You do not have to use this method to create a phase entry point ruleset — Cloudflare automatically creates the entry point ruleset when you add a rule to it, if it does not exist. Refer to [Add rules to phase entry point rulesets](/ruleset-engine/basic-operations/add-rule-phase-rulesets/) for more information.
-
+You do not have to use this method to create a phase entry point ruleset. Cloudflare automatically creates the entry point ruleset when you add a rule to it, if it does not exist. Refer to [Add rules to phase entry point rulesets](/ruleset-engine/basic-operations/add-rule-phase-rulesets/) for more information.
 :::
 
-```bash
-curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "name": "Zone-level phase entry point",
-  "kind": "zone",
-  "description": "This ruleset executes a managed ruleset.",
-  "rules": [
-    {
-      "action": "execute",
-      "expression": "true",
-      "action_parameters": {
-        "id": "<MANAGED_RULESET_ID>"
-      }
-    }
-  ],
-  "phase": "http_request_firewall_managed"
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/rulesets"
+	method="POST"
+	json={{
+		name: "Zone-level phase entry point",
+		kind: "zone",
+		description: "This ruleset executes a managed ruleset.",
+		rules: [
+			{
+				action: "execute",
+				expression: "true",
+				action_parameters: {
+					id: "<MANAGED_RULESET_ID>",
+				},
+			},
+		],
+		phase: "http_request_firewall_managed",
+	}}
+/>
 
 ```json output
 {
@@ -157,10 +132,10 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets \
 				"action_parameters": {
 					"id": "<MANAGED_RULESET_ID>"
 				},
-				"last_updated": "2021-03-17T15:42:37.917815Z"
+				"last_updated": "2025-03-17T15:42:37.917815Z"
 			}
 		],
-		"last_updated": "2021-03-17T15:42:37.917815Z",
+		"last_updated": "2025-03-17T15:42:37.917815Z",
 		"phase": "http_request_firewall_managed"
 	},
 	"success": true,
@@ -174,29 +149,28 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets \
 The following `POST` request creates an account-level phase entry point ruleset for the `http_ratelimit` phase with a single rule that executes a rate limiting ruleset for all Enterprise zones in the account.
 
 :::note
-You do not have to use this method to create a phase entry point ruleset — Cloudflare automatically creates the entry point ruleset when you add a rule to it, if it does not exist. Refer to [Add rules to phase entry point rulesets](/ruleset-engine/basic-operations/add-rule-phase-rulesets/) for more information.
+You do not have to use this method to create a phase entry point ruleset. Cloudflare automatically creates the entry point ruleset when you add a rule to it, if it does not exist. Refer to [Add rules to phase entry point rulesets](/ruleset-engine/basic-operations/add-rule-phase-rulesets/) for more information.
 :::
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "name": "Account-level phase entry point",
-  "kind": "root",
-  "description": "This ruleset executes a rate limiting ruleset.",
-  "rules": [
-    {
-      "action": "execute",
-      "expression": "(cf.zone.plan eq \"ENT\")",
-      "action_parameters": {
-        "id": "<RATE_LIMITING_RULESET_ID>"
-      }
-    }
-  ],
-  "phase": "http_ratelimit"
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/rulesets"
+	method="POST"
+	json={{
+		name: "Account-level phase entry point",
+		kind: "root",
+		description: "This ruleset executes a rate limiting ruleset.",
+		rules: [
+			{
+				action: "execute",
+				expression: '(cf.zone.plan eq "ENT")',
+				action_parameters: {
+					id: "<RATE_LIMITING_RULESET_ID>",
+				},
+			},
+		],
+		phase: "http_ratelimit",
+	}}
+/>
 
 ```json output
 {

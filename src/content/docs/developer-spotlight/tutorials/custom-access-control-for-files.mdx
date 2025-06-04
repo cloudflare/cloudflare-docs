@@ -41,7 +41,7 @@ To get started developing your Worker you will use the [`create-cloudflare` CLI]
 	product="workers"
 	params={{
 		category: "hello-world",
-		type: "Hello World Worker",
+		type: "Worker only",
 		lang: "TypeScript",
 	}}
 />
@@ -94,8 +94,6 @@ npx wrangler r2 bucket create <YOUR_BUCKET_NAME>
 
 This works similar to the D1 database creation, where you will need to replace `<YOUR_BUCKET_NAME>` with the name you want to use for your bucket.
 To do this, go to the Wrangler file again and then add the following lines:
-
-
 
 <WranglerConfig>
 

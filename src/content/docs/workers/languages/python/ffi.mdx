@@ -38,12 +38,12 @@ kv_namespaces = [
 ...and then call `.get()` on the binding object that is exposed on `env`:
 
 ```python
-from js import Response
+from workers import Response
 
 async def on_fetch(request, env):
     await env.FOO.put("bar", "baz")
     bar = await env.FOO.get("bar")
-    return Response.new(bar) # returns "baz"
+    return Response(bar) # returns "baz"
 ```
 
 Under the hood, `env` is actually a JavaScript object. When you call `.FOO`, you are accessing this property via a [`JsProxy`](https://pyodide.org/en/stable/usage/api/python-api/ffi.html#pyodide.ffi.JsProxy) — special proxy object that makes a JavaScript object behave like a Python object.

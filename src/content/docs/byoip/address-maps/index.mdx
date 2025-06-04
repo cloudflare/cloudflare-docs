@@ -45,3 +45,11 @@ Some customers may only proxy zones through BYOIP addresses, and are prohibited 
 It is still possible to create more specific zone-level address maps with specific BYOIPs, but DNS will fall back to the account-wide address map without one.
 
 To specify different addresses for certain zones, [create a new address map](/byoip/address-maps/setup/).
+
+---
+
+## Spectrum compatibility
+
+You can use address maps to set up [non-SNI support](/byoip/address-maps/setup/#spectrum-https-applications) for Spectrum HTTPS applications.
+
+However, to control what IP address Cloudflare will use when responding to requests for your Spectrum applications, you should first refer to their respective configuration and set the `edge_ips` field as `static`. For details, refer to the [Spectrum API](/api/resources/spectrum/models/edge_ips/).

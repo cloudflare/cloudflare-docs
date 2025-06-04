@@ -49,8 +49,8 @@ An optional `filter` property on `query()` method specifies metadata filters:
 - For `$eq` and `$ne`, `filter` object non-nested values can be `string`, `number`, `boolean`, or `null` values.
 - For `$in` and `$nin`, `filter` object values can be arrays of `string`, `number`, `boolean`, or `null` values.
 - Upper-bound range queries (i.e. `$lt` and `$lte`) can be combined with lower-bound range queries (i.e. `$gt` and `$gte`) within the same filter. Other combinations are not allowed.
-- For range queries (i.e. `$lt`, `$lte`, `$gt`, `$gte`), `filter` object non-nested values can be `string` or `number` values. Strings are ordered lexicographically. 
-- Range queries involving a large number of vectors (~10M and above) may experience reduced accuracy. 
+- For range queries (i.e. `$lt`, `$lte`, `$gt`, `$gte`), `filter` object non-nested values can be `string` or `number` values. Strings are ordered lexicographically.
+- Range queries involving a large number of vectors (~10M and above) may experience reduced accuracy.
 
 ### Namespace versus metadata filtering
 
@@ -92,7 +92,9 @@ Both [namespaces](/vectorize/best-practices/insert-vectors/#namespaces) and meta
 ```
 
 #### Range query involving strings
-Range queries can be used to implement prefix searching on string metadata fields.
+
+Range queries can implement **prefix searching** on string metadata fields. This is also like a **starts_with** filter.
+
 For example, the following filter matches all values starting with "net":
 
 ```json

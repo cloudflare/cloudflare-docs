@@ -1,0 +1,47 @@
+---
+title: Removed unused meta fields from DNS records
+description: Cloudflare is removing five fields from the meta object of DNS records.
+date: 2025-02-02T18:00:00Z
+---
+
+Cloudflare is removing five fields from the `meta` object of DNS records. These fields have been unused for more than a year and are no longer set on new records. This change may take up to four weeks to fully roll out.
+
+The affected fields are:
+
+- the `auto_added` boolean
+- the `managed_by_apps` boolean and corresponding `apps_install_id`
+- the `managed_by_argo_tunnel` boolean and corresponding `argo_tunnel_id`
+
+An example record returned from the API would now look like the following:
+
+```json title="Updated API Response" del={14-16}
+{
+	"result": {
+		"id": "<ID>",
+		"zone_id": "<ZONE_ID>",
+		"zone_name": "example.com",
+		"name": "www.example.com",
+		"type": "A",
+		"content": "192.0.2.1",
+		"proxiable": true,
+		"proxied": false,
+		"ttl": 1,
+		"locked": false,
+		"meta": {
+			"auto_added": false,
+			"managed_by_apps": false,
+			"managed_by_argo_tunnel": false,
+			"source": "primary"
+		},
+		"comment": null,
+		"tags": [],
+		"created_on": "2025-03-17T20:37:05.368097Z",
+		"modified_on": "2025-03-17T20:37:05.368097Z"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
+}
+```
+
+For more guidance, refer to [Manage DNS records](/dns/manage-dns-records/).

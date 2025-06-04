@@ -2,7 +2,7 @@
 pcx_content_type: reference
 title: Glossary
 sidebar:
-  order: 7
+  order: 6
 
 ---
 
@@ -68,6 +68,25 @@ of the table are defined as follows:
 
 You can also access the detection result programmatically via our [public API](/api/resources/radar/subresources/bgp/subresources/hijacks/subresources/events/methods/list/) ([CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) license).
 
+## BGP real-time routes
+
+Cloudflare Radar's prefix routing page displays real-time BGP routes as a [Sankey diagram][sankey]. This visualization is built using MRT data from [RouteViews][route-views] and [RIPE RIS][ripe-ris], combined with real-time streams from RouteViews' Kafka instance and [RIS Live][ris-live].
+
+By default, the route visualization shows paths from the originating AS to [Tier-1 networks][tier-1], omitting the segments from Tier-1 networks to BGP route collectors for clarity. Users can choose to see the complete paths using the "Show full paths" toggle.
+
+Above the visualization, a table details the prefix origin, including the originating AS, its visibility percentage across route collectors, and [RPKI][rpki] validation status (`valid`, `invalid`, `unknown`).
+
+Hovering over a link in the diagram reveals a tooltip with the connected ASNs, the observing BGP route collectors (from [RIPE RIS][ris-collectors] and [RouteViews][route-views-collectors]), and the last update timestamp.
+
+[route-views]: https://www.routeviews.org/routeviews/
+[route-views-collectors]: https://www.routeviews.org/routeviews/collectors/
+[ripe-ris]: https://www.ripe.net/analyse/internet-measurements/routing-information-service-ris/
+[ris-live]: https://ris-live.ripe.net/
+[ris-collectors]: https://ris.ripe.net/docs/route-collectors/
+[sankey]: https://en.wikipedia.org/wiki/Sankey_diagram
+[rpki]: https://blog.cloudflare.com/rpki-details/
+[tier-1]: https://en.wikipedia.org/wiki/Tier_1_network
+
 ## Certificates
 
 Encryption is a critical part of a safe Internet. SSL/TLS is the standard security technology for establishing an encrypted link between a client and a server.
@@ -131,7 +150,7 @@ IP address geolocation is the term used for the process of associating an IP add
 
 Note that a number of factors may affect the accuracy of the geolocation information, including mobile network architecture, the use of VPN services, and the use of privacy-protecting proxy services.
 
-Learn more from [MaxMind](https://www.maxmind.com/en/geoip-data-correction-request) about how to suggest a correction if you believe the location provided is incorrect.
+Learn more from [IPinfo](https://ipinfo.io/corrections) about how to suggest a correction if you believe the location provided is incorrect.
 
 ## IPv6 adoption
 
@@ -144,6 +163,10 @@ Note that prior to January 23, 2023, the IPv6 percentage shown in the chart was 
 The Internet Quality Index estimates connection performance under average utilization, such as web browsing. It is based on end user measurements against a fixed set of Cloudflare and third-party targets, providing numbers for bandwidth, round-trip time (latency), and DNS response time, aggregated by continent, country, or ASN.
 
 The IQI methodology requires a minimum number of measurements to generate estimates. As a result, graphs for smaller countries and ASNs may display occasional gaps, especially during nighttime. These gaps do not indicate outages. The number of measurements underlying IQI does not necessarily correlate with the volume of traffic observed by Cloudflare in a specific country or ASN.
+
+## Leaked credentials
+
+[Leaked credentials detection](/waf/detections/leaked-credentials/) scans incoming HTTP requests for known authentication patterns from common web apps and any custom detection locations that were configured. Cloudflare Radar provides visibility into aggregate trends in authentication requests, including the detection of leaked credentials.
 
 ## Mobile operating systems
 

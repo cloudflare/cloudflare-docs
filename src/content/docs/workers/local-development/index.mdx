@@ -1,0 +1,51 @@
+---
+pcx_content_type: navigation
+title: Local development
+sidebar:
+  order: 6
+head: []
+description: Develop your Workers locally.
+---
+
+import { Details, LinkCard, Render, PackageManagers } from "~/components";
+
+When building projects on Cloudflare Workers, you have two options for local development:
+
+- [**Wrangler**](/workers/wrangler/), using the built-in [`wrangler dev`](/workers/wrangler/commands/#dev) command.
+- [Vite](https://vite.dev/), using the [**Cloudflare Vite plugin**](/workers/vite-plugin/).
+
+Both Wrangler and the Vite plugin use [Miniflare](/workers/testing/miniflare/) to provide an accurate **local** simulation of the Cloudflare Workers runtime, ([`workerd`](https://github.com/cloudflare/workerd)). If you need to [develop with **remote resources**](/workers/local-development/remote-data/), Wrangler is the only option, and provides remote development via the `wrangler dev --remote` command.
+
+## Choosing between Wrangler or Vite
+
+Deciding between Wrangler and the Cloudflare Vite plugin depends on your project's focus and development workflow. Here are some quick guidelines to help you choose:
+
+### When to use Wrangler
+
+- **Backend & Workers-focused:**
+  If you're primarily building APIs, serverless functions, or background tasks, use Wrangler.
+
+- **Remote development:**
+  If your project needs the ability to develop and test using production resources and data on Cloudflare's network, use Wrangler's `--remote` flag.
+
+- **Simple frontends:**
+  If you have minimal frontend requirements and don’t need hot reloading or advanced bundling, Wrangler may be sufficient.
+
+### When to use the Cloudflare Vite Plugin
+
+Use the [Vite plugin](/workers/vite-plugin/) for:
+
+- **Frontend-centric development:**
+  If you already use Vite with modern frontend frameworks like React, Vue, Svelte, or Solid, the Vite plugin integrates into your development workflow.
+
+- **React Router v7:**
+  If you are using [React Router v7](https://reactrouter.com/) (the successor to Remix), it is officially supported by the Vite plugin as a full-stack SSR framework.
+
+- **Rapid iteration (HMR):**
+  If you need near-instant updates in the browser, the Vite plugin provides [Hot Module Replacement (HMR)](https://vite.dev/guide/features.html#hot-module-replacement) during local development.
+
+- **Advanced optimizations:**
+  If you require more advanced optimizations (code splitting, efficient bundling, CSS handling, build time transformations, etc.), Vite is a strong fit.
+
+- **Greater flexibility:**
+  Due to Vite's advanced configuration options and large ecosystem of plugins, there is more flexibility to customize your development experience and build output.

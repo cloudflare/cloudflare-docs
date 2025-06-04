@@ -48,7 +48,7 @@ Obtain the following URLs from your SaaS application account:
 If you are using Okta, Microsoft Entra ID (formerly Azure AD), Google Workspace, or GitHub as your IdP, Access will automatically send a SAML attribute titled `groups` with all of the user's associated groups as attribute values.
 :::
 
-11. Add [Access policies](/cloudflare-one/policies/access/) to control who can connect to your application. All Access applications are deny by default -- a user must match an Allow policy before they are granted access.
+11. <Render file="access/add-access-policies" product="cloudflare-one" />
 
 12. <Render file="access/access-choose-idps" product="cloudflare-one" />
 
@@ -113,7 +113,7 @@ JSONata transformations are not compatible with [SAML attribute statements](#sam
 
 For example, the following JSONata script merges group names into a list and adds an `eduPersonPrincipalName` field which maps to the user email.
 
-```jsonata title = "JSONata expression"
+```txt title = "JSONata expression"
 $merge([$, {"groups": groups.name, 'eduPersonPrincipalName': email}])
 ```
 
@@ -217,7 +217,7 @@ For more JSONata transform use cases, refer to the following examples.
 
 The following JSONata script removes the `groups` SAML attribute. This can be useful if your SaaS application does not need to receive user group information.
 
-```jsonata title="JSONata expression"
+```txt title="JSONata expression"
 $ ~> |$|{}, ['groups']|
 ```
 
@@ -262,7 +262,7 @@ Result after applying the JSONata transform:
 
 The following JSONata script changes the `groups.name` field from `name` to `group_name` and removes the `groups.id` field:
 
-```jsonata title="JSONata expression"
+```txt title="JSONata expression"
 {
   "account_id": account_id,
   "amr": amr,
@@ -336,7 +336,7 @@ Result after applying the JSONata transform:
 
 The following JSONata script filters groups to those that match a regular expression.
 
-```jsonata title="JSONata expression"
+```txt title="JSONata expression"
 $merge([$, { "groups": $filter(groups, function($v) { $contains($v.name, /Administrator/) }) }])
 ```
 

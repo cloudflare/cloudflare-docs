@@ -3,7 +3,7 @@ name: API documentation
 product:
   title: API documentation
   url: /api/
-  group: Cloudflare essentials
+  group: Core platform
 
 meta:
   title: Cloudflare API docs

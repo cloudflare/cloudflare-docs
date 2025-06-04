@@ -4,9 +4,7 @@
 
 ## Threat score
 
-The threat score measures IP reputation across Cloudflare services. This score is calculated based on [Project Honeypot](https://www.projecthoneypot.org/), external public IP information, as well as internal threat intelligence from our [WAF managed rules](/waf/reference/legacy/old-waf-managed-rules/) and [DDoS](/ddos-protection/about/).
-
-The threat score of a request has a value from 0 to 100, where 0 indicates low risk. Values above 10 may represent spammers or bots, and values above 40 identify bad actors on the Internet.
+Previously, a threat score represented a Cloudflare threat score from 0–100, where 0 indicates low risk. Now, the threat score is always `0` (zero).
 
 :::note[Recommendation]
 Currently we do not recommend creating rules based on the threat score, since this score is no longer being populated.

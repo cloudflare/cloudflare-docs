@@ -3,14 +3,16 @@ in our page frontmatter. Refer to https://developers.cloudflare.com/style-guide/
 and https://developers.cloudflare.com/style-guide/frontmatter/tags/ for more details.
 */
 
-const data_structures: Array<object> = [
+type Tag = { label: string; variants?: string[] };
+
+const data_structures: Array<Tag> = [
 	{ label: "JSON" },
 	{ label: "TOML" },
 	{ label: "XML" },
 	{ label: "YAML" },
 ];
 
-const frameworks: Array<object> = [
+const frameworks: Array<Tag> = [
 	{ label: "Angular" },
 	{ label: "Astro" },
 	{ label: "Hono" },
@@ -24,7 +26,7 @@ const frameworks: Array<object> = [
 	{ label: "Vue.js", variants: ["vue", "vuejs"] },
 ];
 
-const integrations: Array<object> = [
+const integrations: Array<Tag> = [
 	{ label: "Azure", variants: ["Microsoft Azure", "MS Azure"] },
 	{ label: "AWS", variants: ["Amazon Web Services"] },
 	{ label: "GCP", variants: ["Google Cloud", "Google Cloud Platform"] },
@@ -36,7 +38,8 @@ const integrations: Array<object> = [
 		variants: ["AzureAD", "Azure Active Directory", "MS Entra ID", "Entra ID"],
 	},
 	{ label: "Microsoft" },
-	{ label: "Postgres", variants: ["PostgresSQL"] },
+	{ label: "MotherDuck" },
+	{ label: "Postgres", variants: ["PostgreSQL"] },
 	{ label: "S3" },
 	{ label: "Sentry" },
 	{ label: "Stripe" },
@@ -45,7 +48,7 @@ const integrations: Array<object> = [
 	{ label: "WordPress" },
 ];
 
-const languages: Array<object> = [
+const languages: Array<Tag> = [
 	{ label: "Go" },
 	{ label: "GraphQL" },
 	{ label: "JavaScript", variants: ["js"] },
@@ -60,12 +63,22 @@ const languages: Array<object> = [
 	{ label: "WebAssembly", variants: ["Web Assembly", "wasm"] },
 ];
 
-const product_features: Array<object> = [
+const operating_systems: Array<Tag> = [
+	{ label: "Android", variants: ["ChromeOS"] },
+	{ label: "iOS" },
+	{ label: "Linux" },
+	{ label: "MacOS", variants: ["OS X"] },
+	{ label: "Windows", variants: ["ms windows"] },
+];
+
+const presentation: Array<Tag> = [{ label: "Video" }];
+
+const product_features: Array<Tag> = [
 	{ label: "Web Crypto", variants: ["webcrypto"] },
 	{ label: "RPC" },
 ];
 
-const protocols: Array<object> = [
+const protocols: Array<Tag> = [
 	{ label: "FTP", variants: ["file transfer protocol", "ftps"] },
 	{ label: "ICMP" },
 	{ label: "IPsec" },
@@ -90,15 +103,7 @@ const protocols: Array<object> = [
 	{ label: "Wireguard" },
 ];
 
-const operating_systems: Array<object> = [
-	{ label: "Android", variants: ["ChromeOS"] },
-	{ label: "iOS" },
-	{ label: "Linux" },
-	{ label: "MacOS", variants: ["OS X"] },
-	{ label: "Windows", variants: ["ms windows"] },
-];
-
-const use_cases: Array<object> = [
+const use_cases: Array<Tag> = [
 	{ label: "AI" },
 	{ label: "Authentication", variants: ["auth"] },
 	{ label: "A/B testing", variants: ["ab test"] },
@@ -108,6 +113,7 @@ const use_cases: Array<object> = [
 	{ label: "CORS" },
 	{ label: "Debugging", variants: ["debug", "troubleshooting"] },
 	{ label: "Forms" },
+	{ label: "Full stack", variants: ["full-stack"] },
 	{ label: "Geolocation" },
 	{ label: "Headers", variants: ["header"] },
 	{ label: "Localization" },
@@ -120,6 +126,8 @@ const use_cases: Array<object> = [
 	{ label: "Response modification", variants: ["response"] },
 	{ label: "RPC" },
 	{ label: "Security" },
+	{ label: "SPA" },
+	{ label: "SSG" },
 	{ label: "URL rewrite", variants: ["rewrite"] },
 ];
 
@@ -128,6 +136,7 @@ export const tags = {
 	frameworks,
 	integrations,
 	languages,
+	presentation,
 	product_features,
 	protocols,
 	operating_systems,

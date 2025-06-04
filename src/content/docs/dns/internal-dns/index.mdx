@@ -76,7 +76,7 @@ flowchart LR
 				end
 ```
 
-Internal DNS zones contain the <GlossaryTooltip term="DNS record" link="/dns/internal-dns/internal-zones/#internal-dns-records">DNS records</ GlossaryTooltip> that should be used to resolve an internal DNS query. Also, if no internal record is found within a matching internal zone, Cloudflare will check if the matching internal zone is [referencing another internal zone](/dns/internal-dns/internal-zones/#reference-zones).
+Internal DNS zones contain the <GlossaryTooltip term="DNS record" link="/dns/internal-dns/internal-zones/internal-dns-records/">DNS records</ GlossaryTooltip> that should be used to resolve an internal DNS query. Also, if no internal record is found within a matching internal zone, Cloudflare will check if the matching internal zone is [referencing another internal zone](/dns/internal-dns/internal-zones/reference-zones/).
 
 <Example>
 
@@ -86,13 +86,13 @@ flowchart LR
         accDescr: Diagram exemplifying Internal DNS zones and records relationship
         subgraph View 111 - London
 				subgraph Zone 601 - local
-				S[@ A 192.0.2.10]
-				T[ghi.example A 192.0.2.15]
+				S["@ A 192.0.2.10"]
+				T["ghi.example A 192.0.2.15"]
 				end
         subgraph Zone 600 - example.local
-				X[@ A 192.0.2.1]
-				Y[abc A 192.0.2.6]
-				Z[def A 192.0.2.9]
+				X["@ A 192.0.2.1"]
+				Y["abc A 192.0.2.6"]
+				Z["def A 192.0.2.9"]
 				end
 				end
 ```

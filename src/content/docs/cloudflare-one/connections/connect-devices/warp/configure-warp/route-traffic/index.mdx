@@ -52,3 +52,31 @@ flowchart TD
     A@{ shape: in-out}
     n2@{ shape: proc}
 ```
+
+## Add a DNS suffix
+
+Support for DNS suffix search lists in WARP is currently in development. You can manually configure DNS suffixes at the device level using the following instructions.
+
+### macOS
+
+To manually configure a DNS suffix on macOS:
+
+1. Open **System Settings** (or **System Preferences** on older macOS versions).
+2. Go to **Network** and select your active connection (**Wi-Fi** or **Ethernet**).
+3. Select **Details** (or **Advanced**).
+4. Go to the **DNS** tab.
+5. Under **Search Domains**, select the `+` button and add your DNS suffix.
+6. Select **OK**, then **Apply**.
+
+### Windows
+
+To manually configure a DNS suffix on Windows:
+
+1. Open the **Search** bar in Windows, type **View network connections**, and select **Open**.
+2. Right-click the network adapter (**Wi-Fi** or **Ethernet**) you want to modify and select **Properties**. (Admin privileges required.)
+3. Double-click **Internet Protocol Version 4 (TCP/IPv4)**.
+4. In the **Internet Protocol (TCP/IP) Properties** window, select **Advanced**.
+5. Go to the **DNS** tab.
+6. Select **Append these DNS suffixes (in order)**.
+7. Select **Add**, enter your DNS suffix and select **Add**.
+8. Select **OK** on all windows to apply changes.

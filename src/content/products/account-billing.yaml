@@ -1,9 +1,9 @@
-name: Account and Billing
+name: Account
 
 product:
-  title: Account and Billing
-  group: Cloudflare essentials
-  url: /fundamentals/subscriptions-and-billing/
+  title: Account
+  group: Core platform
+  url: /fundamentals/account/
 
 meta:
-  description: Manage account billing and subscriptions.
+  description: Manage your Cloudflare account.

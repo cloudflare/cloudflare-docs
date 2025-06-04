@@ -1,0 +1,33 @@
+---
+{}
+
+---
+
+import { Render } from "~/components"
+
+<Render file="access/self-hosted-app/create-app" product="cloudflare-one" />
+
+6. Select **Add public hostname**.
+
+7. <Render file="access/self-hosted-app/choose-domain" product="cloudflare-one" />
+
+8. (Optional) Configure **Browser rendering settings**:
+		- [Automatic `cloudflared` authentication](/cloudflare-one/applications/non-http/cloudflared-authentication/automatic-cloudflared-authentication/)
+		- [Browser rendering for SSH, VNC, or RDP](/cloudflare-one/applications/non-http/browser-rendering/)
+
+9. <Render file="access/add-access-policies" product="cloudflare-one" />
+
+10. <Render file="access/access-choose-idps" product="cloudflare-one" />
+
+11. Select **Next**.
+
+12. (Optional) Configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application.
+
+13. <Render file="access/access-block-page" product="cloudflare-one" />
+
+14. Select **Next**.
+
+15. <Render file="access/self-hosted-app/advanced-settings" product="cloudflare-one" />
+
+16. Select **Save**.
+

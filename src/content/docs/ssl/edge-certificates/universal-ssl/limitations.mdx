@@ -3,6 +3,7 @@ title: Limitations
 pcx_content_type: reference
 sidebar:
   order: 5
+description: Review the limitations of Universal certificates, such as hostname coverage, certificate authority  choice, and compatibility with other products.
 head:
   - tag: title
     content: Limitations for Universal SSL
@@ -24,7 +25,7 @@ Universal SSL certificates only support SSL for the root or first-level subdomai
 
 ### CNAME setup
 
-On a CNAME setup zone, each subdomain has its own Universal SSL certificate and does not require additional features or purchases.
+On a [CNAME setup zone](/dns/zone-setups/partial-setup/), each subdomain (regardless of level) has its own Universal SSL certificate and does not require additional features or purchases. As long as the subdomains are proxied to Cloudflare, a universal certificate [will be provisioned](/ssl/edge-certificates/universal-ssl/enable-universal-ssl/#partial-dns-setup).
 
 ## Certificate authority
 

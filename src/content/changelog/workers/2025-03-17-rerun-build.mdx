@@ -1,0 +1,23 @@
+---
+title: Retry Pages & Workers Builds Directly from GitHub
+description: Rerun builds for your Workers and Pages projects directly inside of GitHub.
+products:
+  - workers
+  - pages
+date: 2025-03-17T11:00:00Z
+---
+
+You can now retry your Cloudflare Pages and Workers builds directly from GitHub. No need to switch to the Cloudflare Dashboard for a simple retry!
+
+![Workers Builds GitHub Reruns](src/assets/images/changelog/workers/builds-rerun.gif)
+
+Let’s say you push a commit, but your build fails due to a spurious error like a network timeout. Instead of going to the Cloudflare Dashboard to manually retry, you can now rerun the build with just a few clicks inside GitHub, keeping you inside your workflow.
+
+For Pages and Workers projects connected to a GitHub repository:
+
+1. When a build fails, go to your GitHub repository or pull request
+2. Select the failed Check Run for the build
+3. Select "Details" on the Check Run
+4. Select "Rerun" to trigger a retry build for that commit
+
+Learn more about [Pages Builds](/pages/configuration/git-integration/github-integration/) and [Workers Builds](/workers/ci-cd/builds/git-integration/github-integration/).

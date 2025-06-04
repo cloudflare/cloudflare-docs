@@ -59,7 +59,7 @@ If none of the above scenarios apply, contact Cloudflare support with the follow
 - URL of the request
 - Screenshot or copy/paste of the content from the error page
 
-For more troubleshooting information, refer to [Support](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-526-invalid-ssl-certificate).
+For more troubleshooting information, refer to [Support](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-526/).
 
 ## I see an error in the Gateway Overview page, and no analytics are displayed.
 
@@ -217,7 +217,7 @@ After enabling certificate propagation, you must update your certificate:
 
 For WARP versions on or above 2024.12.554.0, selecting **Activate** will download the new certificate to end-user devices.
 
-Certificate propagation to end-user devices can take up to 24 hours, but can be expedited by resetting the encryption keys.
+Certificate propagation to end-user devices can take up to 10 minutes, but can be expedited by resetting the encryption keys.
 
 To reset the encryption keys:
 
@@ -305,3 +305,66 @@ This error is returned when proper API permissions are not set up in the identit
 For example, [Microsoft Entra](/cloudflare-one/identity/idp-integration/entra-id/#2-configure-api-permissions-in-entra-id) and [Okta](</cloudflare-one/identity/idp-integration/okta/#:~:text=(Optional)%20Create%20an%20Okta%20API%20token%20and%20enter%20it%20in%20Zero%20Trust%20(the%20token%20can%20be%20read%2Donly).%20This%20will%20prevent%20your%20Okta%20groups%20from%20failing%20if%20you%20have%20more%20than%20100%20groups>) have required permissions stated in their integration guides.
 
 You can also examine logs in your identity provider to identify any denied requests related to API access.
+
+## WSL2 is losing connectivity when using WARP.
+
+If your WSL2 environment is losing connectivity while using WARP, check your [split tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/).
+
+The issue may arise because the IP range that the WSL environment uses to communicate with the host device is included in the split tunnel configuration. Excluding the WSL environment’s IP range should restore connectivity.
+
+You must ensure the host device is included in the WARP tunnel while excluding the WSL environment to prevent connectivity issues between WSL and the host device.
+
+### To debug this issue:
+
+1. Review the WSL2 environment's IP address and compare it with the laptop’s IP.
+2. Check if the WSL network is [included in the split tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#change-split-tunnels-mode).
+3. If the WSL network is included, exclude it from the split tunnel to prevent connectivity issues.
+
+## Clientless Web Isolation is loading with a blank screen on a Windows device.
+
+This issue can occur due to a conflict between browser settings and Windows network configuration.
+
+In Chromium-based browsers like Chrome and Edge, the **Anonymize local IPs exposed by WebRTC** flag (`chrome://flags/#enable-webrtc-hide-local-ips-with-mdns` or `edge://flags/#enable-webrtc-hide-local-ips-with-mdns`)  — when set to `Enabled` or left at `Default` — hides local IP addresses by replacing them with mDNS hostnames. Multicast DNS (mDNS) hostnames rely on multicast traffic to be resolved properly on the local network.
+
+The [Internet Group Management Protocol (IGMP)](https://www.cloudflare.com/learning/network-layer/what-is-igmp/) allows devices to join a multicasting group. On Windows, `IGMPLevel` determines whether the system participates in multicast group membership. When `IGMPLevel` is set to `0`, multicast support is disabled.
+
+To resolve this error, review the following options:
+
+| `IGMPLevel`        | **Anonymize local IPs exposed by WebRTC** setting         | Result in Clientless Web Isolation           |
+|--------------------|-----------------------------------------------------------|----------------------------------------------|
+| `0` (disabled)     | **Enabled / Default**                                     | ❌ Blank screen                              |
+| `0` (disabled)     | **Disabled**                                              | ✅ Works - browser will use local IP address |
+| `2` (enabled)      | **Enabled / Default**                                     | ✅ Works - mDNS resolves successfully        |
+
+## After putting Google Workspace behind Access, I can’t log in. It keeps redirecting between Access and Google without ever completing authentication.
+
+When you put your Google Workspace behind Access, users will not be able to log in using Google or Google Workspace as an identity provider.
+
+This configuration creates an authentication loop. Cloudflare Access tries to authenticate the user via Google, but Google itself treats Cloudflare as its identity provider and requires authentication from Cloudflare. Since each system depends on the other to complete login first, the user is caught in an infinite redirect cycle and can never successfully authenticate.
+
+## When installing WARP on Windows, the Setup Wizard ends prematurely.
+
+This error can occur for several reasons, including missing dependencies, like the appropriate .NET Framework version or other Dynamic Link Libraries (DLLs) such as `netstandard2.0`, required during installation.
+
+To investigate, run the following command to generate installation logs:
+
+```powershell
+msiexec /i <PATH_TO_WARP_MSI> /L*V <PATH_TO_OUTPUT_LOG>
+```
+
+Check the logs to verify if there are any missing DLLs (for example, `netstandard2.0`), which may point to a missing or outdated version of the .NET Framework.
+
+One common cause is a missing or outdated version of the [.NET Framework Runtime](/cloudflare-one/connections/connect-devices/warp/download-warp/#windows:~:text=NET%20Framework%20version-,4.7.2%20or%20later,-HD%20space). Cloudflare WARP requires a .NET Framework version of `4.7.2` or later.
+
+Some legacy Windows systems (such as Windows 10 Enterprise 1607 LTSB, which is bundled with .NET `4.6`) do not include this runtime by default and may fail during installation with a `Setup Wizard ended prematurely` error. More recent Windows versions include .NET `4.7.2` or later by default and do not encounter this error.
+
+To fix this:
+
+1. Download and install the [.NET Framework 4.7.2 Runtime](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net472) (make sure to install the **Runtime**, not the Developer Pack).
+2. Re-run the WARP installer.
+
+If the problem continues, try running the [.NET Repair Tool](https://www.microsoft.com/en-ca/download/details.aspx?id=30135), or check which .NET versions are installed by running the following command in PowerShell:
+
+```powershell
+Get-ChildItem -Path "HKLM:\SOFTWARE\Microsoft\NET Framework Setup\NDP" -Recurse | ForEach-Object { $_.Name; Get-ItemProperty $_.PSPath; "" }
+```

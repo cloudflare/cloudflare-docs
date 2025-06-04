@@ -5,6 +5,7 @@ product:
   url: /firewall/
   wrap: true
   group: Application security
+  show: false
 
 meta:
   title: Cloudflare Firewall Rules (deprecated) docs

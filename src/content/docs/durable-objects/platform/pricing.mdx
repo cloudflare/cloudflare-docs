@@ -3,16 +3,21 @@ pcx_content_type: concept
 title: Pricing
 sidebar:
   order: 1
-
 ---
 
 import { Render } from "~/components"
 
-## Billing metrics
+Durable Objects can incur two types of billing: compute and storage.
 
-<Render file="durable_objects_pricing" product="workers" />
+<Render file="do-plans-note"/>
 
-## Durable Objects billing examples
+On Workers Free plan:
+- If you exceed any one of the free tier limits, further operations of that type will fail with an error.
+- Daily free limits reset at 00:00 UTC.
+
+<Render file="durable-objects-pricing" product="durable-objects" params={{product:"durable-objects"}}/>
+
+## Compute billing examples
 
 These examples exclude the costs for the Workers calling the Durable Objects. When modelling the costs of a Durable Object, note that:
 
@@ -114,10 +119,6 @@ In this scenario, the estimated monthly cost would be calculated as:
 <sup>1</sup> 100 messages per minute comes from the fact that 100 clients connect to each DO, and each sends 1 message per minute.
 
 <sup>2</sup> The example uses 1 second because each Durable Object is active for 1 second per minute. This can also be thought of as 432 million requests that each take 10 ms to execute (4,320,000 seconds).
-
-## Storage API billing
-
-<Render file="storage_api_pricing" product="workers" />
 
 ## Frequently Asked Questions
 

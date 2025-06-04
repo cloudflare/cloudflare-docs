@@ -15,6 +15,8 @@ concurrency:
 
 jobs:
   flag_changed_filenames:
+    permissions:
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository

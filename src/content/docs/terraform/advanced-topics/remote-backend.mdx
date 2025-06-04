@@ -5,7 +5,7 @@ title: Remote R2 backend
 
 import { Render } from "~/components";
 
-[Cloudflare R2](/r2/) and [Terraform remote backends](https://developer.hashicorp.com/terraform/language/settings/backends/remote) can interact with each other to provide a seamless experience for Terraform state management. 
+[Cloudflare R2](/r2/) and [Terraform remote backends](https://developer.hashicorp.com/terraform/language/settings/backends/remote) can interact with each other to provide a seamless experience for Terraform state management.
 
 Cloudflare R2 is an object storage service that provides a highly available, scalable, and secure way to store and serve static assets, such as images, videos, and static websites. R2 has [S3 API compatibility](/r2/api/s3/api/) making it easy to integrate with existing cloud infrastructure and applications.
 
@@ -18,12 +18,12 @@ Using [Wrangler](/workers/wrangler/install-and-update/), [API](/api/resources/r2
 <Render file="create-r2-buckets" />
 
 :::note
-Bucket names can only contain lowercase letters (`a-z`), numbers (`0-9`), and hyphens (`-`). 
+Bucket names can only contain lowercase letters (`a-z`), numbers (`0-9`), and hyphens (`-`).
 :::
 
 ### Create scoped bucket API keys
 
-Next you will need to create a [bucket scoped R2 API token](/r2/api/s3/tokens/) with `Object Read & Write` permissions. To create an API token, do the following:
+Next you will need to create a [bucket scoped R2 API token](/r2/api/tokens/) with `Object Read & Write` permissions. To create an API token, do the following:
 
 1. In **Account Home**, select **R2**.
 2. Under **Account details**, select **Manage R2 API tokens**.

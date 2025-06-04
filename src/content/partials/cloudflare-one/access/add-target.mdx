@@ -1,12 +1,18 @@
 ---
-{}
+params:
+  - protocol
 ---
 
 import { Tabs, TabItem, Render, Details } from "~/components";
 
-A target represents a single resource in your infrastructure (such as a server, Kubernetes cluster, database, or container) that users will connect to through Cloudflare. Targets are protocol-agnostic, meaning that you do not need to define a new target for each protocol that runs on the server.
+A target represents a single resource in your infrastructure (such as a server, Kubernetes cluster, database, or container) that users will connect to through Cloudflare.
 
-To create a new target:
+{
+  props.protocol === "rdp" ? (
+		<p> Create a target for each Windows machine that requires RDP access.
+To create a new target:</p>) :
+	(<p>Targets are protocol-agnostic, meaning that you do not need to define a new target for each protocol that runs on the server. To create a new target: </p>)
+}
 
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
@@ -55,14 +61,14 @@ If the target IP does not appear in the dropdown, go to **Networks** > **Routes*
 		```
 
 </TabItem>
-<TabItem label="Terraform (v4)">
+<TabItem label="Terraform">
 
 :::note[Provider versions]
 The following example requires Cloudflare provider version `>=4.45.0`.
 :::
 
 1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.45.0/docs/resources/api_token):
-	- `Teams Write`
+	- `Zero Trust Write`
 
 2. Configure the [`cloudflare_zero_trust_infrastructure_access_target`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.45.0/docs/resources/zero_trust_infrastructure_access_target) resource:
 
@@ -86,4 +92,4 @@ The following example requires Cloudflare provider version `>=4.45.0`.
 </TabItem>
 </Tabs>
 
-Next, create an infrastructure application to secure the target.
+Next, create an Access application to secure the target.

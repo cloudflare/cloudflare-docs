@@ -1,0 +1,17 @@
+---
+title: New models in Workers AI
+description: New text-to-speech, reranker, whisper, embeddings models now available!
+date: 2025-03-17T17:00:00Z
+---
+
+Workers AI is excited to add 4 new models to the catalog, including 2 brand new classes of models with a text-to-speech and reranker model. Introducing:
+- [@cf/baai/bge-m3](/workers-ai/models/bge-m3/) - a multi-lingual embeddings model that supports over 100 languages. It can also simultaneously perform dense retrieval, multi-vector retrieval, and sparse retrieval, with the ability to process inputs of different granularities. 
+- [@cf/baai/bge-reranker-base](/workers-ai/models/bge-reranker-base/) - our first reranker model! Rerankers are a type of text classification model that takes a query and context, and outputs a similarity score between the two. When used in RAG systems, you can use a reranker after the initial vector search to find the most relevant documents to return to a user by reranking the outputs. 
+- [@cf/openai/whisper-large-v3-turbo](/workers-ai/models/whisper-large-v3-turbo/) - a faster, more accurate speech-to-text model. This model was added earlier but is graduating out of beta with pricing included today.
+- [@cf/myshell-ai/melotts](/workers-ai/models/melotts/) - our first text-to-speech model that allows users to generate an MP3 with voice audio from inputted text.
+
+Pricing is available for each of these models on the [Workers AI pricing page](/workers-ai/platform/pricing/).
+
+This docs update includes a few minor bug fixes to the model schema for llama-guard, llama-3.2-1b, which you can review on the [product changelog](/workers-ai/changelog/).
+
+Try it out and let us know what you think! Stay tuned for more models in the coming days.

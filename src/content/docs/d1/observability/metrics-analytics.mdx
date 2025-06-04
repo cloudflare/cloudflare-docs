@@ -61,17 +61,18 @@ D1's GraphQL datasets require an `accountTag` filter with your Cloudflare accoun
 
 To query the sum of `readQueries`, `writeQueries` for a given `$databaseId`, grouping by `databaseId` and `date`:
 
-```graphql
-query {
+```graphql graphql-api-explorer
+query D1ObservabilitySampleQuery(
+	$accountTag: string!
+	$start: Date
+	$end: Date
+	$databaseId: string
+) {
 	viewer {
-		accounts(filter: { accountTag: $accountId }) {
+		accounts(filter: { accountTag: $accountTag }) {
 			d1AnalyticsAdaptiveGroups(
 				limit: 10000
-				filter: {
-					date_geq: $startDate
-					date_leq: $endDate
-					databaseId: $databaseId
-				}
+				filter: { date_geq: $start, date_leq: $end, databaseId: $databaseId }
 				orderBy: [date_DESC]
 			) {
 				sum {
@@ -90,17 +91,18 @@ query {
 
 To query both the average `queryBatchTimeMs` and the 90th percentile `queryBatchTimeMs` per database:
 
-```graphql
-query {
+```graphql graphql-api-explorer
+query D1ObservabilitySampleQuery2(
+	$accountTag: string!
+	$start: Date
+	$end: Date
+	$databaseId: string
+) {
 	viewer {
 		accounts(filter: { accountTag: $accountId }) {
 			d1AnalyticsAdaptiveGroups(
 				limit: 10000
-				filter: {
-					date_geq: $startDate
-					date_leq: $endDate
-					databaseId: $databaseId
-				}
+				filter: { date_geq: $start, date_leq: $end, databaseId: $databaseId }
 				orderBy: [date_DESC]
 			) {
 				quantiles {
@@ -118,17 +120,18 @@ query {
 
 To query your account-wide `readQueries` and `writeQueries`:
 
-```graphql
-query {
+```graphql graphql-api-explorer
+query D1ObservabilitySampleQuery3(
+	$accountTag: string!
+	$start: Date
+	$end: Date
+	$databaseId: string
+) {
 	viewer {
-		accounts(filter: { accountTag: $accountId }) {
+		accounts(filter: { accountTag: $accountTag }) {
 			d1AnalyticsAdaptiveGroups(
 				limit: 10000
-				filter: {
-					date_geq: $startDate
-					date_leq: $endDate
-					databaseId: $databaseId
-				}
+				filter: { date_geq: $start, date_leq: $end, databaseId: $databaseId }
 			) {
 				sum {
 					readQueries
@@ -168,6 +171,7 @@ Run `wrangler d1 insights --help` to view current options.
 ```sh
 npx wrangler d1 insights <database_name> --sort-type=sum --sort-by=count --limit=3
 ```
+
 ```sh output
  ⛅️ wrangler 3.95.0
 -------------------
@@ -213,6 +217,7 @@ npx wrangler d1 insights <database_name> --sort-type=sum --sort-by=count --limit
   }
 ]
 ```
+
 </Details>
 
 <Details header="To find top 3 queries by average execution time:">
@@ -220,6 +225,7 @@ npx wrangler d1 insights <database_name> --sort-type=sum --sort-by=count --limit
 ```sh
 npx wrangler d1 insights <database_name> --sort-type=avg --sort-by=time --limit=3
 ```
+
 ```sh output
 ⛅️ wrangler 3.95.0
 -------------------
@@ -265,6 +271,7 @@ npx wrangler d1 insights <database_name> --sort-type=avg --sort-by=time --limit=
   }
 ]
 ```
+
 </Details>
 
 <Details header="To find top 10 queries by rows written in last 7 days:">
@@ -272,6 +279,7 @@ npx wrangler d1 insights <database_name> --sort-type=avg --sort-by=time --limit=
 ```sh
 npx wrangler d1 insights <database_name> --sort-type=sum --sort-by=writes --limit=10 --timePeriod=7d
 ```
+
 ```sh output
 ⛅️ wrangler 3.95.0
 -------------------
@@ -317,6 +325,7 @@ npx wrangler d1 insights <database_name> --sort-type=sum --sort-by=writes --limi
   }
 ]
 ```
+
 </Details>
 
 :::note

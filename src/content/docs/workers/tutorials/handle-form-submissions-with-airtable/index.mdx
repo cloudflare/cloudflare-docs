@@ -92,7 +92,7 @@ Create a new `airtable-form-handler` Worker project:
 	product="workers"
 	params={{
 		category: "hello-world",
-		type: "Hello World Worker",
+		type: "Worker only",
 		lang: "JavaScript",
 	}}
 />
@@ -201,6 +201,8 @@ async function submitHandler(request, env) {
 // Existing code
 // export default ...
 ```
+
+<Render file="request-dot-clone-warning" product="workers" />
 
 While the majority of this function is concerned with parsing the request body (the data being sent as part of the request), there are two important things to note. First, if the HTTP method sent to this function is not `POST`, you will return a new response with the status code of [`405 Method Not Allowed`](https://httpstatuses.com/405).
 

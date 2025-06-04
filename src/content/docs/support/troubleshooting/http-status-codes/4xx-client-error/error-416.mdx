@@ -1,0 +1,19 @@
+---
+pcx_content_type: troubleshooting
+title: Error 416
+source: null
+---
+
+## 416 Range Not Satisfiable
+
+The `416 Range Not Satisfiable` status code indicates that the server cannot fulfill the requested range specified in the `Range` header of the client's request.
+
+For more details, refer to [RFC 7233](https://datatracker.ietf.org/doc/html/rfc7233).
+
+### Common use cases
+
+This error can happen when a client requests a byte range outside the bounds of the resource, such as a range exceeding the file's total size. It can also happen if the server does not support partial content delivery or if there is a conflict between the requested range and the server's understanding of the resource, often caused by an outdated or invalid cache.
+
+### Cloudflare-specific information
+
+Cloudflare typically serves this response when the origin server rejects a `Range` header request for a resource. This often occurs if the requested range exceeds the size of the file, as indicated in the `Content-Range` header.

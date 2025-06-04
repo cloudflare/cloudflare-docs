@@ -12,6 +12,10 @@ Logpush delivers logs in batches as quickly as possible, with no minimum batch s
 
 Logpush does not offer storage or search functionality for logs; its primary aim is to send logs as quickly as they arrive.
 
+## Limits
+
+There is currently a max limit of **4 Logpush jobs per zone**. Trying to create a job once the limit has been reached will result in an error message: `creating a new job is not allowed: exceeded max jobs allowed`.
+
 ## Availability
 
 <FeatureTable id="analytics.logpush" />

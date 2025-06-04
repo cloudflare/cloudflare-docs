@@ -1,0 +1,33 @@
+---
+title: Google tag gateway for advertisers
+pcx_content_type: reference
+sidebar:
+  order: 1
+
+---
+
+## Get started
+
+Google tag gateway for advertisers allows website owners using Cloudflare as a CDN to get the most out of ad measurement tools with just a few clicks. Note: setting this up [directly in Google Tag Manager](https://support.google.com/analytics/answer/16061641) is the fastest way to use this feature.
+
+### Configure Google tag gateway for advertisers in the dashboard
+
+:::note
+Your Cloudflare dashboard user must have one of the following [Account Roles](/fundamentals/manage-members/roles/#account-scoped-roles): Super Administrator, Administrator or Zaraz Admin. If you are using Domain Scoped Roles, your [Domain Role](/fundamentals/manage-members/roles/#domain-scoped-roles) must be Domain Administrator.
+:::
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
+2. Go to **Tag Management** > **Google tag gateway**.
+3. Select your domain.
+4. Enable the toggle for **Turn on and configure Google tag gateway**.
+
+![Google tag gateway for advertisers configuration](~/assets/images/google-tag-gateway/google-tag-configuration.png)
+
+5. Add your Google tag ID and the path on your website reserved for the Google tag.
+The [Google tag ID](https://support.google.com/analytics/answer/9539598?hl=en) can be found in the Google Tag Experience dashboard. The measurement path is an unused path on your site that will load Google Tag Manager and all subsequent measurement requests.
+
+![Add to ID and path](~/assets/images/google-tag-gateway/google-tag-id-path.png)
+
+6. Once you click **Save**, Google tag gateway for advertisers will be enabled on your zone. If you already have a GTM script on your website, this First Party Tag will override the existing script.
+
+Now that you have authenticated into your Cloudflare account and configured GTM in first-party mode, your Google Tags will be loaded using `https://your-domain/measurement-path/...`and subsequent measurement requests will be served by Cloudflare.

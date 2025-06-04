@@ -1,0 +1,19 @@
+---
+pcx_content_type: troubleshooting
+title: Error 408
+source: null
+---
+
+## 408 Request Timeout
+
+The `408 Request Timeout` status code indicates that the origin server did not receive the complete request within a reasonable time frame and does not wish to continue waiting for the connection. This response is not commonly used, as servers often prefer to use the "close" connection option to terminate idle connections
+
+For more details, refer to [RFC 7231](https://tools.ietf.org/html/rfc7231).
+
+### Common use cases
+
+This error typically occurs when a client fails to send a complete request within the server's timeout period. Common scenarios include slow network connections, server overload or client-side delays to complete the request.
+
+### Cloudflare-specific information
+
+Cloudflare does not generate `408` errors but may proxy them from the origin server. If a `408` error occurs on a Cloudflare-powered site, it is essential to review the origin server's timeout settings and ensure that the server is not overloaded. Additionally, verify that the client's Internet connection is stable and that the request is being sent promptly.

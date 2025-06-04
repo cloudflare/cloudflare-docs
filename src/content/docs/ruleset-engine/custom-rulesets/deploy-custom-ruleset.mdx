@@ -3,50 +3,52 @@ pcx_content_type: how-to
 title: Deploy a custom ruleset
 sidebar:
   order: 4
-head: []
 description: Learn how to deploy a custom ruleset to your Cloudflare account.
 ---
 
-Before you begin:
+import { APIRequest, Render } from "~/components";
 
-1. Obtain the name of the phase where you want to deploy the custom ruleset.
+To deploy a custom ruleset, add a rule with `execute` action to the list of rules of a phase [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) at the account level. The expression of the new rule will define when the custom ruleset will run.
+
+<Render file="custom-rulesets-terraform" />
+
+<Render file="custom-rulesets-dashboard" />
+
+## Before you begin
+
+1. Obtain the name of the [phase](/ruleset-engine/reference/phases-list/) where you want to deploy the custom ruleset.
 2. [Create a custom ruleset](/ruleset-engine/custom-rulesets/create-custom-ruleset/) and keep the ID of the new custom ruleset.
 3. [Fetch the rules already present in the phase entry point ruleset](/ruleset-engine/basic-operations/view-rulesets/#view-the-rules-included-in-a-ruleset). You must include in the `PUT` request all existing rules you want to keep.
-
-To deploy a custom ruleset, add a rule that executes the custom ruleset. Define the rule scope in the rule expression.
-
-:::caution
-Regarding the expression of the rule deploying the ruleset, you must use parentheses to enclose any custom conditions and end your expression with `and cf.zone.plan eq "ENT"` or else the API operation will fail.
-:::
 
 ## Example
 
 The following `PUT` request adds a rule that executes a custom ruleset when the zone name matches `example.com`. The response will include all the rules in the phase entry point ruleset.
 
-```bash
-curl --request PUT \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/phases/http_request_firewall_custom/entrypoint \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "rules": [
-    {
-      "action": "execute",
-      "description": "Execute custom ruleset",
-      "expression": "(cf.zone.name == \"example.com\") and cf.zone.plan eq \"ENT\"",
-      "action_parameters": {
-        "id": "<CUSTOM_RULESET_ID>"
-      }
-    },
-    {
-      "id": "<EXISTING_PHASE_RULE_ID_1>"
-    },
-    {
-      "id": "<EXISTING_PHASE_RULE_ID_2>"
-    }
-  ]
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/rulesets/phases/{ruleset_phase}/entrypoint"
+	method="PUT"
+	parameters={{
+		ruleset_phase: "http_request_firewall_custom",
+	}}
+	json={{
+		rules: [
+			{
+				action: "execute",
+				description: "Execute custom ruleset",
+				expression: '(cf.zone.name == "example.com") and cf.zone.plan eq "ENT"',
+				action_parameters: {
+					id: "<CUSTOM_RULESET_ID>",
+				},
+			},
+			{
+				id: "<EXISTING_PHASE_RULE_ID_1>",
+			},
+			{
+				id: "<EXISTING_PHASE_RULE_ID_2>",
+			},
+		],
+	}}
+/>
 
 ```json output
 {
@@ -106,3 +108,7 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/rulesets/phases/http_
 	"messages": []
 }
 ```
+
+:::caution
+Regarding the expression of the rule deploying the ruleset, you must use parentheses to enclose any custom conditions and end your expression with `and cf.zone.plan eq "ENT"` or else the API operation will fail.
+:::

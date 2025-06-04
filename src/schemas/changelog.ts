@@ -13,4 +13,10 @@ export const changelogSchema = ({ image }: SchemaContext) =>
 				"An array of products to associate this changelog entry with. You may omit the product named after the folder this entry is in.",
 			),
 		preview_image: image().optional(),
+		hidden: z
+			.boolean()
+			.default(false)
+			.describe(
+				"Whether this changelog entry should be hidden from /changelog/ and RSS feeds.",
+			),
 	});

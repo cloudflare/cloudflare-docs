@@ -16,7 +16,7 @@ const { products } = await props.parseAsync(Astro.props);
 const data = await getEntries(products);
 ---
 
-<div class="flex flex-row gap-2">
+<div class="flex flex-row flex-wrap gap-2">
 	{
 		data.map((product) => (
 			<a href={product.data.product.url} class="no-underline">

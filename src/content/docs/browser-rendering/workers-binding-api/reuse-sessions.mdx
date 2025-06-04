@@ -28,7 +28,7 @@ Create a new Worker project named `browser-worker` by running:
 	product="workers"
 	params={{
 		category: "hello-world",
-		type: "Hello World Worker",
+		type: "Worker only",
 		lang: "TypeScript",
 	}}
 />
@@ -37,13 +37,12 @@ Create a new Worker project named `browser-worker` by running:
 
 In your `browser-worker` directory, install Cloudflare's [fork of Puppeteer](/browser-rendering/platform/puppeteer/):
 
-```sh
-npm install @cloudflare/puppeteer --save-dev
-```
+<PackageManagers pkg="@cloudflare/puppeteer" dev />
 
 ## 3. Configure the [Wrangler configuration file](/workers/wrangler/configuration/)
 
 <WranglerConfig>
+
 ```toml
 name = "browser-worker"
 main = "src/index.ts"
@@ -53,6 +52,7 @@ compatibility_flags = [ "nodejs_compat" ]
 browser = { binding = "MYBROWSER" }
 
 ```
+
 </WranglerConfig>
 
 ## 4. Code
@@ -99,7 +99,7 @@ export default {
 		const html = await response!.text();
 
 		// All work done, so free connection (IMPORTANT!)
-		await browser.disconnect();
+		browser.disconnect();
 
 		return new Response(
 			`${launched ? "Launched" : "Connected to"} ${sessionId} \n-----\n` + html,
@@ -136,7 +136,7 @@ export default {
 };
 ```
 
-Besides `puppeteer.sessions()`, we've added other methods to facilitate [Session Management](/browser-rendering/platform/puppeteer/#session-management).
+Besides `puppeteer.sessions()`, we have added other methods to facilitate [Session Management](/browser-rendering/platform/puppeteer/#session-management).
 
 ## 5. Test
 

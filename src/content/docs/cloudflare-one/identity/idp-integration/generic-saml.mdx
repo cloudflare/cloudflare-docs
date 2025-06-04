@@ -53,11 +53,7 @@ To download the SAML metadata file, copy-paste the metadata endpoint into a web 
 6. (Optional) Under **Optional configurations**, configure [additional SAML options](#optional-configurations).
 7. Select **Save**.
 
-</TabItem> <TabItem label="Terraform">
-
-:::note[Provider versions]
-The following example requires Cloudflare provider version `>=4.40.0`.
-:::
+</TabItem> <TabItem label="Terraform (v5)">
 
 1.  Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
 
@@ -70,10 +66,10 @@ The following example requires Cloudflare provider version `>=4.40.0`.
         	account_id = var.cloudflare_account_id
         	name       = "Generic SAML example"
         	type       = "saml"
-        	config {
+        	config 		 = {
         		sso_target_url = "https://example.com/1234/sso/saml"
         		issuer_url = "https://example.com/1234"
-        		idp_public_cert = "-----BEGIN CERTIFICATE-----\nXXXXX\n-----END CERTIFICATE-----"
+        		idp_public_certs = ["-----BEGIN CERTIFICATE-----\nXXXXX\n-----END CERTIFICATE-----"]
         		sign_request = false
         		email_attribute_name = "email"
         		attributes = ["employeeID", "groups"]

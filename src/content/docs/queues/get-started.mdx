@@ -35,7 +35,7 @@ To create a producer Worker, run:
 	product="workers"
 	params={{
 		category: "hello-world",
-		type: "Hello World Worker",
+		type: "Worker only",
 		lang: "TypeScript",
 	}}
 />
@@ -187,8 +187,6 @@ After you have configured your consumer Worker, you are ready to connect it to y
 Each queue can only have one consumer Worker connected to it. If you try to connect multiple consumers to the same queue, you will encounter an error when attempting to publish that Worker.
 
 To connect your queue to your consumer Worker, open your Wrangler file and add this to the bottom:
-
-
 
 <WranglerConfig>
 

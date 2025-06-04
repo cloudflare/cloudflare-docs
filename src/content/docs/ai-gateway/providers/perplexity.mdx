@@ -3,6 +3,8 @@ title: Perplexity
 pcx_content_type: get-started
 ---
 
+import { Render } from "~/components";
+
 [Perplexity](https://www.perplexity.ai/) is an AI powered answer engine.
 
 ## Endpoint
@@ -67,3 +69,17 @@ const chatCompletion = await perplexity.chat.completions.create({
 	max_tokens: maxTokens,
 });
 ```
+
+<Render
+	file="chat-completions-providers"
+	product="ai-gateway"
+	params={{
+		name: "Perplexity",
+		jsonexample: `
+{
+	"model": "perplexity/{model}"
+}`
+
+    }}
+
+/>

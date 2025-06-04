@@ -8,7 +8,7 @@ head:
     content: Set up outgoing zone transfers (Cloudflare as Primary)
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { Render, TabItem, Tabs, APIRequest } from "~/components";
 
 With [outgoing zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-primary/), you can keep Cloudflare as your primary DNS provider and use one or more secondary providers for increased availability and fault tolerance.
 
@@ -35,7 +35,7 @@ Make sure your account team has enabled your zone for outgoing zone transfers.
 
 Review your [existing DNS records](/dns/manage-dns-records/how-to/create-dns-records/) to make sure all of them have the desired **Proxy status**.
 
-If using the API, you may also want to [locate your Zone and Account IDs](/fundamentals/setup/find-account-and-zone-ids/).
+If using the API, you may also want to [locate your Zone and Account IDs](/fundamentals/account/find-account-and-zone-ids/).
 
 ---
 
@@ -137,16 +137,13 @@ If your account [zone defaults](/dns/additional-options/dns-zone-defaults/) are 
 
 Send the following `PATCH` request replacing the placeholders with your zone ID and authentication information:
 
-```bash
-curl --request PATCH \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_settings" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "multi_provider": true
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/dns_settings"
+	method="PATCH"
+	json={{
+		"multi_provider": true,
+	}}
+/>
 
 </TabItem> </Tabs>
 

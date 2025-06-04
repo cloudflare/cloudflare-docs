@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { generateDescription } from "./props";
-import { rehypeExternalLinksOptions } from "~/plugins/rehype/external-links";
+import { externalLinkArrow } from "~/plugins/rehype/external-links";
 
 describe("description", () => {
 	describe("markdown", () => {
@@ -13,10 +13,8 @@ describe("description", () => {
 		});
 
 		test("removes external link icon", async () => {
-			const icon = rehypeExternalLinksOptions.content.value;
-
 			const desc = await generateDescription({
-				markdown: `[links${icon}](/) and **${icon}stuff**`,
+				markdown: `[links${externalLinkArrow}](/) and **${externalLinkArrow}stuff**`,
 			});
 
 			expect(desc).toEqual("links and \\*\\*stuff\\*\\*");

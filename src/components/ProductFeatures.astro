@@ -29,12 +29,12 @@ const entries = Object.entries(plan);
 				<h3>{value.title}</h3>
 				{value.link && (
 					<p>
-						<strong>Link: </strong>
-						<a href={value.link}>{value.title}</a>
+						<!-- prettier-ignore -->
+						<strong>Link:</strong>{" "}<a href={value.link}>{value.title}</a>
 					</p>
 				)}
 				{Object.values(value.properties).map((value: any) => (
-					<p>
+					<div>
 						<strong
 							set:html={marked.parseInline(
 								value.title === "Availability"
@@ -46,9 +46,9 @@ const entries = Object.entries(plan);
 							<p>{value.summary}</p>
 						)}
 						<ul>
-							{value.free && (
+							{value.free !== undefined && (
 								<li>
-									<strong>Free: </strong>
+									<strong>Free:</strong>{" "}
 									<Fragment
 										set:html={marked.parseInline(value.free.toString())}
 									/>
@@ -56,26 +56,28 @@ const entries = Object.entries(plan);
 							)}
 							{additional_descriptions && (
 								<>
-									{value.lite ||
-										(value.free && (
+									{value.lite !== undefined ? (
+										<li>
+											<strong>Lite:</strong>{" "}
+											<Fragment
+												set:html={marked.parseInline(value.lite.toString())}
+											/>
+										</li>
+									) : (
+										value.free !== undefined && (
 											<li>
-												<strong>Lite: </strong>
-												{value.lite ? (
-													<Fragment
-														set:html={marked.parseInline(value.lite.toString())}
-													/>
-												) : (
-													<Fragment
-														set:html={marked.parseInline(value.free.toString())}
-													/>
-												)}
+												<strong>Lite:</strong>{" "}
+												<Fragment
+													set:html={marked.parseInline(value.free.toString())}
+												/>
 											</li>
-										))}
+										)
+									)}
 								</>
 							)}
-							{value.pro && (
+							{value.pro !== undefined && (
 								<li>
-									<strong>Pro: </strong>
+									<strong>Pro:</strong>{" "}
 									<Fragment
 										set:html={marked.parseInline(value.pro.toString())}
 									/>
@@ -83,43 +85,43 @@ const entries = Object.entries(plan);
 							)}
 							{additional_descriptions && (
 								<>
-									{value.pro_plus ||
-										(value.pro && (
+									{value.pro_plus !== undefined ? (
+										<li>
+											<strong>Pro Plus:</strong>{" "}
+											<Fragment
+												set:html={marked.parseInline(value.pro_plus.toString())}
+											/>
+										</li>
+									) : (
+										value.pro !== undefined && (
 											<li>
-												<strong>Pro Plus: </strong>
-												{value.pro_plus ? (
-													<Fragment
-														set:html={marked.parseInline(
-															value.pro_plus.toString(),
-														)}
-													/>
-												) : (
-													<Fragment
-														set:html={marked.parseInline(value.pro.toString())}
-													/>
-												)}
+												<strong>Pro Plus:</strong>{" "}
+												<Fragment
+													set:html={marked.parseInline(value.pro.toString())}
+												/>
 											</li>
-										))}
+										)
+									)}
 								</>
 							)}
-							{value.biz && (
+							{value.biz !== undefined && (
 								<li>
-									<strong>Business: </strong>
+									<strong>Business:</strong>{" "}
 									<Fragment
 										set:html={marked.parseInline(value.biz.toString())}
 									/>
 								</li>
 							)}
-							{value.ent && (
+							{value.ent !== undefined && (
 								<li>
-									<strong>Enterprise: </strong>
+									<strong>Enterprise:</strong>{" "}
 									<Fragment
 										set:html={marked.parseInline(value.ent.toString())}
 									/>
 								</li>
 							)}
 						</ul>
-					</p>
+					</div>
 				))}
 			</div>
 		);

@@ -1,0 +1,481 @@
+---
+updated: 2025-05-02
+category: 🔐 Zero Trust
+pcx_content_type: tutorial
+title: Create and secure an AI agent wrapper using AI Gateway and Zero Trust
+---
+
+import { TabItem, Tabs, Details, Render } from "~/components";
+
+This tutorial explains how to use [Cloudflare AI Gateway](/ai-gateway/) and Zero Trust to create a functional and secure website wrapper for an AI agent. Cloudflare Zero Trust administrators can protect access to the wrapper with [Cloudflare Access](/cloudflare-one/policies/access/). Additionally, you can enforce [Gateway policies](/cloudflare-one/policies/gateway/) to control how your users interact with AI agents, including executing AI agents in an isolated browser with [Browser Isolation](/cloudflare-one/policies/browser-isolation/), enforcing [Data Loss Prevention](/cloudflare-one/policies/data-loss-prevention/) profiles to prevent your users from sharing sensitive data, and scanning content to avoid answers from AI agents that violate internal corporate guidelines. Creating an AI agent wrapper is also an effective way to enforce tenant control if you have an enterprise plan for a specific AI provider, such as ChatGPT Enterprise.
+
+This tutorial uses ChatGPT as an example AI agent.
+
+## Before you begin
+
+Make sure you have:
+
+- A [Cloudflare Zero Trust organization](/cloudflare-one/setup/).
+- An API key for your desired AI provider, such as an [OpenAI API key](https://platform.openai.com/api-keys) for ChatGPT.
+
+## 1. Create an AI gateway
+
+First, create an AI gateway to control your AI app.
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **AI** > **AI Gateway**.
+3. Select **Create Gateway**.
+4. Name your gateway.
+5. Select **Create**.
+6. Configure your desired options for the gateway.
+7. [Connect your AI provider](/ai-gateway/get-started/#connect-application) to proxy queries to your AI agent of choice using your AI gateway.
+8. (Optional) Turn on [Authenticated Gateway](/ai-gateway/configuration/authentication/). The Authenticated Gateway feature ensures your AI gateway can only be called securely by enforcing a token in the form of a request header `cf-aig-authorization`.
+   1. Go to **AI** > **AI Gateway**.
+   2. Select your AI gateway, then go to **Settings**.
+   3. Turn on **Authenticated Gateway**, then choose **Confirm**.
+   4. Select **Create authentication token**, then select **Create an AI Gateway authentication token**.
+   5. Configure your token and copy the token value. When creating your Worker, you will need to pass this token when calling your AI gateway.
+
+For more information, refer to [Getting started with AI Gateway](/ai-gateway/get-started/).
+
+## 2. (Optional) Use Guardrails to block unsafe or inappropriate content
+
+[Guardrails](/ai-gateway/guardrails/) is an built-in AI Gateway security feature that allows Cloudflare to identify unsafe or inappropriate content in prompts and responses based on selected categories.
+
+1. Go to **AI** > **AI Gateway**.
+2. Select your AI gateway.
+3. Go to **Guardrails**.
+4. Turn on Guardrails.
+5. Select **Change** to configure the categories you would like to filter for both prompts and responses.
+
+## 3. Build a Worker to serve the wrapper
+
+### 1. Create the Worker
+
+In order to build the Worker, you will need to choose if you want to build it locally using [Wrangler](/workers/wrangler/install-and-update/) or remotely using the [dashboard](https://dash.cloudflare.com/).
+
+<Tabs> <TabItem label="Wrangler">
+
+1. In a terminal, log in to your Cloudflare account:
+
+   ```bash
+   wrangler login
+   ```
+
+2. Initiate the project locally:
+
+   ```bash
+   mkdir ai-agent-wrapper
+   cd ai-agent-wrapper
+   wrangler init
+   ```
+
+3. Create a `wrangler.toml` configuration file:
+
+   ```toml
+   name = "ai-agent-wrapper"
+   main = "src/index.js"
+   compatibility_date = "2023-10-30"
+
+   [vars]
+   # Add any environment variables here
+   ```
+
+4. Add your AI provider's API key as a [secret](/workers/configuration/secrets/):
+
+   ```bash
+   wrangler secret put <OPENAI_API_KEY>
+   ```
+
+You can now build the Worker using the `index.js` file created by Wrangler.
+
+</TabItem> <TabItem label="Dashboard">
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Workers & Pages** > **Workers & Pages**.
+3. Select **Create**.
+4. In **Workers**, choose the **Hello world** template.
+5. Name your worker, then select **Deploy**.
+6. Select your Worker, then go to the **Settings** tab.
+7. Go to **Variables and Secrets**, then select **Add**.
+8. Choose _Secret_ as the type, name your secret (for example, `OPENAI_API_KEY`), and enter the value of your AI provider's API key in **Value**.
+
+You can now build the Worker using the online code editor by selecting **Edit code** on your Worker page.
+
+</TabItem> </Tabs>
+
+### 2. Build the Worker
+
+The following is an example starter Worker that serves a simple front-end to allow a user to interact with an AI provider behind AI Gateway. This example uses OpenAI as its AI provider:
+
+```javascript {9} collapse={54-230}
+export default {
+	async fetch(request, env) {
+		if (request.url.endsWith("/api/chat")) {
+			if (request.method === "POST") {
+				try {
+					const { messages } = await request.json();
+
+					const response = await fetch(
+						"https://gateway.ai.cloudflare.com/v1/$ACCOUNT_ID/$GATEWAY_ID/openai/chat/completions",
+						{
+							method: "POST",
+							headers: {
+								"Content-Type": "application/json",
+								Authorization: `Bearer ${env.OPENAI_API_KEY}`,
+							},
+							body: JSON.stringify({
+								model: "gpt-4o-mini",
+								messages: messages,
+							}),
+						},
+					);
+
+					if (!response.ok) {
+						throw new Error(`AI Gateway Error: ${response.status}`);
+					}
+
+					const result = await response.json();
+					return new Response(
+						JSON.stringify({
+							response: result.choices[0].message.content,
+						}),
+						{
+							headers: { "Content-Type": "application/json" },
+						},
+					);
+				} catch (error) {
+					return new Response(JSON.stringify({ error: error.message }), {
+						status: 500,
+						headers: { "Content-Type": "application/json" },
+					});
+				}
+			}
+			return new Response("Method not allowed", { status: 405 });
+		}
+
+		return new Response(HTML, {
+			headers: { "Content-Type": "text/html" },
+		});
+	},
+};
+
+const HTML = `<!DOCTYPE html>
+  <html lang="en" data-theme="dark">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>ChatGPT Wrapper</title>
+      <style>
+          :root {
+              --background-color: #1a1a1a;
+              --chat-background: #2d2d2d;
+              --text-color: #ffffff;
+              --input-border: #404040;
+              --message-ai-background: #404040;
+              --message-ai-text: #ffffff;
+          }
+
+          body {
+              font-family: system-ui, sans-serif;
+              margin: 0;
+              padding: 20px;
+              background: var(--background-color);
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              gap: 20px;
+              color: var(--text-color);
+          }
+
+          .chat-container {
+              width: 100%;
+              max-width: 800px;
+              background: var(--chat-background);
+              border-radius: 10px;
+              box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+              height: 80vh;
+              display: flex;
+              flex-direction: column;
+          }
+
+          .chat-header {
+              padding: 15px 20px;
+              border-bottom: 1px solid var(--input-border);
+              background: var(--chat-background);
+              border-radius: 10px 10px 0 0;
+              text-align: center;
+          }
+
+          .chat-messages {
+              flex-grow: 1;
+              overflow-y: auto;
+              padding: 20px;
+          }
+
+          .message {
+              margin-bottom: 20px;
+              padding: 10px 15px;
+              border-radius: 10px;
+              max-width: 80%;
+          }
+
+          .user-message {
+              background: #007AFF;
+              color: white;
+              margin-left: auto;
+          }
+
+          .ai-message {
+              background: var(--message-ai-background);
+              color: var(--message-ai-text);
+          }
+
+          .input-container {
+              padding: 20px;
+              border-top: 1px solid var(--input-border);
+              display: flex;
+              gap: 10px;
+          }
+
+          input {
+              flex-grow: 1;
+              padding: 10px;
+              border: 1px solid var(--input-border);
+              border-radius: 5px;
+              font-size: 16px;
+              background: var(--chat-background);
+              color: var(--text-color);
+          }
+
+          button {
+              padding: 10px 20px;
+              background: #007AFF;
+              color: white;
+              border: none;
+              border-radius: 5px;
+              cursor: pointer;
+              font-size: 16px;
+          }
+
+          button:disabled {
+              background: #ccc;
+          }
+
+          .error {
+              color: red;
+              padding: 10px;
+              text-align: center;
+          }
+      </style>
+  </head>
+  <body>
+      <div class="chat-container">
+          <div class="chat-header">
+              <h2>AI Assistant</h2>
+          </div>
+          <div class="chat-messages" id="messages"></div>
+          <div class="input-container">
+              <input type="text" id="userInput" placeholder="Type your message..." />
+              <button onclick="sendMessage()" id="sendButton">Send</button>
+          </div>
+      </div>
+
+      <script>
+          let messages = [];
+          const messagesDiv = document.getElementById('messages');
+          const userInput = document.getElementById('userInput');
+          const sendButton = document.getElementById('sendButton');
+
+          userInput.addEventListener('keypress', (e) => {
+              if (e.key === 'Enter') sendMessage();
+          });
+
+          async function sendMessage() {
+              const content = userInput.value.trim();
+              if (!content) return;
+
+              userInput.disabled = true;
+              sendButton.disabled = true;
+
+              messages.push({ role: 'user', content });
+              appendMessage('user', content);
+              userInput.value = '';
+
+              try {
+                  const response = await fetch('/api/chat', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({
+                          messages
+                      })
+                  });
+
+                  if (!response.ok) {
+                      throw new Error('API request failed');
+                  }
+
+                  const result = await response.json();
+                  const aiMessage = result.response;
+
+                  messages.push({ role: 'assistant', content: aiMessage });
+                  appendMessage('ai', aiMessage);
+              } catch (error) {
+                  appendMessage('ai', 'Sorry, there was an error processing your request.');
+                  console.error('Error:', error);
+              }
+
+              userInput.disabled = false;
+              sendButton.disabled = false;
+              userInput.focus();
+          }
+
+          function appendMessage(role, content) {
+              const messageDiv = document.createElement('div');
+              messageDiv.className = 'message ' + role + '-message';
+              messageDiv.textContent = content;
+              messagesDiv.appendChild(messageDiv);
+              messagesDiv.scrollTop = messagesDiv.scrollHeight;
+          }
+      </script>
+  </body>
+  </html>`;
+```
+
+Note that the account ID and gateway ID need to be replaced in the AI Gateway endpoint. You can add these as [environment variables](/workers/configuration/environment-variables/) or [secrets](/workers/configuration/secrets/) in Workers. If you chose to use Authenticated Gateway when creating your AI gateway, make sure to also add your token as a secret and pass its value to the AI gateway in the `cf-aig-authorization` header.
+
+### 3. Publish the Worker
+
+Once the Worker code is complete, you need to make the Worker addressable using a hostname controllable by Cloudflare Access.
+
+<Tabs> <TabItem label="Wrangler">
+
+Edit the `wrangler.toml` configuration file and add the following information to ensure that the Worker is only accessible using the custom hostname:
+
+```diff lang="toml"
+name = "ai-agent-wrapper"
+main = "src/index.js"
+compatibility_date = "2023-10-30"
+workers_dev = false
+
++# Replace with your custom domain
++routes = [
++  { pattern = "<YOUR_CUSTOM_DOMAIN>", custom_domain = true }
++]
+
+[vars]
+# Add any environment variables here
+```
+
+To publish the worker, run `wrangler publish`.
+
+</TabItem> <TabItem label="Dashboard">
+
+If you built your Worker remotely using the [code editor](/workers/get-started/dashboard/) available in the Cloudflare dashboard, you can deploy it by selecting **Deploy**.
+
+To ensure that the Worker is only accessible from the custom hostname:
+
+1. Go to **Workers & Pages** > **Workers & Pages**.
+2. Select your Worker.
+3. Go to **Settings**.
+4. Within **Domains & Routes**, select **Add**.
+5. Choose **Custom domain**.
+6. Enter your desired custom domain name.
+7. Select **Add domain**.
+
+The Worker is now behind an addressable public hostname. Make sure to turn off both **workers.dev** and **Preview URLs** so that the Worker can only be accessed with its custom domain.
+
+</TabItem> </Tabs>
+
+## 4. Secure the wrapper with Access
+
+To secure the AI agent wrapper to ensure that only trusted users can access it:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
+2. Select **Add an application**.
+3. Choose **Self-hosted**.
+4. Enter a name for your AI agent wrapper application.
+5. In **Session Duration**, choose when the user's application token should expire.
+6. Select **Add public hostname** and enter the custom domain you set for your Worker.
+7. [Configure your Access application](/cloudflare-one/applications/configure-apps/self-hosted-public-app/) for your Worker.
+8. Add [Access policies](/cloudflare-one/policies/access/policy-management/) to control who can connect to your application.
+
+Now your AI wrapper can only be accessed by your users that successfully match your Access policies.
+
+## 5. Block access to public AI agents with Gateway
+
+You can now block access to all unauthorized public AI agents with a Gateway [HTTP policy](/cloudflare-one/policies/gateway/http-policies/).
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Firewall policies**.
+2. Select **HTTP**.
+3. Select **Add a policy**.
+4. Add the following policy:
+
+   | Selector           | Operator | Value                     | Action |
+   | ------------------ | -------- | ------------------------- | ------ |
+   | Content Categories | in       | _Artificial Intelligence_ | Block  |
+
+5. Select **Create policy**.
+
+This ensures that public AI agents are not accessible using a managed endpoint.
+
+Alternatively, you can prevent users from using public AI agents by displaying a [custom block message](/cloudflare-one/policies/gateway/block-page/#customize-the-block-page), [redirect](/cloudflare-one/policies/gateway/block-page/#redirect-to-a-block-page), or a [user notification](/cloudflare-one/policies/gateway/http-policies/#warp-client-block-notifications) directing users to the AI agent wrapper.
+
+## 6. Enforce Data Loss Prevention and Clientless Browser Isolation
+
+Now that you have full control over access to your AI agent wrapper, you can enforce extra security methods such as Data Loss Prevention (DLP) and Clientless Web Isolation to protect and control data shared with the AI agent.
+
+### Apply Data Loss Prevention profiles
+
+You can use [Data Loss Prevention (DLP)](/cloudflare-one/policies/data-loss-prevention/) to prevent your users from sending sensitive data to the AI agent.
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **DLP** > **DLP profiles**.
+2. Ensure that the [DLP profiles](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/) you want to enforce are properly configured.
+3. Add an HTTP policy to enforce the DLP profile for the hostname for your wrapper. For example:
+
+   | Selector    | Operator | Value                    | Logic | Action |
+   | ----------- | -------- | ------------------------ | ----- | ------ |
+   | Host        | is       | `ai-wrapper.example.com` | And   | Block  |
+   | DLP Profile | in       | _AI DLP profile_         |       |        |
+
+4. Select **Create policy**.
+
+For more information on creating DLP policies, refer to [Scan HTTP traffic](/cloudflare-one/policies/data-loss-prevention/dlp-policies/).
+
+### Execute in a clientless isolated browser
+
+Because you published your wrapper as a self-hosted Access application, you can execute it in an [isolated session](/cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/) for your users by creating an [Access policy](/cloudflare-one/policies/access/) and configuring it for your application.
+
+<Render file="clientless-browser-isolation" />
+
+3. Go to **Access** > **Policies**.
+4. Select **Add a policy**.
+5. Set the **Action** to _Allow_.
+6. In **Add rules**, add identity rules to define who the application should be isolated for.
+7. In **Additional settings (optional)**, turn on **Isolate application**.
+
+Once the Access policy has been created, you can attach it to your wrapper.
+
+1. Go to **Access** > **Applications**.
+2. Choose your wrapper application, then select **Configure**.
+3. In **Policies**, select **Select existing policies**.
+4. Choose the Access policy you previously created.
+5. Select **Confirm**, then select **Save application**.
+
+Because Clientless Web Isolation traffic applies your Gateway HTTP policies, your configured DLP profiles will apply to isolated sessions.
+
+For more information on isolating an Access application, refer to [Isolate self-hosted application](/cloudflare-one/policies/access/isolate-application/).
+
+## Additional benefits
+
+Organizations that adopt Cloudflare to secure access to AI agents will benefit from improved visibility and configurability.
+
+### Visibility
+
+Zero Trust will log all [Access events](/cloudflare-one/insights/logs/audit-logs/) and [DLP detections](/cloudflare-one/insights/logs/gateway-logs/#http-logs). In addition, AI Gateway provides [visibility](/ai-gateway/observability/logging/) into user prompts, model response, token usage, and costs.
+
+Logs can be exported to external providers with [Logpush](/logs/get-started/).
+
+### Configurability
+
+You can configure your wrapper to use a [different AI provider](/ai-gateway/providers/) or give your users the option to choose between multiple AI providers, including AI models running directly on Cloudflare's global network with [Workers AI](/workers-ai/). With this, you can control costs related to AI usage or adopt newer models without impacting your users or the access controls already put in place.

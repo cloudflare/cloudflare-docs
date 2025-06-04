@@ -7,10 +7,25 @@ import { getEntry } from "astro:content";
 import { getOgImage } from "~/util/og";
 import type { CollectionEntry } from "astro:content";
 
-// grab the current top-level folder. Remove . characters for 1.1.1.1 URL
+const DEFAULT_TITLE_DELIMITER = "|";
+const NOINDEX_PRODUCTS = ["email-security", "style-guide", "security"];
+const CHATBOT_DEPRIORITIZE_PRODUCTS = ["firewall"];
+
 const currentSection = Astro.url.pathname.split("/")[1].replaceAll(".", "");
-const head = Astro.locals.starlightRoute.entry.data.head;
-const noIndexProductsList = ["style-guide", "security"];
+
+const { entry, head, lastUpdated } = Astro.locals.starlightRoute;
+const frontmatter = entry.data;
+
+const metaTags = [] as Record<string, string>[];
+
+const shouldNoIndex =
+	NOINDEX_PRODUCTS.includes(currentSection) ||
+	frontmatter.noindex ||
+	frontmatter.external_link;
+
+const shouldChatbotDeprioritize =
+	CHATBOT_DEPRIORITIZE_PRODUCTS.includes(currentSection) ||
+	frontmatter.chatbot_deprioritize;
 
 if (currentSection) {
 	const product = await getEntry("products", currentSection);
@@ -22,47 +37,35 @@ if (currentSection) {
 			let title: string;
 
 			if (titleIdx !== -1) {
-				const existingTitle = head[titleIdx].content;
+				const existingTitle = head[titleIdx].content?.split(
+					` ${DEFAULT_TITLE_DELIMITER} `,
+				)[0];
 				title = `${existingTitle} · ${product.data.meta.title}`;
 
 				head[titleIdx] = {
 					tag: "title",
-					attrs: {},
 					content: title,
 				};
 			} else {
-				title = `${Astro.locals.starlightRoute.entry.data.title} · ${product.data.meta.title}`;
+				title = `${frontmatter.title} · ${product.data.meta.title}`;
 				head.push({
 					tag: "title",
-					attrs: {},
 					content: title,
 				});
 			}
 
-			head.push({
-				tag: "meta",
-				attrs: { property: "og:title", content: title },
-				content: "",
+			metaTags.push({
+				property: "og:title",
+				content: title,
 			});
 		}
 
 		if (product.data.product.title) {
-			const productName = product.data.product.title;
-			head.push({
-				tag: "meta",
-				attrs: {
-					name: "pcx_product",
-					content: productName,
-				},
-				content: "",
-			});
-			head.push({
-				tag: "meta",
-				attrs: {
-					name: "algolia_product_filter",
-					content: productName,
-				},
-				content: "",
+			["pcx_product", "algolia_product_filter"].map((name) => {
+				metaTags.push({
+					name,
+					content: product.data.product.title,
+				});
 			});
 		}
 
@@ -73,104 +76,98 @@ if (currentSection) {
 					name: "pcx_content_group",
 					content: product.data.product.group,
 				},
-				content: "",
 			});
 		}
 	}
-
-	if (noIndexProductsList.includes(currentSection)) {
-		head.push({
-			tag: "meta",
-			attrs: {
-				name: "robots",
-				content: "noindex",
-			},
-			content: "",
-		});
-	}
 }
 
-// Add noindex tag if present in frontmatter
-
-if (Astro.locals.starlightRoute.entry.data.noindex) {
-	head.push({
-		tag: "meta",
-		attrs: {
-			name: "robots",
-			content: "noindex",
-		},
-		content: "",
+if (shouldNoIndex) {
+	metaTags.push({
+		name: "robots",
+		content: "noindex",
 	});
 }
 
-// Adding metadata used for reporting and search indexing
-// content type
-if (Astro.locals.starlightRoute.entry.data.pcx_content_type) {
-	const contentType = Astro.locals.starlightRoute.entry.data.pcx_content_type;
+if (shouldChatbotDeprioritize) {
 	head.push({
 		tag: "meta",
 		attrs: {
-			name: "pcx_content_type",
-			content: contentType,
+			name: "pcx_chatbot_deprioritize",
+			content: true,
 		},
-		content: "",
-	});
-	head.push({
-		tag: "meta",
-		attrs: {
-			name: "algolia_content_type",
-			content: contentType,
-		},
-		content: "",
 	});
 }
 
-// other products
-if (Astro.locals.starlightRoute.entry.data.products) {
-	const additionalProducts = Astro.locals.starlightRoute.entry.data.products;
-	head.push({
-		tag: "meta",
-		attrs: {
-			name: "pcx_additional_products",
-			content: additionalProducts.toString(),
-		},
-		content: "",
-	});
-}
-
-// other products
-if (Astro.locals.starlightRoute.entry.data.tags) {
-	const pageTags = Astro.locals.starlightRoute.entry.data.tags;
-	head.push({
-		tag: "meta",
-		attrs: {
-			name: "pcx_tags",
-			content: pageTags.toString(),
-		},
-		content: "",
-	});
-}
-
-if (Astro.locals.starlightRoute.entry.data.updated) {
-	const daysBetween = differenceInCalendarDays(
-		new Date(),
-		Astro.locals.starlightRoute.entry.data.updated,
+if (
+	frontmatter.description &&
+	head.findIndex(
+		({ tag, attrs }) => tag === "meta" && attrs?.name === "description",
+	) === -1
+) {
+	const existingOpenGraphTag = head.findIndex(
+		({ tag, attrs }) => tag === "meta" && attrs?.property === "og:description",
 	);
-	head.push({
-		tag: "meta",
-		attrs: {
-			name: "pcx_last_reviewed",
-			content: daysBetween.toString(),
-		},
-		content: "",
+
+	if (existingOpenGraphTag !== -1) {
+		head[existingOpenGraphTag].attrs!.content = frontmatter.description;
+	}
+
+	metaTags.push({
+		name: "description",
+		content: frontmatter.description as string,
 	});
 }
 
-// end metadata
+if (frontmatter.pcx_content_type) {
+	["pcx_content_type", "algolia_content_type"].map((name) => {
+		metaTags.push({
+			name,
+			content: frontmatter.pcx_content_type as string,
+		});
+	});
+}
 
-if (Astro.locals.starlightRoute.entry.data.pcx_content_type === "changelog") {
-	const href = new URL(Astro.site ?? "");
-	href.pathname = Astro.locals.starlightRoute.entry.slug.concat("/index.xml");
+if (frontmatter.products) {
+	metaTags.push({
+		name: "pcx_additional_products",
+		content: frontmatter.products.toString(),
+	});
+}
+
+if (frontmatter.tags) {
+	metaTags.push({
+		name: "pcx_tags",
+		content: frontmatter.tags.toString(),
+	});
+}
+
+if (lastUpdated) {
+	const daysBetween = differenceInCalendarDays(new Date(), lastUpdated);
+
+	metaTags.push({
+		name: "pcx_last_modified",
+		content: daysBetween.toString(),
+	});
+}
+
+if (frontmatter.updated) {
+	const daysBetween = differenceInCalendarDays(new Date(), frontmatter.updated);
+
+	metaTags.push({
+		name: "pcx_last_reviewed",
+		content: daysBetween.toString(),
+	});
+}
+
+if (frontmatter.external_link) {
+	metaTags.push({
+		content: `0; url=${frontmatter.external_link}`,
+		"http-equiv": "refresh",
+	});
+}
+
+if (frontmatter.pcx_content_type === "changelog") {
+	const href = new URL(entry.id.concat("/index.xml"), Astro.url.origin);
 
 	head.push({
 		tag: "link",
@@ -179,26 +176,6 @@ if (Astro.locals.starlightRoute.entry.data.pcx_content_type === "changelog") {
 			type: "application/rss+xml",
 			href: href.toString(),
 		},
-		content: "",
-	});
-}
-
-if (Astro.locals.starlightRoute.entry.data.external_link) {
-	head.push({
-		tag: "meta",
-		attrs: {
-			content: "noindex",
-			name: "robots",
-		},
-		content: "",
-	});
-	head.push({
-		tag: "meta",
-		attrs: {
-			content: `0; url=${Astro.locals.starlightRoute.entry.data.external_link}`,
-			"http-equiv": "refresh",
-		},
-		content: "",
 	});
 }
 
@@ -208,34 +185,28 @@ const ogImagePath = await getOgImage(
 );
 const ogImageUrl = new URL(ogImagePath, Astro.url.origin).toString();
 
-const ogImageTags = [
-	{
-		tag: "meta",
-		attrs: {
-			name: "image",
-			content: ogImageUrl,
-		},
-		content: "",
-	},
-	{
-		tag: "meta",
-		attrs: {
-			name: "og:image",
-			content: ogImageUrl,
-		},
-		content: "",
-	},
-	{
-		tag: "meta",
-		attrs: {
-			name: "twitter:image",
-			content: ogImageUrl,
-		},
-		content: "",
-	},
-] as const;
+["image", "og:image", "twitter:image"].map((property) => {
+	metaTags.push({
+		property,
+		content: ogImageUrl,
+	});
+});
 
-head.push(...ogImageTags);
+head.push({
+	tag: "link",
+	attrs: {
+		rel: "alternate",
+		type: "text/markdown",
+		href: Astro.site + Astro.url.pathname.slice(1) + "index.md",
+	},
+});
+
+metaTags.map((attrs) => {
+	head.push({
+		tag: "meta",
+		attrs,
+	});
+});
 ---
 
 <script src="src/scripts/footnotes.ts"></script>

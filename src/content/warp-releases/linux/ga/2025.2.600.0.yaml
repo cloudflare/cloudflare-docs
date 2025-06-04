@@ -1,0 +1,18 @@
+releaseNotes: >-
+  This release contains support for a new WARP setting, [Global WARP override](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#global-warp-override). It also includes significant improvements to our captive portal / public Wi-Fi detection logic. If you have experienced captive portal issues in the past, re-test and give this version a try.
+
+
+  **Changes and improvements**
+
+  - Improved [captive portal detection](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/captive-portals/) to make more public networks compatible and have faster detection.
+
+  - WARP tunnel protocol details can now be viewed using the `warp-cli tunnel stats` command.
+
+  - Fixed an issue with device revocation and re-registration when switching configurations.
+
+  - Added a new [Global WARP override](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#global-warp-override) setting. This setting puts account administrators in control of disabling and enabling WARP across all devices registered to an account from the dashboard. Global WARP override is disabled by default.
+version: 2025.2.600.0
+releaseDate: 2025-03-31T17:32:13.302Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/noble-intel/version/2025.2.600.0
+packageSize: 44482626
+platformName: Linux

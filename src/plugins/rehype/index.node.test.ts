@@ -15,7 +15,12 @@ describe("heading-slugs", () => {
 			.data("settings", {
 				fragment: true,
 			})
-			.use([rehypeParse, rehypeHeadingSlugs, rehypeStringify])
+			.use([
+				rehypeParse,
+				rehypeExternalLinks,
+				rehypeHeadingSlugs,
+				rehypeStringify,
+			])
 			.process(html);
 
 		return file.toString();
@@ -31,6 +36,16 @@ describe("heading-slugs", () => {
 		const text = await process('<h2 id="bar">foo</h2>');
 
 		expect(text).toMatchInlineSnapshot(`"<h2 id="bar">foo</h2>"`);
+	});
+
+	test("does not add arrow if image children", async () => {
+		const text = await process(
+			'<h2 id="bar"><a href="https://example.com">foo</a></h2>',
+		);
+
+		expect(text).toMatchInlineSnapshot(
+			`"<h2 id="bar"><a href="https://example.com" target="_blank" rel="noopener">foo<span class="external-link"> ↗</span></a></h2>"`,
+		);
 	});
 });
 
@@ -58,6 +73,16 @@ describe("external-links", () => {
 		const text = await process('<a href="/">foo</a>');
 
 		expect(text).toMatchInlineSnapshot(`"<a href="/">foo</a>"`);
+	});
+
+	test("does not add arrow if image children", async () => {
+		const text = await process(
+			'<a href="https://example.com"><img src="/image.jpg" /></a>',
+		);
+
+		expect(text).toMatchInlineSnapshot(
+			`"<a href="https://example.com" target="_blank" rel="noopener"><img src="/image.jpg"></a>"`,
+		);
 	});
 });
 

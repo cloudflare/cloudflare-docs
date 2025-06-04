@@ -89,6 +89,10 @@ The first discovery of resources may not succeed in all regions, while the IAM p
 
 ### 2. Authorize access to your Azure account
 
+:::caution
+Magic Cloud does not support personal Microsoft accounts. Please sign in using a work or school account that is part of an Azure Entra Tenant.
+:::
+
 1. Select **Create service principal**. You will be redirected to Microsoft's login page.
 2. Enter your Azure credentials. If your account does not have administrator privileges, you may need to pass this link to an account that has administrator privileges.
 3. The next screen lists Cloudflare required permissions to access your account. Select **Accept**.
@@ -125,13 +129,14 @@ The first discovery of resources may not succeed in all regions, while the IAM p
 2. Grant the new service account these roles:
 	- `Compute Network Admin`
 	- `Compute Viewer`
-3. Grant the **Service Account Token Creator** role to our bot account to allow it to impersonate this service account. Learn how to grant a specific role [in Google's documentation](https://cloud.google.com/iam/docs/manage-access-service-accounts#grant-single-role):
+3. Under **IAM & Admin** > **Service Accounts**, select the service account you just created, and navigate to the **Permissions** tab.
+4. Grant the **Service Account Token Creator** role to our bot account to allow it to impersonate this service account. Learn how to grant a specific role [in Google's documentation](https://cloud.google.com/iam/docs/manage-access-service-accounts#grant-single-role):
    - `mcn-integrations-bot-prod@mcn-gcp-01.iam.gserviceaccount.com`
-4. In the **service account email field**, enter the email account that you used to create the GCP service account.
-5. In the **Project ID field**, enter the [project ID](https://support.google.com/googleapi/answer/7014113?hl=en) associated with your project.
-6. [Add the label](https://cloud.google.com/resource-manager/docs/creating-managing-labels#create-labels) displayed on the dash to your project.
-7. Select **I authorize Cloudflare to access my GCP account.** If your account does not have administrator privileges, you may need to pass this link to an account that has administrator privileges.
-8. Select **Authorize**.
+5. In the **service account email field**, enter the email account that you used to create the GCP service account.
+6. In the **Project ID field**, enter the [project ID](https://support.google.com/googleapi/answer/7014113?hl=en) associated with your project.
+7. [Add the label](https://cloud.google.com/resource-manager/docs/creating-managing-labels#create-labels) displayed on the dash to your project.
+8. Select **I authorize Cloudflare to access my GCP account.** If your account does not have administrator privileges, you may need to pass this link to an account that has administrator privileges.
+9. Select **Authorize**.
 
 You have successfully connected your cloud provider to Magic Cloud Networking. Cloud resources found by Magic Cloud Networking are available in the [Cloud resource catalog](/magic-cloud-networking/manage-resources/#cloud-resource-catalog).
 

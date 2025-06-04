@@ -5,6 +5,8 @@ sidebar:
   label: Custom integration
   order: 1
 
+description: Configure custom device posture checks in Cloudflare Zero Trust using a service-to-service integration.
+
 ---
 
 import { Render } from "~/components"
@@ -21,7 +23,6 @@ sequenceDiagram
 		WARP->>External API: JSON with user and device identity
     External API-->>WARP: JSON with 0-100 result
 ```
-
 ## External API requirements
 
 The custom service provider integration works with any API service that meets the following specifications. For an example of a custom device posture integration API, refer to our [Cloudflare Workers sample code](https://github.com/cloudflare/custom-device-posture-integration-example-worker).

@@ -8,7 +8,7 @@ sidebar:
 
 When [provisioning services for an account](/tenant/how-to/manage-subscriptions/), you need to include certain values with each API call to specify a particular service.
 
-The subscriptions available to you will vary depending on your current partner program ([Self-Service Partner Program](https://www.cloudflare.com/cloudflare-partners-self-serve-program-closed-beta/) or [Enterprise Resellers and MSP Program](https://portal.cloudflarepartners.com)).
+The subscriptions available to you will vary depending on your current partner program ([Agency Partner Program](https://www.cloudflare.com/cloudflare-partners-self-serve-program-closed-beta/) or [Enterprise Resellers and MSP Program](https://portal.cloudflarepartners.com)).
 
 The following values are samples and not exhaustive. For the complete list of subscription values available to you, make an API call to the [zone subscriptions](/api/resources/zones/subresources/rate_plans/methods/get/) or [account subscriptions](/api/resources/accounts/subresources/subscriptions/methods/get/) endpoints.
 
@@ -19,8 +19,10 @@ When creating or updating a [zone plan](/api/resources/zones/subresources/subscr
 | Partner program                     | Available subscriptions                                         |
 | ----------------------------------- | --------------------------------------------------------------- |
 | Enterprise and self-serve resellers | `PARTNERS_FREE`, `PARTNERS_PRO`, `PARTNERS_BIZ`, `PARTNERS_ENT` |
-| PAYGO partners                      | `CF_FREE`, `CF_PRO_20_20`, `CF_BIZ`                             |
+| Agency partners                     | `CF_FREE`, `CF_PRO_20_20`, `CF_BIZ`                             |
 | MSP partners                        | `msp_biz`                                                       |
+
+
 
 ## Other subscriptions
 
@@ -85,4 +87,4 @@ If your reseller plan does not have access to a specific subscription, you will 
 ]
 ```
 
-To change your program or - in some cases - get a specific subscription added to your reseller plan, contact `partners@cloudflare.com`.
+To change your program or - in some cases - get a specific subscription added to your reseller plan, contact `partners@cloudflare.com`. Agency Partners should contact agency@cloudflare.com

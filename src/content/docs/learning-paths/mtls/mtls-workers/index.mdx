@@ -5,6 +5,8 @@ sidebar:
   order: 4
 ---
 
+import { Tabs, TabItem } from "~/components";
+
 :::note
 Cloudflare Workers runs after the Cloudflare WAF and Cloudflare Access. Review the [Traffic Sequence](https://blog.cloudflare.com/traffic-sequence-which-product-runs-first/) visible on the Cloudflare dashboard.
 :::
@@ -16,6 +18,42 @@ Cloudflare Workers runs after the Cloudflare WAF and Cloudflare Access. Review t
 All Client Certificate details can be found in the [tlsClientAuth](/workers/runtime-apis/request#incomingrequestcfproperties) object in Cloudflare Workers.
 
 Example Cloudflare Workers code to return all headers and gain visibility, including [Client Certificate headers](/ssl/client-certificates/enable-mtls/#cloudflare-workers):
+
+<Tabs> <TabItem label="Module Worker" icon="seti:javascript">
+```js
+export default {
+  async fetch(request, env, ctx) {
+    const { tlsClientAuth = {} } = request.cf || {};
+    const tlsHeaders = {
+      'X-CERT-ISSUER-DN': tlsClientAuth.certIssuerDN,
+      'X-CERT-SUBJECT-DN': tlsClientAuth.certSubjectDN,
+      'X-CERT-ISSUER-DN-L': tlsClientAuth.certIssuerDNLegacy,
+      'X-CERT-SUBJECT-DN-L': tlsClientAuth.certSubjectDNLegacy,
+      'X-CERT-SERIAL': tlsClientAuth.certSerial,
+      'X-CERT-FINGER': tlsClientAuth.certFingerprintSHA1,
+      'X-CERT-VERIFY': tlsClientAuth.certVerify,
+      'X-CERT-NOTBE': tlsClientAuth.certNotBefore,
+      'X-CERT-NOTAF': tlsClientAuth.certNotAfter
+    };
+
+    const headers = Object.fromEntries(request.headers);
+    return new Response(JSON.stringify({ ...headers, ...tlsHeaders }, null, 2), {
+      headers: { 'Content-Type': 'application/json' }
+    });
+
+}
+}
+
+````
+
+</TabItem>
+<TabItem label="Service Worker" icon="seti:javascript">
+
+:::caution[Service Workers are deprecated]
+
+Service Workers are deprecated, but still supported. We recommend using [Module Workers](/workers/reference/migrate-to-module-workers/) instead. New features may not be supported for Service Workers.
+
+:::
 
 ```js
 addEventListener('fetch', event => {
@@ -41,7 +79,10 @@ addEventListener('fetch', event => {
     })(event.request)
   );
 });
-```
+````
+
+</TabItem>
+</Tabs>
 
 The response when using the browser with a P12 Certificate to visit the mTLS hostname would look similar to this example:
 
