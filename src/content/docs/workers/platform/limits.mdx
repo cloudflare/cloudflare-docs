@@ -218,7 +218,7 @@ When the client disconnects, all tasks associated with that client’s request a
 
 ## Simultaneous open connections
 
-You can open up to six connections simultaneously, for each invocation of your Worker. The connections opened by the following API calls all count toward this limit:
+You can open up to six connections simultaneously for each invocation of your Worker. The connections opened by the following API calls all count toward this limit:
 
 - the `fetch()` method of the [Fetch API](/workers/runtime-apis/fetch/).
 - `get()`, `put()`, `list()`, and `delete()` methods of [Workers KV namespace objects](/kv/api/).
