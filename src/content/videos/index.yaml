@@ -190,17 +190,6 @@
   updated: 2024-10-07
   difficulty: Beginner
   pcx_content_type: tutorial
-- link: https://developers.cloudflare.com/pages/framework-guides/deploy-a-hono-site/#creator-interview
-  id: DevTalk | Episode 01 - Yusuke Wada, creator of Hono Framework
-  description: In this interview, Yusuke Wada reflects on his journey in developing Hono.
-  tags: [Pages, Workers]
-  languages: [TypeScript]
-  products: [Pages, Workers, Workers AI]
-  cloudflare: true
-  author: yusuke
-  updated: 2024-10-08
-  difficulty: Beginner
-  pcx_content_type: interview
 - link: https://youtu.be/W45MIi_t_go
   id: Building Front-End Applications | Now Supported by Cloudflare Workers
   description: You can now build front-end applications, just like you do on Cloudflare Pages, but with the added benefit of Workers.
@@ -261,18 +250,6 @@
   updated: 2024-10-31
   difficulty: Beginner
   pcx_content_type: tutorial
-- link: https://developers.cloudflare.com/workers/observability/logs/#video-tutorial
-  id: Workers Observability
-  description: With Workers Logs, you can collect, store, filter, and analyze all logging data from your Workers directly in the Cloudflare dashboard.
-  tags: [Workers, Pages]
-  languages: [TypeScript]
-  # stream_id:
-  products: [Workers, Pages]
-  cloudflare: true
-  author: confidence
-  updated: 2024-10-31
-  difficulty: Intermediate
-  pcx_content_type: tutorial
 - link: https://youtu.be/RmF05GpLE20
   id: DevTalk Episode 02 | Post-Quantum Cryptography
   description: Bas Westerbaan is Cloudflare’s Research Lead on Post-Quantum efforts. His work ranges from cryptographic implementation and standardization, to driving large-scale experiment and subsequent deployment.
@@ -295,17 +272,6 @@
   updated: 2024-11-14
   difficulty: Intermediate
   pcx_content_type: tutorial
-- link: https://developers.cloudflare.com/workers/runtime-apis/rpc/#video-tutorial
-  id: Workers RPC Tutorial
-  description: Learn how to implement RPC in your JavaScript applications and build serverless solutions.
-  tags: [Workers, Pages]
-  languages: [TypeScript]
-  products: [Workers, Pages]
-  cloudflare: true
-  author: confidence
-  updated: 2024-11-10
-  difficulty: Beginner
-  pcx_content_type: tutorial
 - link: https://youtu.be/B2bLUc3iOsI
   id: Deploy your React App to Cloudflare Workers
   description: Learn how to deploy an existing React application to Cloudflare Workers.
@@ -316,50 +282,6 @@
   author: confidence
   updated: 2024-11-05
   difficulty: Intermediate
-  pcx_content_type: tutorial
-- link: https://developers.cloudflare.com/pages/framework-guides/deploy-an-astro-site/#video-tutorial
-  id: Build a Full-Stack Application using Astro and Cloudflare Workers
-  description: Learn how to deploy an Astro application to Cloudflare Workers.
-  tags: [Workers, Pages, Astro]
-  languages: [TypeScript]
-  products: [Workers, Pages]
-  cloudflare: true
-  author: kristian
-  updated: 2024-11-19
-  difficulty: Beginner
-  pcx_content_type: tutorial
-- link: https://developers.cloudflare.com/workflows/examples/twilio/
-  id: Schedule Twilio Messaging and Phone Calls with Workflows
-  description: Integrate Workflows with Twilio. Learn how to receive and send text messages and phone calls via APIs and Webhooks.
-  tags: [Workers, Workflows]
-  languages: [TypeScript]
-  products: [Workers, Workflows]
-  cloudflare: true
-  author: craig
-  updated: 2024-11-30
-  difficulty: Intermediate
-  pcx_content_type: tutorial
-- link: https://developers.cloudflare.com/pages/framework-guides/deploy-a-nuxt-site/#video-tutorial
-  id: Deploy Your Nuxt Application To Workers
-  description: Watch to learn how to easily deploy your Nuxt application to the Cloudflare global network.
-  tags: [Workers, Pages, NextJS]
-  languages: [TypeScript]
-  products: [Workers, Pages]
-  cloudflare: true
-  author: kristian
-  updated: 2025-01-08
-  difficulty: Beginner
-  pcx_content_type: tutorial
-- link: https://developers.cloudflare.com/workers-ai/tutorials/image-generation-playground/
-  id: How to Build an Image Generator using Workers AI
-  description: In this series of videos, learn how to build an AI Image Playground, add new AI Models and store your generated images using R2.
-  tags: [Workers, R2, Workers AI]
-  languages: [TypeScript]
-  products: [Workers, R2, Workers AI]
-  cloudflare: true
-  author: kristian
-  updated: 2025-01-29
-  difficulty: Beginner
   pcx_content_type: tutorial
 # - link:
 #   id:
