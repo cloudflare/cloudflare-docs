@@ -33,8 +33,8 @@ Specify the model using `{provider}/{model}` format. For example:
 import OpenAI from "openai";
 const client = new OpenAI({
 	apiKey: "YOUR_PROVIDER_API_KEY", // Provider API key
-	baseURL:
-		"https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/completions",
+  // NOTE: the OpenAI client automatically adds /chat/completions to the end of the URL, you should not add it yourself.
+	baseURL: "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat",
 });
 
 const response = await client.chat.completions.create({

@@ -9,6 +9,8 @@ description: Review common troubleshooting scenarios for Cloudflare Zero Trust.
 
 import { GlossaryTooltip, Render } from "~/components";
 
+<Render file="survey" />
+
 [❮ Back to FAQ](/cloudflare-one/faq/)
 
 ## I tried to register the WARP client with my Zero Trust domain but received the following error messages: `Authentication Expired` and `Registration error. Please try again later`.
@@ -324,17 +326,17 @@ You must ensure the host device is included in the WARP tunnel while excluding t
 
 This issue can occur due to a conflict between browser settings and Windows network configuration.
 
-In Chromium-based browsers like Chrome and Edge, the **Anonymize local IPs exposed by WebRTC** flag (`chrome://flags/#enable-webrtc-hide-local-ips-with-mdns` or `edge://flags/#enable-webrtc-hide-local-ips-with-mdns`)  — when set to `Enabled` or left at `Default` — hides local IP addresses by replacing them with mDNS hostnames. Multicast DNS (mDNS) hostnames rely on multicast traffic to be resolved properly on the local network.
+In Chromium-based browsers like Chrome and Edge, the **Anonymize local IPs exposed by WebRTC** flag (`chrome://flags/#enable-webrtc-hide-local-ips-with-mdns` or `edge://flags/#enable-webrtc-hide-local-ips-with-mdns`) — when set to `Enabled` or left at `Default` — hides local IP addresses by replacing them with mDNS hostnames. Multicast DNS (mDNS) hostnames rely on multicast traffic to be resolved properly on the local network.
 
 The [Internet Group Management Protocol (IGMP)](https://www.cloudflare.com/learning/network-layer/what-is-igmp/) allows devices to join a multicasting group. On Windows, `IGMPLevel` determines whether the system participates in multicast group membership. When `IGMPLevel` is set to `0`, multicast support is disabled.
 
 To resolve this error, review the following options:
 
-| `IGMPLevel`        | **Anonymize local IPs exposed by WebRTC** setting         | Result in Clientless Web Isolation           |
-|--------------------|-----------------------------------------------------------|----------------------------------------------|
-| `0` (disabled)     | **Enabled / Default**                                     | ❌ Blank screen                              |
-| `0` (disabled)     | **Disabled**                                              | ✅ Works - browser will use local IP address |
-| `2` (enabled)      | **Enabled / Default**                                     | ✅ Works - mDNS resolves successfully        |
+| `IGMPLevel`    | **Anonymize local IPs exposed by WebRTC** setting | Result in Clientless Web Isolation           |
+| -------------- | ------------------------------------------------- | -------------------------------------------- |
+| `0` (disabled) | **Enabled / Default**                             | ❌ Blank screen                              |
+| `0` (disabled) | **Disabled**                                      | ✅ Works - browser will use local IP address |
+| `2` (enabled)  | **Enabled / Default**                             | ✅ Works - mDNS resolves successfully        |
 
 ## After putting Google Workspace behind Access, I can’t log in. It keeps redirecting between Access and Google without ever completing authentication.
 
