@@ -110,7 +110,7 @@ These tools and attacks exploit different aspects of network protocols and behav
 
 ---
 
-## Can I exclude a specific user agents from HTTP DDoS protection?
+## Can I exclude specific user agents from HTTP DDoS protection?
 
 Yes, you can create an [override](/ddos-protection/managed-rulesets/http/override-expressions/) and use the expression fields to match against HTTP requests with the user agent. There are a variety of [fields](/ddos-protection/managed-rulesets/http/override-expressions/#available-expression-fields) that you can use.
 
@@ -138,7 +138,7 @@ When SYN flood packets are highly randomized or indistinguishable from legitimat
 
 ## How does Cloudflare handle hyper-localized DDoS attacks that may aim to overwhelm a specific Point of Presence (PoP)?
 
-Cloudflare uses a combination of intelligent traffic engineering, global anycast, and real-time, autonomous DDoS mitigation to handle hyper-localized DDoS attacks—even those that may temporarily exceed the capacity of a specific Point of Presence (PoP).
+Cloudflare uses a combination of intelligent traffic engineering, global anycast, and real-time, autonomous DDoS mitigation to handle hyper-localized DDoS attacks — even those that may temporarily exceed the capacity of a specific Point of Presence (PoP).
 
 ### Global Anycast Network
 
@@ -154,7 +154,7 @@ Cloudflare uses real-time data and intelligence systems to make decisions about 
 
 #### Process 
 
-If a specific PoP becomes saturated or experiences attack traffic, Cloudflare's internal traffic engineering systems dynamically steer traffic across alternative paths using: traffic shaping, path-aware routing, and dynamic DNS responses
+If a specific PoP becomes saturated or experiences attack traffic, Cloudflare's internal traffic engineering systems dynamically steer traffic across alternative paths using traffic shaping, path-aware routing, and dynamic DNS responses.
 
 The system monitors CPU load, network congestion, and traffic type to make smart decisions about whether to reroute or throttle connections.
 
