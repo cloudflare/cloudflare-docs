@@ -117,10 +117,9 @@ To check for leaked credentials in a way that is not covered by the default conf
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **Settings**.
-3. In **Web application exploits**, select **Manage detections**.
-4. On the sidebar, under **Custom username and password location**, select **Go to leaked credentials checks**.
-5. Select **Add custom username and password location**.
-6. In **Username location** and **Password location** (optional), enter expressions for obtaining the username and the password from the HTTP request. For example, you could use the following expressions:
+3. Under **Leaked credential check** > **Configurations**, select the edit icon.
+4. Select **Add custom username and password location**.
+5. In **Username location** and **Password location** (optional), enter expressions for obtaining the username and the password from the HTTP request. For example, you could use the following expressions:
 
    - Username location:<br/>
      `lookup_json_string(http.request.body.raw, "user")`
@@ -135,7 +134,7 @@ To check for leaked credentials in a way that is not covered by the default conf
 
    Refer to the [`lookup_json_string()`](/ruleset-engine/rules-language/functions/#lookup_json_string) documentation for more information on this function.
 
-7. Select **Save**.
+6. Select **Save**.
 
 </TabItem> <TabItem label="API">
 
@@ -188,4 +187,4 @@ Test credentials for users on paid plans (will not work on Free plans):
 - Username: `CF_EXPOSED_USERNAME` or `CF_EXPOSED_USERNAME@example.com`
 - Password: `CF_EXPOSED_PASSWORD`
 
-Cloudflare considers these specific credentials as having been previously leaked. Use them in your tests to check the behavior of your current configuration.
+The Cloudflare considers these specific credentials as having been previously leaked. Use them in your tests to check the behavior of your current configuration.

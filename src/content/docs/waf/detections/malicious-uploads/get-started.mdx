@@ -26,8 +26,7 @@ WAF content scanning is available to customers on an Enterprise plan with a paid
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
 2. Go to **Security** > **Settings**.
-3. In **Web application exploits**, select **Manage detections**.
-4. Next to **Malicious upload detection**, select **Enable**.
+3. Next to **Malicious upload detection**, set the toggle to **On**.
 
 </TabItem> <TabItem label="API">
 
@@ -127,16 +126,14 @@ To check uploaded content in a way that is not covered by the default configurat
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **Settings**.
-3. In **Web application exploits**, select **Manage detections**.
-4. On the sidebar, under **Custom content location**, select **Go to malicious upload**.
-5. Select **Add content location**.
-6. In **Content location**, enter your custom scan expression. For example:
+3. Under **Malicious upload detection** > **Configurations**, select the edit icon.
+4. In **Content location**, enter your custom scan expression. For example:
 
    ```txt
    lookup_json_string(http.request.body.raw, "file")
    ```
 
-7. Select **Save**.
+5. Select **Save**.
 
 </TabItem> <TabItem label="API">
 
