@@ -47,7 +47,7 @@ Use [Security Analytics](/waf/analytics/security-analytics/) and HTTP logs to va
 
 You can use the [EICAR anti-malware test file](https://www.eicar.org/download-anti-malware-testfile/) to test content scanning (select the ZIP format).
 
-Alternatively, create a WAF custom rule like described in the next step using a _Log_ action instead of a mitigation action like _Block_. This rule will generate security events (available in **Security** > **Events**) that will allow you to validate your configuration.
+Alternatively, create a custom rule like described in the next step using a _Log_ action instead of a mitigation action like _Block_. This rule will generate [security events](/waf/analytics/security-events/) that will allow you to validate your configuration.
 
 ## 3. Create a custom rule
 
@@ -65,7 +65,7 @@ If you use the Expression Editor, enter the following expression:
 (cf.waf.content_scan.has_malicious_obj)
 ```
 
-This rule will match requests where the WAF detects a suspicious or malicious content object. For a list of fields provided by WAF content scanning, refer to [Content scanning fields](/waf/detections/malicious-uploads/#content-scanning-fields).
+This rule will match requests where Cloudflare detects a suspicious or malicious content object. For a list of fields provided by WAF content scanning, refer to [Content scanning fields](/waf/detections/malicious-uploads/#content-scanning-fields).
 
 <Details header="Optional: Combine with other Rules language fields">
 
