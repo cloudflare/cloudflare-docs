@@ -255,18 +255,6 @@
   tags: [Workflows, Workers, Queues, Workers AI, AI Gateway, KV, D1]
   languages: [TypeScript]
   # stream_id:
-  products: [Workflows, Workers, Queues, Workers AI, AI Gateway, KV, D1]
-  cloudflare: true
-  author: craig
-  updated: 2024-10-30
-  difficulty: Intermediate
-  pcx_content_type: tutorial
-- link: https://developers.cloudflare.com/workers/frameworks/framework-guides/nextjs/#video-tutorial
-  id: Deploy Your NextJS Application To Workers
-  description: Watch to learn how to easily deploy your NextJS application to the Cloudflare global network.
-  tags: [NextJS, Workers, Pages]
-  languages: [TypeScript]
-  # stream_id:
   products: [Workers, Pages]
   cloudflare: true
   author: confidence
