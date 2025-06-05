@@ -8,15 +8,15 @@ sidebar:
 
 import { FeatureTable, TabItem, Tabs, APIRequest } from "~/components";
 
-User Agent Blocking rules block specific browser or web application [`User-Agent` request headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/User-Agent). These rules apply to the entire domain instead of individual subdomains.
+User Agent Blocking allows you to block specific browser or web application [`User-Agent` request headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/User-Agent). User agent rules apply to the entire domain instead of individual subdomains.
 
-User Agent Blocking rules are applied after [Zone Lockdown rules](/waf/tools/zone-lockdown/). If you allow an IP address via Zone Lockdown, it will skip any User Agent Blocking rules.
+User agent rules are applied after [zone lockdown rules](/waf/tools/zone-lockdown/). If you allow an IP address via Zone Lockdown, it will skip any user agent rules.
 
-:::caution
+:::note
 
-Cloudflare recommends that you create [WAF custom rules](/waf/custom-rules/) instead of User Agent Blocking rules to block specific user agents.
+Cloudflare recommends that you use [custom rules](/waf/custom-rules/) instead of user agent rules to block specific user agents.
 
-For example, a custom rule equivalent to the User Agent Blocking [example rule](#create-a-user-agent-blocking-rule) provided in this page could have the following configuration:
+For example, a custom rule equivalent to the user agent [example rule](#create-a-user-agent-blocking-rule) provided in this page could have the following configuration:
 
 - **Expression**: `http.user_agent eq "BadBot/1.0.2 (+http://bad.bot)"`
 - **Action**: (a block or challenge action)
@@ -25,13 +25,15 @@ For example, a custom rule equivalent to the User Agent Blocking [example rule](
 
 ## Availability
 
-Cloudflare User Agent Blocking is available on all plans. The number of available User Agent Blocking rules depends on your Cloudflare plan.
+Cloudflare User Agent Blocking is available on all plans. However, this feature is only available in the [new security dashboard](/security/) if you have configured at least one user agent rule.
+
+The number of available user agent rules depends on your Cloudflare plan.
 
 <FeatureTable id="security.x_user_agent_rules" />
 
 ## Create a User Agent Blocking rule
 
-<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 
@@ -46,6 +48,24 @@ Cloudflare User Agent Blocking is available on all plans. The number of availabl
 6. Enter a user agent value in **User Agent** (wildcards such as `*` are not supported). For example, to block the Bad Bot web spider, enter `BadBot/1.0.2 (+http://bad.bot)`.
 
 7. Select **Save and Deploy blocking rule**.
+
+</TabItem> <TabItem label="New dashboard" icon="rocket">
+
+:::note
+User Agent Blocking is only available in the new security dashboard if you have configured at least one user agent rule. Cloudflare recommends that you use [custom rules](/waf/custom-rules/) instead of user agent rules.
+:::
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+
+2. Go to **Security** > **Security rules**, and select **Create rule** > **User agent rules**.
+
+3. Enter a descriptive name for the rule in **Name/Description**.
+
+4. In **Action**, select the action to perform: _Managed Challenge_, _Block_, _JS Challenge_, or _Interactive Challenge_.
+
+5. Enter a user agent value in **User Agent** (wildcards such as `*` are not supported). For example, to block the Bad Bot web spider, enter `BadBot/1.0.2 (+http://bad.bot)`.
+
+6. Select **Save and Deploy blocking rule**.
 
 </TabItem> <TabItem label="API">
 
