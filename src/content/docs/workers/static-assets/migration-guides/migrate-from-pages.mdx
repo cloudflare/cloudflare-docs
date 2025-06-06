@@ -26,7 +26,7 @@ Like Pages, requests for static assets on Workers are free, and Pages Functions 
 
 Unlike Pages, Workers has a distinctly broader set of features available to it, (including Durable Objects, Cron Triggers, and more comprehensive Observability). A complete list can be found at [the bottom of this page](#compatibility-matrix). Workers will receive the focus of Cloudflare's development efforts going forwards, so we therefore [are recommending using Cloudflare Workers over Cloudflare Pages for any new projects](http://blog.cloudflare.com/full-stack-development-on-cloudflare-workers).
 
-## Migration guide
+## Migration 
 
 Migrating from Cloudflare Pages to Cloudflare Workers is often a straightforward process. The following are some of the most common steps you will need to take to migrate your project.
 
@@ -372,6 +372,16 @@ Unlike Pages, Workers does not support any domain whose nameservers are not mana
 Once you have validated the behavior of Worker, and are satisfied with the development workflows, and have migrated all of your production traffic, you can delete your Pages project in the Cloudflare dashboard or with Wrangler:
 
 <PackageManagers type="exec" pkg="wrangler" args={"pages project delete"} />
+
+## Migrate your project using an AI coding assistant
+
+You can add the following [experimental prompt](https://developers.cloudflare.com/workers/prompts/pages-to-workers.txt) in your preferred coding assistant (e.g. Claude Code, Cursor) to make your project compatible with Workers: 
+
+```
+https://developers.cloudflare.com/workers/prompts/pages-to-workers.txt
+```
+
+For best results, add the Cloudflare Documentation [MCP server](https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/docs-vectorize) in your coding assistant to provide better context to your LLM when building with Workers. 
 
 ## Compatibility matrix
 
