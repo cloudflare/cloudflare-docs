@@ -7,11 +7,11 @@ sidebar:
 
 import { FileTree, Tabs, TabItem, Steps } from "~/components"
 
-You can view your objects in a R2 bucket in multiple ways.
+View your R2 bucket's objects through:
 
-- Through the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-- Through the [`wrangler list` command](/workers/wrangler/commands/#r2-bucket-list).
-- If using [`rclone`](https://rclone.org/install/), through the `rclone ls` command.
+- the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+- the [`wrangler list` command](/workers/wrangler/commands/#r2-bucket-list).
+- the `rclone ls` command, if using [`rclone`](https://rclone.org/install/).
 
 ## View prefixes as directories
 
@@ -24,7 +24,7 @@ For example, an object named `example/object` will be displayed as below.
   - object
 </FileTree>
 
-Object names which end with `/` will cause the dashboard to render the object as a folder with an unnamed object inside.
+Object names which end with `/` will cause the Cloudflare dashboard to render the object as a folder with an unnamed object inside.
 
 For example, uploading an object named `example/` will be displayed as below.
 
