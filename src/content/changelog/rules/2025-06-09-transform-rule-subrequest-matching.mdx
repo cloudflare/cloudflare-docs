@@ -8,7 +8,7 @@ date: 2025-06-09T17:00:00Z
 
 import { Example } from "~/components";
 
-You can now use the [cf.worker.upstream_zone](/ruleset-engine/rules-language/fields/reference/cf.worker.upstream_zone/) field in [Transform Rules](/rules/transform/) to control rule execution based on whether a request originates from [Workers](/workers/), including subrequests issued by Workers in other zones.
+You can now use the [`cf.worker.upstream_zone`](/ruleset-engine/rules-language/fields/reference/cf.worker.upstream_zone/) field in [Transform Rules](/rules/transform/) to control rule execution based on whether a request originates from [Workers](/workers/), including subrequests issued by Workers in other zones.
 
 ![Match Workers subrequests by upstream zone in Transform Rules](~/assets/images/changelog/rules/transform-rule-subrequest-matching.png)
 
@@ -20,10 +20,10 @@ For example, to add a header when the subrequest comes from another zone:
 
 <Example>
 
-Text in **Expression Editor** *(replace `myzone.com` with your domain)*:
+Text in **Expression Editor** (replace `myappexample.com` with your domain):
 
 ```txt
-(cf.worker.upstream_zone != "" and cf.worker.upstream_zone != "myzone.com")
+(cf.worker.upstream_zone != "" and cf.worker.upstream_zone != "myappexample.com")
 ```
 
 Selected operation under **Modify request header**: _Set static_
