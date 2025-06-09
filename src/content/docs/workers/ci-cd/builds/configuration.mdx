@@ -78,4 +78,23 @@ It is recommended to consistently use the same API token across all uploads and 
 
 [Static assets](/workers/static-assets/) and [frameworks](/workers/framework-guides/) are now supported in Cloudflare Workers. Learn to set up Workers projects and the commands for each framework in the framework guides:
 
-<DirectoryListing folder="workers/framework-guides" maxDepth={4}/>
+<DirectoryListing folder="workers/framework-guides" maxDepth={4} />
+
+## Environment variables
+
+You can provide custom environment variables to your build by configuring them in the Cloudflare dashboard:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. In **Account Home**, select **Workers & Pages**.
+3. In **Overview**, select your Worker.
+4. Select **Settings** > **Environment variables**.
+
+The following system environment variables are injected by default (but can be overridden):
+
+| Environment Variable    | Injected value                  | Example use-case                                                                        |
+| ----------------------- | ------------------------------- | --------------------------------------------------------------------------------------- |
+| `CI`                    | `true`                          | Changing build behaviour when run on CI versus locally                                  |
+| `WORKERS_CI`            | `1`                             | Changing build behaviour when run on Workers Builds versus locally                      |
+| `WORKERS_CI_BUILD_UUID` | `<build-uuid-of-current-build>` | Passing the Build UUID along to custom workflows                                        |
+| `WORKERS_CI_COMMIT_SHA` | `<sha1-hash-of-current-commit>` | Passing current commit ID to error reporting, for example, Sentry                       |
+| `WORKERS_CI_BRANCH`     | `<branch-name-from-push-event`  | Customizing build based on branch, for example, disabling debug logging on `production` |
