@@ -1,0 +1,45 @@
+---
+title: Workers integrations tab removed from dashboard
+description: As we evolve our integrations marketplace strategy, the Workers integrations tab has been removed from the Workers dashboard. Existing integrations continue to work, and new connections should be configured using Wrangler secrets.
+products:
+  - workers
+date: 2025-06-09T19:00:00Z
+---
+
+We are evolving our integrations marketplace strategy to better serve developers' needs. As part of this change, we have removed the database integrations tab from the Workers dashboard in favor of a more straightforward approach using [Wrangler secrets](/workers/wrangler/commands/#secret).
+
+## Background
+
+Database integrations were [originally launched in May 2023](https://blog.cloudflare.com/announcing-database-integrations/) to connect to popular databases and observability providers with your Worker in just a few clicks. 
+
+## What's changed
+
+- **Integrations tab removed**: The database integrations setup flow is no longer available in the Workers dashboard.
+- **Manual secret configuration**: New database connections should be configured by adding credentials as secrets to your Workers using `npx wrangler secret put` commands.
+- **Simplified workflow**: Developers now have direct control over their database credentials without needing to go through dashboard integration flows. 
+
+
+## Impact on existing integrations
+
+**Existing integrations will continue to work without any changes required.** If you have database integrations that were previously created through the dashboard, they will remain functional.
+
+## Updating existing integrations
+
+If you'd like to modify your existing integration, you can update the secrets, environment variables, or Tail Workers that were created from the original integration setup. Use the following approaches:
+
+- **Update secrets**: Use `npx wrangler secret put <SECRET_NAME>` to update credential values
+- **Modify environment variables**: Update variables through the dashboard or Wrangler configuration
+- **Dashboard management**: Access your Worker's settings in the [Cloudflare dashboard](https://dash.cloudflare.com) to modify integration-created resources
+
+## Setting up new database connections
+
+For new database connections, refer to our [third-party database integrations documentation](/workers/databases/third-party-integrations/) for step-by-step guides on connecting to popular database providers including:
+
+- [Turso](/workers/databases/third-party-integrations/turso/)
+- [Neon](/workers/databases/third-party-integrations/neon/)
+- [Supabase](/workers/databases/third-party-integrations/supabase/)
+- [PlanetScale](/workers/databases/third-party-integrations/planetscale/)
+- [Upstash](/workers/databases/third-party-integrations/upstash/)
+- [Xata](/workers/databases/third-party-integrations/xata/)
+
+Each guide includes the exact `wrangler secret put` commands and environment setup needed to connect your Worker to the respective database service. 
