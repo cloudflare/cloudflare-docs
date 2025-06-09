@@ -12,7 +12,7 @@ description: Learn how to set up AI Audit.
 
 ---
 
-import { Render } from "~/components";
+import { Render, Steps } from "~/components";
 
 ## Prerequisites
 
@@ -23,26 +23,24 @@ import { Render } from "~/components";
 
 To enable AI Audit:
 
+<Steps>
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **AI Audit**.
 3. From **AI Crawlers** tab, toggle **Block AI Crawlers**.
 4. From the **Bot traffic** page, under **Block AI Bots**, select **Enable**.
+</Steps>
 
-:::note[Enterprise customers]
-Customers on the Enterprise plan can choose to block only specific AI crawlers, while allowing others.
+## 2. Block specific AI crawlers (Enterprise plan only)
 
-In the **AI Crawlers** tab, block individual AI crawlers by toggling the switch under the **Block** column.
-:::
+Customers on the Enterprise plan can choose to only block specific AI crawlers, while allowing others.
 
-## 2. Review detected AI crawlers
+<Steps>
+1. Go to the **AI Crawlers** tab.
+2. Toggle the switch under the **Block** column for the AI crawlers you wish to block.
+</Steps>
 
-Review the AI crawlers detected on your site in the **Metrics** tab of the Cloudflare dashboard for key metrics. You can specify a time period, and view:
+## 3. Review detected AI crawlers
 
-- Number of total AI crawler requests
-- Number of blocked requests
-- Number of allowed requests
-- Number of review requests by each AI crawler
-- Most popular paths of your website by each AI crawler
-- Hosts (AI crawler owners)
-- Overall most popular paths in your website accessed by AI crawlers
-- Most active AI crawlers
+Review the AI crawlers detected on your site in the **Metrics** tab of the Cloudflare dashboard for key metrics.
+
+Refer to [AI crawler detection](/ai-audit/ai-crawler-detection/) for more information.

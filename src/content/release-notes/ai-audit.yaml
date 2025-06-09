@@ -3,7 +3,7 @@ link: "/ai-audit/changelog/"
 productName: AI Audit
 productLink: "/ai-audit/"
 productArea: Core platform
-productAreaLink: /core/reference/changelog/security/
+productAreaLink: /fundamentals/reference/changelog/platform/
 entries:
   - publish_date: "2025-06-09"
     title: Documentation for AI Audit
