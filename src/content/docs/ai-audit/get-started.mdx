@@ -9,7 +9,6 @@ head:
   - tag: title
     content: Get started with Cloudflare AI Audit
 description: Learn how to set up AI Audit.
-
 ---
 
 import { Render, Steps } from "~/components";
@@ -23,12 +22,13 @@ This guide instructs you through
 
 1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/).
 2. [Connect your domain to Cloudflare](/fundamentals/manage-domains/add-site/).
-3. Configure traffic to be [proxied by Cloudflare](/dns/proxy-status/).
+3. Make sure your domain is [proxying traffic through Cloudflare](/fundamentals/concepts/how-cloudflare-works/#cloudflare-as-a-reverse-proxy).
 
 ## 1. Block all AI crawlers
 
 To use AI Audit:
 
+{/* prettier-ignore */}
 <Steps>
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **AI Audit**.
@@ -40,10 +40,11 @@ To use AI Audit:
 
 Customers on the Enterprise plan can choose to only block specific AI crawlers, while allowing others.
 
+{/* prettier-ignore */}
 <Steps>
 1. Go to the **AI Audit**.
 2. From **Most Popular Paths**, select **Block Some**.
-3. From the **Security rules** page, 
+3. From the **Security rules** page,
 </Steps>
 
 ## 3. Review detected AI crawlers
