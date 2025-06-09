@@ -1,0 +1,11 @@
+---
+link: "/ai-audit/changelog/"
+productName: AI Audit
+productLink: "/ai-audit/"
+productArea: Core platform
+productAreaLink: /core/reference/changelog/security/
+entries:
+  - publish_date: "2025-06-09"
+    title: Documentation for AI Audit
+    description: There is now documentation for AI Audit
+
