@@ -36,7 +36,7 @@ To use AI Audit:
 4. From the **Bot traffic** page, under **Block AI Bots**, select **Enable**.
 </Steps>
 
-## 2. Block specific AI crawlers (Enterprise plan only)
+## 2. Block specific bot categories (Enterprise plan only)
 
 Customers on the Enterprise plan can choose to only block specific AI crawlers, while allowing others.
 
@@ -44,14 +44,28 @@ Customers on the Enterprise plan can choose to only block specific AI crawlers, 
 <Steps>
 1. Go to the **AI Audit**.
 2. From **Most Popular Paths**, select **Block Some**.
-3. From the **Security rules** page,
+3. From the **Security rules** page, select **Create rule** > **Custom rules**.
+4. Provide a name for the custom rule. For example, "Block unwanted AI crawlers".
+5. From the **Field** dropdown, select **Verified Bot Category**.
+6. From the **Value** dropdown, select the specific bot category you wish to block.
+   - You can use **And** / **Or** buttons to add additional conditions. For example, you can use multiple **Or** options to include multiple bot categories in the same rule.
+7. From the **Then take action...** section:
+   - For **Choose action**, select **Block**.
+   - For **With response type**, select **Default Cloudflare WAF block page**.
+8. From the **Place at** section:
+   - For **Select order**, select **First**.
+9. Select **Save**.
 </Steps>
+
+This custom rule will only block the AI bots which belong to the [verified bot categories](/bots/concepts/bot/verified-bots/categories/) you have included in your rule (in step 6).
+
+For more information on creating a custom WAF rule, refer to [Create a custom rule in the dashboard](/waf/custom-rules/create-dashboard/).
 
 ## 3. Review detected AI crawlers
 
 Review the AI crawlers detected on your site in the **Metrics** tab of the Cloudflare dashboard for key metrics.
 
-Refer to [AI crawler detection](/ai-audit/features/ai-crawler-detection/) for more information.
+Refer to [Detect AI crawlers](/ai-audit/features/detect-ai-crawlers/) for more information.
 
 ## Related resources
 
