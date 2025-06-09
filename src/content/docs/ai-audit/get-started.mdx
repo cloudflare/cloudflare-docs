@@ -14,19 +14,25 @@ description: Learn how to set up AI Audit.
 
 import { Render, Steps } from "~/components";
 
+This guide instructs you through
+
+- Viewing AI crawlers that are interacting with your domain.
+- Creating a rule to block AI crawlers on your website.
+
 ## Prerequisites
 
 1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/).
 2. [Connect your domain to Cloudflare](/fundamentals/manage-domains/add-site/).
+3. Configure traffic to be [proxied by Cloudflare](/dns/proxy-status/).
 
 ## 1. Block all AI crawlers
 
-To enable AI Audit:
+To use AI Audit:
 
 <Steps>
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **AI Audit**.
-3. From **AI Crawlers** tab, toggle **Block AI Crawlers**.
+3. From **Most Popular Paths**, select **Block All**.
 4. From the **Bot traffic** page, under **Block AI Bots**, select **Enable**.
 </Steps>
 
@@ -35,12 +41,21 @@ To enable AI Audit:
 Customers on the Enterprise plan can choose to only block specific AI crawlers, while allowing others.
 
 <Steps>
-1. Go to the **AI Crawlers** tab.
-2. Toggle the switch under the **Block** column for the AI crawlers you wish to block.
+1. Go to the **AI Audit**.
+2. From **Most Popular Paths**, select **Block Some**.
+3. From the **Security rules** page, 
 </Steps>
 
 ## 3. Review detected AI crawlers
 
 Review the AI crawlers detected on your site in the **Metrics** tab of the Cloudflare dashboard for key metrics.
 
-Refer to [AI crawler detection](/ai-audit/ai-crawler-detection/) for more information.
+Refer to [AI crawler detection](/ai-audit/features/ai-crawler-detection/) for more information.
+
+## Related resources
+
+Refer to the following related resources:
+
+- Cloudflare blog: [Start auditing and controlling the AI models accessing your content](https://blog.cloudflare.com/nl-nl/cloudflare-ai-audit-control-ai-content-crawlers/)
+- Block AI crawlers that do not adhere to recommended guidelines using [Cloudflare AI Labyrinth](/bots/additional-configurations/ai-labyrinth/).
+- [Direct AI crawlers with managed robots.txt](/bots/additional-configurations/managed-robots-txt/).
