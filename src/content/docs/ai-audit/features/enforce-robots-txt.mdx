@@ -1,0 +1,37 @@
+---
+title: Enforce robots.txt
+pcx_content_type: concept
+sidebar:
+  order: 5
+---
+
+import { Steps } from "~/components";
+
+AI Audit allows you to enforce [`robots.txt`](/radar/glossary/#robotstxt) which instructs bots which webpages they can and cannot access.
+
+To enforce `robots.txt`:
+
+<Steps>
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+2. Go to **AI Audit**.
+3. From the dropdown at the top of the page, select a specific subdomain where you wish you enforce `robots.txt`.
+4. From **Summary**, select **Enforce robots.txt policy**.
+5. From the **Enforce your robots.txt policy** page, select **Go to WAF custom rules**.
+6. From the **New custom rule** page, name your custom rule.
+   - The page will automatically populate the values for the custom rule.
+7. From **Then take action...**:
+   - For **Choose action**, select **Block**.
+   - For **With response type**, select **Default Cloudflare WAF block page**.
+8. From **Place at**:
+   - For **Select order**, select **Last**.
+9. Select **Deploy**.
+</Steps>
+
+This custom rule ensures that bots cannot access the pages specified in your `robots.txt` file.
+
+## Related resources
+
+For more information, refer to the following resources.
+
+- [What is robots.txt? | How a robots.txt file works](https://www.cloudflare.com/en-gb/learning/bots/what-is-robots-txt/)
+- [Direct AI crawlers with managed robots.txt](/bots/additional-configurations/managed-robots-txt/)
