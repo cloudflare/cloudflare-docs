@@ -3,6 +3,7 @@ product:
   title: AI Audit
   url: /ai-audit/
   group: Core platform
+  additional_groups: [AI]
 meta:
   title: AI Audit
   description: Analyze and control third-party AI crawlers in your website
