@@ -232,3 +232,6 @@
 # Web Analytics
 
 /src/content/docs/web-analytics/ @angelampcosta @cloudflare/pcx-technical-writing
+
+# AI Prompts for Cloudflare Workers development
+/public/workers/prompts/ @jahands @Maximo-Guk @jbwcloudflare @cloudflare/pcx-technical-writing
