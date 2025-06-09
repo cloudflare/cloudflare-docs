@@ -4,7 +4,7 @@ pcx_content_type: concept
 sidebar:
   order: 4
 head: []
-description: Page Shield reports any violations to your custom Page Shield policies.
+description: Cloudflare reports any violations to your content security rules (also known as policies).
 ---
 
 import { Details, GlossaryTooltip } from "~/components";
@@ -13,16 +13,21 @@ import { Details, GlossaryTooltip } from "~/components";
 Only available to Enterprise customers with a paid add-on.
 :::
 
-Shortly after you configure Page Shield policies, the Cloudflare dashboard will start displaying any violations of those policies. This information will be available for policies with any [action](/page-shield/policies/#policy-actions) (_Allow_ and _Log_).
+Shortly after you configure policies (or content security rules), the Cloudflare dashboard will start displaying any violations of those policies. This information will be available for policies with any [action](/page-shield/policies/#policy-actions) (_Allow_ and _Log_).
 
 Information about policy violations is also available via [GraphQL API](/analytics/graphql-api/) and [Logpush](/logs/about/).
 
 ## Review policy violations in the dashboard
 
-The policy violation information is available in **Security** > **Page Shield** > **Policies**. It includes the following:
+To view policy violation information:
 
-- A sparkline next to the policy name, showing policy violations in the past seven days.
-- For policies with associated violations, an expandable details section for each policy, with the top resources present in policy violation events and a sparkline per top resource.
+- Old dashboard: Go to **Security** > **Page Shield** > **Policies**.
+- New dashboard: Go to **Security** > **Security rules**, and filter by **Content security rules**.
+
+The displayed information includes the following:
+
+- A sparkline next to the policy/rule name, showing violations in the past seven days.
+- For policies with associated violations, an expandable details section for each policy, with the top resources present in violation events and a sparkline per top resource.
 
 ## Get policy violations via GraphQL API
 
@@ -125,6 +130,6 @@ https://api.cloudflare.com/client/v4/graphql \
 
 [Cloudflare Logpush](/logs/about/) supports pushing logs to storage services, <GlossaryTooltip term="SIEM">SIEM systems</GlossaryTooltip>, and log management providers.
 
-Information about Page Shield policy violations is available in the [`page_shield_events` dataset](/logs/reference/log-fields/zone/page_shield_events/).
+Information about policy violations is available in the [`page_shield_events` dataset](/logs/reference/log-fields/zone/page_shield_events/).
 
 For more information on configuring Logpush jobs, refer to [Logs: Get started](/logs/get-started/).
