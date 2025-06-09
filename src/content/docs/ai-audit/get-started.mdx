@@ -11,7 +11,7 @@ head:
 description: Learn how to set up AI Audit.
 ---
 
-import { Render, Steps } from "~/components";
+import { Details, Render, Steps } from "~/components";
 
 This guide instructs you through
 
@@ -35,6 +35,16 @@ To use AI Audit:
 3. From **Most Popular Paths**, select **Block All**.
 4. From the **Bot traffic** page, under **Block AI Bots**, select **Enable**.
 </Steps>
+
+<Details header="Which bots will Cloudflare block?">
+	<Render file="list-ai-bots" product="bots" />
+</Details>
+
+:::note
+
+For more details on how this rule interacts with other Cloudflare settings, refer to [How it works](/bots/concepts/bot/#how-it-works).
+
+:::
 
 ## 2. Block specific bot categories (Enterprise plan only)
 
