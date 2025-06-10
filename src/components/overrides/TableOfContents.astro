@@ -18,6 +18,7 @@ const tags = Astro.locals.starlightRoute.entry.data.tags;
 					<a
 						href={`/search/?tags=${tag}`}
 						class="rounded-sm border border-(--sl-color-hairline) px-3 text-black"
+						data-tag-serp-link={true}
 					>
 						{tag}
 					</a>
