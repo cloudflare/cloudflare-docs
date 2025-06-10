@@ -226,15 +226,14 @@ export default function SupportAI() {
 		<div>
 			<Messages messages={messages} loading={loading} />
 			<div className="flex items-center justify-center gap-4">
-				<input
+				<textarea
 					className="w-full rounded p-2"
-					type="text"
 					placeholder="Ask a question..."
 					value={question}
 					disabled={loading}
 					onChange={(e) => setQuestion(e.target.value)}
 					onKeyDown={async (e) => {
-						if (e.key === "Enter" && !loading) {
+						if (e.key === "Enter" && !e.shiftKey && !loading) {
 							e.preventDefault();
 							await handleSubmit();
 						}
