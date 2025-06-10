@@ -5,6 +5,7 @@ description: A Super cool video
 products:
   - workers
   - workers-ai
+transcript: ./transcript.vtt
 chapters:
   00:01: Chapter 1
   00:02: Chapter 2

@@ -7,6 +7,7 @@ export const streamSchema = z.object({
 	title: z.string(),
 	description: z.string(),
 	products: z.array(reference("products")),
+	transcript: z.string().optional(),
 	chapters: z.record(z.string(), z.string()).optional(),
 	tags: z.array(z.string()).optional(),
 	thumbnail: z
