@@ -134,5 +134,7 @@ export const baseSchema = ({ image }: SchemaContext) =>
 		feedback: z
 			.boolean()
 			.default(true)
-			.describe("Whether to hide the FeedbackPrompt component on a page"),
+			.describe(
+				"Whether to show the FeedbackPrompt on the page, defaults to true",
+			),
 	});
