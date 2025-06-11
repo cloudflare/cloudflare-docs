@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Markdown from "react-markdown";
 import remarkBreaks from "remark-breaks";
 import remarkGfm from "remark-gfm";
@@ -32,6 +32,29 @@ async function sendCSATFeedback(queryId: string, positive: boolean) {
 	}
 }
 
+function TrackedLink({
+	href,
+	children,
+}: {
+	href?: string;
+	children?: React.ReactNode;
+}) {
+	return (
+		<a
+			href={href}
+			target="_blank"
+			onClick={() =>
+				track("click chat link", {
+					value: children?.toString() ?? "",
+					href,
+				})
+			}
+		>
+			{children}
+		</a>
+	);
+}
+
 function Messages({
 	messages,
 	loading,
@@ -39,35 +62,7 @@ function Messages({
 	messages: Messages;
 	loading: boolean;
 }) {
-	const [listenersAdded, setListenersAdded] = useState<Set<string>>(new Set());
 	const [feedbackGiven, setFeedbackGiven] = useState<Set<string>>(new Set());
-
-	useEffect(() => {
-		const messages = document.querySelectorAll<HTMLDivElement>(
-			"[data-docs-ai-message]",
-		);
-
-		for (const message of messages) {
-			if (listenersAdded.has(message.dataset.queryId ?? "")) {
-				continue;
-			}
-
-			const links = message.querySelectorAll<HTMLAnchorElement>("a");
-
-			for (const link of links) {
-				link.addEventListener("click", () => {
-					track("click chat link", {
-						value: link.innerText,
-						href: link.href,
-					});
-				});
-			}
-
-			setListenersAdded((prev) =>
-				new Set(prev).add(message.dataset.queryId ?? ""),
-			);
-		}
-	}, [messages]);
 
 	const classes = {
 		base: "w-fit max-w-3/4 rounded p-4",
@@ -91,10 +86,13 @@ function Messages({
 					<div key={index} className="flex flex-col gap-2">
 						<div
 							className={`${classes.base} ${message.role === "user" ? classes.user : classes.assistant}`}
-							data-docs-ai-message={true}
-							data-query-id={message.queryId}
 						>
-							<Markdown remarkPlugins={[remarkGfm, remarkBreaks]}>
+							<Markdown
+								remarkPlugins={[remarkGfm, remarkBreaks]}
+								components={{
+									a: TrackedLink,
+								}}
+							>
 								{message.content}
 							</Markdown>
 							{message.sources && (
@@ -106,9 +104,9 @@ function Messages({
 									<ul>
 										{message.sources.map((source) => (
 											<li key={source.file_path}>
-												<a href={source.file_path} target="_blank">
+												<TrackedLink href={source.file_path}>
 													{source.title}
-												</a>
+												</TrackedLink>
 											</li>
 										))}
 									</ul>
