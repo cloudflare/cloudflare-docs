@@ -142,7 +142,7 @@ Advanced TCP Protection is only necessary and available to [Magic Transit](/magi
 
 Hyper-localized DDoS attacks are attacks that target specific PoPs or data centers from botnet nodes that are close to those locations in an attempt to overwhelm them and cause an outage or service disruptions.
 
-However, Cloudflare’s defense approach is resilient to these attacks and uses a combination of intelligent traffic engineering, global anycast, and real-time, autonomous DDoS mitigation to handle hyper-localized DDoS attacks—even those that may temporarily exceed the capacity of a specific Point of Presence (PoP).
+However, Cloudflare's defense approach is resilient to these attacks and uses a combination of intelligent traffic engineering, global anycast, and real-time, autonomous DDoS mitigation to handle hyper-localized DDoS attacks—even those that may temporarily exceed the capacity of a specific Point of Presence (PoP).
 
 ### Global Anycast Network
 
@@ -150,7 +150,7 @@ Anycast allows multiple servers (PoPs) to share the same IP address, and the Bor
 
 #### Process
 
-When one PoP is overwhelmed due to a local DDoS flood or as a result of limited capacity, BGP route propagation can be adjusted to shift traffic away from that PoP. Cloudflare can also withdraw BGP announcements from specific peers or upstreams to force traffic to reroute through better-equipped PoPs. Because DDoS traffic originates from multiple geographic regions, Anycast and traffic engineering distributes the attack across [Cloudflare’s full capacity Anycast network](https://www.cloudflare.com/network/) to reduce the burden on a single PoP. 
+When one PoP is overwhelmed due to a local DDoS flood or as a result of limited capacity, BGP route propagation can be adjusted to shift traffic away from that PoP. Cloudflare can also withdraw BGP announcements from specific peers or upstreams to force traffic to reroute through better-equipped PoPs. Because DDoS traffic originates from multiple geographic regions, Anycast and traffic engineering distributes the attack across [Cloudflare's full capacity Anycast network](https://www.cloudflare.com/network/) to reduce the burden on a single PoP. 
 
 ### Intelligent Traffic Engineering
 
