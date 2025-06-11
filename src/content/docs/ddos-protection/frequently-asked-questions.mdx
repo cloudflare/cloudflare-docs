@@ -130,7 +130,7 @@ No. Since 2017, Cloudflare offers [free, unmetered, and unlimited DDoS protectio
 
 ## How does DDoS Protection determine whether a SYN flood attack is mitigated by `dosd` or Advanced TCP Protection?
 
-DDoS [managed rules](/ddos-protection/managed-rulesets/) detect and mitigate attacks by finding commonality between the attack packet and generating a real-time fingerprint to mitigate the attack. 
+DDoS [managed rules](/ddos-protection/managed-rulesets/) detect and mitigate attacks by finding commonality between attack packets and generating a real-time fingerprint to mitigate the attack. 
 
 When the attacks are highly randomized and DDoS managed rules are unable to detect a common pattern among the attack packets, [Advanced TCP Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-tcp-protection/) uses its stateful TCP flowtracking capabilities to determine whether or not packets are legitimate. Advanced TCP Protection also mitigates simpler TCP-based attacks. 
 
@@ -142,7 +142,7 @@ Advanced TCP Protection is only necessary and available to [Magic Transit](/magi
 
 Hyper-localized DDoS attacks are attacks that target specific PoPs or data centers from botnet nodes that are close to those locations in an attempt to overwhelm them and cause an outage or service disruptions.
 
-However, Cloudflare's defense approach is resilient to these attacks and uses a combination of intelligent traffic engineering, global anycast, and real-time, autonomous DDoS mitigation to handle hyper-localized DDoS attacks—even those that may temporarily exceed the capacity of a specific Point of Presence (PoP).
+However, Cloudflare's defense approach is resilient to these attacks and uses a combination of intelligent traffic engineering, global Anycast, and real-time, autonomous DDoS mitigation to handle hyper-localized DDoS attacks — even those that may temporarily exceed the capacity of a specific Point of Presence (PoP).
 
 ### Global Anycast Network
 
