@@ -131,4 +131,8 @@ export const baseSchema = ({ image }: SchemaContext) =>
 			})
 			.optional(),
 		icon: SidebarIconSchema(),
+		feedback: z
+			.boolean()
+			.default(true)
+			.describe("Whether to hide the FeedbackPrompt component on a page"),
 	});

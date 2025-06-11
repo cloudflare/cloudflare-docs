@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Markdown from "react-markdown";
 import remarkBreaks from "remark-breaks";
 import remarkGfm from "remark-gfm";
 import { fetchEventSource } from "@microsoft/fetch-event-source";
 import { Ring } from "ldrs/react";
 import { MdOutlineThumbUp, MdOutlineThumbDown } from "react-icons/md";
+import { track } from "~/util/zaraz";
 import "ldrs/react/Ring.css";
 
 type Messages = {
@@ -38,7 +39,35 @@ function Messages({
 	messages: Messages;
 	loading: boolean;
 }) {
+	const [listenersAdded, setListenersAdded] = useState<Set<string>>(new Set());
 	const [feedbackGiven, setFeedbackGiven] = useState<Set<string>>(new Set());
+
+	useEffect(() => {
+		const messages = document.querySelectorAll<HTMLDivElement>(
+			"[data-docs-ai-message]",
+		);
+
+		for (const message of messages) {
+			if (listenersAdded.has(message.dataset.queryId ?? "")) {
+				continue;
+			}
+
+			const links = message.querySelectorAll<HTMLAnchorElement>("a");
+
+			for (const link of links) {
+				link.addEventListener("click", () => {
+					track("click chat link", {
+						value: link.innerText,
+						href: link.href,
+					});
+				});
+			}
+
+			setListenersAdded((prev) =>
+				new Set(prev).add(message.dataset.queryId ?? ""),
+			);
+		}
+	}, [messages]);
 
 	const classes = {
 		base: "w-fit max-w-3/4 rounded p-4",
@@ -47,6 +76,9 @@ function Messages({
 	};
 
 	const handleFeedback = async (queryId: string, positive: boolean) => {
+		track("submit chat feedback", {
+			value: positive.toString(),
+		});
 		await sendCSATFeedback(queryId, positive);
 		setFeedbackGiven((prev) => new Set(prev).add(queryId));
 	};
@@ -59,6 +91,8 @@ function Messages({
 					<div key={index} className="flex flex-col gap-2">
 						<div
 							className={`${classes.base} ${message.role === "user" ? classes.user : classes.assistant}`}
+							data-docs-ai-message={true}
+							data-query-id={message.queryId}
 						>
 							<Markdown remarkPlugins={[remarkGfm, remarkBreaks]}>
 								{message.content}
@@ -71,7 +105,7 @@ function Messages({
 									</p>
 									<ul>
 										{message.sources.map((source) => (
-											<li>
+											<li key={source.file_path}>
 												<a href={source.file_path} target="_blank">
 													{source.title}
 												</a>
@@ -124,6 +158,10 @@ export default function SupportAI() {
 	const [messages, setMessages] = useState<Messages>([]);
 
 	async function handleSubmit() {
+		track("submit chat", {
+			value: question,
+		});
+
 		setLoading(true);
 		setMessages((messages) => [
 			...messages,
