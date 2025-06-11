@@ -3,9 +3,32 @@ import Default from "@astrojs/starlight/components/TableOfContents.astro";
 
 import { Icon } from "@astrojs/starlight/components";
 import FeedbackPrompt from "../FeedbackPrompt.tsx";
+
+const tags = Astro.locals.starlightRoute.entry.data.tags;
 ---
 
 <Default />
+{
+	tags && (
+		<>
+			<br />
+			<div>
+				<h2>Tags</h2>
+				<div class="flex gap-2">
+					{tags.map((tag) => (
+						<a
+							href={`/search/?tags=${tag}`}
+							class="rounded-sm border border-(--sl-color-hairline) px-3 text-black"
+							data-tag-serp-link={true}
+						>
+							{tag}
+						</a>
+					))}
+				</div>
+			</div>
+		</>
+	)
+}
 <br />
 <FeedbackPrompt client:idle />
 {
