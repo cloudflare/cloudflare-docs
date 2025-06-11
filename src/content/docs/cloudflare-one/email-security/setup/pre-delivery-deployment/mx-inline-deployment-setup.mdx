@@ -20,14 +20,30 @@ To use Email Security, you will need to have:
 3. Select **Overview**. Select one of the following options:
 
 - If you have not purchased Email Security, select **Contact sales**. 
-- If you have not associated any integration, select **Set up**.
-- If you have associated an integration, but have not connected a domain, select **Connect a domain**.
+- If you have not associated any integration, [associate an integration](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment-setup/#associate-an-integration), then select **Set up**.
+- If you have associated an integration, but have not connected a domain, select [**Connect a domain**](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment-setup/#connect-a-domain).
 4. Select **MX/Inline**.
 5. To start the MX/Inline configuration, you will need to have completed the prerequisite setup on your email provider's platform. Once you have completed this step, select **I confirm that I have completed all the necessary requirements**. Then, select **Start configuration**.
 
 :::note
 You can only onboard one domain at a time.
 :::
+
+## Associate an integration
+
+MX/Inline does not require an integration for protection to be effective. However, it is a best practice to connect an integration.
+
+To associate an integration:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** (gear icon).
+2. Select **SaaS Integrations** > **Connect an integration**.
+3. Select an application: Choose between **Google Workspace CASB + EMAIL**, or **Microsoft CASB + EMAIL**.
+    - Refer to [Enable Gmail BCC integration](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/bcc-setup/gmail-bcc-setup/enable-gmail-integration/#1-create-a-service-account-in-your-gcp-project) if you select **Google Workspace CASB + EMAIL**. 
+    - Refer to [Enable Microsoft integration](/cloudflare-one/email-security/setup/post-delivery-deployment/api/office365-api/#enable-microsoft-integration) if you select **Microsoft CASB + EMAIL**.
+4. After you have associated an integration, go to **Email Security** > **Set up**.
+5. Follow the instructions to [connect a domain](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment-setup/#connect-a-domain).
+
+## Connect a domain
 
 If you have verified zones on Cloudflare, continue with the following steps:
 

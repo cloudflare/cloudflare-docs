@@ -41,8 +41,8 @@
                     "description": "The language of the audio being transcribed or translated."
                 },
                 "vad_filter": {
-                    "type": "string",
-                    "default": "false",
+                    "type": "boolean",
+                    "default": false,
                     "description": "Preprocess the audio with a voice activity detection model."
                 },
                 "initial_prompt": {

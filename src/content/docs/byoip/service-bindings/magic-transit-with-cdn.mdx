@@ -6,120 +6,43 @@ sidebar:
   label: Magic Transit with CDN
 ---
 
-import { Details, Example, TabItem, Tabs, GlossaryTooltip, APIRequest } from "~/components";
+import { Details, Example, TabItem, Tabs, GlossaryTooltip, APIRequest, Render } from "~/components";
 
-[Magic Transit](/magic-transit/) customers using BYOIP can also benefit from the performance, reliability, and security that Cloudflare offers for HTTP-based applications.
+[Magic Transit](/magic-transit/) customers using BYOIP can also benefit from the performance, reliability, and security that Cloudflare offers for HTTP-based applications. [Service bindings](/byoip/service-bindings/) allow BYOIP customers to selectively route traffic on a per-IP address basis to the CDN pipeline (which includes [Cache](/cache/), [Web Application Firewall (WAF)](/waf/), and more).
 
-This documentation covers using the Cloudflare API to configure [service bindings](/byoip/service-bindings/) within Cloudflare's IP Address Management framework. Service bindings allow BYOIP customers to selectively route traffic on a per-IP address basis to the CDN pipeline (which includes [Cache](/cache/), [Web Application Firewall (WAF)](/waf/), and more).
-
-It is also possible to define service bindings to route traffic to the Spectrum pipeline selectively. However, this is not in the scope of this guide.
+This guide covers using the Cloudflare API to configure Magic Transit with CDN. It is also possible to define service bindings to route traffic to the Spectrum pipeline selectively. Refer to [scope](/byoip/service-bindings/#scope) for the full list of possible configurations and other available guides.
 
 It is important to note that traffic routed to the CDN pipeline is protected at Layers 3 and 4 by the inherent DDoS protection capabilities native to the CDN pipeline.
 
 ## Before you begin
 
-Although it is possible to add discrete bindings for non-contiguous CIDR blocks, implementing service bindings through an **aggregated** CIDR block is **strongly** recommended as it is more efficient.
-
-<Details header="Example">
-
-**Magic Transit protected prefix:** `203.0.113.0/24`
-
-**IPs to upgrade to the CDN:**
-
-`203.0.113.16`<br />
-`203.0.113.17`<br />
-`203.0.113.18`<br />
-`203.0.113.19`<br />
-`203.0.113.20`<br />
-`203.0.113.21`<br />
-`203.0.113.22`<br />
-`203.0.113.23`
-
-Add one discrete CDN service binding for `203.0.113.16` with a `/29` netmask.
-
-</Details>
-
-Once a service binding is created (or deleted), it will take **four** to **six** hours to propagate across Cloudflare's global network. Services for the IP addresses in scope will likely be disrupted during this window.
-
-:::note
-This guide assumes that the prefix is tied to a single Cloudflare account that has both Magic Transit and CDN properties. If you are using [prefix delegations](/byoip/concepts/prefix-delegations/), the service bindings must be [created](#2-create-service-binding) on the parent account.
-:::
+<Render
+file="service-bindings-prereqs"
+params={{
+	pre_existing_product: "Magic Transit",
+	added_product: "CDN"
+}}
+/>
 
 ## 1. Get account information
 
-1. Log in to your Cloudflare account and get your [account ID](/fundamentals/account/find-account-and-zone-ids/) and [API token](/fundamentals/api/get-started/create-token/). The token permissions should include `Account` - `IP Prefixes` - `Edit`.
-2. Make a `GET` request to the [List Services](/api/resources/addressing/subresources/services/methods/list/) endpoint and take note of the `id` associated with the CDN service.
-3. Use the [List Prefixes](/api/resources/addressing/subresources/prefixes/methods/list/) endpoint and take note of the `id` associated with the prefix (`cidr`) you will configure.
-
-<Example>
-
-At this point, continuing the [example](#before-you-begin), you should have a mapping similar to the following:
-
-| Variables      | Description                                                                                                                                       |
-| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `{service_id}` | The ID of the CDN service within Cloudflare. <br /><br /> Example: `969xxxxxxxx000xxx0000000x00001bf`                                             |
-| `{prefix_id}`  | The ID of the Magic Transit protected prefix (`203.0.113.0/24`) you want to configure. <br /><br /> Example: `6b25xxxxxxx000xxx0000000x0000cfc` |
-
-</Example>
-
-4. To confirm you currently only have a Magic Transit service binding and that it spans across your entire prefix, make a `GET` request to the [List Service Bindings](/api/resources/addressing/subresources/prefixes/subresources/service_bindings/methods/list/) endpoint. Replace the `{prefix_id}` in the URI path by the actual prefix ID you got from the previous step.
-
-<Example>
-
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/addressing/prefixes/{prefix_id}/bindings \
---header "Authorization: Bearer <API_TOKEN>"
-```
-
-</Example>
+<Render
+file="service-bindings-account-info"
+params={{
+	pre_existing_product: "Magic Transit",
+	added_product: "CDN"
+}}
+/>
 
 ## 2. Create service binding
 
-:::caution[Caution]
-Once a service binding is created (or deleted), it will take four to six hours to propagate across Cloudflare's global network. Services for the IP addresses in scope will likely be disrupted during this window.
-:::
-
-1. Make a `POST` request to the [Create service binding](/api/resources/addressing/subresources/prefixes/subresources/service_bindings/methods/create/) endpoint, indicating the IP address you want to bind to the CDN. Specify the **corresponding network mask** as needed.
-
-<Example>
-
-Continuing the example, `203.0.113.100/32` designates an IP address that is within the Magic Transit protected prefix `203.0.113.0/24`.
-
-Replace the `{prefix_id}` in the URI with your prefix ID from previous steps. Within the request body, the `cidr` value should correspond to the IP address or subnet that you are configuring for use with CDN.
-
-```bash
-
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/addressing/prefixes/{prefix_id}/bindings \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "cidr": "203.0.113.100/32",
-  "service_id": "<SERVICE_ID>"
-}'
-```
-
-In the response body, the initial provisioning state should be `provisioning`.
-
-```json output {9}
-{
-  "errors": [],
-  "messages": [],
-  "success": true,
-  "result": {
-    "cidr": "203.0.113.100/32",
-    "id": "<CDN_SERVICE_BINDING_ID>",
-    "provisioning": {
-      "state": "provisioning"
-      },
-    "service_id": "<SERVICE_ID>",
-    "service_name": "CDN"
-  }
-}
-```
-
-</Example>
-
-You can periodically check the service binding status using the [List Service Bindings](/api/resources/addressing/subresources/prefixes/subresources/service_bindings/methods/list/) endpoint.
+<Render
+file="service-bindings-create-binding"
+params={{
+	pre_existing_product: "Magic Transit",
+	added_product: "CDN"
+}}
+/>
 
 ## 3. Create address maps
 
@@ -218,8 +141,4 @@ Assuming `203.0.113.100` was also the origin IP, the DNS record would look like 
 
 ## 5. (Optional) Add layer 7 functionality
 
-Leverage other features according to your needs:
-
-- [Cache](/cache/)
-- [WAF custom rules](/waf/custom-rules/)
-- [Security analytics](/waf/analytics/security-analytics/)
+<Render file="service-bindings-related-products" />

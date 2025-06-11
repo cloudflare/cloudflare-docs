@@ -126,3 +126,7 @@ Device Information Only mode is now enabled on the device. To start enforcing de
 <Width size="large">
 ![Browser prompts for client certificate](~/assets/images/cloudflare-one/connections/device-information-only-browser.png)
 </Width>
+
+## Limitations
+
+Device Information mode is not compatible with the [Windows pre-login](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/windows-prelogin/) feature. The user must be logged into Windows because WARP needs to [install a certificate](#3-optional-verify-the-client-certificate) in the user store.

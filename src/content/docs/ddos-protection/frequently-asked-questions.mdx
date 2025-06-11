@@ -16,33 +16,33 @@ When Cloudflare's DDoS systems detect and mitigate attacks, they drop, rate-limi
 
 There are three main DDoS mitigation systems:
 
-1. [DDoS Managed Ruleset](/ddos-protection/managed-rulesets/)
+1. [DDoS managed rulesets](/ddos-protection/managed-rulesets/)
     
-    a. [Network-layer DDoS Managed Ruleset](/ddos-protection/managed-rulesets/network/)
+    a. [Network-layer DDoS managed ruleset](/ddos-protection/managed-rulesets/network/)
     
-    b. [HTTP DDoS Managed Ruleset](/ddos-protection/managed-rulesets/http/)
+    b. [HTTP DDoS managed ruleset](/ddos-protection/managed-rulesets/http/)
 
 3. [Advanced TCP Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-tcp-protection/)
 4. [Advanced DNS Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-dns-protection/)
 
-The DDoS Managed Ruleset includes many individual rules. Each rule provides the heuristics that instructs the system how to identify DDoS attack traffic. When the DDoS Managed Ruleset identifies an attack, it will generate a real-time fingerprint to match against the attack traffic, and install an ephemeral mitigation rule to mitigate the attack using that fingerprint. 
+The DDoS managed ruleset includes many individual rules. Each rule provides the heuristics that instructs the system how to identify DDoS attack traffic. When the DDoS managed ruleset identifies an attack, it will generate a real-time fingerprint to match against the attack traffic, and install an ephemeral mitigation rule to mitigate the attack using that fingerprint. 
 
 The start time of the attack is when the mitigation rule is installed. The attack ends when there is no more traffic matching the rule. This is a single DDoS attack event. 
 
-A DDoS attack therefore has a start time, end time, and additional attack metadata such as:
+A DDoS attack has a start time, end time, and additional attack metadata such as:
 
-1. Attack ID
-2. Attack vector
-3. Mitigating rule
-4. Total bytes and packets
-5. Attack target
-6. Mitigation action
+- Attack ID
+- Attack vector
+- Mitigating rule
+- Total bytes and packets
+- Attack target
+- Mitigation action
 
 This information is used to populate the [Executive Summary](/analytics/network-analytics/understand/main-dashboard/#executive-summary) section in the [Network Analytics](/analytics/network-analytics/) dashboard.
 
 It can also be retrieved via GraphQL API using the `dosdAttackAnalyticsGroups` node.
 
-Currently, the concept of a DDoS attack event only exists for the Network-layer DDoS Managed Ruleset. There is no such grouping of individual packets, queries, or HTTP requests for the other systems, although we plan to implement it.
+Currently, the concept of a DDoS attack event only exists for the [Network-layer DDoS managed ruleset](/ddos-protection/managed-rulesets/network/). There is no such grouping of individual packets, queries, or HTTP requests for the other systems yet.
 
 ---
 
@@ -86,7 +86,7 @@ Yes. Using our anycast network, along with Traffic Manager, Unimog, and Plurimog
 
 ## Where can I see latest DDoS trends?
 
-Cloudflare publishes quarterly DDoS reports and coverage of signficant DDoS attacks. The publications are available on our [blog website](https://blog.cloudflare.com/tag/ddos-reports/) and as interactive reports on the [Cloudflare Radar Reports website](https://radar.cloudflare.com/reports?q=DDoS). 
+Cloudflare publishes quarterly DDoS reports and coverage of significant DDoS attacks. The publications are available on our [blog website](https://blog.cloudflare.com/tag/ddos-reports/) and as interactive reports on the [Cloudflare Radar Reports website](https://radar.cloudflare.com/reports?q=DDoS). 
 
 Learn more about the [methodologies](/radar/reference/quarterly-ddos-reports/) behind these reports.
 
@@ -110,7 +110,7 @@ These tools and attacks exploit different aspects of network protocols and behav
 
 ---
 
-## Can I exclude a specific user agent from the HTTP DDoS protection?
+## Can I exclude specific user agents from HTTP DDoS protection?
 
 Yes, you can create an [override](/ddos-protection/managed-rulesets/http/override-expressions/) and use the expression fields to match against HTTP requests with the user agent. There are a variety of [fields](/ddos-protection/managed-rulesets/http/override-expressions/#available-expression-fields) that you can use.
 
@@ -118,9 +118,52 @@ You can then adjust the [sensitivity level](/ddos-protection/managed-rulesets/ht
 
 Refer to the guide on how to [create an override](/ddos-protection/managed-rulesets/http/configure-dashboard/#create-a-ddos-override).
 
-The use of expression fields is subject to [availability](#availability). 
+The use of expression fields is subject to [availability](/ddos-protection/#availability). 
+
+---
 
 ## Does Cloudflare charge for DDoS attack traffic?
 
 No. Since 2017, Cloudflare offers [free, unmetered, and unlimited DDoS protection](https://blog.cloudflare.com/unmetered-mitigation/). There is no limit to the number of DDoS attacks, their duration, or their size. Cloudflare's billing systems automatically exclude DDoS attack traffic from your usage. 
 
+---
+
+## How does DDoS Protection determine whether a SYN flood attack is mitigated by `dosd` or Advanced TCP Protection?
+
+Cloudflare mitigates SYN flood packets statelessly in `dosd` or using [DDoS managed rules](/ddos-protection/managed-rulesets/) when it detects a pattern that indicates that the packet is fake. 
+
+When SYN flood packets are highly randomized or indistinguishable from legitimate packets, Cloudflare uses [Advanced TCP Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-tcp-protection/) to protect your site.
+
+---
+
+## How does Cloudflare handle hyper-localized DDoS attacks that may aim to overwhelm a specific Point of Presence (PoP)?
+
+Cloudflare uses a combination of intelligent traffic engineering, global anycast, and real-time, autonomous DDoS mitigation to handle hyper-localized DDoS attacks — even those that may temporarily exceed the capacity of a specific Point of Presence (PoP).
+
+### Global Anycast Network
+
+Anycast allows multiple servers (PoPs) to share the same IP address, and the Border Gateway Protocol (BGP) routing system ensures user traffic is routed to the nearest or lowest-cost node.
+
+#### Process
+
+When one PoP is overwhelmed due to a local DDoS flood or as a result of limited capacity, BGP route propagation can be adjusted to shift traffic away from that PoP. Cloudflare can also withdraw BGP announcements from specific peers or upstreams to force traffic to reroute through better-equipped PoPs. Because DDoS traffic originates from multiple geographic regions, Anycast and traffic engineering distributes the attack across Cloudflare’s larger 348 Tbps Anycast network to reduce the burden on a single PoP. 
+
+### Intelligent Traffic Engineering
+
+Cloudflare uses real-time data and intelligence systems to make decisions about traffic routing, load balancing, and congestion management.
+
+#### Process 
+
+If a specific PoP becomes saturated or experiences attack traffic, Cloudflare's internal traffic engineering systems dynamically steer traffic across alternative paths using traffic shaping, path-aware routing, and dynamic DNS responses.
+
+The system monitors CPU load, network congestion, and traffic type to make smart decisions about whether to reroute or throttle connections.
+
+For Layer 7 (application-level) attacks, Cloudflare can challenge or rate-limit traffic before it reaches application servers. This scenario is similar to some extent to when we take down certain PoPs for maintenance. This can be done automatically via Traffic Manager, and if needed, by our Site Reliability Engineers (SRE).
+
+### Real-Time DDoS Mitigation
+
+DDoS managed rules and Advanced DDoS Protection are autonomous and run on every single server independently, while also coordinating locally and globally, contributing to the resilience of each server and PoP. These systems run close to the network edge in every PoP, meaning detection and mitigation happen rapidly, often before any noticeable impact. If traffic exceeds the capacity of one PoP, mitigation rules are replicated to other PoPs to help absorb overflow.
+
+- **DDoS managed rules**: Detects and mitigates DDoS attacks in real-time. When it detects an attack, it deploys rules within seconds to mitigate the malicious traffic.
+- **Advanced TCP Protection**: Identifies and drops abnormal TCP/IP behavior before it hits application servers.
+- **Advanced DNS Protection**: Identifies and drops abnormal DNS queries behavior before it hits DNS servers.

@@ -34,6 +34,22 @@ function SearchBox(props: UseSearchBoxProps) {
 		}
 	}, []);
 
+	useEffect(() => {
+		const params = new URLSearchParams(window.location.search);
+
+		if (query) {
+			params.set("q", query);
+		} else {
+			params.delete("q");
+		}
+
+		history.pushState(
+			null,
+			"",
+			`${window.location.pathname}?${params.toString()}`,
+		);
+	}, [query]);
+
 	return (
 		<div className="border-cl1-gray-8 dark:border-cl1-gray-2 flex items-center rounded-sm border p-2">
 			<input
@@ -90,12 +106,18 @@ function InfiniteHits(props: UseInfiniteHitsProps) {
 function FilterDropdown({
 	attribute,
 	label,
+	limit = 1000,
 }: {
 	attribute: string;
 	label: string;
+	limit?: number;
 }) {
 	const [isOpen, setIsOpen] = useState(false);
-	const { items, refine } = useRefinementList({ attribute });
+	const { items, refine } = useRefinementList({
+		attribute,
+		limit,
+		sortBy: ["count:desc"],
+	});
 
 	useEffect(() => {
 		const params = new URLSearchParams(window.location.search);
@@ -112,12 +134,19 @@ function FilterDropdown({
 		const refined = items
 			.filter((item) => item.isRefined)
 			.map((item) => item.value);
-		if (refined.length === 0) return;
+
+		const params = new URLSearchParams(window.location.search);
+
+		if (refined.length === 0) {
+			params.delete(attribute);
+		} else {
+			params.set(attribute, refined.join(","));
+		}
 
 		history.pushState(
 			null,
 			"",
-			`${window.location.pathname}?${attribute}=${refined.join(",")}`,
+			`${window.location.pathname}?${params.toString()}`,
 		);
 	}, [items]);
 
@@ -160,21 +189,28 @@ function FilterDropdown({
 						className="border-cl1-gray-8 bg-cl1-white dark:border-cl1-gray-1 dark:bg-cl1-gray-0 rounded-sm border p-4 shadow-md"
 					>
 						<div className="max-h-60 space-y-2 overflow-y-auto">
-							{items.map((item) => (
-								<label
-									key={item.value}
-									className="flex items-center gap-2 text-sm"
-								>
-									<input
-										type="checkbox"
-										checked={item.isRefined}
-										onChange={() => refine(item.value)}
-									/>
-									<span>
-										{item.label} ({item.count})
-									</span>
-								</label>
-							))}
+							{items
+								.sort((a, b) => {
+									if (a.isRefined && !b.isRefined) return -1;
+									if (!a.isRefined && b.isRefined) return 1;
+									return b.count - a.count;
+								})
+								.map((item) => (
+									<label
+										key={item.value}
+										className="flex items-center gap-2 text-sm"
+									>
+										<input
+											type="checkbox"
+											className="bg-transparent"
+											checked={item.isRefined}
+											onChange={() => refine(item.value)}
+										/>
+										<span>
+											{item.label} ({item.count})
+										</span>
+									</label>
+								))}
 						</div>
 					</div>
 				</FloatingPortal>
@@ -198,8 +234,9 @@ export default function InstantSearchComponent() {
 			<Configure filters="type:content" />
 			<div className="space-y-4">
 				<SearchBox />
-				<div className="flex gap-2">
+				<div className="not-content flex gap-2">
 					<FilterDropdown attribute="product" label="Products" />
+					<FilterDropdown attribute="tags" label="Tags" />
 				</div>
 				<InfiniteHits />
 			</div>

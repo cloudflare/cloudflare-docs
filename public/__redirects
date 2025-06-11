@@ -37,7 +37,7 @@
 /ssl/changelog/index.xml /changelog/rss/ssl.xml 301
 
 ## legacy
-/changelog/index.xml /release-notes/index.xml 301
+/release-notes/index.xml /changelog/rss/index.xml 301
 /release-notes/ /changelog/ 301
 
 # 1dot1_redirect
@@ -711,9 +711,7 @@
 /fundamentals/setup/account/customize-account/appearance/ /fundamentals/account/customize-account/ 301
 /fundamentals/setup/account/customize-account/communication-preference/ /fundamentals/account/customize-account/ 301
 /fundamentals/setup/account/customize-account/language-preference/ /fundamentals/account/customize-account/ 301
-/fundamentals/setup/account/* /fundamentals/account/:splat 301
-/fundamentals/setup/manage-domains/* /fundamentals//manage-domains/:splat 301
-/fundamentals/setup/manage-members/* /fundamentals/manage-members/:splat 301
+/fundamentals/setup/ /fundamentals/account/ 301
 
 # gateway
 /gateway/about/ /cloudflare-one/policies/gateway/ 301
@@ -826,6 +824,74 @@
 /learning-paths/workers/ /learning-paths/workers/concepts/ 301
 /learning-paths/clientless-access/ /learning-paths/clientless-access/concepts/ 301
 /learning-paths/application-security/default-traffic-security/security-level/ /learning-paths/application-security/default-traffic-security/browser-integrity/ 301
+
+## Get started with Cloudflare --> fundamentals
+/learning-paths/get-started/concepts/ /fundamentals/ 301
+/learning-paths/get-started/concepts/what-is-cloudflare/ /fundamentals/ 301
+/learning-paths/get-started/concepts/how-cloudflare-works/ /fundamentals/concepts/how-cloudflare-works/ 301
+/learning-paths/get-started/concepts/traffic-flow-cloudflare/ /fundamentals/concepts/traffic-flow-cloudflare/ 301
+/learning-paths/get-started/concepts/cloudflare-ips/ /fundamentals/concepts/cloudflare-ip-addresses/ 301
+/learning-paths/get-started/account-setup/ /fundamentals/account/create-account/ 301
+/learning-paths/get-started/account-setup/create-account/ /fundamentals/account/create-account/ 301
+/learning-paths/get-started/account-setup/set-up-2fa/ /fundamentals/account/account-security/2fa/ 301
+/learning-paths/get-started/account-setup/customize-account/ /fundamentals/account/customize-account/account-name/ 301
+/learning-paths/get-started/account-setup/add-other-members/ /fundamentals/manage-members/ 301
+/learning-paths/get-started/account-setup/create-api-token/ /fundamentals/api/how-to/create-via-api/ 301
+/learning-paths/get-started/add-domain-to-cf/ /fundamentals/manage-domains/add-site/ 301
+/learning-paths/get-started/add-domain-to-cf/minimize-downtime/ /fundamentals/performance/minimize-downtime/ 301
+/learning-paths/get-started/add-domain-to-cf/allow-cloudflare-ips/ /fundamentals/concepts/cloudflare-ip-addresses/ 301
+/learning-paths/get-started/add-domain-to-cf/disable-dnssec/ /dns/dnssec/#disable-dnssec 301
+/learning-paths/get-started/add-domain-to-cf/add-site/ /fundamentals/manage-domains/add-site/ 301
+/learning-paths/get-started/add-domain-to-cf/update-nameservers/ /dns/zone-setups/full-setup/setup/#update-your-nameservers 301
+/learning-paths/get-started/domain-resolution/ /fundamentals/manage-domains/ 301
+/learning-paths/get-started/domain-resolution/review-dns-records/ /dns/zone-setups/full-setup/setup/#review-dns-records 301
+/learning-paths/get-started/domain-resolution/proxy-status/ /dns/proxy-status/ 301
+/learning-paths/get-started/domain-resolution/enable-dnssec/ /dns/dnssec/#enable-dnssec 301
+/learning-paths/get-started/domain-resolution/create-subdomain/ /fundamentals/manage-domains/manage-subdomains/ 301
+/learning-paths/get-started/domain-resolution/setup-email-records/ /dns/manage-dns-records/how-to/email-records/ 301
+/learning-paths/get-started/security/ /fundamentals/security/ 301
+/learning-paths/get-started/security/default-improvements/ /fundamentals/security/under-ddos-attack/ 301
+/learning-paths/get-started/security/ssl-tls/ /ssl/origin-configuration/ssl-modes/ 301
+/learning-paths/get-started/security/bot-fight-mode/ /bots/get-started/bot-fight-mode/ 301
+/learning-paths/get-started/security/secure-origin/ /fundamentals/security/protect-your-origin-server/ 301
+/learning-paths/get-started/security/security-center/ /security-center/ 301
+/learning-paths/get-started/security/add-on-products/ /products/?product-group=Application+security 301
+/learning-paths/get-started/security/security-settings/ /fundamentals/security/ 301
+/learning-paths/get-started/performance/ /fundamentals/performance/ 301
+/learning-paths/get-started/performance/default-improvements/ /fundamentals/performance/ 301
+/learning-paths/get-started/performance/optimize-caching/ /cache/get-started/ 301
+/learning-paths/get-started/performance/optimize-speed/ /speed/ 301
+/learning-paths/get-started/performance/web-analytics/ /web-analytics/ 301
+/learning-paths/get-started/performance/add-on-products/ /products/?product-group=Application+performance 301
+
+## Get started free plan --> fundamentals
+/learning-paths/get-started-free/onboarding/ /fundamentals/ 301
+/learning-paths/get-started-free/onboarding/add-and-activate/ /fundamentals/manage-domains/add-site/ 301
+/learning-paths/get-started-free/onboarding/proxy-dns-records/ /dns/proxy-status/ 301
+/learning-paths/get-started-free/onboarding/check-dns/ /dns/zone-setups/full-setup/troubleshooting/ 301
+/learning-paths/get-started-free/onboarding/check-ssl/ /ssl/troubleshooting/ 301
+/learning-paths/get-started-free/performance/ /fundamentals/performance/ 301
+/learning-paths/get-started-free/performance/default-improvements/ /fundamentals/performance/ 301
+/learning-paths/get-started-free/performance/optimize-caching/ /cache/get-started/ 301
+/learning-paths/get-started-free/performance/optimize-speed/ /speed/ 301
+/learning-paths/get-started-free/performance/web-analytics/ /web-analytics/ 301
+/learning-paths/get-started-free/performance/add-on-products/ /products/?product-group=Application+security 301
+/learning-paths/get-started-free/security/ /fundamentals/security/ 301
+/learning-paths/get-started-free/security/default-improvements/ /fundamentals/security/under-ddos-attack/ 301
+/learning-paths/get-started-free/security/ssl-tls/ /ssl/origin-configuration/ssl-modes/ 301
+/learning-paths/get-started-free/security/dnssec/ /dns/dnssec/#enable-dnssec 301
+/learning-paths/get-started-free/security/security-settings/ /fundamentals/security/ 301
+/learning-paths/get-started-free/security/bot-fight-mode/ /bots/get-started/bot-fight-mode/ 301
+/learning-paths/get-started-free/security/security-center/ /security-center/ 301
+/learning-paths/get-started-free/security/add-on-products/ /products/?product-group=Application+security 301
+/learning-paths/get-started-free/other-features/ /fundamentals/ 301
+/learning-paths/get-started-free/other-features/rules/ /rules/ 301
+/learning-paths/get-started-free/other-features/redirects/ /fundamentals/reference/redirects/ 301
+/learning-paths/get-started-free/other-features/analytics/ /analytics/account-and-zone-analytics/ 301
+/learning-paths/get-started-free/other-features/account-profile/ /fundamentals/account/ 301
+/learning-paths/get-started-free/other-features/email-routing/ /email-routing/ 301
+/learning-paths/get-started-free/other-features/resources/ /fundamentals/#additional-resources 301
+/learning-paths/get-started-free/other-features/product-lines/ /products/ 301
 
 # more redirects in the /dynamic/ section
 
@@ -1317,7 +1383,7 @@
 /support/account-management-billing/cloudflare-billing-policy/ /billing/billing-policy/ 301
 /support/account-management-billing/billing-add-on-service/ /billing/usage-based-billing/ 301
 /support/account-management-billing/understanding-cloudflare-sales-tax/ /billing/sales-tax/ 301
-/support/account-management-billing/ /support/troubleshooting/general-troubleshooting/cannot-locate-dashboard-account/ 301 
+/support/account-management-billing/ /support/troubleshooting/general-troubleshooting/cannot-locate-dashboard-account/ 301
 /support/account-management-billing/cannot-locate-dashboard-account/ /support/troubleshooting/general-troubleshooting/cannot-locate-dashboard-account/ 301
 
 # r2
@@ -1361,6 +1427,7 @@
 /r2/examples/postman/ /r2/tutorials/postman/ 301
 /r2/examples/cloudflare-access/ /r2/tutorials/cloudflare-access/ 301
 /r2/examples/upload-logs-event-notifications/ /r2/tutorials/upload-logs-event-notifications/ 301
+/r2/examples/demo-worker/ /r2/api/workers/workers-api-usage/ 301
 
 # time-services_redirects
 /time-services/nts/usage/ /time-services/nts/ 301
@@ -1649,7 +1716,25 @@
 /workers/static-assets/migrate-from-pages/ /workers/static-assets/migration-guides/migrate-from-pages/ 301
 /workers/static-assets/compatibility-matrix/ /workers/static-assets/migration-guides/migrate-from-pages/ 301
 /workers/static-assets/migrations/vercel-to-workers/ /workers/static-assets/migration-guides/vercel-to-workers/ 301
-/workers/frameworks/framework-guides/remix/ /workers/frameworks/framework-guides/react-router/ 301
+/workers/frameworks/framework-guides/remix/ /workers/framework-guides/web-apps/react-router/ 301
+/workers/frameworks/ /workers/framework-guides/ 301
+/workers/frameworks/framework-guides/ /workers/framework-guides/ 301
+/workers/frameworks/framework-guides/astro/ /workers/framework-guides/web-apps/astro/ 301
+/workers/frameworks/framework-guides/nextjs/ /workers/framework-guides/web-apps/nextjs/ 301
+/workers/frameworks/framework-guides/react-router/ /workers/framework-guides/web-apps/react-router/ 301
+/workers/frameworks/framework-guides/react/ /workers/framework-guides/web-apps/react/ 301
+/workers/frameworks/framework-guides/redwoodsdk/ /workers/framework-guides/web-apps/redwoodsdk/ 301
+/workers/frameworks/framework-guides/svelte/ /workers/framework-guides/web-apps/svelte/ 301
+/workers/frameworks/framework-guides/tanstack/ /workers/framework-guides/web-apps/tanstack/ 301
+/workers/frameworks/framework-guides/vue/ /workers/framework-guides/web-apps/vue/ 301
+/workers/frameworks/framework-guides/angular/ /workers/framework-guides/web-apps/more-web-frameworks/angular/ 301
+/workers/frameworks/framework-guides/docusaurus/ /workers/framework-guides/web-apps/more-web-frameworks/docusaurus/ 301
+/workers/frameworks/framework-guides/gatsby/ /workers/framework-guides/web-apps/more-web-frameworks/gatsby/ 301
+/workers/frameworks/framework-guides/hono/ /workers/framework-guides/web-apps/more-web-frameworks/hono/ 301
+/workers/frameworks/framework-guides/nuxt/ /workers/framework-guides/web-apps/more-web-frameworks/nuxt/ 301
+/workers/frameworks/framework-guides/qwik/ /workers/framework-guides/web-apps/more-web-frameworks/qwik/ 301
+/workers/frameworks/framework-guides/solid/ /workers/framework-guides/web-apps/more-web-frameworks/solid/ 301
+
 /workers/testing/unit-testing/ /workers/testing/vitest-integration/write-your-first-test/ 301
 /workers/testing/integration-testing/ /workers/testing/ 301
 /workers/testing/vitest-integration/get-started/ /workers/testing/vitest-integration/write-your-first-test/ 301
@@ -1716,9 +1801,8 @@
 /workers-ai/markdown-conversion/ /workers-ai/features/markdown-conversion/ 301
 
 # workflows
-
 /workflows/reference/storage-options/ /workers/platform/storage-options/ 301
-
+/workflows/tutorials/ /workflows/examples 301
 
 # workers KV
 /kv/platform/environments/ /kv/reference/environments/ 301
@@ -2013,6 +2097,9 @@
 /firewall/recipes/* /waf/custom-rules/use-cases/:splat 301
 /web3/polygon-gateway/* /web3/ 301
 /vectorize/configuration/* /vectorize/best-practices/:splat 301
+/fundamentals/setup/account/* /fundamentals/account/:splat 301
+/fundamentals/setup/manage-domains/* /fundamentals/manage-domains/:splat 301
+/fundamentals/setup/manage-members/* /fundamentals/manage-members/:splat 301
 
 # Cloudflare One / Zero Trust
 /cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/as-a-service/* /cloudflare-one/connections/connect-networks/configure-tunnels/local-management/as-a-service/:splat 301
@@ -2056,72 +2143,6 @@
 /learning-paths/secure-internet-traffic/connect-devices/* /learning-paths/secure-internet-traffic/connect-devices-networks/:splat 301
 ## Zero Trust Web Access --> Clientless Access
 /learning-paths/zero-trust-web-access/* /learning-paths/clientless-access/:splat 301
-## Get started with Cloudflare --> fundamentals
-/learning-paths/get-started/concepts/ /fundamentals/ 301
-/learning-paths/get-started/concepts/what-is-cloudflare/ /fundamentals/ 301
-/learning-paths/get-started/concepts/how-cloudflare-works/ /fundamentals/concepts/how-cloudflare-works/ 301
-/learning-paths/get-started/concepts/traffic-flow-cloudflare/ /fundamentals/concepts/traffic-flow-cloudflare/ 301
-/learning-paths/get-started/concepts/cloudflare-ips/ /fundamentals/concepts/cloudflare-ip-addresses/ 301
-/learning-paths/get-started/account-setup/ /fundamentals/account/create-account/ 301
-/learning-paths/get-started/account-setup/create-account/ /fundamentals/account/create-account/ 301
-/learning-paths/get-started/account-setup/set-up-2fa/ /fundamentals/account/account-security/2fa/ 301
-/learning-paths/get-started/account-setup/customize-account/ /fundamentals/account/customize-account/account-name/ 301
-/learning-paths/get-started/account-setup/add-other-members/ /fundamentals/manage-members/ 301
-/learning-paths/get-started/account-setup/create-api-token/ /fundamentals/api/how-to/create-via-api/ 301
-/learning-paths/get-started/add-domain-to-cf/ /fundamentals/manage-domains/add-site/ 301
-/learning-paths/get-started/add-domain-to-cf/minimize-downtime/ /fundamentals/performance/minimize-downtime/ 301
-/learning-paths/get-started/add-domain-to-cf/allow-cloudflare-ips/ /fundamentals/concepts/cloudflare-ip-addresses/ 301
-/learning-paths/get-started/add-domain-to-cf/disable-dnssec/ /dns/dnssec/#disable-dnssec 301
-/learning-paths/get-started/add-domain-to-cf/add-site/ /fundamentals/manage-domains/add-site/ 301
-/learning-paths/get-started/add-domain-to-cf/update-nameservers/ /dns/zone-setups/full-setup/setup/#update-your-nameservers 301
-/learning-paths/get-started/domain-resolution/ /fundamentals/manage-domains/ 301
-/learning-paths/get-started/domain-resolution/review-dns-records/ /dns/zone-setups/full-setup/setup/#review-dns-records 301
-/learning-paths/get-started/domain-resolution/proxy-status/ /dns/proxy-status/ 301
-/learning-paths/get-started/domain-resolution/enable-dnssec/ /dns/dnssec/#enable-dnssec 301
-/learning-paths/get-started/domain-resolution/create-subdomain/ /fundamentals/manage-domains/manage-subdomains/ 301
-/learning-paths/get-started/domain-resolution/setup-email-records/ /dns/manage-dns-records/how-to/email-records/ 301
-/learning-paths/get-started/security/ /fundamentals/security/ 301
-/learning-paths/get-started/security/default-improvements/ /fundamentals/security/under-ddos-attack/ 301
-/learning-paths/get-started/security/ssl-tls/ /ssl/origin-configuration/ssl-modes/ 301
-/learning-paths/get-started/security/bot-fight-mode/ /bots/get-started/bot-fight-mode/ 301
-/learning-paths/get-started/security/secure-origin/ /fundamentals/security/protect-your-origin-server/ 301
-/learning-paths/get-started/security/security-center/ /security-center/ 301
-/learning-paths/get-started/security/add-on-products/ /products/?product-group=Application+security 301
-/learning-paths/get-started/security/security-settings/ /fundamentals/security/ 301
-/learning-paths/get-started/performance/ /fundamentals/performance/ 301
-/learning-paths/get-started/performance/default-improvements/ /fundamentals/performance/ 301
-/learning-paths/get-started/performance/optimize-caching/ /cache/get-started/ 301
-/learning-paths/get-started/performance/optimize-speed/ /speed/ 301
-/learning-paths/get-started/performance/web-analytics/ /web-analytics/ 301
-/learning-paths/get-started/performance/add-on-products/ /products/?product-group=Application+performance 301
-## Get started free plan --> fundamentals
-/learning-paths/get-started-free/onboarding/ /fundamentals/ 301
-/learning-paths/get-started-free/onboarding/add-and-activate/ /fundamentals/manage-domains/add-site/ 301
-/learning-paths/get-started-free/onboarding/proxy-dns-records/ /dns/proxy-status/ 301
-/learning-paths/get-started-free/onboarding/check-dns/ /dns/zone-setups/full-setup/troubleshooting/ 301
-/learning-paths/get-started-free/onboarding/check-ssl/ /ssl/troubleshooting/ 301
-/learning-paths/get-started-free/performance/ /fundamentals/performance/ 301
-/learning-paths/get-started-free/performance/default-improvements/ /fundamentals/performance/ 301
-/learning-paths/get-started-free/performance/optimize-caching/ /cache/get-started/ 301
-/learning-paths/get-started-free/performance/optimize-speed/ /speed/ 301
-/learning-paths/get-started-free/performance/web-analytics/ /web-analytics/ 301
-/learning-paths/get-started-free/performance/add-on-products/ /products/?product-group=Application+security 301
-/learning-paths/get-started-free/security/ /fundamentals/security/ 301
-/learning-paths/get-started-free/security/default-improvements/ /fundamentals/security/under-ddos-attack/ 301
-/learning-paths/get-started-free/security/ssl-tls/ /ssl/origin-configuration/ssl-modes/ 301
-/learning-paths/get-started-free/security/dnssec/ /dns/dnssec/#enable-dnssec 301
-/learning-paths/get-started-free/security/security-settings/ /fundamentals/security/ 301
-/learning-paths/get-started-free/security/bot-fight-mode/ /bots/get-started/bot-fight-mode/ 301
-/learning-paths/get-started-free/security/security-center/ /security-center/ 301
-/learning-paths/get-started-free/security/add-on-products/ /products/?product-group=Application+security 301
-/learning-paths/get-started-free/other-features/ /fundamentals/ 301
-/learning-paths/get-started-free/other-features/rules/ /rules/ 301
-/learning-paths/get-started-free/other-features/redirects/ /fundamentals/reference/redirects/ 301
-/learning-paths/get-started-free/other-features/analytics/ /analytics/account-and-zone-analytics/ 301
-/learning-paths/get-started-free/other-features/account-profile/ /fundamentals/account/ 301
-/learning-paths/get-started-free/other-features/email-routing/ /email-routing/ 301
-/learning-paths/get-started-free/other-features/resources/ /fundamentals/#additional-resources 301
-/learning-paths/get-started-free/other-features/product-lines/ /products/ 301
 
 # Cloudflare for SaaS
 /ssl/ssl-for-saas/common-tasks/* /cloudflare-for-platforms/cloudflare-for-saas/ 301
@@ -2164,9 +2185,6 @@
 # Workers AI
 /workers-ai/demos/* /workers-ai/guides/demos-architectures/:splat 301
 /workers-ai/tutorials/* /workers-ai/guides/tutorials/:splat 301
-
-# Workflows
-/workflows/tutorials/ /workflows/examples 301
 
 # Others
 /logs/analytics-integrations/* /fundamentals/data-products/analytics-integrations/:splat 301

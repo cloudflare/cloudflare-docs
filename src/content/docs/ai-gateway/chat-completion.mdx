@@ -33,8 +33,8 @@ Specify the model using `{provider}/{model}` format. For example:
 import OpenAI from "openai";
 const client = new OpenAI({
 	apiKey: "YOUR_PROVIDER_API_KEY", // Provider API key
-	baseURL:
-		"https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/completions",
+  // NOTE: the OpenAI client automatically adds /chat/completions to the end of the URL, you should not add it yourself.
+	baseURL: "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat",
 });
 
 const response = await client.chat.completions.create({
@@ -64,7 +64,7 @@ curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/comp
 
 ### Universal provider
 
-You can also use this pattern with a [Universal Endpoint](/ai-gateway/universal/).
+You can also use this pattern with the [Universal Endpoint](/ai-gateway/universal/) to add [fallbacks](/ai-gateway/configuration/fallbacks/) across multiple providers. When used in combination, every request will return the same standardized format, whether from the primary or fallback model. This behavior means that you do not have to add extra parsing logic to your app. 
 
 ```ts title="index.ts"
 export interface Env {

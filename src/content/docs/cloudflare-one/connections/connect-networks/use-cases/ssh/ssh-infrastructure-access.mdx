@@ -91,13 +91,17 @@ To learn more about user connections, refer to the [Access for Infrastructure do
 
 ## SSH command logs
 
-SSH command logs contain the actual SSH commands that a user ran on the target. These logs are encrypted using a public key provided by the customer and are not visible to Cloudflare.
+SSH command logs contain the actual SSH commands that a user ran on the target. Customers on all plans can store SSH logs on Cloudflare. These logs are encrypted using a public key provided by the customer and are not visible to Cloudflare. Additionally, Enterprise customers can configure a Logpush job to send SSH logs to storage destinations. Logpush payloads are not encrypted and do not require uploading a public key.
 
-### Enable SSH command logging
+### Download encrypted SSH logs
+
+Follow these instructions to encrypt and download SSH command logs from Zero Trust.
+
+#### Enable SSH command logging
 
 <Render file="ssh/upload-ssh-key" params={{ note: "" }} />
 
-### Disable SSH command logging
+#### Disable SSH command logging
 
 To turn off SSH command logging, delete your uploaded public key:
 
@@ -128,7 +132,7 @@ curl --request PUT https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gat
 </TabItem>
 </Tabs>
 
-### View SSH logs
+#### View SSH logs
 
 SSH command logs are not visible from the dashboard itself and must be exported and decrypted.
 
@@ -139,7 +143,15 @@ To manually retrieve logs:
 3. Select **Download** to download the session's command log.
 4. <Render file="ssh/decrypt-ssh-log" />
 
-Enterprise customers can also export command logs using [Logpush](/cloudflare-one/insights/logs/logpush/).
+### Export SSH logs with Logpush
+
+:::note[Availability]
+Only available on Enterprise plans.
+:::
+
+Cloudflare allows you to send SSH command logs to storage destinations configured in [Logpush](/logs/about/), including third-party destinations. For a list of available data fields, refer to the [SSH logs dataset](/logs/reference/log-fields/account/ssh_logs/).
+
+To set up the Logpush job, refer to [Logpush integration](/cloudflare-one/insights/logs/logpush/).
 
 ## Known limitations
 
