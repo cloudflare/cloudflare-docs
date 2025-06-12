@@ -71,6 +71,8 @@ The duration of the output video or spritesheet. Depends on `mode`:
 
 - When `mode` is `video`, specifies the duration of the output.
 - When `mode` is `spritesheet`, specifies the time range from which to select frames.
+- Acceptable range: 1s - 60s (or 1m)
+- Default: input duration or 30 seconds, whichever is shorter
 
 ### `fit`
 
@@ -108,7 +110,7 @@ If `mode` is `frame`, specifies the image output format.
 
 ## Source video requirements
 
-Input video must be less than 40MB. Contact Stream if the input limitation is unacceptable.
+Input video must be less than 100MB.
 
 Input video should be an MP4 with H.264 encoded video and AAC or MP3 encoded audio. Other formats may work but are untested.
 

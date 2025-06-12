@@ -6,6 +6,8 @@ sidebar:
     text: Beta
 ---
 
+import { Render } from "~/components";
+
 [DeepSeek](https://www.deepseek.com/) helps you build quickly with DeepSeek's advanced AI models.
 
 ## Endpoint
@@ -80,3 +82,17 @@ try {
 	return new Response(e);
 }
 ```
+
+<Render
+	file="chat-completions-providers"
+	product="ai-gateway"
+	params={{
+		name: "DeepSeek",
+		jsonexample: `
+{
+	"model": "deepseek/{model}"
+}`
+
+    }}
+
+/>

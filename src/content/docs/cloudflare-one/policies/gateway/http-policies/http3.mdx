@@ -22,27 +22,25 @@ To enable HTTP/3 inspection, turn on the [Gateway proxy](/cloudflare-one/policie
 
 ### Application limitations
 
-Gateway can inspect HTTP/3 traffic from Mozilla Firefox and Microsoft Edge, as well as other HTTP applications, such as cURL.
+Gateway can inspect HTTP/3 traffic from Mozilla Firefox and Microsoft Edge by establishing an HTTP/3 proxy connection. Gateway will then terminate the HTTP/3 connection, decrypt and inspect the traffic, and connect to the destination server over HTTP/2. Gateway can also inspect other HTTP applications, such as cURL.
 
-If the UDP proxy is enabled in Zero Trust, Google Chrome will force all HTTP/3 traffic to fall back to HTTP/2, allowing you to enforce your HTTP policies. If the UDP proxy is not enabled, HTTP/3 traffic from Chrome will bypass inspection.
+If the UDP proxy is turned on in Zero Trust, Google Chrome will cancel all HTTP/3 connections and retry them with HTTP/2, allowing you to enforce your HTTP policies. If the UDP proxy is turned off, HTTP/3 traffic from Chrome will bypass inspection.
 
 ## Force HTTP/2 traffic
 
-To apply Gateway policies to HTTP traffic without turning on the UDP proxy, you must disable QUIC in your users' browsers to ensure only HTTP/2 traffic reaches Gateway.
+To apply Gateway policies to HTTP traffic without turning on the UDP proxy, you must turn off QUIC in your users' browsers to ensure only HTTP/2 traffic reaches Gateway.
 
 <Details header="Google Chrome">
 
 1. Go to `chrome://flags`
-2. Disable **Experimental QUIC protocol**.
+2. Set **Experimental QUIC protocol** to _Disabled_.
 3. Relaunch Chrome.
 
 </Details>
 
 <Details header="Safari">
 
-1. Go to **Safari** > **Settings** > **Advanced** and enable **Show Develop menu in menu bar**, then relaunch Safari.
-2. Go to **Develop** > **Experimental Features** and disable **HTTP/3**.
-3. Relaunch Safari.
+You cannot turn off QUIC in Safari. All traffic will be sent over HTTP/3.
 
 </Details>
 
@@ -50,7 +48,7 @@ To apply Gateway policies to HTTP traffic without turning on the UDP proxy, you 
 
 1. Go to `about:config`.
 2. If you receive a warning, select **Accept the Risk and Continue**.
-3. Disable **network.http.http3.enable**.
+3. Set **network.http.http3.enable** to _false_.
 4. Relaunch Firefox.
 
 </Details>
@@ -58,7 +56,7 @@ To apply Gateway policies to HTTP traffic without turning on the UDP proxy, you 
 <Details header="Microsoft Edge">
 
 1. Go to `edge://flags`
-2. Disable **Experimental QUIC protocol**.
+2. Set **Experimental QUIC protocol** to _Disabled_.
 3. Relaunch Edge.
 
 </Details>

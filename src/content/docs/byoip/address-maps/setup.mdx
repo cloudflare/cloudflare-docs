@@ -6,7 +6,7 @@ sidebar:
   label: Setup
 ---
 
-import { GlossaryTooltip } from "~/components";
+import { GlossaryTooltip, APIRequest } from "~/components";
 
 Consider the sections below to learn how to set up address maps.
 
@@ -65,17 +65,14 @@ Default SNI for Spectrum can only be created via API using the [Create Address M
 
 Do not include any membership in your command. Your API command should resemble the following:
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/addressing/address_maps \
-  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-  --header "Content-Type: application/json" \
-  --data '{
-  "description": "default_sni",
-  "default_sni": "sni.example.com",
-  "enabled": false,
-  "ips": [
-    "192.0.0.1"
-  ],
-  "memberships": []
-}'
-```
+<APIRequest
+  path="/accounts/{account_id}/addressing/address_maps"
+  method="POST"
+  json={{
+		"description": "default_sni",
+		"default_sni": "sni.example.com",
+		"enabled": false,
+		"ips": ["192.0.0.1"],
+		"memberships": [],
+	}}
+/>

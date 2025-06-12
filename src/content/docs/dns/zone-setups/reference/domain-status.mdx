@@ -4,9 +4,9 @@ title: Zone status
 
 ---
 
-Review information on the different statuses that your [zone](/dns/concepts/#zone) can have after you [add your website or application](/fundamentals/setup/manage-domains/add-site/) to Cloudflare.
+Review information on the different statuses that your [zone](/dns/concepts/#zone) can have after you [add your website or application](/fundamentals/manage-domains/add-site/) to Cloudflare.
 
-Zone status is also referred to as domain status. An **active** domain status is a requirement for your [application services configurations](/fundamentals/setup/manage-domains/add-site/) to be applied. Refer to [How Cloudflare works](/fundamentals/concepts/how-cloudflare-works/) for details.
+Zone status is also referred to as domain status. An **active** domain status is a requirement for your [application services configurations](/fundamentals/manage-domains/add-site/) to be applied. Refer to [How Cloudflare works](/fundamentals/concepts/how-cloudflare-works/) for details.
 
 If your zone status changes, you will receive an email at the address associated with your account.
 
@@ -52,7 +52,7 @@ If your zone is in **Setup** for over 28 days, it will be automatically [deleted
 Your zone status is presented as **Pending Nameserver Update** on the Cloudflare dashboard.
 
 :::note
-If you have mistakenly added a zone to your account it will appear as pending. It can be safely [removed](/fundamentals/setup/manage-domains/remove-domain/).
+If you have mistakenly added a zone to your account it will appear as pending. It can be safely [removed](/fundamentals/manage-domains/remove-domain/).
 :::
 
 Cloudflare responds to DNS queries for pending zones on the assigned Cloudflare nameserver IPs, but your zone is still not active and cannot be used to [proxy traffic to Cloudflare](/dns/proxy-status/limitations/#pending-domains).
@@ -66,17 +66,17 @@ Cloudflare responds to DNS queries for pending zones on the assigned Cloudflare 
 
 If your domain is on the Free plan, it will be deleted automatically if it is not activated within 28 days.
 
-Any pending zone with a paid plan (Pro, Business, Enterprise) will remain pending until the plan is removed, or the domain is activated or [removed from Cloudflare](/fundamentals/setup/manage-domains/remove-domain/).
+Any pending zone with a paid plan (Pro, Business, Enterprise) will remain pending until the plan is removed, or the domain is activated or [removed from Cloudflare](/fundamentals/manage-domains/remove-domain/).
 
 :::caution[Do not use pending zones in production]
-Make sure not to use pending zones for production traffic. Cloudflare responds to DNS queries for pending zones on the assigned Cloudflare nameserver IPs but there are associated risks, especially if you do not use [zone holds](/fundamentals/setup/account/account-security/zone-holds/).
+Make sure not to use pending zones for production traffic. Cloudflare responds to DNS queries for pending zones on the assigned Cloudflare nameserver IPs but there are associated risks, especially if you do not use [zone holds](/fundamentals/account/account-security/zone-holds/).
 :::
 
 For Enterprise zones, if you want to adjust settings before zone activation, Logpush for [DNS logs](/logs/reference/log-fields/zone/dns_logs/) and [DNS Zone Transfer](/dns/zone-setups/zone-transfers/) configuration work as expected in pending state.
 
 ## Active
 
-Cloudflare has authenticated your [nameserver changes](/dns/nameservers/update-nameservers/) or [verification TXT record](/dns/zone-setups/partial-setup/setup/#2-verify-ownership-for-your-domain) and you can proxy domain traffic through Cloudflare. For more details refer to [How Cloudflare works](/fundamentals/concepts/how-cloudflare-works/) and [Domain configurations](/fundamentals/setup/manage-domains/add-site/).
+Cloudflare has authenticated your [nameserver changes](/dns/nameservers/update-nameservers/) or [verification TXT record](/dns/zone-setups/partial-setup/setup/#2-verify-ownership-for-your-domain) and you can proxy domain traffic through Cloudflare. For more details refer to [How Cloudflare works](/fundamentals/concepts/how-cloudflare-works/) and [Domain configurations](/fundamentals/manage-domains/add-site/).
 
 ## Moved
 
@@ -86,12 +86,12 @@ Zones that do not have any active paid subscriptions and have been moved will be
 
 :::caution
 
-If you have an active paid subscription and no longer wish to use Cloudflare, make sure to also [manually remove your domain](/fundamentals/setup/manage-domains/remove-domain/).
+If you have an active paid subscription and no longer wish to use Cloudflare, make sure to also [manually remove your domain](/fundamentals/manage-domains/remove-domain/).
 :::
 
 ## Deleted
 
-Your zone has been archived. Cloudflare still responds to DNS queries for deleted zones on the assigned Cloudflare nameserver IPs (for non-deleted DNS records) and you can re-add the domain to Cloudflare by following the [regular onboarding flow](/fundamentals/setup/manage-domains/add-site/).
+Your zone has been archived. Cloudflare still responds to DNS queries for deleted zones on the assigned Cloudflare nameserver IPs (for non-deleted DNS records) and you can re-add the domain to Cloudflare by following the [regular onboarding flow](/fundamentals/manage-domains/add-site/).
 
 After being deleted for seven days, zones are automatically [purged](#purged).
 

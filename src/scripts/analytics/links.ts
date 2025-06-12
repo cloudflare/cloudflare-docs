@@ -16,6 +16,14 @@ export function registerLinks() {
 	for (const el of elements) {
 		const { hostname, pathname } = new URL(el.href);
 
+		if (el.dataset.tagSerpLink) {
+			el.addEventListener("click", () => {
+				track("click docs tag", { value: el.innerText });
+			});
+
+			continue;
+		}
+
 		if (hostname === "developers.cloudflare.com" || hostname === "localhost") {
 			continue;
 		}

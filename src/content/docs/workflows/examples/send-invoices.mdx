@@ -12,7 +12,7 @@ sidebar:
 description: Send invoice when shopping cart is checked out and paid for
 ---
 
-import { TabItem, Tabs, WranglerConfig } from "~/components";
+import { TabItem, Tabs, WranglerConfig, Render } from "~/components";
 
 In this example, we implement a Workflow for an e-commerce website that is triggered every time a shopping cart is created.
 
@@ -190,7 +190,6 @@ Here's a minimal package.json:
 ```json
 {
 	"devDependencies": {
-		"@cloudflare/workers-types": "^4.20241022.0",
 		"wrangler": "^3.83.0"
 	},
 	"dependencies": {
@@ -219,3 +218,5 @@ name = "SEND_EMAIL"
 ```
 
 </WranglerConfig>
+
+<Render file="wrangler-typegen" product="workers" />

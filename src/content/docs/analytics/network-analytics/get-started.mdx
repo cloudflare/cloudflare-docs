@@ -29,3 +29,13 @@ Use the [GraphQL Analytics API](/analytics/graphql-api/) to query data using the
 ## Send Network Analytics logs to a third-party service
 
 [Create a Logpush job](/logs/get-started/enable-destinations/) that sends Network analytics logs to your storage service, <GlossaryTooltip term="SIEM">SIEM solution</GlossaryTooltip>, or log management provider.
+
+## Limitations
+
+Users with the `Analytics` role will have visibility to IDs but will not see the following on the Network Analytics dashboard:
+
+- Tunnel names
+- Prefix names
+- [Magic Firewall](/magic-firewall/) rules
+- [DDoS managed rulesets](/ddos-protection/managed-rulesets/)
+- Override names

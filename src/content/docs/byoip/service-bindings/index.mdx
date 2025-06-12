@@ -23,6 +23,8 @@ Customers using BYOIP with Magic Transit, [CDN services](/cache/), or [Spectrum]
 - You can upgrade individual IPs within a CDN prefix to a Spectrum IP. For example, if you have a CDN prefix `203.0.113.0/24`, you can upgrade `203.0.113.1` to Spectrum.
 - You can upgrade individual IPs within a Spectrum prefix to a CDN IP. For example, if you have a Spectrum prefix `203.0.113.0/24`, you can upgrade `203.0.113.1` to CDN.
 
+Refer to [Magic Transit with CDN](/byoip/service-bindings/magic-transit-with-cdn/) or [CDN and Spectrum](/byoip/service-bindings/cdn-and-spectrum/) for detailed guidance.
+
 :::caution
 Magic Transit customers must ensure that their contract includes CDN and/or Spectrum according to their needs.
 :::
@@ -30,8 +32,6 @@ Magic Transit customers must ensure that their contract includes CDN and/or Spec
 ### CDN (Cache)
 
 When a service binding of type `CDN` is applied, once the change has propagated across Cloudflare's global network (four to six hours), any HTTP requests are directed into the CDN pipeline for Layer 7 processing.
-
-Refer to [Use BYOIP with Magic Transit and CDN](/byoip/service-bindings/magic-transit-with-cdn/) for detailed guidance.
 
 ### Spectrum
 

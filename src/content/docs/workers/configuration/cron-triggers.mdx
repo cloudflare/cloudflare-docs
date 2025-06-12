@@ -98,7 +98,7 @@ crons = [ "*/3 * * * *", "0 15 1 * *", "59 23 LW * *" ]
 
 </WranglerConfig>
 
-You also can set a different Cron Trigger for each [environment](/workers/wrangler/environments/) in your [Wrangler configuration file](/workers/wrangler/configuration/). You need to put the `[triggers]` table under your chosen environment. For example:
+You also can set a different Cron Trigger for each [environment](/workers/wrangler/environments/) in your [Wrangler configuration file](/workers/wrangler/configuration/). You need to put the `triggers` array under your chosen environment. For example:
 
 <WranglerConfig>
 
@@ -221,11 +221,24 @@ To delete a Cron Trigger on a deployed Worker via the dashboard:
 2. Go to **Workers & Pages**, and select your Worker.
 3. Go to **Triggers** > select the three dot icon next to the Cron Trigger you want to remove > **Delete**.
 
-:::note
+#### Via the [Wrangler configuration file](/workers/wrangler/configuration/)
 
-You can only delete Cron Triggers using the Cloudflare dashboard (and not through your Wrangler file).
+If a Worker is managed with Wrangler, Cron Triggers should be exclusively managed through the [Wrangler configuration file](/workers/wrangler/configuration/).
 
-:::
+When deploying a Worker with Wrangler any previous Cron Triggers are replaced with those specified in the `triggers` array.
+
+- If the `crons` property is an empty array then all the Cron Triggers are removed.
+- If the `triggers` or `crons` property are `undefined` then the currently deploy Cron Triggers are left in-place.
+
+<WranglerConfig>
+
+```toml
+[triggers]
+# Remove all cron triggers:
+crons = [ ]
+```
+
+</WranglerConfig>
 
 ## Limits
 

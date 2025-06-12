@@ -9,3 +9,4 @@ Using the detection IDs below, you can detect and mitigate account takeover atta
 | ------------ | ---------------------------------------- |
 | `201326592`  | Observes all login failures to the zone. |
 | `201326593`  | Observes all login traffic to the zone.  |
+| `201326598`  | Sets a dynamic threshold based on the normal traffic that is unique to the zone.<br /><br /> When the ID matches a login failure, Bot Management sets the [bot score](/bots/concepts/bot-score/) to 2 and [anomaly detection](/bots/concepts/bot-detection-engines/#anomaly-detection-enterprise) as its score source. |

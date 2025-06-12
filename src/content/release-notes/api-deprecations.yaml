@@ -40,7 +40,7 @@ entries:
     description: |-
       Deprecation date: June 8, 2025
 
-      The Zone Settings API endpoints for managing zone-level CNAME flattening are deprecated. Instead, use the [Show DNS Settings](/api/resources/dns/subresources/settings/methods/get/) and [Update DNS Settings](/api/resources/dns/subresources/settings/methods/edit/) endpoints to manage this setting.
+      The Zone Settings API endpoints for managing zone-level CNAME flattening are deprecated. Instead, use the [Show DNS Settings](/api/resources/dns/subresources/settings/subresources/zone/methods/get/) and [Update DNS Settings](/api/resources/dns/subresources/settings/subresources/zone/methods/edit/) endpoints to manage this setting.
 
       Changes via the old endpoints will be reflected in the new ones, and vice versa, so there is no need to migrate existing zones. However, future API calls must use DNS Settings instead of the Zone Settings endpoints.
 
@@ -181,7 +181,7 @@ entries:
       Deprecation date: March 14, 2025
 
       The fields `"default_nameservers"` and `"use_account_custom_ns_by_default"` within the `"settings"` object of accounts are deprecated.
-      Instead, use the [Show DNS Settings](/api/resources/dns/subresources/settings/methods/get/) and [Update DNS Settings](/api/resources/dns/subresources/settings/methods/edit/) endpoints to manage this setting.
+      Instead, use the [Show DNS Settings](/api/resources/dns/subresources/settings/subresources/account/methods/get/) and [Update DNS Settings](/api/resources/dns/subresources/settings/subresources/account/methods/edit/) endpoints to manage this setting.
       This setting is available in the new API as `.zone_defaults.nameservers.type`, with allowed values `"cloudflare.standard"`, `"cloudflare.standard.random"`, `"custom.account"` and `"custom.tenant"`.
 
       Changes via the old endpoints will be reflected in the new ones, and vice versa, so there is no need to migrate existing zones. However, future API calls must use DNS Settings instead of the Accounts endpoints.
@@ -384,7 +384,7 @@ entries:
 
       The dedicated endpoints for DNS settings `use_apex_ns` and `secondary_overrides` are being deprecated.
 
-      Instead, use the [Show DNS Settings](/api/resources/dns/subresources/settings/methods/get/) and [Update DNS Settings](/api/resources/dns/subresources/settings/methods/edit/) endpoints to manage these settings.
+      Instead, use the [Show DNS Settings](/api/resources/dns/subresources/settings/subresources/zone/methods/get/) and [Update DNS Settings](/api/resources/dns/subresources/settings/subresources/zone/methods/edit/) endpoints to manage these settings.
 
       - Instead of the `.../use_apex_ns` endpoint, use the `multi_provider` field.
       - Instead of the `.../secondary_overrides` endpoint, use the `secondary_overrides` field.

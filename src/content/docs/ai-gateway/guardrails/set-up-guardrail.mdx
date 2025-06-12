@@ -28,17 +28,17 @@ After enabling Guardrails, you can monitor results through **AI Gateway Logs** i
 
 ## Error handling and blocked requests
 
-When a request is blocked by guardrails, you will receive a structured error response. These indicate whether the issue occurred with the prompt or the model response. Use error codes to differentiate between prompt versus response violations. 
+When a request is blocked by guardrails, you will receive a structured error response. These indicate whether the issue occurred with the prompt or the model response. Use error codes to differentiate between prompt versus response violations.
 
-- **Prompt blocked**  
-  - `"code": 2016`  
+- **Prompt blocked**
+  - `"code": 2016`
   - `"message": "Prompt blocked due to security configurations"`
 
-- **Response blocked**  
-  - `"code": 2017`  
+- **Response blocked**
+  - `"code": 2017`
   - `"message": "Response blocked due to security configurations"`
 
-You should catch these errors in your application logic and implement error handling accordingly. 
+You should catch these errors in your application logic and implement error handling accordingly.
 
 For example, when using [Workers AI with a binding](/ai-gateway/integrations/aig-workers-ai-binding/):
 

@@ -14,7 +14,7 @@ import {
 	CardGrid,
 	Description,
 	Feature,
-  GlossaryTooltip,
+	GlossaryTooltip,
 	LinkButton,
 	LinkTitleCard,
 	Plan,
@@ -30,6 +30,8 @@ Secure your organization with Cloudflare Zero Trust — a cloud security model t
 
 <Plan type="all" />
 
+<Render file="survey" />
+
 Cloudflare Zero Trust is part of Cloudflare One, our name for the Secure Access Service Edge (SASE) platform that protects enterprise applications, users, devices, and networks.
 
 By progressively adopting Cloudflare One, organizations can move away from a patchwork of hardware appliances and point solutions, and instead consolidate security and networking through a unified control plane that includes products like [Cloudflare Access](/cloudflare-one/policies/access/), [Secure Web Gateway (SWG)](/cloudflare-one/policies/gateway/), [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/), [Data Loss Prevention (DLP)](/cloudflare-one/policies/data-loss-prevention/), [Remote Browser Isolation (RBI)](/cloudflare-one/policies/browser-isolation/), [Cloud Access Security Broker (CASB)](/cloudflare-one/applications/casb/), and [Email Security](/cloudflare-one/email-security/).
@@ -38,15 +40,11 @@ Refer to our [SASE reference architecture](/reference-architecture/architectures
 
 <LinkButton variant="primary" href="/cloudflare-one/setup/">
 	Get started
-</LinkButton> <LinkButton
-	variant="secondary"
-	href="https://one.dash.cloudflare.com/"
->
+</LinkButton>
+<LinkButton variant="secondary" href="https://one.dash.cloudflare.com/">
 	Zero Trust dashboard
-</LinkButton><LinkButton
-	variant="primary"
-	href="/cloudflare-one/implementation-guides/"
->
+</LinkButton>
+<LinkButton variant="primary" href="/cloudflare-one/implementation-guides/">
 	Implementation guides
 </LinkButton>
 
@@ -117,7 +115,8 @@ Monitor device, network, and application performance across your Zero Trust orga
 	href="/learning-paths/sase-overview-course/series/evolution-corporate-networks-1/"
 	icon="seti:video"
 >
-	New to Zero Trust and SASE? Get started with our introductory SASE video series.
+	New to Zero Trust and SASE? Get started with our introductory SASE video
+	series.
 </LinkTitleCard>
 
 <LinkTitleCard
@@ -125,7 +124,8 @@ Monitor device, network, and application performance across your Zero Trust orga
 	href="/reference-architecture/architectures/sase/"
 	icon="open-book"
 >
-	Explore our reference architecture to learn how to evolve your network and security architecture to Cloudflare One, our SASE platform.
+	Explore our reference architecture to learn how to evolve your network and
+	security architecture to Cloudflare One, our SASE platform.
 </LinkTitleCard>
 
 <LinkTitleCard
@@ -133,12 +133,13 @@ Monitor device, network, and application performance across your Zero Trust orga
 	href="https://www.cloudflare.com/plans/zero-trust-services/"
 	icon="seti:shell"
 >
-	Cloudflare Zero Trust offers both Free and Paid plans. Access to certain features depends on a customer's plan type.
+	Cloudflare Zero Trust offers both Free and Paid plans. Access to certain
+	features depends on a customer's plan type.
 </LinkTitleCard>
 
 <LinkTitleCard title="Limits" href="/cloudflare-one/account-limits/" icon="document">
 
-	Learn about account limits. These limits may be increased on Enterprise accounts.
+    Learn about account limits. These limits may be increased on Enterprise accounts.
 
 </LinkTitleCard>
 

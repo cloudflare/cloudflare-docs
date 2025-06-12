@@ -285,4 +285,6 @@ When a user creates an [isolation policy](/cloudflare-one/policies/browser-isola
 
 ## Limitations
 
-Gateway activity logs are not available in the dashboard if you turn on the [Customer Metadata Boundary](/data-localization/metadata-boundary/) within Cloudflare Data Localization Suite (DLS). Enterprise users using CMB can still export logs via [Logpush](/cloudflare-one/insights/logs/logpush/). For more information, refer to [DLS product compatibility](/data-localization/compatibility/#zero-trust).
+If a connection closes before Gateway inspects and filters the traffic, Gateway will log the traffic with an Unknown action.
+
+Gateway activity logs are not available in the dashboard if you turn on the [Customer Metadata Boundary (CMB)](/data-localization/metadata-boundary/) within Cloudflare Data Localization Suite (DLS). Enterprise users using CMB can still export logs via [Logpush](/cloudflare-one/insights/logs/logpush/). For more information, refer to [DLS product compatibility](/data-localization/compatibility/#zero-trust).

@@ -212,17 +212,20 @@ script_name = "billing-worker"
 
 </WranglerConfig>
 
+<Render file="wrangler-typegen" product="workers" />
+
 ## Workflow
 
 :::note
 
-Ensure you have `@cloudflare/workers-types` version `4.20241022.0` or later installed when binding to Workflows from within a Workers project.
+Ensure you have a compatibility date `2024-10-22` or later installed when binding to Workflows from within a Workers project.
 
 :::
 
 The `Workflow` type provides methods that allow you to create, inspect the status, and manage running Workflow instances from within a Worker script.
-
-```ts
+It is part of the generated types produced by [`wrangler types`](/workers/wrangler/commands/#types).
+ 
+```ts title="./worker-configuration.d.ts"
 interface Env {
   // The 'MY_WORKFLOW' variable should match the "binding" value set in the Wrangler config file
   MY_WORKFLOW: Workflow;

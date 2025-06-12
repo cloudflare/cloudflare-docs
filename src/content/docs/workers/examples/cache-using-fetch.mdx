@@ -435,6 +435,12 @@ export default {
 
 </TabItem> <TabItem label="Service Worker" icon="seti:javascript">
 
+:::caution[Service Workers are deprecated]
+
+Service Workers are deprecated, but still supported. We recommend using [Module Workers](/workers/reference/migrate-to-module-workers/) instead. New features may not be supported for Service Workers.
+
+:::
+
 ```js title="index.js"
 addEventListener("fetch", (event) => {
 	return event.respondWith(handleRequest(event.request));

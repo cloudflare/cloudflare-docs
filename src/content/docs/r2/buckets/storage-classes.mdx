@@ -4,7 +4,7 @@ pcx_content_type: how-to
 
 ---
 
-import { Badge } from "~/components"
+import { Badge, Tabs, TabItem } from "~/components"
 
 Storage classes allow you to trade off between the cost of storage and the cost of accessing data. Every object stored in R2 has an associated storage class.
 
@@ -16,50 +16,10 @@ All storage classes share the following characteristics:
 
 ## Available storage classes
 
-<table>
-  <tbody>
-    <th style="width:25%">
-      Storage class
-    </th>
-    <th style="width:25%">
-      Minimum storage duration
-    </th>
-    <th style="width:25%">
-      Data retrieval fees (processing)
-    </th>
-    <th style="width:25%">
-      Egress fees (data transfer to Internet)
-    </th>
-    <tr>
-      <td>
-        Standard
-      </td>
-      <td>
-        None
-      </td>
-      <td>
-        None
-      </td>
-      <td>
-        None
-      </td>
-    </tr>
-    <tr>
-      <td>
-        Infrequent Access <inline-pill style="beta" />
-      </td>
-      <td>
-        30 days
-      </td>
-      <td>
-        Yes
-      </td>
-      <td>
-        None
-      </td>
-    </tr>
-  </tbody>
-</table>
+| Storage class                  | Minimum storage duration  | Data retrieval fees (processing) | Egress fees (data transfer to Internet)  |
+|--------------------------------|---------------------------|----------------------------------|------------------------------------------|
+| Standard                       | None                      | None                             | None                                     |
+| Infrequent Access              | 30 days                   | Yes                              | None                                     |
 
 For more information on how storage classes impact pricing, refer to [Pricing](/r2/pricing/).
 
@@ -124,3 +84,23 @@ Once an object is stored in Infrequent Access, it cannot be transitioned to Stan
 :::
 
 To learn more about how to transition objects from Standard storage to Infrequent Access storage, refer to [Object lifecycles](/r2/buckets/object-lifecycles/).
+
+## Change storage class for objects
+
+You can change the storage class of an object which is already stored in R2 using the [`CopyObject` API](https://docs.aws.amazon.com/AmazonS3/latest/API/API_CopyObject.html).
+
+Use the `x-amz-storage-class` header to change between `STANDARD` and `STANDARD_IA`.
+
+An example of switching an object from `STANDARD` to `STANDARD_IA` using `aws cli` is shown below:
+
+```sh
+aws s3api copy-object \
+  --endpoint-url https://<ACCONUT_ID>.r2.cloudflarestorage.com \
+  --bucket bucket-name \
+  --key path/to/object.txt \
+  --copy-source /bucket-name/path/to/object.txt \
+  --storage-class STANDARD_IA
+```
+
+- Refer to [aws CLI](/r2/examples/aws/aws-cli/) for more information on using `aws CLI`.
+- Refer to [object-level operations](/r2/api/s3/api/#object-level-operations) for the full list of object-level API operations with R2-compatible S3 API.

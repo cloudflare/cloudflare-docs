@@ -123,9 +123,7 @@ export default {
 
 All projects deployed to Cloudflare Workers support npm packages. This support makes it easy to rapidly build out functionality in your Workers. The ['qrcode-svg'](https://github.com/papnkukn/qrcode-svg) package is a great way to take text and encode it into a QR code. In the command line, install and save 'qrcode-svg' to your project’s 'package.json':
 
-```sh title="Installing the qr-image package"
-npm install --save qrcode-svg
-```
+<PackageManagers pkg="qrcode-svg" />
 
 In `index.js`, import the `qrcode-svg` package as the variable `QRCode`. In the `generateQRCode` function, parse the incoming request as JSON using `request.json`, and generate a new QR code using the `qrcode-svg` package. The QR code is generated as an SVG. Construct a new instance of `Response`, passing in the SVG data as the body, and a `Content-Type` header of `image/svg+xml`. This will allow browsers to properly parse the data coming back from your Worker as an image:
 
@@ -135,7 +133,9 @@ import QRCode from "qrcode-svg";
 async function generateQRCode(request) {
 	const { text } = await request.json();
 	const qr = new QRCode({ content: text || "https://workers.dev" });
-	return new Response(qr.svg(), { headers: { "Content-Type": "image/svg+xml" } });
+	return new Response(qr.svg(), {
+		headers: { "Content-Type": "image/svg+xml" },
+	});
 }
 ```
 
@@ -161,7 +161,9 @@ export default {
 async function generateQRCode(request) {
 	const { text } = await request.json();
 	const qr = new QRCode({ content: text || "https://workers.dev" });
-	return new Response(qr.svg(), { headers: { "Content-Type": "image/svg+xml" } });
+	return new Response(qr.svg(), {
+		headers: { "Content-Type": "image/svg+xml" },
+	});
 }
 
 const landing = `
@@ -215,7 +217,9 @@ export default {
 async function generateQRCode(request) {
 	const { text } = await request.json();
 	const qr = new QRCode({ content: text || "https://workers.dev" });
-	return new Response(qr.svg(), { headers: { "Content-Type": "image/svg+xml" } });
+	return new Response(qr.svg(), {
+		headers: { "Content-Type": "image/svg+xml" },
+	});
 }
 
 const landing = `

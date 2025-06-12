@@ -118,12 +118,11 @@ Use bindings in Astro components and API routes by using `context.locals` from [
 
 Refer to the following example of how to access a KV namespace with TypeScript.
 
-First, you need to define Cloudflare runtime and KV type by updating the `env.d.ts`:
+First, you need to define Cloudflare runtime and KV type by updating the `env.d.ts`. Make sure you have generated Cloudflare runtime types by running [`wrangler types`](/pages/functions/typescript/). 
 
 ```typescript
 /// <reference types="astro/client" />
 
-type KVNamespace = import("@cloudflare/workers-types").KVNamespace;
 type ENV = {
 	// replace `MY_KV` with your KV namespace
 	MY_KV: KVNamespace;
@@ -142,7 +141,6 @@ You can then access your KV from an API endpoint in the following way:
 import type { APIContext } from "astro";
 
 export async function get({ locals }: APIContext) {
-	// the type KVNamespace comes from the @cloudflare/workers-types package
 	const { MY_KV } = locals.runtime.env;
 
 	return {
