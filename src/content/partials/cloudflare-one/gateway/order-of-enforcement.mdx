@@ -9,11 +9,11 @@ On 2025-07-14, Gateway will begin evaluating network-level policies before appli
 
 <Details header="Comparison of old and new order of enforcement">
 
-|                                                | Old order of enforcement                                                                                          | New order of enforcement                                                                                                                    |
-| ---------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Network Block policy and HTTP Block policy** | Gateway blocks traffic and displays the block page and/or the client notification configured for the HTTP policy. | Gateway blocks traffic. Gateway does not display the block page but will display the client notification configured for the Network policy. |
-| **Network Allow policy and HTTP Block policy** | Gateway blocks traffic and displays the block page and the client notification configured for the HTTP policy.    | No change.                                                                                                                                  |
-| **Network Block policy and HTTP Allow policy** | Gateway blocks traffic and displays the client notification configured for the Network policy.                    | No change.                                                                                                                                  |
+|                                                | Old order of enforcement                                                                                               | New order of enforcement                                                                                                                |
+| ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| **Network Block policy and HTTP Block policy** | Gateway blocks traffic and displays the block page and/or follows the client notification settings on the HTTP policy. | Gateway blocks traffic. Gateway does not display the block page but will follow the client notification settings on the Network policy. |
+| **Network Allow policy and HTTP Block policy** | Gateway blocks traffic and displays the block page and follows the client notification settings on the HTTP policy.    | No change.                                                                                                                              |
+| **Network Block policy and HTTP Allow policy** | Gateway blocks traffic and follows the client notification settings on the Network policy.                             | No change.                                                                                                                              |
 
 ```mermaid
 flowchart TB
