@@ -39,8 +39,13 @@ if (props.hasSidebar) {
 			};
 		}
 
-		props.pagination.prev = prev;
-		props.pagination.next = next;
+		if (data.prev !== false) {
+			props.pagination.prev = prev;
+		}
+
+		if (data.next !== false) {
+			props.pagination.next = next;
+		}
 	}
 }
 

@@ -7,8 +7,6 @@ import { Render, PackageManagers } from "~/components";
 
 [Turso](https://turso.tech/) is an edge-hosted, distributed database based on [libSQL](https://libsql.org/), an open-source fork of SQLite. Turso was designed to minimize query latency for applications where queries comes from anywhere in the world.
 
-<Render file="database_integrations_definition" />
-
 ## Set up an integration with Turso
 
 To set up an integration with Turso:
@@ -84,19 +82,35 @@ To set up an integration with Turso:
      (10, 'Neon', 10, 'Ne');
    ```
 
-4. Add the Turso database integration to your Worker:
+4. Configure the Turso database credentials in your Worker:
 
-   1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-   2. In **Account Home**, select **Workers & Pages**.
-   3. In **Overview**, select your Worker.
-   4. Select **Integrations** > **Turso**.
-   5. Follow the setup flow, selecting the database created in step 1.
+   You need to add your Turso database URL and authentication token as secrets to your Worker. First, get your database URL and create an authentication token:
+
+   ```sh
+   # Get your database URL
+   turso db show my-db --url
+   
+   # Create an authentication token
+   turso db tokens create my-db
+   ```
+
+   Then add these as secrets to your Worker using Wrangler:
+
+   ```sh
+   # Add the database URL as a secret
+   npx wrangler secret put TURSO_URL
+   # When prompted, paste your database URL
+   
+   # Add the authentication token as a secret  
+   npx wrangler secret put TURSO_AUTH_TOKEN
+   # When prompted, paste your authentication token
+   ```
 
 5. In your Worker, install the Turso client library:
 
    <PackageManagers pkg="@libsql/client" />
 
-6. The following example shows how to make a query to your Turso database in a Worker. The credentials needed to connect to Turso have been automatically added as [secrets](/workers/configuration/secrets/) to your Worker through the integration.
+6. The following example shows how to make a query to your Turso database in a Worker. The credentials needed to connect to Turso have been added as [secrets](/workers/configuration/secrets/) to your Worker.
 
    ```ts
    import { Client as LibsqlClient, createClient } from "@libsql/client/web";

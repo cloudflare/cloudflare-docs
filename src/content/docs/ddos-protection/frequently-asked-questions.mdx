@@ -130,15 +130,19 @@ No. Since 2017, Cloudflare offers [free, unmetered, and unlimited DDoS protectio
 
 ## How does DDoS Protection determine whether a SYN flood attack is mitigated by `dosd` or Advanced TCP Protection?
 
-Cloudflare mitigates SYN flood packets statelessly in `dosd` or using [DDoS managed rules](/ddos-protection/managed-rulesets/) when it detects a pattern that indicates that the packet is fake. 
+DDoS [managed rules](/ddos-protection/managed-rulesets/) detect and mitigate attacks by finding commonality between attack packets and generating a real-time fingerprint to mitigate the attack. 
 
-When SYN flood packets are highly randomized or indistinguishable from legitimate packets, Cloudflare uses [Advanced TCP Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-tcp-protection/) to protect your site.
+When the attacks are highly randomized and DDoS managed rules are unable to detect a common pattern among the attack packets, [Advanced TCP Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-tcp-protection/) uses its stateful TCP flowtracking capabilities to determine whether or not packets are legitimate. Advanced TCP Protection also mitigates simpler TCP-based attacks. 
+
+Advanced TCP Protection is only necessary and available to [Magic Transit](/magic-transit/) customers. For [Spectrum](/spectrum/) and our HTTP services, we leverage the reverse proxy to mitigate sophisticated randomized TCP-based DDoS attacks.
 
 ---
 
 ## How does Cloudflare handle hyper-localized DDoS attacks that may aim to overwhelm a specific Point of Presence (PoP)?
 
-Cloudflare uses a combination of intelligent traffic engineering, global anycast, and real-time, autonomous DDoS mitigation to handle hyper-localized DDoS attacks — even those that may temporarily exceed the capacity of a specific Point of Presence (PoP).
+Hyper-localized DDoS attacks are attacks that target specific PoPs or data centers from botnet nodes that are close to those locations in an attempt to overwhelm them and cause an outage or service disruptions.
+
+However, Cloudflare's defense approach is resilient to these attacks and uses a combination of intelligent traffic engineering, global Anycast, and real-time, autonomous DDoS mitigation to handle hyper-localized DDoS attacks — even those that may temporarily exceed the capacity of a specific Point of Presence (PoP).
 
 ### Global Anycast Network
 
@@ -146,7 +150,7 @@ Anycast allows multiple servers (PoPs) to share the same IP address, and the Bor
 
 #### Process
 
-When one PoP is overwhelmed due to a local DDoS flood or as a result of limited capacity, BGP route propagation can be adjusted to shift traffic away from that PoP. Cloudflare can also withdraw BGP announcements from specific peers or upstreams to force traffic to reroute through better-equipped PoPs. Because DDoS traffic originates from multiple geographic regions, Anycast and traffic engineering distributes the attack across Cloudflare’s larger 348 Tbps Anycast network to reduce the burden on a single PoP. 
+When one PoP is overwhelmed due to a local DDoS flood or as a result of limited capacity, BGP route propagation can be adjusted to shift traffic away from that PoP. Cloudflare can also withdraw BGP announcements from specific peers or upstreams to force traffic to reroute through better-equipped PoPs. Because DDoS traffic originates from multiple geographic regions, Anycast and traffic engineering distributes the attack across [Cloudflare's full capacity Anycast network](https://www.cloudflare.com/network/) to reduce the burden on a single PoP. 
 
 ### Intelligent Traffic Engineering
 

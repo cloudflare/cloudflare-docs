@@ -7,8 +7,6 @@ import { Render, PackageManagers } from "~/components";
 
 [Neon](https://neon.tech/) is a fully managed serverless PostgreSQL. It separates storage and compute to offer modern developer features, such as serverless, branching, and bottomless storage.
 
-<Render file="database_integrations_definition" />
-
 ## Set up an integration with Neon
 
 To set up an integration with Neon:
@@ -43,21 +41,23 @@ To set up an integration with Neon:
      (10, 'Neon', 10, 'Ne');
    ```
 
-4. Add the Neon database integration to your Worker:
+4. Configure the Neon database credentials in your Worker:
 
-   1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-   2. In **Account Home**, select **Workers & Pages**.
-   3. In **Overview**, select your Worker.
-   4. Select **Integrations** > **Neon**.
-   5. Follow the setup flow, selecting the database created in step 1.
+   You need to add your Neon database connection string as a secret to your Worker. Get your connection string from the [Neon Console](https://console.neon.tech) under **Connection Details**, then add it as a secret using Wrangler:
+
+   ```sh
+   # Add the database connection string as a secret
+   npx wrangler secret put DATABASE_URL
+   # When prompted, paste your Neon database connection string
+   ```
 
 5. In your Worker, install the `@neondatabase/serverless` driver to connect to your database and start manipulating data:
 
    <PackageManagers pkg="@neondatabase/serverless" />
 
-6. The following example shows how to make a query to your Neon database in a Worker. The credentials needed to connect to Neon have been automatically added as secrets to your Worker through the integration.
+6. The following example shows how to make a query to your Neon database in a Worker. The credentials needed to connect to Neon have been added as secrets to your Worker.
 
-   ```sql
+   ```js
    import { Client } from '@neondatabase/serverless';
 
    export default {

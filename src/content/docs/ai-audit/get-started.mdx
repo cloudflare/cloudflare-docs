@@ -13,10 +13,10 @@ description: Learn how to set up AI Audit.
 
 import { Details, Render, Steps } from "~/components";
 
-This guide instructs you through
+This guide instructs you on how to:
 
-- Viewing AI crawlers that are interacting with your domain.
-- Creating a rule to block AI crawlers on your website.
+- View AI crawlers that are interacting with pages in your domain (a [Cloudflare zone](/fundamentals/concepts/accounts-and-zones/#zones)).
+- Create a rule to block AI crawlers on your pages.
 
 ## Prerequisites
 
@@ -35,6 +35,11 @@ To use AI Audit:
 3. From **Most Popular Paths**, select **Block All**.
 4. From the **Bot traffic** page, under **Block AI Bots**, select **Enable**.
 </Steps>
+
+This feature also enables Cloudflare's [Bot Fight Mode: Block AI bots](/bots/get-started/bot-fight-mode/#block-ai-bots).
+
+You can also create more complex rules when taking action on AI crawlers. For more information on creating more specific rules, refer to [Create a custom rule in the dashboard
+](/waf/custom-rules/create-dashboard/).
 
 <Details header="Which bots will Cloudflare block?">
 	<Render file="list-ai-bots" product="bots" />

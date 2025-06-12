@@ -51,6 +51,7 @@ The following example sets the rules of an existing phase ruleset (`$RULESET_ID`
 	json={{
 		rules: [
 			{
+				ref: "override_sni_for_admin",
 				expression: 'http.host eq "admin.example.com"',
 				description: "SNI Override for the admin area",
 				action: "route",
@@ -63,6 +64,8 @@ The following example sets the rules of an existing phase ruleset (`$RULESET_ID`
 		],
 	}}
 />
+
+<Render file="terraform-use-ref-field" params={{ addDocsLocation: true }} />
 
 </Details>
 

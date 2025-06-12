@@ -131,4 +131,10 @@ export const baseSchema = ({ image }: SchemaContext) =>
 			})
 			.optional(),
 		icon: SidebarIconSchema(),
+		feedback: z
+			.boolean()
+			.default(true)
+			.describe(
+				"Whether to show the FeedbackPrompt on the page, defaults to true",
+			),
 	});

@@ -5,7 +5,7 @@ sidebar:
   order: 4
 ---
 
-import { Tabs, TabItem, APIRequest } from "~/components";
+import { Tabs, TabItem, APIRequest, Render } from "~/components";
 
 The provided examples use the following fields in their rule expressions:
 
@@ -48,6 +48,7 @@ This example configures a custom JSON error response for all 5XX errors (`500`-`
 	json={{
 		rules: [
 			{
+				ref: "json_response_for_5xx_errors",
 				action: "serve_error",
 				action_parameters: {
 					content: '{"message": "A server error occurred."}',
@@ -60,6 +61,8 @@ This example configures a custom JSON error response for all 5XX errors (`500`-`
 		],
 	}}
 />
+
+<Render file="terraform-use-ref-field" params={{ addDocsLocation: true }} />
 
 This `PUT` request, corresponding to the [Update a zone entry point ruleset](/api/resources/rulesets/subresources/phases/methods/update/) operation, replaces any existing rules in the `http_custom_errors` phase entry point ruleset.
 
@@ -103,6 +106,7 @@ This example configures a custom HTML error response for responses with a `500` 
 	json={{
 		rules: [
 			{
+				ref: "html_response_500_to_503",
 				action: "serve_error",
 				action_parameters: {
 					content:
@@ -116,6 +120,8 @@ This example configures a custom HTML error response for responses with a `500` 
 		],
 	}}
 />
+
+<Render file="terraform-use-ref-field" params={{ addDocsLocation: true }} />
 
 This `PUT` request, corresponding to the [Update a zone entry point ruleset](/api/resources/rulesets/subresources/phases/methods/update/) operation, replaces any existing rules in the `http_custom_errors` phase entry point ruleset.
 
@@ -154,6 +160,7 @@ This example configures a custom HTML error response for [Cloudflare error 1020]
 	json={{
 		rules: [
 			{
+				ref: "html_response_cf_1020",
 				action: "serve_error",
 				action_parameters: {
 					content:
@@ -166,6 +173,8 @@ This example configures a custom HTML error response for [Cloudflare error 1020]
 		],
 	}}
 />
+
+<Render file="terraform-use-ref-field" params={{ addDocsLocation: true }} />
 
 This `PUT` request, corresponding to the [Update a zone entry point ruleset](/api/resources/rulesets/subresources/phases/methods/update/) operation, replaces any existing rules in the `http_custom_errors` phase entry point ruleset.
 
@@ -204,6 +213,7 @@ This example configures a custom error rule returning a previously created custo
 	json={{
 		rules: [
 			{
+				ref: "serve_error_500_asset",
 				action: "serve_error",
 				action_parameters: {
 					asset_name: "500_error_template",
@@ -215,6 +225,8 @@ This example configures a custom error rule returning a previously created custo
 		],
 	}}
 />
+
+<Render file="terraform-use-ref-field" params={{ addDocsLocation: true }} />
 
 This `PUT` request, corresponding to the [Update a zone entry point ruleset](/api/resources/rulesets/subresources/phases/methods/update/) operation, replaces any existing rules in the `http_custom_errors` phase entry point ruleset.
 

@@ -11,7 +11,7 @@ description: Create a compression rule to turn off compression for AVIF images,
   request.
 ---
 
-import { Example, TabItem, Tabs, APIRequest } from "~/components";
+import { Example, TabItem, Tabs, APIRequest, Render } from "~/components";
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -42,6 +42,7 @@ The following example sets the rules of an existing [entry point ruleset](/rules
 	json={{
 		rules: [
 			{
+				ref: "disable_compression_for_avif",
 				expression:
 					'http.response.content_type.media_type eq "image/avif" or http.request.uri.path.extension eq "avif"',
 				action: "compress_response",
@@ -52,5 +53,7 @@ The following example sets the rules of an existing [entry point ruleset](/rules
 		],
 	}}
 />
+
+<Render file="terraform-use-ref-field" params={{ addDocsLocation: true }} />
 
 </TabItem> </Tabs>

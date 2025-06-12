@@ -7,8 +7,6 @@ import { Render } from "~/components";
 
 [Xata](https://xata.io) is a serverless data platform powered by PostgreSQL. Xata uniquely combines multiple types of stores (relational databases, search engines, analytics engines) into a single service, accessible through a consistent REST API.
 
-<Render file="database_integrations_definition" />
-
 ## Set up an integration with Xata
 
 To set up an integration with Xata:
@@ -17,13 +15,23 @@ To set up an integration with Xata:
 
 2. In your database, you have several options for creating a table: you can start from scratch, use a template filled with sample data, or import data from a CSV file. For this guide, choose **Start with sample data**. This option automatically populates your database with two sample tables: `Posts` and `Users`.
 
-3. Add the Xata integration to your Worker:
+3. Configure the Xata database credentials in your Worker:
 
-   1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-   2. In **Account Home**, select **Workers & Pages**.
-   3. In **Overview**, select your Worker.
-   4. Select **Integrations** > **Xata**.
-   5. Follow the setup flow, selecting the database created in step 1.
+   You need to add your Xata database credentials as secrets to your Worker. First, get your database details from your [Xata Dashboard](https://app.xata.io), then add them as secrets using Wrangler:
+
+   ```sh
+   # Add the Xata API key as a secret
+   npx wrangler secret put XATA_API_KEY
+   # When prompted, paste your Xata API key
+   
+   # Add the Xata branch as a secret
+   npx wrangler secret put XATA_BRANCH
+   # When prompted, paste your Xata branch name (usually 'main')
+   
+   # Add the Xata database URL as a secret
+   npx wrangler secret put XATA_DATABASE_URL
+   # When prompted, paste your Xata database URL
+   ```
 
 4. Install the [Xata CLI](https://xata.io/docs/getting-started/installation) and authenticate the CLI by running the following commands:
 
@@ -49,7 +57,7 @@ To set up an integration with Xata:
    XATA_DATABASE_URL=<YOUR_DATABASE_URL_HERE>
    ```
 
-7. The following example shows how to make a query to your Xata database in a Worker. The credentials needed to connect to Xata have been automatically added as secrets to your Worker through the integration.
+7. The following example shows how to make a query to your Xata database in a Worker. The credentials needed to connect to Xata have been added as secrets to your Worker.
 
    ```ts
    export default {
