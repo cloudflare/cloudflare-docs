@@ -5,6 +5,7 @@ import { Icon } from "@astrojs/starlight/components";
 import FeedbackPrompt from "../FeedbackPrompt.tsx";
 
 const tags = Astro.locals.starlightRoute.entry.data.tags;
+const showFeedback = Astro.locals.starlightRoute.entry.data.feedback;
 ---
 
 <Default />
@@ -29,8 +30,14 @@ const tags = Astro.locals.starlightRoute.entry.data.tags;
 		</>
 	)
 }
-<br />
-<FeedbackPrompt client:idle />
+{
+	showFeedback && (
+		<>
+			<br />
+			<FeedbackPrompt client:idle />
+		</>
+	)
+}
 {
 	!Astro.url.pathname.startsWith("/support/") && (
 		<>

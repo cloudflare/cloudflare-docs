@@ -7,8 +7,6 @@ import { Render, PackageManagers } from "~/components";
 
 [PlanetScale](https://planetscale.com/) is a MySQL-compatible platform that makes databases infinitely scalable, easier and safer to manage.
 
-<Render file="database_integrations_definition" />
-
 ## Set up an integration with PlanetScale
 
 To set up an integration with PlanetScale:
@@ -34,19 +32,29 @@ To set up an integration with PlanetScale:
    VALUES ('Ballpoint pen', 'https://example.com/500x500', '1');
    ```
 
-4. Add the PlanetScale integration to your Worker:
+4. Configure the PlanetScale database credentials in your Worker:
 
-   1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-   2. In **Account Home**, select **Workers & Pages**.
-   3. In **Overview**, select your Worker.
-   4. Select **Integrations** > **PlanetScale**.
-   5. Follow the setup flow, selecting the database created in step 1.
+   You need to add your PlanetScale database credentials as secrets to your Worker. Get your connection details from the [PlanetScale Dashboard](https://app.planetscale.com) by creating a connection string, then add them as secrets using Wrangler:
+
+   ```sh
+   # Add the database host as a secret
+   npx wrangler secret put DATABASE_HOST
+   # When prompted, paste your PlanetScale host
+   
+   # Add the database username as a secret
+   npx wrangler secret put DATABASE_USERNAME
+   # When prompted, paste your PlanetScale username
+   
+   # Add the database password as a secret
+   npx wrangler secret put DATABASE_PASSWORD
+   # When prompted, paste your PlanetScale password
+   ```
 
 5. In your Worker, install the `@planetscale/database` driver to connect to your PlanetScale database and start manipulating data:
 
    <PackageManagers pkg="@planetscale/database" />
 
-6. The following example shows how to make a query to your PlanetScale database in a Worker. The credentials needed to connect to PlanetScale have been automatically added as secrets to your Worker through the integration.
+6. The following example shows how to make a query to your PlanetScale database in a Worker. The credentials needed to connect to PlanetScale have been added as secrets to your Worker.
 
    ```js
    import { connect } from "@planetscale/database";

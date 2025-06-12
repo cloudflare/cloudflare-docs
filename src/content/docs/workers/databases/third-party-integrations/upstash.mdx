@@ -7,8 +7,6 @@ import { Render, PackageManagers } from "~/components";
 
 [Upstash](https://upstash.com/) is a serverless database with Redis\* and Kafka API. Upstash also offers QStash, a task queue/scheduler designed for the serverless.
 
-<Render file="database_integrations_definition" />
-
 ## Upstash for Redis
 
 To set up an integration with Upstash:
@@ -44,19 +42,25 @@ To set up an integration with Upstash:
    OK
    ```
 
-3. Add the Upstash Redis integration to your Worker:
+3. Configure the Upstash Redis credentials in your Worker:
 
-   1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-   2. In **Account Home**, select **Workers & Pages**.
-   3. In **Overview**, select your Worker.
-   4. Select **Settings** > **Integrations** > **Upstash Redis**.
-   5. Follow the setup flow, selecting the database created in step 1.
+   You need to add your Upstash Redis database URL and token as secrets to your Worker. Get these from your [Upstash Console](https://console.upstash.com) under your database details, then add them as secrets using Wrangler:
+
+   ```sh
+   # Add the Upstash Redis URL as a secret
+   npx wrangler secret put UPSTASH_REDIS_REST_URL
+   # When prompted, paste your Upstash Redis REST URL
+   
+   # Add the Upstash Redis token as a secret
+   npx wrangler secret put UPSTASH_REDIS_REST_TOKEN
+   # When prompted, paste your Upstash Redis REST token
+   ```
 
 4. In your Worker, install the `@upstash/redis`, a HTTP client to connect to your database and start manipulating data:
 
    <PackageManagers pkg="@upstash/redis" />
 
-5. The following example shows how to make a query to your Upstash database in a Worker. The credentials needed to connect to Upstash have been automatically added as secrets to your Worker through the integration.
+5. The following example shows how to make a query to your Upstash database in a Worker. The credentials needed to connect to Upstash have been added as secrets to your Worker.
 
    ```js
    import { Redis } from "@upstash/redis/cloudflare";
@@ -94,13 +98,23 @@ To set up an integration with Upstash Kafka:
 
 1. Create a [Kafka cluster and topic](https://docs.upstash.com/kafka).
 
-2. Add the Upstash Kafka integration to your Worker:
+2. Configure the Upstash Kafka credentials in your Worker:
 
-   1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-   2. In **Account Home**, select **Workers & Pages**.
-   3. In **Overview**, select your Worker.
-   4. Select **Settings** > **Integrations** > **Upstash Kafka**.
-   5. Follow the setup flow, selecting the cluster and topic.
+   You need to add your Upstash Kafka connection details as secrets to your Worker. Get these from your [Upstash Console](https://console.upstash.com) under your Kafka cluster details, then add them as secrets using Wrangler:
+
+   ```sh
+   # Add the Upstash Kafka URL as a secret
+   npx wrangler secret put UPSTASH_KAFKA_REST_URL
+   # When prompted, paste your Upstash Kafka REST URL
+   
+   # Add the Upstash Kafka username as a secret
+   npx wrangler secret put UPSTASH_KAFKA_REST_USERNAME
+   # When prompted, paste your Upstash Kafka username
+   
+   # Add the Upstash Kafka password as a secret
+   npx wrangler secret put UPSTASH_KAFKA_REST_PASSWORD
+   # When prompted, paste your Upstash Kafka password
+   ```
 
 3. In your Worker, install `@upstash/kafka`, a HTTP/REST based Kafka client:
 
@@ -116,13 +130,15 @@ To set up an integration with Upstash QStash:
 
 1. Configure the [publicly available HTTP endpoint](https://docs.upstash.com/qstash#1-public-api) that you want to send your messages to.
 
-2. Add the Upstash QStash integration to your Worker:
+2. Configure the Upstash QStash credentials in your Worker:
 
-   1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-   2. In **Account Home**, select **Workers & Pages**.
-   3. In **Overview**, select your Worker.
-   4. Select **Integrations** > **Upstash QStash**.
-   5. Follow the setup flow.
+   You need to add your Upstash QStash token as a secret to your Worker. Get your token from your [Upstash Console](https://console.upstash.com) under QStash settings, then add it as a secret using Wrangler:
+
+   ```sh
+   # Add the QStash token as a secret
+   npx wrangler secret put QSTASH_TOKEN
+   # When prompted, paste your QStash token
+   ```
 
 3. In your Worker, install the `@upstash/qstash`, a HTTP client to connect to your database QStash endpoint:
 

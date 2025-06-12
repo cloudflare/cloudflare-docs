@@ -2,7 +2,7 @@
 {}
 ---
 
-import { APIRequest } from "~/components";
+import { APIRequest, Render } from "~/components";
 
 The following example sets the rules of an existing phase ruleset (`$RULESET_ID`) to a single origin rule — overriding the `Host` header of incoming requests and the resolved DNS record — using the [Update a zone ruleset](/api/resources/rulesets/methods/update/) operation. The response will contain the complete definition of the ruleset you updated.
 
@@ -12,6 +12,7 @@ The following example sets the rules of an existing phase ruleset (`$RULESET_ID`
 	json={{
 		rules: [
 			{
+				ref: "hr_app_overrides",
 				expression: 'starts_with(http.request.uri.path, "/hr-app/")',
 				description: "Origin rule for the company HR application",
 				action: "route",
@@ -36,6 +37,7 @@ The following example sets the rules of an existing phase ruleset (`$RULESET_ID`
 		"version": "2",
 		"rules": [
 			{
+				"ref": "hr_app_overrides",
 				"id": "<RULE_ID>",
 				"version": "1",
 				"action": "route",
@@ -59,3 +61,9 @@ The following example sets the rules of an existing phase ruleset (`$RULESET_ID`
 	"messages": []
 }
 ```
+
+<Render
+	file="terraform-use-ref-field"
+	product="rules"
+	params={{ addDocsLocation: true }}
+/>

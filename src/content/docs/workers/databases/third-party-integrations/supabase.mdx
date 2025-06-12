@@ -7,8 +7,6 @@ import { Render, PackageManagers } from "~/components";
 
 [Supabase](https://supabase.com/) is an open source Firebase alternative and a PostgreSQL database service that offers real-time functionality, database backups, and extensions. With Supabase, developers can quickly set up a PostgreSQL database and build applications.
 
-<Render file="database_integrations_definition" />
-
 ## Set up an integration with Supabase
 
 To set up an integration with Supabase:
@@ -35,21 +33,27 @@ To set up an integration with Supabase:
    INSERT INTO countries (name) VALUES ('The Netherlands');
    ```
 
-4. Add the Supabase database integration to your Worker:
+4. Configure the Supabase database credentials in your Worker:
 
-   1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-   2. In **Account Home**, select **Workers & Pages**.
-   3. In **Overview**, select your Worker.
-   4. Select **Integrations** > **Supabase**.
-   5. Follow the setup flow, selecting the database created in step 1.
+   You need to add your Supabase URL and anon key as secrets to your Worker. Get these from your [Supabase Dashboard](https://supabase.com/dashboard) under **Settings** > **API**, then add them as secrets using Wrangler:
+
+   ```sh
+   # Add the Supabase URL as a secret
+   npx wrangler secret put SUPABASE_URL
+   # When prompted, paste your Supabase project URL
+   
+   # Add the Supabase anon key as a secret
+   npx wrangler secret put SUPABASE_KEY
+   # When prompted, paste your Supabase anon/public key
+   ```
 
 5. In your Worker, install the `@supabase/supabase-js` driver to connect to your database and start manipulating data:
 
    <PackageManagers pkg="@supabase/supabase-js" />
 
-6. The following example shows how to make a query to your Supabase database in a Worker. The credentials needed to connect to Supabase have been automatically added as secrets to your Worker through the integration.
+6. The following example shows how to make a query to your Supabase database in a Worker. The credentials needed to connect to Supabase have been added as secrets to your Worker.
 
-   ```sql
+   ```js
    import { createClient } from '@supabase/supabase-js';
 
    export default {
