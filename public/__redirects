@@ -1281,7 +1281,7 @@
 /support/account-management-billing/billing-cloudflare-add-on-services/ /billing/usage-based-billing/ 301
 /support/cloudflare-client-api/ /fundamentals/api/ 301
 /support/firewall/learn-more/understanding-cloudflare-tor-support-and-onion-routing/ /network/onion-routing/ 301
-/support/firewall/managed-rules-web-application-firewall-waf/migrating-from-waf-managed-rules-to-waf-managed-rulesets/ /waf/reference/migration-guides/waf-managed-rules-migration/ 301
+/support/firewall/managed-rules-web-application-firewall-waf/migrating-from-waf-managed-rules-to-waf-managed-rulesets/ /waf/reference/legacy/old-waf-managed-rules/upgrade/ 301
 /support/firewall/tools/understanding-cloudflare-zone-lockdown/ /waf/tools/zone-lockdown/ 301
 /support/firewall/tools/understanding-cloudflare-user-agent-blocking/ /waf/tools/user-agent-blocking/ 301
 /support/more-dashboard-apps/cloudflare-apps/installing-cloudflare-apps/ /workers/ 301
@@ -1492,6 +1492,10 @@
 /waf/analytics/security-events/additional-information/ /waf/tools/validation-checks/ 301
 /waf/reference/cloudflare-challenges/ /cloudflare-challenges/ 301
 /waf/tools/challenge-passage/ /cloudflare-challenges/challenge-types/challenge-pages/#challenge-passage 301
+/waf/reference/migration-guides/ /waf/reference/legacy/ 301
+/waf/reference/migration-guides/old-rate-limiting-deprecation/ /waf/reference/legacy/old-rate-limiting/upgrade/ 301
+/waf/reference/migration-guides/waf-managed-rules-migration/ /waf/reference/legacy/old-waf-managed-rules/upgrade/ 301
+/waf/reference/migration-guides/firewall-rules-to-custom-rules/ /waf/reference/legacy/firewall-rules-upgrade/ 301
 
 # waiting-room
 /waiting-room/how-to/mobile-traffic/ /waiting-room/how-to/json-response/ 301
