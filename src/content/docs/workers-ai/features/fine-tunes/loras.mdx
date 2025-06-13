@@ -76,7 +76,7 @@ You can create a finetune and upload your LoRA adapter via wrangler with the fol
 
 ```bash title="wrangler CLI" {1,7}
 npx wrangler ai finetune create <model_name> <finetune_name> <folder_path>
-#🌀 Creating new finetune "test-lora" for model "@cf/mistral/mistral-7b-instruct-v0.2-lora"...
+#🌀 Creating new finetune "test-lora" for model "@cf/mistralai/mistral-small-3.1-24b-instruct"...
 #🌀 Uploading file "/Users/abcd/Downloads/adapter_config.json" to "test-lora"...
 #🌀 Uploading file "/Users/abcd/Downloads/adapter_model.safetensors" to "test-lora"...
 #✅ Assets uploaded, finetune "test-lora" is ready to use.
@@ -149,13 +149,13 @@ curl -X GET https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/finetu
   "result": [
     [{
        "id": "00000000-0000-0000-0000-000000000",
-       "model": "@cf/meta-llama/llama-2-7b-chat-hf-lora",
+       "model": "@cf/meta/llama-3.2-11b-vision-instruct",
        "name": "llama2-finetune",
        "description": "test"
     },
     {
        "id": "00000000-0000-0000-0000-000000000",
-       "model": "@cf/mistralai/mistral-7b-instruct-v0.2-lora",
+       "model": "@cf/mistralai/mistral-small-3.1-24b-instruct",
        "name": "mistral-finetune",
        "description": "test"
     }]
@@ -175,7 +175,7 @@ To make inference requests and apply the LoRA adapter, you will need your model 
 
 ```javascript null {5-6}
 const response = await env.AI.run(
-	"@cf/mistralai/mistral-7b-instruct-v0.2-lora", //the model supporting LoRAs
+	"@cf/mistralai/mistral-small-3.1-24b-instruct", //the model supporting LoRAs
 	{
 		messages: [{ role: "user", content: "Hello world" }],
 		raw: true, //skip applying the default chat template
@@ -187,7 +187,7 @@ const response = await env.AI.run(
 </TabItem> <TabItem label="rest api">
 
 ```bash null {5-6}
-curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/mistral/mistral-7b-instruct-v0.2-lora \
+curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/mistralai/mistral-small-3.1-24b-instruct \
   -H 'Authorization: Bearer {API_TOKEN}' \
   -d '{
     "messages": [{"role": "user", "content": "Hello world"}],
