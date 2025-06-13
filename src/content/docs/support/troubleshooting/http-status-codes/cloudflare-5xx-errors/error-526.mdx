@@ -39,6 +39,12 @@ Workers subrequests to any hostname outside your Cloudflare zone that is not pro
 
 As a result, a valid SSL certificate is required at the origin server.
 
+If you are using self-signed SSL certificate at the origin server, use the following workaround to avoid an HTTP Error `526`.
+
+1. Add your self-signed SSL certificate to the **[`Custom Origin Trust Store`](/ssl/origin-configuration/custom-origin-trust-store/)**. This allows the Cloudflare edge to recognize your self-signed SSL certificate as valid.
+2. In your Worker's configuration, enable the **[`cots_on_external_fetch` compatibility flag](/workers/configuration/compatibility-flags/#do-not-use-the-custom-origin-trust-store-for-external-subrequests)**. This flag enables the use of the **[`Custom Origin Trust Store`](/ssl/origin-configuration/custom-origin-trust-store/)** when making external (grey-clouded) subrequests from a Cloudflare Worker.
+
+
 ### Resolution
 
 :::note
