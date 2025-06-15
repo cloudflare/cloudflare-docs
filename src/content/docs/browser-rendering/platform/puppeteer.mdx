@@ -1,23 +1,22 @@
 ---
 pcx_content_type: concept
 title: Puppeteer
+description: Learn how to use Puppeteer with Cloudflare Workers for browser automation. Access Puppeteer API, manage sessions, and optimize browser rendering.
 sidebar:
   order: 10
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, PackageManagers } from "~/components";
 
 [Puppeteer](https://pptr.dev/) is one of the most popular libraries that abstract the lower-level DevTools protocol from developers and provides a high-level API that you can use to easily instrument Chrome/Chromium and automate browsing sessions. Puppeteer is used for tasks like creating screenshots, crawling pages, and testing web applications.
 
 Puppeteer typically connects to a local Chrome or Chromium browser using the DevTools port. Refer to the [Puppeteer API documentation on the `Puppeteer.connect()` method](https://pptr.dev/api/puppeteer.puppeteer.connect) for more information.
 
-The Workers team forked a version of Puppeteer and patched it to connect to the Workers Browser Rendering API instead. The [changes between Workers Puppeteer fork and the Puppeteer core](https://github.com/cloudflare/puppeteer/blob/main/src/puppeteer-core.ts) are minimal. After connecting, the developers can then use the full [Puppeteer API](https://github.com/cloudflare/puppeteer/blob/main/docs/api/index.md) as they would on a standard setup.
+The Workers team forked a version of Puppeteer and patched it to connect to the Workers Browser Rendering API instead. After connecting, the developers can then use the full [Puppeteer API](https://github.com/cloudflare/puppeteer/blob/main/docs/api/index.md) as they would on a standard setup.
 
 Our version is open sourced and can be found in [Cloudflare's fork of Puppeteer](https://github.com/cloudflare/puppeteer). The npm can be installed from [npmjs](https://www.npmjs.com/) as [@cloudflare/puppeteer](https://www.npmjs.com/package/@cloudflare/puppeteer):
 
-```javascript
-npm install @cloudflare/puppeteer --save-dev
-```
+<PackageManagers pkg="@cloudflare/puppeteer" dev />
 
 ## Use Puppeteer in a Worker
 
@@ -67,7 +66,7 @@ This script [launches](https://pptr.dev/api/puppeteer.puppeteernode.launch) the 
 
 ### Keep Alive
 
-If users omit the `browser.close()` statement, it will stay open, ready to be connected to again and [re-used](/browser-rendering/get-started/reuse-sessions/) but it will, by default, close automatically after 1 minute of inactivity. Users can optionally extend this idle time up to 10 minutes, by using the `keep_alive` option, set in milliseconds:
+If users omit the `browser.close()` statement, it will stay open, ready to be connected to again and [re-used](/browser-rendering/workers-binding-api/reuse-sessions/) but it will, by default, close automatically after 1 minute of inactivity. Users can optionally extend this idle time up to 10 minutes, by using the `keep_alive` option, set in milliseconds:
 
 ```js
 const browser = await puppeteer.launch(env.MYBROWSER, { keep_alive: 600000 });
@@ -83,18 +82,18 @@ In order to facilitate browser session management, we've added new methods to `p
 
 `puppeteer.sessions()` lists the current running sessions. It will return an output similar to this:
 
-```
+```json
 [
-   {
-      "connectionId": "2a2246fa-e234-4dc1-8433-87e6cee80145",
-      "connectionStartTime": 1711621704607,
-      "sessionId": "478f4d7d-e943-40f6-a414-837d3736a1dc",
-      "startTime": 1711621703708
-   },
-   {
-      "sessionId": "565e05fb-4d2a-402b-869b-5b65b1381db7",
-      "startTime": 1711621703808
-   }
+	{
+		"connectionId": "2a2246fa-e234-4dc1-8433-87e6cee80145",
+		"connectionStartTime": 1711621704607,
+		"sessionId": "478f4d7d-e943-40f6-a414-837d3736a1dc",
+		"startTime": 1711621703708
+	},
+	{
+		"sessionId": "565e05fb-4d2a-402b-869b-5b65b1381db7",
+		"startTime": 1711621703808
+	}
 ]
 ```
 
@@ -104,22 +103,22 @@ Notice that the session `478f4d7d-e943-40f6-a414-837d3736a1dc` has an active wor
 
 `puppeteer.history()` lists recent sessions, both open and closed. It's useful to get a sense of your current usage.
 
-```
+```json
 [
-   {
-      "closeReason": 2,
-      "closeReasonText": "BrowserIdle",
-      "endTime": 1711621769485,
-      "sessionId": "478f4d7d-e943-40f6-a414-837d3736a1dc",
-      "startTime": 1711621703708
-   },
-   {
-      "closeReason": 1,
-      "closeReasonText": "NormalClosure",
-      "endTime": 1711123501771,
-      "sessionId": "2be00a21-9fb6-4bb2-9861-8cd48e40e771",
-      "startTime": 1711123430918
-   }
+	{
+		"closeReason": 2,
+		"closeReasonText": "BrowserIdle",
+		"endTime": 1711621769485,
+		"sessionId": "478f4d7d-e943-40f6-a414-837d3736a1dc",
+		"startTime": 1711621703708
+	},
+	{
+		"closeReason": 1,
+		"closeReasonText": "NormalClosure",
+		"endTime": 1711123501771,
+		"sessionId": "2be00a21-9fb6-4bb2-9861-8cd48e40e771",
+		"startTime": 1711123430918
+	}
 ]
 ```
 
@@ -131,12 +130,15 @@ You should also be able to access this information in the dashboard, albeit with
 
 `puppeteer.limits()` lists your active limits:
 
-```
+```json
 {
-   "activeSessions": ["478f4d7d-e943-40f6-a414-837d3736a1dc", "565e05fb-4d2a-402b-869b-5b65b1381db7"],
-   "allowedBrowserAcquisitions": 1,
-   "maxConcurrentSessions": 2,
-   "timeUntilNextAllowedBrowserAcquisition": 0
+	"activeSessions": [
+		"478f4d7d-e943-40f6-a414-837d3736a1dc",
+		"565e05fb-4d2a-402b-869b-5b65b1381db7"
+	],
+	"allowedBrowserAcquisitions": 1,
+	"maxConcurrentSessions": 2,
+	"timeUntilNextAllowedBrowserAcquisition": 0
 }
 ```
 

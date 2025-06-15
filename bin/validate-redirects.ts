@@ -1,12 +1,13 @@
 import { readFile } from "fs/promises";
 
 async function main() {
-	const redirects = await readFile("public/_redirects", { encoding: "utf-8" });
+	const redirects = await readFile("public/__redirects", { encoding: "utf-8" });
 
 	let numInfiniteRedirects = 0;
 	let numUrlsWithFragment = 0;
 	let numDuplicateRedirects = 0;
-	let redirectSourceUrls: string[] = [];
+
+	const redirectSourceUrls: string[] = [];
 
 	for (const line of redirects.split("\n")) {
 		if (line.startsWith("#") || line.trim() === "") continue;

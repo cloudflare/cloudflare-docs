@@ -4,6 +4,9 @@
 
 :::note
 
-Hyperdrive can connect to your databases with public Internet access or to your private databases over [Cloudflare Tunnels](/hyperdrive/configuration/connect-to-private-database/).
+To allow Hyperdrive to connect to your database, you must allow Cloudflare IPs to be able to access your database.
+You can either allow-list all IP address ranges (0.0.0.0 - 255.255.255.255) or restrict your IP access control list to the [IP ranges used by Hyperdrive](/hyperdrive/configuration/firewall-and-networking-configuration/).
+
+Alternatively, you can connect to your databases over in your private network using [Cloudflare Tunnels](/hyperdrive/configuration/connect-to-private-database/).
 
 :::

@@ -31,9 +31,9 @@ This means that Entrust certificates will be issued using SSL.com roots.
 Since Cloudflare also [partners with SSL.com](/ssl/reference/certificate-authorities/), you can switch from uploading custom certificates to using Cloudflare's managed certificates. This change brings the following advantages:
 
 * Use [Advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/) to have more control and flexibility while also benefitting from automatic renewals.
-* Enable [Total TLS](/ssl/edge-certificates/additional-options/total-tls/) to automatically issue certificates for your [proxied hostnames](/dns/manage-dns-records/reference/proxied-dns-records/).
+* Enable [Total TLS](/ssl/edge-certificates/additional-options/total-tls/) to automatically issue certificates for your [proxied hostnames](/dns/proxy-status/).
 * Use [Delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/) to reduce manual intervention when renewing certificates for [partial (CNAME) setup](/dns/zone-setups/partial-setup/) zones.
-* If you are a SaaS provider, extend the benefits of automatic renewals to your customers by specifying SSL.com as the certificate authority when [creating](/api/operations/custom-hostname-for-a-zone-create-custom-hostname) or [editing](/api/operations/custom-hostname-for-a-zone-edit-custom-hostname) your custom hostnames (API only).
+* If you are a SaaS provider, extend the benefits of automatic renewals to your customers by specifying SSL.com as the certificate authority when [creating](/api/resources/custom_hostnames/methods/create/) or [editing](/api/resources/custom_hostnames/methods/edit/) your custom hostnames (API only).
 
 ## More resources
 

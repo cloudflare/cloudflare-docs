@@ -1,0 +1,15 @@
+name: Security
+
+product:
+  title: "Security dashboard (beta)"
+  url: /security/
+  show: false
+
+meta:
+  title: Security dashboard docs
+  description: Documentation for the Security dashboard with an updated user interface (currently in beta).
+  author: "@cloudflare"
+
+externals:
+  - title: Cloudflare homepage
+    url: https://cloudflare.com

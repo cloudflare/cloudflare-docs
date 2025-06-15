@@ -5,74 +5,258 @@ sidebar:
   order: 2
 ---
 
-import { Details, GlossaryTooltip, Render } from "~/components";
+import { GlossaryTooltip, Render, Tabs, TabItem } from "~/components";
 
 We recommend you add the following network policies to build an Internet and SaaS app security strategy for your organization.
 
 For more information on building network policies, refer to [Network policies](/cloudflare-one/policies/gateway/network-policies/).
 
-<Details header="Quarantined-Users-NET-Restricted-Access">
+## Quarantined-Users-NET-Restricted-Access
 
 <Render file="zero-trust/blocklist-restricted-users" />
+
+<Tabs syncKey="dashPlusAPI">
+
+<TabItem label="Dashboard">
 
 | Selector         | Operator    | Value                               | Logic | Action |
 | ---------------- | ----------- | ----------------------------------- | ----- | ------ |
 | Destination IP   | not in list | _Quarantined-Users-IPAllowlist_     | Or    | Block  |
 | SNI              | not in list | _Quarantined-Users-HostAllowlist_   | Or    |        |
-| Domain SNI       | not in list | _Quarantined-Users-DomainAllowlist_ | And   |        |
+| SNI Domain       | not in list | _Quarantined-Users-DomainAllowlist_ | And   |        |
 | User Group Names | in          | _Quarantined Users_                 |       |        |
 
-</Details>
+</TabItem>
 
-<Details header="Posture-Fail-NET-Restricted-Access">
+<TabItem label="API">
+
+```sh
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "Quarantined-Users-NET-Restricted-Access",
+  "description": "Restrict access for users included in an IdP user group for risky users",
+  "precedence": 0,
+  "enabled": true,
+  "action": "block",
+  "filters": [
+    "l4"
+  ],
+  "traffic": "not(net.dst.ip in $<IP_ALLOWLIST_UUID>) or not(net.sni.host in $<HOST_ALLOWLIST_UUID>) or not(any(net.sni.domains[*] in $<DOMAIN_ALLOWLIST_UUID>))",
+	"identity": "any(identity.groups.name[*] in {\"Quarantined Users\"})"
+}'
+```
+
+</TabItem>
+
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "quarantined_users_net_restricted_access" {
+  account_id  = var.cloudflare_account_id
+  name        = "Quarantined-Users-NET-Restricted-Access"
+  description = "Restrict access for users included in an IdP user group for risky users"
+  precedence  = 0
+  enabled     = true
+  action      = "block"
+  filters     = ["l4"]
+  traffic     = "not(net.dst.ip in ${"$"}${cloudflare_zero_trust_list.ip_allowlist.id}) or not(net.sni.host in ${"$"}${cloudflare_zero_trust_list.host_allowlist.id}) or not(any(net.sni.domains[*] in ${"$"}${cloudflare_zero_trust_list.domain_allowlist.id}))"
+  identity    = "any(identity.groups.name[*] in {\"Quarantined Users\"})"
+}
+```
+
+</TabItem>
+</Tabs>
+
+## Posture-Fail-NET-Restricted-Access
 
 Restrict access for devices where baseline posture checks have not passed. If posture checks are integrated with service providers such as Crowdstrike or Intune via the API, this policy dynamically blocks access for devices that do not meet predetermined security requirements.
+
+<Render file="zero-trust/blocklist-restricted-users" />
+
+<Tabs syncKey="dashPlusAPI">
+
+<TabItem label="Dashboard">
 
 | Selector                     | Operator    | Value                               | Logic | Action |
 | ---------------------------- | ----------- | ----------------------------------- | ----- | ------ |
 | Destination IP               | not in list | _Posture-Fail-IPAllowlist_          | Or    | Block  |
 | SNI                          | not in list | _Posture-Fail-HostAllowlist_        | Or    |        |
-| Domain SNI                   | not in list | _Posture-Fail-DomainAllowlist_      | And   |        |
+| SNI Domain                   | not in list | _Posture-Fail-DomainAllowlist_      | And   |        |
 | Passed Device Posture Checks | not in      | _Windows 10 or higher (OS version)_ |       |        |
+
+</TabItem>
+
+<TabItem label="API">
+
+```sh
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "Posture-Fail-NET-Restricted-Access",
+  "description": "Restrict access for devices where baseline posture checks have not passed",
+  "precedence": 10,
+  "enabled": true,
+  "action": "block",
+  "filters": [
+    "l4"
+  ],
+  "traffic": "not(net.dst.ip in $<IP_ALLOWLIST_UUID>) or not(net.sni.host in $<HOST_ALLOWLIST_UUID>) or not(any(net.sni.domains[*] in $<DOMAIN_ALLOWLIST_UUID>))",
+  "device_posture": "not(any(device_posture.checks.passed[*] in {\"<DEVICE_POSTURE_CHECK_UUID>\"}))"
+}'
+```
+
+</TabItem>
+
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "posture_fail_net_restricted_access" {
+  account_id  = var.cloudflare_account_id
+  name        = "Posture-Fail-NET-Restricted-Access"
+  description = "Restrict access for devices where baseline posture checks have not passed"
+  precedence  = 10
+  enabled     = true
+  action      = "block"
+  filters     = ["l4"]
+  traffic     = "not(net.dst.ip in ${"$"}${cloudflare_zero_trust_list.ip_allowlist.id}) or not(net.sni.host in ${"$"}${cloudflare_zero_trust_list.host_allowlist.id}) or not(any(net.sni.domains[*] in ${"$"}${cloudflare_zero_trust_list.domain_allowlist.id}))"
+  device_posture = "not(any(device_posture.checks.passed[*] in {\"${cloudflare_device_posture_rule.baseline_check.id}\"}))"
+}
+```
+
+</TabItem>
+</Tabs>
 
 You can add a number of WARP client device posture checks as needed, such as [Disk encryption](/cloudflare-one/identity/devices/warp-client-checks/disk-encryption/) and [Domain joined](/cloudflare-one/identity/devices/warp-client-checks/domain-joined/). For more information on device posture checks, refer to [Enforce device posture](/cloudflare-one/identity/devices/).
 
-</Details>
-
-<Details header="FinanceUsers-NET-HTTPS-FinanceServers (example)">
+## FinanceUsers-NET-HTTPS-FinanceServers (example)
 
 Allow HTTPS access for user groups. For example, the following policy gives finance users access to any known financial applications:
+
+<Tabs syncKey="dashPlusAPI">
+
+<TabItem label="Dashboard">
 
 | Selector         | Operator | Value             | Logic | Action |
 | ---------------- | -------- | ----------------- | ----- | ------ |
 | Destination IP   | in list  | _Finance Servers_ | And   | Allow  |
 | User Group Names | in       | _Finance Users_   |       |        |
 
-</Details>
+</TabItem>
 
-<Details header="All-NET-Internet-Blocklist">
+<TabItem label="API">
 
-Block traffic to destination IPs, <GlossaryTooltip term="Server Name Indication (SNI)">SNIs</GlossaryTooltip>, and domain SNIs that are malicious or pose a threat to your organization.
+```sh
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "FinanceUsers-NET-HTTPS-FinanceServers",
+  "description": "Allow HTTPS access for user groups",
+  "precedence": 20,
+  "enabled": true,
+  "action": "allow",
+  "filters": [
+    "l4"
+  ],
+  "traffic": "net.dst.ip in $<FINANCE_SERVERS_LIST_UUID>",
+  "identity": "any(identity.groups.name[*] in {\"Finance Users\"})"
+}'
+```
+
+</TabItem>
+
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "finance_users_net_https_finance_servers" {
+  account_id  = var.cloudflare_account_id
+  name        = "FinanceUsers-NET-HTTPS-FinanceServers"
+  description = "Allow HTTPS access for user groups"
+  precedence  = 20
+  enabled     = true
+  action      = "allow"
+  filters     = ["l4"]
+  traffic     = "net.dst.ip in ${"$"}${cloudflare_zero_trust_list.finance_servers_list.id}"
+  identity    = "any(identity.groups.name[*] in {\"Finance Users\"})"
+}
+```
+
+</TabItem>
+</Tabs>
+
+## All-NET-Internet-Blocklist
+
+Block traffic to destination IPs, <GlossaryTooltip term="Server Name Indication (SNI)">SNIs</GlossaryTooltip>, and SNI domains that are malicious or pose a threat to your organization.
 
 <Render file="zero-trust/threat-intelligence-automation" />
+
+<Tabs syncKey="dashPlusAPI">
+
+<TabItem label="Dashboard">
 
 | Selector       | Operator | Value              | Logic | Action |
 | -------------- | -------- | ------------------ | ----- | ------ |
 | Destination IP | in list  | _IP Blocklist_     | Or    | Block  |
 | SNI            | in list  | _Host Blocklist_   | Or    |        |
-| Domain SNI     | in list  | _Domain Blocklist_ |       |        |
+| SNI Domain     | in list  | _Domain Blocklist_ |       |        |
+
+</TabItem>
+
+<TabItem label="API">
+
+```sh
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "All-NET-Internet-Blocklist",
+  "description": "Block traffic to malicious or risky destination IPs, SNIs, and SNI domains",
+  "precedence": 30,
+  "enabled": true,
+  "action": "block",
+  "filters": [
+    "l4"
+  ],
+  "traffic": "net.dst.ip in $<IP_BLOCKLIST_UUID> and net.sni.host in $<HOST_BLOCKLIST_UUID> and any(net.sni.domains[*] in $<DOMAIN_BLOCKLIST_UUID>)"
+}'
+```
+
+</TabItem>
+
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "finance_users_net_https_finance_servers" {
+  account_id  = var.cloudflare_account_id
+  name        = "All-NET-Internet-Blocklist"
+  description = "Block traffic to malicious or risky destination IPs, SNIs, and SNI domains"
+  precedence  = 30
+  enabled     = true
+  action      = "block"
+  filters     = ["l4"]
+  traffic     = "net.dst.ip in ${"$"}${cloudflare_zero_trust_list.ip_blocklist.id} and net.sni.host in ${"$"}${cloudflare_zero_trust_list.host_blocklist.id} and any(net.sni.domains[*] in ${"$"}${cloudflare_zero_trust_list.domain_blocklist.id})"
+}
+```
+
+</TabItem>
+</Tabs>
 
 :::note
 The **Detected Protocol** selector is only available for Enterprise users. For more information, refer to [Protocol detection](/cloudflare-one/policies/gateway/network-policies/protocol-detection/).
 :::
 
-</Details>
-
-<Details header="All-NET-SSH-Internet-Allowlist">
+## All-NET-SSH-Internet-Allowlist
 
 Allow SSH traffic to specific endpoints on the Internet for specific users. You can create a similar policy for other non-web endpoints that required access.
 
 Optionally, you can include a selector to filter by source IP or IdP group.
+
+<Tabs syncKey="dashPlusAPI">
+
+<TabItem label="Dashboard">
 
 | Selector          | Operator | Value               | Logic | Action |
 | ----------------- | -------- | ------------------- | ----- | ------ |
@@ -81,25 +265,161 @@ Optionally, you can include a selector to filter by source IP or IdP group.
 | Detected Protocol | is       | _SSH_               | And   |        |
 | User Group Names  | in       | _SSH-Allowed-Users_ |       |        |
 
-</Details>
+</TabItem>
 
-<Details header="All-NET-NO-HTTP-HTTPS-Internet-Deny">
+<TabItem label="API">
+
+```sh
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "All-NET-SSH-Internet-Allowlist",
+  "description": "Allow SSH traffic to specific endpoints on the Internet for specific users",
+  "precedence": 40,
+  "enabled": true,
+  "action": "allow",
+  "filters": [
+    "l4"
+  ],
+  "traffic": "net.dst.ip in $<SSH_IP_ALLOWLIST_UUID> and net.sni.host in $<SSH_FQDN_ALLOWLIST_UUID> and net.detected_protocol == \"ssh\"",
+  "identity": "any(identity.groups.name[*] in {\"SSH-Allowed-Users\"})"
+}'
+```
+
+</TabItem>
+
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "all_net_ssh_internet_allowlist" {
+  account_id  = var.cloudflare_account_id
+  name        = "All-NET-SSH-Internet-Allowlist"
+  description = "Allow SSH traffic to specific endpoints on the Internet for specific users"
+  precedence  = 40
+  enabled     = true
+  action      = "allow"
+  filters     = ["l4"]
+  traffic     = "net.dst.ip in ${"$"}${cloudflare_zero_trust_list.ssh_ip_allowlist.id} and net.sni.host in ${"$"}${cloudflare_zero_trust_list.ssh_fqdn_allowlist.id} and net.detected_protocol == \"ssh\""
+  identity    = "any(identity.groups.name[*] in {\"SSH-Allowed-Users\"})"
+}
+```
+
+</TabItem>
+</Tabs>
+
+## All-NET-NO-HTTP-HTTPS-Internet-Deny
 
 Block all non-web traffic towards the Internet. By using the **Detected Protocol** selector, you will ensure alternative ports for HTTP and HTTPS are allowed.
+
+<Tabs syncKey="dashPlusAPI">
+
+<TabItem label="Dashboard">
 
 | Selector          | Operator    | Value             | Logic | Action |
 | ----------------- | ----------- | ----------------- | ----- | ------ |
 | Destination IP    | not in list | _InternalNetwork_ | And   | Block  |
 | Detected Protocol | not in      | _HTTP_, _HTTP2_   |       |        |
 
-</Details>
+</TabItem>
 
-<Details header="All-NET-InternalNetwork-ImplicitDeny">
+<TabItem label="API">
+
+```sh
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "All-NET-NO-HTTP-HTTPS-Internet-Deny",
+  "description": "Block all non-web traffic towards the Internet",
+  "precedence": 50,
+  "enabled": true,
+  "action": "block",
+  "filters": [
+    "l4"
+  ],
+  "traffic": "not(net.dst.ip in $<INTERNAL_NETWORK_IP_LIST_UUID>) and not(net.detected_protocol in {\"http\" \"http2\"})"
+}'
+```
+
+</TabItem>
+
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "all_net_no_http_https_internet_deny" {
+  account_id  = var.cloudflare_account_id
+  name        = "All-NET-NO-HTTP-HTTPS-Internet-Deny"
+  description = "Block all non-web traffic towards the Internet"
+  precedence  = 50
+  enabled     = true
+  action      = "block"
+  filters     = ["l4"]
+  traffic     = "not(net.dst.ip in ${"$"}${cloudflare_zero_trust_list.internal_network_ip_list.id}) and not(net.detected_protocol in {\"http\" \"http2\"})"
+}
+```
+
+</TabItem>
+</Tabs>
+
+## All-NET-InternalNetwork-ImplicitDeny
 
 Implicitly deny all of your internal IP ranges included in a list. We recommend you place this policy at the [bottom of your policy list](/learning-paths/secure-internet-traffic/understand-policies/order-of-enforcement/#order-of-precedence) to ensure you explicitly approve traffic defined in the above policies.
+
+<Tabs syncKey="dashPlusAPI">
+
+<TabItem label="Dashboard">
 
 | Selector       | Operator | Value                  | Action |
 | -------------- | -------- | ---------------------- | ------ |
 | Destination IP | in list  | _Internal Network IPs_ | Block  |
 
-</Details>
+</TabItem>
+
+<TabItem label="API">
+
+```sh
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "All-NET-InternalNetwork-ImplicitDeny",
+  "description": "Implicitly deny all of your internal IP ranges included in a list",
+  "precedence": 60,
+  "enabled": true,
+  "action": "block",
+  "filters": [
+    "l4"
+  ],
+  "traffic": "net.dst.ip in $<INTERNAL_NETWORK_IP_LIST_UUID>"
+}'
+```
+
+</TabItem>
+
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "all_net_internalnetwork_implicitdeny" {
+  account_id  = var.cloudflare_account_id
+  name        = "All-NET-InternalNetwork-ImplicitDeny"
+  description = "Implicitly deny all of your internal IP ranges included in a list"
+  precedence  = 60
+  enabled     = true
+  action      = "block"
+  filters     = ["l4"]
+  traffic     = "net.dst.ip in ${"$"}${cloudflare_zero_trust_list.internal_network_ip_list.id}"
+}
+```
+
+</TabItem>
+</Tabs>
+
+## All-NET-ApplicationAccess-Allow
+
+Only allow network traffic from known and approved devices.
+
+<Render
+	file="gateway/policies/dash-plus-api/network/enforce-device-posture"
+	product="cloudflare-one"
+/>

@@ -14,7 +14,7 @@ To test that the Fonts feature is working correctly, follow these steps:
 1. With the Fonts feature disabled, navigate to your webpage and open the network panel in your browser's developer tools. For Chrome, right click on the webpage and select **Inspect**, which open the developer tools. Next, navigate to the **Network** tab within the console.
 2. Reload the page.
 3. In the Network tab, you should have a request to `fonts.googleapis.com`, and a request to `fonts.gstatic.com`. This means that Google Fonts are being downloaded for this page. If you do not have these requests in the list, either your webpage is not using Google Fonts, or your hosting provider might be optimizing the Google Fonts in some other way.
-4. Enable the Fonts feature and wait for a few seconds.
+4. [Enable Cloudflare Fonts](/speed/optimization/content/fonts/#get-started) and wait for a few seconds.
 5. In the inspect window, toggle **Disable cache** on and reload the page.
 6. In the network panel, you should now have a request to your zone on the `/cf-fonts/` path prefix. The requests to `fonts.googleapis.com` and `fonts.gstatic.com` should have disappeared. This means the feature is working correctly.
 

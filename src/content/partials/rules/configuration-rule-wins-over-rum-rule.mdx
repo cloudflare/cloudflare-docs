@@ -1,11 +1,7 @@
 ---
-inputParameters: configRulesReferenceOrLink;;rumRulesReferenceOrLink
-
+{}
 ---
 
-import { Markdown } from "~/components"
-
 :::caution[Warning]
-
-{props.one} have precedence over any {props.two}. If a Web Analytics rule turns on analytics measurements for an incoming request and the same request matches a configuration rule turning off Web Analytics, the configuration rule will win. 
+Configuration rules have precedence over any Web Analytics rules. If a Web Analytics rule turns on analytics measurements for an incoming request and the same request matches a configuration rule turning off Web Analytics, the configuration rule will win.
 :::

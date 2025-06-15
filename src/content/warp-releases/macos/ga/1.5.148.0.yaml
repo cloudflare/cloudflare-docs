@@ -1,0 +1,47 @@
+releaseNotes: >-
+  **Notable Updates**
+
+
+  - Added support for Teams admins to control use of captive portal in their
+  organization.
+
+  - Support for detecting and opening captive portal login page when captive
+  portal network is detected.
+
+  - Show Excluded IPs UI in Teams mode.
+
+  - Added new support for service token-based authentication for managed (MDM)
+  devices.
+
+  - Fixed issue when going between LAN and/or Wi-Fi networks.
+
+  - Clients registered with Teams can now view their local device posture
+  status.
+
+  - Added new WARP proxy mode for advanced users. See
+  Preferences->Advanced->Configure Proxy Mode for more info.
+
+  - Fixed reconnection issue when waking from sleep.
+
+  - Several other bug fixes and improvements.
+
+
+  **Known issues**
+
+
+  - You are unable to subscribe to WARP+ via the Desktop apps. You must
+  subscribe first on your mobile device and then copy/paste your license key
+  into the Accounts page on desktop.
+
+  - Localization parity with mobile is coming in a future update.
+
+  - Wired networks via a USB dongle are not excluded properly.
+
+
+  For a complete list of known issues please visit
+  https://developers.cloudflare.com/warpclient/known-issues-and-faq
+version: 1.5.148.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/1.5.148.0
+packageSize: 32900112
+releaseDate: 2021-06-05T00:05:03.232Z
+platformName: macOS

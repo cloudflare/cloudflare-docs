@@ -49,11 +49,32 @@ When you search for an AS number, Cloudflare will return registration data such 
 
 With sufficient data, AS number search results will also return the geographical distribution of traffic in its network, application level attacks and network level attacks, each broken down by Cloudflare mitigation techniques and network protocols, respectively.
 
+## Hash
+
+When you search for a hash, the Cloudflare dashboard will provide a URL report for that specific hash.
+
+To search using a hash:
+
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Security Center** > **Investigate**. Enter the hash, then select **Search**.
+3. Select **View report** to view the report for your URL.
+
 ## URL
 
 When you search for a URL, Cloudflare will provide a list of recent scan reports for that specific URL, limited to the past 30 days. You can view previously generated reports or scan again to generate a new report.
 
 Different Cloudflare plans will have different [scan limitations](/security-center/investigate/scan-limits/).
+
+If you want to scan a URL:
+
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Security Center** > **Investigate**. Enter the URL, then select **Search**.
+
+Alternatively, to scan a URL, go to [Cloudflare Radar](https://radar.cloudflare.com/) > **URL scanner**. Enter the URL, then select **Publish**.
+
+:::note
+You can use [Cloudflare Radar API](/radar/investigate/url-scanner/#use-the-api) to investigate threats.
+:::
 
 ### Visibility
 

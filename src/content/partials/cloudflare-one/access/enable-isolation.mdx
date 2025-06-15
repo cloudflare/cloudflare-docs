@@ -7,11 +7,12 @@ import { Render } from "~/components"
 
 <Render file="clientless-browser-isolation" product="cloudflare-one" />
 
-3. Next, go to **Access** > **Applications**.
-4. Choose a [self-hosted application](/cloudflare-one/applications/configure-apps/self-hosted-apps/) and select **Configure**.
-5. Choose an [Allow policy](/cloudflare-one/policies/access/) and select **Configure**.
-6. Under **Additional settings**, turn on **Isolate application**.
-7. Save the policy.
+3. Go to **Access** > **Applications**.
+4. Choose a [self-hosted application](/cloudflare-one/applications/configure-apps/self-hosted-public-app/) and select **Configure**.
+5. Go to **Policies**.
+6. Choose an [Allow policy](/cloudflare-one/policies/access/) and select **Configure**.
+7. Under **Additional settings**, turn on **Isolate application**.
+8. Save the policy.
 
 Browser Isolation is now enabled for users who match this policy. After the user logs into Access, the application will launch in a remote browser. To confirm that the application is isolated, refer to [Check if a web page is isolated](/cloudflare-one/policies/browser-isolation/setup/#3-check-if-a-web-page-is-isolated).
 

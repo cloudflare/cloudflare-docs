@@ -46,9 +46,8 @@ To help this better match the needs of your organization, you can also build a c
 </TabItem> <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --header "Content-Type: application/json" \
 --data '{
   "action": "block",
@@ -98,9 +97,8 @@ For example, you can use a custom expression to detect when your users share pro
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --header "Content-Type: application/json" \
 --data '{
   "action": "block",
@@ -134,7 +132,7 @@ As your datasets change and grow, we recommend building a pipeline to update the
 
 #### Microsoft Information Protection (MIP) labels
 
-If your data already contains Microsoft Information Protection (MIP) labeling schema, Cloudflare can detect those values in-transit automatically. To get started, connect your Microsoft 365 account with a [CASB integration](/cloudflare-one/applications/scan-apps/casb-integrations/microsoft-365/). Cloudflare will automatically pull in your existing MIP definitions into Zero Trust. You can then use the MIP definitions to build DLP profiles for use in Gateway policies.
+If your data already contains Microsoft Information Protection (MIP) labeling schema, Cloudflare can detect those values in-transit automatically. To get started, connect your Microsoft 365 account with a [CASB integration](/cloudflare-one/applications/casb/casb-integrations/microsoft-365/). Cloudflare will automatically pull in your existing MIP definitions into Zero Trust. You can then use the MIP definitions to build DLP profiles for use in Gateway policies.
 
 For more information, refer to [Integration profiles](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/integration-profiles/).
 
@@ -158,7 +156,7 @@ Many organizations want to detect and log financial information egressing from u
 <TabItem label="API">
 
 ```bash title="Block financial information shared with AI"
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rules \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
 --header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '{

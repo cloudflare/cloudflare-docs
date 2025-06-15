@@ -26,10 +26,10 @@ For simplicity, start with wrangler when [getting started](/cloudflare-for-platf
 
 ### Upload user Workers via the API
 
-Since you will be deploying Workers on behalf of your users, you will likely want to use the [Workers for Platforms script upload APIs](/api/operations/namespace-worker-put-script-content) directly instead of Wrangler to have more control over the upload process. The Workers for Platforms script upload API is the same as the [Worker upload API](/api/operations/worker-script-upload-worker-module), but it will upload the Worker to a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dispatch-namespace) instead of to your account directly.
+Since you will be deploying Workers on behalf of your users, you will likely want to use the [Workers for Platforms script upload APIs](/api/resources/workers_for_platforms/subresources/dispatch/subresources/namespaces/subresources/scripts/subresources/content/methods/update/) directly instead of Wrangler to have more control over the upload process. The Workers for Platforms script upload API is the same as the [Worker upload API](/api/resources/workers/subresources/scripts/methods/update/), but it will upload the Worker to a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dispatch-namespace) instead of to your account directly.
 
 ## Bindings
 
 You can use any Workers [bindings](/workers/runtime-apis/bindings/) with the dynamic dispatch Worker or any user Workers.
 
-Bindings for your user Workers can be defined on [multipart script uploads](/api/operations/namespace-worker-put-script-content) in the [metadata](/workers/configuration/multipart-upload-metadata/) part.
+Bindings for your user Workers can be defined on [multipart script uploads](/api/resources/workers_for_platforms/subresources/dispatch/subresources/namespaces/subresources/scripts/subresources/content/methods/update/) in the [metadata](/workers/configuration/multipart-upload-metadata/) part.

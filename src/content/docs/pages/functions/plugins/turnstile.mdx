@@ -3,7 +3,14 @@ pcx_content_type: concept
 title: Turnstile
 sidebar:
   order: 1
+banner:
+  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
+  type: note
+  dismissible:
+    id: pages-migrate-to-workers
 ---
+
+import { Render, PackageManagers } from "~/components";
 
 [Turnstile](/turnstile/) is Cloudflare's smart CAPTCHA alternative.
 
@@ -11,9 +18,7 @@ The Turnstile Pages Plugin validates Cloudflare Turnstile tokens.
 
 ## Installation
 
-```sh
-npm install @cloudflare/pages-plugin-turnstile
-```
+<PackageManagers pkg="@cloudflare/pages-plugin-turnstile" />
 
 ## Usage
 

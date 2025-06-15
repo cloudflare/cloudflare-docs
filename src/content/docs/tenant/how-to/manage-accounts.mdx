@@ -36,7 +36,7 @@ To view any accounts owned by your tenant using the dashboard:
 
 </TabItem> <TabItem label="API">
 
-To fetch any accounts owned by your tenant using the API, send a [`GET`](/api/operations/accounts-list-accounts) request to the `/accounts` endpoint.
+To fetch any accounts owned by your tenant using the API, send a [`GET`](/api/resources/accounts/methods/list/) request to the `/accounts` endpoint.
 
 You will get back a list of all the accounts you have created plus any accounts your user already had access to.
 
@@ -81,7 +81,7 @@ curl https://api.cloudflare.com/client/v4/accounts \
 
 ## Update account
 
-To update an account, send a [`PUT`](/api/operations/accounts-update-account) request to the `/accounts/{account_id}` endpoint.
+To update an account, send a [`PUT`](/api/resources/accounts/methods/update/) request to the `/accounts/{account_id}` endpoint.
 
 ## Delete account
 

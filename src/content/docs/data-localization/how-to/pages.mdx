@@ -11,7 +11,7 @@ In the following sections, we will give you some details about how to configure 
 
 ## Regional Services
 
-To configure Regional Services for hostnames [proxied](/dns/manage-dns-records/reference/proxied-dns-records/) through Cloudflare and ensure that processing of a Pages project occurs only in-region, follow these steps for the dashboard or API configuration:
+To configure Regional Services for hostnames [proxied](/dns/proxy-status/) through Cloudflare and ensure that processing of a Pages project occurs only in-region, follow these steps for the dashboard or API configuration:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -27,7 +27,7 @@ To configure Regional Services for hostnames [proxied](/dns/manage-dns-records/r
 
 <TabItem label="API">
 
-1. Use the [API POST](/api/operations/pages-domains-add-domain) command to add a Custom Domain to a Pages project.
+1. Use the [API POST](/api/resources/pages/subresources/projects/subresources/domains/methods/create/) command to add a Custom Domain to a Pages project.
 2. Run the [API POST](/data-localization/regional-services/get-started/#configure-regional-services-via-api) command on the Pages Custom Domain to create a `regional_hostnames` with a specific Region.
 
 </TabItem> </Tabs>

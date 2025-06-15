@@ -1,22 +1,29 @@
 ---
-title: Transform Rules
+title: Transform Rules configuration using Terraform
 pcx_content_type: how-to
 sidebar:
   order: 6
+  label: Transform Rules
 head:
   - tag: title
-    content: Configure Transform Rules with Terraform
-
+    content: Transform Rules configuration using Terraform
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-This page provides examples of creating Transform Rules in a zone using Terraform. The examples cover the following scenarios:
+This page provides examples of creating [Transform Rules](/rules/transform/) in a zone using Terraform. The examples cover the following scenarios:
 
-* [Create a Rewrite URL Rule](#create-a-rewrite-url-rule)
-* [Create an HTTP Request Header Modification Rule](#create-an-http-request-header-modification-rule)
+- [Create a URL rewrite rule](#create-a-url-rewrite-rule)
+- [Create a request header transform rule](#create-a-request-header-transform-rule)
+- [Create a response header transform rule](#create-a-response-header-transform-rule)
+- [Configure Managed Transforms](#configure-managed-transforms)
 
-For more information on Transform Rules, refer to [Transform Rules](/rules/transform/).
+If you are using the Cloudflare API, refer to the following resources:
+
+- [Create a URL rewrite rule via API](/rules/transform/url-rewrite/create-api/)
+- [Create a request header transform rule via API](/rules/transform/request-header-modification/create-api/)
+- [Create a response header transform rule via API](/rules/transform/response-header-modification/create-api/)
+- [Configure Managed Transforms](/rules/transform/managed-transforms/configure/)
 
 ## Before you start
 
@@ -28,11 +35,13 @@ For more information on Transform Rules, refer to [Transform Rules](/rules/trans
 
 <Render file="import-delete-existing-rulesets" />
 
-***
+---
 
-## Create a Rewrite URL Rule
+## Create a URL rewrite rule
 
-The following example creates a Rewrite URL Rule that rewrites requests for `example.com/old-folder` to `example.com/new-folder`:
+The following example creates a URL rewrite rule that rewrites requests for `example.com/old-folder` to `example.com/new-folder`:
+
+<Render file="v4-code-snippets" />
 
 ```tf
 resource "cloudflare_ruleset" "transform_url_rewrite" {
@@ -43,7 +52,10 @@ resource "cloudflare_ruleset" "transform_url_rewrite" {
   phase       = "http_request_transform"
 
   rules {
-    action = "rewrite"
+    ref         = "url_rewrite_old_folder"
+    description = "Example URL rewrite rule"
+    expression  = "(http.host eq \"example.com\" and http.request.uri.path eq \"/old-folder\")"
+    action      = "rewrite"
     action_parameters {
       uri {
         path {
@@ -51,24 +63,25 @@ resource "cloudflare_ruleset" "transform_url_rewrite" {
         }
       }
     }
-    expression = "(http.host eq \"example.com\" and http.request.uri.path eq \"/old-folder\")"
-    description = "Example Rewrite URL Rule"
-    enabled = true
   }
 }
 ```
 
-<Render file="add-new-rule" params={{ one: "Rewrite URL Rule" }} /> <br/>
+<Render file="terraform-use-ref-field" product="rules" />
 
-For more information on rewriting URLs, refer to [Rewrite URL Rules](/rules/transform/url-rewrite/).
+<Render file="add-new-rule" params={{ ruleType: "URL rewrite rule" }} /> <br />
 
-## Create an HTTP Request Header Modification Rule
+For more information on rewriting URLs, refer to [URL Rewrite Rules](/rules/transform/url-rewrite/).
+
+## Create a request header transform rule
 
 The following configuration example performs the following adjustments to HTTP request headers:
 
-* Adds a `my-header-1` header to the request with a static value.
-* Adds a `my-header-2` header to the request with a dynamic value defined by an expression.
-* Deletes the `existing-header` header from the request, if it exists.
+- Adds a `my-header-1` header to the request with a static value.
+- Adds a `my-header-2` header to the request with a dynamic value defined by an expression.
+- Deletes the `existing-header` header from the request, if it exists.
+
+<Render file="v4-code-snippets" />
 
 ```tf
 resource "cloudflare_ruleset" "transform_modify_request_headers" {
@@ -79,7 +92,10 @@ resource "cloudflare_ruleset" "transform_modify_request_headers" {
   phase       = "http_request_late_transform"
 
   rules {
-    action = "rewrite"
+    ref         = "modify_request_headers"
+    description = "Example request header transform rule"
+    expression  = "true"
+    action      = "rewrite"
     action_parameters {
       headers {
         name      = "my-header-1"
@@ -96,24 +112,28 @@ resource "cloudflare_ruleset" "transform_modify_request_headers" {
         operation = "remove"
       }
     }
-    expression = "true"
-    description = "Example HTTP Request Header Modification Rule"
-    enabled = true
   }
 }
 ```
 
-<Render file="add-new-rule" params={{ one: "Request Header Modification Rule" }} /> <br/>
+<Render file="terraform-use-ref-field" product="rules" />
 
-For more information on modifying request headers, refer to [HTTP Request Header Modification Rules](/rules/transform/request-header-modification/).
+<Render
+	file="add-new-rule"
+	params={{ ruleType: "request header transform rule" }}
+/>
 
-## Create an HTTP Response Header Modification Rule
+For more information on modifying request headers, refer to [Request Header Transform Rules](/rules/transform/request-header-modification/).
+
+## Create a response header transform rule
 
 The following configuration example performs the following adjustments to HTTP response headers:
 
-* Adds a `my-header-1` header to the response with a static value.
-* Adds a `my-header-2` header to the response with a dynamic value defined by an expression.
-* Deletes the `existing-header` header from the response, if it exists.
+- Adds a `my-header-1` header to the response with a static value.
+- Adds a `my-header-2` header to the response with a dynamic value defined by an expression.
+- Deletes the `existing-header` header from the response, if it exists.
+
+<Render file="v4-code-snippets" />
 
 ```tf
 resource "cloudflare_ruleset" "transform_modify_response_headers" {
@@ -124,7 +144,10 @@ resource "cloudflare_ruleset" "transform_modify_response_headers" {
   phase       = "http_response_headers_transform"
 
   rules {
-    action = "rewrite"
+    ref         = "modify_response_headers"
+    description = "Example response header transform rule"
+    expression  = "true"
+    action      = "rewrite"
     action_parameters {
       headers {
         name      = "my-header-1"
@@ -141,13 +164,23 @@ resource "cloudflare_ruleset" "transform_modify_response_headers" {
         operation = "remove"
       }
     }
-    expression = "true"
-    description = "Example HTTP Response Header Modification Rule"
-    enabled = true
   }
 }
 ```
 
-<Render file="add-new-rule" params={{ one: "Response Header Modification Rule" }} /> <br/>
+<Render file="terraform-use-ref-field" product="rules" />
 
-For more information on modifying response headers, refer to [HTTP Response Header Modification Rules](/rules/transform/response-header-modification/).
+<Render
+	file="add-new-rule"
+	params={{ ruleType: "response header transform rule" }}
+/>
+
+For more information on modifying response headers, refer to [Response Header Transform Rules](/rules/transform/response-header-modification/).
+
+## Configure Managed Transforms
+
+<Render file="v4-code-snippets" />
+
+<Render file="transform/terraform-managed-transforms-example" product="rules" />
+
+For more information on Managed Transforms, refer to [Managed Transforms](/rules/transform/managed-transforms/).

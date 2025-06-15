@@ -27,16 +27,13 @@ const props = z
 		}),
 	);
 
-// @ts-ignore
-const { id, type } = props.parse(Astro.props);
+const input = props.parse(Astro.props);
 
 let availability;
-if (type) {
-	// @ts-ignore
-	availability = mappings[type];
+if ("type" in input) {
+	availability = mappings[input.type];
 } else {
-	// @ts-ignore
-	availability = await indexPlans(id);
+	availability = await indexPlans(input.id);
 }
 ---
 

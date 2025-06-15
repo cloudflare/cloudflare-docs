@@ -1,0 +1,14 @@
+releaseNotes: |-
+  This release contains hotfixes for 2022.9.388.1.
+
+  **Notable updates**
+  - Fix issue where device posture check results stopped sending after 24 hours
+    (or possibly even sooner)
+
+  **Known issues**
+  - No known issues
+version: 2022.9.586.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2022.9.586.1
+packageSize: 103960576
+releaseDate: 2022-10-12T00:36:26.458Z
+platformName: Windows

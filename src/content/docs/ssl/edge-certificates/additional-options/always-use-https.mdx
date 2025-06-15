@@ -46,7 +46,7 @@ To enable **Always Use HTTPS** in the dashboard:
 To enable or disable **Always Use HTTPS** with the API:
 
 1. Make sure that your [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/off/) **is not** set to **Off**.
-2. Send a [`PATCH`](/api/operations/zone-settings-edit-single-setting) request with `always_use_https` as the setting name in the URI path, and the `value` parameter set to your desired setting (`"on"` or `"off"`).
+2. Send a [`PATCH`](/api/resources/zones/subresources/settings/methods/edit/) request with `always_use_https` as the setting name in the URI path, and the `value` parameter set to your desired setting (`"on"` or `"off"`).
 
 </TabItem> </Tabs>
 

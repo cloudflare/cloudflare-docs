@@ -1,7 +1,6 @@
 ---
 pcx_content_type: reference
 title: Upload via batch API
-
 ---
 
 The Images batch API lets you make several requests in sequence while bypassing Cloudflare’s global API rate limits.
@@ -26,14 +25,14 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/images/v1/batch
 }
 ```
 
-After getting your token, you can use it to make requests for:
+After getting your token, use it to make requests for:
 
-* [Upload an image](https://developers.cloudflare.com/api/operations/cloudflare-images-upload-an-image-via-url) - `POST /images/v1`
-* [Delete an image](https://developers.cloudflare.com/api/operations/cloudflare-images-delete-image) - `DELETE /images/v1/{identifier}`
-* [Image details](https://developers.cloudflare.com/api/operations/cloudflare-images-image-details) - `GET /images/v1/{identifier}`
-* [Update image](https://developers.cloudflare.com/api/operations/cloudflare-images-update-image) - `PATCH /images/v1/{identifier}`
-* [List images V2](https://developers.cloudflare.com/api/operations/cloudflare-images-list-images-v2) - `GET /images/v2`
-* [Direct upload V2](https://developers.cloudflare.com/api/operations/cloudflare-images-create-authenticated-direct-upload-url-v-2) - `POST /images/v2/direct_upload`
+- [Upload an image](/api/resources/images/subresources/v1/methods/create/) - `POST /images/v1`
+- [Delete an image](/api/resources/images/subresources/v1/methods/delete/) - `DELETE /images/v1/{identifier}`
+- [Image details](/api/resources/images/subresources/v1/methods/get/) - `GET /images/v1/{identifier}`
+- [Update image](/api/resources/images/subresources/v1/methods/edit/) - `PATCH /images/v1/{identifier}`
+- [List images V2](/api/resources/images/subresources/v2/methods/list/) - `GET /images/v2`
+- [Direct upload V2](/api/resources/images/subresources/v2/subresources/direct_uploads/methods/create/) - `POST /images/v2/direct_upload`
 
 These options use a different host and a different path with the same method, request, and response bodies.
 
@@ -43,6 +42,6 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/images/v2" \
 ```
 
 ```bash title="Example request using a batch token"
-curl "https://batch.imagedelivery.net/images/v2" \
+curl "https://batch.imagedelivery.net/images/v1" \
 --header "Authorization: Bearer <BATCH_TOKEN>"
 ```

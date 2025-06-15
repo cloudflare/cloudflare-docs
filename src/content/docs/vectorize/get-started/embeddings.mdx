@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { Render, PackageManagers } from "~/components";
+import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 <Render file="vectorize-ga" />
 
@@ -49,7 +49,7 @@ Open your terminal and create a new project named `embeddings-tutorial` by runni
 	product="workers"
 	params={{
 		category: "hello-world",
-		type: "Hello World Worker",
+		type: "Worker only",
 		lang: "TypeScript",
 	}}
 />
@@ -57,11 +57,11 @@ Open your terminal and create a new project named `embeddings-tutorial` by runni
 This will create a new `embeddings-tutorial` directory. Your new `embeddings-tutorial` directory will include:
 
 - A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/index.ts`.
-- A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. `wrangler.toml` is how your `embeddings-tutorial` Worker will access your index.
+- A [`wrangler.jsonc`](/workers/wrangler/configuration/) configuration file. `wrangler.jsonc` is how your `embeddings-tutorial` Worker will access your index.
 
 :::note
 
-If you are familiar with Cloudflare Workers, or initializing projects in a Continuous Integration (CI) environment, initialize a new project non-interactively by setting `CI=true` as an environmental variable when running `create cloudflare@latest`.
+If you are familiar with Cloudflare Workers, or initializing projects in a Continuous Integration (CI) environment, initialize a new project non-interactively by setting `CI=true` as an [environmental variable](/workers/configuration/environment-variables/) when running `create cloudflare@latest`.
 
 For example: `CI=true npm create cloudflare@latest embeddings-tutorial --type=simple --git --ts --deploy=false` will create a basic "Hello World" project ready to build on.
 
@@ -107,15 +107,19 @@ This will create a new vector database, and output the [binding](/workers/runtim
 
 ## 3. Bind your Worker to your index
 
-You must create a binding for your Worker to connect to your Vectorize index. [Bindings](/workers/runtime-apis/bindings/) allow your Workers to access resources, like Vectorize or R2, from Cloudflare Workers. You create bindings by updating your `wrangler.toml` file.
+You must create a binding for your Worker to connect to your Vectorize index. [Bindings](/workers/runtime-apis/bindings/) allow your Workers to access resources, like Vectorize or R2, from Cloudflare Workers. You create bindings by updating your Wrangler file.
 
-To bind your index to your Worker, add the following to the end of your `wrangler.toml` file:
+To bind your index to your Worker, add the following to the end of your Wrangler file:
+
+<WranglerConfig>
 
 ```toml
 [[vectorize]]
 binding = "VECTORIZE" # available in your Worker on env.VECTORIZE
 index_name = "embeddings-index"
 ```
+
+</WranglerConfig>
 
 Specifically:
 
@@ -127,7 +131,9 @@ Specifically:
 
 Before you deploy your embedding example, ensure your Worker uses your model catalog, including the [text embedding model](/workers-ai/models/#text-embeddings) built-in.
 
-From within the `embeddings-tutorial` directory, open your `wrangler.toml` file in your editor and add the new `[[ai]]` binding to make Workers AI's models available in your Worker:
+From within the `embeddings-tutorial` directory, open your Wrangler file in your editor and add the new `[[ai]]` binding to make Workers AI's models available in your Worker:
+
+<WranglerConfig>
 
 ```toml
 [[vectorize]]
@@ -137,6 +143,8 @@ index_name = "embeddings-index"
 [ai]
 binding = "AI" # available in your Worker on env.AI
 ```
+
+</WranglerConfig>
 
 With Workers AI ready, you can write code in your Worker.
 
@@ -271,6 +279,6 @@ By finishing this tutorial, you have successfully created a Vectorize index, use
 
 ## Next steps
 
-- Build a [generative AI chatbot](/workers-ai/tutorials/build-a-retrieval-augmented-generation-ai/) using Workers AI and Vectorize.
+- Build a [generative AI chatbot](/workers-ai/guides/tutorials/build-a-retrieval-augmented-generation-ai/) using Workers AI and Vectorize.
 - Learn more about [how vector databases work](/vectorize/reference/what-is-a-vector-database/).
 - Read [examples](/vectorize/reference/client-api/) on how to use the Vectorize API from Cloudflare Workers.

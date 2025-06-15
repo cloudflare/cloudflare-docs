@@ -1,0 +1,17 @@
+releaseNotes: |
+  This release contains reliability improvements and general bug fixes.
+
+    **Changes and improvements**
+    - Fixed an issue where SSH sessions and other connections ould drop when a device that is using MASQUE changes its primary network interface.
+    - Device posture client certificate checks now support PKCS#1.
+    - Fixed an issue to ensure the Cloudflare root certificate (or custom certificate) is installed in the trust store if not already there.
+    - Reduced unnecessary log messages when `resolv.conf` has no owner.
+    - Fixed an issue with `warp-diag` printing benign TLS certificate errors.
+    - Fixed an issue with the WARP client becoming unresponsive during startup.
+    - Extended diagnostics collection time in `warp-diag` to ensure logs are captured reliably.
+    - Fixed an issue that was preventing proper operation of DNS-over-TLS (DoT) for consumer users.
+
+version: 2024.11.309.0
+releaseDate: 2024-11-18
+packageURL: https://pkg.cloudflareclient.com/
+platformName: Linux

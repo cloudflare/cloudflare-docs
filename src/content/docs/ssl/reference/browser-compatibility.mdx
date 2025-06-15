@@ -25,9 +25,7 @@ Refer to [Certificate authorities](/ssl/reference/certificate-authorities/) for 
 
 ## Non-SNI support
 
-Although [SNI extensions](https://www.cloudflare.com/learning/ssl/what-is-sni/) to the TLS protocol were standardized in 2003, some browsers and operating systems only implemented this extension when TLS 1.1 was released in 2006 (or 2011 for mobile browsers).
-
-If your visitors use devices that have not been updated since 2011, they may not have SNI support.
+Although [SNI extensions](https://www.cloudflare.com/learning/ssl/what-is-sni/) to the TLS protocol were standardized in 2003, some browsers and operating systems only implemented this extension when TLS 1.1 was released in 2006 (or 2011 for mobile browsers). If your visitors use devices that have not been updated since 2011, they may not have SNI support.
 
 To support non-SNI requests, you can:
 
@@ -35,4 +33,16 @@ To support non-SNI requests, you can:
 
   Note that `Legacy` custom certificates are not compatible with [BYOIP](/byoip/) and that, unlike [Universal SSL](/ssl/edge-certificates/universal-ssl/) or [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/), Cloudflare does not manage issuance and renewal for [custom certificates](/ssl/edge-certificates/custom-certificates/).
 
-* (Paid plans only) [Contact Cloudflare Support](/support/contacting-cloudflare-support/) and request a set of dedicated IPs for your zone.
+* (BYOIP customers only) Enterprise customers can choose to bring their own IP prefix to the Cloudflare network and [specify the default SNI used for any non-SNI handshake in the address map](/byoip/address-maps/setup/#non-sni-support).
+
+* (Paid plans only) [Contact Cloudflare Support](/support/contacting-cloudflare-support/) and request a set of non-SNI IPs for your zone.
+
+## HTTPS records
+
+[HTTPS Service (HTTPS) records](/dns/manage-dns-records/reference/dns-record-types/#svcb-and-https) allow you to provide a client with information about how it should connect to a server upfront, without the need of an initial plaintext HTTP connection.
+
+If your domain has [HTTP/2 or HTTP/3 enabled](/speed/optimization/protocol/) and [proxied DNS records](/dns/proxy-status/), Cloudflare automatically generates HTTPS records on the fly, to advertise to clients how they should connect to your server.
+
+:::caution
+Both HTTP/2 and HTTP/3 configurations also require that you have an SSL/TLS certificate served by Cloudflare. This means that disabling Universal SSL, for example, could impact this behavior.
+:::

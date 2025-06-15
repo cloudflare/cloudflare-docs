@@ -1,0 +1,10 @@
+{
+	"title": "Build and secure your SASE corporate network",
+	"path": "/learning-paths/sase-overview-course/series/evolution-corporate-networks-1/",
+	"priority": 1,
+	"description": "Watch this series and learn all about Cloudflare's Secure Access Service Edge (SASE) platform to learn how it can revolutionize your corporate network.",
+	"products": ["Cloudflare One"],
+	"product_group": "Cloudflare One",
+	"additional_groups": ["Cloudflare One", "Core platform"],
+	"video": true
+}

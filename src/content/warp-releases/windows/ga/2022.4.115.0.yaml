@@ -1,0 +1,27 @@
+releaseNotes: |-
+  *PLEASE NOTE* If you are a Zero Trust customer and have strict firewall rules, you must visit https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#client-orchestration-api and explicitly allow our new Client Orchestration API Endpoints.
+   
+  This release contains new features and improvements from the last release
+   
+  **Notable updates**
+   
+  - Added support for Cloudflare Tunnels users to route traffic to distinct Virtual Networks with overlapping IP ranges
+  - Added ability for users to manually refresh Zero Trust authentication via the Preferences->Account menu
+  - Modified Client Orchestration API Endpoint the client connects to in Zero Trust mode
+  - Modified warp-cli behavior of "connect" and "disconnect" to mimic "enable-always-on" and "disable-always-on" which themselves are copies of how the main toggle switch behaves in the UI
+  - Modified client behavior to no longer do periodic tunnel connectivity checks. These checks frequently caused more problems than they solved.
+  - Fixed issue where UI would not display correctly for users with multiple monitors or in VMWare [win]
+  - Fixed connectivity issues over devices with embedded 4G [win]
+  - Fix issue where Windows device could fail to renew IP address when coming out of sleep [win]
+  - Fixed issue where Zero Trust users would receive a notification to update the client even though upgrades were disabled in settings
+  - Fixed issue where the GUI would show disconnected when it should show Paused
+  - Fixed various issues with warp-diag and improve overall stability
+   
+   
+  **Known issues** 
+  - UI incorrectly Shows Virtual Networks selector when there is only 1 default network. This UI should be hidden unless there are actually multiple networks to choose from.
+version: 2022.4.115.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2022.4.115.0
+packageSize: 90537984
+releaseDate: 2022-04-07T22:42:47.370Z
+platformName: Windows

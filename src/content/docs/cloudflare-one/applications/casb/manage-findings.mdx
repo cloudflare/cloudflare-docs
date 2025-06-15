@@ -1,0 +1,145 @@
+---
+pcx_content_type: how-to
+title: Manage findings
+sidebar:
+  order: 1
+head:
+  - tag: title
+    content: Manage security findings
+---
+
+import { TabItem, Tabs, Details } from "~/components";
+
+Findings are security issues detected within SaaS and cloud applications that involve users, data at rest, and other configuration settings. With Cloudflare CASB, you can review a comprehensive list of findings in Zero Trust and immediately start taking action on the issues found.
+
+## Prerequisites
+
+- You have [added](/cloudflare-one/applications/casb/#add-an-integration) a CASB integration.
+- Your scan has surfaced at least one security finding.
+
+## Posture findings
+
+Posture findings include misconfigurations, unauthorized user activity, and other data security issues.
+
+To view details about the posture findings that CASB found:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **CASB** > **Posture**.
+2. Choose **SaaS** or **Cloud**.
+3. To view details about a finding, select the finding's name
+
+CASB will display details about your posture finding, including the finding type, [severity level](#severity-levels), number of instances, associated integration, current status, and date detected. For more information on each instance of the finding, select **Manage**.
+
+To manage the finding's visibility, you can update the finding's [severity level](#severity-levels) or [hide the finding](#hide-findings) from view. Additionally, some findings provide a remediation guide to resolve the issue or support [creating a Gateway HTTP policy](#resolve-finding-with-a-gateway-policy) to block the traffic.
+
+### Severity levels
+
+Cloudflare CASB labels each finding with one of the following severity levels:
+
+| Severity level | Urgency                                                                      |
+| -------------- | ---------------------------------------------------------------------------- |
+| Critical       | Suggests the finding is something your team should act on today.             |
+| High           | Suggests the finding is something your team should act on this week.         |
+| Medium         | Suggests the finding should be reviewed sometime this month.                 |
+| Low            | Suggests the finding is informational or part of a scheduled review process. |
+
+#### Change the severity level
+
+You can change the severity level for a finding at any time in case the default assignment does not suit your environment:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **CASB** > **Posture**.
+2. Locate the finding you want to modify and select **Manage**.
+3. In the severity level drop-down menu, choose your desired setting (_Critical_, _High_, _Medium_, or _Low_).
+
+The new severity level will only apply to the posture finding within this specific integration. If you added multiple integrations of the same application, the other integrations will not be impacted by this change.
+
+## Content findings
+
+Content findings include instances of potential data exposure as identified by [DLP](/cloudflare-one/policies/data-loss-prevention/).
+
+To view details about the content findings that CASB found:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **CASB** > **Content**.
+2. Choose **SaaS** or **Cloud**.
+3. To view details about a finding, select the finding's name.
+
+CASB will display details about your content finding, including the file name, a link to the file, matching DLP profiles, associated integration, and date detected.
+
+AWS users can configure a [compute account](/cloudflare-one/applications/casb/casb-integrations/aws-s3/#compute-account) to scan for data security resources within their S3 resources.
+
+## View shared files
+
+File findings for some integrations (such as [Microsoft 365](/cloudflare-one/applications/casb/casb-integrations/microsoft-365/#file-sharing) and [Box](/cloudflare-one/applications/casb/casb-integrations/box/#file-sharing)) may link to an inaccessible file. To access the actual shared file:
+
+<Tabs> <TabItem label="Posture finding">
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **CASB** > **Posture**.
+2. Choose **SaaS** or **Cloud**.
+3. Locate the individual finding, then select **Manage**.
+4. In **Active Instances**, select the file name.
+5. In **Shared Links**, select the linked file instance.
+
+</TabItem>
+
+<TabItem label="Content finding">
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **CASB** > **Content**.
+2. Choose **SaaS** or **Cloud**.
+3. Select the file name of the detected asset.
+4. In **Sharing details**, select the linked file instance.
+
+</TabItem> </Tabs>
+
+## Hide findings
+
+After reviewing your findings, you may decide that certain posture findings are not applicable to your organization. Cloudflare CASB allows you to remove findings or individual instances of findings from your list of active issues. CASB will continue to scan for these issues, but any detections will appear in a separate tab.
+
+### Hide a finding
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **CASB** > **Posture**.
+2. Locate the active finding you want to hide.
+3. In the three-dot menu, select **Move to ignore**.
+
+The finding's status will change from **Active** to **Ignored**. CASB will continue to scan for these findings and report detections. You can change ignored findings back to **Active** with the same process at any time.
+
+### Hide an instance of a finding
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **CASB** > **Posture**.
+2. Choose the active finding you want to hide, then select **Manage**.
+3. In **Active**, find the instance you want to hide.
+4. In the three-dot menu, select **Move to hidden**.
+
+The instance will be moved from **Active** to **Hidden** within the finding. If the finding occurs again for the same user, CASB will report the new instance in the **Hidden** tab. You can move hidden instances back to the **Active** tab at any time.
+
+## Resolve finding with a Gateway policy
+
+Using the security findings from CASB allows for fine-grained Gateway policies which prevent future unwanted behavior while still allowing usage that aligns to your organization's security policy. This means going from viewing a CASB finding, like the use of an unapproved application, to preventing or controlling access in minutes.
+
+CASB supports creating a Gateway policy with findings from the [Google Workspace integration](/cloudflare-one/applications/casb/casb-integrations/google-workspace/):
+
+<Details header="Supported CASB findings for Gateway policies">
+
+- Google Workspace: File publicly accessible with edit access
+- Google Workspace: File publicly accessible with view access
+- Google Workspace: File shared outside company with edit access
+- Google Workspace: File shared outside company with view access
+
+</Details>
+
+:::note[Before you begin]
+Ensure that you have [enabled HTTP filtering](/cloudflare-one/policies/gateway/initial-setup/http/) for your organization.
+:::
+
+To create a Gateway policy directly from a CASB finding:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **CASB** > **Posture** or **CASB** > **Content**.
+2. Choose **SaaS** or **Cloud**.
+3. Choose the finding you want to modify, then select **Manage**.
+4. Find the instance you want to block and select its three-dot menu.
+5. Select **Block with Gateway HTTP policy**. A new browser tab will open with a pre-filled HTTP policy.
+   :::note
+   Not all CASB findings will have the **Block with Gateway HTTP policy** option. Unsupported findings can only be resolved from your application dashboard or through your domain provider.
+   :::
+6. (Optional) [Configure the HTTP policy](/cloudflare-one/policies/gateway/http-policies/). For example, if the policy blocks an unsanctioned third-party app, you can apply the policy to some or all users, or only block uploads or downloads.
+7. Select **Save**.
+
+Your HTTP policy will now prevent future instances of the security finding.

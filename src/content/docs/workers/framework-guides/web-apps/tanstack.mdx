@@ -1,0 +1,181 @@
+---
+pcx_content_type: how-to
+title: TanStack
+sidebar:
+  order: 7
+head: []
+tags: ["full-stack"]
+description: Create a TanStack  Router application and deploy it to Cloudflare Workers with Workers Assets.
+---
+
+import { WranglerConfig, Steps, PackageManagers, Details } from "~/components";
+
+## What is TanStack Start?
+
+TanStack Start is a full-stack React framework powered by TanStack Router. It provides a full-document SSR, streaming, server functions, bundling, and more using tools like Nitro and Vite.
+
+## Create a new TanStack Start
+
+TanStack provides a start-basic project. We'll use this starter project to create a new TanStack Start application.
+
+<Steps>
+
+1.  **Create a new TanStack Start project**
+
+    ```sh
+    npx gitpick TanStack/router/tree/main/examples/react/start-basic start-basic
+    cd start-basic
+    npm install
+    ```
+
+        <Details header="How is this project set up?">
+        			This command will clone the TanStack Start basic project to your local machine, change directory to the project, and install the dependencies. TanStack [provides other examples](https://tanstack.com/start/latest/docs/framework/react/quick-start#examples) that you can use by replacing `start-basic` with the example you want to use.
+        </Details>
+
+2.  **Develop locally**
+
+    After creating your project, run the following command in your project directory to start a local development server. By default this starts a local development server on `http://localhost:3000/`
+
+    <PackageManagers type="run" args="dev" />
+
+</Steps>
+
+## Preparing for Deployment to Cloudflare Workers
+
+Whether you created a new TanStack Start project or are using an existing project, you'll need to make some changes to prepare for deployment to Cloudflare Workers.
+
+<Steps>
+
+1. **Install `unenv` & `nitroCloudflareBindings` package**
+
+   [`unenv`](https://github.com/unjs/unenv) is a package that normalizes runtime environments across Node.js, browsers, and edge runtimes like Cloudflare Workers. It’s essential for TanStack Router because certain Node.js APIs are unavailable in the Workers environment. `unenv` offers compatible replacements for those APIs.
+
+   [`nitro-cloudflare-dev`](https://github.com/nitrojs/nitro-cloudflare-dev) enables access to the Cloudflare runtime bindings like R2, D1, and other Cloudflare services in the development server.
+
+   <PackageManagers pkg="unenv nitro-cloudflare-dev" />
+
+2. **Modify the `app.config.ts` file**
+
+   To configure your application for Cloudflare Workers deployment, add the following lines to your `app.config.ts` file:
+
+   ```ts
+   // Required imports
+   import { cloudflare } from 'unenv'
+   import nitroCloudflareBindings from "nitro-cloudflare-dev";
+
+   // Add this new server section to the defineConfig object
+   server: {
+   	preset: "cloudflare-module",
+   	unenv: cloudflare,
+   	modules: [nitroCloudflareBindings],
+   },
+   ```
+
+   This will set the correct build format and runtime environment for Cloudflare.
+
+3. **Add a Wrangler file**
+
+   Create a `wrangler.jsonc` or `wrangler.toml` file in the root of your project, `wrangler.jsonc` is the recommended approach. This file is used to configure the Cloudflare Workers deployment.
+
+   <WranglerConfig>
+
+   ```json
+   {
+   	"$schema": "node_modules/wrangler/config-schema.json",
+   	"name": "start-basic",
+   	"main": "./.output/server/index.mjs",
+   	"compatibility_date": "2025-04-14",
+   	"observability": {
+   		"enabled": true
+   	},
+   	"assets": {
+   		"directory": "./.output/public/"
+   	},
+   	"compatibility_flags": ["nodejs_compat"]
+   }
+   ```
+
+   </WranglerConfig>
+
+   Note that the `directory` key is set to `.output/public/`, which is the folder that will be filled with the build output. Additionally, the `main` key is set to `.output/server/index.mjs`, indicating to Cloudflare Workers where to locate the entry point for your application.
+
+4. **Build the application**
+
+   You must build your application before deploying it to Cloudflare Workers.
+
+   <PackageManagers type="run" args={"build"} />
+
+5. **Deploy the application**
+
+   The command below will deploy your application to Cloudflare Workers and provide a deployment URL. Make sure to rebuild your application after making any changes to see those changes reflected in the deployment.
+
+   ```sh
+   npx wrangler deploy
+   ```
+
+   When making changes in the future ensure you rebuild your application. The deploy will deploy what is in your `.output/public` folder and that only gets updated when you run the build command.
+
+</Steps>
+
+## Using Cloudflare Bindings
+
+<Steps>
+
+1. **Create a helper function to get access to Cloudflare bindings**
+
+   Create a helper function named `cloudflareBindings.ts` in the `src/utils` folder, and paste in the below code. You can create a `utils` folder in your project if you don't already have one. The example assumes you have a KV namespace with a binding name of `CACHE` already created in your account and added to the wrangler file.
+
+   ```ts
+   import type { KVNamespace } from "@cloudflare/workers-types";
+
+   interface CloudflareBindings {
+   	CACHE: KVNamespace;
+   }
+   /**
+    * Will only work when being accessed on the server. Obviously, CF bindings are not available in the browser.
+    * @returns
+    */
+   export async function getBindings() {
+   	if (import.meta.env.DEV) {
+   		const { getPlatformProxy } = await import("wrangler");
+   		const { env } = await getPlatformProxy();
+   		return env as unknown as CloudflareBindings;
+   	}
+
+   	return process.env as unknown as CloudflareBindings;
+   }
+   ```
+
+   <Details header="How is this code working?">
+   	To ensure your bindings work locally with vinxi, the helper function uses
+   	[getPlatformProxy](https://developers.cloudflare.com/workers/wrangler/api/#getplatformproxy)
+   	method from wrangler. This logic is placed under a check if
+   	import.meta.env.DEV is true.
+   </Details>
+
+2. **Example using a Cloudflare Binding**
+
+   Now that you have a helper function to get access to your Cloudflare bindings, you can use them in your application.
+
+   Remember bindings are only available on the server.
+
+   ```ts
+   const bindings = await getBindings();
+   const cache = bindings.CACHE;
+   const queryCount = (await cache.get("queryCount")) || "0";
+   await cache.put("queryCount", String(Number(queryCount) + 1));
+   ```
+
+   A special thanks to GitHub user [backpine](https://github.com/backpine) for the code that supports Cloudflare Bindings in TanStack, which is demonstrated in their [TanStack Start on Workers example](https://github.com/backpine/tanstack-start-on-cloudflare-workers-v0).
+
+</Steps>
+
+#### Optional: Update utils file with deployment URL
+
+This step is required for the `/users` page to function properly in the `start-basic` example. Update the `/src/utils/users.tsx` file with the Cloudflare Workers deployment URL.
+
+```ts
+export const DEPLOY_URL = "YOUR_DEPLOYMENT_URL";
+```
+
+By following the steps above, you will have deployed your TanStack Start application to Cloudflare Workers.

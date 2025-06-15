@@ -2,11 +2,11 @@
 {}
 ---
 
-Bot Management provides access to several [new variables](/ruleset-engine/rules-language/fields/dynamic-fields/) within the expression builder of Ruleset Engine-based products such as [WAF custom rules](/waf/custom-rules/).
+Bot Management provides access to several [new variables](/ruleset-engine/rules-language/fields/reference/?field-category=Bots) within the expression builder of Ruleset Engine-based products such as [WAF custom rules](/waf/custom-rules/).
 
 - **Bot Score** (`cf.bot_management.score`): An integer between 1-99 that indicates [Cloudflare's level of certainty](/bots/concepts/bot-score/) that a request comes from a bot.
 - **Verified Bot** (`cf.bot_management.verified_bot`): A boolean value that is true if the request comes from a good bot, like Google or Bing. Most customers choose to allow this traffic. For more details, see [Traffic from known bots](/waf/troubleshooting/faq/#how-does-the-waf-handle-traffic-from-known-bots).
-- **Serves Static Resource** (`cf.bot_management.static_resource`): An identifier that matches [file extensions](/bots/reference/static-resources/) for many types of static resources. Use this variable if you send emails that retrieve static images.
-- **ja3Hash** (`cf.bot_management.ja3_hash`) and **ja4** (`cf.bot_management.ja4`): A [**JA3/JA4 fingerprint**](/bots/concepts/ja3-ja4-fingerprint/) helps you profile specific SSL/TLS clients across different destination IPs, Ports, and X509 certificates.
+- **Serves Static Resource** (`cf.bot_management.static_resource`): An identifier that matches [file extensions](/bots/additional-configurations/static-resources/) for many types of static resources. Use this variable if you send emails that retrieve static images.
+- **ja3Hash** (`cf.bot_management.ja3_hash`) and **ja4** (`cf.bot_management.ja4`): A [**JA3/JA4 fingerprint**](/bots/additional-configurations/ja3-ja4-fingerprint/) helps you profile specific SSL/TLS clients across different destination IPs, Ports, and X509 certificates.
 - **Bot Detection IDs** (`cf.bot_management.detection_ids`): List of IDs that correlate to the Bot Management heuristic detections made on a request (you can have multiple heuristic detections on the same request).
-- **Verified Bot Categories** (`cf.verified_bot_category`): A string that allows you to segment your verified bot traffic by its [type and purpose](/bots/reference/verified-bot-categories/).
+- **Verified Bot Categories** (`cf.verified_bot_category`): A string that allows you to segment your verified bot traffic by its [type and purpose](/bots/concepts/bot/verified-bots/categories/).

@@ -13,16 +13,21 @@ You can profile memory usage with snapshots in DevTools. Memory snapshots let yo
 memory usage, see how much memory is allocated to different data types, and get details on specific
 objects in memory.
 
+When using DevTools to profile memory, it may be difficult to replicate specific behavior you are
+seeing in production. To mimic production behavior, make sure the requests you send to the local Worker
+are similar to requests in production. This might mean sending a large volume of requests, making requests
+to specific routes, or using production-like data with the [--remote flag](/workers/local-development/#develop-using-remote-resources-and-bindings).
+
 ## Taking a snapshot
 
 To generate a memory snapshot:
 
 - Run `wrangler dev` to start your Worker
-- Hit <kbd>d</kbd> from your terminal to open DevTools
-- Click on the "Memory" tab
+- Press the `D` from your terminal to open DevTools
+- Select on the "Memory" tab
 - Send requests to your Worker to start allocating memory
   - Optionally include a debugger to make sure you can pause execution at the proper time
-- Click `Take snapshot`
+- Select `Take snapshot`
 
 You can now inspect Worker memory.
 
@@ -45,7 +50,7 @@ export default {
 While this code worked well initially, over time you notice slower responses and
 Out of Memory errors. Using DevTools, you can find out if this is a memory leak.
 
-First, as mentioned above, you open DevTools by hitting <kbd>d</kbd> after running `wrangler dev`.
+First, as mentioned above, you open DevTools by pressing the `D` key after running `wrangler dev`.
 Then, you navigate to the "Memory" tab.
 
 Next, generate a large volume of traffic to the Worker by sending requests. You can do this with `curl` or by

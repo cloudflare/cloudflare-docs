@@ -5,6 +5,10 @@ sidebar:
   order: 4
 ---
 
+import { Render } from "~/components";
+
+<Render file="survey" />
+
 With Cloudflare Zero Trust, you can configure Zero Trust policies that rely on additional signals from the WARP client or from third-party endpoint security providers. When device posture checks are configured, users can only connect to a protected application or network resource if they have a managed or healthy device.
 
 ## 1. Enable device posture checks
@@ -55,16 +59,24 @@ C --5 min--> E[Cache] --> F[Gateway policy]
 A --> G[Service provider] --interval--> C
 ```
 
+:::caution
+
+Gateway does not terminate an [active session](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/#configure-warp-sessions-in-gateway) even if a subsequent posture check fails during that session. Gateway only evaluates posture checks at the beginning of a session, and ongoing sessions will remain uninterrupted.
+
+For example, if you establish an SSH session based on a successful posture check, but a posture requirement fails after the session has started, the session will remain active.
+
+:::
+
 ### Expiration
 
-By default, the posture result on Cloudflare remains valid until it is overwritten by new data. You can specify an `expiration` time using our [API](/api/operations/device-posture-rules-update-device-posture-rule). We recommend setting the expiration to be longer than the [polling frequency](#polling-frequency).
+By default, the posture result on Cloudflare remains valid until it is overwritten by new data. You can specify an `expiration` time using our [API](/api/resources/zero_trust/subresources/devices/subresources/posture/methods/update/). We recommend setting the expiration to be longer than the [polling frequency](#polling-frequency).
 
 ### Polling frequency
 
 #### WARP client checks
 
-By default, the WARP client polls the device for status changes every five minutes. To modify the polling frequency, use the API to update the [`schedule`](/api/operations/device-posture-rules-update-device-posture-rule) parameter.
+By default, the WARP client polls the device for status changes every five minutes. To modify the polling frequency, use the API to update the [`schedule`](/api/resources/zero_trust/subresources/devices/subresources/posture/methods/update/) parameter.
 
 #### Service provider checks
 
-When setting up a [service-to-service integration](/cloudflare-one/identity/devices/service-providers/), you will choose a polling frequency to determine how often Cloudflare will query the third-party API. To set the polling frequency via the API, use the [`interval`](/api/operations/device-posture-integrations-update-device-posture-integration) parameter.
+When setting up a [service-to-service integration](/cloudflare-one/identity/devices/service-providers/), you will choose a polling frequency to determine how often Cloudflare will query the third-party API. To set the polling frequency via the API, use the [`interval`](/api/resources/zero_trust/subresources/devices/subresources/posture/subresources/integrations/methods/edit/) parameter.

@@ -30,7 +30,7 @@ If you downloaded and installed the 1.1.1.1 app manually, here are the recommend
 
 1. Update the **1.1.1.1** app to version 6.29 or above. The update ensures that 1.1.1.1 can [co-exist](#what-to-do-with-the-old-app) with the new Cloudflare One Agent app.
 
-2. If you have enabled [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/), ensure that you have a [Do Not Inspect policy](/cloudflare-one/policies/gateway/initial-setup/http/#bypass-inspection-for-incompatible-applications) in place for the following applications:
+2. If you have enabled [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/), ensure that you have a [Do Not Inspect policy](/cloudflare-one/policies/gateway/initial-setup/http/) in place for the following applications:
 
    * *Google Services (Do Not Inspect)*
    * *Google Play Store (Do Not Inspect)*
@@ -75,7 +75,7 @@ If you deployed the 1.1.1.1 app with an [MDM provider](/cloudflare-one/connectio
 
 2. Add the **Cloudflare One Agent** app from the Google Play store. Its application ID is `com.cloudflare.cloudflareoneagent`.
 
-3. Copy your [MDM deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/#android) for the **1.1.1.1** app.
+3. Copy your [MDM deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/#android--chromeos) for the **1.1.1.1** app.
 
 4. Paste the MDM deployment parameters into the **Cloudflare One Agent** app configuration. Make sure that you do not accidentally overwrite the application ID (`com.cloudflare.cloudflareoneagent`).
 
@@ -89,7 +89,7 @@ If you deployed the 1.1.1.1 app with an [MDM provider](/cloudflare-one/connectio
 
 2. Add the **Cloudflare One Agent** app from the App store. Its application ID is `com.cloudflare.cloudflareoneagent`.
 
-3. Copy your [MDM deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/#android) for the **1.1.1.1** app.
+3. Copy your [MDM deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/#ios) for the **1.1.1.1** app.
 
 4. Paste the MDM deployment parameters into the **Cloudflare One Agent** app configuration. Make sure that you do not accidentally overwrite the application ID (`com.cloudflare.cloudflareoneagent`).
 

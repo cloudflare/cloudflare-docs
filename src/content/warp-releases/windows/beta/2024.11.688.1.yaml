@@ -1,0 +1,30 @@
+releaseNotes: |
+  This release contains minor fixes and improvements.
+
+  **Changes and improvements:**
+  - Consumers can now set the tunnel protocol using "warp-cli tunnel protocol set <proto>".
+  - Extended diagnostics collection time in warp-diag to ensure logs are captured reliably.
+  - Improved captive portal support by disabling the firewall during captive portal login flows.
+  - Improved captive portal detection on certain public networks.
+  - Improved reconnection speed when a Cloudflare server is in a degraded state.
+  - Fixed an issue where WARP may fail to remove certificates from the user store in device information only mode.
+  - Ensured at most one powershell instance is opened when fetching the device serial number for posture checks.
+  - Fixed an issue to prevent the daemon from following Windows junctions created by non-admin users that could be used to delete files as SYSTEM user and potentially gain SYSTEM user privileges.
+  - Improved reliability of connection establishment logic under degraded network conditions.
+  - Fixed an issue that caused high memory usage when viewing connection statistics for extended periods of time.
+  - Improved WARP connectivity in environments with virtual interfaces from VirtualBox, VMware, and similar tools.
+  - Reduced connectivity interruptions on WireGuard include split tunnel configurations.
+
+  **Known issues:**
+  - DNS resolution may be broken when the following conditions are all true:
+    - WARP is in Secure Web Gateway without DNS filtering (tunnel-only) mode.
+    - A custom DNS server address is configured on the primary network adapter.
+    - The custom DNS server address on the primary network adapter is changed while WARP is connected.
+
+    To work around this issue, please reconnect the WARP client by toggling off and back on.
+
+version: 2024.11.688.1
+releaseDate: 2024-12-06T00:15:25.077Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2024.11.688.1
+packageSize: 126074880
+platformName: Windows

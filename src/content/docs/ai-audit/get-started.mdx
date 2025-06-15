@@ -1,0 +1,91 @@
+---
+title: Get started
+pcx_content_type: get-started
+sidebar:
+  order: 2
+  group:
+    badge: beta
+head:
+  - tag: title
+    content: Get started with Cloudflare AI Audit
+description: Learn how to set up AI Audit.
+---
+
+import { Details, Render, Steps } from "~/components";
+
+This guide instructs you on how to:
+
+- View AI crawlers that are interacting with pages in your domain (a [Cloudflare zone](/fundamentals/concepts/accounts-and-zones/#zones)).
+- Create a rule to block AI crawlers on your pages.
+
+## Prerequisites
+
+1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/).
+2. [Connect your domain to Cloudflare](/fundamentals/manage-domains/add-site/).
+3. Make sure your domain is [proxying traffic through Cloudflare](/fundamentals/concepts/how-cloudflare-works/#cloudflare-as-a-reverse-proxy).
+
+## 1. Block all AI crawlers
+
+To use AI Audit:
+
+{/* prettier-ignore */}
+<Steps>
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+2. Go to **AI Audit**.
+3. From **Most Popular Paths**, select **Block All**.
+4. From the **Bot traffic** page, under **Block AI Bots**, select **Enable**.
+</Steps>
+
+This feature also enables Cloudflare's [Bot Fight Mode: Block AI bots](/bots/get-started/bot-fight-mode/#block-ai-bots).
+
+You can also create more complex rules when taking action on AI crawlers. For more information on creating more specific rules, refer to [Create a custom rule in the dashboard
+](/waf/custom-rules/create-dashboard/).
+
+<Details header="Which bots will Cloudflare block?">
+	<Render file="list-ai-bots" product="bots" />
+</Details>
+
+:::note
+
+For more details on how this rule interacts with other Cloudflare settings, refer to [How it works](/bots/concepts/bot/#how-it-works).
+
+:::
+
+## 2. Block specific bot categories (Enterprise plan only)
+
+Customers on the Enterprise plan -- and with a [Bot Management subscription](/bots/plans/bm-subscription/) -- can choose to only block specific AI crawlers, while allowing others.
+
+{/* prettier-ignore */}
+<Steps>
+1. Go to the **AI Audit**.
+2. From **Most Popular Paths**, select **Block Some**.
+3. From the **Security rules** page, select **Create rule** > **Custom rules**.
+4. Provide a name for the custom rule. For example, "Block unwanted AI crawlers".
+5. From the **Field** dropdown, select **Verified Bot Category**.
+6. From the **Value** dropdown, select the specific bot category you wish to block.
+   - You can use **And** / **Or** buttons to add additional conditions. For example, you can use multiple **Or** options to include multiple bot categories in the same rule.
+7. From the **Then take action...** section:
+   - For **Choose action**, select **Block**.
+   - For **With response type**, select **Default Cloudflare WAF block page**.
+8. From the **Place at** section:
+   - For **Select order**, select **First**.
+9. Select **Save**.
+</Steps>
+
+This custom rule will only block the AI bots which belong to the [verified bot categories](/bots/concepts/bot/verified-bots/categories/) you have included in your rule (in step 6).
+
+For more information on creating a custom WAF rule, refer to [Create a custom rule in the dashboard](/waf/custom-rules/create-dashboard/).
+
+## 3. Review detected AI crawlers
+
+Review the AI crawlers detected on your site in the **Metrics** tab of the Cloudflare dashboard for key metrics.
+
+Refer to [Detect AI crawlers](/ai-audit/features/detect-ai-crawlers/) for more information.
+
+## Related resources
+
+Refer to the following related resources:
+
+- Cloudflare blog: [Start auditing and controlling the AI models accessing your content](https://blog.cloudflare.com/nl-nl/cloudflare-ai-audit-control-ai-content-crawlers/)
+- Block AI crawlers that do not adhere to recommended guidelines using [Cloudflare AI Labyrinth](/bots/additional-configurations/ai-labyrinth/).
+- [Direct AI crawlers with managed robots.txt](/bots/additional-configurations/managed-robots-txt/).

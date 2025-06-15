@@ -1,0 +1,33 @@
+---
+title: AI Gateway adds Cerebras, ElevenLabs, and Cartesia as new providers
+description: AI Gateway has added Cerebras, ElevenLabs, and Cartesia as new providers.
+products:
+  - ai-gateway
+date: 2025-02-05T12:00:00Z
+---
+
+[AI Gateway](/ai-gateway/) has added three new providers: [Cartesia](/ai-gateway/providers/cartesia/), [Cerebras](/ai-gateway/providers/cerebras/), and [ElevenLabs](/ai-gateway/providers/elevenlabs/), giving you more even more options for providers you can use through AI Gateway. Here's a brief overview of each:
+
+- [Cartesia](/ai-gateway/providers/cartesia/) provides text-to-speech models that produce natural-sounding speech with low latency. 
+- [Cerebras](/ai-gateway/providers/cerebras/) delivers low-latency AI inference to Meta's Llama 3.1 8B and Llama 3.3 70B models.
+- [ElevenLabs](/ai-gateway/providers/elevenlabs/) offers text-to-speech models with human-like voices in 32 languages.
+
+![Example of Cerebras log in AI Gateway](~/assets/images/ai-gateway/cerebras2.png)
+
+To get started with AI Gateway, just update the base URL. Here's how you can send a request to [Cerebras](/ai-gateway/providers/cerebras/) using cURL:
+
+```bash title="Example fetch request"
+curl -X POST https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY/cerebras/chat/completions \
+ --header 'content-type: application/json' \
+ --header 'Authorization: Bearer CEREBRAS_TOKEN' \
+ --data '{
+    "model": "llama-3.3-70b",
+    "messages": [
+        {
+            "role": "user",
+            "content": "What is Cloudflare?"
+        }
+    ]
+}'
+```
+

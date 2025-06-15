@@ -30,8 +30,6 @@ dig example.com caa
 
 ```bash output
 ;; ANSWER SECTION:
-example.com. 3600 IN CAA 0 issue "digicert.com; cansignhttpexchanges=yes"
 example.com. 3600 IN CAA 0 issue "pki.goog; cansignhttpexchanges=yes"
-example.com. 3600 IN CAA 0 issuewild "digicert.com; cansignhttpexchanges=yes"
 example.com. 3600 IN CAA 0 issuewild "pki.goog; cansignhttpexchanges=yes"
 ```

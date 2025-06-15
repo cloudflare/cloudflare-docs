@@ -5,6 +5,8 @@ sidebar:
   order: 4
 ---
 
+import { TabItem, Tabs } from "~/components";
+
 Hyperdrive automatically caches the most popular queries executed against your database, reducing the need to go back to your database (incurring latency and database load) for every query.
 
 ## What does Hyperdrive cache?
@@ -15,22 +17,45 @@ Besides determining the difference between a `SELECT` and an `INSERT`, Hyperdriv
 
 For example, a read query that populates the front page of a news site would be cached:
 
+<Tabs>
+	<TabItem label="PostgreSQL">
 ```sql
 -- Cacheable
-SELECT * FROM articles
-WHERE DATE(published_time) = CURRENT_DATE()
-ORDER BY published_time DESC
-LIMIT 50
+SELECT * FROM articles WHERE DATE(published_time) =
+CURRENT_DATE() ORDER BY published_time DESC LIMIT 50
 ```
+</TabItem>
+<TabItem label="MySQL">
+```sql
+-- Cacheable
+SELECT * FROM articles WHERE DATE(published_time) =
+CURDATE() ORDER BY published_time DESC LIMIT 50
+```
+</TabItem>
+</Tabs>
 
 Mutating queries (including `INSERT`, `UPSERT`, or `CREATE TABLE`) and queries that use [functions designated as `volatile` by PostgreSQL](https://www.postgresql.org/docs/current/xfunc-volatility.html) are not cached:
 
-```sql
--- Not cached
-INSERT INTO users(id, name, email) VALUES(555, 'Matt', 'hello@example.com');
+<Tabs>
+  <TabItem label="PostgreSQL">
+    ```sql
+    -- Not cached
+    INSERT INTO users(id, name, email) VALUES(555, 'Matt', 'hello@example.com');
 
-SELECT LASTVAL(), * FROM articles LIMIT 50;
-```
+    SELECT LASTVAL(), * FROM articles LIMIT 50;
+    ```
+
+  </TabItem>
+  <TabItem label="MySQL">
+    ```sql
+    -- Not cached
+    INSERT INTO users(id, name, email) VALUES(555, 'Thomas', 'hello@example.com');
+
+    SELECT LAST_INSERT_ID(), * FROM articles LIMIT 50;
+    ```
+
+  </TabItem>
+</Tabs>
 
 ## Default cache settings
 
@@ -58,21 +83,58 @@ npx wrangler hyperdrive update my-hyperdrive-id --origin-password my-db-password
 
 You can also configure multiple Hyperdrive connections from a single application: one connection that enables caching for popular queries, and a second connection where you do not want to cache queries, but still benefit from Hyperdrive's latency benefits and connection pooling.
 
-For example, using the [Postgres.js](/hyperdrive/configuration/connect-to-postgres/) driver:
+For example, using database drivers:
 
-```ts
-const client = new Client({
-	connectionString: env.HYPERDRIVE.connectionString,
+<Tabs>
+<TabItem label="PostgreSQL">
+```ts title="index.ts"
+const client = postgres(env.HYPERDRIVE.connectionString);
+// ...
+const clientNoCache = postgres(env.HYPERDRIVE_CACHE_DISABLED.connectionString);
+```
+</TabItem>
+
+<TabItem label="MySQL">
+```ts title="index.ts"
+const connection = createConnection({
+		host: env.HYPERDRIVE.host,
+		user: env.HYPERDRIVE.user,
+		password: env.HYPERDRIVE.password,
+		database: env.HYPERDRIVE.database,
+		port: env.HYPERDRIVE.port
 });
 // ...
-const noCachingClient = new Client({
-	// This represents a Hyperdrive configuration with the cache disabled
-	connectionString: env.HYPERDRIVE_CACHE_DISABLED.connectionString,
+const connectionNoCache = createConnection({
+		host: env.HYPERDRIVE_CACHE_DISABLED.host,
+		user: env.HYPERDRIVE_CACHE_DISABLED.user,
+		password: env.HYPERDRIVE_CACHE_DISABLED.password,
+		database: env.HYPERDRIVE_CACHE_DISABLED.database,
+		port: env.HYPERDRIVE_CACHE_DISABLED.port
 });
 ```
+  </TabItem>
+</Tabs>
+
+The Wrangler configuration remains the same both for PostgreSQL and MySQL.
+
+```jsonc title="wrangler.jsonc"
+		{
+			// Rest of file
+			"hyperdrive": [
+				{
+					"binding": "HYPERDRIVE",
+					"id": "<YOUR_HYPERDRIVE_CACHE_ENABLED_CONFIGURATION_ID>"
+				},
+				{
+					"binding": "HYPERDRIVE_CACHE_DISABLED",
+					"id": "<YOUR_HYPERDRIVE_CACHE_DISABLED_CONFIGURATION_ID>"
+				}
+			]
+		}
+		```
 
 ## Next steps
 
 - Learn more about [How Hyperdrive works](/hyperdrive/configuration/how-hyperdrive-works/).
-- Learn how to [Connect to PostgreSQL](/hyperdrive/configuration/connect-to-postgres/) from Hyperdrive.
+- Learn how to [Connect to PostgreSQL](/hyperdrive/examples/connect-to-postgres/) from Hyperdrive.
 - Review [Troubleshooting common issues](/hyperdrive/observability/troubleshooting/) when connecting a database to Hyperdrive.

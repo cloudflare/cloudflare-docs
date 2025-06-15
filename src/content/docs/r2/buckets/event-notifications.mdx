@@ -12,7 +12,7 @@ Event notifications send messages to your [queue](/queues/) when data in your R2
 Before getting started, you will need:
 
 - An existing R2 bucket. If you do not already have an existing R2 bucket, refer to [Create buckets](/r2/buckets/create-buckets/).
-- An existing queue. If you do not already have a queue, refer to [Create a queue](/queues/get-started/#3-create-a-queue).
+- An existing queue. If you do not already have a queue, refer to [Create a queue](/queues/get-started/#2-create-a-queue).
 - A [consumer Worker](/queues/reference/how-queues-works/#create-a-consumer-worker) or [HTTP pull](/queues/configuration/pull-consumers/) enabled on your Queue.
 
 ### Enable event notifications via Dashboard
@@ -31,7 +31,7 @@ To begin, install [`npm`](https://docs.npmjs.com/getting-started). Then [install
 
 #### Enable event notifications on your R2 bucket
 
-Log in to Wrangler with the [`wrangler login` command](/workers/wrangler/commands/#login). Then add an [event notification rule](/r2/buckets/event-notifications/#event-notification-rules) to your bucket by running the [`r2 bucket notification create` command](/workers/wrangler/commands/#notification-create).
+Log in to Wrangler with the [`wrangler login` command](/workers/wrangler/commands/#login). Then add an [event notification rule](/r2/buckets/event-notifications/#event-notification-rules) to your bucket by running the [`r2 bucket notification create` command](/workers/wrangler/commands/#r2-bucket-notification-create).
 
 ```sh
 npx wrangler r2 bucket notification create <BUCKET_NAME> --event-type <EVENT_TYPE> --queue <QUEUE_NAME>
@@ -232,3 +232,5 @@ Queue consumers receive notifications as [Messages](/queues/configuration/javasc
 ## Notes
 
 - Queues [per-queue message throughput](/queues/platform/limits/) is currently 5,000 messages per second. If your workload produces more than 5,000 notifications per second, we recommend splitting notification rules across multiple queues.
+- Rules without prefix/suffix apply to all objects in the bucket.
+- Overlapping or conflicting rules that could trigger multiple notifications for the same event are not allowed. For example, if you have an `object-create` (or `PutObject` action) rule without a prefix and suffix, then adding another `object-create` (or `PutObject` action) rule with a prefix like `images/` could trigger more than one notification for a single upload, which is invalid.

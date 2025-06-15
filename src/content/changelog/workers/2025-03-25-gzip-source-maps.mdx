@@ -1,0 +1,37 @@
+---
+title: Source Maps are Generally Available
+description: Source maps are now Generally Available with a larger maximum size limit
+products:
+  - workers
+date: 2025-03-25T00:00:00Z
+---
+
+import { WranglerConfig } from "~/components";
+
+Source maps are now Generally Available (GA). You can now be uploaded with a maximum gzipped size of 15 MB.
+Previously, the maximum size limit was 15 MB uncompressed.
+
+Source maps help map between the original source code and the transformed/minified code that gets deployed 
+to production. By uploading your source map, you allow Cloudflare to map the stack trace from exceptions
+ onto the original source code making it easier to debug. 
+
+![Stack Trace without Source Map remapping](src/assets/images/workers-observability/without-source-map.png)
+
+With **no source maps uploaded**: notice how all the Javascript has been minified to one file, so the stack trace is missing information on file name, shows incorrect line numbers, and incorrectly references `js` instead of `ts`.
+
+![Stack Trace with Source Map remapping](src/assets/images/workers-observability/with-source-map.png)
+
+With **source maps uploaded**: all methods reference the correct files and line numbers.
+
+Uploading source maps and stack trace remapping happens out of band from the Worker execution,
+so source maps do not affect upload speed, bundle size, or cold starts. The remapped stack
+traces are accessible through Tail Workers, Workers Logs, and Workers Logpush.
+
+To enable source maps, add the following to your
+[Pages Function's](/pages/functions/source-maps/) or [Worker's](/workers/observability/source-maps/) wrangler configuration:
+
+<WranglerConfig>
+```toml
+upload_source_maps = true
+```
+</WranglerConfig>

@@ -106,15 +106,13 @@ Your Cloudflare Tunnel will terminate at the AWS VPC using your public hostname.
 
 ### 5. Restrict S3 access with an Access policy
 
-1. Go to **Access** > **Applications**. Select **Add an application**.
-2. Select **Self-hosted**.
-3. Enter a name for the application.
-4. In **Application Domain**, enter the public hostname used by your Tunnel. For example, `s3-bucket.<your-domain>.com`.
-5. (Optional) Create a [service token](/cloudflare-one/identity/service-tokens/) to automatically authenticate access to your S3 bucket.
-6. Configure your application, then select **Next**.
-7. Add [Access policies](/cloudflare-one/policies/access/) to determine which users and applications may access your bucket.
-8. Configure the settings per your organization's requirements.
-9. Select **Add application**.
+1. Go to **Access** > **Applications**.
+2. Select **Add an application**.
+3. Select **Self-hosted**.
+4. Enter a name for the application.
+5. Select **Add public hostname** and enter the public hostname used by your Tunnel. For example, `s3-bucket.<your-domain>.com`.
+6. Add [Access policies](/cloudflare-one/policies/access/) to determine which users and applications may access your bucket. You can optionally create a [service token](/cloudflare-one/identity/service-tokens/) policy to automatically authenticate access to your S3 bucket.
+7. Follow the remaining [self-hosted application creation steps](/cloudflare-one/applications/configure-apps/self-hosted-public-app/) to publish the application.
 
 Users and applications that successfully authenticate via Cloudflare Access can access your S3 bucket at `https://s3-bucket.<your-domain>.com`.
 

@@ -1,0 +1,16 @@
+releaseNotes: >-
+  This is a Windows only hotfix from the 2023.3.381.0 release
+   
+  **Notable updates**
+
+  - Fixes an issue that would cause some routes to not work properly after
+  modifying split tunnel configuration or enabling managed network detection.
+   
+  **Known issues**
+
+  No known issues
+version: 2023.3.412.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2023.3.412.0
+packageSize: 106668032
+releaseDate: 2023-04-12T20:10:53.074Z
+platformName: Windows

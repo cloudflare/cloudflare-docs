@@ -1,0 +1,54 @@
+---
+pcx_content_type: changelog
+title: Changelog
+sidebar:
+  order: 153
+---
+
+import { ProductChangelog } from "~/components";
+
+{/* <!-- Actual content lives in /src/content/changelog/load-balancing/. Update the file there for new entries to appear here. */}
+
+<ProductChangelog product="load-balancing" />
+
+## 2025-04-15
+
+**Introducing Support for Orange-Clouded Origin Resolution**
+
+Newly created Cloudflare Load Balancers will resolve orange-clouded origin addresses, provided the origins belong to the same account and zone as the Load Balancer. Existing Load Balancers will continue using the current resolution method. If ownership validation fails, the new system falls back to the existing behavior and defaults to a gray-clouded (DNS-only) lookup, typically resolving to anycast addresses.
+
+## 2025-03-13
+
+**Update to Load Balancing analytics**
+
+Load Balancing request rates in analytics may decrease for some customers as an improvement is made to our infrastructure. This decrease in Load Balancing analytics does not indicate a decrease in HTTP requests received.
+
+## 2025-02-20
+
+**Zone name added to Load Balancing API responses**
+
+Load Balancing API responses for Load Balancers now include a `zone_name` property, which provides the name of the zone in the response data.
+
+## 2025-02-10
+
+**Fix for Cloudflare Tunnel Consistency**
+
+Fixes to improve the consistency of Cloudflare Tunnel handling within Cloudflare Load Balancers. These changes ensure more reliable and predictable routing, particularly when tunnels are involved.
+
+## 2025-01-24
+
+**Update to Cloudflare Tunnel Steering**
+
+Introduced changes to the resolution of proxied domains that are backed by Cloudflare Tunnels on the same zone. These changes correct how orange-clouded records are steered to Cloudflare Tunnels via Cloudflare Load Balancers.
+
+## 2025-01-16
+
+**Update to Pool Health Monitoring**
+
+We made changes to how we resolve and monitor proxied origins to assess pool health. Our analysis indicates no impact to customer configurations or operations. Contact customer support if you notice any unexpected behavior.
+
+## 2024-12-20
+
+**Load Balancing with the China Network**
+
+You can now enable load balancers to be deployed to the [China Network](/china-network/). Refer to the [documentation](/load-balancing/additional-options/load-balancing-china/) for more details.

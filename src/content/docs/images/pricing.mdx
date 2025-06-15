@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-By default, all users are on the Images Free plan. The Free plan includes access to the transformations feature, which lets you optimize images stored outside of Images, like in R2. 
+By default, all users are on the Images Free plan. The Free plan includes access to the transformations feature, which lets you optimize images stored outside of Images, like in R2.
 
 The Paid plan allows transformations, as well as access to storage in Images.
 
@@ -24,12 +24,12 @@ On the Free plan, you can request up to 5,000 unique transformations each month 
 Once you exceed 5,000 unique transformations:
 
 - Existing transformations in cache will continue to be served as expected.
-- New transformations will return a `9423` error. If your source image is from the same domain where the transformation is served, then you can use the [`onerror` parameter](/images/transform-images/transform-via-url/#onerror) to redirect to the original image.
+- New transformations will return a `9422` error. If your source image is from the same domain where the transformation is served, then you can use the [`onerror` parameter](/images/transform-images/transform-via-url/#onerror) to redirect to the original image.
 - You will not be charged for exceeding the limits in the Free plan.
 
 To request more than 5,000 unique transformations each month, you can purchase an Images Paid plan.
 
-## Images Paid 
+## Images Paid
 
 When you purchase an Images Paid plan, you can choose your own storage or add storage in Images.
 
@@ -61,7 +61,7 @@ The `format` parameter counts as only 1 billable transformation, even if multipl
 
 A retail website has 1,000 original product images that get served in 5 different sizes each month. This results in 5,000 unique transformations — or a cost of $2.50 per month.
 
-### Images Stored 
+### Images Stored
 
 Storage in Images is available only with an Images Paid plan. You can purchase storage in increments of $5 for every 100,000 images stored per month.
 
@@ -69,7 +69,7 @@ You can create predefined variants to specify how an image should be resized, su
 
 Only uploaded images count toward Images Stored; defining variants will not impact your storage limit.
 
-### Images Delivered 
+### Images Delivered
 
 For images that are stored in Images, you will incur $1 for every 100,000 images delivered per month. This metric does not include transformed images that are stored in remote sources.
 

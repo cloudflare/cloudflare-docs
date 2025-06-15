@@ -5,6 +5,6 @@
 
 import { GlossaryTooltip } from "~/components"
 
-A partial (`CNAME`) setup allows you to use [Cloudflare's reverse proxy](/fundamentals/concepts/how-cloudflare-works/) while maintaining your primary and authoritative DNS provider.
+A partial (CNAME) setup allows you to use [Cloudflare's reverse proxy](/fundamentals/concepts/how-cloudflare-works/) while maintaining your primary and authoritative DNS provider.
 
-Use this option to <GlossaryTooltip term="proxy status">proxy</GlossaryTooltip> only individual subdomains through Cloudflare's global network when you cannot change your authoritative DNS provider.
+Use this option to <GlossaryTooltip term="proxy status">proxy</GlossaryTooltip> only individual subdomains through Cloudflare when you cannot change your authoritative DNS provider. You will be able to create A, AAAA, and CNAME records, which are the DNS record types that can be [proxied](/dns/proxy-status/).

@@ -22,7 +22,7 @@ This guide covers how to configure [Ironclad](https://support.ironcladapp.com/hc
 4. For the authentication protocol, select **SAML**.
 5. Select **Add application**.
 6. Copy the **SSO Endpoint** and **Public key**.
-7. Keep this window open without selecting **Select configuration**. You will finish this configuration in step [3. Finish adding a SaaS application to Cloudflare Zero Trust](#3-finish-adding-a-saas-application-to-cloudflare-zero-trust).
+7. Keep this window open. You will finish this configuration in step [3. Finish adding a SaaS application to Cloudflare Zero Trust](#3-finish-adding-a-saas-application-to-cloudflare-zero-trust).
 
 ## 2. Add a SAML SSO provider to Ironclad
 
@@ -40,9 +40,8 @@ This guide covers how to configure [Ironclad](https://support.ironcladapp.com/hc
    * **Entity ID**: `ironcladapp.com`
    * **Assertion Consumer Service URL**: Callback from Ironclad SAML SSO set-up.
    * **Name ID format**: *Email*
-2. Select **Save configuration**.
-3. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
-4. Select **Done**.
+2. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
+3. Save the application.
 
 ## 4. Add a test user to Ironclad and test the integration
 

@@ -1,7 +1,6 @@
 ---
 updated: 2023-06-14
 difficulty: Beginner
-content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: OpenAI GPT function calling with JavaScript and Cloudflare Workers
 languages:
@@ -43,7 +42,7 @@ Create a Worker project in the command line:
 	product="workers"
 	params={{
 		category: "hello-world",
-		type: "Hello World Worker",
+		type: "Worker only",
 		lang: "JavaScript",
 	}}
 />
@@ -62,9 +61,7 @@ You will also need an OpenAI account and API key for this tutorial. If you do no
 
 With your Worker project created, make your first request to OpenAI. You will use the OpenAI node library to interact with the OpenAI API. In this project, you will also use the Cheerio library to handle processing the HTML content of websites
 
-```sh
-npm install openai cheerio
-```
+<PackageManagers pkg="openai cheerio" />
 
 Now, define the structure of your Worker in `index.js`:
 
@@ -98,7 +95,7 @@ async fetch(request, env, ctx) {
 },
 ```
 
-Use [`wrangler secret put`](/workers/wrangler/commands/#put-3) to set `OPENAI_API_KEY`. This [secret's](/workers/configuration/secrets/) value is the API key you created earlier in the OpenAI dashboard:
+Use [`wrangler secret put`](/workers/wrangler/commands/#put) to set `OPENAI_API_KEY`. This [secret's](/workers/configuration/secrets/) value is the API key you created earlier in the OpenAI dashboard:
 
 ```sh
 npx wrangler secret put <OPENAI_API_KEY>

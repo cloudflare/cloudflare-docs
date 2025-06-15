@@ -1,0 +1,23 @@
+releaseNotes: |
+  This release contains minor fixes and improvements.
+
+  **Notable updates:**
+  - Added the ability to customize PCAP options in `warp-cli`.
+  - Added a list of installed applications in `warp-diag`.
+  - Added a summary of `warp-dex` traceroute results in its JSON output.
+  - Improved the performance of firewall operations when enforcing Split Tunnels configuration.
+  - Fixed an issue where the DNS logs were not being cleared when the user switched configurations.
+  - Fixed an issue where clients using service tokens failed to retry after a network change.
+  - Fixed a known issue which required users to re-register when an older single configuration MDM file was deployed after deploying the newer, multiple configuration format.
+  - Fixed an issue which prevented the use of private IP ranges that overlapped with end users' home networks.
+  - Deprecated `warp-cli` commands have been removed. If you have any workflows that use the deprecated commands, update to the new commands where necessary.
+
+  **Known issues:**
+  - Cloudflare is investigating temporary networking issues on macOS 15 (Sequoia) that seem to affect some users.
+  - Using MASQUE as the tunnel protocol may be incompatible if your organization has Regional Services enabled.
+
+version: 2024.8.457.0
+releaseDate: 2024-09-26T16:48:59.669Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2024.8.457.0
+packageSize: 77755150
+platformName: macOS

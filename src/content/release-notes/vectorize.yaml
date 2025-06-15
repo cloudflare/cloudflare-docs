@@ -1,0 +1,133 @@
+---
+link: "/vectorize/platform/changelog/"
+productName: Vectorize
+productLink: "/vectorize/"
+productArea: Developer platform
+productAreaLink: /workers/platform/changelog/platform/
+entries:
+  - publish_date: "2024-12-20"
+    title: Added support for index name reuse
+    description: |-
+      Vectorize now supports the reuse of index names within the account. An index can be created using the same name as an index that is in a deleted state.
+
+  - publish_date: "2024-12-19"
+    title: Added support for range queries in metadata filters
+    description: |-
+      Vectorize now supports `$lt`, `$lte`, `$gt`, and `$gte` clauses in [metadata filters](/vectorize/reference/metadata-filtering/).
+
+  - publish_date: "2024-11-13"
+    title: Added support for $in and $nin metadata filters
+    description: |-
+      Vectorize now supports `$in` and `$nin` clauses in [metadata filters](/vectorize/reference/metadata-filtering/).
+
+  - publish_date: "2024-10-28"
+    title: Improved query latency through REST API
+    description: |-
+      Vectorize now has a significantly improved query latency through REST API:
+      * [Query vectors](/api/resources/vectorize/subresources/indexes/methods/query/).
+      * [Get vector by identifier](/api/resources/vectorize/subresources/indexes/methods/get_by_ids/).
+
+  - publish_date: "2024-10-24"
+    title: Vectorize increased limits
+    description: |-
+      Developers with a Workers Paid plan can:
+      * Create 50,000 indexes per account, up from the previous 100 limit.
+      * Create 50,000 namespaces per index, up from the previous 100 limt. This applies to both existing and newly created indexes.
+
+      Refer to [Limits](/vectorize/platform/limits/) to learn about Vectorize's limits.
+
+  - publish_date: "2024-09-26"
+    title: Vectorize GA
+    description: |-
+      Vectorize is now generally available
+
+  - publish_date: "2024-09-16"
+    title: Vectorize is available on Workers Free plan
+    description: |-
+      Developers with a Workers Free plan can:
+      * Query up to 30 million queried vector dimensions / month per account.
+      * Store up to 5 million stored vector dimensions per account.
+
+  - publish_date: "2024-08-14"
+    title: Vectorize v1 is deprecated
+    description: |
+      With the new Vectorize storage engine, which supports substantially larger indexes (up to 5 million vector dimensions) and reduced query latencies, we are deprecating the original "legacy" (v1) storage subsystem.
+
+      To continue interacting with legacy (v1) indexes in [wrangler versions after `3.71.0`](https://github.com/cloudflare/workers-sdk/releases/tag/wrangler%403.71.0), pass the `--deprecated-v1` flag.
+
+      For example: 'wrangler vectorize --deprecated-v1' flag to `create`, `get`, `list`, `delete` and `insert` vectors into legacy Vectorize v1 indexes. There is no currently no ability to migrate existing indexes from v1 to v2. Existing Workers querying or clients to use the REST API against legacy Vectorize indexes will continue to function.
+  - publish_date: "2024-08-14"
+    title: Vectorize v2 in public beta
+    description: |-
+      Vectorize now has a new underlying storage subsystem (Vectorize v2) that supports significantly larger indexes, improved query latency, and changes to metadata filtering.
+
+      Specifically:
+      - Indexes can now support up to 5 million vector dimensions each, up from 200,000 per index.
+      - Metadata filtering now requires explicitly defining the metadata properties that will be filtered on.
+      - Reduced query latency: queries will now return faster and with lower-latency.
+      - You can now return [up to 100 results](/vectorize/reference/client-api/#query-vectors) (`topK`), up from the previous limit of 20.
+  - publish_date: "2024-01-17"
+    title: HTTP API query vectors request and response format change
+    description: |-
+      Vectorize `/query` HTTP endpoint has the following changes:
+      - `returnVectors` request body property is deprecated in favor of `returnValues` and `returnMetadata` properties.
+      - Response format has changed to the below format to match [Workers API change]:(/workers/configuration/compatibility-flags/#vectorize-query-with-metadata-optionally-returned)
+
+      ```json
+      {
+        "result": {
+          "count": 1,
+          "matches": [
+            {
+              "id": "4",
+              "score": 0.789848214,
+              "values": [ 75.0999984741211, 67.0999984741211, 29.899999618530273],
+              "metadata": {
+                "url": "/products/sku/418313",
+                "streaming_platform": "netflix"
+              }
+            }
+          ]
+        },
+        "errors": [],
+        "messages": [],
+        "success": true
+      }
+      ```
+  - publish_date: "2023-12-06"
+    title: Metadata filtering
+    description: |-
+      Vectorize now supports [metadata filtering](/vectorize/reference/metadata-filtering) with equals (`$eq`) and not equals (`$neq`) operators. Metadata filtering limits `query()` results to only vectors that fulfill new `filter` property.
+      ```ts
+      let metadataMatches = await env.YOUR_INDEX.query(queryVector,
+        {
+          topK: 3,
+          filter: { streaming_platform: "netflix" },
+          returnValues: true,
+          returnMetadata: true
+        })
+      ```
+
+      Only new indexes created on or after 2023-12-06 support metadata filtering. Currently, there is no way to migrate previously created indexes to work with metadata filtering.
+  - publish_date: "2023-11-08"
+    title: Metadata API changes
+    description: |-
+      Vectorize now supports distinct `returnMetadata` and `returnValues` arguments when querying an index, replacing the now-deprecated `returnVectors` argument. This allows you to return metadata without needing to return the vector values, reducing the amount of unnecessary data returned from a query. Both `returnMetadata` and `returnValues` default to false.
+
+      For example, to return only the metadata from a query, set `returnMetadata: true`.
+
+      ```ts
+      let matches = await env.YOUR_INDEX.query(queryVector, { topK: 5, returnMetadata: true })
+      ```
+
+      New Workers projects created on or after 2023-11-08 or that [update the compatibility date](/workers/configuration/compatibility-dates/) for an existing project will use the new return type.
+  - publish_date: "2023-10-03"
+    title: Increased indexes per account limits
+    description: |-
+      You can now create up to 100 Vectorize indexes per account. Read the [limits documentation](/vectorize/platform/limits/) for details on other limits, many of which will increase during the beta period.
+  - publish_date: "2023-09-27"
+    title: Vectorize now in public beta
+    description: |-
+      Vectorize, Cloudflare's vector database, is [now in public beta](https://blog.cloudflare.com/vectorize-vector-database-open-beta/). Vectorize allows you to store and efficiently query vector embeddings from AI/ML models from [Workers AI](/workers-ai/), OpenAI, and other embeddings providers or machine-learning workflows.
+
+      To get started with Vectorize, [see the guide](/vectorize/get-started/).

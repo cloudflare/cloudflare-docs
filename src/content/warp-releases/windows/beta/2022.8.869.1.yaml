@@ -1,0 +1,20 @@
+releaseNotes: |-
+  This release contains bug fixes from the previous beta (2022.8.624.1). Please
+  note that the issue preventing the client from working with Windows versions
+  older than 10.0.19042 is now fixed in this release. We also wanted to call out
+  that we've made server side changes to significantly reduce captcha issues for
+  users with IPv6 enabled (no client related change but wanted to call out the
+  work).
+
+  **Notable updates**
+   
+  - Added ability for ZT Administrators to specify if they want embedded WebView2 browser to be used instead of the default system browser. See [Deployment documentation](https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/#install-warp-on-windows) for more information
+  - Fixed failure to reconnect to WARP due to DNS stub server AddrInUse failures
+   
+  **Known issues**
+  - No known issues
+version: 2022.8.869.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2022.8.869.1
+packageSize: 106332160
+releaseDate: 2022-09-12T19:49:11.038Z
+platformName: Windows

@@ -12,11 +12,6 @@ head:
 
 ---
 
-:::caution[Warning]
-
-Cloudflare Aegis is available in early access to Enterprise customers. Contact your account team to request access.
-:::
-
 When you use Cloudflare [as a reverse proxy](/fundamentals/concepts/how-cloudflare-works/#how-cloudflare-works-as-a-reverse-proxy), [Cloudflare's global network](https://www.cloudflare.com/network/) sits between client requests and your origin servers.
 
 ```mermaid
@@ -39,9 +34,8 @@ Ingress refers to the data center where the client request lands on, based on In
 
 Traditionally, Cloudflare maintains a very large pool of egress IPs that are used by all Cloudflare customers and are [publicly documented](https://www.cloudflare.com/ips/). With Aegis, Cloudflare provides dedicated egress IP addresses that are reserved for you.
 
-:::caution[Warning]
-
-[BYOIP](/byoip/) cannot be used as an Aegis egress IP.
+:::note
+Each dedicated egress pool can consist of either IPs from a [BYOIP prefix](/byoip/) or Cloudflare-leased IPs. A single dedicated egress pool cannot contain both BYOIPs and leased IPs.
 :::
 
 ## Benefits

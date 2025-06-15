@@ -1,18 +1,19 @@
 ---
 title: Mistral AI
 pcx_content_type: get-started
-sidebar:
-  badge:
-    text: Beta
 ---
+
+import { Render } from "~/components";
 
 [Mistral AI](https://mistral.ai) helps you build quickly with Mistral's advanced AI models.
 
 ## Endpoint
 
-`https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/mistral`
+```txt
+https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/mistral
+```
 
-## What you need
+## Prerequisites
 
 When making requests to the Mistral AI, you will need:
 
@@ -48,7 +49,7 @@ curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/mist
 }'
 ```
 
-### JavaScript
+### Use `@mistralai/mistralai` package with JavaScript
 
 If you are using the `@mistralai/mistralai` package, you can set your endpoint like this:
 
@@ -70,3 +71,17 @@ await client.chat.create({
 	],
 });
 ```
+
+<Render
+	file="chat-completions-providers"
+	product="ai-gateway"
+	params={{
+		name: "Mistral",
+		jsonexample: `
+{
+	"model": "mistral/{model}"
+}`
+
+    }}
+
+/>

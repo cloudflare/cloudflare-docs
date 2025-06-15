@@ -1,0 +1,48 @@
+releaseNotes: >-
+  This release contains minor fixes and improvements.
+
+
+  **Notable updates**
+
+  - Added the ability to customize PCAP options in the warp-cli.
+
+  - Added a list of installed applications in warp-diag.
+
+  - Added a summary of warp-dex traceroute results in its JSON output.
+
+  - Improved the performance of firewall operations when enforcing split tunnel
+  configuration.
+
+  - Reduced the time it takes for a WARP client update to complete.
+
+  - Fixed an issue where clients using service tokens failed to retry the
+  initial connection when there is no network connectivity on startup.
+
+  - Fixed issues where incorrect DNS server addresses were being applied
+  following reboots and network changes. Any incorrect static entries set by
+  previous WARP versions must be manually reverted.
+
+  - Fixed a known issue which required users to re-register when an older single
+  configuration MDM file was deployed after deploying the newer, multiple
+  configuration format.
+
+  - Deprecated warp-cli commands have been removed. If you have any workflows
+  that use the deprecated commands, please update to the new commands where
+  necessary.
+
+
+  **Known issues**
+
+  - Using MASQUE as the tunnel protocol may be incompatible if your organization
+  has Regional Services enabled.
+
+  - DNS resolution may be broken when the following condition are all true:
+      - WARP is in Secure Web Gateway without DNS filtering (tunnel-only) mode.
+      - A custom DNS server address is configured on the primary network adapter.
+      - The custom DNS server address on the primary network adapter is changed while WARP is connected.
+    To work around this issue, please reconnect the WARP client by toggling off and back on.
+version: 2024.8.458.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2024.8.458.0
+packageSize: 120889344
+releaseDate: 2024-09-26T18:15:24.165Z
+platformName: Windows

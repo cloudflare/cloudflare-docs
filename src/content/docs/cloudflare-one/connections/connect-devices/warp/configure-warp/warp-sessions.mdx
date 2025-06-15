@@ -7,7 +7,7 @@ sidebar:
 
 import { Render, Badge } from "~/components";
 
-Cloudflare Zero Trust enforces WARP client reauthentication on a per-application basis, unlike legacy VPNs which treat it as a global setting. You can configure WARP session timeouts for your [Access applications](#configure-warp-sessions-in-access-) or as part of your [Gateway policies](#configure-warp-sessions-in-gateway).
+Cloudflare Zero Trust enforces WARP client reauthentication on a per-application basis, unlike legacy VPNs which treat it as a global setting. You can configure WARP session timeouts for your [Access applications](#configure-warp-sessions-in-access) or as part of your [Gateway policies](#configure-warp-sessions-in-gateway).
 
 <Render file="warp/warp-sessions-intro" />
 
@@ -32,7 +32,7 @@ To configure WARP sessions for Access applications:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **WARP Client**.
 2. In **Device enrollment permissions**, select **Manage**.
-3. Go to the **Authentication** tab and enable **WARP authentication identity**.
+3. Go to the **Login methods** tab and enable **WARP authentication identity**.
 4. Under **Session duration**, choose a session timeout value. This timeout will apply to all Access applications that have WARP authentication enabled.
 
 :::note

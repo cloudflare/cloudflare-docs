@@ -258,7 +258,10 @@ It always contains a `success` property, either true or false, indicating whethe
 	"hostname": "example.com",
 	"error-codes": [],
 	"action": "login",
-	"cdata": "sessionid-123456789"
+	"cdata": "sessionid-123456789",
+	"metadata":{
+		"ephemeral_id": "x:9f78e0ed210960d7693b167e"
+	}
 }
 ```
 
@@ -269,6 +272,7 @@ It always contains a `success` property, either true or false, indicating whethe
 - `action` is the customer widget identifier passed to the widget on the client side. This is used to differentiate widgets using the same sitekey in analytics. Its integrity is protected by modifications from an attacker. It is recommended to validate that the action matches an expected value.
 - `cdata` is the customer data passed to the widget on the client side. This can be used by the customer to convey state. It is integrity protected by modifications from an attacker.
 - `error-codes` is a list of errors that occurred.
+- (Enterprise only) `ephemeral_id` returns the [Ephemeral ID](/turnstile/concepts/ephemeral-id/) in siteverify.
 
 In case of a validation failure, the response should be similar to the following:
 
@@ -290,7 +294,7 @@ A validation error is indicated by having the `success` property set to `false`.
 | <div style="width:200px">Error code</div> | Description                                                                                                                                                                 |
 | ----------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `missing-input-secret`                    | The secret parameter was not passed.                                                                                                                                        |
-| `invalid-input-secret`                    | The secret parameter was invalid or did not exist.                                                                                                                          |
+| `invalid-input-secret`                    | The secret parameter was invalid, did not exist, or is a [testing secret key](/turnstile/troubleshooting/testing) with a non-testing response.                              |
 | `missing-input-response`                  | The response parameter (token) was not passed.                                                                                                                              |
 | `invalid-input-response`                  | The response parameter (token) is invalid or has expired. Most of the time, this means a fake token has been used. If the error persists, contact customer support.         |
 | `bad-request`                             | The request was rejected because it was malformed.                                                                                                                          |

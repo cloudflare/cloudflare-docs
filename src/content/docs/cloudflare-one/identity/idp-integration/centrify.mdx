@@ -7,6 +7,8 @@ Centrify secures access to infrastructure, DevOps, cloud, and other modern enter
 
 ## Set up Centrify as an OIDC provider
 
+### 1. Create an application in Centrify
+
 1. Log in to the Centrify administrator panel.
 
 2. Select **Apps**.
@@ -54,19 +56,23 @@ Centrify secures access to infrastructure, DevOps, cloud, and other modern enter
 
 16. Select the roles to grant access to your application.
 
-17. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
+### 2. Add Centrify to Zero Trust
 
-18. Under **Login methods**, select **Add new**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
 
-19. Paste in the **Client ID**, **Client Secret**, **Centrify account URL** and **Application ID**.
+2. Under **Login methods**, select **Add new**.
 
-20. (Optional) Under **Optional configurations**, enter [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#oidc-claims) that you wish to add to your users' identity. This information will be available in the [user identity endpoint](/cloudflare-one/identity/authorization-cookie/application-token/#user-identity).
+3. Paste in the **Client ID**, **Client Secret**, **Centrify account URL** and **Application ID**.
 
-21. Select **Save**.
+4. (Optional) To enable SCIM, refer to [Synchronize users and groups](/cloudflare-one/identity/idp-integration/generic-oidc/#synchronize-users-and-groups).
+
+5. (Optional) Under **Optional configurations**, enter [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#oidc-claims) that you wish to add to your users' identity. This information will be available in the [user identity endpoint](/cloudflare-one/identity/authorization-cookie/application-token/#user-identity).
+
+6. Select **Save**.
 
 To test that your connection is working, go to **Authentication** > **Login methods** and select **Test** next to the login method you want to test.
 
-## **Example API Config**
+## Example API Config
 
 ```json
 {

@@ -4,7 +4,7 @@ pcx_content_type: tutorial
 updated: 2024-10-17
 ---
 
-import { Render, PackageManagers } from "~/components";
+import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 This guide will walk you through setting up and deploying a Workers AI project. You will use [Workers](/workers/), an AI Gateway binding, and a large language model (LLM), to deploy your first AI-powered application on the Cloudflare global network.
 
@@ -27,7 +27,7 @@ Running `npm create cloudflare@latest` will prompt you to install the create-clo
 	product="workers"
 	params={{
 		category: "hello-world",
-		type: "Hello World Worker",
+		type: "Worker only",
 		lang: "TypeScript",
 	}}
 />
@@ -35,7 +35,7 @@ Running `npm create cloudflare@latest` will prompt you to install the create-clo
 This will create a new `hello-ai` directory. Your new `hello-ai` directory will include:
 
 - A "Hello World" Worker at `src/index.ts`.
-- A `wrangler.toml` configuration file.
+- A [Wrangler configuration file](/workers/wrangler/configuration/)
 
 Go to your application directory:
 
@@ -47,12 +47,16 @@ cd hello-ai
 
 You must create an AI binding for your Worker to connect to Workers AI. Bindings allow your Workers to interact with resources, like Workers AI, on the Cloudflare Developer Platform.
 
-To bind Workers AI to your Worker, add the following to the end of your `wrangler.toml` file:
+To bind Workers AI to your Worker, add the following to the end of your [Wrangler configuration file](/workers/wrangler/configuration/):
+
+<WranglerConfig>
 
 ```toml title="wrangler.toml"
 [ai]
 binding = "AI"
 ```
+
+</WranglerConfig>
 
 Your binding is [available in your Worker code](/workers/reference/migrate-to-module-workers/#bindings-in-es-modules-format) on [`env.AI`](/workers/runtime-apis/handlers/fetch/).
 
@@ -66,7 +70,7 @@ Update the `index.ts` file in your `hello-ai` application directory with the fol
 
 ```typescript title="src/index.ts" {78-81}
 export interface Env {
-	// If you set another name in wrangler.toml as the value for 'binding',
+	// If you set another name in the [Wrangler configuration file](/workers/wrangler/configuration/) as the value for 'binding',
 	// replace "AI" with the variable name you defined.
 	AI: Ai;
 }
@@ -74,13 +78,18 @@ export interface Env {
 export default {
 	async fetch(request, env): Promise<Response> {
 		// Specify the gateway label and other options here
-		const response = await env.AI.run("@cf/meta/llama-3.1-8b-instruct-fast", {
-			prompt: "What is the origin of the phrase Hello, World",
-			gateway: {
-				id: "GATEWAYID", // Use your gateway label here
-				skipCache: true, // Optional: Skip cache if needed
+		const response = await env.AI.run(
+			"@cf/meta/llama-3.1-8b-instruct-fast",
+			{
+				prompt: "What is the origin of the phrase Hello, World",
 			},
-		});
+			{
+				gateway: {
+					id: "GATEWAYID", // Use your gateway label here
+					skipCache: true, // Optional: Skip cache if needed
+				},
+			},
+		);
 
 		// Return the AI response as a JSON object
 		return new Response(JSON.stringify(response), {

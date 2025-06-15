@@ -1,0 +1,41 @@
+---
+type: example
+summary: Modify the fetch request to follow redirects from the origin, ensuring the client receives the final response.
+goal:
+  - Routing
+operation:
+  - Redirect
+products:
+  - Snippets
+pcx_content_type: example
+title: Follow redirects from the origin
+description: Modify the fetch request to follow redirects from the origin, ensuring the client receives the final response.
+---
+
+```js wrap
+export default {
+	async fetch(request) {
+		// Define fetch options to follow redirects
+		const fetchOptions = {
+			redirect: "follow", // Ensure fetch follows redirects automatically. Each subrequest in a redirect chain counts against the subrequest limit.
+		};
+
+		// Make the fetch request to the origin
+		const response = await fetch(request, fetchOptions);
+
+		// Log the final URL after redirects (optional, for debugging)
+		console.log(`Final URL after redirects: ${response.url}`);
+
+		// Return the final response to the client
+		return response;
+	},
+};
+```
+
+This template is ready for use and should fit most redirect-following scenarios.
+
+It ensures the Snippet transparently follows redirects issued by the origin server. The `redirect: "follow"` option of the [Fetch API](/workers/runtime-apis/fetch/) ensures automatic handling of `3xx` redirects, returning the final response. If the origin response is not a redirect, the original content is returned.
+
+:::note
+Snippets have a [maximum number of subrequests per invocation](/rules/snippets/#availability) which depends on your plan. If the origin server issues multiple redirects, each redirect subrequest will count towards this limit. When the number of subrequests exceeds the limit for your Cloudflare plan, you will receive a [1202 error](/rules/snippets/errors/#error-1202-snippets-exceeded-subrequests-limit). Ensure your origin configuration minimizes unnecessary redirects.
+:::

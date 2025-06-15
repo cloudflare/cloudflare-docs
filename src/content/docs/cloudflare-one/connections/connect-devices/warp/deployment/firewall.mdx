@@ -17,9 +17,14 @@ The WARP client connects to Cloudflare via a standard HTTPS connection outside t
 
 ## DoH IP
 
-All DNS requests through WARP are sent outside the tunnel via DoH (DNS over HTTPS). The following IP addresses must be reachable for DNS to work correctly.
+:::note
+Only required for [Gateway with DoH](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-doh) mode.
+:::
 
-<Render file="warp/doh-ips" />
+In [Gateway with DoH](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-doh) mode, the WARP client sends DNS requests to Gateway over an HTTPS connection outside the tunnel. For DNS to work correctly, you must allow `<ACCOUNT_ID>.cloudflare-gateway.com` which will lookup the following IPs:
+
+- IPv4 DoH Addresses: `162.159.36.1` and `162.159.46.1`
+- IPv6 DoH Addresses: `2606:4700:4700::1111` and `2606:4700:4700::1001`
 
 ### Android devices
 
@@ -47,12 +52,14 @@ WARP connects to the following IP addresses, depending on which [tunnel protocol
 
 ### MASQUE
 
-|                |                                                                                                |
-| -------------- | ---------------------------------------------------------------------------------------------- |
-| IPv4 address   | `162.159.197.0/24`                                                                             |
-| IPv6 address   | `2606:4700:102::/48`                                                                           |
-| Default port   | `UDP 443`                                                                                      |
-| Fallback ports | `UDP 500` <br/> `UDP 1701` <br/> `UDP 4500` <br/> `UDP 4443` <br/> `UDP 8443` <br/> `UDP 8095` |
+|                |                                                                                                                     |
+| -------------- | ------------------------------------------------------------------------------------------------------------------- |
+| IPv4 address   | `162.159.197.0/24`                                                                                                  |
+| IPv6 address   | `2606:4700:102::/48`                                                                                                |
+| Default port   | `UDP 443`                                                                                                           |
+| Fallback ports | `UDP 500` <br/> `UDP 1701` <br/> `UDP 4500` <br/> `UDP 4443` <br/> `UDP 8443` <br/> `UDP 8095` <br/> `TCP 443` [^1] |
+
+[^1]: Required for HTTP/2 fallback
 
 :::note
 
@@ -66,14 +73,29 @@ The following domains are used as part of our captive portal check:
 - `cloudflareportal.com`
 - `cloudflareok.com`
 - `cloudflarecp.com`
+- `www.msftconnecttest.com`
+- `captive.apple.com`
+- `connectivitycheck.gstatic.com`
 
-## Connectivity check
+## Connectivity checks
 
-As part of establishing the WARP connection, the client will check the following HTTPS URLs to validate a successful connection:
+As part of establishing the WARP connection, the client runs connectivity checks inside and outside of the WARP tunnel.
 
-- `engage.cloudflareclient.com` verifies general Internet connectivity outside of the WARP tunnel. These requests are always sent directly to an IP in the [WARP ingress IPv4 or IPv6 range](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip) (or to your [`override_warp_endpoint`](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/#override_warp_endpoint) if set). Requests will not use a proxy server, even if one is configured for the system.
+### Outside tunnel
 
-- `connectivity.cloudflareclient.com` verifies connectivity inside of the WARP tunnel. Because this check happens inside of the tunnel, you do not need to add `connectivity.cloudflareclient.com` to your firewall allowlist.
+The client connects to the following destinations to verify general Internet connectivity outside of the WARP tunnel. Make sure that these IPs and domains are on your firewall allowlist.
+
+- `engage.cloudflareclient.com`: The client will always send requests directly to an IP in the [WARP ingress IPv4 or IPv6 range](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip) (or to your [`override_warp_endpoint`](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/#override_warp_endpoint) if set). Requests will not use a proxy server, even if one is configured for the system.
+- `162.159.197.3`
+- `2606:4700:102::3`
+
+### Inside tunnel
+
+The client connects to the following destinations to verify connectivity inside of the WARP tunnel. Because this check happens inside of the tunnel, you do not need to add these IPs and domains to your firewall allowlist. However, since the requests go through Gateway, ensure that they are not blocked by a Gateway HTTP or Network policy.
+
+- `connectivity.cloudflareclient.com`
+- `162.159.197.4`
+- `2606:4700:102::4`
 
 ## NEL reporting (optional)
 
@@ -94,7 +116,19 @@ The WARP client attempts to synchronize the exact time by NTP (`UDP 123`) to [Cl
 If your organization does not currently allow inbound/outbound communication over the IP addresses, ports, and domains described above, you must manually add an exception. The rule at a minimum needs to be scoped to the following process based on your platform:
 
 - Windows: `C:\Program Files\Cloudflare\Cloudflare WARP\warp-svc.exe`
-- macOS: `/Applications/Cloudflare WARP.app/Contents/Resources/CloudflareWARP`
+- macOS: You must explicitly allow both the core networking daemon and GUI component as shown in the following instructions.
+
+  1.  Core networking daemon: `/Applications/Cloudflare WARP.app/Contents/Resources/CloudflareWARP`
+
+      This binary does not have a Bundle ID and must be allowed via full path.
+
+  2.  GUI component, choose one of the following three identifiers depending on your MDM or firewall vendor's preferred format:
+
+      `/Applications/Cloudflare WARP.app` (Path)
+
+      `/Applications/Cloudflare WARP.app/Contents/MacOS/Cloudflare WARP` (Path)
+
+      `com.cloudflare.1dot1dot1dot1dot1.macos` (Bundle ID)
 
 ### Optional scopes
 

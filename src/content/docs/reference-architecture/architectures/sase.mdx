@@ -18,7 +18,7 @@ sidebar:
 updated: 2024-09-07
 ---
 
-import { Render } from "~/components";
+import { Render, PublicStats } from "~/components";
 
 Download a [PDF version](/reference-architecture/static/cloudflare-evolving-to-a-sase-architecture.pdf) of this reference architecture.
 
@@ -31,7 +31,7 @@ Cloudflare One is a secure access service edge (SASE) platform that protects ent
 - Protecting data in order to comply with regulations and prevent leaks
 - Simplifying connectivity across offices, data centers, and cloud environments
 
-Cloudflare One is built on Cloudflare's [connectivity cloud](https://www.cloudflare.com/connectivity-cloud/), ​​a unified, intelligent platform of programmable cloud-native services that enable any-to-any connectivity between all networks (enterprise and Internet), cloud environments, applications, and users. It is one of the [largest global networks](https://www.cloudflare.com/network/), with data centers spanning [hundreds of cities worldwide](https://www.cloudflare.com/network/) and interconnection with over 12,500 other networks. It also has a greater presence in [core Internet exchanges](https://bgp.he.net/report/exchanges#_participants) than many other large technology companies.
+Cloudflare One is built on Cloudflare's [connectivity cloud](https://www.cloudflare.com/connectivity-cloud/), ​​a unified, intelligent platform of programmable cloud-native services that enable any-to-any connectivity between all networks (enterprise and Internet), cloud environments, applications, and users. It is one of the [largest global networks](https://www.cloudflare.com/network/), with data centers spanning [hundreds of cities worldwide](https://www.cloudflare.com/network/) and interconnection with <PublicStats id="network_peers" />. It also has a greater presence in [core Internet exchanges](https://bgp.he.net/report/exchanges#_participants) than many other large technology companies.
 
 As a result, Cloudflare operates within \~50 ms of \~95% of the world's Internet-connected population. And since all Cloudflare services are designed to run across every network location, all traffic is connected, inspected, and filtered close to the source for the best performance and consistent user experience.
 
@@ -213,7 +213,7 @@ When Cloudflare acts as the SSO service to an application, user authentication i
 
 ![The flow of SSO requests is proxied through Cloudflare, where the IdP is still used to authenticate, but Cloudflare provides additional access controls.](~/assets/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-8.svg)
 
-The last method of connecting SaaS applications to Cloudflare's SASE architecture is with an API-based [cloud access security broker](https://www.cloudflare.com/learning/access-management/what-is-a-casb/) (CASB). The Cloudflare CASB integrates via API to [popular SaaS suites](/cloudflare-one/applications/scan-apps/casb-integrations/) — including Google Workspace, Microsoft 365, Salesforce, and more — and continuously scans these applications for misconfigurations, unauthorized user activity, and other security risks.
+The last method of connecting SaaS applications to Cloudflare's SASE architecture is with an API-based [cloud access security broker](https://www.cloudflare.com/learning/access-management/what-is-a-casb/) (CASB). The Cloudflare CASB integrates via API to [popular SaaS suites](/cloudflare-one/applications/casb/casb-integrations/) — including Google Workspace, Microsoft 365, Salesforce, and more — and continuously scans these applications for misconfigurations, unauthorized user activity, and other security risks.
 
 Native integration with the Cloudflare [data loss prevention](https://www.cloudflare.com/learning/access-management/what-is-dlp/) (DLP) service enables CASB to scan for sensitive or regulated data that may be stored in files with incorrect permissions — further risking leaks or unauthorized access. CASB reports findings that alert IT teams to items such as:
 
@@ -394,7 +394,7 @@ One option is to configure the browser to forward HTTP requests to Cloudflare by
 
 From there, configure a proxy endpoint where the browser will send all HTTP requests to. If using this method, please note that:
 
-- Filtering HTTPS traffic will also require [installing and trusting Cloudflare root certificates](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/) on the devices.
+- Filtering HTTPS traffic will also require [installing and trusting Cloudflare root certificates](/cloudflare-one/connections/connect-devices/user-side-certificates/) on the devices.
 - A proxy endpoint will only proxy traffic sourced from a set of known IP addresses, such as the pool of public IP addresses used by a site's NAT gateway, that the administrator must specify.
 
 #### Using remote browser instances
@@ -434,7 +434,7 @@ The following table summarizes SWG capabilities for the various methods of forwa
 | ------------------------------ | ------------------------------------- | --------------------------------- | -------------- | ------------- | ---------------- |
 | Types of traffic forwarded     | TCP/UDP                               | TPC/UDP                           | HTTP           | HTTP          | DNS              |
 | **Policy types**               |                                       |                                   |                |               |                  |
-| DNS                            | Yes                                   | Yes                               | Yes            | No            | Yes              |
+| DNS                            | Yes                                   | Yes                               | Yes            | Yes           | Yes              |
 | HTTP/S<sup>\*2</sup>           | Yes                                   | Yes                               | Yes            | Yes           | N/A              |
 | Network (L3/L4 parameter)      | Yes                                   | Yes                               | Yes            | Yes           | No               |
 | **Data available in policies** |                                       |                                   |                |               |                  |
@@ -447,7 +447,7 @@ The following table summarizes SWG capabilities for the various methods of forwa
 Notes:
 
 1. Running the device agent in DNS over HTTP mode provides user identity information, in addition to the same capabilities as connecting via DNS.
-2. To filter HTTPS traffic, the Cloudflare [certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/) needs to be installed on each device. This can be automated when using the device agent.
+2. To filter HTTPS traffic, the Cloudflare [certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/) needs to be installed on each device. This can be automated when using the device agent.
 3. If configuring DNS over HTTPS, it is possible to inject a [service token](/cloudflare-one/connections/connect-devices/agentless/dns/dns-over-https/#filter-doh-requests-by-user) into the request, which associates the query with an authenticated user.
 
 #### Checkpoint: Forwarding device traffic to Cloudflare
@@ -468,7 +468,7 @@ But, before organizations define policies to manage that access, they need to kn
 
 The first step in any access decision is to determine who is making the request – i.e., to authenticate the user.
 
-Cloudflare integrates with identity providers that manage secure access to resources for organizations' employees, contractors, partners, and other users. This includes support for integrations with any [SAML](/cloudflare-one/identity/idp-integration/generic-saml/) - or OpenID Connect ([OIDC](/cloudflare-one/identity/idp-integration/generic-oidc/)) - compliant service; Cloudflare One also includes pre-built integrations with [Okta](/cloudflare-one/identity/idp-integration/okta/), [Microsoft Entra ID (formerly Azure Active Directory)](/cloudflare-one/identity/idp-integration/entra-id/), [Google Workspace](/cloudflare-one/identity/idp-integration/gsuite/), as well as consumer IdPs such as [Facebook](/cloudflare-one/identity/idp-integration/facebook-login/), [GitHub](/cloudflare-one/identity/idp-integration/github/) and [LinkedIn](/cloudflare-one/identity/idp-integration/linkedin/).
+Cloudflare integrates with identity providers that manage secure access to resources for organizations' employees, contractors, partners, and other users. This includes support for integrations with any [SAML](/cloudflare-one/identity/idp-integration/generic-saml/) - or OpenID Connect ([OIDC](/cloudflare-one/identity/idp-integration/generic-oidc/)) - compliant service; Cloudflare One also includes pre-built integrations with [Okta](/cloudflare-one/identity/idp-integration/okta/), [Microsoft Entra ID (formerly Azure Active Directory)](/cloudflare-one/identity/idp-integration/entra-id/), [Google Workspace](/cloudflare-one/identity/idp-integration/google-workspace/), as well as consumer IdPs such as [Facebook](/cloudflare-one/identity/idp-integration/facebook-login/), [GitHub](/cloudflare-one/identity/idp-integration/github/) and [LinkedIn](/cloudflare-one/identity/idp-integration/linkedin/).
 
 Multiple IdPs can be integrated, allowing organizations to apply policies to a wide range of both internal and external users. When a user attempts to access a Cloudflare secured application or service, they are redirected to authenticate via one of the integrated IdPs. When using the device agent, users must also authenticate to one of their organization's configured IdPs.
 
@@ -678,8 +678,8 @@ It's worth noting that many of the capabilities described in this document can b
 | Secure Web Gateway        | [How to build Gateway policies](/cloudflare-one/policies/gateway/)                                                                                                       |
 | Zero Trust Network Access | [How to build Access policies](/cloudflare-one/policies/access/)                                                                                                         |
 | Remote Browser Isolation  | [Understanding browser isolation](/cloudflare-one/policies/browser-isolation/)                                                                                           |
-| API-Driven CASB           | [Scanning SaaS applications](/cloudflare-one/applications/scan-apps/)                                                                                                    |
+| API-Driven CASB           | [Scanning SaaS applications](/cloudflare-one/applications/casb/)                                                                                                         |
 | Email Security            | [Understanding Cloudflare Email Security](/email-security/)                                                                                                              |
-| Replacing your VPN        | [Using Cloudflare to replace your VPN](/learning-paths/replace-vpn/)                                                                                                     |
+| Replacing your VPN        | [Using Cloudflare to replace your VPN](/learning-paths/replace-vpn/concepts/)                                                                                            |
 
 If you would like to discuss your SASE requirements in greater detail and connect with one of our architects, please visit [https://www.cloudflare.com/cloudflare-one/](https://www.cloudflare.com/cloudflare-one/) and request a consultation.

@@ -26,7 +26,7 @@ Use `step.sleep` to have a Workflow sleep for a relative period of time:
 await step.sleep("sleep for a bit", "1 hour")
 ```
 
-The second argument to `step.sleep` accepts both `number` (seconds) or a human-readable format, such as "1 minute" or "26 hours". The accepted units for `step.sleep` when used this way are as follows:
+The second argument to `step.sleep` accepts both `number` (milliseconds) or a human-readable format, such as "1 minute" or "26 hours". The accepted units for `step.sleep` when used this way are as follows:
 
 ```ts
 | "second"
@@ -48,7 +48,7 @@ const workflowsLaunchDate = Date.parse("24 Oct 2024 13:00:00 UTC");
 await step.sleepUntil("sleep until X times out", workflowsLaunchDate)
 ```
 
-You can also provide a Unix timestamp (seconds since the Unix epoch) directly to `sleepUntil`.
+You can also provide a UNIX timestamp (milliseconds since the UNIX epoch) directly to `sleepUntil`.
 
 ## Retry steps
 
@@ -69,10 +69,10 @@ const defaultConfig: WorkflowStepConfig = {
 
 When providing your own `StepConfig`, you can configure:
 
-* The total number of attempts to make for a step
-* The delay between attempts
+* The total number of attempts to make for a step (accepts `Infinity` for unlimited retries)
+* The delay between attempts (accepts both `number` (ms) or a human-readable format)
 * What backoff algorithm to apply between each attempt: any of `constant`, `linear`, or `exponential`
-* When to timeout (in duration) before considering the step as failed (including during a retry attempt)
+* When to timeout (in duration) before considering the step as failed (including during a retry attempt, as the timeout is set per attempt)
 
 For example, to limit a step to 10 retries and have it apply an exponential delay (starting at 10 seconds) between each attempt, you would pass the following configuration as an optional object to `step.do`:
 
@@ -87,7 +87,7 @@ let someState = step.do("call an API", {
 }, async () => { /* Step code goes here /* }
 ```
 
-## Force a Workflow to fail
+## Force a Workflow instance to fail
 
 You can also force a Workflow instance to fail and _not_ retry by throwing a `NonRetryableError` from within the step.
 
@@ -102,8 +102,8 @@ import { NonRetryableError } from 'cloudflare:workflows';
 export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
 	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
 	  await step.do("some step", async () => {
-			  if !(event.data) {
-					throw NonRetryableError("event.data did not contain the expected payload")
+			  if !(event.payload.data) {
+					throw new NonRetryableError("event.payload.data did not contain the expected payload")
 				}
 			})
 	}
@@ -111,3 +111,38 @@ export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
 ```
 
 The Workflow instance itself will fail immediately, no further steps will be invoked, and the Workflow will not be retried.
+
+## Catch Workflow errors
+
+Any uncaught exceptions that propagate to the top level, or any steps that reach their retry limit, will cause the Workflow to end execution in an `Errored` state.
+
+If you want to avoid this, you can catch exceptions emitted by a `step`. This can be useful if you need to trigger clean-up tasks or have conditional logic that triggers additional steps.
+
+To allow the Workflow to continue its execution, surround the intended steps that are allowed to fail with a `try-catch` block.
+
+
+```ts
+...
+await step.do('task', async () => {
+	// work to be done
+});
+
+try {
+    await step.do('non-retryable-task', async () => {
+		// work not to be retried
+        throw new NonRetryableError('oh no');
+    });
+} catch(e as Error) {
+    console.log(`Step failed: ${e.message}`);
+    await step.do('clean-up-task', async () => {
+      // Clean up code here
+    });
+}
+
+// the Workflow will not fail and will continue its execution
+
+await step.do('next-task', async() => {
+	// more work to be done
+});
+...
+```

@@ -9,12 +9,7 @@ If you only need to **receive** emails, Cloudflare offers [Email Routing](/email
 
 ## Send and receive email
 
-To **send and receive** emails from your domain, you need:
-
-* An SMTP provider.
-* To create two DNS records within Cloudflare.
-
-To route emails through Cloudflare and to your mail server:
+To **send and receive** emails from your domain, you need an SMTP provider. Then, create two DNS records within Cloudflare, following the steps below:
 
 1. Get the IP address and MX record details from your SMTP provider ([vendor-specific guidelines](/dns/manage-dns-records/reference/vendor-specific-records/)).
 
@@ -56,9 +51,6 @@ To route emails through Cloudflare and to your mail server:
        "ttl": 1,
        "locked": false,
        "meta": {
-         "auto_added": false,
-         "managed_by_apps": false,
-         "managed_by_argo_tunnel": false,
          "source": "primary"
        },
        "comment": null,
@@ -113,9 +105,6 @@ To route emails through Cloudflare and to your mail server:
        "ttl": 3600,
        "locked": false,
        "meta": {
-         "auto_added": false,
-         "managed_by_apps": false,
-         "managed_by_argo_tunnel": false,
          "source": "primary"
        },
        "comment": null,

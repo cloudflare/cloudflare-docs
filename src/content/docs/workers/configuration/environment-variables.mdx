@@ -2,21 +2,20 @@
 pcx_content_type: configuration
 title: Environment variables
 head: []
-description: Environment variables are a type of binding that allow you to attach text strings or JSON values to your Worker
-
+description: You can add environment variables, which are a type of binding, to attach text strings or JSON values to your Worker.
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TabItem, Tabs, WranglerConfig } from "~/components";
 
 ## Background
 
-Environment variables are a type of binding that allow you to attach text strings or JSON values to your Worker. Environment variables are available on the [`env` parameter](/workers/runtime-apis/handlers/fetch/#parameters) passed to your Worker's [`fetch` event handler](/workers/runtime-apis/handlers/fetch/).
+You can add environment variables, which are a type of binding, to attach text strings or JSON values to your Worker. Environment variables are available on the [`env` parameter](/workers/runtime-apis/handlers/fetch/#parameters) passed to your Worker's [`fetch` event handler](/workers/runtime-apis/handlers/fetch/).
 
 Text strings and JSON values are not encrypted and are useful for storing application configuration.
 
 ## Add environment variables via Wrangler
 
-Text and JSON values are defined via the `[vars]` configuration in your `wrangler.toml` file. In the following example, `API_HOST` and `API_ACCOUNT_ID` are text values and `SERVICE_X_DATA` is a JSON value.
+To add env variables using Wrangler, define text and JSON via the `[vars]` configuration in your Wrangler file. In the following example, `API_HOST` and `API_ACCOUNT_ID` are text values and `SERVICE_X_DATA` is a JSON value.
 
 <Render file="envvar-example" />
 
@@ -26,54 +25,56 @@ Refer to the following example on how to access the `API_HOST` environment varia
 
 ```js
 export default {
-  async fetch(request, env, ctx) {
-    return new Response(`API host: ${env.API_HOST}`);
-  }
-}
+	async fetch(request, env, ctx) {
+		return new Response(`API host: ${env.API_HOST}`);
+	},
+};
 ```
 
 </TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
 ```ts
 export interface Env {
-  API_HOST: string;
+	API_HOST: string;
 }
 
 export default {
-  async fetch(request, env, ctx): Promise<Response> {
-    return new Response(`API host: ${env.API_HOST}`);
-  }
+	async fetch(request, env, ctx): Promise<Response> {
+		return new Response(`API host: ${env.API_HOST}`);
+	},
 } satisfies ExportedHandler<Env>;
 ```
 
 </TabItem> </Tabs>
 
-`vars` is a non-inheritable key. [Non-inheritable keys](/workers/wrangler/configuration/#non-inheritable-keys) are configurable at the top-level, but cannot be inherited by environments and must be specified for each environment.
+### Configuring different environments in Wrangler
 
-To define environment variables for different environments, refer to the example below:
+[Environments in Wrangler](/workers/wrangler/environments) let you specify different configurations for the same Worker, including different values for `vars` in each environment.
+As `vars` is a [non-inheritable key](/workers/wrangler/configuration/#non-inheritable-keys), they are not inherited by environments and must be specified for each environment.
+
+The example below sets up two environments, `staging` and `production`, with different values for `API_HOST`.
+
+<WranglerConfig>
 
 ```toml
 name = "my-worker-dev"
 
+# top level environment
+[vars]
+API_HOST = "api.example.com"
+
 [env.staging.vars]
 API_HOST = "staging.example.com"
-API_ACCOUNT_ID = "staging_example_user"
-SERVICE_X_DATA = { URL = "service-x-api.dev.example", MY_ID = 123 }
 
 [env.production.vars]
 API_HOST = "production.example.com"
-API_ACCOUNT_ID = "production_example_user"
-SERVICE_X_DATA = { URL = "service-x-api.prod.example", MY_ID = 456 }
 ```
 
-For local development with `wrangler dev`, variables in `wrangler.toml` are automatically overridden by any values defined in a `.dev.vars` file located in the root directory of your worker. This is useful for providing values you do not want to check in to source control.
+</WranglerConfig>
 
-```shell
-API_HOST = "localhost:4000"
-API_ACCOUNT_ID = "local_example_user"
-```
+To run Wrangler commands in specific environments, you can pass in the `--env` or `-e` flag. For example, you can develop the Worker in an environment called `staging` by running `npx wrangler dev --env staging`, and deploy it with `npx wrangler deploy --env staging`.
 
-Alternatively, you can specify per-environment values in `wrangler.toml` and provide an `environment` value via the `env` flag when developing locally like so `wrangler dev --env=local`.
+Learn about [environments in Wrangler](/workers/wrangler/environments).
 
 ## Add environment variables via the dashboard
 
@@ -83,22 +84,19 @@ To add environment variables via the dashboard:
 2. Select **Workers & Pages**.
 3. In **Overview**, select your Worker.
 4. Select **Settings**.
-5. Select **Variables**.
-6. Under **Environment Variables**, select **Add variable**.
-7. Input a **Variable name** and its **Value**, which will be made available to your Worker.
-8. (Optional) To add multiple environment variables, select **Add variable**.
-9. Select **Save and deploy** to implement your changes.
+5. Under **Variables and Secrets**, select **Add**.
+6. Select a **Type**, input a **Variable name**, and input its **Value**. This variable will be made available to your Worker.
+7. (Optional) To add multiple environment variables, select **Add variable**.
+8. Select **Deploy** to implement your changes.
 
 :::caution[Plaintext strings and secrets]
-
-
-Only select **Encrypt** if your environment variable is a [secret](/workers/configuration/secrets/).
-
-
+Select the **Secret** type if your environment variable is a [secret](/workers/configuration/secrets/). Alternatively, consider [Cloudflare Secrets Store](/secrets-store/), for account-level secrets.
 :::
 
 <Render file="env_and_secrets" />
 
+<Render file="secrets-in-dev" />
+
 ## Related resources
 
-* Learn how to access environment variables in [ES modules syntax](/workers/reference/migrate-to-module-workers/) for an optimized experience.
+- Migrating environment variables from [Service Worker format to ES modules syntax](/workers/reference/migrate-to-module-workers/#environment-variables).

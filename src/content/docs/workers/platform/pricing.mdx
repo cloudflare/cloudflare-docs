@@ -9,9 +9,9 @@ description: Workers plans and pricing information.
 
 import { GlossaryTooltip, Render } from "~/components";
 
-By default, users have access to the Workers Free plan. The Workers Free plan includes limited usage of Workers, Pages Functions and Workers KV. Read more about the [Free plan limits](/workers/platform/limits/#worker-limits).
+By default, users have access to the Workers Free plan. The Workers Free plan includes limited usage of Workers, Pages Functions, Workers KV and Hyperdrive. Read more about the [Free plan limits](/workers/platform/limits/#worker-limits).
 
-The Workers Paid plan includes Workers, Pages Functions, Workers KV, and Durable Objects usage for a minimum charge of $5 USD per month for an account. The plan includes increased initial usage allotments, with clear charges for usage that exceeds the base plan.
+The Workers Paid plan includes Workers, Pages Functions, Workers KV, Hyperdrive, and Durable Objects usage for a minimum charge of $5 USD per month for an account. The plan includes increased initial usage allotments, with clear charges for usage that exceeds the base plan. There are no additional charges for data transfer (egress) or throughput (bandwidth).
 
 All included usage is on a monthly basis.
 
@@ -28,7 +28,7 @@ Users on the Workers Paid plan have access to the Standard usage model. Workers 
 |              | Requests<sup>1, 2</sup>                                            | Duration                        | CPU time                                                                                                                                                                                                                                                                                                                                   |
 | ------------ | ------------------------------------------------------------------ | ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **Free**     | 100,000 per day                                                    | No charge for duration          | 10 milliseconds of CPU time per invocation                                                                                                                                                                                                                                                                                                 |
-| **Standard** | 10 million included per month <br /> +$0.30 per additional million | No charge or limit for duration | 30 million CPU milliseconds included per month<br /> +$0.02 per additional million CPU milliseconds<br /><br/> Max of 30 seconds of CPU time per invocation <br /> Max of 15 minutes of CPU time per [Cron Trigger](/workers/configuration/cron-triggers/) or [Queue Consumer](/queues/configuration/javascript-apis/#consumer) invocation |
+| **Standard** | 10 million included per month <br /> +$0.30 per additional million | No charge or limit for duration | 30 million CPU milliseconds included per month<br /> +$0.02 per additional million CPU milliseconds<br /><br/> Max of [5 minutes of CPU time](/workers/platform/limits/#worker-limits) per invocation (default: 30 seconds)<br /> Max of 15 minutes of CPU time per [Cron Trigger](/workers/configuration/cron-triggers/) or [Queue Consumer](/queues/configuration/javascript-apis/#consumer) invocation |
 
 <sup>1</sup> Inbound requests to your Worker. Cloudflare does not bill for
 [subrequests](/workers/platform/limits/#subrequests) you make from your Worker.
@@ -50,7 +50,7 @@ A Worker that serves 15 million requests per month, and uses an average of 7 mil
 
 #### Example 2
 
-A project that serves 15 million requests per month, with 80% (12 million) requests serving [static assets](/workers/static-assets/) and the remaining invoking dynamic Worker code. The Worker uses an average of 7 milliseconds (ms) of CPU time per request.
+A project that serves 15 million requests per month, with 80% (12 million) requests serving [static assets](/workers/static-assets/) and the remaining invoking dynamic Worker code. The Worker uses an average of 7 milliseconds (ms) of  time per request.
 
 Requests to static assets are free and unlimited. This project would have the following estimated costs:
 
@@ -93,27 +93,35 @@ A high traffic Worker that serves 100 million requests per month, and uses an av
 
 :::note[Custom limits]
 
-To prevent accidental runaway bills or denial-of-wallet attacks, configure the maximum amount of CPU time that can be used per invocation by [defining limits in your Worker's `wrangler.toml` file](/workers/wrangler/configuration/#limits), or via the Cloudflare dashboard (Workers & Pages > Select your Worker > Settings > CPU Limits).
+To prevent accidental runaway bills or denial-of-wallet attacks, configure the maximum amount of CPU time that can be used per invocation by [defining limits in your Worker's Wrangler file](/workers/wrangler/configuration/#limits), or via the Cloudflare dashboard (**Workers & Pages** > Select your Worker > **Settings** > **CPU Limits**).
 
 If you had a Worker on the Bundled usage model prior to the migration to Standard pricing on March 1, 2024, Cloudflare has automatically added a 50 ms CPU limit on your Worker.
 
 :::
 
+### How to switch usage models
+
 :::note
 
-Some Workers Enterprise customers maintain the ability to change usage models. 
+Some Workers Enterprise customers maintain the ability to change usage models.
 
-Usage models may be changed at the individual Worker level:
+:::
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. In Account Home, select **Workers & Pages**.
-3. In **Overview**, select your Worker > **Settings** > **Usage Model**.
+Users on the Workers Paid plan have access to the Standard usage model. However, some users may still have a legacy usage model configured.
+Legacy usage models include Workers Unbound and Workers Bundled. Users are advised to move to the Workers Standard usage model.
+Changing the usage model only affects billable usage, and has no technical implications.
 
 To change your default account-wide usage model:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers-and-pages) and select your account.
 2. In Account Home, select **Workers & Pages**.
 3. Find **Usage Model** on the right-side menu > **Change**.
+
+Usage models may be changed at the individual Worker level:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/services/view/:worker/production/settings) and select your account.
+2. In Account Home, select **Workers & Pages**.
+3. In **Overview**, select your Worker > **Settings** > **Usage Model**.
 
 Existing Workers will not be impacted when changing the default usage model. You may change the usage model for individual Workers without affecting your account-wide default usage model.
 
@@ -150,6 +158,16 @@ To learn more about KV, refer to the [KV documentation](/kv/).
 
 :::
 
+## Hyperdrive
+
+<Render file="hyperdrive_pricing" />
+
+:::note[Hyperdrive documentation]
+
+To learn more about Hyperdrive, refer to the [Hyperdrive documentation](/hyperdrive/).
+
+:::
+
 ## Queues
 
 <Render file="queues_pricing" />
@@ -162,7 +180,7 @@ To learn more about Queues pricing and review billing examples, refer to [Queues
 
 ## D1
 
-D1 is available on both the [Workers Free](#workers) and [Workers Paid](#workers) plans.
+D1 is available on both the Workers Free and Workers Paid plans.
 
 <Render file="d1-pricing" />
 
@@ -174,17 +192,15 @@ Refer to [D1 Pricing](/d1/platform/pricing/) to learn more about how D1 is bille
 
 ## Durable Objects
 
-<Render file="durable_objects_pricing" />
+<Render file="do-plans-note" product="durable-objects"/>
+
+<Render file="durable-objects-pricing" product="durable-objects" params={{product:"workers"}} />
 
 :::note[Durable Objects billing examples]
 
-For more information and [examples of Durable Objects billing](/durable-objects/platform/pricing/#durable-objects-billing-examples), refer to [Durable Objects Pricing](/durable-objects/platform/pricing/).
+For more information and [examples of Durable Objects billing](/durable-objects/platform/pricing#compute-billing-examples), refer to [Durable Objects Pricing](/durable-objects/platform/pricing/).
 
 :::
-
-## Durable Objects Storage API
-
-<Render file="storage_api_pricing" />
 
 ## Vectorize
 
@@ -202,7 +218,7 @@ For example, if Worker A makes a subrequest to Worker B via a Service Binding, o
 - The total amount of CPU time used across both Worker A and Worker B
 
 :::note[Only available on Workers Standard pricing]
-If your Worker is on the deprecated [Bundled](/workers/platform/pricing/#example-pricing-bundled-usage-model) or [Unbound](/workers/platform/pricing/#example-pricing-unbound-usage-model) pricing plans, subrequests and RPC calls made via Service Bindings are charged as if they are request from the Internet. In the example above, you would be charged for two requests, one to Worker A, and one to Worker B.
+If your Worker is on the deprecated Bundled or Unbound pricing plans, incoming requests from Service Bindings are charged the same as requests from the Internet. In the example above, you would be charged for two requests, one to Worker A, and one to Worker B.
 :::
 
 ## Fine Print

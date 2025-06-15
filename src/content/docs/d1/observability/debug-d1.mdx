@@ -10,7 +10,7 @@ D1 allows you to capture exceptions and log errors returned when querying a data
 
 ## Handle errors
 
-The D1 [client API](/d1/build-with-d1/d1-client-api/) returns detailed [error messages](/d1/build-with-d1/d1-client-api/#errors) within an `Error` object.
+The D1 [Workers Binding API](/d1/worker-api/) returns detailed error messages within an `Error` object.
 
 To ensure you are capturing the full error message, log or return `e.message` as follows:
 
@@ -29,6 +29,50 @@ try {
 */
 ```
 
+### Errors
+
+The [`stmt.`](/d1/worker-api/prepared-statements/) and [`db.`](/d1/worker-api/d1-database/) methods throw an [Error object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) whenever an error occurs.
+
+:::note
+Prior to [`wrangler` 3.1.1](https://github.com/cloudflare/workers-sdk/releases/tag/wrangler%403.1.1), D1 JavaScript errors used the [cause property](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause) for detailed error messages.
+
+To inspect these errors when using older versions of `wrangler`, you should log `error?.cause?.message`.
+:::
+
+To capture exceptions, log the `Error.message` value. For example, the code below has a query with an invalid keyword - `INSERTZ` instead of `INSERT`:
+
+```js
+try {
+    // This is an intentional misspelling
+    await db.exec("INSERTZ INTO my_table (name, employees) VALUES ()");
+} catch (e: any) {
+    console.error({
+        message: e.message
+    });
+}
+```
+
+The code above throws the following error message:
+
+```json
+{
+	"message": "D1_EXEC_ERROR: Error in line 1: INSERTZ INTO my_table (name, employees) VALUES (): sql error: near \"INSERTZ\": syntax error in INSERTZ INTO my_table (name, employees) VALUES () at offset 0"
+}
+```
+
+### Error list
+
+D1 returns the following error constants, in addition to the extended (detailed) error message:
+
+| Message              | Cause                                                                                                                                                            |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `D1_ERROR`           | Generic error.                                                                                                                                                   |
+| `D1_TYPE_ERROR`      | Returned when there is a mismatch in the type between a column and a value. A common cause is supplying an `undefined` variable (unsupported) instead of `null`. |
+| `D1_COLUMN_NOTFOUND` | Column not found.                                                                                                                                                |
+| `D1_DUMP_ERROR`      | Database dump error.                                                                                                                                             |
+| `D1_EXEC_ERROR`      | Exec error in line x: y error.                                                                                                                                   |
+
+
 ## View logs
 
 View a stream of live logs from your Worker by using [`wrangler tail`](/workers/observability/logs/real-time-logs#view-logs-using-wrangler-tail) or via the [Cloudflare dashboard](/workers/observability/logs/real-time-logs#view-logs-from-the-dashboard).
@@ -43,11 +87,11 @@ You should include as much of the following in any bug report:
 
 * The ID of your database. Use `wrangler d1 list` to match a database name to its ID.
 * The query (or queries) you ran when you encountered an issue. Ensure you redact any personally identifying information (PII).
-* The Worker code that makes the query, including any calls to `bind()` using the [client API](/d1/build-with-d1/d1-client-api/).
+* The Worker code that makes the query, including any calls to `bind()` using the [Workers Binding API](/d1/worker-api/).
 * The full error text, including the content of [`error.cause.message`](#handle-errors).
 
 ## Related resources
 
 * Learn [how to debug Workers](/workers/observability/).
 * Understand how to [access logs](/workers/observability/logs/) generated from your Worker and D1.
-* Use [`wrangler dev`](/workers/wrangler/commands/#dev) to run your Worker and D1 locally and [debug issues before deploying](/workers/testing/local-development/).
+* Use [`wrangler dev`](/workers/wrangler/commands/#dev) to run your Worker and D1 locally and [debug issues before deploying](/workers/local-development/).

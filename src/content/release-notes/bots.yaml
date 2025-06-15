@@ -1,0 +1,26 @@
+---
+link: "/bots/changelog/"
+productName: Bots
+productLink: "/bots/"
+productArea: Application security
+productAreaLink: /fundamentals/reference/changelog/security/
+entries:
+  - publish_date: "2025-05-14"
+    title: Anomaly detection events now receive a bot score of 2
+    description: Events detected by the [anomaly detection engine](/bots/concepts/bot-detection-engines/#anomaly-detection-enterprise) are now given a bot score of 2.
+  - publish_date: "2025-05-08"
+    title: Machine Learning model v9 is now the default model
+    description: |-
+      [Machine Learning model v9](/bots/reference/machine-learning-models/#model-versions-and-release-notes) is now the default model for all new zones and existing zones set to use the latest machine learning model. 
+  - publish_date: "2025-04-28"
+    title: Managed robots.txt is now available
+    description: |-
+      Direct AI crawlers on what they can and cannot scrape from your website or application by [implementing a `robots.txt` file](/bots/additional-configurations/managed-robots-txt/) to your domain.
+  - publish_date: "2025-04-24"
+    title: Bot Detection Alerts are now available
+    description: |-
+      You can now create a [Bot Detection Alert](/bots/reference/alerts/) to notify you when Cloudflare detects a spike in Bot traffic on your website.
+  - publish_date: "2024-08-19"
+    title: AI bots is now a managed rule
+    description: |-
+      [AI bots protection](/bots/concepts/bot/#ai-bots) has been upgraded from a custom rule to a managed rule.

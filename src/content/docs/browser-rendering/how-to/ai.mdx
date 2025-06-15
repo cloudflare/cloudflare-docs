@@ -1,0 +1,275 @@
+---
+title: Use browser rendering with AI
+sidebar:
+  order: 2
+---
+
+import { Aside, WranglerConfig } from "~/components";
+
+The ability to browse websites can be crucial when building workflows with AI. Here, we provide an example where we use Browser Rendering to visit
+`https://labs.apnic.net/` and then, using a machine learning model available in [Workers AI](/workers-ai/), extract the first post as JSON with a specified schema.
+
+## Prerequisites
+
+1. Use the `create-cloudflare` CLI to generate a new Hello World Cloudflare Worker script:
+
+```sh
+npm create cloudflare@latest -- browser-worker
+```
+
+2. Install `@cloudflare/puppeteer`, which allows you to control the Browser Rendering instance:
+
+```sh
+npm i @cloudflare/puppeteer
+```
+
+2. Install `zod` so we can define our output format and `zod-to-json-schema` so we can convert it into a JSON schema format:
+
+```sh
+npm i zod
+npm i zod-to-json-schema
+```
+
+3. Activate the nodejs compatibility flag and add your Browser Rendering binding to your new Wrangler configuration:
+
+<WranglerConfig>
+```toml
+compatibility_flags = [ "nodejs_compat" ]
+```
+</WranglerConfig>
+
+<WranglerConfig>
+```toml
+[browser]
+binding = "MY_BROWSER"
+```
+</WranglerConfig>
+
+4.  In order to use [Workers AI](/workers-ai/), you need to get your [Account ID and API token](/workers-ai/get-started/rest-api/#1-get-api-token-and-account-id).
+Once you have those, create a [`.dev.vars`](/workers/configuration/environment-variables/#add-environment-variables-via-wrangler) file and set them there:
+
+```
+ACCOUNT_ID=
+API_TOKEN=
+```
+
+We use `.dev.vars` here since it's only for local development, otherwise you'd use [Secrets](/workers/configuration/secrets/).
+
+## Load the page using Browser Rendering
+
+In the code below, we launch a browser using `await puppeteer.launch(env.MY_BROWSER)`, extract the rendered text and close the browser.
+Then, with the user prompt, the desired output schema and the rendered text, prepare a prompt to send to the LLM.
+
+Replace the contents of `src/index.ts` with the following skeleton script:
+
+```ts
+import { z } from "zod";
+import puppeteer from "@cloudflare/puppeteer";
+import zodToJsonSchema from "zod-to-json-schema";
+
+export default {
+  async fetch(request, env) {
+    const url = new URL(request.url);
+    if (url.pathname != "/") {
+      return new Response("Not found");
+    }
+
+    // Your prompt and site to scrape
+    const userPrompt = "Extract the first post only.";
+    const targetUrl = "https://labs.apnic.net/";
+
+    // Launch browser
+    const browser = await puppeteer.launch(env.MY_BROWSER);
+    const page = await browser.newPage();
+    await page.goto(targetUrl);
+
+    // Get website text
+    const renderedText = await page.evaluate(() => {
+      // @ts-ignore js code to run in the browser context
+      const body = document.querySelector("body");
+      return body ? body.innerText : "";
+    });
+    // Close browser since we no longer need it
+    await browser.close();
+
+    // define your desired json schema
+    const outputSchema = zodToJsonSchema(
+      z.object({ title: z.string(), url: z.string(), date: z.string() })
+    );
+
+    // Example prompt
+    const prompt = `
+    You are a sophisticated web scraper. You are given the user data extraction goal and the JSON schema for the output data format.
+    Your task is to extract the requested information from the text and output it in the specified JSON schema format:
+
+        ${JSON.stringify(outputSchema)}
+
+    DO NOT include anything else besides the JSON output, no markdown, no plaintext, just JSON.
+
+    User Data Extraction Goal: ${userPrompt}
+
+    Text extracted from the webpage: ${renderedText}`;
+
+    // TODO call llm
+    //const result = await getLLMResult(env, prompt, outputSchema);
+    //return Response.json(result);
+  }
+
+} satisfies ExportedHandler<Env>;
+```
+
+## Call an LLM
+
+Having the webpage text, the user's goal and output schema, we can now use an LLM to transform it to JSON according to the user's request.
+The example below uses `@hf/thebloke/deepseek-coder-6.7b-instruct-awq` but other [models](/workers-ai/models/) or services like OpenAI, could be used with minimal changes:
+
+```ts
+async function getLLMResult(env, prompt: string, schema?: any) {
+  const model = "@hf/thebloke/deepseek-coder-6.7b-instruct-awq"
+  const requestBody = {
+    messages: [{
+      role: "user",
+      content: prompt
+    }],
+  };
+  const aiUrl = `https://api.cloudflare.com/client/v4/accounts/${env.ACCOUNT_ID}/ai/run/${model}`
+
+  const response = await fetch(aiUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${env.API_TOKEN}`,
+    },
+    body: JSON.stringify(requestBody),
+  });
+  if (!response.ok) {
+    console.log(JSON.stringify(await response.text(), null, 2));
+    throw new Error(`LLM call failed ${aiUrl} ${response.status}`);
+  }
+
+  // process response
+  const data = await response.json();
+  const text = data.result.response || '';
+  const value = (text.match(/```(?:json)?\s*([\s\S]*?)\s*```/) || [null, text])[1];
+  try {
+    return JSON.parse(value);
+  } catch(e) {
+    console.error(`${e} . Response: ${value}`)
+  }
+}
+```
+
+If you want to use Browser Rendering with OpenAI instead you'd just need to change the `aiUrl` endpoint and `requestBody` (or check out the [llm-scraper-worker](https://www.npmjs.com/package/llm-scraper-worker) package).
+
+## Conclusion
+
+The full Worker script now looks as follows:
+
+```ts
+import { z } from "zod";
+import puppeteer from "@cloudflare/puppeteer";
+import zodToJsonSchema from "zod-to-json-schema";
+
+export default {
+  async fetch(request, env) {
+    const url = new URL(request.url);
+    if (url.pathname != "/") {
+      return new Response("Not found");
+    }
+
+    // Your prompt and site to scrape
+    const userPrompt = "Extract the first post only.";
+    const targetUrl = "https://labs.apnic.net/";
+
+    // Launch browser
+    const browser = await puppeteer.launch(env.MY_BROWSER);
+    const page = await browser.newPage();
+    await page.goto(targetUrl);
+
+    // Get website text
+    const renderedText = await page.evaluate(() => {
+      // @ts-ignore js code to run in the browser context
+      const body = document.querySelector("body");
+      return body ? body.innerText : "";
+    });
+    // Close browser since we no longer need it
+    await browser.close();
+
+    // define your desired json schema
+    const outputSchema = zodToJsonSchema(
+      z.object({ title: z.string(), url: z.string(), date: z.string() })
+    );
+
+    // Example prompt
+    const prompt = `
+    You are a sophisticated web scraper. You are given the user data extraction goal and the JSON schema for the output data format.
+    Your task is to extract the requested information from the text and output it in the specified JSON schema format:
+
+        ${JSON.stringify(outputSchema)}
+
+    DO NOT include anything else besides the JSON output, no markdown, no plaintext, just JSON.
+
+    User Data Extraction Goal: ${userPrompt}
+
+    Text extracted from the webpage: ${renderedText}`;
+
+    // call llm
+    const result = await getLLMResult(env, prompt, outputSchema);
+    return Response.json(result);
+  }
+
+} satisfies ExportedHandler<Env>;
+
+
+async function getLLMResult(env, prompt: string, schema?: any) {
+  const model = "@hf/thebloke/deepseek-coder-6.7b-instruct-awq"
+  const requestBody = {
+    messages: [{
+      role: "user",
+      content: prompt
+    }],
+  };
+  const aiUrl = `https://api.cloudflare.com/client/v4/accounts/${env.ACCOUNT_ID}/ai/run/${model}`
+
+  const response = await fetch(aiUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${env.API_TOKEN}`,
+    },
+    body: JSON.stringify(requestBody),
+  });
+  if (!response.ok) {
+    console.log(JSON.stringify(await response.text(), null, 2));
+    throw new Error(`LLM call failed ${aiUrl} ${response.status}`);
+  }
+
+  // process response
+  const data = await response.json() as { result: { response: string }};
+  const text = data.result.response || '';
+  const value = (text.match(/```(?:json)?\s*([\s\S]*?)\s*```/) || [null, text])[1];
+  try {
+    return JSON.parse(value);
+  } catch(e) {
+    console.error(`${e} . Response: ${value}`)
+  }
+}
+```
+
+You can run this script to test it using Wrangler's `--remote` flag:
+
+```sh
+npx wrangler dev --remote
+```
+
+With your script now running, you can go to `http://localhost:8787/` and should see something like the following:
+
+```json
+{
+  "title": "IP Addresses in 2024",
+  "url": "http://example.com/ip-addresses-in-2024",
+  "date": "11 Jan 2025"
+}
+```
+
+For more complex websites or prompts, you might need a better model. Check out the latest models in [Workers AI](/workers-ai/models/).

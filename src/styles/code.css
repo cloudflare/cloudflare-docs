@@ -1,0 +1,8 @@
+/*
+    This is normally set to 2.5rem if the user is unable to hover (i.e mobile)
+    and 2rem otherwise, we would like it to always be 2rem.
+*/
+.expressive-code .copy button {
+	width: 2rem !important;
+	height: 2rem !important;
+}

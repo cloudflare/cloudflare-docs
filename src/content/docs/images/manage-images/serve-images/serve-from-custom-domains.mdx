@@ -3,7 +3,6 @@ pcx_content_type: how-to
 title: Serve images from custom domains
 sidebar:
   order: 22
-
 ---
 
 Image delivery is supported from all customer domains under the same Cloudflare account. To serve images through custom domains, an image URL should be adjusted to the following format:
@@ -20,11 +19,11 @@ https://example.com/cdn-cgi/imagedelivery/ZWd9g1K7eljCn_KDTu_MWA/083eb7b2-5392-4
 
 In this example, `<ACCOUNT_HASH>`, `<IMAGE_ID>` and `<VARIANT_NAME>` are the same, but the hostname and prefix path is different:
 
-* `example.com`: Cloudflare proxied domain under the same account as the Cloudflare Images.
-* `/cdn-cgi/imagedelivery`: Path to trigger `cdn-cgi` image proxy.
-* `ZWd9g1K7eljCn_KDTu_MWA`: The Images account hash. This can be found in the Cloudflare Images Dashboard.
-* `083eb7b2-5392-4565-b69e-aff66acddd00`: The image ID.
-* `public`: The variant name.
+- `example.com`: Cloudflare proxied domain under the same account as the Cloudflare Images.
+- `/cdn-cgi/imagedelivery`: Path to trigger `cdn-cgi` image proxy.
+- `ZWd9g1K7eljCn_KDTu_MWA`: The Images account hash. This can be found in the Cloudflare Images Dashboard.
+- `083eb7b2-5392-4565-b69e-aff66acddd00`: The image ID.
+- `public`: The variant name.
 
 ## Custom paths
 
@@ -32,34 +31,32 @@ By default, Images are served from the `/cdn-cgi/imagedelivery/` path. You can u
 
 ### Basic version
 
-Free and Pro plans only support string matching rules that do not require regular expressions.
+Free and Pro plans support string matching rules (including wildcard operations) that do not require regular expressions.
 
-This example lets you rewrite a request from example.com/images to `example.com/cdn-cgi/imagedelivery/<ACCOUNT_HASH>`.
+This example lets you rewrite a request from `example.com/images` to `example.com/cdn-cgi/imagedelivery/<ACCOUNT_HASH>`.
 
 To create a rule:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and website.
-2. Select **Rules** > **Transform Rules**.
-3. Select **Create rule**.
-4. Under **When incoming requests match...**, select **Edit expression**.
-5. In the text field, enter `starts_with(http.request.uri.path, "/images")`.
-6. Under **Path**, select **Rewrite to**.
-7. Select *Dynamic* and enter the following in the text field.
+2. Go to **Rules** > **Overview**.
+3. Next to **URL Rewrite Rules**, select **Create rule**.
+4. Under **If incoming requests match**, select **Wildcard pattern** and enter the following **Request URL** (update with your own domain):
 
-```txt
-concat(
-  "/cdn-cgi/imagedelivery/<ACCOUNT_HASH>",
-  substring(http.request.uri.path, 7)
-)
-```
+   ```txt
+   https://example.com/images/*
+   ```
 
-8. Select **Deploy** when you are done.
+5. Under **Then rewrite the path and/or query** > **Path**, enter the following values (using your account hash):
 
-### ​​Advanced version
+   - **Target path**: [`/`] `images/*`
+   - **Rewrite to**: [`/`] `cdn-cgi/imagedelivery/<ACCOUNT_HASH>/${1}`
+
+6. Select **Deploy** when you are done.
+
+### Advanced version
 
 :::note
-
-This feature requires a Business or Enterprise plan to enable regex in Transform Rules. Refer to Cloudflare [Transform Rules Availability](/rules/transform/#availability) for more information. 
+This feature requires a Business or Enterprise plan to enable regular expressions in Transform Rules. Refer to Cloudflare [Transform Rules Availability](/rules/transform/#availability) for more information.
 :::
 
 This example lets you rewrite a request from `example.com/images/some-image-id/w100,h300` to `example.com/cdn-cgi/imagedelivery/<ACCOUNT_HASH>/some-image-id/width=100,height=300` and assumes Flexible variants feature is turned on.
@@ -67,12 +64,12 @@ This example lets you rewrite a request from `example.com/images/some-image-id/w
 To create a rule:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and website.
-2. Select **Rules** > **Transform Rules**.
-3. Select **Create rule**.
-4. Under **When incoming requests match...**, select **Edit expression**.
+2. Go to **Rules** > **Overview**.
+3. Next to **URL Rewrite Rules**, select **Create rule**.
+4. Under **If incoming requests match**, select **Custom filter expression** and then select **Edit expression**.
 5. In the text field, enter `(http.request.uri.path matches "^/images/.*$")`.
 6. Under **Path**, select **Rewrite to**.
-7. Select *Dynamic* and enter the following in the text field.
+7. Select _Dynamic_ and enter the following in the text field.
 
 ```txt
 regex_replace(

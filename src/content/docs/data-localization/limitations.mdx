@@ -38,7 +38,7 @@ The following features and protocols are not supported by Regional Services and 
 
 Since Regional Services leverages Spectrum in the background, [Spectrum limitations](/spectrum/reference/limitations/) apply.
 
-Regional Services does not apply to [Subrequests](/workers/platform/limits/#subrequests).
+Regional Services does not apply to [Subrequests](/workers/platform/limits/#subrequests). Regional Services operates on your hostname's IPs. We recommend using [DNSSEC](/learning-paths/application-security/default-traffic-security/dnssec/) and/or [DNS over HTTPS](/1.1.1.1/encryption/dns-over-https/) to ensure that DNS responses are secure and correct.
 
 ## Customer Metadata Boundary
 
@@ -46,7 +46,7 @@ There are certain limitations and caveats when using Customer Metadata Boundary.
 
 Specifically most of the Zone Analytics & Logs UI Tabs will be showing up as empty, when configuring Customer Metadata Boundary to EU only. It is recommended to use the UI [Security Analytics](/waf/analytics/security-analytics/) instead, or the [HTTP request](/logs/reference/log-fields/zone/http_requests/) logs via [Logpush](/logs/about/).
 
-To configure Customer Metadata Boundary to EU only, you must disable Log Retention for all zones within your account. Log Retention is a legacy feature of [Logpull](/logs/logpull/). 
+To configure Customer Metadata Boundary to EU only, you must disable Log Retention for all zones within your account. Log Retention is a legacy feature of [Logpull](/logs/logpull/).
 
 For product-specific caveats, refer to [Cloudflare product compatibility](/data-localization/compatibility/) page.
 

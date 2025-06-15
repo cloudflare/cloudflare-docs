@@ -1,0 +1,115 @@
+---
+updated: 2025-04-02
+difficulty: Beginner
+pcx_content_type: tutorial
+title: Connect to a MySQL database with Cloudflare Workers
+products:
+  - Hyperdrive
+tags:
+  - MySQL
+languages:
+  - TypeScript
+  - SQL
+---
+
+import { Render, PackageManagers, WranglerConfig } from "~/components";
+
+In this tutorial, you will learn how to create a Cloudflare Workers application and connect it to a MySQL database using [TCP Sockets](/workers/runtime-apis/tcp-sockets/) and [Hyperdrive](/hyperdrive/). The Workers application you create in this tutorial will interact with a product database inside of MySQL.
+
+:::note[Note]
+
+We recommend using [Hyperdrive](/hyperdrive/) to connect to your MySQL database. Hyperdrive provides optimal performance and will ensure secure connectivity between your Worker and your MySQL database.
+
+When connecting directly to your MySQL database (without Hyperdrive), the MySQL drivers rely on unsupported Node.js APIs to create secure connections, which prevents connections.
+:::
+
+## Prerequisites
+
+To continue:
+
+1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) if you have not already.
+2. Install [`npm`](https://docs.npmjs.com/getting-started).
+3. Install [`Node.js`](https://nodejs.org/en/). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.17.0` or later.
+4. Make sure you have access to a MySQL database.
+
+## 1. Create a Worker application
+
+First, use the [`create-cloudflare` CLI](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare) to create a new Worker application. To do this, open a terminal window and run the following command:
+
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"mysql-tutorial"}
+/>
+
+This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package and lead you through a setup wizard.
+
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{
+		category: "hello-world",
+		type: "Worker only",
+		lang: "TypeScript",
+	}}
+/>
+
+If you choose to deploy, you will be asked to authenticate (if not logged in already), and your project will be deployed. If you deploy, you can still modify your Worker code and deploy again at the end of this tutorial.
+
+Now, move into the newly created directory:
+
+```sh
+cd mysql-tutorial
+```
+
+## 2. Enable Node.js compatibility
+
+[Node.js compatibility](/workers/runtime-apis/nodejs/) is required for database drivers, including mysql2, and needs to be configured for your Workers project.
+
+<Render file="nodejs_compat" product="workers" />
+
+## 3. Create a Hyperdrive configuration
+
+Create a Hyperdrive configuration using the connection string for your MySQL database.
+
+```bash
+npx wrangler hyperdrive create <NAME_OF_HYPERDRIVE_CONFIG> --connection-string="mysql://user:password@HOSTNAME_OR_IP_ADDRESS:PORT/database_name"
+```
+
+This command outputs the Hyperdrive configuration `id` that will be used for your Hyperdrive [binding](/workers/runtime-apis/bindings/). Set up your binding by specifying the `id` in the Wrangler file.
+
+<WranglerConfig>
+
+```toml {7-9}
+name = "hyperdrive-example"
+main = "src/index.ts"
+compatibility_date = "2024-08-21"
+compatibility_flags = ["nodejs_compat"]
+
+# Pasted from the output of `wrangler hyperdrive create <NAME_OF_HYPERDRIVE_CONFIG> --connection-string=[...]` above.
+[[hyperdrive]]
+binding = "HYPERDRIVE"
+id = "<ID OF THE CREATED HYPERDRIVE CONFIGURATION>"
+```
+
+</WranglerConfig>
+
+## 4. Query your database from your Worker
+
+<Render file="use-mysql2-to-make-query" product="hyperdrive" />
+
+## 5. Deploy your Worker
+
+Run the following command to deploy your Worker:
+
+```sh
+npx wrangler deploy
+```
+
+Your application is now live and accessible at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`.
+
+## Next steps
+
+To build more with databases and Workers, refer to [Tutorials](/workers/tutorials) and explore the [Databases documentation](/workers/databases).
+
+If you have any questions, need assistance, or would like to share your project, join the Cloudflare Developer community on [Discord](https://discord.cloudflare.com) to connect with fellow developers and the Cloudflare team.

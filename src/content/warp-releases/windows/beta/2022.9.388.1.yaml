@@ -1,0 +1,19 @@
+releaseNotes: >-
+  This release primarily contains bug fixes for beta release 2022.9.266.1 and
+  matches GA 2022.9.383.0
+
+  **Notable updates**
+
+  - Fixes 10 second delay for on some connections for Comcast users
+
+  - Fixes error code 2755 during installation via msi
+   
+  **Known issues**
+
+  - Device posture check results stop sending after 24 hours (or possibly even
+  sooner)
+version: 2022.9.388.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2022.9.388.1
+packageSize: 103960576
+releaseDate: 2022-09-30T19:44:41.367Z
+platformName: Windows

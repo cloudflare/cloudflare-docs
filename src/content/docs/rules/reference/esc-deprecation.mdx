@@ -6,22 +6,19 @@ sidebar:
 head:
   - tag: title
     content: Deprecation notice for Edge Side Code
-
 ---
 
-Edge Side Code (ESC) is a customization option used by several Enterprise customers that allows for more configurability of Cloudflare's global network features. This code can alter the behavior of Cloudflare's CDN, enabling logic for specific customer use cases. Currently, a few customers have ESC in place to perform special operations such as advanced header manipulation, host header switching.
+**Edge Side Code (ESC) is now deprecated.** All configurations currently done via ESC are currently being removed. If you are still using ESC, you will need to configure other Cloudflare products to replace your current ESC configuration before this date.
 
-**Edge Side Code is now deprecated.** All configurations currently done via ESC will be removed on 2025-01-01. If you are using ESC, you will need to configure other Cloudflare products to replace your current ESC configuration before this date.
+Edge Side Code was a customization option used by several Enterprise customers that allowed for more configurability of Cloudflare's global network features. This code could alter the behavior of Cloudflare's CDN, enabling logic for specific customer use cases. Currently, a few customers have ESC in place to perform special operations such as advanced header manipulation, host header switching.
 
 ## Will this deprecation affect my account?
 
-If your account is currently using ESC, your account team will contact you so that you can discuss the migration from ESC to other existing Cloudflare products.
+If your account is still using ESC, you will need to complete your migration to other Cloudflare products.
 
 ## Which Cloudflare products should I use instead?
 
 The following table contains recommendations for different use cases of ESC:
-
-
 
 | Use case                        | Description                                                                                                                                                   | Alternative                                                                                                                                                                                                                                                                                                                         |
 | ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -31,12 +28,10 @@ The following table contains recommendations for different use cases of ESC:
 | Rewrite URI                     | Request a different URL from the origin server while displaying the original request URL in the visitor's browser.                                            | Use [Transform Rules](/rules/transform/url-rewrite/) to rewrite URLs.                                                                                                                                                                                                                                                               |
 | Set/clear request headers       | Set (or clear) HTTP headers sent to the origin server.                                                                                                        | Use [Transform Rules](/rules/transform/request-header-modification/) to modify request headers.                                                                                                                                                                                                                                     |
 | Feature exceptions              | Exclude specific requests from one or more Cloudflare security products.                                                                                      | Use [Configuration Rules](/rules/configuration-rules/settings/).                                                                                                                                                                                                                                                                    |
-| Send custom error response      | Abort the current request, returning a specific response body and/or HTTP status code to the client.                                                          | Use [Custom Error Responses](/rules/custom-error-responses/) to define custom responses for errors returned by an origin server or by a Cloudflare product (including Workers).                                                                                                                                                     |
+| Send custom error response      | Abort the current request, returning a specific response body and/or HTTP status code to the client.                                                          | Use [Custom Error Responses](/rules/custom-errors/) to define custom responses for errors returned by an origin server or by a Cloudflare product (including Workers).                                                                                                                                                              |
 | Set/add/remove response headers | Update, add, or remove headers from the response returned by the origin server.                                                                               | Use [Transform Rules](/rules/transform/response-header-modification/) to modify response headers.                                                                                                                                                                                                                                   |
 | Status redirect                 | After receiving a response from the origin, conditionally send a redirect back to the client if the origin response code matches a key in the supplied table. | Use [Cloudflare Workers](/workers/). Refer to the [Modify response](/workers/examples/modify-response/) example for a similar use case.                                                                                                                                                                                             |
 | Add cookies to response         | Set cookies in the response sent to the client.                                                                                                               | Use [Transform Rules](/rules/transform/response-header-modification/) to modify response headers (which includes setting cookies).                                                                                                                                                                                                  |
-
-
 
 For more complex use cases, consider using [Cloudflare Workers](/workers/).
 
@@ -44,16 +39,16 @@ For more complex use cases, consider using [Cloudflare Workers](/workers/).
 
 Yes, you can [disable ESC via API](#disabling-esc-via-api). The API allows you to:
 
-* Understand the impact of disabling ESC on your account or zone.
-* Test your alternative configuration with other Cloudflare products (and with ESC disabled) before the sunset date.
+- Understand the impact of disabling ESC on your account or zone.
+- Test your alternative configuration with other Cloudflare products (and with ESC disabled) before the sunset date.
 
 ## What kind of tests can I run?
 
 The [available API operations](#api-operations) allow you to do the following:
 
-* **Disable ESC for individual requests:** Any test requests containing a cookie with a specific secret will be processed with ESC disabled.
-* **Disable/enable ESC for a specific zone:** After disabling ESC for a zone, all incoming requests for the zone will have all ESC configurations disabled.
-* **Disable/enable ESC for an entire account**: After disabling ESC for an account, all incoming requests for any zone in the account will have all ESC configurations disabled.
+- **Disable ESC for individual requests:** Any test requests containing a cookie with a specific secret will be processed with ESC disabled.
+- **Disable/enable ESC for a specific zone:** After disabling ESC for a zone, all incoming requests for the zone will have all ESC configurations disabled.
+- **Disable/enable ESC for an entire account**: After disabling ESC for an account, all incoming requests for any zone in the account will have all ESC configurations disabled.
 
 ## What is the recommended testing strategy?
 
@@ -65,7 +60,7 @@ If these tests are successful, [disable ESC for the entire zone](#disable-esc-fo
 
 If you wish, you can also [disable ESC for an entire account](#disable-esc-for-an-account). This will affect all incoming requests for all zones in your account.
 
-***
+---
 
 ## Disabling ESC via API
 
@@ -83,17 +78,15 @@ To disable/enable ESC for individual requests, do the following:
 
 To change the ESC status for a zone, use the following operations:
 
-* [Disable ESC for a zone](#disable-esc-for-a-zone)
-* [Re-enable ESC for a zone](#re-enable-esc-for-a-zone)
+- [Disable ESC for a zone](#disable-esc-for-a-zone)
+- [Re-enable ESC for a zone](#re-enable-esc-for-a-zone)
 
 To change the ESC status for an account, use the following operations:
 
-* [Disable ESC for an account](#disable-esc-for-an-account)
-* [Re-enable ESC for an account](#re-enable-esc-for-an-account)
+- [Disable ESC for an account](#disable-esc-for-an-account)
+- [Re-enable ESC for an account](#re-enable-esc-for-an-account)
 
 ### API operations
-
-
 
 | Name                                    | HTTP verb | Endpoint                             |
 | --------------------------------------- | --------- | ------------------------------------ |
@@ -105,8 +98,6 @@ To change the ESC status for an account, use the following operations:
 | Create ESC secret for an account        | POST      | `/accounts/{account_id}/disable_esc` |
 | Disable ESC for an account              | POST      | `/accounts/{account_id}/disable_esc` |
 | Re-enable ESC for an account            | DELETE    | `/accounts/{account_id}/disable_esc` |
-
-
 
 To invoke an API operation, append the operation endpoint to the Cloudflare API base URL:
 
@@ -129,13 +120,13 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/disable_esc" \
 The following example response states that ESC is disabled for the entire `{zone_id}` zone:
 
 ```json
-{"always": true}
+{ "always": true }
 ```
 
 The following example response includes the previously configured secret for the zone using the [Create ESC secret for a zone](#create-esc-secret-for-a-zone) operation:
 
 ```json
-{"with_secret": "<SECRET>"}
+{ "with_secret": "<SECRET>" }
 ```
 
 #### Create ESC secret for a zone
@@ -252,7 +243,7 @@ curl --request DELETE \
 --header "X-Auth-Email: <EMAIL>"
 ```
 
-***
+---
 
 ## Final remarks
 

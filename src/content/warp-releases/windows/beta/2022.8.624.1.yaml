@@ -1,0 +1,21 @@
+releaseNotes: |-
+  This release contains bug fixes from the previous beta (2022.8.558.1). Please
+  note that the issue preventing the client from working with Windows versions
+  older than 10.0.19042 is now fixed in this release. We also wanted to call out
+  that we've made server side changes to significantly reduce captcha issues for
+  users with IPv6 enabled (no client related change but wanted to call out the
+  work).
+
+  **Notable updates**
+   
+  - Fixed crash of daemon after wake from sleeping which could cause loss of
+    network connectivity or the GUI to freeze 
+  - Fixed issue with includeonly tunnels reconnecting every ~135 seconds
+   
+  **Known issues**
+  - No known issues
+version: 2022.8.624.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2022.8.624.1
+packageSize: 105893888
+releaseDate: 2022-09-01T01:04:14.158Z
+platformName: Windows

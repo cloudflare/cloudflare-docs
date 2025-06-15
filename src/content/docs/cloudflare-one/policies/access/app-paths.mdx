@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-Application paths define the URLs protected by an Access policy. When adding a [self-hosted web application](/cloudflare-one/applications/configure-apps/self-hosted-apps/) to Access, you can choose to protect the entire website by entering its apex domain, or alternatively, protect specific subdomains and paths.
+Application paths define the URLs protected by an Access policy. When adding a self-hosted application to Access, you can choose to protect the entire website by entering its apex domain, or alternatively, protect specific subdomains and paths.
 
 ## Policy inheritance
 
@@ -82,6 +82,10 @@ Using a wildcard in the middle of the **Path** field covers multiple segments of
 ### Port numbers
 
 Port numbers are not supported in Access application paths. If a request includes a port number in the URL, Access will strip the port number and redirect the request to the default HTTP/HTTPS port.
+
+### Query strings
+
+Query strings (such as`?foo=bar`) are not supported in Access application paths.
 
 ### Anchor links
 

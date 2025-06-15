@@ -1,0 +1,33 @@
+---
+pcx_content_type: concept
+title: Rule groups
+sidebar:
+  order: 2
+
+---
+
+import { Render } from "~/components"
+
+A rule group is a collection of Access rules that can be configured once and then quickly applied across many Access policies. Rule groups use the same [rule types](/cloudflare-one/policies/access/#rule-types) and [selectors](/cloudflare-one/policies/access/#selectors) shown in the Access policy builder.
+
+:::note
+Rule groups are distinct from groups in your identity provider, like Okta groups. Rule groups can contain a mix of individual users, groups from identity providers, and service authentication options like service tokens.
+:::
+
+## Create a rule group
+
+<Render file="access/rule-group" />
+
+## Use cases
+
+### IP-based rules
+
+We recommend using rule groups to define any IP address-based rules you configure in policies. Keeping IP addresses in one place allows you to modify or remove addresses once, rather than in each policy, and reduces the potential for mistakes.
+
+:::note
+If adding more than one IP address or range to a rule group, use an Include rule for the IPs. If you do not use an Include rule, the policy will require traffic to originate from all ranges.
+:::
+
+### Country requirements
+
+You can create a rule group that consists of countries to allow or block. Access will treat the countries in the Include rule with an OR logical operator. When building policies for an Access application, you can assign this rule group to a Require policy to require at least one of the countries inside of the group. For an example policy, refer to [Require rules with OR operators](/cloudflare-one/policies/access/#require-rules-with-or-operators).

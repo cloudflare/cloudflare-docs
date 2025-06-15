@@ -35,7 +35,7 @@ If your customer cannot update their authoritative DNS, you could also use [HTTP
 
 To set up `TXT` validation:
 
-1. When you [create a custom hostname](/api/operations/custom-hostname-for-a-zone-create-custom-hostname), save the `ownership_verification` information.
+1. When you [create a custom hostname](/api/resources/custom_hostnames/methods/create/), save the `ownership_verification` information.
 
    ```json null {11-12}
    {
@@ -73,7 +73,7 @@ When you [create a custom hostname](/cloudflare-for-platforms/cloudflare-for-saa
 
 To get and use the `ownership_verification` record:
 
-1. Make an API call to [create a Custom Hostname](/api/operations/custom-hostname-for-a-zone-create-custom-hostname).
+1. Make an API call to [create a Custom Hostname](/api/resources/custom_hostnames/methods/create/).
 
 2. In the response, copy the `http_url` and `http_body` from the `ownership_verification_http` object:
 

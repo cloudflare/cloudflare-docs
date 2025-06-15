@@ -1,7 +1,6 @@
 ---
 updated: 2023-03-27
 difficulty: Intermediate
-content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Generate YouTube thumbnails with Workers and Cloudflare Image Resizing
 products:
@@ -11,7 +10,7 @@ languages:
   - Rust
 ---
 
-import { Render, PackageManagers } from "~/components";
+import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 In this tutorial, you will learn how to programmatically generate a custom YouTube thumbnail using Cloudflare Workers and Cloudflare Image Resizing. You may want to generate a custom YouTube thumbnail to customize the thumbnail's design, call-to-actions and images used to encourage more viewers to watch your video.
 
@@ -335,12 +334,16 @@ Adding a query parameter with custom text, you should receive:
 
 ![Follow the instructions above to receive an output image](~/assets/images/workers/tutorials/youtube-thumbnails/build-serverles.png)
 
-To deploy your Worker, open your `wrangler.toml` file and update the `name` key with your project's name. Below is an example with this tutorial's project name:
+To deploy your Worker, open your Wrangler file and update the `name` key with your project's name. Below is an example with this tutorial's project name:
+
+<WranglerConfig>
 
 ```toml
 name = "worker-to-text"
 
 ```
+
+</WranglerConfig>
 
 Then run the `npx wrangler deploy` command to deploy your Worker.
 
@@ -365,7 +368,7 @@ Create a Worker to serve the image you uploaded to Images by running:
 	product="workers"
 	params={{
 		category: "hello-world",
-		type: "Hello World Worker",
+		type: "Worker only",
 		lang: "JavaScript",
 	}}
 />
@@ -393,7 +396,7 @@ export default {
 };
 ```
 
-Update `env.CLOUDFLARE_ACCOUNT_HASH` with your [Cloudflare account ID](/fundamentals/setup/find-account-and-zone-ids/). Update `env.IMAGE_ID` with your [image ID](/images/get-started/).
+Update `env.CLOUDFLARE_ACCOUNT_HASH` with your [Cloudflare account ID](/fundamentals/account/find-account-and-zone-ids/). Update `env.IMAGE_ID` with your [image ID](/images/get-started/).
 
 Run your Worker and go to the `/original-image` route to review your image.
 
@@ -492,12 +495,16 @@ fetch(imageURL, {
 
 Image transformations can only be tested when you deploy your Worker.
 
-To deploy your Worker, open your `wrangler.toml` file and update the `name` key with your project's name. Below is an example with this tutorial's project name:
+To deploy your Worker, open your Wrangler file and update the `name` key with your project's name. Below is an example with this tutorial's project name:
+
+<WranglerConfig>
 
 ```toml
 name = "thumbnail-image"
 
 ```
+
+</WranglerConfig>
 
 Deploy your Worker by running:
 

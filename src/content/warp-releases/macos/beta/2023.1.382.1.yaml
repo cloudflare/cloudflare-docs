@@ -1,0 +1,29 @@
+releaseNotes: >-
+  This release primarily contains bug fixes and improvements, no new features
+  are included in this release.
+
+
+  **Notable updates**
+
+  - Improve timeouts with broken CNAME records that could result in very long
+  load times for certain apps (Office 365 apps, etc.)
+
+  - Fixed issue where trying to launch a support_url without a valid protocol
+  handler (ex. https://) would result in an error
+
+  - Fixed issue where systems with significantly out of sync system clocks could
+  fail registration
+
+  - Fixed panic that could result in loss of internet connectivity
+
+
+  **Known issues**
+
+  - If you are having issues with upgrading to new beta, please uninstall
+  current app, install the GA version from https://1.1.1.1/ and participate in
+  beta program from Preferences->Advanced.
+version: 2023.1.382.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2023.1.382.1
+packageSize: 47735934
+releaseDate: 2023-02-02T00:19:03.252Z
+platformName: macOS

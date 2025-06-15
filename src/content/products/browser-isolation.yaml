@@ -4,4 +4,6 @@ product:
   title: Browser Isolation
   group: Cloudflare One
   url: /cloudflare-one/policies/browser-isolation/
-  grid_placeholder: true
+
+meta:
+  description: Cloudflare Browser Isolation executes active webpage content in a secure isolated browser.

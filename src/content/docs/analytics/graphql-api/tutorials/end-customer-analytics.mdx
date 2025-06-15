@@ -8,7 +8,7 @@ title: Querying HTTP events by hostname with GraphQL
 
 In this example, we are going to use the GraphQL Analytics API to query aggregated metrics about HTTP events by hostname over a specific period of time.
 
-The following API call will request the number of visits and edge response bytes for the custom hostname `hostname.example.com` over a four day period. Be sure to replace `CLOUDFLARE_ZONE_ID` AND `API_TOKEN` with your zone ID and API credentials, and adjust the `datetime_geq` and `datetime_leq` values as needed.
+The following API call will request the number of visits and edge response bytes for the custom hostname `hostname.example.com` over a four day period. Be sure to replace `CLOUDFLARE_ZONE_TAG` and `API_TOKEN`[^1] with your zone ID and API credentials, and adjust the `datetime_geq` and `datetime_leq` values as needed.
 
 ### API Call
 
@@ -30,7 +30,7 @@ echo '{ "query":
     }
   }",
   "variables": {
-    "zoneTag": "<CLOUDFLARE_ZONE_ID>",
+    "zoneTag": "<CLOUDFLARE_ZONE_TAG>",
     "filter": {
       "datetime_geq": "2022-07-20T11:00:00Z",
       "datetime_lt": "2022-07-24T12:00:00Z",
@@ -191,3 +191,5 @@ https://api.cloudflare.com/client/v4/graphql \
   }
 }' | jq -r 'try .data.viewer.zones[].topPaths[] | "\"\(.dimensions.metric)\": \(.sum.edgeResponseBytes)"' | sort
 ```
+
+[^1]: Refer to [Configure an Analytics API token](/analytics/graphql-api/getting-started/authentication/api-token-auth/) for more information on configuration and permissions.

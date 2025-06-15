@@ -1,12 +1,12 @@
 ---
-title: How it works
+title: How Bulk Redirects work
 pcx_content_type: concept
 sidebar:
   order: 4
-head:
-  - tag: title
-    content: How Bulk Redirects work
+  label: How it works
 ---
+
+import { MetaInfo } from "~/components";
 
 For each incoming request, Cloudflare evaluates all URL redirects of each Bulk Redirect List that is enabled by a Bulk Redirect Rule.
 
@@ -16,13 +16,12 @@ If there is a match for a URL redirect according to the URL matching algorithm, 
 
 The following URL redirect parameters control the matching behavior between the request URL and source URLs of the configured (and enabled) URL redirects:
 
-- **Subpath matching** (default: false)
+- **Subpath matching** <MetaInfo text="(default: false)"/>
 
-  - If true, the URL redirect will apply to all paths under the given source path. For example, consider the following source and target URLs of a URL redirect:
+  - If `true`, the URL redirect will apply to all paths under the given source path. For example, consider the following source and target URLs of a URL redirect:
 
-    — Source URL: `https://example.com/foo/`
-
-    — Target URL: `https://example.com/qux/`
+    - Source URL: `https://example.com/foo/`
+    - Target URL: `https://example.com/qux/`
 
   - With this configuration and **Subpath matching** enabled, an incoming request to `example.com/foo/bar` will be redirected to `https://example.com/qux/bar`.
 
@@ -30,13 +29,12 @@ The following URL redirect parameters control the matching behavior between the 
   URL redirects with **Subpath matching** enabled cannot contain more than 16 `/` (slash) characters in the source URL path.
   :::
 
-- **Include subdomains** (default: false)
+- **Include subdomains** <MetaInfo text="(default: false)"/>
 
-  - If true, the source URL hostname of the URL redirect will also apply to all its subdomains. For example, consider the following source and target URLs of a URL redirect:
+  - If `true`, the source URL hostname of the URL redirect will also apply to all its subdomains. For example, consider the following source and target URLs of a URL redirect:
 
-    — Source URL: `https://example.com/about`
-
-    — Target URL: `https://example.com/newpage`
+    - Source URL: `https://example.com/about`
+    - Target URL: `https://example.com/newpage`
 
   - With this configuration and **Includes subdomains** enabled, incoming requests to `http://a.example.com/about` and `http://a.b.example.com/about` would also match, in addition to the specified domain with no subdomain (`https://example.com/about`).
 
@@ -46,29 +44,27 @@ For detailed information on these parameters, refer to [URL redirect parameters]
 
 The following parameters configure how Cloudflare determines the path and query string of the final target URL:
 
-- **Preserve query string** (default: false)
+- **Preserve query string** <MetaInfo text="(default: false)"/>
 
-  - If true, the final target URL will keep the query string of the original request. For example, consider the following source and target URLs of a URL redirect:
+  - If `true`, the final target URL will keep the query string of the original request. For example, consider the following source and target URLs of a URL redirect:
 
-    — Source URL: `https://example.com/about`
-
-    — Target URL: `https://example.com/newpage`
+    - Source URL: `https://example.com/about`
+    - Target URL: `https://example.com/newpage`
 
   - With this configuration and **Preserve query string** enabled, an incoming request to `http://example.com/about?q=term` would be redirected to `https://example.com/newpage?q=term`. If **Preserve query string** is disabled, the same incoming request would be redirected to `https://example.com/newpage`.
 
-- **Preserve path suffix** (default: true)
+- **Preserve path suffix** <MetaInfo text="(default: true)"/>
 
   - Defines if the final target URL will include the parts of the request path that did not match the URL redirect's source URL.
 
   - When **Subpath matching** is enabled, the path that was not matched is copied over to the final target URL. For example, consider the following source and target URLs of a URL redirect:
 
-    — Source URL: `https://example.com/a/`
-
-    — Target URL: `https://example.com/b/`
+    - Source URL: `https://example.com/a/`
+    - Target URL: `https://example.com/b/`
 
   - An incoming request to `https://example.com/a/foo` will be redirected to `https://example.com/b/foo`.
 
-  - If you set **Preserve path suffix** to false, the same request will still match the redirect, but it will be redirected to `https://example.com/b/`.
+  - If you set **Preserve path suffix** to `false`, the same request will still match the redirect, but it will be redirected to `https://example.com/b/`.
 
 For detailed information on these parameters, refer to [URL redirect parameters](/rules/url-forwarding/bulk-redirects/reference/parameters/).
 

@@ -24,7 +24,7 @@ This guide covers how to configure [Atlassian Cloud](https://support.atlassian.c
 4. For the authentication protocol, select **SAML**.
 5. Select **Add application**.
 6. Copy the **Access Entity ID or Issuer**, **Public key**, and **SSO endpoint**.
-7. Keep this window open without selecting **Select configuration**. You will finish this configuration in step [4. Finish adding a SaaS application to Cloudflare Zero Trust](#4-finish-adding-a-saas-application-to-cloudflare-zero-trust).
+7. Keep this window open. You will finish this configuration in step [4. Finish adding a SaaS application to Cloudflare Zero Trust](#4-finish-adding-a-saas-application-to-cloudflare-zero-trust).
 
 ## 2. Create a x.509 certificate
 
@@ -38,13 +38,9 @@ This guide covers how to configure [Atlassian Cloud](https://support.atlassian.c
 3. For **Directory name**, enter your desired name. For example, you could enter `Cloudflare Access`.
 4. Select **Add** > **Set up SAML single sign-on** > **Next**.
 
-:::note
-
-
-This screen will advise you to create an authentication policy before proceeding. You will do this in step [5. Create an application policy to test integration](#5-create-an-authentication-policy-to-test-integration).
-
-
-:::
+		:::note
+		This screen will advise you to create an authentication policy before proceeding. You will do this in step [5. Create an application policy to test integration](#5-create-an-authentication-policy-to-test-integration).
+		:::
 
 5. Fill in the following fields:
    * **Identity provider Entity ID**: Access Entity ID or Issuer from application configuration in Cloudflare Zero Trust.
@@ -60,11 +56,10 @@ This screen will advise you to create an authentication policy before proceeding
 
 1. In your open Zero Trust window, fill in the following fields:
    * **Entity ID**: Service provider entity URL from Atlassian Cloud SAML SSO set-up.
-   * **Assertion Consumer Service URL**: Service provider assertion comsumer service URL from Atlassian Cloud SAML SSO set-up.
+   * **Assertion Consumer Service URL**: Service provider assertion consumer service URL from Atlassian Cloud SAML SSO set-up.
    * **Name ID format**: *Email*
-2. Select **Save configuration**.
-3. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
-4. Select **Done**.
+2. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
+3. Save the application.
 
 ## 5. Create an authentication policy to test integration
 

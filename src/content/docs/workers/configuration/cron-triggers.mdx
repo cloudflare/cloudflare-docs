@@ -5,6 +5,8 @@ head: []
 description: Enable your Worker to be executed on a schedule.
 ---
 
+import { Render, WranglerConfig, TabItem, Tabs } from "~/components";
+
 ## Background
 
 Cron Triggers allow users to map a cron expression to a Worker using a [`scheduled()` handler](/workers/runtime-apis/handlers/scheduled/) that enables Workers to be executed on a schedule.
@@ -25,36 +27,87 @@ Cron Triggers execute on UTC time.
 
 To respond to a Cron Trigger, you must add a [`"scheduled"` handler](/workers/runtime-apis/handlers/scheduled/) to your Worker.
 
-Refer to the following examples to write your code:
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+
+```js
+export default {
+	async scheduled(controller, env, ctx) {
+		console.log("cron processed");
+	},
+};
+```
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+
+```ts
+interface Env {}
+export default {
+	async scheduled(
+		controller: ScheduledController,
+		env: Env,
+		ctx: ExecutionContext,
+	) {
+		console.log("cron processed");
+	},
+};
+```
+
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```python
+from workers import handler
+
+@handler
+async def on_scheduled(controller, env, ctx):
+  print("cron processed")
+```
+
+</TabItem></Tabs>
+
+Refer to the following additional examples to write your code:
 
 - [Setting Cron Triggers](/workers/examples/cron-trigger/)
 - [Multiple Cron Triggers](/workers/examples/multiple-cron-triggers/)
 
 ### 2. Update configuration
 
+:::note[Cron Trigger changes take time to propagate.]
+
+Changes such as adding a new Cron Trigger, updating an old Cron Trigger, or deleting a Cron Trigger may take several minutes (up to 15 minutes) to propagate to the Cloudflare global network.
+
+:::
+
 After you have updated your Worker code to include a `"scheduled"` event, you must update your Worker project configuration.
 
-#### Via `wrangler.toml`
+#### Via the [Wrangler configuration file](/workers/wrangler/configuration/)
 
-If a Worker is managed with Wrangler, Cron Triggers should be exclusively managed through the [`wrangler.toml`](/workers/wrangler/configuration/) file.
+If a Worker is managed with Wrangler, Cron Triggers should be exclusively managed through the [Wrangler configuration file](/workers/wrangler/configuration/).
 
-Refer to the example below for a sample `wrangler.toml` Cron Triggers configuration:
+Refer to the example below for a Cron Triggers configuration:
+
+<WranglerConfig>
 
 ```toml
 [triggers]
 # Schedule cron triggers:
 # - At every 3rd minute
-# - At 3PM on first day of the month
-# - At 11:59PM on the last weekday of the month
+# - At 15:00 (UTC) on first day of the month
+# - At 23:59 (UTC) on the last weekday of the month
 crons = [ "*/3 * * * *", "0 15 1 * *", "59 23 LW * *" ]
 ```
 
-You also can set a different Cron Trigger for each [environment](/workers/wrangler/environments/) in your `wrangler.toml`. You need to put the `[triggers]` table under your chosen environment. For example:
+</WranglerConfig>
+
+You also can set a different Cron Trigger for each [environment](/workers/wrangler/environments/) in your [Wrangler configuration file](/workers/wrangler/configuration/). You need to put the `triggers` array under your chosen environment. For example:
+
+<WranglerConfig>
 
 ```toml
 [env.dev.triggers]
 crons = ["0 * * * *"]
 ```
+
+</WranglerConfig>
 
 #### Via the dashboard
 
@@ -76,6 +129,13 @@ Cloudflare supports cron expressions with five fields, along with most [Quartz s
 | Months        | 1-12, case-insensitive 3-letter abbreviations ("JAN", "aug", etc.) | \* , - /     |
 | Weekdays      | 1-7, case-insensitive 3-letter abbreviations ("MON", "fri", etc.)  | \* , - / L # |
 
+:::note
+
+Days of the week go from 1 = Sunday to 7 = Saturday, which is different on some other cron systems (where 0 = Sunday and 6 = Saturday).
+To avoid ambiguity you may prefer to use the three latter abbreviations (e.g. `SUN` rather than 1).
+
+:::
+
 ### Examples
 
 Some common time intervals that may be useful for setting up your Cron Trigger:
@@ -94,39 +154,41 @@ Some common time intervals that may be useful for setting up your Cron Trigger:
 
 - `0 17 * * sun` or `0 17 * * 1`
 
-  - 5PM on Sunday
+  - 17:00 (UTC) on Sunday
 
 - `10 7 * * mon-fri` or `10 7 * * 2-6`
 
-  - 7:10AM on weekdays
+  - 07:10 (UTC) on weekdays
 
 - `0 15 1 * *`
 
-  - 3PM on first day of the month
+  - 15:00 (UTC) on first day of the month
 
 - `0 18 * * 6L` or `0 18 * * friL`
 
-  - 6PM on the last Friday of the month
+  - 18:00 (UTC) on the last Friday of the month
 
 - `59 23 LW * *`
-  - 11:59PM on the last weekday of the month
+  - 23:59 (UTC) on the last weekday of the month
 
-## Test Cron Triggers
+## Test Cron Triggers locally
 
-The recommended way of testing Cron Triggers is using Wrangler.
-
-:::note[Cron Trigger changes take time to propagate.]
-
-Changes such as adding a new Cron Trigger, updating an old Cron Trigger, or deleting a Cron Trigger may take several minutes (up to 15 minutes) to propagate to the Cloudflare global network.
-
-:::
-
-Test Cron Triggers using `Wrangler` by passing in the `--test-scheduled` flag to [`wrangler dev`](/workers/wrangler/commands/#dev). This will expose a `/__scheduled` route which can be used to test using a HTTP request. To simulate different cron patterns, a `cron` query parameter can be passed in.
+Test Cron Triggers using Wrangler with [`wrangler dev`](/workers/wrangler/commands/#dev). This will expose a `/cdn-cgi/handler/scheduled` route which can be used to test using a HTTP request.
 
 ```sh
-npx wrangler dev --test-scheduled
+curl "http://localhost:8787/cdn-cgi/handler/scheduled"
+```
 
-curl "http://localhost:8787/__scheduled?cron=*+*+*+*+*"
+To simulate different cron patterns, a `cron` query parameter can be passed in.
+
+```sh
+curl "http://localhost:8787/cdn-cgi/handler/scheduled?cron=*+*+*+*+*"
+```
+
+Optionally, you can also pass a `time` query parameter to override `controller.scheduledTime` in your scheduled event listener.
+
+```sh
+curl "http://localhost:8787/cdn-cgi/handler/scheduled?cron=*+*+*+*+*&time=1745856238"
 ```
 
 ## View past events
@@ -159,11 +221,24 @@ To delete a Cron Trigger on a deployed Worker via the dashboard:
 2. Go to **Workers & Pages**, and select your Worker.
 3. Go to **Triggers** > select the three dot icon next to the Cron Trigger you want to remove > **Delete**.
 
-:::note
+#### Via the [Wrangler configuration file](/workers/wrangler/configuration/)
 
-You can only delete Cron Triggers using the Cloudflare dashboard (and not through your `wrangler.toml` file).
+If a Worker is managed with Wrangler, Cron Triggers should be exclusively managed through the [Wrangler configuration file](/workers/wrangler/configuration/).
 
-:::
+When deploying a Worker with Wrangler any previous Cron Triggers are replaced with those specified in the `triggers` array.
+
+- If the `crons` property is an empty array then all the Cron Triggers are removed.
+- If the `triggers` or `crons` property are `undefined` then the currently deploy Cron Triggers are left in-place.
+
+<WranglerConfig>
+
+```toml
+[triggers]
+# Remove all cron triggers:
+crons = [ ]
+```
+
+</WranglerConfig>
 
 ## Limits
 
@@ -186,5 +261,5 @@ Green Compute can be configured at the account level:
 
 ## Related resources
 
-- [Triggers](/workers/wrangler/configuration/#triggers) - Review `wrangler.toml` syntax for Cron Triggers.
+- [Triggers](/workers/wrangler/configuration/#triggers) - Review Wrangler configuration file syntax for Cron Triggers.
 - Learn how to access Cron Triggers in [ES modules syntax](/workers/reference/migrate-to-module-workers/) for an optimized experience.

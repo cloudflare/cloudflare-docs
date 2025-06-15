@@ -1,14 +1,16 @@
 ---
 import { z } from "astro:schema";
 import { marked } from "marked";
+import dedent from "dedent";
 
 type Props = z.infer<typeof props>;
 
 const props = z.object({
-	text: z.string(),
+	text: z.string().transform((val) => dedent(val)),
+	inline: z.boolean().default(true),
 });
 
-const { text } = props.parse(Astro.props);
+const { text, inline } = props.parse(Astro.props);
 ---
 
-<Fragment set:html={marked.parseInline(text)} />
+<Fragment set:html={inline ? marked.parseInline(text) : marked.parse(text)} />

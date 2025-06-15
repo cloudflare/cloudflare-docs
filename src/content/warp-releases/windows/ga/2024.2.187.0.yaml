@@ -1,0 +1,22 @@
+releaseNotes: >-
+  This release contains no new features and is focused exclusively on
+  improvements.
+
+
+  **Notable updates**
+
+  - Improved error handling to avoid causing an unnecessary reconnection when
+  the Windows networking subsystem is under load.
+
+
+  **Known issues**
+
+  - When `Install CA to system certificate store` is enabled, the certificate is
+  not always properly left behind in
+  `%ProgramData%\Cloudflare\installed_cert.pem`. This issue will be fixed in a
+  future release.
+version: 2024.2.187.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2024.2.187.0
+packageSize: 114958336
+releaseDate: 2024-02-29T21:03:04.019Z
+platformName: Windows

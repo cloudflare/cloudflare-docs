@@ -1,0 +1,18 @@
+releaseNotes: |
+  This release includes fixes and minor improvements.
+
+    **Changes and improvements**
+    - Consumers can now set the tunnel protocol using `warp-cli tunnel protocol set <protocol>`.
+    - Extended diagnostics collection time in `warp-diag` to ensure logs are captured reliably.
+    - Improved captive portal support by disabling the firewall during captive portal login flows.
+    - Improved reliability of connection establishment logic under degraded network conditions.
+    - Improved reconnection speed when a Cloudflare server is in a degraded state.
+    - Improved captive portal detection on certain public networks.
+    - Reduced connectivity interruptions on WireGuard Split Tunnel Include mode configurations.
+    - Fixed connectivity issues switching between managed network profiles with different configured protocols.
+    - QLogs are now disabled by default and can be enabled with `warp-cli debug qlog enable`. The QLog setting from previous releases will no longer be respected.
+
+version: 2024.12.554.0
+releaseDate: 2024-12-19
+packageURL: https://pkg.cloudflareclient.com/
+platformName: Linux

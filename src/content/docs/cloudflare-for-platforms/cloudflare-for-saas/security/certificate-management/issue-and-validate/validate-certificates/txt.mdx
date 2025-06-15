@@ -63,11 +63,3 @@ You will then need to share these TXT tokens with your customers.
 Your DCV tokens expire after a [certain amount of time](/cloudflare-for-platforms/cloudflare-for-saas/reference/token-validity-periods/), depending on your certificate authority.
 
 This means that, if your customers take too long to place their tokens at their authoritative DNS provider, you may need to [get new tokens](#1-get-txt-tokens) and re-share them with your customer.
-
----
-
-### DigiCert
-
-If you create a hostname with DigiCert as the certificate authority, you only need to share one TXT record for your customer to place at their authoritative DNS provider.
-
-However, Cloudflare [will soon be deprecating](/ssl/reference/migration-guides/digicert-update/) DigiCert as an issuing CA for custom hostnames, so we recommend you follow our [migration guide](/ssl/reference/migration-guides/digicert-update/custom-hostname-certificates/) to move your custom hostnames over to another CA.

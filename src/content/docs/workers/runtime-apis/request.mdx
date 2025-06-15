@@ -6,7 +6,7 @@ description: Interface that represents an HTTP request.
 
 ---
 
-import { Type, MetaInfo } from "~/components";
+import { Type, MetaInfo, Render } from "~/components";
 
 The [`Request`](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request) interface represents an HTTP request and is part of the [Fetch API](/workers/runtime-apis/fetch/).
 
@@ -62,7 +62,10 @@ let request = new Request(input, options)
 
 An object containing properties that you want to apply to the request.
 
+* `cache` `undefined | 'no-store'` optional
 
+	* Standard HTTP `cache` header. Only `cache: 'no-store'` is supported.
+	Any other cache header will result in a `TypeError` with the message `Unsupported cache mode: <attempted-cache-mode>`.
 
 * `cf` RequestInitCfProperties optional
 
@@ -70,7 +73,7 @@ An object containing properties that you want to apply to the request.
 
 * `method` <Type text="string" /> <MetaInfo text="optional" />
 
-  * The HTTP request method. The default is `GET`. In Workers, all [HTTP request methods](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) are supported, except for [`CONNECT`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/CONNECT).
+  * The HTTP request method. The default is `GET`. In Workers, all [HTTP request methods](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Methods) are supported, except for [`CONNECT`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Methods/CONNECT).
 
 * `headers` Headers optional
 
@@ -85,6 +88,8 @@ An object containing properties that you want to apply to the request.
 
   * The redirect mode to use: `follow`, `error`, or `manual`. The default  for a new `Request` object is `follow`. Note, however, that the incoming `Request` property of a `FetchEvent` will have redirect mode `manual`.
 
+* `signal` AbortSignal optional
+  * If provided, the request can be canceled by triggering an abort on the corresponding `AbortController`.
 
 
 #### The `cf` property (`RequestInitCfProperties`)
@@ -96,7 +101,7 @@ An object containing Cloudflare-specific properties that can be set on the `Requ
 fetch(event.request, { cf: { scrapeShield: false } })
 ```
 
-Invalid or incorrectly-named keys in the `cf` object will be silently ignored. Consider using TypeScript and [`@cloudflare/workers-types`](https://github.com/cloudflare/workers-types) to ensure proper use of the `cf` object.
+Invalid or incorrectly-named keys in the `cf` object will be silently ignored. Consider using TypeScript and generating types by running [`wrangler types`](/workers/languages/typescript/#generate-types) to ensure proper use of the `cf` object.
 
 
 
@@ -115,7 +120,7 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 * `cacheTags` Array\<string> optional
 
-  * This option appends additional [**Cache-Tag**](/cache/how-to/purge-cache/purge-by-tags/) headers to the response from the origin server. This allows for purges of cached content based on tags provided by the Worker, without modifications to the origin server. This is performed using the [**Purge by Tag**](/cache/how-to/purge-cache/purge-by-tags/#purge-using-cache-tags) feature, which is currently only available to Enterprise zones. If this option is used in a non-Enterprise zone, the additional headers will not be appended.
+  * This option appends additional [**Cache-Tag**](/cache/how-to/purge-cache/purge-by-tags/) headers to the response from the origin server. This allows for purges of cached content based on tags provided by the Worker, without modifications to the origin server. This is performed using the [**Purge by Tag**](/cache/how-to/purge-cache/purge-by-tags/#purge-using-cache-tags) feature.
 
 * `cacheTtl` <Type text="number" /> <MetaInfo text="optional" />
 
@@ -180,7 +185,7 @@ All properties of an incoming `Request` object (the request you receive from the
 
   :::caution
 
-  If the response is a redirect and the redirect mode is set to `follow` (see below), then all headers will be forwarded to the redirect destination, even if the destination is a different hostname or domain. This includes sensitive headers like `Cookie`, `Authorization`, or any application-specific headers. If this is not the behavior you want, you should set redirect mode to `manual` and implement your own redirect policy. Note that redirect mode defaults to `manual` for requests that originated from the Worker's client, so this warning only applies to `fetch()`es made by a Worker that are not proxying the original request. 
+  If the response is a redirect and the redirect mode is set to `follow` (see below), then all headers will be forwarded to the redirect destination, even if the destination is a different hostname or domain. This includes sensitive headers like `Cookie`, `Authorization`, or any application-specific headers. If this is not the behavior you want, you should set redirect mode to `manual` and implement your own redirect policy. Note that redirect mode defaults to `manual` for requests that originated from the Worker's client, so this warning only applies to `fetch()`es made by a Worker that are not proxying the original request.
   :::
 
 * `method` string read-only
@@ -190,6 +195,11 @@ All properties of an incoming `Request` object (the request you receive from the
 * `redirect` string read-only
 
   * The redirect mode to use: `follow`, `error`, or `manual`. The `fetch` method will automatically follow redirects if the redirect mode is set to `follow`. If set to `manual`, the `3xx` redirect response will be returned to the caller as-is. The default for a new `Request` object is `follow`. Note, however, that the incoming `Request` property of a `FetchEvent` will have redirect mode `manual`.
+
+* `signal` AbortSignal read-only
+  * The `AbortSignal` corresponding to this request. If you use the [`enable_request_signal`](/workers/configuration/compatibility-flags/#enable-requestsignal-for-incoming-requests) compatibility flag, you can attach an event listener to the signal. This allows you to perform cleanup tasks or write to logs before your Worker's invocation ends.
+    For example, if you run the Worker below, and then abort the request from the client, a log will be written:
+    <Render file="request-signal-example" />
 
 * `url` string read-only
 
@@ -248,6 +258,18 @@ All plans have access to:
 * `tlsClientAuth` Object | null
 
   * Only set when using Cloudflare Access or API Shield (mTLS). Object with the following properties: `certFingerprintSHA1`, `certFingerprintSHA256`, `certIssuerDN`, `certIssuerDNLegacy`, `certIssuerDNRFC2253`, `certIssuerSKI`, `certIssuerSerial`, `certNotAfter`, `certNotBefore`, `certPresented`, `certRevoked`, `certSKI`, `certSerial`, `certSubjectDN`, `certSubjectDNLegacy`, `certSubjectDNRFC2253`, `certVerified`.
+
+* `tlsClientCiphersSha1` string
+
+  * The SHA-1 hash (Base64-encoded) of the cipher suite sent by the client during the TLS handshake, encoded in big-endian format. For example, `"GXSPDLP4G3X+prK73a4wBuOaHRc="`.
+
+* `tlsClientExtensionsSha1` string
+
+  * The SHA-1 hash (Base64-encoded) of the TLS client extensions sent during the handshake, encoded in big-endian format. For example, `"OWFiM2I5ZDc0YWI0YWYzZmFkMGU0ZjhlYjhiYmVkMjgxNTU5YTU2Mg=="`.
+
+* `tlsClientExtensionsSha1Le` string
+
+  * The SHA-1 hash (Base64-encoded) of the TLS client extensions sent during the handshake, encoded in little-endian format. For example, `"7zIpdDU5pvFPPBI2/PCzqbaXnRA="`.
 
 * `tlsClientHelloLength` string
 

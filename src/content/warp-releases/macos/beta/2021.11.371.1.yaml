@@ -1,0 +1,23 @@
+releaseNotes: >-
+  This release contains new features and improvements from the last release.
+
+
+  **Notable updates**
+
+  - With this release you can now specify specific DNS servers to use for
+  domains in Local Domain fallback in the Teams Dashboard.
+
+  - Improved reliability of connection between client gui and daemon.
+
+  - Improved the connectivity check to more frequently and consistently check
+  for connectivity.
+
+  - Fixed issue where Split Tunnel UI in Preferences->Advanced of the client did
+  not correctly show include only routes.
+
+  - Fixed reliability issues around waking from sleep.
+version: 2021.11.371.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2021.11.371.1
+packageSize: 41333114
+releaseDate: 2021-12-07T01:47:45.274Z
+platformName: macOS

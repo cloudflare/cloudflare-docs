@@ -4,6 +4,8 @@ title: Reference architecture diagram
 
 ---
 
+import { Render } from "~/components";
+
 ## Purpose
 
 To provide a visual reference and explanation of using Cloudflare for a specific solution.
@@ -14,17 +16,26 @@ instructional, straightforward
 
 ## content\_type
 
-`reference-architecture-diagram`
+```yaml
+pcx_content_type: reference-architecture-diagram
+```
 
-## Structure
+For more details, refer to [`pcx_content_type`](/style-guide/frontmatter/custom-properties/#pcx_content_type).
 
-### Required components
+## Components
+
+### Most used
+
+- [`PublicStats`](/style-guide/components/public-stats/): <Render file="public-stats-definition" />
+- [Diagrams](/style-guide/documentation-content-strategy/component-attributes/diagrams/): Particularly helpful for image captions.
+
+### Required
 
 [**Title**](/style-guide/documentation-content-strategy/component-attributes/titles/): Short verb phrase in second-person imperative. Do not use gerund phrases.
 
 [**Reference diagram**](/style-guide/documentation-content-strategy/component-attributes/reference-diagram/): A single diagram that reflects the overall reference architecture.
 
-### Optional components
+### Optional
 
 [**Notes/warnings**](/style-guide/documentation-content-strategy/component-attributes/notes-tips-warnings/)
 

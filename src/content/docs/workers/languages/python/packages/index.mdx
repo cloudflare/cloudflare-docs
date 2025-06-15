@@ -10,7 +10,7 @@ import { Render } from "~/components";
 
 <Render file="python-workers-beta-packages" product="workers" />
 
-To import a Python package, add the package name to the `requirements.txt` file within the same directory as your `wrangler.toml` configuration file.
+To import a Python package, add the package name to the `requirements.txt` file within the same directory as your [Wrangler configuration file](/workers/wrangler/configuration/).
 
 For example, if your Worker depends on [FastAPI](https://fastapi.tiangolo.com/), you would add the following:
 
@@ -22,7 +22,7 @@ fastapi
 
 In the example above, you likely noticed that there is no explicit version of the Python package declared in `requirements.txt`.
 
-In Workers, Python package versions are set via [Compatibility Dates](/workers/configuration/compatibility-dates/) and [Compatibility Flags](/workers/configuration/compatibility-dates/#compatibility-flags). Given a particular compatibility date, a specific version of the [Pyodide Python runtime](https://pyodide.org/en/stable/project/changelog.html) is provided to your Worker, providing a specific set of Python packages pinned to specific versions.
+In Workers, Python package versions are set via [Compatibility Dates](/workers/configuration/compatibility-dates/) and [Compatibility Flags](/workers/configuration/compatibility-flags/). Given a particular compatibility date, a specific version of the [Pyodide Python runtime](https://pyodide.org/en/stable/project/changelog.html) is provided to your Worker, providing a specific set of Python packages pinned to specific versions.
 
 As new versions of Pyodide and additional Python packages become available in Workers, we will publish compatibility flags and their associated compatibility dates here on this page.
 

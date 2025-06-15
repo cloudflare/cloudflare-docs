@@ -5,16 +5,11 @@ product:
   title: Privacy Gateway
   url: /privacy-gateway/
   group: Developer platform
+  additional_groups: [Privacy]
 
 meta:
-  title: Cloudflare Privacy Gateway
+  title: Cloudflare Privacy Gateway docs
   description:
     A managed gateway service that implements the Oblivious HTTP IETF standard
     and improves client privacy.
   author: "@cloudflare"
-
-externals:
-  - title: Introductory blog
-    url: https://blog.cloudflare.com/building-privacy-into-internet-standards-and-how-to-make-your-app-more-private-today/
-  - title: Product marketing page
-    url: https://www.cloudflare.com/lp/privacy-edge/

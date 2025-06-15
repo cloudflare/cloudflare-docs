@@ -3,6 +3,9 @@ title: How DDoS protection works
 pcx_content_type: concept
 sidebar:
   order: 1
+learning_center:
+  title: What is a DDoS attack?
+  link: https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/
 
 ---
 
@@ -31,13 +34,19 @@ Once attack traffic matches a rule, Cloudflare's systems will track that traffic
 | Interactive Challenge | The client that made the request must pass an interactive Challenge. |
 | Managed Challenge | Depending on the characteristics of a request, Cloudflare will choose an appropriate type of challenge. |
 | Log | Records matching requests in the Cloudflare Logs. |
-| Use rule defaults | Uses the default action that is pre-defined for each rule. | 
+| Use rule defaults | Uses the default action that is pre-defined for each rule. |
+
+## Thresholds
+
+Thresholds vary for each rule and there are different thresholds globally and per colocation. Within a rule, the traffic is fingerprinted and the thresholds are per fingerprint, and it is difficult to know ahead of time which rules, colocations, or fingerprints your traffic generates, so the threshold numbers are not necessarily valuable.
+
+Instead, Cloudflare's DDoS Protection system provides the sensitivity adjustment. If you experience a false positive, you can decrease the sensitivity. You can also use the `Log` action to help find an appropriate sensitivity level. You can decrease the sensitivity while in `Log` mode until the rule no longer matches.
 
 ## Time to mitigate
 
 - Immediate mitigation for Advanced TCP and DNS Protection systems.
 - Up to three seconds on average for the detection and mitigation of L3/4 DDoS attacks at the edge using the Network-layer DDoS Protection Managed rules.
-- Up to 15 seconds on average for the detection and mitigation of HTTP DDoS attacks at the edge using the HTTP DDoS Protection Managed rules.
+- Up to three seconds on average for the detection and mitigation of HTTP DDoS attacks at the edge using the HTTP DDoS Protection Managed rules.
 
 ## Data localization
 

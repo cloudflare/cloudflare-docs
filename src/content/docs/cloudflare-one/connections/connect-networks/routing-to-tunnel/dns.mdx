@@ -25,7 +25,7 @@ To create a new DNS record for your tunnel:
 4. Input the following information:
    - **Type**: _CNAME_
    - **Name**: Subdomain of your application
-   - **IPv4 address**: `<UUID>.cfargotunnel.com`
+   - **Target**: `<UUID>.cfargotunnel.com`
 5. Select **Save**.
 
 ![Example of fields completed to create a new CNAME record.](~/assets/images/cloudflare-one/connections/connect-apps/dns/dns-record.png)
@@ -44,7 +44,7 @@ This command create a `CNAME` record that points to the tunnel subdomain, but wi
 
 :::note
 
-To create DNS records using `cloudflared`, the [`cert.pem`](/cloudflare-one/connections/connect-networks/get-started/tunnel-useful-terms/#certpem) file must be installed on your system.
+To create DNS records using `cloudflared`, the [`cert.pem`](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/local-tunnel-terms/#certpem) file must be installed on your system.
 :::
 
 </TabItem>

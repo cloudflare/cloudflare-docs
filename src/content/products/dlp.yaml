@@ -4,4 +4,6 @@ product:
   title: Data Loss Prevention
   group: Cloudflare One
   url: /cloudflare-one/policies/data-loss-prevention/
-  grid_placeholder: true
+
+meta:
+  description: Cloudflare Data Loss Prevention (DLP) allows you to scan your web traffic and SaaS applications for the presence of sensitive data such as social security numbers, financial information, secret keys, and source code.

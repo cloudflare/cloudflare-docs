@@ -1,0 +1,13 @@
+---
+link: "/data-localization/changelog/"
+productName: Data Localization Suite
+productLink: "/data-localization/"
+productArea: Application performance
+productAreaLink: /fundamentals/reference/changelog/performance/
+entries:
+  - publish_date: "2024-05-22"
+    title: Expanded Regional Services for more precise data localization.
+    description: |-
+      * Added Austria, Brazil, France, Hong Kong, Italy, NATO, the Netherlands, Russia, Saudi Arabia, South Africa, Spain, Switzerland, and Taiwan. Some regions may not appear in the dropdown as they require Cloudflare approval. Contact your account team for more information.
+      * Introduced Exclusive of Hong Kong and Macau, and Exclusive of Russia and Belarus options.
+      * Launched the Cloudflare Green Energy region, using renewable-powered data centers.

@@ -1,9 +1,7 @@
-
 on:
-  pull_request: {}
   workflow_dispatch: {}
   schedule:
-    - cron: '0 4 * * *'
+    - cron: "0 4 * * *"
 name: Semgrep config
 jobs:
   semgrep:

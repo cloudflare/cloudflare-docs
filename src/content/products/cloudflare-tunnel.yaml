@@ -4,4 +4,6 @@ product:
   title: Cloudflare Tunnel
   group: Cloudflare One
   url: /cloudflare-one/connections/connect-networks/
-  grid_placeholder: true
+
+meta:
+  description: Cloudflare Tunnel provides you with a secure way to connect your resources to Cloudflare without a publicly routable IP address

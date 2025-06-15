@@ -41,7 +41,7 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/<I
 
 ## Control when you start and stop simulcasting
 
-You can enable and disable individual live outputs via the [API](/api/operations/stream-live-inputs-update-an-output) or [Stream dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs), allowing you to:
+You can enable and disable individual live outputs via the [API](/api/resources/stream/subresources/live_inputs/subresources/outputs/methods/update/) or [Stream dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs), allowing you to:
 
 * Start a live stream, but wait to start simulcasting to YouTube and Twitch until right before the content begins.
 * Stop simulcasting before the live stream ends, to encourage viewers to transition from a third-party service like YouTube or Twitch to a direct live stream.
@@ -60,7 +60,9 @@ By default, all live outputs are enabled.
 
 | Command                                                                  | Method   | Endpoint                                                                 |
 | ------------------------------------------------------------------------ | -------- | ------------------------------------------------------------------------ |
-| [List outputs](/api/operations/stream-live-inputs-list-live-inputs)      | `GET`    | `accounts/:account_identifier/stream/live_inputs`                        |
-| [Delete outputs](/api/operations/stream-live-inputs-delete-a-live-input) | `DELETE` | `accounts/:account_identifier/stream/live_inputs/:live_input_identifier` |
+| [List outputs](/api/resources/stream/subresources/live_inputs/methods/list/)      | `GET`    | `accounts/:account_identifier/stream/live_inputs`                        |
+| [Delete outputs](/api/resources/stream/subresources/live_inputs/methods/delete/) | `DELETE` | `accounts/:account_identifier/stream/live_inputs/:live_input_identifier` |
+| [List All Outputs Associated With A Specified Live Input](/api/resources/stream/subresources/live_inputs/subresources/outputs/methods/list/) | `GET` | `/accounts/{account_id}/stream/live_inputs/{live_input_identifier}/outputs` |
+| [Delete An Output](/api/resources/stream/subresources/live_inputs/subresources/outputs/methods/delete/) | `DELETE` | `/accounts/{account_id}/stream/live_inputs/{live_input_identifier}/outputs/{output_identifier}` |
 
 If the associated live input is already retransmitting to this output when you make the `DELETE` request, that output will be disconnected within 30 seconds.

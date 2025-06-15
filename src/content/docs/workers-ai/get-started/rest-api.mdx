@@ -42,7 +42,7 @@ If you choose to [create an API token](/fundamentals/api/get-started/create-toke
 
 After creating your API token, authenticate and make requests to the API using your API token in the request.
 
-You will use the [Execute AI model](/api/operations/workers-ai-post-run-model) endpoint to run the [`@cf/meta/llama-3.1-8b-instruct`](/workers-ai/models/llama-3.1-8b-instruct/) model:
+You will use the [Execute AI model](/api/resources/ai/methods/run/) endpoint to run the [`@cf/meta/llama-3.1-8b-instruct`](/workers-ai/models/llama-3.1-8b-instruct/) model:
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/meta/llama-3.1-8b-instruct \
@@ -72,3 +72,4 @@ By completing this guide, you have created a Cloudflare account (if you did not 
 ## Related resources
 
 - [Models](/workers-ai/models/) - Browse the Workers AI models catalog.
+- [AI SDK](/workers-ai/configuration/ai-sdk) - Learn how to integrate with an AI model.

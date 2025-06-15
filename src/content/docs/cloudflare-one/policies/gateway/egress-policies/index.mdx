@@ -5,16 +5,23 @@ sidebar:
   order: 5
 ---
 
-import { Render } from "~/components";
+import { Render, Badge, Tabs, TabItem, Details } from "~/components";
 
 :::note
-
 Only available on Enterprise plans.
 :::
 
 When your users connect to the Internet through Cloudflare Gateway, by default their traffic is assigned a source IP address that is shared across all Cloudflare WARP users. Enterprise users can purchase [dedicated egress IPs](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/) to ensure that egress traffic from your organization is assigned a unique, static IP. These source IPs are dedicated to your account and can be used within allowlists on upstream services.
 
 Egress policies allow you to control which dedicated egress IP is used and when, based on attributes such as identity, IP address, and geolocation. Traffic that does not match an egress policy will default to using the most performant dedicated egress IP.
+
+Cloudflare does not publish WARP egress IP ranges. WARP egress IPs are not documented at [Cloudflare's IP Ranges](https://cloudflare.com/ips). To obtain a dedicated WARP egress IP, contact your account team.
+
+<Render file="gateway/terraform-precedence-warning" product="cloudflare-one" />
+
+## Load balancing
+
+Gateway traffic that does not match an egress policy will egress from the closest Cloudflare data center with a default Gateway egress IP. If there are two data centers of equal distance from the user, Gateway will split the traffic between the two data centers, and the load balancer will retain the same user selection and egress IP regardless of data center.
 
 ## Force IP version
 
@@ -48,6 +55,24 @@ Choose one of the following options for your egress policy:
 
 Gateway matches egress traffic against the following selectors, or criteria:
 
+### Application <Badge text="Beta" variant="caution"/>
+
+<Render
+	file="gateway/selectors/application"
+	params={{ policyType: "egress" }}
+/>
+
+<Render file="gateway/selectors/egress-selector-limitation" />
+
+### Content Categories <Badge text="Beta" variant="caution"/>
+
+<Render
+	file="gateway/selectors/net-http-content-categories"
+	params={{ APIendpoint: "net.fqdn.content_category" }}
+/>
+
+<Render file="gateway/selectors/egress-selector-limitation" />
+
 ### Destination Continent
 
 <Render
@@ -73,6 +98,24 @@ Gateway matches egress traffic against the following selectors, or criteria:
 ### Device Posture
 
 <Render file="gateway/selectors/device-posture" />
+
+### Domain <Badge text="Beta" variant="caution"/>
+
+<Render
+	file="gateway/selectors/domain"
+	params={{ APIendpoint: "net.fqdn.domains" }}
+/>
+
+<Render file="gateway/selectors/egress-selector-limitation" />
+
+### Host <Badge text="Beta" variant="caution"/>
+
+<Render
+	file="gateway/selectors/host"
+	params={{ APIendpoint: "net.fqdn.host" }}
+/>
+
+<Render file="gateway/selectors/egress-selector-limitation" />
 
 ### Protocol
 
@@ -132,3 +175,85 @@ Gateway uses Rust to evaluate regular expressions. The Rust implementation is sl
 	file="gateway/logical-operators"
 	params={{ one: "**Identity** or **Device Posture**" }}
 />
+
+## Limitations
+
+### Selector prerequisites
+
+<Details header="Feature availability">
+
+| [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| Gateway with WARP                                                                         | Enterprise                                                    |
+
+| System   | Availability | Minimum WARP version |
+| -------- | ------------ | -------------------- |
+| Windows  | ✅           | 2025.4.929.0         |
+| macOS    | ✅           | 2025.4.929.0         |
+| Linux    | ✅           | 2025.4.929.0         |
+| iOS      | ❌           |                      |
+| Android  | ❌           |                      |
+| ChromeOS | ❌           |                      |
+
+</Details>
+
+The [Application](#application), [Content Categories](#content-categories), [Domain](#domain), and [Host](#host) selectors are only available for traffic on-ramped to Gateway with the following methods:
+
+| On-ramp method                                                                             | Compatibility |
+| ------------------------------------------------------------------------------------------ | ------------- |
+| [WARP](/cloudflare-one/connections/connect-devices/warp/)                                  | ✅            |
+| [PAC files](/cloudflare-one/connections/connect-devices/agentless/pac-files/)              | ✅            |
+| [Browser Isolation](/cloudflare-one/policies/browser-isolation/)                           | ✅            |
+| [WARP Connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/) | ❌            |
+| [Magic WAN](/magic-wan/zero-trust/cloudflare-gateway/)                                     | ❌            |
+
+When you use these selectors in an egress policy for traffic from a supported on-ramp, Gateway will assign initial resolved IPs in the `100.80.0.0/16` range to the DNS queries, then apply the correct egress IP according to the egress policy. Unsupported traffic will be resolved with your default Gateway settings. Gateway will only overwrite the DNS response when the query matches a condition in the egress policy. If you use [DNS locations](/cloudflare-one/connections/connect-devices/agentless/dns/locations/) to send a DNS query to Gateway with IPv4, IPv6, DoT, or DoH, Gateway will not return the initial resolved IP for supported traffic nor resolve unsupported traffic.
+
+To turn on the selectors for your account, use the [Patch Zero Trust account configuration](/api/resources/zero_trust/subresources/gateway/subresources/configurations/methods/edit/) endpoint. For example:
+
+```sh title="Turn on selectors for egress policies"
+curl --request PATCH \
+"https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/configuration" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--header "Content-Type: application/json" \
+--data '{
+  "settings": {
+    "host_selector": {
+      "enabled": true
+		}
+	}
+}'
+```
+
+Additionally, to use these selectors to filter traffic onboarded with WARP, you need to:
+
+1. Ensure you have deployed [WARP version 2025.4.929.0](/cloudflare-one/connections/connect-devices/warp/download-warp/beta-releases/) or later on your users' desktop devices. If you need to apply your policies to mobile devices or devices running a version of WARP prior to 2025.4.929.0, add and deploy the following key-value pair to your devices' [WARP configuration file](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/) (`mdm.xml` on Windows and Linux or `com.cloudflare.warp.plist` on macOS):
+
+   ```diff lang="xml"
+   <array>
+   	<dict>
+   +		<key>doh_in_tunnel</key>
+   +		<true/>
+   	</dict>
+   </array>
+   ```
+
+2. In your WARP [device profile](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/), configure your [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) depending on the mode:
+
+   <Tabs> <TabItem label="Exclude IPs and domains">
+
+   1. [Remove the route](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#remove-a-route) to the IP address `100.64.0.0/10` from your Split Tunnel exclude list.
+   2. [Add routes](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route) to exclude the following IP addresses:
+      - `100.64.0.0/12`
+      - `100.81.0.0/16`
+      - `100.82.0.0/15`
+      - `100.84.0.0/14`
+      - `100.88.0.0/13`
+      - `100.96.0.0/11`
+
+   </TabItem> <TabItem label="Include IPs and domains">
+
+   1. Add the required [Zero Trust domains](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#cloudflare-zero-trust-domains) or [IP addresses](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#cloudflare-zero-trust-ip-addresses) to your Split Tunnel include list.
+   2. [Add a route](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route) to include the IP address `100.80.0.0/16`.
+
+   </TabItem> </Tabs>

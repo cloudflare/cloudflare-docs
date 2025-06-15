@@ -1,25 +1,26 @@
 ---
 title: Google AI Studio
 pcx_content_type: get-started
-sidebar:
-  badge:
-    text: Beta
 ---
+
+import { Render } from "~/components";
 
 [Google AI Studio](https://ai.google.dev/aistudio) helps you build quickly with Google Gemini models.
 
 ## Endpoint
 
-`https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/google-ai-studio`
+```txt
+https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/google-ai-studio
+```
 
-## What you need
+## Prerequisites
 
 When making requests to Google AI Studio, you will need:
 
-- AI Gateway account ID
-- AI Gateway gateway name
-- Google AI Studio API key
-- Google AI Studio model name
+- Your AI Gateway Account ID.
+- Your AI Gateway gateway name.
+- An active Google AI Studio API token.
+- The name of the Google AI Studio model you want to use.
 
 ## URL structure
 
@@ -27,7 +28,7 @@ Your new base URL will use the data above in this structure: `https://gateway.ai
 
 Then you can append the endpoint you want to hit, for example: `v1/models/{model}:{generative_ai_rest_resource}`
 
-So your final URL will come together as: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/google-ai-studio/v1//models/{model}:{generative_ai_rest_resource}`.
+So your final URL will come together as: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/google-ai-studio/v1/models/{model}:{generative_ai_rest_resource}`.
 
 ## Examples
 
@@ -49,7 +50,7 @@ curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_name}/google-ai
       }'
 ```
 
-### JavaScript
+### Use `@google/generative-ai` with JavaScript
 
 If you are using the `@google/generative-ai` package, you can set your endpoint like this:
 
@@ -70,3 +71,17 @@ const model = genAI.getGenerativeModel(
 
 await model.generateContent(["What is Cloudflare?"]);
 ```
+
+<Render
+	file="chat-completions-providers"
+	product="ai-gateway"
+	params={{
+		name: "Google AI Studio",
+		jsonexample: `
+{
+	"model": "google-ai-studio/{model}"
+}`
+
+    }}
+
+/>

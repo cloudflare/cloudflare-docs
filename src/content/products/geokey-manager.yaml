@@ -4,4 +4,6 @@ product:
   title: Geo Key Manager
   group: Application security
   url: /ssl/edge-certificates/geokey-manager/
-  grid_placeholder: true
+
+meta:
+  description: Restrict where the private keys used for TLS certificates are stored and managed.

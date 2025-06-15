@@ -8,7 +8,7 @@ meta:
 
 ## Using DevTools
 
-When running your Worker locally using `wrangler dev`, you automatically have access to [Cloudflare's implementation](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler-devtools?cf_target_id=115890352C73E75FD7D837D0B8720E96) of [Chrome's DevTools](https://developer.chrome.com/docs/devtools/overview).
+When running your Worker locally using `wrangler dev`, you automatically have access to [Cloudflare's implementation](https://github.com/cloudflare/workers-sdk/tree/main/packages/chrome-devtools-patches) of [Chrome's DevTools](https://developer.chrome.com/docs/devtools/overview).
 DevTools help you debug and optimize your Workers.
 
 :::note
@@ -17,7 +17,7 @@ You may have experience using Chrome's DevTools for frontend development. Notabl
 
 ## Opening DevTools
 
-To get started, run your Worker in development mode with `wrangler dev`, then open the DevTools in the browser by hitting <kbd>d</kbd> from your terminal. Now when you access this worker locally, it can be debugged and profiled with this DevTools instance.
+To get started, run your Worker in development mode with `wrangler dev`, then open the DevTools in the browser by pressing the `D` key from your terminal. Now when you access this worker locally, it can be debugged and profiled with this DevTools instance.
 
 Alternatively, both the [Cloudflare Dashboard](https://dash.cloudflare.com/) and the [Worker's Playground](https://workers.cloudflare.com/playground) include DevTools in their UI.
 
@@ -31,4 +31,4 @@ DevTools can be used in a variety of situations. For more information, see the d
 
 ## Related resources
 
-- [Local development](/workers/testing/local-development/) - Develop your Workers and connected resources locally via Wrangler and workerd, for a fast, accurate feedback loop.
+- [Local development](/workers/local-development/) - Develop your Workers and connected resources locally via Wrangler and workerd, for a fast, accurate feedback loop.

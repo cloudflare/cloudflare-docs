@@ -3,7 +3,6 @@ pcx_content_type: reference
 title: Supported fields and operators
 sidebar:
   order: 51
-
 ---
 
 The fields that are supported by load balancing rules depend on whether Cloudflare proxies the traffic going through your load balancer or not.
@@ -29,57 +28,106 @@ Consider the following table to know how the fields available in the [Expression
 Regardless of your traffic [proxy status](/load-balancing/understand-basics/proxy-modes/), Load Balancing rules can access values for the following fields:
 
 <table style="width:100%">
-  <thead>
-    <tr>
-      <th style="width:40%">Field</th>
-      <th style="width:20%">Name in Expression Builder</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr id="field-cf-load-balancer-name">
-      <td valign="top"><code>cf.load_balancer.name</code><br />`Bytes`</td>
-      <td><code>Load Balancer Name</code></td>
-      <td>
-        <p>Represents the name of the load balancer executing these rules.</p>
-         <p>
-         Example value:
-         <br /><code class="InlineCode">lb.example.com</code>
-        </p>
-      </td>
-    </tr>
-    <tr id="field-cf-load-balancer-region">
-      <td valign="top"><code>cf.load_balancer.region</code><br />`Bytes`</td>
-      <td><code>Load Balancer Region</code></td>
-      <td>
-        <p>Provides the <a href="/load-balancing/reference/region-mapping-api/#list-of-load-balancer-regions">region name</a> of the data center processing the request.</p>
-         <p>
-         Example value:
-         <br /><code class="InlineCode">ENAM</code>
-        </p>
-      </td>
-    </tr>
-    <tr id="field-ip-src">
-      <td valign="top"><code>ip.src</code><br />`IP address`</td>
-      <td><code>IP Source Address</code></td>
-      <td>
-        <p>If proxied, this field provides the client TCP IP address, which may be adjusted to reflect the actual address of the client by using HTTP headers such as <code>X-Forwarded-For</code> or <code>X-Real-IP</code>.</p>
-        <p>If unproxied (DNS-only), this field provides the ECS source address, if available. If not available, it provides the client resolver IP address.</p>
-        <p><strong>Deprecation Warning:</strong> In the future, this field will always be set to the client resolver IP address for unproxied requests. To check for the presence of ECS and use the ECS IP, see the fields <a href="#field-dns-rr-opt-client"><code>dns.rr.opt.client</code></a> and <a href="#field-dns-rr-opt-client-addr"><code>dns.rr.opt.client.addr</code></a>, respectively.</p>
-         <p>
-         Example value:
-         <br /><code class="InlineCode">1.2.3.4</code>
-        </p>
-      </td>
-    </tr>
-  </tbody>
+	<thead>
+		<tr>
+			<th style="width:40%">Field</th>
+			<th style="width:20%">Name in Expression Builder</th>
+			<th>Description</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr id="field-cf-load-balancer-name">
+			<td valign="top">
+				<code>cf.load_balancer.name</code>
+				<br />
+				`Bytes`
+			</td>
+			<td>
+				<code>Load Balancer Name</code>
+			</td>
+			<td>
+				<p>Represents the name of the load balancer executing these rules.</p>
+				<p>
+					Example value:
+					<br />
+					<code class="InlineCode">lb.example.com</code>
+				</p>
+			</td>
+		</tr>
+		<tr id="field-cf-load-balancer-region">
+			<td valign="top">
+				<code>cf.load_balancer.region</code>
+				<br />
+				`Bytes`
+			</td>
+			<td>
+				<code>Load Balancer Region</code>
+			</td>
+			<td>
+				<p>
+					Provides the{" "}
+					<a href="/load-balancing/reference/region-mapping-api/#list-of-load-balancer-regions">
+						region name
+					</a>{" "}
+					of the data center processing the request.
+				</p>
+				<p>
+					Example value:
+					<br />
+					<code class="InlineCode">ENAM</code>
+				</p>
+			</td>
+		</tr>
+		<tr id="field-ip-src">
+			<td valign="top">
+				<code>ip.src</code>
+				<br />
+				`IP address`
+			</td>
+			<td>
+				<code>IP Source Address</code>
+			</td>
+			<td>
+				<p>
+					If proxied, this field provides the client TCP IP address, which may
+					be adjusted to reflect the actual address of the client by using HTTP
+					headers such as <code>X-Forwarded-For</code> or <code>X-Real-IP</code>
+					.
+				</p>
+				<p>
+					If unproxied (DNS-only), this field provides the ECS source address,
+					if available. If not available, it provides the client resolver IP
+					address.
+				</p>
+				<p>
+					<strong>Deprecation Warning:</strong> In the future, this field will
+					always be set to the client resolver IP address for unproxied
+					requests. To check for the presence of ECS and use the ECS IP, see the
+					fields{" "}
+					<a href="#field-dns-rr-opt-client">
+						<code>dns.rr.opt.client</code>
+					</a>{" "}
+					and{" "}
+					<a href="#field-dns-rr-opt-client-addr">
+						<code>dns.rr.opt.client.addr</code>
+					</a>
+					, respectively.
+				</p>
+				<p>
+					Example value:
+					<br />
+					<code class="InlineCode">1.2.3.4</code>
+				</p>
+			</td>
+		</tr>
+	</tbody>
 </table>
 
 ## Proxied-only fields
 
 If your traffic is proxied through Cloudflare, you have access to all the fields listed under [Fields supported regardless of proxy](#fields-supported-regardless-of-proxy) in addition to the following fields:
 
-Many of these fields are referenced from the [Rules language documentation](/ruleset-engine/rules-language/fields/).
+Many of these fields are referenced from the [Rules language documentation](/ruleset-engine/rules-language/fields/reference/).
 
 <table style="width:100%">
   <thead>
@@ -91,7 +139,7 @@ Many of these fields are referenced from the [Rules language documentation](/rul
   </thead>
   <tbody>
     <tr id="field-http-cookie">
-      <td valign="top"><a href="/ruleset-engine/rules-language/fields/standard-fields/#httpcookie"><code>http.cookie</code></a><br />`String`</td>
+      <td valign="top"><a href="/ruleset-engine/rules-language/fields/reference/http.cookie/"><code>http.cookie</code></a><br />`String`</td>
       <td>(<a href="/load-balancing/additional-options/load-balancing-rules/expressions/#expression-editor">Manual entry only</a>)</td>
       <td>
         <p>Represents the entire cookie as a string.</p>
@@ -102,7 +150,7 @@ Many of these fields are referenced from the [Rules language documentation](/rul
       </td>
     </tr>
     <tr id="field-http-host">
-      <td valign="top"><a href="/ruleset-engine/rules-language/fields/standard-fields/#httphost"><code>http.host</code></a><br />`String`</td>
+      <td valign="top"><a href="/ruleset-engine/rules-language/fields/reference/http.host/"><code>http.host</code></a><br />`String`</td>
       <td>(<a href="/load-balancing/additional-options/load-balancing-rules/expressions/#expression-editor">Manual entry only</a>)</td>
       <td>
         <p>Represents the hostname used in the full request URI.</p>
@@ -113,7 +161,7 @@ Many of these fields are referenced from the [Rules language documentation](/rul
       </td>
     </tr>
     <tr id="field-http-referer">
-      <td valign="top"><a href="/ruleset-engine/rules-language/fields/standard-fields/#httpreferer"><code>http.referer</code></a><br />`String`</td>
+      <td valign="top"><a href="/ruleset-engine/rules-language/fields/reference/http.referer/"><code>http.referer</code></a><br />`String`</td>
       <td>(<a href="/load-balancing/additional-options/load-balancing-rules/expressions/#expression-editor">Manual entry only</a>)</td>
       <td>
         <p>Represents the HTTP Referer request header, which contains the address of the web page that linked to the currently requested page.</p>
@@ -124,7 +172,7 @@ Many of these fields are referenced from the [Rules language documentation](/rul
       </td>
     </tr>
     <tr id="field-http-request-headers">
-      <td valign="top"><a href="/ruleset-engine/rules-language/fields/http-request-header/"><code>http.request.headers</code></a><br />`Map<Array<String>>`</td>
+      <td valign="top"><a href="/ruleset-engine/rules-language/fields/reference/http.request.headers/"><code>http.request.headers</code></a><br />`Map<Array<String>>`</td>
       <td><code>Header</code></td>
       <td>
         <p>Represents HTTP request headers as a Map (or associative array).</p>
@@ -146,7 +194,7 @@ Many of these fields are referenced from the [Rules language documentation](/rul
       </td>
     </tr>
     <tr id="field-http-request-method">
-      <td valign="top"><a href="/ruleset-engine/rules-language/fields/standard-fields/#httprequestmethod"><code>http.request.method</code></a><br />`String`</td>
+      <td valign="top"><a href="/ruleset-engine/rules-language/fields/reference/http.request.method/"><code>http.request.method</code></a><br />`String`</td>
       <td><code>Request Method</code></td>
       <td>
         <p>Represents the HTTP method, returned as a string of uppercase characters.</p>
@@ -157,7 +205,7 @@ Many of these fields are referenced from the [Rules language documentation](/rul
       </td>
     </tr>
     <tr id="field-http-request-timestamp-sec">
-      <td valign="top"><a href="/ruleset-engine/rules-language/fields/standard-fields/#httprequesttimestampsec"><code>http.request.timestamp.sec</code></a><br />`Integer`</td>
+      <td valign="top"><a href="/ruleset-engine/rules-language/fields/reference/http.request.timestamp.sec/"><code>http.request.timestamp.sec</code></a><br />`Integer`</td>
       <td><code>Timestamp</code></td>
       <td>
         <p>Represents the timestamp when Cloudflare received the request, expressed as Unix time in seconds. This value is 10 digits long.</p>
@@ -168,7 +216,7 @@ Many of these fields are referenced from the [Rules language documentation](/rul
       </td>
     </tr>
     <tr id="field-http-request-uri">
-      <td valign="top"><a href="/ruleset-engine/rules-language/fields/standard-fields/#httprequesturi"><code>http.request.uri</code></a><br />`String`</td>
+      <td valign="top"><a href="/ruleset-engine/rules-language/fields/reference/http.request.uri/"><code>http.request.uri</code></a><br />`String`</td>
       <td><code>URI</code></td>
       <td>
         <p>Represents the URI path and query string of the request.</p>
@@ -179,7 +227,7 @@ Many of these fields are referenced from the [Rules language documentation](/rul
       </td>
     </tr>
     <tr id="field-http-request-uri-args">
-      <td valign="top"><a href="/ruleset-engine/rules-language/fields/uri/"><code>http.request.uri.args</code></a><br />`Map<Array<String>>`</td>
+      <td valign="top"><a href="/ruleset-engine/rules-language/fields/reference/http.request.uri.args/"><code>http.request.uri.args</code></a><br />`Map<Array<String>>`</td>
       <td>(<a href="/load-balancing/additional-options/load-balancing-rules/expressions/#expression-editor">Manual entry only</a>)</td>
       <td>
         <p>Represents the HTTP URI arguments associated with a request as a Map (associative array).</p>
@@ -202,7 +250,7 @@ Many of these fields are referenced from the [Rules language documentation](/rul
       </td>
     </tr>
     <tr id="field-http-request-uri-args-names">
-      <td valign="top"><a href="/ruleset-engine/rules-language/fields/uri/#httprequesturiargsnames"><code>http.request.uri.args.names</code></a><br />`Array<String>`</td>
+      <td valign="top"><a href="/ruleset-engine/rules-language/fields/reference/http.request.uri.args.names/"><code>http.request.uri.args.names</code></a><br />`Array<String>`</td>
       <td>(<a href="/load-balancing/additional-options/load-balancing-rules/expressions/#expression-editor">Manual entry only</a>)</td>
       <td>
         <p>Represents the names of the arguments in the HTTP URI query string. The names are not pre-processed and retain the original case used in the request.</p>
@@ -222,7 +270,7 @@ Many of these fields are referenced from the [Rules language documentation](/rul
       </td>
     </tr>
     <tr id="field-http-request-uri-args-values">
-      <td valign="top"><a href="/ruleset-engine/rules-language/fields/uri/#httprequesturiargsvalues"><code>http.request.uri.args.values</code></a><br />`Array<String>`</td>
+      <td valign="top"><a href="/ruleset-engine/rules-language/fields/reference/http.request.uri.args.values/"><code>http.request.uri.args.values</code></a><br />`Array<String>`</td>
       <td>(<a href="/load-balancing/additional-options/load-balancing-rules/expressions/#expression-editor">Manual entry only</a>)</td>
       <td>
         <p>Represents the values of arguments in the HTTP URI query string. The values are not pre-processed and retain the original case used in the request. They are in the same order as in the request.</p>
@@ -242,7 +290,7 @@ Many of these fields are referenced from the [Rules language documentation](/rul
       </td>
     </tr>
     <tr id="field-http-request-uri-path">
-      <td valign="top"><a href="/ruleset-engine/rules-language/fields/standard-fields/#httprequesturipath"><code>http.request.uri.path</code></a><br />`String`</td>
+      <td valign="top"><a href="/ruleset-engine/rules-language/fields/reference/http.request.uri.path/"><code>http.request.uri.path</code></a><br />`String`</td>
       <td><code>URI Path</code></td>
       <td>
         <p>Represents the URI path of the request.</p>
@@ -253,7 +301,7 @@ Many of these fields are referenced from the [Rules language documentation](/rul
       </td>
     </tr>
     <tr id="field-http-request-uri-query">
-      <td valign="top"><a href="/ruleset-engine/rules-language/fields/standard-fields/#httprequesturiquery"><code>http.request.uri.query</code></a><br />`String`</td>
+      <td valign="top"><a href="/ruleset-engine/rules-language/fields/reference/http.request.uri.query/"><code>http.request.uri.query</code></a><br />`String`</td>
       <td><code>URI Query</code></td>
       <td>
         <p>Represents the entire query string, without the <code class="InlineCode">?</code> delimiter.</p>
@@ -264,7 +312,7 @@ Many of these fields are referenced from the [Rules language documentation](/rul
       </td>
     </tr>
     <tr id="field-http-request-version">
-      <td valign="top"><a href="/ruleset-engine/rules-language/fields/standard-fields/#httprequestversion"><code>http.request.version</code></a><br />`String`</td>
+      <td valign="top"><a href="/ruleset-engine/rules-language/fields/reference/http.request.version/"><code>http.request.version</code></a><br />`String`</td>
       <td><code>HTTP Version</code></td>
       <td>
         <p>Represents the version of the HTTP protocol used. Use this field when you require different checks for different versions.</p>
@@ -285,82 +333,148 @@ Many of these fields are referenced from the [Rules language documentation](/rul
 If your traffic is not proxied through Cloudflare, you have access to all the fields listed under [Fields supported regardless of proxy](#fields-supported-regardless-of-proxy) in addition to the following fields:
 
 <table style="width:100%">
-  <thead>
-    <tr>
-      <th style="width:40%">Field</th>
-      <th style="width:20%">Name in Expression Builder</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr id="field-dns-qry-name">
-      <td valign="top"><code>dns.qry.name</code><br />`Bytes`</td>
-      <td><code>Query Name</code></td>
-      <td>
-        <p>Represents the query name asked.</p>
-         <p>
-         Example value:
-         <br /><code class="InlineCode">example.com.</code>
-         </p>
-      </td>
-    </tr>
-    <tr id="field-dns-qry-name-len">
-      <td valign="top"><code class>dns.qry.name.len</code><br />`Integer`</td>
-      <td><code>Query Name Length</code></td>
-      <td>
-        <p>Represents the length in bytes of the query name.</p>
-         <p>
-         Example value:
-         <br /><code class="InlineCode">123</code>
-         </p>
-      </td>
-    </tr>
-    <tr id="field-dns-qry-qu">
-      <td valign="top"><code>dns.qry.qu</code><br />`Boolean`</td>
-      <td><code>Question</code></td>
-      <td>
-        <p>When <code>true</code>, this field indicates that the received DNS message was a question.</p>
-      </td>
-    </tr>
-    <tr id="field-dns-qry-type">
-      <td valign="top"><code>dns.qry.type</code><br />`Integer`</td>
-      <td><code>Query Type</code></td>
-      <td>
-        <p>Represents the numeric value of the <a href= "https://en.wikipedia.org/wiki/List_of_DNS_record_types">DNS query type</a>.</p>
-        <p>Example Values:</p>
-          <ul>
-              <li><code class="InlineCode">1</code>&nbsp;(A record)</li>
-              <li><code class="InlineCode">28</code>&nbsp;(AAAA record)</li>
-          </ul>
-      </td>
-    </tr>
-    <tr id="field-dns-rr-opt-client">
-      <td valign="top"><code class>dns.rr.opt.client</code><br />`Boolean`</td>
-       <td>(<a href="/load-balancing/additional-options/load-balancing-rules/expressions/#expression-editor">Manual entry only</a>)</td>
-      <td>
-        <p>When <code>true</code>, this field indicates that the EDNS Client Subnet (ECS) address was sent with the DNS request.</p>
-      </td>
-    </tr>
-    <tr id="field-dns-rr-opt-client-addr">
-      <td valign="top"><code class>dns.rr.opt.client.addr</code><br />`String`</td>
-      <td>(<a href="/load-balancing/additional-options/load-balancing-rules/expressions/#expression-editor">Manual entry only</a>)</td>
-      <td>
-        <p>If present, this field represents the ECS address sent with the DNS request.</p>
-         <p>
-         Example value:
-         <br /><code class="InlineCode">1.2.3.0</code>
-         </p>
-      </td>
-    </tr>
-  </tbody>
+	<thead>
+		<tr>
+			<th style="width:40%">Field</th>
+			<th style="width:20%">Name in Expression Builder</th>
+			<th>Description</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr id="field-dns-qry-name">
+			<td valign="top">
+				<code>dns.qry.name</code>
+				<br />
+				`Bytes`
+			</td>
+			<td>
+				<code>Query Name</code>
+			</td>
+			<td>
+				<p>Represents the query name asked.</p>
+				<p>
+					Example value:
+					<br />
+					<code class="InlineCode">example.com.</code>
+				</p>
+			</td>
+		</tr>
+		<tr id="field-dns-qry-name-len">
+			<td valign="top">
+				<code class>dns.qry.name.len</code>
+				<br />
+				`Integer`
+			</td>
+			<td>
+				<code>Query Name Length</code>
+			</td>
+			<td>
+				<p>Represents the length in bytes of the query name.</p>
+				<p>
+					Example value:
+					<br />
+					<code class="InlineCode">123</code>
+				</p>
+			</td>
+		</tr>
+		<tr id="field-dns-qry-qu">
+			<td valign="top">
+				<code>dns.qry.qu</code>
+				<br />
+				`Boolean`
+			</td>
+			<td>
+				<code>Question</code>
+			</td>
+			<td>
+				<p>
+					When <code>true</code>, this field indicates that the received DNS
+					message was a question.
+				</p>
+			</td>
+		</tr>
+		<tr id="field-dns-qry-type">
+			<td valign="top">
+				<code>dns.qry.type</code>
+				<br />
+				`Integer`
+			</td>
+			<td>
+				<code>Query Type</code>
+			</td>
+			<td>
+				<p>
+					Represents the numeric value of the{" "}
+					<a href="https://en.wikipedia.org/wiki/List_of_DNS_record_types">
+						DNS query type
+					</a>
+					.
+				</p>
+				<p>Example Values:</p>
+				<ul>
+					<li>
+						<code class="InlineCode">1</code>&nbsp;(A record)
+					</li>
+					<li>
+						<code class="InlineCode">28</code>&nbsp;(AAAA record)
+					</li>
+				</ul>
+			</td>
+		</tr>
+		<tr id="field-dns-rr-opt-client">
+			<td valign="top">
+				<code class>dns.rr.opt.client</code>
+				<br />
+				`Boolean`
+			</td>
+			<td>
+				(
+				<a href="/load-balancing/additional-options/load-balancing-rules/expressions/#expression-editor">
+					Manual entry only
+				</a>
+				)
+			</td>
+			<td>
+				<p>
+					When <code>true</code>, this field indicates that the EDNS Client
+					Subnet (ECS) address was sent with the DNS request.
+				</p>
+			</td>
+		</tr>
+		<tr id="field-dns-rr-opt-client-addr">
+			<td valign="top">
+				<code class>dns.rr.opt.client.addr</code>
+				<br />
+				`String`
+			</td>
+			<td>
+				(
+				<a href="/load-balancing/additional-options/load-balancing-rules/expressions/#expression-editor">
+					Manual entry only
+				</a>
+				)
+			</td>
+			<td>
+				<p>
+					If present, this field represents the ECS address sent with the DNS
+					request.
+				</p>
+				<p>
+					Example value:
+					<br />
+					<code class="InlineCode">1.2.3.0</code>
+				</p>
+			</td>
+		</tr>
+	</tbody>
 </table>
 
 ## Operators and grouping symbols
 
-* **Comparison operators** specify how values defined in an expression must relate to the actual HTTP request value for the expression to return true.
+- **Comparison operators** specify how values defined in an expression must relate to the actual HTTP request value for the expression to return true.
 
-* **Logical operators** combine two expressions to form a compound expression and use order of precedence to determine how an expression is evaluated.
+- **Logical operators** combine two expressions to form a compound expression and use order of precedence to determine how an expression is evaluated.
 
-* **Grouping symbols** allow you to organize expressions, enforce operator precedence, and nest expressions.
+- **Grouping symbols** allow you to organize expressions, enforce operator precedence, and nest expressions.
 
 For examples and usage, refer to [Operators and grouping symbols](/ruleset-engine/rules-language/operators/) in the Rules language documentation.

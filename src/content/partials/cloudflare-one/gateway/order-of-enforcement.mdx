@@ -1,9 +1,78 @@
 ---
 {}
-
 ---
 
-import { Render } from "~/components"
+import { Render, Details } from "~/components";
+
+:::caution[Order of enforcement changing on 2025-07-14]
+On 2025-07-14, Gateway will begin evaluating network-level policies before application-level policies and verify the network path to an origin server before accepting a connection. This will only affect your policies if you are applying HTTP policies in your account. For example:
+
+<Details header="Comparison of old and new order of enforcement">
+
+|                                                | Old order of enforcement                                                                                               | New order of enforcement                                                                                                                |
+| ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| **Network Block policy and HTTP Block policy** | Gateway blocks traffic and displays the block page and/or follows the client notification settings on the HTTP policy. | Gateway blocks traffic. Gateway does not display the block page but will follow the client notification settings on the Network policy. |
+| **Network Allow policy and HTTP Block policy** | Gateway blocks traffic and displays the block page and follows the client notification settings on the HTTP policy.    | No change.                                                                                                                              |
+| **Network Block policy and HTTP Allow policy** | Gateway blocks traffic and follows the client notification settings on the Network policy.                             | No change.                                                                                                                              |
+
+```mermaid
+flowchart TB
+    %% Accessibility
+    accTitle: Gateway order of enforcement
+    accDescr: Flowchart describing the order of enforcement for Gateway policies.
+
+ subgraph Resolution["Resolution"]
+        dns2["1.1.1.1"]
+        dns4["Custom resolver"]
+        dns3["Resolver policies <br>(Enterprise users only)"]
+        internal["Internal DNS"]
+  end
+ subgraph DNS["DNS"]
+        dns1["DNS policies"]
+        Resolution
+  end
+ subgraph HTTP["HTTP policies"]
+        http1{{"Do Not Inspect policies"}}
+        http2["Isolate policies  <br>(with Browser Isolation add-on)"]
+        http3["Allow, Block, Do Not Scan, Quarantine, and Redirect policies, DLP, and anti-virus scanning"]
+        https["HTTP (port 80) or<br>HTTPS (port 443)?"]
+  end
+ subgraph Proxy["Proxy"]
+        HTTP
+        network1["Network policies"]
+        nonhttp["Non-HTTP(S) traffic"]
+  end
+ subgraph Egress["Egress"]
+        egress1["Egress policies <br>(Enterprise users only)"]
+  end
+    start(["Traffic"]) --> dns0[/"DNS query"/] & http0["Network connections"]
+    dns0 ----> dns1
+    dns1 -- Resolved by --> dns2
+    dns1 --> dns3
+    dns3 -- Resolved by --> dns4
+    dns2 -----> internet(["Internet"])
+    dns4 -----> internet
+    dns4 ---> cloudflare["Private network services <br>(Cloudflare Tunnel, Magic WAN, WARP Connector)"]
+    http1 -- Do Not Inspect --> internet
+    http1 -- Inspect --> http2
+    http2 --> http3
+    http0 --> magic["Magic Firewall (Enterprise users only)"]
+    magic --> egress1
+    egress1 --> tcp["Check for origin availability (TCP SYN)"]
+    tcp --> network1
+    http3 --> internet
+    https -- HTTPS --> http1
+    https -- HTTP --> http2
+    network1 --> https & nonhttp
+    dns3 -- Resolved by --> internal & dns2
+    nonhttp -----> internet
+
+    https@{ shape: hex}
+    http0@{ shape: lean-r}
+```
+
+</Details>
+:::
 
 ```mermaid
 flowchart TB
@@ -14,20 +83,20 @@ flowchart TB
     %% In with user traffic
     start(["Traffic"])-->dns0[/"DNS query"/]-->dns1
     start-->http0{{"HTTP(S) request on port 80 or 443?"}}
-    http0--Yes-->http1
-    http0--No-->network0
+    http0-- "Yes" -->http1
+    http0-- "No" -->network0
 
     %% DNS policies
     subgraph DNS
     dns1["DNS policies"]
     style DNS text-align:left
-    dns1--Resolved by-->dns2["1.1.1.1"]
+    dns1-- "Resolved by" -->dns2["1.1.1.1"]
     dns1-.->dns3
 
         %% DNS resolution
         subgraph Resolution
         dns2["1.1.1.1"]
-        dns3["Resolver policies <br />(Enterprise users only)"]--Resolved by-->dns4["Custom resolver"]
+        dns3["Resolver policies <br />(Enterprise users only)"]-- "Resolved by" -->dns4["Custom resolver"]
         end
 
     end
@@ -46,7 +115,7 @@ flowchart TB
     http2-->http3["Allow, Block, Do Not Scan policies"]
     end
 
-    http1--Do Not Inspect-->network0
+    http1-- "Do Not Inspect" -->network0
     http3-->network0
     network0[/"Network connections"/]-->network1
 
@@ -62,8 +131,8 @@ flowchart TB
     end
 
     %% Finish
-    network1--Egress with Cloudflare IP-->internet([Internet])
-    egress1--Egress with dedicated IP-->internet
+    network1-- "Egress with Cloudflare IP" -->internet([Internet])
+    egress1-- "Egress with dedicated IP" -->internet
 ```
 
 ## Priority between policy builders
@@ -74,7 +143,8 @@ Gateway applies your policies in the following order:
 2. DNS policies with selectors evaluated after resolution
 3. HTTP policies
 4. Network policies
-5. Egress policies (if applicable)
+5. Resolver policies (if applicable)
+6. Egress policies (if applicable)
 
 DNS policies are standalone. For example, if you block a site with a DNS policy but do not create a corresponding HTTP policy, users can still access the site if they know its IP address.
 
@@ -103,7 +173,7 @@ When DNS queries are received, Gateway evaluates policies with pre-resolution se
 | 1          | Resolved Country IP Geolocation | is       | United States | Allow  |
 | 2          | Domain                          | is       | `example.com` | Block  |
 
-Despite an explicit Allow policy ordered first, policy 2 takes precedence because the *Domain* selector is evaluated before DNS resolution.
+Despite an explicit Allow policy ordered first, policy 2 takes precedence because the _Domain_ selector is evaluated before DNS resolution.
 
 If a policy contains both pre-resolution and post-resolution selectors, Gateway will evaluate the entire policy after DNS resolution. For information on when each selector is evaluated, refer to the [list of DNS selectors](/cloudflare-one/policies/gateway/dns-policies/#selectors).
 
@@ -118,38 +188,46 @@ Gateway applies HTTP policies based on a combination of [action type](/cloudflar
 1. All Do Not Inspect policies are evaluated first, in order of precedence.
 2. If no policies match, all Isolate policies are evaluated in order of precedence.
 3. All Allow, Block and Do Not Scan policies are evaluated in order of precedence.
+4. The body of the HTTP request, including Data Loss Prevention (DLP), AV scanning, and file sandboxing, is evaluated.
 
 This order of enforcement allows Gateway to first determine whether decryption should occur. If a site matches a Do Not Inspect policy, it is automatically allowed through Gateway and bypasses all other HTTP policies.
 
 :::note
-
-The only exception is if you are using [Clientless Web Isolation](/cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/) — all sites within the clientless remote browser are implicitly isolated even if they match a Do Not Inspect policy. 
+The only exception is if you are using [Clientless Web Isolation](/cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/) — all sites within the clientless remote browser are implicitly isolated even if they match a Do Not Inspect policy.
 :::
 
 Next, Gateway checks decrypted traffic against your Isolate policies. When a user makes a request which triggers an Isolate policy, the request will be rerouted to a [remote browser](/cloudflare-one/policies/browser-isolation/).
 
 Lastly, Gateway evaluates all Allow, Block, and Do Not Scan policies. These policies apply to both isolated and non-isolated traffic. For example, if `example.com` is isolated and `example.com/subpage` is blocked, Gateway will block the subpage inside of the remote browser.
 
+### Resolver policies
+
+When [resolver policies](/cloudflare-one/policies/gateway/resolver-policies/) are present, Gateway first evaluates any DNS policies with pre-resolution selectors, then routes any DNS queries according to the [order of precedence](#order-of-precedence) of your resolver policies, and lastly evaluates any DNS policies with post-resolution selectors.
+
 ### Order of precedence
 
-<Render file="gateway/order-of-precedence" product="cloudflare-one" params={{ one: "DNS, network, or HTTP" }} />
+<Render
+	file="gateway/order-of-precedence"
+	product="cloudflare-one"
+	params={{ one: "DNS, network, or HTTP" }}
+/>
 
-:::caution[Terraform precedence limitation]
-
-To avoid conflicts, Terraform applies a hash calculation to precedences. For example, a precedence of `1000` may become `1000901`. This can cause errors when reordering policies. To avoid this issue, manually set the precedence of your policies via the [Cloudflare API](/api/operations/zero-trust-gateway-rules-update-zero-trust-gateway-rule). 
-:::
+<Render file="gateway/terraform-precedence-warning" product="cloudflare-one" />
 
 ## Example
 
 Suppose you have a list of policies arranged in the following order of precedence:
 
-* DNS policies: <Render file="gateway/order-of-precedence-dns" product="cloudflare-one" />
-* HTTP policies:
+- DNS policies: <Render file="gateway/order-of-precedence-dns" product="cloudflare-one" />
+- HTTP policies:
+
   | Precedence | Selector | Operator | Value               | Action         |
   | ---------- | -------- | -------- | ------------------- | -------------- |
   | 1          | Host     | is       | `example.com`       | Block          |
   | 2          | Host     | is       | `test2.example.com` | Do Not Inspect |
-* Network policies:
+
+- Network policies:
+
   | Precedence | Selector         | Operator | Value              | Action |
   | ---------- | ---------------- | -------- | ------------------ | ------ |
   | 1          | Destination Port | is       | `80`               | Block  |
@@ -172,3 +250,37 @@ When a user goes to `https://test.example.com`, Gateway performs the following o
    3. Policy #3 is not evaluated because there has already been an explicit match.
 
 Therefore, the user is able to connect to `https://test.example.com`.
+
+## Precedence calculations
+
+When arranging policies in Zero Trust, Gateway automatically calculates the precedence for rearranged policies.
+
+When using the API to create a policy, unless the precedence is explicitly defined in the policy, Gateway will assign precedence to policies starting at `1000`. Every time a new policy is added to the bottom of the order, Gateway will calculate the current highest precedence in the account and add a random integer between 1 and 100 to `1000` so that it now claims the maximum precedence in the account. To manually update a policy's precedence, use the [Update a Zero Trust Gateway rule](/api/resources/zero_trust/subresources/gateway/subresources/rules/methods/update/) endpoint. You can set a policy's precedence to any value that is not already in use.
+
+Changing the order within the Zero Trust dashboard or API may result in configuration issues when using [Terraform](#manage-precedence-with-terraform).
+
+## Manage precedence with Terraform
+
+You can manage the order of execution of your Gateway policies using Terraform. With version 5 of the Terraform Cloudflare provider, Gateway users can list their policies in a Terraform file with any desired integer precedence value. Cloudflare recommends starting with a precedence of `1000` and adding extra space between each policy's precedence for any future policies. For example:
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "policy_1" {
+  account_id = var.cloudflare_account_id
+  # other attributes...
+  precedence = 1000
+}
+
+resource "cloudflare_zero_trust_gateway_policy" "policy_2" {
+  account_id = var.cloudflare_account_id
+  # other attributes...
+  precedence = 2000
+}
+
+resource "cloudflare_zero_trust_gateway_policy" "policy_3" {
+  account_id = var.cloudflare_account_id
+  # other attributes...
+  precedence = 3000
+}
+```
+
+To avoid precedence calculation errors when reordering policies with Terraform, you should move one policy at a time before running `terraform plan` and `terraform apply`. If you use both Terraform and the Zero Trust dashboard or API, sync your polices with `terraform refresh` before reordering policies in Terraform. Alternatively, you can set your account to [read-only in the Zero Trust dashboard](/cloudflare-one/api-terraform/#set-dashboard-to-read-only), only allowing changes using the API or Terraform.

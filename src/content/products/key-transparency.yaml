@@ -4,12 +4,9 @@ product:
   title: Key Transparency Auditor
   url: /key-transparency/
   group: Application security
+  additional_groups: [Privacy]
 
 meta:
-  title: Key Transparency Auditor
-  description: Key Transparency Auditor docs
+  title: Key Transparency Auditor docs
+  description: Secure the distribution of public keys in your end-to-end encrypted messaging systems.
   author: "@cloudflare"
-
-externals:
-  - title: Cloudflare homepage
-    url: https://cloudflare.com

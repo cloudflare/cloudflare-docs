@@ -25,7 +25,7 @@ It is possible to use [Universal SSL](/ssl/edge-certificates/universal-ssl/) ins
 
 * Universal certificates can take at least [15 minutes](/ssl/edge-certificates/universal-ssl/enable-universal-ssl/#full-dns-setup) to be issued.
 * You should make sure to add Cloudflare nameservers to your registrar within 72 hours of the conversion process.
-* Universal SSL only supports first-level subdomains.
+* Universal SSL only supports first-level subdomains. You can use [Advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/) with the [Total TLS](/ssl/edge-certificates/additional-options/total-tls/) option to automatically issue certificates for any proxied hostname.
 * To minimize downtime, it is recommended having a certificate in place beforehand.
 
 
@@ -49,7 +49,7 @@ In the Cloudflare dashboard:
 
 1. Go to **DNS** > **Settings**.
 2. Select **Convert to Primary DNS** (this will not affect how your traffic is proxied).
-3. Import your records into Cloudflare DNS and verify that they have been configured correctly. Usually, you will want to import [unproxied records](/dns/manage-dns-records/reference/proxied-dns-records/).
+3. Import your records into Cloudflare DNS and verify that they have been configured correctly. Usually, you will want to import [unproxied records](/dns/proxy-status/).
 
 ## 4. Activate full setup
 
@@ -67,4 +67,4 @@ Cloudflare recommends that you also [enable DNSSEC](/dns/dnssec/) from **DNS** >
 
 Once all the DNS TTLs expire, all your DNS queries will be answered by the Cloudflare global network.
 
-Start proxying additional hostnames by enabling the [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/) (also known as orange-clouding) for specific DNS records. Previously proxied subdomains will continue to be proxied without any interruption.
+Start proxying additional hostnames by enabling the [proxy status](/dns/proxy-status/) (also known as orange-clouding) for specific DNS records. Previously proxied subdomains will continue to be proxied without any interruption.

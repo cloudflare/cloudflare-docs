@@ -1,6 +1,7 @@
 ---
 title: Available Managed Transforms
 pcx_content_type: reference
+description: Learn about Cloudflare's Managed Transforms for modifying HTTP headers, including bot protection, TLS client auth, and leaked credentials checks.
 sidebar:
   order: 2
 ---
@@ -11,7 +12,7 @@ This page lists the available Managed Transforms. They can modify HTTP request h
 
 <Render
 	file="snippets-alternative"
-	params={{ one: "and customized header modifications" }}
+	params={{ suffix: "and customized header modifications" }}
 />
 <br />
 
@@ -31,45 +32,45 @@ Adds HTTP headers with bot-related values to the request sent to the origin serv
 
 - `cf-bot-score`: Contains the <GlossaryTooltip term="bot score" link="/bots/concepts/bot-score/">bot score</GlossaryTooltip> (for example, `30`).
 - `cf-verified-bot`: Contains `true` if the request comes from a <GlossaryTooltip term="verified bot" link="/bots/concepts/bot/#verified-bots">verified bot</GlossaryTooltip>, or `false` otherwise.
-- `cf-ja3-hash`: Contains the <GlossaryTooltip term="JA3 fingerprint" link="/bots/concepts/ja3-ja4-fingerprint/">JA3 fingerprint</GlossaryTooltip>.
-- `cf-ja4`: Contains the <GlossaryTooltip term="JA3 fingerprint" link="/bots/concepts/ja3-ja4-fingerprint/">JA4 fingerprint</GlossaryTooltip>.
+- `cf-ja3-hash`: Contains the <GlossaryTooltip term="JA3 fingerprint" link="/bots/additional-configurations/ja3-ja4-fingerprint/">JA3 fingerprint</GlossaryTooltip>.
+- `cf-ja4`: Contains the <GlossaryTooltip term="JA3 fingerprint" link="/bots/additional-configurations/ja3-ja4-fingerprint/">JA4 fingerprint</GlossaryTooltip>.
 
 ### Add TLS client auth headers
 
 Adds HTTP headers with [Mutual TLS](/api-shield/security/mtls/) (mTLS) client authentication values to the request sent to the origin server:
 
-- `cf-cert-revoked`: Value from the [`cf.tls_client_auth.cert_revoked`](/ruleset-engine/rules-language/fields/dynamic-fields/#cftls_client_authcert_revoked) field.
-- `cf-cert-verified`: Value from the [`cf.tls_client_auth.cert_verified`](/ruleset-engine/rules-language/fields/dynamic-fields/#cftls_client_authcert_verified) field.
-- `cf-cert-presented`: Value from the [`cf.tls_client_auth.cert_presented`](/ruleset-engine/rules-language/fields/dynamic-fields/#cftls_client_authcert_presented) field.
-- `cf-cert-issuer-dn`: Value from the [`cf.tls_client_auth.cert_issuer_dn`](/ruleset-engine/rules-language/fields/dynamic-fields/#cftls_client_authcert_issuer_dn) field.
-- `cf-cert-subject-dn`: Value from the [`cf.tls_client_auth.cert_subject_dn`](/ruleset-engine/rules-language/fields/dynamic-fields/#cftls_client_authcert_subject_dn) field.
-- `cf-cert-issuer-dn-rfc2253`: Value from the [`cf.tls_client_auth.cert_issuer_dn_rfc2253`](/ruleset-engine/rules-language/fields/dynamic-fields/#cftls_client_authcert_issuer_dn_rfc2253) field.
-- `cf-cert-subject-dn-rfc2253`: Value from the [`cf.tls_client_auth.cert_subject_dn_rfc2253`](/ruleset-engine/rules-language/fields/dynamic-fields/#cftls_client_authcert_subject_dn_rfc2253) field.
-- `cf-cert-issuer-dn-legacy`: Value from the [`cf.tls_client_auth.cert_issuer_dn_legacy`](/ruleset-engine/rules-language/fields/dynamic-fields/#cftls_client_authcert_issuer_dn_legacy) field.
-- `cf-cert-subject-dn-legacy`: Value from the [`cf.tls_client_auth.cert_subject_dn_legacy`](/ruleset-engine/rules-language/fields/dynamic-fields/#cftls_client_authcert_subject_dn_legacy) field.
-- `cf-cert-serial`: Value from the [`cf.tls_client_auth.cert_serial`](/ruleset-engine/rules-language/fields/dynamic-fields/#cftls_client_authcert_serial) field.
-- `cf-cert-issuer-serial`: Value from the [`cf.tls_client_auth.cert_issuer_serial`](/ruleset-engine/rules-language/fields/dynamic-fields/#cftls_client_authcert_issuer_serial) field.
-- `cf-cert-fingerprint-sha256`: Value from the [`cf.tls_client_auth.cert_fingerprint_sha256`](/ruleset-engine/rules-language/fields/dynamic-fields/#cftls_client_authcert_fingerprint_sha256) field.
-- `cf-cert-fingerprint-sha1`: Value from the [`cf.tls_client_auth.cert_fingerprint_sha1`](/ruleset-engine/rules-language/fields/dynamic-fields/#cftls_client_authcert_fingerprint_sha1) field.
-- `cf-cert-not-before`: Value from the [`cf.tls_client_auth.cert_not_before`](/ruleset-engine/rules-language/fields/dynamic-fields/#cftls_client_authcert_not_before) field.
-- `cf-cert-not-after`: Value from the [`cf.tls_client_auth.cert_not_after`](/ruleset-engine/rules-language/fields/dynamic-fields/#cftls_client_authcert_not_after) field.
-- `cf-cert-ski`: Value from the [`cf.tls_client_auth.cert_ski`](/ruleset-engine/rules-language/fields/dynamic-fields/#cftls_client_authcert_ski) field.
-- `cf-cert-issuer-ski`: Value from the [`cf.tls_client_auth.cert_issuer_ski`](/ruleset-engine/rules-language/fields/dynamic-fields/#cftls_client_authcert_issuer_ski) field.
+- `cf-cert-revoked`: Value from the [`cf.tls_client_auth.cert_revoked`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_revoked/) field.
+- `cf-cert-verified`: Value from the [`cf.tls_client_auth.cert_verified`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_verified/) field.
+- `cf-cert-presented`: Value from the [`cf.tls_client_auth.cert_presented`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_presented/) field.
+- `cf-cert-issuer-dn`: Value from the [`cf.tls_client_auth.cert_issuer_dn`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_issuer_dn/) field.
+- `cf-cert-subject-dn`: Value from the [`cf.tls_client_auth.cert_subject_dn`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_subject_dn/) field.
+- `cf-cert-issuer-dn-rfc2253`: Value from the [`cf.tls_client_auth.cert_issuer_dn_rfc2253`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_issuer_dn_rfc2253/) field.
+- `cf-cert-subject-dn-rfc2253`: Value from the [`cf.tls_client_auth.cert_subject_dn_rfc2253`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_subject_dn_rfc2253/) field.
+- `cf-cert-issuer-dn-legacy`: Value from the [`cf.tls_client_auth.cert_issuer_dn_legacy`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_issuer_dn_legacy/) field.
+- `cf-cert-subject-dn-legacy`: Value from the [`cf.tls_client_auth.cert_subject_dn_legacy`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_subject_dn_legacy/) field.
+- `cf-cert-serial`: Value from the [`cf.tls_client_auth.cert_serial`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_serial/) field.
+- `cf-cert-issuer-serial`: Value from the [`cf.tls_client_auth.cert_issuer_serial`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_issuer_serial/) field.
+- `cf-cert-fingerprint-sha256`: Value from the [`cf.tls_client_auth.cert_fingerprint_sha256`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_fingerprint_sha256/) field.
+- `cf-cert-fingerprint-sha1`: Value from the [`cf.tls_client_auth.cert_fingerprint_sha1`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_fingerprint_sha1/) field.
+- `cf-cert-not-before`: Value from the [`cf.tls_client_auth.cert_not_before`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_not_before/) field.
+- `cf-cert-not-after`: Value from the [`cf.tls_client_auth.cert_not_after`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_not_after/) field.
+- `cf-cert-ski`: Value from the [`cf.tls_client_auth.cert_ski`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_ski/) field.
+- `cf-cert-issuer-ski`: Value from the [`cf.tls_client_auth.cert_issuer_ski`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_issuer_ski/) field.
 
 ### Add visitor location headers
 
 Adds HTTP headers with location information for the visitor's IP address to the request sent to the origin server:
 
-- `cf-ipcity`: The visitor's city (value from the [`ip.src.city`](/ruleset-engine/rules-language/fields/standard-fields/#ipsrccity) field).
-- `cf-ipcountry`: The visitor's country (value from the [`ip.src.country`](/ruleset-engine/rules-language/fields/standard-fields/#ipsrccountry) field).
-- `cf-ipcontinent`: The visitor's continent (value from the [`ip.src.continent`](/ruleset-engine/rules-language/fields/standard-fields/#ipsrccontinent) field).
-- `cf-iplongitude`: The visitor's longitude (value from the [`ip.src.lon`](/ruleset-engine/rules-language/fields/standard-fields/#ipsrclon) field).
-- `cf-iplatitude`: The visitor's latitude (value from the [`ip.src.lat`](/ruleset-engine/rules-language/fields/standard-fields/#ipsrclat) field).
-- `cf-region`: The visitor's region (value from the [`ip.src.region`](/ruleset-engine/rules-language/fields/standard-fields/#ipsrcregion) field).
-- `cf-region-code`: The visitor's region code (value from the [`ip.src.region_code`](/ruleset-engine/rules-language/fields/standard-fields/#ipsrcregion_code) field).
-- `cf-metro-code`: The visitor's metro code (value from the [`ip.src.metro_code`](/ruleset-engine/rules-language/fields/standard-fields/#ipsrcmetro_code) field).
-- `cf-postal-code`: The visitor's postal code (value from the [`ip.src.postal_code`](/ruleset-engine/rules-language/fields/standard-fields/#ipsrcpostal_code) field).
-- `cf-timezone`: The name of the visitor's timezone (value from the [`ip.src.timezone.name`](/ruleset-engine/rules-language/fields/standard-fields/#ipsrctimezonename) field).
+- `cf-ipcity`: The visitor's city (value from the [`ip.src.city`](/ruleset-engine/rules-language/fields/reference/ip.src.city/) field).
+- `cf-ipcountry`: The visitor's country (value from the [`ip.src.country`](/ruleset-engine/rules-language/fields/reference/ip.src.country/) field).
+- `cf-ipcontinent`: The visitor's continent (value from the [`ip.src.continent`](/ruleset-engine/rules-language/fields/reference/ip.src.continent/) field).
+- `cf-iplongitude`: The visitor's longitude (value from the [`ip.src.lon`](/ruleset-engine/rules-language/fields/reference/ip.src.lon/) field).
+- `cf-iplatitude`: The visitor's latitude (value from the [`ip.src.lat`](/ruleset-engine/rules-language/fields/reference/ip.src.lat/) field).
+- `cf-region`: The visitor's region (value from the [`ip.src.region`](/ruleset-engine/rules-language/fields/reference/ip.src.region/) field).
+- `cf-region-code`: The visitor's region code (value from the [`ip.src.region_code`](/ruleset-engine/rules-language/fields/reference/ip.src.region_code/) field).
+- `cf-metro-code`: The visitor's metro code (value from the [`ip.src.metro_code`](/ruleset-engine/rules-language/fields/reference/ip.src.metro_code/) field).
+- `cf-postal-code`: The visitor's postal code (value from the [`ip.src.postal_code`](/ruleset-engine/rules-language/fields/reference/ip.src.postal_code/) field).
+- `cf-timezone`: The name of the visitor's timezone (value from the [`ip.src.timezone.name`](/ruleset-engine/rules-language/fields/reference/ip.src.timezone.name/) field).
 
 :::caution
 Turning on [IP geolocation](/network/ip-geolocation/) will send a `cf-ipcountry` HTTP header to your origin server even when **Add visitor location headers** is turned off.
@@ -111,7 +112,7 @@ For example, consider an incoming request proxied by two CDNs (`CDN_1` and `CDN_
 With **Remove visitor IP headers** enabled, the `x-forwarded-for` header sent to the origin server will be:<br/>
 `x-forwarded-for: <THIRD_PARTY_CDN_2_IP>`
 
-### Add Leaked Credentials Checks Header
+### Add leaked credentials checks header
 
 Adds an `Exposed-Credential-Check` request header whenever the WAF detects leaked credentials in the incoming request.
 
@@ -129,6 +130,20 @@ You will only receive this managed header at your origin server if:
 - The [leaked credentials detection](/waf/detections/leaked-credentials/) in the WAF is turned on.
 - The **Add Leaked Credentials Checks Header** managed transform is turned on.
 - Your Cloudflare plan supports the type of credentials detection. For example, Free plans can only know if a password was previously leaked. In this situation, Cloudflare will add an `Exposed-Credential-Check: 4` header to the request.
+
+### Add malicious uploads detection header
+
+Adds a `Malicious-Uploads-Detection` request header indicating the outcome of scanning uploaded content for malicious signatures.
+
+The header can have one of the following values:
+
+| Header + Value                   | Description                                                                                                                                                                                                          |
+| -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Malicious-Uploads-Detection: 1` | The request contains at least one malicious content object ([`cf.waf.content_scan.has_malicious_obj`](/ruleset-engine/rules-language/fields/reference/cf.waf.content_scan.has_malicious_obj/) is `true`).            |
+| `Malicious-Uploads-Detection: 2` | The file scanner was unable to scan all the content objects detected in the request ([`cf.waf.content_scan.has_failed`](/ruleset-engine/rules-language/fields/reference/cf.waf.content_scan.has_failed/) is `true`). |
+| `Malicious-Uploads-Detection: 3` | The request contains at least one content object ([`cf.waf.content_scan.has_obj`](/ruleset-engine/rules-language/fields/reference/cf.waf.content_scan.has_obj/) is `true`).                                          |
+
+For more information, refer to [Malicious uploads detection](/waf/detections/malicious-uploads/).
 
 ## HTTP response headers
 

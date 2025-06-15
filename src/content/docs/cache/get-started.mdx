@@ -22,7 +22,7 @@ Cloudflare caches static content based on the following factors:
 * Origin headers that indicate <GlossaryTooltip term="dynamic content">dynamic content</GlossaryTooltip>
 * Cache rules that bypass cache on cookie
 
-Cloudflare only caches resources within the Cloudflare data center that serve the request. Cloudflare does not cache off-site or third-party resources, such as Facebook or Flickr, or content hosted on [unproxied (grey-clouded)](/dns/manage-dns-records/reference/proxied-dns-records/) DNS records.
+Cloudflare only caches resources within the Cloudflare data center that serve the request. Cloudflare does not cache off-site or third-party resources, such as Facebook or Flickr, or content hosted on [unproxied (grey-clouded)](/dns/proxy-status/) DNS records.
 
 ## Learn the basics
 
@@ -41,9 +41,9 @@ Configure your settings to cache static HTML or cache anonymous page views of dy
 * [Understand Origin Cache Control](/cache/concepts/cache-control/)
 * [Cache by device type (Enterprise only)](/cache/how-to/cache-rules/examples/cache-device-type/)
 
-## Improve cache hit rates
+## Improve cache HIT rates
 
-Include or exclude query strings, optimize cache keys, or enable tiered cache to improve hit rates and reduce traffic to your origin.
+Include or exclude query strings, optimize cache keys, or enable [Tiered Cache](/cache/how-to/tiered-cache/) to improve HIT rates and reduce traffic to your origin.
 
 * [Choose a cache level](/cache/how-to/set-caching-levels/)
 * [Enable Tiered Cache with Argo](/cache/how-to/tiered-cache/#enable-tiered-cache)
@@ -71,7 +71,7 @@ Review the list of Cloudflare features that function in this manner:
 * [Mirage](/speed/optimization/images/mirage/)
 * [Hotlink Protection](/waf/tools/scrape-shield/hotlink-protection/)
 * [Email address obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/)
-* [Bot Management JavaScript Detections](/bots/reference/javascript-detections/)
+* [Bot Management JavaScript Detections](/bots/additional-configurations/javascript-detections/)
 
 ## Troubleshoot
 

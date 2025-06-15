@@ -1,0 +1,16 @@
+releaseNotes: >-
+  This release contains bug fixes from the previous beta
+   
+  **Notable updates**
+   
+  - Fixed issue where file device posture checks wouldn't work correctly when
+  the file path was changed for an existing rule.
+   
+  **Known issues**
+
+  - No known issues
+version: 2022.7.369.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2022.7.369.1
+packageSize: 45307806
+releaseDate: 2022-07-29T20:24:22.562Z
+platformName: macOS

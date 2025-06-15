@@ -1,0 +1,77 @@
+releaseNotes: >-
+  This release contains a security fix for IPv6 users introduced in a prior
+  release, major bug fixes and a significant change to the Zero Trust
+  authentication flow.
+
+
+  **NOTE** This release contains a bug that impacts Zero Trust users who deploy
+  with .msi command line parameters that will break clean installs. For clean
+  installs please move forward to 2022.7.421
+   
+  **Notable updates**
+   
+  - Added C:\ProgramData\Cloudflare\cfwarp_daemon_dns.txt log file when DNS
+  logging is enabled
+
+  - Added `do not fragment` bit to WARP tunnel traffic
+
+  - Added ability for posture rules that support file paths to use environment
+  variables as part of the path
+
+  - Modified Zero Trust authentication flow to no longer rely on WebView2
+  embedded experience and use default browser instead
+
+  - Modified output of `warp-cli account` and `warp-cli settings` to make
+  parsing information easier
+
+  - Modified client UI during re-authentication flow to always appear as the top
+  most window so it is less likely users will miss it
+
+  - Fixed major issue introduced with 2022.5.341 where IPv6 traffic was no
+  longer consistently routed through the tunnel
+
+  - Fixed issue where warp-svc.exe may not start due to missing VCRUNTIME140.dll
+  on some systems
+
+  - Fixed issue that could result in broken DNS for users running WiFi until an
+  admin manually reset DNS back to default
+
+  - Fixed issue where the UI could appear stretched when using an external
+  monitor
+
+  - Fixed issue where warp-cli could be used determine a valid admin override
+  code
+
+  - Fixed issue where warp-cli could be used to enable/disable on wifi networks
+  when in Zero Trust mode
+
+  - Fixed issue where the UI could get a barrage of notifications when coming
+  out of modern standby
+
+  - Fixed issue where you would receive a notification immediately after install
+  that your internet was no longer private
+
+  - Fixed issue with domain based split tunnels when a wildcard is used.
+  Anything after the `*` was included in the wildcard search so `*.example.com`
+  would include  `badexample.com`
+
+  - Fixed issue where client was sending improper ICMP responses when MTU needed
+  to change
+
+  - Fixed UI issue when going between light/dark modes
+
+  - Fixed issue where logs could grow too large
+   
+  **Known issues**
+
+  - This version requires at least Windows 10.0.19042. If you are running a
+  prior version of Windows, please delay upgrading.
+
+  - Zero Trust users who perform a clean install of the client utilizing msi
+  parameters will result in the GUI being in a broken state and not asking for
+  authentication. This is fixed in 2022.7.421
+version: 2022.7.174.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2022.7.174.0
+packageSize: 88604672
+releaseDate: 2022-07-14T18:48:26.264Z
+platformName: Windows

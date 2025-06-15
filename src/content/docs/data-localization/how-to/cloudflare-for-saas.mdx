@@ -11,7 +11,7 @@ In the following sections, we will give you some details about how to configure 
 
 ## Regional Services
 
-To configure Regional Services for both hostnames [proxied](/dns/manage-dns-records/reference/proxied-dns-records/) through Cloudflare and the fallback origin, follow these steps for the dashboard or API configuration:
+To configure Regional Services for both hostnames [proxied](/dns/proxy-status/) through Cloudflare and the fallback origin, follow these steps for the dashboard or API configuration:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -23,8 +23,8 @@ To configure Regional Services for both hostnames [proxied](/dns/manage-dns-reco
 
 <TabItem label="API">
 
-1. Set the [fallback record](/api/operations/custom-hostname-fallback-origin-for-a-zone-update-fallback-origin-for-custom-hostnames).
-2. Create a [Custom Hostname](/api/operations/custom-hostname-for-a-zone-create-custom-hostname).
+1. Set the [fallback record](/api/resources/custom_hostnames/subresources/fallback_origin/methods/update/).
+2. Create a [Custom Hostname](/api/resources/custom_hostnames/methods/create/).
 3. Run the [API POST](/data-localization/regional-services/get-started/#configure-regional-services-via-api) command on the Custom Hostname to create a `regional_hostnames` with a specific region.
 
 </TabItem> </Tabs>

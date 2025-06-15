@@ -1,6 +1,5 @@
 ---
 import { z } from "astro:schema";
-import { Icon } from "@astrojs/starlight/components";
 
 type Props = z.infer<typeof props>;
 
@@ -13,11 +12,42 @@ const props = z
 const { id } = props.parse(Astro.props);
 ---
 
-<code
-	title="Click to copy the full ID"
-	onclick=`navigator.clipboard.writeText("${id}")`
-	class="inline-flex w-fit hover:bg-accent-600/50 hover:cursor-pointer active:bg-accent-600"
->
-	{`...${id.slice(-8)}`}
-	<Icon name="document" class="!inline justify-center" />
-</code>
+<rule-id id={id}>
+	<button title="Click to copy the full ID" class="px-0">
+		<code class="flex">
+			{`...${id.slice(-8)}`}
+		</code>
+	</button>
+</rule-id>
+
+<style>
+	button {
+		transition: opacity 100ms ease;
+
+		opacity: 0.75;
+
+		&:hover {
+			cursor: copy;
+			opacity: 1;
+		}
+	}
+</style>
+
+<script>
+	import { addTooltip } from "~/util/tippy";
+
+	class RuleID extends HTMLElement {
+		handleCopy() {
+			navigator.clipboard.writeText(this.id);
+		}
+		connectedCallback() {
+			const button = this.querySelector<HTMLButtonElement>("button");
+
+			addTooltip(this, "Copied", { trigger: "click", hideAfter: 1000 });
+
+			button?.addEventListener("click", () => this.handleCopy());
+		}
+	}
+
+	customElements.define("rule-id", RuleID);
+</script>

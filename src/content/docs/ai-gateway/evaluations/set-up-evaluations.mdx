@@ -24,6 +24,24 @@ Please keep in mind that datasets currently use `AND` joins, so there can only b
 
 :::
 
+### List of available filters
+
+| Filter category | Filter options                                               | Filter by description                     |
+| --------------- | ------------------------------------------------------------ | ----------------------------------------- |
+| Status          | error, status                                                | error type or status.                     |
+| Cache           | cached, not cached                                           | based on whether they were cached or not. |
+| Provider        | specific providers                                           | the selected AI provider.                 |
+| AI Models       | specific models                                              | the selected AI model.                    |
+| Cost            | less than, greater than                                      | cost, specifying a threshold.             |
+| Request type    | Universal, Workers AI Binding, WebSockets                    | the type of request.                      |
+| Tokens          | Total tokens, Tokens In, Tokens Out                          | token count (less than or greater than).  |
+| Duration        | less than, greater than                                      | request duration.                         |
+| Feedback        | equals, does not equal (thumbs up, thumbs down, no feedback) | feedback type.                            |
+| Metadata Key    | equals, does not equal                                       | specific metadata keys.                   |
+| Metadata Value  | equals, does not equal                                       | specific metadata values.                 |
+| Log ID          | equals, does not equal                                       | a specific Log ID.                        |
+| Event ID        | equals, does not equal                                       | a specific Event ID.                      |
+
 ## 2. Select evaluators
 
 After creating a dataset, choose the evaluation parameters:

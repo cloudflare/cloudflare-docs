@@ -1,0 +1,50 @@
+---
+title: Run Workers for up to 5 minutes of CPU-time
+description: Workers now support up to 5 minutes of CPU time per request. Allowing more CPU-intensive workloads.
+products:
+  - workers
+date: 2025-03-26T17:00:00Z
+---
+
+import { Render, TypeScriptExample, WranglerConfig } from "~/components";
+
+You can now run a Worker for up to 5 minutes of CPU time for each request.
+
+Previously, each Workers request ran for a maximum of 30 seconds of CPU time — that is the time that a Worker is actually performing a task (we still allowed unlimited wall-clock time, in case you were waiting on slow resources). This
+meant that some compute-intensive tasks were impossible to do with a Worker. For instance,
+you might want to take the cryptographic hash of a large file from R2. If
+this computation ran for over 30 seconds, the Worker request would have timed out.
+
+By default, Workers are still limited to 30 seconds of CPU time. This protects developers
+from incurring accidental cost due to buggy code.
+
+By changing the `cpu_ms` value in your Wrangler configuration, you can opt in to
+any value up to 300,000 (5 minutes).
+
+<WranglerConfig>
+
+```jsonc
+{
+	// ...rest of your configuration...
+	"limits": {
+		"cpu_ms": 300000,
+	},
+	// ...rest of your configuration...
+}
+```
+
+</WranglerConfig>
+
+:::note
+CPU time is the amount of time the CPU actually spends doing work during a given request.
+If a Worker's request makes a sub-request and waits for that request to come back before
+doing additional work, this time spent waiting **is not** counted towards CPU time.
+
+Worker requests could run for more than 30 seconds of total time prior to this change — only
+CPU time was limited.
+:::
+
+For more information on the updates limits, see the documentation on [Wrangler configuration for `cpu_ms`](/workers/wrangler/configuration/#limits)
+and on [Workers CPU time limits](/workers/platform/limits/#cpu-time).
+
+For building long-running tasks on Cloudflare, we also recommend checking out [Workflows](/workflows/) and [Queues](/queues/). 

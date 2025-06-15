@@ -11,7 +11,7 @@ In the following sections, we will give you some details about how to configure 
 
 ## Regional Services
 
-To configure Regional Services for hostnames [proxied](/dns/manage-dns-records/reference/proxied-dns-records/) through Cloudflare and ensure that [eligible assets](/cache/concepts/default-cache-behavior/) are cached only in-region, follow these steps for the dashboard or API configuration:
+To configure Regional Services for hostnames [proxied](/dns/proxy-status/) through Cloudflare and ensure that [eligible assets](/cache/concepts/default-cache-behavior/) are cached only in-region, follow these steps for the dashboard or API configuration:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -25,7 +25,7 @@ To configure Regional Services for hostnames [proxied](/dns/manage-dns-records/r
 
 <TabItem label="API">
 
-1. To create records with the API, use the [API POST](/api/operations/dns-records-for-a-zone-create-dns-record) command.
+1. To create records with the API, use the [API POST](/api/resources/dns/subresources/records/methods/create/) command.
 2. Run the [API POST](/data-localization/regional-services/get-started/#configure-regional-services-via-api) command on the hostname to create a `regional_hostnames` with a specific region.
 
 </TabItem> </Tabs>

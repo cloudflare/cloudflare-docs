@@ -1,0 +1,41 @@
+releaseNotes: >-
+  This release contains reliability improvements and general bug fixes. No new
+  features are introduced with this release.
+   
+  **Notable updates**
+
+  - Added more status messages to UI when client is unable to connect
+
+  - Improved performance of client when in Proxy Only mode
+
+  - Modified `warp-cli settings` to now show if setting came from local (mdm) or
+  network (warp settings profile) policy to make debugging issues easier
+
+  - Fixed issue that could result in latency increases every few minutes
+
+  - FIxed issue where UI would be in wrong state after entering an admin
+  override code
+
+  - Fixed an issue with re-authentication policies that could result in the
+  browser loading a broken url
+
+  - Fixed a minor memory leak every time we did a DNS query
+
+  - Fixed issue when service token information was removed from mdm.xml the
+  client would not prompt for user authentication as expected
+
+  - Fixed issue where localhost DNS proxy could not be set properly in certain
+  VPN and VM configuration
+   
+
+   
+
+   
+  **Known issues**
+
+  - No known issues
+version: 2023.5.170.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2023.5.170.1
+packageSize: 108167168
+releaseDate: 2023-05-11T23:21:23.059Z
+platformName: Windows

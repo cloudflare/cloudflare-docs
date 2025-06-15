@@ -17,7 +17,3 @@ resources:
   community: https://community.cloudflare.com/c/security/6
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/
   learning_center: https://www.cloudflare.com/learning/ssl/what-is-ssl/
-
-externals:
-  - title: Cloudflare homepage
-    url: https://cloudflare.com

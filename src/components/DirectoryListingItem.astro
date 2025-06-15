@@ -1,0 +1,37 @@
+---
+import { marked } from "marked";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+	node: {
+		page: CollectionEntry<"docs">;
+		children: Array<Props["node"]>;
+	};
+	descriptions: boolean;
+}
+
+const { node, descriptions } = Astro.props;
+---
+
+<li>
+	<a href={node.page.data.external_link ?? "/" + node.page.id + "/"}>
+		{node.page.data.title}
+	</a>
+	{
+		descriptions && node.page.data.description && (
+			<>
+				<span>: </span>
+				<Fragment set:html={marked.parseInline(node.page.data.description)} />
+			</>
+		)
+	}
+	{
+		node.children.length > 0 && (
+			<ul>
+				{node.children.map((child) => (
+					<Astro.self node={child} descriptions={descriptions} />
+				))}
+			</ul>
+		)
+	}
+</li>

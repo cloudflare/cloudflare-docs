@@ -1,0 +1,24 @@
+releaseNotes: >-
+  This release contains couple of fixes from last GA build. No other bug fixes
+  or feature are included.
+   
+  **Notable updates**
+   
+  - Modified client behavior to no longer automatically open a new browser tab
+  when user needs to re-authenticate as this was causing some users to return to
+  their devices with 100s of tabs open. Instead the client will now use the
+  built in operating system notification framework to inform users of the need
+  to authenticate.
+
+
+  - Fixed an issue with enrolling Zero Trust users using Windows installer.
+   
+  **Known issues**
+
+  - This version requires at least Windows 10.0.19042. If you are running a
+  prior version of Windows, please delay upgrading
+version: 2022.7.281.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2022.7.281.1
+packageSize: 103211008
+releaseDate: 2022-07-22T23:04:25.614Z
+platformName: Windows

@@ -16,7 +16,7 @@ When both IPv4 and IPv6 connections are available, Cloudflare prefers IPv4.
 
 ## Enable IPv6 compatibility
 
-By default, IPv6 compatibility is enabled on your domain and will apply to all domains and subdomains covered by [proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/).
+By default, IPv6 compatibility is enabled on your domain and will apply to all domains and subdomains covered by [proxied DNS records](/dns/proxy-status/).
 
 :::note
 
@@ -40,7 +40,7 @@ To disable **IPv6 Compatibility** in the dashboard:
 
 </TabItem> <TabItem label="API">
 
-To disable **IPv6 Compatibility** with the API, send a [`PATCH`](/api/operations/zone-settings-edit-single-setting) request with `ipv6` as the setting name in the URI path, and the `value` parameter set to `"off"`.
+To disable **IPv6 Compatibility** with the API, send a [`PATCH`](/api/resources/zones/subresources/settings/methods/edit/) request with `ipv6` as the setting name in the URI path, and the `value` parameter set to `"off"`.
 
 </TabItem> </Tabs>
 

@@ -1,0 +1,22 @@
+releaseNotes: |
+  This release contains minor fixes and improvements.
+
+  **Changes and improvements:**
+  - Added `target list` to the `warp-cli` to enhance the user experience with the [Access for Infrastructure SSH](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) solution.
+  - Added [pre-login](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/windows-prelogin/) configuration details to the `warp-diag` output.
+  - Added a `tunnel reset mtu` subcommand to the `warp-cli`.
+  - Added a JSON output option to the `warp-cli`.
+  - Added the ability for `warp-cli` to use the team name provided in the MDM file for initial registration.
+  - Added the ability to execute a PCAP on multiple interfaces with `warp-cli` and `warp-dex`.
+  - Improved `warp-dex` default interface selection for PCAPs and changed `warp-dex` CLI output to JSON.
+  - Fixed an issue where the client, when switching between WireGuard and MASQUE protocols, sometimes required a manual tunnel key reset.
+  - Added MASQUE tunnel protocol support for the consumer version of WARP ([1.1.1.1 w/ WARP](/warp-client/)).
+
+  **Known issues:**
+  - Using MASQUE as the tunnel protocol may be incompatible if your organization has Regional Services enabled.
+
+version: 2024.9.346.0
+releaseDate: 2024-10-03T22:25:25.836Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2024.9.346.0
+packageSize: 121704448
+platformName: Windows

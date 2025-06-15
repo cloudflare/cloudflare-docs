@@ -1,0 +1,22 @@
+releaseNotes: |-
+  **Notable updates**
+  - Fixed DNS issue when Teams Gateway is in use side-by-side with another VPN
+  - Support for split tunnel and local domain fallback in Cloudflare for Teams
+  - Improved connection retry logic when coming out of sleep
+  - Fixed an issue with mdm configs not being applied correctly
+  - Fixed crashes when in 1.1.1.1 only mode
+  - Added new onboarding mdm flag to suppress UI during initial client startup when joining a Teams organization
+  - Fixed UI issues when in a Teams DoH only mode deployment
+  - Now install Edge Chromium WebView2 runtime for use during Cloudflare for Teams enrollment
+
+  **Known issues**
+
+  - You are unable to subscribe to WARP+ via the Desktop apps. You must subscribe first on your mobile device and then copy/paste your license key into the Accounts page on desktop
+  - To opt-out of the beta please uninstall via the instructions here: https://developers.cloudflare.com/warp-client/warp-for-everyone/setting-up/windows#how-to-remove-application and install from from the link here: https://developers.cloudflare.com/warp-client/warp-for-everyone/setting-up/requirements#windows
+
+  For a complete list of known issues please visit https://developers.cloudflare.com/warpclient/known-issues-and-faq
+version: 1.3.184.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/1.3.184.0
+packageSize: 80990208
+releaseDate: 2021-03-03T23:25:31.540Z
+platformName: Windows

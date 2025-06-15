@@ -1,7 +1,6 @@
 ---
 updated: 2023-10-30
 difficulty: Beginner
-content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Create a serverless, globally distributed time-series API with Timescale
 products:
@@ -13,7 +12,7 @@ languages:
   - SQL
 ---
 
-import { Render, PackageManagers } from "~/components";
+import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 In this tutorial, you will learn to build an API on Workers which will ingest and query time-series data stored in [Timescale](https://www.timescale.com/) (they make PostgreSQL faster in the cloud).
 
@@ -42,7 +41,7 @@ Run the following command to create a Worker project from the command line:
 	product="workers"
 	params={{
 		category: "hello-world",
-		type: "Hello World Worker",
+		type: "Worker only",
 		lang: "TypeScript",
 	}}
 />
@@ -140,7 +139,9 @@ Hyperdrive will attempt to connect to your database with the provided credential
 
 :::
 
-This command outputs your Hyperdrive ID. You can now bind your Hyperdrive configuration to your Worker in your `wrangler.toml` configuration by replacing the content with the following:
+This command outputs your Hyperdrive ID. You can now bind your Hyperdrive configuration to your Worker in your Wrangler configuration by replacing the content with the following:
+
+<WranglerConfig>
 
 ```toml
 name = "timescale-api"
@@ -153,11 +154,11 @@ binding = "HYPERDRIVE"
 id = "your-id-here"
 ```
 
+</WranglerConfig>
+
 Install the Postgres driver into your Worker project:
 
-```sh
-npm install pg
-```
+<PackageManagers pkg="pg" />
 
 Now copy the below Worker code, and replace the current code in `./src/index.ts`. The code below:
 

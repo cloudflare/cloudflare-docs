@@ -3,15 +3,13 @@ title: Short-lived certificates (legacy)
 pcx_content_type: how-to
 sidebar:
   order: 6
-head:
-  - tag: title
-    content: Configure short-lived certificates (legacy)
+  label: Short-lived certificates (legacy)
 ---
 
 import { Render } from "~/components";
 
-:::note[Short-lived certificates are now managed through Access for Infrastructure.]
-Cloudflare recommends configuring short-lived certificates through our new [Access for Infrastructure](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) workflow. Access for Infrastructure supports differing SSH aliases out-of-the-box, removes the need for client SSH configuration, and allows for more granular security policies.
+:::note
+Not recommended for new deployments. We recommend using [Access for Infrastructure](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) to configure short-lived certificates for SSH.
 :::
 
 <Render
@@ -25,8 +23,8 @@ Cloudflare Access short-lived certificates can work with any modern SSH server, 
 
 To secure your server behind Cloudflare Access:
 
-1. Connect the server to Cloudflare as a [public hostname route](/cloudflare-one/connections/connect-networks/use-cases/ssh/#1-connect-the-server-to-cloudflare-1).
-2. Create a [self-hosted Access application](/cloudflare-one/applications/configure-apps/self-hosted-apps/) for the server.
+1. [Connect the server to Cloudflare](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/) as a public hostname route.
+2. Create a [self-hosted Access application](/cloudflare-one/applications/configure-apps/self-hosted-public-app/) for the server.
 
 :::note
 If you do not wish to use Access, refer instead to our [SSH proxy instructions](/cloudflare-one/policies/gateway/network-policies/ssh-logging/).
@@ -87,7 +85,9 @@ Match host vm.example.com exec "/usr/local/bin/cloudflared access ssh-gen --host
 
 ### Connect through a browser-based terminal
 
-End users can connect to the SSH session without any configuration by using Cloudflare's browser-based terminal. Users visit the URL of the application and Cloudflare's terminal handles the short-lived certificate flow. To enable, refer to [Browser-rendered terminal](/cloudflare-one/applications/non-http/browser-rendering/).
+End users can connect to the SSH session without any configuration by using Cloudflare's browser-based terminal. To enable, refer to [Browser-rendered terminal](/cloudflare-one/applications/non-http/browser-rendering/).
+
+By default, the browser-based terminal prompts the user for a username/password login. If you would like to use certificate based authentication, make sure you have [created a short-lived certificate](#3-generate-a-short-lived-certificate-public-key) for the specific Access application configured for browser-rendered SSH.
 
 ---
 

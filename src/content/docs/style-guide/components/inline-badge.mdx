@@ -1,5 +1,7 @@
 ---
 title: Inline badge
+styleGuide:
+  component: InlineBadge
 ---
 
 :::caution[Recommendation: Avoid inline badges]
@@ -12,7 +14,9 @@ Guidelines:
 - For instructions related to the feature (such as instructions on turning the feature on or off), you may mention again it's in beta, and also include "(beta)" in the side nav.
 :::
 
-## Example
+## Component
+
+To adopt this styling in a React component, apply the `sl-badge` class to a `span` element.
 
 ```mdx live
 import { InlineBadge } from '~/components';
@@ -27,7 +31,7 @@ import { InlineBadge } from '~/components';
 
 ### Legacy <InlineBadge preset="legacy" />
 
-### Custom <InlineBadge text="Custom" variant="success" />
+### Default <InlineBadge text="Default" />
 ```
 
 ## Inputs

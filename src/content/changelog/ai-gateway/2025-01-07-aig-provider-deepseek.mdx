@@ -1,0 +1,34 @@
+---
+title: AI Gateway adds DeepSeek as a Provider
+description: AI Gateway has added DeepSeek as a new provider.
+products:
+  - ai-gateway
+date: 2025-01-02T11:00:00Z
+---
+
+[**AI Gateway**](/ai-gateway/) now supports [**DeepSeek**](/ai-gateway/providers/deepseek/), including their cutting-edge DeepSeek-V3 model. With this addition, you have even more flexibility to manage and optimize your AI workloads using AI Gateway. Whether you're leveraging DeepSeek or other providers, like OpenAI, Anthropic, or [Workers AI](/workers-ai/), AI Gateway empowers you to:
+
+- **Monitor**: Gain actionable insights with analytics and logs.
+- **Control**: Implement caching, rate limiting, and fallbacks.
+- **Optimize**: Improve performance with feedback and evaluations.
+
+![AI Gateway adds DeepSeek as a provider](~/assets/images/ai-gateway/deepseek.png)
+
+To get started, simply update the base URL of your DeepSeek API calls to route through AI Gateway. Here's how you can send a request using cURL:
+
+```bash title="Example fetch request"
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/deepseek/chat/completions \
+ --header 'content-type: application/json' \
+ --header 'Authorization: Bearer DEEPSEEK_TOKEN' \
+ --data '{
+    "model": "deepseek-chat",
+    "messages": [
+        {
+            "role": "user",
+            "content": "What is Cloudflare?"
+        }
+    ]
+}'
+```
+
+For detailed setup instructions, see our [DeepSeek provider documentation](/ai-gateway/providers/deepseek/).

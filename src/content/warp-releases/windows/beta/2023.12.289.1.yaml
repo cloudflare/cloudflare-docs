@@ -1,0 +1,34 @@
+releaseNotes: >-
+  This release contains exciting new features and bug fixes for both DEX and
+  notifications. Please take time over the next few weeks to play with the new
+  functionality and let us know what you think on both the community forum and
+  through your account teams.
+   
+  **Notable updates**
+
+  - Added ability for Client to display Gateway NETWORK and HTTP block
+  notifications to the user (feature to be available in dash in the coming
+  week).
+
+  - Added ability for administrators to specify multiple configurations in MDM
+  files that users can toggle between. This allows users to more easily switch
+  between production and test environments or China customers to switch between
+  their override endpoints within the UI.
+
+  - Improved existing re-auth notifications to be more visible and time
+  sensitive.
+
+  - Fixed an issue where DEX tests would run before the client was fully
+  connected.
+   
+  **Known issues**
+
+  - The new `display_name` MDM parameter that is part of the multiple
+  configurations feature is not correctly working. For this release the name
+  visible in the UI will be the organization value. A future beta release will
+  correct this; it is safe to include this parameter in updated MDM files now.
+version: 2023.12.289.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2023.12.289.1
+packageSize: 113917952
+releaseDate: 2023-12-16T03:15:55.788Z
+platformName: Windows

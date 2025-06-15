@@ -8,7 +8,7 @@ products:
 
 In this example, we are going to use the GraphQL Analytics API to query for Workers Metrics over a specified time period. We can query up to one month of data for dates up to three months ago.
 
-The following API call will request a Worker script's metrics over a one day period, and output the requested fields. Be sure to replace `<CLOUDFLARE_ACCOUNT_ID>`, `<EMAIL>`, and `<API_KEY>` with your API credentials, and adjust the `datetimeStart`, `datetimeEnd`, and `scriptName` variables as needed.
+The following API call will request a Worker script's metrics over a one day period, and output the requested fields. Be sure to replace `<CLOUDFLARE_ACCOUNT_TAG>` and `<API_TOKEN>`[^1] with your API credentials, and adjust the `datetimeStart`, `datetimeEnd`, and `scriptName` variables as needed.
 
 ## API Call
 
@@ -41,7 +41,7 @@ echo '{ "query":
     }
   }",
   "variables": {
-    "accountTag": "<CLOUDFLARE_ACCOUNT_ID>",
+    "accountTag": "<CLOUDFLARE_ACCOUNT_TAG>",
     "datetimeStart": "2022-08-04T00:00:00.000Z",
     "datetimeEnd": "2022-08-04T01:00:00.000Z",
     "scriptName": "worker-subrequest-test-client"
@@ -126,3 +126,5 @@ https://api.cloudflare.com/client/v4/graphql \
 #=>   "errors": null
 #=> }
 ```
+
+[^1]: Refer to [Configure an Analytics API token](/analytics/graphql-api/getting-started/authentication/api-token-auth/) for more information on configuration and permissions.

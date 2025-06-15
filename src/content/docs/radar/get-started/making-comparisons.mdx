@@ -8,7 +8,7 @@ sidebar:
 
 When comparing time series, across locations/time ranges/etc., in endpoints that normalize values using [min-max](/radar/concepts/normalization), you must do so in the same request. This is done by asking for multiple series. All values will then be normalized using the same minimum and maximum value and can safely be compared against each other.
 
-[Netflows](/radar/investigate/netflows) values are normalized using [min0-max](/radar/concepts/normalization), so we will use it as an example. Refer to [Get NetFlow time series](/api/operations/radar-get-netflows-timeseries) for more information.
+[NetFlows](/radar/investigate/netflows) values are normalized using [min0-max](/radar/concepts/normalization), so we will use it as an example. Refer to [Get NetFlow time series](/api/resources/radar/subresources/netflows/methods/timeseries/) for more information.
 
 ## Compare locations
 
@@ -27,7 +27,7 @@ The second series has the following parameters:
 
 `name=pt_data&dateRange=7d&location=PT`
 
-All of these parameters are arrays and it is the position in the array that defines the series the filter belongs to. Refer to [NetFlow's endpoint](/api/operations/radar-get-netflows-timeseries) for more information on the available parameters.
+All of these parameters are arrays, and it is the position in the array that defines the series the filter belongs to. Refer to [NetFlow's endpoint](/api/resources/radar/subresources/netflows/methods/timeseries/) for more information on the available parameters.
 
 The response (shortened below for brevity) uses the provided `name` property to wrap the timestamps and corresponding values. If we chart this data, it becomes obvious that Cloudflare received much less traffic from Portugal than from the United States.
 
@@ -50,6 +50,7 @@ The response (shortened below for brevity) uses the provided `name` property to 
         "endTime": "2022-11-02T17:00:00Z"
       },
       "aggInterval": "ONE_HOUR",
+			// ...
     }
   }
 }
@@ -108,18 +109,20 @@ The second series has these parameters:
 
 `name=tonga_outage&dateStart=2022-01-15T02%3A00%3A00Z&&dateEnd=2022-01-15T05%3A00%3A00Z&location=TO`
 
-In the above example, we requested for an [aggregation interval](/radar/concepts/aggregation-intervals) of one hour (`aggInterval=1h`), so that the results could be shown in this page. `format` and `aggInterval` are not arrays, as specified in the [API reference](/api/operations/radar-get-netflows-timeseries), and apply globally to all series in the request.
+In the above example, we requested for an [aggregation interval](/radar/concepts/aggregation-intervals) of one hour (`aggInterval=1h`), so that the results could be shown in this page. `format` and `aggInterval` are not arrays, as specified in the [API reference](/api/resources/radar/subresources/netflows/methods/timeseries/), and apply globally to all series in the request.
 
 The `result` property should return a response like this:
 
 ```json
-"tonga": {
-  "timestamps": ["2022-10-15T02:00:00Z", "2022-10-15T03:00:00Z", "2022-10-15T04:00:00Z", "2022-10-15T05:00:00Z"],
-  "values": ["1.0", "0.832473", "0.820083", "0.79408"]
-},
-"tonga_outage": {
-  "timestamps": ["2022-01-15T02:00:00Z", "2022-01-15T03:00:00Z", "2022-01-15T04:00:00Z", "2022-01-15T05:00:00Z"],
-  "values": ["0.354105", "0.357287", "0.181811", "0.044198"]
+{
+	"tonga": {
+		"timestamps": ["2022-10-15T02:00:00Z", "2022-10-15T03:00:00Z", "2022-10-15T04:00:00Z", "2022-10-15T05:00:00Z"],
+		"values": ["1.0", "0.832473", "0.820083", "0.79408"]
+	},
+	"tonga_outage": {
+		"timestamps": ["2022-01-15T02:00:00Z", "2022-01-15T03:00:00Z", "2022-01-15T04:00:00Z", "2022-01-15T05:00:00Z"],
+		"values": ["0.354105", "0.357287", "0.181811", "0.044198"]
+	}
 }
 ```
 

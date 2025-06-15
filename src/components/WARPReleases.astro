@@ -1,0 +1,64 @@
+---
+import WARPRelease from "./WARPRelease.astro";
+import Details from "./Details.astro";
+import { getCollection } from "astro:content";
+import { z } from "astro:schema";
+import { sub } from "date-fns";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	track: z.enum([
+		"windows/ga",
+		"windows/beta",
+		"macos/ga",
+		"macos/beta",
+		"linux/ga",
+	]),
+});
+
+const { track } = props.parse(Astro.props);
+
+const sortByDate = (a: any, b: any) =>
+	b.releaseDate.getTime() - a.releaseDate.getTime();
+
+const entries = await getCollection("warp-releases", (release) => {
+	if (!release.id.startsWith(track)) return false;
+
+	const oneYearAgo = sub(new Date(), {
+		years: 1,
+	});
+
+	if (release.data.releaseDate.getTime() < oneYearAgo.getTime()) return false;
+
+	return true;
+});
+
+const releases = entries.map((x) => x.data);
+
+releases.sort(sortByDate);
+
+const latestRelease = releases.at(0);
+
+if (!latestRelease) {
+	throw new Error();
+}
+
+const platform = latestRelease.platformName;
+---
+
+<WARPRelease header="Latest release" open={true} release={latestRelease} />
+
+<Details header=`Previous version history (${releases.length - 1})`>
+	{
+		releases
+			.slice(1)
+			.sort(sortByDate)
+			.map((release) => (
+				<WARPRelease
+					header={`${platform} ${release.version}`}
+					release={release}
+				/>
+			))
+	}
+</Details>

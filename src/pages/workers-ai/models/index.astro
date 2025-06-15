@@ -2,7 +2,7 @@
 import { getCollection } from "astro:content";
 
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
-import ModelCatalog from "~/components/ModelCatalog.jsx";
+import ModelCatalog from "~/components/ModelCatalog.tsx";
 
 const modelData = await getCollection("workers-ai-models");
 const models = modelData.map(({ data }) => data);

@@ -13,14 +13,14 @@ import { GlossaryDefinition, Render } from "~/components"
 For more details about how endpoints and pools become unhealthy, refer to [Endpoint and pool health](/load-balancing/understand-basics/health-details/).
 
 :::caution
- <Render file="endpoints-introduction-callout" /> 
+ <Render file="endpoints-introduction-callout" />
 :::
 
 ***
 
 ## Properties
 
-For an up-to-date list of pool properties, refer to [Pool properties](/api/operations/account-load-balancer-pools-list-pools) in our API documentation.
+For an up-to-date list of pool properties, refer to [Pool properties](/api/resources/load_balancers/subresources/pools/methods/list/) in our API documentation.
 
 ***
 
@@ -42,12 +42,12 @@ The Cloudflare API supports the following commands for pools. Examples are given
 
 | Command                                                                                  | Method   | Endpoint                                                   |
 | ---------------------------------------------------------------------------------------- | -------- | ---------------------------------------------------------- |
-| [Create Pool](/api/operations/account-load-balancer-pools-create-pool)                   | `POST`   | `accounts/:account_id/load_balancers/pools`                |
-| [Delete Pool](/api/operations/account-load-balancer-pools-delete-pool)                   | `DELETE` | `accounts/:account_id/load_balancers/pools/:id`            |
-| [List Pools](/api/operations/account-load-balancer-pools-list-pools)                     | `GET`    | `accounts/:account_id/load_balancers/pools`                |
-| [Pool Details](/api/operations/account-load-balancer-pools-pool-details)                 | `GET`    | `accounts/:account_id/load_balancers/pools/:id`            |
-| [Pool Health Details](/api/operations/account-load-balancer-pools-pool-health-details)   | `GET`    | `account/:account_id/load_balancers/pools/:id/health`      |
-| [Overwrite specific properties](/api/operations/account-load-balancer-pools-patch-pool)  | `PATCH`  | `accounts/:account_id/load_balancers/pools/:id`            |
-| [Overwrite existing pool](/api/operations/account-load-balancer-pools-update-pool)       | `PUT`    | `accounts/:account_id/load_balancers/pools/:id`            |
-| [Preview Pool](/api/operations/account-load-balancer-pools-preview-pool)                 | `POST`   | `account/:account_id/load_balancers/pools/:id/preview`     |
-| [List Pool References](/api/operations/account-load-balancer-pools-list-pool-references) | `GET`    | `accounts/:account_id/load_balancers/pools/:id/references` |
+| [Create Pool](/api/resources/load_balancers/subresources/pools/methods/create/)                   | `POST`   | `accounts/:account_id/load_balancers/pools`                |
+| [Delete Pool](/api/resources/load_balancers/subresources/pools/methods/delete/)                   | `DELETE` | `accounts/:account_id/load_balancers/pools/:id`            |
+| [List Pools](/api/resources/load_balancers/subresources/pools/methods/list/)                     | `GET`    | `accounts/:account_id/load_balancers/pools`                |
+| [Pool Details](/api/resources/load_balancers/subresources/pools/methods/get/)                 | `GET`    | `accounts/:account_id/load_balancers/pools/:id`            |
+| [Pool Health Details](/api/resources/load_balancers/subresources/pools/subresources/health/methods/get/)   | `GET`    | `account/:account_id/load_balancers/pools/:id/health`      |
+| [Overwrite specific properties](/api/resources/load_balancers/subresources/pools/methods/edit/)  | `PATCH`  | `accounts/:account_id/load_balancers/pools/:id`            |
+| [Overwrite existing pool](/api/resources/load_balancers/subresources/pools/methods/update/)       | `PUT`    | `accounts/:account_id/load_balancers/pools/:id`            |
+| [Preview Pool](/api/resources/load_balancers/subresources/pools/subresources/health/methods/create/)                 | `POST`   | `account/:account_id/load_balancers/pools/:id/preview`     |
+| [List Pool References](/api/resources/load_balancers/subresources/pools/subresources/references/methods/get/) | `GET`    | `accounts/:account_id/load_balancers/pools/:id/references` |

@@ -1,0 +1,16 @@
+releaseNotes: |-
+  This release contains new features and improvements from the last beta release. 
+
+  **Notable updates**
+  - Added support for Device Information only mode. This allows for posture to be used for Access policies without Gateway being enabled. Please reach out to your Cloudflare rep if you would like to test this feature ahead of release
+
+
+  **Known issues**
+  - The organization name is case sensitive, which could cause a device to lose registration.
+
+  For releated Cloudflare for Teams documentation please see: https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp
+version: 2022.2.116.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2022.2.116.1
+packageSize: 88367104
+releaseDate: 2022-02-15T22:10:21.115Z
+platformName: Windows

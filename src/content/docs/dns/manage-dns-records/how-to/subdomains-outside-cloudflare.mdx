@@ -2,6 +2,8 @@
 pcx_content_type: how-to
 source: https://support.cloudflare.com/hc/en-us/articles/360021357131-Delegating-Subdomains-Outside-of-Cloudflare
 title: Delegate subdomains
+sidebar:
+  order: 20
 
 ---
 
@@ -27,7 +29,7 @@ Cloudflare's CDN and security services are not applied to delegated subdomains.
 
 ***
 
-## Delegate a subdomain
+## Delegate a subdomain (outgoing)
 
 To delegate a subdomain such as *internal.example.com*, tell DNS resolvers where to find the zone file:
 
@@ -42,3 +44,7 @@ To delegate a subdomain such as *internal.example.com*, tell DNS resolvers wher
    The `A` records for the subdomain are only required as glue records for nameservers that are located in the subdomain of the current zone that is being delegated.
    :::
 5. (Optional) If the delegated nameserver has DNSSEC enabled, [add the `DS` record](/dns/dnssec/#1-activate-dnssec-in-cloudflare) in Cloudflare.
+
+## Delegate a subdomain (incoming)
+
+To delegate a subdomain from an external DNS provider to Cloudflare, refer to [subdomain setups](/dns/zone-setups/subdomain-setup/setup/).

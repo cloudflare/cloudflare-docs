@@ -7,15 +7,7 @@ sidebar:
 
 ---
 
-import { Render, PackageManagers } from "~/components"
-
-:::note
-
-Workflows is in **public beta**, and any developer with a [free or paid Workers plan](/workers/platform/pricing/#workers) can start using Workflows immediately.
-
-To learn more about Workflows and how it works, read [the beta announcement blog](https://blog.cloudflare.com/building-workflows-durable-execution-on-workers).
-
-:::
+import { Render, PackageManagers, WranglerConfig } from "~/components"
 
 Workflows allow you to build durable, multi-step applications using the Workers platform. A Workflow can automatically retry, persist state, run for hours or days, and coordinate between third-party APIs.
 
@@ -45,7 +37,7 @@ npm create cloudflare@latest workflows-starter -- --template "cloudflare/workflo
 This will create a new folder called `workflows-tutorial`, which contains two files:
 
 * `src/index.ts` - this is where your Worker script, including your Workflows definition, is defined.
-* `wrangler.toml` - the configuration for your Workers project and your Workflow.
+* wrangler.jsonc - the [Wrangler configuration file](/workers/wrangler/configuration/) for your Workers project and your Workflow.
 
 Open the `src/index.ts` file in your text editor. This file contains the following code, which is the most basic instance of a Workflow definition:
 
@@ -66,12 +58,11 @@ type Params = {
 export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
 	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
 		// Can access bindings on `this.env`
-		// Can access params on `event.params`
+		// Can access params on `event.payload`
 
 		const files = await step.do('my first step', async () => {
 			// Fetch a list of files from $SOME_SERVICE
 			return {
-				inputParams: event,
 				files: [
 					'doc_7392_rev3.pdf',
 					'report_x29_final.pdf',
@@ -155,7 +146,7 @@ npx wrangler@latest deploy
 
 ## 3. Run a Workflow
 
-You can run a Workflow via the `wrangler` CLI, via a Worker binding, or via the Workflows [REST API](/api/operations/wor-list-workflows).
+You can run a Workflow via the `wrangler` CLI, via a Worker binding, or via the Workflows [REST API](/api/resources/workflows/methods/list/).
 
 ### `wrangler` CLI
 
@@ -170,9 +161,11 @@ Refer to the [events and parameters documentation](/workflows/build/events-and-p
 
 You can [bind to a Workflow](/workers/runtime-apis/bindings/#what-is-a-binding) from any handler in a Workers script, allowing you to programatically trigger and pass parameters to a Workflow instance from your own application code.
 
-To bind a Workflow to a Worker, you need to define a `[[workflows]]` binding in your `wrangler.toml` configuration:
+To bind a Workflow to a Worker, you need to define a `[[workflows]]` binding in your Wrangler configuration:
 
-```toml title="wrangler.toml"
+<WranglerConfig>
+
+```toml
 [[workflows]]
 # name of your workflow
 name = "workflows-starter"
@@ -182,9 +175,12 @@ binding = "MY_WORKFLOW"
 class_name = "MyWorkflow"
 ```
 
+</WranglerConfig>
+
 You can then invoke the methods on this binding directly from your Worker script's `env` parameter. The `Workflow` type has methods for:
 
 * `create()` - creating (triggering) a new instance of the Workflow, returning the ID.
+* `createBatch()` - creating (triggering) a batch of new instances of the Workflow, returning the IDs.
 * `get()`- retrieve a Workflow instance by its ID.
 * `status()` - get the current status of a unique Workflow instance.
 
@@ -195,7 +191,7 @@ For example, the following Worker will fetch the status of an existing Workflow 
 import { WorkflowEntrypoint, WorkflowStep, WorkflowEvent} from 'cloudflare:workers';
 
 interface Env {
-  // Matches the binding definition in your wrangler.toml
+  // Matches the binding definition in your Wrangler configuration file
   MY_WORKFLOW: Workflow;
 }
 

@@ -50,7 +50,7 @@ To enforce mTLS authentication from [Zero Trust](https://one.dash.cloudflare.com
 
 7. Next, go to **Access** > **Applications**.
 
-8. Find the application you would like to enforce mTLS on and select **Edit**. The application must be included in the **Associated hostnames** list from Step 5.
+8. Find the application you would like to enforce mTLS on and select **Configure**. The application must be included in the **Associated hostnames** list from Step 5.
 
 9. Create a new (or amend an existing) [Access policy](/cloudflare-one/policies/access/).
 
@@ -248,7 +248,6 @@ You will need to add the CRL to your server or enforce the revocation in a Cloud
 
 mTLS does not currently work for:
 
-- HTTP/3 traffic
 - Cloudflare Pages site served on a [custom domain](/pages/configuration/custom-domains/)
 - Cloudflare R2 public bucket served on a [custom domain](/r2/buckets/public-buckets/#connect-a-bucket-to-a-custom-domain)
 

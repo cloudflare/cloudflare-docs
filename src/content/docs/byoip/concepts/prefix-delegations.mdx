@@ -6,19 +6,35 @@ sidebar:
 
 ---
 
-BYOIP supports prefix delegations, which occur when a prefix owner account (Account A) allows another account (Account B) to use part or all of their prefix.
+BYOIP supports prefix delegations, which occur when a prefix owner’s account (Account A) allows another account (Account B) to use all or part of their prefix. The original prefix is still managed by the original account, but a delegation allows another account to use the delegated IP(s) on various services within that account.
 
-The effect of a delegation depends on the service used with the prefix. Currently BYOIP + CDN and BYOIP + Spectrum support prefix delegations.
+Refer to [service bindings](/byoip/service-bindings/) for more information on the services an IP can be bound to.
 
 ## CDN
 
-CDN delegations only have an effect if you are using [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/) in addition to BYOIP + CDN.
 
-In this example, Account A is using BYOIP + CDN and Cloudflare for SaaS. Account A can validate and serve traffic for a custom hostname on any of the IPs in its prefix. If Account A delegates some or all of the prefix to Account B, Account B may also validate and serve traffic for custom hostnames on those IPs as well. This is very useful if you use Cloudflare for SaaS but manage different configurations in different accounts. All the accounts can use the IPs through a delegation.
+CDN delegations allow you to use the IP(s) with [Address Maps](/byoip/address-maps/) or [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) customers.
+
+Address Maps allows you to assign IPs either at the account level or zone level.
+
+In the Cloudflare for SaaS example, Account A is using BYOIP + CDN and Cloudflare for SaaS. Account A can validate and serve traffic for a custom hostname on any of the IPs in its prefix. If Account A delegates some or all of the prefix to Account B, Account B may also validate and serve traffic for custom hostnames on those IPs as well. This is very useful if you use Cloudflare for SaaS but manage different configurations in different accounts. All the accounts can use the IPs through a delegation.
+
+## Spectrum
+
+If Account A delegates use of part or all of a prefix to Account B via a prefix delegation, Account B can also use the [Spectrum API](/spectrum/about/byoip/) with the IPs it was delegated access to.
+
+**Example:** Account A is the primary owner of prefix 1.2.3.0/24. Account A delegates the use of 1.2.3.0/32 to Account B. Account B can now use the Spectrum API to create a Spectrum app with 1.2.3.0/32.
 
 ## API calls for prefix delegations
 
-API calls for delegations can be found at [Prefix Delegations](/api/operations/ip-address-management-prefix-delegation-list-prefix-delegations).
+API calls for delegations can be found at [Prefix Delegations](/api/resources/addressing/subresources/prefixes/subresources/delegations/methods/list/).
+
+:::note
+
+The dashboard only supports delegation of an entire prefix. If you want to delegate less than the entire prefix, use the API.
+
+To bind an IP from one service to another, use the API.
+:::
 
 ## Configure prefix delegations
 
@@ -27,14 +43,4 @@ API calls for delegations can be found at [Prefix Delegations](/api/operations/i
 3. Select **Edit** to modify a prefix. **Edit IP Prefixes** displays.
 4. At the bottom of the page, select **Add Delegation**. Other accounts that your user is a part of will auto-load when you create the delegation.
 5. Select **Save**.
-
-:::note
-
-The dashboard only supports delegation of an entire prefix. If you want to delegate less than the entire prefix, use the API.
-:::
-
-## Spectrum
-
-If Account A delegates use of part or all of a prefix to Account B via a prefix delegation, Account B can also use the [Spectrum API](/spectrum/about/byoip/) with the IPs it was delegated access to.
-
-**Example:** Account A is the primary owner of prefix 1.2.3.0/24. Account A delegates the use of 1.2.3.0/32 to Account B. Account B can now use the Spectrum API to create a Spectrum app with 1.2.3.0/32.
+6. Bind IPs to a service via the [Service Bindings API](/api/resources/addressing/subresources/prefixes/subresources/service_bindings/) as needed.

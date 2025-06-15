@@ -9,7 +9,7 @@ This tutorial explains how to set up strongSwan along with Magic WAN. You will l
 
 Start by configuring the [bidirectional health checks](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) target for Magic WAN. For this particular tutorial, we are using `172.64.240.252` as the target IP address, and `type` as the request.
 
-This can be set up [with the API](/api/operations/magic-ipsec-tunnels-update-ipsec-tunnel). For example:
+This can be set up [with the API](/api/resources/magic_transit/subresources/ipsec_tunnels/methods/update/). For example:
 
 ```bash
 curl --request PUT \
@@ -62,7 +62,7 @@ config setup
     uniqueids = yes
 
 conn %default
-    ikelifetime=4h
+    ikelifetime=24h
     rekey=yes
     reauth=no
     keyexchange=ikev2
@@ -86,8 +86,8 @@ conn cloudflare-ipsec
     rightid=<YOUR_CLOUDFLARE_ANYCAST_IP>
     rightsubnet=0.0.0.0/0
     rightauth=psk
-    ike=aes256-sha256-modp2048!
-    esp=aes256-sha256-modp2048!
+    ike=aes256-sha256-ecp384!
+    esp=aes256-sha256-ecp384!
     replay_window=0
     mark_in=42
     mark_out=42

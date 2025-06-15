@@ -43,7 +43,7 @@ If you make a preflighted cross-origin request to an Access-protected domain, th
 There are three ways you can resolve this error:
 
 - **Option 1** — [Bypass OPTIONS requests to origin](#bypass-options-requests-to-origin).
-- **Option 2** - [Configure Cloudflare to respond to the OPTIONS request](#configure-response-to-preflight-requests).
+- **Option 2** — [Configure Cloudflare to respond to the OPTIONS request](#configure-response-to-preflight-requests).
 - **Option 3** — [Create a Cloudflare Worker which automatically sends an authentication token](#send-authentication-token-with-cloudflare-worker). This method only works if both sites involved in the CORS exchange are behind Access.
 
 ### Bypass OPTIONS requests to origin
@@ -51,8 +51,8 @@ There are three ways you can resolve this error:
 You can configure Cloudflare to send OPTIONS requests directly to your origin server. To bypass Access for OPTIONS requests:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
-2. Locate the origin that will be receiving OPTIONS requests and select **Edit**.
-3. In the **Settings** tab, scroll down to **CORS settings**.
+2. Locate the origin that will be receiving OPTIONS requests and select **Configure**.
+3. Go to **Advanced settings** > **Cross-Origin Resource Sharing (CORS) settings**.
 4. Turn on **Bypass options requests to origin**. This will remove all existing CORS settings for this application.
 
 It is still important to enforce CORS for the Access JWT -- this option should only be used if you have CORS enforcement established in your origin server.
@@ -65,11 +65,11 @@ To configure how Cloudflare responds to preflight requests:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 
-2. Locate the origin that will be receiving OPTIONS requests and select **Edit**.
+2. Locate the origin that will be receiving OPTIONS requests and select **Configure**.
 
-3. In the **Settings** tab, scroll down to **CORS settings**.
+3. Go to **Advanced settings** > **Cross-Origin Resource Sharing (CORS) settings**.
 
-4. Configure the dashboard [CORS settings](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#the_http_response_headers) to match the response headers sent by your origin.
+4. Configure these [CORS settings](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#the_http_response_headers) to match the response headers sent by your origin.
 
    For example, if you have configured `api.mysite.com`to return the following headers:
 
@@ -158,7 +158,7 @@ This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/
 	product="workers"
 	params={{
 		category: "hello-world",
-		type: "Hello World Worker",
+		type: "Worker only",
 		lang: "JavaScript",
 	}}
 />
@@ -176,7 +176,7 @@ Open `/src/index.js` and delete the existing code and paste in the following exa
 const originalAPIHostname = "api.mysite.com";
 
 export default {
-	async fetch(request) {
+	async fetch(request, env) {
 		// Change just the host. If the request comes in on example.com/api/name, the new URL is api.mysite.com/api/name
 		const url = new URL(request.url);
 		url.hostname = originalAPIHostname;
@@ -191,8 +191,8 @@ export default {
 		// since once a Request has been constructed, its URL is immutable.
 		const newRequest = new Request(url.toString(), request);
 
-		newRequest.headers.set("cf-access-client-id", CF_ACCESS_CLIENT_ID);
-		newRequest.headers.set("cf-access-client-secret", CF_ACCESS_CLIENT_SECRET);
+		newRequest.headers.set("cf-access-client-id", env.CF_ACCESS_CLIENT_ID);
+		newRequest.headers.set("cf-access-client-secret", env.CF_ACCESS_CLIENT_SECRET);
 		try {
 			const response = await fetch(newRequest);
 

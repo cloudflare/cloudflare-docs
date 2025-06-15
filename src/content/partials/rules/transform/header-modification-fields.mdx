@@ -31,15 +31,20 @@
 - `ip.src`
 - `ip.src.lat`
 - `ip.src.lon`
+- `ip.src.asnum`
 - `ip.src.city`
-- `ip.geoip.*`
+- `ip.src.country`
+- `ip.src.continent`
+- `ip.src.is_in_european_union`
+- `ip.src.subdivision_1_iso_code`
+- `ip.src.subdivision_2_iso_code`
 - `ssl`
 
-Refer to [Fields](/ruleset-engine/rules-language/fields/) for reference information on these fields.
+Refer to [Fields](/ruleset-engine/rules-language/fields/reference/) for reference information on these fields.
 
 :::caution[Important]
 
-- To obtain the value of an HTTP request header using the [`http.request.headers`](/ruleset-engine/rules-language/fields/http-request-header/#httprequestheaders) field, specify the header name in **lowercase**. For example, to get the first value of the `Accept-Encoding` request header in an expression, use: `http.request.headers["accept-encoding"][0]`.
+- To obtain the value of an HTTP request header using the [`http.request.headers`](/ruleset-engine/rules-language/fields/reference/http.request.headers/) field, specify the header name in **lowercase**. For example, to get the first value of the `Accept-Encoding` request header in an expression, use: `http.request.headers["accept-encoding"][0]`.
 
 - Use the `to_string()` function to get the string representation of a non-string value like an Integer value. For example, `to_string(cf.bot_management.score)`.
 

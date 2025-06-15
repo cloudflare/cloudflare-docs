@@ -1,0 +1,28 @@
+releaseNotes: |
+  This release contains an exciting new feature along with reliability improvements and general bug fixes. Please take time over the next few weeks to play with the new functionality and let us know what you think on both the community forum and through your account teams.
+
+
+  **New features:**
+  - Added the ability for administrators to initiate remote packet capture (PCAP) and warp-diag collection
+
+  **Changes and improvements:**
+  - Improved reliability of connection establishment logic under degraded network conditions
+  - Improved captive portal detection behavior by forcing captive portal checks outside the tunnel
+  - Allow the ability to configure tunnel protocol for consumer registrations
+  - Fixed an issue with the WARP client becoming unresponsive during startup
+  - Extended diagnostics collection time in warp-diag to ensure logs are captured reliably
+
+
+  **Known issues:**
+  - DNS resolution may be broken when the following condition are all true:
+    - WARP is in Secure Web Gateway without DNS filtering (tunnel-only) mode.
+    - A custom DNS server address is configured on the primary network adapter.
+    - The custom DNS server address on the primary network adapter is changed while WARP is connected.
+
+    To work around this issue, please reconnect the WARP client by toggling off and back on.
+
+version: 2024.10.537.1
+releaseDate: 2024-11-05T19:51:27.779Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2024.10.537.1
+packageSize: 123584512
+platformName: Windows

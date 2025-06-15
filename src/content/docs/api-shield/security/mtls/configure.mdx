@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Configure mTLS
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 When you specify API hosts in [mTLS authentication](/api-shield/security/mtls/), Cloudflare will block all requests that do not have a [client certificate](/ssl/client-certificates/) for mTLS authentication.
 
@@ -40,7 +39,25 @@ The first expression — `not cf.tls_client_auth.cert_verified` — returns `tru
 
 The second expression uses the `http.request.uri.path` field, combined with the `in` operator, to capture the URI paths your mTLS rule applies to.
 
-Because the [action](/ruleset-engine/rules-language/actions/) for your rule is *Block*, only requests that present a valid client certificate can access the specified hosts.
+Because the [action](/ruleset-engine/rules-language/actions/) for your rule is _Block_, only requests that present a valid client certificate can access the specified hosts.
+
+For enhanced security, Cloudflare recommends that you validate the issuer Subject Key Identifier (SKI) hash alongside the verified certificate field. This ensures that only requests presenting a valid client certificate with a specific issuer are allowed.
+
+You can implement this by using an expression similar to the following:
+
+```txt
+not (cf.tls_client_auth.cert_verified and cf.tls_client_auth.cert_issuer_ski eq "A5AC554235DBA6D963B9CDE0185CFAD6E3F55E9F")
+```
+
+To obtain the issuer Subject Key Identifier (SKI) hash of a client certificate stored in the `mtls.crt` file, you can run the following OpenSSL command:
+
+```sh
+openssl x509 -noout -ext authorityKeyIdentifier -in mtls.crt | tail -n1 | tr -d ': '
+```
+
+```txt output
+A5AC554235DBA6D963B9CDE0185CFAD6E3F55E9F
+```
 
 ### Check for revoked certificates
 
@@ -54,5 +71,5 @@ When a request includes a revoked certificate, the `cf.tls_client_auth.cert_revo
 
 :::caution
 
-This check only applies to client certificates issued by the Cloudflare managed CA. Cloudflare currently does not check certificate revocation lists (CRL) for [CAs that have been uploaded](/ssl/client-certificates/byo-ca/). 
+This check only applies to client certificates issued by the Cloudflare managed CA. Cloudflare currently does not check certificate revocation lists (CRL) for [CAs that have been uploaded](/ssl/client-certificates/byo-ca/).
 :::

@@ -1,0 +1,24 @@
+---
+title: Configure auto-moves
+pcx_content_type: how-to
+sidebar:
+  order: 3
+---
+
+To configure auto-move events:
+
+1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
+2. Select **Email security**.
+3. Select **Settings**.
+4. Select **Moves**.
+5. Under **Auto-moves**, select **Configure**.
+6. Assign actions based on malicious, spoof, suspicious, spam, and bulk dispositions. Select among:
+    - **Soft delete - user recoverable**: Moves the message to the user's **Recoverable Items - Deleted** folder. Messages can be recovered by the user.
+    - **Hard delete - admin recoverable**: Completely deletes messages from a user's inbox.
+    - **Move to trash**: Moves messages to the trash or deleted items email folder.
+    - **Move to junk**: Moves the message to the junk or spam folder.
+    - **No action**: Messages stay in the origin folder.
+7. Select **Post-delivery** moves:
+    - **(Recommended) Post-delivery response**: Enabling this option allows Email Security to rescan delivered emails at multiple time intervals for previously unknown phishing sites or campaigns.
+    - **(Recommended) Phish submission response**: Enabling this option allows Email Security to move emails that your users reported as phishing and Email Security determined to be malicious.
+8. Select **Save**.

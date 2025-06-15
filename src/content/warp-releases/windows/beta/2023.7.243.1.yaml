@@ -1,0 +1,27 @@
+releaseNotes: >-
+  This is a critical hotfix for organizations that have long running deployment
+  cycles. The certificate used to sign and validate our installer will expire on
+  August 9th 2023 and may cause windows SmartScreen warnings on installation.
+    
+  This update contains no new features.
+   
+  **Notable updates**
+
+  - Fixed issue where DoH requests could take too long to timeout causes DNS
+  reliability issues
+   
+
+   
+  **Known issues**
+
+  - Customers may experience a DPC_WATCHDOG_VIOLATION Blue Screen when
+  connecting. This error was introduced with the 2023.3 GA release and happens
+  more frequently with larger split tunnel configurations, especially on more
+  resource constrained machines. We are actively working on a fix. Until then we
+  recommend staying on 2022.12 GA release OR reducing your split tunnel
+  configuration if possible.
+version: 2023.7.243.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2023.7.243.1
+packageSize: 111558656
+releaseDate: 2023-07-27T03:25:02.078Z
+platformName: Windows

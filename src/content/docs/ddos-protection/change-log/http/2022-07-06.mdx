@@ -1,42 +1,43 @@
 ---
-title: '2022-07-06'
-pcx_content_type: changelog
+title: "2022-07-06"
+pcx_content_type: release-notes
 sidebar:
   order: 28303
-
 ---
 
-
-
 <table style="width: 100%">
-  <thead>
-    <tr>
-      <th>Rule ID</th>
-      <th>Description</th>
-      <th>Previous Action</th>
-      <th>New Action</th>
-      <th>Notes</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>...444be2c3</td>
-      <td>Location-Aware DDoS Protection (Available only to Enterprise zones with Advanced DDoS service).</td>
-      <td>N/A</td>
-      <td>log</td>
-      <td>Added new Location-Aware DDoS Protection for Enterprise accounts that are
-subscribed to the Advanced DDoS service. Location Aware DDoS Protection
-constantly learns a zone’s traffic levels per country and region over time,
-creates a traffic profile and then flags or mitigates traffic that deviates
-from the profile.</td>
-    </tr>
-<tr>
-      <td>...863134d5</td>
-      <td>HTTP requests from known bad user agents.</td>
-      <td>block</td>
-      <td>block</td>
-      <td>Requests matching this rule will not match any other.</td>
-    </tr>
-  </tbody>
+	<thead>
+		<tr>
+			<th>Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Notes</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>...444be2c3</td>
+			<td>
+				Location-Aware DDoS Protection (Available only to Enterprise zones with
+				Advanced DDoS service).
+			</td>
+			<td>N/A</td>
+			<td>log</td>
+			<td>
+				Added new Location-Aware DDoS Protection for Enterprise accounts that
+				are subscribed to the Advanced DDoS service. Location Aware DDoS
+				Protection constantly learns a zone’s traffic levels per country and
+				region over time, creates a traffic profile and then flags or mitigates
+				traffic that deviates from the profile.
+			</td>
+		</tr>
+		<tr>
+			<td>...863134d5</td>
+			<td>HTTP requests from known bad user agents.</td>
+			<td>block</td>
+			<td>block</td>
+			<td>Requests matching this rule will not match any other.</td>
+		</tr>
+	</tbody>
 </table>
-

@@ -1,5 +1,6 @@
 # build output
 dist/
+distmd/
 # generated types
 .astro/
 
@@ -26,3 +27,5 @@ pnpm-debug.log*
 .wrangler
 /assets/secrets
 /worker/functions/
+
+.idea

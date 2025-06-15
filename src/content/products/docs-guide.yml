@@ -10,7 +10,3 @@ meta:
   title: Cloudflare Docs Guide
   description: Learn how to create and then level up your docs site.
   author: "@cloudflare"
-
-externals:
-  - title: Cloudflare homepage
-    url: https://cloudflare.com

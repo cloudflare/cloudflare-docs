@@ -1,0 +1,22 @@
+releaseNotes: |-
+  This release contains several new features and improvements.
+
+  **Notable updates in this release**
+
+  - Significant improvements to DoH reliability and performance.
+  - Organization name in MDM file is no longer case sensitive.
+  - Fixed an issue where config changes in Teams Dashboard don't automatically propagate to the client.
+  - Fixed an issue where MDM file changes were not picked up correctly by client.
+  - Fixed issues with local domain fallback not working in all cases.
+  - Several other bug fixes and improvements.
+
+  **Known issues**
+  - You are unable to subscribe to WARP+ via the Desktop apps. You must subscribe first on your mobile device and then copy/paste your license key into the Accounts page on desktop
+  - To opt-out of the beta please uninstall via the instructions here: https://developers.cloudflare.com/warp-client/warp-for-everyone/setting-up/windows#how-to-remove-application and install from from the link here: https://developers.cloudflare.com/warp-client/warp-for-everyone/setting-up/requirements#windows
+
+  For a complete list of known issues please visit https://developers.cloudflare.com/warpclient/known-issues-and-faq
+version: 1.5.206.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/1.5.206.0
+packageSize: 84258816
+releaseDate: 2021-06-16T17:40:09.578Z
+platformName: Windows

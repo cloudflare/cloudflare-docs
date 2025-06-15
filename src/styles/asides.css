@@ -1,0 +1,35 @@
+.starlight-aside {
+	border: unset;
+	border-radius: 4px;
+
+	&.starlight-aside--note {
+		background-color: rgb(236, 244, 255);
+	}
+
+	&.starlight-aside--caution {
+		background-color: rgb(255, 248, 228);
+	}
+
+	.starlight-aside__title {
+		margin-left: 30px;
+
+		svg {
+			margin-left: -30px;
+		}
+	}
+
+	.starlight-aside__content {
+		margin-top: unset;
+		margin-left: 30px;
+	}
+}
+
+:root[data-theme="dark"] {
+	.starlight-aside--note {
+		background-color: rgb(0, 28, 67);
+	}
+
+	.starlight-aside--caution {
+		background-color: rgb(98, 73, 10);
+	}
+}

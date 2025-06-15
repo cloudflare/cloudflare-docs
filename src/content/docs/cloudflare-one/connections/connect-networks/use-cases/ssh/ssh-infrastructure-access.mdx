@@ -4,43 +4,47 @@ title: SSH with Access for Infrastructure (recommended)
 sidebar:
   order: 2
   label: SSH with Access for Infrastructure
-  badge:
-    variant: tip
-    text: New
 ---
 
 import { Tabs, TabItem, Badge, Render } from "~/components";
 
-[Access for Infrastructure](/cloudflare-one/applications/non-http/infrastructure-apps/) uses the same deployment model as [WARP-to-Tunnel](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-warp-to-tunnel/) but unlocks more granular policy options and command logging functionality.
-<Render file="access/short-lived-certs-intro" params={{ intro: "Furthermore, Access for Infrastructure replaces" }} />
+[Access for Infrastructure](/cloudflare-one/applications/non-http/infrastructure-apps/) provides granular control over how users can connect to your SSH servers. This feature uses the same deployment model as [WARP-to-Tunnel](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-warp-to-tunnel/) but unlocks more policy options and command logging functionality.
+
+<Render
+	file="access/short-lived-certs-intro"
+	params={{ intro: "Furthermore, Access for Infrastructure replaces" }}
+/>
 
 ## 1. Connect the server to Cloudflare
 
-1. Create a Cloudflare Tunnel for your server by following our [dashboard setup guide](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/). You can skip the connect an application step and go straight to connecting a network.
+<Render file="tunnel/connect-private-network" />
 
-2. In the **Private Networks** tab for the tunnel, enter the private IP address of your server (or a range that includes the server IP).
+<Render file="tunnel/connect-private-network-infra-access" />
 
 ## 2. Set up the client
 
 To connect your devices to Cloudflare:
 
 1. [Deploy the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your devices in Gateway with WARP mode.
-2. [Enable the Gateway proxy for TCP](/cloudflare-one/policies/gateway/proxy/#enable-the-gateway-proxy).
+2. [Enable the Gateway proxy for TCP](/cloudflare-one/policies/gateway/proxy/#turn-on-the-gateway-proxy).
 3. [Create device enrollment rules](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/) to determine which devices can enroll to your Zero Trust organization.
 
-## 3. Route private network IPs through WARP
+## 3. Route server IPs through WARP
 
-<Render file="tunnel/warp-to-tunnel-route-ips" />
+<Render file="tunnel/warp-to-tunnel-route-ips" params={{ one: "SSH server" }} />
 
 ## 4. Add a target
 
-<Render file="access/add-target" />
+<Render file="access/add-target" params={{ protocol: "generic" }} />
 
 ## 5. Add an infrastructure application
 
 <Render file="access/add-infrastructure-app" />
 
-## 6. Configure SSH server
+## 6. (Recommended) Modify order of precedence in Gateway
+<Render file="access/modify-gateway-policy-precedence" product="cloudflare-one" params={{ selector: "Access Infrastructure Target" }} />
+
+## 7. Configure SSH server
 
 Next, configure your SSH server to trust the Cloudflare SSH CA. This allows Access to authenticate using short-lived certificates instead of traditional SSH keys.
 
@@ -53,9 +57,11 @@ To generate a Cloudflare SSH CA and get its public key:
 <Render file="ssh/ssh-proxy-ca" />
 
 ### Save the public key
+
 <Render file="ssh/public-key" />
 
 ### Modify your SSHD config
+
 <Render file="ssh/modify-sshd" />
 
 :::note
@@ -64,12 +70,14 @@ For certain distributions, such as Amazon Linux 1 (based on RHEL), the certifica
 ```sh
 chmod 600 /etc/ssh/ca.pub
 ```
+
 :::
 
 ### Restart your SSH server
+
 <Render file="ssh/restart-server" />
 
-## 7. Connect as a user
+## 8. Connect as a user
 
 Users can use any SSH client to connect to the target, as long as they are logged into the WARP client on their device. If the target is located within a particular virtual network, ensure that the WARP client is [connected to that virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/#connect-to-a-virtual-network) before initiating the connection. Users do not need to modify any SSH configs on their device. For example, to SSH from a terminal:
 
@@ -77,19 +85,23 @@ Users can use any SSH client to connect to the target, as long as they are logge
 ssh <username>@<target IP>
 ```
 
-SSH with Access for Infrastructure also supports `scp` and `rsync` commands. At this time, `sftp` is not supported.
+Access for Infrastructure also supports `scp` and `rsync` commands. Refer to [Known limitations](#known-limitations) for a list of unsupported SSH commands and features.
 
-For more information, refer to the [Access for Infrastructure documentation](/cloudflare-one/applications/non-http/infrastructure-apps/#connect-as-a-user).
+To learn more about user connections, refer to the [Access for Infrastructure documentation](/cloudflare-one/applications/non-http/infrastructure-apps/#4-connect-as-a-user).
 
 ## SSH command logs
 
-SSH command logs contain the actual SSH commands that a user ran on the target. These logs are encrypted using a public key provided by the customer and are not visible to Cloudflare.
+SSH command logs contain the actual SSH commands that a user ran on the target. Customers on all plans can store SSH logs on Cloudflare. These logs are encrypted using a public key provided by the customer and are not visible to Cloudflare. Additionally, Enterprise customers can configure a Logpush job to send SSH logs to storage destinations. Logpush payloads are not encrypted and do not require uploading a public key.
 
-### Enable SSH command logging
+### Download encrypted SSH logs
+
+Follow these instructions to encrypt and download SSH command logs from Zero Trust.
+
+#### Enable SSH command logging
 
 <Render file="ssh/upload-ssh-key" params={{ note: "" }} />
 
-### Disable SSH command logging
+#### Disable SSH command logging
 
 To turn off SSH command logging, delete your uploaded public key:
 
@@ -107,20 +119,20 @@ Cloudflare will stop logging SSH commands to your targets, as well as any comman
 </TabItem>
 <TabItem label="API">
 
-To delete the SSH encryption public key using the [API](/api/operations/zero-trust-update-audit-ssh-settings):
+To delete the SSH encryption public key using the [API](/api/resources/zero_trust/subresources/gateway/subresources/audit_ssh_settings/methods/update/):
 
 ```sh
-curl --request PUT https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/audit_ssh_settings \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
+curl --request PUT https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/audit_ssh_settings \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "public_key": ""
 }'
 ```
+
 </TabItem>
 </Tabs>
 
-### View SSH logs
+#### View SSH logs
 
 SSH command logs are not visible from the dashboard itself and must be exported and decrypted.
 
@@ -130,3 +142,23 @@ To manually retrieve logs:
 2. Select a user who was allowed to access the target.
 3. Select **Download** to download the session's command log.
 4. <Render file="ssh/decrypt-ssh-log" />
+
+### Export SSH logs with Logpush
+
+:::note[Availability]
+Only available on Enterprise plans.
+:::
+
+Cloudflare allows you to send SSH command logs to storage destinations configured in [Logpush](/logs/about/), including third-party destinations. For a list of available data fields, refer to the [SSH logs dataset](/logs/reference/log-fields/account/ssh_logs/).
+
+To set up the Logpush job, refer to [Logpush integration](/cloudflare-one/insights/logs/logpush/).
+
+## Known limitations
+
+The following SSH features are not supported:
+
+- `sftp` commands
+- `scp` commands that utilize OpenSSH versions > 9.0, because OpenSSH 9.0+ leverages `sftp` to execute the command
+- Local and remote port forwarding
+- SSH agent forwarding
+- X11 forwarding

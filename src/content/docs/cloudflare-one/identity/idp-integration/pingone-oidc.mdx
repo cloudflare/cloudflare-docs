@@ -7,6 +7,8 @@ The PingOne cloud platform from PingIdentity provides SSO identity management. C
 
 ## Set up PingOne as an OIDC provider
 
+### 1. Create an application in PingOne
+
 1. In your PingIdentity environment, go to **Connections** > **Applications**.
 2. Select **Add Application**.
 3. Enter an **Application Name**.
@@ -24,13 +26,17 @@ The PingOne cloud platform from PingIdentity provides SSO identity management. C
    You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
 
 10. Select **Save**.
-11. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Authentication**.
-12. Under **Login methods**, select **Add new**.
-13. Select **PingOne**.
-14. Input the **Client ID**, **Client Secret**, and **Environment ID** generated previously.
-15. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/). PKCE will be performed on all login attempts.
-16. (Optional) Under **Optional configurations**, enter [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#oidc-claims) that you wish to add to your users' identity. This information will be available in the [user identity endpoint](/cloudflare-one/identity/authorization-cookie/application-token/#user-identity).
-17. Select **Save**.
+
+### 2. Add PingOne to Zero Trust
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Authentication**.
+2. Under **Login methods**, select **Add new**.
+3. Select **PingOne**.
+4. Input the **Client ID**, **Client Secret**, and **Environment ID** generated previously.
+5. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/). PKCE will be performed on all login attempts.
+6. (Optional) To enable SCIM, refer to [Synchronize users and groups](/cloudflare-one/identity/idp-integration/generic-oidc/#synchronize-users-and-groups).
+7. (Optional) Under **Optional configurations**, enter [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#oidc-claims) that you wish to add to your users' identity. This information will be available in the [user identity endpoint](/cloudflare-one/identity/authorization-cookie/application-token/#user-identity).
+8. Select **Save**.
 
 You can now [test your connection](/cloudflare-one/identity/idp-integration/#test-idps-in-zero-trust) and create [Access policies](/cloudflare-one/policies/access/) based on the configured login method.
 

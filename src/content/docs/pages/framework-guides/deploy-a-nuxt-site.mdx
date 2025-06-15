@@ -3,6 +3,11 @@ pcx_content_type: how-to
 title: Nuxt
 head: []
 description: Web framework making Vue.js-based development simple and powerful.
+banner:
+  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
+  type: note
+  dismissible:
+    id: pages-migrate-to-workers
 ---
 
 import {
@@ -13,11 +18,20 @@ import {
 	ResourcesBySelector,
 	ExternalResources,
 	PackageManagers,
+	Stream,
 } from "~/components";
 
 [Nuxt](https://nuxt.com) is a web framework making Vue.js-based development simple and powerful.
 
 In this guide, you will create a new Nuxt application and deploy it using Cloudflare Pages.
+
+### Video Tutorial
+
+<Stream
+	id="fd106a56e13af42eb39b35c499432e4b"
+	title="Deploy a Nuxt Application to Cloudflare"
+	thumbnail="2.5s"
+/>
 
 ## Create a new project using the `create-cloudflare` CLI (C3)
 
@@ -26,7 +40,7 @@ The [`create-cloudflare` CLI (C3)](/pages/get-started/c3/) will configure your N
 <PackageManagers
 	type="create"
 	pkg="cloudflare@latest"
-	args="my-nuxt-app --framework=nuxt"
+	args="my-nuxt-app --framework=nuxt --platform=pages"
 />
 
 C3 will ask you a series of setup questions and create a new project with [`nuxi` (the official Nuxt CLI)](https://github.com/nuxt/cli). C3 will also install the necessary adapters along with the [Wrangler CLI](/workers/wrangler/install-and-update/#check-your-wrangler-version).
@@ -69,12 +83,7 @@ git push -u origin main
 
 ### Create a Pages project
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Workers & Pages** > **Create application** > **Pages** > **Connect to Git** and create a new Pages project.
-
-You will be asked to authorize access to your GitHub account if you have not already done so. Cloudflare needs this so that it can monitor and deploy your projects from the source. You may narrow access to specific repositories if you prefer; however, you will have to manually update this list [within your GitHub settings](https://github.com/settings/installations) when you want to add more repositories to Cloudflare Pages.
-
-3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
+<Render file="deploy-to-pages-steps-with-preset" params={{ name: "Nuxt.js" }} />
 
 <PagesBuildPreset framework="nuxt-js" />
 
@@ -102,7 +111,7 @@ export default defineNuxtConfig({
 });
 ```
 
-This module is powered by the [`getPlatformProxy` helper function](/workers/wrangler/api#getplatformproxy). `getPlatformProxy` will automatically detect any bindings defined in your project's `wrangler.toml` file and emulate those bindings in local development. Review [Wrangler configuration information on bindings](/workers/wrangler/configuration/#bindings) for more information on how to configure bindings in `wrangler.toml`.
+This module is powered by the [`getPlatformProxy` helper function](/workers/wrangler/api#getplatformproxy). `getPlatformProxy` will automatically detect any bindings defined in your project's Wrangler configuration file and emulate those bindings in local development. Review [Wrangler configuration information on bindings](/workers/wrangler/configuration/#bindings) for more information on how to configure bindings in the [Wrangler configuration file](/workers/wrangler/configuration/).
 
 :::note
 
@@ -116,17 +125,11 @@ In order to access bindings in a deployed application, you will need to [configu
 
 ### Add bindings to TypeScript projects
 
-To get proper type support, you need to create a new `env.d.ts` file in the root of your project and declare a [binding](/pages/functions/bindings/).
+To get proper type support, you need to create a new `env.d.ts` file in the root of your project and declare a [binding](/pages/functions/bindings/). Make sure you have generated Cloudflare runtime types by running [`wrangler types`](/pages/functions/typescript/).
 
 The following is an example of adding a `KVNamespace` binding:
 
 ```ts null {9}
-import {
-	CfProperties,
-	Request,
-	ExecutionContext,
-	KVNamespace,
-} from "@cloudflare/workers-types";
 
 declare module "h3" {
 	interface H3EventContext {

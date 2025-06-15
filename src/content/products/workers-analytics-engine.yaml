@@ -5,4 +5,6 @@ product:
   url: /analytics/analytics-engine/
   group: Developer platform
   additional_groups: [Analytics]
-  grid_placeholder: true
+
+meta:
+  description: Workers Analytics Engine provides unlimited-cardinality analytics at scale, via a built-in API to write data points from Workers, and a SQL API to query that data.

@@ -1,0 +1,85 @@
+---
+pcx_content_type: concept
+title: Custom Errors
+sidebar:
+  order: 10
+head:
+  - tag: title
+    content: Custom Errors
+---
+
+import { FeatureTable, Render } from "~/components";
+
+Use Custom Errors to return custom content to your website visitors in case of HTTP errors returned by an origin server or by a Cloudflare product (including Workers), or when showing a [security challenge](/cloudflare-challenges/).
+
+You can configure custom error content using the following methods:
+
+- [**Error Page**](#error-pages): An HTML page shown to website visitors when a specific error occurs (refer to the different [error page types](/rules/custom-errors/reference/error-page-types/)) or when showing a security challenge. Error Pages can be defined at the zone level and at the account level on paid plans, with zone-level configurations taking precedence.
+- [**Custom Error Rule**](#custom-error-rules): Defines the conditions under which Cloudflare will serve a custom error response to visitors in case of HTTP errors (status codes `400` and above), and the exact content that will be served. A matching custom error rule has priority over an Error Page configured at the account or at the zone level that would apply to the same error.
+
+Custom Errors require that you [proxy the DNS records](/dns/proxy-status/) of your domain (or subdomain) through Cloudflare.
+
+## How it works
+
+Cloudflare has a set of default pages for presenting errors and challenges to your website visitors. You can customize those pages using Error Pages and Custom Error Rules.
+
+When an error of a [specific type](/rules/custom-errors/reference/error-page-types/) occurs, Cloudflare does the following:
+
+1. Search for a configured Error Page at the account level for the specific error.
+2. Search for a configured Error Page at the zone level for the specific error (it will have priority over the account-level Error Page, if any).
+3. Search for a matching custom error rule at the account level. The rule will have priority over 500 and 1000 class Error Pages at the account or zone level.
+4. Search for a matching custom error rule at the zone level. The rule will have priority over 500 and 1000 class Error Pages at the account or zone level and over custom error rules at the account level.
+5. If a security rule like a [WAF custom rule](/waf/custom-rules/) or a [rate limiting rule](/waf/rate-limiting-rules/) triggers a custom block response instead of a default Cloudflare WAF block page, the rule-specific block response will have priority over Error Pages or a matching custom error rule.
+6. If any of the previous configurations apply, serve the custom error content to the visitor. If not, serve the default error page for the specific error type.
+
+:::note
+To customize a challenge page or a block page, use an Error Page, since Custom Error Rules will not be applied to security actions originating from Cloudflare products. Keep in mind that [custom WAF response](/waf/custom-rules/create-dashboard/#configure-a-custom-response-for-blocked-requests) takes precedence over an Error Page and custom error rules.
+:::
+
+## Availability
+
+Custom Errors are available to all paid plans. The exact features depend on your Cloudflare plan.
+
+<Render file="rules-new-limits" />
+
+<FeatureTable id="rules.custom_errors" />
+
+---
+
+## Error Pages
+
+Cloudflare uses a wide range of [error codes](/support/troubleshooting/http-status-codes/) to identify issues in handling request traffic. By default, these error pages mention Cloudflare; however, you can create custom error pages to provide a consistent brand experience for your users.
+
+Error Pages do not apply to responses with an HTTP status code of `500`, `501`, `503`, or `505`. These exceptions help avoid issues with specific API endpoints and other web applications. You can still customize responses for these status codes using Custom Error Rules.
+
+If you are on a Cloudflare paid plan, you can create custom error pages at the zone level or for your entire account. Zone-level error pages have priority over account-level error pages.
+
+Additionally, Enterprise customers can customize 5XX error pages (except errors `520`-`527`) at their origin via **Enable Origin Error Pages** in **Error Pages** in the dashboard.
+
+You can design custom error pages to appear during a security challenge or when an error occurs. For more information on the different error page types, refer to [Error page types](/rules/custom-errors/reference/error-page-types/).
+
+:::note
+Cloudflare will return the default Cloudflare error page instead of your custom Error Pages if the incoming request does not contain an `accept-encoding` header. This does not apply to responses originating from Custom Error Rules.
+:::
+
+## Custom Error Rules
+
+A custom error rule defines the conditions under which Cloudflare will serve custom error content to visitors in case of HTTP errors (status codes `400` and above), and the exact content that will be served to visitors.
+
+When defining the content to serve, you provide either an inline response or the URL of an existing webpage. The URL can point to a webpage or to a different resource such as JSON content.
+
+When you provide a URL, Cloudflare will gather any required images, CSS, and JavaScript code and save a minified version of the full page in the Cloudflare global network. This resource is called a [custom error asset](#custom-error-assets), which you can use in one or more custom error rules in the same scope of the asset (zone or account).
+
+When a custom error rule is triggered, Cloudflare will replace the body with the response you previously defined and (optionally) the response HTTP status code sent to the visitor. Cloudflare will keep any existing HTTP response headers except for `Content-Type` and `Content-Length`.
+
+Additionally, you can configure [Response Header Transform Rules](/rules/transform/response-header-modification/) for error responses to add, change, or remove HTTP headers from the response.
+
+Custom error rules have priority over [Error Pages](#error-pages).
+
+## Custom Error Assets
+
+A custom error asset corresponds to a web resource such as an HTML web page (including any referenced images, CSS, and JavaScript code) that Cloudflare fetches and saves based on a URL you provide, to be served to visitors as an error page.
+
+Once the custom error asset is stored in Cloudflare's global network, the URL you initially provided no longer needs to be available. You can update an existing custom error asset by fetching it again. The metadata associated with each custom error asset includes the timestamp when the last fetch occurred, and this information is displayed in the dashboard.
+
+You can use a custom error asset in one or more custom error rules in the same scope where you defined the asset (zone or account).

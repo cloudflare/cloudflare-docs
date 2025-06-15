@@ -1,0 +1,113 @@
+---
+import { Aside } from "@astrojs/starlight/components";
+
+import AnchorHeading from "./AnchorHeading.astro";
+import RSSButton from "./RSSButton.astro";
+import Details from "./Details.astro";
+
+import { getCollection } from "astro:content";
+import { getChangelogs } from "~/util/changelog";
+
+const changelogs = await getChangelogs({});
+const productsInChangelog = changelogs.flatMap((entry) =>
+	entry.data.products.map((product) => product.id),
+);
+
+const products = await getCollection("products", (entry) => {
+	return productsInChangelog.includes(entry.id);
+});
+
+const productsByGroup = Object.entries(
+	Object.groupBy(
+		products.filter((product) => Boolean(product.data.product.group)),
+		(product) => product.data.product.group,
+	),
+).sort();
+---
+
+<AnchorHeading depth={2} title="Feeds" />
+
+<AnchorHeading depth={3} title="Global feed" />
+<p>
+	This feed contains entries for all Cloudflare products in the changelog: <RSSButton
+		changelog="index"
+	/>
+</p>
+
+<AnchorHeading depth={3} title="Area-specific feeds" />
+
+<p>
+	Cloudflare also offers RSS feeds scoped to specific product areas or products
+	in the <a href="/changelog/">changelog</a>.
+</p>
+
+{
+	productsByGroup.map(([group, products]) => (
+		<>
+			<AnchorHeading depth={4} title={group} />
+			<p>
+				This feed is for all {group} products in the changelog:{" "}
+				<RSSButton changelog={group} />
+			</p>
+			<Details header="Included products">
+				<ul>
+					{products?.map((product) => (
+						<li>
+							<p>
+								<a href={product.data.product.url}>
+									{product.data.product.title}
+								</a>
+							</p>
+							<RSSButton changelog={product.id} />
+						</li>
+					))}
+				</ul>
+			</Details>
+			{group === "Application security" && (
+				<Aside type="note" title="DDoS and WAF ruleset feeds">
+					<p>
+						For <a href="/ddos-protection/">DDoS Protection</a> or{" "}
+						<a href="/waf/">WAF</a> updates to managed rulesets, please refer to
+						their independent feeds:
+						<ul>
+							<li>
+								<p>
+									<a href="/ddos-protection/change-log/network/">
+										Network-layer DDoS managed ruleset
+									</a>
+								</p>
+								<RSSButton href="/ddos-protection/change-log/network/index.xml" />
+							</li>
+							<li>
+								<p>
+									<a href="/ddos-protection/change-log/http/">
+										HTTP DDoS managed ruleset
+									</a>
+								</p>
+								<RSSButton href="/ddos-protection/change-log/http/index.xml" />
+							</li>
+							<li>
+								<p>
+									<a href="/waf/change-log/">WAF managed ruleset</a>
+								</p>
+								<RSSButton href="/waf/change-log/index.xml" />
+							</li>
+						</ul>
+					</p>
+				</Aside>
+			)}
+			{group === "Core platform" && (
+				<Aside type="note" title="API deprecations feed">
+					<p>
+						Cloudflare also maintains a separate{" "}
+						<a href="/fundamentals/api/reference/deprecations/">
+							API deprecations page.
+						</a>
+						<br />
+						<RSSButton href="/fundamentals/api/reference/deprecations/index.xml" />
+					</p>
+				</Aside>
+			)}
+		</>
+	))
+}

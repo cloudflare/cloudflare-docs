@@ -3,16 +3,16 @@
 ---
 import { Tabs, TabItem } from "~/components"
 
-Whether to preserve animation frames from input files. Default is `true`. Setting it to `false` reduces animations to still images. This setting is recommended when enlarging images or processing arbitrary user content, because large GIF animations can weigh tens or even hundreds of megabytes. It is also useful to set `anim:false` when using `format:"json"` to get the response quicker without the number of frames. 
+Whether to preserve animation frames from input files. Default is `true`. Setting it to `false` reduces animations to still images. This setting is recommended when enlarging images or processing arbitrary user content, because large GIF animations can weigh tens or even hundreds of megabytes. It is also useful to set `anim:false` when using `format:"json"` to get the response quicker without the number of frames.
 
 <Tabs>
   <TabItem label="URL format">
-    ```js 
+    ```js
     anim=false
     ```
   </TabItem>
   <TabItem label="Workers">
-  ```js 
+  ```js
   cf: {image: {anim: false}}
   ```
   </TabItem>

@@ -3,6 +3,8 @@ pcx_content_type: tutorial
 title: Import Cloudflare resources
 ---
 
+import { Render } from "~/components";
+
 An important point to understand about Terraform is that it can only manage configuration it created or was explicitly told about after the fact. The reason for this limitation is that Terraform expects to be authoritative for the resources it manages. It relies on two types of files to understand what resources it controls and what state they are in. Terraform determines when and how to make changes from the following:
 
 - A [configuration file](https://developer.hashicorp.com/terraform/language) (ending in `.tf`) that defines the configuration of resources for Terraform to manage. This is what you worked with in the tutorial steps.
@@ -54,6 +56,8 @@ To start managing existing Cloudflare resources in Terraform, for example, DNS r
 
 If you do not have a Terraform configuration file defined, you need the `provider` block defined as follows:
 
+<Render file="v4-code-snippets" />
+
 ```hcl
 provider 'cloudflare' {
  # Cloudflare email saved in $CLOUDFLARE_EMAIL
@@ -70,6 +74,8 @@ cf-terraforming generate --email $CLOUDFLARE_EMAIL --token $CLOUDFLARE_API_TOKEN
 ```
 
 If you had not redirected the output to the `importing-example.tf` file, the result displayed in the standard output (your terminal window) would look like the following:
+
+<Render file="v4-code-snippets" />
 
 ```tf
 resource "cloudflare_record" "terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31" {
@@ -115,7 +121,7 @@ Calling `terraform plan` at this point will try to create these resources as if 
 terraform plan
 ```
 
-```sh output
+```txt output
 Terraform used the selected providers to generate the following execution plan.
 Resource actions are indicated with the following symbols:
   + create
@@ -229,7 +235,7 @@ You would run each command individually in the terminal:
 terraform import cloudflare_record.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31 1109d899a5ff5fd74bc01e581693685b/3c0b456bc2aa443089c5f40f45f51b31
 ```
 
-```sh output
+```txt output
 cloudflare_record.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31: Importing from ID "1109d899a5ff5fd74bc01e581693685b/3c0b456bc2aa443089c5f40f45f51b31"...
 cloudflare_record.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31: Import complete!
   Imported cloudflare_record [id=3c0b456bc2aa443089c5f40f45f51b31]
@@ -245,7 +251,7 @@ your Terraform state and will henceforth be managed by Terraform.
 terraform import cloudflare_record.terraform_managed_resource_5e10399a590a45279f09aa8fb1163354 1109d899a5ff5fd74bc01e581693685b/d09d916d059aa9fc8cb54bdd49deea5f
 ```
 
-```sh output
+```txt output
 cloudflare_record.terraform_managed_resource_5e10399a590a45279f09aa8fb1163354: Importing from ID "1109d899a5ff5fd74bc01e581693685b/d09d916d059aa9fc8cb54bdd49deea5f"...
 cloudflare_record.terraform_managed_resource_5e10399a590a45279f09aa8fb1163354: Import complete!
   Imported cloudflare_record [id=d09d916d059aa9fc8cb54bdd49deea5f]
@@ -261,7 +267,7 @@ your Terraform state and will henceforth be managed by Terraform.
 terraform import cloudflare_record.terraform_managed_resource_de1cb74bae184b569bb7f83fefe72248 1109d899a5ff5fd74bc01e581693685b/8d6ec0d02c5b22212ff673782c816ef8
 ```
 
-```sh output
+```txt output
 cloudflare_record.terraform_managed_resource_de1cb74bae184b569bb7f83fefe72248: Importing from ID "1109d899a5ff5fd74bc01e581693685b/8d6ec0d02c5b22212ff673782c816ef8"...
 cloudflare_record.terraform_managed_resource_de1cb74bae184b569bb7f83fefe72248: Import complete!
   Imported cloudflare_record [id=8d6ec0d02c5b22212ff673782c816ef8]
@@ -277,7 +283,7 @@ your Terraform state and will henceforth be managed by Terraform.
 terraform import cloudflare_record.terraform_managed_resource_5799bb01054843eea726758f935d2aa2 1109d899a5ff5fd74bc01e581693685b/3766b952a2dda4c47e71952aeef33c77
 ```
 
-```sh output
+```txt output
 cloudflare_record.terraform_managed_resource_5799bb01054843eea726758f935d2aa2: Importing from ID "1109d899a5ff5fd74bc01e581693685b/3766b952a2dda4c47e71952aeef33c77"...
 cloudflare_record.terraform_managed_resource_5799bb01054843eea726758f935d2aa2: Import complete!
   Imported cloudflare_record [id=3766b952a2dda4c47e71952aeef33c77]

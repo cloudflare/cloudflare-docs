@@ -3,24 +3,46 @@ pcx_content_type: how-to
 title: Browser-rendered terminal
 sidebar:
   order: 3
-
 ---
 
-Cloudflare can render certain non-web applications in your browser without the need for client software or end-user configuration changes. Cloudflare currently supports rendering a terminal for SSH and VNC connections in a user's browser.
+import { Render } from "~/components";
 
-:::note
-You can only enable browser rendering on domains and subdomains, not for specific paths.
-:::
+Cloudflare can render SSH, VNC, and RDP applications in a browser without the need for client software or end-user configuration changes. For SSH and VNC, user email prefixes must match their username on the server. RDP leverages your existing Windows usernames and passwords for authenticating to the Windows server; Cloudflare does not manage any credentials on the Windows server.
 
-## Enable browser rendering
+## Limitations
 
-To enable browser rendering:
+- Browser rendering is only supported for [self-hosted public applications](/cloudflare-one/applications/configure-apps/self-hosted-public-app/), not private IPs or hostnames.
+- You can only render a browser-rendered terminal on domains and subdomains, not on specific paths.
+- <Render file="access/self-hosted-app/ssh-sessions" />
+- Cloudflare uses TLS to secure the egress RDP connection to your Windows server. We do not currently validate the chain of trust.
+
+## Turn on browser rendering
+
+### SSH and VNC
+
+To turn on browser rendering for an SSH or VNC application:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 2. Locate the SSH or VNC application you created when [connecting the server to Cloudflare](/cloudflare-one/connections/connect-networks/use-cases/ssh/). Select **Configure**.
 3. In the **Policies** tab, ensure that only **Allow** or **Block** policies are present. **Bypass** and **Service Auth** are not supported for browser-rendered applications.
-4. In the **Settings** tab, scroll down to **Additional settings**.
-5. For **Browser rendering**, choose *SSH* or *VNC*.
-6. Select **Save application**.
+4. Go to **Advanced settings** > **Browser rendering settings**.
+5. For **Browser rendering**, choose _SSH_ or _VNC_.
+6.  Select **Save application**.
 
 When users authenticate and visit the URL of the application, Cloudflare will render a terminal in their browser.
+
+### RDP
+
+To set up browser-rendering for RDP, refer to our [browser-based RDP guide](/cloudflare-one/connections/connect-networks/use-cases/rdp/rdp-browser/).
+
+### SSH key exchange algorithms
+
+Cloudflare's browser-rendered SSH terminal supports the following Key Exchange (KEX) algorithms:
+
+	- `curve25519-sha256@libssh.org`
+	- `curve25519-sha256`
+	- `ecdh-sha2-nistp256`
+	- `ecdh-sha2-nistp384`
+	- `ecdh-sha2-nistp521`
+
+For browser-rendered SSH connections to work, you may need to update the `sshd_config` file on your server to accept these algorithms.

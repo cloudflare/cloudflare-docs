@@ -1,0 +1,40 @@
+releaseNotes: >-
+  This release contains bug fixes and support for a new operating mode called
+  "Secure Web Gateway without DNS Filtering". This new mode disabled all DNS
+  functionality of the client while still retaining things such as the WARP
+  Tunnel, DEX and posture support.
+   
+  **Notable updates**
+
+  - Add support for "SWG without DNS Filtering" mode. All DNS functionality from
+  the WARP client is disabled.
+
+  - Improve performance of domain-based split tunneling when the IP was already
+  split tunneled (seen frequently with Zoom domains and IPs being used)
+
+  - Fixed localization issues in en-MX UI that caused longer strings to get
+  clipped
+
+  - Fixed issue with certain tools like nslookup that was introduced in previous
+  beta where DNS could appear broken
+
+  - Fixed issue where WARP Client wasn't properly detecting if IPv6 was disabled
+  via `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip6\Parameters`
+
+  - Fixed issue where onboarding=false mdm flag did not work if that GUI app
+  started before the service
+   
+
+   
+
+   
+  **Known issues**
+
+  - If certain deployment parameters (e.g. auth id, secret, etc.) are removed
+  from the MDM file, the GUI will display a registration error. To remediate
+  this, the user will be prompted to login to the Zero Trust organization again.
+version: 2023.5.587.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2023.5.587.1
+packageSize: 110772224
+releaseDate: 2023-06-12T16:07:05.431Z
+platformName: Windows

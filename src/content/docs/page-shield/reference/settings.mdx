@@ -3,12 +3,11 @@ title: Configuration settings
 pcx_content_type: reference
 sidebar:
   order: 1
-
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip } from "~/components";
 
-## CSP reporting endpoint
+## Reporting endpoint
 
 When enabled, Page Shield uses a <GlossaryTooltip term="content security policy (CSP)">Content Security Policy (CSP)</GlossaryTooltip> [report-only HTTP header](/page-shield/reference/csp-header/) to gather information about all the scripts running on your application.
 
@@ -28,8 +27,8 @@ Enterprise customers with a paid add-on can change the reporting endpoint so tha
 
 Using the same hostname for CSP reporting may interfere with other Cloudflare products. Before selecting this option, ensure that your Cloudflare configuration complies with the following:
 
-* No rate limiting rules match the `cdn-cgi/*` URL path
-* No WAF custom rules match the `cdn-cgi/*` URL path
+- No rate limiting rules match the `cdn-cgi/*` URL path
+- No WAF custom rules match the `cdn-cgi/*` URL path
 
 ### Configure the reporting endpoint
 
@@ -64,6 +63,5 @@ To turn off Page Shield:
 3. In **Disable Page Shield**, select **Disable**.
 
 :::note
-
-Turning off Page Shield will not turn off [policies](/page-shield/policies/). To turn off policies, go to **Page Shield** > **Policies**. 
+Turning off Page Shield will not turn off [policies](/page-shield/policies/). To turn off policies, go to **Page Shield** > **Policies**.
 :::

@@ -18,6 +18,12 @@ description: Determine how to cache a resource by setting TTLs, custom cache
   keys, and cache headers in a fetch request.
 ---
 
+If you want to get started quickly, click on the button below.
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/docs-examples/tree/main/workers/cache-using-fetch)
+
+This creates a repository in your GitHub account and deploys the application to Cloudflare Workers.
+
 import { TabItem, Tabs } from "~/components";
 
 <Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
@@ -74,6 +80,46 @@ export default {
 		return response;
 	},
 } satisfies ExportedHandler;
+```
+
+</TabItem> <TabItem label="Hono" icon="seti:typescript">
+
+```ts
+import { Hono } from 'hono';
+
+type Bindings = {};
+
+const app = new Hono<{ Bindings: Bindings }>();
+
+app.all('*', async (c) => {
+  const url = new URL(c.req.url);
+
+  // Only use the path for the cache key, removing query strings
+  // and always store using HTTPS, for example, https://www.example.com/file-uri-here
+  const someCustomKey = `https://${url.hostname}${url.pathname}`;
+
+  // Fetch the request with custom cache settings
+  let response = await fetch(c.req.raw, {
+    cf: {
+      // Always cache this fetch regardless of content type
+      // for a max of 5 seconds before revalidating the resource
+      cacheTtl: 5,
+      cacheEverything: true,
+      // Enterprise only feature, see Cache API for other plans
+      cacheKey: someCustomKey,
+    },
+  });
+
+  // Reconstruct the Response object to make its headers mutable
+  response = new Response(response.body, response);
+
+  // Set cache control headers to cache on browser for 25 minutes
+  response.headers.set("Cache-Control", "max-age=1500");
+
+  return response;
+});
+
+export default app;
 ```
 
 </TabItem> <TabItem label="Python" icon="seti:python">
@@ -226,6 +272,38 @@ export default {
 } satisfies ExportedHandler;
 ```
 
+</TabItem> <TabItem label="Hono" icon="seti:typescript">
+
+```ts
+import { Hono } from 'hono';
+
+type Bindings = {};
+
+const app = new Hono<{ Bindings: Bindings }>();
+
+app.all('*', async (c) => {
+  const originalUrl = c.req.url;
+  const url = new URL(originalUrl);
+
+  // Randomly select a storage backend
+  if (Math.random() < 0.5) {
+    url.hostname = "example.s3.amazonaws.com";
+  } else {
+    url.hostname = "example.storage.googleapis.com";
+  }
+
+  // Create a new request to the selected backend
+  const newRequest = new Request(url, c.req.raw);
+
+  // Fetch using the original URL as the cache key
+  return fetch(newRequest, {
+    cf: { cacheKey: originalUrl },
+  });
+});
+
+export default app;
+```
+
 </TabItem> </Tabs>
 
 Workers operating on behalf of different zones cannot affect each other's cache. You can only override cache keys when making requests within your own zone (in the above example `event.request.url` was the key stored), or requests to hosts that are not on Cloudflare. When making a request to another Cloudflare zone (for example, belonging to a different Cloudflare customer), that zone fully controls how its own content is cached within Cloudflare; you cannot override it.
@@ -357,6 +435,12 @@ export default {
 
 </TabItem> <TabItem label="Service Worker" icon="seti:javascript">
 
+:::caution[Service Workers are deprecated]
+
+Service Workers are deprecated, but still supported. We recommend using [Module Workers](/workers/reference/migrate-to-module-workers/) instead. New features may not be supported for Service Workers.
+
+:::
+
 ```js title="index.js"
 addEventListener("fetch", (event) => {
 	return event.respondWith(handleRequest(event.request));
@@ -466,3 +550,13 @@ async function handleRequest(request) {
 ```
 
 </TabItem> </Tabs>
+
+## Using the HTTP Cache API
+
+The `cache` mode can be set in `fetch` options.
+Currently Workers only support the `no-store` mode for controlling the cache.
+When `no-store` is supplied the cache is bypassed on the way to the origin and the request is not cacheable.
+
+```js
+fetch(request, { cache: 'no-store'});
+```

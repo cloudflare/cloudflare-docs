@@ -1,0 +1,14 @@
+releaseNotes: |-
+  This release contains Bug fixes and connection stability improvement
+
+  **Notable updates**
+  - Bug fixes and connection stability improvement
+
+
+  **Known issues**
+  No known issues
+version: 2022.3.150.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2022.3.150.1
+packageSize: 42647934
+releaseDate: 2022-03-21T20:23:34.817Z
+platformName: macOS

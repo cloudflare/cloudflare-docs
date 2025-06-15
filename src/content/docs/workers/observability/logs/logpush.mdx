@@ -9,6 +9,8 @@ sidebar:
 
 ---
 
+import { WranglerConfig } from "~/components";
+
 [Cloudflare Logpush](/logs/about/) supports the ability to send [Workers Trace Event Logs](/logs/reference/log-fields/account/workers_trace_events/) to a [supported destination](/logs/get-started/enable-destinations/). Worker’s Trace Events Logpush includes metadata about requests and responses, unstructured `console.log()` messages and any uncaught exceptions. This product is available on the Workers Paid plan. For pricing information, refer to [Pricing](/workers/platform/pricing/#workers-trace-events-logpush).
 
 :::caution
@@ -22,7 +24,7 @@ Workers Trace Events Logpush is not available for zones on the [Cloudflare China
 ## Verify your Logpush access
 
 :::note[Wrangler version]
-Minimum required Wrangler version: 2.2.0. Check your version by running `wrangler version`. To update Wrangler, refer to [Install/Update Wrangler](/workers/wrangler/install-and-update/).
+Minimum required Wrangler version: 2.2.0. Check your version by running `wrangler --version`. To update Wrangler, refer to [Install/Update Wrangler](/workers/wrangler/install-and-update/).
 :::
 
 To configure a Logpush job, verify that your Cloudflare account role can use Logpush. To check your role:
@@ -40,8 +42,8 @@ Alternatively, create a new [API token](/fundamentals/api/get-started/create-tok
 To create a Logpush job in the Cloudflare dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account.
-2. Select **Analytics & Logs** > **Logs**.
-3. Select **Add Logpush job**.
+2. Select **Analytics & Logs** > **Logpush**.
+3. Select **Create a Logpush job**.
 4. Select **Workers trace events** as the data set > **Next**.
 5. If needed, customize your data fields. Otherwise, select **Next**.
 
@@ -73,7 +75,9 @@ In Logpush, you can configure [filters](/logs/reference/filters/) and a [samplin
 
 ## Enable logging on your Worker
 
-Enable logging on your Worker by adding a new property, `logpush = true`, to your `wrangler.toml` file. This can be added either in the top-level configuration or under an [environment](/workers/wrangler/environments/). Any new Workers with this property will automatically get picked up by the Logpush job.
+Enable logging on your Worker by adding a new property, `logpush = true`, to your Wrangler file. This can be added either in the top-level configuration or under an [environment](/workers/wrangler/environments/). Any new Workers with this property will automatically get picked up by the Logpush job.
+
+<WranglerConfig>
 
 ```toml
 # Top-level configuration
@@ -86,6 +90,8 @@ workers_dev = false
 logpush = true
 route = { pattern = "example.org/*", zone_name = "example.org" }
 ```
+
+</WranglerConfig>
 
 Configure via multipart script upload API:
 

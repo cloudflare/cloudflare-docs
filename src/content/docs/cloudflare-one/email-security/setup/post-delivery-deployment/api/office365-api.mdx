@@ -5,22 +5,29 @@ sidebar:
   order: 3
 ---
 
+import { Render } from "~/components"
+
 This guide will instruct you through setting up Microsoft Office 365 with Email Security via the Cloudflare dashboard.
 
 ## Prerequisites
 
-* A [Cloudflare account](https://dash.cloudflare.com/sign-up).
-* A domain to protect.
+To use Email Security, you will need to have:
+
+<Render file="email-security/onboarding-prerequisites" />
 
 ## Enable Email Security via the dashboard
 
-To enable Email Security:
-
 1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
 2. Select **Email Security**.
-3. Select **Monitoring**. If you are a first time user, select **Contact sales**. Otherwise, select **Connect an integration**.
-
-Continue with [Enable Microsoft integration](/cloudflare-one/email-security/setup/post-delivery-deployment/api/office365-api/#enable-microsoft-integration) for the next steps.
+3. Select **Overview**. Select one of the following options depending on your use case:
+- If you have not purchased Email Security, select **Contact sales**. 
+- If you have not associated any integration:
+   - Select **Set up**.
+   - Choose **MS Graph API** > **Authorize**. 
+   - Refer to [Enable Microsoft integration](/cloudflare-one/email-security/setup/post-delivery-deployment/api/office365-api/#enable-microsoft-integration) to continue the onboarding process.
+- If you have associated an integration, but have not connected a domain:
+   - Select **Connect a domain**.
+   - Choose **MS Graph API**. Refer to [Connect your domains](/cloudflare-one/email-security/setup/post-delivery-deployment/api/office365-api/#connect-your-domains) to connect your domain(s).
 
 ### Enable Microsoft integration
 
@@ -39,14 +46,15 @@ Continue with [Connect your domains](/cloudflare-one/email-security/setup/post-d
 
 ### Connect your domains
 
-On the **Set up Email Security** page, you will be able to connect your domains. To connect your domains:
+On the **Set up Email Security** page, you will be able to connect your Microsoft domains. To connect your domains:
 
 1. **Connect domains**: Select at least one domain. Then, select **Continue**.
-2. (**Optional**, select **Skip for now** to skip this step) **Configure auto-move**: Refer to [Auto-moves](/cloudflare-one/email-security/auto-moves/) to configure auto-moves.
-3. **Review details**: Review your connected domains, then select **Go to domains**. 
+2. (Optional) **Modify default scanning**: You can configure which folder Email Security can scan.
+3. (Optional - select **Skip for now** to skip this step) **Redirect messages**: Refer to [Auto-moves](/cloudflare-one/email-security/auto-moves/) to learn what auto-moves are, and how to configure auto-moves.
+4. **Review details**: Review your connected domains, then select **Go to Domains**.
 
 Your domains are now connected successfully.
- 
+
 ### Connect new domains
 
 To connect new domains:
@@ -55,7 +63,7 @@ To connect new domains:
 2. Select **Zero Trust**.
 3. Select **Email security**.
 4. Select **Settings**.
-5. On the **Integrated domains** page, select **Connect a domain**.
+5. On the **Domain management** page, select **Add a domain**.
 6. Select the domains you want Email Security to scan.
 7. Select **Save**.
 
@@ -63,7 +71,7 @@ To connect new domains:
 
 If you want to prevent Cloudflare from scanning a domain:
 
-1. On the **Integrated domains** page, select the domain you do not want to be scanned.
+1. On the **Domain management** page, select the domain you do not want to be scanned.
 2. Select the three dots > **Stop scanning**.
 
 ## View an integration
@@ -73,4 +81,8 @@ To view the integration for each connected domain:
 1. Select a domain.
 2. Select the three dots > **View integration**.
 
-Once you have set up Email Security to scan through your inbox, Email Security will display detailed information about your inbox. Refer to [Monitor your inbox](/cloudflare-one/insights/email-monitoring/) to learn more.
+Once you have set up Email Security to scan through your inbox, Email Security will display detailed information about your inbox. Refer to [Monitor your inbox](/cloudflare-one/email-security/email-monitoring/) to learn more.
+
+## Next steps
+
+<Render file="email-security/enable-logs" />

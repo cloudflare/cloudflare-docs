@@ -1,5 +1,5 @@
 ---
-title: CLI
+title: C3 CLI
 pcx_content_type: get-started
 head:
   - tag: title
@@ -8,9 +8,21 @@ description: Use C3 (`create-cloudflare` CLI) to set up and deploy new
   applications using framework-specific setup guides to ensure each new
   application follows Cloudflare and any third-party best practices for
   deployment.
+banner:
+  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
+  type: note
+  dismissible:
+    id: pages-migrate-to-workers
 ---
 
-import { Render, TabItem, Tabs, Type, MetaInfo, PackageManagers } from "~/components";
+import {
+	Render,
+	TabItem,
+	Tabs,
+	Type,
+	MetaInfo,
+	PackageManagers,
+} from "~/components";
 
 Cloudflare provides a CLI command for creating new Workers and Pages projects â€” `npm create cloudflare`, powered by the [`create-cloudflare` package](https://www.npmjs.com/package/create-cloudflare).
 
@@ -18,9 +30,13 @@ Cloudflare provides a CLI command for creating new Workers and Pages projects â€
 
 Open a terminal window and run:
 
-<Render file="c3-run-command-no-directory" product="workers" />
+<Render file="c3-run-command-no-directory" product="pages" />
 
 Running this command will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package, and then ask you questions about the type of application you wish to create.
+
+:::note
+To create a Pages project you must now specify the `--platform=pages` arg, otherwise C3 will always create a Workers project.
+:::
 
 ## Web frameworks
 
@@ -37,8 +53,8 @@ If you choose the "Framework Starter" option, you will be prompted to choose a f
 - [Qwik](/pages/framework-guides/deploy-a-qwik-site/)
 - [React](/pages/framework-guides/deploy-a-react-site/)
 - [Remix](/pages/framework-guides/deploy-a-remix-site/)
-- [Solid](/pages/framework-guides/deploy-a-solid-site/)
-- [Svelte](/pages/framework-guides/deploy-a-svelte-site/)
+- [SolidStart](/pages/framework-guides/deploy-a-solid-start-site/)
+- [SvelteKit](/pages/framework-guides/deploy-a-svelte-kit-site/)
 - [Vue](/pages/framework-guides/deploy-a-vue-site/)
 
 When you use a framework, `npm create cloudflare` directly uses the framework's own command for generating a new projects, which may prompt additional questions. This ensures that the project you create is up-to-date with the latest version of the framework, and you have all the same options when creating you project via `npm create cloudflare` that you would if you created your project using the framework's tooling directly.
@@ -64,37 +80,17 @@ C3 collects any required input through a series of interactive prompts. You may 
 
 This is the full format of a C3 invocation alongside the possible CLI arguments:
 
-<Tabs> <TabItem label="npm">
-
-```sh
-npm create cloudflare@latest [--] [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]
-```
-
-</TabItem> <TabItem label="yarn">
-
-```sh
-yarn create cloudflare@latest [--] [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]
-```
-
-</TabItem> <TabItem label="pnpm">
-
-```sh
-pnpm create cloudflare@latest [--] [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]
-```
-
-</TabItem> <TabItem label="bun">
-
-```sh
-bun create cloudflare@latest [--] [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]
-```
-
-</TabItem> </Tabs>
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args="--platform=pages [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]"
+/>
 
 - `DIRECTORY` <Type text="string" /> <MetaInfo text="optional" />
 
   - The directory where the application should be created. The name of the application is taken from the directory name.
 
-- `NESTED ARGS..` string\[] optional
+- `NESTED ARGS..` <Type text="string[]" /> <MetaInfo text="optional" />
 
   - CLI arguments to pass to eventual third party CLIs C3 might invoke (in the case of full-stack applications).
 
@@ -163,16 +159,16 @@ bun create cloudflare@latest [--] [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]
     At a minimum, templates must contain the following:
 
     - `package.json`
-    - `wrangler.toml`
-    - `src/` containing a worker script referenced from `wrangler.toml`
+    - [Wrangler configuration file](/pages/functions/wrangler-configuration/)
+    - `src/` containing a worker script referenced from the Wrangler configuration file
 
-    See the [templates folder](https://github.com/cloudflare/workers-sdk/tree/main/templates) of this repo for more examples.
+    See the [templates folder](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare/templates) of this repo for more examples.
 
-- `--deploy` boolean (default: true) optional
+- `--deploy` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
 
   - Deploy your application after it has been created.
 
-- `--lang`string (default: ts) optional
+- `--lang` <Type text="string" /> <MetaInfo text="(default: ts) optional" />
 
   - The programming language of the template.
 
@@ -182,15 +178,15 @@ bun create cloudflare@latest [--] [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]
     - `js`
     - `python`
 
-- `--ts`boolean (default: true) optional
+- `--ts` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
 
-  - Use TypeScript in your application. Deprecated. Please use `--lang=ts` instead.
+  - Use TypeScript in your application. Deprecated. Use `--lang=ts` instead.
 
-- `--git` boolean (default: true) optional
+- `--git` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
 
   - Initialize a local git repository for your application.
 
-- `--open` boolean (default: true) optional
+- `--open` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
 
   - Open with your browser the deployed application (this option is ignored if the application is not deployed).
 
@@ -204,7 +200,7 @@ bun create cloudflare@latest [--] [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]
 
   - Use all the default C3 options each can also be overridden by specifying it.
 
-- `--auto-update` boolean (default: true) optional
+- `--auto-update` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
 
   - Automatically uses the latest version of C3.
 
@@ -229,7 +225,7 @@ Cloudflare collects anonymous usage data to improve `create-cloudflare` over tim
 You can opt-out if you do not wish to share any information.
 
 <PackageManagers
-  type="create"
+	type="create"
 	pkg="cloudflare@latest"
 	args="telemetry disable"
 />
@@ -243,15 +239,15 @@ export CREATE_CLOUDFLARE_TELEMETRY_DISABLED=1
 You can check the status of telemetry collection at any time.
 
 <PackageManagers
-  type="create"
-  pkg="cloudflare@latest"
-  args="telemetry status"
+	type="create"
+	pkg="cloudflare@latest"
+	args="telemetry status"
 />
 
 You can always re-enable telemetry collection.
 
 <PackageManagers
-  type="create"
-  pkg="cloudflare@latest"
-  args="telemetry enable"
+	type="create"
+	pkg="cloudflare@latest"
+	args="telemetry enable"
 />

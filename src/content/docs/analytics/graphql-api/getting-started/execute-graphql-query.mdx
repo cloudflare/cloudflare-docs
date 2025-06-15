@@ -7,11 +7,11 @@ sidebar:
 ---
 
 Using a plain curl to send a query provides the ability to slice-n-dice with the
-results and apply post-processing if needed. For example, [converting][1]
+results and apply post-processing if needed. For example, converting
 results received from GraphQL API into a CSV format.
 
 For more functionality, like auto-completion, schema exploring, etc., you can
-look at GraphQL [clients][2].
+look at GraphQL [clients](/analytics/graphql-api/getting-started/compose-graphql-query/).
 
 GraphQL API expects JSON with two essentials fields: "query" and "variables".
 
@@ -66,7 +66,3 @@ https://api.cloudflare.com/client/v4/graphql \
 --header "Content-Type: application/json" \
 --data @-
 ```
-
-[1]: /analytics/graphql-api/tutorials/export-graphql-to-csv/
-
-[2]: /analytics/graphql-api/getting-started/compose-graphql-query/

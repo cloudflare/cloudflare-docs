@@ -5,6 +5,8 @@ sidebar:
   order: 2
 ---
 
+import { Tabs, TabItem } from "~/components";
+
 This section covers the most common errors you might encounter when connecting resources with Cloudflare Tunnel. If you do not see your issue listed below, refer to the [troubleshooting FAQ](/cloudflare-one/faq/troubleshooting/), view your [Tunnel logs](/cloudflare-one/connections/connect-networks/monitor-tunnels/logs/), or [contact Cloudflare Support](/support/contacting-cloudflare-support/).
 
 ## I see `cloudflared service is already installed`.
@@ -52,14 +54,14 @@ This means the origin is using a certificate that `cloudflared` does not trust. 
 
 An error 1033 indicates your tunnel is not connected to Cloudflare's edge. First, run `cloudflared tunnel list` to see whether your tunnel is listed as active. If it isn't, check the following:
 
-1. Make sure you correctly routed traffic to your tunnel (step 5 in the [Tunnel guide](/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/#5-start-routing-traffic)) by assigning a CNAME record to point traffic to your tunnel. Alternatively, check [this guide](/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb/) to route traffic to your tunnel using load balancers.
-2. Make sure you run your tunnel (step 6 in the [Tunnel guide](/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/#6-run-the-tunnel)).
+1. Make sure you correctly routed traffic to your tunnel (step 5 in the [Tunnel guide](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/create-local-tunnel/#5-start-routing-traffic)) by assigning a CNAME record to point traffic to your tunnel. Alternatively, check [this guide](/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb/) to route traffic to your tunnel using load balancers.
+2. Make sure you run your tunnel (step 6 in the [Tunnel guide](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/create-local-tunnel/#6-run-the-tunnel)).
 
-For more information, here is a [comprehensive list](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/) of Cloudflare 1xxx errors.
+For more information, here is a [comprehensive list](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/) of Cloudflare 1xxx errors.
 
 ## I see `ERR_TOO_MANY_REDIRECTS` when attempting to connect to an Access self-hosted app.
 
-This error occurs when `cloudflared` does not recognize the SSL/TLS certificate presented by your origin. To resolve the issue, set the [origin server name](/cloudflare-one/connections/connect-networks/configure-tunnels/origin-configuration/#originservername) parameter to the hostname on your origin certificate. Here is an example of a locally-managed tunnel configuration:
+This error occurs when `cloudflared` does not recognize the SSL/TLS certificate presented by your origin. To resolve the issue, set the [origin server name](/cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/origin-parameters/#originservername) parameter to the hostname on your origin certificate. Here is an example of a locally-managed tunnel configuration:
 
 ```txt
 ingress:
@@ -79,16 +81,18 @@ There are a few different possible root causes behind the `websocket: bad handsh
 
 - Your `cloudflared tunnel` is either not running or not connected to Cloudflare Edge.
 
-- WebSockets are not enabled. To enable them, go to `dash.cloudflare.com` > **Network**.
+- WebSockets are not [enabled](/network/websockets/#enable-websockets).
 
 - Your Cloudflare account has Universal SSL enabled but your SSL/TLS encryption mode is set to **Off (not secure)**. To resolve:
 
   1. On the Cloudflare dashboard for your zone, go to **SSL/TLS** > **Overview**.
   2. Ensure that your SSL/TLS encryption mode is set to either **Flexible**, **Full** or **Full (strict)**.
 
-- Your requests are blocked by [Super Bot Fight Mode](/bots/get-started/pro/). To resolve, make sure you set **Definitely automated** to _Allow_ in the bot fight mode settings.
+- Your requests are blocked by [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/). To resolve, make sure you set **Definitely automated** to _Allow_ in the bot fight mode settings.
 
 - Your SSH or RDP Access application has the [Binding Cookie](/cloudflare-one/identity/authorization-cookie/#binding-cookie) enabled. To disable the cookie, go to **Access** > **Applications** and edit the application settings.
+
+- One or more [Workers routes](/workers/configuration/routing/routes/) are overlapping with the tunnel hostname, and the Workers do not properly handle the traffic. To resolve, you could either exclude your tunnel from the Worker route by not defining a route that includes the tunnel's hostname or update your Worker to only handle specific paths and forward all other requests to the origin, for example, by using `return fetch(req)`.
 
 ## My tunnel randomly disconnects.
 
@@ -100,7 +104,7 @@ If `cloudflared` returns error `error="remote error: tls: handshake failure"`, c
 
 ## Tunnel connections fail with `Too many open files` error.
 
-If your [Cloudflare Tunnel logs](/cloudflare-one/connections/connect-networks/monitor-tunnels/logs/) returns a `socket: too many open files` error, it means that `cloudflared` has exhausted the open files limit on your machine. The maximum number of open files, or file descriptors, is an operating system setting that determines how many files a process is allowed to open. To increase the open file limit, you will need to [configure ulimit settings](/cloudflare-one/connections/connect-networks/deploy-tunnels/system-requirements/#ulimits) on the machine running `cloudflared`.
+If your [Cloudflare Tunnel logs](/cloudflare-one/connections/connect-networks/monitor-tunnels/logs/) returns a `socket: too many open files` error, it means that `cloudflared` has exhausted the open files limit on your machine. The maximum number of open files, or file descriptors, is an operating system setting that determines how many files a process is allowed to open. To increase the open file limit, you will need to [configure ulimit settings](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/system-requirements/#ulimits) on the machine running `cloudflared`.
 
 ## I see `failed to sufficiently increase receive buffer size` in my cloudflared logs.
 
@@ -131,3 +135,50 @@ sudo sysctl -a | grep net.core.rmem_max
 ```sh output
 net.core.rmem_max = 2500000
 ```
+
+## `ping` and `traceroute` commands do not work.
+
+To ping an IP address behind Cloudflare Tunnel, your system must allow ICMP traffic through `cloudflared`:
+
+<Tabs> <TabItem label="Linux" icon="linux">
+
+1. Ensure that `ping_group_range` includes the Group ID (GID) of the user running `cloudflared`.
+
+   1. To get the Group ID of the user, run `id -g`.
+   2. To verify the Group IDs that are allowed to use ICMP:
+
+   ```sh
+   sudo sysctl net.ipv4.ping_group_range
+   ```
+
+   ```sh output
+   net.ipv4.ping_group_range= 0 10000
+   ```
+
+   3. Either add the user to a group within that range, or update the range to encompass a group the user is already in. To update `ping_group_range`:
+
+   ```sh
+   echo 0 10001 | sudo tee /proc/sys/net/ipv4/ping_group_range
+   ```
+
+2. If you are running multiple network interfaces (for example, `eth0` and `eth1`), configure `cloudflared` to use the external Internet-facing interface:
+
+   ```sh
+   cloudflared tunnel run --icmpv4-src <IP of primary interface>
+   ```
+
+</TabItem> <TabItem label="Docker" icon="seti:docker">
+
+In your environment, modify the `ping_group_range` parameter to include the Group ID (GID) of the user running `cloudflared`.
+
+By default the [`cloudflared` Docker container](https://github.com/cloudflare/cloudflared/blob/master/Dockerfile#L29C6-L29C13) executes as a user called `nonroot` inside of the container. `nonroot` is a specific user that exists in the [base image](https://github.com/GoogleContainerTools/distroless/blob/859eeea1f9b3b7d59bdcd7e24a977f721e4a406c/base/base.bzl#L8) we use, and its Group ID is hardcoded to 65532.
+
+</TabItem> </Tabs>
+
+## Cloudflare Tunnel is buffering my streaming response instead of streaming it live.
+
+Proxied traffic through Cloudflare Tunnel is buffered by default unless the origin server includes the response header `Content-Type: text/event-stream`. The `Content-Type: text/event-stream` response header tells `cloudflared` to stream data as it arrives instead of buffering the entire response.
+
+## Troubleshooting
+
+[Troubleshooting](/cloudflare-one/faq/troubleshooting/) - Browse other Cloudflare One-related troubleshooting errors and solutions.

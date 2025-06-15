@@ -65,7 +65,7 @@ If you have already created DNS records covering your subdomain in the parent zo
 6. Get the nameserver names for the subdomain. These can be found within your newly created child zone in [DNS > Records](https://dash.cloudflare.com/?to=/:account/:zone/dns/records), and will **not** be the same nameservers as the ones used in the parent zone.
 
    :::note
-   If the parent zone is on Cloudflare, steps 7 and 9 below can be achieved via API. Use the [Batch DNS records](/api/operations/dns-records-for-a-zone-batch-dns-records) endpoint to delete and create or update DNS records within a single request. Refer to [Batch record changes](/dns/manage-dns-records/how-to/batch-record-changes/) for further guidance.
+   If the parent zone is on Cloudflare, steps 7 and 9 below can be achieved via API. Use the [Batch DNS records](/api/resources/dns/subresources/records/methods/batch/) endpoint to delete and create or update DNS records within a single request. Refer to [Batch record changes](/dns/manage-dns-records/how-to/batch-record-changes/) for further guidance.
    :::
 
 7. Within the **DNS** > **Records** of the parent zone, update existing address records (`A/AAAA`) on your subdomain to `NS` records. If you only have one address record, update the existing one and add a new `NS` record. If you have multiple address records, update any two of them.

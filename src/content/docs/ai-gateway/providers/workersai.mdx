@@ -7,14 +7,32 @@ sidebar:
 
 import { Render } from "~/components";
 
-Use AI Gateway for analytics, caching, and security on requests to [Workers AI](/workers-ai/).
+Use AI Gateway for analytics, caching, and security on requests to [Workers AI](/workers-ai/). Workers AI integrates seamlessly with AI Gateway, allowing you to execute AI inference via API requests or through an environment binding for Workers scripts. The binding simplifies the process by routing requests through your AI Gateway with minimal setup.
+
+## Prerequisites
+
+When making requests to Workers AI, ensure you have the following:
+
+- Your AI Gateway Account ID.
+- Your AI Gateway gateway name.
+- An active Workers AI API token.
+- The name of the Workers AI model you want to use.
 
 ## REST API
 
 To interact with a REST API, update the URL used for your request:
 
-- **Previous**: `https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/{model_id}`
-- **New**: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/workers-ai/{model_id}`
+- **Previous**:
+
+```txt
+https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/{model_id}
+```
+
+- **New**:
+
+```txt
+https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/workers-ai/{model_id}
+```
 
 For these parameters:
 
@@ -60,9 +78,9 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/workers-ai/v
 '
 ```
 
-### Worker
+## Workers Binding
 
-To include an AI Gateway within your Worker, add the gateway as an object in your Workers AI request.
+You can integrate Workers AI with AI Gateway using an environment binding. To include an AI Gateway within your Worker, add the gateway as an object in your Workers AI request.
 
 ```ts
 export interface Env {
@@ -89,11 +107,27 @@ export default {
 } satisfies ExportedHandler<Env>;
 ```
 
+For a detailed step-by-step guide on integrating Workers AI with AI Gateway using a binding, see [Integrations in AI Gateway](/ai-gateway/integrations/aig-workers-ai-binding/).
+
 Workers AI supports the following parameters for AI gateways:
 
 - `id` string
   - Name of your existing [AI Gateway](/ai-gateway/get-started/#create-gateway). Must be in the same account as your Worker.
 - `skipCache` boolean(default: false)
-  - Controls whether the request should [skip the cache](/ai-gateway/configuration/caching/#skip-cache-cf-skip-cache).
+  - Controls whether the request should [skip the cache](/ai-gateway/configuration/caching/#skip-cache-cf-aig-skip-cache).
 - `cacheTtl` number
-  - Controls the [Cache TTL](/ai-gateway/configuration/caching/#cache-ttl-cf-cache-ttl).
+  - Controls the [Cache TTL](/ai-gateway/configuration/caching/#cache-ttl-cf-aig-cache-ttl).
+
+<Render
+	file="chat-completions-providers"
+	product="ai-gateway"
+	params={{
+		name: "Workers AI",
+		jsonexample: `
+{
+	"model": "workers-ai/{model}"
+}`
+
+    }}
+
+/>

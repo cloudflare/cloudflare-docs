@@ -10,6 +10,18 @@ import { Render } from "~/components";
 
 You must configure [`boto3`](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html) to use a preconstructed `endpoint_url` value. This can be done through any `boto3` usage that accepts connection arguments; for example:
 
+:::note[Compatibility]
+Client version `1.36.0` introduced a modification to the default checksum behavior from the client that is currently incompatible with R2 APIs.
+
+To mitigate, users can use `1.35.99` or add the following to their s3 resource config:
+
+```python
+request_checksum_calculation = 'WHEN_REQUIRED',
+response_checksum_validation = 'WHEN_REQUIRED'
+```
+
+:::
+
 ```python
 import boto3
 

@@ -22,7 +22,7 @@ You can limit each user’s time on your site to only one session duration by ch
 To terminate a user's session when they perform a specific action, you can send a command to the waiting room using an HTTP header on the response from your origin. This command tells the waiting room to revoke the session of the user associated with the current response. This allows spots to open up more dynamically and may increase throughput from your queue.
 
 To enable this feature in the Cloudflare Dashboard, check the box next to Allow session termination via origin commands from the dashboard. 
-To enable this feature through the [Cloudflare API](/api/operations/waiting-room-update-waiting-room), update the `enabled_origin_commands` property to include the value `”revoke”` in the list of enabled origin commands.
+To enable this feature through the [Cloudflare API](/api/resources/waiting_rooms/methods/update/), update the `enabled_origin_commands` property to include the value `”revoke”` in the list of enabled origin commands.
  
 Then, to return a revocation origin command and revoke the user's session associated with the current request, add the `Cf-Waiting-Room-Command: revoke` HTTP header to the response from your origin.
 

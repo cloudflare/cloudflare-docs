@@ -11,6 +11,11 @@ const props = z.object({
 const { framework } = props.parse(Astro.props);
 
 const entry = await getEntry("pages-framework-presets", "index");
+
+if (!entry) {
+	throw new Error("Failed to load data");
+}
+
 const presets = entry.data.build_configs;
 
 const preset = presets[framework];

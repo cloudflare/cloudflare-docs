@@ -6,13 +6,13 @@ sidebar:
 
 ---
 
-This tutorial explains how to analyze [Cloudflare Logs](https://www.cloudflare.com/products/cloudflare-logs/) using the [Cloudflare Log Analytics for Looker](https://looker.com/platform/blocks/source/cloudflare-log-analytics).
+This tutorial explains how to analyze [Cloudflare Logs](https://www.cloudflare.com/products/cloudflare-logs/) using the [Cloudflare Log Analytics for Looker](https://marketplace.looker.com/marketplace/detail/cloudflare-log-analytics).
 
 ## Overview
 
 If you have not used Cloudflare Logs before, refer to the [Logs documentation](/logs/) for more details. Contact your Cloudflare Customer Account Team to enable logs for your account.
 
-This tutorial uses Cloudflare Logpush to send logs to [Google Cloud Storage Bucket and Cloud Function](/analytics/analytics-integrations/google-cloud/) and then import them into Google Big Query.
+This tutorial uses Cloudflare Logpush to send logs to [Google Cloud Storage Bucket](https://cloud.google.com/storage) and Cloud Function and then import them into Google BigQuery.
 
 ### Prerequisites
 
@@ -26,7 +26,7 @@ Before sending your Cloudflare log data to Looker, make sure that you:
 :::note[Note]
 
 
-Cloudflare logs are HTTP/HTTPS request logs in JSON format and are gathered from our 200+ data centers globally. By default, timestamps are returned as Unix nanosecond integers. We recommend using the RFC 3339 format for sending logs to Looker.
+Cloudflare logs are HTTP/HTTPS request logs in JSON format and are gathered from our 200+ data centers globally. By default, timestamps are returned as UNIX nanosecond integers. We recommend using the RFC 3339 format for sending logs to Looker.
 
 
 :::
@@ -147,8 +147,8 @@ Available Filters:
 
 With the following pre-set filter values in the Looker dashboards all workers subrequests and client request method PURGE are excluded from the calculations:
 
-* **WorkerSubrequet** set to value *False*
+* **WorkerSubrequest** set to value *False*
 
-* **ClientRequestMethod** doesn’t equal to *PURGE*
+* **ClientRequestMethod** does not equal to *PURGE*
 
-You can always adjust your default filters values according to your needs.
+You can always adjust your default filter values according to your needs.

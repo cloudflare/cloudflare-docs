@@ -17,8 +17,13 @@ const { id } = props.parse(Astro.props);
 // TODO: improve product features types
 const plan = (await indexPlans(id)) as any;
 
-// @ts-ignore types not implemented for plans JSON
-const properties = plan.properties;
+const features: any[] = Object.values(plan.properties);
+
+const hasFree = features.some((x) => x.free);
+const hasPro = features.some((x) => x.pro);
+const hasBiz = features.some((x) => x.biz);
+const hasEnt = features.some((x) => x.ent);
+const hasEntPlus = features.some((x) => x.ent_plus);
 
 const markdown = (content: any) => {
 	if (typeof content !== "string") return content;
@@ -31,16 +36,16 @@ const markdown = (content: any) => {
 	<thead>
 		<tr>
 			<th></th>
-			<th>Free</th>
-			<th>Pro</th>
-			<th>Business</th>
-			<th>Enterprise</th>
-			{plan.ent_plus && <th>{plan.ent_plus}</th>}
+			{hasFree && <th>Free</th>}
+			{hasPro && <th>Pro</th>}
+			{hasBiz && <th>Business</th>}
+			{hasEnt && <th>Enterprise</th>}
+			{hasEntPlus && <th>{plan.ent_plus}</th>}
 		</tr>
 	</thead>
 	<tbody>
 		{
-			Object.entries(properties).map(([_, v]: [string, any]) => {
+			features.map((feature) => {
 				const renderTitle = (title: string) => {
 					const placeholder = "[[GLOSSARY_TOOLTIP_SNIPPETS_SUBREQUEST]]";
 
@@ -67,12 +72,12 @@ const markdown = (content: any) => {
 
 				return (
 					<tr>
-						<th set:html={renderTitle(v.title)} />
-						<td set:html={markdown(v.free)} />
-						<td set:html={markdown(v.pro)} />
-						<td set:html={markdown(v.biz)} />
-						<td set:html={markdown(v.ent)} />
-						{plan.ent_plus && <td set:html={markdown(v.ent_plus)} />}
+						<th set:html={renderTitle(feature.title)} />
+						{hasFree && <td set:html={markdown(feature.free)} />}
+						{hasPro && <td set:html={markdown(feature.pro)} />}
+						{hasBiz && <td set:html={markdown(feature.biz)} />}
+						{hasEnt && <td set:html={markdown(feature.ent)} />}
+						{hasEntPlus && <td set:html={markdown(feature.ent_plus)} />}
 					</tr>
 				);
 			})

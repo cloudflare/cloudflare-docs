@@ -1,0 +1,9 @@
+---
+{}
+
+---
+
+| Description | 2xx response codes | 4xx, 5xx response codes |
+| --- | --- | --- |
+| If all requests are missing authentication, Cloudflare will apply the label: | `cf-missing-auth` | Without successful responses, no label will be added. |
+| If only some requests are missing authentication, Cloudflare will apply the label: | `cf-mixed-auth` | Without successful responses, no label will be added. |

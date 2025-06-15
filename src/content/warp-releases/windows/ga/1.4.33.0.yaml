@@ -1,0 +1,24 @@
+releaseNotes: |-
+  **Notable updates in this release**
+  - This is a hotfix release to address two issues for Teams customers:
+      - Fixed a rare deployment issue
+      - Fixed issue with device posture verification of applications
+
+  ***Previous Release (1.4.25.0) Notes***
+  - New support for device posture reporting (Teams accounts only)
+  - New IP exclusion UI so you can now exclude an IP, or IP range from the WARP tunnel
+  - Fixed: Reconnect DNS when errors are encountered
+  - DoH/DoT are now routed inside the WARP tunnel
+  - Other minor bug fixes
+
+  **Known issues**
+
+  - You are unable to subscribe to WARP+ via the Desktop apps. You must subscribe first on your mobile device and then copy/paste your license key into the Accounts page on desktop
+  - To opt-out of the beta please uninstall via the instructions here: https://developers.cloudflare.com/warp-client/warp-for-everyone/setting-up/windows#how-to-remove-application and install from from the link here: https://developers.cloudflare.com/warp-client/warp-for-everyone/setting-up/requirements#windows
+
+  For a complete list of known issues please visit https://developers.cloudflare.com/warpclient/known-issues-and-faq
+version: 1.4.33.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/1.4.33.0
+packageSize: 81084416
+releaseDate: 2021-03-24T18:20:59.127Z
+platformName: Windows

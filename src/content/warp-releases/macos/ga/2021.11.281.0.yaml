@@ -1,0 +1,45 @@
+releaseNotes: >-
+  This release contains new features and improvements from the last release.
+
+
+  - Starting with this release our version number scheme has now changed to
+  YYYY.M.build_number (ex. 2021.11.123).
+
+  - Use timestamps in log file names stored by warp-diag.
+
+  - Added traceroute information to warp-diag for Teams destinations to help
+  debug connectivity issues.
+
+  - warp-diag now reports status when run from terminal so you can see it
+  working.
+
+  - warp-diag now allows for --output flag so you can specify where diagnostics
+  data is stored.
+
+  - Improved general reliability issues by moving DoH requests outside the
+  tunnel
+
+  - Improved overall reliability of daemon/service including how it connects to
+  the GUI (reduce instance of IPC errors).
+
+  - Fixed localhost proxy mode which was broken in last release.
+
+  - Fixed issue where posture checks were not running every 5 minutes like they
+  should.
+
+  - Fixed issue where DNS sockets could sometimes fail to be released, resulting
+  in address in use errors.
+
+  - Fixed issue where auto_connect mdm parameter wasn't working correctly when
+  switch_locked=false.
+
+  - Fixed issue where invalid certificate on device would cause the client to
+  not connect.
+
+  - Fixed issue in re-connection logic where we would not always try to
+  re-connect if there was a network change detected.
+version: 2021.11.281.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2021.11.281.0
+packageSize: 40031870
+releaseDate: 2021-11-30T17:11:42.873Z
+platformName: macOS

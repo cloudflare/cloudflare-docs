@@ -1,0 +1,27 @@
+---
+link: "/autorag/platform/release-note/"
+productName: AutoRAG
+productLink: "/autorag/"
+productArea: Developer platform
+productAreaLink: /workers/platform/changelog/platform/
+entries:
+  - publish_date: "2025-05-31"
+    title: Errored files will now be retried in next sync
+    description: |-
+      Files that fail to index will now be automatically retried in the next indexing job. For instance, if a file initially failed because it was oversized but was then corrected (e.g. replaced with a file of the same name/key within the size limit), it will be re-attempted during the next scheduled sync.
+  - publish_date: "2025-05-31"
+    title: Fixed character cutoff in recursive chunking
+    description: |-
+      Resolved an issue where certain characters (e.g. '#') were being cut off during the recursive chunking and embedding process. This fix ensures complete character processing in the indexing process.
+  - publish_date: "2025-05-25"
+    title: EU jurisdiction R2 buckets now supported
+    description: |-
+      AutoRAG now supports R2 buckets configured with European Union (EU) jurisdiction restrictions. Previously, files in EU-restricted R2 buckets would not index when linked. This issue has been resolved, and all EU-restricted R2 buckets should now function as expected.
+  - publish_date: "2025-04-23"
+    title: Response streaming in AutoRAG binding added
+    description: |-
+      AutoRAG now supports response streaming in the `AI Search` method of the [Workers binding](/autorag/usage/workers-binding/), allowing you to stream results as they’re retrieved by setting `stream: true`.
+  - publish_date: "2025-04-07"
+    title: AutoRAG is now in open beta!
+    description: |-
+      AutoRAG allows developers to create fully-managed retrieval-augmented generation (RAG) pipelines powered by Cloudflare allowing developers to integrate context-aware AI into their applications without managing infrastructure. Get started today on the [Cloudflare Dashboard](https://dash.cloudflare.com/?to=/:account/ai/autorag).

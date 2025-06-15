@@ -2,7 +2,7 @@
 pcx_content_type: reference
 title: Identity-based policies
 sidebar:
-  order: 10
+  order: 7
 ---
 
 import { Render } from "~/components";
@@ -24,11 +24,7 @@ To view the identity that Gateway will use when evaluating policies, check the [
 
 ### Automatic SCIM IdP updates
 
-Gateway will automatically detect changes in user name, title, and group membership for IdPs configured with System for Cross-domain Identity Management (SCIM) provisioning. IdPs that support SCIM include:
-
-<Render file="access/scim-supported-idps" />
-
-For more information, refer to [SCIM provisioning](/cloudflare-one/identity/users/scim/).
+Gateway will automatically detect changes in user name, title, and group membership for IdPs configured with System for Cross-domain Identity Management (SCIM) provisioning. For more information, refer to [SCIM provisioning](/cloudflare-one/identity/users/scim/).
 
 ### Extended email addresses
 
@@ -40,41 +36,31 @@ For more information, refer to [SCIM provisioning](/cloudflare-one/identity/user
 
 Specify a value from the SAML Attribute Assertion.
 
-| UI name         | API example                                       |
-| --------------- | ------------------------------------------------- |
-| SAML Attributes | `identity.saml_attributes == "\"group=finance\""` |
+<Render file="gateway/selectors/saml-attributes" />
 
 ### User Email
 
 Use this selector to create identity-based Gateway rules based on a user's email.
 
-| UI name    | API example value                           |
-| ---------- | ------------------------------------------- |
-| User Email | `identity.email == "user-name@company.com"` |
+<Render file="gateway/selectors/user-email" params={{ UIname: "User Email" }}/>
 
 ### User Group IDs
 
 Use this selector to create identity-based Gateway rules based on an IdP group ID of which the user is configured as a member in the IdP.
 
-| UI name        | API example                                    |
-| -------------- | ---------------------------------------------- |
-| User Group IDs | `identity.groups.id == "12jf495bhjd7893ml09o"` |
+<Render file="gateway/selectors/user-group-ids" params={{ UIname: "User Group IDs" }}/>
 
 ### User Group Email
 
 Use this selector to create identity-based Gateway rules based on an IdP group email address of which the user is configured as a member in the IdP.
 
-| UI name          | API example                                       |
-| ---------------- | ------------------------------------------------- |
-| User Group Email | `identity.groups.id == "contractors@company.com"` |
+<Render file="gateway/selectors/user-group-email" params={{ UIname: "User Group Email" }}/>
 
 ### User Group Names
 
 Use this selector to create identity-based Gateway rules based on an IdP group name of which the user is configured as a member in the IdP.
 
-| UI name          | API example                             |
-| ---------------- | --------------------------------------- |
-| User Group Names | `identity.groups.name == "\"finance\""` |
+<Render file="gateway/selectors/user-group-names" params={{ UIname: "User Group Names" }}/>
 
 ### User Name
 
@@ -84,9 +70,9 @@ Use this selector to create identity-based Gateway rules based on an IdP usernam
 | --------- | ------------------------------ |
 | User Name | `identity.name == "user-name"` |
 
-:::note[Gateway groups vs. Access groups]
+:::note[Gateway groups vs. Access rule groups]
 
-In Gateway, a **User Group** refers to a group in your IdP (for example, an Okta group). Gateway does not currently support applying DNS, HTTP, and Network policies to [Access groups](/cloudflare-one/identity/users/groups/). This is because Access groups may include criteria not available through the IdP, such as device location or IP address.
+In Gateway, a **User Group** refers to a group in your IdP (for example, an Okta group). Gateway does not currently support applying DNS, HTTP, and Network policies to [Access rule groups](/cloudflare-one/policies/access/groups/). This is because Access rule groups may include criteria not available through the IdP, such as device location or IP address.
 
 :::
 

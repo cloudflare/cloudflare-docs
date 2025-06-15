@@ -1,0 +1,37 @@
+---
+# Error: cloudflare.Contractions
+#
+# Do not use contractions.
+#
+# For a list of all options, see https://vale.sh/docs/topics/styles/
+
+extends: substitution
+message: "Do not use contractions. Only change the contractions, nothing else."
+link: https://developers.cloudflare.com/style-guide/grammar/parts-of-speech/contractions/
+level: error
+ignorecase: true
+action:
+  name: replace
+swap:
+  aren't: are not
+  can't: cannot
+  couldn't: could not
+  didn't: did not
+  don't: do not
+  doesn't: does not
+  hasn't: has not
+  haven't: have not
+  how's: how is
+  isn't: is not
+  it's: it is
+  shouldn't: should not
+  that's: that is
+  they're: they are
+  wasn't: was not
+  we're: we are
+  we've: we have
+  weren't: were not
+  what's: what is
+  when's: when is
+  where's: where is
+  won't: will not

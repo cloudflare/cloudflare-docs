@@ -2,11 +2,37 @@
 {}
 ---
 
-## Block file types
+import { Tabs, TabItem } from "~/components";
 
 Block the upload or download of files based on their type.
 
-| Selector           | Operator | Value                                   | Logic | Action |
-| ------------------ | -------- | --------------------------------------- | ----- | ------ |
-| Upload File Type   | in       | _Microsoft Office Word Document (docx)_ | And   | Block  |
-| Download File Type | in       | _PDF (pdf)_                             |       |        |
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector            | Operator | Value                                   | Logic | Action |
+| ------------------- | -------- | --------------------------------------- | ----- | ------ |
+| Upload File Types   | in       | _Microsoft Office Word Document (docx)_ | And   | Block  |
+| Download File Types | in       | _PDF (pdf)_                             |       |        |
+
+</TabItem>
+
+<TabItem label="API">
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "Block file types",
+  "description": "Block the upload or download of files based on their type",
+  "enabled": true,
+  "action": "block",
+  "filters": [
+    "http"
+  ],
+  "traffic": "any(http.upload.file.types[*] in {\"docx\"}) and any(http.download.file.types[*] in {\"pdf\"})",
+  "identity": "",
+  "device_posture": ""
+}'
+```
+
+</TabItem> </Tabs>

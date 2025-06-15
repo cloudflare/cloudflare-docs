@@ -14,12 +14,12 @@ This guide covers how to configure [Google Cloud](https://support.google.com/clo
 
 When configuring Google Cloud with Access, the following limitations apply:
 
-- Users will not be able to log in using [Google](/cloudflare-one/identity/idp-integration/google/) or [Google Workspace](/cloudflare-one/identity/idp-integration/gsuite/) as an identity provider after Google Cloud is configured with Access.
+- Users will not be able to log in using [Google](/cloudflare-one/identity/idp-integration/google/) or [Google Workspace](/cloudflare-one/identity/idp-integration/google-workspace/) as an identity provider after Google Cloud is configured with Access.
 
 - The integration of Access as a single sign-on provider for your Google Cloud account does not work for Google super admins. It will work for other users.
   :::
 
-## Prerequistes
+## Prerequisites
 
 - An [identity provider](/cloudflare-one/identity/idp-integration/) configured in Cloudflare Zero Trust
 - Admin access to a Google Workspace account
@@ -37,9 +37,8 @@ When configuring Google Cloud with Access, the following limitations apply:
    - **Assertion Consumer Service URL**: `https://www.google.com/a/<your_domain.com>/acs`
    - **Name ID format**: _Email_
 7. Copy the **SSO endpoint**, **Access Entity ID or Issuer**, and **Public key**.
-8. Select **Save configuration**.
-9. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
-10. Select **Done**.
+8. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
+9. Save the application.
 
 ## 2. Create a x.509 certificate
 

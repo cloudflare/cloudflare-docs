@@ -1,0 +1,15 @@
+releaseNotes: |
+  This release contains minor fixes and improvements.
+
+  **Changes and improvements:**
+  - Fixed an issue where SSH sessions and other application connections over TCP or UDP could be dropped when using MASQUE and the device’s primary network interface changed.
+  - Fixed an issue to ensure the managed certificate is installed in the trust store if not already there.
+
+  **Known issues:**
+  - Cloudflare is investigating temporary networking issues caused by  macOS 15 (Sequoia) changes that seem to affect some users and may be seen with any version of the WARP client.
+
+version: 2024.10.279.1
+releaseDate: 2024-10-22T15:49:22.421Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2024.10.279.1
+packageSize: 80563160
+platformName: macOS

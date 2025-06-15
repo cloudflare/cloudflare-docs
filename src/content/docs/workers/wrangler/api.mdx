@@ -8,12 +8,50 @@ description: A set of programmatic APIs that can be integrated with local
   Cloudflare Workers-related workflows.
 ---
 
-import { Render, TabItem, Tabs, Type, MetaInfo } from "~/components";
+import {
+	Render,
+	TabItem,
+	Tabs,
+	Type,
+	MetaInfo,
+	WranglerConfig,
+	PackageManagers,
+} from "~/components";
 
 Wrangler offers APIs to programmatically interact with your Cloudflare Workers.
 
+- [`unstable_startWorker`](#unstable_startworker) - Start a server for running integration tests against your Worker.
 - [`unstable_dev`](#unstable_dev) - Start a server for running either end-to-end (e2e) or integration tests against your Worker.
 - [`getPlatformProxy`](#getplatformproxy) - Get proxies and values for emulating the Cloudflare Workers platform in a Node.js process.
+
+## `unstable_startWorker`
+
+This API exposes the internals of Wrangler's dev server, and allows you to customise how it runs. For example, you could use `unstable_startWorker()` to run integration tests against your Worker. This example uses `node:test`, but should apply to any testing framework:
+
+```js
+import assert from "node:assert";
+import test, { after, before, describe } from "node:test";
+import { unstable_startWorker } from "wrangler";
+
+describe("worker", () => {
+	let worker;
+
+	before(async () => {
+		worker = await unstable_startWorker({ config: "wrangler.json" });
+	});
+
+	test("hello world", async () => {
+		assert.strictEqual(
+			await (await worker.fetch("http://example.com")).text(),
+			"Hello world",
+		);
+	});
+
+	after(async () => {
+		await worker.dispose();
+	});
+});
+```
 
 ## `unstable_dev`
 
@@ -25,9 +63,9 @@ By default, `unstable_dev` will perform integration tests against a local server
 
 :::note
 
-The `unstable_dev()` function has an `unstable_` prefix because the API is experimental and may change in the future.
+The `unstable_dev()` function has an `unstable_` prefix because the API is experimental and may change in the future. We recommend migrating to the `unstable_startWorker()` API, documented above.
 
-`unstable_dev()` has no known bugs and is safe to use. If you discover any bugs, open a [GitHub issue](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+If you have been using `unstable_dev()` for integration testing and want to migrate to Cloudflare's Vitest integration, refer to the [Migrate from `unstable_dev` migration guide](/workers/testing/vitest-integration/migration-guides/migrate-from-unstable-dev/) for more information.
 
 :::
 
@@ -252,19 +290,15 @@ const platform = await getPlatformProxy(options);
 
       The path to the config file to use.
 
-      If no path is specified the default behavior is to search from the current directory up the filesystem for a `wrangler.toml` to use.
+      If no path is specified, the default behavior is to search from the current directory up the filesystem for a [Wrangler configuration file](/workers/wrangler/configuration/) to use.
 
       **Note:** this field is optional but if a path is specified it must point to a valid file on the filesystem.
-
-    - `experimentalJsonConfig` boolean
-
-      If `true`, allows the utility to read a JSON config file (for example, `wrangler.json`).
 
     - `persist` boolean | `{ path: string }`
 
       Indicates if and where to persist the bindings data. If `true` or `undefined`, defaults to the same location used by Wrangler, so data can be shared between it and the caller. If `false`, no data is persisted to or read from the filesystem.
 
-      **Note:** If you use `wrangler`'s `--persist-to` option, note that this option adds a sub directory called `v3` under the hood while `getPlatformProxy`'s `persist` does not. For example, if you run `wrangler dev --persist-to ./my-directory`, to reuse the same location using `getPlatformProxy`, you will have to specify: `persist: "./my-directory/v3"`.
+      **Note:** If you use `wrangler`'s `--persist-to` option, note that this option adds a subdirectory called `v3` under the hood while `getPlatformProxy`'s `persist` does not. For example, if you run `wrangler dev --persist-to ./my-directory`, to reuse the same location using `getPlatformProxy`, you will have to specify: `persist: { path: "./my-directory/v3" }`.
 
 ### Return Type
 
@@ -295,12 +329,16 @@ const platform = await getPlatformProxy(options);
 
 ### Usage
 
-The `getPlatformProxy` function uses bindings found in `wrangler.toml`. For example, if you have an [environment variable](/workers/configuration/environment-variables/#add-environment-variables-via-wrangler) configuration set up in `wrangler.toml`:
+The `getPlatformProxy` function uses bindings found in the [Wrangler configuration file](/workers/wrangler/configuration/). For example, if you have an [environment variable](/workers/configuration/environment-variables/#add-environment-variables-via-wrangler) configuration set up in the Wrangler configuration file:
+
+<WranglerConfig>
 
 ```toml
 [vars]
 MY_VARIABLE = "test"
 ```
+
+</WranglerConfig>
 
 You can access the bindings by importing `getPlatformProxy` like this:
 
@@ -320,7 +358,7 @@ This will print the following output: `MY_VARIABLE = test`.
 
 ### Supported bindings
 
-All supported bindings found in your `wrangler.toml` are available to you via `env`.
+All supported bindings found in your [Wrangler configuration file](/workers/wrangler/configuration/) are available to you via `env`.
 
 The bindings supported by `getPlatformProxy` are:
 
@@ -330,28 +368,11 @@ The bindings supported by `getPlatformProxy` are:
 
 - [KV namespace bindings](/kv/api/)
 
-- [Durable Object bindings](/durable-objects/api/)
-
-  - To use a Durable Object binding with `getPlatformProxy`, always [specify a `script_name`](/workers/wrangler/configuration/#durable-objects) and have the target Worker run in a separate terminal via [`wrangler dev`](/workers/wrangler/commands/#dev).
-
-    For example, you might have the following file read by `getPlatformProxy`.
-
-    ```toml
-    [[durable_objects.bindings]]
-    name = "MyDurableObject"
-    class_name = "MyDurableObject"
-    script_name = "my-worker"
-    ```
-
-    In order for this binding to be successfully proxied by `getPlatformProxy`, a worker named `my-worker`
-    with a Durable Object declaration using the same `class_name` of `"MyDurableObject"` must be run
-    separately via `wrangler dev`.
-
 - [R2 bucket bindings](/r2/api/workers/workers-api-reference/)
 
 - [Queue bindings](/queues/configuration/javascript-apis/)
 
-- [D1 database bindings](/d1/build-with-d1/d1-client-api/)
+- [D1 database bindings](/d1/worker-api/)
 
 - [Hyperdrive bindings](/hyperdrive)
 
@@ -365,3 +386,56 @@ The bindings supported by `getPlatformProxy` are:
 - [Workers AI bindings](/workers-ai/get-started/workers-wrangler/#2-connect-your-worker-to-workers-ai)
 
   <Render file="ai-local-usage-charges" product="workers" />
+
+- [Durable Object bindings](/durable-objects/api/)
+
+  - To use a Durable Object binding with `getPlatformProxy`, always specify a [`script_name`](/workers/wrangler/configuration/#durable-objects).
+
+    For example, you might have the following binding in a Wrangler configuration file read by `getPlatformProxy`.
+
+    <WranglerConfig>
+
+    ```toml
+    [[durable_objects.bindings]]
+    name = "MyDurableObject"
+    class_name = "MyDurableObject"
+    script_name = "external-do-worker"
+    ```
+
+    </WranglerConfig>
+
+    You will need to declare your Durable Object `"MyDurableObject"` in another Worker, called `external-do-worker` in this example.
+
+        ```ts title="./external-do-worker/src/index.ts"
+        export class MyDurableObject extends DurableObject {
+        	// Your DO code goes here
+        }
+
+        export default {
+        	fetch() {
+        			// Doesn't have to do anything, but a DO cannot be the default export
+        			return new Response("Hello, world!");
+        	},
+        };
+        ```
+        That Worker also needs a Wrangler configuration file that looks like this:
+
+        <WranglerConfig>
+        ```json
+        {
+        	"name": "external-do-worker",
+        	"main": "src/index.ts",
+        	"compatibility_date": "XXXX-XX-XX"
+        }
+        ```
+        </WranglerConfig>
+
+        If you are not using RPC with your Durable Object, you can run a separate Wrangler dev session alongside your framework development server.
+
+        Otherwise, you can build your application and run both Workers in the same Wrangler dev session.
+
+        If you are using Pages run:
+        <PackageManagers type="exec" pkg="wrangler" args="pages dev -c path/to/pages/wrangler.jsonc -c path/to/external-do-worker/wrangler.jsonc" />
+
+        If you are using Workers with Assets run:
+        <PackageManagers type="exec" pkg="wrangler" args="dev -c path/to/workers-assets/wrangler.jsonc -c path/to/external-do-worker/wrangler.jsonc" />

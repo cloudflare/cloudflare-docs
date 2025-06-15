@@ -1,4 +1,5 @@
 ---
+/* eslint-disable astro/jsx-a11y/no-noninteractive-tabindex */
 import { z } from "astro:schema";
 import { getGlossaryEntry } from "~/util/glossary";
 import { marked } from "marked";
@@ -29,7 +30,7 @@ definition = definition.split(/\r?\n/)[0];
 	id={tooltip.term}
 	data-tooltip
 	data-content={marked.parse(definition)}
-	class="border-b-2 border-dashed border-accent-600"
+	class="border-b-2 border-dashed border-accent"
 	tabindex="0"
 	>{
 		link ? (

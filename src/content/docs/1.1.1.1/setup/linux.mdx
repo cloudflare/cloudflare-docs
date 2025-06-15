@@ -53,6 +53,13 @@ sudo <EDITOR> /etc/systemd/resolved.conf
 [Resolve]
 DNS=1.1.1.1
 ```
+To use DNS over TLS, add `#one.one.one.one` and set `DNSOverTLS` to `yes`, as in the following example:
+
+```txt
+[Resolve]
+DNS=1.1.1.1#one.one.one.one
+DNSOverTLS=yes
+```
 
 ## Use graphical user interface (GUI)
 

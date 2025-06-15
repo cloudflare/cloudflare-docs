@@ -1,0 +1,72 @@
+---
+title: FAQ
+pcx_content_type: faq
+sidebar:
+  order: 8
+head:
+  - tag: title
+    content: Frequently asked questions about Cloudflare Browser Rendering
+---
+
+import { GlossaryTooltip } from "~/components";
+
+Below you will find answers to our most commonly asked questions. If you cannot find the answer you are looking for, refer to the [Discord](https://discord.cloudflare.com) to explore additional resources.
+
+### I see `Cannot read properties of undefined (reading 'fetch')` when using Browser Rendering. How do I fix this?
+
+This error occurs because your Puppeteer launch is not receiving the Browser binding or you are not on a Workers Paid plan.
+
+To resolve: Pass your Browser binding into `puppeteer.launch`.
+
+### Will Browser Rendering bypass Cloudflare's Bot Protection?
+
+No, Browser Rendering requests are always identified as bots by Cloudflare and do not bypass Bot Protection. Additionally, Browser Rendering respects the robots.txt protocol, ensuring that any disallowed paths specified for user agents are not accessed during rendering.
+
+If you are attempting to scan your **own zone** and need Browser Rendering to access areas protected by Cloudflare’s Bot Protection, you can create a [WAF skip rule](/waf/custom-rules/skip/) to bypass the bot protection using a header or a custom user agent.
+
+### Why can't I use an XPath selector when using Browser Rendering with Puppeteer?
+
+Currently it is not possible to use Xpath to select elements since this poses a security risk to Workers.
+
+As an alternative try to use a css selector or `page.evaluate` for example:
+
+```ts
+const innerHtml = await page.evaluate(() => {
+	return (
+		// @ts-ignore this runs on browser context
+		new XPathEvaluator()
+			.createExpression("/html/body/div/h1")
+			// @ts-ignore this runs on browser context
+			.evaluate(document, XPathResult.FIRST_ORDERED_NODE_TYPE).singleNodeValue
+			.innerHTML
+	);
+});
+```
+
+:::note
+
+Keep in mind that `page.evaluate` can only return primitive types like strings, numbers, etc.
+
+Returning an `HTMLElement` will not work.
+
+:::
+
+### What are the usage limits and pricing tiers for Cloudflare Browser Rendering and how do I estimate my costs?
+
+You can view the complete breakdown of concurrency caps, request rates, timeouts, and REST API quotas on the [limits page](/browser-rendering/platform/limits/).
+
+By default, idle browser sessions close after 60 seconds of inactivity. You can adjust this with the [`keep_alive` option](/browser-rendering/platform/puppeteer/#keep-alive).
+
+#### Pricing
+
+Browser Rendering is currently free up to the limits above until billing begins. Pricing will be announced in advance.
+
+### Does Browser Rendering rotate IP addresses for outbound requests?
+
+No. Browser Rendering requests originate from Cloudflares global network, but you cannot configure per-request IP rotation. All rendering traffic comes from Cloudflare IP ranges and requests include special headers [(`cf-biso-request-id`, `cf-biso-devtools`)](/browser-rendering/reference/automatic-request-headers/) so origin servers can identify them.
+
+### I see `Error processing the request: Unable to create new browser: code: 429: message: Browser time limit exceeded for today`. How do I fix it?
+
+This error indicates you have hit the daily browser-instance limit on the Workers Free plan. [Free-plan accounts are capped at free plan limit is 10 minutes of browser use a day](/browser-rendering/platform/limits/#workers-free) once you exceed those, further creation attempts return a 429 until the next UTC day.
+
+To resolve:[Upgrade to a Workers Paid plan](/workers/platform/pricing/) - Paid accounts raise these limits to [10 concurrent browsers and 10 new instances per minute](/browser-rendering/platform/limits/#workers-paid).

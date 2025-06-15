@@ -12,7 +12,7 @@ import { Render, TabItem, Tabs } from "~/components";
 
 If you cannot use a [Cloudflare Tunnel setup](/ssl/keyless-ssl/configuration/cloudflare-tunnel/), you can also create a public DNS record for your key server.
 
-This setup option is not ideal as the DNS record cannot be [proxied](/dns/manage-dns-records/reference/proxied-dns-records/) and - as a result - will expose the origin IP address of your key server.
+This setup option is not ideal as the DNS record cannot be [proxied](/dns/proxy-status/) and - as a result - will expose the origin IP address of your key server.
 
 ---
 
@@ -57,7 +57,7 @@ To create a Keyless certificate in the dashboard:
 
 </TabItem> <TabItem label="API">
 
-To create a Keyless certificate with the API, send a [`POST`](/api/operations/keyless-ssl-for-a-zone-create-keyless-ssl-configuration) request.
+To create a Keyless certificate with the API, send a [`POST`](/api/resources/keyless_certificates/methods/create/) request.
 
 </TabItem> </Tabs>
 
@@ -74,4 +74,4 @@ To create a Keyless certificate with the API, send a [`POST`](/api/operations/ke
 
 During TLS handshakes, Cloudflare's keyless client will initiate connections to the key server hostname or IP address you specify during certificate upload. By default, the keyless client will use a destination TCP port of 2407, but this can be changed during certificate upload or by editing the certificate details after upload.
 
-Create WAF custom rules that allow your key server to accept connections from only Cloudflare. You can get Cloudflare's IPv4 and IPv6 addresses via the [IP details API endpoint](/api/operations/cloudflare-i-ps-cloudflare-ip-details).
+Create WAF custom rules that allow your key server to accept connections from only Cloudflare. You can get Cloudflare's IPv4 and IPv6 addresses via the [IP details API endpoint](/api/resources/ips/methods/list/).

@@ -7,7 +7,7 @@ title: gRPC connections
 
 import { FeatureTable, Render } from "~/components"
 
-Cloudflare offers support for gRPC to protect your APIs on any [proxied gRPC endpoints](/dns/manage-dns-records/reference/proxied-dns-records/). The gRPC protocol helps build efficient APIs with smaller payloads for reduced bandwidth usage, decreased latency, and faster implementations.
+Cloudflare offers support for gRPC to protect your APIs on any [proxied gRPC endpoints](/dns/proxy-status/). The gRPC protocol helps build efficient APIs with smaller payloads for reduced bandwidth usage, decreased latency, and faster implementations.
 
 ## Availability
 
@@ -34,7 +34,7 @@ However, the following products have limited capabilities with gRPC requests:
 * HTTP/2 must be advertised over ALPN.
 * Use `application/grpc` or `application/grpc+<message type` (for example: `application/grpc+proto`) for the **Content-Type** header of gRPC requests.
 * Make sure that the hostname that hosts your gRPC endpoint:
-  * Is set to [proxied](/dns/manage-dns-records/reference/proxied-dns-records/)
+  * Is set to [proxied](/dns/proxy-status/)
   * Uses at least the [Full SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/full/).
 
 ### Procedure

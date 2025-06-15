@@ -30,10 +30,10 @@ The exact settings will vary depending on your use case. Refer to the following 
 3. Select **Create Load Balancer**.
 
 4. On the **Hostname** page, define the settings presented and select **Next**.
-   * Enter a **Hostname**, which is the DNS name at which the load balancer is available. For more details on record priority, refer to [DNS records for load balancing](/load-balancing/load-balancers/dns-records/). 
+   * Enter a **Hostname**, which is the DNS name at which the load balancer is available. For more details on record priority, refer to [DNS records for load balancing](/load-balancing/load-balancers/dns-records/).
       :::caution
 
-      To prevent issues with DNS resolution, the load balancer hostname should be different from the hostname (or domain) you intend to define for your Spectrum application. 
+      To prevent issues with DNS resolution, the load balancer hostname should be different from the hostname (or domain) you intend to define for your Spectrum application.
       :::
    * Keep the orange cloud icon enabled, meaning the load balancer is proxied. This refers to the [proxy mode](/load-balancing/understand-basics/proxy-modes/) and, with Spectrum, traffic is always proxied.
    * Keep **Session Affinity** and **Failover across pools** disabled as these features are not supported with Spectrum.
@@ -53,7 +53,7 @@ The exact settings will vary depending on your use case. Refer to the following 
 9. On the **Review** page:
    * Review your configuration and make any changes.
      * If you set traffic steering to **Off**, re-order the pools in your load balancer to adjust the fallback order.
-     * If you chose to set traffic steering to Random, you can [set weights to your pools](/load-balancing/understand-basics/traffic-steering/steering-policies/standard-options/#random-steering) (via the [API](/api/operations/load-balancers-create-load-balancer)) to determine the percentage of traffic sent to each pool.
+     * If you chose to set traffic steering to Random, you can [set weights to your pools](/load-balancing/understand-basics/traffic-steering/steering-policies/standard-options/#random-steering) (via the [API](/api/resources/load_balancers/methods/create/)) to determine the percentage of traffic sent to each pool.
    * Choose whether to **Save as Draft** or **Save and Deploy**.
 
 ### 2. Configure your Spectrum application

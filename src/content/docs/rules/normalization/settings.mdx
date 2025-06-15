@@ -1,42 +1,35 @@
 ---
-title: Settings
+title: URL normalization settings
 pcx_content_type: reference
 sidebar:
   order: 5
-head:
-  - tag: title
-    content: URL normalization settings
-
+  label: Settings
 ---
 
 The Cloudflare dashboard provides the following settings to manage URL normalization:
 
+- **Normalization type** (default: _RFC-3986_)
 
+  - Selects the type of normalization to perform:
 
-* **Normalization type** (default: *RFC-3986*)
+    - _RFC-3986_ – Applies URL normalization strictly according to [RFC 3986](https://datatracker.ietf.org/doc/html/rfc3986).
 
-  * Selects the type of normalization to perform:
+    - _Cloudflare_ – In addition to what is defined in RFC 3986, applies [extra URL normalization techniques](/rules/normalization/how-it-works/#cloudflare-normalization).
 
-    * *RFC-3986* – Applies URL normalization strictly according to [RFC 3986](https://datatracker.ietf.org/doc/html/rfc3986).
+- **Normalize incoming URLs** (default: _On_)
 
-    * *Cloudflare* – In addition to what is defined in RFC 3986, applies [extra URL normalization techniques](/rules/normalization/how-it-works/#cloudflare-normalization).
+  - Configures the URLs of all incoming traffic to Cloudflare:
 
-* **Normalize incoming URLs** (default: *On*)
+    - When enabled, all incoming URLs are normalized before they pass to subsequent Cloudflare features that can receive a URL as input, such as Page Rules, WAF custom rules, Workers, and Access.
+    - When disabled, incoming URLs are not normalized before passing to subsequent Cloudflare features.
 
-  * Configures the URLs of all incoming traffic to Cloudflare:
+- **Normalize URLs to origin** (default: _Off_)
 
-    * When enabled, all incoming URLs are normalized before they pass to subsequent Cloudflare features that can receive a URL as input, such as Page Rules, WAF custom rules, Workers, and Access.
-    * When disabled, incoming URLs are not normalized before passing to subsequent Cloudflare features.
+  - Configures URLs sent to the origin:
 
-* **Normalize URLs to origin** (default: *Off*)
+    - When enabled, requests sent to the origin are normalized.
+    - When disabled, requests sent to the origin are not modified.
 
-  * Configures URLs sent to the origin:
-
-    * When enabled, requests sent to the origin are normalized.
-    * When disabled, requests sent to the origin are not modified.
-
-  * You can only view and enable this option when **Normalize incoming URLs** is enabled.
-
-
+  - You can only view and enable this option when **Normalize incoming URLs** is enabled.
 
 For examples of how these settings affect URL normalization, refer to the [URL normalization examples](/rules/normalization/examples/).

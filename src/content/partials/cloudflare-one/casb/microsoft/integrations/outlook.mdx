@@ -1,0 +1,49 @@
+---
+params:
+  - integrationName
+  - environmentName
+  - slugifiedName
+---
+
+import { Render } from "~/components";
+
+<Render
+	file="casb/integration-description"
+	params={{
+		integrationName: props.integrationName,
+		integrationAccountType: props.environmentName,
+	}}
+/>
+
+## Integration prerequisites
+
+<Render file="casb/microsoft/m365-prereqs" />
+
+## Integration permissions
+
+<Render
+	file="casb/integration-perms"
+	params={{ parentIntegration: "Microsoft 365", parentSlug: "microsoft-365" }}
+/>
+
+## Security findings
+
+<Render
+	file="casb/security-findings"
+	params={{
+		integrationName: props.integrationName,
+		slugRelativePath: props.slugifiedName,
+	}}
+/>
+
+### Calendar sharing
+
+<Render file="casb/microsoft/calendar-sharing" />
+
+### Email administrator settings
+
+<Render file="casb/microsoft/email-admin-settings" />
+
+### Email forwarding
+
+<Render file="casb/microsoft/email-forwarding" />

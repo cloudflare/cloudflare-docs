@@ -2,7 +2,7 @@
 title: Malicious uploads detection
 pcx_content_type: concept
 sidebar:
-  order: 3
+  order: 4
   group:
     label: Malicious uploads
 ---
@@ -57,13 +57,20 @@ All content objects in an incoming request will be checked, namely for requests 
 
 The content scanner will fully check content objects with a size up to 15 MB. For larger content objects, the scanner will analyze the first 15 MB and provide scan results based on that portion of the object.
 
-:::caution
-The AV scanner will not scan some particular types of files, namely encrypted or password-protected files. Refer to [Non-scannable files](/cloudflare-one/policies/gateway/http-policies/antivirus-scanning/#non-scannable-files) for a list of AV scanning limitations.
+:::note
+
+The AV scanner will not scan some particular types of files, namely the following:
+
+- Password-protected archives
+- Archives with more than three recursion levels
+- Archives with more than 300 files
+- PGP-encrypted files
+
 :::
 
 ## Custom scan expressions
 
-Sometimes, you may wish to specify where to find the content objects, such as when the content is a Base64-encoded string within a JSON payload. For example:
+Sometimes, you may want to specify where to find the content objects, such as when the content is a Base64-encoded string within a JSON payload. For example:
 
 ```json
 { "file": "<BASE64_ENCODED_STRING>" }
@@ -71,19 +78,25 @@ Sometimes, you may wish to specify where to find the content objects, such as wh
 
 In these situations, configure a custom scan expression to tell the content scanner where to find the content objects. For more information, refer to [Configure a custom scan expression](/waf/detections/malicious-uploads/get-started/#4-optional-configure-a-custom-scan-expression).
 
+For more information and additional examples of looking up fields in nested JSON payloads, refer to the [`lookup_json_string()`](/ruleset-engine/rules-language/functions/#lookup_json_string) function documentation.
+
+:::note
+The content scanner will automatically decode Base64 strings.
+:::
+
 ## Content scanning fields
 
 When content scanning is enabled, you can use the following fields in WAF rules:
 
-| Field name in the dashboard                                                                | Field name in expressions                                                                                                           |
-| ------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------- |
-| Has content object                                                                         | [`cf.waf.content_scan.has_obj`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfwafcontent_scanhas_obj)                     |
-| Has malicious content object                                                               | [`cf.waf.content_scan.has_malicious_obj`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfwafcontent_scanhas_malicious_obj) |
-| Number of malicious content objects                                                        | [`cf.waf.content_scan.num_malicious_obj`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfwafcontent_scannum_malicious_obj) |
-| Content scan has failed                                                                    | [`cf.waf.content_scan.has_failed`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfwafcontent_scanhas_failed)               |
-| Number of content objects                                                                  | [`cf.waf.content_scan.num_obj`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfwafcontent_scannum_obj)                     |
-| Content object size (in bytes)                                                             | [`cf.waf.content_scan.obj_sizes`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfwafcontent_scanobj_sizes)                 |
-| Content object type                                                                        | [`cf.waf.content_scan.obj_types`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfwafcontent_scanobj_types)                 |
-| Content object result<br/>Values: `clean`, `suspicious`,<br/>`infected`, and `not scanned` | [`cf.waf.content_scan.obj_results`](/ruleset-engine/rules-language/fields/dynamic-fields/#cfwafcontent_scanobj_results)             |
+| Field name in the dashboard                                                                | Field name in expressions                                                                                                         |
+| ------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- |
+| Has content object                                                                         | [`cf.waf.content_scan.has_obj`](/ruleset-engine/rules-language/fields/reference/cf.waf.content_scan.has_obj/)                     |
+| Has malicious content object                                                               | [`cf.waf.content_scan.has_malicious_obj`](/ruleset-engine/rules-language/fields/reference/cf.waf.content_scan.has_malicious_obj/) |
+| Number of malicious content objects                                                        | [`cf.waf.content_scan.num_malicious_obj`](/ruleset-engine/rules-language/fields/reference/cf.waf.content_scan.num_malicious_obj/) |
+| Content scan has failed                                                                    | [`cf.waf.content_scan.has_failed`](/ruleset-engine/rules-language/fields/reference/cf.waf.content_scan.has_failed/)               |
+| Number of content objects                                                                  | [`cf.waf.content_scan.num_obj`](/ruleset-engine/rules-language/fields/reference/cf.waf.content_scan.num_obj/)                     |
+| Content object size (in bytes)                                                             | [`cf.waf.content_scan.obj_sizes`](/ruleset-engine/rules-language/fields/reference/cf.waf.content_scan.obj_sizes/)                 |
+| Content object type                                                                        | [`cf.waf.content_scan.obj_types`](/ruleset-engine/rules-language/fields/reference/cf.waf.content_scan.obj_types/)                 |
+| Content object result<br/>Values: `clean`, `suspicious`,<br/>`infected`, and `not scanned` | [`cf.waf.content_scan.obj_results`](/ruleset-engine/rules-language/fields/reference/cf.waf.content_scan.obj_results/)             |
 
 For examples of rule expressions using these fields, refer to [Example rules](/waf/detections/malicious-uploads/example-rules/).

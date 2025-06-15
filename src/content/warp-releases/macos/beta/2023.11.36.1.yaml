@@ -1,0 +1,17 @@
+releaseNotes: >-
+  This releases contains bug fixes only, no new functionality has been
+  introduced
+   
+  **Notable updates**
+
+  - Fixed an issue where we were incorrectly setting the default local domain
+  fallback server value for entries without an explicit DNS server set
+   
+  **Known issues**
+
+  - No known issues
+version: 2023.11.36.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2023.11.36.1
+packageSize: 69634828
+releaseDate: 2023-11-14T21:34:24.046Z
+platformName: macOS

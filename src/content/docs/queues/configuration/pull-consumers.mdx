@@ -8,6 +8,8 @@ head:
     content: Cloudflare Queues - Pull consumers
 ---
 
+import { WranglerConfig } from "~/components";
+
 A pull-based consumer allows you to pull from a queue over HTTP from any environment and/or programming language outside of Cloudflare Workers. A pull-based consumer can be useful when your message consumption rate is limited by upstream infrastructure or long-running tasks.
 
 ## How to choose between push or pull consumer
@@ -34,11 +36,13 @@ To configure a pull-based consumer and receive messages from a queue, you need t
 
 ## 1. Enable HTTP pull
 
-You can enable HTTP pull or change a queue from push-based to pull-based via `wrangler.toml`, the `wrangler` CLI, or via the [Cloudflare dashboard](https://dash.cloudflare.com/).
+You can enable HTTP pull or change a queue from push-based to pull-based via the [Wrangler configuration file](/workers/wrangler/configuration/), the `wrangler` CLI, or via the [Cloudflare dashboard](https://dash.cloudflare.com/).
 
-### wrangler.toml
+### Wrangler configuration file
 
-A HTTP consumer can be configured in `wrangler.toml` by setting `type = "http_pull"` in the consumer configuration:
+A HTTP consumer can be configured in the [Wrangler configuration file](/workers/wrangler/configuration/) by setting `type = "http_pull"` in the consumer configuration:
+
+<WranglerConfig>
 
 ```toml
 [[queues.consumers]]
@@ -50,6 +54,8 @@ visibility_timeout_ms = 5000
 max_retries = 5
 dead_letter_queue = "SOME-OTHER-QUEUE"
 ```
+
+</WranglerConfig>
 
 Omitting the `type` property will default the queue to push-based.
 
@@ -69,7 +75,7 @@ wrangler queues consumer worker remove $QUEUE-NAME $SCRIPT_NAME
 
 :::note
 
-If you remove the Worker consumer with `wrangler` but do not delete the `[[queues.consumer]]` configuration from `wrangler.toml`, subsequent deployments of your Worker will fail when they attempt to add a conflicting consumer configuration.
+If you remove the Worker consumer with `wrangler` but do not delete the `[[queues.consumer]]` configuration from your [Wrangler configuration file](/workers/wrangler/configuration/), subsequent deployments of your Worker will fail when they attempt to add a conflicting consumer configuration.
 
 Ensure you remove the consumer configuration first.
 
@@ -90,7 +96,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/queues/${QU
 --data '{ "visibility_timeout": 10000, "batch_size": 2 }'
 ```
 
-You may authenticate and run multiple concurrent pull-based consumers against a single queue, noting that all consumers will share the same [rate limit](/queues/platform/limits/) against the Cloudflare API.
+You may authenticate and run multiple concurrent pull-based consumers against a single queue.
 
 ### Create API tokens
 
@@ -108,7 +114,7 @@ You will need to note the token down: it will only be displayed once.
 
 ## 3. Pull messages
 
-To pull a message, make a HTTP POST request to the [Queues REST API](/api/operations/queue-v2-messages-pull) with a JSON-encoded body that optionally specifies a `visibility_timeout` and a `batch_size`, or an empty JSON object (`{}`):
+To pull a message, make a HTTP POST request to the [Queues REST API](/api/resources/queues/subresources/messages/methods/pull/) with a JSON-encoded body that optionally specifies a `visibility_timeout` and a `batch_size`, or an empty JSON object (`{}`):
 
 ```ts
 // POST /accounts/${CF_ACCOUNT_ID}/queues/${QUEUE_ID}/messages/pull with the timeout & batch size
@@ -121,7 +127,7 @@ let resp = await fetch(
 			authorization: `Bearer ${QUEUES_API_TOKEN}`,
 		},
 		// Optional - you can provide an empty object '{}' and the defaults will apply.
-		body: JSON.stringify({ visibility_timeout: 6000, batch_size: 50 }),
+		body: JSON.stringify({ visibility_timeout_ms: 6000, batch_size: 50 }),
 	},
 );
 ```
@@ -134,6 +140,7 @@ This will return an array of messages (up to the specified `batch_size`) in the 
 	"errors": [],
 	"messages": [],
 	"result": {
+		"message_backlog_count": 10,
 		"messages": [
 			{
 				"body": "hello",
@@ -166,7 +173,7 @@ Pull consumers follow a "short polling" approach: if there are messages availabl
 
 :::note
 
-The [`pull`](/api/operations/queue-v2-messages-pull) and [`ack`](/api/operations/queue-v2-messages-ack) endpoints use the new `/queues/queue_id/messages/{action}` API format, as defined in the Queues API documentation.
+The [`pull`](/api/resources/queues/subresources/messages/methods/pull/) and [`ack`](/api/resources/queues/subresources/messages/methods/ack/) endpoints use the new `/queues/queue_id/messages/{action}` API format, as defined in the Queues API documentation.
 
 The undocumented `/queues/queue_id/{action}` endpoints are not supported and will be deprecated as of June 30th, 2024.
 
@@ -199,7 +206,7 @@ Multiple consumers can be useful in cases where you have multiple upstream resou
 
 Messages pulled by a consumer need to be either acknowledged or marked for retry.
 
-To acknowledge and/or mark messages to be retried, make a HTTP `POST` request to `/ack` endpoint of your queue per the [Queues REST API](/api/operations/queue-v2-messages-ack) by providing an array of `lease_id` objects to acknowledge and/or retry:
+To acknowledge and/or mark messages to be retried, make a HTTP `POST` request to `/ack` endpoint of your queue per the [Queues REST API](/api/resources/queues/subresources/messages/methods/ack/) by providing an array of `lease_id` objects to acknowledge and/or retry:
 
 ```ts
 // POST /accounts/${CF_ACCOUNT_ID}/queues/${QUEUE_ID}/messages/ack with the lease_ids
@@ -241,34 +248,34 @@ Additionally:
 
 - You should provide every `lease_id` in the request to the `/ack` endpoint if you are processing those messages in your consumer. If you do not acknowledge a message, it will be marked for re-delivery (put back in the queue).
 - You can optionally mark messages to be retried: for example, if there is an error processing the message or you have upstream resource pressure. Explicitly marking a message for retry will place it back into the queue immediately, instead of waiting for a (potentially long) `visibility_timeout` to be reached.
-- You can make multiple calls to the `/ack` endpoint as you make progress through a batch of messages, but we recommend grouping acknowledgements to avoid hitting [API rate limits](/queues/platform/limits/).
+- You can make multiple calls to the `/ack` endpoint as you make progress through a batch of messages, but we recommend grouping acknowledgements to reduce the number of API calls required.
 
 Queues aims to be permissive when it comes to lease IDs: if a consumer acknowledges a message by its lease ID _after_ the visibility timeout is reached, Queues will still accept that acknowledgment. If the message was delivered to another consumer during the intervening period, it will also be able to acknowledge the message without an error.
 
     {/* <!--
 
-    ## Examples
+	## Examples
 
-    ### TypeScript (Node.js)
+	### TypeScript (Node.js)
 
-    The following example is a Node.js-based TypeScript application that pulls from a queue on startup, acknowledges messages after writing them to stdout, and polls the queue at a fixed interval.
+	The following example is a Node.js-based TypeScript application that pulls from a queue on startup, acknowledges messages after writing them to stdout, and polls the queue at a fixed interval.
 
-    In a production application, you could replace writing to stdout with inserting into a database, making HTTP requests to an upstream service, or writing to object storage.
+	In a production application, you could replace writing to stdout with inserting into a database, making HTTP requests to an upstream service, or writing to object storage.
 
-    ```ts
+	```ts
 
-    ```
+	```
 
-    ### Go
+	### Go
 
-    The following example is a Go application that pulls from a queue on startup, acknowledges messages after writing them to stdout, and polls the queue at a fixed interval.
+	The following example is a Go application that pulls from a queue on startup, acknowledges messages after writing them to stdout, and polls the queue at a fixed interval.
 
-    ```go
+	```go
 
 
-    ```
+	```
 
-    --> */}
+	--> */}
 
 ## Content types
 
@@ -290,6 +297,6 @@ Your consumer will need to decode the `json` and `bytes` types before operating 
 
 ## Next steps
 
-- Review the [REST API documentation](/api/operations/queue-v2-create-queue-consumer) and schema for Queues.
+- Review the [REST API documentation](/api/resources/queues/subresources/consumers/methods/create/) and schema for Queues.
 - Learn more about [how to make API calls](/fundamentals/api/how-to/make-api-calls/) to the Cloudflare API.
 - Understand [what limit apply](/queues/platform/limits/) when consuming and writing to a queue.

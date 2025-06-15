@@ -3,13 +3,13 @@ pcx_content_type: reference
 title: Certificate statuses
 sidebar:
   order: 8
+description: Understand certificate statuses in Cloudflare SSL/TLS, including stages like Initializing, Pending Validation, and Active. Monitor via dashboard or command line.
 ---
 
 Certificates statuses show which stage of the issuance process each certificate is in.
-
 ## New certificates
 
-When you order a new certificate, either an [edge certificate](/ssl/edge-certificates/) or a certificate used for a [custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/), its status will move through various stages as it progresses to Cloudflare’s global network:
+When you order a new certificate, either an [edge certificate](/ssl/edge-certificates/) or a certificate used for a [custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/), its status will move through various stages as it progresses to Cloudflare's global network:
 
 1. Initializing
 2. Pending Validation
@@ -20,6 +20,12 @@ When you order a new certificate, either an [edge certificate](/ssl/edge-certifi
 Once you issue a certificate, it should be in **Pending Validation**, but change to **Active** after the validation is completed. If you see any errors, you or your customer may need to take additional actions to validate the certificate.
 
 If you deactivate a certificate, it will become a **Deactivating** and then an **Inactive** status.
+
+### Certificate replacement
+
+When replacing a certificate, you may note a **Pending Cleanup** status. Old certificates are not deleted until the replacement has been successfully issued. This ensures TLS will not break for the hostname while the certificate is being replaced.
+
+When the new certificate is successfully issued and activated, the status for the old certificate will transition from **Pending Cleanup**, and the certificate will be deleted.
 
 ## Custom certificates
 
@@ -53,13 +59,13 @@ When you use [client certificates](/ssl/client-certificates/), those client cert
 
 ### SSL/TLS
 
-Monitor a certificate's status in the dashboard at **SSL/TLS** > **Edge Certificates** or by using the [Get Certificate Pack endpoint](/api/operations/certificate-packs-get-certificate-pack).
+Monitor a certificate's status in the dashboard at **SSL/TLS** > **Edge Certificates** or by using the [Get Certificate Pack endpoint](/api/resources/ssl/subresources/certificate_packs/methods/get/).
 
 For more details on certificate validation, refer to [Domain Control Validation](/ssl/edge-certificates/changing-dcv-method/).
 
 ### SSL for SaaS
 
-Monitor a certificate's status in the dashboard at **SSL/TLS** > **Custom Hostnames** or by using the [Custom Hostname Details endpoint](/api/operations/custom-hostname-for-a-zone-custom-hostname-details).
+Monitor a certificate's status in the dashboard at **SSL/TLS** > **Custom Hostnames** or by using the [Custom Hostname Details endpoint](/api/resources/custom_hostnames/methods/get/).
 
 For more details on certificate validation, refer to [Issue and validate certificates](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/).
 

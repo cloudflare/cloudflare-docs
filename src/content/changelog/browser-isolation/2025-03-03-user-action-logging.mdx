@@ -1,0 +1,28 @@
+---
+title: Gain visibility into user actions in Zero Trust Browser Isolation sessions
+description: User action logs for Remote Browser Isolation
+date: 2025-03-04T11:00:00Z
+---
+
+We're excited to announce that new logging capabilities for [Remote Browser Isolation (RBI)](/cloudflare-one/policies/browser-isolation/) through [Logpush](/logs/reference/log-fields/account/) are available in Beta starting today!
+
+With these enhanced logs, administrators can gain visibility into end user behavior in the remote browser and track blocked data extraction attempts, along with the websites that triggered them, in an isolated session.
+
+```json
+{
+	"AccountID": "$ACCOUNT_ID",
+	"Decision": "block",
+	"DomainName": "www.example.com",
+	"Timestamp": "2025-02-27T23:15:06Z",
+	"Type": "copy",
+	"UserID": "$USER_ID"
+}
+```
+
+User Actions available:
+
+- **Copy & Paste**
+- **Downloads & Uploads**
+- **Printing**
+
+Learn more about how to get started with Logpush in our [documentation](/logs/get-started/).

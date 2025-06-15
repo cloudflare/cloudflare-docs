@@ -15,7 +15,3 @@ resources:
   community: https://community.cloudflare.com/c/developers/zaraz/67
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/zaraz
   discord: https://discord.gg/cloudflaredev
-
-externals:
-  - title: Cloudflare homepage
-    url: https://cloudflare.com

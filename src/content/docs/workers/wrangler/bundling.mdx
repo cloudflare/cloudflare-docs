@@ -7,6 +7,13 @@ description: Review Wrangler's default bundling.
 
 By default, Wrangler bundles your Worker code using [`esbuild`](https://esbuild.github.io/). This means that Wrangler has built-in support for importing modules from [npm](https://www.npmjs.com/) defined in your `package.json`. To review the exact code that Wrangler will upload to Cloudflare, run `npx wrangler deploy --dry-run --outdir dist`, which will show your Worker code after Wrangler's bundling.
 
+<details>
+<summary>`esbuild` version</summary>
+
+Wrangler uses `esbuild`. We periodically update the `esbuild` version included with Wrangler, and since `esbuild` is a pre-1.0.0 tool, this may sometimes include breaking changes to how bundling works. In particular, we may bump the `esbuild` version in a Wrangler minor version.
+
+</details>
+
 :::note
 
 Wrangler's inbuilt bundling usually provides the best experience, but we understand there are cases where you will need more flexibility.
@@ -79,3 +86,10 @@ Disabling bundling is not recommended in most scenarios. Use this option only wh
 If your build tooling already produces build artifacts suitable for direct deployment to Cloudflare, you can opt out of bundling by using the `--no-bundle` command line flag: `npx wrangler deploy --no-bundle`. If you opt out of bundling, Wrangler will not process your code and some features introduced by Wrangler bundling (for example minification, and polyfills injection) will not be available.
 
 Use [Custom Builds](/workers/wrangler/custom-builds/) to customize what Wrangler will bundle and upload to the Cloudflare global network when you use [`wrangler dev`](/workers/wrangler/commands/#dev) and [`wrangler deploy`](/workers/wrangler/commands/#deploy).
+
+## Generated Wrangler configuration
+
+Some framework tools, or custom pre-build processes, generate a modified Wrangler configuration to be used to deploy the Worker code.
+It is possible for Wrangler to automatically use this generated configuration rather than the original, user's configuration.
+
+See [Generated Wrangler configuration](/workers/wrangler/configuration/#generated-wrangler-configuration) for more information.

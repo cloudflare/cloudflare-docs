@@ -3,11 +3,24 @@ pcx_content_type: configuration
 title: Require specific HTTP headers
 ---
 
-Many organizations qualify traffic based on the presence of specific HTTP request headers. Use the Rules language [HTTP request header fields](/ruleset-engine/rules-language/fields/http-request-header/) to target requests with specific headers.
+Many organizations qualify traffic based on the presence of specific HTTP request headers. Use the Rules language [HTTP request header fields](/ruleset-engine/rules-language/fields/reference/?field-category=Headers&search-term=http.request) to target requests with specific headers.
 
-This example uses the `http.headers.names` field to look for the presence of an `X-CSRF-Token` header. The [`lower()`](/ruleset-engine/rules-language/functions/#lower) transformation function converts the value to lowercase so that the expression is case insensitive.
+## Example 1: Require presence of HTTP header
 
-When the `X-CSRF-Token` header is missing, Cloudflare blocks the request:
+This example uses the [`http.request.headers.names`](/ruleset-engine/rules-language/fields/reference/http.request.headers.names/) field to look for the presence of an `X-CSRF-Token` header. The [`lower()`](/ruleset-engine/rules-language/functions/#lower) transformation function converts the header name to lowercase so that the expression is case-insensitive.
+
+When the `X-CSRF-Token` header is missing, Cloudflare blocks the request.
 
 - **Expression**: `not any(lower(http.request.headers.names[*])[*] eq "x-csrf-token") and (http.request.full_uri eq "https://www.example.com/somepath")`
 - **Action**: _Block_
+
+## Example 2: Require HTTP header with a specific value
+
+This example uses the [`http.request.headers`](/ruleset-engine/rules-language/fields/reference/http.request.headers/) field to look for the presence of the `X-Example-Header` header and to get its value (if any). The keys in the `http.request.headers` field, corresponding to HTTP header names, are in lowercase.
+
+When the `X-Example-Header` header is missing or it does not have the value `example-value`, Cloudflare blocks the request.
+
+- **Expression**: `not any(http.request.headers["x-example-header"][*] eq "example-value") and (http.request.uri.path eq "/somepath")`
+- **Action**: _Block_
+
+In this example the header name is case-insensitive, but the header value is case-sensitive.

@@ -7,15 +7,7 @@ sidebar:
 
 ---
 
-import { Render, PackageManagers } from "~/components"
-
-:::note
-
-Workflows is in **public beta**, and any developer with a [free or paid Workers plan](/workers/platform/pricing/#workers) can start using Workflows immediately.
-
-To learn more about Workflows and how it works, read [the beta announcement blog](https://blog.cloudflare.com/building-workflows-durable-execution-on-workers).
-
-:::
+import { Render, PackageManagers, WranglerConfig } from "~/components"
 
 Workflows allow you to build durable, multi-step applications using the Workers platform. A Workflow can automatically retry, persist state, run for hours or days, and coordinate between third-party APIs.
 
@@ -62,12 +54,11 @@ type Params = {
 export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
 	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
 		// Can access bindings on `this.env`
-		// Can access params on `event.params`
+		// Can access params on `event.payload`
 
 		const files = await step.do('my first step', async () => {
 			// Fetch a list of files from $SOME_SERVICE
 			return {
-				inputParams: event,
 				files: [
 					'doc_7392_rev3.pdf',
 					'report_x29_final.pdf',
@@ -183,7 +174,9 @@ The term "Durable Execution" is widely used to describe this programming model.
 
 Before you can deploy a Workflow, you need to configure it.
 
-Open the `wrangler.toml` file at the root of your `workflows-starter` folder, which contains the following `[[workflows]]` configuration:
+Open the Wrangler file at the root of your `workflows-starter` folder, which contains the following `[[workflows]]` configuration:
+
+<WranglerConfig>
 
 ```toml title="wrangler.toml"
 #:schema node_modules/wrangler/config-schema.json
@@ -200,6 +193,8 @@ binding = "MY_WORKFLOW"
 class_name = "MyWorkflow"
 ```
 
+</WranglerConfig>
+
 :::note
 
 If you have changed the name of the Workflow in your Wrangler commands, the JavaScript class name, or the name of the project you created, ensure that you update the values above to match the changes.
@@ -215,7 +210,7 @@ We have a very basic Workflow definition, but now need to provide a way to call 
 1. External HTTP requests via a `fetch()` handler
 2. Messages from a [Queue](/queues/)
 3. A schedule via [Cron Trigger](/workers/configuration/cron-triggers/)
-4. Via the [Workflows REST API](/api/operations/wor-list-workflows) or [wrangler CLI](/workers/wrangler/commands/#workflows)
+4. Via the [Workflows REST API](/api/resources/workflows/methods/list/) or [wrangler CLI](/workers/wrangler/commands/#workflows)
 
 Return to the `src/index.ts` file we created in the previous step and add a `fetch` handler that _binds_ to our Workflow. This binding allows us to create new Workflow instances, fetch the status of an existing Workflow, pause and/or terminate a Workflow.
 
@@ -284,12 +279,11 @@ type Params = {
 export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
 	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
 		// Can access bindings on `this.env`
-		// Can access params on `event.params`
+		// Can access params on `event.payload`
 
 		const files = await step.do('my first step', async () => {
 			// Fetch a list of files from $SOME_SERVICE
 			return {
-				inputParams: event,
 				files: [
 					'doc_7392_rev3.pdf',
 					'report_x29_final.pdf',
@@ -507,6 +501,8 @@ curl -s https://workflows-starter.YOUR_WORKERS_SUBDOMAIN.workers.dev/
 {"id":"16ac31e5-db9d-48ae-a58f-95b95422d0fa","details":{"status":"queued","error":null,"output":null}}
 ```
 
+{/*
+
 ## 7. (Optional) Clean up
 
 You can optionally delete the Workflow, which will prevent the creation of any (all) instances by using `wrangler`:
@@ -516,6 +512,8 @@ npx wrangler workflows delete my-workflow
 ```
 
 Re-deploying the Workers script containing your Workflow code will re-create the Workflow.
+
+*/}
 
 ---
 

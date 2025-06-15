@@ -1,0 +1,52 @@
+releaseNotes: >-
+  This release contains bug fixes and new features from the previous beta
+  release. With this release we are now feature complete for the quarter and
+  will begin focusing exclusively on QA and bug fixes only. We encourage
+  customers to test with this version and report issues ASAP.
+   
+  *Major change*
+
+  As a reminder, starting with the previous beta 2023.1.625.1, WARP On Windows
+  now uses a new tunnel architecture that more closely matches our macOS and
+  Linux implementations. WARP will now create a virtual interface that is
+  visible in your network connections and directly modify the routing table to
+  control where traffic flows. Please thoroughly test this release before
+  deploying in your organization. 
+   
+  **Notable updates**
+
+  - Added support for Zero Trust Digital Experience Monitoring. More information
+  coming soon for customers who signed up for the beta
+
+  - Added new log message to help customers and support identify when a users
+  local network IP space overlaps with a remote network configured to go through
+  the tunnel
+
+  - Added support for Zero Trust customers to opt in to having the WARP Client
+  install the root CA for your organization if TLS Decryption is enabled. A new
+  toggle switch will appear in the dashboard under Settings->WARP Client soon to
+  enable this
+
+  - Modified behavior of Managed networks tests to always happen outside the
+  tunnel as per original intent
+
+  - Fixed issue introduced in previous beta, and called out in known issues,
+  where users may need to restart or perform a clean install after upgrade to
+  the new release
+
+  - Fixed issue where GUI could miss a status message from the WARP Service
+  resulting in the wrong state being reflected to users. An example is the GUI
+  could show `Connecting` even though device was `Connected`
+   
+  **Known issues**
+
+  - Latest Windows client may take a few seconds to change to update the
+  connection status after initial registration.
+
+  - If you encounter issues during upgrade/install, please restart your Windows
+  device (this issue will be resolved in a future release).
+version: 2023.3.142.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2023.3.142.1
+packageSize: 106692608
+releaseDate: 2023-03-13T22:14:39.826Z
+platformName: Windows

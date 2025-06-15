@@ -1,0 +1,29 @@
+---
+pcx_content_type: configuration
+title: dns
+---
+
+import { Render, TypeScriptExample } from "~/components";
+
+<Render file="nodejs-compat-howto" />
+
+You can use [`node:dns`](https://nodejs.org/api/dns.html) for name resolution via [DNS over HTTPS](/1.1.1.1/encryption/dns-over-https/) using
+[Cloudflare DNS](https://www.cloudflare.com/application-services/products/dns/) at 1.1.1.1.
+
+<TypeScriptExample filename="index.ts">
+```ts
+import dns from 'node:dns';
+
+let responese = await dns.promises.resolve4('cloudflare.com', 'NS');
+```
+</TypeScriptExample>
+
+All `node:dns` functions are available, except `lookup`, `lookupService`, and `resolve` which throw "Not implemented" errors when called.
+
+:::note
+
+DNS requests will execute a subrequest, counts for your [Worker's subrequest limit](/workers/platform/limits/#subrequests).
+
+:::
+
+The full `node:dns` API is documented in the [Node.js documentation for `node:dns`](https://nodejs.org/api/dns.html).

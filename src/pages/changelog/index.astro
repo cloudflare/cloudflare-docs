@@ -1,160 +1,230 @@
 ---
-import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
-import { Badge } from "~/components";
-import { marked } from "marked";
-import { getChangelogs } from "~/util/changelogs";
+import StarlightPage, {
+	type StarlightPageProps,
+} from "@astrojs/starlight/components/StarlightPage.astro";
 
-const { products, productAreas, changelogs } = await getChangelogs();
+import Header from "~/components/changelog/Header.astro";
+import ProductPills from "~/components/changelog/ProductPills.astro";
+
+import { Steps } from "~/components";
+import { format } from "date-fns";
+import { getChangelogs } from "~/util/changelog";
+import { productsByGroup } from "~/util/products";
+
+import { render } from "astro:content";
+
+const notes = await getChangelogs({
+	filter: (entry) => !entry.data.hidden,
+});
+
+const props = {
+	frontmatter: {
+		title: "Changelogs",
+		tableOfContents: false,
+		template: "splash",
+		chatbot_deprioritize: true,
+	},
+	hideTitle: true,
+	hideBreadcrumbs: true,
+} as StarlightPageProps;
 ---
 
-<StarlightPage frontmatter={{ title: "Changelogs", template: "splash" }}>
-	<Badge text="Beta" variant="caution" size="medium" />
-	<br />
-	<br />
-	<p id="productDescription">
-		Subscribe to all Changelog posts via <a href="/changelog/index.xml">RSS</a>.
-	</p>
-	<p id="productAreaDescription" style="display:none">
-		Subscribe to all Changelog posts via <a
-			class="rssLink"
-			href="/changelog/index.xml">RSS</a
-		>.
-	</p>
-	<p>
-		Unless otherwise noted, all dates refer to the release date of the change.
-	</p>
-	<br />
-	<label for="products">Product:</label>
-	<select name="products" id="products">
-		<option value="all">Select...</option>
-		{
-			products.map((product) => (
-				<option value={product.toLowerCase()}>{product}</option>
-			))
-		}
-	</select>
-	<label for="productAreas">Product area:</label>
-	<select name="productAreas" id="productAreas">
-		<option value="all">Select...</option>
-		{
-			productAreas.map((productAreas) => (
-				<option value={productAreas.toLowerCase()}>{productAreas}</option>
-			))
-		}
-	</select>
+<StarlightPage {...props}>
+	<Header notes={notes} />
 	{
-		changelogs.map(([date, entries]) => (
-			<div style="overflow-anchor: none;" data-date={date}>
-				<h2>{date}</h2>
-				{entries?.map((entry) => (
-					<div
-						data-product={entry.product.toLowerCase()}
-						data-productArea={entry.productAreaName.toLowerCase()}
+		notes.map(async (entry, idx) => {
+			const date = format(entry.data.date, "MMM dd, yyyy");
+
+			const productIds = entry.data.products.map((product) => product.id);
+
+			const productGroups = productsByGroup
+				.filter((group) =>
+					group[1]?.find((product) => productIds.includes(product.id)),
+				)
+				.map((group) => group[0])
+				.sort();
+
+			const { Content } = await render(entry);
+
+			return (
+				<div
+					class:list={["mt-0! sm:flex", { "hidden!": idx >= 10 }]}
+					data-products={JSON.stringify(
+						productIds.concat(
+							productGroups.map((group) =>
+								group.replaceAll(" ", "-").toLowerCase(),
+							),
+						),
+					)}
+				>
+					<time
+						datetime={entry.data.date.toISOString()}
+						class="text-xs leading-6 font-bold whitespace-nowrap sm:pr-4 sm:text-right"
 					>
-						<h3>
-							<a href={entry.link}>{entry.product}</a>
-						</h3>
-						{["WAF", "DDoS protection"].includes(entry.product) ? (
-							<p
-								set:html={marked.parse(
-									entry.scheduled
-										? "**" +
-												"Scheduled changes for " +
-												(entry.date ?? "") +
-												"**"
-										: "**" + (entry.date ?? "") + "**",
-								)}
-							/>
-						) : (
-							<p set:html={marked.parse("**" + (entry.title ?? "") + "**")} />
-						)}
-						{["WAF", "DDoS protection"].includes(entry.product) ? (
-							<p
-								set:html={marked.parse(
-									"For more details, refer to the [changelog page](" +
-										entry.link +
-										").",
-								)}
-							/>
-						) : (
-							<p set:html={marked.parse(entry.description ?? "")} />
-						)}
-					</div>
-				))}
-			</div>
-		))
+						{date}
+					</time>
+					<Steps>
+						<ol class="mt-0! overflow-x-auto">
+							<li class="pb-16!">
+								<div>
+									<h3 class="leading-none">
+										<a
+											href={`/changelog/${entry.id}/`}
+											class="mb-4 text-black! no-underline hover:underline"
+										>
+											{entry.data.title}
+										</a>
+									</h3>
+									<ProductPills products={entry.data.products} />
+								</div>
+								<Content />
+							</li>
+						</ol>
+					</Steps>
+				</div>
+			);
+		})
 	}
+	<div class="flex items-center justify-center">
+		<button
+			id="changelogs-next-button"
+			class="bg-cl1-brand-orange text-cl1-black h-12 cursor-pointer rounded-sm px-6 font-medium"
+		>
+			Load more items
+		</button>
+	</div>
 </StarlightPage>
 
 <script>
-	import StickyHeader from "@codingheads/sticky-header";
-
-	const navHeightRem = getComputedStyle(document.body).getPropertyValue(
-		"--sl-nav-height",
-	);
-	const navHeightPx = Number(navHeightRem.split("rem")[0]) * 16 + 16;
-
-	const headers = document.querySelectorAll<HTMLElement>("[data-date] > h2");
-	headers.forEach(
-		(header) => new StickyHeader(header, { offset: 0 - navHeightPx }),
+	const filter = document.querySelector<HTMLSelectElement>(
+		"#changelogs-next-filter",
 	);
 
-	const productFilter = document.querySelector<HTMLSelectElement>("#products");
-	productFilter?.addEventListener("change", filterEntries);
+	const button = document.querySelector<HTMLButtonElement>(
+		"#changelogs-next-button",
+	);
 
-	const productAreaFilter =
-		document.querySelector<HTMLSelectElement>("#productAreas");
-	productAreaFilter?.addEventListener("change", filterEntries);
+	const url = new URL(window.location.href);
 
-	function filterEntries() {
-		const dates = document.querySelectorAll<HTMLElement>("[data-date]");
+	if (filter && url.searchParams.has("product")) {
+		filter.value = url.searchParams.get("product")!;
+		updateFilter();
+	}
 
-		for (const date of dates) {
-			const entries = date.querySelectorAll<HTMLElement>("[data-product]");
+	filter?.addEventListener("change", updateFilter);
 
-			if (
-				productAreaFilter?.value === "all" &&
-				productFilter?.value === "all"
-			) {
-				dates.forEach((x) => {
-					x.style.display = "";
-				});
-				entries.forEach((x) => {
-					x.style.display = "";
-				});
-				continue;
+	function filterByProduct(e: HTMLElement, value?: string): boolean {
+		if (!value || value === "all") {
+			return true;
+		}
+
+		if (!e.dataset.products) {
+			return false;
+		}
+
+		const products: string[] = JSON.parse(e.dataset.products);
+		return products.includes(value);
+	}
+
+	button?.addEventListener("click", () => {
+		const hidden = [
+			...document.querySelectorAll<HTMLElement>("[data-products]"),
+		]
+			.filter(
+				(e) =>
+					e.classList.contains("hidden!") && filterByProduct(e, filter!.value),
+			)
+			.slice(0, 10);
+
+		hidden.forEach((e) => e.classList.remove("hidden!"));
+
+		hideButton();
+	});
+
+	function updateFilter() {
+		const entries = [
+			...document.querySelectorAll<HTMLElement>("[data-products]"),
+		];
+
+		if (!entries) return;
+
+		const value = filter!.value;
+
+		const filtered = entries
+			.filter((e) => filterByProduct(e, value))
+			.slice(0, 10);
+
+		for (const entry of entries) {
+			const show = filtered.includes(entry);
+
+			if (show) {
+				entry.classList.remove("hidden!");
+			} else {
+				entry.classList.add("hidden!");
 			}
+		}
 
-			let entriesHidden = 0;
+		const url = new URL(window.location.href);
 
-			for (const entry of entries) {
-				const product = entry.dataset.product;
-				const productArea = entry.dataset.productarea;
+		if (value === "all") {
+			url.searchParams.delete("product");
+		} else {
+			url.searchParams.set("product", value);
+		}
 
-				if (
-					(productFilter?.value === product ||
-						productFilter?.value === "all") &&
-					(productAreaFilter?.value === productArea ||
-						productAreaFilter?.value === "all")
-				) {
-					entry.style.display = "";
-					date.style.display = "";
-				} else {
-					entry.style.display = "none";
-					entriesHidden++;
-				}
-			}
+		history.replaceState(null, "", url.href);
 
-			if (entriesHidden >= entries.length) {
-				date.style.display = "none";
-			}
+		hideButton();
+	}
+
+	function hideButton() {
+		const entries = [
+			...document.querySelectorAll<HTMLDivElement>("[data-products]"),
+		];
+
+		if (entries.length === 0) return;
+
+		const filtered = entries.filter((p) => filterByProduct(p, filter!.value));
+
+		const visible = filtered.filter((p) => !p.classList.contains("hidden!"));
+		const hidden = filtered.length - visible.length;
+
+		if (hidden > 0) {
+			button!.classList.remove("hidden!");
+		} else {
+			button!.classList.add("hidden!");
 		}
 	}
 </script>
 
 <style>
-	h2.sticky-pinned {
-		top: var(--sl-nav-height);
-		background-color: var(--sl-color-bg);
+	:root {
+		.sl-container {
+			--sl-content-width: 50rem !important;
+			margin-inline: auto !important;
+		}
+
+		.feedback-prompt-content {
+			display: none !important;
+		}
+
+		#footer-links {
+			justify-content: center;
+		}
+	}
+
+	.sl-steps {
+		--bullet-size: 24px !important;
+
+		& > li {
+			padding-inline-start: calc(var(--bullet-size) + 2.5rem) !important;
+
+			&::before {
+				content: "•" !important;
+				font-size: calc(var(--bullet-size) * 2) !important;
+				line-height: calc(var(--bullet-size) / 1.5) !important;
+				color: var(--orange-accent-200) !important;
+			}
+		}
 	}
 </style>

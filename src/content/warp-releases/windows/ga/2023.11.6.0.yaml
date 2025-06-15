@@ -1,0 +1,27 @@
+releaseNotes: >-
+  This releases contains a fairly major refactor of the warp-cli interface.
+  While all existing commands are backwards compatible for at least the next 6
+  months, please take a moment to look through the new warp-cli and let us know
+  what you think
+   
+  **Notable updates**
+
+  - Added ability to run pcaps from warp-cli to make debugging easier
+
+  - Modified warp-cli commands to be more consistent and readable
+
+  - Fixed an issue where tunnel could become unresponsive a few minutes after
+  coming out of sleep or after changing networks
+
+  - Fixed an issue where the Cloudflare WARP interface could not properly
+  initialize when coming out of sleep when running alongside some 3rd party
+  legacy VPNs
+   
+  **Known issues**
+
+  - No known issues
+version: 2023.11.6.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2023.11.6.0
+packageSize: 112979968
+releaseDate: 2023-11-09T22:13:23.283Z
+platformName: Windows

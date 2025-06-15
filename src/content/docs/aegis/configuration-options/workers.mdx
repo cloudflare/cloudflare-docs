@@ -1,8 +1,6 @@
 ---
 title: Workers
 pcx_content_type: reference
-sidebar:
-  order: 6
 head:
   - tag: title
     content: Use Aegis with Cloudflare Workers
@@ -12,3 +10,7 @@ head:
 [Workers](/workers/) provides a serverless execution environment for you to create applications leveraging Cloudflare's global network.
 
 When paired with Aegis, whenever Cloudflare's developer platform needs to access services on your origin, it will use the dedicated IP addresses.
+
+:::note
+For Workers subrequests — meaning requests from one Worker to another — it is expected that different IPs are used. However, requests to external origins made by a Worker invoked via a subrequest will use the dedicated IP addresses.
+:::

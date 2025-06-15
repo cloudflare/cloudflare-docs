@@ -36,7 +36,7 @@ This behavior occurs when all of the following conditions are true:
 
 Yes, Google announced that they use [HTTPS as a ranking signal for SEO](https://googleonlinesecurity.blogspot.co.uk/2014/08/https-as-ranking-signal_6.html).
 
-For further SEO tweaks, refer to our article on [improving SEO Rankings with Cloudflare](/fundamentals/basic-tasks/improve-seo/).
+For further SEO tweaks, refer to our article on [improving SEO Rankings with Cloudflare](/fundamentals/performance/improve-seo/).
 
 ***
 
@@ -119,15 +119,6 @@ If you are encountering issues with PayPal IPN when the traffic is proxied by Cl
 
 ***
 
-## How can I serve an SSL certificate from Cloudflare's China data centers?
-
-Cloudflare [Universal SSL](/ssl/edge-certificates/universal-ssl) and [advanced](/ssl/edge-certificates/advanced-certificate-manager) certificates are not deployed in China.  If your domain is on an Enterprise plan and has been granted access to China data centers, Cloudflare's data centers in China only serve a SSL certificate for your domain under the following conditions:
-
-1. You have uploaded a [Custom SSL certificate](/ssl/edge-certificates/custom-certificates/uploading).
-2. **Allow Private Keys in China (Custom Certificates)** is set to *On* in the **Edge Certificates** tab of the Cloudflare **SSL/TLS** app.
-
-***
-
 ## Does Cloudflare support TLS client authentication?
 
 Yes. For more details, refer to our documentation on [Mutual TLS authentication](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/).
@@ -164,5 +155,5 @@ The Let's Encrypt Certificate Authority and SNI are not currently supported by R
 
 We recommend one of the following options:
 
-* Change the Universal Certificate Certificate Authority to a different CA.
+* Change the Universal Certificate Authority to a different CA.
 * Add an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) or [custom certificate](/ssl/edge-certificates/custom-certificates/) using a different CA.

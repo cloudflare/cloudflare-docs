@@ -32,7 +32,7 @@ Prior to setting up DNS Firewall, you need:
 4. Fill out the required fields, including:
    - **IP Addresses**: The upstream IPv4 and/or IPv6 addresses of your authoritative nameservers.
    - **Minimum Cache TTL**: Recommended setting of **30 seconds**.
-   - **Maximum Cache TTL**: Recommended setting of **1 hour**. Larger values increase the cache hit ratio, but also increase the time required for DNS changes to propagate.
+   - **Maximum Cache TTL**: Recommended setting of **4 hours**. Larger values increase the cache hit ratio, but also increase the time required for DNS changes to propagate.
    - **ANY queries**: Recommended setting is **Off** because these are often used as part of DDoS attacks. Also refer to this [blog post](https://blog.cloudflare.com/rfc8482-saying-goodbye-to-any/).
 5. Click **Continue**.
 6. On the following screen, save the values for **Your new DNS Firewall IP Addresses**.
@@ -41,11 +41,13 @@ Prior to setting up DNS Firewall, you need:
 
 If you forget to save your new IP addresses, find your cluster and click **IP Addresses**.
 
+If you delete your cluster, the assigned set of IPs will be lost. If you recreate the cluster you will get a different set of IPs.
+
 :::
 
 </TabItem> <TabItem label="API">
 
-You can also create a DNS Firewall cluster by sending a [POST request](/api/operations/dns-firewall-create-dns-firewall-cluster) to the API.
+You can also create a DNS Firewall cluster by sending a [POST request](/api/resources/dns_firewall/methods/create/) to the API.
 
 </TabItem> </Tabs>
 
@@ -67,6 +69,6 @@ Configure security policy in your DNS servers and Firewall to allow only [Cloudf
 
 ## Additional options
 
-When you use the API, you can also specify other parameters, such as rate limit (in queries per second per data center). You can find the parameters descriptions and examples in the [API documentation](/api/operations/dns-firewall-create-dns-firewall-cluster).
+When you use the API, you can also specify other parameters, such as rate limit (in queries per second per data center). You can find the parameters descriptions and examples in the [API documentation](/api/resources/dns_firewall/methods/create/).
 
-To configure rate limiting and other options for already existing clusters, use the [Update DNS Firewall Cluster](/api/operations/dns-firewall-update-dns-firewall-cluster) endpoint.
+To configure rate limiting and other options for already existing clusters, use the [Update DNS Firewall Cluster](/api/resources/dns_firewall/methods/edit/) endpoint.

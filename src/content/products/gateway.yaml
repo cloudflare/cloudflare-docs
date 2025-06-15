@@ -4,4 +4,6 @@ product:
   title: Gateway
   group: Cloudflare One
   url: /cloudflare-one/policies/gateway/
-  grid_placeholder: true
+
+meta:
+  description: Cloudflare Gateway, our comprehensive Secure Web Gateway, allows you to set up policies to inspect DNS, Network, HTTP, and Egress traffic.

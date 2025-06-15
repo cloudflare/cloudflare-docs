@@ -1,0 +1,29 @@
+---
+pcx_content_type: concept
+title: Wrangler commands
+sidebar:
+  order: 6
+
+---
+
+import { Render, Type, MetaInfo } from "~/components"
+
+D1 Wrangler commands use REST APIs to interact with the control plane. This page lists the Wrangler commands for D1.
+
+<Render file="wrangler-commands/d1" product="workers" />
+
+## Global commands
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+## Experimental commands
+
+### `insights`
+
+Returns statistics about your queries.
+
+```sh
+npx wrangler d1 insights <database_name> --<option>
+```
+
+For more information, see [Query `insights`](/d1/observability/metrics-analytics/#query-insights).

@@ -5,7 +5,7 @@ sidebar:
   order: 4
 ---
 
-import { GlossaryTooltip, Example } from "~/components";
+import { GlossaryTooltip, Example, WranglerConfig } from "~/components";
 
 With Cloudflare Access, you can create Allow or Block policies which evaluate the user based on custom criteria. This is done by adding an **External Evaluation** rule to your policy. The **External Evaluation** selector requires two values:
 
@@ -53,12 +53,14 @@ You can set up External Evaluation rules using any API service, but to get start
       id = "YOUR_KV_NAMESPACE_ID"
    ```
 
-4. Open `wrangler.toml` in a text editor and insert the following:
+4. Open the [Wrangler configuration file](/workers/wrangler/configuration/) in an editor and insert the following:
 
    - `[[kv_namespaces]]`: Add the output generated in the previous step.
    - `<TEAM_NAME>`: your Cloudflare Zero Trust <GlossaryTooltip term="team name">team name</GlossaryTooltip>.
 
-   ```txt
+  <WranglerConfig>
+
+   ```toml
    name = "my-worker"
    workers_dev = true
    compatibility_date = "2024-08-06"
@@ -73,6 +75,7 @@ You can set up External Evaluation rules using any API service, but to get start
    TEAM_DOMAIN="<TEAM_NAME>.cloudflareaccess.com"
    DEBUG=false
    ```
+	 </WranglerConfig>
 
 ### 2. Program your business logic
 
@@ -106,19 +109,25 @@ Other key formats (such as DSA) are not supported at this time.
 
 ### 4. Create an External Evaluation rule
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Policies**.
 
-2. Find the application for which you want to apply the External Evaluation rule and select **Edit**.
+2. Edit an existing policy or select **Add a policy**.
 
-3. In the **Policies** tab, edit an existing policy or select **Add a policy**.
-
-4. Add the following rule to your policy:
+3. Add the following rule to your policy:
 
 | Rule Type | Selector            | Evaluate URL                                      | Keys URL                                               |
 | --------- | ------------------- | ------------------------------------------------- | ------------------------------------------------------ |
 | Include   | External Evaluation | `https://my-worker.<YOUR_SUBDOMAIN>.workers.dev/` | `https://my-worker.<YOUR_SUBDOMAIN>.workers.dev/keys/` |
 
-When a user logs in to your application, Access will now check their email, device, location, and other identity-based data against your business logic. To test your policies against an email, go to the **Policies** tab and select **Test your policies**.
+4. Save the policy.
+
+5. Go to **Access** > **Applications** and edit the application for which you want to apply the External Evaluation rule.
+
+6. In the **Policies** tab, add the policy that contains the External Evaluation rule.
+
+7. Select **Save application**.
+
+When a user logs in to your application, Access will now check their email, device, location, and other identity-based data against your business logic.
 
 ### Troubleshooting the Worker
 
@@ -130,7 +139,7 @@ To debug your External Evaluation rule:
    cd my-worker
    ```
 
-2. Open `wrangler.toml` in a text editor and set the `debug` variable to `TRUE`.
+2. Open the [Wrangler configuration file](/workers/wrangler/configuration/) in an editor and set the `debug` variable to `TRUE`.
 
 3. Deploy your changes.
 

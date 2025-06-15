@@ -2,7 +2,7 @@
 pcx_content_type: how-to
 title: Batch record changes
 sidebar:
-  order: 7
+  order: 10
 ---
 
 import { GlossaryTooltip, Example, Render } from "~/components";
@@ -30,7 +30,7 @@ The number of records that you can operate with in one action depends on your zo
 
 ### Edit proxy status in bulk
 
-`A`,`AAAA`, and `CNAME` records can be [proxied](/dns/manage-dns-records/reference/proxied-dns-records/). The **Proxy status** of a DNS record affects [how Cloudflare responds to DNS queries](/fundamentals/concepts/how-cloudflare-works/) to that record.
+`A`,`AAAA`, and `CNAME` records can be [proxied](/dns/proxy-status/). The **Proxy status** of a DNS record affects [how Cloudflare responds to DNS queries](/fundamentals/concepts/how-cloudflare-works/) to that record.
 
 <Render file="mix-proxied-and-unproxied" product="dns" />
 
@@ -75,7 +75,7 @@ This option requires familiarity with API usage and concepts. For further inform
 
 :::
 
-The [Batched DNS record changes](/api/operations/dns-records-for-a-zone-batch-dns-records) endpoint allows you to trigger the execution of `DELETES`, `PATCHES`, `PUTS`, and `POSTS` in a single request.
+The [Batched DNS record changes](/api/resources/dns/subresources/records/methods/batch/) endpoint allows you to trigger the execution of `DELETES`, `PATCHES`, `PUTS`, and `POSTS` in a single request.
 
 [Tags and comments](/dns/manage-dns-records/reference/record-attributes/) are also supported with batch changes.
 
@@ -99,7 +99,7 @@ For each operation that you list in the `/batch` request body, consider the requ
 - **`deletes`**: only the `id` is required for each record object. You can keep additional parameters such as `name` for readability, but any other fields aside from `id` will be ignored in this case.
 - **`patches`**: aside from each record `id`, you should specify the fields you want to update. All unspecified fields will remain as they are.
 - **`puts`**: you must specify each record `id`, `content`, `name`, and `type`. You should also specify any other fields you want to set to a value that is not the default. Any unspecified fields will assume their default value for each [record type](/dns/manage-dns-records/reference/dns-record-types/). This operation works as an overwrite, so all fields in a given record are always affected.
-- **`posts`**: since you are creating a new record, `id` is not required. For field definitions, refer to the [Create DNS Record](/api/operations/dns-records-for-a-zone-create-dns-record) endpoint and select the desired record type under the request body specification.
+- **`posts`**: since you are creating a new record, `id` is not required. For field definitions, refer to the [Create DNS Record](/api/resources/dns/subresources/records/methods/create/) endpoint and select the desired record type under the request body specification.
 
 ### Example request
 

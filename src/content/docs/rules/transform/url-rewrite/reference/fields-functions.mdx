@@ -5,14 +5,14 @@ sidebar:
   order: 3
 head:
   - tag: title
-    content: Available fields and functions in rewrite URL rules
+    content: Available fields and functions | URL Rewrite Rules
 ---
 
 import { Render } from "~/components";
 
 ## Filter expressions
 
-A rewrite URL rule [filter expression](/ruleset-engine/rules-language/expressions/) (that is, the expression that defines which incoming requests match the rule) can include the following fields:
+A URL rewrite rule [filter expression](/ruleset-engine/rules-language/expressions/) (that is, the expression that defines which incoming requests match the rule) can include the following fields:
 
 <Render file="transform/transform-phase-fields" />
 
@@ -26,6 +26,6 @@ A rewrite expression (that is, the expression that defines the dynamic URL rewri
 - `http.request.headers.*`
 - `http.request.accepted_languages`
 
-Refer to [Fields](/ruleset-engine/rules-language/fields/) for reference information on these fields.
+Refer to the [Fields reference](/ruleset-engine/rules-language/fields/reference/) for more information on these fields.
 
 The [`concat()`](/ruleset-engine/rules-language/functions/#concat), [`regex_replace()`](/ruleset-engine/rules-language/functions/#regex_replace), and [`wildcard_replace()`](/ruleset-engine/rules-language/functions/#wildcard_replace) functions can appear only **once** in a rewrite expression.
