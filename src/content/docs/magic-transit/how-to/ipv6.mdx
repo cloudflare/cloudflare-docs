@@ -40,4 +40,6 @@ To configure IPv6:
 2. In **IPv6 Interface address** enter the IPv6 address assigned to you by Cloudflare for the Cloudflare side of the GRE tunnel. This address is part of a `/127` subnet that is provided to you by your Cloudflare team.
 3. Use the other IPv6 address you received from your team to configure your router.
 
-For IPv6 traffic over IPv4 tunnels, the same [MSS clamping](/magic-transit/reference/mtu-mss/#mss-clamping) recommendations apply.
+### MSS clamping recommendations
+
+Customers using Magic Transit ingress-only traffic (DSR) should apply a TCP MSS clamp with a maximum of 1416 bytes to their edge router's transit ports to account for the larger IPv6 header.
