@@ -100,7 +100,7 @@
 /src/content/release-notes/d1.yaml @elithrar @rozenmd @vy-ton @joshthoward @oxyjun @cloudflare/pcx-technical-writing
 /src/content/partials/d1/ @elithrar @rozenmd @vy-ton @joshthoward @oxyjun @harshil1712 @cloudflare/pcx-technical-writing
 /src/content/docs/ai-audit/ @oxyjun @kodster28 @cloudflare/pcx-technical-writing
-/src/content/docs/durable-objects/ @elithrar @vy-ton @joshthoward @oxyjun @harshil1712 @cloudflare/pcx-technical-writing
+/src/content/docs/durable-objects/ @elithrar @vy-ton @joshthoward @oxyjun @harshil1712 @mikenomitch @cloudflare/pcx-technical-writing @cloudflare/workers-runtime-1
 /src/content/release-notes/durable-objects.yaml @elithrar @rozenmd @vy-ton @joshthoward @oxyjun @cloudflare/pcx-technical-writing
 /src/content/docs/email-routing/ @cloudflare/pcx-technical-writing
 /src/content/docs/hyperdrive/ @elithrar @thomasgauvin @sejoker @oxyjun @cloudflare/pcx-technical-writing
@@ -121,23 +121,15 @@
 /src/content/release-notes/r2.yaml @oxyjun @elithrar @aninibread @cloudflare/workers-docs @cloudflare/pcx-technical-writing
 /src/content/docs/stream/ @tsmith512 @ToriLindsay @cloudflare/pcx-technical-writing @renandincer @third774
 /src/content/release-notes/stream.yaml @tsmith512 @ToriLindsay @cloudflare/pcx-technical-writing
-/src/content/docs/workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @mikenomitch @WalshyDev @cloudflare/deploy-config @cloudflare/pcx-technical-writing @kodster28 @cloudflare/wrangler
-/src/content/partials/workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @mikenomitch @WalshyDev @cloudflare/deploy-config @cloudflare/pcx-technical-writing @kodster28 @cloudflare/wrangler
-/src/assets/images/workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @WalshyDev @cloudflare/deploy-config @cloudflare/pcx-technical-writing @kodster28 @cloudflare/wrangler
+/src/content/docs/workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @mikenomitch @WalshyDev @cloudflare/deploy-config @cloudflare/pcx-technical-writing @kodster28 @cloudflare/wrangler @cloudflare/workers-runtime-1
+/src/content/partials/workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @mikenomitch @WalshyDev @cloudflare/deploy-config @cloudflare/pcx-technical-writing @kodster28 @cloudflare/wrangler @cloudflare/workers-runtime-1
+/src/assets/images/workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @WalshyDev @cloudflare/deploy-config @cloudflare/pcx-technical-writing @kodster28 @cloudflare/wrangler @cloudflare/workers-runtime-1
 /src/content/release-notes/workers.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @aninibread @cloudflare/deploy-config @cloudflare/pcx-technical-writing @irvinebroque @mikenomitch
 /src/content/docs/zaraz/ @bjesus @jonnyparris @simonabadoiu @cloudflare/pcx-technical-writing
 /src/content/release-notes/zaraz.yaml @bjesus @jonnyparris @simonabadoiu @cloudflare/pcx-technical-writing
 /src/content/docs/workers/ci-cd/ @irvinebroque @aninibread @GregBrimble @kodster28 @cloudflare/pcx-technical-writing
-/src/content/docs/workers/runtime-apis/ @irvinebroque @jasnell @mikenomitch @GregBrimble @kodster28 @cloudflare/pcx-technical-writing
-/src/content/docs/workers/runtime-apis/bindings/ @irvinebroque @mikenomitch @GregBrimble @kodster28 @cloudflare/pcx-technical-writing
-/src/content/docs/workers/platform/ @irvinebroque @GregBrimble @cloudflare/deploy-config @cloudflare/pcx-technical-writing
-/src/content/docs/workers/configuration/compatibility-dates.mdx @irvinebroque @mikenomitch @GregBrimble @kodster28 @cloudflare/deploy-config @cloudflare/pcx-technical-writing
-/src/content/docs/workers/configuration/compatibility-flags.mdx @irvinebroque @mikenomitch @GregBrimble @kodster28 @cloudflare/deploy-config @cloudflare/pcx-technical-writing
-
-/src/content/docs/workers/reference/migrate-to-module-workers.mdx @irvinebroque @GregBrimble @kodster28 @cloudflare/deploy-config @cloudflare/pcx-technical-writing
-/src/content/docs/workers/reference/security-model.mdx @irvinebroque @GregBrimble @kodster28 @cloudflare/pcx-technical-writing
 /src/content/compatibility-flags/ @irvinebroque @mikenomitch @GregBrimble @cloudflare/pcx-technical-writing
-/src/content/docs/workers/wrangler/ @cloudflare/wrangler @irvinebroque @kodster28 @cloudflare/pcx-technical-writing
+/src/content/docs/workers/wrangler/ @cloudflare/wrangler @irvinebroque @kodster28 @cloudflare/pcx-technical-writing @cloudflare/workers-runtime-1
 /src/content/docs/workers/frameworks/ @igorminar @cloudflare/wrangler @aninibread @GregBrimble @kodster28 @cloudflare/pcx-technical-writing
 /src/content/docs/pages/framework-guides/ @igorminar @cloudflare/wrangler @aninibread @GregBrimble @kodster28 @cloudflare/pcx-technical-writing
 /src/content/docs/analytics/analytics-engine/ @irvinebroque @elithrar @cloudflare/pcx-technical-writing
