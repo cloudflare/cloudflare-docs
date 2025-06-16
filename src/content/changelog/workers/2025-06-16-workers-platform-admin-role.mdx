@@ -1,0 +1,23 @@
+---
+title: Grant account members read-only access to the Workers Platform
+description: You can now grant members of your Cloudflare account read-only access to the Workers Platform.
+date: 2025-06-16T00:00:00Z
+---
+
+You can now grant members of your Cloudflare account read-only access to the Workers
+Platform. People using the "Workers Platform (Read-only)" role will be able to view
+all Workers and related resources, however, they won't be able update or deploy changes.
+
+Additionally, the role "Workers Admin" has been renamed to "Workers Platform Admin". This
+change was introduced to account for the fact that role granted access to more than just
+Workers, and it was a point of confusion to many customers.
+
+See the updated and added roles here:
+
+https://developers.cloudflare.com/fundamentals/manage-members/roles/
+
+### How are you affected?
+
+* The role "Workers Platform (Read-only)" is available to everybody.
+* If you're using the old role name "Workers Admin" to talk to our API, you should
+update all your references to use the new name "Workers Platform Admin".
