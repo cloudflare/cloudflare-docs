@@ -11,7 +11,9 @@ head:
 
 import { GlossaryTooltip, Render } from "~/components"
 
-[Network Analytics](/analytics/network-analytics/) gives you real-time visibility into Magic Transit traffic entering and leaving Cloudflare's network through <GlossaryTooltip term="GRE tunnel">GRE</GlossaryTooltip> or <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels. Data is aggregated over time intervals that vary based on your selected zoom level. For example, a daily view shows 24-hour averages, which can flatten out short-term traffic spikes. As a result, longer time intervals will display lower peak bandwidth values compared to more granular views like five-minute intervals.
+[Network Analytics](/analytics/network-analytics/) gives you real-time visibility into Magic Transit traffic entering and leaving Cloudflare's network through <GlossaryTooltip term="GRE tunnel">GRE</GlossaryTooltip> or <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels.
+
+<Render file="analytics/network-analytics-data-averages" product="networking-services" />
 
 Start by inspecting information from the source and destination tunnel panels in Network Analytics to learn more about your data.
 
