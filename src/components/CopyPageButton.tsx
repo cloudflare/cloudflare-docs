@@ -15,6 +15,7 @@ import {
 	PiArrowSquareOutLight,
 	PiCheckCircleLight,
 	PiXCircleLight,
+	PiChatCircleLight,
 } from "react-icons/pi";
 import { track } from "~/util/zaraz";
 
@@ -45,6 +46,14 @@ export default function CopyPageButton() {
 			value: "view markdown",
 		});
 		window.open(markdownUrl, "_blank");
+	};
+
+	const handleDocsAI = () => {
+		const docsAIUrl = "https://developers.cloudflare.com/support/ai/";
+		track("clicked copy page button", {
+			value: "docs ai",
+		});
+		window.open(docsAIUrl, "_blank");
 	};
 
 	const handleCopyMarkdown = async () => {
@@ -90,6 +99,12 @@ export default function CopyPageButton() {
 			description: "Open the Markdown file in a new tab",
 			icon: PiArrowSquareOutLight,
 			onClick: handleViewMarkdown,
+		},
+		{
+			label: "Ask Docs AI",
+			description: "Open our Docs AI assistant in a new tab",
+			icon: PiChatCircleLight,
+			onClick: handleDocsAI,
 		},
 	];
 
