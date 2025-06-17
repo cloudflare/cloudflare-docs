@@ -6,7 +6,7 @@ sidebar:
   label: Configure using Terraform
 ---
 
-import { Render } from "~/components";
+import { Render, Tabs, TabItem } from "~/components";
 
 <Render file="v4-code-snippets" product="terraform" />
 
@@ -108,5 +108,21 @@ resource "cloudflare_ruleset" "bulk_root_redirect_to_id" {
   ]
 }
 ```
+
+## Required token permissions
+
+Your API token must have at least the following [permissions](/fundamentals/api/reference/permissions/):
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+- Account Filter Lists > Edit
+- Bulk URL Redirects > Edit
+
+</TabItem> <TabItem label="API">
+
+- Account Rule Lists Write
+- Bulk URL Redirects Write
+
+</TabItem> </Tabs>
 
 <Render file="terraform-additional-resources" />
