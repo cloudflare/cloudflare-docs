@@ -326,7 +326,7 @@ Each zone has a limit of 1,000 [routes](/workers/configuration/routing/routes/).
 
 ### Number of routes per zone when using `wrangler dev --remote`
 
-When you run a [remote development](/workers/local-development/#develop-using-remote-resources-and-bindings) session using the `--remote` flag, a limit of 50 [routes](/workers/configuration/routing/routes/) per zone is enforced. The Quick Editor in the Cloudflare Dashboard also uses `wrangler dev --remote`, so any changes made there are subject to the same 50-route limit. If your zone has more than 50 routes, you **will not be able to run a remote session**. To fix this, you must remove routes until you are under the 50-route limit.
+When you run a [remote development](/workers/development-testing/#remote-bindings) session using the `--remote` flag, a limit of 50 [routes](/workers/configuration/routing/routes/) per zone is enforced. The Quick Editor in the Cloudflare Dashboard also uses `wrangler dev --remote`, so any changes made there are subject to the same 50-route limit. If your zone has more than 50 routes, you **will not be able to run a remote session**. To fix this, you must remove routes until you are under the 50-route limit.
 
 ### Number of custom domains per zone
 

@@ -23,7 +23,7 @@ import {
 
 You can build, run, and test your Worker code on your own local machine before deploying it to Cloudflare's network. This is made possible through [Miniflare](/workers/testing/miniflare/), a simulator that executes your Worker code using the same runtime used in production, [`workerd`](https://github.com/cloudflare/workerd).
 
-By default, your Worker's bindings connect to locally simulated resources, but can be configured to interact with the real, production resource.
+[By default](/workers/development-testing/#defaults), your Worker's bindings [connect to locally simulated resources](/workers/development-testing/#bindings-during-local-development), but can be configured to interact with the real, production resource with [remote bindings](/workers/development-testing/#remote-bindings).
 
 ## Core concepts
 
@@ -276,6 +276,26 @@ If a Workers AI binding has `experimental_remote` set to `false`, Cloudflare wil
 
 </Aside>
 
+#### [Dispatch Namespaces](/cloudflare-for-platforms/workers-for-platforms/get-started/developing-with-wrangler/):
+
+Workers for Platforms users can configure `experimental_remote: true` in dispatch namespace binding definitions:
+
+<WranglerConfig>
+```jsonc title="wrangler.jsonc"
+{
+  "dispatch_namespaces": [
+    {
+      "binding": "DISPATCH_NAMESPACE",
+      "namespace": "testing",
+      "experimental_remote":true
+		}
+  ]
+}
+```
+</WranglerConfig>
+
+This allows you to run your [dynamic dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dynamic-dispatch-worker) locally, while connecting it to your remote dispatch namespace binding. This allows you to test changes to your core dispatching logic against real, deployed [user Workers](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#user-workers).
+
 ### Unsupported remote bindings
 
 Certain bindings are not supported for remote connections during local development (`experimental_remote: true`). These will always use local simulations or local values.
@@ -425,7 +445,7 @@ mf.setOptions(miniflareOptions);
 
 ## `wrangler dev --remote` (Legacy)
 
-Separate from Miniflare-powered local development, Wrangler also offers a fully remote development mode via [`wrangler dev --remote`](/workers/wrangler/commands/#dev). Remote development is [**not** supported in the Vite plugin](/workers/local-development/wrangler-vs-vite/).
+Separate from Miniflare-powered local development, Wrangler also offers a fully remote development mode via [`wrangler dev --remote`](/workers/wrangler/commands/#dev). Remote development is [**not** supported in the Vite plugin](/workers/development-testing/wrangler-vs-vite/).
 
 <PackageManagers type="exec" pkg="wrangler" args="dev --remote" />
 
