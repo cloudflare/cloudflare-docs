@@ -1,0 +1,56 @@
+---
+title: Cloudflare One Gateway New Order of Enforcement
+description: Gateway Network policies (Layer 4) will be evaluated before HTTP (Layer 7) policies
+products:
+  - gateway
+hidden: false
+date: 2025-06-18T11:00:00Z
+---
+Gateway will now evaluate **Network (Layer 4) policies before HTTP (Layer 7) policies**. This change will not weaken your security posture or change the traffic filtered by your policies. However, for a smooth transition, we ask that you review your policy configuration ahead of the rollout. **A review of your policies is only required if you have HTTP policies applied in your account.** 
+
+Starting the **week of July 14th, 2025 through July 18th, 2025** we will begin progressively rolling out this change across our data centers worldwide. 
+
+**Previous Order of Enforcement:**
+
+1.  DNS Policies
+2.  HTTP Policies
+3.  Network Policies
+
+**New Order of Enforcement:**
+
+1.  DNS Policies
+2.  **Network Policies**
+3.  **HTTP Policies**
+
+**Importantly, this change will not weaken your security posture. Gateway will continue to filter all traffic filtered by your policies today.** The fundamental logic of your policies  will not change. The new order simply ensures that Gateway evaluates network-level policies before application-level HTTP policies. 
+
+---
+
+### Action Required if using HTTP policies: Review Policy Notifications
+
+While your security is unaffected, this change may alter the notification your users see when traffic is blocked. **We recommend customers with HTTP policies review their configuration.**
+
+**Example Scenario:**
+Consider if you have:
+
+- An **HTTP policy** to block `example.com` that is configured to **show a block page**.
+- A **Network policy** to block traffic to `example.com` with **no block notification** enabled.
+
+Under the new order, the Network policy will be evaluated first, and the traffic will be blocked silently. Your user will **not** see the block page from the HTTP policy.
+
+To ensure users continue to receive a notification, you can either **add a client notification to your Network policy** or rely solely on your HTTP policy for that traffic.
+
+---
+
+### Why We're Making This Change
+
+This update is based on user feedback and aims to:
+
+- Create a more intuitive model by evaluating network-level policies before application-level policies.
+- Minimize 526 connection errors by verifying the network path to an origin before attempting to establish a decrypted TLS connection.
+
+---
+
+If applying HTTP policies, please review them before **July 14, 2025,** to ensure your user experience remains as intended.
+
+For more details, please see our [updated documentation on the order of enforcement](https://developers.cloudflare.com/cloudflare-one/policies/gateway/order-of-enforcement/).
