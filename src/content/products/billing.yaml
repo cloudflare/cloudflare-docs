@@ -1,0 +1,9 @@
+name: Billing
+
+product:
+  title: Billing
+  url: /billing/
+  group: Core platform
+
+meta:
+  description: Manage billing for your account.

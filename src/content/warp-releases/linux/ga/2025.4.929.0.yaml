@@ -3,8 +3,7 @@ releaseNotes: >-
   of:
 
   1. All DNS traffic now flows inside the WARP tunnel. Customers are no longer
-  required to configure their local Firewall rules to allow our DoH IP Address
-  or domains.
+  required to configure their local firewall rules to allow our [DoH IP addresses and domains](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#doh-ip).
 
   2. When using MASQUE, the connection will fall back to HTTP/2 (TCP) when we
   detect that HTTP/3 traffic is blocked. This allows for a much more reliable
@@ -16,18 +15,16 @@ releaseNotes: >-
   - Fixed an issue where the managed network policies could incorrectly report
   network location beacons as missing.
 
-  - Improved DEX Test Error reporting.
+  - Improved DEX test error reporting.
 
   - Fixed an issue causing client notifications to fail in IPv6 only
   environments which prevented the client from receiving configuration changes
   to settings like device profile.
 
   - Added a TCP fallback for the MASQUE tunnel protocol to improve connectivity
-  on networks that block UDP or http/3 specifically.
+  on networks that block UDP or HTTP/3 specifically.
 
-  - Added new IPs for Client Orchestration API for operations like tunnel
-  connectivity checks. If your organization uses a firewall or other policies
-  you will need to exempt these IPs.
+  - Added new IP addresses for [tunnel connectivity checks](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#connectivity-checks). If your organization uses a firewall or other policies you will need to exempt these IPs.
 
   - Fixed an issue where frequent network changes could cause WARP to become
   unresponsive.

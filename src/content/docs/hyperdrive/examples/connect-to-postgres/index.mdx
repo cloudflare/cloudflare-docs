@@ -44,8 +44,8 @@ Hyperdrive uses Workers [TCP socket support](/workers/runtime-apis/tcp-sockets/#
 
 | Driver                                                     | Documentation                                                            | Minimum Version Required | Notes                                                                                                                                                                                                                                                                                |
 | ---------------------------------------------------------- | ------------------------------------------------------------------------ | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| node-postgres - `pg`      (recommended)                                 | [node-postgres - `pg` documentation](https://node-postgres.com/)         | `pg@8.13.0`              | `8.11.4` introduced a bug with URL parsing and will not work. `8.11.5` fixes this. Requires `compatibility_flags = ["nodejs_compat"]` and `compatibility_date = "2024-09-23"` - refer to [Node.js compatibility](/workers/runtime-apis/nodejs). Requires wrangler `3.78.7` or later. |
 | Postgres.js                                                | [Postgres.js documentation](https://github.com/porsager/postgres)        | `postgres@3.4.4`         | Supported in both Workers & Pages.                                                                                                                                                                                                                                                   |
-| node-postgres - `pg`                                       | [node-postgres - `pg` documentation](https://node-postgres.com/)         | `pg@8.13.0`              | `8.11.4` introduced a bug with URL parsing and will not work. `8.11.5` fixes this. Requires `compatibility_flags = ["nodejs_compat"]` and `compatibility_date = "2024-09-23"` - refer to [Node.js compatibility](/workers/runtime-apis/nodejs). Requires wrangler `3.78.7` or later. |
 | Drizzle                                                    | [Drizzle documentation](https://orm.drizzle.team/)                       | `0.26.2`^                |                                                                                                                                                                                                                                                                                      |
 | Kysely                                                     | [Kysely documentation](https://kysely.dev/)                              | `0.26.3`^                |                                                                                                                                                                                                                                                                                      |
 | [rust-postgres](https://github.com/sfackler/rust-postgres) | [rust-postgres documentation](https://docs.rs/postgres/latest/postgres/) | `v0.19.8`                | Use the [`query_typed`](https://docs.rs/postgres/latest/postgres/struct.Client.html#method.query_typed) method for best performance.                                                                                                                                                 |
@@ -68,17 +68,17 @@ The following examples show you how to:
 2. Pass the Hyperdrive connection string and connect to the database.
 3. Query your database via Hyperdrive.
 
-### Postgres.js
-
-The following Workers code shows you how to use [Postgres.js](https://github.com/porsager/postgres) with Hyperdrive.
-
-<Render file="use-postgres-js-to-make-query" product="hyperdrive" />
-
 ### node-postgres / pg
 
 Install the `node-postgres` driver:
 
 <Render file="use-node-postgres-to-make-query" product="hyperdrive" />
+
+### Postgres.js
+
+The following Workers code shows you how to use [Postgres.js](https://github.com/porsager/postgres) with Hyperdrive.
+
+<Render file="use-postgres-js-to-make-query" product="hyperdrive" />
 
 ## Identify connections from Hyperdrive
 

@@ -37,6 +37,7 @@ The following request of the [Create a zone ruleset](/api/resources/rulesets/met
 		phase: "http_request_dynamic_redirect",
 		rules: [
 			{
+				ref: "redirect_gb_fr_to_localized",
 				expression:
 					'(ip.src.country eq "GB" or ip.src.country eq "FR") and http.request.uri.path eq "/"',
 				description: "Redirect GB and FR users in home page to localized site.",
@@ -67,6 +68,7 @@ The following request of the [Create a zone ruleset](/api/resources/rulesets/met
 		"version": "1",
 		"rules": [
 			{
+				"ref": "redirect_gb_fr_to_localized",
 				"id": "235e557b92fd4e5e8753ee665a9ddd75",
 				"version": "1",
 				"expression": "(ip.src.country eq \"GB\" or ip.src.country eq \"FR\") and http.request.uri.path eq \"/\"",
@@ -95,6 +97,8 @@ The following request of the [Create a zone ruleset](/api/resources/rulesets/met
 
 </Details>
 
+<Render file="terraform-use-ref-field" params={{ addDocsLocation: true }} />
+
 If there is already a phase entry point ruleset for the `http_request_dynamic_redirect` phase, use the [Update a zone ruleset](/api/resources/rulesets/methods/update/) operation instead, like in the following example:
 
 <APIRequest
@@ -106,6 +110,7 @@ If there is already a phase entry point ruleset for the `http_request_dynamic_re
 		phase: "http_request_dynamic_redirect",
 		rules: [
 			{
+				ref: "redirect_gb_fr_to_localized",
 				expression:
 					'(ip.src.country eq "GB" or ip.src.country eq "FR") and http.request.uri.path eq "/"',
 				description: "Redirect GB and FR users in home page to localized site.",
@@ -122,6 +127,7 @@ If there is already a phase entry point ruleset for the `http_request_dynamic_re
 				},
 			},
 			{
+				ref: "redirect_contacts_to_new_page",
 				expression: 'http.request.uri.path eq "/contacts.html"',
 				description: "Redirect to new contacts page.",
 				action: "redirect",
@@ -150,6 +156,7 @@ If there is already a phase entry point ruleset for the `http_request_dynamic_re
 		"version": "2",
 		"rules": [
 			{
+				"ref": "redirect_gb_fr_to_localized",
 				"id": "235e557b92fd4e5e8753ee665a9ddd75",
 				"version": "1",
 				"action": "redirect",
@@ -169,6 +176,7 @@ If there is already a phase entry point ruleset for the `http_request_dynamic_re
 				"enabled": true
 			},
 			{
+				"ref": "redirect_contacts_to_new_page",
 				"id": "cfad5efbfcd1440fb5b30cf30f95ece3",
 				"version": "1",
 				"action": "redirect",

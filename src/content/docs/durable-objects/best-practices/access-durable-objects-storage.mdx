@@ -14,11 +14,7 @@ A Durable Object's [in-memory state](/durable-objects/reference/in-memory-state/
 
 ## Access storage
 
-:::note[Recommended SQLite-backed Durable Objects]
-Cloudflare recommends all new Durable Object classes use the [SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class).
-
-The [key-value storage backend](/durable-objects/reference/durable-objects-migrations/#create-durable-object-class-with-key-value-storage) remains for backwards compatibility, and a migration path from KV storage to SQLite storage for existing Durable Object classes will be available in the future.
-:::
+<Render file="recommend-sqlite-do" product="durable-objects"/>
 
 <Render file="do-sqlite-storage-no-bill-note"/>
 
@@ -88,7 +84,7 @@ export class MyDurableObject extends DurableObject<Env> {
   async clearDo():Promise<void> {
     // If you've configured a Durable Object alarm
     await this.ctx.storage.deleteAlarm();
-    
+
     // This will delete all the storage associated with this Durable Object instance
     // This will also delete the Durable Object instance itself
     await this.ctx.storage.deleteAll();
@@ -152,7 +148,7 @@ for (let row of cursor) {
 }
 ```
 
-You can represent the shape of any result type you wish, including more complex types. If you are performing a 
+You can represent the shape of any result type you wish, including more complex types. If you are performing a
 `JOIN` across multiple tables, you can compose a type that reflects the results of your queries.
 
 ## Indexes in SQLite

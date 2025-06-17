@@ -5,6 +5,10 @@ productLink: "/browser-rendering/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-05-26"
+    title: Playwright MCP
+    description: |-
+      * You can now deploy [Playwright MCP](/browser-rendering/platform/playwright-mcp/) and use any MCP client to get AI models to interact with Browser Rendering.
   - publish_date: "2025-04-30"
     title: Automatic Request Headers
     description: |-

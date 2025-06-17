@@ -81,10 +81,13 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/explorer/datasets
 ```json
 {
   "result": {
-    "id": <JOB_ID>,
     "dataset": "http_requests",
-    "created_at": "2023-09-25T22:12:31Z",
-    "updated_at": "2023-09-25T22:12:31Z"
+    "object_type": "zone",
+    "object_id": "<ZONE ID>",
+    "created_at": "2025-06-03T14:33:16Z",
+    "updated_at": "2025-06-03T14:33:16Z",
+    "dataset_id": "01973635f7e273a1964a02f4d4502499",
+    "enabled": true
   },
   "success": true,
   "errors": [],

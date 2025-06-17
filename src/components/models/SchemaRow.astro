@@ -2,32 +2,21 @@
 import { Type, MetaInfo } from "~/components";
 import { type SchemaNode } from "@stoplight/json-schema-tree";
 
-const { node, root } = Astro.props;
+const { node } = Astro.props;
 ---
 
-<li
-	class={`py-2 my-0! list-none! ${root ? "" : "border-l border-l-gray-200 dark:border-l-gray-500 pl-4"}`}
->
-	{
-		(
-			<code
-				class="mr-2 rounded-md bg-gray-100 pr-0! font-mono"
-				title={node.title}
-			>
-				{node.subpath[node.subpath.length - 1]}
-				{node.parent.fragment?.required?.includes(
-					node.subpath[node.subpath.length - 1],
-				) ? (
-					<span class="font-semibold text-red-500">*</span>
-				) : (
-					""
-				)}
-			</code>
-		)
-	}
+<li>
+	<code title={node.title}>{node.subpath[node.subpath.length - 1]}</code>
 
 	{node.primaryType && <Type text={node.primaryType} />}
+
 	{node.combiners && node.combiners.includes("oneOf") && <Type text="one of" />}
+
+	{
+		node.parent.fragment?.required?.includes(
+			node.subpath[node.subpath.length - 1],
+		) && <MetaInfo text="required" />
+	}
 
 	{
 		node.annotations.default && (
@@ -50,11 +39,11 @@ const { node, root } = Astro.props;
 			/>
 		)
 	}
-	<p class="mb-0!">{node.annotations.description}</p>
+	<p>{node.annotations.description}</p>
 
 	{
 		node.children && (
-			<ul class="m-0 ml-4 list-none! p-0">
+			<ul class="pl-6">
 				{node.children.map((node: SchemaNode) => (
 					<Astro.self node={node} />
 				))}

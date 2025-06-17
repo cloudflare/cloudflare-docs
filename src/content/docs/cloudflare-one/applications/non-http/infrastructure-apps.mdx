@@ -43,13 +43,16 @@ Access for Infrastructure currently only supports [SSH](/cloudflare-one/connecti
 
 <Render file="access/add-infrastructure-app" />
 
-## 3. Configure the server
+## 3. (Recommended) Modify order of precedence in Gateway
+<Render file="access/modify-gateway-policy-precedence" product="cloudflare-one" params={{ selector: "Access Infrastructure Target" }} />
+
+## 4. Configure the server
 
 Certain protocols require configuring the server to trust connections through Access for Infrastructure. For more information, refer to the protocol-specific tutorial:
 
 - [SSH](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/#6-configure-ssh-server)
 
-## 4. Connect as a user
+## 5. Connect as a user
 
 Users connect to the target's IP address using their preferred client software. The user must be logged into WARP on their device, but no other system configuration is required. You can optionally configure a [private DNS resolver](/cloudflare-one/policies/gateway/resolver-policies/) to allow connections to the target's private hostname.
 
@@ -117,17 +120,3 @@ The following [Access policy selectors](/cloudflare-one/policies/access/#selecto
 - Authentication method
 - Device posture
 - Entra group, GitHub organization, Google Workspace group, Okta group
-
-## Modify order of precedence in Gateway
-
-By default, Cloudflare will evaluate Access infrastructure application policies after evaluating all Gateway network policies. To evaluate Access infrastructure applications before or after specific Gateway policies, create the following [Gateway network policy](/cloudflare-one/policies/gateway/network-policies/):
-
-| Selector                     | Operator | Value     | Action |
-| ---------------------------- | -------- | --------- | ------ |
-| Access Infrastructure Target | is       | _Present_ | Allow  |
-
-You can move this policy in the Gateway policy builder to change its [order of precedence](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence).
-
-:::note
-Users must pass the policies in your Access application before they are granted access. The Gateway Allow policy is strictly for routing and connectivity purposes.
-:::

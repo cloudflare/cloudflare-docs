@@ -1,5 +1,7 @@
 ---
 import { getCollection } from "astro:content";
+import { tags as allowedTags } from "~/schemas/tags";
+
 import AnchorHeading from "./AnchorHeading.astro";
 import Details from "./Details.astro";
 
@@ -13,28 +15,57 @@ for (const entry of entries) {
 		byTag[tag].push(entry.id);
 	}
 }
+
+const flattened = Object.values(allowedTags).flat();
 ---
 
 {
 	Object.entries(byTag)
 		.sort()
-		.map(([tag, pages]) => (
-			<>
-				<AnchorHeading depth={3} title={tag} />
-				<p>
-					<code>{tag}</code> is used on <code>{pages.length}</code> pages.
-				</p>
-				<Details header={`Pages tagged with ${tag}`}>
-					<ul>
-						{pages.map((path) => (
+		.map(([tag, pages]) => {
+			const pretty = flattened.find(
+				(x) =>
+					x.label.toLowerCase() === tag.toLowerCase() ||
+					x.variants?.find((v) => v.toLowerCase() === tag.toLowerCase()),
+			);
+
+			if (!pretty) {
+				throw new Error(
+					`[TagsUsage] Tag ${tag} not found in /src/schemas/tags.ts`,
+				);
+			}
+
+			return (
+				<>
+					<AnchorHeading depth={3} title={pretty.label} />
+					{pretty.variants && pretty.variants.length > 0 && (
+						<p>
+							Variants:
+						</p>
+						<ul>
+							{pretty.variants?.map((variant) => (
 							<li>
-								<a href={`/${path}/`} target="_blank">
-									{path}
-								</a>
+								<code>{variant}</code>
 							</li>
 						))}
 					</ul>
-				</Details>
-			</>
-		))
+				)}
+				<p>
+					Used on <code>{pages.length}</code>{" "}
+					pages.
+				</p>
+				<Details header={`Pages tagged with ${pretty.label}`}>
+					<ul>
+							{pages.map((path) => (
+								<li>
+									<a href={`/${path}/`} target="_blank">
+										{path}
+									</a>
+								</li>
+							))}
+						</ul>
+					</Details>
+				</>
+			);
+		})
 }

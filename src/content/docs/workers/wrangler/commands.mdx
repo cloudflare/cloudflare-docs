@@ -14,6 +14,7 @@ import {
 	Type,
 	MetaInfo,
 	WranglerConfig,
+	PackageManagers,
 } from "~/components";
 
 Wrangler offers a number of commands to manage your Cloudflare Workers.
@@ -71,25 +72,11 @@ wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
 
 Since Cloudflare recommends [installing Wrangler locally](/workers/wrangler/install-and-update/) in your project(rather than globally), the way to run Wrangler will depend on your specific setup and package manager.
 
-<Tabs> <TabItem label="npm">
-
-```sh
-npx wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
-```
-
-</TabItem> <TabItem label="yarn">
-
-```sh
-yarn wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
-```
-
-</TabItem> <TabItem label="pnpm">
-
-```sh
-pnpm wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
-```
-
-</TabItem> </Tabs>
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="<COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]"
+/>
 
 You can add Wrangler commands that you use often as scripts in your project's `package.json` file:
 
@@ -106,25 +93,7 @@ You can add Wrangler commands that you use often as scripts in your project's `p
 
 You can then run them using your package manager of choice:
 
-<Tabs> <TabItem label="npm">
-
-```sh
-npm run deploy
-```
-
-</TabItem> <TabItem label="yarn">
-
-```sh
-yarn run deploy
-```
-
-</TabItem> <TabItem label="pnpm">
-
-```sh
-pnpm run deploy
-```
-
-</TabItem> </Tabs>
+<PackageManagers type="run" args="deploy" />
 
 ---
 
@@ -196,12 +165,6 @@ wrangler dev [<SCRIPT>] [OPTIONS]
 :::note
 
 None of the options for this command are required. Many of these options can be set in your Wrangler file. Refer to the [Wrangler configuration](/workers/wrangler/configuration) documentation for more information.
-
-:::
-
-:::caution
-
-As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions providing `glibc 2.31` or higher (e.g. Ubuntu 20.04/22.04, Debian 11/12, Fedora 37/38/39), macOS version 11 or higher, and Windows (x86-64 architecture).
 
 :::
 
@@ -348,7 +311,8 @@ None of the options for this command are required. Also, many can be set in your
   - Compile a project without actually deploying to live servers. Combined with `--outdir`, this is also useful for testing the output of `npx wrangler deploy`. It also gives developers a chance to upload our generated sourcemap to a service like Sentry, so that errors from the Worker can be mapped against source code, but before the service goes live.
 - `--keep-vars` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - It is recommended best practice to treat your Wrangler developer environment as a source of truth for your Worker configuration, and avoid making changes via the Cloudflare dashboard.
-  - If you change your environment variables or bindings in the Cloudflare dashboard, Wrangler will override them the next time you deploy. If you want to disable this behaviour set `keep-vars` to `true`.
+  - If you change your environment variables in the Cloudflare dashboard, Wrangler will override them the next time you deploy. If you want to disable this behaviour set `keep-vars` to `true`.
+  - Secrets are never deleted by a deployment whether this flag is true or false.
 - `--dispatch-namespace` <Type text="string" /> <MetaInfo text="optional" />
   - Specify the [Workers for Platforms dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/#2-create-a-dispatch-namespace) to upload this Worker to.
 - `--metafile` <Type text="string" /> <MetaInfo text="optional" />
@@ -885,6 +849,23 @@ wrangler workflows describe <WORKFLOW_NAME> [OPTIONS]
   - The name of a registered Workflow.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
+
+### `delete`
+
+Delete a Workflow and all its instances.
+
+```sh
+wrangler workflows delete <WORKFLOW_NAME> [OPTIONS]
+```
+
+- `WORKFLOW_NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of a registered Workflow.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+```sh
+wrangler workflows instances delete my-workflow
+```
 
 ### `trigger`
 
@@ -1999,6 +1980,7 @@ wrangler types [<PATH>] [OPTIONS]
   	SERVICE_BINDING: Service<import("../bound-worker/src/index").Entrypoint>;
   }
   ```
+  - If your service binding targets a [`WorkerEntrypoint`](/workers/runtime-apis/bindings/service-bindings/rpc/) that is a default export, make sure you set `entrypoint: "default"` in your Wrangler config when you configure your service binding.
 
 ---
 

@@ -52,6 +52,10 @@ Then, [create a `CNAME` record](/dns/manage-dns-records/how-to/create-dns-record
 files  CNAME  files.example.com.s3.amazonaws.com
 ```
 
+:::caution
+AWS states in their [documentation](https://docs.aws.amazon.com/AmazonS3/latest/userguide/VirtualHosting.html#VirtualHostingCustomURLs) that the CNAME and the bucket name must be the same. To avoid potential compromise if you set it up differently, use a [host header origin rule](/rules/origin-rules/features/#host-header) to explicitly route all requests to the correct bucket.
+:::
+
 ### Amazon Simple Email Service (SES)
 
 For help setting up DKIM in SES, refer to the [Amazon documentation](https://docs.aws.amazon.com/ses/latest/dg/creating-identities.html).

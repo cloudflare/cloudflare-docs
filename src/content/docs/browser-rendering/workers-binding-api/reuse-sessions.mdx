@@ -37,13 +37,12 @@ Create a new Worker project named `browser-worker` by running:
 
 In your `browser-worker` directory, install Cloudflare's [fork of Puppeteer](/browser-rendering/platform/puppeteer/):
 
-```sh
-npm install @cloudflare/puppeteer --save-dev
-```
+<PackageManagers pkg="@cloudflare/puppeteer" dev />
 
 ## 3. Configure the [Wrangler configuration file](/workers/wrangler/configuration/)
 
 <WranglerConfig>
+
 ```toml
 name = "browser-worker"
 main = "src/index.ts"
@@ -53,6 +52,7 @@ compatibility_flags = [ "nodejs_compat" ]
 browser = { binding = "MYBROWSER" }
 
 ```
+
 </WranglerConfig>
 
 ## 4. Code

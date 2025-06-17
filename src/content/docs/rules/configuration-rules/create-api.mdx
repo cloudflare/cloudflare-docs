@@ -43,6 +43,7 @@ The following example sets the rules of an existing phase ruleset (`{ruleset_id}
 	json={{
 		rules: [
 			{
+				ref: "enable_email_obfuscation_bic",
 				expression: 'starts_with(http.request.uri.path, "/contact-us/")',
 				description:
 					"Obfuscates email addresses and enables BIC in contacts page",
@@ -56,6 +57,8 @@ The following example sets the rules of an existing phase ruleset (`{ruleset_id}
 	}}
 />
 
+<Render file="terraform-use-ref-field" params={{ addDocsLocation: true }} />
+
 </Details>
 
 <Details header="Example: Add a rule that turns on Under Attack mode for the admin area">
@@ -68,6 +71,7 @@ The following example sets the rules of an existing phase ruleset (`{ruleset_id}
 	json={{
 		rules: [
 			{
+				ref: "enable_under_attack_in_admin",
 				expression: 'http.host eq "admin.example.com"',
 				description: "Turn on Under Attack mode for admin area",
 				action: "set_config",
@@ -78,6 +82,8 @@ The following example sets the rules of an existing phase ruleset (`{ruleset_id}
 		],
 	}}
 />
+
+<Render file="terraform-use-ref-field" params={{ addDocsLocation: true }} />
 
 </Details>
 
