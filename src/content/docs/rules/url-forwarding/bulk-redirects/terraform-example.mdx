@@ -1,16 +1,16 @@
 ---
-title: Create a bulk redirect rule using Terraform
+title: Configure Bulk Redirects using Terraform
 pcx_content_type: configuration
 sidebar:
   order: 6
-  label: Create bulk redirect using Terraform
+  label: Configure using Terraform
 ---
 
 import { Render } from "~/components";
 
 <Render file="v4-code-snippets" product="terraform" />
 
-The following example defines bulk redirect rules for an account using Terraform. The rule creates a redirect list item and a bulk URL redirect rule from the list to visitors based on the defined redirect list.
+This Terraform example configures account-level Bulk Redirects. It creates a [Bulk Redirect List](/rules/url-forwarding/bulk-redirects/concepts/#bulk-redirect-lists) populated with [URL redirects](/rules/url-forwarding/bulk-redirects/concepts/#url-redirects) and a corresponding [Bulk Redirect Rule](/rules/url-forwarding/bulk-redirects/concepts/#bulk-redirect-rules) to activate them.
 
 ```tf
 # Cloudflare account ID
@@ -28,7 +28,7 @@ variable "bulk_redirect_list_name" {
   default = "my_bulk_redirect_list_name"
 }
 
-# Bulk redirect list item
+# Bulk redirect list item (URL redirect)
 variable "bulk_redirects" {
   type = map(object({
     source_url  = string
@@ -37,8 +37,8 @@ variable "bulk_redirects" {
   }))
 
   default = {
-    "redirect1" = { 
-      source_url = "https://source.url/redirect/1" 
+    "redirect1" = {
+      source_url = "https://source.url/redirect/1"
       target_url = "https://target.url/?redirect=1"
       status_code = 301
     }
