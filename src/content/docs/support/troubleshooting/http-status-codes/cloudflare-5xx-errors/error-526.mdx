@@ -62,7 +62,7 @@ Workers subrequests to any hostname outside your Cloudflare zone that is not pro
 
 - Make sure the SSL certificate configured at the origin is valid.
 
-- Add you self-signed certificate to the [Custom Origin Trust Store](/ssl/origin-configuration/custom-origin-trust-store/) and enable the [`cots_on_external_fetch` compatibility flag](/workers/configuration/compatibility-flags/#do-not-use-the-custom-origin-trust-store-for-external-subrequests) in your Worker's configuration. 
+- Add your self-signed SSL certificate to the [Custom Origin Trust Store](/ssl/origin-configuration/custom-origin-trust-store/) and enable the [`cots_on_external_fetch` compatibility flag](/workers/configuration/compatibility-flags/#do-not-use-the-custom-origin-trust-store-for-external-subrequests) in your Worker's configuration. 
 This flag enables the use of the [Custom Origin Trust Store](/ssl/origin-configuration/custom-origin-trust-store/) when making external (grey-clouded) subrequests from a Cloudflare Worker.
 
 
