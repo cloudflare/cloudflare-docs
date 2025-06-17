@@ -1,0 +1,26 @@
+---
+title: Fixes to Workers in Terraform, SDKs, and APIs.
+description: Various fixes and improvements have been made to Workers Terraform resources, SDKs, APIs, and API docs.
+products:
+  - d1
+  - workers
+  - workers-for-platforms
+date: 2025-06-17T00:00:00Z
+---
+
+Fixes and improvements have been made to Workers Terraform resources, SDKs, APIs, and API docs that unblock users from configuring Workers and resources on the Developer Platform for build and deploy scripts, CI/CD pipelines, custom dev tools, testing, etc.
+
+## New Workers Script Upload Interface in SDKs
+
+In [cloudlfare-typescript](https://github.com/cloudflare/cloudflare-typescript) (4.4.1) and [cloudflare-python](https://github.com/cloudflare/cloudflare-python) (4.3.1), there is a fixed (and improved!) interface for uploading Workers. Check out the examples [here](/workers/platform/infrastructure-as-code).
+
+## Terraform
+
+- Fixed the [cloudflare_workers_script](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/workers_script) resource in Terraform producing a diff even when there are no changes.
+- Fixed the [cloudflare_workers_for_platforms_dispatch_namespace](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/workers_for_platforms_dispatch_namespace) resource in Terraform always attempting to recreate.
+- The [cloudflare_workers_route](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/workers_route) resource now allows for the `script` property to be empty, null, or omitted to indicate that pattern should be negated for all scripts (see routes [docs](/workers/configuration/routing/routes)).
+- Using `primary_location_hint` in the [cloudflare_d1_database](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/d1_database) resource will no longer always try to recreate.
+
+## API
+
+- Added missing [Workers Script And Version Settings](/api/resources/workers/subresources/scripts/subresources/script_and_version_settings) to the OpenAPI docs and API SDKs.
