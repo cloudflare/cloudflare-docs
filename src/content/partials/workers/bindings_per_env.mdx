@@ -2,42 +2,64 @@
 {}
 ---
 
-The three development modes differ in [**where your Worker executes** and **how bindings connect**](/workers/development-testing/#core-concepts):
+## Local development
 
-**Local Development:** [Worker execution](/workers/development-testing/#worker-execution) runs locally on your machine. [Bindings](/workers/development-testing/#bindings) connect to local resource simulations. Supported in both [`wrangler dev`](/workers/wrangler/commands/#dev) and the [Cloudflare Vite plugin](/workers/vite-plugin/).
+During local development, your Worker code always executes locally and bindings connect to locally simulated resources [by default](/workers/development-testing/#remote-bindings).
 
-**Hybrid Development:** [Worker execution](/workers/development-testing/#worker-execution-1) runs locally on your machine. [Bindings](/workers/development-testing/#bindings-1) can connect to local simulations (default) or remote resources via `experimental_remote: true` configuration. Supported in both [`wrangler dev --x-hybrid-dev`](/workers/development-testing/#hybrid-development) and the Cloudflare Vite plugin.
+You can configure [**remote bindings** during local development](/workers/development-testing/#remote-bindings), allowing your bindings to connect to a deployed resource on a per-binding basis.
 
-**Remote Development:** [Worker execution](/workers/development-testing/#worker-execution-2) runs on Cloudflare's infrastructure. [Bindings](/workers/development-testing/#bindings-2) always connect to remote resources. Supported only in [`wrangler dev --remote`](/workers/wrangler/commands/#dev) - there is **no Vite plugin equivalent**.
+| Binding                                 | Local simulations |                      Remote binding connections                       |
+| --------------------------------------- | :---------------: | :-------------------------------------------------------------------: |
+| **AI**                                  |        ❌         |    ✅ [**Recommended**](/workers/development-testing/#workers-ai)     |
+| **Assets**                              |        ✅         |                                  ❌                                   |
+| **Analytics Engine**                    |      ✅[^4]       |                                  ❌                                   |
+| **Browser Rendering**                   |        ❌         | ✅ [**Recommended**](/workers/development-testing/#browser-rendering) |
+| **D1**                                  |        ✅         |                                  ✅                                   |
+| **Durable Objects**                     |        ✅         |                                  ❌                                   |
+| **Email Bindings**                      |        ✅         |                                  ✅                                   |
+| **Hyperdrive**                          |      ✅[^2]       |                                  ❌                                   |
+| **Images**                              |        ✅         |      ✅ [**Recommended**](/workers/development-testing/#images)       |
+| **KV**                                  |        ✅         |                                  ✅                                   |
+| **mTLS**                                |        ❌         |       ✅ [**Recommended**](/workers/development-testing/#mtls)        |
+| **Queues**                              |        ✅         |                                  ✅                                   |
+| **R2**                                  |        ✅         |                                  ✅                                   |
+| **Rate Limiting**                       |        ✅         |                                  ❌                                   |
+| **Service Bindings (multiple Workers)** |        ✅         |                                  ✅                                   |
+| **Vectorize**                           |        ❌         |     ✅ [**Recommended**](/workers/development-testing/#vectorize)     |
+| **Workflows**                           |        ✅         |                                  ✅                                   |
 
-| Binding                                 | Local dev | Hybrid dev | Remote dev |
-| --------------------------------------- | :-------: | :--------: | :--------: |
-| **AI**                                  |         ✅[^1]          |        ✅ [**Recommended**](/workers/development-testing/#workers-ai)     |           ✅           |
-| **Assets**                              |           ✅            |             ❌            |           ✅           |
-| **Analytics Engine**                    |         ✅[^4]          |             ❌            |           ✅           |
-| **Browser Rendering**                   |           ❌            |        ✅ [**Recommended**](/workers/development-testing/#browser-rendering)     |           ✅           |
-| **D1**                                  |           ✅            |             ✅            |           ✅           |
-| **Durable Objects**                     |           ✅            |             ❌            |           ✅           |
-| **Email Bindings**                      |           ✅            |             ✅            |           ✅           |
-| **Hyperdrive**                          |         ✅[^2]          |             ❌            |           ✅           |
-| **Images**                              |           ✅            |        ✅ [**Recommended**](/workers/development-testing/#images)     |           ✅           |
-| **KV**                                  |           ✅            |             ✅            |           ✅           |
-| **mTLS**                                |           ❌            |        ✅ [**Recommended**](/workers/development-testing/#mtls)     |           ✅           |
-| **Queues**                              |           ✅            |             ✅            |           ❌           |
-| **R2**                                  |           ✅            |             ✅            |           ✅           |
-| **Rate Limiting**                       |           ✅            |             ❌            |           ✅           |
-| **Service Bindings (multiple Workers)** |           ✅            |             ✅            |           ✅           |
-| **Vectorize**                           |         ✅[^3]          |        ✅ [**Recommended**](/workers/development-testing/#vectorize)     |           ✅           |
-| **Workflows**                           |           ✅            |             ✅            |           ❌           |
+- **Local simulations:** Bindings connect to local resource simulations. Supported in [`wrangler dev`](/workers/wrangler/commands/#dev) and the [Cloudflare Vite plugin](/workers/vite-plugin/).
 
-[^1]: Using Workers AI always accesses your Cloudflare account in order to run AI models and will incur usage charges, even in local development.
+- **Remote binding connections:** Bindings connect to remote resources via `experimental_remote: true` configuration. Supported in [`wrangler dev --x-remote-bindings`](/workers/development-testing/#using-wrangler-with-remote-bindings) and the [Cloudflare Vite plugin](/workers/development-testing/#using-vite-with-remote-bindings).
 
-[^2]: Using Hyperdrive with local development allows you to connect to a local database (running on `localhost`) but you cannot connect to a remote database. To connect to a remote database, use `wrangler dev --remote`.
+## Remote development
 
-[^3]: Using Vectorize always accesses your Cloudflare account to run queries, and will incur usage charges even in local development.
+During remote development, all of your Worker code is uploaded and executed on Cloudflare's infrastructure, and bindings always connect to remote resources. **We recommend using local development with remote binding connections instead** for faster iteration and debugging.
 
-[^4]: Analytics Engine is supported in local development with Wrangler but is not currently supported in the Vite plugin.
+Supported only in [`wrangler dev --remote`](/workers/wrangler/commands/#dev) - there is **no Vite plugin equivalent**.
 
-> **Tip:** If you have a binding with no local dev support, try [hybrid development](/workers/development-testing/#hybrid-development) to connect to the remote resource while keeping your Worker code running locally.
+| Binding                                 | Remote development |
+| --------------------------------------- | :----------------: |
+| **AI**                                  |         ✅         |
+| **Assets**                              |         ✅         |
+| **Analytics Engine**                    |         ✅         |
+| **Browser Rendering**                   |         ✅         |
+| **D1**                                  |         ✅         |
+| **Durable Objects**                     |         ✅         |
+| **Email Bindings**                      |         ✅         |
+| **Hyperdrive**                          |         ✅         |
+| **Images**                              |         ✅         |
+| **KV**                                  |         ✅         |
+| **mTLS**                                |         ✅         |
+| **Queues**                              |         ❌         |
+| **R2**                                  |         ✅         |
+| **Rate Limiting**                       |         ✅         |
+| **Service Bindings (multiple Workers)** |         ✅         |
+| **Vectorize**                           |         ✅         |
+| **Workflows**                           |         ❌         |
+
+[^2]: Using Hyperdrive with local simulations allows you to connect to a local database (running on `localhost`) but you cannot connect to a remote database. To connect to a remote database, use `wrangler dev --remote`.
+
+[^4]: Analytics Engine is supported with local simulations in Wrangler but is not currently supported in the Vite plugin.
 
 ---

@@ -4,7 +4,7 @@ title: Development & testing
 sidebar:
   order: 6
 head: []
-description: Develop and test your Workers locally or with hybrid approaches.
+description: Develop and test your Workers locally.
 ---
 
 import {
@@ -17,9 +17,13 @@ import {
 	InlineBadge,
 	CardGrid,
 	Card,
+	Type,
+	TypeScriptExample,
 } from "~/components";
 
-Cloudflare Workers offers three distinct development modes to build, run, and test your Worker code before deploying to production. Choose from [fully **local development**](/workers/development-testing/#local-development) with simulated resources, [**hybrid development**](/workers/development-testing/#hybrid-development) that combines local execution with remote resource connections, or [legacy **remote development**](/workers/development-testing/#remote-development-legacy) that runs entirely on Cloudflare's infrastructure.
+You can build, run, and test your Worker code on your own local machine before deploying it to Cloudflare's network. This is made possible through [Miniflare](/workers/testing/miniflare/), a simulator that executes your Worker code using the same runtime used in production, [`workerd`](https://github.com/cloudflare/workerd).
+
+By default, your Worker's bindings connect to locally simulated resources, but can be configured to interact with the real, production resource.
 
 ## Core concepts
 
@@ -29,41 +33,9 @@ When developing Workers, it's important to understand two distinct concepts:
 
 - **Worker execution**: Where your Worker code actually runs (on your local machine vs on Cloudflare's infrastructure).
 
-- **Bindings**: How your Worker interacts with Cloudflare resources (like [KV namespaces](/kv), [R2 buckets](/r2), [D1 databases](/d1), [Queues](/queues/), [Durable Objects](/durable-objects/), etc). In your Worker code, these are accessed via the `env` object (such as `env.MY_KV`).
-
-While these are independent concepts, **where your Worker** runs and **how bindings connect** determines which [development mode](/workers/development-testing/#development-modes) you're using.
-
-### Development Modes
-
-Based on where your Worker runs and how bindings connect, there are three development modes:
-
-    <Card title="Local development" icon="laptop">
-    	**Worker execution**: Runs locally on your machine via `wrangler dev` / [`vite dev`](/workers/vite-plugin/get-started/).
-
-    **Bindings**: Connect to local resource simulations by default.
-
-    	[Learn more.](/workers/development-testing/#local-development)
-
-    </Card>
-    <Card title="Hybrid development" icon="cloudflare">
-    	**Worker execution**: Runs locally on your machine, via the experimental `wrangler dev --x-hybrid-dev` command.
-
-    	**Bindings**: Can connect to local resource simulations (default) or be configured to connect to the deployed, remote resource.
-
-    		[Learn more.](/workers/development-testing/#hybrid-development)
-
-    </Card>
-    <Card title="Remote development (Legacy)" icon="external">
-    	**Worker execution**: Runs on Cloudflare's infrastructure via `wrangler dev --remote`.
-
-    	**Bindings**: Always connect to remote resources.
-
-    		[Learn more.](/workers/development-testing/#remote-development-legacy)
-    </Card>
+- [**Bindings**](/workers/runtime-apis/bindings/): How your Worker interacts with Cloudflare resources (like [KV namespaces](/kv), [R2 buckets](/r2), [D1 databases](/d1), [Queues](/queues/), [Durable Objects](/durable-objects/), etc). In your Worker code, these are accessed via the `env` object (such as `env.MY_KV`).
 
 ## Local development
-
-Local development allows you to build, run, and test your Worker code on your own machine before deploying it to Cloudflare's network. This is made possible through [Miniflare](/workers/testing/miniflare/), a simulator that executes your Worker code using the same runtime used in production, [`workerd`](https://github.com/cloudflare/workerd).
 
 **You can start a local development server using:**
 
@@ -75,29 +47,30 @@ Local development allows you to build, run, and test your Worker code on your ow
 
 <PackageManagers type="exec" pkg="vite" args="dev" />
 
-Both Wrangler and the Cloudflare Vite plugin use [Miniflare](/workers/testing/miniflare/) under the hood, and are developed and maintained by the Cloudflare team. For guidance on choosing when to use Wrangler versus Vite, see our guide [Choosing between Wrangler & Vite](/workers/local-development/wrangler-vs-vite/).
+Both Wrangler and the Cloudflare Vite plugin use [Miniflare](/workers/testing/miniflare/) under the hood, and are developed and maintained by the Cloudflare team. For guidance on choosing when to use Wrangler versus Vite, see our guide [Choosing between Wrangler & Vite](/workers/development-testing/wrangler-vs-vite/).
 
 - [Get started with Wrangler](/workers/wrangler/install-and-update/)
 - [Get started with the Cloudflare Vite plugin](/workers/vite-plugin/get-started/)
 
-### Worker execution
+### Defaults
 
-During **local development**, your Worker code always runs on your local machine.
+By default, running `wrangler dev` / `vite dev` (when using the [Vite plugin](/workers/vite-plugin/get-started/)) means that:
 
-### Bindings
+- Your Worker code runs on your local machine.
+- All resources your Worker is bound to in your [Wrangler configuration](/workers/wrangler/configuration/) are simulated locally.
 
-When you start a local development server, Miniflare creates local simulations of Cloudflare resources, allowing your Worker code to interact with [bindings](/workers/runtime-apis/bindings/) without any code changes. Your Worker uses the exact same API calls (such as `env.MY_KV.put()`) as it would in a deployed environment, and Miniflare intercepts these calls and directs them to the locally simulated resource.
+### Bindings during local development
 
-These local resources are initially empty, but you can populate them with data, as documented in [Adding local data](/workers/local-development/local-data/). If you want to connect to remote resources (such as a real, deployed R2 bucket) while still executing your Worker code locally, see [hybrid development](/workers/development-testing/#hybrid-development).
+[Bindings](/workers/runtime-apis/bindings/) are interfaces that allow your Worker to interact with various Cloudflare resources (like [KV namespaces](/kv), [R2 buckets](/r2), [D1 databases](/d1), [Queues](/queues/), [Durable Objects](/durable-objects/), etc). In your Worker code, these are accessed via the `env` object (such as `env.MY_KV`).
 
-## Hybrid development <InlineBadge preset="beta"/>
+During local development, your Worker code interacts with these bindings using the exact same API calls (such as `env.MY_KV.put()`) as it would in a deployed environment. These local resources are initially empty, but you can populate them with data, as documented in [Adding local data](/workers/development-testing/local-data/).
 
-With hybrid development, your Worker executes locally and bindings are configured to connect to their remote counterparts (rather than their [local simulations](/workers/development-testing/#bindings)).
+- By default, bindings connect to **local resource simulations** (except for [AI bindings](/workers-ai/configuration/bindings/), as AI models always run remotely).
+- You can override this default behavior and **connect to the remote resource**, on a per-binding basis. This lets you connect to real, production resources while still running your Worker code locally.
 
-**To run a hybrid development session:**
+## Remote bindings <InlineBadge preset="beta"/>
 
-1. **Configure bindings**: Add the `experimental_remote: true` property to the binding definition. See [all supported bindings in hybrid development](/workers/development-testing/bindings-per-env/).
-2. **Run beta command**: Use `wrangler dev --x-hybrid-dev` to start a hybrid development session.
+**Remote bindings** are bindings that are configured to connect to the deployed, remote resource during local development _instead_ of the locally simulated resource. You can configure remote bindings by setting `experimental_remote: true` in the binding definition.
 
 ### Example configuration
 
@@ -108,25 +81,10 @@ With hybrid development, your Worker executes locally and bindings are configure
 	"name": "my-worker",
 	"compatibility_date": "2025-06-01",
 
-	"browser": {
-		"binding": "MY_BROWSER",
-		"experimental_remote": true,
-	},
-
-	"queues": {
-		"producers": [
-			{
-				"queue": "queues-web-crawler",
-				"binding": "queues_web_crawler",
-			},
-		],
-	},
-
 	"r2_buckets": [
 		{
 			"bucket_name": "screenshots-bucket",
 			"binding": "screenshots_bucket",
-			"preview_bucket_name": "preview-screenshots-bucket",
 			"experimental_remote": true,
 		},
 	],
@@ -135,17 +93,54 @@ With hybrid development, your Worker executes locally and bindings are configure
 
 </WranglerConfig>
 
-In the above example, you’re able to more realistically test out and trust that any [Browser Rendering](/browser-rendering/) interactions work as intended, as well as validate the end results of the screenshots in R2 – while leaving room to rapidly iterate on the actual logic within your Worker and queues.
+When remote bindings are configured, your Worker still **executes locally**, only the underlying resources your bindings connect to change. For all bindings marked with `experimental_remote: true`, Miniflare will route its operations (such as `env.MY_KV.put()`) to the deployed resource. All other bindings not explicitly configured with `experimental_remote: true` continue to use their default local simulations.
 
-### Worker execution
+### Using Wrangler with remote bindings
 
-During **hybrid development**, your Worker code always runs on your local machine.
+If you're using [Wrangler](/workers/wrangler/) for local development and have remote bindings configured, you'll need to use the following experimental command:
 
-### Bindings
+<PackageManagers type="exec" pkg="wrangler" args="dev --x-remote-bindings" />
 
-For all bindings marked with `experimental_remote: true`, Miniflare routes its operations (such as `env.MY_KV.put()`) to the deployed resource. This connection is facilitated through a secure proxy mechanism provisioned on Cloudflare's network. All other bindings not explicitly configured with `experimental_remote: true` continue to use their default local simulations. Your Worker code can remain unchanged, regardless of whether the binding connects locally or remotely.
+### Using Vite with remote bindings
 
-### Targeting Preview vs. Production resources
+If you're using Vite via [the Cloudflare Vite plugin](/workers/vite-plugin/), you'll need to add support for remote bindings in your Vite configuration (`vite.config.ts`):
+
+```ts title="vite.config.ts" {10}
+import { cloudflare } from "@cloudflare/vite-plugin";
+import { defineConfig } from "vite";
+
+export default defineConfig({
+	plugins: [
+		cloudflare({
+			configPath: "./entry-worker/wrangler.jsonc",
+			inspectorPort: false,
+			persistState: false,
+			experimental: { remoteBindings: true },
+		}),
+	],
+});
+```
+
+### Using Vitest with remote bindings
+
+You can also use Vitest with configured remote bindings by enabling support in your Vitest configuration file (`vitest.config.ts`):
+
+```ts title="vitest.config.ts" {7}
+import { defineWorkersConfig } from "@cloudflare/vitest-pool-workers/config";
+
+export default defineWorkersConfig({
+	test: {
+		poolOptions: {
+			workers: {
+				experimental_remoteBindings: true,
+				wrangler: { configPath: "./wrangler.jsonc" },
+			},
+		},
+	},
+});
+```
+
+### Targeting preview resources
 
 To protect production data, you can create and specify preview resources in your [Wrangler configuration](/workers/wrangler/configuration/), such as:
 
@@ -153,7 +148,7 @@ To protect production data, you can create and specify preview resources in your
 - [Preview buckets for R2 storage](/workers/wrangler/configuration/#r2-buckets): `preview_bucket_name`.
 - [Preview database IDs for D1](/workers/wrangler/configuration/#d1-databases): `preview_database_id`
 
-If preview configuration is present for a binding, setting `experimental_remote: true` will make your local session connect to that designated remote preview resource. If no preview configuration is specified, `experimental_remote: true` will connect to the main remote production resource.
+If preview configuration is present for a binding, setting `experimental_remote: true` will ensure that remote bindings connect to that designated remote preview resource.
 
 **For example:**
 
@@ -177,7 +172,7 @@ If preview configuration is present for a binding, setting `experimental_remote:
 
 </WranglerConfig>
 
-Running your local dev command `wrangler dev --x-hybrid-dev` with the above configuration means that:
+Running `wrangler dev --x-remote-bindings` with the above configuration means that:
 
 - Your Worker code runs locally
 - All calls made to `env.screenshots_bucket` will use the `preview-screenshots-bucket` resource, rather than the production `screenshots-bucket`.
@@ -254,7 +249,7 @@ To verify that the certificate exchange and validation process work as expected.
 
 }
 
-```
+````
 </WranglerConfig>
 
 #### [Images](/workers/wrangler/configuration/#images):
@@ -269,7 +264,7 @@ To connect to a high-fidelity version of the Images API, and verify that all tra
 		"experimental_remote": true
   }
 }
-```
+````
 
 </WranglerConfig>
 
@@ -283,13 +278,13 @@ If a Workers AI binding has `experimental_remote` set to `false`, Cloudflare wil
 
 ### Unsupported remote bindings
 
-While hybrid development allows many bindings to connect to remote resources, certain bindings are not supported for remote connections during local development (`experimental_remote: true`). These will always use local simulations or local values.
+Certain bindings are not supported for remote connections during local development (`experimental_remote: true`). These will always use local simulations or local values.
 
-If `experimental_remote: true` is specified in Wrangler configuration for any of the following unsupported binding types, Cloudflare **will issue an error**. See [all supported and unsupported bindings in hybrid development](/workers/development-testing/bindings-per-env/).
+If `experimental_remote: true` is specified in Wrangler configuration for any of the following unsupported binding types, Cloudflare **will issue an error**. See [all supported and unsupported bindings for remote bindings](/workers/development-testing/bindings-per-env/).
 
-- [**Durable Objects**](/workers/wrangler/configuration/#durable-objects): Durable Objects have synchronous operational aspects in their API. The current hybrid development proxy mechanism primarily supports asynchronous operations. Enabling remote connections for Durable Objects may be supported in the future, but currently will always run locally.
+- [**Durable Objects**](/workers/wrangler/configuration/#durable-objects): Enabling remote connections for Durable Objects may be supported in the future, but currently will always run locally.
 
-- [**Environment Variables (`vars`)**](/workers/wrangler/configuration/#environment-variables): Environment variables are intended to be distinct between local development and deployed environments (`production`, `preview`). They are easily configurable locally (such as in a `.dev.vars` file or directly in Wrangler configuration).
+- [**Environment Variables (`vars`)**](/workers/wrangler/configuration/#environment-variables): Environment variables are intended to be distinct between local development and deployed environments. They are easily configurable locally (such as in a `.dev.vars` file or directly in Wrangler configuration).
 
 - [**Secrets**](/workers/wrangler/configuration/#secrets): Like environment variables, secrets are expected to have different values in local development versus deployed environments for security reasons. Use `.dev.vars` for local secret management.
 
@@ -316,46 +311,138 @@ If you have use-cases for connecting to any of the remote resources above, pleas
 
 - **Network latency**: Expect network latency for operations on these remotely connected bindings, as they involve communication over the internet.
 
-- **Environment Variables & Secrets**: Standard environment variables (from `vars`) and Secrets always use their locally defined values during local development. The `experimental_remote: true` flag does not apply to them.
-
 ### API
 
-TO-DO
+Wrangler provides programmatic utilities to help tooling authors support remote binding connections when running Workers code with [Miniflare](/workers/testing/miniflare/).
 
-## Remote development (Legacy)
+**Key APIs include:**
+
+- [`experimental_startRemoteProxySession`](#experimental_startRemoteProxySession): Starts a proxy session that allows interaction with remote bindings.
+- [`unstable_convertConfigBindingsToStartWorkerBindings`](#unstable_convertconfigbindingstostartworkerbindings): Utility for converting binding definitions.
+- [`experimental_maybeStartOrUpdateProxySession`](#experimental_maybestartorupdatemixedmodesession): Convenience function to easily start or update a proxy session.
+
+#### `experimental_startRemoteProxySession`
+
+This function starts a proxy session for a given set of bindings. It accepts options to control session behavior, including an `auth` option with your Cloudflare account ID and API token for remote binding access.
+
+It returns an object with:
+
+- `ready` <Type text="Promise<void>" />: Resolves when the session is ready.
+- `dispose` <Type text="() => Promise<void>" />: Stops the session.
+- `updateBindings` <Type text="(bindings: StartDevWorkerInput['bindings']) => Promise<void>" />: Updates session bindings.
+- `remoteProxyConnectionString` <Type text="remoteProxyConnectionString" />: String to pass to Miniflare for remote binding access.
+
+#### `unstable_convertConfigBindingsToStartWorkerBindings`
+
+The `unstable_readConfig` utility returns an `Unstable_Config` object which includes the definition of the bindings included in the configuration file. These bindings definitions
+are however not directly compatible with `experimental_startRemoteProxySession`. It can be quite convenient to however read the binding declarations with `unstable_readConfig` and then
+pass them to `experimental_startRemoteProxySession`, so for this wrangler exposes `unstable_convertConfigBindingsToStartWorkerBindings` which is a simple utility to convert
+the bindings in an `Unstable_Config` object into a structure that can be passed to `experimental_startRemoteProxySession`.
+
+<Aside type="note">
+	This type conversion is temporary. In the future, the types will be unified so
+	you can pass the config object directly to
+	`experimental_startRemoteProxySession`.
+</Aside>
+
+#### `experimental_maybeStartOrUpdateRemoteProxySession`
+
+This wrapper simplifies proxy session management. It takes:
+
+- The path to your Wrangler config, or an object with remote bindings.
+- The current proxy session details (or `null` if none).
+
+It returns:
+
+- `null` if no proxy session is needed.
+- An object with the proxy session details if started or updated.
+
+The function:
+
+- Based on the first argument prepares the input arguments for the proxy session.
+- If there are no remote bindings to be used (nor a pre-existing proxy session) it returns null, signaling that no proxy session is needed.
+- If the details of an existing proxy session have been provided it updates the proxy session accordingly.
+- Otherwise if starts a new proxy session.
+- Returns the proxy session details (that can later be passed as the second argument to `experimental_maybeStartOrUpdateRemoteProxySession`).
+
+#### Example
+
+Here's a basic example of using Miniflare with `experimental_maybeStartOrUpdateRemoteProxySession` to provide a local dev session with remote bindings. This example uses a single hardcoded KV binding.
+
+<TypeScriptExample>
+```ts
+import { Miniflare, MiniflareOptions } from "miniflare";
+import { experimental_maybeStartOrUpdateRemoteProxySession } from "wrangler";
+
+let mf: Miniflare | null;
+
+let remoteProxySessionDetails: Awaited<
+ReturnType<typeof experimental_maybeStartOrUpdateRemoteProxySession>
+
+> | null = null;
+
+async function startOrUpdateDevSession() {
+remoteProxySessionDetails =
+await experimental_maybeStartOrUpdateRemoteProxySession(
+{
+bindings: {
+MY_KV: {
+type: 'kv_namespace',
+id: 'kv-id',
+experimental_remote: true,
+}
+}
+},
+remoteProxySessionDetails
+);
+
+const miniflareOptions: MiniflareOptions = {
+scriptPath: "./worker.js",
+kvNamespaces: {
+MY_KV: {
+id: "kv-id",
+remoteProxyConnectionString:
+remoteProxySessionDetails?.session.remoteProxyConnectionString,
+},
+},
+};
+
+if (!mf) {
+mf = new Miniflare(miniflareOptions);
+} else {
+mf.setOptions(miniflareOptions);
+}
+}
+
+// ... tool logic that invokes `startOrUpdateDevSession()` ...
+
+// ... once the dev session is no longer needed run
+// `remoteProxySessionDetails?.session.dispose()`
+
+```
+</TypeScriptExample>
+
+
+## `wrangler dev --remote` (Legacy)
 
 Separate from Miniflare-powered local development, Wrangler also offers a fully remote development mode via [`wrangler dev --remote`](/workers/wrangler/commands/#dev). Remote development is [**not** supported in the Vite plugin](/workers/local-development/wrangler-vs-vite/).
 
 <PackageManagers type="exec" pkg="wrangler" args="dev --remote" />
 
-### Worker execution
-
 During **remote development**, all of your Worker code is uploaded to a temporary preview environment on Cloudflare's infrastructure, and changes to your code are automatically uploaded as you save.
 
-### Bindings
-
-When using remote development, all bindings automatically connect to their remote resources. Unlike local and hybrid development modes, you cannot configure bindings to use local simulations - they will always use the deployed resources on Cloudflare's network.
+When using remote development, all bindings automatically connect to their remote resources. Unlike local development, you cannot configure bindings to use local simulations - they will always use the deployed resources on Cloudflare's network.
 
 ### When to use Remote development
 
-- For most development tasks, the most efficient and productive experience will be local development along with [hybrid development](/workers/development-testing/#hybrid-development) when needed.
+- For most development tasks, the most efficient and productive experience will be local development along with [remote bindings](/workers/development-testing/#remote-bindings) when needed.
 - You may want to use `wrangler dev --remote` for testing features or behaviors that are highly specific to Cloudflare's network and cannot be adequately simulated locally or tested via remote bindings.
 
 ### Considerations
 
 - Iteration is significantly slower than local development due to the upload/deployment step for each change.
 
-### Isolating from Production
-
-To protect production data, you can specify preview resources in your [Wrangler configuration](/workers/wrangler/configuration/), such as:
-
-- [Preview namespaces for KV stores](/workers/wrangler/configuration/#kv-namespaces):`preview_id`.
-  - This option is **required** when using `wrangler dev --remote`.
-- [Preview buckets for R2 storage](/workers/wrangler/configuration/#r2-buckets): `preview_bucket_name`.
-- [Preview database IDs for D1](/workers/wrangler/configuration/#d1-databases): `preview_database_id`
-
-This separation ensures your development activities don't impact production data while still providing a realistic testing environment.
-
 ### Limitations
 
 - When you run a remote development session using the `--remote` flag, a limit of 50 [routes](/workers/configuration/routing/routes/) per zone is enforced. Learn more in[ Workers platform limits](/workers/platform/limits/#number-of-routes-per-zone-when-using-wrangler-dev---remote).
+```
