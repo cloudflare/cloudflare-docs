@@ -68,6 +68,15 @@ The following are the properties on the `context` object which are passed throug
 
   This is the incoming [Request](/workers/runtime-apis/request/).
 
+  You can use this to access request parameters such as the url:
+
+  ```js
+  export function onRequest(context) {
+  	const url = context.request.url;
+  	const pathname = new URL(url).pathname;
+  }
+  ```
+
 - `functionPath` string
 
   This is the path of the request.
