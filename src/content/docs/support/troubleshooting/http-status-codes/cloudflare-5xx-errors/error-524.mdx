@@ -20,10 +20,11 @@ Error `524` can also indicate that Cloudflare successfully connected to the orig
 
 Here are the options we suggest to work around this issue:
 
-- Implement status polling of large HTTP processes to avoid hitting this error.
 - [Contact your hosting provider](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/#required-error-details-for-hosting-provider) to exclude the following common causes at your origin web server:
   - A long-running process on the origin web server.
-  - An overloaded origin web server. 
+  - An overloaded origin web server.
+
+- Implement status polling of large HTTP processes to avoid hitting this error.
 
 :::note
 
