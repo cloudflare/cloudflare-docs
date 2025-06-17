@@ -50,23 +50,20 @@ If you need to always run your Worker script before serving static assets (for e
 
 ### Run Worker first for selective paths
 
-You can also configure selective Worker-first routing using an array of route patterns. This allows you to run the Worker first only for specific routes while letting other requests follow the default asset-first behavior:
+You can also configure selective Worker-first routing using an array of route patterns, often paired with the [`single-page-application` setting](/workers/static-assets/routing/single-page-application/#advanced-routing-control). This allows you to run the Worker first only for specific routes while letting other requests follow the default asset-first behavior:
 
 <WranglerConfig>
 
 ```json
 {
-	"name": "my-worker",
-	"compatibility_date": "$today",
-	"main": "./worker/index.ts",
+	"name": "my-spa-worker",
+	"compatibility_date": "06-17-2025",
+	"main": "./src/index.ts",
+	"not_found_handling": "single-page-application",
 	"assets": {
 		"directory": "./dist/",
 		"binding": "ASSETS",
-		"run_worker_first": [
-			"/api/*", // All API routes go to Worker first
-			"/auth/*", // All auth routes go to Worker first
-			"!/api/public/*" // Exception: public API docs served as assets
-		]
+		"run_worker_first": ["/app/*", "!/app/assets/*"]
 	}
 }
 ```

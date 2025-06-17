@@ -39,13 +39,22 @@ Configuring `assets.not_found_handling` to `single-page-application` overrides t
 
 For more explicit control over SPA routing behavior, you can use `run_worker_first` with an array of route patterns. This approach disables the automatic `Sec-Fetch-Mode: navigate` detection and gives you explicit control over which requests should be handled by your Worker script vs served as static assets.
 
+<Aside type="note">
+	To use advanced routing control with `run_worker_first`, you'll need:
+    - [Wrangler](/workers/wrangler/install-and-update/) v4.20.0 and above
+    - [Cloudflare Vite
+    plugin](/workers/vite-plugin/get-started/) v1.7.0 and above
+
+</Aside>
+
 <WranglerConfig>
 
 ```json
 {
 	"name": "my-spa-worker",
-	"compatibility_date": "$today",
+	"compatibility_date": "06-17-2025",
 	"main": "./src/index.ts",
+	"not_found_handling": "single-page-application",
 	"assets": {
 		"directory": "./dist/",
 		"binding": "ASSETS",
@@ -56,7 +65,27 @@ For more explicit control over SPA routing behavior, you can use `run_worker_fir
 
 </WranglerConfig>
 
-This configuration provides explicit routing control without relying on browser navigation headers, making it ideal for complex SPAs that need fine-grained routing behavior. Your Worker script will need to handle the matched routes and use the assets binding to serve the appropriate content.
+This configuration provides explicit routing control without relying on browser navigation headers, making it ideal for complex SPAs that need fine-grained routing behavior. Your Worker script will need to handle the matched routes and use [the assets binding](/workers/static-assets/binding/#binding) to serve the appropriate content.
+
+**For example:**
+
+```js {13}
+// index.js
+
+export default {
+	async fetch(request, env) {
+		const url = new URL(request.url);
+
+		if (url.pathname.startsWith("/app/")) {
+			return new Response(JSON.stringify({ name: "Cloudflare" }), {
+				headers: { "Content-Type": "application/json" },
+			});
+		}
+
+		return env.ASSETS.fetch(request);
+	},
+};
+```
 
 <Aside type="caution">
 	When using `run_worker_first`, requests matching the specified patterns will

@@ -64,36 +64,6 @@ Now Wrangler will not upload these files as client-side assets when deploying th
 
 Controls whether to invoke the Worker script regardless of a request which would have otherwise matched an asset. `run_worker_first = false` (default) will serve any static asset matching a request, while `run_worker_first = true` will unconditionally [invoke your Worker script](/workers/static-assets/routing/worker-script/#run-your-worker-script-first).
 
-You can also specify `run_worker_first` as an array of route patterns to selectively run the Worker first only for specific routes:
-
-<WranglerConfig>
-
-```toml title="wrangler.toml"
-name = "my-worker"
-compatibility_date = "2024-09-19"
-main = "src/index.ts"
-
-[assets]
-directory = "./public/"
-binding = "ASSETS"
-run_worker_first = [
-  "/api/*",        # API calls go to Worker first
-  "!/api/docs/*"   # EXCEPTION: For /api/docs/*, try static assets first
-  ]
-```
-
-</WranglerConfig>
-
-The array supports glob patterns with `*` for deep matching and exception patterns with `!` prefix. In this configuration, requests to `/api/*` routes will invoke the Worker script first, except for `/api/docs/*` which will follow the default asset-first routing behavior.
-
-<Aside type="caution">
-	When using `run_worker_first`, requests matching the specified patterns will
-	always invoke your Worker script. If you're on the free tier and exceed your
-	request limits, these requests will receive a 429 (Too Many Requests) response
-	instead of falling back to static asset serving. Consider this when designing
-	your routing patterns.
-</Aside>
-
 <WranglerConfig>
 
 ```toml title="wrangler.toml"
@@ -109,6 +79,35 @@ run_worker_first = true
 ```
 
 </WranglerConfig>
+
+You can also specify `run_worker_first` as an array of route patterns to selectively run the Worker first only for specific routes, often paired with the [`single-page-application` setting](/workers/static-assets/routing/single-page-application/#advanced-routing-control):
+
+<WranglerConfig>
+
+```json
+{
+	"name": "my-spa-worker",
+	"compatibility_date": "06-17-2025",
+	"main": "./src/index.ts",
+	"not_found_handling": "single-page-application",
+	"assets": {
+		"directory": "./dist/",
+		"binding": "ASSETS",
+		"run_worker_first": ["/app/*", "!/app/assets/*"]
+	}
+}
+```
+
+</WranglerConfig>
+The array supports glob patterns with `*` for deep matching and exception patterns with `!` prefix. In this configuration, requests to `/api/*` routes will invoke the Worker script first, except for `/api/docs/*` which will follow the default asset-first routing behavior.
+
+<Aside type="caution">
+	When using `run_worker_first`, requests matching the specified patterns will
+	always invoke your Worker script. If you're on the free tier and exceed your
+	request limits, these requests will receive a 429 (Too Many Requests) response
+	instead of falling back to static asset serving. Consider this when designing
+	your routing patterns.
+</Aside>
 
 ## `binding`
 

@@ -121,19 +121,19 @@ If you want the Worker code to execute before serving assets, you can use the `r
 
 <WranglerConfig>
 
-    ```toml
-    	[assets]
-    	directory = "./dist"
-    	run_worker_first = [
-    		# API routes go to Worker first
-    		"/api/*",
-    		# Auth routes go to Worker first
-    		"/auth/*",
-    		# Exception: public API docs served as assets
-    		"!/api/public/*"
-    	]
-
-    	```
+```json
+{
+	"name": "my-spa-worker",
+	"compatibility_date": "06-17-2025",
+	"main": "./src/index.ts",
+	"not_found_handling": "single-page-application",
+	"assets": {
+		"directory": "./dist/",
+		"binding": "ASSETS",
+		"run_worker_first": ["/app/*", "!/app/assets/*"]
+	}
+}
+```
 
 </WranglerConfig>
 
