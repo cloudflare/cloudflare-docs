@@ -22,7 +22,7 @@ At the account level, the datasets available are:
 
 ## Authentication
 
-Log Explorer is available to users with the following permissions:
+Log Search is available to users with the following permissions:
 
 - **Logs Edit**: users with Logs Edit permissions can enable datasets.
 - **Logs Read**: users with Logs Read permissions can run queries via the UI or API.
@@ -48,10 +48,10 @@ In order for Log Explorer to begin storing logs, you need to enable the desired 
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account or domain (also known).
 2. Go to **Log Explorer** > **Manage datasets**.
-3. Select **Add a dataset** to select the datasets you want to query. You can always return to this page to enable more datasets or manage your existing ones.
+3. Select **Add dataset** to select the datasets you want to query. 
+4. Choose a dataset and then a zone. Then, select **Add**. You can always return to this page to enable more datasets or manage your existing ones.
 
 :::note
-
 It may take a few minutes for the logs to become available for querying.
 :::
 
@@ -108,15 +108,13 @@ Filtering and viewing your logs is available via the Cloudflare Dashboard or via
 
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Go to  **Log Explorer** > .
-3. From the dropdown, select the **Dataset** you want to use and in **Columns** select the dataset fields. If you selected a zone scoped that dataset, select the zone you would like to use.
-4. Select a **Limit**. That is the maximum number of results to return, for example, 50.
+2. Go to  **Log Explorer** > **Log Search**.
+3. Select the **Dataset** you want to use and in **Columns** select the dataset fields. If you selected a zone scoped dataset, select the zone you would like to use.
+4. Enter a **Limit**. A limit is the maximum number of results to return, for example, 50.
 5. Select the **Time period** from which you want to query, for example, the previous 12 hours.
-6. Select **Add filter** to create your query. Select a **Field**, an **Operator**, and a **Value**.
-7. A query preview is displayed. Select **Custom SQL**, if you would like to change it.
-8. Select **Run Query** when you are done. The results are displayed below within the **Query results** section.
-
-
+6. Select **Add filter** to create your query. Select a **Field**, an **Operator**, and a **Value**, then select **Apply**.
+7. A query preview is displayed. Select **Custom SQL** to change the query.
+8. Select **Run query** when you are done. The results are displayed below within the **Query results** section.
 
 :::note
 
@@ -128,7 +126,7 @@ You can also access the Log Explorer dashboard directly from the [Security Analy
 
 Log Explorer exposes a query endpoint that uses a familiar SQL syntax for querying your logs generated with Cloudflare's network.
 
-For example, to find an HTTP request with a specific [Ray ID](/fundamentals/reference/cloudflare-ray-id/), you can perform the following SQL query.
+For example, to find an HTTP request with a specific [Ray ID](/fundamentals/reference/cloudflare-ray-id/), you can perform the following SQL query:
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/explorer/query/sql \
@@ -155,7 +153,7 @@ Which returns the following HTTP request details:
 }
 ```
 
-For another example using an account-level dataset, to find Cloudflare Access requests with selected columns from a specific timeframe, you can perform the following SQL query.
+For another example using an account-level dataset, to find Cloudflare Access requests with selected columns from a specific timeframe, you can perform the following SQL query:
 
 ```bash
 curl https://api.cloudflare.com/client/v4/account/{account_id}/logs/explorer/query/sql \
@@ -191,23 +189,11 @@ Which returns the following request details:
 
 ### Save queries
 
-After selecting all the fields for your query, you can save it by selecting **Save query**. Provide a name and description to help identify it later. To view your saved and recent queries, select **Queries** — they will appear in a side panel where you can rename, duplicate, or delete any query.
-## Output formats
+After selecting all the fields for your query, you can save it by selecting **Save query**. Provide a name and description to help identify it later. To view your saved and recent queries, select **Queries** — they will appear in a side panel where you can insert a new query, or delete any query.
 
-Log Explorer output can be presented in different formats, besides JSON: JSON Lines (also known as NDJSON), CSV, and plain text. The plain text uses ASCII tables similar to psql's `aligned` output mode. Besides the convenience factor of not having to translate the format on the client side, JSON Lines, CSV, and plain text formats have the advantage of being streamed from the API. So for large result sets, you will get a response earlier.
+## Optimize your queries
 
-You can choose the output format with an HTTP `Accept` header, as shown in the table below:
-
-| Output format | Content type           | Streaming? |
-| ------------- | ---------------------- | ---------- |
-| JSON          | `application/json`     | No         |
-| JSON Lines    | `application/x-ndjson` | Yes        |
-| CSV           | `text/csv`             | Yes        |
-| Plain text    | `text/plain`           | Yes        |
-
-## Optimizing your queries
-
-All the tables supported by Log Explorer contain a special column called `date`, which helps to narrow down the amount of data that is scanned to respond to your query, resulting in faster query response times. The value of `date` must be in the form of `YYYY-MM-DD`. For example, to query logs that occurred on October 12, 2023, add the following to your `WHERE` clause: `date = '2023-10-12'`. The column supports the standard operators of `<`, `>`, and `=`.
+All the tables supported by Log Explorer contain a special column called `date`, which helps to narrow down the amount of data that is scanned to respond to your query, resulting in faster query response times. The value of `date` must be in the form of `YYYY-MM-DD`. For example, to query logs that occurred on October 12, 2023, add the following to your `WHERE` clause: `date = '2023-10-12'`. The column supports the standard operators of `<`, `>`, and `=`:
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/explorer/query/sql \
@@ -240,10 +226,6 @@ The `WHERE` clause filters the rows returned by a query based on specified condi
 ### GROUP BY
 
 The `GROUP BY` clause is used to group rows that have the same values into summary rows.
-
-### HAVING
-
-The `HAVING` clause is similar to the `WHERE` clause but is used specifically with the `GROUP BY` clause. It filters groups of rows based on specified conditions after the `GROUP BY` operation has been performed.
 
 ### ORDER BY
 
