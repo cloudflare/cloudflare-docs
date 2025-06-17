@@ -37,7 +37,6 @@
                 },
                 "language": {
                     "type": "string",
-                    "default": "en",
                     "description": "The language of the audio being transcribed or translated."
                 },
                 "vad_filter": {
