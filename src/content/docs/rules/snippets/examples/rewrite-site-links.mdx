@@ -43,7 +43,6 @@ export default {
         if (!res.headers.has("Content-Type")) {
             return res;
         }
-
         const contentType = res.headers.get("Content-Type");
         if (typeof contentType !== "string") {
             return res;
