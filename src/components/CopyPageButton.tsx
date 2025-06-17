@@ -10,7 +10,7 @@ import {
 } from "@floating-ui/react";
 import { useState } from "react";
 import {
-	PiMarkdownLogo,
+	PiDotsThreeOutlineFill,
 	PiClipboardTextLight,
 	PiArrowSquareOutLight,
 	PiCheckCircleLight,
@@ -129,8 +129,8 @@ export default function CopyPageButton() {
 
 		return (
 			<>
-				<span>Copy Page</span>
-				<PiMarkdownLogo />
+				<span>Page options</span>
+				<PiDotsThreeOutlineFill />
 			</>
 		);
 	};
