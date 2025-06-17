@@ -168,7 +168,7 @@ If you get an `access.api.error.service_token_not_found` error, check that `$SER
 
 :::note
 
-Although you can create multiple valid service tokens, only one service token can be designated for issuing DoH tokens. Calling the API to enable DoH on a new service token replaces the previously active service token. This can cause intermittent failures if a new token overrides each other’s tokens.
+Although you can create multiple valid service tokens, only one service token can be designated for issuing DoH tokens. Calling the API to enable DoH on a new service token replaces the previously active service token. This can cause intermittent failures If a new token overrides an active service tokens, the API call will fail.
 
 :::
 
