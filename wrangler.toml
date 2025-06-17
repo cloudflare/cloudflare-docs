@@ -1,7 +1,7 @@
 #:schema ./node_modules/wrangler/config-schema.json
 name = "cloudflare-docs"
 account_id = "b54f07a6c269ecca2fa60f1ae4920c99"
-compatibility_date = "2022-10-22"
+compatibility_date = "2023-08-01"
 compatibility_flags = ["nodejs_compat"]
 main = "./worker/index.ts"
 
