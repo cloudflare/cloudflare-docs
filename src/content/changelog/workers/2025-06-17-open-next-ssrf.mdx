@@ -6,7 +6,7 @@ products:
 date: 2025-06-17T01:00:00Z
 ---
 
-A Server-Side Request Forgery (SSRF) vulnerability was identified in the @opennextjs/cloudflare package, which has been automatically mitigated for all existing deployments.
+A Server-Side Request Forgery (SSRF) vulnerability was identified in the @opennextjs/cloudflare package, which has been automatically mitigated for all Next.js apps deployed to Cloudflare that use the @opennextjs/cloudflare package.
 
 The vulnerability stems from an unimplemented feature in the Cloudflare adapter for Open Next, which allowed users to proxy arbitrary remote content via the `/_next/image` endpoint.
 
