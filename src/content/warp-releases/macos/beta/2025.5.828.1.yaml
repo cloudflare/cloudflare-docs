@@ -1,0 +1,21 @@
+releaseNotes: |-
+  This release contains new improvements in addition to features and improvements introduced in Beta Client version 2025.5.735.1. Please try this Beta version to resolve the issues noted below.
+
+
+  **Changes and improvements**
+  - Improvement for WARP connectivity issues on macOS due to the operating system not accepting DNS server configurations.
+
+
+  **Known issues**
+  - macOS Sequoia: Due to changes Apple introduced in macOS 15.0.x, the WARP client may not behave as expected. Cloudflare recommends the use of macOS 15.4 or later.
+
+  - macOS Sequoia: Due to changes Apple introduced in macOS 15.0.x, the WARP client may not behave as expected. Cloudflare recommends the use of macOS 15.4 or later.
+
+  For Zero Trust documentation please see: <https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp>
+
+  For Consumer documentation please see: <https://developers.cloudflare.com/warp-client/>
+version: 2025.5.828.1
+releaseDate: 2025-06-17T12:04:39.058Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2025.5.828.1
+packageSize: 95503195
+platformName: macOS
