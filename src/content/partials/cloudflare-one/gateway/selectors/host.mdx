@@ -8,3 +8,7 @@ Use this selector to match against only the hostname specified. For example, you
 | UI name | API example                                         | Evaluation phase      |
 | ------- | --------------------------------------------------- | --------------------- |
 | Host    | <code>{props.APIendpoint} == \"example.com\"</code> | Before DNS resolution |
+
+:::note
+Some hostnames (`example.com`) will invisibly redirect to the www subdomain (`www.example.com`). To match this type of website, use the [Domain](#domain) selector instead of the Host selector.
+:::
