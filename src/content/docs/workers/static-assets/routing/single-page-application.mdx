@@ -87,14 +87,6 @@ export default {
 };
 ```
 
-<Aside type="caution">
-	When using `run_worker_first`, requests matching the specified patterns will
-	always invoke your Worker script. If you're on the free tier and exceed your
-	request limits, these requests will receive a 429 (Too Many Requests) response
-	instead of falling back to static asset serving. Consider this when designing
-	your routing patterns.
-</Aside>
-
 ## Local Development
 
 If you are using a Vite-powered SPA framework, you might be interested in using our [Vite plugin](/workers/vite-plugin/) which offers a Vite-native developer experience.
