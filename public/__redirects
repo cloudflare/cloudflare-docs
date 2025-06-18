@@ -999,6 +999,7 @@
 /notifications/create-notifications/configure-webhooks/ /notifications/get-started/configure-webhooks/ 301
 /notifications/edit-notifications/edit-webhook/ /notifications/get-started/configure-webhooks/ 301
 /fundamentals/notifications/notification-available/ /notifications/notification-available/ 301
+/notifications/changelog/ /changelog/ 301
 
 # pages
 /pages/getting-started/ /pages/get-started/ 301
