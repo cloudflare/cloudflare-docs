@@ -53,9 +53,9 @@ For more explicit control over SPA routing behavior, you can use `run_worker_fir
 	"name": "my-worker",
 	"compatibility_date": "06-17-2025",
 	"main": "./src/index.ts",
-	"not_found_handling": "single-page-application",
 	"assets": {
 		"directory": "./dist/",
+		"not_found_handling": "single-page-application",
 		"binding": "ASSETS",
 		"run_worker_first": ["/api/*", "!/api/docs/*"]
 	}
