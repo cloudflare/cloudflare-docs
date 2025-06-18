@@ -1,15 +1,72 @@
----
-pcx_content_type: reference
-title: Log Explorer API
-sidebar:
-  order: 5
----
+Configuration and Log searches are also available via a public API. 
+## Authentication
 
-Log searches are available via the [API](https://developers.cloudflare.com/log-explorer/). 
+Log Explorer is available to users with the following permissions:
 
-Log Explorer exposes a query endpoint that uses familiar SQL syntax for querying your logs generated with Cloudflare's network.
+- **Logs Edit**: users with Logs Edit permissions can enable datasets.
+- **Logs Read**: users with Logs Read permissions can run queries via the UI or API.
 
-For example, to find an HTTP request with a specific [Ray ID](/fundamentals/reference/cloudflare-ray-id/), you can perform the following SQL query:
+Note that these permissions exist at the account and zone level and you need the appropriate permission level for the datasets you wish to query.
+
+Authentication with the API can be done via an authentication header or API token. Append your API call with either of the following additional parameters.
+
+- **Authentication header**
+
+  - `X-Auth-Email` - the Cloudflare account email address associated with the domain
+  - `X-Auth-Key` - the Cloudflare API key
+
+- **API token**
+
+  - `Authorization: Bearer <API_TOKEN>` To create an appropriately scoped API token, refer to [Create API token](/fundamentals/api/get-started/create-token/) documentation. Copy and paste the token into the authorization parameter for your API call.
+
+## Manage Datasets
+
+Use the Log Explorer API to enable Log Explorer for each dataset you wish to store. It may take a few minutes after a log stream is enabled before you can view the logs.
+
+The following curl command is an example for enabling the zone-level dataset `http_requests`, as well as the expected response when the command succeeds.
+
+```bash
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/explorer/datasets \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "dataset": "http_requests"
+}'
+```
+
+```json
+{
+  "result": {
+    "dataset": "http_requests",
+    "object_type": "zone",
+    "object_id": "<ZONE ID>",
+    "created_at": "2025-06-03T14:33:16Z",
+    "updated_at": "2025-06-03T14:33:16Z",
+    "dataset_id": "01973635f7e273a1964a02f4d4502499",
+    "enabled": true
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+If you would like to enable an account-level dataset, replace `zones/{zone_id}` with `accounts/{account_id}` in the curl command. For example:
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/logs/explorer/datasets \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "dataset": "access_requests"
+}'
+```
+
+## Query data
+
+Log Explorer includes a SQL API for submitting queries. 
+
+For example, to find an HTTP request with a specific [Ray ID](/fundamentals/reference/cloudflare-ray-id/), and use the following SQL query:
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/explorer/query/sql \
@@ -36,7 +93,7 @@ Which returns the following HTTP request details:
 }
 ```
 
-A example to find Cloudflare Access requests with selected columns from a specific timeframe, you can perform the following SQL query:
+Another example to find Cloudflare Access requests with selected columns from a specific timeframe, you can perform the following SQL query:
 
 ```bash
 curl https://api.cloudflare.com/client/v4/account/{account_id}/logs/explorer/query/sql \
@@ -67,23 +124,3 @@ Which returns the following request details:
 	"messages": []
 }
 ```
-
-## Authentication
-
-Log Search is available to users with the following permissions:
-
-- **Logs Edit**: users with Logs Edit permissions can enable datasets.
-- **Logs Read**: users with Logs Read permissions can run queries via the UI or API.
-
-Note that these permissions exist at the account and zone level and you need the appropriate permission level for the datasets you wish to query.
-
-Authentication with the API can be done via an authentication header or API token. Append your API call with either of the following additional parameters.
-
-- **Authentication header**
-
-  - `X-Auth-Email` - the Cloudflare account email address associated with the domain
-  - `X-Auth-Key` - the Cloudflare API key
-
-- **API token**
-
-  - `Authorization: Bearer <API_TOKEN>` To create an appropriately scoped API token, refer to [Create API token](/fundamentals/api/get-started/create-token/) documentation. Copy and paste the token into the authorization parameter for your API call.
