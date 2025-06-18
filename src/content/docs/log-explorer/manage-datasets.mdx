@@ -11,11 +11,10 @@ Log Explorer allows you to enable or disable which datasets are available to que
 
 ## Supported datasets
 
-Log Explorer currently supports:
+Log Explorer currently supports the following datasets:
 
 - [HTTP requests](/logs/reference/log-fields/zone/http_requests/) (`FROM http_requests`)
 - [Firewall events](/logs/reference/log-fields/zone/firewall_events/) (`FROM firewall_events`)
-
 
 ## Enable Log Explorer
 
@@ -30,20 +29,19 @@ In order for Log Explorer to begin storing logs, you need to enable the desired 
 It may take a few minutes for the logs to become available for querying.
 :::
 
-Use the Log Explorer API to enable Log Explorer for each dataset you wish to store. It may take a few minutes after a log stream is enabled before you can view the logs.
+If you are using the API, Use the Log Explorer API to enable Log Explorer for each dataset you wish to store. It may take a few minutes after a log stream is enabled before you can view the logs.
 
-The following curl command is an example for enabling the zone-level dataset `http_requests`, as well as the expected response when the command succeeds.
+The following `curl` command is an example for enabling the zone-level dataset `http_requests`, as well as the expected response when the command succeeds.
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/explorer/datasets \
 --header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
+--json '{
   "dataset": "http_requests"
 }'
 ```
 
-```json
+```json output
 {
   "result": {
     "dataset": "http_requests",
@@ -60,13 +58,12 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/explorer/datasets
 }
 ```
 
-If you would like to enable an account-level dataset, replace `zones/{zone_id}` with `accounts/{account_id}` in the curl command. For example:
+To enable an account-level dataset, replace `zones/{zone_id}` with `accounts/{account_id}` in the `curl` command. For example:
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/logs/explorer/datasets \
 --header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
+--json '{
   "dataset": "access_requests"
 }'
 ```

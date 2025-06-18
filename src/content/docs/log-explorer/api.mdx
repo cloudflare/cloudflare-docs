@@ -27,22 +27,21 @@ Authentication with the API can be done via an authentication header or API toke
 
   - `Authorization: Bearer <API_TOKEN>` To create an appropriately scoped API token, refer to [Create API token](/fundamentals/api/get-started/create-token/) documentation. Copy and paste the token into the authorization parameter for your API call.
 
-## Manage Datasets
+## Enable datasets
 
 Use the Log Explorer API to enable Log Explorer for each dataset you wish to store. It may take a few minutes after a log stream is enabled before you can view the logs.
 
-The following curl command is an example for enabling the zone-level dataset `http_requests`, as well as the expected response when the command succeeds.
+The following `curl` command is an example for enabling the zone-level dataset `http_requests`, as well as the expected response when the command succeeds.
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/explorer/datasets \
 --header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
+--json '{
   "dataset": "http_requests"
 }'
 ```
 
-```json
+```json output
 {
   "result": {
     "dataset": "http_requests",
@@ -59,13 +58,12 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/explorer/datasets
 }
 ```
 
-If you would like to enable an account-level dataset, replace `zones/{zone_id}` with `accounts/{account_id}` in the curl command. For example:
+If you would like to enable an account-level dataset, replace `zones/{zone_id}` with `accounts/{account_id}` in the `curl` command. For example:
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/logs/explorer/datasets \
 --header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
+--json '{
   "dataset": "access_requests"
 }'
 ```
@@ -74,7 +72,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/logs/explorer/da
 
 Log Explorer includes a SQL API for submitting queries. 
 
-For example, to find an HTTP request with a specific [Ray ID](/fundamentals/reference/cloudflare-ray-id/), and use the following SQL query:
+For example, to find an HTTP request with a specific [Ray ID](/fundamentals/reference/cloudflare-ray-id/), use the following SQL query:
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/explorer/query/sql \
@@ -82,7 +80,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/explorer/query/sq
 --url-query query="SELECT clientRequestScheme, clientRequestHost, clientRequestMethod, edgeResponseStatus, clientRequestUserAgent FROM http_requests WHERE RayID = '806c30a3cec56817' LIMIT 1"
 ```
 
-Which returns the following HTTP request details:
+This command returns the following HTTP request details:
 
 ```json
 {
@@ -101,7 +99,7 @@ Which returns the following HTTP request details:
 }
 ```
 
-Another example to find Cloudflare Access requests with selected columns from a specific timeframe, you can perform the following SQL query:
+As another example, you could find Cloudflare Access requests with selected columns from a specific timeframe by performing the following SQL query:
 
 ```bash
 curl https://api.cloudflare.com/client/v4/account/{account_id}/logs/explorer/query/sql \
@@ -109,7 +107,7 @@ curl https://api.cloudflare.com/client/v4/account/{account_id}/logs/explorer/que
 --url-query query="SELECT CreatedAt, AppDomain, AppUUID, Action, Allowed, Country, RayID, Email, IPAddress, UserUID FROM access_requests WHERE Date >= '2025-02-06' AND Date <= '2025-02-06' AND CreatedAt >= '2025-02-06T12:28:39Z' AND CreatedAt <= '2025-02-06T12:58:39Z'"
 ```
 
-Which returns the following request details:
+This command returns the following request details:
 
 ```json
 {
