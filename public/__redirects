@@ -212,6 +212,10 @@
 /api-shield/security/sequential-abuse-detection/ /api-shield/security/sequence-analytics/ 301
 /api-shield/security/bola-attack-detection/ /api-shield/security/bola-vulnerability-detection/ 301
 /api-shield/management-and-monitoring/api-routing/configure/ /api-shield/management-and-monitoring/api-routing/ 301
+/api-shield/security/graphql-protection/configure/ /api-shield/security/graphql-protection/api/ 301
+/api-shield/security/jwt-validation/configure/ /api-shield/security/jwt-validation/api/ 301
+/api-shield/security/schema-validation/configure/ /api-shield/security/schema-validation/api/ 301
+/api-shield/security/sequence-mitigation/configure/ /api-shield/security/sequence-mitigation/api/ 301
 
 #autorag
 /autorag/usage/recipes/ /autorag/how-to/ 301
