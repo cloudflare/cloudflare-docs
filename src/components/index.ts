@@ -9,6 +9,7 @@ export { default as APIRequest } from "./APIRequest.astro";
 export { default as AvailableNotifications } from "./AvailableNotifications.astro";
 export { default as CompatibilityFlag } from "./CompatibilityFlag.astro";
 export { default as CompatibilityFlags } from "./CompatibilityFlags.astro";
+export { default as ComponentUsage } from "./ComponentUsage.astro";
 export { default as ComponentsUsage } from "./ComponentsUsage.astro";
 export { default as CopyPageButton } from "./CopyPageButton.tsx";
 export { default as CURL } from "./CURL.astro";
