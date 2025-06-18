@@ -7,7 +7,7 @@ sidebar:
 
 ---
 
-import { Render } from "~/components"
+import { Render, Steps } from "~/components"
 
 API Shield Routing enables customers to create a unified external-facing API that routes requests to different back-end services that may have different paths and hosts than the existing zone and DNS configuration.
 
@@ -34,11 +34,13 @@ Once your Source Endpoints are added to Endpoint Management, use the following s
 
 ### Remove a route
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+<Steps>
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Select **Security** > **API Shield**.
 3. In **Endpoint Management**, select an existing endpoint and expand its details.
 4. Under **Routing**, select **Edit routing**.
 5. Select **Delete route**.
+</Steps>
 
 ### Test a route
 
