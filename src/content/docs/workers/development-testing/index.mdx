@@ -79,7 +79,7 @@ During local development, your Worker code interacts with these bindings using t
 ```jsonc title="wrangler.jsonc"
 {
 	"name": "my-worker",
-	"compatibility_date": "2025-06-01",
+	"compatibility_date": "$today",
 
 	"r2_buckets": [
 		{
@@ -157,7 +157,7 @@ If preview configuration is present for a binding, setting `experimental_remote:
 ```jsonc title="wrangler.jsonc"
 {
 	"name": "my-worker",
-	"compatibility_date": "2025-06-01",
+	"compatibility_date": "$today",
 
 	"r2_buckets": [
 		{
