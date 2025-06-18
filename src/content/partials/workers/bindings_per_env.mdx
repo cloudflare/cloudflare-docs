@@ -8,25 +8,25 @@ During local development, your Worker code always executes locally and bindings 
 
 You can configure [**remote bindings** during local development](/workers/development-testing/#remote-bindings), allowing your bindings to connect to a deployed resource on a per-binding basis.
 
-| Binding                                 | Local simulations |                      Remote binding connections                       |
-| --------------------------------------- | :---------------: | :-------------------------------------------------------------------: |
-| **AI**                                  |        ❌         |    ✅ [**Recommended**](/workers/development-testing/#workers-ai)     |
-| **Assets**                              |        ✅         |                                  ❌                                   |
-| **Analytics Engine**                    |      ✅[^4]       |                                  ❌                                   |
-| **Browser Rendering**                   |        ❌         | ✅ [**Recommended**](/workers/development-testing/#browser-rendering) |
-| **D1**                                  |        ✅         |                                  ✅                                   |
-| **Durable Objects**                     |        ✅         |                                  ❌                                   |
-| **Email Bindings**                      |        ✅         |                                  ✅                                   |
-| **Hyperdrive**                          |      ✅[^2]       |                                  ❌                                   |
-| **Images**                              |        ✅         |      ✅ [**Recommended**](/workers/development-testing/#images)       |
-| **KV**                                  |        ✅         |                                  ✅                                   |
-| **mTLS**                                |        ❌         |       ✅ [**Recommended**](/workers/development-testing/#mtls)        |
-| **Queues**                              |        ✅         |                                  ✅                                   |
-| **R2**                                  |        ✅         |                                  ✅                                   |
-| **Rate Limiting**                       |        ✅         |                                  ❌                                   |
-| **Service Bindings (multiple Workers)** |        ✅         |                                  ✅                                   |
-| **Vectorize**                           |        ❌         |     ✅ [**Recommended**](/workers/development-testing/#vectorize)     |
-| **Workflows**                           |        ✅         |                                  ✅                                   |
+| Binding                                 | Local simulations | Remote binding connections |
+| --------------------------------------- | :---------------: | :------------------------: |
+| **AI**                                  |        ❌         |             ✅             |
+| **Assets**                              |        ✅         |             ❌             |
+| **Analytics Engine**                    |        ✅         |             ❌             |
+| **Browser Rendering**                   |        ❌         |             ✅             |
+| **D1**                                  |        ✅         |             ✅             |
+| **Durable Objects**                     |        ✅         |             ❌             |
+| **Email Bindings**                      |        ✅         |             ✅             |
+| **Hyperdrive**                          |        ✅         |             ❌             |
+| **Images**                              |        ✅         |             ✅             |
+| **KV**                                  |        ✅         |             ✅             |
+| **mTLS**                                |        ❌         |             ✅             |
+| **Queues**                              |        ✅         |             ✅             |
+| **R2**                                  |        ✅         |             ✅             |
+| **Rate Limiting**                       |        ✅         |             ❌             |
+| **Service Bindings (multiple Workers)** |        ✅         |             ✅             |
+| **Vectorize**                           |        ❌         |             ✅             |
+| **Workflows**                           |        ✅         |             ✅             |
 
 - **Local simulations:** Bindings connect to local resource simulations. Supported in [`wrangler dev`](/workers/wrangler/commands/#dev) and the [Cloudflare Vite plugin](/workers/vite-plugin/).
 
@@ -57,9 +57,5 @@ Supported only in [`wrangler dev --remote`](/workers/wrangler/commands/#dev) - t
 | **Service Bindings (multiple Workers)** |         ✅         |
 | **Vectorize**                           |         ✅         |
 | **Workflows**                           |         ❌         |
-
-[^2]: Using Hyperdrive with local simulations allows you to connect to a local database (running on `localhost`) but you cannot connect to a remote database. To connect to a remote database, use `wrangler dev --remote`.
-
-[^4]: Analytics Engine is supported with local simulations in Wrangler but is not currently supported in the Vite plugin.
 
 ---
