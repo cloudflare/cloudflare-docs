@@ -201,7 +201,7 @@ export default function SupportAI() {
 							{
 								role: "assistant",
 								content:
-									"I'm unable to provide an answer to that at the moment. Please rephrase your query and I'll try again.",
+									"I'm unable to provide an answer to that at the moment. Rephrase your query and I'll try again.\n\nIf that doesn't help, try searching [our docs](/search/) or the [Cloudflare Community](community.cloudflare.com/search).",
 							},
 						]);
 						throw error;
