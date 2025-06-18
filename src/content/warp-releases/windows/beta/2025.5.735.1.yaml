@@ -13,7 +13,7 @@ releaseNotes: |-
   - Added [SCCM VPN boundary support](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#sccm-vpn-boundary-support) to device profile settings. With SCCM VPN boundary support enabled, operating systems will register WARP's local interface IP with the on-premise DNS server when reachable.
 
   **Known issues**
-  - We have received reports of performance issues from some customers that have upgraded to 24H2 with the Windows Filtering Platform and local device firewall rules. We highly recommend customers test this Windows client thoroughly before full deployment as we continue to work with Microsoft to resolve these issues.
+  - Microsoft has confirmed a regression with Windows 11 starting around 24H2 that may cause performance issues for some users. These performance issues could manifest as mouse lag, audio cracking, or other slowdowns. A fix from Microsoft is expected in early July.
 
   - Devices with `KB5055523` installed may receive a warning about `Win32/ClickFix.ABA` being present in the installer. To resolve this false positive, update Microsoft Security Intelligence to [version 1.429.19.0](https://www.microsoft.com/en-us/wdsi/definitions/antimalware-definition-release-notes?requestVersion=1.429.19.0) or later.
 
