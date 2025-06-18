@@ -1527,7 +1527,11 @@
 /workers/about/tips/debugging/ /workers/observability/ 301
 /workers/testing/debugging-tools/ /workers/observability/dev-tools/ 301
 /workers/testing/local-development/ /workers/local-development/ 301
-/workers/local-development/ /workers/development-testing/ 301
+/workers/local-development/ /workers/development-testing/#local-development 301
+/workers/local-development/bindings-per-env/ /workers/development-testing/bindings-per-env/ 301
+/workers/local-development/environment-variables/ /workers/development-testing/environment-variables/ 301
+/workers/local-development/local-data/ /workers/development-testing/local-data/ 301
+/workers/local-development/remote-data/ /workers/development-testing/#remote-bindings 301
 /workers/about/using-cache/ /workers/reference/how-the-cache-works/ 301
 /workers/learning/how-the-cache-works/ /workers/reference/how-the-cache-works/ 301
 /workers/api/ /api/resources/workers/subresources/scripts/methods/list/ 301
