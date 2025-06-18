@@ -89,9 +89,9 @@ You can also specify `run_worker_first` as an array of route patterns to selecti
 	"name": "my-spa-worker",
 	"compatibility_date": "$today",
 	"main": "./src/index.ts",
-	"not_found_handling": "single-page-application",
 	"assets": {
 		"directory": "./dist/",
+		"not_found_handling": "single-page-application",
 		"binding": "ASSETS",
 		"run_worker_first": ["/app/*", "!/app/assets/*"]
 	}
