@@ -1,0 +1,89 @@
+---
+pcx_content_type: reference
+title: Log Explorer API
+sidebar:
+  order: 5
+---
+
+Log searches are available via the [API](https://developers.cloudflare.com/log-explorer/). 
+
+Log Explorer exposes a query endpoint that uses familiar SQL syntax for querying your logs generated with Cloudflare's network.
+
+For example, to find an HTTP request with a specific [Ray ID](/fundamentals/reference/cloudflare-ray-id/), you can perform the following SQL query:
+
+```bash
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/explorer/query/sql \
+--header "Authorization: Bearer <API_TOKEN>" \
+--url-query query="SELECT clientRequestScheme, clientRequestHost, clientRequestMethod, edgeResponseStatus, clientRequestUserAgent FROM http_requests WHERE RayID = '806c30a3cec56817' LIMIT 1"
+```
+
+Which returns the following HTTP request details:
+
+```json
+{
+	"result": [
+		{
+			"clientrequestscheme": "https",
+			"clientrequesthost": "example.com",
+			"clientrequestmethod": "GET",
+			"clientrequestuseragent": "curl/7.88.1",
+			"edgeresponsestatus": 200
+		}
+	],
+	"success": true,
+	"errors": [],
+	"messages": []
+}
+```
+
+A example to find Cloudflare Access requests with selected columns from a specific timeframe, you can perform the following SQL query:
+
+```bash
+curl https://api.cloudflare.com/client/v4/account/{account_id}/logs/explorer/query/sql \
+--header "Authorization: Bearer <API_TOKEN>" \
+--url-query query="SELECT CreatedAt, AppDomain, AppUUID, Action, Allowed, Country, RayID, Email, IPAddress, UserUID FROM access_requests WHERE Date >= '2025-02-06' AND Date <= '2025-02-06' AND CreatedAt >= '2025-02-06T12:28:39Z' AND CreatedAt <= '2025-02-06T12:58:39Z'"
+```
+
+Which returns the following request details:
+
+```json
+{
+	"result": [
+		{
+			"createdat": "2025-01-14T18:17:55Z",
+			"appdomain": "example.com",
+			"appuuid": "a66b4ab0-ccdf-4d60-a6d0-54a59a827d92",
+			"action": "login",
+			"allowed": true,
+			"country": "us",
+			"rayid": "90fbb07c0b316957",
+			"email": "user@example.com",
+			"ipaddress": "1.2.3.4",
+			"useruid": "52859e81-711e-4de0-8b31-283336060e79"
+		}
+	],
+	"success": true,
+	"errors": [],
+	"messages": []
+}
+```
+
+## Authentication
+
+Log Search is available to users with the following permissions:
+
+- **Logs Edit**: users with Logs Edit permissions can enable datasets.
+- **Logs Read**: users with Logs Read permissions can run queries via the UI or API.
+
+Note that these permissions exist at the account and zone level and you need the appropriate permission level for the datasets you wish to query.
+
+Authentication with the API can be done via an authentication header or API token. Append your API call with either of the following additional parameters.
+
+- **Authentication header**
+
+  - `X-Auth-Email` - the Cloudflare account email address associated with the domain
+  - `X-Auth-Key` - the Cloudflare API key
+
+- **API token**
+
+  - `Authorization: Bearer <API_TOKEN>` To create an appropriately scoped API token, refer to [Create API token](/fundamentals/api/get-started/create-token/) documentation. Copy and paste the token into the authorization parameter for your API call.
