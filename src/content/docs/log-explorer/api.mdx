@@ -16,57 +16,7 @@ Log Explorer is available to users with the following permissions:
 
 Note that these permissions exist at the account and zone level and you need the appropriate permission level for the datasets you wish to query.
 
-Authentication with the API can be done via an authentication header or API token. Append your API call with either of the following additional parameters.
-
-- **Authentication header**
-
-  - `X-Auth-Email` - the Cloudflare account email address associated with the domain
-  - `X-Auth-Key` - the Cloudflare API key
-
-- **API token**
-
-  - `Authorization: Bearer <API_TOKEN>` To create an appropriately scoped API token, refer to [Create API token](/fundamentals/api/get-started/create-token/) documentation. Copy and paste the token into the authorization parameter for your API call.
-
-## Enable datasets
-
-Use the Log Explorer API to enable Log Explorer for each dataset you wish to store. It may take a few minutes after a log stream is enabled before you can view the logs.
-
-The following `curl` command is an example for enabling the zone-level dataset `http_requests`, as well as the expected response when the command succeeds.
-
-```bash
-curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/explorer/datasets \
---header "Authorization: Bearer <API_TOKEN>" \
---json '{
-  "dataset": "http_requests"
-}'
-```
-
-```json output
-{
-  "result": {
-    "dataset": "http_requests",
-    "object_type": "zone",
-    "object_id": "<ZONE ID>",
-    "created_at": "2025-06-03T14:33:16Z",
-    "updated_at": "2025-06-03T14:33:16Z",
-    "dataset_id": "01973635f7e273a1964a02f4d4502499",
-    "enabled": true
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
-}
-```
-
-If you would like to enable an account-level dataset, replace `zones/{zone_id}` with `accounts/{account_id}` in the `curl` command. For example:
-
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/logs/explorer/datasets \
---header "Authorization: Bearer <API_TOKEN>" \
---json '{
-  "dataset": "access_requests"
-}'
-```
+Authentication with the API can be done via an API token or API key with an email. Refer to [Create API token](/fundamentals/api/get-started/create-token/) for further instructions.
 
 ## Query data
 

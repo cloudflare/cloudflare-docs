@@ -65,11 +65,6 @@ You can filter and view your logs via the Cloudflare dashboard or the API.
 7. A query preview is displayed. Select **Custom SQL** to change the query.
 8. Select **Run query** when you are done. The results are displayed below within the **Query results** section.
 
-:::note
-
-
-
-
 For example, to find an HTTP request with a specific [Ray ID](/fundamentals/reference/cloudflare-ray-id/), go to **Custom SQL**, and enter the following SQL query:
 
 ```sql
@@ -110,8 +105,6 @@ After selecting all the fields for your query, you can save it by selecting **Sa
 ## Integration with Security Analytics
 
 You can also access the Log Explorer dashboard directly from the [Security Analytics dashboard](/waf/analytics/security-analytics/#logs). When doing so, the filters you applied in Security Analytics will automatically carry over to your query in Log Explorer.
-
-:::
 
 ## Optimize your queries
 
@@ -156,8 +149,6 @@ All fields listed in [Log Fields](/logs/reference/log-fields/) for the [supporte
 ### Why does my query not complete or time out?
 
 Log Explorer performs best when query parameters focus on narrower ranges of time. You may experience query timeouts when your query would return a large quantity of data. Consider refining your query to improve performance.
-
-If your query times out with an HTTP status of 524 (Gateway Timeout), consider using one of the [streaming output formats](/logs/log-explorer/#output-formats), such as `application/x-ndjson`.
 
 ### Why don't I see any logs in my queries after enabling the dataset?
 
