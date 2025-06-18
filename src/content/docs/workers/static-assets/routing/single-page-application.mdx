@@ -65,7 +65,7 @@ For more explicit control over SPA routing behavior, you can use `run_worker_fir
 
 </WranglerConfig>
 
-This configuration provides explicit routing control without relying on browser navigation headers, making it ideal for complex SPAs that need fine-grained routing behavior. Your Worker script will need to handle the matched routes and use [the assets binding](/workers/static-assets/binding/#binding) to serve the appropriate content.
+This configuration provides explicit routing control without relying on browser navigation headers, making it ideal for complex SPAs that need fine-grained routing behavior. Your Worker script can then handle the matched routes and (optionally using [the assets binding](/workers/static-assets/binding/#binding)) and serve dynamic content.
 
 **For example:**
 
