@@ -13,7 +13,7 @@ const props = z
 		filename: z.string().optional(),
 		playground: z.boolean().default(false),
 		code: z.custom<ComponentProps<typeof Code>>().optional(),
-    omitTabs: z.boolean().optional(),
+		omitTabs: z.boolean().default(false),
 	})
 	.strict();
 
@@ -43,54 +43,20 @@ raw = raw.replace(/\u007f/g, "\n");
 
 const js = await format(tsBlankSpace(raw), { parser: "babel", useTabs: true });
 
-const includeTabsDefinition = !omitTabs;
-
-// Define tab config array
-const tabs = [
-  {
-    label: "JavaScript",
-    icon: "seti:javascript",
-    lang: "js",
-    code: js,
-    title: filename?.replace(".ts", ".js"),
-    meta: playground ? "playground" : undefined,
-  },
-  {
-    label: "TypeScript",
-    icon: "seti:typescript",
-    lang: "ts",
-    code: raw,
-    title: filename,
-    meta: undefined
-  },
-] as const;
+const Wrapper = omitTabs ? Fragment : Tabs;
 ---
-{includeTabsDefinition ? (
-  <Tabs syncKey="workersExamples">
-    {tabs.map(tab => (
-      <TabItem label={tab.label} icon={tab.icon}>
-        <Code
-          {...code}
-          lang={tab.lang}
-          code={tab.code}
-          title={tab.title}
-          meta={tab.meta}
-        />
-      </TabItem>
-    ))}
-  </Tabs>
-) : (
-  <>
-    {tabs.map(tab => (
-      <TabItem label={tab.label} icon={tab.icon}>
-        <Code
-          {...code}
-          lang={tab.lang}
-          code={tab.code}
-          title={tab.title}
-          meta={tab.meta}
-        />
-      </TabItem>
-    ))}
-  </>
-)}
+
+<Wrapper syncKey="workersExamples">
+	<TabItem label="JavaScript" icon="seti:javascript">
+		<Code
+			{...code}
+			lang="js"
+			code={js}
+			title={filename?.replace(".ts", ".js")}
+			meta={playground ? "playground" : undefined}
+		/>
+	</TabItem>
+	<TabItem label="TypeScript" icon="seti:typescript">
+		<Code {...code} lang="ts" code={raw} title={filename} />
+	</TabItem>
+</Wrapper>
