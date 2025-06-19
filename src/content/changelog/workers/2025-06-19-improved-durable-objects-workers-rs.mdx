@@ -15,7 +15,7 @@ Updated support for Durable Objects on [workers-rs](https://github.com/cloudflar
 
 The updated macro no longer needs `async_trait` imports or attributes on `impl` blocks, with better IDE support and allowing multiple Durable Objects in the same file.
 
-Durable Object trait methods now use `&self` instead of `&mut self`, eliminating the "recursive use of an object detected" errors when handling multiple requests. Use `Mutex`, `RwLock`, or `RefCell` for field-level mutability as needed.
+Durable Object trait methods now use `&self` instead of `&mut self`, eliminating the "recursive use of an object detected" errors when handling multiple requests. Use `RefCell` or Tokio's `Mutex` for field-level mutability as needed.
 
 Before:
 
