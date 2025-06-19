@@ -191,7 +191,7 @@ Whether you created a new TanStack Start project or are using an existing projec
    ```
 
    <Details header="How is this code working?">
-   	The helper function uses [getPlatformProxy](https://developers.cloudflare.com/workers/wrangler/api/#getplatformproxy) method from wrangler to provide access to your Cloudflare bindings during local development. The bindings are cached at startup for better performance. In production, bindings are accessed via `process.env`. Make sure you've run `npm run cf-typegen` to generate the `Env` types that this code references.
+   	The helper function uses [getPlatformProxy](/workers/wrangler/api/#getplatformproxy) method from wrangler to provide access to your Cloudflare bindings during local development. The bindings are cached at startup for better performance. In production, bindings are accessed via `process.env`. Make sure you've run `npm run cf-typegen` to generate the `Env` types that this code references.
    </Details>
 
 3. **Example using a Cloudflare Binding in Server Functions**
