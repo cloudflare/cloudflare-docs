@@ -32,7 +32,7 @@ You can create Sequence Mitigation rules for a sequence even if the sequence is 
 
 ## Process
 
-You can create a sequence rule to enforce behavior on your API over time in two different ways. Sequence rules can either protect an endpoint from users performing a known specific sequence of API calls (otherwise known as a negative security model) or from users making API requests outside of your expectations (otherwise known as a positive security model).
+You can [create a sequence rule](/api-shield/security/sequence-mitigation/manage-sequence-rules/) to enforce behavior on your API over time in two different ways. Sequence rules can either protect an endpoint from users performing a known specific sequence of API calls (otherwise known as a negative security model) or from users making API requests outside of your expectations (otherwise known as a positive security model).
 
 Sequence rules built via the Cloudflare dashboard using API Shield rules utilize a lookback window to match endpoints in the sequence. The rule will match as long as both endpoints are found within [10 requests](/api-shield/security/sequence-mitigation/#request-limitations) (to endpoints within Endpoint Management) of each other and made within [10 minutes](/api-shield/security/sequence-mitigation/#time-limitations) of each other.
 
@@ -44,39 +44,6 @@ A negative security model may be useful if you see abusive behavior that is outs
 
 For example, if there was an authorization bug that allowed users to iterate through other users' profiles that contain account numbers via `GET /api/v1/users/{var1}/profile` and then a user tries to make fradulent funds transfers, you could create up a rule to block or log the sequence `GET /api/v1/users/{var1}/profile` to `POST /api/v1/transferFunds`.
 
-## Create a sequence rule
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Go to **Security** > **API Shield** > **API Rules**.
-3. Select **Create sequence rule**.
-4. <a id="rule-form"/>
-   Name your rule.
-5. Select a starting endpoint. This is the endpoint that you expect users to hit first in their request flow when using your API.
-   1. Choose a hostname to display the list of endpoints for that hostname.
-   2. Choose an endpoint.
-   3. Select **Set as starting endpoint**.
-6. Select a final endpoint. This is the endpoint you are targeting for protection.
-   1. Choose a hostname to display the list of endpoints for that hostname.
-   2. Choose an endpoint.
-   3. Select **Set as ending endpoint**.
-7. Choose an action that corresponds to the security model type:
-   - **Allow**: This will create a positive security model by defining approved sequences on your API.
-   - **Log** / **Block**: This will test or enforce a negative security model defining known bad sequences on your API. 
-      :::note
-
-      If you chose **Allow**, select whether to log or block the request to the final endpoint when users do not first request the starting endpoint in the sequence. 
-      :::
-8. Select **Create rule**.
-
-## Edit a sequence rule
-
-You also have the option to edit an existing rule by selecting it on the rule list. You can rename your rule, adjust the starting and ending endpoint order, modify the endpoint, and change the action of the rule.
-
-## Reprioritize a sequence rule
-
-You can change the priority order of your rules by selecting and dragging the rules on the list.
-
-You can also explicitly set a priority order by selecting the three dots on your rule and choosing **Move to…** where you can set the new priority in the resulting modal window.
 
 ## Limitations
 

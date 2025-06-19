@@ -487,13 +487,27 @@
                             "items": {
                                 "type": "object",
                                 "properties": {
-                                    "arguments": {
-                                        "type": "object",
-                                        "description": "The arguments passed to be passed to the tool call request"
-                                    },
-                                    "name": {
+                                    "id": {
                                         "type": "string",
-                                        "description": "The name of the tool to be called"
+                                        "description": "The tool call id."
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "description": "Specifies the type of tool (e.g., 'function')."
+                                    },
+                                    "function": {
+                                        "type": "object",
+                                        "description": "Details of the function tool.",
+                                        "properties": {
+                                            "name": {
+                                                "type": "string",
+                                                "description": "The name of the tool to be called"
+                                            },
+                                            "arguments": {
+                                                "type": "object",
+                                                "description": "The arguments passed to be passed to the tool call request"
+                                            }
+                                        }
                                     }
                                 }
                             }

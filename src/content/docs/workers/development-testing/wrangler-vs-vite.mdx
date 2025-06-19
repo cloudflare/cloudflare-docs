@@ -1,26 +1,17 @@
 ---
 pcx_content_type: navigation
-title: Local development
+title: Choosing between Wrangler & Vite
 sidebar:
-  order: 6
+  order: 3
 head: []
-description: Develop your Workers locally.
+description: Choosing between Wrangler and Vite for local development
 ---
 
-import { Details, LinkCard, Render, PackageManagers } from "~/components";
-
-When building projects on Cloudflare Workers, you have two options for local development:
-
-- [**Wrangler**](/workers/wrangler/), using the built-in [`wrangler dev`](/workers/wrangler/commands/#dev) command.
-- [Vite](https://vite.dev/), using the [**Cloudflare Vite plugin**](/workers/vite-plugin/).
-
-Both Wrangler and the Vite plugin use [Miniflare](/workers/testing/miniflare/) to provide an accurate **local** simulation of the Cloudflare Workers runtime, ([`workerd`](https://github.com/cloudflare/workerd)). If you need to [develop with **remote resources**](/workers/local-development/remote-data/), Wrangler is the only option, and provides remote development via the `wrangler dev --remote` command.
-
-## Choosing between Wrangler or Vite
+# When to use Wrangler vs Vite
 
 Deciding between Wrangler and the Cloudflare Vite plugin depends on your project's focus and development workflow. Here are some quick guidelines to help you choose:
 
-### When to use Wrangler
+## When to use Wrangler
 
 - **Backend & Workers-focused:**
   If you're primarily building APIs, serverless functions, or background tasks, use Wrangler.
@@ -31,7 +22,7 @@ Deciding between Wrangler and the Cloudflare Vite plugin depends on your project
 - **Simple frontends:**
   If you have minimal frontend requirements and don’t need hot reloading or advanced bundling, Wrangler may be sufficient.
 
-### When to use the Cloudflare Vite Plugin
+## When to use the Cloudflare Vite Plugin
 
 Use the [Vite plugin](/workers/vite-plugin/) for:
 

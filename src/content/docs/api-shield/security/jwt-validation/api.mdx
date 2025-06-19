@@ -1,12 +1,13 @@
 ---
-title: Configure JWT validation
+title: Configure JWT validation via the API
 pcx_content_type: how-to
 type: overview
 sidebar:
-  order: 1
+  order: 2
+  label: API
 head:
   - tag: title
-    content: Configure JWT validation
+    content: Configure JWT validation via the API
 
 ---
 
@@ -159,8 +160,8 @@ Token validation rules can be configured using the Cloudflare API or [dashboard]
 | `description`                             | A human-readable description that gives more details than `title` and helps to document it. | Log requests without a valid `authorization` header.    | Limited to 500 characters.                                                                                                                                                                              |
 | `action`                                  | The Firewall Action taken on requests that do not meet `expression`.                        | `log`                                                   | Possible: `log` or `block`                                                                                                                                                                              |
 | `enabled`                                 | Enable or disable the rule.                                                                 | `true`                                                  | Possible: `true` or `false`                                                                                                                                                                             |
-| `expression`                              | The rule's security policy.                                                                 | `is_jwt_valid ("00170473-ec24-410e-968a-9905cf0a7d03")` | Make sure to escape any quotes when creating rules using the Cloudflare API. <br /> Refer to [Define a security policy](/api-shield/security/jwt-validation/configure/#define-a-security-policy) below. |
-| `selector`                                | Configure what operations are covered by this rule.                                         |                                                         | Refer to [Applying a rule to operations](/api-shield/security/jwt-validation/configure/#apply-a-rule-to-operations) below.                                                                              |
+| `expression`                              | The rule's security policy.                                                                 | `is_jwt_valid ("00170473-ec24-410e-968a-9905cf0a7d03")` | Make sure to escape any quotes when creating rules using the Cloudflare API. <br /> Refer to [Define a security policy](#define-a-security-policy) below. |
+| `selector`                                | Configure what operations are covered by this rule.                                         |                                                         | Refer to [Applying a rule to operations](#apply-a-rule-to-operations) below.                                                                              |
 
 ### Selectors
 
@@ -178,7 +179,7 @@ To find the operation ID, refer to [Endpoint Management](/api-shield/management-
 
 A request must also match an operation covered by this rule to trigger an action.
 
-Refer to [Apply a rule to operations](/api-shield/security/jwt-validation/configure/#apply-a-rule-to-operations) for more information. 
+Refer to [Apply a rule to operations](#apply-a-rule-to-operations) for more information. 
 :::
 
 A token validation rule's expression defines a security policy that a request must meet.
