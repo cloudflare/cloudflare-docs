@@ -34,7 +34,7 @@ For example, the `attributes` section of your search response may look like:
 
 When you include a custom metadata field named `context`, AutoRAG attaches that value to each chunk of the file. When you run an `/ai-search` query, this `context` is passed to the LLM and can be used as additional input when generating an answer.
 
-We recommend using the `context` field to describe supplemental information you want the LLM to consider, such as a summary of the document or a source URL.
+We recommend using the `context` field to describe supplemental information you want the LLM to consider, such as a summary of the document or a source URL. If you have several different, you can join them together however you choose within the `context` string.
 
 For example:
 
