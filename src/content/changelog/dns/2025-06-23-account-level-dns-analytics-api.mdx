@@ -10,7 +10,7 @@ This allows users to query DNS analytics across multiple zones in their account,
 
 Here is an example to retrieve all DNS queries across all zones in an account that resulted in an `NXDOMAIN` response over a given time frame. Please replace `a30f822fcd7c401984bf85d8f2a5111c` with your actual account ID.
 
-```graphql title="GraphQL example for account-level DNS analytics"
+```graphql graphql-api-explorer title="GraphQL example for account-level DNS analytics"
 query Viewer {
     viewer {
         accounts(filter: { accountTag: "a30f822fcd7c401984bf85d8f2a5111c" }) {
