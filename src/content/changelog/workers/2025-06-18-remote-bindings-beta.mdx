@@ -3,12 +3,12 @@ title: Remote bindings public beta - Connect to remote resources during local de
 description: We are excited to introduce beta support for remote bindings for local development, allowing you to connect to deployed resources like R2 buckets and D1 databases, all while running your Worker code on your local machine.
 products:
   - workers
-date: 2025-06-18T01:00:00Z
+date: 2025-06-18T17:00:00Z
 ---
 
 import { WranglerConfig, Aside } from "~/components";
 
-Today [we announced the public beta](https://github.com/cloudflare/workers-sdk/discussions/9660) of [remote bindings](/workers/development-testing/#remote-bindings) for local development: allowing you to connect to deployed resources like R2 buckets and D1 databases while running your Worker code on your local machine. This means you can test your local code changes against real data and services, without the overhead of deploying for each iteration.
+Today [we announced the public beta](https://github.com/cloudflare/workers-sdk/discussions/9660) of [remote bindings](/workers/development-testing/#remote-bindings) for local development. With remote bindings, you can now connect to deployed resources like [R2 buckets](/r2/) and [D1 databases](/d1/) while running Worker code on your local machine. This means you can test your local code changes against real data and services, without the overhead of deploying for each iteration.
 
 ## Example configuration
 
@@ -41,7 +41,5 @@ When remote bindings are configured, your Worker **still executes locally**, but
 - The [Cloudflare Vite Plugin](/workers/development-testing/#using-vite-with-remote-bindings): Refer to the documentation for how to enable in your Vite config.
 - The [Cloudflare Vitest Plugin](/workers/development-testing/#using-vitest-with-remote-bindings): Refer to the documentation for how to enable in your Vitest config.
 
-<Aside type="tip">
-	Learn more and provide feedback in [our beta
-	announcement](https://github.com/cloudflare/workers-sdk/discussions/9660).
-</Aside>
+**Have feedback?**
+Join the discussion in our [beta announcement](https://github.com/cloudflare/workers-sdk/discussions/9660) to share feedback or report any issues.
