@@ -1,0 +1,37 @@
+---
+title: React Core SDK
+sidebar:
+  order: 2
+---
+
+## Introduction
+
+The RealtimeKit Core SDK is designed to provide developers with an easy way to incorporate real-time communication (RTC) solutions into their apps and websites. With full customization and branding options, you can build your own user interface from the ground up without dealing with complicated media layers.
+
+The Core SDK acts as a data-only layer, offering high-level primitives and abstracting away complex media and networking optimizations. It only provides simple APIs that are user-friendly and easy to work with.
+
+### Hooks
+
+[React Hooks](https://beta.reactjs.org/reference/react) are functions that allow developers to manage state and other React features in functional components. Hooks were introduced in React version 16.8 as a way to simplify the code. RealtimeKit provides the following built-in hooks:
+
+- useRealtimeKitClient()
+- useRealtimeKitMeeting()
+- useRealtimeKitSelector()
+
+See [Hooks](/react-ui-kit/using-hooks) for more information.
+{/* refactor */}
+
+### Utility Modules
+
+The Core SDK includes various modules for in-call utilities like chat, polls, and recording that enable building a UI on top of it. The following are the core SDK modules:
+
+- **meeting.self**: This consists of properties and methods corresponding to the current (local) user, such as enabling or disabling their audio and video, getting a list of media devices or changing the device, or sharing your mobile screen.
+- **meeting.participants**: Use this module to get useful information about the other participants that are present in the meeting. A host can use this module for access control. For example, the host can mute or kick a participant.
+- **meeting.chat**: It provides the methods to integrate chat features such as sending/receiving, editing, and deleting text, images, and files.
+- **meeting.polls**: Meetings can have polls. This module lets you perform actions related to polls, that is create and manage a poll within a meeting.
+- **meeting.recording**: When a meeting needs to be recorded, this module can be used. It lets you start or stop a recording, and get the current status of an ongoing recording.
+- **meeting.meta**: This object consists of all the metadata related to the current meeting, such as the title, the timestamp of when it started, and more.
+
+<head>
+	<title>React Web Core Introduction</title>
+</head>

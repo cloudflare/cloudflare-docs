@@ -1,0 +1,37 @@
+import {
+	ChatMultipleRegular,
+	LiveRegular,
+	MicRegular,
+	VideoRegular,
+} from "@fluentui/react-icons";
+
+<CardSection
+	id="Quickstart"
+	title="Quickstart"
+	description="Learn how to integrate live video and voice, live stream, and chat experiences into your product."
+>
+	<Card
+		title="Live Video"
+		icon={<VideoRegular />}
+		to="/guides/live-video/intro-video-conf"
+		description="Add live video functionality to your web, mobile, and desktop applications."
+	/>
+	<Card
+		title="Voice Conferencing"
+		icon={<MicRegular />}
+		to="/guides/voice-conf/intro-voice-conf"
+		description="Integrate reliable voice calling experiences into your product."
+	/>
+	<Card
+		title="Interactive Livestreaming"
+		icon={<LiveRegular />}
+		to="/guides/livestream/livestream-overview"
+		description="Get started with interactive livestreaming and broadcast to a large audience"
+	/>
+	{/* <Card
+    title="Realtime Chat"
+    icon={<ChatMultipleRegular />}
+    to="/guides/realtime-chat/intro-chat"
+    description="Create interactive and collaborative in-app chat experiences."
+  /> */}
+</CardSection>
