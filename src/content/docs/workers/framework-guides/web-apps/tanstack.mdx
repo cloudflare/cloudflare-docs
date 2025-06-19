@@ -50,7 +50,7 @@ Whether you created a new TanStack Start project or are using an existing projec
 
    Update your `vite.config.ts` file to use the `cloudflare-module` target for a compatible build:
 
-   ```ts
+   ```ts title="vite.config.ts" {14}
    import { tanstackStart } from "@tanstack/react-start/plugin/vite";
    import { defineConfig } from "vite";
    import tsConfigPaths from "vite-tsconfig-paths";
