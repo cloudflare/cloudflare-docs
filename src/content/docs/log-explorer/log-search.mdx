@@ -144,7 +144,7 @@ WHERE
 
 ### Which fields (or columns) are available for querying?
 
-All fields listed in [Log Fields](/logs/reference/log-fields/) for the [supported datasets](/log-explorer/manage-datasets/#supported-datasets) are viewable in Log Explorer. For filtering, only fields with simple values, such as those of type `bool`, `int`, `float`, or `string` are supported. Fields with key-value pairs are currently not supported. For example, you cannot use the fields `RequestHeaders` and `Cookies` from the HTTP requests dataset in a filter.
+All fields listed in [Log Fields](/logs/reference/log-fields/) for the [supported datasets](/log-explorer/manage-datasets/#supported-datasets) are viewable in Log Explorer. 
 
 ### Why does my query not complete or time out?
 
@@ -156,7 +156,7 @@ Log Explorer starts ingesting logs from the moment you enable the dataset. It wi
 
 ### My query returned an error. How do I figure out what went wrong?
 
-We are actively working on improving error codes. If you receive a generic error, check your SQL syntax (if you are using the custom SQL feature), make sure you have included a date and a limit, and that the field you are filtering is not a key-value pair. If the query still fails it is likely timing out. Try refining your filters.
+We are actively working on improving error codes. If you receive a generic error, check your SQL syntax (if you are using the custom SQL feature), make sure you have included a date and a limit. If the query still fails it is likely timing out. Try refining your filters.
 
 ### Where is the data stored?
 
