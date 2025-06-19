@@ -40,8 +40,8 @@ const answer = await env.AI.autorag("my-autorag").search({
 | Attribute |  Description | Example |
 | --- | --- | --- |
 | `filename` | The name of the file. | `dog.png` or `animals/mammals/cat.png` |
-| `folder` | The prefix or directory to the object. | For the object `animals/mammals/cat.png`, the folder is `animals/mammals/` |
-| `timestamp` | The timestamp for when the object was last modified. Comparisons are supported using a 13-digit Unix timestamp (milliseconds), but values will be rounded to the floored to the nearest second. | The timestamp `2025-01-01 00:00:00.999 UTC` is `1735689600999` and it will be truncated to `1735689600000`, corresponding to `2025-01-01 00:00:00 UTC` |
+| `folder` | The folder or prefix to the object. | For the object `animals/mammals/cat.png`, the folder is `animals/mammals/` |
+| `timestamp` | The timestamp for when the object was last modified. Comparisons are supported using a 13-digit Unix timestamp (milliseconds), but values will be rounded to 10 digits (seconds). | The timestamp `2025-01-01 00:00:00.999 UTC` is `1735689600999` and it will be rounded to `1735689600000`, corresponding to `2025-01-01 00:00:00 UTC` |
 
 ### Filter schema
 
