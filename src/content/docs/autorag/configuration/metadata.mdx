@@ -1,12 +1,15 @@
 ---
 pcx_content_type: concept
-title: Metadata filtering
+title: Metadata
 sidebar:
   order: 6
 ---
 
 import { FileTree } from "~/components"
 
+Use metadata to filter documents before retrieval and provide context to guide AI responses. This page covers how to apply filters and attach optional context metadata to your files.
+
+## Metadata filtering
 Metadata filtering narrows down search results based on metadata, so only relevant content is retrieved. The filter narrows down results prior to retrieval, so that you only query the scope of documents that matter.
 
 Here is an example of metadata filtering using [Workers Binding](/autorag/usage/workers-binding/) but it can be easily adapted to use the [REST API](/autorag/usage/rest-api/) instead.
@@ -32,25 +35,19 @@ const answer = await env.AI.autorag("my-autorag").search({
 });
 ```
 
-## Metadata attributes
+### Metadata attributes
 
-You can currently filter by the `folder` and `timestamp` of an R2 object. Currently, custom metadata attributes are not supported.
+| Attribute |  Description | Example |
+| --- | --- | --- |
+| `filename` | The name of the file. | `dog.png` or `animals/mammals/cat.png` |
+| `folder` | The folder or prefix to the object. | For the object `animals/mammals/cat.png`, the folder is `animals/mammals/` |
+| `timestamp` | The timestamp for when the object was last modified. Comparisons are supported using a 13-digit Unix timestamp (milliseconds), but values will be rounded down to 10 digits (seconds). | The timestamp `2025-01-01 00:00:00.999 UTC` is `1735689600999` and it will be rounded down to `1735689600000`, corresponding to `2025-01-01 00:00:00 UTC` |
 
-### Folder
-
-The directory to the object. For example, the `folder` of the object at `llama/logistics/llama-logistics.mdx` is `llama/logistics/`. Note that the `folder` does not include a leading `/`.
-
-Note that `folder` filter only includes files exactly in that folder, so files in subdirectories are not included. For example, specifying `folder: "llama/"` will match files in `llama/` but does not match files in `llama/logistics`.
-
-### Timestamp
-
-The timestamp indicating when the object was last modified. Comparisons are supported using a 13-digit Unix timestamp (milliseconds), but values will be rounded to 10 digits (seconds). For example, `1735689600999` or `2025-01-01 00:00:00.999 UTC` will be rounded down to `1735689600000`, corresponding to `2025-01-01 00:00:00 UTC`.
-
-## Filter schema
+### Filter schema
 
 You can create simple comparison filters or an array of comparison filters using a compound filter.
 
-### Comparison filter
+#### Comparison filter
 
 You can compare a metadata attribute (for example, `folder` or `timestamp`) with a target value using a comparison filter.
 
@@ -73,7 +70,7 @@ The available operators for the comparison are:
 | `lt`     | Less than                 |
 | `lte`    | Less than or equals to    |
 
-### Compound filter
+#### Compound filter
 
 You can use a compound filter to combine multiple comparison filters with a logical operator.
 
@@ -93,7 +90,7 @@ Note the following limitations with the compound operators:
   - Only the `eq` operator is allowed.
   - All conditions must filter on the **same key** (for example, all on `folder`)
 
-### "Starts with" filter for folders
+#### "Starts with" filter for folders
 
 You can use "starts with" filtering on the `folder` metadata attribute to search for all files and subfolders within a specific path.
 
@@ -137,6 +134,25 @@ This filter identifies paths starting with `customer-a/` by using:
 
 Together, these conditions effectively select paths that begin with the provided path value.
 
+## Add `context` field to guide AI Search
+You can optionally include a custom metadata field named `context` when uploading an object to your R2 bucket.
+
+The `context` field is attached to each chunk and passed to the LLM during an `/ai-search` query. It does not affect retrieval but helps the LLM interpret and frame the answer.
+
+The field can be used for providing document summaries, source links, or custom instructions without modifying the file content.
+
+You can add [custom metadata](/r2/api/workers/workers-api-reference/#r2putoptions) to an object in the `/PUT` operation when uploading the object to your R2 bucket. For example if you are using the [Workers binding with R2](/r2/api/workers/workers-api-usage/):
+
+```javascript
+await env.MY_BUCKET.put("cat.png", file, {
+  customMetadata: {
+    context: "This is a picture of Joe's cat. His name is Max."
+  }
+});
+```
+
+During `/ai-search`, this context appears in the response under `attributes.file.context`, and is included in the data passed to the LLM for generating a response.
+
 ## Response
 
 You can see the metadata attributes of your retrieved data in the response under the property `attributes` for each retrieved chunk. For example:
@@ -150,6 +166,10 @@ You can see the metadata attributes of your retrieved data in the response under
     "attributes": {
       "timestamp": 1735689600000,   // unix timestamp for 2025-01-01
       "folder": "llama/logistics/",
+      "file": {
+        "url": "www.llamasarethebest.com/logistics"
+        "context": "This file contains information about how llamas can logistically deliver coffee."
+      }
     },
     "content": [
       {

@@ -219,6 +219,7 @@
 
 #autorag
 /autorag/usage/recipes/ /autorag/how-to/ 301
+/autorag/configuration/metadata-filtering/ /autorag/configuration/metadata/ 301
 
 # bots
 /bots/about/plans/ /bots/plans/ 301

@@ -64,7 +64,7 @@ curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/comp
 
 ### Universal provider
 
-You can also use this pattern with the [Universal Endpoint](/ai-gateway/universal/) to add [fallbacks](/ai-gateway/configuration/fallbacks/) across multiple providers. When used in combination, every request will return the same standardized format, whether from the primary or fallback model. This behavior means that you do not have to add extra parsing logic to your app. 
+You can also use this pattern with the [Universal Endpoint](/ai-gateway/universal/) to add [fallbacks](/ai-gateway/configuration/fallbacks/) across multiple providers. When used in combination, every request will return the same standardized format, whether from the primary or fallback model. This behavior means that you do not have to add extra parsing logic to your app.
 
 ```ts title="index.ts"
 export interface Env {
@@ -77,7 +77,7 @@ export default {
 			provider: "compat",
 			endpoint: "chat/completions",
 			headers: {
-				authorization: "Bearer ",
+				authorization: "Bearer",
 			},
 			query: {
 				model: "google-ai-studio/gemini-2.0-flash",

@@ -197,7 +197,7 @@ export class MyAgent extends Agent<Env> {
 
 </TypeScriptExample>
 
-You can also supply a [TypeScript type argument](https://www.typescriptlang.org/docs/handbook/2/generics.html#using-type-parameters-in-generic-constraints) the query, which will be used to infer the type of the result:
+You can also supply a [TypeScript type argument](https://www.typescriptlang.org/docs/handbook/2/generics.html#using-type-parameters-in-generic-constraints) to the query, which will be used to infer the type of the result:
 
 ```ts
 type User = {
@@ -209,7 +209,7 @@ type User = {
 export class MyAgent extends Agent<Env> {
 	async onRequest(request: Request) {
 		let userId = new URL(request.url).searchParams.get('userId');
-		// Supply the type paramter to the query when calling this.sql
+		// Supply the type parameter to the query when calling this.sql
 		// This assumes the results returns one or more User rows with "id", "name", and "email" columns
 		const user = await this.sql<User>`SELECT * FROM users WHERE id = ${userId}`;
 		return Response.json(user)
