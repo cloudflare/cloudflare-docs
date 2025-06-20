@@ -16,7 +16,7 @@ We've simplified the programmatic deployment of Workers via our [Cloudflare SDKs
 
 This new interface is available in:
 
-- [cloudlfare-typescript](https://github.com/cloudflare/cloudflare-typescript) (4.4.1)
+- [cloudflare-typescript](https://github.com/cloudflare/cloudflare-typescript) (4.4.1)
 - [cloudflare-python](https://github.com/cloudflare/cloudflare-python) (4.3.1)
 
 For complete examples, see our guide on [programmatic Worker deployments](/workers/platform/infrastructure-as-code).
@@ -55,23 +55,34 @@ EOF
 
 With the new SDK interface, you can now define your entire Worker configuration using a single, structured object.
 
-This approach allows you to specify metadata like `main_module`, `bindings`, and `compatibility_date` as top-level properties directly alongside your script content. Our SDK takes this logical object and automatically constructs the complex multipart/form-data API request behind the scenes.
+This approach allows you to specify metadata like `main_module`, `bindings`, and `compatibility_date` as clearer properties directly alongside your script content. Our SDK takes this logical object and automatically constructs the complex multipart/form-data API request behind the scenes.
 
-Here's how you can now programmatically deploy a Worker via the [`cloudlfare-typescript` SDK](https://github.com/cloudflare/cloudflare-typescript)
+Here's how you can now programmatically deploy a Worker via the [`cloudflare-typescript` SDK](https://github.com/cloudflare/cloudflare-typescript)
 
 <TypeScriptExample>
 ```ts
+import Cloudflare from 'cloudflare';
+import { toFile } from 'cloudflare/index';
+
+// ... client setup, script content, etc.
+
 const script = await client.workers.scripts.update(scriptName, {
   account_id: accountID,
-  main_module: `${scriptName}.mjs`,
-  body: scriptContent,
-  bindings: [
-    {},
-  ],
+  metadata: {
+    main_module: scriptFileName,
+    bindings: [],
+  },
+  files: {
+    [scriptFileName]: await toFile(Buffer.from(scriptContent), scriptFileName, {
+      type: 'application/javascript+module',
+    }),
+  },
 });
-````
+```
 
 </TypeScriptExample>
+
+View the complete example here: https://github.com/cloudflare/cloudflare-typescript/blob/main/examples/workers/script-upload.ts
 
 ## Terraform provider improvements
 
@@ -85,3 +96,6 @@ We've also made several fixes and enhancements to the [Cloudflare Terraform prov
 ## API improvements
 
 We've also properly documented the [Workers Script And Version Settings](/api/resources/workers/subresources/scripts/subresources/script_and_version_settings) in our public OpenAPI spec and SDKs.
+
+
+```
