@@ -368,12 +368,9 @@ the bindings in an `Unstable_Config` object into a structure that can be passed 
 This wrapper simplifies proxy session management. It takes:
 
 - The path to your Wrangler config, or an object with remote bindings.
-- The current proxy session details (or `null` if none).
+- The current proxy session details (this parameter can be set to `null` or not being provided if none).
 
-It returns:
-
-- `null` if no proxy session is needed.
-- An object with the proxy session details if started or updated.
+It returns an object with the proxy session details if started or updated, or `null` if no proxy session is needed.
 
 The function:
 
