@@ -201,7 +201,7 @@ export default function SupportAI() {
 							{
 								role: "assistant",
 								content:
-									"I'm unable to provide an answer to that at the moment. Rephrase your query and I'll try again.\n\nIf that doesn't help, try searching [our docs](/search/) or the [Cloudflare Community](community.cloudflare.com/search).",
+									"We are experiencing errors with your request. These errors can be due to too many requests or an issue with our upstream model availability.\n\nTry asking again later. If that does not work, search [our docs](/search/) or the [Cloudflare Community](community.cloudflare.com/search).",
 							},
 						]);
 						throw error;
