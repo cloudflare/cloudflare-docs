@@ -195,8 +195,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/sso/v2/connectors
 ```bash title="cURL command"
 curl --request PATCH \
 'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/sso/v2/connectors/2828' \
---header "X-Auth-Email: $CLOUDFLARE_EMAIL" \
---header "X-Auth-Key: $CLOUDFLARE_API_KEY" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --header "Content-Type: application/json" \
 --data '{
   "sso_connector_status": "DIS"
