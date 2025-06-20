@@ -165,6 +165,21 @@ To receive an email claim in the `id_token` from Microsoft Entra, you must:
 3. If you gave your email claim another name than `email`, you must update your configuration in the Cloudflare dashboard. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication** > **Azure AD** > **Edit**.
 4. Under **Optional configurations** > **Email claim**, enter the name of the claim representing your organization's email addresses.
 
+#### Adding Entra user Object ID to JWT
+If you're concerned users emails or UPNs may change, and you use information held within the JWT for identification on your origin, you can pass the Entra Object ID (OID) and add this to your JWT.
+
+1. Under "OIDC Claims" in the Zero Trust IdP configuration, add *oid* as a claim. No changes should be needed from the Entra side.
+2. Save your changes and click *Test* to verify the OID is shown.
+3. Once you verify the OID is visible in the test, it will now be passed to origins behind Access within a JWT. Once decoded the OID will be shown under the *custom* field like the below example:
+
+```
+custom
+{
+  "oid": "d14b1e08-6dd9-4ced-ae86-16783c733bd8"
+}
+```
+
+
 ## Synchronize users and groups
 
 The Microsoft Entra ID integration allows you to synchronize IdP groups and automatically deprovision users using [SCIM](/cloudflare-one/identity/users/scim/).
