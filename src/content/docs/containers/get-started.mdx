@@ -1,0 +1,284 @@
+---
+pcx_content_type: get-started
+title: Getting started
+sidebar:
+  order: 1
+---
+
+import { WranglerConfig } from "~/components";
+
+In this guide, you will deploy a Worker that can make requests to one or more Containers in response to end-user requests.
+In this example, each container runs a small webserver written in Go.
+
+This example Worker should give you a sense for simple Container use, and provide a starting point for more complex use cases.
+
+## Prerequisites
+
+### Get an API Token with the correct permissions
+
+Ensure your account (or manually provided token) has the correct permissions to deploy a Worker with Containers.
+
+If you have admin-level permissions, this should happen automatically.
+
+If you have a custom token or a user with specific privledges, you must have the following permissions:
+
+- "Containers: Edit"
+- "Workers Scripts: Edit"
+
+Refer to [Find zone and account IDs](/fundamentals/setup/find-account-and-zone-ids/) for help locating
+your Account ID and [Create an API token](/fundamentals/api/get-started/create-token/) to learn how to create
+an access your API token.
+
+### Ensure Docker is running locally
+
+In this guide, we will build and push a container image alongside your Worker code. By default, this process uses
+Docker to do so. You must have Docker running locally when you run `wrangler deploy`.
+
+If Docker is running properly, the `docker info` command will successfully run. If Docker is not running,
+the `docker info` command will hang or return an error including the message "Cannot connect to the Docker daemon".
+
+{/* FUTURE CHANGE: Add some image you can use if you don't have Docker running. */}
+{/* FUTURE CHANGE: Link to docs on alternative build/push options */}
+
+## Deploy a Container to Workers
+
+Now that your environment is set up, you can write your Worker.
+
+### Deploy from the Hello World Template
+
+Use [C3](/learning-paths/workers/get-started/c3-and-wrangler/#c3) to create and deploy a new Worker using the "Hello World Containers" template.
+
+```sh
+npm create cloudflare@latest -- --template=cloudflare/templates/hello-world-containers
+```
+
+Subsequent updates to the Worker or Container code can be deployed using Wrangler:
+
+```sh
+npx wrangler deploy
+```
+
+When you run this command, several things happen:
+
+- Wrangler builds your image using Docker.
+- Wrangler pushes your image to the Cloudchamber Image Registry, which is automatically
+  integrated with your Cloudflare account.
+- Wrangler deploys your Worker, which includes setting up a "Container" for it to interact with.
+
+:::note
+The build and push usually take the longest on the first deploy. Future deploys
+will go faster by [reusing cached image layers](https://docs.docker.com/build/cache/).
+:::
+
+After you deploy your Worker for the first time, you will need to wait several minutes until
+it is ready to receive requests. Unlike Workers, Containers take a few minutes to be provisioned.
+During this time, requests are sent to the Worker, but calls to the Container will error.
+
+### Check deploy status
+
+After deploying, you can list containers in your accout with the following command:
+
+```sh
+npx wrangler containers list
+```
+
+And see images deployed to the Cloudflare Registry with the following command:
+
+```sh
+npx wrangler containers images list
+```
+
+### Make requests to Containers
+
+Now, open the URL for your worker. It should look something like `https://hello-containers.YOUR_ACCOUNT_NAME.workers.dev`.
+
+If you make requests to the paths `/container/1` or `/container/2`, these requests are routed to specific containers.
+Each different path after "/container/" routes to a unique container.
+
+If you make requests to `/lb`, you will load balanace requests to one of 3 containers chosen at random.
+
+You can confirm this behavior by reading the output of each request.
+
+## Understanding Durable Objects and Containers
+
+Requests are initially handled by the Worker, then passed to container-enabled [Durable Objects](/durable-objects)
+that is defined by the [`Container` class](https://github.com/cloudflare/containers).
+
+You don't have to be familiar with Durable Objects to use Containers, but it may be helpful
+to understand how the basics.
+
+Each Durable Object runs alongside an individual container instance, manages starting and stopping it, and
+can interact with the container through its ports. Containers will likely run near the Worker instance
+requesting them, but not necessarily. See ["How Locations are Selected"](/containers/platform-details/#how-are-locations-are-selected)
+for details.
+
+In a simple app, the Durable Object may just boot the container and proxy requests to it.
+
+In a more complex app, having container-enabled Durable Objects allows you to route requests to individual stateful container
+instances, manage the container lifecycle, pass in custom starting commands and environment variables to containers, run hooks
+on container status changes, and more.
+
+See the [documentation for Durable Object container methods](/durable-objects/api/container/) and the
+[`Container` class repository](https://github.com/cloudflare/containers) for more details.
+
+## Understanding the Code
+
+### Worker Config
+
+First, wrangler config sets up a container and a Durable Object that will run alongside it.
+
+<WranglerConfig>
+
+```toml
+[[containers]]
+max_instances = 10
+name = "hello-containers"
+class_name = "MyContainer"
+image = "./Dockerfile"
+
+[[durable_objects.bindings]]
+name = "MY_CONTAINER"
+class_name = "MyContainer"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["MyContainer"]
+```
+
+</WranglerConfig>
+
+Important points about this config:
+
+- `image` points to a Dockerfile or to a directory containing a Dockerfile.
+- `class_name` must be a Durable Object class name.
+- `max_instances` declares the maximum number of simultaneously running container instances
+  that will run.
+- The Durable Object must use `new_sqlite_classes` not `new_classes`.
+
+### The Container Image
+
+The container image itself has to run on the `linux/amd64` architecture, but aside from that has few limitations.
+
+In this case, it is a simple Golang server that responds to requests on port 8080 using
+the `MESSAGE` environment variable that will be set in the Worker and an [auto-generated
+environment variable](/containers/platform-details/#environment-variables) `CLOUDFLARE_DEPLOYMENT_ID.`
+
+```go
+func handler(w http.ResponseWriter, r *http.Request) {
+	message := os.Getenv("MESSAGE")
+	instanceId := os.Getenv("CLOUDFLARE_DEPLOYMENT_ID")
+
+	fmt.Fprintf(w, "Hi, I'm a container and this is my message: %s, and my instance ID is: %s", message, instanceId)
+}
+```
+
+:::note
+After deploying the example code, feel free to replace the provided image with one of your own.
+:::
+
+### Worker code
+
+#### Container Configuration
+
+First note `MyContainer` which extends the [`Container`](https://github.com/cloudflare/containers) class:
+
+```js
+export class MyContainer extends Container {
+  defaultPort = 8080;
+  sleepAfter = '10s';
+  envVars = {
+    MESSAGE: 'I was passed in via the container class!',
+  };
+
+  override onStart() {
+    console.log('Container successfully started');
+  }
+
+  override onStop() {
+    console.log('Container successfully shut down');
+  }
+
+  override onError(error: unknown) {
+    console.log('Container error:', error);
+  }
+}
+```
+
+This defines basic configuration for the container:
+
+- `defaultPort` sets the port that the `fetch` and `containerFetch` methods will use to communicate with the container. It also blocks
+  requests until the container is listening on this port.
+- `sleepAfter` sets the timeout for the container to sleep after it has been idle for a certain amount of time.
+- `envVars` sets environment variables that will be passed to the container when it starts.
+- `onStart`, `onStop`, and `onError` are hooks that run when the container starts, stops, or errors, respectively.
+
+See the [Container class documentation](/containers/container-package) for more details and configuration options.
+
+#### Routing to Containers
+
+In the Worker's main `fetch` handler, Containers are launched in one of two ways:
+
+- Making requests to `/container/` passes requests to a new container for
+  each path. This is done by spinning up a new Container instance. You may note
+  that the first request to a new path takes longer than subsequent requests, this is
+  because a new container is booting.
+
+  ```js
+  if (pathname.startsWith("/container")) {
+  	let id = env.MY_CONTAINER.idFromName("container");
+  	let container = env.MY_CONTAINER.get(id);
+  	return await container.fetch(request);
+  }
+  ```
+
+- Making requests to `/lb` will load balance requests across several containers.
+  This uses a simple `getRandom` helper method currently, which picks an ID at random
+  from a set number (in this case 3), then routes to that Container instance.
+
+  ```js
+  if (pathname.startsWith("/lb")) {
+  	let container = await getRandom(env.MY_CONTAINER, 3);
+  	return await container.fetch(request);
+  }
+  ```
+
+This allows for multiple ways of using Containers:
+
+- If you simply want to send requests to many stateless and interchangeable containers,
+  you should load balance.
+- If you have stateful services or need individually addressable
+  containers, you should request specific Container instances.
+- If you are running short-lived jobs, want fine-grained control over the container
+  lifecycle, want to parameterize container entrypoint or env vars, or
+  want to chain together multiple container calls, you should request specific
+  Container instances.
+
+:::note
+Currently, routing requests to one of many interchangeable Container instances is accomplished
+with the `getRandom` helper.
+
+This is a temporary solution until first-party support for utilization-aware autoscaling
+and latency-aware load balancing is added to Cloudflare Containers. We plan to add this
+in the coming months.
+:::
+
+## View Containers in your Dashboard
+
+The [Containers Dashboard](http://dash.cloudflare.com/?to=/:account/workers/containers) shows you helpful
+information about your Containers, including:
+
+- Status and Health
+- Metrics
+- Logs
+- A link to associated Workers and Durable Objects
+
+After launching your Worker, navigate to the Containers Dashboard
+by clicking on "Containers" under "Workers & Pages" in your sidebar.
+
+## Next Steps
+
+To do more:
+
+- Modify the image by changing the Dockerfile and calling `wrangler deploy`
+- Review our [examples](/containers/examples) for more inspiration
+- Get [more information on the Containers Beta](/containers/beta-info)

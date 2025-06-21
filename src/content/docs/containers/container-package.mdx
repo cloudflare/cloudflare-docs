@@ -1,0 +1,36 @@
+---
+pcx_content_type: navigation
+title: Container Package
+sidebar:
+  order: 8
+---
+
+When writing code that interacts with a container instance, you can either use a
+Durable Object directly or use the [`Container` module](https://github.com/cloudflare/containers)
+importable from [`@cloudflare/containers`](https://www.npmjs.com/package/@cloudflare/containers).
+
+```javascript
+import { Container } from "@cloudflare/containers";
+
+class MyContainer extends Container {
+	defaultPort = 8080;
+	sleepAfter = "5m";
+}
+```
+
+We recommend using the `Container` class for most use cases.
+
+Install it with `npm install @cloudflare/containers`.
+
+The `Container` class extends `DurableObject` so all Durable Object functionality is available.
+It also provides additional functionality and a nice interface for common container behaviors,
+such as:
+
+- sleeping instances after an inactivity timeout
+- making requests to specific ports
+- running status hooks on startup, stop, or error
+- awaiting specific ports before making requests
+- setting environment variables and secrets
+
+See the [Containers GitHub repo](https://github.com/cloudflare/containers) for more details
+and the complete API.
