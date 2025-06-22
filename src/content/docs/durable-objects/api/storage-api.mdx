@@ -227,13 +227,19 @@ ctx.storage.onNextSessionRestoreBookmark(bookmark);
 
 - <code>put(key <Type text="string" />, value <Type text="any" />, options{" "}<Type text="Object" /> <MetaInfo text="optional" />)</code>: <Type text="Promise" />
 
-  - Stores the value and associates it with the given key. The value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types. Keys are limited to a max size of 2,048 bytes and values are limited to 128 KiB (131,072 bytes).<br/><br/>
+  - Stores the value and associates it with the given key. The value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types.
+
+    The size of keys and values have different limits depending on the Durable Object storage backend you are using. Refer to either:
+    - [SQLite-backed Durable Object limits](/durable-objects/platform/limits/#sqlite-backed-durable-objects-general-limits)
+    - [KV-backed Durable Object limits](/durable-objects/platform/limits/#key-value-backed-durable-objects-general-limits).<br/><br/>
 
 - <code>put(entries <Type text="Object" />, options <Type text="Object" />{" "}<MetaInfo text="optional" />)</code>: <Type text="Promise" />
 
   - Takes an Object and stores each of its keys and values to storage.
   - Each value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types.
-  - Supports up to 128 key-value pairs at a time. Each key is limited to a maximum size of 2,048 bytes and each value is limited to 128 KiB (131,072 bytes).
+  - Supports up to 128 key-value pairs at a time. The size of keys and values have different limits depending on the flavor of Durable Object you are using. Refer to either:
+     - [SQLite-backed Durable Object limits](/durable-objects/platform/limits/#sqlite-backed-durable-objects-general-limits)
+     - [KV-backed Durable Object limits](/durable-objects/platform/limits/#key-value-backed-durable-objects-general-limits)
 
 ### `delete`
 

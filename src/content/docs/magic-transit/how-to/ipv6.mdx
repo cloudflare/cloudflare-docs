@@ -32,7 +32,9 @@ Cloudflare transports IPv6 traffic over an IPv6-over-IPv4 GRE tunnel. Here is ho
 
 ## How to configure IPv6
 
-Since IPv6 works over an existing IPv4 tunnel you will need to choose either an existing IPv4 GRE tunnel or create a new one to test IPv6. All settings that apply to the IPv4 GRE tunnel apply to the IPv6 tunnel as well, and there is only one new field you need to fill out: **IPv6 Interface address**. Here, you enter one of the two IPv6 addresses from the `/127` subnet that Cloudflare automatically allocates for the GRE tunnel. The other, you need to enter in your router.
+Since IPv6 works over an existing IPv4 tunnel you will need to choose either an existing IPv4 GRE tunnel or create a new one to test IPv6. All settings that apply to the IPv4 GRE tunnel apply to the IPv6 tunnel as well, except for any MSS clamping you might need to configure — refer to [MSS clamping recommendations](#mss-clamping-recommendations) below for more information.
+
+To test and set up IPv6 in the Cloudflare dashboard there is only one new field you need to fill out when creating a new IPv4 GRE tunnel or editing an existing one: **IPv6 Interface address**. Here, you enter one of the two IPv6 addresses from the `/127` subnet that Cloudflare automatically allocates for the GRE tunnel. You need to enter the other IPv6 address in your router.
 
 To configure IPv6:
 
@@ -40,4 +42,6 @@ To configure IPv6:
 2. In **IPv6 Interface address** enter the IPv6 address assigned to you by Cloudflare for the Cloudflare side of the GRE tunnel. This address is part of a `/127` subnet that is provided to you by your Cloudflare team.
 3. Use the other IPv6 address you received from your team to configure your router.
 
-For IPv6 traffic over IPv4 tunnels, the same [MSS clamping](/magic-transit/reference/mtu-mss/#mss-clamping) recommendations apply.
+### MSS clamping recommendations
+
+Customers using Magic Transit ingress-only traffic (DSR) should apply a TCP MSS clamp with a maximum of 1,416 bytes to their edge router's transit ports to account for the larger IPv6 header.

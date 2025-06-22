@@ -5,7 +5,7 @@ sidebar:
   order: 10
 ---
 
-import { TabItem, Tabs, Render } from "~/components";
+import { TabItem, Tabs, Render, APIRequest } from "~/components";
 
 A remotely-managed tunnel only requires the tunnel token to run. Anyone with access to the token will be able to run the tunnel.
 
@@ -23,7 +23,12 @@ To get the token for a remotely-managed tunnel:
 </TabItem>
 <TabItem label="API">
 
-Make a `GET` request to the [Cloudflare Tunnel token](/api/resources/zero_trust/subresources/tunnels/subresources/cloudflared/subresources/token/methods/get/) endpoint. The token value can be found in the `result`:
+Make a `GET` request to the [Cloudflare Tunnel token](/api/resources/zero_trust/subresources/tunnels/subresources/cloudflared/subresources/token/methods/get/) endpoint:
+
+<APIRequest
+  path="/accounts/{account_id}/cfd_tunnel/{tunnel_id}/token"
+  method="GET"
+/>
 
 ```sh output
 {
@@ -33,6 +38,8 @@ Make a `GET` request to the [Cloudflare Tunnel token](/api/resources/zero_trust/
   "result": "eyJhIjoiNWFiNGU5Z..."
 }
 ```
+
+The token value can be found in the `result`.
 
 </TabItem>
 
@@ -73,16 +80,15 @@ To rotate a tunnel token:
 		```
 
 	2. Make a `PATCH` request to the [Cloudflare Tunnel](/api/resources/zero_trust/subresources/tunnels/methods/edit/) endpoint:
-		```sh
-		curl --request PATCH \
-		https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/cfd_tunnel/$TUNNEL_ID \
-		--header 'Content-Type: application/json' \
-		--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-		--data '{
-			"name": "Example tunnel",
-			"tunnel_secret": "AQIDBAUGBwgBAgMEBQYHCAECAwQFBgcIAQIDBAUGBwg="
-		}'
-		```
+
+		<APIRequest
+			path="/accounts/{account_id}/cfd_tunnel/{tunnel_id}"
+			method="PATCH"
+			json={{
+				name: "Example tunnel",
+				tunnel_secret: "AQIDBAUGBwgBAgMEBQYHCAECAwQFBgcIAQIDBAUGBwg=",
+			}}
+		/>
 
 		```sh output {18}
 		{
@@ -144,11 +150,11 @@ If your tunnel token is compromised, we recommend taking the following steps:
 
 1. Refresh the token using the dashboard or API. Refer to Step 1 of [Rotate a token without service disruption](#rotate-a-token-without-service-disruption).
 2. [Delete all connections](/api/resources/zero_trust/subresources/tunnels/subresources/connections/methods/delete/) between `cloudflared` and Cloudflare:
-	```sh
-	curl --request DELETE \
-	https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/cfd_tunnel/$TUNNEL_ID/connections \
-	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
-	```
+
+	<APIRequest
+		path="/accounts/{account_id}/cfd_tunnel/{tunnel_id}/connections"
+		method="DELETE"
+	/>
 
 	This will clean up any unauthorized connections and prevent users from connecting to your network.
 

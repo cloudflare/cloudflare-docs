@@ -16,8 +16,6 @@ import {
 	Description,
 	InlineBadge,
 	Icon,
-	DirectoryListing,
-	FileTree,
 	Render,
 	TabItem,
 	Tabs,
@@ -28,9 +26,25 @@ import {
 	Flex,
 	WranglerConfig,
 	Steps,
+	PackageManagers,
 } from "~/components";
 
 You can upload static assets (HTML, CSS, images and other files) as part of your Worker, and Cloudflare will handle caching and serving them to web browsers.
+
+**Start from CLI** - Scaffold a React SPA with an API Worker, and use the [Cloudflare Vite plugin](/workers/vite-plugin/).
+
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args="my-react-app --framework=react"
+/>
+---
+
+**Or just deploy to Cloudflare**
+
+[![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://dash.cloudflare.com/?to=/:account/workers-and-pages/create/deploy-to-workers&repository=https://github.com/cloudflare/templates/tree/main/vite-react-template)
+
+Learn more about supported frameworks on Workers.
 
 <LinkCard
 	title="Supported frameworks"
@@ -87,7 +101,7 @@ By default, if a requested URL matches a file in the static assets directory, th
 
 The default behavior for requests which don't match a static asset can be changed by setting the [`not_found_handling` option under `assets`](/workers/wrangler/configuration/#assets) in your Wrangler configuration file:
 
-- [`not_found_handling = "single-page-application"`](/workers/static-assets/routing/single-page-application/): Sets your application to return a `200 OK` response with `index.html` for requests which don't match a static asset. Use this if you have a Single Page Application.
+- [`not_found_handling = "single-page-application"`](/workers/static-assets/routing/single-page-application/): Sets your application to return a `200 OK` response with `index.html` for requests which don't match a static asset. Use this if you have a Single Page Application. We recommend pairing this with selective routing using `run_worker_first` for [advanced routing control](/workers/static-assets/routing/single-page-application/#advanced-routing-control).
 - [`not_found_handling = "404-page"`](/workers/static-assets/routing/static-site-generation/#custom-404-pages): Sets your application to return a `404 Not Found` response with the nearest `404.html` for requests which don't match a static asset.
 
 <WranglerConfig>
@@ -101,16 +115,25 @@ The default behavior for requests which don't match a static asset can be change
 
 </WranglerConfig>
 
-If you want the Worker code to execute before serving an asset (for example, to protect an asset behind authentication), you can set `run_worker_first = true`.
+If you want the Worker code to execute before serving assets, you can use the `run_worker_first` option. This can be set to `true` to invoke the Worker script for all requests, or configured as an array of route patterns for selective Worker-script-first routing:
+
+**Invoking your Worker script on specific paths:**
 
 <WranglerConfig>
 
-    ```toml
-    	[assets]
-    	directory = "./dist"
-    	run_worker_first = true
-
-    	```
+```json
+{
+	"name": "my-spa-worker",
+	"compatibility_date": "$today",
+	"main": "./src/index.ts",
+	"assets": {
+		"directory": "./dist/",
+		"not_found_handling": "single-page-application",
+		"binding": "ASSETS",
+		"run_worker_first": ["/api/*", "!/api/docs/*"]
+	}
+}
+```
 
 </WranglerConfig>
 
@@ -130,224 +153,11 @@ Cloudflare provides automatic caching for static assets across its network, ensu
 
 ## Try it out
 
-#### 1. Create a new Worker project
-
-```sh
-npm create cloudflare@latest -- my-dynamic-site
-```
-
-**For setup, select the following options**:
-
-- For _What would you like to start with?_, choose `Framework`.
-- For _Which framework would you like to use?_, choose `React`.
-- For _Which language do you want to use?_, choose `TypeScript`.
-- For _Do you want to use git for version control_?, choose `Yes`.
-- For _Do you want to deploy your application_?, choose `No` (we will be making some changes before deploying).
-
-After setting up the project, change the directory by running the following command:
-
-```sh
-cd my-dynamic-site
-```
-
-#### 2. Build project
-
-Run the following command to build the project:
-
-```sh
-npm run build
-```
-
-We should now see a new directory `/dist` in our project, which contains the compiled assets:
-
-<FileTree>
-- package.json
-- index.html
-- ...
-- dist Asset directory
-	- ... Compiled assets
-- src
-	- ...
-- ...
-
-</FileTree>
-
-In the next step, we use a Wrangler configuration file to allow Cloudflare to locate our compiled assets.
-
-#### 3. Add a Wrangler configuration file (`wrangler.toml` or `wrangler.json`)
-
-<WranglerConfig>
-
-    ```toml
-    	name = "my-spa"
-    	compatibility_date = "2025-01-01"
-    	[assets]
-    	directory = "./dist"
-    	```
-
-</WranglerConfig>
-
-**Notice the `[assets]` block**: here we have specified our directory where Cloudflare can find our compiled assets (`./dist`).
-
-Our project structure should now look like this:
-
-<FileTree>
-- package.json
-- index.html
-- **wrangler.toml** Wrangler configuration
-- ...
-- dist Asset directory
-	- ... Compiled assets
-- src
-	- ...
-- ...
-
-</FileTree>
-
-#### 4. Deploy with Wrangler
-
-```sh
-npx wrangler deploy
-```
-
-Our project is now deployed on Workers! But we can take this even further, by adding an **API Worker**.
-
-#### 5. Adjust our Wrangler configuration
-
-Replace the file contents of our Wrangler configuration with the following:
-
-<WranglerConfig>
-
-    ```toml
-    	name = "my-spa"
-    	main = "src/api/index.js"
-    	compatibility_date = "2025-01-01"
-    	[assets]
-    	directory = "./dist"
-    	binding = "ASSETS"
-    	not_found_handling = "single-page-application"
-
-    	```
-
-</WranglerConfig>
-
-We have edited the Wrangler file in the following ways:
-
-- Added `main = "src/api/index.js"` to tell Cloudflare where to find our Worker code.
-- Added an `ASSETS` binding, which our Worker code can use to fetch and serve assets.
-- Enabled routing for Single Page Applications, which ensures that unmatched routes (such as `/dashboard`) serve our `index.html`.
-
-:::note
-
-By default, Cloudflare serves a `404 Not Found` to unmatched routes. To have the frontend handle routing instead of the server, you must enable `not_found_handling = "single-page-application"`.
-
-:::
-
-#### 5. Create a new directory `/api`, and add an `index.js` file
-
-Copy the contents below into the index.js file.
-
-```js {13}
-// api/index.js
-
-export default {
-	async fetch(request, env) {
-		const url = new URL(request.url);
-
-		if (url.pathname.startsWith("/api/")) {
-			return new Response(JSON.stringify({ name: "Cloudflare" }), {
-				headers: { "Content-Type": "application/json" },
-			});
-		}
-
-		return env.ASSETS.fetch(request);
-	},
-};
-```
-
-**Consider what this Worker does:**
-
-- Our Worker receives a HTTP request and extracts the URL.
-- If the request is for an API route (`/api/...`), it returns a JSON response.
-- Otherwise, it serves static assets from our directory (`env.ASSETS`).
-
-#### 6. Call the API from the client
-
-Edit `src/App.tsx` so that it includes an additional button that calls the API, and sets some state. Replace the file contents with the following code:
-
-```js {9,25, 33-47}
-
-// src/App.tsx
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
-
-function App() {
-  const [count, setCount] = useState(0);
-  const [name, setName] = useState("unknown");
-
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button
-          onClick={() => setCount((count) => count + 1)}
-          aria-label="increment"
-        >
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <div className="card">
-        <button
-          onClick={() => {
-            fetch("/api/")
-              .then((res) => res.json() as Promise<{ name: string }>)
-              .then((data) => setName(data.name));
-          }}
-          aria-label="get name"
-        >
-          Name from API is: {name}
-        </button>
-        <p>
-          Edit <code>api/index.ts</code> to change the name
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  );
-}
-
-export default App;
-```
-
-Before deploying again, we need to rebuild our project:
-
-```sh
-npm run build
-```
-
-#### 7. Deploy with Wrangler
-
-```sh
-npx wrangler deploy
-
-```
-
-Now we can see a new button **Name from API**, and if you click the button, we can see our API response as **Cloudflare**!
+<LinkCard
+	title="Vite + React SPA tutorial"
+	href="/workers/vite-plugin/tutorial/"
+	description="Learn how to build and deploy a full-stack Single Page Application with static assets and API routes."
+/>
 
 ## Learn more
 

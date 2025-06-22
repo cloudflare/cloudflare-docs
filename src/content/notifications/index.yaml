@@ -619,3 +619,10 @@ entries:
     associatedProducts: Cloudflare Images
     nextSteps: No action is needed.
     otherFilters: None.
+
+  - name: Connection Maintenance Alert
+    audience: "[Classic CNI](/network-interconnect/classic-cni/) customers who want to be alerted to maintenance events that might affect Classic CNI."
+    availability: Purchase of Cloudflare Network Interconnect (CNI).
+    associatedProducts: Network Interconnect
+    nextSteps: No action is needed.
+    otherFilters: None.

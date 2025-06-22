@@ -72,7 +72,9 @@ If you do not use JavaScript or TypeScript, you will need a [shim](https://devel
 
 Your `MyDurableObject` class will have a constructor with two parameters. The first parameter, `ctx`, passed to the class constructor contains state specific to the Durable Object, including methods for accessing storage. The second parameter, `env`, contains any bindings you have associated with the Worker when you uploaded it.
 
-<TypeScriptExample>
+<Tabs syncKey="workersExamples">
+
+<TypeScriptExample omitTabs={true}>
 ```ts
 export class MyDurableObject extends DurableObject<Env> {
 	constructor(ctx: DurableObjectState, env: Env) {
@@ -83,11 +85,27 @@ export class MyDurableObject extends DurableObject<Env> {
 ```
 </TypeScriptExample>
 
+<TabItem label="Python" icon="seti:python">
+
+```python
+from workers import DurableObject
+
+class MyDurableObject(DurableObject):
+    def __init__(self, ctx, env):
+        super().__init__(ctx, env)
+```
+
+</TabItem>
+
+</Tabs>
+
 Workers communicate with a Durable Object using [remote-procedure call](/workers/runtime-apis/rpc/#_top). Public methods on a Durable Object class are exposed as [RPC methods](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/) to be called by another Worker.
 
 Your file should now look like:
 
-<TypeScriptExample>
+<Tabs syncKey="workersExamples">
+
+<TypeScriptExample omitTabs={true}>
 ```ts
 export class MyDurableObject extends DurableObject<Env> {
 	constructor(ctx: DurableObjectState, env: Env) {
@@ -95,7 +113,7 @@ export class MyDurableObject extends DurableObject<Env> {
 		super(ctx, env)
 	}
 
-	async sayHello():Promise<string> {
+	async sayHello(): Promise<string> {
 		let result = this.ctx.storage.sql
 			.exec("SELECT 'Hello, World!' as greeting")
 			.one();
@@ -104,6 +122,27 @@ export class MyDurableObject extends DurableObject<Env> {
 }
 ```
 </TypeScriptExample>
+
+<TabItem label="Python" icon="seti:python">
+
+```python
+from workers import DurableObject
+
+class MyDurableObject(DurableObject):
+    def __init__(self, ctx, env):
+        super().__init__(ctx, env)
+
+    async def say_hello(self):
+        result = self.ctx.storage.sql \
+            .exec("SELECT 'Hello, World!' as greeting") \
+            .one()
+
+        return result.greeting
+```
+
+</TabItem>
+
+</Tabs>
 
 In the code above, you have:
 
@@ -124,7 +163,10 @@ A Worker is used to [access Durable Objects](/durable-objects/best-practices/cre
 
 To communicate with a Durable Object, the Worker's fetch handler should look like the following:
 
-<TypeScriptExample>
+
+<Tabs syncKey="workersExamples">
+
+<TypeScriptExample omitTabs={true}>
 ```ts
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
@@ -139,6 +181,25 @@ export default {
 } satisfies ExportedHandler<Env>;
 ```
 </TypeScriptExample>
+
+<TabItem label="Python" icon="seti:python">
+
+```python
+from workers import handler, Response
+from urllib.parse import urlparse
+
+@handler
+async def on_fetch(request, env, ctx):
+    url = urlparse(request.url)
+    id = env.MY_DURABLE_OBJECT.idFromName(url.path)
+    stub = env.MY_DURABLE_OBJECT.get(id)
+    greeting = await stub.say_hello()
+    return Response(greeting)
+```
+
+</TabItem>
+
+</Tabs>
 
 In the code above, you have:
 
@@ -217,7 +278,10 @@ Preview your Durable Object Worker at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.de
 
 Your final code should look like this:
 
-<TypeScriptExample>
+
+<Tabs syncKey="workersExamples">
+
+<TypeScriptExample omitTabs={true}>
 ```ts title="index.ts"
 import { DurableObject } from "cloudflare:workers";
 export class MyDurableObject extends DurableObject<Env> {
@@ -246,6 +310,36 @@ export default {
 } satisfies ExportedHandler<Env>;
 ```
 </TypeScriptExample>
+
+<TabItem label="Python" icon="seti:python">
+
+```python
+from workers import DurableObject, handler, Response
+from urllib.parse import urlparse
+
+class MyDurableObject(DurableObject):
+    def __init__(self, ctx, env):
+        super().__init__(ctx, env)
+
+    async def say_hello(self):
+        result = self.ctx.storage.sql \
+            .exec("SELECT 'Hello, World!' as greeting") \
+            .one()
+
+        return result.greeting
+
+@handler
+async def on_fetch(request, env, ctx):
+    url = urlparse(request.url)
+    id = env.MY_DURABLE_OBJECT.idFromName(url.path)
+    stub = env.MY_DURABLE_OBJECT.get(id)
+    greeting = await stub.say_hello()
+    return Response(greeting)
+```
+
+</TabItem>
+
+</Tabs>
 
 By finishing this tutorial, you have:
 

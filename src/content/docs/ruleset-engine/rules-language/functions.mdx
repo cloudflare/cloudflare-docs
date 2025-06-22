@@ -102,11 +102,13 @@ You can only use the `cidr6()` function in [custom rules](/waf/custom-rules/) an
 ### `concat`
 
 {/* prettier-ignore */}
-<code>concat(<Type text="String | Integer | Bytes | Array elements" />)</code>: <Type text="String" />
+<code>concat(<Type text="String | Bytes | Array" />)</code>: <Type text="String | Array" />
 
-Takes a comma-separated list of values. Concatenates the argument values into a single String.
+Takes a comma-separated list of values. Concatenates the argument values into a single String or array. 
 
-For example, `concat("String1", " ", "String", 2)` will return `"String1 String2"`.
+The return type depends on the type of input arguments. For example, if you concatenate arrays, the function will return an array.
+
+For example, `concat("String1", " ", "String", "2")` will return `"String1 String2"`.
 
 ### `decode_base64`
 

@@ -3,7 +3,7 @@ params:
   - protocol
 ---
 
-import { Tabs, TabItem, Render, Details } from "~/components";
+import { Tabs, TabItem, Render, Details, APIRequest} from "~/components";
 
 A target represents a single resource in your infrastructure (such as a server, Kubernetes cluster, database, or container) that users will connect to through Cloudflare.
 
@@ -34,31 +34,25 @@ If the target IP does not appear in the dropdown, go to **Networks** > **Routes*
 </TabItem>
 <TabItem label="API">
 
-1. [Create an API token](/fundamentals/api/get-started/create-token/) with the following permissions:
+Make a `POST` request to the [Infrastructure Access Targets](/api/resources/zero_trust/subresources/access/subresources/infrastructure/subresources/targets/methods/create/) endpoint:
 
-		| Type    | Item             | Permission |
-		| ------- | ---------------- | ---------- |
-		| Account | Zero Trust       | Edit       |
-
-2. Make a `POST` request to the [Infrastructure Access Targets](/api/resources/zero_trust/subresources/access/subresources/infrastructure/subresources/targets/methods/create/) endpoint:
-
-		```sh
-		curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/infrastructure/targets \
-		--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-		--data '{
-			"hostname": "infra-access-target",
-			"ip": {
-				"ipv4": {
-					"ip_addr": "187.26.29.249",
-					"virtual_network_id": "c77b744e-acc8-428f-9257-6878c046ed55"
-				},
-				"ipv6": {
-					"ip_addr": "64c0:64e8:f0b4:8dbf:7104:72b0:ec8f:f5e0",
-					"virtual_network_id": "c77b744e-acc8-428f-9257-6878c046ed55"
-				}
-			}
-		}'
-		```
+<APIRequest
+  path="/accounts/{account_id}/infrastructure/targets"
+  method="POST"
+  json={{
+    hostname: "infra-access-target",
+    ip: {
+      ipv4: {
+        ip_addr: "187.26.29.249",
+        virtual_network_id: "c77b744e-acc8-428f-9257-6878c046ed55",
+      },
+      ipv6: {
+        ip_addr: "64c0:64e8:f0b4:8dbf:7104:72b0:ec8f:f5e0",
+        virtual_network_id: "c77b744e-acc8-428f-9257-6878c046ed55",
+      },
+    },
+  }}
+/>
 
 </TabItem>
 <TabItem label="Terraform">

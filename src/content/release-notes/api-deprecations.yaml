@@ -198,7 +198,7 @@ entries:
     description: |-
       Deprecation date: June 15, 2025
 
-      The Firewall Rules API and the Filters API are deprecated, since Firewall Rules was deprecated in favor of [WAF custom rules](/waf/custom-rules/). Refer to [Firewall Rules to WAF custom rules migration](/waf/reference/migration-guides/firewall-rules-to-custom-rules/) for more information about this change.
+      The Firewall Rules API and the Filters API are deprecated, since Firewall Rules was deprecated in favor of [WAF custom rules](/waf/custom-rules/). Refer to [Firewall Rules upgrade](/waf/reference/legacy/firewall-rules-upgrade/) for more information about this change.
 
       Deprecated APIs:
 
@@ -226,7 +226,7 @@ entries:
     description: |-
       Deprecation date: June 15, 2025
 
-      The APIs for managing WAF managed rules (previous version) — namely for managing packages, rule groups, rules, and overrides — are deprecated in favor of [WAF Managed Rules](/waf/managed-rules/). Refer to [WAF Managed Rules migration](/waf/reference/migration-guides/waf-managed-rules-migration/) for more information about this change.
+      The APIs for managing WAF managed rules (previous version) — namely for managing packages, rule groups, rules, and overrides — are deprecated in favor of using the [Rulesets API](/ruleset-engine/rulesets-api/) for managing the new version of [WAF Managed Rules](/waf/managed-rules/). Refer to [WAF Managed Rules upgrade](/waf/reference/legacy/old-waf-managed-rules/upgrade/) for more information about this change.
 
       Deprecated APIs:
 
@@ -252,7 +252,7 @@ entries:
     description: |-
       Deprecation date: June 15, 2025
 
-      The Rate Limiting API is deprecated, since the previous version of rate limiting rules was deprecated in favor of the new [rate limiting rules](/waf/rate-limiting-rules/) based on the Ruleset Engine. Refer to [Rate limiting (previous version) deprecation notice](/waf/reference/migration-guides/old-rate-limiting-deprecation/) for more information about this change.
+      The Rate Limiting API is deprecated, in favor of using the [Rulesets API](/ruleset-engine/rulesets-api/) for managing the new [rate limiting rules](/waf/rate-limiting-rules/). Refer to [Rate limiting (previous version) upgrade](/waf/reference/legacy/old-rate-limiting/upgrade/) for more information about this change.
 
       Deprecated API:
 

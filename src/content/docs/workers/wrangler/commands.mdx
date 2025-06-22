@@ -244,7 +244,7 @@ None of the options for this command are required. Many of these options can be 
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
-`wrangler dev` is a way to [locally test](/workers/local-development/) your Worker while developing. With `wrangler dev` running, send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see `console.log` messages and exceptions appearing in your terminal.
+`wrangler dev` is a way to [locally test](/workers/development-testing/) your Worker while developing. With `wrangler dev` running, send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see `console.log` messages and exceptions appearing in your terminal.
 
 ---
 
@@ -491,7 +491,7 @@ Finished processing secrets JSON file:
 With the release of [Secrets Store](/secrets-store/) in open beta, you can use the following commands to manage your account secrets.
 
 :::note[`--remote` option]
-In order to interact with Secrets Store in production, you should append `--remote` to your command. Without it, your command will default to [local development mode](/workers/local-development/).
+In order to interact with Secrets Store in production, you should append `--remote` to your command. Without it, your command will default to [local development mode](/workers/development-testing/).
 :::
 
 ### `create`

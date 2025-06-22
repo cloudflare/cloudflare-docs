@@ -6,7 +6,7 @@ sidebar:
   label: SSH with Access for Infrastructure
 ---
 
-import { Tabs, TabItem, Badge, Render } from "~/components";
+import { Tabs, TabItem, Badge, Render, APIRequest } from "~/components";
 
 [Access for Infrastructure](/cloudflare-one/applications/non-http/infrastructure-apps/) provides granular control over how users can connect to your SSH servers. This feature uses the same deployment model as [WARP-to-Tunnel](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-warp-to-tunnel/) but unlocks more policy options and command logging functionality.
 
@@ -121,13 +121,13 @@ Cloudflare will stop logging SSH commands to your targets, as well as any comman
 
 To delete the SSH encryption public key using the [API](/api/resources/zero_trust/subresources/gateway/subresources/audit_ssh_settings/methods/update/):
 
-```sh
-curl --request PUT https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/audit_ssh_settings \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "public_key": ""
-}'
-```
+<APIRequest
+  path="/accounts/{account_id}/gateway/audit_ssh_settings"
+  method="PUT"
+  json={{
+    public_key: "",
+  }}
+/>
 
 </TabItem>
 </Tabs>
