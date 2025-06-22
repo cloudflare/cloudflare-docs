@@ -188,6 +188,7 @@
 /analytics/graphql-api/tutorials/build-your-own-analytics/ /analytics/graphql-api/tutorials/ 301
 /analytics/graphql-api/tutorials/export-graphql-to-csv/ /analytics/graphql-api/tutorials/ 301
 /analytics/analytics-integrations/google-cloud/ /analytics/analytics-integrations/ 301
+/analytics/dashboards/ /log-explorer/custom-dashboards/ 301
 
 # email-security
 /email-security/reporting/search/detection-search/ /email-security/reporting/search/ 301
@@ -211,9 +212,14 @@
 /api-shield/security/sequential-abuse-detection/ /api-shield/security/sequence-analytics/ 301
 /api-shield/security/bola-attack-detection/ /api-shield/security/bola-vulnerability-detection/ 301
 /api-shield/management-and-monitoring/api-routing/configure/ /api-shield/management-and-monitoring/api-routing/ 301
+/api-shield/security/graphql-protection/configure/ /api-shield/security/graphql-protection/api/ 301
+/api-shield/security/jwt-validation/configure/ /api-shield/security/jwt-validation/api/ 301
+/api-shield/security/schema-validation/configure/ /api-shield/security/schema-validation/api/ 301
+/api-shield/security/sequence-mitigation/configure/ /api-shield/security/sequence-mitigation/api/ 301
 
 #autorag
 /autorag/usage/recipes/ /autorag/how-to/ 301
+/autorag/configuration/metadata-filtering/ /autorag/configuration/metadata/ 301
 
 # bots
 /bots/about/plans/ /bots/plans/ 301
@@ -816,7 +822,7 @@
 /learning-paths/get-started/ /learning-paths/get-started/concepts/ 301
 /learning-paths/load-balancing/ /learning-paths/load-balancing/concepts/ 301
 /learning-paths/mtls/ /learning-paths/mtls/concepts/ 301
-/learning-paths/personal-website/ /learning-paths/personal-website/concepts/ 301
+/learning-paths/personal-website/ /learning-paths/ 301
 /learning-paths/prevent-ddos-attacks/ /learning-paths/prevent-ddos-attacks/concepts/ 301
 /learning-paths/replace-vpn/ /learning-paths/replace-vpn/concepts/ 301
 /learning-paths/secure-internet-traffic/ /learning-paths/secure-internet-traffic/concepts/ 301
@@ -933,6 +939,7 @@
 /logs/reference/logpush-api-configuration/filters/ /logs/reference/filters/ 301
 # Non-slashed version is being used in the Cloudflare dashboard
 /logs/reference/logpush-api-configuration/examples/example-logpush-curl/ /logs/tutorials/examples/example-logpush-curl/ 301
+/logs/log-explorer/ /log-explorer/log-search/ 301
 
 # magic-firewall
 /magic-firewall/reference/examples/ /magic-firewall/how-to/add-rules/ 301
@@ -999,6 +1006,7 @@
 /notifications/create-notifications/configure-webhooks/ /notifications/get-started/configure-webhooks/ 301
 /notifications/edit-notifications/edit-webhook/ /notifications/get-started/configure-webhooks/ 301
 /fundamentals/notifications/notification-available/ /notifications/notification-available/ 301
+/notifications/changelog/ /changelog/ 301
 
 # pages
 /pages/getting-started/ /pages/get-started/ 301
@@ -1532,6 +1540,11 @@
 /workers/about/tips/debugging/ /workers/observability/ 301
 /workers/testing/debugging-tools/ /workers/observability/dev-tools/ 301
 /workers/testing/local-development/ /workers/local-development/ 301
+/workers/local-development/ /workers/development-testing/#local-development 301
+/workers/local-development/bindings-per-env/ /workers/development-testing/bindings-per-env/ 301
+/workers/local-development/environment-variables/ /workers/development-testing/environment-variables/ 301
+/workers/local-development/local-data/ /workers/development-testing/local-data/ 301
+/workers/local-development/remote-data/ /workers/development-testing/#remote-bindings 301
 /workers/about/using-cache/ /workers/reference/how-the-cache-works/ 301
 /workers/learning/how-the-cache-works/ /workers/reference/how-the-cache-works/ 301
 /workers/api/ /api/resources/workers/subresources/scripts/methods/list/ 301

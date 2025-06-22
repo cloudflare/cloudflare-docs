@@ -7,7 +7,7 @@ sidebar:
 
 import { FileTree } from "~/components"
 
-AutoRAG supports multitenancy by letting you segment content by tenant, so each user, customer, or workspace can only access their own data. This is typically done by organizing documents into per-tenant folders and applying [metadata filters](/autorag/configuration/metadata-filtering/) at query time.
+AutoRAG supports multitenancy by letting you segment content by tenant, so each user, customer, or workspace can only access their own data. This is typically done by organizing documents into per-tenant folders and applying [metadata filters](/autorag/configuration/metadata/) at query time.
 
 ## 1. Organize Content by Tenant
 
@@ -42,7 +42,7 @@ const response = await env.AI.autorag("my-autorag").search({
 });
 ```
 
-To filter across multiple folders, or to add date-based filtering, you can use a compound filter with an array of [comparison filters](/autorag/configuration/metadata-filtering/#compound-filter).
+To filter across multiple folders, or to add date-based filtering, you can use a compound filter with an array of [comparison filters](/autorag/configuration/metadata/#compound-filter).
 
 ## Tip: Use "Starts with" filter
 
@@ -56,7 +56,7 @@ While an `eq` filter targets files at the specific folder, you'll often want to 
       - contract-1.pdf
 </FileTree>
 
-To achieve this [starts with](/autorag/configuration/metadata-filtering/#starts-with-filter-for-folders) behavior, use a compound filter like:
+To achieve this [starts with](/autorag/configuration/metadata/#starts-with-filter-for-folders) behavior, use a compound filter like:
 
 ```js
 filters: {

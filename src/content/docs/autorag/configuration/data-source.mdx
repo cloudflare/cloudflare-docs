@@ -16,7 +16,7 @@ AutoRAG will automatically scan and process supported files stored in that bucke
 AutoRAG has different file size limits depending on the file type:
 
 - **Plain text files:** Up to **4 MB**
-- **Rich format files:** Up to **1 MB**
+- **Rich format files:** Up to **4 MB**
 
 Files that exceed these limits will not be indexed and will show up in the error logs.
 
@@ -30,7 +30,7 @@ AutoRAG supports the following plain text file types:
 
 | Format     | File extensions                                                                | Mime Type                                                             |
 | ---------- | ------------------------------------------------------------------------------ | --------------------------------------------------------------------- |
-| Text       | `.txt`                                                                         | `text/plain`                                                          |
+| Text       | `.txt`, `.rst`                                                                 | `text/plain`                                                          |
 | Log        | `.log`                                                                         | `text/plain`                                                          |
 | Config     | `.ini`, `.conf`, `.env`, `.properties`, `.gitignore`, `.editorconfig`, `.toml` | `text/plain`, `text/toml`                                             |
 | Markdown   | `.markdown`, `.md`, `.mdx`                                                     | `text/markdown`                                                       |

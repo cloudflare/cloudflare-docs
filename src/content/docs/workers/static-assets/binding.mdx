@@ -79,6 +79,27 @@ run_worker_first = true
 
 </WranglerConfig>
 
+You can also specify `run_worker_first` as an array of route patterns to selectively run the Worker script first only for specific routes. This is often paired with the [`not_found_handling = "single-page-application"` setting](/workers/static-assets/routing/single-page-application/#advanced-routing-control):
+
+<WranglerConfig>
+
+```json
+{
+	"name": "my-spa-worker",
+	"compatibility_date": "$today",
+	"main": "./src/index.ts",
+	"assets": {
+		"directory": "./dist/",
+		"not_found_handling": "single-page-application",
+		"binding": "ASSETS",
+		"run_worker_first": ["/api/*", "!/api/docs/*"]
+	}
+}
+```
+
+</WranglerConfig>
+The array supports glob patterns with `*` for deep matching and exception patterns with `!` prefix. In this configuration, requests to `/api/*` routes will invoke the Worker script first, except for `/api/docs/*` which will follow the default asset-first routing behavior.
+
 ## `binding`
 
 Configuring the optional [binding](/workers/runtime-apis/bindings) gives you access to the collection of assets from within your Worker script.

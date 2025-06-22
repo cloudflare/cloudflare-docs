@@ -2,16 +2,15 @@
 pcx_content_type: reference
 title: Verified bot categories
 sidebar:
-    order: 3
-    label: Categories
-
+  order: 3
+  label: Categories
 ---
 
 You can segment your verified bot traffic by its type and purpose by adding the Verified Bot Categories field `cf.verified_bot_category` as a filter criteria in [WAF Custom rules](/waf/custom-rules/), [Advanced Rate Limiting](/waf/rate-limiting-rules/), and Late Transform rules.
 
 :::note
 
-The Verified Bot Categories field is not compatible with legacy Firewall rules. 
+The Verified Bot Categories field is not compatible with legacy Firewall rules.
 :::
 
 ## Categories
@@ -24,8 +23,8 @@ The Verified Bot Categories field is not compatible with legacy Firewall rules.
 | Aggregators                | `Aggregator`                 | Pinterest, Indeed Jobsbot                                               |
 | AI Assistant               | `AI Assistant`               | Perplexity-User, DuckAssistBot                                          |
 | AI Crawler                 | `AI Crawler`                 | Google Bard, ChatGPT bot                                                |
-| AI Search                  | `AI Search`                  | SearchGPT                                                               |
-| Archiver									 | `Archiver`										| Internet Archive, CommonCrawl                                           |
+| AI Search                  | `AI Search`                  | OAI-SearchBot                                                           |
+| Archiver                   | `Archiver`                   | Internet Archive, CommonCrawl                                           |
 | Feed fetcher               | `Feed Fetcher`               | RSS or Podcast feed updaters                                            |
 | Monitoring or analytics    | `Monitoring & Analytics`     | Uptime Monitors                                                         |
 | Page preview               | `Page Preview`               | Facebook, Slack, Twitter, or Discord Link Preview tools                 |

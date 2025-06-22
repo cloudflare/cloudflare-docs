@@ -9,9 +9,15 @@ import {
 } from "mdast-util-mdx";
 import { visit } from "unist-util-visit";
 
-let usages: Record<string, { count: number; pages: Set<string> }>;
+type Usage = { count: number; pages: Set<string> };
 
-export const getComponentsUsage = async () => {
+let usages: Record<string, Usage>;
+
+export function getComponentsUsage(): Promise<Record<string, Usage>>;
+export function getComponentsUsage(component: string): Promise<Usage>;
+export async function getComponentsUsage(
+	component?: string,
+): Promise<Usage | Record<string, Usage>> {
 	if (!usages) {
 		usages = {};
 
@@ -48,5 +54,9 @@ export const getComponentsUsage = async () => {
 		}
 	}
 
+	if (component) {
+		return usages[component] || { count: 0, pages: new Set() };
+	}
+
 	return usages;
-};
+}

@@ -199,3 +199,25 @@ curl http://localhost:8600
 ```sh output
 # -> user worker got "intercepted a request for customer-1 by the outbound" from fetch
 ```
+
+## Remote dispatch namespaces
+
+You can configure dispatch namespace bindings to connect to remote dispatch namespaces during local development by setting [`experimental_remote = true`](/workers/development-testing/#remote-bindings):
+
+<WranglerConfig>
+```jsonc title="wrangler.jsonc"
+{
+  "dispatch_namespaces": [
+    {
+      "binding": "DISPATCH_NAMESPACE",
+      "namespace": "testing",
+      "experimental_remote": true
+		}
+  ]
+}
+```
+</WranglerConfig>
+
+This allows you to run your [dynamic dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dynamic-dispatch-worker) locally, while connecting it to your remote dispatch namespace binding. You can then test changes to your core dispatching logic against real, deployed [user Workers](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#user-workers).
+
+For more information about remote bindings during local development, refer to [remote bindings documentation](/workers/development-testing/#remote-bindings).
