@@ -25,7 +25,7 @@ The [HTTP Event Collector (HEC)](https://dev.splunk.com/enterprise/docs/devtools
    - **Source Type** - For example, `cloudflare:json`. If you are using the [Cloudflare App for Splunk](https://splunkbase.splunk.com/app/4501), refer to the appropriate source type for the corresponding datasets under the **Details** section. For instance, for Zero Trust Access requests logs, the source type is `cloudflare:access`.
    - **Use insecure skip verify option** (not recommended).
 
-When you are done entering the destination details, click **Continue**.
+When you are done entering the destination details, select **Continue**.
 
 7. Select the dataset to push to the storage service.
 
@@ -41,7 +41,7 @@ When you are done entering the destination details, click **Continue**.
    - Select a [sampling rate](/logs/get-started/api-configuration/#sampling-rate) for your logs or push a randomly-sampled percentage of logs.
    - Enable redaction for `CVE-2021-44228`. This option will replace every occurrence of `${` with `x{`.
 
-10. Click **Submit** once you are done configuring your logpush job.
+10. Select **Submit** once you are done configuring your logpush job.
 
 ## Manage via API
 
@@ -64,7 +64,6 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 - **destination_conf** - A log destination consisting of an endpoint URL, channel id, insecure-skip-verify flag, source type, authorization header in the string format below.
 
   - **\<SPLUNK_ENDPOINT_URL>**: The Splunk raw HTTP Event Collector URL with port. For example: `splunk.cf-analytics.com:8088/services/collector/raw`.
-    - Currently, HEC network port has to be configured to either `443` or `8088`.
     - Cloudflare expects the Splunk endpoint to be `/services/collector/raw` while configuring and setting up the Logpush job.
     - Ensure you have enabled HEC in Splunk. Refer to [Splunk Analytics Integrations](/analytics/analytics-integrations/splunk/) for information on how to set up HEC in Splunk.
     - You may notice an API request failed with a 504 error, when adding an incorrect URL. Splunk Cloud endpoint URL usually contains `http-inputs-` or similar text before the hostname.
