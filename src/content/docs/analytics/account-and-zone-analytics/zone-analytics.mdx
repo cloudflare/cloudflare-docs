@@ -43,11 +43,11 @@ This section outlines the metrics available under each Analytics app tab. Before
 
 Below is a summary of each Analytics app tab.
 
-### Traffic
+### HTTP Traffic
 
 #### Free plan
 
-These metrics include legitimate user requests as well as crawlers and threats. The Traffic tab features the following panels: 
+These metrics include legitimate user requests as well as crawlers and threats. The HTTP Traffic tab features the following panels: 
 
 * **Web Traffic** - Displays metrics for *Requests*, *Bandwidth*, and *Unique Visitors*. If you are using Cloudflare Workers, subrequests data will not be visible in zone Traffic Analytics. Instead, you can find subrequests analytics under the **Workers & Pages** tab in the **Overview** section. Refer to [Worker Analytics](/analytics/account-and-zone-analytics/analytics-with-workers/#worker-analytics) for more information.
 * **Web Traffic Requests by Country** - Is an interactive map that breaks down the number of requests by country.  This panel also includes a data table for **Top Traffic Countries / Regions** that display the countries with the most number of requests (up to five, if the data exists).
@@ -56,19 +56,46 @@ These metrics include legitimate user requests as well as crawlers and threats. 
 
 :::note
 
-Privacy-first Web Traffic Analytics are available on the Pro, Business,
+Privacy-first HTTP Traffic Analytics are available on the Pro, Business,
 and Enterprise plans.
 :::
 
-Analytics are based on Cloudflare's edge logs, with no need for third party scripts or trackers. The Traffic tab features the following metrics:
+Analytics are based on Cloudflare's edge logs, with no need for third party scripts or trackers. The HTTP Traffic tab features the following metrics:
 
-* **Requests** - An HTTP request. A typical page view requires many requests. If you are using Cloudflare Workers, subrequests data will not be visible in zone Traffic Analytics. Instead, you can find subrequests analytics under the **Workers & Pages** tab in the **Overview** section. Refer to [Worker Analytics](/analytics/account-and-zone-analytics/analytics-with-workers/#worker-analytics) for more information.
+* **Requests** - An HTTP request. A typical page view requires many requests. If you are using Cloudflare Workers, subrequests data will not be visible in zone HTTP Traffic Analytics. Instead, you can find subrequests analytics under the **Workers & Pages** tab in the **Overview** section. Refer to [Worker Analytics](/analytics/account-and-zone-analytics/analytics-with-workers/#worker-analytics) for more information.
 * **Data Transfer** - Total HTTP data transferred in responses.
 * <a id="page-views" /> **Page views** - A page view is defined as a successful HTTP response with a content-type of HTML.
 * **Visits** - A visit is defined as a [page view](#page-views) that originated from a different website, or direct link. Cloudflare checks where the HTTP referer does not match the hostname. One visit can consist of multiple page views.
 * **API Requests** - An HTTP request for API data.
 
-To receive more detailed metrics, **Add filter**. You can also filter each metric by **Referer**, **Host**, **Country**, **Path**, **Status code**, **Origin status code**, **Browser**, **Operating system**, or **Device type**. 
+To receive more detailed metrics, **Add filter**. You can also filter each metric by:
+
+* Cache status
+* Data center
+* Source ASN
+* Country
+* Source device type
+* Source IP
+* Referer host
+* Host
+* HTTP method
+* HTTP version
+* Path
+* Query string
+* Content type
+* Edge status code
+* Origin status code
+* Security Action
+* Security Source
+* Source browser
+* Source operating system
+* Source user agent
+* X-Requested-With header
+
+In addition, the following filters are available to Enterprise [Bot Management](/bots/get-started/bot-management/) customers only.
+
+* Source JA4 fingerprint
+* Source JA3 fingerprint
 
 To change the time period, use the dropdown menu on the right-hand side above the graph. You can also drag to zoom on the graph.
 

@@ -1,6 +1,6 @@
 ---
 pcx_content_type: navigation
-title: Digital Experience Monitoring
+title: DEX
 sidebar:
   order: 1
 ---
@@ -9,6 +9,29 @@ import { DirectoryListing, Render } from "~/components";
 
 <Render file="survey" />
 
-Digital Experience Monitoring (DEX) provides visibility into device, network, and application performance across your Zero Trust organization. This information enables you to understand the state of your WARP client deployment and quickly resolve issues impacting end-user productivity.
+Digital Experience Monitoring (DEX) provides visibility into device, network, and application performance across your Zero Trust organization.
+
+With DEX, you can monitor the state of your [WARP client](/cloudflare-one/connections/connect-devices/warp/) deployment and resolve issues impacting end-user productivity. DEX is designed for IT and security teams who need to proactively monitor and troubleshoot device and network health across distributed environments. DEX is available on all Cloudflare Zero Trust and SASE plans.
+
+Use DEX to troubleshoot other Zero Trust features:
+
+- Test connectivity to a [SaaS application secured with Access](/cloudflare-one/applications/configure-apps/saas-apps/).
+- Verify that a website routed through [Gateway](/cloudflare-one/policies/gateway/) is reachable from user devices.
+- Confirm that users can successfully reach internal resources after configuring a [Tunnel](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/).
+
+### Get started
+
+To start using DEX for device, network, and application monitoring:
+
+1. [Create a Zero Trust organization](/cloudflare-one/setup/#create-a-zero-trust-organization).
+2. [Install the WARP client](/cloudflare-one/connections/connect-devices/warp/) and sign in to register your device to the organization.
+3. Create [tests](/cloudflare-one/insights/dex/tests/) to verify device connectivity to applications and networks.
+4. [Monitor](/cloudflare-one/insights/dex/monitoring/) device and network health across your fleet using real-time and historical metrics.
+5. Run [remote captures](/cloudflare-one/insights/dex/remote-captures/) to collect diagnostic logs and packet captures from user devices.
+6. Set up [notifications](/cloudflare-one/insights/dex/notifications/) to get alerts when degraded connectivity or application performance is detected.
+
+### Directory
+
+Review all available documentation for DEX capabilities.
 
 <DirectoryListing />

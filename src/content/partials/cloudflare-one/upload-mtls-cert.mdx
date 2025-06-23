@@ -4,21 +4,20 @@ params:
   - key?
 ---
 
-import { Markdown } from "~/components";
+import { Markdown, APIRequest } from "~/components";
 
 Use the [Upload mTLS certificate endpoint](/api/resources/mtls_certificates/methods/create/) to upload the certificate and private key to Cloudflare. The certificate must be a {props.cert}, formatted as a single string with `\n` replacing the line breaks. {props.key}
 
-```sh
-curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/mtls_certificates" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---header "Content-Type: application/json" \
---data '{
-  "name": "example_ca_cert",
-  "certificates": "-----BEGIN CERTIFICATE-----\nXXXXX\n-----END CERTIFICATE-----",
-  "private_key": "-----BEGIN PRIVATE KEY-----\nXXXXX\n-----END PRIVATE KEY-----",
-  "ca": true
-}'
-```
+<APIRequest
+  path="/accounts/{account_id}/mtls_certificates"
+  method="POST"
+  json={{
+    name: "example_ca_cert",
+    certificates: "-----BEGIN CERTIFICATE-----\nXXXXX\n-----END CERTIFICATE-----",
+    private_key: "-----BEGIN PRIVATE KEY-----\nXXXXX\n-----END PRIVATE KEY-----",
+    ca: true,
+  }}
+/>
 
 The response will return a UUID for the certificate. For example:
 

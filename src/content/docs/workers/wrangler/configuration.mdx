@@ -504,7 +504,7 @@ To bind D1 databases to your Worker, assign an array of the below object to the 
 
 :::note
 
-When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production database. Refer to [Local development and testing](/workers/local-development/) for more details.
+When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production database. Refer to [Local development and testing](/workers/development-testing/) for more details.
 
 :::
 
@@ -694,8 +694,8 @@ To bind Images to your Worker, assign an array of the below object to the `image
 ```jsonc
 {
 	"images": {
-		"binding": "IMAGES" // i.e. available in your Worker on env.IMAGES
-	}
+		"binding": "IMAGES", // i.e. available in your Worker on env.IMAGES
+	},
 }
 ```
 
@@ -721,7 +721,7 @@ To bind KV namespaces to your Worker, assign an array of the below object to the
 
 :::note
 
-When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production namespace. Refer to [Local development and testing](/workers/local-development/) for more details.
+When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production namespace. Refer to [Local development and testing](/workers/development-testing/) for more details.
 
 :::
 
@@ -846,7 +846,7 @@ To bind R2 buckets to your Worker, assign an array of the below object to the `r
 
 :::note
 
-When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production bucket. Refer to [Local development and testing](/workers/local-development/) for more details.
+When using Wrangler in the default local development mode, files will be written to local storage instead of the preview or production bucket. Refer to [Local development and testing](/workers/development-testing/) for more details.
 
 :::
 
@@ -1027,9 +1027,9 @@ The following options are available under the `assets` key.
 
   - The binding name used to refer to the assets. Optional, and only useful when a Worker script is set with `main`.
 
-- `run_worker_first` <Type text="boolean" /> <MetaInfo text="optional, defaults to false" />
+- `run_worker_first` <Type text="boolean | string[]" /> <MetaInfo text="optional, defaults to false" />
 
-  - Controls whether static assets are fetched directly, or a Worker script is invoked. Learn more about fetching assets when using [`run_worker_first`](/workers/static-assets/routing/worker-script/#run-your-worker-script-first).
+  - Controls whether static assets are fetched directly, or a Worker script is invoked. Can be a boolean (`true`/`false`) or an array of route pattern strings with support for glob patterns (`*`) and exception patterns (`!` prefix). Patterns must begin with `/` or `!/`. Learn more about fetching assets when using [`run_worker_first`](/workers/static-assets/routing/worker-script/#run-your-worker-script-first).
 
 - `html_handling`: <Type text={'"auto-trailing-slash" | "force-trailing-slash" | "drop-trailing-slash" | "none"'} /> <MetaInfo text={'optional, defaults to "auto-trailing-slash"'} />
 
@@ -1045,6 +1045,22 @@ Example:
 
 ```toml title="wrangler.toml"
 assets = { directory = "./public", binding = "ASSETS", html_handling = "force-trailing-slash", not_found_handling = "404-page" }
+```
+
+</WranglerConfig>
+
+You can also configure `run_worker_first` with an array of route patterns:
+
+<WranglerConfig>
+
+```toml title="wrangler.toml"
+[assets]
+directory = "./public"
+binding = "ASSETS"
+run_worker_first = [
+  "/api/*",        # API calls go to Worker first
+  "!/api/docs/*"   # EXCEPTION: For /api/docs/*, try static assets first
+]
 ```
 
 </WranglerConfig>
