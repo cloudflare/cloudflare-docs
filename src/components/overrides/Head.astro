@@ -25,6 +25,8 @@ const shouldNoIndex =
 
 const shouldChatbotDeprioritize =
 	CHATBOT_DEPRIORITIZE_PRODUCTS.includes(currentSection) ||
+	frontmatter.sidebar.group?.hideIndex ||
+	frontmatter.sidebar.hidden ||
 	frontmatter.chatbot_deprioritize;
 
 if (currentSection) {
