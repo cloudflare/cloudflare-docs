@@ -6,18 +6,22 @@ sidebar:
   order: 2
 ---
 
+import { Steps } from "~/components"
+
 Cloudflare learns schema parameters via traffic inspection. For all endpoints saved to Endpoint Management, you can export the learned schema in OpenAPI `v3.0.0` format by hostname.
 
 To protect your API with a learned schema, refer to [Schema validation](/api-shield/security/schema-validation/#add-validation-by-applying-a-learned-schema-to-an-entire-hostname).
 
 ## Export a schema
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+<Steps>
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Select **Security** > **API Shield**.
 3. Navigate to **Endpoint Management**.
 4. Select **Export schema** and choose a hostname to export.
 5. Select whether to include [learned parameters](/api-shield/management-and-monitoring/#learned-schemas-will-always-include) and [rate limit recommendations](/api-shield/security/volumetric-abuse-detection/)
 6. Select **Export schema** and choose a location to save the file.
+</Steps>
 
 :::note
 The schema is saved as a JSON file in OpenAPI `v3.0.0` format.

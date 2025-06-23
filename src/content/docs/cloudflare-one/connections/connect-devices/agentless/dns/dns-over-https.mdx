@@ -124,6 +124,8 @@ Currently, authentication tokens can only be generated through the API. You can 
 
 ### 1. Create a service token for the account
 
+Each Cloudflare account can only have one active Access [service token](/cloudflare-one/identity/service-tokens/) authorized for DNS over HTTPS (DoH) at a time.
+
 ```bash
 curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/service_tokens" \
 --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
@@ -163,6 +165,12 @@ curl --request PUT \
 ```
 
 If you get an `access.api.error.service_token_not_found` error, check that `$SERVICE_TOKEN_ID` is the value of `id` and not `client_id`.
+
+:::note
+
+Although you can create multiple valid service tokens, only one service token can be designated for issuing DoH tokens. Calling the API to enable DoH on a new service token replaces the previously active service token. If a new token overrides an active service token, the API call will fail.
+
+:::
 
 <Details header="Example response">
 

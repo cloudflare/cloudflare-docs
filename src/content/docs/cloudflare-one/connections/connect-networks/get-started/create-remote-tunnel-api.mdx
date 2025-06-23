@@ -5,11 +5,11 @@ sidebar:
   order: 2
 ---
 
-import { Render } from "~/components";
+import { Render, APIRequest } from "~/components";
 
 Follow this guide to set up a Cloudflare Tunnel using the API.
 
-## 1. Create an API token
+## Create an API token
 
 [Create an API token](/fundamentals/api/get-started/create-token/) with the following permissions:
 
@@ -22,15 +22,14 @@ Follow this guide to set up a Cloudflare Tunnel using the API.
 
 Make a `POST` request to the [Cloudflare Tunnel](/api/resources/zero_trust/subresources/tunnels/subresources/cloudflared/methods/create/) endpoint:
 
-```sh
-curl 'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/cfd_tunnel' \
---header 'Content-Type: application/json' \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "api-tunnel",
-  "config_src": "cloudflare"
-}'
-```
+<APIRequest
+  path="/accounts/{account_id}/cfd_tunnel"
+  method="POST"
+  json={{
+    name: "api-tunnel",
+    config_src: "cloudflare",
+  }}
+/>
 
 ```sh output
 {
@@ -76,27 +75,24 @@ Follow these steps to connect an application through your tunnel. If you are loo
 
 1. Make a [`PUT` request](/api/resources/zero_trust/subresources/tunnels/subresources/cloudflared/subresources/configurations/methods/update/) to route your local service URL to a public hostname. For example,
 
-   ```sh
-   curl --request PUT \
-   'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/cfd_tunnel/c1744f8b-faa1-48a4-9e5c-02ac921467fa/configurations' \
-   --header 'Content-Type: application/json' \
-   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-   --data '{
-   	"config": {
-   		"ingress": [
-   			{
-   				"hostname": "app.example.com",
-   				"service": "http://localhost:8001",
-   				"originRequest": {}
-   			},
-   			{
-   				"service": "http_status:404"
-   			}
-   		]
-   	}
-   }'
-   ```
-
+		<APIRequest
+			path="/accounts/{account_id}/cfd_tunnel/{tunnel_id}/configurations"
+			method="PUT"
+			json={{
+				config: {
+					ingress: [
+						{
+							hostname: "app.example.com",
+							service: "http://localhost:8001",
+							originRequest: {},
+						},
+						{
+							service: "http_status:404",
+						},
+					],
+				},
+			}}
+		/>
    :::note
    If you add a multi-level subdomain (more than one level of subdomain), you must [order an Advanced Certificate for the hostname](/cloudflare-one/faq/troubleshooting/#i-see-this-site-cant-provide-a-secure-connection).
    :::
@@ -105,17 +101,16 @@ Follow these steps to connect an application through your tunnel. If you are loo
 
 2. [Create a DNS record](/api/resources/dns/subresources/records/methods/create/) for your application:
 
-   ```sh
-   curl https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records \
-   --header 'Content-Type: application/json' \
-   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-   --data '{
-   	"type": "CNAME",
-   	"proxied": true,
-   	"name": "app.example.com",
-   	"content": "c1744f8b-faa1-48a4-9e5c-02ac921467fa.cfargotunnel.com"
-   }'
-   ```
+		<APIRequest
+			path="/zones/{zone_id}/dns_records"
+			method="POST"
+			json={{
+				type: "CNAME",
+				proxied: true,
+				name: "app.example.com",
+				content: "c1744f8b-faa1-48a4-9e5c-02ac921467fa.cfargotunnel.com",
+			}}
+		/>
 
    This DNS record allows Cloudflare to proxy `app.example.com` traffic to your Cloudflare Tunnel (`<tunnel-id>.cfargotunnel.com`).
 
@@ -125,16 +120,15 @@ This application will be publicly available on the Internet once you [run the tu
 
 To connect a private network through your tunnel, [add a tunnel route](/api/resources/zero_trust/subresources/networks/subresources/routes/methods/create/):
 
-```sh
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/teamnet/routes \
---header 'Content-Type: application/json' \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "network": "172.16.0.0/16",
-  "tunnel_id": "c1744f8b-faa1-48a4-9e5c-02ac921467fa",
-  "comment": "Example private network route"
-}'
-```
+<APIRequest
+  path="/accounts/{account_id}/teamnet/routes"
+  method="POST"
+  json={{
+    network: "172.16.0.0/16",
+    tunnel_id: "c1744f8b-faa1-48a4-9e5c-02ac921467fa",
+    comment: "Example private network route",
+  }}
+/>
 
 To configure Zero Trust policies and connect as a user, refer to [Connect private networks](/cloudflare-one/connections/connect-networks/private-net/cloudflared/).
 
@@ -148,11 +142,13 @@ Install `cloudflared` on your server and run the tunnel using the `token` value 
 
 To check if the tunnel is serving traffic:
 
-```sh
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/cfd_tunnel/c1744f8b-faa1-48a4-9e5c-02ac921467fa \
---header 'Content-Type: application/json' \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
-```
+<APIRequest
+  path="/accounts/{account_id}/cfd_tunnel/{tunnel_id}"
+  method="GET"
+  parameters={{
+    tunnel_id: "c1744f8b-faa1-48a4-9e5c-02ac921467fa",
+  }}
+/>
 
 ```sh output
 {

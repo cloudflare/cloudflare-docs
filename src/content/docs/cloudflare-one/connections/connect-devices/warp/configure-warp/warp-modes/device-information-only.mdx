@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { TabItem, Tabs, Details, Width } from "~/components"
+import { TabItem, Tabs, Details, Width, APIRequest } from "~/components"
 
 <Details header="Feature availability">
 
@@ -27,14 +27,13 @@ Device Information Only mode allows you to enforce device posture rules when a u
 
 Using the API, enable client certificate provisioning for [your zone](/fundamentals/account/find-account-and-zone-ids/):
 
-   ```bash
-   curl --request PATCH \
-   "https://api.cloudflare.com/client/v4/zones/{zone_id}/devices/policy/certificates" \
-   --header "X-Auth-Email: <EMAIL>" \
-   --header "X-Auth-Key: <API_KEY>" \
-   --header "Content-Type: application/json" \
-   --data '{"enabled": true}'
-   ```
+<APIRequest
+  path="/zones/{zone_id}/devices/policy/certificates"
+  method="PATCH"
+  json={{
+    enabled: true,
+  }}
+/>
 
 ## 2. Configure the WARP client
 
