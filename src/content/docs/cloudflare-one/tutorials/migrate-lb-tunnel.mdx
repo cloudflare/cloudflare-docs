@@ -32,11 +32,13 @@ This tutorial starts by documenting the steps to create a Legacy Tunnel with Clo
 
 In both modes, the first step is to create a load balancer and endpoint pool.
 
-1. Go to **Traffic** > **Load Balancing**.
+1. Go to **Load Balancing** and select **Create load balancer**.
 
-2. Select **Create Load Balancer**.
+2. On the **Load Balancer Setup**, select **Public load balancer** 
 
-3. On the **Hostname** page:
+3. Choose the website to which you want to add this load balancer.
+
+4. On the **Hostname** page:
    - Enter a **Hostname**, which is the DNS name at which the load balancer is available. For more details on record priority, refer to [DNS records for load balancing](/load-balancing/load-balancers/dns-records/).
    - Toggle the orange cloud icon to update the [proxy mode](/load-balancing/understand-basics/proxy-modes/), which affects how traffic is routed and which IP addresses are advertised.
    - If you want [session-based load balancing](/load-balancing/understand-basics/session-affinity/), toggle the **Session Affinity** switch.
