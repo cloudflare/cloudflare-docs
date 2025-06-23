@@ -5,7 +5,9 @@ sidebar:
   order: 9
 ---
 
-### How and where containers run
+This page describes the architecture of Cloudflare Containers.
+
+## How and where containers run
 
 After you deploy a Worker that uses a Container, your image is uploaded to
 [Cloudflare's Registry](/containers/image-management) and distributed globally to Cloudflare's Network.
@@ -32,7 +34,7 @@ should be built for the `linux/amd64` architecture, and should stay within
 [size limits](/containers/platform-details/#limits). Logging, metrics collection, and
 networking are automatically set up on each container.
 
-### Life of a Container Request
+## Life of a Container Request
 
 When a request is made to any Worker, including one with an associated Container, it is generally handled
 by a datacenter in a location with the best latency between itself and the requesting user.
@@ -60,6 +62,6 @@ which will allow container instances to always run in the same location as their
 :::
 
 Because all Container requests are passed through a Worker, end-users cannot make TCP or
-UDP requests to a Container instance. Workers themselves cal make TCO and UDP requests to
+UDP requests to a Container instance. Workers themselves can make TCO and UDP requests to
 the Container using the [`connect()` API](/workers/runtime-apis/tcp-sockets/#connect). If you have a use
 case that requires inbound TCP or UDP from an end-user, please [let us know](https://forms.gle/AGSq54VvUje6kmKu8).

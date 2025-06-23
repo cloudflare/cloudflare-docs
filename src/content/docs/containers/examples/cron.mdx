@@ -1,8 +1,6 @@
 ---
 type: example
 summary: Running a container on a schedule using Cron Triggers
-tags:
-  - Containers
 pcx_content_type: example
 title: Cron Container
 sidebar:
@@ -20,35 +18,37 @@ Use a cron expression in your Wrangler config to specify the schedule:
 
 <WranglerConfig>
 
-```jsonc
+```json
 {
 	"name": "cron-container",
 	"main": "src/index.ts",
 	"triggers": {
 		"crons": [
-			"*/2 * * * *", // Run every 2 minutes
-		],
+			"*/2 * * * *" // Run every 2 minutes
+		]
 	},
 	"containers": [
 		{
 			"class_name": "CronContainer",
-			"image": "./Dockerfile",
-		},
+			"image": "./Dockerfile"
+		}
 	],
 	"durable_objects": {
 		"bindings": [
 			{
 				"class_name": "CronContainer",
-				"name": "CRON_CONTAINER",
-			},
-		],
+				"name": "CRON_CONTAINER"
+			}
+		]
 	},
 	"migrations": [
 		{
-			"new_sqlite_classes": ["CronContainer"],
-			"tag": "v1",
-		},
-	],
+			"new_sqlite_classes": [
+				"CronContainer"
+			],
+			"tag": "v1"
+		}
+	]
 }
 ```
 

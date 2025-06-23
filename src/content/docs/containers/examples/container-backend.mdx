@@ -1,8 +1,6 @@
 ---
 type: example
 summary: A simple frontend app with a containerized backend
-tags:
-  - Containers
 pcx_content_type: example
 title: Static Frontend, Container Backend
 sidebar:
@@ -20,44 +18,44 @@ but you can select from one of many frontend frameworks. See our [Workers framew
 
 For a full example, see the [Static Frontend + Container Backend Template](https://github.com/mikenomitch/static-frontend-container-backend).
 
-### Configure Static Assets and a Container
+## Configure Static Assets and a Container
 
 <WranglerConfig>
-```jsonc
+```json
 {
-	"name": "cron-container",
-	"main": "src/index.ts",
-	"assets": {
+  "name": "cron-container",
+  "main": "src/index.ts",
+  "assets": {
     "directory": "./dist",
     "binding": "ASSETS"
   },
-	"containers": [
-		{
-			"class_name": "Backend",
-			"image": "./Dockerfile",
-		}
-	],
-	"durable_objects": {
-		"bindings": [
-			{
-				"class_name": "Backend",
-				"name": "BACKEND"
-			}
-		]
-	},
-	"migrations": [
-		{
-			"new_sqlite_classes": [
-				"Backend"
-			],
-			"tag": "v1"
-		}
-	]
+  "containers": [
+    {
+      "class_name": "Backend",
+      "image": "./Dockerfile",
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "class_name": "Backend",
+        "name": "BACKEND"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "new_sqlite_classes": [
+        "Backend"
+      ],
+      "tag": "v1"
+    }
+  ]
 }
 ```
 </WranglerConfig>
 
-### Add a simple index.html file to serve
+## Add a simple index.html file to serve
 
 Create a simple `index.html` file in the `./dist` directory.
 
@@ -125,25 +123,20 @@ Create a simple `index.html` file in the `./dist` directory.
 ```
 </Details>
 
-In this example, we are using Alpine.js to fetch a list of widgets from "/api/widgets".
+In this example, we are using [Alpine.js](https://alpinejs.dev/) to fetch a list of widgets from "/api/widgets".
 
 This is meant to be a very simple example, but you can get significantly more complex.
 See [examples of Workers integrating with frontend frameworks](/workers/framework-guides/web-apps/) for more information.
 
-### Define a Worker
+## Define a Worker
 
 Your Worker needs to be able to both serve static assets and route requests to the containerized backend.
 
 In this case, we will pass requests to one of three container instances if the route starts with `/api`,
 and all other requests will be served as static assets.
 
-```ts
+```javascript
 import { Container, getRandom } from "@cloudflare/containers";
-
-export interface Env {
-	BACKEND: DurableObjectNamespace<Backend>;
-	ASSETS: Fetcher;
-}
 
 const INSTANCE_COUNT = 3;
 
@@ -153,7 +146,7 @@ class Backend extends Container {
 }
 
 export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
+	async fetch(request, env) {
 		const url = new URL(request.url);
 		if (url.pathname.startsWith("/api")) {
 			// note: "getRandom" to be replaced with latency-aware routing in the near future
@@ -176,7 +169,7 @@ This will make scaling stateless instances simple and routing more efficient. Se
 [autoscaling documentation](/containers/scaling-and-routing) for more details.
 :::
 
-### Define a backend container
+## Define a backend container
 
 Your container should be able to handle requests to `/api/widgets`.
 
@@ -212,4 +205,3 @@ log.Fatal(http.ListenAndServe(":8080", nil))
 
 ```
 </Details>
-```

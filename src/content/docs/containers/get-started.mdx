@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { WranglerConfig } from "~/components";
+import { WranglerConfig, PackageManagers } from "~/components";
 
 In this guide, you will deploy a Worker that can make requests to one or more Containers in response to end-user requests.
 In this example, each container runs a small webserver written in Go.
@@ -54,9 +54,7 @@ npm create cloudflare@latest -- --template=cloudflare/templates/hello-world-cont
 
 Subsequent updates to the Worker or Container code can be deployed using Wrangler:
 
-```sh
-npx wrangler deploy
-```
+<PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
 When you run this command, several things happen:
 
@@ -78,15 +76,11 @@ During this time, requests are sent to the Worker, but calls to the Container wi
 
 After deploying, you can list containers in your accout with the following command:
 
-```sh
-npx wrangler containers list
-```
+<PackageManagers type="exec" pkg="wrangler" args="containers list" />
 
 And see images deployed to the Cloudflare Registry with the following command:
 
-```sh
-npx wrangler containers images list
-```
+<PackageManagers type="exec" pkg="wrangler" args="containers images list" />
 
 ### Make requests to Containers
 

@@ -7,9 +7,9 @@ sidebar:
     hideIndex: true
 ---
 
-import { WranglerConfig } from "~/components";
+import { WranglerConfig, PackageManagers } from "~/components";
 
-### Pushing images during `wrangler deploy`
+## Pushing images during `wrangler deploy`
 
 When running `wrangler deploy`, if you set the `image` attribute in you [Wranlger configuration](/workers/wrangler/configuration/#containers)
 file to a path, wrangler will build your container image locally using Docker, then push it to a registry run by Cloudflare.
@@ -20,12 +20,12 @@ Just provide the path to your Dockerfile:
 
 <WranglerConfig>
 
-```jsonc
+```json
 {
 	"containers": {
-		"image": "./Dockerfile",
+		"image": "./Dockerfile"
 		// ...rest of config...
-	},
+	}
 }
 ```
 
@@ -40,32 +40,32 @@ calls after the initial deploy.
 Docker or a Docker-compatible CLI tool must be running for Wrangler to build and push images.
 :::
 
-### Using existing images
+## Using existing images
 
 If you wish to use a pre-built image, first, push it to the Cloudflare Registry:
 
 Wrangler provides a command to push images to the Cloudflare Registry:
 
-```bash
-wrangler containers push <image>:<tag>
-```
+<PackageManagers type="exec" pkg="wrangler" args="push <image>:<tag>" />
 
 Additionally, you can use the `-p` flag with `wrangler containers build` to build and push an image in one step:
 
-```bash
-wrangler containers build -p -t <tag> .
-```
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="containers build -p -t <tag> ."
+/>
 
 Then you can specify the URL in the image attribute:
 
 <WranglerConfig>
 
-```jsonc
+```json
 {
 	"containers": {
-		"image": "registry.cloudflare.com/your-namespace/your-image:tag",
+		"image": "registry.cloudflare.com/your-namespace/your-image:tag"
 		// ...rest of config...
-	},
+	}
 }
 ```
 
@@ -88,13 +88,13 @@ download your image, optionally using auth credentials, then cache it globally i
 This is not yet available.
 :::
 
-### Pushing images with CI
+## Pushing images with CI
 
 To use an image built in a continuous integration environment, install `wrangler` then
 build and pushi images using either `wrangler containers build` with the `--push` flag, or
 using the `wrangler containers push` command.
 
-### Registry Limits
+## Registry Limits
 
 Images are limited to 2 GB in size and you are limited to 50 total GB in your account's registry.
 

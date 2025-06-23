@@ -47,23 +47,19 @@ This lets you run:
 <Tabs>
 	<TabItem label="Worker Code">
 ```js
-import { Container } from "@cloudflare/containers";
+import { Container, getContainer } from "@cloudflare/containers";
 
 export class MyContainer extends Container {
 	defaultPort = 4000; // Port the container is listening on
-	sleepAfter = "3m"; // Stop the instance if requests not sent for 3 minutes
+	sleepAfter = "10m"; // Stop the instance if requests not sent for 10 minutes
 }
 
 async fetch(request, env) {
-const { "session-id": sessionId } = await request.json();
-const id = env.MY_CONTAINER.idFromName(sessionId);
-
-    // Get a new container instance for each id
-    const containerInstance = env.MY_CONTAINER.get(id);
-
-    // Pass the request to the container instance on its default port
-    return containerInstance.fetch(request);
-
+  const { "session-id": sessionId } = await request.json();
+  // Get the container instance for the given session ID
+  const containerInstance = getContainer(env.MY_CONTAINER, sessionId)
+  // Pass the request to the container instance on its default port
+  return containerInstance.fetch(request);
 }
 
 ````
@@ -71,7 +67,7 @@ const id = env.MY_CONTAINER.idFromName(sessionId);
 <TabItem label="Worker Config">
 <WranglerConfig>
 
-```jsonc
+```json
 {
   "name": "container-starter",
   "main": "src/index.js",
@@ -162,4 +158,4 @@ regional placement, Workflow and Queue integrations, AI-generated code execution
 </LinkTitleCard>
 
 </CardGrid>
-````
+
