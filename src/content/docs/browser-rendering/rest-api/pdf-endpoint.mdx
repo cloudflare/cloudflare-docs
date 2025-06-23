@@ -7,9 +7,27 @@ sidebar:
 
 import { Tabs, TabItem } from "~/components";
 
-The `/pdf` endpoint instructs the browser to render the webpage as a PDF document.
+The `/pdf` endpoint instructs the browser to generate a PDF of a webpage or custom HTML using Cloudflare's headless browser rendering service.
+
+## Endpoint
+
+```txt
+https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/pdf
+```
+
+## Required Fields
+You must provider either `url` or `html`:
+-  `url` (string)
+-  `html` (string)
+
+## Common Use Cases
+
+-  Capture a PDF of a webpage
+-  Generate PDFs, such as invoices, licenses, reports, and certificates, directly from HTML
 
 ## Basic usage
+
+### Convert a URL to PDF
 
 <Tabs syncKey="workersExamples"> <TabItem label="curl">
 
@@ -50,6 +68,24 @@ console.log(content);
 ```
 
 </TabItem> </Tabs>
+
+### Convert custom HTML to PDF
+
+If you have HTML you'd like to generate a PDF from, the `html` option can be used. The option `addStyleTag` can be used to add custom styles.
+
+```bash
+curl -X POST https://api.cloudflare.com/client/v4/accounts/<acccountID>/browser-rendering/pdf \
+  -H 'Authorization: Bearer <apiToken>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "html": "<html><body>Advanced Snapshot</body></html>",
+	"addStyleTag": [
+      { "content": "body { font-family: Arial; }" },
+      { "url": "https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" }
+    ]
+}' \
+  --output "invoice.pdf"
+```
 
 ## Advanced usage
 
@@ -92,24 +128,6 @@ curl -X POST https://api.cloudflare.com/client/v4/accounts/<acccountID>/browser-
   "rejectRequestPattern": ["/^.*\\.(css)"]
 }' \
   --output "cloudflare.pdf"
-```
-
-## Generate PDF from custom HTML
-
-If you have HTML you'd like to generate a PDF from, the `html` option can be used. The option `addStyleTag` can be used to add custom styles.
-
-```bash
-curl -X POST https://api.cloudflare.com/client/v4/accounts/<acccountID>/browser-rendering/pdf \
-  -H 'Authorization: Bearer <apiToken>' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "html": "<html><body>Advanced Snapshot</body></html>",
-	"addStyleTag": [
-      { "content": "body { font-family: Arial; }" },
-      { "url": "https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" }
-    ]
-}' \
-  --output "invoice.pdf"
 ```
 
 Many more options exist, like setting HTTP credentials using `authenticate`, setting `cookies`, and using `gotoOptions` to control page load behaviour - check the endpoint [reference](/api/resources/browser_rendering/subresources/pdf/methods/create/) for all available parameters.
