@@ -11,6 +11,10 @@ import { GlossaryTooltip, Steps } from "~/components"
 
 Web Bot Auth is an authentication method that leverages cryptographic signatures in HTTP messages to verify that a request comes from an automated bot.
 
+It relies on two active IETF drafts: a [directory draft](https://datatracker.ietf.org/doc/html/draft-meunier-http-message-signatures-directory) allowing the crawler to share their public keys, and a [protocol draft](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture) defining how these keys should be used to attach crawler's identity to HTTP requests.
+
+This documentation goes over specific integration within Cloudflare.
+
 ## 1. Generate a valid signing key
 
 You need to generate a signing key which will be used to authenticate your bot's requests.
@@ -38,7 +42,8 @@ By following these steps, you have generated a private key and a public key, the
 
 ## 2. Host a key directory
 
-You need to host a key directory which creates a way for Cloudflare to authenticate your bot's requests.
+You need to host a key directory which creates a way for your bot to authenticate its requests to Cloudflare.
+This directory should follow the definition from the active IETF draft [draft-meunier-http-message-signatures-directory-01](https://datatracker.ietf.org/doc/html/draft-meunier-http-message-signatures-directory-01).
 
 <Steps>
 1. Host a key directory at a well known message signatures directory. The key directory should serve a JSON Web Key Set (JWKS) including the public key derived from your signing key.
@@ -82,7 +87,7 @@ You need to host a key directory which creates a way for Cloudflare to authentic
 </Steps>
 
 :::note
-This URL serves a standard JSON Web Key Set. Besides `x`, `crv`, and `kty`, you can include other standard JSON Web Key parameters, and you may publish non-Ed25519 keys as well. Multiple Ed25519 keys are acceptable as well.
+This URL serves a standard JSON Web Key Set. Besides `x`, `crv`, and `kty`, you can include other standard JSON Web Key parameters, and you may publish non-Ed25519 keys as well. Multiple Ed25519 keys are supported. Only those for which you provide a signature in the above format are going to be used.
 
 Cloudflare will ignore all other key types and key parameters except those containing `kty`, `crv`, and `x` formatted above. Do not include information that would leak your private key, such as the `d` parameter.
 :::
@@ -112,7 +117,8 @@ After successful verification, you will be able to send verified requests.
 
 ## 4. (After verification) Sign your requests
 
-After your bot has been successfully verified, you need to sign your bot's requests.
+After your bot has been successfully verified, your bot is ready to sign its requests. The signature protocol is defined in [draft-meunier-web-bot-auth-architecture-02](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture-02)
+
 
 ### 4.1. Choose a set of components to sign
 
@@ -129,7 +135,7 @@ A component is either an HTTP header, or any [derived components](https://www.rf
 
 ### 4.2. Calculate the JWK thumbprint
 
-[Calculate the base64 URL-encoded JWK thumbprint](https://www.rfc-editor.org/rfc/rfc8037.html#appendix-A.3) associated with your Ed25519 public key registered with Cloudflare.
+[Calculate the base64 URL-encoded JWK thumbprint](https://www.rfc-editor.org/rfc/rfc8037.html#appendix-A.3) from the public key you registered with Cloudflare.
 
 ### 4.3. Construct the required headers
 
@@ -153,9 +159,9 @@ Construct a [`Signature` header](https://www.rfc-editor.org/rfc/rfc9421#name-the
 
 #### `Signature-Agent` header
 
-Construct a [`Signature-Agent` header](https://www.ietf.org/archive/id/draft-meunier-http-message-signatures-directory-00.html#name-header-field-definition) that points to your key directory. Note that Cloudflare will fail to verify a message if:
+Construct a [`Signature-Agent` header](https://www.ietf.org/archive/id/draft-meunier-http-message-signatures-directory-01.html#name-header-field-definition) that points to your key directory. Note that Cloudflare will fail to verify a message if:
   - The message includes a `Signature-Agent` header that is not an `https://`.
-  - The message includes a valid URI but do not enclose it in double quotes.
+  - The message includes a valid URI but does not enclose it in double quotes. This is due to Signature-Agent being a structured field.
   - The message has a valid `Signature-Agent` header, but does not include it in the component list in `Signature-Input`.
 
 ### 4.4. Add the headers to your bot's requests
