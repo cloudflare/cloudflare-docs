@@ -9,8 +9,3 @@ meta:
   title: Containers docs
   description: Enhance your Workers with serverless containers
   author: "@cloudflare"
-
-resources:
-  community: https://community.cloudflare.com/c/developers/containers
-  dashboard_link: https://dash.cloudflare.com/?to=/:account/workers/containers
-  discord: https://discord.com/invite/cloudflaredev
