@@ -16,7 +16,7 @@ https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/pdf
 ```
 
 ## Required Fields
-You must provider either `url` or `html`:
+You must provide either `url` or `html`:
 -  `url` (string)
 -  `html` (string)
 
@@ -69,9 +69,9 @@ console.log(content);
 
 </TabItem> </Tabs>
 
-### Convert custom HTML to PDF
+### Convert Custom HTML to PDF
 
-If you have HTML you'd like to generate a PDF from, the `html` option can be used. The option `addStyleTag` can be used to add custom styles.
+If you have raw HTML you'd like to generate a PDF from, use the `html` option. You can still apply custom styles using the `addStyleTag` parameter.
 
 ```bash
 curl -X POST https://api.cloudflare.com/client/v4/accounts/<acccountID>/browser-rendering/pdf \
@@ -89,9 +89,13 @@ curl -X POST https://api.cloudflare.com/client/v4/accounts/<acccountID>/browser-
 
 ## Advanced usage
 
-Navigate to `https://example.com`, first setting an additional HTTP request header and configuring the page size (`viewport`). Then, wait until there are no more than 2 network connections for at least 500 ms, or until the maximum timeout of 4500 ms is reached, before considering the page loaded and returning the rendered PDF document.
+Many more options exist, such as setting HTTP credentials using `authenticate`, setting `cookies`, and customizing load behavior using `gotoOptions`. **Check the full endpoint [reference](/api/resources/browser_rendering/subresources/pdf/methods/create/) for all available parameters.**
 
-The `goToOptions` parameter exposes most of [Puppeteer'd API](https://pptr.dev/api/puppeteer.gotooptions).
+### Advanced Page Load with Custom Headers and Viewport
+
+Navigate to `https://example.com`, setting additional HTTP headers and configuring the page size (viewport). The PDF generation will wait until there are no more than 2 network connections for at least 500 ms, or until the maximum timeout of 4500 ms is reached, before rendering.
+
+The `goToOptions` parameter exposes most of [Puppeteer's API](https://pptr.dev/api/puppeteer.gotooptions).
 
 ```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/pdf' \
@@ -114,9 +118,9 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
   --output "advanced-output.pdf"
 ```
 
-## Blocking images and styles when generating a PDF
+## Blocking Images and Styles when Generating a PDF
 
-The options `rejectResourceTypes` and `rejectRequestPattern` can be used to block requests. The opposite can also be done, _only_ allow certain requests using `allowResourceTypes` and `allowRequestPattern`.
+The options `rejectResourceTypes` and `rejectRequestPattern` can be used to block requests during rendering. The opposite can also be done, _only_ allow certain requests using `allowResourceTypes` and `allowRequestPattern`.
 
 ```bash
 curl -X POST https://api.cloudflare.com/client/v4/accounts/<acccountID>/browser-rendering/pdf \
@@ -129,5 +133,3 @@ curl -X POST https://api.cloudflare.com/client/v4/accounts/<acccountID>/browser-
 }' \
   --output "cloudflare.pdf"
 ```
-
-Many more options exist, like setting HTTP credentials using `authenticate`, setting `cookies`, and using `gotoOptions` to control page load behaviour - check the endpoint [reference](/api/resources/browser_rendering/subresources/pdf/methods/create/) for all available parameters.
