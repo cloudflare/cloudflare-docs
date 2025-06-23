@@ -40,21 +40,23 @@ You need to generate a signing key which will be used to authenticate your bot's
 
 By following these steps, you have generated a private key and a public key, then converted the public key to a JWK.
 
+:::note
+You can also [generate a JavaScript key using WebCrypto API](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/generateKey), which will produce a key in the correct JWK format.
+
+Many existing [JWK libraries](https://jwt.io/libraries) support WebCrypto API for generating JavaScript key.
+:::
+
 ## 2. Host a key directory
 
 You need to host a key directory which creates a way for your bot to authenticate its requests to Cloudflare.
 This directory should follow the definition from the active IETF draft [draft-meunier-http-message-signatures-directory-01](https://datatracker.ietf.org/doc/html/draft-meunier-http-message-signatures-directory-01).
 
 <Steps>
-1. Host a key directory at a well known message signatures directory. The key directory should serve a JSON Web Key Set (JWKS) including the public key derived from your signing key.
-
-   An example directory would be:
-   ```txt
-   /.well-known/http-message-signatures-directory/
-   ```
+1. Host a key directory at `/.well-known/http-message-signatures-directory/` (note that this is a requirement). This key directory should serve a JSON Web Key Set (JWKS) including the public key derived from your signing key.
 2. Serve the web page over HTTPS (not HTTP).
 3. [Calculate the base64 URL-encoded JWK thumbprint](https://www.rfc-editor.org/rfc/rfc8037.html#appendix-A.3) associated with your Ed25519 public key.
 4. Sign your HTTP response using the HTTP message signature specification by attaching one signature per key in your key directory. This ensures no one else can mirror your directory and attempt to register on your behalf. Your response must include the following headers:
+   - `Content-Type`: This header must have the value `application/http-message-signatures-directory+json`.
    - `Signature`: Construct a [`Signature` header](https://www.rfc-editor.org/rfc/rfc9421#name-the-signature-http-field) over your chosen components.
    - `Signature-Input`: Construct a [`Signature-Input` header](https://www.rfc-editor.org/rfc/rfc9421#name-the-signature-input-http-fi) over your chosen components. The header must meet the following requirements.
      | Required component parameter | Requirement                                                                                                                 |
@@ -131,7 +133,12 @@ A component is either an HTTP header, or any [derived components](https://www.rf
   :::note[Use components with only ASCII values]
   Cloudflare currently does not support `bs` or `sf` parameter designed to serialize non-ASCII values into ASCII equivalents.
   :::
-  - Add a `Content-Digest` header if you wish to sign your [message content](https://www.rfc-editor.org/rfc/rfc9421#name-message-content), then specify `Content-Digest` as a component to sign.
+
+:::caution[`Content-Digest` header]
+If you wish to sign your [message content](https://www.rfc-editor.org/rfc/rfc9421#name-message-content) using a `Content-Digest` header, note that you should only do so if there is zero risk of a message being altered on the way to Cloudflare.
+
+For example, if the message is unencrypted and proxied to Cloudflare, you should not use `Content-Digest`.
+:::
 
 ### 4.2. Calculate the JWK thumbprint
 
@@ -191,3 +198,4 @@ You may wish to refer to the following resources.
 - Cloudflare blog: [Forget IPs: using cryptography to verify bot and agent traffic](https://blog.cloudflare.com/web-bot-auth/).
 - Cloudflare's [`web-bot-auth` library in Rust](https://crates.io/crates/web-bot-auth).
 - Cloudflare's [`web-bot-auth` npm package in Typescript](https://www.npmjs.com/package/web-bot-auth).
+-

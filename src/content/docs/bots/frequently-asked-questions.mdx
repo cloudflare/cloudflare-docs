@@ -186,7 +186,7 @@ Cloudflare supports Ed25519 key algorithm.
 
 The following derived components are not supported, and we will fail to verify a message if they are included:
 
-- `@query-params`: Cloudflare recommends signing the whole query instead of an individual parameter.
+- `@query-params`: Cloudflare recommends signing the whole query using the `@query` component instead of signing an individual parameter.
 - `@status`: This is not possible to include in the request path.
 
 The following component parameters defined in IETF RFC 9421 are not supported, and Cloudflare will fail to verify a message if they are included:
@@ -211,13 +211,13 @@ Instead, Cloudflare recommends short `expires` as a protection against replay at
 
 ### How do I know my JSON Web Key set directory will be accepted?
 
-Cloudflare uses [`http-signature-directory` tool](https://crates.io/crates/http-signature-directory) to validate your directory. Please your this works before submitting a verification request.
+Cloudflare uses [`http-signature-directory` tool](https://crates.io/crates/http-signature-directory) to validate your directory. Please ensure this works against your directory before registering with us.
 
 ---
 
 ### My message is failing validation. What could be the cause?
 
-- Ensure you have a [`Signature-Agent` header](/bots/concepts/bot/verified-bots/web-bot-auth/#signature-agent-header), and that its value in double-quotes.
+- Ensure you have a [`Signature-Agent` header](/bots/concepts/bot/verified-bots/web-bot-auth/#signature-agent-header), and that its value is in double-quotes.
 - Ensure you include `signature-agent` in the component list in your [`Signature-Input` header](/bots/concepts/bot/verified-bots/web-bot-auth/#signature-agent-header).
 - Ensure your `expires` timestamp is not too short, such that, by the time it arrives at Cloudflare servers, it has already expired. A minute is often sufficient.
 - Ensure you are not signing components containing non-ASCII values, or on the unsupported list.
