@@ -33,7 +33,7 @@ Refer to <a href={props.trafficSteeringPage}>Traffic Steering</a> for more infor
 6. In **Tunnel/Next hop** select which tunnel you want your route to go through. Choose from the tunnels you have created in <a href={props.tunnelEndpoints}>Configure tunnel endpoints</a>.
 7. Choose the **Priority** for your route. Lower numbers have higher priorities.
 	:::note
-	You should also be aware that Cloudflare routing applies longest-prefix match. This means more specific routes will always be preferred over less specific ones. Refer to <a href={props.routePrioritization}>Route prioritization</a> for more information.
+	<Render file="longest-prefix-match" product="networking-services/reference" /> Have this in mind when configuring priorities for your routes. Refer to <a href={props.routePrioritization}>Route prioritization</a> for more information.
 	:::
 8. (Optional) Choose a **Weight** for your route. Refer to <a href={props.chooseWeights}>Set priority and weights for static routes</a> for examples.
 9. (Optional) If you need to scope your route to a specific region, you can do it in **Region code**.
