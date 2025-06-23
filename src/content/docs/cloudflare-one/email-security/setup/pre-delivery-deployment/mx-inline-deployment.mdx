@@ -9,13 +9,13 @@ With pre-delivery deployment, also known as Inline deployment, Email Security ev
 
 ![Inline deployment diagram](~/assets/images/email-security/deployment/inline-setup/CF_A1S_Deployment_Inline_Diagrams.png)
 
-When you deploy Email Security via MX/Inline, you will have to change your email's MX records to point to Cloudflare. An MX record is a [DNS record](/dns/manage-dns-records/). 
+Before you change your MX records, you will have to set up the [Time to Live (TTL)](/dns/manage-dns-records/reference/ttl/) on your DNS records. If you do not set up the TTL, the DNS propagation will take longer to happen. By reducing the TTL, you are decreasing the time it takes for DNS records to propagate.
+
+Once you have configured your TTL, you can deploy Email Security via MX/Inline. An MX record is a [DNS record](/dns/manage-dns-records/). 
 
 If your DNS records are hosted by Cloudflare (or any other provider, except for Google), you can [edit your DNS records](/dns/manage-dns-records/how-to/create-dns-records/#edit-dns-records) via the dashboard or the API to point your MX records to Cloudflare.
 
 By changing your MX records, Email Security will be positioned between your incoming emails and Microsoft 0365 or Gmail.
-
-Once you changed your MX records, you will have to set up the [Time to Live (TTL)](/dns/manage-dns-records/reference/ttl/) on your DNS records. If you do not set up the TTL, the DNS propagation will take longer to happen. By reducing the TTL, you are decreasing the time it takes for DNS records to propagate.
 
 Email Security becomes a hop in the [SMTP](https://www.cloudflare.com/en-gb/learning/email-security/what-is-smtp/) processing chain and physically interacts with incoming email messages. Based on your policies, various messages are blocked before reaching the inbox.
 
