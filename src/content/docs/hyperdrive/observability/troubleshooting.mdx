@@ -64,6 +64,10 @@ Hyperdrive may also encounter `ErrorResponse` wire protocol messages sent by you
 
 If your queries are not getting cached despite Hyperdrive having caching enabled, your driver may be configured such that your queries are not cacheable by Hyperdrive. This may happen if you are using the [Postgres.js](https://github.com/porsager/postgres) driver with [`prepare: false:`](https://github.com/porsager/postgres?tab=readme-ov-file#prepared-statements). To resolve this, enable prepared statements with `prepare: true`.
 
+| Error Message                                    | Details                                                                                                               | Recommended fixes                                                                                                            |
+| ------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `Code generation from strings disallowed for this context` | The database driver you are using is attempting to use the `eval()` command, which is unsupported on Cloudflare Workers (common in `mysql2` driver). | Configure the database driver to not use `eval()`. See how to [configure `mysql2` to disable the usage of `eval()`](/hyperdrive/examples/connect-to-mysql/mysql-drivers-and-libraries/mysql2/). |
+
 ### Improve performance
 
 Having query traffic written as transactions can limit performance. This is because in the case of a transaction, the connection must be held for the duration of the transaction, which limits connection multiplexing. If there are multiple queries per transaction, this can be particularly impactful on connection multiplexing. Where possible, we recommend not wrapping queries in transactions to allow the connections to be shared more aggressively.
