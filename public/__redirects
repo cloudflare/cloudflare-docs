@@ -240,7 +240,7 @@
 /bots/additional-configurations/javascript-detections/ /cloudflare-challenges/challenge-types/javascript-detections/ 301
 
 #browser-rendering
-/browser-rendering/get-started/browser-rendering-with-DO/ /browser-rendering/workers-bindings/browser-rendering-with-DO/ 301
+/browser-rendering/get-started/browser-rendering-with-DO/ /browser-rendering/workers-bindings/browser-rendering-with-do/ 301
 /browser-rendering/get-started/reuse-sessions/ /browser-rendering/workers-bindings/reuse-sessions/ 301
 /browser-rendering/get-started/screenshots/ /browser-rendering/workers-bindings/screenshots/ 301
 /browser-rendering/workers-binding-api/ /browser-rendering/workers-bindings/ 301
