@@ -9,10 +9,10 @@ sidebar:
 
 Containers are billed for every 10ms that they are actively running at the following rates, with included monthly usage as part of the $5 USD per month [Workers Paid plan](/workers/platform/pricing/):
 
-|             | Memory                                                                        | CPU                                                                   | Disk                                                              |
-|-------------|-------------------------------------------------------------------------------|-----------------------------------------------------------------------|-------------------------------------------------------------------|
-| **Free**    | N/A                                                                           | N/A                                                                   |                                                                   |
-| **Workers Paid**| 25 GiB-hours/month included <br/> +$0.0000025 per additional GiB-second   | 375 vCPU-minutes/month <br/>+ $0.000020 per additional vCPU-second    | 200 GB-hours/month <br/> +$0.00000007 per additional GB-second    |
+|                  | Memory                                                                  | CPU                                                                | Disk                                                           |
+| ---------------- | ----------------------------------------------------------------------- | ------------------------------------------------------------------ | -------------------------------------------------------------- |
+| **Free**         | N/A                                                                     | N/A                                                                |                                                                |
+| **Workers Paid** | 25 GiB-hours/month included <br/> +$0.0000025 per additional GiB-second | 375 vCPU-minutes/month <br/>+ $0.000020 per additional vCPU-second | 200 GB-hours/month <br/> +$0.00000007 per additional GB-second |
 
 You only pay for what you use — charges start when a request is sent to the container or when it is manually started. Charges stop after the container instance goes to sleep, which can happen automatically after a timeout. This makes it easy to scale to zero, and allows you to get high utilization even with bursty traffic.
 
@@ -20,17 +20,21 @@ You only pay for what you use — charges start when a request is sent to the co
 
 When you add containers to your Worker, you specify an [instance type](/containers/platform-details/#instance-types). The instance type you select will impact your bill — larger instances include more vCPUs, memory and disk, and therefore incur additional usage costs. The following instance types are currently available, and larger instance types are coming soon:
 
-| Name     | Memory   | CPU        | Disk |
-|----------|----------|------------|------|
-| dev      | 256 MiB  | 1/16 vCPU  | 2 GB |
-| basic    | 1 GiB    | 1/4 vCPU   | 4 GB |
-| standard | 4 GiB    | 1/2 vCPU   | 4 GB |
+| Name     | Memory  | CPU       | Disk |
+| -------- | ------- | --------- | ---- |
+| dev      | 256 MiB | 1/16 vCPU | 2 GB |
+| basic    | 1 GiB   | 1/4 vCPU  | 4 GB |
+| standard | 4 GiB   | 1/2 vCPU  | 4 GB |
 
 ## Network Egress
 
 Egress from Containers is priced at the following rates:
 
-TODO
+| Region                 | Price per GB | Included Allotment per month |
+| ---------------------- | ------------ | ---------------------------- |
+| North America & Europe | $0.025       | 1 TB                         |
+| Oceania, Korea, Taiwan | $0.05        | 500 GB                       |
+| Everywhere Else        | $0.04        | 500 GB                       |
 
 ## Workers and Durable Objects Pricing
 

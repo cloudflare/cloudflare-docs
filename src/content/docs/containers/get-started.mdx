@@ -32,7 +32,7 @@ the `docker info` command will hang or return an error including the message "Ca
 Run the following command to create and deploy a new Worker with a container, from the starter template:
 
 ```sh
-npm create cloudflare@latest -- --template=cloudflare/templates/hello-world-containers
+npm create cloudflare@latest -- --template=cloudflare/templates/containers-template
 ```
 
 When you want to deploy a code change to either the Worker or Container code, you can run the following command using [Wrangler CLI](/workers/wrangler/:
@@ -46,14 +46,14 @@ When you run `wrangler deploy`, the following things happen:
   integrated with your Cloudflare account.
 - Wrangler deploys your Worker, and configures Cloudflare's network to be ready to spawn instances of your container
 
-:::note
 The build and push usually take the longest on the first deploy. Subsequent deploys
 are faster, because they [reuse cached image layers](https://docs.docker.com/build/cache/).
-:::
 
+:::note
 After you deploy your Worker for the first time, you will need to wait several minutes until
 it is ready to receive requests. Unlike Workers, Containers take a few minutes to be provisioned.
 During this time, requests are sent to the Worker, but calls to the Container will error.
+:::
 
 ### Check deployment status
 
@@ -79,6 +79,7 @@ You can confirm this behavior by reading the output of each request.
 ## Understanding the Code
 
 Now that you've deployed your first container, let's explain what is happening in your Worker's code, in your configuration file, in your container's code, and how requests are routed.
+
 ## Each Container is backed by its own Durable Object
 
 Incoming requests are initially handled by the Worker, then passed to a container-enabled [Durable Object](/durable-objects).
@@ -204,9 +205,9 @@ When a request enters Cloudflare, your Worker's [`fetch` handler](/workers/runti
 
   ```js
   if (pathname.startsWith("/container")) {
-  	let id = env.MY_CONTAINER.idFromName("container");
-  	let container = env.MY_CONTAINER.get(id);
-  	return await container.fetch(request);
+  	const id = env.MY_CONTAINER.idFromName(pathname);
+		const container = env.MY_CONTAINER.get(id);
+		return await container.fetch(request);
   }
   ```
 
@@ -216,7 +217,7 @@ When a request enters Cloudflare, your Worker's [`fetch` handler](/workers/runti
 
   ```js
   if (pathname.startsWith("/lb")) {
-  	let container = await getRandom(env.MY_CONTAINER, 3);
+  	const container = await getRandom(env.MY_CONTAINER, 3);
   	return await container.fetch(request);
   }
   ```
