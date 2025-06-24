@@ -52,7 +52,7 @@ You need to host a key directory which creates a way for your bot to authenticat
 This directory should follow the definition from the active IETF draft [draft-meunier-http-message-signatures-directory-01](https://datatracker.ietf.org/doc/html/draft-meunier-http-message-signatures-directory-01).
 
 <Steps>
-1. Host a key directory at `/.well-known/http-message-signatures-directory/` (note that this is a requirement). This key directory should serve a JSON Web Key Set (JWKS) including the public key derived from your signing key.
+1. Host a key directory at `/.well-known/http-message-signatures-directory` (note that this is a requirement). This key directory should serve a JSON Web Key Set (JWKS) including the public key derived from your signing key.
 2. Serve the web page over HTTPS (not HTTP).
 3. [Calculate the base64 URL-encoded JWK thumbprint](https://www.rfc-editor.org/rfc/rfc8037.html#appendix-A.3) associated with your Ed25519 public key.
 4. Sign your HTTP response using the HTTP message signature specification by attaching one signature per key in your key directory. This ensures no one else can mirror your directory and attempt to register on your behalf. Your response must include the following headers:
@@ -62,7 +62,6 @@ This directory should follow the definition from the active IETF draft [draft-me
      | Required component parameter | Requirement                                                                                                                 |
      | ---------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
      | `tag`                        | This should be equal to `http-message-signatures-directory`.                                                                |
-     | `alg`                        | This should be equal to `ed25519`.                                                                                          |
      | `keyid`                      | JWK thumbprint of the corresponding key in your directory.                                                                  |
      | `created`                    | This should be equal to a `Unix` timestamp associated with when the message was sent by your application.                   |
      | `expires`                    | This should be equal to a `Unix` timestamp associated with when Cloudflare should no longer attempt to verify the message.  |
@@ -155,7 +154,6 @@ Construct a [`Signature-Input` header](https://www.rfc-editor.org/rfc/rfc9421#na
 | Required component parameter | Requirement                                                                                                                                                                                                                                               |
 | ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `tag`                        | This should be equal to `web-bot-auth`.                                                                                                                                                                                                                   |
-| `alg`                        | This should be equal to `ed25519`.                                                                                                                                                                                                                        |
 | `keyid`                      | This should be equal to the thumbprint computed in step 2.                                                                                                                                                                                                |
 | `created`                    | This should be equal to a `Unix` timestamp associated with when the message was sent by your application.                                                                                                                                                 |
 | `expires`                    | This should be equal to a `Unix` timestamp associated with when Cloudflare should no longer attempt to verify the message. A short `expires` reduces the likelihood of replay attacks, and Cloudflare recommends choosing suitable short-lived intervals. |
