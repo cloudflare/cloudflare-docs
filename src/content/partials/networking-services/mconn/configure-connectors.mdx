@@ -183,23 +183,7 @@ You cannot enable high availability for an existing Connector on-ramp. To add hi
 		inline={false}
 		/>
 
-		<Aside title="VLAN tagging">
-		<Markdown
-		text={`
-		Virtual Connector supports creating subinterfaces through the use of [802.1Q VLAN tagging](https://en.wikipedia.org/wiki/IEEE_802.1Q).
-
-		Use VLAN ID <code>0</code> when:
-
-		- Connected to a Port Group or Distributed Port Group that is associated with a specific VLAN.
-		- Connected to a Port Group or Distributed Port Group that is configured as a trunk that requires untagged packets.
-
-		You can also configure subinterfaces on the Virtual Connector by associating the network interface with a Port Group or Distributed Port Group trunk and specifying a VLAN ID in addition to the port associated with the network interface (VLAN ID <code>1</code>-<code>4094</code>).
-
-		Refer to [VMware's documentation](https://kb.vmware.com/s/article/1003825) for more information.
-		`}
-		inline={false}
-		/>
-		</Aside>
+		<Render file="mconn/vlan-tagging" product="networking-services" params={{	url: "[VMware's documentation](https://kb.vmware.com/s/article/1003825)" }}/>
 
 		<Markdown
 		text={`
@@ -243,7 +227,7 @@ You cannot enable high availability for an existing Connector on-ramp. To add hi
 		inline={false}
 		/>
 
-		<Aside>You cannot use the same license key twice, or reuse a key once the virtual machine has been registered with Cloudflare. You need a new key from your account team for every new Virtual Connector.</Aside>
+		<Render file="mconn/licence-keys" product="networking-services" />
 
 		<Markdown
 		text={`
@@ -275,7 +259,7 @@ You cannot enable high availability for an existing Connector on-ramp. To add hi
 		inline={false}
 		/>
 
-		<Aside>You cannot use the same license key twice, or reuse a key once the virtual machine has been registered with Cloudflare. You need a new key from your account team for every new Virtual Connector.</Aside>
+		<Render file="mconn/licence-keys" product="networking-services" />
 
 		<Markdown
 		text={`
@@ -286,23 +270,7 @@ You cannot enable high availability for an existing Connector on-ramp. To add hi
 		inline={false}
 		/>
 
-		<Aside title="VLAN tagging">
-		<Markdown
-		text={`
-		Virtual Connector supports creating subinterfaces through the use of [802.1Q VLAN tagging](https://en.wikipedia.org/wiki/IEEE_802.1Q).
-
-		Use VLAN ID <code>0</code> when:
-
-		- Connected to a Port Group or Distributed Port Group that is associated with a specific VLAN.
-		- Connected to a Port Group or Distributed Port Group that is configured as a trunk that requires untagged packets.
-
-		You can also configure subinterfaces on the Virtual Connector by associating the network interface with a Port Group or Distributed Port Group trunk and specifying a VLAN ID in addition to the port associated with the network interface (VLAN ID <code>1</code>-<code>4094</code>).
-
-		Refer to [Proxmox documentation](https://www.proxmox.com/en/products/proxmox-virtual-environment/get-started) for more information.
-		`}
-		inline={false}
-		/>
-		</Aside>
+		<Render file="mconn/vlan-tagging" product="networking-services" params={{	url: "[Proxmox documentation](https://www.proxmox.com/en/products/proxmox-virtual-environment/get-started)" }}/>
 
 		<Markdown
 		text={`
