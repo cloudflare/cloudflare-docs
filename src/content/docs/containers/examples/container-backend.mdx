@@ -13,7 +13,7 @@ import { WranglerConfig, Details } from "~/components";
 A common pattern is to serve a static frontend application (e.g., React, Vue, Svelte) using Static Assets,
 then pass backend requests to a containerized backend application.
 
-In this example, we'll show an example using a simple index.html file served as a static asset,
+In this example, we'll show an example using a simple `index.html` file served as a static asset,
 but you can select from one of many frontend frameworks. See our [Workers framework examples](/workers/framework-guides/web-apps/) for more information.
 
 For a full example, see the [Static Frontend + Container Backend Template](https://github.com/mikenomitch/static-frontend-container-backend).
@@ -123,7 +123,7 @@ Create a simple `index.html` file in the `./dist` directory.
 ```
 </Details>
 
-In this example, we are using [Alpine.js](https://alpinejs.dev/) to fetch a list of widgets from "/api/widgets".
+In this example, we are using [Alpine.js](https://alpinejs.dev/) to fetch a list of widgets from `/api/widgets`.
 
 This is meant to be a very simple example, but you can get significantly more complex.
 See [examples of Workers integrating with frontend frameworks](/workers/framework-guides/web-apps/) for more information.
@@ -186,11 +186,11 @@ import (
 )
 
 func handler(w http.ResponseWriter, r \*http.Request) {
-widgets := []map[string]interface{}{
-{"id": 1, "name": "Widget A"},
-{"id": 2, "name": "Sprocket B"},
-{"id": 3, "name": "Gear C"},
-}
+    widgets := []map[string]interface{}{
+        {"id": 1, "name": "Widget A"},
+        {"id": 2, "name": "Sprocket B"},
+        {"id": 3, "name": "Gear C"},
+    }
 
     w.Header().Set("Content-Type", "application/json")
     w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -199,8 +199,8 @@ widgets := []map[string]interface{}{
 }
 
 func main() {
-http.HandleFunc("/api/widgets", handler)
-log.Fatal(http.ListenAndServe(":8080", nil))
+    http.HandleFunc("/api/widgets", handler)
+    log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
 ```

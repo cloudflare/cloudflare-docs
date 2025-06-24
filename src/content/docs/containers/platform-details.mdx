@@ -13,16 +13,16 @@ This page containers general details about the Containers platform.
 
 ## Instance Types
 
-Currently, Containers are configured with custom memory, vCPU, and disk space.
-On launch, there will be three instance types available for Containers users by default:
+The memory, vCPU, and disk space for Containers are set through predefined instance types.
+There are currently three instance types available for Containers users by default:
 
-| Instance Type | Memory | vCPU | Disk |
-| ------------- | ------ | ---- | ---- |
-| dev           | 256 MB | 1/16 | 2 GB |
-| basic         | 1 GB   | 1/4  | 4 GB |
-| standard      | 4 GB   | 1/2  | 4 GB |
+| Instance Type | Memory  | vCPU | Disk |
+| ------------- | ------- | ---- | ---- |
+| dev           | 256 MiB | 1/16 | 2 GB |
+| basic         | 1 GiB   | 1/4  | 4 GB |
+| standard      | 4 GiB   | 1/2  | 4 GB |
 
-These will be specified using the `instance_type` property in wrangler config.
+These are specified using the `instance_type` property in wrangler config.
 
 ## Limits
 

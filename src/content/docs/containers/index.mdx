@@ -55,14 +55,14 @@ export class MyContainer extends Container {
 }
 
 async fetch(request, env) {
-  const { "session-id": sessionId } = await request.json();
-  // Get the container instance for the given session ID
-  const containerInstance = getContainer(env.MY_CONTAINER, sessionId)
-  // Pass the request to the container instance on its default port
-  return containerInstance.fetch(request);
+	const { "session-id": sessionId } = await request.json();
+	// Get the container instance for the given session ID
+	const containerInstance = getContainer(env.MY_CONTAINER, sessionId)
+	// Pass the request to the container instance on its default port
+	return containerInstance.fetch(request);
 }
 
-````
+```
 </TabItem>
 <TabItem label="Worker Config">
 <WranglerConfig>
@@ -96,7 +96,7 @@ async fetch(request, env) {
 		}
 	],
 }
-````
+```
 
 </WranglerConfig>
 </TabItem>
