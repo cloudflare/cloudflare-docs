@@ -255,6 +255,57 @@ You cannot enable high availability for an existing Connector on-ramp. To add hi
 
 		</TabItem> <TabItem label="Proxmox">
 
+		<Markdown
+		text={`
+		**1. Obtain the Virtual Connector script**
+
+		Contact your account team at Cloudflare to obtain your license keys and the Virtual Connector script for Proxmox. The script will set up and configure a Proxmox virtual machine with the appropriate settings for Virtual Connector. Refer to [Prerequisites](#prerequisites) for more information on system requirements.
+
+		The script can be deployed multiple times to create several instances of a Virtual Connector, in different locations or on the same Proxmox host. You will consume one license key for each instance created. For example, if you want to deploy 10 Virtual Connectors you should request 10 license keys.
+
+		**2. Deploy the Virtual Connector on Proxmox**
+
+		The following instructions assume you already have Proxmox Virtual Environment installed with sufficient resources. Refer to [Prerequisites](#prerequisites) for more information.
+
+		1. In the terminal prompt of your Proxmox server, load the script provided by your account team. For example: \`bash YOUR_SCRIPT\`.
+		2. You will be prompted to create a new Virtual Connector. Select **yes** to proceed.
+		3. Set up your Virtual Connector name.
+		4. Enter your license key.
+		5. Select the network interface card (NIC) you want to use with Virtual Connector.
+		6. Select the network bridge that corresponds to the physical network interface card (NIC) on your host machine. This bridge allows the network adapter in the virtual machine to communicate through the NIC in the host, as if it were directly connected to the physical network.
+		7. (Optional) Configure your VLAN setting if needed.
+				`}
+		inline={false}
+		/>
+
+		<Aside title="VLAN tagging">
+		<Markdown
+		text={`
+		Virtual Connector supports creating subinterfaces through the use of [802.1Q VLAN tagging](https://en.wikipedia.org/wiki/IEEE_802.1Q).
+
+		Use VLAN ID <code>0</code> when:
+
+		- Connected to a Port Group or Distributed Port Group that is associated with a specific VLAN.
+		- Connected to a Port Group or Distributed Port Group that is configured as a trunk that requires untagged packets.
+
+		You can also configure subinterfaces on the Virtual Connector by associating the network interface with a Port Group or Distributed Port Group trunk and specifying a VLAN ID in addition to the port associated with the network interface (VLAN ID <code>1</code>-<code>4094</code>).
+
+		Refer to [Proxmox documentation](https://www.proxmox.com/en/products/proxmox-virtual-environment/get-started) for more information.
+		`}
+		inline={false}
+		/>
+		</Aside>
+
+		<Markdown
+		text={`
+		8. Finish your configuration.
+		9. The script will apply your settings and configure the virtual machine template for Virtual Connector.
+		10. In the **Hardware settings** for the new VM, make sure the hardware settings match the minimum requirements for running Virtual Connector. Make changes to the RAM and CPU if needed.
+		11. Continue setup in your [Cloudflare dashboard](#set-up-cloudflare-dashboard).
+		`}
+		inline={false}
+		/>
+
 
 
 		</TabItem> </Tabs>
