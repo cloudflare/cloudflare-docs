@@ -1,0 +1,26 @@
+---
+title: Announcing Sandboxes
+description: You can start creating sandboxes today by installing our new Sandbox package.
+products:
+  - agents
+  - workers
+  - workflows
+date: 2025-02-14T19:00:00Z
+---
+
+AI is supercharging app development for everyone, but we need a safe way to run untrusted, LLM-written code. We’re introducing [Sandboxes](https://www.npmjs.com/package/@cloudflare/sandbox), which let your Worker run actual processes in a secure, container-based environment.
+
+```sh
+import { getSandbox } from "@cloudflare/sandbox";
+
+export default {
+  async fetch(request: Request, env: Env) {
+    const sandbox = getSandbox(env.Sandbox, "my-sandbox");
+    return sandbox.exec("ls", ["-la"]);
+  },
+};
+```
+
+Sandboxes are still experimental. We're using them to explore how isolated, container-like workloads might scale on Cloudflare — and to help define the developer experience around them.
+
+You can try it today from your Worker, with just a few lines of code. Let us know what you build.
