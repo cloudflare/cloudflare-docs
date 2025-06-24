@@ -126,3 +126,8 @@ curl --request PUT \
 </TabItem> </Tabs>
 
 You can set multiple certificates to **Available**, but you can only turn on one certificate for use in inspection at a time. Setting a certificate as **In-Use** will set any other in-use certificates as **Available** only and prevent them from being used for inspection until turned on again.
+
+:::note
+You may use [terraform](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_gateway_certificate) to import/create/delete Zero Trust certificates. But they need to be activated/decativated or put in use through the gateway dashboard UI/API at the moment.
+You also CAN NOT not delete a Zero Trust certificate that is currently in use.
+:::
