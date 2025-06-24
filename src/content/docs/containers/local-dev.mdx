@@ -1,11 +1,11 @@
 ---
 pcx_content_type: reference
-title: Local Dev
+title: Local Development
 sidebar:
   order: 3
 ---
 
-## Local Development
+You can run both your container and your Worker locally, without additional configuration, by running [`npx wrangler dev`](/workers/wrangler/commands/#dev) in your project's directory.
 
 To develop Container-enabled Workers locally, you will need to first ensure that a
 Docker compatible CLI tool is installed. For instance, you can use [Docker Desktop](https://docs.docker.com/desktop/)
@@ -26,8 +26,7 @@ local images are not removed, so that they can be reused in subsequent calls to
 `wrangler dev` or `wrangler deploy`.
 
 :::note
-If your Worker app creates many container instances, you may hit local limits
-on concurrent containers.
+If your Worker app creates many container instances, your local machine may not be able to run as many containers concurrently as is possible when you deploy to Cloudflare.
 
 Additionally, if you regularly rebuild containers locally, you may want to clear
 out old container images (using `docker image prune` or similar) to reduce disk used.
@@ -35,13 +34,13 @@ out old container images (using `docker image prune` or similar) to reduce disk 
 
 ## Iterating on Container code
 
-When using `wrangler dev`, standard Worker code is automatically reloaded by wrangler you save a change,
+When you use `wrangler dev`, your Worker's code is automatically reloaded by Wrangler each time you save a change,
 but code running within the container is not.
 
-If you wish to rebuild your container with new code changes, you can hit the `[r]` key on your keyboard, and a
-rebuild will be triggered. Instances will be restarted with the new images.
+To rebuild your container with new code changes, you can hit the `[r]` key on your keyboard, which
+triggers a rebuild. Container instances will then be restarted with the newly built images.
 
-You may prefer to set up your code watchers and reloading mechanisms, or mount a local directory
+You may prefer to set up your own code watchers and reloading mechanisms, or mount a local directory
 into the local container images to sync code changes. This can be done, but there is no built-in
 mechanism for doing so in Wrangler, and best-practices will depend on the languages and frameworks
 you are using in your container code.

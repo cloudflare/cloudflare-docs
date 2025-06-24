@@ -1,6 +1,6 @@
 ---
 pcx_content_type: navigation
-title: Platform Details
+title: Platform
 sidebar:
   order: 2
   group:
@@ -9,12 +9,11 @@ sidebar:
 
 import { WranglerConfig } from "~/components";
 
-This page containers general details about the Containers platform.
 
 ## Instance Types
 
 The memory, vCPU, and disk space for Containers are set through predefined instance types.
-There are currently three instance types available for Containers users by default:
+Three instance types are currently available:
 
 | Instance Type | Memory  | vCPU | Disk |
 | ------------- | ------- | ---- | ---- |
@@ -22,26 +21,24 @@ There are currently three instance types available for Containers users by defau
 | basic         | 1 GiB   | 1/4  | 4 GB |
 | standard      | 4 GiB   | 1/2  | 4 GB |
 
-These are specified using the `instance_type` property in wrangler config.
+These are specified using the [`instance_type` property](/workers/wrangler/configuration/#containers) in your Worker's Wrangler configuration file. Looking for larger instances? [Give us feedback here](/containers/beta-info/#feedback-wanted) and tell us what size instances you need, and what you want to use them for.
 
 ## Limits
 
-Containers limits are currently set per account. You may have higher
-limits on your account if configured as such.
 
-The default limits during the initial beta phase are:
+While in open beta, the following limits are currently in effect:
 
 | Feature                                           | Workers Paid |
 | ------------------------------------------------- | ------------ |
-| GB Memory for concurrent live Container instances | 40GB [^1]    |
-| vCPU for concurrent live Container instances      | 20 [^1]      |
-| GB Disk for concurrent live Container instances   | 100GB [^1]   |
+| GB Memory for all concurrent live Container instances | 40GB [^1]    |
+| vCPU for all concurrent live Container instances      | 20 [^1]      |
+| GB Disk for all concurrent live Container instances   | 100GB [^1]   |
 | Image size                                        | 2 GB         |
-| Total image storage for account                   | 50 GB [^2]   |
+| Total image storage per account                   | 50 GB [^2]   |
 
 [^1]: This limit will be raised as we continue the beta.
 
-[^2]: Delete images with `wrangler containers delete` to free up space. Note that reverted Workers may then break.
+[^2]: Delete container images with `wrangler containers delete` to free up space. Note that if you delete a container image and then [roll back](/workers/configuration/versions-and-deployments/rollbacks/) your Worker to a previous version, this version may no longer work.
 
 ## Environment variables
 
