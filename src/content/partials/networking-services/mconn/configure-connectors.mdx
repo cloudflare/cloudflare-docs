@@ -271,10 +271,18 @@ You cannot enable high availability for an existing Connector on-ramp. To add hi
 		2. You will be prompted to create a new Virtual Connector. Select **yes** to proceed.
 		3. Set up your Virtual Connector name.
 		4. Enter your license key.
+				`}
+		inline={false}
+		/>
+
+		<Aside>You cannot use the same license key twice, or reuse a key once the virtual machine has been registered with Cloudflare. You need a new key from your account team for every new Virtual Connector.</Aside>
+
+		<Markdown
+		text={`
 		5. Select the network interface card (NIC) you want to use with Virtual Connector.
 		6. Select the network bridge that corresponds to the physical network interface card (NIC) on your host machine. This bridge allows the network adapter in the virtual machine to communicate through the NIC in the host, as if it were directly connected to the physical network.
 		7. (Optional) Configure your VLAN setting if needed.
-				`}
+		`}
 		inline={false}
 		/>
 
