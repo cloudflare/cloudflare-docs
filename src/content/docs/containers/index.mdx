@@ -33,17 +33,18 @@ Enhance your Workers with serverless containers
 
 <Plan type="workers-paid" />
 
-With Containers, you can build applications that integrate Workers with a serverless container runtime.
+Run code written in any programming language, built for any runtime, as part of apps built on [Workers](/workers).
 
 Deploy your container image to Region:Earth without worrying about managing infrastructure - just define your
 Worker and `wrangler deploy`.
 
-This lets you run:
+With Containers you can run:
 
-- Resouce-intensive applications that use more memory, CPU, or disk than standard Workers
+- Resource-intensive applications that require multiple vCPUs, large amounts of memory or disk space
 - Applications and libraries that require a full filesystem, specific runtime, or Linux-like environment
-- Existing applications and tools that have been distributed as images
+- Existing applications and tools that have been distributed as container images
 
+Container instances are spun up on-demand and controlled by code you write in your [Worker](/workers).  Instead of chaining together API calls or writing Kubernetes operators, you just write JavaScript:
 <Tabs>
 	<TabItem label="Worker Code">
 ```js
@@ -102,7 +103,8 @@ async fetch(request, env) {
 </TabItem>
 </Tabs>
 
-See the [Getting Started Guide](/containers/get-started/) to start building with Containers.
+
+ <LinkButton variant="primary" href="/containers/get-started/">Get started</LinkButton> <LinkButton variant="secondary" href="https://dash.cloudflare.com/?to=/:account/workers/containers">Containers dashboard</LinkButton>
 
 ---
 
