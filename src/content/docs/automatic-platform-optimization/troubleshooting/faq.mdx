@@ -52,3 +52,7 @@ APO will skip URL font transformation when the `content-security-policy` respons
 To fix the problem, the `content-security-policy` header value must allow for `unsafe-inline` on either the `style-src` or `default-src` directive. For example, `Content-Security-Policy: style-src unsafe-inline;`.
 
 The header must allow for `self` on either the `font-src` or `default-src` directive. For example, `Content-Security-Policy: font-src self;`.
+
+## Why do I see Worker subrequests in my zone logs when using APO?
+
+APO uses Cloudflare Workers internally to optimize content delivery, which results in Worker subrequests. These subrequests may appear in your zone logs (for example, via Logpush).

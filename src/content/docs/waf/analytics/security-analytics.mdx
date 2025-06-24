@@ -9,6 +9,8 @@ import { FeatureTable, GlossaryTooltip, Badge } from "~/components";
 
 Security Analytics displays information about all incoming HTTP requests for your domain, including requests not handled by Cloudflare security products.
 
+By default, Security Analytics queries filter on `requestSource = 'eyeball'`, which represents requests from end users. Note that requests from Cloudflare Workers (subrequests) are not visible in Security Analytics.
+
 Use the Security Analytics dashboard to:
 
 - View the traffic distribution for your domain.
