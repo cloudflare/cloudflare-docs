@@ -189,7 +189,7 @@ export default {
 
 ### Keep Alive
 
-If users omit the `browser.close()` statement, the browser instance will stay open, ready to be connected to again and [re-used](/browser-rendering/workers-binding-api/reuse-sessions/) but it will, by default, close automatically after 1 minute of inactivity. Users can optionally extend this idle time up to 10 minutes, by using the `keep_alive` option, set in milliseconds:
+If users omit the `browser.close()` statement, the browser instance will stay open, ready to be connected to again and [re-used](/browser-rendering/workers-bindings/reuse-sessions/) but it will, by default, close automatically after 1 minute of inactivity. Users can optionally extend this idle time up to 10 minutes, by using the `keep_alive` option, set in milliseconds:
 
 ```js
 const browser = await playwright.launch(env.MYBROWSER, { keep_alive: 600000 });

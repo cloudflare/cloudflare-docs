@@ -21,6 +21,7 @@ import {
 	FloatingPortal,
 } from "@floating-ui/react";
 import { PiCaretDownBold } from "react-icons/pi";
+import { setSearchParams } from "~/util/url";
 
 function SearchBox(props: UseSearchBoxProps) {
 	const { query, refine } = useSearchBox(props);
@@ -43,11 +44,7 @@ function SearchBox(props: UseSearchBoxProps) {
 			params.delete("q");
 		}
 
-		history.pushState(
-			null,
-			"",
-			`${window.location.pathname}?${params.toString()}`,
-		);
+		setSearchParams(params);
 	}, [query]);
 
 	return (
@@ -143,11 +140,7 @@ function FilterDropdown({
 			params.set(attribute, refined.join(","));
 		}
 
-		history.pushState(
-			null,
-			"",
-			`${window.location.pathname}?${params.toString()}`,
-		);
+		setSearchParams(params);
 	}, [items]);
 
 	const { refs, floatingStyles, context } = useFloating({

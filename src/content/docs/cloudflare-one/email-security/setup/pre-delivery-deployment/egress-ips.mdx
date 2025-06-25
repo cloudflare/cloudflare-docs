@@ -11,15 +11,14 @@ Setting up egress IPs allows Cloudflare to deliver emails to your inbox.
 
 Refer to this page for reference on what IP subnet mask ranges to use.
 
-:::caution[Additional information for O365]
+:::caution[Additional information for Microsoft 365]
 
-Office 365 does not support IPv6 addresses nor the following IPv4 subnet mask ranges:
+Microsoft 365 does not support IPv6 addresses nor the following IPv4 subnet mask ranges:
 
-* `104.30.32.0/19`
-* `134.195.26.0/23`
+- `104.30.32.0/19`
+- `134.195.26.0/23`
 
-If you use Office 365, you will have to use the broken down `/24` subnet mask IP addresses. Refer to [Office 365 `/24` addresses](#office-365-24-addresses) for a list of supported IPv4 addresses.
-
+If you use Microsoft 365, you will have to use the broken down `/24` subnet mask IP addresses. Refer to [Microsoft 365 `/24` addresses](#microsoft-365-24-addresses) for a list of supported IPv4 addresses.
 
 :::
 
@@ -47,9 +46,9 @@ If you use Office 365, you will have to use the broken down `/24` subnet mask IP
 35.157.195.63
 ```
 
-## Office 365 `/24` addresses
+## Microsoft 365 `/24` addresses
 
-Use these IPv4 addresses for Office 365, instead of the `/19` and `/23` subnets:
+Use these IPv4 addresses for Microsoft 365, instead of the `/19` and `/23` subnets:
 
 ```txt
 104.30.32.0/24

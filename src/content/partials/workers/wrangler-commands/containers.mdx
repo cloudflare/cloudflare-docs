@@ -1,0 +1,133 @@
+---
+{}
+---
+
+import { Render, AnchorHeading, Type, MetaInfo } from "~/components";
+
+<AnchorHeading title="`build`" slug="containers-build" depth={3} />
+
+Build a Container image from a Dockerfile.
+
+```txt
+wrangler containers build [PATH] [OPTIONS]
+```
+
+- `PATH` <Type text="string" /> <MetaInfo text="optional" />
+  - Path for the directory containing the Dockerfile to build.
+
+#### Options:
+
+- `-t, --tag` <Type text="string" /> <MetaInfo text="required" />
+  - Name and optionally a tag (format: "name:tag").
+- `--path-to-docker` <Type text="string" /> <MetaInfo text="optional" />
+  - Path to your docker binary if it's not on $PATH.
+  - Default: "docker"
+- `-p, --push` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Push the built image to Cloudflare's managed registry.
+  - Default: false
+- `--platform` <Type text="string" /> <MetaInfo text="optional" />
+  - Platform to build for. Defaults to the architecture supported by Workers (linux/amd64).
+  - Default: "linux/amd64"
+- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Return output as clean JSON.
+  - Default: false
+
+<AnchorHeading title="`delete`" slug="containers-delete" depth={3} />
+
+Delete a Container (application).
+
+```txt
+wrangler containers delete <CONTAINER_ID> [OPTIONS]
+```
+
+- `CONTAINER_ID` <Type text="string" /> <MetaInfo text="required" />
+  - The ID of the Container to delete.
+- `-y, --skip-confirmation` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Skip deletion confirmation prompt.
+- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Return output as JSON rather than a table.
+
+<AnchorHeading title="`images`" slug="containers-images" depth={3} />
+
+Perform operations on images in your containers registry.
+
+<AnchorHeading title="`images list`" slug="containers-images-list" depth={4} />
+
+List images in your containers registry.
+
+```txt
+wrangler containers images list [OPTIONS]
+```
+
+#### Options:
+
+- `--filter` <Type text="string" /> <MetaInfo text="optional" />
+  - Regex to filter results.
+- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Return output as clean JSON.
+  - Default: false
+
+<AnchorHeading
+	title="`images delete`"
+	slug="containers-images-delete"
+	depth={4}
+/>
+
+Remove an image from your containers registry.
+
+```txt
+wrangler containers images delete [IMAGE] [OPTIONS]
+```
+
+- `IMAGE` <Type text="string" /> <MetaInfo text="required" />
+  - Image to delete.
+
+#### Options:
+
+- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Return output as clean JSON.
+  - Default: false
+
+<AnchorHeading title="`info`" slug="containers-info" depth={3} />
+
+Get information about a specific Container, including top-level details and a list of instances.
+
+```txt
+wrangler containers info <CONTAINER_ID> [OPTIONS]
+```
+
+- `CONTAINER_ID` <Type text="string" /> <MetaInfo text="required" />
+  - The ID of the Container to get information about.
+- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Return output as JSON rather than a table.
+
+<AnchorHeading title="`list`" slug="containers-list" depth={3} />
+
+List the Containers in your account.
+
+```txt
+wrangler containers list [OPTIONS]
+```
+
+- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Return output as JSON rather than a table.
+
+<AnchorHeading title="`push`" slug="containers-push" depth={3} />
+
+Push a tagged image to a Cloudflare managed registry, which is automatically integrated with your account.
+
+```txt
+wrangler containers push [TAG] [OPTIONS]
+```
+
+- `TAG` <Type text="string" /> <MetaInfo text="required" />
+  - The name and tag of the container image to push.
+
+#### Options:
+
+- `--path-to-docker` <Type text="string" /> <MetaInfo text="optional" />
+  - Path to your docker binary if it's not on $PATH.
+  - Default: "docker"
+- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Return output as clean JSON.
+  - Default: false

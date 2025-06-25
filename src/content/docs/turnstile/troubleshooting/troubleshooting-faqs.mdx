@@ -12,9 +12,9 @@ import { Render } from "~/components"
 
 The Turnstile widget needs to be refreshed to generate a new token. This can be done using the `turnstile.reset` function.
 
-## Can the front end use siteverify?
+## Can the front end use Siteverify?
 
-The siteverify API must not be called by the front end as this may reveal the secret key used to authenticate. An attacker may simply modify the front end to not perform the siteverify check at all, rendering Turnstile ineffective.
+The Siteverify API must not be called by the front end as this may reveal the secret key used to authenticate. An attacker may simply modify the front end to not perform the siteverify check at all, rendering Turnstile ineffective.
 
 
 ## What is challenges.cloudflare.com, and why does my application connect to this origin?

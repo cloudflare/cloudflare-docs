@@ -15,9 +15,9 @@ Write-Output "This one has a title!"
 ```js collapse={3-5}
 // Collapsing
 const foo = {
-  1: 1,
-  2: 2,
-  3: 3,
+	1: 1,
+	2: 2,
+	3: 3,
 };
 ```
 
@@ -80,10 +80,12 @@ index_name = "tutorial-index"
 ```
 ````
 
-## Playground
+## Workers Playground
 
 If you add the `playground` option to the opening code fence for a Worker example, it will
 add a "Run Worker in Playground" link that will take the user to the [Worker's playground](/workers/playground/)
+
+### Live demo
 
 ```js playground
 export default {
@@ -93,12 +95,61 @@ export default {
 };
 ```
 
-````mdx
+### How to use
+
+````mdx "playground"
 ```js playground
 export default {
 	fetch() {
 		return new Response("Test!");
 	},
 };
+```
+````
+
+## GraphQL API explorer
+
+If you add the `graphql-api-explorer` option to the opening code fence for a `graphql` code block, it will
+add a "Run in GraphQL API Explorer" link that will take the user to the [GraphQL API explorer](https://graphql.cloudflare.com/explorer).
+
+### Live demo
+
+```graphql graphql-api-explorer title="A GraphQL query"
+query ASingleDatasetExample($zoneTag: string, $start: Time, $end: Time) {
+	viewer {
+		zones(filter: { zoneTag: $zoneTag }) {
+			firewallEventsAdaptive(
+				filter: { datetime_gt: $start, datetime_lt: $end }
+				limit: 2
+				orderBy: [datetime_DESC]
+			) {
+				action
+				datetime
+				host: clientRequestHTTPHost
+			}
+		}
+	}
+}
+```
+
+### How to use
+
+````mdx "graphql-api-explorer"
+```graphql graphql-api-explorer title="A GraphQL query"
+query ASingleDatasetExample($zoneTag: string, $start: Time, $end: Time) {
+	viewer {
+		zones(filter: { zoneTag: $zoneTag }) {
+			firewallEventsAdaptive(
+				filter: { datetime_gt: $start, datetime_lt: $end }
+				limit: 2
+				orderBy: [datetime_DESC]
+			) {
+				action
+				datetime
+				host: clientRequestHTTPHost
+			}
+		}
+	}
+}
 ```
 ````
