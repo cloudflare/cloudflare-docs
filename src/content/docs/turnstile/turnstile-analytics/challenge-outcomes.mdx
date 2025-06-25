@@ -11,7 +11,7 @@ When a visitor encounters Turnstile, it assesses whether they are human or bot-l
 
 ## Metrics
 
-A "solved" Turnstile challenge does not automatically confirm the visitor is human. You must [call the siteverify API](#call-siteverify) to validate the token and proceed only if the response returns `success:true`.
+A "solved" Turnstile challenge does not automatically confirm the visitor is human. You must [call the Siteverify API](#call-siteverify) to validate the token and proceed only if the response returns `success:true`.
 
 For example, the challenge outcome values in your analytics may look like this:
 
@@ -25,7 +25,7 @@ For example, the challenge outcome values in your analytics may look like this:
 
 By analyzing these metrics, you can identify trends such as high failure rates in specific regions, device types, or traffic sources, which may indicate bot activity or misconfigurations.
 
-### Call siteverify
+### Call Siteverify
 
 <Render file="siteverify" />
 

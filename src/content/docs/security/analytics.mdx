@@ -12,6 +12,8 @@ Security analytics shows information about all incoming HTTP requests or only ab
 
 Use Security analytics as your starting point to understand and analyze traffic patterns, and to create security rules based on the filters you applied.
 
+By default, Security Analytics queries filter on `requestSource = 'eyeball'`, which represents requests from end users. Note that requests from Cloudflare Workers (subrequests) are not visible in Security Analytics.
+
 Security analytics is available in **Security** > **Analytics**.
 
 ## Traffic

@@ -5,6 +5,9 @@ productLink: "/bots/"
 productArea: Application security
 productAreaLink: /fundamentals/reference/changelog/security/
 entries:
+  - publish_date: "2025-07-02"
+    title: Managed robots.txt will prepend existing files
+    description: Cloudflare will prepend our managed `robots.txt` before your existing `robots.txt`, combining both into a single response.
   - publish_date: "2025-05-14"
     title: Anomaly detection events now receive a bot score of 2
     description: Events detected by the [anomaly detection engine](/bots/concepts/bot-detection-engines/#anomaly-detection-enterprise) are now given a bot score of 2.
