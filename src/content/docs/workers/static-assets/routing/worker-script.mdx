@@ -127,3 +127,44 @@ export default class extends WorkerEntrypoint<Env> {
 }
 ```
 </TypeScriptExample>
+
+### Run Worker only on selective paths
+
+You can configure a User Worker to only be invoked on specific paths, by using an array of positive route patterns, followed by a negative wildcard pattern. This configuration can be very helpful when hosting a static website with a Worker as a simple backend service:
+
+For more information you can take a look at the [routing reference diagram](/workers/static-assets/routing/static-site-generation/#reference).
+
+<WranglerConfig>
+
+```json
+{
+	"name": "my-worker",
+	"compatibility_date": "$today",
+	"main": "./worker/index.ts",
+	"assets": {
+		"directory": "./dist/",
+		"not_found_handling": "single-page-application",
+		"binding": "ASSETS",
+		"run_worker_first": ["/api/*", "!**"]
+	}
+}
+```
+
+</WranglerConfig>
+
+<TypeScriptExample filename="./worker/index.ts">
+
+```ts
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+export default class extends WorkerEntrypoint<Env> {
+	async fetch(request: Request) {
+		// This Worker script is only called for requests on paths starting with `/api/`
+		return Response.json({
+			success: true,
+			message: 'Hello from API endpoint',
+		});
+	}
+}
+```
+</TypeScriptExample>
