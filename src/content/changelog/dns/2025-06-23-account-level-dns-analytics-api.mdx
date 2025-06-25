@@ -15,7 +15,6 @@ query Viewer {
     viewer {
         accounts(filter: { accountTag: "a30f822fcd7c401984bf85d8f2a5111c" }) {
             dnsAnalyticsAdaptive(
-                limit: 10
                 filter: { date_geq: "2025-06-16", responseCode: "NXDOMAIN", date_leq: "2025-06-18" }
                 orderBy: [datetime_DESC]
             ) {
