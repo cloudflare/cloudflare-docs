@@ -10,10 +10,6 @@ sidebar:
 
 import { Render, GlossaryTooltip  } from "~/components"
 
-:::note[Availability]
-Browser-based RDP is currently available in closed beta to Enterprise customers. To request access, contact your account team.
-:::
-
 With Cloudflare Zero Trust, users can connect to an RDP server without installing an RDP client or the [WARP client](/cloudflare-one/connections/connect-devices/warp/) on their device. Browser-based RDP leverages [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/), which creates a secure, outbound-only connection from your RDP server to Cloudflare's global network. Setup involves running the `cloudflared` daemon on the RDP server (or any other host machine within the private network) and routing RDP traffic over a public hostname.
 
 There are two ways for users to [reach the RDP server in their browser](#4-connect-as-a-user):

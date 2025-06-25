@@ -3,6 +3,7 @@ import ModelInfo from "./models/ModelInfo";
 import ModelBadges from "./models/ModelBadges";
 import { authorData } from "./models/data";
 import type { WorkersAIModelsSchema } from "~/schemas";
+import { setSearchParams } from "~/util/url";
 
 type Filters = {
 	search: string;
@@ -66,6 +67,30 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 			capabilities,
 		});
 	}, []);
+
+	useEffect(() => {
+		const params = new URLSearchParams();
+
+		if (filters.search) {
+			params.set("search", filters.search);
+		}
+
+		if (filters.authors.length > 0) {
+			filters.authors.forEach((author) => params.append("authors", author));
+		}
+
+		if (filters.tasks.length > 0) {
+			filters.tasks.forEach((task) => params.append("tasks", task));
+		}
+
+		if (filters.capabilities.length > 0) {
+			filters.capabilities.forEach((capability) =>
+				params.append("capabilities", capability),
+			);
+		}
+
+		setSearchParams(params);
+	}, [filters]);
 
 	const mapped = sortedModels.map((model) => ({
 		model: {

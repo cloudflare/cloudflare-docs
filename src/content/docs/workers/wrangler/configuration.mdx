@@ -1065,6 +1065,74 @@ run_worker_first = [
 
 </WranglerConfig>
 
+## Containers
+
+You can define [Containers](/containers) to run alongside your Worker using the `containers` field.
+
+:::note
+You must also define a Durable Object to communicate with your Container via Workers. This Durable Object's
+class name must match the `class_name` value in container configuration.
+:::
+
+The following options are available:
+
+- `image` <Type text="string" /> <MetaInfo text="required" />
+
+  - The image to use for the container. This can either be a local path, in which case `wrangler deploy` will
+    build and push the image. Or it can be an image URL. Currently, only the Cloudflare Registry is a supported registry.
+
+- `class_name` <Type text="string" /> <MetaInfo text="required" />
+
+  - The corresponding Durable Object class name. This will make this Durable Object a container-enabled Durable Object
+    and allow each instance to control a container. See [Durable Object Container Methods](/durable-objects/api/container/) for details.
+
+- `instance_type` <Type text="string" /> <MetaInfo text="optional" />
+
+  - The instance type of the container. This determines the amount of memory, CPU, and disk given to the container
+    instance. The current options are `"dev"`, `"basic"`, and `"standard"`. The default is `"dev"`. For more information,
+    the see [instance types documentation](/containers/platform-details#instance-types).
+
+- `max_instances` <Type text="string" /> <MetaInfo text="optional" />
+
+  - The maxiumum number of concurrent container instances you want to run. If you have more Durable Objects that
+    request to run a container than this number, the container request will error. You may have more Durable Objects
+    than this number over a longer time period, but you may not have more concurrently.
+
+- `name` <Type text="string" /> <MetaInfo text="optional" />
+
+  - The name of your container. Used as an identifier. This will default to a comination of your Worker name, the class
+    name, and your environment.
+
+- `image_build_context` <Type text="string" /> <MetaInfo text="optional" />
+
+  - The build context of the application, by default it is the directory of `image`.
+
+- `image_vars` <Type text="Record<string, string>" /> <MetaInfo text="optional" />
+
+  - Environment variables to set in the container. These will be used during the build phase and will be defaults
+    when running the container, though they can be overridden at runtime when starting the container.
+
+<WranglerConfig>
+
+```toml title="wrangler.toml"
+[[containers]]
+class_name = "MyContainer"
+image = "./Dockerfile"
+max_instances = 10
+instance_type = "basic" # Optional, defaults to "dev"
+image_vars = { FOO = "BAR" }
+
+[[durable_objects.bindings]]
+name = "MY_CONTAINER"
+class_name = "MyContainer"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["MyContainer"]
+```
+
+</WranglerConfig>
+
 ## Bundling
 
 :::note

@@ -8,8 +8,8 @@ import { getOgImage } from "~/util/og";
 import type { CollectionEntry } from "astro:content";
 
 const DEFAULT_TITLE_DELIMITER = "|";
-const NOINDEX_PRODUCTS = ["email-security", "style-guide", "security"];
-const CHATBOT_DEPRIORITIZE_PRODUCTS = ["firewall"];
+const NOINDEX_PRODUCTS = ["email-security", "security"];
+const CHATBOT_DEPRIORITIZE_PRODUCTS = ["firewall", "style-guide"];
 
 const currentSection = Astro.url.pathname.split("/")[1].replaceAll(".", "");
 

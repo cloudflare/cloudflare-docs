@@ -22,7 +22,7 @@ Before you start the onboarding process, you will have to:
 
 When you choose post-delivery deployment, Cloudflare scans emails **after** they reach a users' inbox.
 
-If you are a Microsoft 365 user, this is done via [Microsoft's Graph API](/cloudflare-one/email-security/setup/post-delivery-deployment/api/office365-api/) or [journaling](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/journaling-setup/office365-journaling/).
+If you are a Microsoft 365 user, this is done via [Microsoft's Graph API](/cloudflare-one/email-security/setup/post-delivery-deployment/api/m365-api/) or [journaling](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/journaling-setup/m365-journaling/).
 
 If you are a [Google Workspace](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/bcc-setup/gmail-bcc-setup/gmail-bcc-setup/) or [Microsoft Exchange](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/bcc-setup/bcc-microsoft-exchange/) user, this is done via BCC.
 
@@ -106,7 +106,7 @@ Follow the below checklist to ensure your email environment is set up correctly:
 
 | Step                                                                                                    | Post-delivery | Pre-delivery |
 |---------------------------------------------------------------------------------------------------------|---------------|--------------|
-| Authorize integration ([Graph API](/cloudflare-one/email-security/setup/post-delivery-deployment/api/office365-api/#enable-microsoft-integration) or [Google Workspace](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/bcc-setup/gmail-bcc-setup/enable-gmail-integration/))                                                | Required[^1]      | Required [^2]     |
+| Authorize integration ([Graph API](/cloudflare-one/email-security/setup/post-delivery-deployment/api/m365-api/#enable-microsoft-integration) or [Google Workspace](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/bcc-setup/gmail-bcc-setup/enable-gmail-integration/))                                                | Required[^1]      | Required [^2]     |
 | Associate an integration with an MX/Inline domain                                                       |               | Required     |
 | Add/verify domains                                                                                      | Required      | Required     |
 | [Update MX records/connector](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment-setup/), then allow Cloudflare [egress IPs](/cloudflare-one/email-security/setup/pre-delivery-deployment/egress-ips/) on downstream mail server |               | Required     |

@@ -139,7 +139,7 @@ entries:
 
   - name: Advanced HTTP DDoS Attack Alert
     audience: "[WAF](/waf/) or [CDN](/cache/) customers with the [Advanced DDoS Protection](/ddos-protection/) subscription who want to receive a notification when Cloudflare has mitigated attacks that generate more than the configured number of requests per second (100 rps by default)."
-    availability: Enterprise plans.
+    availability: Enterprise plans with the Advanced DDoS Protection add-on.
     associatedProducts: DDoS Protection
     nextSteps: No action needed. Refer to [DDoS alerts](/ddos-protection/reference/alerts/) for more information.
     otherFilters: |-
