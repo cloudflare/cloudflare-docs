@@ -41,11 +41,11 @@ To make your RDP targets (that is, your Windows machines) available through the 
 For example, if want users to connect to targets on `rdp.example.com`, [create a DNS record](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) for `rdp.example.com`. You can create either an `A`, `AAAA`, or `CNAME` record:
 
 <Details header="A record" open={false}>
-The following DNS record points your public subdomain (`rdp`) to the default IPv4 address range:
+The following DNS record points your public subdomain (`rdp`) to an IPv4 address in the [Class E address space](https://datatracker.ietf.org/doc/html/rfc5735).
 
 - **Type**: _A_
 - **Name**: `rdp`
-- **IPv4 address**: `0.0.0.0`
+- **IPv4 address**: `240.0.0.0`
 - **Proxy status**: On
 
 </Details>
