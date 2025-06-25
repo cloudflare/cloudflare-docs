@@ -55,8 +55,10 @@ On a Windows device, you may need to set up Windows Hello or register your secur
 
 ## Configure TOTP mobile application authentication
 
+Time-based one-time password (TOTP) authentication works by using an authenticatior app, such as Google Authenticator or Microsoft Authenticator, which generates a secret code shared between the app and a website. When you log in to the website, you enter your username, password, and the secret code generated from the authenticator app. The secret code is only valid for a short period of time, about 30 to 60 seconds, before a new code is generated. 
+
 1. Once your security key is plugged in, go to **Profile** > **Authentication**.
-2. From **Two-Factor Authentication, select **Set up**.
+2. From **Two-Factor Authentication**, select **Set up**.
 3. Under **Mobile App Authentication**, select **Add**.
 4. Scan the QR code with your mobile device and enter the code from your authenticator application.
 5. Enter your Cloudflare password, then select **Next**. If you cannot scan the QR code, select **Can't scan QR code, Follow alternative steps** to configure your authenticator application manually.
@@ -64,10 +66,12 @@ On a Windows device, you may need to set up Windows Hello or register your secur
 ![You can enable 2FA by scanning a QR code with your mobile device.](~/assets/images/fundamentals/2FA_scan_QR_code.png)
 
 6. Enter your Cloudflare password again.
-7. Select **Next** to review your backup codes. You can use backup codes to access your account without your mobile device.  
-8. Select **Download**, **Print**, or **Copy** to save your backup codes in a secure location.
+7. Select **Next** to review your backup codes. You can use backup codes to access your account without your mobile device.
+8. Select **Download**, **Print**, or **Copy** to save your backup codes in a secure location.
 
 :::note
+
+To avoid being locked out of your account, be sure to generate and save your recovery codes. If you forget your password and cannot receive the reset code or lose access to your phone with the authenticator app, you can use the recovery codes to access your account. 
 
 You can regenerate your backup codes at any time using the Cloudflare dashboard.
 :::
