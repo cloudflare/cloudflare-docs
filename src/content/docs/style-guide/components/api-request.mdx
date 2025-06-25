@@ -8,6 +8,8 @@ styleGuide:
 
 ```mdx
 import { APIRequest } from "~/components";
+
+;
 ```
 
 ## Usage
@@ -22,7 +24,7 @@ import { APIRequest } from "~/components";
 		validation_default_mitigation_action: "block",
 	}}
 	code={{
-		mark: [5, "block"]
+		mark: [5, "block"],
 	}}
 />
 
@@ -111,6 +113,8 @@ If not provided, the component will default to an environment variable. For exam
 The JSON payload to send.
 
 If required properties are missing, the component will throw an error.
+
+Functionally, [the `--json` option](https://everything.curl.dev/http/post/json.html) is equivalent to the `--data` option in cURL, but handles a few additional headers automatically.
 
 ### `form`
 

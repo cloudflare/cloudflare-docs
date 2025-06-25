@@ -1,0 +1,68 @@
+---
+pcx_content_type: navigation
+title: Platform
+sidebar:
+  order: 2
+  group:
+    hideIndex: true
+---
+
+import { WranglerConfig } from "~/components";
+
+
+## Instance Types
+
+The memory, vCPU, and disk space for Containers are set through predefined instance types.
+Three instance types are currently available:
+
+| Instance Type | Memory  | vCPU | Disk |
+| ------------- | ------- | ---- | ---- |
+| dev           | 256 MiB | 1/16 | 2 GB |
+| basic         | 1 GiB   | 1/4  | 4 GB |
+| standard      | 4 GiB   | 1/2  | 4 GB |
+
+These are specified using the [`instance_type` property](/workers/wrangler/configuration/#containers) in your Worker's Wrangler configuration file. Looking for larger instances? [Give us feedback here](/containers/beta-info/#feedback-wanted) and tell us what size instances you need, and what you want to use them for.
+
+## Limits
+
+
+While in open beta, the following limits are currently in effect:
+
+| Feature                                           | Workers Paid |
+| ------------------------------------------------- | ------------ |
+| GB Memory for all concurrent live Container instances | 40GB [^1]    |
+| vCPU for all concurrent live Container instances      | 20 [^1]      |
+| GB Disk for all concurrent live Container instances   | 100GB [^1]   |
+| Image size                                        | 2 GB         |
+| Total image storage per account                   | 50 GB [^2]   |
+
+[^1]: This limit will be raised as we continue the beta.
+
+[^2]: Delete container images with `wrangler containers delete` to free up space. Note that if you delete a container image and then [roll back](/workers/configuration/versions-and-deployments/rollbacks/) your Worker to a previous version, this version may no longer work.
+
+## Environment variables
+
+The container runtime automatically sets the following variables:
+
+- `CLOUDFLARE_COUNTRY_A2` - a two-letter code of a country the container is placed in
+- `CLOUDFLARE_DEPLOYMENT_ID` - the ID of the container instance
+- `CLOUDFLARE_LOCATION` - a name of a location the container is placed in
+- `CLOUDFLARE_NODE_ID` - an ID of a machine the container runs on
+- `CLOUDFLARE_PLACEMENT_ID` - a placement ID
+- `CLOUDFLARE_REGION` - a region name
+
+:::note
+If you supply environment variables with the same names, supplied values will override predefined values.
+:::
+
+Custom environment variables can be set when defining a Container in your Worker:
+
+```javascript
+class MyContainer extends Container {
+	defaultPort = 4000;
+	envVars = {
+		MY_CUSTOM_VAR: "value",
+		ANOTHER_VAR: "another_value",
+	};
+}
+```

@@ -10,7 +10,7 @@ head:
 
 import { Render } from "~/components";
 
-Cloudflare Logpush supports pushing logs directly to Splunk via the Cloudflare dashboard or via API.
+The [HTTP Event Collector (HEC)](https://dev.splunk.com/enterprise/docs/devtools/httpeventcollector/) is a reliable method to receive data from Splunk Enterprise or Splunk Cloud Platform. Cloudflare Logpush supports pushing logs directly to Splunk HEC via the Cloudflare dashboard or API.
 
 ## Manage via the Cloudflare dashboard
 
@@ -19,9 +19,9 @@ Cloudflare Logpush supports pushing logs directly to Splunk via the Cloudflare d
 5. In **Select a destination**, choose **Splunk**.
 
 6. Enter or select the following destination information:
-   - **Splunk raw HTTP Event Collector URL**
-   - **Channel ID** - This is a random GUID that you can generate using [guidgenerator.com](http://guidgenerator.com/).
-   - **Auth Token**
+   - **Splunk HEC URL**
+   - **Channel ID** - This is a random GUID that you can generate using [guidgenerator.com](https://guidgenerator.com/).
+   - **Auth Token** - Event Collector token.
    - **Source Type** - For example, `cloudflare:json`. If you are using the [Cloudflare App for Splunk](https://splunkbase.splunk.com/app/4501), refer to the appropriate source type for the corresponding datasets under the **Details** section. For instance, for Zero Trust Access requests logs, the source type is `cloudflare:access`.
    - **Use insecure skip verify option** (not recommended).
 
@@ -64,10 +64,9 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 - **destination_conf** - A log destination consisting of an endpoint URL, channel id, insecure-skip-verify flag, source type, authorization header in the string format below.
 
   - **\<SPLUNK_ENDPOINT_URL>**: The Splunk raw HTTP Event Collector URL with port. For example: `splunk.cf-analytics.com:8088/services/collector/raw`.
-    - Cloudflare expects the HEC network port to be configured to `:443` or `:8088`.
     - Cloudflare expects the Splunk endpoint to be `/services/collector/raw` while configuring and setting up the Logpush job.
     - Ensure you have enabled HEC in Splunk. Refer to [Splunk Analytics Integrations](/analytics/analytics-integrations/splunk/) for information on how to set up HEC in Splunk.
-    - You may notice an API request failed with a 504 error, when adding an incorrect URL. Splunk Cloud endpoint URL usually contains `http-inputs-` or similar text before the hostname. Refer to [Send data to HTTP Event Collector on Splunk Cloud Platform](https://docs.splunk.com/Documentation/Splunk/latest/Data/UsetheHTTPEventCollector#Send_data_to_HTTP_Event_Collector) for more details.
+    - You may notice an API request failed with a 504 error, when adding an incorrect URL. Splunk Cloud endpoint URL usually contains `http-inputs-` or similar text before the hostname.
   - **\<SPLUNK_CHANNEL_ID>**: A unique channel ID. This is a random GUID that you can generate by:
     - Using an online tool like the [GUID generator](https://www.guidgenerator.com/).
     - Using the command line. For example: `python -c 'import uuid; print(uuid.uuid4())'`.
