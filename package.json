@@ -41,7 +41,7 @@
 		"@expressive-code/plugin-collapsible-sections": "0.41.2",
 		"@floating-ui/react": "0.27.12",
 		"@iarna/toml": "2.2.5",
-		"@lottiefiles/dotlottie-react": "0.14.1",
+		"@lottiefiles/dotlottie-react": "0.14.2",
 		"@marsidev/react-turnstile": "1.1.0",
 		"@microsoft/fetch-event-source": "2.0.1",
 		"@nanostores/react": "1.0.0",
