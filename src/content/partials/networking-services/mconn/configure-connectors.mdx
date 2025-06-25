@@ -292,7 +292,7 @@ You cannot enable high availability for an existing Connector on-ramp. To add hi
 
 ## Set up Cloudflare dashboard
 
-### 1. Add a Connector on-ramp
+### Add a Connector on-ramp
 
 You need to add your Connector to your Cloudflare dashboard and configure its settings before connecting it to the Internet.
 
@@ -309,7 +309,7 @@ To add a Connector on-ramp:
 9. The Connector will be added to your account with an **Interrupt window** defined. The interrupt window is the time period when the Magic WAN Connector software can update, which may result in interruption to existing connections. You can change this later. Refer to [Interrupt window](/magic-wan/configuration/connector/maintenance/interrupt-service-window/) for more details on how to define when the Connector can update its systems.
 10. Select **Continue** to proceed to creating your WAN and LAN networks.
 
-### 2. Create a WAN
+### Create a WAN
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -352,7 +352,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{sit
 
 </TabItem> </Tabs>
 
-### 3. Create a LAN
+### Create a LAN
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
