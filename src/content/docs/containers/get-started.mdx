@@ -86,7 +86,7 @@ Incoming requests are initially handled by the Worker, then passed to a containe
 To simplify and reduce boilerplate code, Cloudflare provides a [`Container` class](https://github.com/cloudflare/containers) as part of the `@cloudflare/containers` NPM package.
 
 You don't have to be familiar with Durable Objects to use Containers, but it may be helpful
-to understand how the basics.
+to understand the basics.
 
 Each Durable Object runs alongside an individual container instance, manages starting and stopping it, and
 can interact with the container through its ports. Containers will likely run near the Worker instance
