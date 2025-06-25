@@ -93,7 +93,7 @@ curl -X POST https://api.cloudflare.com/client/v4/accounts/<acccountID>/browser-
 Visit the [Browser Rendering PDF API reference](/api/resources/browser_rendering/subresources/pdf/methods/create/) for all available parameters, such as setting HTTP credentials using `authenticate`, setting `cookies`, and customizing load behavior using `gotoOptions`.
 :::
 
-### Advanced Page Load with Custom Headers and Viewport
+### Advanced page load with custom headers and viewport
 
 Navigate to `https://example.com`, setting additional HTTP headers and configuring the page size (viewport). The PDF generation will wait until there are no more than 2 network connections for at least 500 ms, or until the maximum timeout of 4500 ms is reached, before rendering.
 
