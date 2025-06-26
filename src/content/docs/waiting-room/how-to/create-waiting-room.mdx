@@ -8,7 +8,7 @@ head:
     content: Create a waiting room
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, APIRequest } from "~/components";
 
 You can create a waiting room from the dashboard or via API.
 
@@ -37,29 +37,28 @@ To create a Waiting Room using the API, send a [`POST` request](/api/resources/w
 - For authentication instructions, refer to [Create an API token](/fundamentals/api/get-started/create-token/).
 - For help with endpoints and pagination, refer to [Make API calls](/fundamentals/api/how-to/make-api-calls/).
 
-```json title="Request"
-curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone_identifier}/waiting_rooms" \
---header 'Authorization: Bearer REDACTED' \
---header 'Content-Type: application/json' \
---data '{
-  "name": "shop_waiting_room",
-  "description": "Waiting room for webshop",
-  "host": "shop.example.com",
-  "path": "/shop",
-  "queue_all": true,
-  "new_users_per_minute": 200,
-  "total_active_users": 300,
-  "session_duration": 1,
-  "disable_session_renewal": false,
-  "json_response_enabled": false,
-  "queueing_method": "fifo",
-  "queueing_status_code": 202,
-  "cookie_attributes": {
-    "samesite": "auto",
-    "secure": "auto"
-  }
-}'
-```
+<APIRequest
+  path="/zones/{zone_id}/waiting_rooms"
+  method="POST"
+  json={{
+    name: "shop_waiting_room",
+    description: "Waiting room for webshop",
+    host: "shop.example.com",
+    path: "/shop",
+    queue_all: true,
+    new_users_per_minute: 200,
+    total_active_users: 300,
+    session_duration: 1,
+    disable_session_renewal: false,
+    json_response_enabled: false,
+    queueing_method: "fifo",
+    queueing_status_code: 202,
+    cookie_attributes: {
+      samesite: "auto",
+      secure: "auto"
+    }
+  }}
+/>
 
 The response contains the complete definition of the newly created Waiting Room.
 

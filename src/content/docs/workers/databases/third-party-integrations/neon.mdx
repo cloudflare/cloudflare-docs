@@ -1,15 +1,31 @@
 ---
 pcx_content_type: configuration
 title: Neon
+description: Connect Workers to a Neon Postgres database.
 ---
 
-import { Render, PackageManagers } from "~/components";
+import { Render, PackageManagers, Tabs, TabItem } from "~/components";
 
 [Neon](https://neon.tech/) is a fully managed serverless PostgreSQL. It separates storage and compute to offer modern developer features, such as serverless, branching, and bottomless storage.
 
-## Set up an integration with Neon
+:::note
 
-To set up an integration with Neon:
+You can connect to Neon using [Hyperdrive](/hyperdrive) (recommended), or using the Neon serverless driver, `@neondatabase/serverless`. Both provide connection pooling and reduce the amount of round trips required to create a secure connection from Workers to your database.
+
+Hyperdrive can provide the lowest possible latencies because it performs the database connection setup and connection pooling across Cloudflare's network. Hyperdrive supports native database drivers, libraries, and ORMs, and is included in all [Workers plans](/hyperdrive/platform/pricing/). Learn more about Hyperdrive in [How Hyperdrive Works](/hyperdrive/configuration/how-hyperdrive-works/).
+
+:::
+
+<Tabs>
+	<TabItem label="Hyperdrive (recommended)">
+
+To connect to Neon using [Hyperdrive](/hyperdrive), follow these steps:
+
+         <Render file="neon-partial" product="hyperdrive"/>
+    </TabItem>
+    <TabItem label="Neon serverless driver">
+
+To connect to Neon using `@neondatabase/serverless`, follow these steps:
 
 1. You need to have an existing Neon database to connect to. [Create a Neon database](https://neon.tech/docs/postgres/tutorial-createdb#create-a-table) or [load data from an existing database to Neon](https://neon.tech/docs/import/import-from-postgres).
 
@@ -58,18 +74,21 @@ To set up an integration with Neon:
 6. The following example shows how to make a query to your Neon database in a Worker. The credentials needed to connect to Neon have been added as secrets to your Worker.
 
    ```js
-   import { Client } from '@neondatabase/serverless';
+   import { Client } from "@neondatabase/serverless";
 
    export default {
-     async fetch(request, env, ctx) {
-       const client = new Client(env.DATABASE_URL);
-       await client.connect();
-       const { rows } = await client.query('SELECT * FROM elements');
-       ctx.waitUntil(client.end());  // this doesn’t hold up the response
+   	async fetch(request, env, ctx) {
+   		const client = new Client(env.DATABASE_URL);
+   		await client.connect();
+   		const { rows } = await client.query("SELECT * FROM elements");
+   		ctx.waitUntil(client.end()); // this doesn’t hold up the response
 
-       return new Response(JSON.stringify(rows));
-     }
-   }
+   		return new Response(JSON.stringify(rows));
+   	},
+   };
    ```
 
 To learn more about Neon, refer to [Neon's official documentation](https://neon.tech/docs/introduction).
+
+   </TabItem>
+</Tabs>

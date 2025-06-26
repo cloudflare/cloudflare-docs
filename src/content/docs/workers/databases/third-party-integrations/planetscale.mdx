@@ -3,9 +3,26 @@ pcx_content_type: configuration
 title: PlanetScale
 ---
 
-import { Render, PackageManagers } from "~/components";
+import { Render, PackageManagers, Tabs, TabItem } from "~/components";
 
 [PlanetScale](https://planetscale.com/) is a MySQL-compatible platform that makes databases infinitely scalable, easier and safer to manage.
+
+:::note
+
+You can connect to PlanetScale using [Hyperdrive](/hyperdrive) (recommended), or using the PlanetScale serverless driver, `@planetscale/database`. Both provide connection pooling and reduce the amount of round trips required to create a secure connection from Workers to your database.
+
+Hyperdrive can provide lower latencies because it performs the database connection setup and connection pooling across Cloudflare's network. Hyperdrive supports native database drivers, libraries, and ORMs, and is included in all [Workers plans](/hyperdrive/platform/pricing/). Learn more about Hyperdrive in [How Hyperdrive Works](/hyperdrive/configuration/how-hyperdrive-works/).
+
+:::
+
+<Tabs>
+	<TabItem label="Hyperdrive (recommended)">
+
+To connect to PlanetScale using [Hyperdrive](/hyperdrive), follow these steps:
+
+         <Render file="planetscale-partial" product="hyperdrive"/>
+    </TabItem>
+    <TabItem label="PlanetScale serverless driver">
 
 ## Set up an integration with PlanetScale
 
@@ -40,11 +57,11 @@ To set up an integration with PlanetScale:
    # Add the database host as a secret
    npx wrangler secret put DATABASE_HOST
    # When prompted, paste your PlanetScale host
-   
+
    # Add the database username as a secret
    npx wrangler secret put DATABASE_USERNAME
    # When prompted, paste your PlanetScale username
-   
+
    # Add the database password as a secret
    npx wrangler secret put DATABASE_PASSWORD
    # When prompted, paste your PlanetScale password
@@ -85,3 +102,6 @@ To set up an integration with PlanetScale:
    ```
 
 To learn more about PlanetScale, refer to [PlanetScale's official documentation](https://docs.planetscale.com/).
+
+</TabItem>
+</Tabs>
