@@ -50,9 +50,7 @@ cd d1-example
 
 In this tutorial, you will use [Hono](https://github.com/honojs/hono), an Express.js-style framework, to build your API. To use Hono in this project, install it using `npm`:
 
-```sh
-npm install hono
-```
+<PackageManagers pkg="hono" />
 
 ## 2. Initialize your Hono application
 
@@ -203,8 +201,6 @@ With your application ready for deployment, use Wrangler to build and deploy you
 Begin by running `wrangler whoami` to confirm that you are logged in to your Cloudflare account. If you are not logged in, Wrangler will prompt you to login, creating an API key that you can use to make authenticated requests automatically from your local machine.
 
 After you have logged in, confirm that your Wrangler file is configured similarly to what is seen below. You can change the `name` field to a project name of your choice:
-
-
 
 <WranglerConfig>
 

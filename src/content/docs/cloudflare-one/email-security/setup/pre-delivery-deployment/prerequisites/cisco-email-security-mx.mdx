@@ -7,11 +7,11 @@ sidebar:
 
 import { Render } from "~/components"
 
-![A schematic showing where Email Security sits in the life cycle of an email received](src/assets/email-security/Cisco_to_Email_Security_MX_Inline.png)
+![A schematic showing where Email Security sits in the life cycle of an email received](~/assets/images/email-security/deployment/inline-setup/Cisco_to_Email_Security_MX_Inline.png)
 
 In this tutorial, you will learn how to configure Cisco IronPort with Email Security as MX record. 
 
-<Render file="email-security/deployment/mx-deployment-prerequisites"/>
+<Render file="email-security/deployment/mx-deployment-prereq"/>
 
 ## 1. Add a Sender Group for Email Security Email Protection IPs
 
@@ -50,6 +50,6 @@ Make sure you disable Sender Policy Framework (SPF) checks in IronPort. Because 
 
 Refer to [Cisco's documentation](https://www.cisco.com/c/en/us/support/docs/security/email-security-appliance/117973-faq-esa-00.html) for more information on how to disable SPF checks.
 
-## Next steps
+## 4. Set up MX/Inline
 
-Now that you have completed the prerequisite steps, you can set up [MX/Inline](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment-setup/) on the Cloudflare dashboard.
+<Render file="email-security/deployment/set-up-mx-inline-step"/>

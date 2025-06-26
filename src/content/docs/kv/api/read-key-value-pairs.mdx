@@ -253,6 +253,44 @@ The `cacheTtl` parameter must be an integer greater than or equal to `60`, which
 
 The effective `cacheTtl` of an already cached item can be reduced by getting it again with a lower `cacheTtl`. For example, if you did `NAMESPACE.get(key, {cacheTtl: 86400})` but later realized that caching for 24 hours was too long, you could `NAMESPACE.get(key, {cacheTtl: 300})` or even `NAMESPACE.get(key)` and it would check for newer data to respect the provided `cacheTtl`, which defaults to 60 seconds.
 
+### Requesting more keys per Worker invocation with bulk requests
+
+Workers are limited to 1,000 operations to external services per invocation. This applies to Workers KV, as documented in [Workers KV limits](/kv/platform/limits/).
+
+To read more than 1,000 keys per operation, you can use the bulk read operations to read multiple keys in a single operation. These count as a single operation against the 1,000 operation limit.
+
+### Reducing cardinality by coalescing keys
+
+If you have a set of related key-value pairs that have a mixed usage pattern (some hot keys and some cold keys), consider coalescing them. By coalescing cold keys with hot keys, cold keys will be cached alongside hot keys which can provide faster reads than if they were uncached as individual keys.
+
+#### Merging into a "super" KV entry
+
+One coalescing technique is to make all the keys and values part of a super key-value object. An example is shown below.
+
+```
+key1: value1
+key2: value2
+key3: value3
+```
+
+becomes
+
+```
+coalesced: {
+  key1: value1,
+  key2: value2,
+  key3: value3,
+}
+```
+
+By coalescing the values, the cold keys benefit from being kept warm in the cache because of access patterns of the warmer keys.
+
+This works best if you are not expecting the need to update the values independently of each other, which can pose race conditions.
+
+- **Advantage**: Infrequently accessed keys are kept in the cache.
+- **Disadvantage**: Size of the resultant value can push your worker out of its memory limits. Safely updating the value requires a [locking mechanism](/kv/api/write-key-value-pairs/#concurrent-writes-to-the-same-key) of some kind.
+
+
 ## Other methods to access KV
 
 You can [read key-value pairs from the command line with Wrangler](/kv/reference/kv-commands/#kv-key-get) and [from the REST API](/api/resources/kv/subresources/namespaces/subresources/values/methods/get/).

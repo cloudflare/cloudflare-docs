@@ -1,0 +1,19 @@
+---
+pcx_content_type: troubleshooting
+title: Error 411
+source: null
+---
+
+## 411 Length Required
+
+The `411 Length Required` status code indicates that the client did not specify the `Content-Length` of the request body in the headers, and this information is required to obtain the resource. The client may resend the request after adding the required header field.
+
+For more details, refer to [RFC 7231](https://tools.ietf.org/html/rfc7231).
+
+### Common use cases
+
+This status code can occur in various scenarios, such as when a client sends an API request without the required `Content-Length` header, when uploading a file where the server needs the header to allocate resources, or when proxies or legacy systems enforce strict HTTP compliance. In each case, the server or intermediary requires the `Content-Length` header to process the request properly.
+
+### Cloudflare-specific information
+
+Cloudflare does not generate `411` for customer websites, we only proxy the request from the origin server. If you encounter a `411` error on a Cloudflare-powered site, the issue lies with the origin server. In such cases, contact your hosting provider for assistance.

@@ -1,10 +1,9 @@
 ---
 title: DeepSeek
 pcx_content_type: get-started
-sidebar:
-  badge:
-    text: Beta
 ---
+
+import { Render } from "~/components";
 
 [DeepSeek](https://www.deepseek.com/) helps you build quickly with DeepSeek's advanced AI models.
 
@@ -80,3 +79,17 @@ try {
 	return new Response(e);
 }
 ```
+
+<Render
+	file="chat-completions-providers"
+	product="ai-gateway"
+	params={{
+		name: "DeepSeek",
+		jsonexample: `
+{
+	"model": "deepseek/{model}"
+}`
+
+    }}
+
+/>

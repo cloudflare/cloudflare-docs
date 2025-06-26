@@ -11,11 +11,9 @@ View the content of the matched rule payload in the dashboard by entering your p
 
 2. Under **Sampled logs**, expand the details of an event triggered by a rule whose managed ruleset has payload logging enabled.
 
-3. Under **Payload match**, select **Decrypt payload log**.
+3. Under **Matched service**, select **Decrypt payload match**.
 
    ![Example of a firewall event with available payload match data (still encrypted)](~/assets/images/waf/transform-rules/payload-logging-example.png)
-
-   The **Payload match** section is not available if the action taken by the matched rule is _Log_.
 
 4. Enter your private key in the pop-up window and select **Decrypt**.
 
@@ -23,6 +21,6 @@ View the content of the matched rule payload in the dashboard by entering your p
    The private key is not sent to a Cloudflare server. The decryption occurs entirely in the browser.
    :::
 
-If the private key you entered decrypts the encrypted payload successfully, the **Payload match** card displays the payload content in clear text.
+If the private key you entered decrypts the encrypted payload successfully, the dashboard will show the name of the fields that matched and the matched string in clear text, along with some text appearing before and after the match.
 
 ![Viewing the decrypted payload match data after entering your private key in the dashboard](~/assets/images/waf/transform-rules/payload-decrypted.png)

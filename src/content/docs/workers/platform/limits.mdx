@@ -21,6 +21,8 @@ import { Render, WranglerConfig } from "~/components";
 | [Worker startup time](#worker-startup-time)                                      | 400 ms       | 400 ms       |
 | [Number of Workers](#number-of-workers)<sup>1</sup>                              | 100          | 500          |
 | Number of [Cron Triggers](/workers/configuration/cron-triggers/)<br/>per account | 5            | 250          |
+| Number of [Static Asset](#static-assets) files                                   | 20000        | 20000        |
+| Individual [Static Asset](#static-assets) file size                              | 25 MiB       | 25 MiB       |
 
 <sup>1</sup> If you are running into limits, your project may be a good fit for
 [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/).
@@ -196,7 +198,7 @@ A subrequest is any request that a Worker makes to either Internet resources usi
 
 To make subrequests from your Worker to another Worker on your account, use [Service Bindings](/workers/runtime-apis/bindings/service-bindings/). Service bindings allow you to send HTTP requests to another Worker without those requests going over the Internet.
 
-If you attempt to use global [`fetch()`](/workers/runtime-apis/fetch/) to make a subrequest to another Worker on your account that runs on the same [zone](/fundamentals/setup/accounts-and-zones/#zones), without service bindings, the request will fail.
+If you attempt to use global [`fetch()`](/workers/runtime-apis/fetch/) to make a subrequest to another Worker on your account that runs on the same [zone](/fundamentals/concepts/accounts-and-zones/#zones), without service bindings, the request will fail.
 
 If you make a subrequest from your Worker to a target Worker that runs on a [Custom Domain](/workers/configuration/routing/custom-domains/#worker-to-worker-communication) rather than a route, the request will be allowed.
 
@@ -216,7 +218,7 @@ When the client disconnects, all tasks associated with that client’s request a
 
 ## Simultaneous open connections
 
-You can open up to six connections simultaneously, for each invocation of your Worker. The connections opened by the following API calls all count toward this limit:
+You can open up to six connections simultaneously for each invocation of your Worker. The connections opened by the following API calls all count toward this limit:
 
 - the `fetch()` method of the [Fetch API](/workers/runtime-apis/fetch/).
 - `get()`, `put()`, `list()`, and `delete()` methods of [Workers KV namespace objects](/kv/api/).
@@ -271,7 +273,7 @@ Each environment variable has a size limitation of 5 KB.
 
 ## Worker size
 
-A Worker can be up to 10 MB in size _after compression_ on the Workers Paid plan, and up to 3 MB on the Workers Free plan.
+A Worker can be up to 10 MB in size _after compression_ on the Workers Paid plan, and up to 3 MB on the Workers Free plan. On either plan, a Worker can be up to 64 MB _before compression_.
 
 You can assess the size of your Worker bundle after compression by performing a dry-run with `wrangler` and reviewing the final compressed (`gzip`) size output by `wrangler`:
 
@@ -284,7 +286,13 @@ wrangler deploy --outdir bundled/ --dry-run
 Total Upload: 259.61 KiB / gzip: 47.23 KiB
 ```
 
-Note that larger Worker bundles can impact the start-up time of the Worker, as the Worker needs to be loaded into memory. You should consider removing unnecessary dependencies and/or using [Workers KV](/kv/), a [D1 database](/d1/) or [R2](/r2/) to store configuration files, static assets and binary data instead of attempting to bundle them within your Worker code.
+Note that larger Worker bundles can impact the start-up time of the Worker, as the Worker needs to be loaded into memory.
+
+To reduce the upload size of a Worker, consider some of the following strategies:
+
+- Removing unnecessary dependencies and packages
+- Storing configuration files, static assets, and binary data using [Workers KV](/kv/), [R2](/r2/), [D1](/d1/), or [Workers Static Assets](/workers/static-assets/) instead of bundling them within your Worker code.
+- Splitng functionality across multiple Workers and connecting them using [Service bindings](/workers/runtime-apis/bindings/service-bindings/).
 
 ---
 
@@ -318,7 +326,7 @@ Each zone has a limit of 1,000 [routes](/workers/configuration/routing/routes/).
 
 ### Number of routes per zone when using `wrangler dev --remote`
 
-When you run a [remote development](/workers/local-development/#develop-using-remote-resources-and-bindings) session using the `--remote` flag, a limit of 50 [routes](/workers/configuration/routing/routes/) per zone is enforced. The Quick Editor in the Cloudflare Dashboard also uses `wrangler dev --remote`, so any changes made there are subject to the same 50-route limit. If your zone has more than 50 routes, you **will not be able to run a remote session**. To fix this, you must remove routes until you are under the 50-route limit.
+When you run a [remote development](/workers/development-testing/#remote-bindings) session using the `--remote` flag, a limit of 50 [routes](/workers/configuration/routing/routes/) per zone is enforced. The Quick Editor in the Cloudflare Dashboard also uses `wrangler dev --remote`, so any changes made there are subject to the same 50-route limit. If your zone has more than 50 routes, you **will not be able to run a remote session**. To fix this, you must remove routes until you are under the 50-route limit.
 
 ### Number of custom domains per zone
 
@@ -358,6 +366,22 @@ If your Worker is on a Bundled plan, your limits are the same as the Workers Pai
 - Your limit for [CPU time](/workers/platform/limits/#cpu-time) is 50ms for HTTP requests and 50ms for [Cron Triggers](/workers/configuration/cron-triggers/)
 - You have no [Duration](/workers/platform/limits/#duration) limits for [Cron Triggers](/workers/configuration/cron-triggers/), [Durable Object alarms](/durable-objects/api/alarms/), or [Queue consumers](/queues/configuration/javascript-apis/#consumer)
 - Your Cache API limits for calls/requests is 50
+
+---
+
+## Static Assets
+
+### Files
+
+There is a 20,000 file count limit per [Worker version](/workers/configuration/versions-and-deployments/), and a 25 MiB individual file size limit. This matches the [limits in Cloudflare Pages](/pages/platform/limits/) today.
+
+### Headers
+
+A `_headers` file may contain up to 100 rules and each line may contain up to 2,000 characters. The entire line, including spacing, header name, and value, counts towards this limit.
+
+### Redirects
+
+A `_redirects` file may contain up to 2,000 static redirects and 100 dynamic redirects, for a combined total of 2,100 redirects. Each redirect declaration has a 1,000-character limit.
 
 ---
 

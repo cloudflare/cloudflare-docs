@@ -111,7 +111,7 @@ if (!releaseNotes) {
 							</a>
 							<p class="text-xs">{entry.date}</p>
 							{page.data.release_notes_product_area_name && (
-								<h3 class="!mt-4">
+								<h3 class="mt-4!">
 									<a href={entry.productLink}>{entry.product}</a>
 								</h3>
 							)}
@@ -125,7 +125,7 @@ if (!releaseNotes) {
 							<AnchorHeading depth={2} title={date} />
 							<div data-product={entry.product.toLowerCase()}>
 								{page.data.release_notes_product_area_name && (
-									<h3 class="!mt-4">
+									<h3 class="mt-4!">
 										<a href={entry.productLink}>{entry.product}</a>
 									</h3>
 								)}

@@ -45,23 +45,23 @@ export default {
 		// write a key-value pair
 		await env.KV_BINDING.put('KEY', 'VALUE');
 
-    	// read a key-value pair
-    	const value = await env.KV_BINDING.get('KEY');
+		// read a key-value pair
+		const value = await env.KV_BINDING.get('KEY');
 
-    	// list all key-value pairs
-    	const allKeys = await env.KV_BINDING.list();
+		// list all key-value pairs
+		const allKeys = await env.KV_BINDING.list();
 
-    	// delete a key-value pair
-    	await env.KV_BINDING.delete('KEY');
+		// delete a key-value pair
+		await env.KV_BINDING.delete('KEY');
 
-    	// return a Workers response
-    	return new Response(
-    		JSON.stringify({
-    			value: value,
-    			allKeys: allKeys,
-    		}),
-    	);
-    },
+		// return a Workers response
+		return new Response(
+			JSON.stringify({
+				value: value,
+				allKeys: allKeys,
+			}),
+		);
+	},
 
 } satisfies ExportedHandler<{ KV_BINDING: KVNamespace }>;
 
@@ -142,7 +142,7 @@ See the full [Workers KV binding API reference](/kv/api/read-key-value-pairs/).
     	</TabItem>
     </Tabs>
 
-See the full Workers KV [REST API and SDK reference](/api/resources/kv/subresources/namespaces/methods/list/) for details on using REST API from external applications, with pre-generated SDK's for external TypeScript, Python, or Go applications.
+See the full Workers KV [REST API and SDK reference](/api/resources/kv/) for details on using REST API from external applications, with pre-generated SDK's for external TypeScript, Python, or Go applications.
 
 </TabItem>
 </Tabs>

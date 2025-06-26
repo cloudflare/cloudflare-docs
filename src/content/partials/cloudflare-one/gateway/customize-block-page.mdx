@@ -2,9 +2,13 @@
 {}
 ---
 
+import { Tabs, TabItem } from "~/components";
+
 You can customize the Cloudflare-hosted block page by making global changes that Gateway will display every time a user reaches your block page. Customizations will apply regardless of the type of policy (DNS or HTTP) that blocks the traffic.
 
 To customize your block page:
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Custom Pages**.
 2. Under **Account Gateway block page**, select **Customize**.
@@ -16,5 +20,36 @@ To customize your block page:
    - [Mailto link](/cloudflare-one/policies/gateway/block-page/#allow-users-to-email-an-administrator)
    - Background color
 4. Select **Save**.
+
+
+</TabItem>
+<TabItem label="Terraform (v5)">
+
+1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
+	- `Zero Trust Write`
+
+2. In [`cloudflare_zero_trust_gateway_settings`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_gateway_settings), configure the `block_page` argument with your customizations:
+
+	```tf
+	resource "cloudflare_zero_trust_gateway_settings" "team_name" {
+		account_id = var.cloudflare_account_id
+		settings = {
+			block_page = {
+				enabled = true //do not use the default Gateway block page
+				mode = "customized_block_page" //use a custom block page
+				name = "Cloudflare"
+				logo_path = "https://logos.com/a.png"
+				header_text = "--header--"
+				footer_text = "--footer--"
+				mailto_address = "admin@example.com"
+				mailto_subject = "Blocked Request"
+				background_color = "#ffffff"
+				suppress_footer = false
+			}
+		}
+	}
+	```
+</TabItem>
+</Tabs>
 
 Gateway will now display a custom Gateway block page when your users visit a blocked website.

@@ -2,7 +2,6 @@
 export * from "@astrojs/starlight/components";
 export { Icon as StarlightIcon } from "@astrojs/starlight/components";
 // Community packages
-export { PackageManagers } from "starlight-package-managers";
 export { Icon as AstroIcon } from "astro-icon/components";
 // Custom components
 export { default as AnchorHeading } from "./AnchorHeading.astro";
@@ -10,6 +9,7 @@ export { default as APIRequest } from "./APIRequest.astro";
 export { default as AvailableNotifications } from "./AvailableNotifications.astro";
 export { default as CompatibilityFlag } from "./CompatibilityFlag.astro";
 export { default as CompatibilityFlags } from "./CompatibilityFlags.astro";
+export { default as ComponentUsage } from "./ComponentUsage.astro";
 export { default as ComponentsUsage } from "./ComponentsUsage.astro";
 export { default as CopyPageButton } from "./CopyPageButton.tsx";
 export { default as CURL } from "./CURL.astro";
@@ -34,6 +34,7 @@ export { default as ListTutorials } from "./ListTutorials.astro";
 export { default as Markdown } from "./Markdown.astro";
 export { default as MetaInfo } from "./MetaInfo.astro";
 export { default as NetworkMap } from "./NetworkMap.astro";
+export { default as PackageManagers } from "./PackageManagers.astro";
 export { default as PagesBuildEnvironment } from "./PagesBuildEnvironment.astro";
 export { default as PagesBuildEnvironmentLanguages } from "./PagesBuildEnvironmentLanguages.astro";
 export { default as PagesBuildEnvironmentTools } from "./PagesBuildEnvironmentTools.astro";
@@ -65,6 +66,7 @@ export { default as Width } from "./Width.astro";
 export { default as WorkersArchitectureDiagram } from "./WorkersArchitectureDiagram.astro";
 export { default as WorkersIsolateDiagram } from "./WorkersIsolateDiagram.astro";
 export { default as WorkerStarter } from "./WorkerStarter.astro";
+export { default as WorkersTemplates } from "./WorkersTemplates.astro";
 export { default as YouTube } from "./YouTube.astro";
 export { default as YouTubeVideos } from "./YouTubeVideos.astro";
 

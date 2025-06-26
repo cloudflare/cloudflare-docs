@@ -1,0 +1,37 @@
+---
+title: Add a site
+pcx_content_type: tutorial
+
+---
+
+import { Render } from "~/components"
+
+If you purchased your domain from a different provider, you can still connect the domain to Cloudflare. After you connect your domain to Cloudflare, Cloudflare will act as the [reverse proxy](/fundamentals/concepts/how-cloudflare-works/#cloudflare-as-a-reverse-proxy) and [DNS provider](/fundamentals/concepts/how-cloudflare-works/#cloudflare-as-a-dns-provider) for your site.
+
+The information below applies to a [full DNS setup](/dns/zone-setups/full-setup) which is the most common configuration.
+
+:::note
+To use Cloudflare as a reverse proxy but maintain your DNS provider, refer to [partial setup](/dns/zone-setups/partial-setup/). To use one or more DNS providers, refer to or [DNS Zone transfers](/dns/zone-setups/zone-transfers/).
+:::
+
+## Prerequisites
+
+[Disable DNSSEC](/dns/dnssec/#disable-dnssec) at the registrar where you purchased your domain name to avoid connectivity errors when you change your nameservers.
+
+## 1. Add site in Cloudflare
+
+<Render file="add-site" product="fundamentals" />
+
+## 2. Update nameservers
+
+<Render file="nameserver-preamble" product="dns" /> <br/>
+
+<Render file="update-nameservers" product="fundamentals" />
+
+<Render file="minimize-downtime-tip" product="dns" />
+
+## 3. Complete SSL/TLS setup
+
+To prevent insecure connections and visitor browser errors, [enable SSL/TLS protection](/ssl/get-started/). Many Cloudflare services will automatically protect and speed up your web traffic after your nameservers are updated.
+
+If you encounter unexpected results when changing your nameservers, refer to the [DNS Full Setup troubleshooting](/dns/zone-setups/full-setup/troubleshooting/).

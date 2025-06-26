@@ -90,6 +90,18 @@ To reclassify a message:
 
 To reclassify messages in bulk, select the messages you want to reclassify > **Action** > **Reclassify**.
 
+### Upload EML files
+
+Email Security classifies certain emails as "Clean". If you disagree with the disposition, you can upload an EML file and reclassify the email.
+
+On the **Investigation** page:
+
+1. Go to the email marked as **Clean**.
+2. Select the three dots > **Reclassify**.
+3. Upload the EML file.
+4. Select a new disposition.
+5. Select **Save**.
+
 Once you have reclassified your messages, you can access those on **Reclassifications**.
 
 To view reclassifications:
@@ -122,6 +134,10 @@ To gain more details on a specific reclassification:
 ### User submissions
 
 User submissions are the emails your users submitted for reclassification. User submissions help enhance our detection model, but can be escalated for human review.
+
+:::note
+[PhishGuard](/cloudflare-one/email-security/phish-guard/) customers can have submissions analyzed when submitting at either user or team level. Any non-PhishGuard customer can still have submissions analyzed by submitting at team level.
+:::
 
 Select among the following filters:
 
@@ -156,7 +172,7 @@ To move messages:
    * **Inbox**: Move messages to the primary email folder.
    * **Junk email**: Move messages to the junk or spam folder.
    * **Trash**: Move messages to the trash or deleted items email folder.
-   * **Soft delete (user recoverable)**: Move messages to the user's Deleted Items folder. This option is for Microsoft O365 only.
+   * **Soft delete (user recoverable)**: Move messages to the user's Deleted Items folder. This option is for Microsoft 365 only.
    * **Hard delete (admin recoverable)**: Delete messages from a user's inbox.
 4. Select **Save**.
 
@@ -176,7 +192,7 @@ With Email Security, you can export messages to a CSV file.
 To export messages:
 
 1. On the **Investigation** page, under **Your matching messages**, select **Export to CSV**.
-2. Select **Export messages** on the pop-up message. You can only export up to 1,000 rows from the dashboard. To export all matching messages, use the [API](/api/resources/email_security/subresources/investigate/methods/get/).
+2. Select **Export messages** on the pop-up message. You can export up to 500 messages from the dashboard. To export up to 1,000 matching messages, use the [API](/api/resources/email_security/subresources/investigate/methods/get/).
 
 ## Email status
 

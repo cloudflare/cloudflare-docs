@@ -6,7 +6,11 @@ sidebar:
 head:
   - tag: title
     content: Functions - Get started
-
+banner:
+  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
+  type: note
+  dismissible:
+    id: pages-migrate-to-workers
 ---
 
 This guide will instruct you on creating and deploying a Pages Function.
@@ -21,9 +25,7 @@ To get started with generating a Pages Function, create a `/functions` directory
 
 :::note[Advanced mode]
 
-
 For existing applications where Pages Functions’ built-in file path based routing and middleware system is not desirable, use [Advanced mode](/pages/functions/advanced-mode/). Advanced mode allows you to develop your Pages Functions with a `_worker.js` file rather than the `/functions` directory.
-
 
 :::
 
@@ -33,7 +35,7 @@ Copy and paste the following code into a `helloworld.js` file that you create in
 
 ```js
 export function onRequest(context) {
-  return new Response("Hello, world!")
+	return new Response("Hello, world!");
 }
 ```
 
@@ -60,8 +62,8 @@ Additionally, use other Cloudflare products such as [D1](/d1/) (serverless DB) a
 
 After you have set up your Function, deploy your Pages project. Deploy your project by:
 
-* Connecting your [Git provider](/pages/get-started/git-integration/).
-* Using [Wrangler](/workers/wrangler/commands/#pages) from the command line.
+- Connecting your [Git provider](/pages/get-started/git-integration/).
+- Using [Wrangler](/workers/wrangler/commands/#pages) from the command line.
 
 :::caution
 
@@ -70,6 +72,6 @@ After you have set up your Function, deploy your Pages project. Deploy your proj
 
 ## Related resources
 
-* Customize your [Function's routing](/pages/functions/routing/)
-* Review the [API reference](/pages/functions/api-reference/)
-* Learn how to [debug your Function](/pages/functions/debugging-and-logging/)
+- Customize your [Function's routing](/pages/functions/routing/)
+- Review the [API reference](/pages/functions/api-reference/)
+- Learn how to [debug your Function](/pages/functions/debugging-and-logging/)

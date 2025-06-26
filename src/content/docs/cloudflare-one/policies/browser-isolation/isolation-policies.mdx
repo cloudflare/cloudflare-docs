@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Render, Tabs, TabItem } from "~/components";
+import { Render, Badge, Tabs, TabItem } from "~/components";
 
 With Browser Isolation, you can define policies to dynamically isolate websites based on identity, security threats, or content.
 
@@ -116,6 +116,21 @@ Mouse input remains available to allow users to browse a website by following hy
 
 - _Allow_: (Default) Users can print isolated web pages to their local machine.
 - _Do not allow_: Prohibits users from printing isolated web pages to their local machine.
+
+## Custom block dialog <Badge text="Beta" variant="note" />
+
+With custom block dialogs, you can host a custom block page when users are blocked from taking specific actions, like [copying](/cloudflare-one/policies/browser-isolation/isolation-policies/#copy-from-remote-to-client), [pasting](/cloudflare-one/policies/browser-isolation/isolation-policies/#paste-from-client-to-remote), [downloading](/cloudflare-one/policies/browser-isolation/isolation-policies/#file-downloads), [uploading](/cloudflare-one/policies/browser-isolation/isolation-policies/#file-uploads), [performing keyboard inputs](/cloudflare-one/policies/browser-isolation/isolation-policies/#keyboard), or [printing](/cloudflare-one/policies/browser-isolation/isolation-policies/#printing), within an isolated browser session.
+
+Administrators can configure custom block dialogs to explain the reason for the block, and guide the users on how to resolve their issue using the provided query parameters:
+
+- `action`: copy, paste, download, upload, perform keyboard inputs, and print
+- `cf_colo`: for example, `e.g sea01`
+- `client_url`: for example, `https://example.com`
+- `policy_id`: 32-character id
+- `rbi_debug_id`: 32-character id
+- `user_id`: 32-character id
+
+Custom block dialogs are still in beta. Contact your account team to start using custom block dialogs.
 
 ## Common policies
 

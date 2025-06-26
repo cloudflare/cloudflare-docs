@@ -7,6 +7,8 @@ sidebar:
     hideIndex: true
 ---
 
+import { APIRequest } from "~/components";
+
 You can control Aegis enablement on your zones via API. If you are not familiar with how Cloudflare API works, refer to [Fundamentals](/fundamentals/api/).
 
 :::caution[Availability]
@@ -25,12 +27,17 @@ Cloudflare Aegis is available in early access to Enterprise customers. Contact y
 - Specify `aegis` as the setting ID in the URL.
 - In the request body, set `enabled` to `true` and use the ID from the previous step as `pool_id`.
 
-```bash
---data '{
-  "id": "aegis",
-  "value": {
-    "enabled": true,
-    "pool_id": "<YOUR_EGRESS_POOL_ID>"
-  },
-}'
-```
+<APIRequest
+  path="/zones/{zone_id}/settings/{setting_id}"
+  method="PATCH"
+  json={{
+		  "id": "aegis",
+			"value": {
+				"enabled": true,
+				"pool_id": "<YOUR_EGRESS_POOL_ID>",
+				},
+	}}
+	parameters={{
+    setting_id: "aegis",
+  }}
+/>

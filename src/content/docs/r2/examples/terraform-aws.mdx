@@ -19,7 +19,7 @@ For using only the Cloudflare provider, see [Terraform](/r2/examples/terraform/)
 With [`terraform`](https://developer.hashicorp.com/terraform/downloads) installed:
 
 1. Create `main.tf` file, or edit your existing Terraform configuration
-2. Populate the endpoint URL at `endpoints.s3` with your [Cloudflare account ID](/fundamentals/setup/find-account-and-zone-ids/)
+2. Populate the endpoint URL at `endpoints.s3` with your [Cloudflare account ID](/fundamentals/account/find-account-and-zone-ids/)
 3. Populate `access_key` and `secret_key` with the corresponding [R2 API credentials](/r2/api/tokens/).
 4. Ensure that `skip_region_validation = true`, `skip_requesting_account_id = true`, and `skip_credentials_validation = true` are set in the provider configuration.
 

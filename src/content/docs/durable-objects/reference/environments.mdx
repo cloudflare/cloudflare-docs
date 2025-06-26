@@ -61,13 +61,19 @@ durable_objects.bindings = [
 
 </WranglerConfig>
 
+### Migration environments
+
+You can define a Durable Object migration for each environment, as well as at the top level. Migrations at at the environment-level override migrations at the top level.
+
+For more information, refer to [Migration Wrangler Configuration](/durable-objects/reference/durable-objects-migrations/#migration-wrangler-configuration).
+
 ## Local development
 
 Local development sessions create a standalone, local-only environment that mirrors the production environment, so that you can test your Worker and Durable Objects before you deploy to production.
 
 An existing Durable Object binding of `DB` would be available to your Worker when running locally.
 
-Refer to Workers [Local development](/workers/local-development/#supported-resource-bindings-in-different-environments).
+Refer to Workers [Local development](/workers/development-testing/bindings-per-env/).
 
 ## Remote development
 

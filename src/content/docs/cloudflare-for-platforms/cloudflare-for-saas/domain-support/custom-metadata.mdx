@@ -7,7 +7,7 @@ head: []
 description: Configure per-hostname settings such as URL rewriting and custom headers.
 ---
 
-import { Render } from "~/components";
+import { Render, APIRequest } from "~/components";
 
 You may wish to configure per-hostname (customer) settings beyond the scale of Page Rules or Rate Limiting, which have a maximum of 125 rules each.
 
@@ -32,14 +32,12 @@ Please speak with your Solutions Engineer to discuss additional logic and requir
 
 You may add custom metadata to Cloudflare via the Custom Hostnames API. This data can be added via a [`PATCH` request](/api/resources/custom_hostnames/methods/edit/) to the specific hostname ID to set metadata for that hostname, for example:
 
-```bash
-curl --request PATCH \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/{hostname_id}" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "ssl": {
+
+<APIRequest
+  path="/zones/{zone_id}/custom_hostnames/{custom_hostname_id}"
+  method="PATCH"
+  json={{
+		"ssl": {
     "method": "http",
     "type": "dv"
   },
@@ -47,11 +45,11 @@ curl --request PATCH \
     "customer_id": "12345",
     "redirect_to_https": true,
     "security_tag": "low"
-  }
-}'
-```
+  },
+	}}
+/>
 
-Changes to metadata will propagate across Cloudflare’s edge within 30 seconds.
+Changes to metadata will propagate across Cloudflare's edge within 30 seconds.
 
 ---
 
@@ -103,7 +101,7 @@ lookup_json_string(cf.hostname.metadata, "security_tag") eq "low"
 - Define fallback behaviour in the non-presence of metadata
 - Define fallback behaviour if a key or value in the metadata are unknown
 
-General guidance is to follow [Google’s JSON Style guide](https://google.github.io/styleguide/jsoncstyleguide.xml) where appropriate.
+General guidance is to follow [Google's JSON Style guide](https://google.github.io/styleguide/jsoncstyleguide.xml) where appropriate.
 
 ---
 
@@ -112,7 +110,7 @@ General guidance is to follow [Google’s JSON Style guide](https://google.githu
 There are some limitations to the metadata that can be provided to Cloudflare:
 
 - It must be valid JSON.
-- Any origin resolution — for example, directing requests for a given hostname to a specific backend — must be provided as a hostname that exists within Cloudflare’s DNS (even for non-authoritative setups). Providing an IP address directly will cause requests to error.
+- Any origin resolution — for example, directing requests for a given hostname to a specific backend — must be provided as a hostname that exists within Cloudflare's DNS (even for non-authoritative setups). Providing an IP address directly will cause requests to error.
 - The total payload must not exceed 4 KB.
 - It requires a Cloudflare Worker that knows how to process the schema and trigger logic based on the contents.
 - Custom metadata cannot be set on custom hostnames that contain wildcards.
