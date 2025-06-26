@@ -146,3 +146,29 @@ The device is now protected by your organization's Zero Trust policies.
 ## Virtual machines
 
 By default, virtual machines (VMs) are subject to the WARP client settings of the host. If you want to deploy a separate instance of WARP in a VM, you must configure the VM to operate in bridged networking mode.
+
+## Connectivity status
+
+The WARP client GUI displays the following status messages when transitioning from a **Disconnected** to **Connected** state. These messages indicate the connectivity stage of the WARP daemon as it establishes a connection from the device to Cloudflare. Not all status messages will be displayed; the ones that appear depend on the [WARP mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/).
+
+To print status messages to the console, run the `warp-cli -l status` command before turning on the WARP switch.
+
+| Status message        | Description              |
+| --------------------- | ------------------------ |
+| Initializing settings | Initializes connection components based on your [WARP settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/). |
+| Checking network      | Validates Ethernet and/or Wi-Fi network connectivity. |
+| Performing Happy Eyeballs | Checks for IPv4 and IPv6 connectivity to Cloudflare using the [Happy Eyeballs algorithm](https://datatracker.ietf.org/doc/html/rfc6555). |
+| Establishing connection | Connects to the endpoint discovered by Happy Eyeballs. |
+| Initializing tunnel interface | Creates a [virtual network interface](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#virtual-interface) on the operating system. |
+| Configuring initial firewall | Configures the system firewall to allow WARP tunnel traffic. |
+| Setting routes | Updates the [system routing table](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#routing-table) based on your [Split Tunnel rules](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/). |
+| Configuring firewall rules | Configures the [system firewall](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#system-firewall) based on your Split Tunnel rules. |
+| Checking for route to DNS endpoint | Checks connectivity to ` <account-id>.cloudflare-gateway.com`. |
+| Configuring local sockets | Configures the local DNS proxy sockets for DNS resolution. |
+| Configuring local DNS proxy | Creates a [local DNS proxy](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#dns-traffic) on the device.|
+| Applying DNS settings | Sets the local DNS proxy as the default DNS server on the device. |
+| Configuring forward proxy | (Only in [Proxy mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#proxy-mode)) Configures the SOCKS proxy. |
+| Performing connectivity checks | Checks connectivity to [destinations](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#connectivity-checks) inside and outside of the WARP tunnel. |
+| Validating DNS configuration | Verifies that DNS requests are answered by WARP's local DNS proxy. |
+| Validating proxy configuration | (Only in [Proxy mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#proxy-mode)) Verifies the SOCKS proxy configuration. |
+
