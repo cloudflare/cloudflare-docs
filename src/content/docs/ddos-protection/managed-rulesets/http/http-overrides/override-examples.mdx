@@ -1,15 +1,39 @@
 ---
-pcx_content_type: how-to
-title: Handle a false negative or an incomplete mitigation
-description: Learn how to handle false negatives and incomplete mitigations in Cloudflare DDoS Protection. Adjust rules to ensure effective attack mitigation.
+title: Override examples
+pcx_content_type: reference
 sidebar:
-  order: 3
-
+  order: 5
+head:
+  - tag: title
+    content: Override examples for HTTP DDoS Attack Protection
 ---
 
 import { Details, GlossaryTooltip } from "~/components"
 
-## False negatives
+## Use cases
+
+The following scenarios detail how you can make use of override rules as a solution to common HTTP DDoS Protection issues.
+
+### Traffic from your mobile application is blocked by a DDoS Managed Rule
+
+The traffic from your mobile application may have appeared suspicious, causing a DDoS Managed Rule to block it. 
+
+You should identify the Managed Rule blocking the traffic and change the sensitivity level to `Medium`. If traffic continues to be blocked by the managed rule, set the sensitivity level to `Low` or `Essentially off`.
+
+If you have access to filter expressions, you can create an override to target the specific affected traffic. 
+
+
+### Traffic is flagged by an adaptive rule based on the location and may be an attack
+
+If you recognize that the traffic flagged by an adaptive rule may be considered an attack, you can create an override rule to enable the adaptive rule in mitigation mode to `challenge` (if it is browser traffic) or `block` (for other suspicious traffic).
+
+### An end user is experiencing a false positive
+
+If you observe that one of your end users is experiencing a false positive, you can create an override for the rule that caused the false positive and use the filter expressions to apply it only to the hostname.
+
+[INSERT false-positive.mdx PAGE CONTENT HERE]
+
+### An attack is incorrectly identified as legitimate traffic and causes a false negative
 
 A false negative is a lack of identification. In the case of DDoS protection, there is a false negative when attack traffic is mistakenly classified as legitimate traffic and is not mitigated. This can occur when the attack traffic is not sufficiently high to trigger mitigation actions or if there are no rules matching the attack.
 
