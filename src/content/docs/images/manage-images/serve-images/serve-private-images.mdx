@@ -5,6 +5,8 @@ sidebar:
   order: 23
 ---
 
+import { TypeScriptExample } from "~/components";
+
 You can serve private images by using signed URL tokens. When an image requires a signed URL, the image cannot be accessed without a token unless it is being requested for a variant set to always allow public access.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
@@ -19,7 +21,9 @@ Private images do not currently support custom paths.
 
 The example below uses a Worker that takes in a regular URL without a signed token and returns a tokenized URL that expires after one day. You can, however, set this expiration period to whatever you need, by changing the const `EXPIRATION` value.
 
-```js
+<TypeScriptExample>
+
+```ts
 const KEY = 'YOUR_KEY_FROM_IMAGES_DASHBOARD';
 const EXPIRATION = 60 * 60 * 24; // 1 day
 
@@ -69,3 +73,5 @@ export default {
   },
 } satisfies ExportedHandler<Env>;
 ```
+
+</TypeScriptExample>

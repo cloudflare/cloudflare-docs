@@ -11,7 +11,7 @@ import { WranglerConfig, PackageManagers } from "~/components";
 
 ## Pushing images during `wrangler deploy`
 
-When running `wrangler deploy`, if you set the `image` attribute in you [Wranlger configuration](/workers/wrangler/configuration/#containers)
+When running `wrangler deploy`, if you set the `image` attribute in you [Wrangler configuration](/workers/wrangler/configuration/#containers)
 file to a path, wrangler will build your container image locally using Docker, then push it to a registry run by Cloudflare.
 This registry is integrated with your Cloudflare account and is backed by [R2](/r2/). All authentication is handled automatically by
 Cloudflare both when pushing and pulling images.
@@ -46,7 +46,11 @@ If you wish to use a pre-built image, first, push it to the Cloudflare Registry:
 
 Wrangler provides a command to push images to the Cloudflare Registry:
 
-<PackageManagers type="exec" pkg="wrangler" args="push <image>:<tag>" />
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="containers push <image>:<tag>"
+/>
 
 Additionally, you can use the `-p` flag with `wrangler containers build` to build and push an image in one step:
 
