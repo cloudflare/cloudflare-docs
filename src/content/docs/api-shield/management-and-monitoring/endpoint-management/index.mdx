@@ -7,7 +7,7 @@ sidebar:
 
 ---
 
-import { GlossaryTooltip, Plan } from "~/components"
+import { GlossaryTooltip, Plan, Steps } from "~/components"
 
 <Plan type="all" />
 
@@ -26,47 +26,55 @@ When an endpoint is using [Cloudflare Workers](/workers/), the metrics data will
 
 ## Access
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
+<Steps>
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
 2. Select **Security** > **API Shield**.
 3. Add your endpoints [manually](#add-endpoints-manually), from [Schema validation](#add-endpoints-from-schema-validation), or from [API Discovery](#add-endpoints-from-api-discovery).
+</Steps>
 
-## Add endpoints from API Discovery
+### Add endpoints from API Discovery
 
 There are two ways to add API endpoints from Discovery.
 
-### Add from the Endpoint Management Tab
+#### Add from the Endpoint Management Tab
 
+<Steps>
 1. From Endpoint Management, select **Add endpoints** > **Select from Discovery** tab.
 2. Select the discovered endpoints you would like to add.
 3. Select **Add endpoints**.
+</Steps>
 
-### Add from the Discovery Tab
+#### Add from the Discovery Tab
 
+<Steps>
 1. From Endpoint Management, select the **Discovery** tab.
 2. Select the discovered endpoints you would like to add.
 3. Select **Save selected endpoints**.
+</Steps>
 
-## Add endpoints from Schema validation
+### Add endpoints from Schema validation
 
+<Steps>
 1. Add a schema by [configuring Schema validation](/api-shield/security/schema-validation/).
 2. On **Review schema endpoints**, save new endpoints to endpoint management by checking the box.
 3. Select **Save as draft** or **Save and Deploy**. Endpoints will be saved regardless of whether the Schema is saved as a draft or published.
+</Steps>
 
 API Shield will look for duplicate endpoints that have the same host, method, and path. Duplicate endpoints will not be saved to endpoint management.
 
 :::note
-
 If you deselect **Save new endpoints to endpoint management**, the endpoints will not be added.
 :::
 
-## Add endpoints manually
+### Add endpoints manually
 
+<Steps>
 1. From Endpoint Management, select **Add endpoints** > **Manually add**.
 2. Choose the method from the dropdown menu and add the path and hostname for the endpoint.
 3. Select **Add endpoints**.
+</Steps>
 
 :::note
-
 By selecting multiple checkboxes, you can add several endpoints from Discovery at once instead of individually.
 :::
 
@@ -94,12 +102,14 @@ foo-{hostVar1}.example.com
 
 For more information on how Cloudflare uses variables in API Shield, refer to the examples from [API Discovery](/api-shield/security/api-discovery/).
 
-## Delete endpoints manually
+### Delete endpoints manually
 
 You can delete endpoints one at a time or in bulk.
 
+<Steps>
 1. From Endpoint Management, select the checkboxes for the endpoints that you want to delete.
 2. Select **Delete endpoints**.
+</Steps>
 
 ## Endpoint Analysis
 

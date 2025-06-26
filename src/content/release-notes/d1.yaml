@@ -5,6 +5,13 @@ productLink: "/d1/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-07-01"
+    title: D1 alpha database backup access removed
+    description: |-
+      Following the removal of query access to D1 alpha databases on [2024-08-23](/d1/platform/release-notes/#2024-08-23), D1 alpha database backups can no longer be accessed or created with [`wrangler d1 backup`](/d1/reference/backups/), available with wrangler v3.
+
+      If you want to retain a backup of your D1 alpha database, please use `wrangler d1 backup` before 2025-07-01. A D1 alpha backup can be used to [migrate](/d1/platform/alpha-migration/#5-create-a-new-d1-database) to a newly created D1 database in its generally available state. 
+
   - publish_date: "2025-05-02"
     title: D1 HTTP API permissions bug fix
     description: |-

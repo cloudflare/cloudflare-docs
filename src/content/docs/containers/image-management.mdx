@@ -1,0 +1,106 @@
+---
+pcx_content_type: navigation
+title: Image Management
+sidebar:
+  order: 5
+  group:
+    hideIndex: true
+---
+
+import { WranglerConfig, PackageManagers } from "~/components";
+
+## Pushing images during `wrangler deploy`
+
+When running `wrangler deploy`, if you set the `image` attribute in you [Wranlger configuration](/workers/wrangler/configuration/#containers)
+file to a path, wrangler will build your container image locally using Docker, then push it to a registry run by Cloudflare.
+This registry is integrated with your Cloudflare account and is backed by [R2](/r2/). All authentication is handled automatically by
+Cloudflare both when pushing and pulling images.
+
+Just provide the path to your Dockerfile:
+
+<WranglerConfig>
+
+```json
+{
+	"containers": {
+		"image": "./Dockerfile"
+		// ...rest of config...
+	}
+}
+```
+
+</WranglerConfig>
+
+And deploy your Worker with `wrangler deploy`. No other image management is necessary.
+
+On subsequent deploys, Wrangler will only push image layers that have changed, which saves space and time on `wrangler deploy`
+calls after the initial deploy.
+
+:::note
+Docker or a Docker-compatible CLI tool must be running for Wrangler to build and push images.
+:::
+
+## Using pre-built container images
+
+If you wish to use a pre-built image, first, push it to the Cloudflare Registry:
+
+Wrangler provides a command to push images to the Cloudflare Registry:
+
+<PackageManagers type="exec" pkg="wrangler" args="push <image>:<tag>" />
+
+Additionally, you can use the `-p` flag with `wrangler containers build` to build and push an image in one step:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="containers build -p -t <tag> ."
+/>
+
+Then you can specify the URL in the image attribute:
+
+<WranglerConfig>
+
+```json
+{
+	"containers": {
+		"image": "registry.cloudflare.com/your-namespace/your-image:tag"
+		// ...rest of config...
+	}
+}
+```
+
+</WranglerConfig>
+
+Currently, all images must use `registry.cloudflare.com`, which is the default registry for Wrangler.
+
+To use an existing image from another repo, you can pull it, tag it, then push it to the Cloudflare Registry:
+
+```bash
+docker pull <public-image>
+docker tag <public-image> <image>:<tag>
+wrangler containers push <image>:<tag>
+```
+
+:::note
+We plan to allow configuring public images directly in wrangler config. Cloudflare will
+download your image, optionally using auth credentials, then cache it globally in the Cloudflare Registry.
+
+This is not yet available.
+:::
+
+## Pushing images with CI
+
+To use an image built in a continuous integration environment, install `wrangler` then
+build and pushi images using either `wrangler containers build` with the `--push` flag, or
+using the `wrangler containers push` command.
+
+## Registry Limits
+
+Images are limited to 2 GB in size and you are limited to 50 total GB in your account's registry.
+
+:::note
+These limits will likely increase in the future.
+:::
+
+Delete images with `wrangler containers delete` to free up space, but note that reverting a
+Worker to a previous version that uses a deleted image will then error.

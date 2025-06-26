@@ -196,6 +196,10 @@ Certain scenarios also affect Origin Cache Control behavior when it is enabled o
   </tbody>
 </table>
 
+:::note
+When the `Cloudflare-Cdn-Cache-Control` header is set, OCC is turned **on** (regardless of whether OCC is enabled or disabled). As a result, we apply our Authorization header logic (per [RFC 7234, Section 3.2](https://tools.ietf.org/html/rfc7234#section-3.2)) to allow only the `s-maxage`, `must-revalidate`, or `public` directives. If any other directive is present, we do not cache the asset and instead return `BYPASS`.
+:::
+
 ## Examples
 
 Review the examples below to learn which directives to use with the `Cache-Control` header to control specific caching behavior.

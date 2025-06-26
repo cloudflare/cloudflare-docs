@@ -190,13 +190,18 @@ Below are definitions of the priority levels Cloudflare assigns to cases and the
 
 ### Priority definitions
 
-- P1 - Service is significantly impaired and unavailable in multiple user locations.
-  - _Example_: site outage issues or an ongoing attack.
-- P2 - Repeated inability to use the Service from a single location or localized region.
-  - _Example_: Localized site outage. These issues may be with a single website or even a single server.
-- P3 - Issues that may impact service performance or user experience but do not prevent service usage; account-related queries.
-  - _Example_: slow performance issues, information requests, or usage questions.
-- P4 - General questions related to Cloudflare's products and services
+- P1 - Critical Business Impact: Severe disruption to your business operations. This issue requires immediate and ongoing attention from both Cloudflare as well as yourself as it directly affects revenue, users, or business continuity.
+  - _Example_: Your websites, applications, or services are completely unavailable or severely impaired across multiple regions or ISPs.
+  - _Example_: A confirmed, active security attack is causing major disruptions, such as denial of service, data breaches, or account compromises.
+- P2 - High Business Impact: Significant but localized service or security disruption. While not a full outage, this issue affects business operations and requires urgent resolution.
+  - _Example_: A recurring or persistent issue is affecting a portion of your users, such as degraded performance, intermittent outages, or limited accessibility.
+  - _Example_: A past, confirmed security attack has resulted in measurable impact, requiring investigation and mitigation to prevent recurrence.
+- P3 -  Moderate Business Impact: Limited service impact or suspected security concerns. The issue does not pose an immediate risk but requires attention for continued reliability.
+  - _Example_: Your service is operational, but you are experiencing minor disruptions, such as performance fluctuations, unexpected behavior, or non-critical bugs.
+  - _Example_: A suspected security threat has been detected but is currently mitigated (e.g., an attack that Cloudflare successfully blocked).
+- P4 - Low Business Impact: General inquiries and non-urgent requests. The issue does not impact your service availability or business operations.
+  - _Example_: You are requesting feature enhancements or recommendations for improving security or performance.
+  - _Example_: You have questions about Cloudflare’s products, documentation, or best practices.
 
 ### Premium SLA
 

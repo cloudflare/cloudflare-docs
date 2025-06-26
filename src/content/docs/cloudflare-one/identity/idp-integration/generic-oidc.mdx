@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { Tabs, TabItem, Render } from '~/components';
+import { Tabs, TabItem, Render, APIRequest } from '~/components';
 
 Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you integrate IdPs not already set in Access.
 
@@ -53,32 +53,27 @@ Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you inte
 
 </TabItem> <TabItem label="API">
 
-1. [Create an API token](/fundamentals/api/get-started/create-token/) with the following permissions:
-		| Type    | Item             | Permission |
-		| ------- | ---------------- | ---------- |
-		| Account | Access: Organizations, Identity Providers, and Groups   | Edit    |
+Make a `POST` request to the [Identity Providers](/api/resources/zero_trust/subresources/identity_providers/methods/create/) endpoint:
 
-2. Make a `POST` request to the [Identity Providers](/api/resources/zero_trust/subresources/identity_providers/methods/create/) endpoint:
-
-		```sh
-		curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/identity_providers \
-		--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-		--data '{
-			"name": "Generic OIDC example",
-			"type": "oidc",
-			"config": {
-				"client_id": "<your client id>",
-				"client_secret": "<your client secret>",
-				"auth_url": "https://accounts.google.com/o/oauth2/auth",
-				"token_url": "https://accounts.google.com/o/oauth2/token",
-				"certs_url": "https://www.googleapis.com/oauth2/v3/certs",
-				"pkce_enabled": false,
-				"email_claim_name": "email",
-				"claims": ["employeeID", "groups"],
-				"scopes": ["openid", "email", "profile"]
-			}
-		}'
-		```
+<APIRequest
+  path="/accounts/{account_id}/access/identity_providers"
+  method="POST"
+  json={{
+    name: "Generic OIDC example",
+    type: "oidc",
+    config: {
+      client_id: "<your client id>",
+      client_secret: "<your client secret>",
+      auth_url: "https://accounts.google.com/o/oauth2/auth",
+      token_url: "https://accounts.google.com/o/oauth2/token",
+      certs_url: "https://www.googleapis.com/oauth2/v3/certs",
+      pkce_enabled: false,
+      email_claim_name: "email",
+      claims: ["employeeID", "groups"],
+      scopes: ["openid", "email", "profile"],
+    },
+  }}
+/>
 
 </TabItem> <TabItem label="Terraform (v5)">
 

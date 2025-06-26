@@ -15,7 +15,27 @@ This error occurs when these two conditions are true:
 - Cloudflare cannot validate the SSL certificate at your origin web server.
 - [_Full SSL (Strict)_](/ssl/origin-configuration/ssl-modes/full-strict/) **SSL** is set in the **Overview** tab of your Cloudflare **SSL/TLS** app.
 
-#### Error 526 in the Zero Trust context
+#### Resolution
+
+Here are some options to fix or workaround this issue:
+
+- For a potential quick fix, set **SSL** to _Full_ instead of _Full (strict)_ in the **Overview** tab of your Cloudflare **SSL/TLS** app for the domain.
+
+- Add your self-signed SSL certificate to the [Custom Origin Trust Store](/ssl/origin-configuration/custom-origin-trust-store/). This allows the Cloudflare edge to recognize your self-signed SSL certificate as valid.
+
+- Request your server administrator or hosting provider to review the origin web server's SSL certificates and verify that:
+  - Certificate is not expired.
+  - Certificate is not revoked.
+  - Certificate is signed by a [Certificate Authority](https://en.wikipedia.org/wiki/Certificate_authority) (not self-signed).
+  - The requested or target domain name and hostname are in the certificate's **Common Name** or **Subject Alternative Name**.
+  - Your origin web server accepts connections over port SSL port `443`.
+  - [Temporarily pause Cloudflare](/fundamentals/manage-domains/pause-cloudflare/) and visit [https://www.sslshopper.com/ssl-checker.html#hostname=www.example.com](https://www.sslshopper.com/ssl-checker.html#hostname=www.example.com) (replace `www.example.com` with your hostname and domain) to verify no issues exists with the origin SSL certificate:
+
+  ![Screen showing an SSL certificate with no errors.](~/assets/images/support/hc-import-troubleshooting_5xx_errors_sslshopper_output.png)
+
+
+
+### Error 526 in the Zero Trust context
 
 When using [Cloudflare Gateway](/cloudflare-one/policies/gateway/), an HTTP Error `526` might be returned in the [following cases](/cloudflare-one/faq/troubleshooting/#i-see-error-526-when-browsing-to-a-website):
 
@@ -33,27 +53,21 @@ When using [Cloudflare Gateway](/cloudflare-one/policies/gateway/), an HTTP Erro
   - Do not support [FIPS-compliant ciphers](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#cipher-suites) (if you have enabled [FIPS compliance mode](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#fips-compliance)). In order to load the page, you can either disable FIPS mode or create a Do Not Inspect policy for this host (which has the effect of disabling FIPS compliance for this origin).
   - Redirect all HTTPS requests to HTTP.
 
-#### Error 526 in the Workers context
+
+### Error 526 in the Workers context
 
 Workers subrequests to any hostname outside your Cloudflare zone that is not proxied by Cloudflare are always made using the **[Full (strict)](/ssl/origin-configuration/ssl-modes/full-strict/)** SSL mode, regardless of the Workers zone configuration.
 
-As a result, a valid SSL certificate is required at the origin server.
+#### Resolution
 
-### Resolution
+- Make sure the SSL certificate configured at the origin is valid.
 
-:::note
-For a potential quick fix, set **SSL** to _Full_ instead of _Full (strict)_ in the **Overview** tab of your Cloudflare **SSL/TLS** app for the domain.
-:::
+- Add your self-signed SSL certificate to the [Custom Origin Trust Store](/ssl/origin-configuration/custom-origin-trust-store/) and enable the [`cots_on_external_fetch` compatibility flag](/workers/configuration/compatibility-flags/#do-not-use-the-custom-origin-trust-store-for-external-subrequests) in your Worker's configuration. 
+This flag enables the use of the [Custom Origin Trust Store](/ssl/origin-configuration/custom-origin-trust-store/) when making external (grey-clouded) subrequests from a Cloudflare Worker.
 
-Request your server administrator or hosting provider to review the origin web server's SSL certificates and verify that:
 
-- Certificate is not expired.
-- Certificate is not revoked.
-- Certificate is signed by a [Certificate Authority](https://en.wikipedia.org/wiki/Certificate_authority) (not self-signed).
-- The requested or target domain name and hostname are in the certificate's **Common Name** or **Subject Alternative Name**.
-- Your origin web server accepts connections over port SSL port `443`.
-- [Temporarily pause Cloudflare](/fundamentals/manage-domains/pause-cloudflare/) and visit [https://www.sslshopper.com/ssl-checker.html#hostname=www.example.com](https://www.sslshopper.com/ssl-checker.html#hostname=www.example.com) (replace `www.example.com` with your hostname and domain) to verify no issues exists with the origin SSL certificate:
 
-![Screen showing an SSL certificate with no errors.](~/assets/images/support/hc-import-troubleshooting_5xx_errors_sslshopper_output.png)
 
-If the origin server uses a self-signed certificate, configure the domain to use _Full_ _SSL_ instead of _Full SSL (Strict)_. Refer to [recommended SSL settings for your origin](/ssl/origin-configuration/ssl-modes).
+
+
+

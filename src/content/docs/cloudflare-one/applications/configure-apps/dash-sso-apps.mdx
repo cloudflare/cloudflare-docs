@@ -5,7 +5,7 @@ sidebar:
   order: 4
 ---
 
-import { FeatureTable } from "~/components";
+import { FeatureTable, APIRequest } from "~/components";
 
 By adding a Cloudflare Dashboard SSO application to your Cloudflare Zero Trust account, you can enforce single sign-on (SSO) to the Cloudflare dashboard with the identity provider (IdP) of your choice. SSO will be enforced for every user in your email domain.
 
@@ -114,15 +114,14 @@ If there is an issue with your SSO IdP provider, you can add an alternate IdP us
 
 1. [Add](/api/resources/zero_trust/subresources/identity_providers/methods/create/) one-time PIN login:
 
-```bash title="cURL command"
-curl 'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/identity_providers' \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---header "Content-Type: application/json" \
---data '{
-  "type": "onetimepin",
-  "config": {}
-}'
-```
+<APIRequest
+  path="/accounts/{account_id}/access/identity_providers"
+  method="POST"
+  json={{
+    type: "onetimepin",
+    config: {},
+  }}
+/>
 
 2. [Get](/api/resources/zero_trust/subresources/access/subresources/applications/methods/list/) the `id` of the `dash_sso` Access application. You can use [`jq`](https://jqlang.github.io/jq/download/) to quickly find the correct application:
 
@@ -142,20 +141,24 @@ curl 'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/apps' \
 }
 ```
 
-3. Using the `id` obtained above, [update](/api/resources/zero_trust/subresources/access/subresources/applications/methods/update/) **SSO App** to accept all identity providers:
+3. Using the `id` obtained above, [update](/api/resources/zero_trust/subresources/access/subresources/applications/methods/update/) **SSO App** to accept all identity providers. To avoid overwriting your existing configuration, the PUT request body should contain all fields returned by the previous GET request.
 
-```bash title="cURL command"
-curl --request PUT \
-'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/apps/3537a672-e4d8-4d89-aab9-26cb622918a1' \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---header "Content-Type: application/json" \
---data '{
-  "id": "3537a672-e4d8-4d89-aab9-26cb622918a1",
-  ...
-  "allowed_idps": [],
-  ...
-}'
-```
+<APIRequest
+  path="/accounts/{account_id}/access/apps/{app_id}"
+  method="PUT"
+  parameters={{ app_id: "3537a672-e4d8-4d89-aab9-26cb622918a1" }}
+  json={{
+    id: "3537a672-e4d8-4d89-aab9-26cb622918a1",
+		uid: "3537a672-e4d8-4d89-aab9-26cb622918a1",
+		type: "dash_sso",
+		name: "SSO App",
+    allowed_idps: [],
+    // ... (other existing properties)
+  }}
+	code={{
+		mark: [9]
+	}}
+/>
 
 Users will now have the option to log in using a one-time PIN.
 
@@ -192,8 +195,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/sso/v2/connectors
 ```bash title="cURL command"
 curl --request PATCH \
 'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/sso/v2/connectors/2828' \
---header "X-Auth-Email: $CLOUDFLARE_EMAIL" \
---header "X-Auth-Key: $CLOUDFLARE_API_KEY" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --header "Content-Type: application/json" \
 --data '{
   "sso_connector_status": "DIS"

@@ -296,7 +296,7 @@ async function handleLink(link: Link): Promise<Link> {
 						text: "API",
 						variant: "note",
 					}
-				: undefined,
+				: link.badge,
 			attrs: {
 				"data-external-link": true,
 			},

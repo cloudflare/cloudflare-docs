@@ -7,11 +7,28 @@ sidebar:
 
 import { GitHubCode } from "~/components";
 
-Uploading and managing a Worker is easy with [Wrangler](/workers/wrangler/configuration), but sometimes you need to do it more programmatically. You might do this with IaC ("Infrastructure as Code") tools or by calling the [Cloudflare API](/api) directly. Use cases for the API include build and deploy scripts, CI/CD pipelines, custom dev tools, or testing. We provide API SDK libraries for common languages that make interacting with the API easier, such as [cloudflare-typescript](https://github.com/cloudflare/cloudflare-typescript) or [cloudflare-python](https://github.com/cloudflare/cloudflare-python). For IaC, a common tool is HashiCorp's Terraform where you can use the [Cloudflare Provider](/terraform) to create and manage Workers resources.
+Uploading and managing Workers is easy with [Wrangler](/workers/wrangler/configuration), but sometimes you need to do it more programmatically. You might do this with IaC ("Infrastructure as Code") tools or by calling the [Cloudflare API](/api) directly. Use cases for the API include build and deploy scripts, CI/CD pipelines, custom dev tools, and testing. We provide API SDK libraries for common languages that make interacting with the API easier, such as [cloudflare-typescript](https://github.com/cloudflare/cloudflare-typescript) and [cloudflare-python](https://github.com/cloudflare/cloudflare-python). For IaC, a common tool is HashiCorp's Terraform. You can use the [Cloudflare Terraform Provider](/terraform) to create and manage Workers resources.
 
-Here are examples of deploying a Worker with common tools and languages. In particular, they highlight how to upload script content and metadata which is different with each approach. Reference the Upload Worker Module API docs [here](/api/resources/workers/subresources/scripts/methods/update).
+Here are examples of deploying a Worker with common tools and languages, and considerations for successfully managing Workers with IaC. In particular, the examples highlight how to upload script content and metadata which is different with each approach. Reference the Upload Worker Module API docs [here](/api/resources/workers/subresources/scripts/methods/update) for an exact definition of how script upload works.
 
-All of these examples need an [account id](/fundamentals/account/find-account-and-zone-ids) and [API token](/fundamentals/api/get-started/create-token) (not Global API key) to work.
+All of these examples need an [account ID](/fundamentals/account/find-account-and-zone-ids) and [API token](/fundamentals/api/get-started/create-token) (not Global API key) to work.
+
+## Workers Bundling
+
+None of the examples below do [Workers Bundling](/workers/wrangler/bundling) which is usually the function of a tool like Wrangler or [esbuild](https://esbuild.github.io). Generally, you'd run this bundling step before applying your Terraform plan or using the API for script upload:
+
+```bash
+wrangler deploy --dry-run -outdir build
+```
+
+Then you'd reference the bundled script like `build/index.js`.
+
+:::note
+
+Depending on your Wrangler project and `-outdir`, the name and location of your bundled script might vary.
+:::
+
+Make sure to copy all of your config from `wrangler.json` into your Terraform config or API request. This is especially important for compatibility date or compatibility flags your script relies on.
 
 ## Terraform
 
@@ -32,6 +49,7 @@ resource "cloudflare_workers_script" "my-hello-world-script" {
   script_name = "my-hello-world-script"
   main_module = "my-hello-world-script.mjs"
   content = trimspace(file("my-hello-world-script.mjs"))
+  compatibility_date = "$today"
   bindings = [{
     name = "MESSAGE"
     type = "plain_text"
@@ -88,7 +106,7 @@ curl https://api.cloudflare.com/client/v4/accounts/<account_id>/workers/scripts/
             "text": "Hello World!"
           }
         ],
-        "compatibility_date": "2025-03-11"
+        "compatibility_date": "$today"
       };type=application/json' \
   -F 'my-hello-world-script.mjs=@-;filename=my-hello-world-script.mjs;type=application/javascript+module' <<EOF
 export default {
@@ -106,13 +124,13 @@ Change `my-hello-world-script.mjs=@-;` to `my-hello-world-script.mjs=@./my-hello
 
 ### Workers for Platforms
 
-With [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms), you can upload [User Workers](/cloudflare-for-platforms/workers-for-platforms/get-started/user-workers) in a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dispatch-namespace). You can use the exact same example above for that if you simply change the url to:
+With [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms), you can upload [User Workers](/cloudflare-for-platforms/workers-for-platforms/get-started/user-workers) in a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dispatch-namespace). You can use the exact same example. Simply change the url to:
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/<account_id>/workers/dispatch/namespaces/<dispatch_namespace>/scripts/my-hello-world-script
 ```
 
-For this to work, you will first need to configure [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration), create a dispatch namespace, and replace `<dispatch_namespace>` with your own.
+For this to work, you first need to configure [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration), create a dispatch namespace, and replace `<dispatch_namespace>` with your own.
 
 ### Python Workers
 
@@ -131,7 +149,7 @@ curl https://api.cloudflare.com/client/v4/accounts/<account_id>/workers/scripts/
             "text": "Hello World!"
           }
         ],
-        "compatibility_date": "2025-03-11",
+        "compatibility_date": "$today",
         "compatibility_flags": [
           "python_workers"
         ]
