@@ -93,7 +93,7 @@
 		"patch-package": "8.0.0",
 		"prettier": "3.5.3",
 		"prettier-plugin-astro": "0.14.1",
-		"prettier-plugin-tailwindcss": "0.6.12",
+		"prettier-plugin-tailwindcss": "0.6.13",
 		"pretty-bytes": "7.0.0",
 		"react": "19.0.0",
 		"react-dom": "19.0.0",
