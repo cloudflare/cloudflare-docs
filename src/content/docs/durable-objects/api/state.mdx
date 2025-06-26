@@ -53,11 +53,11 @@ export class MyDurableObject extends DurableObject {
 
 ### `waitUntil`
 
-`waitUntil` waits until the promise which is passed as a parameter resolves and can extend a <GlossaryTooltip term= "request context">request context</GlossaryTooltip> up to 30 seconds after the last client disconnects.
+`waitUntil` waits until the promise which is passed as a parameter resolves and can extend a request context up to 30 seconds after the last client disconnects.
 
 :::note[`waitUntil` is not necessary]
 
-The request context for a Durable Objects extends at least 60 seconds after the last client disconnects. So `waitUntil` is not necessary. It remains part of the `DurableObjectState` interface to remain compatible with [Workers Runtime APIs](/workers/runtime-apis/context/#waituntil).
+A Durable Object will remain active for at least 70 seconds after the last client disconnects if the Durable Object is still waiting on any ongoing work or outbound I/O. So `waitUntil` is not necessary. It remains part of the `DurableObjectState` interface to remain compatible with [Workers Runtime APIs](/workers/runtime-apis/context/#waituntil).
 
 :::
 

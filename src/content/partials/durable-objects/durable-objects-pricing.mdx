@@ -8,7 +8,7 @@ import { Render, Markdown, GlossaryTooltip, Details, AnchorHeading } from "~/com
 { props.product === "durable-objects" && <><AnchorHeading title="Compute billing" depth={2}/></> }
 { props.product === "workers" && <><AnchorHeading title="Compute billing" depth={3}/></> }
 
-Durable Objects are billed only while the Durable Object is active (includes the <GlossaryTooltip term="request context"> request context</GlossaryTooltip>).
+Durable Objects are billed for duration while the Durable Object is active and running in memory. Requests to a Durable Object keep it active or creates the object if it was inactive, not in memory.
 
 |                      | Free plan         | Paid plan                                                                                                                               |
 | -------------------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
@@ -32,7 +32,7 @@ await durableObjectStub.cat(); // billed as a request
 
 <sup>3</sup> Application level auto-response messages handled by [`state.setWebSocketAutoResponse()`](/durable-objects/best-practices/websockets/) will not incur additional wall-clock time, and so they will not be charged.
 
-<sup>4</sup> Duration is billed in wall-clock time as long as the Object is active, but is shared across all requests active on an Object at once. Calling `accept()` on a WebSocket in an Object will incur duration charges for the entire time the WebSocket is connected. The request context of a Durable Object is evaluated every 70 seconds and the context is ended if it has been active for 70 seconds. If you prefer, use the [WebSocket Hibernation API](/durable-objects/best-practices/websockets/#websocket-hibernation-api) to avoid incurring duration charges once all event handlers finish running.
+<sup>4</sup> Duration is billed in wall-clock time as long as the Object is active, but is shared across all requests active on an Object at once. Calling `accept()` on a WebSocket in an Object will incur duration charges for the entire time the WebSocket is connected. It is recommended to use the WebSocket Hibernation API to avoid incurring duration charges once all event handlers finish running. Note that the Durable Object will remain active for 10 seconds after the last client disconnects. For a complete explanation, refer to [When does a Durable Object incur duration charges?](/durable-objects/platform/pricing/#when-does-a-durable-object-incur-duration-charges).
 
 <sup>5</sup> Duration billing charges for the 128 MB of memory your Durable Object is allocated, regardless of actual usage. If your account creates many instances of a single Durable Object class, Durable Objects may run in the same isolate on the same physical machine and share the 128 MB of memory. These Durable Objects are still billed as if they are allocated a full 128 MB of memory.
 

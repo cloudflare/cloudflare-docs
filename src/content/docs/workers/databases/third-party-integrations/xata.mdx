@@ -3,9 +3,26 @@ pcx_content_type: configuration
 title: Xata
 ---
 
-import { Render } from "~/components";
+import { Render, TabItem, Tabs } from "~/components";
 
 [Xata](https://xata.io) is a serverless data platform powered by PostgreSQL. Xata uniquely combines multiple types of stores (relational databases, search engines, analytics engines) into a single service, accessible through a consistent REST API.
+
+:::note
+
+You can connect to Xata using [Hyperdrive](/hyperdrive) (recommended), or using the Xata client, `@xata.io/client`. Both provide connection pooling and reduce the amount of round trips required to create a secure connection from Workers to your database.
+
+Hyperdrive can provide lower latencies because it performs the database connection setup and connection pooling across Cloudflare's network. Hyperdrive supports native database drivers, libraries, and ORMs, and is included in all [Workers plans](/hyperdrive/platform/pricing/). Learn more about Hyperdrive in [How Hyperdrive Works](/hyperdrive/configuration/how-hyperdrive-works/).
+
+:::
+
+<Tabs>
+	<TabItem label="Hyperdrive (recommended)">
+
+To connect to Xata using [Hyperdrive](/hyperdrive), follow these steps:
+
+         <Render file="xata-partial" product="hyperdrive"/>
+    </TabItem>
+    <TabItem label="Supabase client">
 
 ## Set up an integration with Xata
 
@@ -23,11 +40,11 @@ To set up an integration with Xata:
    # Add the Xata API key as a secret
    npx wrangler secret put XATA_API_KEY
    # When prompted, paste your Xata API key
-   
+
    # Add the Xata branch as a secret
    npx wrangler secret put XATA_BRANCH
    # When prompted, paste your Xata branch name (usually 'main')
-   
+
    # Add the Xata database URL as a secret
    npx wrangler secret put XATA_DATABASE_URL
    # When prompted, paste your Xata database URL
@@ -82,3 +99,6 @@ To set up an integration with Xata:
    ```
 
 To learn more about Xata, refer to [Xata's official documentation](https://xata.io/docs).
+
+</TabItem>
+</Tabs>

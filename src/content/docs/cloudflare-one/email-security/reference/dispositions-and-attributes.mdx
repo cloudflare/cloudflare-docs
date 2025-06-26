@@ -25,6 +25,20 @@ The following disposition values follow an order of maliciousness:
 
 <Render file="email-security/dispositions-and-attributes" />
 
+### Header structure
+
+When Email Security adds a disposition header to an email message, that header matches the following format:
+
+```txt
+X-CFEmailSecurity-Disposition: [Value]
+```
+
+Note that emails with a disposition of `SPAM` will be tagged with `UCE` (unsolicited commercial emails) in their headers:
+
+```txt
+X-CFEmailSecurity-Disposition: UCE
+```
+
 ## Attributes 
 
 Traffic that flows through Email Security can also receive one or more Attributes, which indicate that a specific condition has been met.
