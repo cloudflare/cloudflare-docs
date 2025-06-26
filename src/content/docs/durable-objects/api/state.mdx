@@ -57,7 +57,7 @@ export class MyDurableObject extends DurableObject {
 
 :::note[`waitUntil` is not necessary]
 
-A Durable Object will automatically remain active for at least 70 seconds after the last client disconnects if the Durable Object is still waiting on any ongoing work or outbound I/O. So `waitUntil` is not necessary. It remains part of the `DurableObjectState` interface to remain compatible with [Workers Runtime APIs](/workers/runtime-apis/context/#waituntil).
+A Durable Object will remain active for at least 70 seconds after the last client disconnects if the Durable Object is still waiting on any ongoing work or outbound I/O. So `waitUntil` is not necessary. It remains part of the `DurableObjectState` interface to remain compatible with [Workers Runtime APIs](/workers/runtime-apis/context/#waituntil).
 
 :::
 
