@@ -18,7 +18,7 @@ The Vite plugin does not require that you provide the `assets` field in order to
 - There is an `index.html` file in the root of your project
 - `build.rollupOptions.input` or `environments.client.build.rollupOptions.input` is specified in your Vite config
 - You have a non-empty [`public` directory](https://vite.dev/guide/assets#the-public-directory)
-- Your entry Worker [imports assets as URLs](https://vite.dev/guide/assets#importing-asset-as-url)
+- Your Worker [imports assets as URLs](https://vite.dev/guide/assets#importing-asset-as-url)
 
 On running `vite build`, an output `wrangler.json` configuration file is generated as part of the build output.
 The `assets.directory` field in this file is automatically populated with the path to your `client` build output.
@@ -38,23 +38,23 @@ assets = { not_found_handling = "single-page-application" }
 ## Features
 
 The Vite plugin ensures that all of Vite's [static asset handling](https://vite.dev/guide/assets) features are supported in your Worker as well as in your frontend.
-This includes importing assets as URLs, inlining assets, importing assets as strings and importing assets from the `public` directory.
+These include importing assets as URLs, importing as strings and importing from the `public` directory as well as inlining assets.
 
 Assets [imported as URLs](https://vite.dev/guide/assets#importing-asset-as-url) can be fetched via the [assets binding](/workers/static-assets/binding/#binding).
 As the binding's `fetch` method requires a full URL, we recommend using the request URL as the `base`.
 This is demonstrated in the following example:
 
 ```ts
-import assetPath from "./my-image.svg";
+import myImage from "./my-image.png";
 
 export default {
-	async fetch(request, env) {
-		return env.ASSETS.fetch(new URL(assetPath, request.url));
+	fetch(request, env) {
+		return env.ASSETS.fetch(new URL(myImage, request.url));
 	},
 };
 ```
 
-Assets imported as URLs in your Worker will automatically be moved from the Worker to the client build output.
+Assets imported as URLs in your Worker will automatically be moved to the client build output.
 When running `vite build` the paths of any moved assets will be displayed in the console.
 
 :::note
