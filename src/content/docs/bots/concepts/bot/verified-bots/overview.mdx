@@ -1,0 +1,37 @@
+---
+pcx_content_type: concept
+title: Overview
+sidebar:
+    order: 3
+    label: Overview
+
+---
+
+import { GlossaryTooltip } from "~/components"
+
+A **verified bot** is a bot which has been added to Cloudflare's list of <GlossaryTooltip term="verified bot">verified bots</GlossaryTooltip>.
+
+You can request for your bot to be added to Cloudflare's list of verified bots by filling out an [online application](https://dash.cloudflare.com/?to=/:account/configurations/verified-bots) in the Cloudflare dashboard.
+
+## Verified bot requirement
+
+For a bot to be verified, it must meet the following requirements:
+
+1. The bot must follow [verified bots policy](/bots/concepts/bot/verified-bots/policy/).
+2. The bot must be verified using one of the following verification methods:
+   - [Web Bot Auth](/bots/concepts/bot/verified-bots/web-bot-auth/)
+   - [IP validation](/bots/concepts/bot/verified-bots/ip-validation/)
+
+Once Cloudflare verifies a bot, it should appear on the [Cloudflare Radar's list of verified bots](https://radar.cloudflare.com/verified-bots).
+
+:::note
+Bot operators who prefer not to create a free Cloudflare account can do so using our [old form](https://docs.google.com/forms/d/e/1FAIpQLSdqYNuULEypMnp4i5pROSc-uP6x65Xub9svD27mb8JChA_-XA/viewform?usp=sf_link), but the waiting time is up to several weeks for verified bot requests to be evaluated.
+:::
+
+## Transient false negatives
+
+Once Cloudflare lists a bot as a verified bot, this entry is cached and may get delisted if no traffic is seen in the Cloudflare network coming from the bot for a defined period of time.
+
+It takes 24 hours for an inactive IP to be removed as a verified bot.
+
+A bot can remain unlisted until Cloudflare sees traffic being sourced from the bot. When the bot is revalidated, it is listed as a verified bot again.

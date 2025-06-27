@@ -5,6 +5,8 @@ sidebar:
   order: 4
 ---
 
+import { TypeScriptExample } from "~/components";
+
 AutoRAG is designed to work out of the box with data in R2 buckets. But what if your content lives on a website or needs to be rendered dynamically?
 
 In this tutorial, we’ll walk through how to:
@@ -61,6 +63,8 @@ npx wrangler r2 bucket create html-bucket
 ```
 
 5. Replace the contents of `src/index.ts` with the following skeleton script:
+
+<TypeScriptExample filename="src/index.ts">
 
 ```typescript
 import puppeteer from "@cloudflare/puppeteer";
@@ -119,6 +123,8 @@ export default {
 	},
 } satisfies ExportedHandler<Env>;
 ```
+
+</TypeScriptExample>
 
 6. Once the code is ready, you can deploy it to your Cloudflare account by running:
 

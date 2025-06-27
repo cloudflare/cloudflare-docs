@@ -131,3 +131,23 @@ Yes, although minimal. Empty tables can consume at least a few kilobytes, based 
 All writes to a SQLite-backed Durable Object stores nominal amounts of metadata in internal tables in the Durable Object, which counts towards your billable storage.
 
 The metadata remains in the Durable Object until you call [`deleteAll()`](/durable-objects/api/storage-api/#deleteall).
+
+### When does a Durable Object incur duration charges?
+
+A Durable Object incurs duration charges as long as the JavaScript object is held in memory. Once an object has been evicted from memory, the next time it is needed, it will be recreated (calling the constructor again). There are two factors which decide when an object may be evicted from memory: hibernatability and existence of clients.
+
+A Durable Object is considered hibernatable any time that it is not waiting for any I/O or callbacks that depend on the in-memory state. 
+
+- For example, if an object calls `fetch()` and awaits the response, it is considered to be waiting for I/O, and so cannot hibernate. 
+
+- Less obvious to a user, if an object calls `setTimeout()` to schedule a callback in the future - no matter how far in the future - then it is considered non-hibernatable, since there would be no way to recreate the callback after hibernating. 
+
+- Additionally, if the Durable Object has received an incoming request and has not fully responded yet, then it cannot be hibernated, because hibernating would mean losing track of the async function which is eventually supposed to return a response to that request.
+
+- As an exception, a WebSocket request which has explicitly been accepted using the [WebSocket hibernation API](/durable-objects/best-practices/websockets/#websocket-hibernation-api allows a Durable Object to hibernate even while the WebSocket is still connected.
+
+
+
+Once a Durable Object has been in a hibernatable state for 10 consecutive seconds, it hibernates, and duration billing stops.
+
+Even if a Durable Object never becomes hibernatable, it will still be evicted once all clients have gone away. A Durable Object is considered to have clients if any other Worker currently holds a stub pointing to the Durable Object, or is waiting for a response from the Durable Object. An incoming WebSocket connection counts as a client. If the object is currently responding to an alarm event, this also counts as having a client. When not hibernatable, a Durable Object will be evicted from memory after it has had no client for 70-140 seconds (the exact interval varies). But again, if the object is hibernatable, then the 10-second hibernation timeout takes precedence and the 70-140 second no-client timeout is moot.
