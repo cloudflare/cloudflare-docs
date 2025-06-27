@@ -126,6 +126,21 @@ const res = await port.fetch("http://container/set-state", {
 });
 ```
 
+```js
+const conn = this.ctx.container.getTcpPort(8080).connect('10.0.0.1:8080');
+await conn.opened;
+
+try {
+  if (request.body) {
+    await request.body.pipeTo(conn.writable);
+  }
+  return new Response(conn.readable);
+} catch (err) {
+  console.error("Request body piping failed:", err);
+  return new Response("Failed to proxy request body", { status: 502 });
+}
+```
+
 #### Parameters
 
 - `port` (number): a TCP port number to use for communication with the container.
