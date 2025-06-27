@@ -373,4 +373,4 @@ Get-ChildItem -Path "HKLM:\SOFTWARE\Microsoft\NET Framework Setup\NDP" -Recurse 
 
 ## I get an `Invalid session. Please try logging in again.` error from Access when trying to log in to the Cloudflare dashboard via SSO.
 
-Cloudflare Access uses a [`CF_Session` cookie](/cloudflare-one/identity/authorization-cookie/#access-cookies) to validate that the same browser both initiated and completed your sign-in. The `Invalid session` error means Access was unable to validate this cookie. Ensure that there is no software or firewall on your device and/or network that may be interfering with requests to Access.
+Cloudflare Access uses a [`CF_Session` cookie](/cloudflare-one/identity/authorization-cookie/#access-cookies) to validate that the same browser both initiated and completed your sign-in. The `Invalid session` error means Access was unable to validate this cookie. Ensure that there is no software or firewall on your device or network that may be interfering with requests to Access.
