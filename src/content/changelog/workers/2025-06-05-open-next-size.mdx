@@ -1,0 +1,25 @@
+---
+title: Performance and size optimization for the Cloudflare adapter for Open Next.
+description: Update to the latest version of `@opennextjs/cloudflare` to automatically benefit from these improvements.
+products:
+  - workers
+date: 2025-06-05T19:00:00Z
+
+---
+
+We released the Cloudflare adapter for Open Next v1.0.0 in May 2025.
+
+We had plans [to improve performance and size](https://blog.cloudflare.com/deploying-nextjs-apps-to-cloudflare-workers-with-the-opennext-adapter/#1-0-and-the-road-ahead) after v1 was released.
+
+`@opennextjs/cloudflare` v1.2 released on June 5, 2025 contains a few improvements:
+
+- `babel` was pulled into the app code, we [remove it](https://github.com/opennextjs/opennextjs-cloudflare/pull/710) to save ~4MB on a typical uncompressed app size
+- we were also able [to drop a dependency on `@ampproject/toolbox-optimizer`](https://github.com/opennextjs/opennextjs-cloudflare/pull/700) to save ~3MB on a typical uncompressed app size
+- we [stopped preloading all the app routes](https://github.com/opennextjs/opennextjs-cloudflare/pull/696) to save >100ms on the first request.
+
+Users only need to update to the latest version of `@opennextjs/cloudflare` to automatically benefit from these improvements.
+
+Note that we published [CVE-2005-6087](https://github.com/opennextjs/opennextjs-cloudflare/security/advisories/GHSA-rvpw-p7vw-wj3m) for a SSRF vulnerability in the `@opennextjs/cloudflare` package.
+The vulnerability has been fixed from `@opennextjs/cloudflare` v1.3.0 onwards. Please update to any version after this one. v1.3.1 is the latest at the time of writing.
+
+
