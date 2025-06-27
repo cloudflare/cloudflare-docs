@@ -30,7 +30,7 @@ The fields available for Cache Rule matching expressions in the **Expression Bui
 - Cookie value of - `http.request.cookies`
 - File extension - `http.request.uri.path.extension`
 
-If you select the [**Edit expression**](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-editor) option, you can enter any of the [available fields](/ruleset-engine/rules-language/fields/reference/).
+If you select the [Edit expression](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-editor) option, you can enter any of the [available fields](/ruleset-engine/rules-language/fields/reference/).
 
 :::note
 
@@ -166,13 +166,13 @@ Refer to [Create a cache rule via API](/cache/how-to/cache-rules/create-api/#exa
 
 #### Cache Key
 
-Cache keys refer to the criteria that Cloudflare uses to determine how to store resources in our cache. Customizing the cache key allows you to determine how Cloudflare can reuse particular cache entries across requests or share the cache entries for more granularity for end users.
+Cache keys refer to the criteria that Cloudflare uses to determine how to store resources in our cache. Customizing the Cache Key allows you to determine how Cloudflare can reuse particular cache entries across requests or share the cache entries for more granularity for end users.
 
-Define the request components used to define a [custom cache key](/cache/how-to/cache-keys/), customizing the following options:
+Define the request components used to define a [custom Cache Key](/cache/how-to/cache-keys/), customizing the following options:
 
 - You can switch on or off [Cache deception armor](/cache/cache-security/cache-deception-armor/), [Cache by device type](/automatic-platform-optimization/reference/cache-device-type/), and [Sort query string](/cache/how-to/cache-keys/#query-string).
 
-Enterprise customers have these additional options for custom cache keys:
+Enterprise customers have these additional options for custom Cache Keys:
 
 - In the **Query string** section, you can select **All query string parameters**, **All query string parameters except** and enter an exception, **No query parameters except** and enter the parameters, or **Ignore query string** (also available for pay-as-you-go customers).
 - In the **Headers** section, you can specify header names along with their values. For custom headers, values are optional; however, for the following restricted headers, you must include one to three specific values:
@@ -188,10 +188,10 @@ Enterprise customers have these additional options for custom cache keys:
   To check for a header's presence without including its value, use the **Check presence of** option. You can also choose whether to **Include origin header**.
 
 - In the **Cookie** section, you can include cookie names and their values, and check for the presence of another cookie.
-- In the **Host** section, you can select **Use original host** and **Resolved host**. In the **User** section, you can select **Device type**, **Country**, and **Language**. Using **Resolved host** means the cache key will contain whatever hostname was used to resolve the origin IP which can be different depending on whether the [resolve override](/rules/origin-rules/features/#dns-record) feature is on or not.
+- In the **Host** section, you can select **Use original host** and **Resolved host**. In the **User** section, you can select **Device type**, **Country**, and **Language**. Using **Resolved host** means the Cache Key will contain whatever hostname was used to resolve the origin IP which can be different depending on whether the [resolve override](/rules/origin-rules/features/#dns-record) feature is on or not.
 
 :::note
-When [URL normalization](/rules/normalization/) is enabled, we recommend also enabling [Normalize URLs to origin](/rules/normalization/manage/), especially if you are setting custom cache keys or using cache by device type, which also modifies the cache key. This helps ensure the URL in the cache key matches the URL sent to the origin, preventing cache poisoning and ensuring consistent behavior.
+When [URL normalization](/rules/normalization/) is enabled, we recommend also enabling [Normalize URLs to origin](/rules/normalization/manage/), especially if you are setting custom Cache Keys or using cache by device type, which also modifies the Cache Key. This helps ensure the URL in the Cache Key matches the URL sent to the origin, preventing cache poisoning and ensuring consistent behavior.
 :::
 
 <Details header="API information">
