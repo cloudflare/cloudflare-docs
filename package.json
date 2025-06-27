@@ -50,7 +50,7 @@
 		"@tailwindcss/postcss": "4.1.4",
 		"@types/hast": "3.0.4",
 		"@types/he": "1.2.3",
-		"@types/node": "24.0.4",
+		"@types/node": "24.0.6",
 		"@types/react": "19.0.7",
 		"@types/react-dom": "19.0.4",
 		"@typescript-eslint/parser": "8.35.0",
