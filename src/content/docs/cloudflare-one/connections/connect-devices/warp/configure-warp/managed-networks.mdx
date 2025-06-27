@@ -11,7 +11,7 @@ import { Details, TabItem, Tabs } from "~/components";
 
 | [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| All modes  | All plans                                       |
+| All modes                                                                                 | All plans                                                     |
 
 | System   | Availability | Minimum WARP version |
 | -------- | ------------ | -------------------- |
@@ -232,11 +232,12 @@ SHA256 Fingerprint=DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8
             }
             ```
 
-        </TabItem>
+</TabItem>
+</Tabs>
 
-    </Tabs>
+WARP will automatically exclude the TLS endpoint from all device profiles if it is specified as a private IP address. This exclusion prevents remote users from accessing the endpoint through the WARP tunnel on any port. If the TLS endpoint is specified as a hostname instead of a private IP, WARP will not automatically exclude it.
 
-WARP will automatically exclude the TLS endpoint from all device profiles. This prevents remote users from accessing the endpoint through the WARP tunnel on any port. If a device profile uses [Split Tunnels](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) in **Include** mode, make sure that the Split Tunnel entries do not contain the TLS endpoint IP address; otherwise, the entire IP range will be excluded from the WARP tunnel.
+If a device profile uses [Split Tunnels](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) in **Include** mode, ensure that the Split Tunnel entries do not contain the TLS endpoint IP address; otherwise, the entire IP range will be excluded from the WARP tunnel.
 
 ## 4. Configure device profile
 
