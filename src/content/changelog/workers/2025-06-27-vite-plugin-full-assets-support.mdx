@@ -6,25 +6,31 @@ products:
 date: 2025-06-27T12:00:00Z
 ---
 
-All of Vite's [static asset handling](https://vite.dev/guide/assets) features are now supported in your Worker as well as in your frontend.
+You can now use any of Vite's [static asset handling](https://vite.dev/guide/assets) features in your Worker as well as in your frontend.
 These include importing assets as URLs, importing as strings and importing from the `public` directory as well as inlining assets.
 
 Additionally, assets imported as URLs in your Worker are now automatically moved to the client build output.
 
-Here's an example that fetches an imported asset using the [assets binding](/workers/static-assets/binding/#binding) and modifies the response.
+Here is an example that fetches an imported asset using the [assets binding](/workers/static-assets/binding/#binding) and modifies the response.
 
 ```ts
+// Import the asset URL
+// This returns the resolved path in development and production
 import myImage from "./my-image.png";
 
 export default {
 	async fetch(request, env) {
+		// Fetch the asset using the binding
 		const response = await env.ASSETS.fetch(new URL(myImage, request.url));
+		// Create a new `Response` object that can be modified
 		const modifiedResponse = new Response(response.body, response);
+		// Add an additional header
 		modifiedResponse.headers.append("my-header", "imported-asset");
 
+		// Return the modfied response
 		return modifiedResponse;
 	},
 };
 ```
 
-See [Static Assets](/workers/vite-plugin/reference/static-assets/) in the Vite plugin docs for more info.
+Refer to [Static Assets](/workers/vite-plugin/reference/static-assets/) in the Cloudflare Vite plugin docs for more info.
