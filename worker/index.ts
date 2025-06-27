@@ -27,6 +27,22 @@ export default class extends WorkerEntrypoint<Env> {
 			const res = await this.env.ASSETS.fetch(htmlUrl, request);
 
 			if (res.status === 404) {
+				const redirect = await redirectsEvaluator(
+					new Request(htmlUrl, request),
+					this.env.ASSETS,
+				);
+
+				if (redirect) {
+					const location = redirect.headers.get("location");
+
+					return new Response(null, {
+						status: redirect.status,
+						headers: {
+							Location: location + "index.md",
+						},
+					});
+				}
+
 				return res;
 			}
 

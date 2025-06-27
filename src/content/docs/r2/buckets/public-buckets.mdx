@@ -44,7 +44,7 @@ For more information on default Cache behavior and how to customize it, refer to
 
 To restrict access to your custom domain's bucket, use Cloudflare's existing security products.
 
-- [Cloudflare Zero Trust Access](/cloudflare-one/applications/configure-apps): Protects buckets that should only be accessible by your teammates.
+- [Cloudflare Zero Trust Access](/cloudflare-one/applications/configure-apps): Protects buckets that should only be accessible by your teammates. Refer to [Protect an R2 Bucket with Cloudflare Access](/r2/tutorials/cloudflare-access/) tutorial for more information.
 - [Cloudflare WAF Token Authentication](/waf/custom-rules/use-cases/configure-token-authentication/): Restricts access to documents, files, and media to selected users by providing them with an access token.
 
 :::caution
@@ -59,7 +59,7 @@ To specify the minimum TLS version of a custom hostname of an R2 bucket, you can
 
 ## Add your domain to Cloudflare
 
-The domain being used must have been added as a [zone](/fundamentals/setup/accounts-and-zones/#zones) in the same account as the R2 bucket.
+The domain being used must have been added as a [zone](/fundamentals/concepts/accounts-and-zones/#zones) in the same account as the R2 bucket.
 
 - If your domain is already managed by Cloudflare, you can proceed to [Connect a bucket to a custom domain](/r2/buckets/public-buckets/#connect-a-bucket-to-a-custom-domain).
 - If your domain is not managed by Cloudflare, you need to set it up using a [partial (CNAME) setup](/dns/zone-setups/partial-setup/) to add it to your account.
@@ -74,7 +74,7 @@ To view the added DNS record, select **...** next to the connected domain and se
 
 :::note
 
-If the zone is on an Enterprise plan, make sure that you [release the zone hold](/fundamentals/setup/account/account-security/zone-holds/#release-zone-holds) before adding the custom domain.
+If the zone is on an Enterprise plan, make sure that you [release the zone hold](/fundamentals/account/account-security/zone-holds/#release-zone-holds) before adding the custom domain.
 
 A zone hold would prevent the custom subdomain from activating.
 

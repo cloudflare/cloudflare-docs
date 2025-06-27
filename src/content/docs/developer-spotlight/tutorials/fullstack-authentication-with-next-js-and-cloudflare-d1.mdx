@@ -22,7 +22,7 @@ import {
 	FileTree,
 } from "~/components";
 
-In this tutorial, you will build a [Next.js app](/workers/frameworks/framework-guides/nextjs/) with authentication powered by Auth.js, Resend, and [Cloudflare D1](/d1/).
+In this tutorial, you will build a [Next.js app](/workers/framework-guides/web-apps/nextjs/) with authentication powered by Auth.js, Resend, and [Cloudflare D1](/d1/).
 
 Before continuing, make sure you have a Cloudflare account and have installed and [authenticated Wrangler](https://developers.cloudflare.com/workers/wrangler/commands/#login). Some experience with HTML, CSS, and JavaScript/TypeScript is helpful but not required. In this tutorial, you will learn:
 
@@ -58,7 +58,7 @@ From within the repository or directory where you want to create your project ru
 	}}
 />
 
-This will create a new Next.js project using [OpenNext](https://opennext.js.org/cloudflare) that will run in a Worker using [Workers Static Assets](/workers/frameworks/framework-guides/nextjs/#static-assets).
+This will create a new Next.js project using [OpenNext](https://opennext.js.org/) that will run in a Worker using [Workers Static Assets](#static-assets).
 
 Before we get started, open your project's `tsconfig.json` file and modify the following to the `compilerOptions` object to allow for top level await needed to let our application get the Cloudflare context:
 

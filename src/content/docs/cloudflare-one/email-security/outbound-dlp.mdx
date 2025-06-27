@@ -47,7 +47,7 @@ After creating your policy, you can modify or reorder your policies in **Email S
 
 ## 2. DLP Assist add-in
 
-The Data Loss Prevention (DLP) Assist add-in allows Microsoft O365 users to deploy a DLP solution for free using Cloudflare's Email Security.
+The Data Loss Prevention (DLP) Assist add-in allows Microsoft 365 users to deploy a DLP solution for free using Cloudflare's Email Security.
 
 To set up DLP Assist add-in:
 
@@ -84,3 +84,19 @@ To block, encrypt, or send approval, you can configure rules within Microsoft Pu
 :::note
 The Cloudflare add-in can take up to 24 hours to propagate after install.
 :::
+
+### Limitations
+
+Outbound DLP presents its limitations:
+
+- Outbound DLP only protects user-managed inboxes.
+- Outbound DLP offers the most consistent experience on Outlook Web App and Outlook desktop, due to limitations imposed by Microsoft.
+
+| Platform                             	| Status                                                   	|
+|--------------------------------------	|----------------------------------------------------------	|
+| Web client                           	| Stable                                                   	|
+| New Outlook desktop client - Windows 	| Stable                                                   	|
+| Desktop client - macOS               	| Can cause scanning to be delayed due to Apple limitation 	|
+| Old Outlook desktop client           	| Does not work due to Microsoft limitation                 |
+| Mobile client - iOS                  	| Unstable due to Apple limitation                         	|
+| Mobile client - Android              	| Unstable due to Microsoft limitation                      |

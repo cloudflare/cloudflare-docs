@@ -6,7 +6,7 @@ sidebar:
   label: SSH with Access for Infrastructure
 ---
 
-import { Tabs, TabItem, Badge, Render } from "~/components";
+import { Tabs, TabItem, Badge, Render, APIRequest } from "~/components";
 
 [Access for Infrastructure](/cloudflare-one/applications/non-http/infrastructure-apps/) provides granular control over how users can connect to your SSH servers. This feature uses the same deployment model as [WARP-to-Tunnel](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-warp-to-tunnel/) but unlocks more policy options and command logging functionality.
 
@@ -85,19 +85,23 @@ Users can use any SSH client to connect to the target, as long as they are logge
 ssh <username>@<target IP>
 ```
 
-SSH with Access for Infrastructure also supports `scp` and `rsync` commands. At this time, `sftp` is not supported. Note that `scp` commands that utilize OpenSSH versions > 9.0 will not work at this time because OpenSSH 9.0+ leverages `sftp` to execute the command.
+Access for Infrastructure also supports `scp` and `rsync` commands. Refer to [Known limitations](#known-limitations) for a list of unsupported SSH commands and features.
 
 To learn more about user connections, refer to the [Access for Infrastructure documentation](/cloudflare-one/applications/non-http/infrastructure-apps/#4-connect-as-a-user).
 
 ## SSH command logs
 
-SSH command logs contain the actual SSH commands that a user ran on the target. These logs are encrypted using a public key provided by the customer and are not visible to Cloudflare.
+SSH command logs contain the actual SSH commands that a user ran on the target. Customers on all plans can store SSH logs on Cloudflare. These logs are encrypted using a public key provided by the customer and are not visible to Cloudflare. Additionally, Enterprise customers can configure a Logpush job to send SSH logs to storage destinations. Logpush payloads are not encrypted and do not require uploading a public key.
 
-### Enable SSH command logging
+### Download encrypted SSH logs
+
+Follow these instructions to encrypt and download SSH command logs from Zero Trust.
+
+#### Enable SSH command logging
 
 <Render file="ssh/upload-ssh-key" params={{ note: "" }} />
 
-### Disable SSH command logging
+#### Disable SSH command logging
 
 To turn off SSH command logging, delete your uploaded public key:
 
@@ -117,18 +121,18 @@ Cloudflare will stop logging SSH commands to your targets, as well as any comman
 
 To delete the SSH encryption public key using the [API](/api/resources/zero_trust/subresources/gateway/subresources/audit_ssh_settings/methods/update/):
 
-```sh
-curl --request PUT https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/audit_ssh_settings \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "public_key": ""
-}'
-```
+<APIRequest
+  path="/accounts/{account_id}/gateway/audit_ssh_settings"
+  method="PUT"
+  json={{
+    public_key: "",
+  }}
+/>
 
 </TabItem>
 </Tabs>
 
-### View SSH logs
+#### View SSH logs
 
 SSH command logs are not visible from the dashboard itself and must be exported and decrypted.
 
@@ -139,4 +143,22 @@ To manually retrieve logs:
 3. Select **Download** to download the session's command log.
 4. <Render file="ssh/decrypt-ssh-log" />
 
-Enterprise customers can also export command logs using [Logpush](/cloudflare-one/insights/logs/logpush/).
+### Export SSH logs with Logpush
+
+:::note[Availability]
+Only available on Enterprise plans.
+:::
+
+Cloudflare allows you to send SSH command logs to storage destinations configured in [Logpush](/logs/about/), including third-party destinations. For a list of available data fields, refer to the [SSH logs dataset](/logs/reference/log-fields/account/ssh_logs/).
+
+To set up the Logpush job, refer to [Logpush integration](/cloudflare-one/insights/logs/logpush/).
+
+## Known limitations
+
+The following SSH features are not supported:
+
+- `sftp` commands
+- `scp` commands that utilize OpenSSH versions > 9.0, because OpenSSH 9.0+ leverages `sftp` to execute the command
+- Local and remote port forwarding
+- SSH agent forwarding
+- X11 forwarding

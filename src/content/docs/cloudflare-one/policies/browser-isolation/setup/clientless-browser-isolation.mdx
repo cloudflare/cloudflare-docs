@@ -3,10 +3,9 @@ pcx_content_type: concept
 title: Clientless Web Isolation
 sidebar:
   order: 5
-
 ---
 
-import { GlossaryTooltip, Render } from "~/components"
+import { GlossaryTooltip, Render } from "~/components";
 
 Clientless Web Isolation allows users to securely browse high risk or sensitive websites in a remote browser without having to install the Cloudflare WARP client on their device.
 
@@ -14,7 +13,19 @@ Clientless Web Isolation allows users to securely browse high risk or sensitive 
 
 <Render file="clientless-browser-isolation" />
 
-3. To configure permissions, select **Manage**. You can add authentication methods and [rules](/cloudflare-one/policies/access/) to control who can access the remote browser.
+3. To configure permissions, in **Settings** > **Browser Isolation** > select **Manage** next to Permissions. You can add authentication methods and [rules](/cloudflare-one/policies/access/) to control who can access the remote browser.
+
+4. Under **Policies** > Access Policies > select **Create new policy**.
+
+5. Name your policy and define who will have access to your isolated application. Refer to the [Access policy documentation](/cloudflare-one/policies/access/#actions) to construct your policy.
+
+6. Select **Save**.
+
+7. Under **Policies** > Access Policies > select **Select existing policies** and select the policy or policies you created in the previous step > select **Confirm**.
+
+8. At the bottom of the page, select **Save**.
+
+Your application will now be served in an isolated browser for users matching your policies.
 
 ## Filter DNS queries
 
@@ -121,28 +132,28 @@ If you want to isolate a website without Cloudflare WARP installed, you will nee
 ```html
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Redirecting website to a remote browser</title>
-    <script>
-      window.location.href =
-        "https://<your-team-name>.cloudflareaccess.com/browser/<URL>}";
-    </script>
-    <noscript>
-      <meta
-        http-equiv="refresh"
-        content="0; url=https://<your-team-name>.cloudflareaccess.com/browser/<URL>"
-      />
-    </noscript>
-  </head>
-  <body>
-    <p>
-      This website is being redirected to a remote browser. Select
-      <a href="https://<your-team-name>.cloudflareaccess.com/browser/<URL>"
-        >here</a
-      >
-      if you are not automatically redirected.
-    </p>
-  </body>
+	<head>
+		<title>Redirecting website to a remote browser</title>
+		<script>
+			window.location.href =
+				"https://<your-team-name>.cloudflareaccess.com/browser/<URL>}";
+		</script>
+		<noscript>
+			<meta
+				http-equiv="refresh"
+				content="0; url=https://<your-team-name>.cloudflareaccess.com/browser/<URL>"
+			/>
+		</noscript>
+	</head>
+	<body>
+		<p>
+			This website is being redirected to a remote browser. Select
+			<a href="https://<your-team-name>.cloudflareaccess.com/browser/<URL>"
+				>here</a
+			>
+			if you are not automatically redirected.
+		</p>
+	</body>
 </html>
 ```
 

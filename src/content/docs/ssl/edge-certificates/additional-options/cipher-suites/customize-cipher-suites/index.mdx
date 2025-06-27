@@ -25,7 +25,7 @@ If you are a SaaS provider looking to restrict cipher suites for connections to 
 
 Custom cipher suites is a hostname-level setting, which implies that:
 
-* When you customize cipher suites for a zone, this will affect all hostnames within that zone. If you are not familiar with what a Cloudflare zone is, refer to [Fundamentals](/fundamentals/setup/accounts-and-zones/#zones).
+* When you customize cipher suites for a zone, this will affect all hostnames within that zone. If you are not familiar with what a Cloudflare zone is, refer to [Fundamentals](/fundamentals/concepts/accounts-and-zones/#zones).
 * The configuration is applicable to all edge certificates used to connect to the hostname(s), regardless of the [certificate type](/ssl/edge-certificates/) (universal, advanced, or custom).
 * If you need to use a per-hostname cipher suite customization, you must ensure that the hostname is specified on the certificate.
 

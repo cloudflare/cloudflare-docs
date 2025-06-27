@@ -15,7 +15,7 @@ import { Render, Details } from "~/components";
 | Maximum storage per account                                                                                         | 250 GB (Workers Paid)[^1] / 5 GB (Free)           |
 | [Time Travel](/d1/reference/time-travel/) duration (point-in-time recovery)                                         | 30 days (Workers Paid) / 7 days (Free)            |
 | Maximum Time Travel restore operations                                                                              | 10 restores per 10 minute (per database)          |
-| Queries per Worker invocation (read [subrequest limits](/workers/platform/limits/#how-many-subrequests-can-i-make)) | 50 (Free) / 1000 (Paid)                           |
+| Queries per Worker invocation (read [subrequest limits](/workers/platform/limits/#how-many-subrequests-can-i-make)) | 1000 (Workers Paid) / 50 (Free)                           |
 | Maximum number of columns per table                                                                                 | 100                                               |
 | Maximum number of rows per table                                                                                    | Unlimited (excluding per-database storage limits) |
 | Maximum string, `BLOB` or table row size                                                                            | 2,000,000 bytes (2 MB)                            |
@@ -64,3 +64,9 @@ D1 is designed for horizontal scale out across multiple, smaller (10 GB) databas
 :::caution
 Note that the 10 GB limit of a D1 database cannot be further increased.
 :::
+
+### How many simultaneous connections can a Worker open to D1?
+
+You can open up to six connections (to D1) simultaneously for each invocation of your Worker.
+
+For more information on a Worker's simultaneous connections, refer to [Simultaneous open connections](/workers/platform/limits/#simultaneous-open-connections).

@@ -2,20 +2,19 @@ import { useEffect, useState, type ChangeEvent } from "react";
 import FieldBadges from "./fields/FieldBadges";
 import Markdown from "react-markdown";
 import type { CollectionEntry } from "astro:content";
+import { setSearchParams } from "~/util/url";
 
 type Fields = CollectionEntry<"fields">["data"]["entries"];
 
 type Filters = {
 	search: string;
 	categories: string[];
-	keywords: string[];
 };
 
 const FieldCatalog = ({ fields }: { fields: Fields }) => {
 	const [filters, setFilters] = useState<Filters>({
 		search: "",
 		categories: [],
-		keywords: [],
 	});
 
 	const mapped = fields.sort((f1, f2) => {
@@ -58,7 +57,6 @@ const FieldCatalog = ({ fields }: { fields: Fields }) => {
 	});
 
 	useEffect(() => {
-		// On component load, check for deep-links to categories in the query param
 		const params = new URLSearchParams(window.location.search);
 		const categories = params.getAll("field-category");
 		const searchTerm = params.get("search-term") ?? "";
@@ -71,6 +69,22 @@ const FieldCatalog = ({ fields }: { fields: Fields }) => {
 			categories: categories,
 		});
 	}, []);
+
+	useEffect(() => {
+		const params = new URLSearchParams();
+
+		if (filters.search) {
+			params.set("search-term", filters.search);
+		}
+
+		if (filters.categories.length > 0) {
+			filters.categories.forEach((category) =>
+				params.append("field-category", category),
+			);
+		}
+
+		setSearchParams(params);
+	}, [filters]);
 
 	return (
 		<div className="md:flex">

@@ -1,0 +1,165 @@
+---
+title: Infrastructure as Code (IaC)
+pcx_content_type: concept
+sidebar:
+  order: 11
+---
+
+import { GitHubCode } from "~/components";
+
+Uploading and managing Workers is easy with [Wrangler](/workers/wrangler/configuration), but sometimes you need to do it more programmatically. You might do this with IaC ("Infrastructure as Code") tools or by calling the [Cloudflare API](/api) directly. Use cases for the API include build and deploy scripts, CI/CD pipelines, custom dev tools, and testing. We provide API SDK libraries for common languages that make interacting with the API easier, such as [cloudflare-typescript](https://github.com/cloudflare/cloudflare-typescript) and [cloudflare-python](https://github.com/cloudflare/cloudflare-python). For IaC, a common tool is HashiCorp's Terraform. You can use the [Cloudflare Terraform Provider](/terraform) to create and manage Workers resources.
+
+Here are examples of deploying a Worker with common tools and languages, and considerations for successfully managing Workers with IaC. In particular, the examples highlight how to upload script content and metadata which is different with each approach. Reference the Upload Worker Module API docs [here](/api/resources/workers/subresources/scripts/methods/update) for an exact definition of how script upload works.
+
+All of these examples need an [account ID](/fundamentals/account/find-account-and-zone-ids) and [API token](/fundamentals/api/get-started/create-token) (not Global API key) to work.
+
+## Workers Bundling
+
+None of the examples below do [Workers Bundling](/workers/wrangler/bundling) which is usually the function of a tool like Wrangler or [esbuild](https://esbuild.github.io). Generally, you'd run this bundling step before applying your Terraform plan or using the API for script upload:
+
+```bash
+wrangler deploy --dry-run -outdir build
+```
+
+Then you'd reference the bundled script like `build/index.js`.
+
+:::note
+
+Depending on your Wrangler project and `-outdir`, the name and location of your bundled script might vary.
+:::
+
+Make sure to copy all of your config from `wrangler.json` into your Terraform config or API request. This is especially important for compatibility date or compatibility flags your script relies on.
+
+## Terraform
+
+In this example, you need a local file named `my-hello-world-script.mjs` with script content similar to the above examples. Replace `account_id` with your own. Learn more about the Cloudflare Terraform Provider [here](/terraform), and see an example with all the Workers script resource settings [here](https://github.com/cloudflare/terraform-provider-cloudflare/blob/main/examples/resources/cloudflare_workers_script/resource.tf).
+
+```tf
+terraform {
+  required_providers {
+    cloudflare = {
+      source = "cloudflare/cloudflare"
+      version = "~> 5"
+    }
+  }
+}
+
+resource "cloudflare_workers_script" "my-hello-world-script" {
+  account_id = "<replace_me>"
+  script_name = "my-hello-world-script"
+  main_module = "my-hello-world-script.mjs"
+  content = trimspace(file("my-hello-world-script.mjs"))
+  compatibility_date = "$today"
+  bindings = [{
+    name = "MESSAGE"
+    type = "plain_text"
+    text = "Hello World!"
+  }]
+}
+```
+
+:::note
+
+- `trimspace()` removes empty lines in the file
+- The Workers Script resource does not have a `metadata` property like in the other examples. All of the properties found in `metadata` are instead at the top-level of the resource class, such as `bindings` or `compatibility_date`. Please see the [cloudflare_workers_script (Resource) docs](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/workers_script).
+  :::
+
+## Cloudflare API Libraries
+
+### JavaScript/TypeScript
+
+This example uses the [cloudflare-typescript](https://github.com/cloudflare/cloudflare-typescript) library which provides convenient access to the Cloudflare REST API from server-side JavaScript or TypeScript.
+
+<GitHubCode
+	repo="cloudflare/cloudflare-typescript"
+	file="examples/workers/script-upload.ts"
+	commit="3031b3c5a7091cebbff7b18d9780a11340ee21cd"
+	lang="ts"
+	useTypeScriptExample={true}
+/>
+
+### Python
+
+This example uses the [cloudflare-python](https://github.com/cloudflare/cloudflare-python) library.
+
+<GitHubCode
+	repo="cloudflare/cloudflare-python"
+	file="examples/workers/script_upload.py"
+	commit="756dc87dde3a42c8d4c860ff2239c920c22014ec"
+	lang="py"
+/>
+
+## Cloudflare REST API
+
+Open a terminal or create a shell script to upload a Worker easily with curl. For this example, replace `<account_id>` and `<api_token>` with your own. What's notable about interacting with the Workers Script Upload API directly is that it uses [multipart/form-data](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Methods/POST) for uploading metadata, multiple JavaScript modules, source maps, and more. This is abstracted away in Terraform and the API libraries.
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/<account_id>/workers/scripts/my-hello-world-script \
+  -X PUT \
+  -H 'Authorization: Bearer <api_token>' \
+  -F 'metadata={
+        "main_module": "my-hello-world-script.mjs",
+        "bindings": [
+          {
+            "type": "plain_text",
+            "name": "MESSAGE",
+            "text": "Hello World!"
+          }
+        ],
+        "compatibility_date": "$today"
+      };type=application/json' \
+  -F 'my-hello-world-script.mjs=@-;filename=my-hello-world-script.mjs;type=application/javascript+module' <<EOF
+export default {
+  async fetch(request, env, ctx) {
+    return new Response(env.MESSAGE, { status: 200 });
+  }
+};
+EOF
+```
+
+:::note
+
+Change `my-hello-world-script.mjs=@-;` to `my-hello-world-script.mjs=@./my-hello-world-script.mjs;` and remove everything after and including `<<EOF` to upload a local file named `my-hello-world-script.mjs` instead.
+:::
+
+### Workers for Platforms
+
+With [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms), you can upload [User Workers](/cloudflare-for-platforms/workers-for-platforms/get-started/user-workers) in a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dispatch-namespace). You can use the exact same example. Simply change the url to:
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/<account_id>/workers/dispatch/namespaces/<dispatch_namespace>/scripts/my-hello-world-script
+```
+
+For this to work, you first need to configure [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration), create a dispatch namespace, and replace `<dispatch_namespace>` with your own.
+
+### Python Workers
+
+[Python Workers](/workers/languages/python/) (open beta) have their own special `text/x-python` content type and `python_workers` compatibility flag for uploading.
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/<account_id>/workers/scripts/my-hello-world-script \
+  -X PUT \
+  -H 'Authorization: Bearer <api_token>' \
+  -F 'metadata={
+        "main_module": "my-hello-world-script.py",
+        "bindings": [
+          {
+            "type": "plain_text",
+            "name": "MESSAGE",
+            "text": "Hello World!"
+          }
+        ],
+        "compatibility_date": "$today",
+        "compatibility_flags": [
+          "python_workers"
+        ]
+      };type=application/json' \
+  -F 'my-hello-world-script.py=@-;filename=my-hello-world-script.py;type=text/x-python' <<EOF
+from workers import Response
+
+def on_fetch(request, env):
+    return Response(env.MESSAGE)
+EOF
+```
+
+You can upload Python Workers in any of our language SDKs, even the non-Python ones. Just modify the above SDK examples with the `text/x-python` content type, change the script file extension from `.mjs` to `.py`, change the script content to a Python Worker format, and add the `python_workers` compatibility date.

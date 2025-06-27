@@ -10,29 +10,100 @@ This guide covers how to deploy the Cloudflare WARP client using Microsoft Intun
 
 ## Windows
 
-### Prerequisites
+### Deploy the WARP client
 
-[Download the `Cloudflare_WARP_<VERSION>.msi` installer](/cloudflare-one/connections/connect-devices/warp/download-warp/#windows).
+To deploy WARP on Windows using Intune:
 
-### Configure Intune for Windows
-
-1. Log in to your Microsoft Intune account.
-2. Go to **Apps** > **All Apps** > **Add**.
-3. In **App type**, select *Line-of-business app* from the drop-down menu. Select **Select**.
-4. Select **Select app package file** and upload the `Cloudflare_WARP_<VERSION>.msi` installer you downloaded previously.
-5. Select **OK**.
-6. In the **Name** field, we recommend entering the version number of the package being uploaded.
-7. In the **Publisher** field, we recommend entering `Cloudflare, Inc`.
-8. In the **Command-line arguments** field, enter a valid installation command. For example,
+1. [Download the `Cloudflare_WARP_<VERSION>.msi` installer](/cloudflare-one/connections/connect-devices/warp/download-warp/#windows).
+2. Log in to your Microsoft Intune account.
+3. Go to **Apps** > **All Apps** > **Add**.
+4. In **App type**, select *Line-of-business app* from the drop-down menu. Select **Select**.
+5. Select **Select app package file** and upload the `Cloudflare_WARP_<VERSION>.msi` installer you downloaded previously.
+6. Select **OK**.
+7. In the **Name** field, we recommend entering the version number of the package being uploaded.
+8. In the **Publisher** field, we recommend entering `Cloudflare, Inc`.
+9. In the **Command-line arguments** field, enter a valid installation command. 
+	 For example:
    ```txt
    /qn ORGANIZATION="your-team-name" SUPPORT_URL="http://support.example.com"
    ```
-   Refer to [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/) for a description of each argument.
-9. Select **Next**.
-10. Add the users or groups who require Cloudflare WARP and select **Next**.
-11. Review your configuration and select **Create**.
+   Refer to [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/) for a description of each argument. You can change these parameters at any time by pushing a new [MDM file](#update-mdm-parameters).
+10. Select **Next**.
+11. Add the users or groups who require Cloudflare WARP and select **Next**.
+12. Review your configuration and select **Create**.
 
 Intune is now configured to deploy the WARP client.
+
+### Update MDM parameters
+
+You can use Intune to update [MDM parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/) for the WARP client. On Windows, these parameters are stored on the local device in `C:\ProgramData\Cloudflare\mdm.xml`.
+
+To push a new `mdm.xml` file using Intune:
+
+1. Log in to your Microsoft Intune account.
+2. Go to **Devices** > **Scripts and remediations**.
+3. Select the **Platform scripts** tab and select **Add**.
+4. Select **Windows 10 and later**.
+5. Enter a name for the script (for example, `Deploy Cloudflare mdm.xml`).
+6. In **PowerShell script**, upload the following `.ps1` file. Be sure to modify the XML content with your desired [parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/).
+
+		```powershell title="mdm-template.ps1"
+		# Define the path to the file
+		$filePath = "C:\ProgramData\Cloudflare\mdm.xml"
+
+		# Create the XML content as a string
+		$xmlContent = @"
+		<dict>
+			<key>multi_user</key>
+			<true/>
+			<key>pre_login</key>
+			<dict>
+				<key>organization</key>
+				<string>mycompany</string>
+				<key>auth_client_id</key>
+				<string>88bf3b6d86161464f6509f7219099e57.access</string>
+				<key>auth_client_secret</key>
+				<string>bdd31cbc4dec990953e39163fbbb194c93313ca9f0a6e420346af9d326b1d2a5</string>
+			</dict>
+			<key>configs</key>
+			<array>
+				<dict>
+					<key>organization</key>
+					<string>mycompany</string>
+					<key>display_name</key>
+					<string>Production environment</string>
+				</dict>
+				<dict>
+					<key>organization</key>
+					<string>test-org</string>
+					<key>display_name</key>
+					<string>Test environment</string>
+				</dict>
+			</array>
+		</dict>
+		"@
+
+		# Ensure the directory exists
+		$directory = Split-Path $filePath -parent
+		if (-not (Test-Path $directory)) {
+			New-Item -ItemType Directory -Path $directory | Out-Null
+		}
+
+		# Write the XML content to the file
+		try {
+			$xmlContent | Out-File -Encoding UTF8 -FilePath $filePath
+			Write-Host "mdm.xml file created successfully at: $filePath"
+		}
+		catch {
+			Write-Error "Failed to create mdm.xml file: $_"
+		}
+		```
+7. In **Assignments**, select the Windows devices that should receive the new `mdm.xml` file.
+8. To deploy the script, select **Add**.
+
+Intune will now execute the Powershell script on the target devices and overwrite the previous `mdm.xml` file. Once the new `mdm.xml` file is created, WARP will immediately start using the new configuration.
+
+If you prefer to use Intune's Win32 App tool to run the Powershell script, refer to the [Intune documentation](https://learn.microsoft.com/en-us/mem/intune/apps/apps-win32-app-management).
 
 ## macOS
 

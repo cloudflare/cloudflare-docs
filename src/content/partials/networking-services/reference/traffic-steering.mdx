@@ -10,7 +10,7 @@ params:
   - tunnelHCsPage
 ---
 
-import { AnchorHeading, Aside, Markdown } from "~/components";
+import { AnchorHeading, Aside, Markdown, Render } from "~/components";
 
 ## Magic routing table
 
@@ -60,6 +60,7 @@ Magic {props.productName} is steered along tunnel routes based on priorities of 
 
 - Lower values have greater priority.
 - When the priority values for prefix entries match, Cloudflare uses [equal-cost multi-path (ECMP)](#equal-cost-multi-path-routing) packet forwarding to route traffic. An optional weight value can be applied to static routes to [modify ECMP tunnel distribution](#set-priority-and-weights-for-static-routes).
+- <Render file="longest-prefix-match" product="networking-services/reference" />
 - When BGP and static routes have the same prefix and priority, Cloudflare enforces priority by preferring static routes over BGP routes. This ensures that manually configured static routes take precedence unless explicitly deprioritized.
 
 ### Set priority and weights for static routes

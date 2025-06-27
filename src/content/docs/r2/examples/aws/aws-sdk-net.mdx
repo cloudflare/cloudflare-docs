@@ -83,9 +83,7 @@ static async Task ListObjectsV2()
 The [PutObjectAsync](https://docs.aws.amazon.com/sdkfornet/v3/apidocs/items/S3/MIS3PutObjectAsyncPutObjectRequestCancellationToken.html) and [GetObjectAsync](https://docs.aws.amazon.com/sdkfornet/v3/apidocs/items/S3/MIS3GetObjectAsyncStringStringCancellationToken.html) methods can be used to upload objects and download objects from an R2 bucket respectively.
 
 :::caution
-
-`DisablePayloadSigning = true` must be passed as Cloudflare R2 does not currently support the Streaming SigV4 implementation used by AWSSDK.S3.
-
+`DisablePayloadSigning = true` and `DisableDefaultChecksumValidation = true` must be passed as Cloudflare R2 does not currently support the Streaming SigV4 implementation used by AWSSDK.S3.
 :::
 
 ```csharp
@@ -95,7 +93,8 @@ static async Task PutObject()
 	{
 		FilePath = @"/path/file.txt",
 		BucketName = "sdk-example",
-		DisablePayloadSigning = true
+		DisablePayloadSigning = true,
+    DisableDefaultChecksumValidation = true
 	};
 
 	var response = await s3Client.PutObjectAsync(request);

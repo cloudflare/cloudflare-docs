@@ -12,6 +12,14 @@
     "tags": [],
     "properties": [
         {
+            "property_id": "async_queue",
+            "value": "true"
+        },
+        {
+            "property_id": "context_window",
+            "value": "131000"
+        },
+        {
             "property_id": "price",
             "value": [
                 {
@@ -25,10 +33,6 @@
                     "currency": "USD"
                 }
             ]
-        },
-        {
-            "property_id": "context_window",
-            "value": "131000"
         },
         {
             "property_id": "function_calling",
@@ -147,7 +151,7 @@
                                     },
                                     "tool_call_id": {
                                         "type": "string",
-                                        "description": "The tool call id. Must be supplied for tool calls for Mistral-3. If you don't know what to put here you can fall back to 000000001",
+                                        "description": "The tool call id. If you don't know what to put here you can fall back to 000000001",
                                         "pattern": "[a-zA-Z0-9]{9}"
                                     },
                                     "content": {
@@ -487,13 +491,27 @@
                             "items": {
                                 "type": "object",
                                 "properties": {
-                                    "arguments": {
-                                        "type": "object",
-                                        "description": "The arguments passed to be passed to the tool call request"
-                                    },
-                                    "name": {
+                                    "id": {
                                         "type": "string",
-                                        "description": "The name of the tool to be called"
+                                        "description": "The tool call id."
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "description": "Specifies the type of tool (e.g., 'function')."
+                                    },
+                                    "function": {
+                                        "type": "object",
+                                        "description": "Details of the function tool.",
+                                        "properties": {
+                                            "name": {
+                                                "type": "string",
+                                                "description": "The name of the tool to be called"
+                                            },
+                                            "arguments": {
+                                                "type": "object",
+                                                "description": "The arguments passed to be passed to the tool call request"
+                                            }
+                                        }
                                     }
                                 }
                             }

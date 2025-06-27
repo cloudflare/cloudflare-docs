@@ -7,7 +7,7 @@ sidebar:
 
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip, Steps } from "~/components"
 
 Cloudflare Volumetric Abuse Detection helps you set up a system of adaptive rate limiting.
 
@@ -48,22 +48,19 @@ Implementing low confidence rate limits can still be helpful to prevent API abus
 
 ### Create rate limits
 
-To create rate limits:
-
+<Steps>
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **API Shield**.
 3. In **Endpoint Management**, select an endpoint.
 4. Select **Create rule** to be automatically redirected to the Advanced Rate Limiting rules dashboard. 
-
-  :::note
-
-  Your endpoint information, session identifier, and recommended rate limit will be pre-filled into the rule. The pre-filled rule will only be enforced when the session identifiers are present on incoming requests.
-
-  To apply rate limits to all requests, remove the `exists` logic in the rule and refer to the disclaimer in the [WAF documentation](/waf/rate-limiting-rules/parameters/#missing-field-versus-empty-value). 
-  :::
-  
+   :::note
+   Your endpoint information, session identifier, and recommended rate limit will be pre-filled into the rule. The pre-filled rule will only be enforced when the session identifiers are present on incoming requests. 
+   
+   To apply rate limits to all requests, remove the `exists` logic in the rule and refer to the disclaimer in the [WAF documentation](/waf/rate-limiting-rules/parameters/#missing-field-versus-empty-value). 
+   :::
 5. Give your rule a name, action, and duration.
 6. Select **Deploy** to activate your rule.
+</Steps>
 
 ## API
 

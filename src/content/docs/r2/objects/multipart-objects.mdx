@@ -6,6 +6,8 @@ sidebar:
 
 ---
 
+import { Render } from "~/components";
+
 R2 supports [S3 API's Multipart Upload](https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html) with some limitations.
 
 ## Limitations
@@ -34,3 +36,5 @@ Note that the binary MD5 sums themselves are concatenated and then summed, not t
 echo -n $(echo -n bce6bf66aeb76c7040fdd5f4eccb78e6 | xxd -r -p -)\
 $(echo -n 8165449fc15bbf43d3b674595cbcc406 | xxd -r -p -) | md5sum
 ```
+
+<Render file="link-to-workers-r2-api" product="r2"/>

@@ -26,13 +26,13 @@ First, make sure that:
 - Vitest and `@cloudflare/vitest-pool-workers` are installed in your project as dev dependencies
 
   <PackageManagers
-  	pkg="vitest@~3.1.0 @cloudflare/vitest-pool-workers"
+  	pkg="vitest@~3.2.0 @cloudflare/vitest-pool-workers"
   	dev="true"
   />
 
   :::note
 
-  Currently, the `@cloudflare/vitest-pool-workers` package _only_ works with Vitest 2.0.x - 3.1.x.
+  Currently, the `@cloudflare/vitest-pool-workers` package _only_ works with Vitest 2.0.x - 3.2.x.
 
   :::
 
@@ -49,7 +49,7 @@ export default defineWorkersConfig({
 	test: {
 		poolOptions: {
 			workers: {
-				wrangler: { configPath: "./wrangler.toml" },
+				wrangler: { configPath: "./wrangler.jsonc" },
 			},
 		},
 	},
@@ -65,7 +65,7 @@ For example, this configuration would add a KV namespace `TEST_NAMESPACE` that w
         	test: {
         		poolOptions: {
         			workers: {
-        				wrangler: { configPath: "./wrangler.toml" },
+        				wrangler: { configPath: "./wrangler.jsonc" },
         				miniflare: {
         					kvNamespaces: ["TEST_NAMESPACE"],
         				},

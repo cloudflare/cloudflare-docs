@@ -1,0 +1,41 @@
+---
+import { z } from "astro:schema";
+import { getComponentsUsage } from "~/util/components";
+import Details from "./Details.astro";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	component: z.string(),
+});
+
+const { component } = props.parse(Astro.props);
+
+const usage = await getComponentsUsage(component);
+---
+
+<>
+	<p>
+		<code>{component}</code> is used <code>{usage.count}</code> times on{" "}
+		<code>{usage.pages.size}</code> pages.
+	</p>
+	<Details header={`Pages which use ${component}`}>
+		<ul>
+			{
+				[...usage.pages].map((path) => (
+					<li>
+						<a
+							href={
+								"https://github.com/cloudflare/cloudflare-docs/blob/production/" +
+								path
+							}
+							target="_blank"
+						>
+							{path}
+						</a>
+					</li>
+				))
+			}
+		</ul>
+	</Details>
+</>

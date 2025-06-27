@@ -182,11 +182,15 @@ Once you have created a Hyperdrive configuration and bound it to your Worker, yo
 <Tabs>
 <TabItem label="PostgreSQL">
 
-To connect to your database, you will need a database driver which allows you to authenticate and query your database. For this tutorial, you will use [Postgres.js](https://github.com/porsager/postgres), one of the most widely used PostgreSQL drivers.
+To connect to your database, you will need a database driver which allows you to authenticate and query your database. For this tutorial, you will use [node-postgres (pg)](https://node-postgres.com/), one of the most widely used PostgreSQL drivers.
 
-To install `postgres`, ensure you are in the `hyperdrive-tutorial` directory. Open your terminal and run the following command:
+To install `pg`, ensure you are in the `hyperdrive-tutorial` directory. Open your terminal and run the following command:
 
-<PackageManagers pkg="postgres" comment="This should install v3.4.5 or later" />
+<PackageManagers pkg="pg" comment="This should install v8.13.0 or later" />
+
+If you are using TypeScript, you should also install the type definitions for `pg`:
+
+<PackageManagers pkg="@types/pg" dev comment="This should install v8.13.0 or later" />
 
 With the driver installed, you can now create a Worker script that queries your database.
 
@@ -217,8 +221,8 @@ The `index.ts` file is where you configure your Worker's interactions with Hyper
 Populate your `index.ts` file with the following code:
 
 ```typescript
-// Postgres.js 3.4.5 or later is recommended
-import postgres from "postgres";
+// pg 8.13.0 or later is recommended
+import { Client } from "pg";
 
 export interface Env {
 	// If you set another name in the Wrangler config file as the value for 'binding',
@@ -228,27 +232,24 @@ export interface Env {
 
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
-		// Create a connection using the Postgres.js driver (or any supported driver, ORM or query builder)
-		// with the Hyperdrive credentials. These credentials are only accessible from your Worker.
-		const sql = postgres(env.HYPERDRIVE.connectionString, {
-			// Workers limit the number of concurrent external connections, so be sure to limit
-			// the size of the local connection pool that postgres.js may establish.
-			max: 5,
-
-			// If you are not using array types in your Postgres schema,
-			// disabling this will save you an extra round-trip every time you connect.
-			fetch_types: false,
-		});
+		// Create a client using the pg driver (or any supported driver, ORM or query builder)
+    // with the Hyperdrive credentials. These credentials are only accessible from your Worker.
+    const sql = new Client({
+      connectionString: env.HYPERDRIVE.connectionString,
+    });
 
 		try {
+			// Connect to the database
+			await sql.connect();
+			
 			// Sample query
-			const results = await sql`SELECT * FROM pg_tables`;
+			const results = await sql.query(`SELECT * FROM pg_tables`);
 
 			// Clean up the client after the response is returned, before the Worker is killed
 			ctx.waitUntil(sql.end());
 
 			// Return result rows as JSON
-			return Response.json(results);
+			return Response.json(results.rows);
 		} catch (e) {
 			console.error(e);
 			return Response.json(
@@ -263,7 +264,7 @@ export default {
 Upon receiving a request, the code above does the following:
 
 1. Creates a new database client configured to connect to your database via Hyperdrive, using the Hyperdrive connection string.
-2. Initiates a query via `await sql` that outputs all tables (user and system created) in the database (as an example query).
+2. Initiates a query via `await sql.query()` that outputs all tables (user and system created) in the database (as an example query).
 3. Returns the response as JSON to the client.
 
 </TabItem>

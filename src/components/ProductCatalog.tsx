@@ -1,6 +1,7 @@
 import { useEffect, useState, type ChangeEvent } from "react";
 import type { CollectionEntry } from "astro:content";
 import type { IconifyIconBuildResult } from "@iconify/utils";
+import { setSearchParams } from "~/util/url";
 
 export type ProductData = CollectionEntry<"products"> & {
 	icon?: IconifyIconBuildResult;
@@ -42,7 +43,6 @@ const ProductCatalog = ({ products }: { products: ProductData[] }) => {
 	});
 
 	useEffect(() => {
-		// On component load, check for deep-links to groups in the query param
 		const params = new URLSearchParams(window.location.search);
 		const groups = params.get("product-group")?.split(",");
 
@@ -53,6 +53,20 @@ const ProductCatalog = ({ products }: { products: ProductData[] }) => {
 			groups,
 		});
 	}, []);
+
+	useEffect(() => {
+		const params = new URLSearchParams();
+
+		if (filters.search) {
+			params.set("search", filters.search);
+		}
+
+		if (filters.groups.length > 0) {
+			filters.groups.forEach((group) => params.append("product-group", group));
+		}
+
+		setSearchParams(params);
+	}, [filters]);
 
 	return (
 		<div className="md:flex">

@@ -1,7 +1,8 @@
-import { useState, type ChangeEvent } from "react";
+import { useEffect, useState, type ChangeEvent } from "react";
 import Markdown from "react-markdown";
 import type { CollectionEntry } from "astro:content";
 import type { IconifyIconBuildResult } from "@iconify/utils";
+import { setSearchParams } from "~/util/url";
 
 type LearningPaths = CollectionEntry<"learning-paths">["data"][];
 type Icons = Record<string, IconifyIconBuildResult>;
@@ -22,6 +23,34 @@ const LearningPathCatalog = ({
 		products: [],
 		groups: [],
 	});
+
+	useEffect(() => {
+		const params = new URLSearchParams(window.location.search);
+		const products = params.getAll("products");
+		const groups = params.getAll("groups");
+
+		if (!products && !groups) return;
+
+		setFilters({
+			...filters,
+			products,
+			groups,
+		});
+	}, []);
+
+	useEffect(() => {
+		const params = new URLSearchParams();
+
+		if (filters.products.length > 0) {
+			filters.products.forEach((product) => params.append("products", product));
+		}
+
+		if (filters.groups.length > 0) {
+			filters.groups.forEach((group) => params.append("groups", group));
+		}
+
+		setSearchParams(params);
+	}, [filters]);
 
 	const sorted = paths.sort((lp1, lp2) => {
 		return lp1.priority < lp2.priority ? -1 : 1;
