@@ -1,0 +1,75 @@
+---
+{}
+
+---
+
+When Cloudflare's DDoS Protection systems detect an attack, mitigations are emitted against it. Each mitigation has a single managed rule from the managed ruleset associated with it.
+
+All mitigations and its associated managed rules are evaluated in order by DDoS Protection systems one by one. 
+
+You can create only one override ruleset that can contain one or multiple override rules. An override rule instructs the DDoS Protection system on the action it should take based on its matching managed rule.
+
+For each active mitigation that is linked to a single managed rule, Cloudflare will go through all of the override rules defined in the override ruleset until one matches the managed rule, and apply the action and stop at that point. Otherwise, evaluation will continue in order until a rule matches. 
+
+However, within an override rule, specificity matters. If the override rule has the following two elements defined, then DDoS Protection systems will prioritize specificity when evaluating overrides:
+
+- All of the managed rules in the ruleset are set to a specific action.
+- A managed rule within that ruleset is set to a different action from the rest of the rules.
+
+## Examples
+
+### General example
+
+A managed ruleset contains the following managed rules:
+
+- Managed rule 1
+- Managed rule 2
+- Managed rule 3
+
+An override ruleset contains the following override rules:
+
+- Override rule 1
+   - Managed rule 1 is set to `block`
+- Override rule 2
+   - *All managed rules* are set to `challenge`
+   - Managed rule 1 is set to `log`
+   - Managed rule 2 is set to `log`
+- Override rule 3
+   - Managed rule 3 is set to `log`
+
+If DDoS Protection triggers three mitigations — one linked with an individual managed rule — then the override for each mitigation is evaluated one by one.
+
+**Mitigation 1 linked with managed rule 1**
+
+Since managed rule 1 matches override rule 1, Cloudflare will `block` the attacks and not proceed with the rest of the rules. 
+
+**Mitigation 2 linked with managed rule 2**
+
+Since managed rule 2 does not match override rule 1, Cloudflare will proceed to override rule 2. 
+
+Override rule 2 matches both *All managed rules* and managed rule 2, but specificity takes precedent. It does not `challenge` as dictated by *All managed rules* and instead proceeds with `log` since it matches the most specific managed rule.
+
+**Mitigation 3 linked with managed rule 3**
+
+Since managed rule 3 does not match override rule 1, Cloudflare will proceed to override rule 2.
+
+Override rule 2 sets *All managed rules* to `challenge`, so Cloudflare challenges the attack and does not proceed to override rule 3.
+
+---
+
+### Sensitivity example
+
+An additional dimension to take into account is Cloudflare will apply a given Override Rule only if its conditions are met, which includes the Sensitivity level. 
+
+While the override rule needs to match and modify the correct managed rule (or all managed rules in the case of mitigation 3 above), it also has to meet the specified Sensitivity level of the rule.
+
+- Override rule 1
+   - All managed rules are set to `challenge` at `low` sensitivity
+
+- Override rule 2
+   - Managed rule 1 is set to `log` at `default` sensitivity.
+
+**Scenario**: You receive a small attack below the threshold for `low` sensitivity, but above the threshold for `high` sensitivity on managed rule 1.
+
+- Override rule 1 does not meet the `low` sensitivity threshold. Therefore, we do not match the override and do not mitigate the attack, but proceed to evaluate the next managed rule in case the override rules instruct DDoS Protection to mitigate. 
+- Override rule 2 sets `log` at default visibility, which matches the condition, so the defined action is applied and attack traffic is logged.
