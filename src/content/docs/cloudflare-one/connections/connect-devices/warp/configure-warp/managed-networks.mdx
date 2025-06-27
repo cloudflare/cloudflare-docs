@@ -45,7 +45,7 @@ When you configure a managed network, the WARP client uses the TLS endpoint to d
 
 The time it takes to apply the correct device profile depends on how quickly the TLS endpoint responds.
 
-If the TLS endpoint times out after 5 seconds, the WARP client will determine that the device is not on a managed network and will apply the appropriate device profile. The WARP client only retries detection if a non-timeout error occurs. A timeout triggers fallback to the default device profile without further retries.
+If the TLS endpoint times out after 5 seconds, the WARP client will determine that the device is not on a managed network and will apply the default device profile. The WARP client only retries detection if a non-timeout error occurs. A timeout triggers fallback to the default device profile without further retries.
 
 ### Create a new TLS endpoint
 
