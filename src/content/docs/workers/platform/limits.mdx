@@ -227,6 +227,8 @@ You can open up to six connections simultaneously for each invocation of your Wo
 - `send()` and `sendBatch()`, methods of [Queues](/queues/).
 - Opening a TCP socket using the [`connect()`](/workers/runtime-apis/tcp-sockets/) API.
 
+Outbound WebSocket connections are just HTTP connections and thus also contribute to the maximum concurrent connections limit.
+
 Once an invocation has six connections open, it can still attempt to open additional connections.
 
 - These attempts are put in a pending queue — the connections will not be initiated until one of the currently open connections has closed.

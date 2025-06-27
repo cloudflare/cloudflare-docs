@@ -8,6 +8,8 @@ banner:
     id: pages-migrate-to-workers
 ---
 
+import { APIRequest } from "~/components";
+
 The [Pages API](/api/resources/pages/subresources/projects/methods/list/) empowers you to build automations and integrate Pages with your development workflow. At a high level, the API endpoints let you manage deployments and builds and configure projects. Cloudflare supports [Deploy Hooks](/pages/configuration/deploy-hooks/) for headless CMS deployments. Refer to the [API documentation](https://api.cloudflare.com/) for a full breakdown of object types and endpoints.
 
 ## How to use the API
@@ -25,10 +27,10 @@ To create an API token:
 
 After creating your token, you can authenticate and make requests to the API using your API token in the request headers. For example, here is an API request to get all deployments in a project.
 
-```bash
-curl 'https://api.cloudflare.com/client/v4/accounts/{account_id}/pages/projects/{project_name}/deployments' \
---header 'Authorization: Bearer <API_TOKEN>'
-```
+<APIRequest
+	path="/accounts/{account_id}/pages/projects/{project_name}/deployments"
+	method="GET"
+/>
 
 Try it with one of your projects by replacing `{account_id}`, `{project_name}`, and `<API_TOKEN>`. Refer to [Find your account ID](/fundamentals/account/find-account-and-zone-ids/) for more information.
 

@@ -130,6 +130,14 @@ If your organization does not currently allow inbound/outbound communication ove
 
       `com.cloudflare.1dot1dot1dot1dot1.macos` (Bundle ID)
 
+  :::caution
+
+  Due to changes in macOS Sequoia version 15.0 and 15.0.1., you must update your macOS firewall settings to allow the WARP client to manage your device's firewall.
+
+  To ensure proper functionality, disable the [Block all incoming connections](https://support.apple.com/guide/mac-help/change-firewall-settings-on-mac-mh11783/mac) option in your macOS firewall settings.
+
+  :::
+
 ### Optional scopes
 
 #### DEX tests
