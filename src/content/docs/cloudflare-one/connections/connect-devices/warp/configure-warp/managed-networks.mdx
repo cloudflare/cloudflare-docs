@@ -26,7 +26,11 @@ import { Details, TabItem, Tabs } from "~/components";
 
 Cloudflare WARP allows you to selectively apply specific [device profiles](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) and WARP client settings when a device connects to a secure network location, such as an office. WARP identifies these managed networks by detecting a TLS endpoint you set up on the network.
 
-On this page, you will learn how to create a TLS endpoint on your trusted network and configure it in Zero Trust to set up a managed network. After the TLS endpoint and managed network are configured, the WARP client on a device will detect when the device is on your managed network and apply the appropriate device profile.
+On this page, you will learn how to:
+
+- Create a TLS endpoint on your trusted network.
+- Configure the TLS endpoint in Zero Trust to set up a managed network.
+- Apply the appropriate device profile to a device when the WARP client detects it is on your managed network.
 
 ## Requirements
 
@@ -291,4 +295,4 @@ To check if the WARP client detects the network location:
 ## Related resources
 
 - [Device profiles](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) - How to create and manage the device profiles you apply via managed networks.
-- [WARP settings](https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/) - Defines how WARP behaves and what users can do.
+- [WARP settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/) - Defines how WARP behaves and what users can do.
