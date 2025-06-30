@@ -182,47 +182,34 @@ Browser-based RDP supports connecting to Windows machines with the following for
 
 SAM-formatted user identifiers are supported with and without spaces.
 
-`domain\user with spaces` format:
+`domain\username with spaces` format:
 - The domain may have a maximum of 20 characters.
 - The username may have a maximum of 15 characters.
 
-`.\user` format:
+`.\username` format:
 - This uses the default domain.
 - The username may have a maximum of 20 characters.
 
 Examples:
-- `DOMAIN\user with spaces`
-- `DOMAIN\user`
-- `Username`
-- `User Name`
+- `DOMAIN\username with spaces`
+- `DOMAIN\username`
+- `.\username`
+- `.\username with spaces`
+- `username`
+- `username with space`
 
 #### User Principal Name (UPN)
 
 UPN-formatted user identifiers are supported with spaces, quotes, and unquoted.
 
 Examples:
-- `"user with spaces"@domain.org`
-- `user with spaces@domain.org`
-- `user@domain.org`
+- `"username with spaces"@domain.org`
+- `username with spaces@domain.org`
+- `username@domain.org`
 
 :::note
 		Cloudflare will not configure any user identifier on the target. Any user identifier used to authenticate must be pre-configured on the server.
 :::
-
-### Clipboard file formats
-
-Browser-based RDP supports the following formats for text-based copy and paste actions:
-- "text/plain"
-- "text/html"
-- "image/png"
-- "HTML Format" (via CF_HTML)
-- CF_UNICODETEXT
-- CF_DIBV5 (Windows native bitmap formats)
-
-:::note
-		File transfer is not supported presently (see Known limitations below). Copying and pasting any file from the local machine to the remote machine or vice versa will not succeed.
-:::
-
 
 ### Cloudflare products
 
