@@ -418,13 +418,13 @@
 /ddos-protection/dns-protection/ /ddos-protection/advanced-ddos-systems/overview/advanced-dns-protection/ 301
 /ddos-protection/tcp-protection/api/ /ddos-protection/advanced-ddos-systems/api/ 301
 /ddos-protection/managed-rulesets/http/configure-api/ /ddos-protection/managed-rulesets/http/http-overrides/configure-api/ 301
- /ddos-protection/managed-rulesets/http/configure-dashboard/  /ddos-protection/managed-rulesets/http/http-overrides/configure-dashboard/ 301
- /ddos-protection/managed-rulesets/http/link-configure-terraform/  /ddos-protection/managed-rulesets/http/http-overrides/link-configure-terraform/ 301
- /ddos-protection/managed-rulesets/http/override-expressions/  /ddos-protection/managed-rulesets/http/http-overrides/override-expressions/ 301
- /ddos-protection/managed-rulesets/network/configure-api/  /ddos-protection/managed-rulesets/network/network-overrides/configure-api/ 301
- /ddos-protection/managed-rulesets/network/configure-dashboard/  /ddos-protection/managed-rulesets/network/network-overrides/configure-dashboard/ 301
- /ddos-protection/managed-rulesets/network/link-configure-terraform/  /ddos-protection/managed-rulesets/network/network-overrides/link-configure-terraform/ 301
- /ddos-protection/managed-rulesets/network/override-expressions/  /ddos-protection/managed-rulesets/network/network-overrides/override-expressions/ 301
+/ddos-protection/managed-rulesets/http/configure-dashboard/  /ddos-protection/managed-rulesets/http/http-overrides/configure-dashboard/ 301
+/ddos-protection/managed-rulesets/http/link-configure-terraform/  /ddos-protection/managed-rulesets/http/http-overrides/link-configure-terraform/ 301
+/ddos-protection/managed-rulesets/http/override-expressions/  /ddos-protection/managed-rulesets/http/http-overrides/override-expressions/ 301
+/ddos-protection/managed-rulesets/network/configure-api/  /ddos-protection/managed-rulesets/network/network-overrides/configure-api/ 301
+/ddos-protection/managed-rulesets/network/configure-dashboard/  /ddos-protection/managed-rulesets/network/network-overrides/configure-dashboard/ 301
+/ddos-protection/managed-rulesets/network/link-configure-terraform/  /ddos-protection/managed-rulesets/network/network-overrides/link-configure-terraform/ 301
+/ddos-protection/managed-rulesets/network/override-expressions/  /ddos-protection/managed-rulesets/network/network-overrides/override-expressions/ 301
 
  # dns
 /dns/additional-options/cname-flattening/ /dns/cname-flattening/ 301
