@@ -25,24 +25,15 @@ If your website already has a `robots.txt` file — verified by a HTTP `200` res
 For example, without this feature enabled, the `robots.txt` content of `crawlstop.com` would be:
 
 ```txt
-# This robots.txt is managed using Cloudflare's managed robots.txt feature
-# See: https://developers.cloudflare.com/bots/additional-configurations/managed-robots.txt/
+User-agent: *
+Disallow: /lp
+Disallow: /feedback
+Disallow: /langtest
 
-# Cloudflare will prepend their managed robots.txt directives before this content
+Sitemap: https://www.crawlstop.com/sitemap.xml
 ```
 
 With the managed `robots.txt` enabled, Cloudflare will prepend our managed content before your original content, resulting in what you can view at https://crawlstop.com/robots.txt.
-
-<div style="position: relative; padding-top: 56.25%">
-	<iframe
-		src="https://crawlstop.com/robots.txt"
-		title="YouTube video player"
-		allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-		style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
-		referrerpolicy="strict-origin-when-cross-origin"
-		allowfullscreen
-	></iframe>
-</div>
 
 ### No robots.txt file
 
