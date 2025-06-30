@@ -244,6 +244,7 @@
 /bots/get-started/bm-subscription/ /bots/get-started/bot-management/ 301
 /bots/get-started/pro/ /bots/get-started/super-bot-fight-mode/ 301
 /bots/additional-configurations/javascript-detections/ /cloudflare-challenges/challenge-types/javascript-detections/ 301
+/bots/troubleshooting/frequently-asked-questions/ /bots/frequently-asked-questions/ 301
 
 #browser-rendering
 /browser-rendering/get-started/browser-rendering-with-DO/ /browser-rendering/workers-bindings/browser-rendering-with-do/ 301

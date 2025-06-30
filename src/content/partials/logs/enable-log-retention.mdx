@@ -9,6 +9,7 @@ import { TabItem, Tabs } from "~/components";
 
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/control/retention/flag \
+--request POST \
 --header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '{"flag": true}'
@@ -18,6 +19,7 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/control/retention
 
 ```txt
 curl.exe "https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/control/retention/flag" ^
+--request POST ^
 --header "Authorization: Bearer <API_TOKEN>" ^
 --header "Content-Type: application/json" ^
 --data "{""flag"": true}"

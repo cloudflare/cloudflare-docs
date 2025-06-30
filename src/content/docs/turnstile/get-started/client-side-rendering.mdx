@@ -208,9 +208,13 @@ There are two options:
 
 ## Appearance modes
 
-If a widget is visible, its appearance can be controlled via the `appearance` parameter.
+If a widget is visible, its appearance can be controlled via the `appearance` parameter in three different ways:
 
-By default, `appearance` is set to `always` for visible widget types. However, if `appearance` is set to `execute`, the widget will only become visible after the challenge begins. This is helpful in situations where `execute()` is called after `render()`. If `appearance` is set to `interaction-only`, the widget will become only visible in cases where an interaction is required.
+| <div style="width:150px">Mode</div> | Description |
+| --- | --- |
+| `always` <br />(Default) | `appearance` is set to `always` for visible widget types. |
+| `interaction-only` | The widget will become visible in cases where an interaction is required. |
+| `execute` | The widget will become visible after the challenge begins. This is helpful in situations where `execute()` is called after `render()`. |
 
 Refer to [Widget types](/turnstile/concepts/widget/) to see widgets by type and state.
 
