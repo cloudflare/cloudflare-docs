@@ -6,7 +6,7 @@ productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
   - publish_date: "2025-06-27"
-    title: Bug fix: Debug log noise in Workers
+    title: Bug fix to debug log noise in Workers
     description: |-
       * Fixed an issue where all debug logging was on by default and would flood logs. Debug logs is now off by default but can be re-enabled by setting [`process.env.DEBUG`](https://pptr.dev/guides/debugging#log-devtools-protocol-traffic) when needed.
   - publish_date: "2025-05-26"
