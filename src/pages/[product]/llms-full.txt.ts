@@ -3,7 +3,7 @@ import { getCollection } from "astro:content";
 
 export async function getStaticPaths() {
 	const products = await getCollection("products", (p) => {
-		return p.data.product.group?.toLowerCase() === "developer platform";
+		return p.data.product.group;
 	});
 
 	return products.map((entry) => {

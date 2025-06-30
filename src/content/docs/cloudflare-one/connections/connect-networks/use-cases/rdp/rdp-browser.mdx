@@ -8,9 +8,9 @@ sidebar:
     text: Beta
 ---
 
-import { Render, GlossaryTooltip  } from "~/components"
+import { Render, GlossaryTooltip, Details  } from "~/components"
 
-With Cloudflare Zero Trust, users can connect to an RDP server without installing an RDP client or the [WARP client](/cloudflare-one/connections/connect-devices/warp/) on their device. Browser-based RDP leverages [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/), which creates a secure, outbound-only connection from your RDP server to Cloudflare's global network. Setup involves running the `cloudflared` daemon on the RDP server (or any other host machine within the private network) and routing RDP traffic over a public hostname.
+Users can connect to an RDP server without installing an RDP client or the [WARP client](/cloudflare-one/connections/connect-devices/warp/) on their device. Browser-based RDP leverages [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/), which creates a secure, outbound-only connection from your RDP server to Cloudflare's global network. Setup involves running the `cloudflared` daemon on the RDP server (or any other host machine within the private network) and routing RDP traffic over a public hostname.
 
 There are two ways for users to [reach the RDP server in their browser](#4-connect-as-a-user):
 - **App Launcher**: Users can log in to the [Access App Launcher](/cloudflare-one/applications/app-launcher/) with their Cloudflare Access credentials and then initiate an RDP connection within the browser to their Windows machine. Users will authenticate to the Windows machine using their pre-configured Windows username and password. Cloudflare does not manage any credentials on the Windows server.
@@ -34,7 +34,47 @@ Browser-based RDP can be used in conjunction with [routing over WARP](/cloudflar
 
 <Render file="access/add-target" params={{ protocol: "rdp" }}/>
 
-## 3. Create an Access application
+## 3. Create a DNS record
+
+To make your RDP targets (that is, your Windows machines) available through the browser, you will need a [Cloudflare DNS record](/dns/manage-dns-records/how-to/create-dns-records/) for the domain and subdomain that users will connect to.  This domain will be used to access any targets that are available to users through your Access application (see Step 4).
+
+For example, if want users to connect to targets on `rdp.example.com`, [create a DNS record](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) for `rdp.example.com`. You can create either an `A`, `AAAA`, or `CNAME` record:
+
+<Details header="A record" open={false}>
+The following DNS record points your public subdomain (`rdp`) to an IPv4 address in the [Class E address space](https://datatracker.ietf.org/doc/html/rfc5735).
+
+- **Type**: _A_
+- **Name**: `rdp`
+- **IPv4 address**: `240.0.0.0`
+- **Proxy status**: On
+
+</Details>
+
+<Details header="AAAA record" open={false}>
+The following DNS record points your public subdomain (`rdp`) to the IPv6 [discard address range](https://www.rfc-editor.org/rfc/rfc6666.html):
+
+- **Type**: _AAAA_
+- **Name**: `rdp`
+- **IPv6 address**: `100::`
+- **Proxy status**: On
+
+</Details>
+
+<Details header="CNAME record" open={false}>
+The following `CNAME` record points your public subdomain (`rdp`) to a fully qualified domain name.
+
+- **Type**: _CNAME_
+- **Name**: `rdp`
+- **Target**: `www.rdp.example.com`
+- **Proxy status**: On
+
+The CNAME **Target** field is unrelated to the RDP targets configured in Step 2.
+
+</Details>
+
+The DNS record does not need to point to an active destination IP address or hostname; the DNS record just needs to be valid. Cloudflare's RDP proxy will handle the routing to the correct RDP target.
+
+## 4. Create an Access application
 
 <Render file="access/self-hosted-app/create-app" />
 
@@ -47,7 +87,7 @@ Browser-based RDP can be used in conjunction with [routing over WARP](/cloudflar
 7. <Render file="access/self-hosted-app/choose-domain" product="cloudflare-one" />
 
 		:::note
-		You can only enable browser-based RDP on domains and subdomains, not for specific paths.
+		You can only enable browser-based RDP on domains and subdomains, not for specific paths. The selected domain and subdomain must also have a corresponding DNS record (refer to [Step 3](#3-create-a-dns-record)).
 		:::
 
 8. Expand **Browser rendering settings**. In the **Browser rendering** dropdown, select _RDP_.
@@ -81,17 +121,6 @@ Ensure that only **Allow** or **Block** policies are present. **Bypass** and **S
 18. <Render file="access/self-hosted-app/advanced-settings" product="cloudflare-one" />
 
 19. Select **Save**.
-
-## 4. Create a DNS record
-
-In the [Cloudflare dashboard](https://dash.cloudflare.com/login), go to **DNS** > **Records** and verify that a [DNS record](/dns/manage-dns-records/how-to/create-dns-records/) exists for your domain. The DNS record allows Cloudflare to proxy browser-based RDP traffic to your private network. Any arbitrary DNS record will work.
-
-If you do not already have a DNS record, [create a new DNS record](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records). For example, you could create an `AAAA` record that points your Access application public hostname (`app.example.com`) to the IPv6 [discard address range](https://www.rfc-editor.org/rfc/rfc6666.html):
-
-- **Type**: _AAAA_
-- **Name**: `app`
-- **IPv6 address**: `100::`
-- **Proxy status**: On
 
 ## 5. (Recommended) Modify order of precedence in Gateway
 <Render file="access/modify-gateway-policy-precedence" product="cloudflare-one" params={{ selector: "Access Infrastructure Target" }} />

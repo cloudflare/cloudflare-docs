@@ -3,32 +3,32 @@ pcx_content_type: faq
 title: FAQ
 structured_data: true
 sidebar:
-  order: 3
+  order: 11
 ---
 
 import { Render, RuleID } from "~/components";
 
 ## Bots
 
-## How does Cloudflare detect bots?
+### How does Cloudflare detect bots?
 
 Cloudflare uses multiple methods to detect bots, but these vary by plan. For more details, refer to [Plans](/bots/plans).
 
 ---
 
-## How do I know what is included in my plan?
+### How do I know what is included in my plan?
 
 To know what's included in your plan, refer to our [Plans](/bots/plans).
 
 ---
 
-## How do I set up my bot product?
+### How do I set up my bot product?
 
 To learn how to set up your bot product, refer to [Get started](/bots/get-started).
 
 ---
 
-## Yandex bot unexpectedly blocked by the WAF managed rule with ID `...f6cbb163`
+### Yandex bot unexpectedly blocked by the WAF managed rule with ID `...f6cbb163`
 
 Yandex updates their bots very frequently, you may see more false positives while these changes are propagated. New and recently updated bots will occasionally be blocked by a Cloudflare WAF managed rule, as the IP list of Yandex bots has not yet synced with Yandex's most recent changes.
 
@@ -45,7 +45,7 @@ Once the new Yandex IP is propagated to our system, the requests will not be blo
 
 ---
 
-## How does machine learning work?
+### How does machine learning work?
 
 Supervised machine learning takes certain variables (X) like gender and age and predicts another variable (Y) like income.
 
@@ -55,7 +55,7 @@ Cloudflare uses data from millions of requests and re-train the system on a peri
 
 ---
 
-## Why am I seeing a Managed Challenge action for WAF rules?
+### Why am I seeing a Managed Challenge action for WAF rules?
 
 When you choose to challenge different bot categories with Bot Fight Mode or Super Bot Fight Mode, you will see Security Events with an **Action Taken** of **Managed Challenge**.
 
@@ -65,13 +65,13 @@ This does not mean that your traffic was blocked. It is the challenge sent to yo
 
 To understand if the result of the challenge was a success or a failure, you can verify using [Logpush](/logs/about/).
 
-## Does the WAF run before Super Bot Fight Mode?
+### Does the WAF run before Super Bot Fight Mode?
 
 Yes. WAF rules are executed before Super Bot Fight Mode. If a WAF custom rule performs a [terminating action](/ruleset-engine/rules-language/actions/) such as _Block_, your Super Bot Fight Mode configuration will not be evaluated.
 
 ---
 
-## What is cf.bot_management.verified_bot?
+### What is cf.bot_management.verified_bot?
 
 A request's _cf.bot_management.verified_bot_ value is a boolean indicating whether such request comes from a Cloudflare allowed bot.
 
@@ -83,13 +83,13 @@ To allow traffic from good bots, use the [Verified Bot](/ruleset-engine/rules-la
 
 ---
 
-## Why might the ja3hash or JA4 be empty in HTTP logs?
+### Why might the ja3hash or JA4 be empty in HTTP logs?
 
 <Render file="ja3-ja4-null" />
 
 ---
 
-## I run a good bot and want for it to be added to the allowlist (cf.bot_management.verified_bot). What should I do?
+### I run a good bot and want for it to be added to the allowlist (cf.bot_management.verified_bot). What should I do?
 
 Cloudflare maintains a sample list of verified bots in [Cloudflare Radar](https://radar.cloudflare.com/verified-bots).
 
@@ -97,7 +97,7 @@ As a bot operator, in order to be listed by Cloudflare as a Verified Bot, your b
 
 ---
 
-## What information do I need to troubleshoot my bot issues?
+### What information do I need to troubleshoot my bot issues?
 
 If you are experiencing errors with your bot solution and need to submit a Support request, include the following information:
 
@@ -124,7 +124,7 @@ Please follow instructions in the following questions on how to disable BFM and 
 
 ---
 
-## What should I do if I am getting False positives caused by Bot Fight Mode (BFM) or Super Bot Fight Mode (SBFM)?
+### What should I do if I am getting False positives caused by Bot Fight Mode (BFM) or Super Bot Fight Mode (SBFM)?
 
 :::caution[Important considerations you need to be aware of before turning on BFM or SBFM]
 
@@ -150,7 +150,7 @@ Bot Fight Mode can still trigger if you have IP Access rules, but it cannot trig
 
 ---
 
-## Super Bot Fight Mode feature (SBFM) is still blocking requests even though the feature is turned off, why?
+### Super Bot Fight Mode feature (SBFM) is still blocking requests even though the feature is turned off, why?
 
 This is a known issue the Bots team is working to resolve in the near future. In the meantime, there is a workaround to resolve such issue. You will need to run the following API command to check and remove the SBFM ruleset:
 
@@ -171,3 +171,59 @@ This is a known issue the Bots team is working to resolve in the near future. In
    ```
 
 Note that you need to replace `<API_TOKEN>` with your own [API token](/fundamentals/api/get-started/create-token/).
+
+---
+
+## Web Bot Auth
+
+### What key algorithms does Cloudflare support?
+
+Cloudflare supports Ed25519 key algorithm.
+
+---
+
+### What `web-bot-auth` features from the IETF draft are not supported?
+
+The following derived components are not supported, and we will fail to verify a message if they are included:
+
+- `@query-params`: Cloudflare recommends signing the whole query using the `@query` component instead of signing an individual parameter.
+- `@status`: This is not possible to include in the request path.
+
+The following component parameters defined in IETF RFC 9421 are not supported, and Cloudflare will fail to verify a message if they are included:
+
+- `sf` (for HTTP header fields)
+- `bs` (for HTTP header fields)
+- `key` (for HTTP header fields)
+- `req` (for HTTP header fields or derived components)
+- `name` (for `@query-param` support - this requires `@query-param` support)
+
+---
+
+### Should I supply a `nonce` parameter in `Signature-Input`?
+
+The `nonce` parameter allows you to supply a `nonce` to prevent attackers from replaying past messages against a server.
+
+While Cloudflare recommends including it, there is currently no `nonce` validation, nor does Cloudflare guard against replay attacks using a database of seen `nonces`.
+
+Instead, Cloudflare recommends short `expires` as a protection against replay attacks. A minute is often sufficient.
+
+---
+
+### How do I know my JSON Web Key set directory will be accepted?
+
+Cloudflare uses [`http-signature-directory` tool](https://crates.io/crates/http-signature-directory) to validate your directory. Please ensure this works against your directory before registering with us.
+
+---
+
+### My message is failing validation. What could be the cause?
+
+- Ensure you have a [`Signature-Agent` header](/bots/concepts/bot/verified-bots/web-bot-auth/#signature-agent-header), and that its value is in double-quotes.
+- Ensure you include `signature-agent` in the component list in your [`Signature-Input` header](/bots/concepts/bot/verified-bots/web-bot-auth/#signature-agent-header).
+- Ensure your `expires` timestamp is not too short, such that, by the time it arrives at Cloudflare servers, it has already expired. A minute is often sufficient.
+- Ensure you are not signing components containing non-ASCII values, or on the unsupported list.
+
+---
+
+### I want to use HTTP message signatures / Web Bot Auth on my zone, and do not want Cloudflare's verification to intervene. What do I do?
+
+You can request the Web Bot Auth feature be disabled for your zone by contacting Cloudflare support. This will disable usage of Web Bot Auth specifically with Cloudflare, and verified bots will fallback to other modes to validate traffic.

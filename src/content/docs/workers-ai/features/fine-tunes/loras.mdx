@@ -11,7 +11,7 @@ head:
 description: Upload and use LoRA adapters to get fine-tuned inference on Workers AI.
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { APIRequest, TabItem, Tabs } from "~/components";
 
 Workers AI supports fine-tuned inference with adapters trained with [Low-Rank Adaptation](https://blog.cloudflare.com/fine-tuned-inference-with-loras). This feature is in open beta and free during this period.
 
@@ -84,19 +84,15 @@ Alternatively, you can use our REST API to create a finetune and upload your ada
 
 #### Creating a fine-tune on your account
 
-```bash title="cURL"
-## Input: user-defined name of fine tune
-## Output: unique finetune_id
-
-curl -X POST https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/finetunes/ \
-    -H "Authorization: Bearer {API_TOKEN}" \
-    -H 'Content-Type: application/json' \
-    -d '{
-      "model": "SUPPORTED_MODEL_NAME",
-      "name": "FINETUNE_NAME",
-      "description": "OPTIONAL_DESCRIPTION"
-    }'
-```
+<APIRequest
+	path="/accounts/{account_id}/ai/finetunes"
+	method="POST"
+	json={{
+		model: "SUPPORTED_MODEL_NAME",
+		name: "FINETUNE_NAME",
+		description: "OPTIONAL_DESCRIPTION",
+	}}
+/>
 
 #### Uploading your adapter weights and config
 
@@ -119,40 +115,29 @@ curl -X POST https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/finet
 
 You can call this method to confirm what fine-tunes you have created in your account
 
-<Tabs> <TabItem label="curl">
+<APIRequest path="/accounts/{account_id}/ai/finetunes" method="GET" />
 
-```bash title="cURL"
-## Input: n/a
-## Output: success true/false
-
-curl -X GET https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/finetunes/ \
-    -H 'Authorization: Bearer {API_TOKEN}'
-```
-
-</TabItem> <TabItem label="json output">
-
-```json title="Example JSON output"
-# Example output JSON
+```json output
 {
-  "success": true,
-  "result": [
-    [{
-       "id": "00000000-0000-0000-0000-000000000",
-       "model": "@cf/meta-llama/llama-2-7b-chat-hf-lora",
-       "name": "llama2-finetune",
-       "description": "test"
-    },
-    {
-       "id": "00000000-0000-0000-0000-000000000",
-       "model": "@cf/mistralai/mistral-7b-instruct-v0.2-lora",
-       "name": "mistral-finetune",
-       "description": "test"
-    }]
-  ]
+	"success": true,
+	"result": [
+		[
+			{
+				"id": "00000000-0000-0000-0000-000000000",
+				"model": "@cf/meta-llama/llama-2-7b-chat-hf-lora",
+				"name": "llama2-finetune",
+				"description": "test"
+			},
+			{
+				"id": "00000000-0000-0000-0000-000000000",
+				"model": "@cf/mistralai/mistral-7b-instruct-v0.2-lora",
+				"name": "mistral-finetune",
+				"description": "test"
+			}
+		]
+	]
 }
 ```
-
-</TabItem> </Tabs>
 
 ---
 
