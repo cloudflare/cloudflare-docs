@@ -49,6 +49,11 @@ dig TXT cf2024-1._domainkey.example.com +short
 ### DMARC enforcing
 
 Email Routing enforces Domain-based Message Authentication, Reporting & Conformance (DMARC). Depending on the sender's DMARC policy, Email Routing will reject emails when there is an authentication failure. Refer to [dmarc.org](https://dmarc.org/) for more information on this protocol.
+It is recommended that all senders implement the DMARC protocol in order to successfully deliver email to Cloudflare.
+
+### Mail authentication requirement
+
+Cloudflare requires emails to [pass some form of authentication](/changelog/email-routing/2025-06-30-mail-authentication/), either pass SPF verification or be correctly DKIM-signed to forward them. Having DMARC configured will also have a positive impact and is recommended.
 
 ### IPv6 support
 
@@ -152,6 +157,7 @@ Email Routing uses an internal Domain Name System Blocklists (DNSBL) service to 
 ```txt
 554 <YOUR_IP_ADDRESS> found on one or more RBLs (abusixip). Refer to https://developers.cloudflare.com/email-routing/postmaster/#spam-and-abusive-traffic/
 ```
+
 We update our RBLs regularly. You can use combined block list lookup services like [MxToolbox](https://mxtoolbox.com/blacklists.aspx) to check if your IP matches other RBLs. IP reputation blocks are usually temporary, but if you feel your IP should be removed immediately, please contact the RBL's maintainer mentioned in the SMTP error directly.
 
 ### Anti-spam

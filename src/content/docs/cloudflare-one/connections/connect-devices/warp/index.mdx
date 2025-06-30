@@ -8,11 +8,15 @@ head:
     content: About Cloudflare WARP
 ---
 
-The Cloudflare WARP client allows you to protect corporate devices by securely and privately sending traffic from those devices to Cloudflare's global network, where Cloudflare Gateway can apply advanced web filtering. The WARP client also makes it possible to apply advanced Zero Trust policies that check for a device's health before it connects to corporate applications.
+The Cloudflare WARP client allows you to protect corporate devices by securely and privately sending traffic from those devices to Cloudflare's global network, where [Cloudflare Gateway](/cloudflare-one/policies/gateway/) can apply advanced web filtering. The WARP client also makes it possible to apply advanced [Zero Trust policies](/cloudflare-one/identity/devices/) that check for a device's health before it connects to corporate applications.
+
+WARP is a lightweight device client, which builds proxy tunnels using either Wireguard or MASQUE, and builds a DNS proxy using DNS-over-HTTPS. WARP supports all major operating systems, all common forms of endpoint management tooling, and has a robust series of management parameters and profiles to accurately scope the needs of a diverse user base.
+
+WARP has flexible [operating modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) and can control device traffic as a proxy, control device DNS traffic as a DNS proxy, or both. It is the most common method to send traffic from user devices to be filtered and decrypted by Cloudflare Gateway.
 
 Downloading and deploying the WARP client to your devices enhances the protection Cloudflare Zero Trust can provide to your users and data, wherever they are.
 
-Here are a few ways in which the WARP client provides in-depth protection for your organization:
+The WARP client provides in-depth protection for your organization in a few ways:
 
 - **WARP lets you enforce security policies anywhere**. With the WARP client deployed in the Gateway with WARP mode, Gateway policies are not location-dependent — they can be enforced anywhere.
 - **WARP lets you enforce HTTP filtering and user-based policies**. Download and install the WARP client to enable Gateway features such as [Anti-Virus scanning](/cloudflare-one/policies/gateway/http-policies/antivirus-scanning/), [HTTP filtering](/cloudflare-one/policies/gateway/http-policies/), [Browser Isolation](/cloudflare-one/policies/gateway/http-policies/#isolate), and [identity-based policies](/cloudflare-one/policies/gateway/network-policies/).

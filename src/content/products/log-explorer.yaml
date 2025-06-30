@@ -5,7 +5,7 @@ product:
   title: Log Explorer
   url: /log-explorer/
   group: Core platform
- 
+
 meta:
   title: Cloudflare Log Explorer docs
   description: Store and explore your Cloudflare logs directly within the Cloudflare dashboard or API.
