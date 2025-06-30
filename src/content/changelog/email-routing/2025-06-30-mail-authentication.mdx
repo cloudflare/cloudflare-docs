@@ -9,7 +9,7 @@ honors these protocols when the sending domain has them configured. However, if 
 we still forward the emails to upstream mailbox providers.
 
 Starting on July 3, 2025, we will require all emails to be authenticated using at least one of the protocols, SPF or DKIM, to
-forward them. We alsostrongly recommend that all senders implement the DMARC protocol.
+forward them. We also strongly recommend that all senders implement the DMARC protocol.
 
 If you are using a Worker with an Email trigger to receive email messages and forward them upstream, you will need to handle the case where
 the forward action may fail due to missing authentication on the incoming email.
