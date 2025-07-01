@@ -2,14 +2,14 @@
 title: Analyze AI crawlers
 pcx_content_type: concept
 sidebar:
-  order: 7
+  order: 5
 ---
 
-import { Tabs, TabItem } from "~/components";
+import { Steps, Tabs, TabItem } from "~/components";
 
-AI Audit metrics provides you with key insights on how AI crawlers are interacting with your website.
+AI Audit metrics provide you with insight on how AI crawlers are interacting with your website ([Cloudflare zone](/fundamentals/concepts/accounts-and-zones/#zones)).
 
-To analyze AI crawlers:
+To view AI Audit metrics:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **AI Audit**.
@@ -19,23 +19,29 @@ To analyze AI crawlers:
 
 AI Audit provides you with the following metrics to help you understand how AI crawlers are interacting with your website.
 
-| Metric                             | Description                                                              |
-| ---------------------------------- | ------------------------------------------------------------------------ |
-| Total requests                     | The total number of requests to crawl your website, from all AI crawlers |
-| Allowed requests                   | The number of requests you have allowed (by allowing AI crawlers)        |
-| Blocked requests                   | The number of requests you have blocked (by blocking AI crawlers)        |
-| Requests by AI crawlers            | A graph which displays the number of crawl requests from each AI crawler |
-| Most popular paths by AI crawlers  | The most popular pages crawled by AI crawlers, for each AI crawler       |
-| Hosts                              | Top five most requested hosts (website domains)                          |
-| Paths                              | Top five most requested paths                                            |
-| AI crawler operators               | Top five most active AI crawler operators (by requests)                  |
+| Metric                                | Description                                                                   |
+| ------------------------------------- | ----------------------------------------------------------------------------- |
+| Total requests                        | The total number of requests to crawl your website, from all AI crawlers      |
+| Blocked requests                      | The number of requests you have blocked (by blocking AI crawlers)             |
+| Allowed requests                      | The number of requests you have allowed (by allowing AI crawlers)             |
+| Request by AI crawlers                | A graph which displays the number of crawl requests from each AI crawler      |
+| Most popular paths by AI crawlers     | The most popular pages crawled by AI crawlers, for each AI crawler            |
+| Hosts                                 | The owner of the AI crawler                                                   |
+| Overall popular paths                 | The most popular pages crawled by AI crawlers, from all AI crawlers           |
+| Most active AI crawlers by operators  | The AI crawler owners with the highest number of requests to access your site |
+
+:::note[Requests in AI Audit metrics]
+The number of requests in AI Audit metrics are specifically requests which were met with HTTP code 200 (the request was successfully served, with actual content).
+
+AI Audit metrics filter all other HTTP codes.
+:::
 
 ## Filter date range
 
 You can use the date filter to choose the period of time you wish to analyze.
 
 <Tabs>
-<TabItem label="Free plan">
+<TabItem label="Free plans">
 
 Filter options:
 

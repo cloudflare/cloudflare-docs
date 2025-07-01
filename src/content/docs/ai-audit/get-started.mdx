@@ -16,7 +16,7 @@ import { Details, Render, Steps, Tabs, TabItem, GlossaryTooltip } from "~/compon
 This guide instructs you on how to:
 
 - View AI crawlers that are interacting with pages in your domain (a [Cloudflare zone](/fundamentals/concepts/accounts-and-zones/#zones)).
-- Use AI Audit to block individual crawlers from accessing your content.
+- Create a rule to block AI crawlers on your pages.
 
 ## Prerequisites
 
@@ -34,9 +34,9 @@ To only block specific AI crawlers:
 {/* prettier-ignore */}
 <Steps>
 1. Go to **AI Audit**.
-2. From **AI Crawlers** tab, go to the list of AI crawlers.
+2. From the **AI Crawlers** tab, go to the list of AI crawlers.
 3. Review the AI crawlers that are accessing your domain.
-4. From the **Block** column, toggle the switch for AI crawlers you with to block.
+4. From the **Block** column, select the option **Block**.
 </Steps>
 
 :::note[Quality of AI crawler detection]
@@ -45,27 +45,23 @@ On the free plan, AI Audit identifies AI crawlers based on their [user agent str
 Upgrade your plan to enable a more thorough detection using Cloudflare's [Bot Management detection ID](/bots/reference/bot-management-variables/#ruleset-engine-fields) field.
 :::
 
-</TabItem> <TabItem label="Paid plans">
+</TabItem> <TabItem label="Paid plan">
 
 To only block specific AI crawlers:
 
 {/* prettier-ignore */}
 <Steps>
 1. Go to **AI Audit**.
-2. From **AI Crawlers** tab, go to the list of AI crawlers.
+2. From the **AI Crawlers** tab, go to the list of AI crawlers.
 3. Review key information such as:
    - Bot operator
    - Number of requests sent by the AI crawler
    - Whether the AI crawler is allowed according to your `robots.txt`, or the number of times the AI crawler has violated your `robots.txt`.
-4. From the **Block** column, toggle the switch for AI crawlers you with to block.
+4. From the **Block** column, toggle the switch for AI crawlers you wish to block.
 </Steps>
 
 </TabItem>
 </Tabs>
-
-For more information, refer to [Manage AI crawlers](/ai-audit/features/manage-ai-crawlers/).
-
-You can also create more complex rules when taking action on AI crawlers, using [Cloudflare WAF](/waf/). For more information on creating more specific rules, refer to [Create a custom rule in the dashboard](/waf/custom-rules/create-dashboard/).
 
 ## 2. Review detected AI crawlers
 

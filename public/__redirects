@@ -158,6 +158,8 @@
 /ai-gateway/configuration/websockets-api/non-realtime-api/ /ai-gateway/websockets-api/non-realtime-api/ 301
 /ai-gateway/configuration/websockets-api/realtime-api/ /ai-gateway/websockets-api/realtime-api/ 301
 
+# ai audit
+/ai-audit/features/detect-ai-crawlers/ /ai-audit/features/analyze-ai-crawlers/ 301
 
 # agents
 /agents/capabilities/mcp-server/ /agents/model-context-protocol/ 301
