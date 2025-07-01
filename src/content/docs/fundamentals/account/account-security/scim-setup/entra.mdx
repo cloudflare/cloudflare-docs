@@ -32,14 +32,13 @@ import { Render } from "~/components";
 :::note
 To successfully provision with Microsoft Entra ID:
 1. The `User Principal Name` and `Email` fields must match. These values are case-sensitive.
-2. The Entra group must match the same name of a Cloudflare user group.
-3. User Principal Name should only contain alphanumeric characters.
+2. User Principal Name should only contain alphanumeric characters.
 :::
 
 4. To validate which users and groups have been synchronized, navigate to **Provisioning logs** in Microsoft Entra. You can also [review the Cloudflare Audit Logs](/fundamentals/account/account-security/review-audit-logs/).
 
-:::note
-Once a Cloudflare user group is managed via SCIM, it will become `Read-only` - its members can only be edited from Entra.
+:::caution[Group name]
+If the Entra group shares the same name of a Cloudflare user group, the Cloudflare user group will become read-only after the provisioning.
 :::
 
 5. To grant permissions to Users & Groups in Cloudflare, refer to [Roles](/fundamentals/manage-members/roles/) and [Policies](/fundamentals/manage-members/policies/).
