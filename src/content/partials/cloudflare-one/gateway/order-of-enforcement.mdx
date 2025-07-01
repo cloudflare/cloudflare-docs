@@ -226,7 +226,7 @@ For Gateway configurations with DLP policies, Gateway will filter and log traffi
 
 #### Access applications
 
-If Gateway traffic is headed to a private IP address protected as an Access application, that traffic will still be evaluated by the destination application's Access policies, even if a Gateway Allow rule matched first. Block policies that match traffic will terminate any other policy evaluation. This is expected behavior. A Gateway Allow policy does not override or bypass Access policies.
+If Gateway traffic is headed to a private IP address protected as an Access application, that traffic will still be evaluated by the destination application's Access policies, even if a Gateway Allow policy matched first. Gateway Block policies that match traffic will terminate any other policy evaluation. This is expected behavior. A Gateway Allow policy does not override or bypass Access policies.
 
 <Render file="gateway/terraform-precedence-warning" product="cloudflare-one" />
 
