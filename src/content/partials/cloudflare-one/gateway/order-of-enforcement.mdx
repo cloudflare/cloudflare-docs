@@ -137,9 +137,9 @@ flowchart TB
 
 ## Connection establishment
 
-When a user connects to a server with Gateway, Gateway first establishes a TCP connection with the destination server on the port the user requested. If the connection is successful, Gateway will apply policies. If Gateway policies allow the connection, Gateway will connect the user to the destination server. If Gateway policies block the connection, Gateway will end the connection and will not send any data between the user and the destination server. If the TCP connection to the destination server is unsuccessful, Gateway will not run any policies and retry TCP connections from the user to the server.
+When a user connects to a server with Gateway, Gateway first establishes a TCP connection with the destination server on the port the user requested. Because TCP traffic is proxied by Cloudflare, the connection Gateway establishes with the origin is independent from the connection users establish with Gateway. This means Gateway assigns a new source IP and port to the user's connection and no details from the user's TCP handshake are included in the TCP handshake with the origin server.
 
-Because TCP traffic is proxied by Cloudflare, the connection Gateway establishes with the origin is independent from the connection users establish with Gateway. This means Gateway assigns a new source IP and port to the user's connection and no details from the user's TCP handshake are included in the TCP handshake with the origin server.
+If the TCP connection to the destination server is successful, Gateway will apply policies. If Gateway policies allow the connection, Gateway will connect the user to the destination server. If Gateway policies block the connection, Gateway will end the connection and will not send any data between the user and the destination server. If the TCP connection to the destination server is unsuccessful, Gateway will not run any policies and retry TCP connections from the user to the server.
 
 ```mermaid
 flowchart TB
