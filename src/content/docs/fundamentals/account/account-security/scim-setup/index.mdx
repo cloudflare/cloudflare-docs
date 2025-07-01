@@ -4,7 +4,7 @@ title: SCIM provisioning
 
 ---
 
-Cloudflare supports bulk provisioning of users into the Cloudflare dashboard by using the System for Cross-domain Identity Management (SCIM) protocol. This allows you to connect your external identity provider (IdP) to Cloudflare and quickly onboard and manage users and their permissions. Cloudflare supports SCIM onboarding with Okta and Microsoft Entra.
+Cloudflare supports bulk provisioning of users into the Cloudflare dashboard by using the System for Cross-domain Identity Management (SCIM) protocol. This allows you to connect your external identity provider (IdP) to Cloudflare, quickly onboard and manage user permissions. Currently, SCIM provisioning is supported with Okta and Microsoft Entra.
 
 :::note
 This section covers SCIM provisioning for the Cloudflare dashboard only. If you need to provision SCIM for Cloudflare Zero Trust, refer to [Zero Trust SCIM provisioning](/cloudflare-one/identity/users/scim/).
@@ -29,7 +29,7 @@ Expectations for user lifecycle management with SCIM:
 ## Prerequisites
 
 - Cloudflare provisioning with SCIM is only available to Enterprise customers using Okta or Microsoft Entra.
-- You must be a [Super Administrator](/fundamentals/manage-members/roles/) on the account.
+- You must be a [Super Administrator](/fundamentals/manage-members/roles/) of the account.
 - In your identity provider, you must have the ability to create applications and groups.
 
 ---
@@ -39,8 +39,7 @@ To start, you will need to collect a couple of pieces of data from Cloudflare an
 
 ### Get your Account ID
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to the Cloudflare account that you want to configure for SCIM provisioning.
-2. Copy your account ID from the account home page.
+The account ID can be found via dashboard or API. For more information, refer to [Find account and zone IDs](/fundamentals/account/find-account-and-zone-ids/).
 
 ### Create an API token
 
@@ -52,7 +51,7 @@ To start, you will need to collect a couple of pieces of data from Cloudflare an
 
    :::note
 
-   Cloudflare recommends using Account Owned API Tokens for SCIM Provisioning. Using user-specific API tokens, while supported, will lead to a broken SCIM connection in the event that the user's policies are revoked from the account with the SCIM integration. Learn more about [account owned tokens](/fundamentals/api/get-started/account-owned-tokens/).
+   Account Owned API Tokens are recommended for SCIM Provisioning. Using user-specific API tokens, while supported, will lead to a broken SCIM connection in the event that the user's policies are revoked from the account with the SCIM integration, or the [API access](/fundamentals/api/how-to/control-api-access/) is unexpected disabled. Learn more about [account owned tokens](/fundamentals/api/get-started/account-owned-tokens/).
    :::
 
 2. Under **Account Resources**, select the specific account to include or exclude from the dropdown menu, if applicable.
