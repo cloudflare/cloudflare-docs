@@ -16,7 +16,7 @@ import { Details, Render, Steps, Tabs, TabItem, GlossaryTooltip } from "~/compon
 This guide instructs you on how to:
 
 - View AI crawlers that are interacting with pages in your domain (a [Cloudflare zone](/fundamentals/concepts/accounts-and-zones/#zones)).
-- Create a rule to block AI crawlers on your pages.
+- Use AI Audit to block individual crawlers from accessing your content.
 
 ## Prerequisites
 
@@ -45,7 +45,7 @@ On the free plan, AI Audit identifies AI crawlers based on their [user agent str
 Upgrade your plan to enable a more thorough detection using Cloudflare's [Bot Management detection ID](/bots/reference/bot-management-variables/#ruleset-engine-fields) field.
 :::
 
-</TabItem> <TabItem label="Paid plan">
+</TabItem> <TabItem label="Paid plans">
 
 To only block specific AI crawlers:
 
@@ -62,6 +62,10 @@ To only block specific AI crawlers:
 
 </TabItem>
 </Tabs>
+
+For more information, refer to [Manage AI crawlers](/ai-audit/features/manage-ai-crawlers/).
+
+You can also create more complex rules when taking action on AI crawlers, using [Cloudflare WAF](/waf/). For more information on creating more specific rules, refer to [Create a custom rule in the dashboard](/waf/custom-rules/create-dashboard/).
 
 ## 2. Review detected AI crawlers
 
