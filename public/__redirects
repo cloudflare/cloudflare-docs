@@ -160,6 +160,7 @@
 
 # ai audit
 /ai-audit/features/detect-ai-crawlers/ /ai-audit/features/analyze-ai-crawlers/ 301
+/ai-audit/features/enforce-robots-txt/ /ai-audit/features/analyze-ai-crawlers/ 301
 
 # agents
 /agents/capabilities/mcp-server/ /agents/model-context-protocol/ 301
