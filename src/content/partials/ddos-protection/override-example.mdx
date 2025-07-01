@@ -42,5 +42,5 @@ An additional dimension to take into account is Cloudflare’s DDoS systems will
 
 You receive a small attack below the threshold for low sensitivity, but above the threshold for high sensitivity on **managed rule 1**.
 
-- **Rule override A** does not meet the low sensitivity threshold. Therefore, we do not match the override and do not mitigate the attack, but proceed to evaluate the next Managed Rule in case Override Rules instructs DoS to mitigate. 
+- **Rule override A** does not meet the low sensitivity threshold. Therefore, we do not match the override and do not mitigate the attack, but proceed to evaluate the next managed rule in case the rule override instructs DoS to mitigate. 
 - **Rule override B** sets `log` at default visibility, which matches the condition. So, the defined action is applied and attack traffic is logged.
