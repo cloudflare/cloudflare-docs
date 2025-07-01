@@ -9,6 +9,8 @@ import { Render } from "~/components";
 
 <Render file="idp-group-deprecation" />
 
+Once you have [gathered the required data](/fundamentals/account/account-security/scim-setup/#gather-the-required-data), the following steps will be required to finish the provisioning with Entra.
+
 ## Set up the Enterprise application
 
 1. Go to the Entra admin center, select **Applications** > **Enterprise Applications**.
@@ -19,8 +21,8 @@ import { Render } from "~/components";
 ## Provision the Enterprise application
 
 1. Inside the application just created, under **Manage** on the sidebar menu, select **Provisioning**.
-2. Select **New configuration** and enter the **Tenant URL**: `https://api.cloudflare.com/client/v4/accounts/<Account_ID>/scim/v2`, replace `<Account_ID>` with your own [account ID](/fundamentals/account/find-account-and-zone-ids/).
-3. Paste the [API token](/fundamentals/account/account-security/scim-setup/#create-an-api-token) value as **Secret token**.
+2. Select **New configuration** and enter the **Tenant URL**: `https://api.cloudflare.com/client/v4/accounts/<Account_ID>/scim/v2`, replace `<Account_ID>` with your own account ID.
+3. Paste the SCIM provisioning API token value as **Secret token**.
 4. Select **Test Connection**, then **Save** the configuration.
 
 ## Configure user & group synchronization in Microsoft Entra ID application
