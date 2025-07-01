@@ -188,9 +188,7 @@ Signature: sig2=:jdq0SqOwHdyHr9+r5jw3iYZH6aNGKijYp/EstF4RQTQdi5N5YYKrD+mCT1HA1nZ
 ```
 
 :::note
-You can test how Cloudflare interprets your signed requests against https://crawltest.com/cdn-cgi/web-bot-auth. This endpoint returns
-an HTTP `401` if your message is formatted correctly but your key is unknown, an HTTP `200` if the key is known and your message is verified,
-and an HTTP `400` otherwise. You may also see an HTTP `401` if your key is known but the message failed to verify.
+You can test how Cloudflare interprets your signed requests against https://crawltest.com/cdn-cgi/web-bot-auth. This endpoint returns an HTTP `401` if your message is formatted correctly but your key is unknown, an HTTP `200` if the key is known and your message is verified, and an HTTP `400` otherwise. You may also see an HTTP `401` if your key is known but the message failed to verify.
 :::
 
 ## Additional resources
