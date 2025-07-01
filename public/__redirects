@@ -138,6 +138,10 @@
 # ai
 /ai/ /use-cases/ai/ 301
 
+# ai-audit
+/ai-audit/features/detect-ai-crawlers/ /ai-audit/features/analyze-ai-crawlers/ 301
+/ai-audit/features/enforce-robots-txt/ /ai-audit/features/analyze-ai-crawlers/ 301
+
 # AI Gateway
 /ai-gateway/get-started/configuring-settings/ /ai-gateway/get-started/ 301
 /ai-gateway/get-started/connecting-applications/ /ai-gateway/get-started/ 301
@@ -153,7 +157,6 @@
 /ai-gateway/configuration/websockets-api/ /ai-gateway/websockets-api/ 301
 /ai-gateway/configuration/websockets-api/non-realtime-api/ /ai-gateway/websockets-api/non-realtime-api/ 301
 /ai-gateway/configuration/websockets-api/realtime-api/ /ai-gateway/websockets-api/realtime-api/ 301
-
 
 # agents
 /agents/capabilities/mcp-server/ /agents/model-context-protocol/ 301
@@ -417,8 +420,16 @@
 /ddos-protection/tcp-protection/rule-settings/ /ddos-protection/advanced-ddos-systems/rule-settings/ 301
 /ddos-protection/dns-protection/ /ddos-protection/advanced-ddos-systems/overview/advanced-dns-protection/ 301
 /ddos-protection/tcp-protection/api/ /ddos-protection/advanced-ddos-systems/api/ 301
+/ddos-protection/managed-rulesets/http/configure-api/ /ddos-protection/managed-rulesets/http/http-overrides/configure-api/ 301
+/ddos-protection/managed-rulesets/http/configure-dashboard/  /ddos-protection/managed-rulesets/http/http-overrides/configure-dashboard/ 301
+/ddos-protection/managed-rulesets/http/link-configure-terraform/  /ddos-protection/managed-rulesets/http/http-overrides/link-configure-terraform/ 301
+/ddos-protection/managed-rulesets/http/override-expressions/  /ddos-protection/managed-rulesets/http/http-overrides/override-expressions/ 301
+/ddos-protection/managed-rulesets/network/configure-api/  /ddos-protection/managed-rulesets/network/network-overrides/configure-api/ 301
+/ddos-protection/managed-rulesets/network/configure-dashboard/  /ddos-protection/managed-rulesets/network/network-overrides/configure-dashboard/ 301
+/ddos-protection/managed-rulesets/network/link-configure-terraform/  /ddos-protection/managed-rulesets/network/network-overrides/link-configure-terraform/ 301
+/ddos-protection/managed-rulesets/network/override-expressions/  /ddos-protection/managed-rulesets/network/network-overrides/override-expressions/ 301
 
-# dns
+ # dns
 /dns/additional-options/cname-flattening/ /dns/cname-flattening/ 301
 /dns/additional-options/dnssec/ /dns/dnssec/ 301
 /dns/foundation-dns/graphql-analytics/ /dns/additional-options/analytics/ 301
@@ -559,8 +570,8 @@
 /fundamentals/speed/prefetch-urls/ /speed/optimization/content/prefetch-urls/ 301
 /fundamentals/data-products/analytics-integrations/sumo-logic/ /logs/get-started/enable-destinations/sumo-logic/ 301
 /support/account-management-billing/account-management/adding-multiple-sites-to-cloudflare-via-automation/ /fundamentals/manage-domains/add-multiple-sites-automation/ 301
-/support/account-management-billing/account-privacy-and-security/securing-user-access-with-two-factor-authentication-2fa/ /fundamentals/account/account-security/2fa/ 301
-/support/account-management-billing/account-privacy-and-security/multi-factor-email-authentication/ /fundamentals/account/account-security/multi-factor-email-authentication/ 301
+/support/account-management-billing/account-privacy-and-security/securing-user-access-with-two-factor-authentication-2fa/ /fundamentals/user-profiles/2fa/ 301
+/support/account-management-billing/account-privacy-and-security/multi-factor-email-authentication/ /fundamentals/user-profiles/multi-factor-email-authentication/ 301
 /support/account-management-billing/billing-cloudflare-plans/troubleshooting-failed-payments/ /billing/troubleshoot-failed-payments/ 301
 /support/account-management-billing/common-account-questions/login-and-account-issues/ /fundamentals/account/account-security/login-and-account-issues/ 301
 /support/other-languages/deutsch/mehrere-websites-automatisch-in-cloudflare-aufnehmen-/ /fundamentals/manage-domains/add-multiple-sites-automation/ 301
@@ -577,23 +588,23 @@
 /fundamentals/security/cybersafe/ /fundamentals/reference/policies-compliances/cybersafe/ 301
 /fundamentals/security/challenge-passage/ /cloudflare-challenges/challenge-types/challenge-pages/#challenge-passage 301
 /fundamentals/glossary/ /fundamentals/reference/glossary/ 301
-/fundamentals/account-and-billing/login/ /fundamentals/account/login/ 301
-/fundamentals/account-and-billing/account-maintenance/delete-account/ /fundamentals/account/delete-account/ 301
+/fundamentals/account-and-billing/login/ /fundamentals/user-profiles/login/ 301
+/fundamentals/account-and-billing/account-maintenance/delete-account/ /fundamentals/user-profiles/delete-account/ 301
 /fundamentals/account-and-billing/account-maintenance/updating-billing-info/ /billing/update-billing-info/ 301
 /fundamentals/account-and-billing/account-maintenance/understand-invoices/ /billing/invoices/ 301
 /fundamentals/account-and-billing/account-maintenance/cancel-subscription/ /fundamentals/subscriptions-and-billing/cancel-subscription/ 301
 /fundamentals/account-and-billing/account-maintenance/change-plan/ /fundamentals/subscriptions-and-billing/change-plan/ 301
-/fundamentals/account-and-billing/account-maintenance/change-password-or-email/ /fundamentals/account/change-password-or-email/ 301
+/fundamentals/account-and-billing/account-maintenance/change-password-or-email/ /fundamentals/user-profiles/change-password-or-email/ 301
 /fundamentals/account-and-billing/account-maintenance/ /fundamentals/subscriptions-and-billing/ 301
 /fundamentals/account-and-billing/members/scope/ /fundamentals/manage-members/scope/ 301
 /fundamentals/account-and-billing/members/manage/ /fundamentals/manage-members/manage/ 301
 /fundamentals/account-and-billing/non-contract-products/ /fundamentals/subscriptions-and-billing/preview-services/ 301
 /fundamentals/account-and-billing/account-setup/create-account/ /fundamentals/account/create-account/ 301
-/fundamentals/account-and-billing/account-setup/verify-email-address/ /fundamentals/account/verify-email-address/ 301
+/fundamentals/account-and-billing/account-setup/verify-email-address/ /fundamentals/user-profiles/verify-email-address/ 301
 /fundamentals/account-and-billing/account-setup/create-billing-profile/ /billing/create-billing-profile/ 301
-/fundamentals/account-and-billing/account-setup/customize-account/language-preference/ /fundamentals/account/customize-account/language-preference/ 301
-/fundamentals/account-and-billing/account-setup/customize-account/account-name/ /fundamentals/account/customize-account/account-name/ 301
-/fundamentals/account-and-billing/account-setup/customize-account/communication-preference/ /fundamentals/account/customize-account/communication-preference/ 301
+/fundamentals/account-and-billing/account-setup/customize-account/language-preference/ /fundamentals/user-profiles/customize-account/#language 301
+/fundamentals/account-and-billing/account-setup/customize-account/account-name/ /fundamentals/account/create-account/#account-name 301
+/fundamentals/account-and-billing/account-setup/customize-account/communication-preference/ /fundamentals/user-profiles/customize-account/#notifications 301
 /fundamentals/account-and-billing/members/ /fundamentals/manage-members/ 301
 /fundamentals/data-products/types-of-analytics/ /analytics/types-of-analytics/ 301
 /fundamentals/data-products/about-analytics/ /analytics/faq/about-analytics/ 301
@@ -661,8 +672,8 @@
 /fundamentals/account-and-billing/account-billing/understand-invoices/ /billing/invoices/ 301
 /fundamentals/account-and-billing/account-billing/updating-billing-info/ /billing/update-billing-info/ 301
 /fundamentals/account-and-billing/account-security/ /fundamentals/account/account-security/ 301
-/fundamentals/account-and-billing/account-security/2fa/ /fundamentals/account/account-security/2fa/ 301
-/fundamentals/account-and-billing/account-security/login-and-account-issues/ /fundamentals/account/account-security/login-and-account-issues/ 301
+/fundamentals/account-and-billing/account-security/2fa/ /fundamentals/user-profiles/2fa/ 301
+/fundamentals/account-and-billing/account-security/login-and-account-issues/ /fundamentals/user-profiles/change-password-or-email/ 301
 /fundamentals/account-and-billing/account-security/manage-active-sessions/ /fundamentals/account/account-security/manage-active-sessions/ 301
 /fundamentals/account-and-billing/account-security/review-audit-logs/ /fundamentals/account/account-security/review-audit-logs/ 301
 /fundamentals/account-and-billing/account-security/securing-a-compromised-account/ /fundamentals/account/account-security/secure-a-compromised-account/ 301
@@ -673,9 +684,9 @@
 /fundamentals/setup/account-setup/add-site/ /fundamentals/manage-domains/add-site/ 301
 /fundamentals/setup/account-setup/create-account/ /fundamentals/account/create-account/ 301
 /fundamentals/setup/account-setup/create-billing-profile/ /billing/create-billing-profile/ 301
-/fundamentals/setup/account-setup/verify-email-address/ /fundamentals/account/verify-email-address/ 301
+/fundamentals/setup/account-setup/verify-email-address/ /fundamentals/user-profiles/verify-email-address/ 301
 /fundamentals/setup/allow-cloudflare-ip-addresses/ /fundamentals/concepts/cloudflare-ip-addresses/ 301
-/fundamentals/basic-tasks/login/ /fundamentals/account/login/ 301
+/fundamentals/basic-tasks/login/ /fundamentals/user-profiles/login/ 301
 /fundamentals/concepts/redirects/ /fundamentals/reference/redirects/ 301
 /fundamentals/reference/changelog/ /fundamentals/reference/ 302
 /fundamentals/basic-tasks/optimize-speed-external-link/ /fundamentals/performance/optimize-speed-external-link/ 301
@@ -708,9 +719,9 @@
 /fundamentals/subscriptions-and-billing/cancel-subscription/ /billing/cancel-subscription/ 301
 /fundamentals/subscriptions-and-billing/change-plan/ /billing/change-plan/ 301
 /fundamentals/subscriptions-and-billing/preview-services/ /billing/preview-services/ 301
-/fundamentals/subscriptions-and-billing/change-password-or-email/ /fundamentals/account/change-password-or-email/  301
+/fundamentals/subscriptions-and-billing/change-password-or-email/ /fundamentals/user-profiles/change-password-or-email/  301
 /fundamentals/subscriptions-and-billing/change-super-admin/ /fundamentals/account/change-super-admin/  301
-/fundamentals/subscriptions-and-billing/delete-account/ /fundamentals/account/delete-account/ 301
+/fundamentals/subscriptions-and-billing/delete-account/ /fundamentals/user-profiles/delete-account/ 301
 /fundamentals/subscriptions-and-billing/ /fundamentals/account/ 301
 /fundamentals/api/building-custom-dashboards/ /fundamentals/api/ 301
 /fundamentals/trace-request/ /rules/trace-request/ 301
@@ -722,11 +733,20 @@
 /fundamentals/setup/find-account-and-zone-ids/ /fundamentals/account/find-account-and-zone-ids/ 301
 /fundamentals/setup/accounts-and-zones/ /fundamentals/concepts/accounts-and-zones/ 301
 /fundamentals/setup/troubleshooting/ /fundamentals/reference/troubleshooting/ 301
-/fundamentals/setup/account/customize-account/account-name/ /fundamentals/account/customize-account/ 301
-/fundamentals/setup/account/customize-account/appearance/ /fundamentals/account/customize-account/ 301
-/fundamentals/setup/account/customize-account/communication-preference/ /fundamentals/account/customize-account/ 301
-/fundamentals/setup/account/customize-account/language-preference/ /fundamentals/account/customize-account/ 301
+/fundamentals/setup/account/customize-account/account-name/ /fundamentals/account/create-account/#account-name 301
+/fundamentals/setup/account/customize-account/appearance/ /fundamentals/user-profiles/customize-account/#dashboard-appearance 301
+/fundamentals/setup/account/customize-account/communication-preference/ /fundamentals/user-profiles/customize-account/#notifications 301
+/fundamentals/setup/account/customize-account/language-preference/ /fundamentals/user-profiles/customize-account/#language 301
 /fundamentals/setup/ /fundamentals/account/ 301
+/fundamentals/account/verify-email-address/ /fundamentals/user-profiles/verify-email-address/ 301
+/fundamentals/account/login/ /fundamentals/user-profiles/login/ 301
+/fundamentals/account/customize-account/ /fundamentals/user-profiles/customize-account/ 301
+/fundamentals/account/account-security/multi-factor-email-authentication/ /fundamentals/user-profiles/multi-factor-email-authentication/ 301
+/fundamentals/account/account-security/2fa/ /fundamentals/user-profiles/2fa/ 301
+/fundamentals/account/account-security/login-and-account-issues/ /fundamentals/user-profiles/change-password-or-email/ 301
+/fundamentals/account/delete-account/ /fundamentals/user-profiles/delete-account/ 301
+/fundamentals/account/change-password-or-email/ /fundamentals/user-profiles/change-password-or-email/ 301
+
 
 # gateway
 /gateway/about/ /cloudflare-one/policies/gateway/ 301
@@ -848,8 +868,8 @@
 /learning-paths/get-started/concepts/cloudflare-ips/ /fundamentals/concepts/cloudflare-ip-addresses/ 301
 /learning-paths/get-started/account-setup/ /fundamentals/account/create-account/ 301
 /learning-paths/get-started/account-setup/create-account/ /fundamentals/account/create-account/ 301
-/learning-paths/get-started/account-setup/set-up-2fa/ /fundamentals/account/account-security/2fa/ 301
-/learning-paths/get-started/account-setup/customize-account/ /fundamentals/account/customize-account/account-name/ 301
+/learning-paths/get-started/account-setup/set-up-2fa/ /fundamentals/user-profiles/2fa/ 301
+/learning-paths/get-started/account-setup/customize-account/ /fundamentals/user-profiles/customize-account/ 301
 /learning-paths/get-started/account-setup/add-other-members/ /fundamentals/manage-members/ 301
 /learning-paths/get-started/account-setup/create-api-token/ /fundamentals/api/how-to/create-via-api/ 301
 /learning-paths/get-started/add-domain-to-cf/ /fundamentals/manage-domains/add-site/ 301

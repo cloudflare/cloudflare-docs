@@ -70,6 +70,10 @@ In **Cache eligibility**, you have the option to select **Bypass cache** if you 
 
 When creating a cache rule, you have the option to select **Bypass cache** if you want matching incoming requests to not be cached. Alternatively, you can use [Development Mode](/cache/reference/development-mode/), if you want to bypass cache for shorter periods.
 
+:::note
+When using Custom Cache Rules with a Bypass setting, the response header may return [DYNAMIC](/cache/concepts/cache-responses/#dynamic) rather than explicitly indicating a bypass. This occurs because the rule makes the content ineligible for caching, even if the origin response is otherwise cacheable.
+:::
+
 ### Eligible for cache settings
 
 When you select **Eligible for cache**, you can change the configuration settings described below.

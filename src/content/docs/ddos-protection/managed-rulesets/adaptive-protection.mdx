@@ -45,7 +45,7 @@ Cloudflare may change the logic of these protection rules from time to time to i
 
 Cloudflare’s network is built to automatically monitor and mitigate large DDoS attacks. Cloudflare also helps mitigate smaller DDoS attacks, based on the following general rules:
 
-- For zones on any plan, Cloudflare will apply mitigations when the HTTP error rate is above the _High_ (default) sensitivity level of 1,000 errors-per-second rate threshold. You can decrease the sensitivity level by [configuring the HTTP DDoS Attack Protection managed ruleset](/ddos-protection/managed-rulesets/http/configure-dashboard/).
+- For zones on any plan, Cloudflare will apply mitigations when the HTTP error rate is above the _High_ (default) sensitivity level of 1,000 errors-per-second rate threshold. You can decrease the sensitivity level by [configuring the HTTP DDoS Attack Protection managed ruleset](/ddos-protection/managed-rulesets/http/http-overrides/configure-dashboard/).
 - For zones on Pro, Business, and Enterprise plans, Cloudflare performs an additional check for better detection accuracy: the errors-per-second rate must also be at least five times the normal origin traffic levels before applying DDoS mitigations.
 
 Cloudflare determines the error rate based on all HTTP errors in the 52X range (Internal Server Error) and in the 53X range, except for [error 530](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-530). Currently, for DDoS mitigations based on HTTP error rate, you cannot exclude specific HTTP error codes.
@@ -90,8 +90,8 @@ You can adjust the action and sensitivity of the Adaptive DDoS Protection rules.
 
 To configure a rule, refer to the instructions in the following pages:
 
-- [Configure HTTP DDoS Attack Protection in the dashboard](/ddos-protection/managed-rulesets/http/configure-dashboard/) (for L7 rules)
-- [Configure Network-layer DDoS Attack Protection in the dashboard](/ddos-protection/managed-rulesets/network/configure-dashboard/) (for L3/4 rules)
+- [Configure HTTP DDoS Attack Protection in the dashboard](/ddos-protection/managed-rulesets/http/http-overrides/configure-dashboard/) (for L7 rules)
+- [Configure Network-layer DDoS Attack Protection in the dashboard](/ddos-protection/managed-rulesets/network/network-overrides/configure-dashboard/) (for L3/4 rules)
 
 For more information on the available configuration parameters, refer to the following pages:
 

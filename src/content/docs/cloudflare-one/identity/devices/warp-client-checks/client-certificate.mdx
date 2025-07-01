@@ -71,7 +71,9 @@ You can use the [Cloudflare PKI toolkit](/cloudflare-one/identity/devices/access
       <Details header="Windows">
       	- Local machine trust store - User trust store
       </Details>
-      <Details header="macOS">- System keychain</Details>
+      <Details header="macOS">
+			  - System keychain
+			</Details>
       <Details header="Linux">
       	- NSSDB (`/etc/pki/nssdb`) - To search a custom location, enter the
       	absolute file path(s) to the certificate and private key (for example
@@ -81,9 +83,10 @@ You can use the [Cloudflare PKI toolkit](/cloudflare-one/identity/devices/access
       	files or the same file.
       </Details>
    4. **Certificate ID**: Enter the UUID of the signing certificate.
-   5. **Common name**: (Optional) To check for a specific common name on the client certificate, enter a string with optional `${serial_number}` and `${hostname}` variables (for example, `${serial_number}_mycompany`). WARP will search for an exact, case-insensitive match. If you do not specify a common name, WARP will ignore the common name field on the certificate.
+   5. **Common name**: (Optional) To check for a Common Name (CN) on the client certificate, enter a string with optional `${serial_number}` and `${hostname}` variables (for example, `${serial_number}_mycompany`). WARP will search for an exact, case-insensitive match. If you do not specify a common name, WARP will ignore the common name field on the certificate.
    6. **Check for Extended Key Usage**: (Optional) Check whether the client certificate has one or more attributes set. Supported values are **Client authentication** (`1.3.6.1.5.5.7.3.2`) and/or **Email** (`1.3.6.1.5.5.7.3.4`).
    7. **Check for private key**: (Recommended) When enabled, WARP checks that the device has a private key associated with the client certificate.
+	 8. **Subject Alternative Name**: (Optional) To check for a Subject Alternative Name (SAN) on the client certificate, enter a string with optional `${serial_number}` and `${hostname}` variables (for example, `${serial_number}_mycompany`). WARP will search for an exact, case-insensitive match. You can add multiple SANs to the posture check — a certificate only needs to match one SAN for the check to pass.
 
 6. Select **Save**.
 

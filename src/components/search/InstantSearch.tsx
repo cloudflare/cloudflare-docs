@@ -22,6 +22,7 @@ import {
 } from "@floating-ui/react";
 import { PiCaretDownBold } from "react-icons/pi";
 import { setSearchParams } from "~/util/url";
+import he from "he";
 
 function SearchBox(props: UseSearchBoxProps) {
 	const { query, refine } = useSearchBox(props);
@@ -79,7 +80,7 @@ function InfiniteHits(props: UseInfiniteHitsProps) {
 						href={item.url}
 						className="border-cl1-gray-8 hover:bg-cl1-gray-9 dark:border-cl1-gray-2 dark:bg-cl1-gray-0 dark:hover:bg-cl1-gray-1 flex flex-col rounded-sm border p-6 text-black! no-underline"
 					>
-						<strong>{title}</strong>
+						<strong>{he.decode(title)}</strong>
 						<p className="line-clamp-2">
 							<Highlight attribute="content" hit={item} />
 						</p>

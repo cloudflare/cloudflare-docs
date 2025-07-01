@@ -316,7 +316,7 @@ The issue may arise because the IP range that the WSL environment uses to commun
 
 You must ensure the host device is included in the WARP tunnel while excluding the WSL environment to prevent connectivity issues between WSL and the host device.
 
-### To debug this issue:
+To debug this issue:
 
 1. Review the WSL2 environment's IP address and compare it with the laptop’s IP.
 2. Check if the WSL network is [included in the split tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#change-split-tunnels-mode).
@@ -370,3 +370,7 @@ If the problem continues, try running the [.NET Repair Tool](https://www.microso
 ```powershell
 Get-ChildItem -Path "HKLM:\SOFTWARE\Microsoft\NET Framework Setup\NDP" -Recurse | ForEach-Object { $_.Name; Get-ItemProperty $_.PSPath; "" }
 ```
+
+## I get an `Invalid session. Please try logging in again.` error from Access when trying to log in to the Cloudflare dashboard via SSO.
+
+Cloudflare Access uses a [`CF_Session` cookie](/cloudflare-one/identity/authorization-cookie/#access-cookies) to validate that the same browser both initiated and completed your sign-in. The `Invalid session` error means Access was unable to validate this cookie. Ensure that there is no software or firewall on your device or network that may be interfering with requests to Access.

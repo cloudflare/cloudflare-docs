@@ -187,12 +187,16 @@ Signature-Input: sig2=("@authority" "signature-agent")
 Signature: sig2=:jdq0SqOwHdyHr9+r5jw3iYZH6aNGKijYp/EstF4RQTQdi5N5YYKrD+mCT1HA1nZDsi6nJKuHxUi/5Syp3rLWBA==:
 ```
 
+:::note
+You can test how Cloudflare interprets your signed requests against https://crawltest.com/cdn-cgi/web-bot-auth. This endpoint returns an HTTP `401` if your message is formatted correctly but your key is unknown, an HTTP `200` if the key is known and your message is verified, and an HTTP `400` otherwise. You may also see an HTTP `401` if your key is known but the message failed to verify.
+:::
+
 ## Additional resources
 
 You may wish to refer to the following resources.
 
 - [Bots FAQs](/bots/frequently-asked-questions/).
-{/* - Cloudflare blog: [Message Signatures are now part of our Verified Bots Program](https://blog.cloudflare.com/verified-bots-with-cryptography). */}
+- Cloudflare blog: [Message Signatures are now part of our Verified Bots Program](https://blog.cloudflare.com/verified-bots-with-cryptography).
 - Cloudflare blog: [Forget IPs: using cryptography to verify bot and agent traffic](https://blog.cloudflare.com/web-bot-auth/).
 - Cloudflare's [`web-bot-auth` library in Rust](https://crates.io/crates/web-bot-auth).
 - Cloudflare's [`web-bot-auth` npm package in Typescript](https://www.npmjs.com/package/web-bot-auth).
