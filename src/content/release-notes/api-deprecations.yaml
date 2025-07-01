@@ -5,6 +5,25 @@ productLink: "/fundamentals/"
 productArea: Core platform
 productAreaLink: /fundamentals/reference/changelog/platform/
 entries:
+  - publish_date: "2025-07-01"
+    title: "Cloudflare Radar: Verified Bots APIs"
+    description: |-
+      Deprecation date: July 1, 2025
+
+      End of life date: January 1, 2026
+
+      The Radar Verified Bots API is now deprecated and will be replaced by the new Bots API.
+
+      Deprecated APIs:
+
+        * `GET /radar/verified_bots/top/bots`
+        * `GET /radar/verified_bots/top/categories`
+
+      Replacements:
+
+        * `GET /radar/bots/summary/bot`
+        * `GET /radar/bots/summary/category`
+
   - publish_date: "2025-11-11"
     title: "Zero Trust Devices"
     description: |-

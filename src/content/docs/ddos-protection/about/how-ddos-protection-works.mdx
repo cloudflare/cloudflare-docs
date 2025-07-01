@@ -23,7 +23,7 @@ Cloudflare uses a set of dynamic rules that scan for attack patterns, known atta
 
 :::note
 
-You can set an override expression for the [HTTP DDoS Attack Protection](/ddos-protection/managed-rulesets/http/override-expressions/) or [Network-layer DDoS Attack Protection](/ddos-protection/managed-rulesets/network/override-expressions/) managed ruleset to define a specific scope for sensitivity level or action adjustments.
+You can set an override expression for the [HTTP DDoS Attack Protection](/ddos-protection/managed-rulesets/http/http-overrides/override-expressions/) or [Network-layer DDoS Attack Protection](/ddos-protection/managed-rulesets/network/network-overrides/override-expressions/) managed ruleset to define a specific scope for sensitivity level or action adjustments.
 :::
 
 Once attack traffic matches a rule, Cloudflare's systems will track that traffic and generate a real-time signature to surgically match against the attack pattern and mitigate the attack without impacting legitimate traffic. The rules are able to generate different signatures based on various properties of the attacks and the signal strength of each attribute. For example, if the attack is distributed — that is, originating from many source IPs — then the source IP field will not serve as a strong indicator, and the rule will not choose the source IP field as part of the attack signature. Once generated, the fingerprint is propagated as a mitigation rule to the most optimal location on the Cloudflare global network for cost-efficient mitigation. These mitigation rules are ephemeral and will expire shortly after the attack has ended, which happens when no additional traffic has been matched to the rule.

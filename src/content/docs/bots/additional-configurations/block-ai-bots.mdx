@@ -1,0 +1,31 @@
+---
+pcx_content_type: reference
+title: Block AI Bots
+sidebar:
+  order: 8
+  label: Block AI Bots
+---
+
+import { Render, Tabs, TabItem } from "~/components"
+
+:::note[Block AI bots availability]
+Note that **Block AI bots** feature is only available in the new application security dashboard (beta).
+
+To try the new dashboard, refer to [Application security dashboard (beta)](/security/).
+:::
+
+You can choose to block AI bots by activating **Block AI bots**. Activating this setting will block [verified bots](/bots/concepts/bot/verified-bots/overview/) that are classified in AI-related categories such as AI Assistant, AI Crawler, or an Archiver, as well as a number of unverified bots that behave similarly.
+
+To block [AI bots](/bots/concepts/bot/#ai-bots):
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+2. Go to **Security** > **Settings**.
+3. Filter by **Bot traffic**.
+4. Go to **Block AI bots**.
+5. Under **Configurations**, select the edit icon. Choose from:
+   - **Only block on hostnames with ads**: Use this option if you wish to block AI bots only on portions of your site that show ads. Cloudflare automatically detects whether ads are present on a subdomain, and only block on hostnames that contain those ad units.
+   - **Block on all pages**: Use this option if you wish to block AI bots on all your pages.
+   - **Do not block (off)**: Use this option if you wish to allow AI bots on all your pages.
+6. Select **Save** to save your configuration.
+
+To block individual AI crawlers (rather than blocking all crawlers), use [AI Audit](/ai-audit/).

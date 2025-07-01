@@ -3,7 +3,7 @@ title: HTTP DDoS Attack Protection
 pcx_content_type: concept
 description: Explore HTTP DDoS Attack Protection rule categories, including botnets, unusual requests, and advanced features, to enhance your Cloudflare security.
 sidebar:
-  order: 3
+  order: 1
 head:
   - tag: title
     content: HTTP DDoS Attack Protection managed ruleset
@@ -19,7 +19,7 @@ The HTTP DDoS Attack Protection managed ruleset provides users with increased ob
 
 ## Ruleset configuration
 
-If you are expecting large spikes of legitimate traffic, consider customizing your DDoS protection settings to avoid [false positives](/ddos-protection/managed-rulesets/adjust-rules/false-positive/), where legitimate traffic is falsely identified as attack traffic and blocked/challenged.
+If you are expecting large spikes of legitimate traffic, consider customizing your DDoS protection settings to avoid [false positives](/ddos-protection/managed-rulesets/http/http-overrides/override-examples/#legitimate-traffic-is-incorrectly-identified-as-an-attack-and-causes-a-false-positive), where legitimate traffic is falsely identified as attack traffic and blocked/challenged.
 
 You can adjust the behavior of the rules in the managed ruleset by modifying the following parameters:
 
@@ -35,8 +35,8 @@ You can adjust the behavior of the rules in the managed ruleset by modifying the
 
 To adjust rule behavior, do one of the following:
 
-- [Configure the managed ruleset in the Cloudflare dashboard](/ddos-protection/managed-rulesets/http/configure-dashboard/).
-- [Configure the managed ruleset via API](/ddos-protection/managed-rulesets/http/configure-api/).
+- [Configure the managed ruleset in the Cloudflare dashboard](/ddos-protection/managed-rulesets/http/http-overrides/configure-dashboard/).
+- [Configure the managed ruleset via API](/ddos-protection/managed-rulesets/http/http-overrides/configure-api/).
 - [Configure the managed ruleset using Terraform](/terraform/additional-configurations/ddos-managed-rulesets/#example-configure-http-ddos-attack-protection).
 
 For more information on the available configuration parameters, refer to [Managed ruleset parameters](/ddos-protection/managed-rulesets/http/override-parameters/).
@@ -61,7 +61,7 @@ All HTTP errors in the 52x range (Internal Server Error) and all errors in the 5
 
 The HTTP DDoS Attack Protection managed ruleset protects Cloudflare customers on all plans for zones [onboarded to Cloudflare](/dns/zone-setups/full-setup/). All customers can customize the ruleset both at the zone level and at the account level.
 
-Customers on Enterprise plans with the Advanced DDoS Protection subscription can create up to 10 overrides (or up to 10 rules, for API users) with custom [expressions](/ddos-protection/managed-rulesets/http/override-expressions/), to customize the DDoS protection for different incoming requests.
+Customers on Enterprise plans with the Advanced DDoS Protection subscription can create up to 10 overrides (or up to 10 rules, for API users) with custom [expressions](/ddos-protection/managed-rulesets/http/http-overrides/override-expressions/), to customize the DDoS protection for different incoming requests.
 
 Other customers can only create one override (or rule) and they cannot customize the rule expression. In this case, the single override, containing one or more configurations, will always apply to all incoming traffic.
 

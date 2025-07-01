@@ -1,0 +1,32 @@
+---
+title: Set a pay per crawl price
+pcx_content_type: concept
+sidebar:
+  order: 10
+---
+
+import { Steps } from "~/components";
+
+```mermaid
+graph LR
+A[Set up your<br>Cloudflare Account] --> B[Connect to<br>Stripe]
+B --> C[Set pay per<br>crawl price]:::highlight
+C --> D[Select AI crawlers<br>to charge]
+D --> E[Monitor<br>metrics]
+classDef highlight fill:#F6821F,color:white
+```
+Once you have connected your Stripe account, you can set your pay per crawl price.
+
+{/* prettier-ignore */}
+<Steps>
+1. From the [Cloudflare dashboard](https://dash.cloudflare.com/), select your account and domain.
+2. Go to **AI Audit**.
+3. Go to the **Settings** tab.
+4. From **Pay Per Crawl**, select the **Edit** icon under **Pay Per Crawl price**.
+5. Enter the pay per crawl price you wish to set. Note that smallest unit of payment is 0.01 USD.
+6. Select **Save**.
+</Steps>
+
+:::note
+When you configure a pay per crawl price, AI Audit automatically sets the default action for all applicable AI crawlers as **Charge**.
+:::

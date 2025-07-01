@@ -5,6 +5,14 @@ productLink: "/radar/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-07-01"
+    title: Add Bots and Web Crawlers Endpoints
+    description: |-
+      * Added new [bots endpoints](/api/resources/radar/subresources/bots/), replacing the deprecated verified bots
+      endpoints. Use the following replacements:
+        * `/verified_bots/top/bots` → `/bots/summary/bot`
+        * `/verified_bots/top/categories` → `/bots/summary/bot_category`
+      * Added [web crawlers endpoints](/api/resources/radar/subresources/bots/subresources/web_crawlers/).
   - publish_date: "2025-03-20"
     title: Endpoint deprecations and new BGP real-time routes endpoint
     description: |-

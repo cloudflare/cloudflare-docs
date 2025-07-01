@@ -29,11 +29,7 @@ Create a new `Client` instance and pass the Hyperdrive `connectionString`:
 import { Client } from "pg";
 
 export default {
-	async fetch(
-		request: Request,
-		env: Env,
-		ctx: ExecutionContext,
-	): Promise<Response> {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
 		// Create a new client instance for each request.
 		const client = new Client({
 			connectionString: env.HYPERDRIVE.connectionString,

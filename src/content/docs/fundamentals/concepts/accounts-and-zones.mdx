@@ -6,6 +6,8 @@ sidebar:
 
 ---
 
+import { Render } from "~/components";
+
 Within the Cloudflare ecosystem, there are three organizing concepts that control where specific settings live: user profiles, accounts, and zones.
 
 ```mermaid
@@ -34,9 +36,7 @@ end
 
 ## User profiles
 
-Each user has a profile that contains several settings, such as [Communication preferences](/fundamentals/account/customize-account/#communication-preference/) and [Language preferences](/fundamentals/account/customize-account/#language-preference/).
-
-To access your profile, select the user icon and then **My Profile** from any page within the [Cloudflare dashboard](https://dash.cloudflare.com).
+<Render file="user-profiles" />
 
 ## Accounts
 
