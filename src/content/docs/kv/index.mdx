@@ -43,16 +43,16 @@ Access your Workers KV namespace from Cloudflare Workers using [Workers Bindings
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
 		// write a key-value pair
-		await env.KV_BINDING.put('KEY', 'VALUE');
+		await env.KV.put('KEY', 'VALUE');
 
 		// read a key-value pair
-		const value = await env.KV_BINDING.get('KEY');
+		const value = await env.KV.get('KEY');
 
 		// list all key-value pairs
-		const allKeys = await env.KV_BINDING.list();
+		const allKeys = await env.KV.list();
 
 		// delete a key-value pair
-		await env.KV_BINDING.delete('KEY');
+		await env.KV.delete('KEY');
 
 		// return a Workers response
 		return new Response(
@@ -63,7 +63,7 @@ export default {
 		);
 	},
 
-} satisfies ExportedHandler<{ KV_BINDING: KVNamespace }>;
+} satisfies ExportedHandler<{ KV: KVNamespace }>;
 
     ```
     </TabItem>
@@ -81,7 +81,7 @@ export default {
 
 	"kv_namespaces": [
 		{
-			"binding": "KV_BINDING",
+			"binding": "KV",
 			"id": "<YOUR_BINDING_ID>"
 		}
 	]
