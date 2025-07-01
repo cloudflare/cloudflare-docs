@@ -15,7 +15,7 @@ entries:
 
   - term: backup codes
     general_definition: |-
-      backup codes allow restoration of Cloudflare account access outside the normal [two-factor authentication process](/fundamentals/account/account-security/2fa/). A backup code becomes invalid after use.
+      backup codes allow restoration of Cloudflare account access outside the normal [two-factor authentication process](/fundamentals/user-profiles/2fa/). A backup code becomes invalid after use.
 
   - term: CIDR
     general_definition: |-
