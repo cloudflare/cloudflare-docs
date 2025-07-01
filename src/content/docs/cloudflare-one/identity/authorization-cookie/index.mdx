@@ -16,11 +16,11 @@ When you protect a site with Cloudflare Access, Cloudflare checks every HTTP req
 
 The `CF_Authorization` cookie contains the user's identity in the form of a JSON Web Token (JWT). Cloudflare securely creates these tokens through the OAUTH or SAML integration between Cloudflare Access and the configured identity provider.
 
-Two tokens are generated:
+Access generates two separate `CF_Authorization` tokens depending on the domain:
 
-- **Global session token**: a token generated when a user logs in to Access. This token is stored as a cookie at your <GlossaryTooltip term="team domain">team domain</GlossaryTooltip> (for example, `https://<your-team-name>.cloudflareaccess.com`) and prevents a user from needing to log in to each application.
+- **Global session token**: Generated when a user logs in to Access. This token is stored as a cookie at your <GlossaryTooltip term="team domain">team domain</GlossaryTooltip> (for example, `https://<your-team-name>.cloudflareaccess.com`) and prevents a user from needing to log in to each application.
 
-- [**Application token**](/cloudflare-one/identity/authorization-cookie/application-token/): a token generated for each application that a user reaches. This token is stored as a cookie on the protected domain (for example, `https://jira.site.com`) and may be used to [validate requests](/cloudflare-one/identity/authorization-cookie/validating-json) on your origin.
+- [**Application token**](/cloudflare-one/identity/authorization-cookie/application-token/): Generated for each application that a user reaches. This token is stored as a cookie on the protected domain (for example, `https://jira.site.com`) and may be used to [validate requests](/cloudflare-one/identity/authorization-cookie/validating-json) on your origin.
 
 ### Multi-domain applications
 
@@ -29,6 +29,19 @@ Cloudflare Access allows you to protect and manage multiple domains in a single 
 For Access applications with five or less domains, Access will preemptively set the cookie for all domains through a series of redirects. This allows single-page applications (SPAs) to retrieve data from other subdomains, even if the user has not explicitly visited those subdomains. Note that we cannot set cookies up-front for a wildcarded subdomain, because we do not know which concrete subdomain to redirect to (wildcarded paths are allowed).
 
 If the Access application has more than five domains, Access will not preemptively set any cookies. Cookies are only issued as the user visits each domain. This limitation is to avoid latency issues that could affect the user experience.
+
+## Access cookies
+
+The following Access cookies are essential to Access functionality. Cookies that are marked as required cannot be opted out of. The following cookies are not used for tracking or analytics.
+
+| Cookie                                                                                                     | Details                                                                                                                                                                                                                                                                                                                 | Expiration                                                                                                                                                                                                                                                                                                                  | HttpOnly                     | SameSite                     | Required? |
+| ---------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- | ---------------------------- | --------- |
+| [CF_Authorization](/cloudflare-one/identity/authorization-cookie/#access-jwts) (team domain)               | [JSON web token (JWT)](https://www.cloudflare.com/learning/access-management/token-based-authentication/) set on the `cloudflareaccess.com` [team domain](/cloudflare-one/faq/getting-started-faq/#what-is-a-team-domainteam-name) that contains the user's identity and enables Access to perform single sign-on (SSO) | If set, adheres to [global session duration](/cloudflare-one/identity/users/session-management/#global-session-duration).<br/><br/> If not, adheres to [application session duration](/cloudflare-one/identity/users/session-management/#application-session-duration).<br/><br/> If neither are set, defaults to 24 hours. | Yes                          | None                         | Required  |
+| [CF_Authorization](/cloudflare-one/identity/authorization-cookie/#access-jwts) (Access application domain) | [JSON web token (JWT)](https://www.cloudflare.com/learning/access-management/token-based-authentication/) set on the domain protected by Access that allows Access to confirm that the user has been authenticated and is authorized to reach the origin                                                                | If set, adheres to [policy session duration](/cloudflare-one/identity/users/session-management/#policy-session-duration).<br/><br/> If not, adheres to [application session duration](/cloudflare-one/identity/users/session-management/#application-session-duration).<br/><br/> If neither are set, defaults to 24 hours.  | Admin choice (Default: None) | Admin choice (Default: None) | Required  |
+| CF_Binding                                                                                                 | Refer to [Binding cookie](/cloudflare-one/identity/authorization-cookie/#binding-cookie)                                                                                                                                                                                                                                | If set, adheres to [policy session duration](/cloudflare-one/identity/users/session-management/#policy-session-duration).<br/><br/> If not, adheres to [application session duration](/cloudflare-one/identity/users/session-management/#application-session-duration).<br/><br/> If neither are set, defaults to 24 hours. | Yes                          | None                         | Optional  |
+| CF_Session                                                                                                 | [CSRF](https://www.cloudflare.com/learning/security/threats/cross-site-request-forgery/) token used on the `cloudflareaccess.com` [team domain](/cloudflare-one/faq/getting-started-faq/#what-is-a-team-domainteam-name)                                                                                                | 4 hours                                                                                                                                                                                                                                                                                                                     | Yes                          | None                         | Required  |
+| CF_AppSession                                                                                              | [CSRF](https://www.cloudflare.com/learning/security/threats/cross-site-request-forgery/) token used per application domain, scoped to individual applications behind Access                                                                                                                                             | 24 hours                                                                                                                                                                                                                                                                                                                    | Yes                          | None                         | Required  |
+| CF_Device                                                                                                  | Cookie used to help prevent abuse of the [Access OTP flow](https://developers.cloudflare.com/cloudflare-one/identity/one-time-pin/)                                                                                                                                                                                     | 30 days                                                                                                                                                                                                                                                                                                                     | Yes                          | Strict                       | Required  |
 
 ## Cookie settings
 
@@ -53,7 +66,7 @@ To enable these settings:
 
 ### SameSite Attribute
 
-The [SameSite](https://web.dev/samesite-cookies-explained/) Attribute selector restricts the cookie to only being sent if the cookie's defined site matches the site being requested in the browser. This adds protection against [cross-site request forgery (CSRF)](https://en.wikipedia.org/wiki/Cross-site_request_forgery).
+The [`SameSite`](https://web.dev/samesite-cookies-explained/) Attribute selector restricts the cookie to only being sent if the cookie's defined site matches the site being requested in the browser. This adds protection against [cross-site request forgery (CSRF)](https://en.wikipedia.org/wiki/Cross-site_request_forgery).
 
 The selector options are:
 
@@ -65,22 +78,24 @@ Refer to the [Mozilla documentation](https://developer.mozilla.org/en-US/docs/We
 
 #### When not to use SameSite
 
-Do not enable SameSite restrictions if you have additional sites or applications that rely on a specific application's authorization cookie.
+Do not enable `SameSite` restrictions if you have additional sites or applications that rely on a specific application's authorization cookie.
 
 ### HttpOnly
 
-The HttpOnly flag is a cookie attribute that prevents the cookie from being accessed by any client-side scripts, reducing the likelihood of Cross-Site Scripting (XSS) attacks. This flag is enabled by default.
+The `HttpOnly` flag is a cookie attribute that prevents the cookie from being accessed by any client-side scripts, reducing the likelihood of Cross-Site Scripting (XSS) attacks. This flag is enabled by default.
 
 #### When not to use HttpOnly
 
-Do not enable HttpOnly if:
+Do not enable `HttpOnly` if:
 
 - You are using the Access application for non-browser based tools (such as SSH or RDP).
 - You have software that relies on being able to access a user's cookie generated by Access.
 
-### Binding Cookie
+### Binding cookie
 
-The Binding Cookie is an additional cookie created when a user successfully authenticates, shared with Cloudflare to verify identity, and then stripped before it reaches the origin server. The Binding Cookie associates the browser with the Access token; the association protects against compromised authorization tokens because the origin webapp would never see this binding cookie. This protects against session hijack style attacks.
+The binding cookie (`CF_Binding`) is an optional cookie issued when a user successfully authenticates. The binding cookie is sent by the user’s browser and tied to a specific application’s `CF_Authorization` cookie. This cookie is stripped at Cloudflare's edge and never forwarded to the origin server.
+
+Binding cookies protect users' `CF_Authorization` cookies from possible malicious origins. If a request arrives to Cloudflare's network without the expected binding cookie, Cloudflare rejects the `CF_Authorization` cookie.
 
 #### When not to use Binding Cookie
 

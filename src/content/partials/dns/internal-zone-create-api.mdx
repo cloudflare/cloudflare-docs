@@ -3,9 +3,9 @@ params:
   - conditional?
 ---
 
-import { Details, Render } from "~/components";
+import { Details, Render, APIRequest } from "~/components";
 
-1. Use the [Create Zone](/api/resources/zones/) endpoint to create an [internal zone](/dns/internal-dns/internal-zones/). Specify your account ID and set the `type` to `internal`.
+1. Use the [Create Zone](/api/resources/zones/methods/create/) endpoint to create an [internal zone](/dns/internal-dns/internal-zones/). Specify your account ID and set the `type` to `internal`.
 
 { props.conditional === "get-started-detail" && (
 <Details header="Internal zone configuration conditions">
@@ -13,6 +13,20 @@ import { Details, Render } from "~/components";
 </Details>
 	)
 }
+
+<Details header="Example">
+<APIRequest
+  path="/zones"
+	method="POST"
+	json={{
+		"account": {
+			"id": "<ACCOUNT_ID>",
+			},
+		"name": "<ZONE_NAME>",
+		"type": "internal"
+		}}
+/>
+</Details>
 
 2. Add DNS records to your internal zone using your preferred option:
 - [Import](/api/resources/dns/subresources/records/methods/import/) a formatted BIND file. Refer to the [DNS records how-to](/dns/manage-dns-records/how-to/import-and-export/) for guidance.

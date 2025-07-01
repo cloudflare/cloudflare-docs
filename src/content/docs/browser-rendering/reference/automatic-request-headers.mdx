@@ -5,15 +5,19 @@ sidebar:
   order: 2
 ---
 
-When using the [REST API](/browser-rendering/rest-api/) to fetch content via Browser Rendering, Cloudflare adds the following headers to outbound requests made to the target URL:
+Cloudflare automatically attaches headers to every [REST API](/browser-rendering/rest-api/) request made through Browser Rendering. These headers make it easy for destination servers to identify that these requests came from Cloudflare.
+
+:::note[Note]
+
+These headers are meant to ensure transparency and cannot be removed or overridden (with `setExtraHTTPHeaders`, for example).
+
+:::
 
 | Header               | Description                                                                         |
 | -------------------- | ----------------------------------------------------------------------------------- |
 | `cf-biso-request-id` | A unique identifier for the Browser Rendering request                               |
 | `cf-biso-devtools`   | A flag indicating the request originated from Cloudflare's rendering infrastructure |
+| `Signature-agent`    | [The location of the bot public keys](https://web-bot-auth.cloudflare-browser-rendering-085.workers.dev), used to sign the request and verify it came from Cloudflare                                       |
+| `Signature` and `Signature-input`| A digital signature, used to validate requests, as shown in [this architecture document](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture)                     |
 
-:::note[Note]
-
-These headers are unique to Browser Rendering and are automatically included and cannot be removed or overridden (such as via `setExtraHTTPHeaders`). They are intended to ensure transparency, allowing destination servers to identify traffic as coming from Cloudflare Browser Rendering.
-
-:::
+The `Signature` headers use an authentication method called [Web Bot Auth](/bots/concepts/bot/verified-bots/web-bot-auth/). Web Bot Auth leverages cryptographic signatures in HTTP messages to verify that a request comes from an automated bot. To verify a request originated from Cloudflare Browser Rendering, use the keys found on [this directory](https://web-bot-auth.cloudflare-browser-rendering-085.workers.dev/.well-known/http-message-signatures-directory) to verify the `Signature` and `Signature-Input` found in the headers from the incoming request. A successful verification proves that the request originated from Cloudflare Browser Rendering and has not been tampered with in transit.

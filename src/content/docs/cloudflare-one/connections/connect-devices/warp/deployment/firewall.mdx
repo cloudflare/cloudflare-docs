@@ -21,7 +21,7 @@ The WARP client connects to Cloudflare via a standard HTTPS connection outside t
 Only required for [Gateway with DoH](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-doh) mode.
 :::
 
-In [Gateway with DoH](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-doh) mode, the WARP client sends DNS requests to Gateway over an HTTPS connection outside the tunnel. For DNS to work correctly, you must allow `<ACCOUNT_ID>.cloudflare-gateway.com` which will lookup the following IPs:
+In [Gateway with DoH](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-doh) mode, the WARP client sends DNS requests to Gateway over an HTTPS connection. For DNS to work correctly, you must allow `<ACCOUNT_ID>.cloudflare-gateway.com` which will lookup the following IPs:
 
 - IPv4 DoH Addresses: `162.159.36.1` and `162.159.46.1`
 - IPv6 DoH Addresses: `2606:4700:4700::1111` and `2606:4700:4700::1001`
@@ -129,6 +129,14 @@ If your organization does not currently allow inbound/outbound communication ove
       `/Applications/Cloudflare WARP.app/Contents/MacOS/Cloudflare WARP` (Path)
 
       `com.cloudflare.1dot1dot1dot1dot1.macos` (Bundle ID)
+
+  :::caution
+
+  Due to changes in macOS Sequoia version 15.0 and 15.0.1., you must update your macOS firewall settings to allow the WARP client to manage your device's firewall.
+
+  To ensure proper functionality, disable the [Block all incoming connections](https://support.apple.com/guide/mac-help/change-firewall-settings-on-mac-mh11783/mac) option in your macOS firewall settings.
+
+  :::
 
 ### Optional scopes
 
