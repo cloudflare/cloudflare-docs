@@ -4,10 +4,10 @@ title: SCIM provisioning
 
 ---
 
-Cloudflare supports bulk provisioning of users into the Cloudflare dashboard by using the System for Cross-domain Identity Management (SCIM) protocol. This allows you to connect your external identity provider (IdP) to Cloudflare, quickly onboard and manage user permissions. Currently, SCIM provisioning is supported with Okta and Microsoft Entra.
+Cloudflare supports bulk provisioning of users into the Cloudflare dashboard by using the System for Cross-domain Identity Management (SCIM) protocol. This allows you to connect an external identity provider (IdP) to Cloudflare, quickly onboard and manage user permissions. Currently, SCIM provisioning has been integrated with Okta and Microsoft Entra.
 
 :::note
-This section covers SCIM provisioning for the Cloudflare dashboard only. If you need to provision SCIM for Cloudflare Zero Trust, refer to [Zero Trust SCIM provisioning](/cloudflare-one/identity/users/scim/).
+This section covers SCIM provisioning for the Cloudflare dashboard. If you need to provision SCIM for Cloudflare Zero Trust, refer to [Zero Trust SCIM provisioning](/cloudflare-one/identity/users/scim/).
 :::
 
 ## Expected behaviors
@@ -28,16 +28,16 @@ Expectations for user lifecycle management with SCIM:
 
 ## Prerequisites
 
-- Cloudflare provisioning with SCIM is only available to Enterprise customers using Okta or Microsoft Entra.
-- You must be a [Super Administrator](/fundamentals/manage-members/roles/) of the account.
-- In your identity provider, you must have the ability to create applications and groups.
+- Cloudflare dashboard SCIM provisioning is only available to Enterprise customers using Okta or Microsoft Entra.
+- You must be a [Super Administrator](/fundamentals/manage-members/roles/) for the initial setup.
+- In the identity provider, you must have the ability to create applications and groups.
 
 ---
 ## Gather the required data
 
 To start, you will need to collect a couple of pieces of data from Cloudflare and set these aside for later use.
 
-### Get your Account ID
+### Get the Account ID
 
 The account ID can be found via dashboard or API. For more information, refer to [Find account and zone IDs](/fundamentals/account/find-account-and-zone-ids/).
 
@@ -51,7 +51,7 @@ The account ID can be found via dashboard or API. For more information, refer to
 
    :::note
 
-   Account Owned API Tokens are recommended for SCIM Provisioning. Using user-specific API tokens, while supported, will lead to a broken SCIM connection in the event that the user's policies are revoked from the account with the SCIM integration, or the [API access](/fundamentals/api/how-to/control-api-access/) is unexpected disabled. Learn more about [account owned tokens](/fundamentals/api/get-started/account-owned-tokens/).
+   Account owned API tokens are recommended for SCIM Provisioning. User owned API tokens, while supported, will lead to a broken SCIM connection in the event when the user's policies are revoked from the account with the SCIM integration, or the [API access](/fundamentals/api/how-to/control-api-access/) is unexpectedly disabled. Learn more about [account owned tokens](/fundamentals/api/get-started/account-owned-tokens/).
    :::
 
 2. Under **Account Resources**, select the specific account to include or exclude from the dropdown menu, if applicable.
