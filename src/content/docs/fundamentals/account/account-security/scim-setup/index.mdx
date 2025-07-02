@@ -15,7 +15,7 @@ This section covers SCIM provisioning for the Cloudflare dashboard. If you need 
 Once the SCIM provisioning is enabled:
 
 1. A Cloudflare account can receive user group provisioning from the identity provider.
-2. Members of each user group can be assigned one or more policies. Each policy defines one or more roles to be applied to all group members thereof.
+2. Members of each user group can be assigned one or more [policies](/fundamentals/manage-members/policies/). Each policy defines one or more [roles](https://developers.cloudflare.com/fundamentals/manage-members/roles/) applied to all group members thereof.
 3. Members can belong to multiple user groups, each group can also be configured with different policies.
 4. Policies provisioned via SCIM can coexist with policies configured via the [traditional setup](/fundamentals/manage-members/manage/#edit-member-permissions).
 
@@ -38,7 +38,7 @@ Expectations for user lifecycle management with SCIM:
 ## Prerequisites
 
 - Cloudflare dashboard SCIM provisioning is only available to Enterprise customers using Okta or Microsoft Entra.
-- You must be a [Super Administrator](/fundamentals/manage-members/roles/) for the initial setup.
+- You must be a Super Administrator for the initial setup.
 - In the identity provider, you must have the ability to create applications and groups.
 
 ---
