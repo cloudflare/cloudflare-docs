@@ -524,10 +524,10 @@ When you are ready to connect your Magic WAN Connector to the Cloudflare network
 		text={`
 		1. Connect Magic WAN Connector to a DHCP port with access to the Internet.
 		2. [Add a Connector on-ramp](#add-a-connector-on-ramp) in the Cloudflare dashboard.
-		3. Create a [DHCP WAN](#2-create-a-wan).
+		3. Create a [DHCP WAN](#create-a-wan).
 		4. [Activate](#activate-connector) and power on your Connector.
 		5. Wait 60 seconds.
-		6. Make changes to the [WAN settings](#2-create-a-wan) in the Cloudflare dashboard to a static IP set up.
+		6. Make changes to the [WAN settings](#create-a-wan) in the Cloudflare dashboard to a static IP set up.
 		7. Wait 60 seconds again.
 		8. Magic WAN Connector will go offline. This is normal and expected behavior.
 		9. Adjust your physical connections as required to match the static configuration.
@@ -549,10 +549,10 @@ When you are ready to connect your Magic WAN Connector to the Cloudflare network
 		text={`
 		1. Connect the machine where you installed the VM with Virtual Connector to a DHCP port with access to the Internet.
 		2. [Add a Connector on-ramp](#add-a-connector-on-ramp) in the Cloudflare dashboard.
-		3. Create a [DHCP WAN](#2-create-a-wan).
+		3. Create a [DHCP WAN](#create-a-wan).
 		4. [Activate](#activate-connector) and boot your Virtual Connector.
 		5. Wait 60 seconds.
-		6. Make changes to the [WAN settings](#2-create-a-wan) in the Cloudflare dashboard to a static IP set up.
+		6. Make changes to the [WAN settings](#create-a-wan) in the Cloudflare dashboard to a static IP set up.
 		7. Wait 60 seconds again.
 		8. Modify your [Port Groups](#deploy-the-virtual-connector-on-vmware) as needed to change the source from which the WAN port obtains its IP address.
 		9. Reboot your virtual machine.
@@ -713,7 +713,7 @@ To set up a high availability configuration:
 5. From the list, choose your first Connector > **Add Connector**.
 6. Back on the previous screen, select **Add secondary Connector**.
 7. From the list, choose your second Connector > **Add Connector**.
-8. Select **Continue** to [Create a WAN](#2-create-a-wan). If you are configuring a static IP, configure the IP for the primary node as the static address, and the IP for the secondary node as the secondary static address.
+8. Select **Continue** to [Create a WAN](#create-a-wan). If you are configuring a static IP, configure the IP for the primary node as the static address, and the IP for the secondary node as the secondary static address.
 9. To create a LAN, follow the steps mentioned above in [Create a LAN](#3-create-a-lan) up until step 4.
 10. In **Static address**, enter the IP for the primary node in your site. For example, `192.168.10.1/24`.
 11. In **Secondary static address**, enter the IP for the secondary node in your site. For example, `192.168.10.2/24`.
