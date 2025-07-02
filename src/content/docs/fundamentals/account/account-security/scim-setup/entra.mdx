@@ -14,7 +14,7 @@ Once you have [gathered the required data](/fundamentals/account/account-securit
 ## Set up the Enterprise application
 
 1. Go to the Entra admin center, select **Applications** > **Enterprise Applications**.
-2. Select **New application** > **Create your own application**, then choose a name.
+2. In the Microsoft Entra Gallery, select **New application** > **Create your own application**, then choose a name.
 3. Select **"Integrate any other application you don't find in the gallery (Non-gallery)"**.
 4. **Create** an application.
 
@@ -25,25 +25,25 @@ Once you have [gathered the required data](/fundamentals/account/account-securit
 3. Paste the SCIM provisioning API token value as **Secret token**.
 4. Select **Test Connection**, then **Save** the configuration.
 
-## Configure user & group synchronization in Microsoft Entra ID application
+## Configure user & group synchronization
 
-1. Navigate to the application just created, under **Manage** on the sidebar menu, select **Provisioning**.
-2. Once the SCIM application is created, [assign users and groups to the application](https://learn.microsoft.com/entra/identity/enterprise-apps/assign-user-or-group-access-portal).
-3. After the users are assigned, begin syncing your Users & Groups into Cloudflare by select **Provisioning** > **Start Provisioning**.
+1. Navigate to the application just created, under **Manage** on the sidebar menu, select **Users and groups**.
+2. [Assign users and groups to the application](https://learn.microsoft.com/entra/identity/enterprise-apps/assign-user-or-group-access-portal).
+3. After the users are assigned, navigate to **Provisioning** on the sidebar menu and select **Start Provisioning**.
 
 :::note
 To successfully synchronize the group details into Cloudflare:
-1. The `User Principal Name` (of `Identity`) and `Email` (of `Contact Information`) fields must match of the same group member. These values are case-sensitive. Learn more about [how to create, invite, and delete users](https://learn.microsoft.com/entra/fundamentals/how-to-create-delete-users).
+1. The `User Principal Name` (of `Identity`) and `Email` (of `Contact Information`) fields of each user must be identical (values are case-sensitive). Learn more about [how to create, invite, and delete users](https://learn.microsoft.com/entra/fundamentals/how-to-create-delete-users).
 2. User Principal Name should only contain alphanumeric characters.
 :::
 
-4. To validate which users and groups have been synchronized, navigate to **Provisioning logs** in Microsoft Entra. You can also [review the Cloudflare Audit Logs](/fundamentals/account/account-security/review-audit-logs/).
+3. To validate which users and groups have been synchronized, navigate to **Provisioning logs** on the sidebar menu. You can also [review the Cloudflare Audit Logs](/fundamentals/account/account-security/review-audit-logs/).
 
-:::caution[Group name]
-If the Entra group shares the same name of a Cloudflare user group, the Cloudflare user group will become read-only after the provisioning.
+:::caution[Read-only group]
+If the Entra group shares the same name of an existing Cloudflare user group, the Cloudflare user group will become read-only after the provisioning.
 :::
 
-5. To grant permissions to Users & Groups in Cloudflare, refer to [Roles](/fundamentals/manage-members/roles/) and [Policies](/fundamentals/manage-members/policies/).
+4. To grant permissions to users & groups at Cloudflare, refer to [Roles](/fundamentals/manage-members/roles/) and [Policies](/fundamentals/manage-members/policies/).
 
 ## (Optional) Automate Cloudflare's SCIM integration
 
