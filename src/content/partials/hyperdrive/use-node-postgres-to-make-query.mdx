@@ -44,7 +44,7 @@ export default {
 			const result = await client.query("SELECT * FROM pg_tables");
 
 			// Clean up the client after the response is returned, before the Worker is killed
-			env.waitUntil(client.end());
+			ctx.waitUntil(client.end());
 
 			return Response.json({
 				success: true,

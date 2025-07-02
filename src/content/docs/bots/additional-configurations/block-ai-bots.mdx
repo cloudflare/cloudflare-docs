@@ -6,7 +6,7 @@ sidebar:
   label: Block AI Bots
 ---
 
-import { Render, Tabs, TabItem } from "~/components"
+import { Render, Steps } from "~/components"
 
 :::note[Block AI bots availability]
 Note that **Block AI bots** feature is only available in the new application security dashboard (beta).
@@ -18,7 +18,8 @@ You can choose to block AI bots by activating **Block AI bots**. Activating this
 
 To block [AI bots](/bots/concepts/bot/#ai-bots):
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+<Steps>
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **Settings**.
 3. Filter by **Bot traffic**.
 4. Go to **Block AI bots**.
@@ -27,5 +28,6 @@ To block [AI bots](/bots/concepts/bot/#ai-bots):
    - **Block on all pages**: Use this option if you wish to block AI bots on all your pages.
    - **Do not block (off)**: Use this option if you wish to allow AI bots on all your pages.
 6. Select **Save** to save your configuration.
+</Steps>
 
 To block individual AI crawlers (rather than blocking all crawlers), use [AI Audit](/ai-audit/).

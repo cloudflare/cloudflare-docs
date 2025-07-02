@@ -6,7 +6,7 @@ sidebar:
   label: Managed robots.txt
 ---
 
-import { Render, Tabs, TabItem } from "~/components";
+import { Render, Tabs, TabItem, Steps } from "~/components";
 
 Protect your website or application from AI crawlers by implementing a `robots.txt` file on your domain to direct AI bot operators on what content they can and cannot scrape for AI model training.
 
@@ -45,27 +45,26 @@ If your website does not have a `robots.txt` file, Cloudflare creates a new file
 
 ## Implementation
 
-To implement a `robots.txt` file on your domain based on your plan:
+To implement a `robots.txt` file on your domain:
 
-<Tabs>
-	<TabItem label="Bot Fight Mode">
-		<Render
-			file="enable-managed-robots-txt"
-			params={{ one: "Bot Fight Mode" }}
-		/>
-	</TabItem>
-	<TabItem label="Super Bot Fight Mode">
-		<Render
-			file="enable-managed-robots-txt"
-			params={{ one: "Super Bot Fight Mode" }}
-		/>
-	</TabItem>
-	<TabItem label="Bot Management for Enterprise">
-		<Render
-			file="enable-managed-robots-txt"
-			params={{ one: "Bot Management" }}
-		/>
-	</TabItem>
+<Tabs syncKey="dashNewNav"> 
+	<TabItem label="Old dashboard">
+		<Steps>
+			<Render
+				file="enable-managed-robots-txt"
+				params={{ one: "Bot Fight Mode" }}
+			/>
+		</Steps>
+	</TabItem> 
+	<TabItem label="New dashboard" icon="rocket">
+		<Steps>
+			1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
+			2. Go to **Security** > **Settings**.
+			3. Filter by **Bot traffic**.
+			4. Go to **Managed robots.txt**. 
+			5. Turn **Managed robots.txt** on.
+		</Steps>
+	</TabItem> 
 </Tabs>
 
 ## Availability
