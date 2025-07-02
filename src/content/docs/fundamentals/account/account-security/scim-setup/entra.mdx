@@ -28,7 +28,7 @@ Once you have [gathered the required data](/fundamentals/account/account-securit
 ## Configure user & group synchronization in Microsoft Entra ID application
 
 1. Navigate to the application just created, under **Manage** on the sidebar menu, select **Provisioning**.
-2. Once the SCIM application is created, [assign users and groups to the application](https://learn.microsoft.com/en-us/entra/identity/enterprise-apps/assign-user-or-group-access-portal?pivots=portal).
+2. Once the SCIM application is created, [assign users and groups to the application](https://learn.microsoft.com/entra/identity/enterprise-apps/assign-user-or-group-access-portal).
 3. After the users are assigned, begin syncing your Users & Groups into Cloudflare by select **Provisioning** > **Start Provisioning**.
 
 :::note
@@ -47,7 +47,7 @@ If the Entra group shares the same name of a Cloudflare user group, the Cloudfla
 
 ## (Optional) Automate Cloudflare's SCIM integration
 
-Cloudflare's SCIM integration requires one external application per account. Customers with many accounts may want to automate part of the setup to save time and reduce the amount of time spent in the Entra administrative UI.
+Cloudflare's SCIM integration requires one external application per account. Customers with multiple accounts may want to automate part of the setup to save time and reduce the amount of time spent in the Entra administrative UI.
 
 The initial setup of creating the non-gallery applications and adding the provisioning URL and API key are scriptable via API, but the rest of the setup is dependent on your specific need and IDP configuration.
 
