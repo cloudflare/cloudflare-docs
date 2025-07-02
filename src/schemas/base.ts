@@ -1,7 +1,7 @@
 import { z } from "astro:schema";
 import type { SchemaContext } from "astro:content";
 
-import { sidebar } from "./types/sidebar";
+import { sidebar, SidebarIconSchema } from "./types/sidebar";
 
 const spotlightAuthorDetails = z
 	.object({
@@ -97,7 +97,13 @@ export const baseSchema = ({ image }: SchemaContext) =>
 			.boolean()
 			.optional()
 			.describe(
-				"If true, this property adds a `noindex` declaration to the page, which will tell internal / external search crawlers to ignore this page. Helpful for pages that are historically accurate, but no longer recommended, such as [Workers Sites](/workers/configuration/sites/).",
+				"If true, this property adds a `noindex` declaration to the page, which will tell internal / external search crawlers to ignore this page. Helpful for pages that are historically accurate, but no longer recommended, such as [Workers Sites](/workers/configuration/sites/). Companion to the `chatbot_deprioritize` property.",
+			),
+		chatbot_deprioritize: z
+			.boolean()
+			.optional()
+			.describe(
+				"If true, this property will de-prioritize this page in the responses surfaced by Support AI. Helpful for pages that are historically accurate, but no longer recommended, such as [Workers Sites](/workers/configuration/sites/). Companion to the `noindex` property.",
 			),
 		sidebar,
 		hideChildren: z
@@ -112,4 +118,23 @@ export const baseSchema = ({ image }: SchemaContext) =>
 			})
 			.optional()
 			.describe("Used by overrides for style guide component documentation"),
+		banner: z
+			.object({
+				content: z.string(),
+				type: z
+					.enum(["default", "note", "tip", "caution", "danger"])
+					.optional()
+					.default("default"),
+				dismissible: z
+					.object({ id: z.string(), days: z.number().optional().default(7) })
+					.optional(),
+			})
+			.optional(),
+		icon: SidebarIconSchema(),
+		feedback: z
+			.boolean()
+			.default(true)
+			.describe(
+				"Whether to show the FeedbackPrompt on the page, defaults to true",
+			),
 	});

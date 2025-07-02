@@ -1,0 +1,32 @@
+---
+pcx_content_type: get-started
+title: TURN Feature Matrix
+sidebar:
+  order: 18
+
+---
+
+## TURN client to TURN server protocols
+
+| Protocol | Support | Relevant specification                                                                                    |
+| -------- | ------- | --------------------------------------------------------------------------------------------------------- |
+| UDP      | ✅       | [RFC 5766](https://datatracker.ietf.org/doc/html/rfc5766)                                                 |
+| TCP      | ✅       | [RFC 5766](https://datatracker.ietf.org/doc/html/rfc5766)                                                 |
+| TLS      | ✅       | [RFC 5766](https://datatracker.ietf.org/doc/html/rfc5766)                                                 |
+| DTLS     | No      | [draft-petithuguenin-tram-turn-dtls-00](http://tools.ietf.org/html/draft-petithuguenin-tram-turn-dtls-00) |
+
+## TURN client to TURN server protocols
+
+| Protocol                                        | Support                                                                                                                        | Relevant specification                                                                                               |
+| ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------- |
+| TURN (base RFC)                                 | ✅                                                                                                                              | [RFC 5766](https://datatracker.ietf.org/doc/html/rfc5766)                                                            |
+| TURN REST API                                   | ✅ (See [FAQ](/realtime/turn/faq/#does-cloudflare-realtime-turn-support-the-expired-ietf-rfc-draft-draft-uberti-behave-turn-rest-00)) | [draft-uberti-behave-turn-rest-00](http://tools.ietf.org/html/draft-uberti-behave-turn-rest-00)                      |
+| Origin field in TURN (Multi-tenant TURN Server) | ✅                                                                                                                              | [draft-ietf-tram-stun-origin-06](https://tools.ietf.org/html/draft-ietf-tram-stun-origin-06)                         |
+| ALPN support for STUN & TURN                    | ✅                                                                                                                              | [RFC 7443](https://datatracker.ietf.org/doc/html/rfc7443)                                                            |
+| TURN Bandwidth draft specs                      | No                                                                                                                             | [draft-thomson-tram-turn-bandwidth-01](http://tools.ietf.org/html/draft-thomson-tram-turn-bandwidth-01)              |
+| TURN-bis (with dual allocation) draft specs     | No                                                                                                                             | [draft-ietf-tram-turnbis-04](http://tools.ietf.org/html/draft-ietf-tram-turnbis-04)                                  |
+| TCP relaying TURN extension                     | No                                                                                                                             | [RFC 6062](https://datatracker.ietf.org/doc/html/rfc6062)                                                            |
+| IPv6 extension for TURN                         | No                                                                                                                             | [RFC 6156](https://datatracker.ietf.org/doc/html/rfc6156)                                                            |
+| oAuth third-party TURN/STUN authorization       | No                                                                                                                             | [RFC 7635](https://datatracker.ietf.org/doc/html/rfc7635)                                                            |
+| DTLS support (for TURN)                         | No                                                                                                                             | [draft-petithuguenin-tram-stun-dtls-00](https://datatracker.ietf.org/doc/html/draft-petithuguenin-tram-stun-dtls-00) |
+| Mobile ICE (MICE) support                       | No                                                                                                                             | [draft-wing-tram-turn-mobility-02](http://tools.ietf.org/html/draft-wing-tram-turn-mobility-02)                      |

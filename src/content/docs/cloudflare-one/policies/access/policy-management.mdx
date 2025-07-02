@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Tabs, TabItem } from "~/components";
+import { Tabs, TabItem, APIRequest } from "~/components";
 
 Access policies define the users who can log in to your Access applications. You can create, edit, or delete policies at any time and reuse policies across multiple applications.
 
@@ -50,7 +50,7 @@ To delete a reusable Access policy:
 
 You can test your Access policies against all existing user identities in your Zero Trust organization.  For the policy tester to work, users must have logged into the [App Launcher](/cloudflare-one/applications/app-launcher/) or any other Access application at some point in time.
 
-Cloudflare will use the most recent device that was authenticated with Access to test your policies. 
+Cloudflare will use the most recent device that was authenticated with Access to test your policies.
 
 ### Test a single policy
 
@@ -78,8 +78,11 @@ To test if users have access to an application:
 		The policy tester reports the percentage of users who are allowed or denied access to this application based on all configured policies. You can expand the test results to view a list of allowed or blocked users.
 
 5. To perform a detailed test on a single user:
+
 	a. If you made any changes to your policies, first save the application.
+
 	b. Select **testing a single user**.
+
 	c. Enter their email address and select **Test policies**.
 
 	The single user test results will show:
@@ -104,10 +107,9 @@ To migrate legacy policies to reusable policies:
 
 You can use the API to convert a legacy policy into a reusable policy. To convert a legacy policy, make a `PUT` request with an empty request body:
 
-```bash
-curl --request PUT \
-https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/apps/$APP_ID/policies/$POLICY_ID/make_reusable \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
-```
+<APIRequest
+  path="/accounts/{account_id}/access/apps/{app_id}/policies/{policy_id}/make_reusable"
+  method="PUT"
+/>
 
 The policy is now removed from the applications endpoint (`/access/apps/$APP_ID/policies`) and managed using the [reusable policies endpoints](/api/resources/zero_trust/subresources/access/subresources/policies/)(`/access/policies/$POLICY_ID`).

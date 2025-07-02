@@ -22,19 +22,27 @@ jobs:
       - uses: actions/cache/restore@v4
         with:
           path: |
-            node_modules/.astro
+            node_modules/.astro/assets
           key: static
       - run: npm run build
         name: Build
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_OPTIONS: --max-old-space-size=4096
       - run: npx wrangler deploy
         name: Deploy to Cloudflare Workers
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      - name: Build vendored Markdown archive
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          npx tsx bin/generate-index-md.ts
+          cd distmd && zip -r markdown.zip .
+          npx wrangler r2 object put vendored-markdown/markdown.zip --file=markdown.zip --remote
       - uses: actions/cache/save@v4
         if: always()
         with:
           path: |
-            node_modules/.astro
+            node_modules/.astro/assets
           key: static

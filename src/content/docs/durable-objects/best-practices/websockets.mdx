@@ -1,5 +1,5 @@
 ---
-title: Using WebSockets
+title: Use WebSockets
 pcx_content_type: concept
 sidebar:
   order: 5
@@ -9,12 +9,12 @@ import { Tabs, TabItem, GlossaryTooltip, Type } from "~/components";
 
 This guide covers how to use Durable Objects as WebSocket servers that can connect thousands of clients (per instance), as well as a WebSocket client to connect to other servers or even Durable Objects.
 
-There are two sets of WebSockets API 
+There are two sets of WebSockets API:
 
-1. Native Durable Object WebSocket API, which allows your Durable Object to hibernate without disconnecting clients when not actively doing work  **(recommended)**
+1. Native Durable Object WebSocket API, which allows your Durable Object to hibernate without disconnecting clients when not actively doing work **(recommended)**.
 2. Web Standard WebSocket APIs, using the familiar `addEventListener` event pattern.
 
-### What are WebSockets? 
+### What are WebSockets?
 
 WebSockets are long-lived TCP connections that enable bi-directional, real-time communication between client and server. Both Cloudflare Durable Objects and Workers can act as WebSocket endpoints – either as a client or as a server. Because WebSocket sessions are long-lived, applications commonly use Durable Objects to accept either the client or server connection. While there are other use cases for using Workers exclusively with WebSockets, for example proxying WebSocket messages, WebSockets are most useful when combined with Durable Objects.
 
@@ -138,7 +138,7 @@ export class WebSocketHibernationServer extends DurableObject {
 
 </TabItem> </Tabs>
 
-Similar to the WebSocket Standard API example, to execute this code, configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/tutorial/#5-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the <GlossaryTooltip term="namespace">namespace</GlossaryTooltip> and class name chosen previously.
+Similar to the WebSocket Standard API example, to execute this code, configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/#4-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the <GlossaryTooltip term="namespace">namespace</GlossaryTooltip> and class name chosen previously.
 
 ```toml title="wrangler.toml"
 name = "websocket-hibernation-server"
@@ -149,7 +149,7 @@ class_name = "WebSocketHibernationServer"
 
 [[migrations]]
 tag = "v1"
-new_classes = ["WebSocketHibernationServer"]
+new_sqlite_classes = ["WebSocketHibernationServer"]
 ```
 
 A full example can be found in [Build a WebSocket server with WebSocket Hibernation](/durable-objects/examples/websocket-hibernation-server/).
@@ -379,7 +379,7 @@ export class WebSocketServer extends DurableObject {
 
 </TabItem> </Tabs>
 
-To execute this code, configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/tutorial/#5-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the <GlossaryTooltip term="namespace">namespace</GlossaryTooltip> and class name chosen previously.
+To execute this code, configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/#4-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the <GlossaryTooltip term="namespace">namespace</GlossaryTooltip> and class name chosen previously.
 
 ```toml title="wrangler.toml"
 name = "websocket-server"
@@ -390,7 +390,7 @@ class_name = "WebSocketServer"
 
 [[migrations]]
 tag = "v1"
-new_classes = ["WebSocketServer"]
+new_sqlite_classes = ["WebSocketServer"]
 ```
 
 A full example can be found in [Build a WebSocket server](/durable-objects/examples/websocket-server/).

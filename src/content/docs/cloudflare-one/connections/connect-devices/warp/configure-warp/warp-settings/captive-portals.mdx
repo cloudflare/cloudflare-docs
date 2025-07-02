@@ -5,6 +5,8 @@ sidebar:
   order: 3
 ---
 
+import { Details, Badge } from "~/components";
+
 Captive portals are used by public Wi-Fi networks (such as airports, coffee shops, and hotels) to make a user agree to their Terms of Service or provide payment before allowing access to the Internet. When a user connects to the Wi-Fi, the captive portal blocks all HTTPS traffic until the user completes a captive portal login flow in their browser. This prevents the WARP client from connecting to Cloudflare. At the same time, WARP creates [firewall rules](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#ip-traffic) on the device to send all traffic to Cloudflare. The user is therefore unable to access the captive portal login screen unless they temporarily disable WARP.
 
 ## Allow users to connect to captive portals
@@ -42,3 +44,33 @@ If WARP cannot establish a connection to Cloudflare, it will:
 
   - Captive portals that intercept all DNS traffic will block WARP's [DoH connection](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#overview). Users will likely see a [CF_NO_NETWORK](/cloudflare-one/connections/connect-devices/warp/troubleshooting/client-errors/#cf_no_network) error after they login to the captive portal.
   - Captive portals that only allow HTTPS traffic will block WARP's [Wireguard UDP connection](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#overview). Users will likely see a [CF_HAPPY_EYEBALLS_MITM_FAILURE](/cloudflare-one/connections/connect-devices/warp/troubleshooting/client-errors/#cf_happy_eyeballs_mitm_failure) error after they login to the captive portal.
+
+## Get captive portal logs <Badge text="Beta" variant="note" />
+
+<Details header="Feature availability">
+
+| [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+|  All modes   | All plans                                                     |
+
+| System   | Availability | Minimum WARP version |
+| -------- | ------------ | -------------------- |
+| Windows  | ✅           | 2025.4.589.1        |
+| macOS    | ✅           | 2025.4.589.1        |
+| Linux    | ❌           |                      |
+| iOS      | ❌           |                      |
+| Android  | ❌           |                      |
+| ChromeOS | ❌           |                      |
+
+</Details>
+
+Captive portal logs are used by Cloudflare Support to troubleshoot WARP captive portal issues. When an end user reports an issue with a captive portal, the IT administrator can ask the user to collect captive portal logs on their device. The administrator can then attach the logs to a Cloudflare Support ticket.
+
+To get captive portal logs:
+
+1. Open the WARP client.
+2. Go to **Settings** (gear icon) > **Preferences** > **Advanced**.
+3. Select **Collect Captive Portal Diag**.
+4. The WARP client will ask if the device is connected (or attempting to connect) to the Wi-Fi network that is causing issues. Select **Yes** to confirm.
+
+Once the diagnostic finishes running, WARP will place a `warp-captive-portal-diag-<date>-<time>.zip` file on the user's desktop. The end user can now share this file with their IT administrator.

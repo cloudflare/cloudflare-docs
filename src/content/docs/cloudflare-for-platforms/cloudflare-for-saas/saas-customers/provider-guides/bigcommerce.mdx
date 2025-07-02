@@ -5,16 +5,18 @@ head:
   - tag: title
     content: BigCommerce | Provider guides
 description: Learn how to configure your Enterprise zone with BigCommerce.
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="provider-guide-intro" params={{ one: "BigCommerce" }} />
+<Render file="provider-guide-intro" params={{ providerName: "BigCommerce" }} />
 
 ## Benefits
 
-<Render file="provider-guide-benefits" params={{ one: "BigCommerce" }} />
+<Render
+	file="provider-guide-benefits"
+	params={{ providerName: "BigCommerce" }}
+/>
 
 ## How it works
 
@@ -32,11 +34,9 @@ To enable O2O on your account, [create](/dns/manage-dns-records/how-to/create-dn
 
 :::note
 
-
 For more details about a BigCommerce setup, refer to their [support guide](https://support.bigcommerce.com/s/article/Cloudflare-for-Performance-and-Security?language=en_US#orange-to-orange).
 
 If you cannot activate your domain using [proxied DNS records](/dns/proxy-status/), reach out to your account team.
-
 
 :::
 
@@ -46,4 +46,4 @@ If you cannot activate your domain using [proxied DNS records](/dns/proxy-status
 
 ## Additional support
 
-<Render file="provider-guide-help" params={{ one: "BigCommerce" }} />
+<Render file="provider-guide-help" params={{ providerName: "BigCommerce" }} />

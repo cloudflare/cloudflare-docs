@@ -31,8 +31,10 @@ const { Content, headings } = await render(note);
 const props = {
 	frontmatter: {
 		title: note.data.title,
+		description: note.data.description,
 		template: "splash",
 		noindex: note.data.hidden,
+		chatbot_deprioritize: true,
 	},
 	headings,
 	hideTitle: true,

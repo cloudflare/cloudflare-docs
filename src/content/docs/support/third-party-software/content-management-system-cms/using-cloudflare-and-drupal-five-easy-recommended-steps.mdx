@@ -20,26 +20,26 @@ Note: You don’t need to worry about this if you activated through a certified 
 
 **Step #2**
 
-Create a [Page Rule](/rules/page-rules/) to exclude the Drupal admin or Drupal login sections from Cloudflare’s caching and performance features. You can access Page Rules in the [Rules app](/rules/page-rules/).
+Create a [Page Rule](/rules/page-rules/) to exclude the Drupal admin or Drupal login sections from Cloudflare’s caching and performance features. You can access Page Rules in **Rules** > **Page Rules**.
 
 Why do this?
 
-While there is not always an issue, we have seen some optional performance features like Rocket Loader inadvertently breaking certain functions (editors, etc.) in your site's admin area..
+While there is not always an issue, we have seen some optional performance features like Rocket Loader inadvertently breaking certain functions (editors, etc.) in your site's admin area.
 
 **Step #3**
 
-Allow IP addresses you expect traffic from in the Cloudflare **Firewall** App. Some common services you probably want to allow include:
+[Skip some security features](/waf/custom-rules/skip/) for specific IP addresses you expect traffic from. Some common services you probably want to allow include:
 
-- APIs you’re pulling from
+- APIs you are getting data from
 - Monitoring services you use to monitor your site's uptime
 - Security services
-- IP addresses you frequently login from
+- IP addresses you frequently log in from
 
 Why do this?
 
-If Cloudflare has an IP address with a high threat score going to your site, or if you have [Cloudflare's Web Application Firewall](https://www.cloudflare.com/waf) turned on, you may get challenged working in your back end and/or services you want to access your site may get challenged. Taking the steps to allow in the beginning will help prevent future surprises on your site.
+If you have enabled and configured [Cloudflare's Web Application Firewall](/waf/), legitimate services and/or you may get challenged while accessing your backend. To prevent issues on your site, consider skipping certain security features for requests coming from known IP addresses.
 
-**Note:** We allow all known search engine and social media crawlers in our macro list. If you decide to block specific countries, please use care because you may end up inadvertently blocking their crawlers (blocking the USA, for example, could mean that a good crawler gets challenged).
+**Note:** Cloudflare allows known search engine and social media crawlers. If you decide to block specific countries, you must use care because you may end up inadvertently blocking their crawlers (blocking the USA, for example, could mean that their crawler gets challenged).
 
 **Step #4**
 

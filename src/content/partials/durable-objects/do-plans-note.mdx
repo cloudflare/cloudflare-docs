@@ -1,0 +1,12 @@
+---
+{}
+---
+
+:::note
+Durable Objects are available both on Workers Free and Workers Paid plans.
+
+- **Workers Free plan**: Only Durable Objects with [SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#wrangler-configuration-for-sqlite-backed-durable-objects) are available.
+- **Workers Paid plan**: Durable Objects with either SQLite storage backend or [key-value storage backend](/durable-objects/reference/durable-objects-migrations/#create-durable-object-class-with-key-value-storage) are available.
+
+If you wish to downgrade from a Workers Paid plan to a Workers Free plan, you must first ensure that you have deleted all Durable Object namespaces with the key-value storage backend.
+:::

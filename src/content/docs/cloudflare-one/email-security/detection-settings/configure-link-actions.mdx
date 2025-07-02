@@ -1,0 +1,29 @@
+---
+title: Configure link actions
+pcx_content_type: how-to
+sidebar:
+  order: 6
+---
+
+You can configure how Email Security handles links in emails.
+
+To configure link actions:
+
+1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
+2. Select **Email Security**.
+3. Select **Settings**, then go to **Detection settings** > **Link actions** > **View**.
+4. Select **Configure**:
+    - **Email link isolation (Recommended)**: This option allows Email Security to open all suspicious links in an isolated browser environment. This option is on by default.
+    - **Assign actions based on dispositions**: Review the [disposition types](/cloudflare-one/email-security/reference/dispositions-and-attributes/#dispositions) and select link actions (choose between **URL defang** to allow links to be clickable, or **No action** for no action to be taken on the link).
+5. Select **Save**.
+
+## Add patterns for URLs
+
+You can add patterns for URLs that should be rewritten.
+
+1. Under **URL rewrite ignore patterns**, select **Add a pattern**.
+2. Choose **URL defang** (to allow links to be clickable), or **No action** (for no action to be taken on the link).
+
+To edit a pattern, go to the pattern you want to edit, select the three dots, then **Edit**. Once you have finished modifying the URL patter, select **Save**.
+
+To delete a pattern, go to the pattern you want to delete, select the three dots, then **Delete**.

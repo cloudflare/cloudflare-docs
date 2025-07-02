@@ -1,0 +1,148 @@
+---
+pcx_content_type: how-to
+title: Provision with Microsoft Entra
+sidebar:
+  label: Microsoft Entra
+---
+
+import { Render } from "~/components";
+
+<Render file="idp-group-deprecation" />
+
+## Set up the Enterprise application
+
+1. Go to your Microsoft Entra ID instance and select **Enterprise Applications**.
+2. Select **Create your own application** and name your application.
+3. Select **Integrate any other application you do not find in the gallery (Non-gallery)**.
+4. Select **Create**.
+
+## Provision the Enterprise application
+
+1. Under **Manage** on the sidebar menu, select **Provisioning**.
+2. Select **Automatic** on the dropdown menu for the Provisioning Mode.
+3. Enter your API token value and the tenant URL: `https://api.cloudflare.com/client/v4/accounts/<your_account_ID>/scim/v2`.
+4. Select **Test Connection**, then select **Save**.
+
+## Configure user & group sync in Microsoft Entra ID application
+
+1. Once the SCIM application is created, [assign users and groups to the application](https://learn.microsoft.com/en-us/entra/identity/enterprise-apps/assign-user-or-group-access-portal?pivots=portal).
+2. To begin syncing your Users & Groups into Cloudflare, navigate back to **Provisioning**, and under **Provisioning Status**, check *On*, then select **Save**. 
+
+:::note
+To successfully provision with Microsoft Entra ID, the `user principal name` and `email` fields must match. These values are case-sensitive.
+:::
+
+3. To validate which users and groups were synchronized, select **Provisioning logs** in Microsoft Entra. You can also check the Cloudflare dashboard Audit Logs by navigating to **Manage Account** > **Audit Log**. 
+4. To grant permissions to Users & Groups in Cloudflare, refer to the Permission Policies guide.
+
+
+## (Optional) Automate Cloudflare's SCIM integration
+
+Cloudflare's SCIM integration requires one external application per account. Customers with many accounts may want to automate part of the setup to save time and reduce the amount of time spent in the Entra administrative UI.
+
+The initial setup of creating the non-gallery applications and adding the provisioning URL and API key are scriptable via API, but the rest of the setup is dependent on your specific need and IDP configuration.
+
+**1. Get an access token**
+
+Get an Entra access token. Note that the example below is using the Azure CLI.
+
+```
+# Using azure-cli
+az login
+az account get-access-token --resource https://graph.microsoft.com
+
+(payload with accessToken returned)
+```
+**2. Create a new application via template.**
+
+The template ID 8adf8e6e-67b2-4cf2-a259-e3dc5476c621 is the suggested template to create non-gallery apps in the Entra docs. Replace `<accessToken>` and `displayName` with your values.
+
+```curl title="Example request"
+curl -X POST 'https://graph.microsoft.com/v1.0/applicationTemplates/8adf8e6e-67b2-4cf2-a259-e3dc5476c621/instantiate' \
+  --header 'Content-Type: application/json' \
+  --header 'Authorization: Bearer <accessToken>' \
+  --data-raw '{
+    "displayName": "Entra API create application test"
+}'
+```
+
+```curl title="Example response"
+{
+  "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#microsoft.graph.applicationServicePrincipal",
+  "application": {
+    "id": "343a8552-f9d9-471c-b677-d37062117cc8", //
+    "appId": "03d8207b-e837-4be9-b4e6-180492eb3b61",
+    "applicationTemplateId": "8adf8e6e-67b2-4cf2-a259-e3dc5476c621",
+    "createdDateTime": "2025-01-30T00:37:44Z",
+    "deletedDateTime": null,
+    "displayName": "Entra API create application test",
+    "description": null,
+    // ... snipped rest of large application payload
+  },
+  "servicePrincipal": {
+    "id": "a8cb133d-f841-4eb9-8bc9-c8e9e8c0d417", // Note this ID for the subsequent request 
+    "deletedDateTime": null,
+    "accountEnabled": true,
+    "appId": "03d8207b-e837-4be9-b4e6-180492eb3b61",
+    "applicationTemplateId": "8adf8e6e-67b2-4cf2-a259-e3dc5476c621",
+    "appDisplayName": "Entra API create application test",
+	// ...snipped rest of JSON payload
+}
+}
+```
+
+**3. Create a provisioning job**
+
+To enable provisioning, you will also need to create a job. Note the SERVICE_PRINCIPAL_ID in the previous request will be used in the request below. The SCIM templateId is an Entra provided template.
+
+```curl title="Example request"
+curl -X POST 'https://graph.microsoft.com/v1.0/servicePrincipals/<SERVICE_PRINCIPAL_ID>/synchronization/jobs' \
+  --header 'Content-Type: application/json' \
+  --header 'Authorization: Bearer <accessToken>' \
+  --data-raw '{ 
+    "templateId": "scim"
+}'
+```
+
+```curl title="Example response"
+{
+  "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#servicePrincipals('a8cb133d-f841-4eb9-8bc9-c8e9e8c0d417')/synchronization/jobs/$entity",
+  "id": "scim.5b223a2cc249463bbd9a791550f11c76.03d8207b-e837-4be9-b4e6-180492eb3b61",
+  "templateId": "scim",
+  "schedule": {
+    "expiration": null,
+    "interval": "PT40M",
+    "state": "Disabled"
+  },
+}
+// ... snipped rest of JSON payload
+```
+
+**4. Configure the SCIM provisioning URL and API token**
+
+Next, configure the Tenant URL (Cloudflare SCIM endpoint) and API token (SCIM Provisioning API Token). 
+
+Replace `<accessToken>`, `<ACCOUNT_ID>`, `<SCIM_PROVISIONING_API_TOKEN_VALUE>` with your values.
+
+```curl title="Example request"
+ --header 'Content-Type: application/json' \
+  --header 'Authorization: Bearer <accessToken>' \
+  --data-raw '{
+  "value": [
+    {
+      "key": "BaseAddress",
+      "value": "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/scim/v2"
+    },
+    {
+      "key": "SecretToken",
+      "value": "<SCIM_PROVISIONING_API_TOKEN_VALUE>"
+    }
+  ]
+}'
+```
+
+After completing the tasks above, the next steps in Entra include:
+
+- Additional group/provisioning configuration
+- Test and save after updating the config.
+- Provisioning after configuration is complete

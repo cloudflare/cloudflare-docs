@@ -9,15 +9,12 @@ import { TabItem, Tabs, Details, Example, Render } from "~/components";
 
 Follow this guide to get started with Internal DNS.
 
-Although there are some steps that can be achieved on the dashboard, currently the whole process can only be completed via API.
-
 ## Before you begin
 
 <Render file="internal-dns-beta-note" />
 
 - Make sure you have an Enterprise account with access to [Gateway resolver policies](/cloudflare-one/policies/gateway/resolver-policies/) and [Internal DNS](/dns/internal-dns/).
 - Consider the different ways in which you can [connect to Gateway resolver](/dns/internal-dns/connectivity/).
-- If you are not familiar with how to use Cloudflare API, refer to [Fundamentals](/fundamentals/api/get-started/).
 - If you will be using an API token for authentication, make sure you have the following permissions:
 
 <Details header="API token configuration">
@@ -41,27 +38,63 @@ Although there are some steps that can be achieved on the dashboard, currently t
 
 ## 1. Set up your internal DNS zone
 
-<Render file="internal-zone-create" params={{
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+<Render file="internal-zone-create-dash" params={{
 	conditional: "get-started-detail"}}
 />
 
+</TabItem> <TabItem label="API">
+
+<Render file="internal-zone-create-api" params={{
+	conditional: "get-started-detail"}}
+/>
+
+</TabItem> </Tabs>
+
 ### (Optional) Reference a zone from another zone
 
-1. Use the [Update DNS settings](/api/resources/dns/subresources/settings/subresources/zone/methods/edit/) endpoint to add a reference from an internal zone to another internal zone. In `--data`, specify the `internal_dns` object with the parameter `reference_zone_id`. For details, refer to [reference zones](/dns/internal-dns/internal-zones/reference-zones/).
+<Render file="internal-reference-zone-intro" params={{
+	conditional: "get-started-link"}}
+/>
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. Go to **Internal DNS** and select a zone.
+2. Within the selected zone, go to **Reference zone**.
+3. Select **Add reference zone**.
+4. Find the zone you want to use as reference and choose **Select** in the respective row.
+
+</TabItem> <TabItem label="API">
+
+1. Use the [Update DNS settings](/api/resources/dns/subresources/settings/subresources/zone/methods/edit/) endpoint to add a reference from an internal zone to another internal zone. In `--json`, specify the `internal_dns` object with the parameter `reference_zone_id`.
 
 <Example>
 <Render file="internal-reference-zone-api"/>
 </ Example>
 
+</TabItem> </Tabs>
+
 ## 2. Link your internal zone to a view
 
 Since the resolver policy will require a [DNS view](/dns/internal-dns/dns-views/), you must have at least one view to be able to route requests to internal zones.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+<Render file="internal-dns-view-create-dash" params={{
+	conditional: "get-started-detail"}}
+/>
+
+</TabItem> <TabItem label="API">
 
 1. Use the [Create Internal DNS View](/api/resources/dns/subresources/settings/subresources/account/subresources/views/methods/create/) endpoint. For each view you create, list all the internal zones that should be grouped under that view.
 
 <Details header="DNS view configuration conditions">
 <Render file="internal-dns-view-conditions" />
 </Details>
+
+</TabItem> </Tabs>
+
 
 ## 3. Configure Gateway policies
 
@@ -76,7 +109,7 @@ Besides selecting an internal DNS view when setting up your resolver policies, y
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Resolver policies**.
 2. Select **Add a policy** and enter a name and description.
 3. Create an expression for the traffic you wish to route. For guidance about selectors, operators, and values, refer to [Gateway](/cloudflare-one/policies/gateway/resolver-policies/#selectors).
-4. Select **Use DNS view**. In the dropdown, choose the view that queries matching the expression should be sent to.
+4. Select **Use Internal DNS**. Choose the view that queries matching the expression should be sent to.
 5. (Optional) Adjust the option to **fallback through public DNS** according to your use case.
 - Off: Gateway DNS resolver returns the response as-is to the client.
 - On: In case the response from the internal zone is REFUSED, NXDOMAIN, or a response with a CNAME type, Gateway DNS resolver sends the query to Cloudflare 1.1.1.1 public resolver and tries to resolve the query via public DNS.
@@ -92,3 +125,5 @@ Use the rule settings object to define `resolve_dns_internally`, specifying `vie
 - `public_dns`: In case the response from the internal zone is REFUSED, NXDOMAIN, or a response with a CNAME type, Gateway DNS resolver sends the query to Cloudflare 1.1.1.1 public resolver and tries to resolve the query via public DNS.
 
 </TabItem> </Tabs>
+
+Once you add the Gateway resolver policy, it will be listed in the respective internal view under **Resolver policies referencing this view**.

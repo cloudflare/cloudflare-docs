@@ -5,13 +5,19 @@ sidebar:
   order: 2
 ---
 
-Security overview provides a high-level security overview of your domain. Security overview allows you to review the security posture of your domain. The security overview page is available on both the new security dashboard as well as the existing security dashboard.
+Security overview provides a high-level overview of your domain. It allows you to identify security action items and review the security posture of your domain.
 
-The Security overview page will display the following information:
+The Security overview page displays the following information:
 
-- **Traffic last 7 days**: Review traffic from the last seven days that has been mitigated, served by Cloudflare, and served by origin.
-- **Security posture**:
-  - **Configurations**: Review your currently enabled configurations, and whether additional configurations are required for them.
-  - **Suggestions**: Review security suggestions to improve your security posture.
-- **Rules with the most activity**: Review the number of times a security rule has been activated by matching requests.
-- **Last updated rules**: Review rules you recently changed.
+- If you are on a Free plan, the dashboard will display **Traffic last 24 hours**, which allows you to review traffic from the 24 hours that has been mitigated by Cloudflare. If you are on a Business, Pro, or Enterprise plan, the dashboard will display **Traffic last 7 days**, which allows you to review traffic from the last seven days that has been mitigated by Cloudflare.
+- **Modules**: The dashboard will display suggestions categorized on your security module.
+- **All suggestions**: The dashboard displays a list of suggestions to improve your security posture. Suggestions include:
+  - Web application exploits
+  - DDoS attacks
+  - Bot traffic 
+  - API abuse
+  - Client-side abuse
+  - Domain settings
+  - Web assets and endpoints
+  - Rule templates
+  - Detections

@@ -1,0 +1,23 @@
+releaseNotes: >-
+  This release contains a hotfix for captive portal detection and PF state tables for the
+  2025.2.600.0 release.
+
+
+  **Changes and improvements**
+
+  - Fix to reduce the number of browser tabs opened during captive portal logins.
+
+  - Improvement to exclude local DNS traffic entries from PF state table to
+  reduce risk of connectivity issues from exceeding table capacity.
+
+
+  **Known issues**
+
+  - macOS Sequoia: Due to changes Apple introduced in macOS 15.0.x, the WARP
+  client may not behave as expected. Cloudflare recommends the use of macOS 15.4
+  or later.
+version: 2025.2.664.0
+releaseDate: 2025-04-08T21:25:07.334Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2025.2.664.0
+packageSize: 91811115
+platformName: macOS

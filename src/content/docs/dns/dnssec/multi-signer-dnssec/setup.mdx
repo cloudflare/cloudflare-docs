@@ -6,7 +6,7 @@ sidebar:
   label: Setup
 ---
 
-import { Tabs, TabItem } from "~/components";
+import { Tabs, TabItem, APIRequest } from "~/components";
 
 This page explains how you can enable [multi-signer DNSSEC](/dns/dnssec/multi-signer-dnssec/about/) with Cloudflare, using the [model 2](/dns/dnssec/multi-signer-dnssec/about/#model-2) as described in [RFC 8901](https://www.rfc-editor.org/rfc/rfc8901.html).
 
@@ -44,17 +44,14 @@ For the purpose of this tutorial, you will update your registrar with the DS rec
 
 1. Use the [Edit DNSSEC Status endpoint](/api/resources/dns/subresources/dnssec/methods/edit/) to enable DNSSEC and activate multi-signer DNSSEC for your zone. Set `status` to `active` and `dnssec_multi_signer` to `true`, as in the following example.
 
-```bash
-curl --request PATCH \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "status": "active",
-  "dnssec_multi_signer": true
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/dnssec"
+	method="PATCH"
+	json={{
+  	"status": "active",
+  	"dnssec_multi_signer": true,
+	}}
+/>
 
 2. Add the ZSK(s) of your external provider(s) to Cloudflare by creating a DNSKEY record on your zone.
 
@@ -97,16 +94,13 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records" \
 This step is required. Without turning on this setting, Cloudflare will ignore any `NS` records created on the zone apex. This means that responses to DNS queries made to the zone apex and requesting `NS` records will only contain Cloudflare nameservers.
 :::
 
-```bash
-curl --request PATCH \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_settings" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-    "multi_provider": true
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/dns_settings"
+	method="PATCH"
+	json={{
+		"multi_provider": true,
+	}}
+/>
 
 </TabItem>
 </Tabs>
@@ -135,16 +129,14 @@ For the purpose of this tutorial, you will update your registrar with the DS rec
 
 1. Use the [Edit DNSSEC Status endpoint](/api/resources/dns/subresources/dnssec/methods/edit/) to enable DNSSEC and activate multi-signer DNSSEC for your zone. Set `status` to `active` and `dnssec_multi_signer` to `true`, as in the following example.
 
-```bash
-$ curl --request PATCH 'https://api.cloudflare.com/client/v4/zones/{zone_id}/dnssec' \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "status": "active",
-  "dnssec_multi_signer": true
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/dnssec"
+	method="PATCH"
+	json={{
+  	"status": "active",
+  	"dnssec_multi_signer": true,
+	}}
+/>
 
 2. Add the ZSK(s) of your external provider(s) to a DNSKEY record at your primary DNS provider. This record should be transferred successfully to Cloudflare.
 

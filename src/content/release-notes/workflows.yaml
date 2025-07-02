@@ -5,6 +5,34 @@ productLink: "/workflows/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-05-07"
+    title: "Search for specific Workflows"
+    description: |-
+      With this release, you can search Workflows by name via API.
+  - publish_date: "2025-04-29"
+    title: "Workflow deletion and more"
+    description: |-
+      Workflows can now be deleted (from the Dashboard/UI or via API), and the maximum length limit for event types and instance IDs was increased to 100 characters.
+
+      Also, this release fixes a bug where a delay of `0` in step config retries would fail.
+  - publish_date: "2025-04-07"
+    title: "Workflows is now Generally Available"
+    description: |-
+      Workflows is now Generally Available (or "GA").
+
+      This release includes the following new features:
+        * A new `waitForEvent` API that allows a Workflow to wait for an event to occur before continuing execution.
+        * Increased concurrency: you can run up to 4,500 Workflow instances concurrently — and this will continue to grow.
+        * Improved observability, including new CPU time metrics that allow you to better understand which Workflow instances are consuming the most resources and/or contributing to your bill.
+        * Support for vitest for testing Workflows locally and in CI/CD pipelines.
+
+      More information available in the [changelog](/changelog/2025-04-07-workflows-ga/).
+  - publish_date: "2025-02-25"
+    title: "Concurrent Workflow instances limits increased"
+    description: |-
+      Workflows now supports up to 4,500 concurrent (running) instances, up from the previous limit of 100.
+
+      More information available in the [changelog](/changelog/2025-02-25-workflows-concurrency-increased/).
   - publish_date: "2025-02-11"
     title: "Behavior improvements"
     description: |-

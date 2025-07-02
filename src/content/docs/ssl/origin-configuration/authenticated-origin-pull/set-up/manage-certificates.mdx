@@ -9,6 +9,8 @@ head:
 
 ---
 
+import { APIRequest } from "~/components";
+
 Refer to the following sections to learn how to manage certificates used with the different Authenticated Origin Pulls setups.
 
 ## Use specialized certificates
@@ -33,13 +35,29 @@ However, requests are dropped at your origin if your origin only accepts a valid
 
 ## Replace a client cert (without downtime)
 
-For hostname:
+### Per-hostname
 
 1. [Upload the new certificate](/api/resources/origin_tls_client_auth/subresources/hostnames/subresources/certificates/methods/create/).
 
-2. [Enable Authenticated Origin Pulls for that specific hostname](/api/resources/origin_tls_client_auth/subresources/hostnames/methods/update/).
+2. [List your certificates](/api/resources/origin_tls_client_auth/subresources/hostnames/subresources/certificates/methods/list/) and note the ID for the certificate you uploaded.
 
-For global:
+3. [Enable Authenticated Origin Pulls for the specific hostname](/api/resources/origin_tls_client_auth/subresources/hostnames/methods/update/), using the ID obtained in step 2 to specify the certificate you want to use:
+
+<APIRequest
+	path="/zones/{zone_id}/origin_tls_client_auth/hostnames"
+	method="PUT"
+	json={{
+		"config": [
+			{
+				"enabled": true,
+				"hostname": "<HOSTNAME>",
+				"cert_id": "<CERT_ID>"
+			}
+		]
+	}}
+/>
+
+### Zone-level
 
 1. [Upload the new certificate](/api/resources/origin_tls_client_auth/methods/create/).
 

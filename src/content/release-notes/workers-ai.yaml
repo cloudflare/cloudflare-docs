@@ -5,6 +5,10 @@ productLink: "/workers-ai/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-04-09"
+    title: Pricing correction for @cf/myshell-ai/melotts
+    description: |-
+      - We've updated our documentation to reflect the correct pricing for melotts: $0.0002 per audio minute, which is actually cheaper than initially stated. The documented pricing was incorrect, where it said users would be charged based on input tokens.
   - publish_date: "2025-03-17"
     title: Minor updates to the model schema for llama-3.2-1b-instruct, whisper-large-v3-turbo, llama-guard
     description: |-

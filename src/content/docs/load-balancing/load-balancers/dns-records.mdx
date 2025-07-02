@@ -9,7 +9,7 @@ head:
 
 ---
 
-When you [create a load balancer](/load-balancing/load-balancers/create-load-balancer/), Cloudflare automatically creates an LB DNS record for the specified **Hostname**. This functionality allows you to use a hostname with or without an existing DNS record.
+When you [create a load balancer](/load-balancing/load-balancers/create-load-balancer/), Cloudflare automatically creates an LB DNS record for the specified **Hostname**. This functionality allows you to use a hostname with or without an existing DNS record. Private load balancers do not receive an automatic DNS record. Instead, you can configure a hostname using your internal DNS system or by applying a [Gateway Firewall override](/cloudflare-one/policies/gateway/dns-policies/#override) to a hostname.
 
 ## Supported records
 
@@ -46,6 +46,15 @@ This behavior only applies to [supported records](#supported-records) (determine
 
 
 :::
+
+If the DNS record points to a [SaaS provider](/cloudflare-for-platforms/cloudflare-for-saas/) and an active [custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/) exists, the custom hostname will take precedence over the Load Balancing record:
+
+* **Scenario 4**:
+
+  * **CNAME**: `x.example.com` with target to a Cloudflare for SaaS provider
+  * **LB record**: `x.example.com`
+  * **Active custom hostname on the SaaS provider side**: `x.example.com`
+  * **Outcome**: Custom hostname takes precedence.
 
 ## Disabling a load balancer
 

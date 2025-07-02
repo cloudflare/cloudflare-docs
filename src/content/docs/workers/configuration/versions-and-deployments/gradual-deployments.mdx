@@ -125,7 +125,7 @@ You can set the `Cloudflare-Workers-Version-Key` header both when making an exte
 
 You may want to extract a version key from certain properties of your request such as the URL, headers or cookies. You can configure a [Ruleset Engine](/ruleset-engine/) rule on your zone to do this. This allows you to specify version affinity based on these properties without having to modify the external client that makes the request.
 
-For example, if your worker serves video assets under the URI path `/assets/` and you wanted requests to each unique asset to be handled by a consistent version, you could define the following [request header modification](/rules/transform/request-header-modification/) rule:
+For example, if your worker serves video assets under the URI path `/assets/` and you wanted requests to each unique asset to be handled by a consistent version, you could define the following [request header transform rule](/rules/transform/request-header-modification/):
 
 <Example>
 
@@ -157,7 +157,7 @@ curl -s https://example.com -H 'Cloudflare-Workers-Version-Overrides: my-worker-
 
 The dictionary can contain multiple key-value pairs. Each key indicates the name of the Worker the override should be applied to. The value indicates the version ID that should be used and must be a [String](https://www.rfc-editor.org/rfc/rfc8941#name-strings).
 
-A version override will only be applied if the specified version is in the current deployment. The versions in the current deployment can be found using the [`wrangler deployments list`](/workers/wrangler/commands/#list-5) command or on the [Workers Dashboard](https://dash.cloudflare.com/?to=/:account/workers) under Worker > Deployments > Active Deployment.
+A version override will only be applied if the specified version is in the current deployment. The versions in the current deployment can be found using the [`wrangler deployments list`](/workers/wrangler/commands/#list-6) command or on the [Workers Dashboard](https://dash.cloudflare.com/?to=/:account/workers) under Worker > Deployments > Active Deployment.
 
 :::note[Verifying that the version override was applied]
 
@@ -197,9 +197,9 @@ curl -s https://example.com -H 'Cloudflare-Workers-Version-Overrides: my-worker-
 
 ## Gradual deployments for Durable Objects
 
-Due to [global uniqueness](/durable-objects/platform/known-issues/#global-uniqueness), only one version of each [Durable Object](/durable-objects/) can run at a time. This means that gradual deployments work slightly differently for Durable Objects.
+To provide [global uniqueness](/durable-objects/platform/known-issues/#global-uniqueness), only one version of each [Durable Object](/durable-objects/) can run at a time. This means that gradual deployments work slightly differently for Durable Objects.
 
-When you create a new gradual deployment for a Durable Object Worker, each Durable Object is assigned a Worker version based on the percentages you configured in your [deployment](/workers/configuration/versions-and-deployments/#deployments). This version will not change until you create a new deployment.
+When you create a new gradual deployment for a Worker with Durable Objects, each Durable Object is assigned a Worker version based on the percentages you configured in your [deployment](/workers/configuration/versions-and-deployments/#deployments). This version will not change until you create a new deployment.
 
 ![Gradual Deployments Durable Objects](~/assets/images/workers/platform/versions-and-deployments/durable-objects.png)
 
@@ -225,12 +225,24 @@ This is only an example, so the versions assigned to your Durable Objects may be
 - The Durable Object will only be [reset](/durable-objects/observability/troubleshooting/#durable-object-reset-because-its-code-was-updated) when it is assigned a different version, so each Durable Object will only be reset once in this example.
 
 :::note
-
-Typically, your Durable Object Worker will define both your Durable Object class and the Worker that interacts with it. In this case, you cannot deploy changes to your Durable Object and its Worker independently.
+Typically, a Worker bundle will define both the Durable Object class and a Worker that interacts with it. In this case, you cannot deploy changes to your Durable Object and its Worker independently.
 
 You should ensure that API changes between your Durable Object and its Worker are [forwards and backwards compatible](/durable-objects/platform/known-issues/#code-updates) whether you are using gradual deployments or not. However, using gradual deployments will make it even more likely that different versions of your Durable Objects and its Worker will interact with each other.
-
 :::
+
+### Migrations
+
+Versions of Worker bundles containing new Durable Object migrations cannot be uploaded. This is because Durable Object migrations are atomic operations. Durable Object migrations can be deployed with the following command:
+
+```sh
+npx wrangler versions deploy
+```
+
+To limit the blast radius of Durable Object migration deployments, migrations should be deployed independently of other code changes.
+
+To understand why Durable Object migrations are atomic operations, consider the hypothetical example of gradually deploying a delete migration. If a delete migration were applied to 50% of Durable Object instances, then Workers requesting those Durable Object instances would fail because they would have been deleted.
+
+To do this without producing errors, a version of the Worker which does not depend on any Durable Object instances would have to have already been rolled out. Then, you can deploy a delete migration without affecting any traffic and there is no reason to do so gradually.
 
 ## Observability
 

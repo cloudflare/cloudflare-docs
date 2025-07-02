@@ -9,6 +9,8 @@ import { FeatureTable, GlossaryTooltip, Badge } from "~/components";
 
 Security Analytics displays information about all incoming HTTP requests for your domain, including requests not handled by Cloudflare security products.
 
+By default, Security Analytics queries filter on `requestSource = 'eyeball'`, which represents requests from end users. Note that requests from Cloudflare Workers (subrequests) are not visible in Security Analytics.
+
 Use the Security Analytics dashboard to:
 
 - View the traffic distribution for your domain.
@@ -92,7 +94,7 @@ To apply the filters for an insight to the data displayed in the Security Analyt
 
 ### Score-based analyses
 
-The **Attack analysis**, **Bot analysis**, **Malicious uploads**, and **Account abuse detection** sections display statistics related to WAF attack scores, bot scores, WAF content scanning scores, and leaked credentials scanning of incoming requests for the selected time frame. All plans include access to the **Leaked credential check** under **Account abuse detection**. This feature detects login attempts using credentials that have been exposed online. For more information on what to do if you have credentials that have been leaked, refer to the [mitigation examples page](/waf/detections/leaked-credentials/examples/).
+The **Attack analysis**, **Bot analysis**, **Malicious uploads**, and **Account abuse detection** sections display statistics related to WAF attack scores, bot scores, WAF content scanning scores, and leaked credentials scanning of incoming requests for the selected time frame. All plans include access to the **Leaked credential check** under **Account abuse detection**. This feature detects login attempts using credentials that have been exposed online. For more information on what to do if you have credentials that have been leaked, refer to the [example mitigation rules page](/waf/detections/leaked-credentials/examples/).
 
 You can examine different traffic segments according to the current metric (attack score, bot score, or content scanning). To apply score filters for different segments, select the buttons below the traffic chart. For example, select **Likely attack** under **Attack analysis** to filter requests that are likely an attack (requests with WAF attack score values between 21 and 50).
 
@@ -120,7 +122,7 @@ The main chart displays the following data for the selected time frame, accordin
 
 Security Analytics shows request logs for the selected time frame and applied filters, along with detailed information and security analyses of those requests.
 
-By default, Security Analytics uses sampled logs for the logs table. If you are subscribed to [Log Explorer](/logs/log-explorer/), you may also have access to [raw logs](#raw-logs).
+By default, Security Analytics uses sampled logs for the logs table. If you are subscribed to [Log Explorer](/log-explorer/), you may also have access to [raw logs](#raw-logs).
 
 #### Sampled logs
 
@@ -155,7 +157,7 @@ To switch from raw logs back to sampled logs, select **Switch back to sampled lo
 
 ##### Query raw logs using Log Explorer
 
-You can switch to [Log Explorer](/logs/log-explorer/) to dive deeper on your analysis while applying the same filters you used in Security Analytics. Raw logs in Security Analytics are based on the same data source used in Log Explorer.
+You can switch to [Log Explorer](/log-explorer/) to dive deeper on your analysis while applying the same filters you used in Security Analytics. Raw logs in Security Analytics are based on the same data source used in Log Explorer.
 
 :::note[Note]
 Currently, changing the time frame or the applied filters while showing raw logs may cause the Cloudflare dashboard to switch automatically to sampled logs. This happens if the total number of request logs for the selected time frame is high.

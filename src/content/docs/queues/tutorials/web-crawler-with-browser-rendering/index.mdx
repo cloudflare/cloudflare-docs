@@ -60,10 +60,17 @@ cd queues-web-crawler
 
 We need to create a KV store. This can be done through the Cloudflare dashboard or the Wrangler CLI. For this tutorial, we will use the Wrangler CLI.
 
-```sh
-npx wrangler kv namespace create crawler_links
-npx wrangler kv namespace create crawler_screenshots
-```
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="kv namespace create crawler_links"
+/>
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="kv namespace create crawler_screenshots"
+/>
 
 ```sh output
 🌀 Creating namespace with title "web-crawler-crawler-links"
@@ -102,10 +109,9 @@ Now, you need to set up your Worker for Browser Rendering.
 
 In your current directory, install Cloudflare’s [fork of Puppeteer](/browser-rendering/platform/puppeteer/) and also [robots-parser](https://www.npmjs.com/package/robots-parser):
 
-```sh
-npm install @cloudflare/puppeteer --save-dev
-npm install robots-parser
-```
+<PackageManagers pkg="@cloudflare/puppeteer" dev />
+
+<PackageManagers pkg="robots-parser" />
 
 Then, add a Browser Rendering binding. Adding a Browser Rendering binding gives the Worker access to a headless Chromium instance you will control with Puppeteer.
 
@@ -121,9 +127,11 @@ browser = { binding = "CRAWLER_BROWSER" }
 
 Now, we need to set up the Queue.
 
-```sh
-npx wrangler queues create queues-web-crawler
-```
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="queues create queues-web-crawler"
+/>
 
 ```txt title="Output"
 Creating queue queues-web-crawler.
@@ -536,9 +544,7 @@ export default {
 
 To deploy your Worker, run the following command:
 
-```sh
-npx wrangler deploy
-```
+<PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
 You have successfully created a Worker which can submit URLs to a queue for crawling and save results to Workers KV.
 

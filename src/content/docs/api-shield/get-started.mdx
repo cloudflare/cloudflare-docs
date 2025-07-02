@@ -7,7 +7,7 @@ sidebar:
   
 ---
 
-import { GlossaryTooltip, Render } from "~/components"
+import { GlossaryTooltip, Render, Steps } from "~/components"
 
 This guide will help you set up API Shield to identify and address API security best practices.
 
@@ -117,7 +117,7 @@ Use the Cloudflare API to configure [JSON Web Tokens validation](/api-shield/sec
 
 If your origin uses GraphQL, you may consider setting limits on GraphQL query size and depth.
 
-[GraphQL malicious query protection](/api-shield/security/graphql-protection/configure/) scans your GraphQL traffic for queries that could overload your origin and result in a denial of service. Customers can build rules that limit the query depth and size of incoming GraphQL queries in order to block suspiciously large or complex queries.
+[GraphQL malicious query protection](/api-shield/security/graphql-protection/api/) scans your GraphQL traffic for queries that could overload your origin and result in a denial of service. Customers can build rules that limit the query depth and size of incoming GraphQL queries in order to block suspiciously large or complex queries.
 
 For more information, refer to the [blog post](https://blog.cloudflare.com/protecting-graphql-apis-from-malicious-queries/).
 

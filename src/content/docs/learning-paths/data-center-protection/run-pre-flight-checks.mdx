@@ -1,0 +1,23 @@
+---
+title: Run pre-flight checks
+pcx_content_type: learning-unit
+sidebar:
+  order: 7
+---
+
+After setting up your Magic Transit product, Cloudflare validates:
+- Tunnel connectivity
+- Tunnel and endpoint [health checks](/magic-transit/reference/tunnel-health-checks/#types-of-health-checks)
+- Letter of Agency (LOA)
+- Internet Routing Registry (IRR)
+- Maximum segment size (MSS) configurations.
+
+Refer to [Get started](/learning-paths/data-center-protection/get-started/) for information about the above topics.
+
+Configurations for Cloudflare global network are applied and take around one day to rollout.
+
+On your side, you should do the following:
+
+- Confirm that your upstream ISPs do not have [uRPF](/byoip/troubleshooting/#urpf-filtering-and-packet-loss) strict-mode enabled. If they do, ask them to change this setting to uRPF loose mode. Having strict-mode uRPF will result in packet loss when you advertise your prefix from Cloudflare and withdraw your prefix advertisement from your ISP.
+- Confirm you have adjusted MSS/MTU value on any IPsec or GRE tunnels with third parties that are configured on your Magic Transit prefix.
+- If you are using BGP for Magic Transit prefix advertisement, configure your own alerts/logs for the BGP peerings with Cloudflare route reflectors. Cloudflare will not notify you if these peerings go down, so you should enable this on your equipment using syslog or other event-alerting tools.

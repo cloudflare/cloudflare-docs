@@ -96,7 +96,7 @@ To add additional OIDC claims onto the ID token sent to your SaaS application, c
 
 	- **Name**: OIDC claim name
 	- **Scope**: Select the OIDC scope where this claim should be included. In most cases, we recommend selecting `profile` since it already includes other custom claims from the IdP.
-	- **IdP claim**: The identity provider value that should map to this OIDC claim. You can select any [SAML attribute](/cloudflare-one/identity/idp-integration/generic-saml/#saml-headers-and-attributes) or [OIDC claim](/cloudflare-one/identity/idp-integration/generic-oidc/#oidc-claims) that was configured in a Zero Trust IdP integration.
+	- **IdP claim**: The identity provider value that should map to this OIDC claim. You can select any [SAML attribute](/cloudflare-one/identity/idp-integration/generic-saml/#saml-headers-and-attributes) or [OIDC claim](/cloudflare-one/identity/idp-integration/generic-oidc/#custom-oidc-claims) that was configured in a Zero Trust IdP integration.
 	- **Required**: If a claim is marked as required but is not provided by an IdP, Cloudflare will fail the authentication request and show an error page.
 	- **Add per IdP claim**: (Optional) If you turned on multiple identity providers for the SaaS application, you can choose different attribute mappings for each IdP. These values will override the parent **IdP claim**.
 

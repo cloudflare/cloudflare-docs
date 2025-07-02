@@ -1,0 +1,26 @@
+---
+pcx_content_type: overview
+title: AI Labyrinth
+sidebar:
+  order: 7
+---
+
+import { Render, Tabs, TabItem } from "~/components"
+
+The AI Labyrinth adds invisible links on your webpage with specific `Nofollow` tags to block AI crawlers that do not adhere to the recommended guidelines and crawl without permission. AI crawlers that scrape your website content without permission will be stuck in a maze of never-ending links, and their details are recorded and used by all Cloudflare customers who choose to block [AI bots](/bots/concepts/bot/#ai-bots).
+
+These links do not impact your search engine optimization (SEO) or your website's appearance, and are only seen by bots. AI bots that respect no-crawl instructions will safely ignore this honeypot.
+
+To enable [AI Labyrinth](/bots/additional-configurations/ai-labyrinth) based on your plan: 
+
+<Tabs>
+  <TabItem label="Bot Fight Mode">
+    <Render file="ai-labyrinth-enable" params={{ one: "Bot Fight Mode" }} />
+  </TabItem>
+  <TabItem label="Super Bot Fight Mode">
+    <Render file="ai-labyrinth-enable" params={{ one: "Super Bot Fight Mode" }} />
+  </TabItem>
+    <TabItem label="Bot Management for Enterprise">
+    <Render file="ai-labyrinth-enable" params={{ one: "Bot Management" }} />
+  </TabItem>
+</Tabs>

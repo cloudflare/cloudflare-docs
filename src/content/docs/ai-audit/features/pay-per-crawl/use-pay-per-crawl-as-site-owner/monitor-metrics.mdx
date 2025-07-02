@@ -1,0 +1,37 @@
+---
+title: Monitor metrics
+pcx_content_type: concept
+sidebar:
+  order: 17
+---
+
+import { Steps } from "~/components";
+
+```mermaid
+graph LR
+A[Set up your<br>Cloudflare Account] --> B[Connect to<br>Stripe]
+B --> C[Set pay per<br>crawl price]
+C --> D[Select AI crawlers<br>to charge]
+D --> E[Monitor<br>metrics]:::highlight
+classDef highlight fill:#F6821F,color:white
+```
+
+Once you have confirmed the selection of AI crawlers to charge, monitor key metrics to understand how AI crawlers are interacting with your content.
+
+{/* prettier-ignore */}
+<Steps>
+1. Go to the **Metrics** tab.
+2. [View AI Audit metrics](/ai-audit/features/analyze-ai-crawlers/#view-ai-audit-metrics). Understanding these metrics can help you better manage AI crawlers accessing your content.
+</Steps>
+
+## Other considerations
+
+You may also wish to do the following:
+
+1. Update your `robots.txt` to clearly indicate which pages are off-limits, even if AI crawlers are willing to pay for the content.
+
+## Additional resources
+
+You may wish to refer to the following resources.
+
+- [AI Audit FAQs](/ai-audit/reference/faq/).

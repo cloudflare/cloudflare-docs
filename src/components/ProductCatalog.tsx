@@ -1,6 +1,7 @@
 import { useEffect, useState, type ChangeEvent } from "react";
 import type { CollectionEntry } from "astro:content";
 import type { IconifyIconBuildResult } from "@iconify/utils";
+import { setSearchParams } from "~/util/url";
 
 export type ProductData = CollectionEntry<"products"> & {
 	icon?: IconifyIconBuildResult;
@@ -42,17 +43,30 @@ const ProductCatalog = ({ products }: { products: ProductData[] }) => {
 	});
 
 	useEffect(() => {
-		// On component load, check for deep-links to groups in the query param
 		const params = new URLSearchParams(window.location.search);
-		const groups = params.get("product-group");
+		const groups = params.get("product-group")?.split(",");
 
 		if (!groups) return;
 
 		setFilters({
 			...filters,
-			groups: [groups],
+			groups,
 		});
 	}, []);
+
+	useEffect(() => {
+		const params = new URLSearchParams();
+
+		if (filters.search) {
+			params.set("search", filters.search);
+		}
+
+		if (filters.groups.length > 0) {
+			filters.groups.forEach((group) => params.append("product-group", group));
+		}
+
+		setSearchParams(params);
+	}, [filters]);
 
 	return (
 		<div className="md:flex">
@@ -65,13 +79,13 @@ const ProductCatalog = ({ products }: { products: ProductData[] }) => {
 					onChange={(e) => setFilters({ ...filters, search: e.target.value })}
 				/>
 
-				<div className="!mb-8 hidden md:block">
-					<span className="text-sm font-bold uppercase text-gray-600 dark:text-gray-200">
+				<div className="mb-8! hidden md:block">
+					<span className="text-sm font-bold text-gray-600 uppercase dark:text-gray-200">
 						Groups
 					</span>
 
 					{groups.map((group) => (
-						<label key={group} className="!my-2 block">
+						<label key={group} className="my-2! block">
 							<input
 								type="checkbox"
 								className="mr-2"
@@ -99,10 +113,10 @@ const ProductCatalog = ({ products }: { products: ProductData[] }) => {
 				</div>
 			</div>
 
-			<div className="!mt-0 grid w-full grid-cols-1 items-stretch gap-2 self-start md:grid-cols-2 lg:w-3/4 lg:grid-cols-3 lg:gap-4">
+			<div className="mt-0! grid w-full grid-cols-1 items-stretch gap-2 self-start md:grid-cols-2 lg:w-3/4 lg:grid-cols-3 lg:gap-4">
 				{productList.length === 0 && (
-					<div className="flex w-full flex-col justify-center rounded-md border bg-gray-50 py-6 text-center align-middle dark:border-gray-500 dark:bg-gray-800 md:col-span-2 lg:col-span-3">
-						<span className="text-lg !font-bold">No products found</span>
+					<div className="flex w-full flex-col justify-center rounded-md border bg-gray-50 py-6 text-center align-middle md:col-span-2 lg:col-span-3 dark:border-gray-500 dark:bg-gray-800">
+						<span className="text-lg font-bold!">No products found</span>
 						<p>
 							Try a different search term, or broaden your search by removing
 							filters.
@@ -114,7 +128,7 @@ const ProductCatalog = ({ products }: { products: ProductData[] }) => {
 						<a
 							key={product.data.name}
 							href={product.data.product.url}
-							className="block self-stretch rounded-md border border-solid border-gray-200 p-3 !text-inherit no-underline hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
+							className="block self-stretch rounded-md border border-solid border-gray-200 p-3 text-inherit! no-underline hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
 						>
 							<div className="flex items-start">
 								{product.icon && (
@@ -128,7 +142,7 @@ const ProductCatalog = ({ products }: { products: ProductData[] }) => {
 									</div>
 								)}
 								{!product.icon && (
-									<div className="mr-2 flex h-8 w-8 items-center justify-center rounded-full bg-orange-50 p-1 text-lg font-bold leading-none text-[color:var(--orange-accent-200)] dark:bg-orange-950">
+									<div className="mr-2 flex h-8 w-8 items-center justify-center rounded-full bg-orange-50 p-1 text-lg leading-none font-bold text-[color:var(--orange-accent-200)] dark:bg-orange-950">
 										{product.data.name.substr(0, 1)}
 									</div>
 								)}
@@ -137,7 +151,7 @@ const ProductCatalog = ({ products }: { products: ProductData[] }) => {
 								</span>
 							</div>
 							{product.data.meta && (
-								<p className="!mt-2 line-clamp-2 text-sm leading-6">
+								<p className="mt-2! line-clamp-2 text-sm leading-6">
 									{product.data.meta.description}
 								</p>
 							)}

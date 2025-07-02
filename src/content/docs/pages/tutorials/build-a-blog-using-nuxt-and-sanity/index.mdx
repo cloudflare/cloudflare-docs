@@ -10,7 +10,7 @@ languages:
   - JavaScript
 ---
 
-import { Stream } from "~/components";
+import { Stream, PackageManagers } from "~/components";
 
 In this tutorial, you will build a blog application using Nuxt.js and Sanity.io and deploy it on Cloudflare Pages. Nuxt.js is a powerful static site generator built on the front-end framework Vue.js. Sanity.io is a headless CMS tool built for managing your application's data without needing to maintain a database.
 
@@ -27,9 +27,9 @@ To begin, create a new Sanity project, using one of Sanity's templates, the blog
 
 Create your new Sanity project by installing the `@sanity/cli` client from npm, and running `sanity init` in your terminal:
 
-```sh title="Installing the Sanity client and creating a new project"
-npm install -g @sanity/cli && sanity init
-```
+<PackageManagers pkg="@sanity/cli" />
+
+<PackageManagers type="exec" pkg="sanity" args="init" />
 
 When you create a Sanity project, you can choose to use one of their pre-defined schemas. Schemas describe the shape of your data in your Sanity dataset -- if you were to start a brand new project, you may choose to initialize the schema from scratch, but for now, select the **Blog** schema.
 
@@ -37,10 +37,11 @@ When you create a Sanity project, you can choose to use one of their pre-defined
 
 With your project created, you can navigate into the folder and start up the studio locally:
 
-```sh title="Starting the Sanity studio"
+```sh
 cd my-sanity-project
-sanity start
 ```
+
+<PackageManagers type="exec" pkg="sanity" args="start" />
 
 The Sanity studio is where you can create new records for your dataset. By default, running the studio locally makes it available at `localhost:3333`– go there now and create your author record. You can also create blog posts here.
 
@@ -50,9 +51,7 @@ The Sanity studio is where you can create new records for your dataset. By defau
 
 When you are ready to deploy your studio, run `sanity deploy` to choose a unique URL for your studio. This means that you (or anyone else you invite to manage your blog) can access the studio at a `yoururl.sanity.studio` domain.
 
-```sh title="Deploying the studio"
-sanity deploy
-```
+<PackageManagers type="exec" pkg="sanity" args="deploy" />
 
 Once you have deployed your Sanity studio:
 
@@ -69,26 +68,23 @@ This means that requests that come to your Sanity dataset from your Nuxt applica
 
 Next, create a Nuxt.js project. In a new terminal, use `create-nuxt-app` to set up a new Nuxt project:
 
-```sh title="Creating a new Nuxt.js project"
-npx create-nuxt-app blog
-```
+<PackageManagers type="dlx" pkg="create-nuxt-app" args="blog" />
 
 Importantly, ensure that you select a rendering mode of **Universal (SSR / SSG)** and a deployment target of **Static (Static/JAMStack hosting)**, while going through the setup process.
 
 After you have completed your project, `cd` into your new project, and start a local development server by running `yarn dev` (or, if you chose npm as your package manager, `npm run dev`):
 
-```sh title="Starting a Nuxt.js development server"
+```sh
 cd blog
-yarn dev
 ```
+
+<PackageManagers type="run" args="dev" />
 
 ### Integrating Sanity.io
 
 After your Nuxt.js application is set up, add Sanity's `@sanity/nuxt` plugin to your Nuxt project:
 
-```sh title="Adding @nuxt/sanity"
-yarn add @nuxtjs/sanity @sanity/client
-```
+<PackageManagers pkg="@nuxtjs/sanity @sanity/client" />
 
 To configure the plugin in your Nuxt.js application, you will need to provide some configuration details. The easiest way to do this is to copy the `sanity.json` folder from your studio into your application directory (though there are other methods, too: [refer to the `@nuxt/sanity` documentation](https://sanity.nuxtjs.org/getting-started/quick-start/).
 
@@ -236,9 +232,7 @@ You have rendered the `post` title for our blog, but you are still missing the c
 
 First, install the npm package:
 
-```sh title="Add sanity-blocks-vue-component package"
-yarn add sanity-blocks-vue-component
-```
+<PackageManagers pkg="sanity-blocks-vue-component" />
 
 After the package is installed, create `plugins/sanity-blocks.js`, which will import the component and register it as the Vue component `block-content`:
 
@@ -353,10 +347,7 @@ In `pages/index.vue`, you can use the `block-content` component to render a summ
 </style>
 ```
 
-<Stream
-	id="cdf12588663302139f022c26c4e5cede"
-	title="Nuxt & Sanity video"
-/>
+<Stream id="cdf12588663302139f022c26c4e5cede" title="Nuxt & Sanity video" />
 
 There are many other things inside of your blog schema that you can add to your project. As an exercise, consider one of the following to continue developing your understanding of how to build with a headless CMS:
 

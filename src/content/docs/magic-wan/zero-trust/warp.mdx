@@ -5,6 +5,13 @@ head:
   - tag: title
     content: Use WARP as an on-ramp
 ---
+:::note
+By default, direct WARP-to-WARP connections are not supported for devices located behind Magic WAN with WARP enabled. This is due to issues caused by double encapsulation and asymmetric routing.
+
+When a device is behind Magic WAN, it is recommended to avoid enabling WARP. Instead, access the device using its local LAN IP from remote systems, rather than relying on WARP-to-WARP communication.
+
+If you do want to use WARP on a device behind Magic WAN and connect to its WARP IP (within the `100.96.0.0/12` range), you will need to adjust your WARP profiles. Specifically, exclude the `100.96.0.0/12` subnet from the on-premises WARP profile, and include it in the off-premises profile.
+:::
 
 import { GlossaryTooltip, Render } from "~/components";
 

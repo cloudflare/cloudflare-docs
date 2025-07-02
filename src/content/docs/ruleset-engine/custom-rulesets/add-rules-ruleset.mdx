@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { APIRequest } from "~/components";
+import { APIRequest, Render } from "~/components";
 
 To add rules to an existing custom ruleset, use the [Update an account ruleset](/api/resources/rulesets/methods/update/) operation and pass the rules in an array. Each rule has an expression and an action.
 
@@ -20,6 +20,10 @@ You can use other API operations depending on the type of operation:
 
 :::
 
+<Render file="custom-rulesets-terraform" />
+
+<Render file="custom-rulesets-dashboard" />
+
 ## Add rules
 
 The following request adds two rules to a custom ruleset with ID `$RULESET_ID`. These will be the only two rules in the ruleset.
@@ -33,9 +37,9 @@ The response will include the rule ID of the new rules in the `id` field.
 		rules: [
 			{
 				expression:
-					'(ip.src.country eq "GB" or ip.src.country eq "FR") or cf.threat_score > 0',
+					'(ip.src.country in {"GB" "FR"} and cf.bot_management.score < 20 and not cf.bot_management.verified_bot)',
 				action: "challenge",
-				description: "challenge GB and FR or based on IP Reputation",
+				description: "challenge GB and FR based on bot score",
 			},
 			{
 				expression: 'not http.request.uri.path matches "^/api/.*$"',
@@ -58,8 +62,8 @@ The response will include the rule ID of the new rules in the `id` field.
 				"id": "<CUSTOM_RULE_ID_1>",
 				"version": "1",
 				"action": "challenge",
-				"expression": "(ip.src.country eq \"GB\" or ip.src.country eq \"FR\") or cf.threat_score \u003e 0",
-				"description": "challenge GB and FR or based on IP Reputation",
+				"expression": "(ip.src.country in {\"GB\" \"FR\"} and cf.bot_management.score < 20 and not cf.bot_management.verified_bot)",
+				"description": "challenge GB and FR based on bot score",
 				"last_updated": "2021-03-18T18:25:08.122758Z",
 				"ref": "<CUSTOM_RULE_REF_1>",
 				"enabled": true
@@ -132,8 +136,8 @@ The response will include the modified custom ruleset. Note that the updated rul
 				"id": "<CUSTOM_RULE_ID_1>",
 				"version": "1",
 				"action": "challenge",
-				"expression": "(ip.src.country eq \"GB\" or ip.src.country eq \"FR\") or cf.threat_score \u003e 0",
-				"description": "challenge GB and FR or based on IP Reputation",
+				"expression": "(ip.src.country in {\"GB\" \"FR\"} and cf.bot_management.score < 20 and not cf.bot_management.verified_bot)",
+				"description": "challenge GB and FR based on bot score",
 				"last_updated": "2021-03-18T18:25:08.122758Z",
 				"ref": "<CUSTOM_RULE_ID_1>",
 				"enabled": true

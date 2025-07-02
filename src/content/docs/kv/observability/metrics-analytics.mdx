@@ -3,7 +3,6 @@ pcx_content_type: concept
 title: Metrics and analytics
 sidebar:
   order: 10
-
 ---
 
 KV exposes analytics that allow you to inspect requests and storage across all namespaces in your account.
@@ -14,10 +13,10 @@ The metrics displayed in the [Cloudflare dashboard](https://dash.cloudflare.com/
 
 KV currently exposes the below metrics:
 
-| Dataset   | GraphQL Dataset Name      | Description                                                                   |
-| ----------------------- | --------------------------- | ------------------------------------------------------------- |
-| Operations              | `kvOperationsAdaptiveGroups`| This dataset consists of the operations made to your KV namespaces.   |
-| Storage                 | `kvStorageAdaptiveGroups`   | This dataset consists of the storage details of your KV namespaces.   |
+| Dataset    | GraphQL Dataset Name         | Description                                                         |
+| ---------- | ---------------------------- | ------------------------------------------------------------------- |
+| Operations | `kvOperationsAdaptiveGroups` | This dataset consists of the operations made to your KV namespaces. |
+| Storage    | `kvStorageAdaptiveGroups`    | This dataset consists of the storage details of your KV namespaces. |
 
 Metrics can be queried (and are retained) for the past 31 days.
 
@@ -49,86 +48,103 @@ The following are common GraphQL queries that you can use to retrieve informatio
 
 ```json
 {
-    "accountTag":"<YOUR_ACCOUNT_ID>",
-    "namespaceId": "<YOUR_KV_NAMESPACE_ID>",
-    "date_geq": "2024-07-15",
-    "date_leq": "2024-07-30"
+	"accountTag": "<YOUR_ACCOUNT_ID>",
+	"namespaceId": "<YOUR_KV_NAMESPACE_ID>",
+	"date_geq": "2024-07-15",
+	"date_leq": "2024-07-30"
 }
 ```
 
 #### Operations
 
-To query the sum of read, write, delete, and list operations for a given `namespaceId` and for a given date range (`date_geq` and `date_leq`), grouped by `date` and `actionType`:
+To query the sum of read, write, delete, and list operations for a given `namespaceId` and for a given date range (`start` and `end`), grouped by `date` and `actionType`:
 
-```graphql
-query {
-    viewer {
-        accounts(filter: { accountTag: $accountTag }) {
-            kvOperationsAdaptiveGroups(
-                filter: { namespaceId: $namespaceId, date_geq: $date_geq, date_leq: $date_leq }
-                limit: 10000
+```graphql graphql-api-explorer
+query KvOperationsSample(
+	$accountTag: string!
+	$namespaceId: string
+	$start: Date
+	$end: Date
+) {
+	viewer {
+		accounts(filter: { accountTag: $accountTag }) {
+			kvOperationsAdaptiveGroups(
+				filter: { namespaceId: $namespaceId, date_geq: $start, date_leq: $end }
+				limit: 10000
 				orderBy: [date_DESC]
-            ) {
-                sum {
-                    requests
-                }
-                dimensions {
-                    date
-                    actionType
-                }
-            }
-        }
-    }
+			) {
+				sum {
+					requests
+				}
+				dimensions {
+					date
+					actionType
+				}
+			}
+		}
+	}
 }
 ```
 
+To query the distribution of the latency for read operations for a given `namespaceId` within a given date range (`start`, `end`):
 
-To query the distribution of the latency for read operations for a given `namespaceId` within a given date range (`date_geq`, `date_leq`):
-
-```graphql
-query {
-    viewer {
-        accounts(filter: { accountTag: $accountTag }) {
-            kvOperationsAdaptiveGroups(
-                filter: { namespaceId: $namespaceId, date_geq: $date_geq, date_leq: $date_leq, actionType: "read" }
-                limit: 10000
-            ) {
-                sum {
-                    requests
-                }
-                dimensions {
-                    actionType
-                }
-                quantiles {
-                    latencyMsP25
-                    latencyMsP50
-                    latencyMsP75
-                    latencyMsP90
-                    latencyMsP99
-                    latencyMsP999
-                }
-            }
-        }
-    }
+```graphql graphql-api-explorer
+query KvOperationsSample2(
+	$accountTag: string!
+	$namespaceId: string
+	$start: Date
+	$end: Date
+) {
+	viewer {
+		accounts(filter: { accountTag: $accountTag }) {
+			kvOperationsAdaptiveGroups(
+				filter: {
+					namespaceId: $namespaceId
+					date_geq: $start
+					date_leq: $end
+					actionType: "read"
+				}
+				limit: 10000
+			) {
+				sum {
+					requests
+				}
+				dimensions {
+					actionType
+				}
+				quantiles {
+					latencyMsP25
+					latencyMsP50
+					latencyMsP75
+					latencyMsP90
+					latencyMsP99
+					latencyMsP999
+				}
+			}
+		}
+	}
 }
 ```
 
 To query your account-wide read, write, delete, and list operations across all KV namespaces:
 
-```graphql
-query {
-    viewer {
-        accounts(filter: { accountTag: $accountTag }) {
-            kvOperationsAdaptiveGroups(filter: { date_geq: $date_geq, date_leq: $date_leq  }, limit: 10000) {
-                sum {
-                    requests
-                }
-                dimensions {
-                    actionType
-                }
-            }
-        }
-    }
+```graphql graphql-api-explorer
+query KvOperationsAllSample($accountTag: string!, $start: Date, $end: Date) {
+	viewer {
+		accounts(filter: { accountTag: $accountTag }) {
+			kvOperationsAdaptiveGroups(
+				filter: { date_geq: $start, date_leq: $end }
+				limit: 10000
+			) {
+				sum {
+					requests
+				}
+				dimensions {
+					actionType
+				}
+			}
+		}
+	}
 }
 ```
 
@@ -136,24 +152,29 @@ query {
 
 To query the storage details (`keyCount` and `byteCount`) of a KV namespace for every day of a given date range:
 
-```graphql
-query Viewer {
-    viewer {
-        accounts(filter: { accountTag: $accountTag }) {
-            kvStorageAdaptiveGroups(
-                filter: { date_geq: $date_geq, date_leq: $date_leq, namespaceId: $namespaceId }
-                limit: 10000
-                orderBy: [date_DESC]
-            ) {
-                max {
-                    keyCount
-                    byteCount
-                }
-                dimensions {
-                    date
-                }
-            }
-        }
-    }
+```graphql graphql-api-explorer
+query Viewer(
+	$accountTag: string!
+	$namespaceId: string
+	$start: Date
+	$end: Date
+) {
+	viewer {
+		accounts(filter: { accountTag: $accountTag }) {
+			kvStorageAdaptiveGroups(
+				filter: { date_geq: $start, date_leq: $end, namespaceId: $namespaceId }
+				limit: 10000
+				orderBy: [date_DESC]
+			) {
+				max {
+					keyCount
+					byteCount
+				}
+				dimensions {
+					date
+				}
+			}
+		}
+	}
 }
 ```
