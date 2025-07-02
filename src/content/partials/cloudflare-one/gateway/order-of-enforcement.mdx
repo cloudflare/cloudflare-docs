@@ -198,7 +198,9 @@ The only exception is if you are using [Clientless Web Isolation](/cloudflare-on
 
 Next, Gateway checks decrypted traffic against your Isolate policies. When a user makes a request which triggers an Isolate policy, the request will be rerouted to a [remote browser](/cloudflare-one/policies/browser-isolation/).
 
-Lastly, Gateway evaluates all Allow, Block, and Do Not Scan policies. These policies apply to both isolated and non-isolated traffic. For example, if `example.com` is isolated and `example.com/subpage` is blocked, Gateway will block the subpage inside of the remote browser.
+Next, Gateway evaluates all Allow, Block, and Do Not Scan policies. These policies apply to both isolated and non-isolated traffic. For example, if `example.com` is isolated and `example.com/subpage` is blocked, Gateway will block the subpage (`example.com/subpage`) inside of the remote browser.
+
+Lastly, Gateway inspects the body of the HTTP request by evaluating it against DLP policies, and running anti-virus scanning and file sandboxing. If DLP Block policies are present, the action Gateway ultimately takes may not match the action it initially logs. For more information, refer to [DLP policy precedence](#dlp-policy-precedence).
 
 ### Resolver policies
 
@@ -206,11 +208,25 @@ When [resolver policies](/cloudflare-one/policies/gateway/resolver-policies/) ar
 
 ### Order of precedence
 
-<Render
-	file="gateway/order-of-precedence"
-	product="cloudflare-one"
-	params={{ one: "DNS, network, or HTTP" }}
-/>
+Order of precedence refers to the priority of individual policies within the DNS, network, or HTTP policy builder. Gateway evaluates policies in ascending order beginning with the lowest value.
+
+The order of precedence follows the first match principle. Once traffic matches an Allow or Block policy, evaluation stops and no subsequent policies can override the decision. Therefore, Cloudflare recommends assigning the most specific policies and exceptions with the highest precedence and the most general policies with the lowest precedence.
+
+#### Zero Trust dashboard
+
+In the Zero Trust dashboard, policies are in order of precedence from top to bottom of the list. Policies begin with precedence `1` and count upward. You can modify the order of precedence by dragging and dropping individual policies in the dashboard.
+
+#### Cloudflare API
+
+To update the precedence of a policy with the Cloudflare API, use the [Update a Zero Trust Gateway rule](/api/resources/zero_trust/subresources/gateway/subresources/rules/methods/update/) endpoint to update the `precedence` field.
+
+#### DLP policy precedence
+
+For Gateway configurations with DLP policies, Gateway will filter and log traffic based on first match, then scan the body of the HTTP request for matching content. Because of the first match principle, Gateway may perform and log a decision for traffic, then perform a contradicting decision. For example, if traffic is first allowed with an Allow HTTP policy, then blocked with a DLP Block policy, Gateway will log the initial Allow action despite ultimately blocking the request.
+
+#### Access applications
+
+If Gateway traffic is headed to a private IP address protected as an Access application, that traffic will still be evaluated by the destination application's Access policies, even if a Gateway Allow policy matched first. Gateway Block policies that match traffic will terminate any other policy evaluation. This is expected behavior. A Gateway Allow policy does not override or bypass Access policies.
 
 <Render file="gateway/terraform-precedence-warning" product="cloudflare-one" />
 

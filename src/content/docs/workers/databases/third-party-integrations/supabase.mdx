@@ -9,21 +9,14 @@ import { Render, PackageManagers, Tabs, TabItem } from "~/components";
 
 :::note
 
-You can connect to Supabase using [Hyperdrive](/hyperdrive) (recommended), or using the Supabase client, `@supabase/supabase-js`. Both provide connection pooling and reduce the amount of round trips required to create a secure connection from Workers to your database.
+The Supabase client (`@supabase/supabase-js`) provides access to Supabase's various features, including database access. If you need access to all of the Supabase client functionality, use the Supabase client. 
 
-Hyperdrive can provide lower latencies because it performs the database connection setup and connection pooling across Cloudflare's network. Hyperdrive supports native database drivers, libraries, and ORMs, and is included in all [Workers plans](/hyperdrive/platform/pricing/). Learn more about Hyperdrive in [How Hyperdrive Works](/hyperdrive/configuration/how-hyperdrive-works/).
+If you want to connect directly to the Supabase Postgres database, connect using [Hyperdrive](/hyperdrive). Hyperdrive can provide lower latencies because it performs the database connection setup and connection pooling across Cloudflare's network. Hyperdrive supports native database drivers, libraries, and ORMs, and is included in all [Workers plans](/hyperdrive/platform/pricing/). Learn more about Hyperdrive in [How Hyperdrive Works](/hyperdrive/configuration/how-hyperdrive-works/). 
 
 :::
 
 <Tabs>
-	<TabItem label="Hyperdrive (recommended)">
-
-When connecting to Supabase with Hyperdrive, you connect directly to the underlying Postgres database. This is [recommended by Supabase](https://supabase.com/docs/guides/database/connecting-to-postgres#choosing-a-connection-method) when accessed server-side from Workers.
-If you prefer to use the Supabase client, refer to the `Supabase client` tab. To connect to Supabase using [Hyperdrive](/hyperdrive), follow these steps:
-
-         <Render file="supabase-partial" product="hyperdrive"/>
-    </TabItem>
-    <TabItem label="Supabase client">
+	    <TabItem label="Supabase client">
 
 ### Supabase client setup
 
@@ -91,4 +84,11 @@ To set up an integration with Supabase:
 To learn more about Supabase, refer to [Supabase's official documentation](https://supabase.com/docs).
 
 </TabItem>
+	<TabItem label="Hyperdrive">
+
+When connecting to Supabase with Hyperdrive, you connect directly to the underlying Postgres database. This provides the lowest latency for databsae queries when accessed server-side from Workers. To connect to Supabase using [Hyperdrive](/hyperdrive), follow these steps:
+
+         <Render file="supabase-partial" product="hyperdrive"/>
+    </TabItem>
+
 </Tabs>
