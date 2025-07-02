@@ -7,7 +7,7 @@ releaseNotes: |-
   - Captive portal improvements including showing connectivity status in the client and sending system notifications for captive portal sign in.
   - The WARP client now applies post-quantum cryptography end-to-end on enabled devices accessing resources behind a Cloudflare Tunnel. This feature can be [enabled by MDM](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/#enable_post_quantum).
   - Improvement to gracefully handle changes made by MDM while WARP is not running.
-  - Fixed an issue affecting Split Tunnel Include mode, where traffic outside the tunnel was blocked when switching between Wi-Fi and ethernet networks.
+  - Fixed an issue affecting Split Tunnel Include mode, where traffic outside the tunnel was blocked when switching between Wi-Fi and Ethernet networks.
 
   **Known issues**
   - macOS Sequoia: Due to changes Apple introduced in macOS 15.0.x, the WARP client may not behave as expected. Cloudflare recommends the use of macOS 15.4 or later.

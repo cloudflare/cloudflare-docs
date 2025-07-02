@@ -12,7 +12,7 @@ releaseNotes: >-
 
   - Improvement to gracefully handle changes made by MDM while WARP is not running.
 
-  - Fixed an issue affecting Split Tunnel Include mode, where traffic outside the tunnel was blocked when switching between Wi-Fi and ethernet networks.
+  - Fixed an issue affecting Split Tunnel Include mode, where traffic outside the tunnel was blocked when switching between Wi-Fi and Ethernet networks.
 version: 2025.5.735.1
 releaseDate: 2025-06-05T19:47:54.412Z
 packageURL: https://downloads.cloudflareclient.com/v1/download/noble-intel/version/2025.5.735.1
