@@ -3,9 +3,23 @@
 
 ---
 
-To enable JavaScript Detections:
+import { Tabs, TabItem, Steps } from '~/components';
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+
+To enable JavaScript detections:
+
+<Steps>
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **Bots**.
 3. Select **Configure Bot Management**.
 4. For **JavaScript Detections**, switch the toggle to **On**.
+</Steps>
+</TabItem> <TabItem label="New dashboard" icon="rocket">
+To enable JavaScript detections using the Bot traffic settings module:
+<Steps>
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+2. Go to **Security** > **Settings**.
+3. Under your bot traffic plan configurations, select the edit icon for **JS detections** and switch the **JavaScript Detections** toggle to **On**.
+</Steps>
+</TabItem> </Tabs>
