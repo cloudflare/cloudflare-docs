@@ -67,7 +67,7 @@ Then you can specify the URL in the image attribute:
 ```json
 {
 	"containers": {
-		"image": "registry.cloudflare.com/your-namespace/your-image:tag"
+		"image": "registry.cloudflare.com/your-image:tag"
 		// ...rest of config...
 	}
 }
@@ -86,7 +86,7 @@ wrangler containers push <image>:<tag>
 ```
 
 :::note
-We plan to allow configuring public images directly in wrangler config. Cloudflare will
+We plan to allow configuring public images directly in Wrangler config. Cloudflare will
 download your image, optionally using auth credentials, then cache it globally in the Cloudflare Registry.
 
 This is not yet available.
