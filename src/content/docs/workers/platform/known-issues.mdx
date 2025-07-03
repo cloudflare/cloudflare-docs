@@ -96,3 +96,7 @@ Do not use:
 ```js
 await fetch('http://192.0.2.1')
 ```
+
+## Fetch HEAD being converted to GET
+
+By default a fetch() request will go through Cache.  When a request goes through cache it converts any HEAD requests to GET.  See: [Interaction of HEAD requests with Cache](/cache/concepts/cache-behavior/#interaction-of-head-requests-with-cache).  You can stop this from happening by disabling caching for that fetch() request by setting Cache to [no-store](/workers/runtime-apis/fetch/#parameters).
