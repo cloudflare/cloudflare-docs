@@ -1,36 +1,85 @@
 ---
 import { z } from "astro:schema";
-import { getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
+import ReactSelect from "./ReactSelect";
 
 type Props = z.infer<typeof props>;
+type Frontmatter = keyof CollectionEntry<"docs">["data"];
 
 const props = z.object({
 	tags: z.string().array().optional(),
 	types: z.string().array(),
 	products: z.string().array().optional(),
+	directory: z.string().optional(),
+	filters: z.custom<Frontmatter>().array().optional(),
 });
 
-const { tags, types, products } = props.parse(Astro.props);
+const { tags, types, products, directory, filters } = props.parse(Astro.props);
 
-const resources = await getCollection("docs", ({ data }) => {
+const resources = await getCollection("docs", ({ id, data }) => {
 	return (
 		types.includes(data.pcx_content_type ?? "") &&
+		(directory ? id.startsWith(directory) : true) &&
 		(tags ? data.tags?.some((v: string) => tags.includes(v)) : true) &&
 		(products ? data.products?.some((v: string) => products.includes(v)) : true)
 	);
 });
+
+const facets = resources.reduce(
+	(acc, page) => {
+		if (!filters) return acc;
+
+		for (const filter of filters) {
+			const val = page.data[filter];
+			if (val) {
+				if (Array.isArray(val) && val.every((v) => typeof v === "string")) {
+					acc[filter] = [...new Set([...(acc[filter] || []), ...val])];
+				} else if (typeof val === "string") {
+					acc[filter] = [...new Set([...(acc[filter] || []), val])];
+				}
+			}
+		}
+
+		return acc;
+	},
+	{} as Record<string, string[]>,
+);
 ---
 
-<ul>
+{
+	filters && (
+		<div class="not-content">
+			<ReactSelect
+				id="resources-filters"
+				className="mt-2"
+				options={Object.entries(facets).map(([key, values]) => ({
+					label: key,
+					options: values.map((v) => ({
+						value: v,
+						label: v,
+					})),
+				}))}
+				onChange={(opt) => console.log(opt)}
+				client:idle
+			/>
+		</div>
+	)
+}
+
+<div class="grid grid-cols-2 gap-4">
 	{
-		resources.map((page) => {
-			const description = page.data.description;
-			return (
-				<li>
-					<!-- prettier-ignore -->
-					<a href={`/${page.id}/`}>{page.data.title}</a>{description && `: ${description}`}
-				</li>
-			);
-		})
+		resources.map((page) => (
+			<a
+				href={`/${page.id}/`}
+				class="flex flex-col gap-2 rounded-sm border border-solid border-gray-200 p-6 text-black no-underline hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
+			>
+				<p class="decoration-accent underline decoration-2 underline-offset-4">
+					{page.data.title}
+				</p>
+				<span class="line-clamp-3" title={page.data.description}>
+					{page.data.description}
+				</span>
+			</a>
+		))
 	}
-</ul>
+</div>

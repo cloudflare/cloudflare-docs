@@ -1,16 +1,10 @@
 import type { CollectionEntry } from "astro:content";
-import type { StylesConfig } from "react-select";
-import Select from "react-select";
+import ReactSelect, { type Option } from "../ReactSelect";
 import { useEffect, useState } from "react";
 
 interface Props {
 	products: CollectionEntry<"products">[];
 	groups: string[];
-}
-
-interface Option {
-	label?: string;
-	value: string;
 }
 
 export default function ProductSelect({ products, groups }: Props) {
@@ -42,47 +36,6 @@ export default function ProductSelect({ products, groups }: Props) {
 		},
 	];
 
-	const selectStyles: StylesConfig<Option, false> = {
-		control: (base, state) => ({
-			...base,
-			backgroundColor: "var(--sl-color-gray-6)",
-			borderColor: state.isFocused
-				? "var(--sl-color-gray-3)"
-				: "var(--sl-color-gray-4)",
-			"&:hover": {
-				borderColor: "var(--sl-color-gray-3)",
-			},
-			boxShadow: state.isFocused ? "0 0 0 1px var(--sl-color-gray-3)" : "none",
-		}),
-		menu: (base) => ({
-			...base,
-			backgroundColor: "var(--sl-color-gray-6)",
-			borderColor: "var(--sl-color-gray-4)",
-		}),
-		option: (base, state) => ({
-			...base,
-			backgroundColor: state.isFocused
-				? "var(--sl-color-gray-5)"
-				: "var(--sl-color-gray-6)",
-			color: "var(--sl-color-gray-1)",
-			"&:active": {
-				backgroundColor: "var(--sl-color-gray-4)",
-			},
-		}),
-		singleValue: (base) => ({
-			...base,
-			color: "var(--sl-color-gray-1)",
-		}),
-		input: (base) => ({
-			...base,
-			color: "var(--sl-color-gray-1)",
-		}),
-		groupHeading: (base) => ({
-			...base,
-			color: "var(--sl-color-gray-3)",
-		}),
-	};
-
 	useEffect(() => {
 		const url = new URL(window.location.href);
 		const param = url.searchParams.get("product");
@@ -100,6 +53,7 @@ export default function ProductSelect({ products, groups }: Props) {
 
 	const handleChange = (option: Option | null) => {
 		if (!option) return;
+
 		setSelectedOption(option);
 
 		const event = new Event("change");
@@ -114,13 +68,13 @@ export default function ProductSelect({ products, groups }: Props) {
 	};
 
 	return (
-		<Select
+		<ReactSelect
 			id="changelogs-next-filter"
 			className="mt-2"
 			options={options}
 			value={selectedOption}
-			onChange={handleChange}
-			styles={selectStyles}
+			onChange={(e) => handleChange(e as Option | null)}
+			urlParam="product"
 		/>
 	);
 }

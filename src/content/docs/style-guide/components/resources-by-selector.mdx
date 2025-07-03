@@ -14,8 +14,9 @@ The `ResourcesBySelector` component allows you to pull in documentation resource
 import { ResourcesBySelector } from "~/components";
 
 <ResourcesBySelector
-	tags={["AI"]}
-	types={["reference-architecture","design-guide","reference-architecture-diagram"]}
+	directory="workers/examples/"
+	types={["example"]}
+	filters={["languages", "tags"]}
 />
 ```
 
@@ -23,14 +24,14 @@ import { ResourcesBySelector } from "~/components";
 
 - `types` <Type text="string[]" />
 
-	An array of `pcx_content_type` values to filter by.
+  An array of `pcx_content_type` values to filter by.
 
 - `tags` <Type text="string[]" /> <MetaInfo text="optional" />
 
-	An array of `tags` values to filter by.
+  An array of `tags` values to filter by.
 
-	To see a list of the available tags, and which pages are associated with them, refer to [this list](/style-guide/frontmatter/tags/).
+  To see a list of the available tags, and which pages are associated with them, refer to [this list](/style-guide/frontmatter/tags/).
 
 - `products` <Type text="string[]" /> <MetaInfo text="optional" />
 
-	An array of `products` values to filter by.
+  An array of `products` values to filter by.
