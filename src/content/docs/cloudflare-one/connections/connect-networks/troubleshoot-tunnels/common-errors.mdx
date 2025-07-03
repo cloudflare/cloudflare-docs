@@ -183,7 +183,7 @@ To ping an IP address behind Cloudflare Tunnel, your system must allow ICMP traf
 	 e. To make the change persist on reboot, update your `systcl` parameters:
 
 	 ```sh
-	 echo "net.ipv4.ping_group_range = 0 10001" | sudo tee /etc/sysctl.d/99-cloudflared.conf
+	 echo "net.ipv4.ping_group_range = 0 10001" | sudo tee -a /etc/sysctl.d/99-cloudflared.conf
    ```
 
 2. If you are running multiple network interfaces (for example, `eth0` and `eth1`), configure `cloudflared` to use the external Internet-facing interface:
