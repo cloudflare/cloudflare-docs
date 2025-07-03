@@ -5,8 +5,6 @@ sidebar:
   order: 5
 ---
 
-import { TabItem, Tabs } from "~/components";
-
 Hyperdrive maintains a pool of connections to your database. These are optimally placed to minimize the latency for your applications. You can configure
 the amount of connections your Hyperdrive configuration uses to connect to your origin database. This enables you to right-size your connection pool based on your database capacity and application requirements.
 
@@ -17,34 +15,13 @@ All configurations have a minimum of 5 connections, and with a maximum depending
 
 ## How Hyperdrive pools database connections
 
-Hyperdrive will automatically increase or decrease the amount of database connections held open by Hyperdrive depending on your traffic and the amount of load that is put on your database.
+Hyperdrive will automatically scale the amount of database connections held open by Hyperdrive depending on your traffic and the amount of load that is put on your database.
 
 The `max_size` parameter acts as a soft limit - Hyperdrive may temporarily create additional connections during network issues or high traffic periods to ensure high availability and resiliency.
 
-## Configure connection counts with Wrangler
-
-You can configure connection counts using the Cloudflare dashboard, Wrangler CLI, or the Cloudflare API. To configure Hyperdrive's connection count, follow these steps:
-
-Use the `origin-connection-limit` parameter when creating or updating a Hyperdrive configuration:
-
-<Tabs>
-<TabItem label="Create new configuration">
-```sh
-npx wrangler hyperdrive create my-hyperdrive \
-  --connection-string="postgresql://user:password@host:port/database" \
-  --origin-connection-limit=10
-```
-</TabItem>
-
-<TabItem label="Update existing configuration">
-```sh
-npx wrangler hyperdrive update my-hyperdrive-id \
-  --origin-connection-limit=15
-```
-</TabItem>
-</Tabs>
-
 ## Best practices
+
+You can configure connection counts using the Cloudflare dashboard or the Cloudflare API. Consider the following best practices to determine the right limit for your use-case:
 
 - **Start conservatively**: Begin with a lower connection count and increase as needed based on your application's performance.
 - **Monitor database metrics**: Watch your database's connection usage and performance metrics to optimize the connection count.
