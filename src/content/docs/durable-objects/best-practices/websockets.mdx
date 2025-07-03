@@ -28,7 +28,7 @@ In addition to [the Web Standard WebSocket API](/workers/runtime-apis/websockets
 
 ### How does Durable Object Hibernation work with WebSockets?
 
-When a Durable Object receives no events or messages for 10 seconds, the Durable Object is evicted from memory to avoid unnecessary usage. The WebSocket clients remain connected to the Cloudflare network. When your Durable Object receives an event during hibernation, it is re-initialized, its `constructor` function is called, and it can access the WebSocket clients with the `this.ctx.getWebSockets()` function.
+When a Durable Object receives no events (like alarms) or messages for 10 seconds, the Durable Object is evicted from memory to avoid unnecessary charges. The WebSocket clients remain connected to the Cloudflare network. When your Durable Object receives an event during hibernation, it is re-initialized, its `constructor` function is called, and it can access the WebSocket clients with the `this.ctx.getWebSockets()` function.
 
 When the Durable Object is evicted from memory, its in-memory state is reset. It is common to rely on in-memory state to organize your WebSockets (for example, keeping your WebSockets in rooms with a `Map<WebSocket, Object>` data type). With Hibernation, you must restore the in-memory state of your Durable Object within the `constructor` function.
 
