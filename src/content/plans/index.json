@@ -690,20 +690,35 @@
 					"biz": "Yes",
 					"ent": "Yes"
 				},
-				"maximum_duration": {
-					"title": "Maximum time interval",
+				"maximum_duration_zone": {
+					"title": "Maximum time interval (zone)",
 					"free": "7 days",
 					"pro": "31 days",
 					"biz": "31 days",
 					"ent": "62 days"
 				},
-				"historical_data": {
-					"title": "Historical data",
+				"maximum_duration_account": {
+					"title": "Maximum time interval (account)",
+					"free": "7 days",
+					"pro": "7 days",
+					"biz": "7 days",
+					"ent": "62 days"
+				},
+				"historical_data_zone": {
+					"title": "Historical data (zone)",
 					"free": "8 days",
 					"pro": "31 days",
 					"biz": "31 days",
 					"ent": "62 days"
+				},
+				"historical_data_account": {
+					"title": "Historical data (account)",
+					"free": "8 days",
+					"pro": "8 days",
+					"biz": "8 days",
+					"ent": "62 days"
 				}
+
 			}
 		},
 		"dnssec": {
