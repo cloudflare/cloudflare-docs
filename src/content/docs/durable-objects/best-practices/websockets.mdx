@@ -47,7 +47,7 @@ Read more in the section [When does a Durable Object incur duration charges?](/d
 
 ### Example
 
-The Worker used in the [WebSocket Standard API example](/durable-objects/examples/websocket-server/) does not require any code changes to make use of the WebSocket Hibernation API. The changes to the Durable Object are described in the code sample below. In summary, [`DurableObjectState::acceptWebSocket`](/durable-objects/api/state/#acceptwebsocket) is called to accept the server side of the WebSocket connection, and handler methods are defined on the Durable Object class for relevant event types rather than adding event listeners.
+To use WebSockets with Durable Objects, you first need to proxy the `request` object from the Worker to the Durable Object, as is done in the [WebSocket Standard API example](/durable-objects/examples/websocket-server/). Using the Hibernation WebSockets API in Durable Objects differs slightly from using WebSocket Standard APIs. In summary, [`DurableObjectState::acceptWebSocket`](/durable-objects/api/state/#acceptwebsocket) is called to accept the server side of the WebSocket connection, and handler methods are defined on the Durable Object class for relevant event types rather than adding event listeners.
 
 If an event occurs for a hibernated Durable Object's corresponding handler method, it will return to memory. This will call the Durable Object's constructor, so it is best to minimize work in the constructor when using WebSocket hibernation.
 
