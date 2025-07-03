@@ -10,7 +10,7 @@ import { Tabs, TabItem } from "~/components";
 2. In **Firewall**, turn on **Proxy**.
 3. Select **TCP**.
 4. (Recommended) To proxy traffic to internal DNS resolvers, select **UDP**.
-5. (Recommended) To proxy traffic for diagnostic tools such as `ping` and `traceroute`, select **ICMP**. You may also need to [update your system](/cloudflare-one/connections/connect-networks/troubleshoot-tunnels/common-errors/#ping-and-traceroute-commands-do-not-work) to allow ICMP traffic through `cloudflared`.
+5. (Recommended) To proxy traffic for diagnostic tools such as `ping` and `traceroute`, select **ICMP**. You may also need to [update your system](/cloudflare-one/policies/gateway/proxy/#icmp) to allow ICMP traffic through `cloudflared`.
 
 </TabItem>
 <TabItem label="Terraform (v5)">
