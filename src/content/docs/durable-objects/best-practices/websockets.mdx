@@ -32,7 +32,7 @@ When a Durable Object receives no events (like alarms) or messages for 10 second
 
 When the Durable Object is evicted from memory, its in-memory state is reset. It is common to rely on in-memory state to organize your WebSockets (for example, keeping your WebSockets in rooms with a `Map<WebSocket, Object>` data type). With Hibernation, you must restore the in-memory state of your Durable Object within the `constructor` function.
 
-To do this, you can use the `serializeAttachment` to persist additional data with the Durable Object WebSocket class, which will persist the data to the Durable Object's storage. Upon re-initialization of the Durable Object, you can access this data with `deserializeAttachment`.
+To do this, you can use the [`serializeAttachment`](#websocketserializeattachment) to persist additional data with the Durable Object WebSocket class, which will persist the data to the Durable Object's storage. Upon re-initialization of the Durable Object, you can access this data with [`deserializeAttachment`](#websocketdeserializeattachment).
 
 The Durable Object WebSocket class consists of Cloudflare-specific extensions to the Web Standard WebSocket API. These extensions are either present on the [DurableObjectState](/durable-objects/api/state) interface, or as handler methods on the Durable Object class.
 
