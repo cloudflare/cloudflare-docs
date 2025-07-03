@@ -9,7 +9,13 @@ head:
 
 ---
 
-<Render file="analytics/site-analytics"	product="networking-services" />
+import { Render } from "~/components"
 
-Refer to [Set up a site](/magic-wan/configuration/common-settings/sites/) for more information on how to set up a site.
+<Render
+	file="analytics/site-analytics"
+	product="networking-services"
+	params={{
+		instructions: "Refer to [Set up a site](/magic-wan/configuration/common-settings/sites/) for more information on how to set up a site."
+		}}
+/>
 
