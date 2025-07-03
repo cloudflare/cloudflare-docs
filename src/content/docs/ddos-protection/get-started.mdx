@@ -6,6 +6,8 @@ sidebar:
 
 ---
 
+import { Steps } from "~/components"
+
 ## Free, Pro, and Business plans
 
 The DDoS Attack Protection managed rulesets provided by Cloudflare are enabled by default on zones onboarded to Cloudflare, IP applications onboarded to Spectrum, and IP Prefixes onboarded to Magic Transit.
@@ -26,10 +28,12 @@ Cloudflare's DDoS protection systems automatically detect and mitigate DDoS atta
 
 To prevent this situation, Cloudflare recommends that you perform these steps to get started:
 
+<Steps>
 1. Set the ruleset actions for all the [DDoS Attack Protection managed rulesets](/ddos-protection/managed-rulesets/) to _Log_.
 2. Analyze the flagged traffic.
 3. Adjust the sensitivity or action of individual managed ruleset rules, if required.
 4. Switch ruleset actions from _Log_ back to the default.
+</Steps>
 
 ### Prerequisites
 
@@ -46,9 +50,11 @@ You must have one of the following:
 The _Log_ action is only available to Enterprise customers.
 :::
 
+<Steps>
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
 2. [Configure all the rules in the HTTP DDoS Attack Protection managed ruleset](/ddos-protection/managed-rulesets/http/http-overrides/configure-dashboard/#create-a-ddos-override), setting their action to _Log_.
 3. [Configure all the rules in the Network-layer DDoS Attack Protection managed ruleset](/ddos-protection/managed-rulesets/network/network-overrides/configure-dashboard/#create-a-ddos-override), setting the action to _Log_.
+</Steps>
 
 Alternatively, if you are using the API, define an override at the ruleset level to set the action of all managed ruleset rules to `log` by following these instructions:
 
@@ -57,8 +63,10 @@ Alternatively, if you are using the API, define an override at the ruleset level
 
 ### 2. Review flagged traffic
 
+<Steps>
 1. Go to your [analytics dashboard](/ddos-protection/reference/analytics/) (the exact dashboard depends on your Cloudflare services).
 2. Apply one or more filters, if required, and identify any rules that would have blocked legitimate traffic if _Log_ mode were disabled. Take note of the rule IDs.
+</Steps>
 
 ### 3. Customize managed ruleset rules
 

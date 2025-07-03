@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Render } from "~/components"
+import { Render, Tabs, TabItem, Steps } from "~/components"
 
 <Render file="detection-ids" />
 
@@ -40,7 +40,8 @@ You can create or edit existing Logpush jobs to include the new Bot Detection ID
 
 ### Via the Cloudflare dashboard
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+<Steps>
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Analytics & Logs** > **Logs**.
 3. Select **Add Logpush Job**.
 4. Select **HTTP Requests** as the dataset.
@@ -48,6 +49,7 @@ You can create or edit existing Logpush jobs to include the new Bot Detection ID
 6. Select and enter the destination information.
 7. Prove the ownership.
 8. Select **Save**.
+</Steps>
 
 ### Via the API
 
@@ -55,11 +57,26 @@ You can create or edit existing Logpush jobs to include the new Bot Detection ID
 
 ## Create or edit an expression
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Go to **Security** > **Bots**, apply filters and select **Create custom rule** to create a [custom rule](/waf/custom-rules/create-dashboard/) based on those filters. 
-   - Alternatively, if you already created a custom rule, go to **Security** > **WAF** > **Custom rules** and edit the expression of an existing custom rule.
-3. Use the `cf.bot_management.detection_ids` field in the rule expression.
-4. Select **Save**.
+<Tabs syncKey="dashNewNav"> 
+	<TabItem label="Old dashboard">
+		<Steps>
+      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+      2. Go to **Security** > **Bots**, apply filters and select **Create custom rule** to create a [custom rule](/waf/custom-rules/create-dashboard/) based on those filters. Alternatively, if you already created a custom rule, go to **Security** > **WAF** > **Custom rules** and edit the expression of an existing custom rule.
+      3. Use the `cf.bot_management.detection_ids` field in the rule expression.
+      4. Select **Save**.
+    </Steps>
+  </TabItem> 
+  <TabItem label="New dashboard" icon="rocket">
+		<Steps>
+      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
+      2. Go to **Security** > **Analytics**.
+      3. Apply filters and select **Create custom security rule** to create a custom rule based on your filters. Alternatively, if you have already created a custom rule, you can go to the existing rule in **Security** > **Security rules** and edit the expression based on your filters.
+      4. Use the `cf.bot_management.detection_ids` field in the rule expression.
+      5. Select **Deploy**.
+      </Steps>
+	</TabItem> 
+</Tabs>
+
 
 ## Use cases
 
@@ -92,11 +109,26 @@ Cloudflare's [Managed Challenge](/cloudflare-challenges/challenge-types/challeng
 
 To access account takeover detections:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Go to **Security** > **WAF**.
-3. Under **Custom Rules**, select **Create rule**.
-4. Fill out the form using **Bot Detection IDs** along with other necessary information.
-5. Select **Save as draft** to return to it later, or **Deploy** to deploy the rule.
+<Tabs syncKey="dashNewNav"> 
+	<TabItem label="Old dashboard">
+		<Steps>
+      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+      2. Go to **Security** > **WAF**.
+      3. Under **Custom Rules**, select **Create rule**.
+      4. Fill out the form using **Bot Detection IDs** along with other necessary information.
+      5. Select **Save as draft** to return to it later, or **Deploy** to deploy the rule.
+    </Steps>
+  </TabItem> 
+  <TabItem label="New dashboard" icon="rocket">
+		<Steps>
+      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
+      2. Go to **Security** > **Security rules**.
+      3. Select **Create rule** and choose **Custom rule**.
+      4. Fill out the form using **Bot Detection IDs** along with other necessary information.
+      5. Select **Save as draft** to return to it later, or **Deploy** to deploy the rule.
+      </Steps>
+	</TabItem> 
+</Tabs>
 
 ```js title="Rule example"
 
@@ -109,11 +141,26 @@ Rate limiting rules can limit the number of logins from a particular IP, JA4 Fin
 
 To use rate limiting rules with account takeover detections:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Go to ***Security** > **WAF**.
-3. Under **Rate limiting rules**, select **Create rule**.
-4. Fill out the form using the **Custom expression builder** and `cf.bot_management_detection_ids` along with other necessary information.
-5. Select **Save as draft** to return to it later, or **Deploy** to deploy the rule.
+<Tabs syncKey="dashNewNav"> 
+	<TabItem label="Old dashboard">
+		<Steps>
+      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+      2. Go to **Security** > **WAF**.
+      3. Under **Rate limiting rules**, select **Create rule**.
+      4. Fill out the form using the **Custom expression builder** and `cf.bot_management_detection_ids` along with other necessary information.
+      5. Select **Save as draft** to return to it later, or **Deploy** to deploy the rule.
+    </Steps>
+  </TabItem> 
+  <TabItem label="New dashboard" icon="rocket">
+		<Steps>
+      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
+      2. Go to **Security** > **Security rules**.
+      3. Select **Create rule** and choose **Rate limiting rule**.
+      4. Fill out the form using the **Custom expression builder** and `cf.bot_management_detection_ids` along with other necessary information.
+      5. Select **Save as draft** to return to it later, or **Deploy** to deploy the rule.
+    </Steps>
+  </TabItem> 
+</Tabs>
 
 :::note
 The rule can be enhanced with Leaked Credential Checks. Refer to the [WAF documentation](/waf/detections/leaked-credentials/) for more information on how to include leaked credentials and account takeover detections in a rate limiting rule. 

@@ -135,6 +135,29 @@ flowchart TB
     egress1-- "Egress with dedicated IP" -->internet
 ```
 
+## Connection establishment
+
+When a user connects to a server with Gateway, Gateway first establishes a TCP connection with the destination server on the port the user requested. Because TCP traffic is proxied by Cloudflare, the connection Gateway establishes with the origin is independent from the connection users establish with Gateway. This means Gateway assigns a new source IP and port to the user's connection and no details from the user's TCP handshake are included in the TCP handshake with the origin server.
+
+If the TCP connection to the destination server is successful, Gateway will apply policies. If Gateway policies allow the connection, Gateway will connect the user to the destination server. If Gateway policies block the connection, Gateway will end the connection and will not send any data between the user and the destination server. If the TCP connection to the destination server is unsuccessful, Gateway will not run any policies and retry TCP connections from the user to the server.
+
+```mermaid
+flowchart TB
+    A(["User"]) -- Initiates connection --> B["Gateway TCP connection to destination server"]
+    B -- Connection success --> C["Gateway applies policies"]
+    B -- Connection failure --> E["Gateway rejects user TCP connections"]
+    C -- Allow policies --> D["Gateway connects user to destination server"]
+    C -- Block policies --> F["Gateway ends connection and sends no data"]
+
+    B@{ shape: hex}
+    C@{ shape: hex}
+    style E stroke:#D50000
+    style D stroke:#00C853
+    style F stroke:#D50000
+```
+
+Connections to Zero Trust will always appear in your [Zero Trust network session logs](/logs/reference/log-fields/account/zero_trust_network_sessions/) regardless of connection success. Because Gateway does not inspect failed connections, they will not appear in your [Gateway activity logs](/cloudflare-one/insights/logs/gateway-logs/).
+
 ## Priority between policy builders
 
 Gateway applies your policies in the following order:

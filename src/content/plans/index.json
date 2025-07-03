@@ -1465,7 +1465,7 @@
 		"ddos": {
 			"title": "DDoS protection",
 			"link": "/ddos-protection/",
-			"ent_plus": "Enterprise with add-on",
+			"ent_plus": "Enterprise with Advanced DDoS Protection add-on",
 			"properties": {
 				"availability": {
 					"title": "Availability",
@@ -1515,7 +1515,7 @@
 					"link": "/ddos-protection/managed-rulesets/#proactive-false-positive-detection-for-new-rules",
 					"free": "No",
 					"pro": "No",
-					"biz": "Yes",
+					"biz": "No",
 					"ent": "Yes",
 					"ent_plus": "Yes"
 				},
@@ -1553,6 +1553,15 @@
 					"biz": "Available to [Magic Transit](/magic-transit/) customers",
 					"ent": "Available to [Magic Transit](/magic-transit/) customers",
 					"ent_plus": "Available to [Magic Transit](/magic-transit/) customers"
+				},
+				"ruleset_overrides": {
+					"title": "Number of ruleset overrides allowed",
+					"link": "/ddos-protection/reference/alerts/",
+					"free": "1",
+					"pro": "1",
+					"biz": "1",
+					"ent": "1",
+					"ent_plus": "10"
 				},
 				"v_alerts": {
 					"title": "Alerts",
