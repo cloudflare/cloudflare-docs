@@ -227,7 +227,7 @@ curl --request PATCH \
 
 Additionally, to use these selectors to filter traffic onboarded with WARP, you need to:
 
-1. Ensure you have deployed [WARP version 2025.4.929.0](/cloudflare-one/connections/connect-devices/warp/download-warp/beta-releases/) or later on your users' desktop devices. If you need to apply your policies to mobile devices or devices running a version of WARP prior to 2025.4.929.0, add and deploy the following key-value pair to your devices' [WARP configuration file](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/) (`mdm.xml` on Windows and Linux or `com.cloudflare.warp.plist` on macOS):
+1. Ensure you have deployed [WARP version 2025.4.929.0](/cloudflare-one/connections/connect-devices/warp/download-warp/) or later on your users' desktop devices. If you need to apply your policies to mobile devices or devices running a version of WARP prior to 2025.4.929.0, add and deploy the following key-value pair to your devices' [WARP configuration file](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/) (`mdm.xml` on Windows and Linux or `com.cloudflare.warp.plist` on macOS):
 
    ```diff lang="xml"
    <array>
