@@ -63,14 +63,6 @@ Be aware that changes in the SSL setting can lead to cache invalidation when usi
 
 Understanding how $scheme interacts with your caching configuration is essential when modifying SSL modes to avoid unexpected cache behavior.
 
-#### Visitor scheme vs Origin scheme in Cache Keys
-
-Cloudflare treats `$scheme` differently depending on the cache key type:
-
-* Default Cache Key: `$scheme` refers to the origin scheme — the protocol Cloudflare uses to connect to your origin server (for example, HTTP or HTTPS). This means SSL mode changes (for example, Flexible → Full) change the cache key, triggering a cache bust.
-
-* Custom Cache Key: `$scheme` instead reflects the visitor's scheme — the protocol used by the client making the request to Cloudflare. As a result, SSL mode changes do not affect the cache key in custom configurations unless explicitly included.
-
 ### Cache Level: Ignore Query String
 
 A [Cache Level](/cache/how-to/set-caching-levels/) of Ignore Query String creates a Cache Key that includes all the elements in the default cache key, except for the query string in the URI that is no longer included. For instance, a request for `http://example.com/file.jpg?something=123` and a request for `http://example.com/file.jpg?something=789` will have the same cache key, in this case.
