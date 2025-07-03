@@ -6,23 +6,23 @@ sidebar:
   label: Unexpected TXT records
 ---
 
-import { Render } from "~/components"
+import { Render, GlossaryTooltip } from "~/components"
 
-You might notice some TXT record `_acme-challenge.<hostname>` returned by your domain.
-These records cannot be found in the DNS tab of your Cloudflare Dashboard.
+You might notice TXT records like `_acme-challenge.<hostname>` are returned by your domain but cannot be found on the DNS tab of your Cloudflare dashboard.
 
 ## Causes
 
-These records are automatically created to allow Cloudflare Edge certificates ([Universal](/ssl/edge-certificates/universal-ssl/), [Advanced](/ssl/edge-certificates/advanced-certificate-manager/) and [Backup](/ssl/edge-certificates/backup-certificates/)) to be provisioned.
-They are required by the [Certificate Authorities](/ssl/reference/certificate-authorities/) to perform the [Domain Control Validation](/ssl/edge-certificates/changing-dcv-method/).
+These records are automatically created to allow Cloudflare edge certificates ([universal](/ssl/edge-certificates/universal-ssl/), [advanced](/ssl/edge-certificates/advanced-certificate-manager/), and [backup](/ssl/edge-certificates/backup-certificates/)) to be provisioned. They are required by [certificate authorities](/ssl/reference/certificate-authorities/) to perform [Domain Control Validation (DCV)](/ssl/edge-certificates/changing-dcv-method/).
 
 ## Solution
 
-As these records are tied to the certificates, they cannot be deleted in the DNS tab of your Cloudflare Dashboard.
-If you need more `_acme-challenge.<hostname>` TXT records in order to provision certificates on your side, you can add them in the [DNS tab of your Cloudflare Dashboard](/dns/manage-dns-records/how-to/create-dns-records/).
+As these records are tied to the certificates, they cannot be deleted from the DNS tab of your Cloudflare dashboard.
+
+If you need more `_acme-challenge.<hostname>` TXT records in order to provision certificates on your side, you can [manually add them](/dns/manage-dns-records/how-to/create-dns-records/) under [DNS records](https://dash.cloudflare.com/?to=/:account/:zone/dns/records).
 
 If you want to remove these records:
- * You need to [disable Universal SSL](/ssl/edge-certificates/universal-ssl/disable-universal-ssl/) to remove the records related to Universal and Backup SSL.
- * You need to [delete advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/#delete-a-certificate) to remove the records related to Advanced certificates.
+
+ * [Disable Universal SSL](/ssl/edge-certificates/universal-ssl/disable-universal-ssl/) to remove the records related to universal and backup certificates.
+ * [Delete advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/#delete-a-certificate) to remove the records related to advanced certificates.
 
 
