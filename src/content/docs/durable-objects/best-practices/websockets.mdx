@@ -40,7 +40,8 @@ The Durable Object WebSocket class consists of Cloudflare-specific extensions to
 
 Hibernation is only supported when a Durable Object acts as a WebSocket server. Currently, outgoing WebSockets cannot hibernate.
 
-Other events, for example [alarms](/durable-objects/api/alarms/), can prevent a Durable Object from being inactive and therefore prevent this cost saving.
+Events, for example [alarms](/durable-objects/api/alarms/), incoming requests, and scheduling callbacks using `setTimeout/setInterval`) can prevent a Durable Object from being inactive and therefore prevent this cost saving.
+Read more in the section [When does a Durable Object incur duration charges?](/durable-objects/platform/pricing/#when-does-a-durable-object-incur-duration-charges).
 
 :::
 
