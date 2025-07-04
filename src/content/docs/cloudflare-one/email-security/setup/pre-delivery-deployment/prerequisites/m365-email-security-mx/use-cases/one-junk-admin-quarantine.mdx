@@ -41,7 +41,7 @@ To create the transport rules that will send emails with certain dispositions to
    * **Name**: `Email Security Deliver to Junk Email folder`.
    * **Apply this rule if**: *The message headers* > *includes any of these words*.
      * **Enter text**: `X-CFEmailSecurity-Disposition` > **Save**.
-     * **Enter words**: `SUSPICIOUS`, `BULK` > **Add** > **Save**.
+     * **Enter words**: `BULK` > **Add** > **Save**.
    * **Apply this rule if**: Select **+** to add a second condition.
    * **And**: *The sender* > *IP address is in any of these ranges or exactly matches* > enter the egress IPs in the [Egress IPs](/cloudflare-one/email-security/setup/pre-delivery-deployment/egress-ips/) page.
    * **Do the following** - *Modify the message properties* > *Set the Spam Confidence Level (SCL)* > *5*.
