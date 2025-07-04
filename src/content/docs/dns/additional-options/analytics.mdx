@@ -72,7 +72,7 @@ To get account-level data, you can set up queries similar to the following:
 
 <Details header="Get the last 10,000 queries resulting in NXDOMAIN" open = {true}>
 
-```
+```graphql graphql-api-explorer
 query GetLastNXDOMAINResponses {
   viewer {
     accounts(filter: { accountTag: "83a4527361bcdec24566fd7f837b6de5" }) {
@@ -99,7 +99,7 @@ query GetLastNXDOMAINResponses {
 
 <Details header="Get the overall query count per account" open = {true}>
 
-```
+```graphql graphql-api-explorer
 query GetTotalDNSQueryCount {
   viewer {
     accounts(filter: { accountTag: "83a4527361bcdec24566fd7f837b6de5" }) {
