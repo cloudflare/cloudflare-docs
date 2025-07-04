@@ -19,7 +19,7 @@ To create the transport rules that will send emails with certain [disposition](/
    * **Name**: *{props.one}*.
    * **Apply this rule if**: *The message headers* > *includes any of these words*.
      * **Enter text**: `X-CFEmailSecurity-Disposition` > **Save**.
-     * **Enter words**: `BULK` > **Add** > **Save**.
+     * **Enter words**: <code>{props.two}</code> > **Add** > **Save**.
    * **Apply this rule if**: Select **+** to add a second condition.
    * **And**: *The sender* > *IP address is in any of these ranges or exactly matches* > enter the egress IPs in the [Egress IPs](/cloudflare-one/email-security/setup/pre-delivery-deployment/egress-ips/) page.
    * **Do the following** - *{props.three}*.
@@ -39,7 +39,7 @@ To create the transport rules that will send emails with certain [disposition](/
     * **Name**: *{props.five}*.
     * **Apply this rule if**: *The message headers* > *includes any of these words*.
       * **Enter text**: `X-CFEmailSecurity-Disposition` > **Save**.
-      * **Enter words**: `MALICIOUS` > **Add** > **Save**.
+      * **Enter words**: *{props.six}* > **Add** > **Save**.
     * **Apply this rule if**: Select **+** to add a second condition.
     * **And**: *The sender* > *IP address is in any of these ranges or exactly matches* > enter the egress IPs in the [Egress IPs](/cloudflare-one/email-security/setup/pre-delivery-deployment/egress-ips/) page.
     * **Do the following**: *{props.seven}*.
