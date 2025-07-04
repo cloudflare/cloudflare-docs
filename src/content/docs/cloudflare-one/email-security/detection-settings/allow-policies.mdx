@@ -27,8 +27,19 @@ To configure allow policies:
            - **Regular expressions**: Must be valid Java expressions. Regular expressions are matched with fields related to the sender email address (envelope from, header from, reply-to), the originating IP address, and the server name for the email.
      - **(Recommended) Sender verification**: This option enforces DMARC, SPF, or DKIM authentication. If you choose to enable this option, Email Security will only honor policies that pass authentication.
        - **Notes**: Provide additional information about your allow policy.
-   - **Uploading an allow policy**: Upload a file no larger than 150 KB. The file can only contain `Pattern`, `Notes`, `Verify Email`, `Trusted Sender`, `Exempt Recipient` and `Acceptable Sender` fields. The first row must be a header row.
+   - **Uploading an allow policy**: Upload a file no larger than 150 KB. The file can only contain `Pattern`, `Pattern Type`, `Verify Email`, `Trusted Sender`, `Exempt Recipient`, `Acceptable Sender`, `Notes` fields. The first row must be a header row. Refer to [CSV uploads](/cloudflare-one/email-security/detection-settings/allow-policies/#csv-uploads) for an example file.
 6. Select **Save**.
+
+### CSV uploads
+
+You can upload a file no larger than 150 KB. The file can only contain `Pattern`, `Pattern Type`, `Verify Email`, `Trusted Sender`, `Exempt Recipient`, `Acceptable Sender`, `Notes`. The first row must be a header row.
+
+An example file would look like this:
+
+```txt
+Pattern, Pattern Type, Verify Email, Trusted Sender, Exempt Recipient, Acceptable Sender, Notes
+whale@notaphish.com, EMAIL, true, true, false, true, not a phish
+```
 
 ## Export allow policies
 

@@ -23,7 +23,7 @@ The resulting landscape leaves content owners with limited options for managing 
 
 Pay per crawl is a feature of AI Audit that enables site owners to control and monetize AI crawler access to content by setting a price per zone.
 
-Each time an AI crawler requests content, they either present payment intent via request headers for successful `HTTP 200` access, or receive an `HTTP 402 Payment Required` response with pricing. Cloudflare acts as the <GlossaryTooltip term="Merchant of Record">Merchant of Record</GlossaryTooltip>. for pay per crawl and also provides the underlying technical infrastructure.
+Each time an AI crawler requests content, they either present payment intent via request headers for successful `HTTP 200` access, or receive an `HTTP 402 Payment Required` response with pricing. Cloudflare acts as the <GlossaryTooltip term="Merchant of Record">Merchant of Record</GlossaryTooltip> for pay per crawl and also provides the underlying technical infrastructure.
 
 :::note
 If you block an AI crawler from a zone via either of Cloudflare's [WAF](/waf/) or [Bot Management](/bots/get-started/bot-management/) products, those products' rulesets will override pay per crawl's "charge" feature, and the blocked crawler will not have access to the zone.

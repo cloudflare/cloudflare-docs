@@ -91,7 +91,7 @@ To learn more about user connections, refer to the [Access for Infrastructure do
 
 ## SSH command logs
 
-SSH command logs contain the actual SSH commands that a user ran on the target. Customers on all plans can store SSH logs on Cloudflare. These logs are encrypted using a public key provided by the customer and are not visible to Cloudflare. Additionally, Enterprise customers can configure a Logpush job to send SSH logs to storage destinations. Logpush payloads are not encrypted and do not require uploading a public key.
+SSH command logs contain the actual SSH commands that a user ran on the target. Customers on all plans can store SSH logs on Cloudflare and download the logs from the dashboard. [Downloadable logs](#download-encrypted-ssh-logs) are encrypted using a public key provided by the customer and are not visible to Cloudflare. Delivery of downloadable SSH logs is best effort; for guaranteed delivery, Enterprise customers can [configure a Logpush job](#export-ssh-logs-with-logpush) to send SSH logs to storage destinations. Logpush payloads are not encrypted with a customer-provided public key.
 
 ### Download encrypted SSH logs
 

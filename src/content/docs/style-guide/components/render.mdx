@@ -66,6 +66,17 @@ params:
 ---
 ```
 
+:::caution
+If you use the Markdown component to format your optional parameter, you need to craft it in a special way so you don't get an `Undefined` error in pages without the optional parameter.
+
+Say, for example, that your optional parameter is `instructions`. You would craft it like this:
+
+`{props.instructions && <Markdown text={props.instructions} />}`
+
+instead of `<Markdown text={props.instructions} />`
+
+:::
+
 For each of the below examples, you can open the dropdown to view the partial's content.
 
 ### Properties as a plain string

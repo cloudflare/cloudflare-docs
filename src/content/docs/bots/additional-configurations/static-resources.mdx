@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { GlossaryTooltip, Render } from "~/components"
+import { Render, Tabs, TabItem, Steps, GlossaryTooltip } from "~/components";
 
 Pro, Business, and Enterprise customers can use Cloudflare's bot solutions to protect their <GlossaryTooltip term="static content">static resources</GlossaryTooltip> from bots.
 
@@ -19,9 +19,25 @@ If you enable static resource protection, you may block good bots — like mail 
 
 To enable this feature as a Pro or Business customer or an Enterprise customer without Bot Management:
 
-1. Go to **Security** > **Bots**.
-2. Select **Configure Super Bot Fight Mode**.
-3. For **Static resource protection**, select **On**.
+<Tabs syncKey="dashNewNav"> 
+	<TabItem label="Old dashboard">
+		<Steps>
+      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
+      2. Go to **Security** > **Bots**.
+      3. Select **Configure Super Bot Fight Mode**.
+      4. For **Static resource protection**, select **On**.
+    </Steps>
+  </TabItem>
+  <TabItem label="New dashboard" icon="rocket">
+		<Steps>
+      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
+      2. Go to **Security** > **Settings**.
+      3. Filter by **Bot traffic**.
+      4. Go to **Super Bot Fight Mode**.
+      5. Under **Configurations**, select the edit icon for **Static resource protection** and turn it on.
+    </Steps>
+  </TabItem>
+</Tabs>
 
 :::caution
 

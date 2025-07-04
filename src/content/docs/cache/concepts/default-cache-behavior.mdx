@@ -29,6 +29,13 @@ If both `max-age` and an `Expires` header are set, `max-age` will be used by Clo
 
 When [Origin Cache Control](/cache/concepts/cache-control/) is enabled on an Enterprise customer’s website, it indicates that Cloudflare should strictly respect `Cache-Control` directives received from the origin server. Free, Pro and Business customers have this feature enabled by default. For a list of directives and behaviors when Origin Cache-Control is enabled or disabled, refer to [Cache-Control directives](/cache/concepts/cache-control/#cache-control-directives).
 
+## Client side range requests
+
+Clients can send range requests to be served from the cache using the `Range` header. Note that:
+
+ - If the origin response includes a `Content-Length` header, then the specified byte range will be returned with an HTTP 206 response.
+ - If the origin response does not include the `Content-Length` header, the cache will return the full content with an HTTP 200 response.
+
 ## Default cached file extensions
 
 Cloudflare only caches based on file extension and not by MIME type. The Cloudflare CDN does not cache HTML or JSON by default. Additionally, by default Cloudflare caches a website's robots.txt.

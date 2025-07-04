@@ -7,6 +7,8 @@ sidebar:
 
 ---
 
+import { Tabs, TabItem, Steps } from "~/components"
+
 Adaptive DDoS Protection learns your unique traffic patterns and adapts to them to provide better protection against sophisticated DDoS attacks on layer 7 and layers 3/4, depending on your subscribed Cloudflare services.
 
 Adaptive DDoS Protection provides the following types of protection:
@@ -58,15 +60,41 @@ For more information on the types of DDoS attacks covered by Cloudflare's DDoS p
 
 To view traffic flagged by HTTP Adaptive DDoS Protection rules:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
-2. Go to **Security** > **Events**.
-3. Filter by `Service equals HTTP DDoS` and by rule ID.
+<Tabs syncKey="dashNewNav"> 
+  <TabItem label="Old dashboard">
+    <Steps>
+      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+      2. Go to **Security** > **Events**.
+      3. Filter by `Service equals HTTP DDoS` and by rule ID.
+    </Steps>
+  </TabItem>
+  <TabItem label="New dashboard" icon="rocket">
+    <Steps>
+      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+      2. Go to **Security** > **Analytics** > **Events**.
+      3. Filter by `Service equals HTTP DDoS` and by rule ID.
+    </Steps>
+  </TabItem>
+</Tabs>
 
 To view traffic flagged by L3/4 Adaptive DDoS Protection rules:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to Account Home > **Analytics & Logs** > **Network Analytics**.
-3. Filter by rule ID.
+<Tabs syncKey="dashNewNav"> 
+  <TabItem label="Old dashboard">
+    <Steps>
+      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+      2. Go to Account Home > **Analytics & Logs** > **Network Analytics**.
+      3. Filter by rule ID.
+    </Steps>
+  </TabItem>
+  <TabItem label="New dashboard" icon="rocket">
+    <Steps>
+      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+      2. Go to **Security** > **Analytics** > **Events**.
+      3. Filter by rule ID.
+    </Steps>
+  </TabItem>
+</Tabs>
 
 You may also obtain information about flagged traffic through [Logpush](/logs/about/) or the [GraphQL API](/analytics/graphql-api/).
 

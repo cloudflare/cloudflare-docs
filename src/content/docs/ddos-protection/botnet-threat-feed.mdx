@@ -11,6 +11,7 @@ learning_center:
   link: https://www.cloudflare.com/learning/ddos/what-is-a-ddos-botnet/
 
 ---
+import { Steps } from "~/components"
 
 The Cloudflare DDoS Botnet Threat Feed is a threat intelligence feed for service providers (SPs) such as hosting providers and Internet service providers (ISPs) that provides information about their own IP addresses that have participated in HTTP DDoS attacks as observed from Cloudflare's global network. The feed aims to help service providers stop the abuse and reduce DDoS attacks originating from within their networks.
 
@@ -44,11 +45,13 @@ Make sure that:
 
 ### 1. Authenticate your ASN via PeeringDB
 
+<Steps>
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **Manage Account** > **Configurations**.
 3. Select **DDoS Threat Feed ASNs**.
 4. On the list of ASNs configured for your threat feed, select **Add ASN**.
 5. You will be redirected to the PeeringDB authentication page, where you can log in and consent to share the affiliation data with us. You will be redirected back to the configuration page once it is successful.
+</Steps>
 
 :::note
 You can add multiple ASNs to your threat feed.
