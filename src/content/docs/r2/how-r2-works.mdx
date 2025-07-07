@@ -60,7 +60,7 @@ When a read request (e.g. fetching an object) is made to R2, the following seque
 ## Performance
 The performance of your operations can be influenced by factors such as the bucket's geographical location, request origin, and access patterns.
 
-To further optimize R2 performance for object read requests, you can enable [Cloudflare Cache](/cache/) when using a [custom domain](/r2/buckets/public-buckets/#custom-domains). With caching enabled, objects can be served directly from Cloudflare’s edge, bypassing the R2 Gateway Worker and metadata lookups. However, note that it may cause consistency trade-offs since cached data may not reflect the latest version immediately.
+To further optimize R2 performance for object read requests, you can enable [Cloudflare Cache](/cache/) when using a [custom domain](/r2/buckets/public-buckets/#custom-domains). When caching is enabled, [read requests](/r2/how-r2-works/#read-data-from-r2) can bypass the R2 Gateway Worker and be served directly from Cloudflare’s edge cache, reducing latency. However, note that it may cause consistency trade-offs since cached data may not reflect the latest version immediately.
 
 ![Read data to R2 with Cloudflare Cache](public/images/r2/read-data-to-r2-with-cloudflare-cache.png)
 
