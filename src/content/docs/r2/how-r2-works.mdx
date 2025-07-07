@@ -10,6 +10,8 @@ head:
     content: How R2 works
 ---
 
+import { Render, LinkCard } from "~/components";
+
 Cloudflare R2 is an S3-compatible object storage service with no egress fees, built on Cloudflare’s global network. It is [strongly consistent](/r2/reference/consistency/) and designed for high [data durability](/r2/reference/durability/).
 
 R2 is ideal for storing and serving unstructured data that needs to be accessed frequently over the internet, without incurring egress fees. It’s a good fit for workloads like serving web assets, training AI models, and managing user-generated content.
@@ -64,11 +66,28 @@ To further optimize R2 performance for object read requests, you can enable [Clo
 
 ![Read data to R2 with Cloudflare Cache](public/images/r2/read-data-to-r2-with-cloudflare-cache.png)
 
-## Consistency
-Refer to R2’s [consistency](/r2/reference/consistency/) for more details.
+## Learn more
 
-## Data durability
-Refer to R2’s [data durability](/r2/reference/durability/) for more details.
+<LinkCard
+	title="Consistency"
+	href="/r2/reference/consistency/"
+	description="Learn about R2's consistency model."
+/>
 
-## Data security
-Refer to [data location](/r2/reference/data-location/#jurisdictional-restrictions) for more details on Jurisdiction restrictions, and the [data security](/r2/reference/data-security/) to understand how R2 secures data.
+<LinkCard
+	title="Durability"
+	href="/r2/reference/durability/"
+	description="Learn more about R2's durability guarantee."
+/>
+
+<LinkCard
+	title=" Data location"
+	href="/r2/reference/data-location/#jurisdictional-restrictions"
+	description="Learn how R2 determines where data is stored, and details on jurisdiction restrictions."
+/>
+
+<LinkCard
+	title="Data security"
+	href="(/r2/reference/data-security/"
+	description="Learn about R2's data security properties."
+/>
