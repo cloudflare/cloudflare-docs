@@ -211,7 +211,32 @@ When you use these selectors in an egress policy for traffic from a supported on
 
 Gateway will overwrite the DNS response for all supported traffic, even if identity or device posture selectors are used to limit which users or devices should be affected by the policy. In these cases, while the DNS response is overwritten, the correct egress policy will still be applied.
 
-To turn on the selectors for your account, enable the 'Host selector' toggle in **Settings > Network > Firewall**.
+To turn on the selectors for your account:
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Network**.
+2. In **Firewall**, turn on **Host selector**.
+
+</TabItem> <TabItem label="API">
+
+Use the [Patch Zero Trust account configuration](/api/resources/zero_trust/subresources/gateway/subresources/configurations/methods/edit/) endpoint to update your Zero Trust configuration. For example:
+
+```sh title="Turn on selectors for egress policies"
+curl --request PATCH \
+"https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/configuration" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--header "Content-Type: application/json" \
+--data '{
+  "settings": {
+    "host_selector": {
+      "enabled": true
+		}
+	}
+}'
+```
+
+</TabItem> </Tabs>
 
 Additionally, to use these selectors to filter traffic onboarded with WARP, you need to:
 
