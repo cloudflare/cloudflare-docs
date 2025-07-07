@@ -99,6 +99,12 @@ Type: `object`
 
 JSON object of what the Zero Trust client actually uploads.
 
+## RegistrationID
+
+Type: `string`
+
+The UUID of the device registration associated with this posture result.
+
 ## Timestamp
 
 Type: `int or string`

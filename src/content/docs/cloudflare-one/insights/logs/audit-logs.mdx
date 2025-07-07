@@ -8,7 +8,7 @@ description: Use Access audit logs to review authentication events and
   requests to protected URI paths and infrastructure targets.
 ---
 
-import { GlossaryTooltip, TabItem, Tabs } from "~/components";
+import { GlossaryTooltip, TabItem, Tabs, APIRequest } from "~/components";
 
 Cloudflare Access generates two types of audit logs:
 
@@ -42,10 +42,17 @@ To view logs for identity-based authentication events:
 
 The [Access authentication logs](/api/resources/zero_trust/subresources/access/subresources/logs/subresources/access_requests/methods/list/) API endpoint provides a custom URL to export audit log events for your account.
 
-```bash title="Request"
-curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/logs/access_requests?limit=25&direction=desc&since=2020-07-01T05:20:00Z&until=2020-10-01T05:20:00Z" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
-```
+<APIRequest
+  path="/accounts/{account_id}/access/logs/access_requests"
+  method="GET"
+  parameters={{
+    account_id: "$ACCOUNT_ID",
+    limit: 25,
+    direction: "desc",
+    since: "2020-07-01T05:20:00Z",
+    until: "2020-10-01T05:20:00Z",
+  }}
+/>
 
 ```json title="Response"
 {

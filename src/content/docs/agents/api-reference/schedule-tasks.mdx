@@ -70,7 +70,7 @@ Calling `await this.schedule` returns a `Schedule`, which includes the task's ra
 
 :::note[Maximum scheduled tasks]
 
-Each task is mapped to a row in the Agent's underlying [SQLite database](/durable-objects/api/sql-storage/), which means that each task can be up to 2 MB in size. The maximum number of tasks must be `(task_size * tasks) + all_other_state < maximum_database_size` (currently 1GB per Agent).
+Each task is mapped to a row in the Agent's underlying [SQLite database](/durable-objects/api/storage-api/), which means that each task can be up to 2 MB in size. The maximum number of tasks must be `(task_size * tasks) + all_other_state < maximum_database_size` (currently 1GB per Agent).
 
 :::
 

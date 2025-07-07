@@ -37,7 +37,7 @@ ALTER TABLE users ...
 PRAGMA defer_foreign_keys = off
 ```
 
-You can also explicitly set `PRAGMA defer_foreign_keys = on` immediately after you have resolved outstanding foreign key constraints. If there are still outstanding foreign key constraints, you will receive a `FOREIGN KEY constraint failed` error and will need to resolve the violation.
+You can also explicitly set `PRAGMA defer_foreign_keys = off` immediately after you have resolved outstanding foreign key constraints. If there are still outstanding foreign key constraints, you will receive a `FOREIGN KEY constraint failed` error and will need to resolve the violation.
 
 ## Define a foreign key relationship
 

@@ -13,9 +13,9 @@ const tracks = [
 
 const linesToRemove = [
 	"For related Cloudflare for Teams documentation please see: https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp",
-	"For Zero Trust documentation please see: https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp",
+	"For Zero Trust documentation please see: <https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp>",
 	"For related Consumer documentation please see: https://developers.cloudflare.com/warp-client/",
-	"For Consumer documentation please see: https://developers.cloudflare.com/warp-client/",
+	"For Consumer documentation please see: <https://developers.cloudflare.com/warp-client/>",
 ];
 
 for (let track of tracks) {

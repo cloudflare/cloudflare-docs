@@ -1,0 +1,61 @@
+---
+{}
+---
+
+## Local development
+
+During local development, your Worker code always executes locally and bindings connect to locally simulated resources [by default](/workers/development-testing/#remote-bindings).
+
+You can configure [**remote bindings** during local development](/workers/development-testing/#remote-bindings), allowing your bindings to connect to a deployed resource on a per-binding basis.
+
+| Binding                                 | Local simulations | Remote binding connections |
+| --------------------------------------- | :---------------: | :------------------------: |
+| **AI**                                  |        ❌         |             ✅             |
+| **Assets**                              |        ✅         |             ❌             |
+| **Analytics Engine**                    |        ✅         |             ❌             |
+| **Browser Rendering**                   |        ❌         |             ✅             |
+| **D1**                                  |        ✅         |             ✅             |
+| **Durable Objects**                     |        ✅         |             ❌             |
+| **Email Bindings**                      |        ✅         |             ✅             |
+| **Hyperdrive**                          |        ✅         |             ❌             |
+| **Images**                              |        ✅         |             ✅             |
+| **KV**                                  |        ✅         |             ✅             |
+| **mTLS**                                |        ❌         |             ✅             |
+| **Queues**                              |        ✅         |             ✅             |
+| **R2**                                  |        ✅         |             ✅             |
+| **Rate Limiting**                       |        ✅         |             ❌             |
+| **Service Bindings (multiple Workers)** |        ✅         |             ✅             |
+| **Vectorize**                           |        ❌         |             ✅             |
+| **Workflows**                           |        ✅         |             ✅             |
+
+- **Local simulations:** Bindings connect to local resource simulations. Supported in [`wrangler dev`](/workers/wrangler/commands/#dev) and the [Cloudflare Vite plugin](/workers/vite-plugin/).
+
+- **Remote binding connections:** Bindings connect to remote resources via `experimental_remote: true` configuration. Supported in [`wrangler dev --x-remote-bindings`](/workers/development-testing/#using-wrangler-with-remote-bindings) and the [Cloudflare Vite plugin](/workers/development-testing/#using-vite-with-remote-bindings).
+
+## Remote development
+
+During remote development, all of your Worker code is uploaded and executed on Cloudflare's infrastructure, and bindings always connect to remote resources. **We recommend using local development with remote binding connections instead** for faster iteration and debugging.
+
+Supported only in [`wrangler dev --remote`](/workers/wrangler/commands/#dev) - there is **no Vite plugin equivalent**.
+
+| Binding                                 | Remote development |
+| --------------------------------------- | :----------------: |
+| **AI**                                  |         ✅         |
+| **Assets**                              |         ✅         |
+| **Analytics Engine**                    |         ✅         |
+| **Browser Rendering**                   |         ✅         |
+| **D1**                                  |         ✅         |
+| **Durable Objects**                     |         ✅         |
+| **Email Bindings**                      |         ✅         |
+| **Hyperdrive**                          |         ✅         |
+| **Images**                              |         ✅         |
+| **KV**                                  |         ✅         |
+| **mTLS**                                |         ✅         |
+| **Queues**                              |         ❌         |
+| **R2**                                  |         ✅         |
+| **Rate Limiting**                       |         ✅         |
+| **Service Bindings (multiple Workers)** |         ✅         |
+| **Vectorize**                           |         ✅         |
+| **Workflows**                           |         ❌         |
+
+---

@@ -1,9 +1,10 @@
 ---
-title: Security analytics
+title: Security analytics (new dashboard)
 pcx_content_type: concept
 sidebar:
   order: 3
-description: Security analytics shows information about all incoming HTTP requests or mitigated requests (rule matches).
+  label: Security analytics 
+description: Security analytics shows information about all incoming HTTP requests or mitigated requests (rule matches).  
 ---
 
 import { GlossaryTooltip } from "~/components";
@@ -11,6 +12,10 @@ import { GlossaryTooltip } from "~/components";
 Security analytics shows information about all incoming HTTP requests or only about requests mitigated by Cloudflare.
 
 Use Security analytics as your starting point to understand and analyze traffic patterns, and to create security rules based on the filters you applied.
+
+By default, Security Analytics queries filter on `requestSource = 'eyeball'`, which represents requests from end users. Note that requests from Cloudflare Workers (subrequests) are not visible in Security Analytics.
+
+Security analytics is available in **Security** > **Analytics**.
 
 ## Traffic
 
@@ -31,7 +36,7 @@ If you need to modify existing security-related rules you already configured, co
 
 The suspicious activity gives you information about suspicious requests that were identified by the Cloudflare detections you have enabled. The supported detections include:
 
-- [Account takeover](/bots/concepts/detection-ids/#account-takeover-detections)
+- [Account takeover](/bots/additional-configurations/detection-ids/#account-takeover-detections)
 - [Leaked credential check](/waf/detections/leaked-credentials/) (only for user and password leaked)
 - [Malicious uploads](/waf/detections/malicious-uploads/)
 - [WAF attack score](/waf/detections/attack-score/)

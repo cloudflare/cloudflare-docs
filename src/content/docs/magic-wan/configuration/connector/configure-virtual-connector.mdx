@@ -7,7 +7,9 @@ sidebar:
 
 import { Render } from "~/components";
 
-<Render file="connector/configure-connectors" params={{
+<Render file="mconn/configure-connectors"
+	product="networking-services"
+	params={{
 	magicWord: "virtual",
 	productName: "Virtual Connector",
 	wan: "needs to correspond to the virtual network interface on the Virtual Connector instance you have set up in VMware. Following our example from the previous steps, you need to choose port `1` since that is what corresponds to the `eno1` port we set up in VMware.",

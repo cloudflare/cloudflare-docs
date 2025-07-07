@@ -59,7 +59,15 @@ export class MyAgent extends Agent<Env> {
 ```
 </TypeScriptExample>
 
-#### Calling methods directly
+:::note[Calling other Agents]
+
+You can also call other Agents from within an Agent and build multi-Agent systems.
+
+Calling other Agents uses the same APIs as calling into an Agent directly.
+
+:::
+
+### Calling methods on Agents
 
 When using `getAgentByName`, you can pass both requests (including WebSocket) connections and call methods defined directly on the Agent itself using the native [JavaScript RPC](/workers/runtime-apis/rpc/) (JSRPC) API.
 

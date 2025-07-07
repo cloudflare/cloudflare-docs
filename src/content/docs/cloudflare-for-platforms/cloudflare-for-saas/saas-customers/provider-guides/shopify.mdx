@@ -5,12 +5,11 @@ head:
   - tag: title
     content: Shopify | Provider guides
 description: Learn how to configure your zone with Shopify.
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="provider-guide-intro" params={{ one: "Shopify" }} />
+<Render file="provider-guide-intro" params={{ providerName: "Shopify" }} />
 
 ## Benefits
 
@@ -19,6 +18,10 @@ O2O routing also enables you to take advantage of Cloudflare zones specifically 
 ## How it works
 
 For more details about how O2O is different than other Cloudflare setups, refer to [How O2O works](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/how-it-works/).
+
+When you [set up O2O routing for your Shopify website](#enable), Cloudflare enables specific configurations for this SaaS provider. Currently, this includes the following:
+
+- Workers and Snippets are disabled on the `/checkout` URI path.
 
 ## Enable
 
@@ -30,13 +33,15 @@ To enable O2O on your account, [create](/dns/manage-dns-records/how-to/create-dn
 | ------- | -------------------- | --------------------- | ------------ |
 | `CNAME` | `<YOUR_SHOP_DOMAIN>` | `shops.myshopify.com` | Proxied      |
 
-:::note
+Once you save the new DNS record, the Cloudflare dashboard will show a Shopify icon next to the CNAME record value. For example:
 
+![](~/assets/images/cloudflare-for-platforms/provider-guides/shopify-dns-entry.png)
+
+:::note
 
 For questions about Shopify setup, refer to their [support guide](https://help.shopify.com/en/manual/domains/add-a-domain/connecting-domains/connect-domain-manual).
 
 If you cannot activate your domain using [proxied DNS records](/dns/proxy-status/), reach out to your account team or the [Cloudflare Community](https://community.cloudflare.com).
-
 
 :::
 
@@ -46,7 +51,7 @@ If you cannot activate your domain using [proxied DNS records](/dns/proxy-status
 
 ## Additional support
 
-<Render file="provider-guide-help" params={{ one: "Shopify" }} />
+<Render file="provider-guide-help" params={{ providerName: "Shopify" }} />
 
 ### DNS CAA records
 

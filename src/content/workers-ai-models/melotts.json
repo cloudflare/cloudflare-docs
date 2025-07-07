@@ -8,8 +8,20 @@
         "name": "Text-to-Speech",
         "description": "Text-to-Speech (TTS) is the task of generating natural sounding speech given text input. TTS models can be extended to have a single model that generates speech for multiple speakers and multiple languages."
     },
+    "created_at": "2024-07-19 15:51:04.819",
     "tags": [],
-    "properties": [],
+    "properties": [
+        {
+            "property_id": "price",
+            "value": [
+                {
+                    "unit": "per audio minute",
+                    "price": 0.0002,
+                    "currency": "USD"
+                }
+            ]
+        }
+    ],
     "schema": {
         "input": {
             "type": "object",

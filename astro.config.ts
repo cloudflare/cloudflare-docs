@@ -1,6 +1,5 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
-import tailwind from "@astrojs/tailwind";
 import starlightDocSearch from "@astrojs/starlight-docsearch";
 import starlightImageZoom from "starlight-image-zoom";
 import liveCode from "astro-live-code";
@@ -12,11 +11,14 @@ import react from "@astrojs/react";
 import { readdir } from "fs/promises";
 import { fileURLToPath } from "url";
 
+import remarkValidateImages from "./src/plugins/remark/validate-images";
+
 import rehypeTitleFigure from "rehype-title-figure";
 import rehypeMermaid from "./src/plugins/rehype/mermaid.ts";
 import rehypeAutolinkHeadings from "./src/plugins/rehype/autolink-headings.ts";
 import rehypeExternalLinks from "./src/plugins/rehype/external-links.ts";
 import rehypeHeadingSlugs from "./src/plugins/rehype/heading-slugs.ts";
+import rehypeShiftHeadings from "./src/plugins/rehype/shift-headings.ts";
 
 async function autogenSections() {
 	const sections = (
@@ -45,7 +47,8 @@ async function autogenStyles() {
 		})
 	)
 		.filter((x) => x.isFile())
-		.map((x) => x.parentPath + x.name);
+		.map((x) => x.parentPath + x.name)
+		.sort((a) => (a === "./src/styles/tailwind.css" ? -1 : 1));
 
 	return styles;
 }
@@ -60,6 +63,7 @@ export default defineConfig({
 	site: "https://developers.cloudflare.com",
 	markdown: {
 		smartypants: false,
+		remarkPlugins: [remarkValidateImages],
 		rehypePlugins: [
 			rehypeMermaid,
 			rehypeExternalLinks,
@@ -67,6 +71,7 @@ export default defineConfig({
 			rehypeAutolinkHeadings,
 			// @ts-expect-error plugins types are outdated but functional
 			rehypeTitleFigure,
+			rehypeShiftHeadings,
 		],
 	},
 	image: {
@@ -90,25 +95,25 @@ export default defineConfig({
 				src: "./src/assets/logo.svg",
 			},
 			favicon: "/favicon.png",
-			head: ["image", "og:image", "twitter:image"].map((name) => {
-				return {
-					tag: "meta",
-					attrs: {
-						name,
-						content: "https://developers.cloudflare.com/cf-twitter-card.png",
-					},
-				};
-			}),
-			social: {
-				github: "https://github.com/cloudflare/cloudflare-docs",
-				"x.com": "https://x.com/cloudflare",
-				youtube: "https://www.youtube.com/cloudflare",
-			},
+			social: [
+				{
+					label: "GitHub",
+					icon: "github",
+					href: "https://github.com/cloudflare/cloudflare-docs",
+				},
+				{ label: "X.com", icon: "x.com", href: "https://x.com/cloudflare" },
+				{
+					label: "YouTube",
+					icon: "youtube",
+					href: "https://www.youtube.com/cloudflare",
+				},
+			],
 			editLink: {
 				baseUrl:
 					"https://github.com/cloudflare/cloudflare-docs/edit/production/",
 			},
 			components: {
+				Banner: "./src/components/overrides/Banner.astro",
 				Footer: "./src/components/overrides/Footer.astro",
 				Head: "./src/components/overrides/Head.astro",
 				Header: "./src/components/overrides/Header.astro",
@@ -134,8 +139,7 @@ export default defineConfig({
 									"/http/resources/**",
 									"{props.*}",
 									"/",
-									"**/glossary/?term=**",
-									"/products/?product-group=*",
+									"/glossary/",
 									"/products/",
 									"/rules/snippets/examples/?operation=*",
 									"/rules/transform/examples/?operation=*",
@@ -153,9 +157,10 @@ export default defineConfig({
 				starlightImageZoom(),
 			],
 			lastUpdated: true,
-		}),
-		tailwind({
-			applyBaseStyles: false,
+			markdown: {
+				headingLinks: false,
+			},
+			routeMiddleware: "./src/plugins/starlight/route-data.ts",
 		}),
 		liveCode({}),
 		icon(),

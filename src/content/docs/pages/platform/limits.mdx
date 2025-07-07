@@ -3,10 +3,14 @@ pcx_content_type: concept
 title: Limits
 sidebar:
   order: 1
-
+banner:
+  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
+  type: note
+  dismissible:
+    id: pages-migrate-to-workers
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 Below are limits observed by the Cloudflare Free plan. For more details on removing these limits, refer to the [Cloudflare plans](https://www.cloudflare.com/plans) page.
 
@@ -38,9 +42,7 @@ The maximum file size for a single Cloudflare Pages site asset is 25 MiB.
 
 :::note[Larger Files]
 
-
 To serve larger files, consider uploading them to [R2](/r2/) and utilizing the [public bucket](/r2/buckets/public-buckets/) feature. You can also use [custom domains](/r2/buckets/public-buckets/#connect-a-bucket-to-a-custom-domain), such as `static.example.com`, for serving these files.
-
 
 :::
 
@@ -60,7 +62,7 @@ A `_redirects` file can have a maximum of 2,000 static redirects and 100 dynamic
 
 ## Users
 
-Your Pages site can be managed by an unlimited number of users via the Cloudflare dashboard. Note that this does not correlate with your Git project – you can manage both public and private repositories, open issues, and accept pull requests via  without impacting your Pages site.
+Your Pages site can be managed by an unlimited number of users via the Cloudflare dashboard. Note that this does not correlate with your Git project – you can manage both public and private repositories, open issues, and accept pull requests via without impacting your Pages site.
 
 ## Projects
 

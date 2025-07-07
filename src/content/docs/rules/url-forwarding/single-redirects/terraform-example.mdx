@@ -8,6 +8,8 @@ sidebar:
 
 import { Render } from "~/components";
 
+<Render file="v4-code-snippets" product="terraform" />
+
 The following example defines a single redirect rule for a zone using Terraform. The rule creates a static URL redirect for visitors requesting the contacts page using an old URL.
 
 ```tf
@@ -36,5 +38,7 @@ resource "cloudflare_ruleset" "single_redirects_example" {
   }
 }
 ```
+
+<Render file="terraform-use-ref-field" params={{ addDocsLocation: true }} />
 
 <Render file="terraform-additional-resources" />

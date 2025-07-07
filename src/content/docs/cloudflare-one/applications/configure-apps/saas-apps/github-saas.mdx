@@ -19,7 +19,7 @@ This guide covers how to configure [GitHub Enterprise Cloud](https://docs.github
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 2. Select **Add an application** > **SaaS** > **Select**.
-3. For **Application**, select *Github*.
+3. For **Application**, select *GitHub*.
 4. For the authentication protocol, select **SAML**.
 5. Select **Add application**.
 6. Fill in the following fields:
@@ -30,14 +30,14 @@ This guide covers how to configure [GitHub Enterprise Cloud](https://docs.github
 8. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
 9. Save the application.
 
-## 2. Create a x.509 certificate
+## 2. Create an X.509 certificate
 
 1. Paste the **Public key** in a text editor.
 2. Wrap the certificate in `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
 
 ## 3. Configure an identity provider and SAML SSO in GitHub Enterprise Cloud
 
-1. In your Github organization page, go to **Settings** > **Authentication security**.
+1. In your GitHub organization page, go to **Settings** > **Authentication security**.
 2. Under **SAML single sign-on**, turn on **Enable SAML authentication**.
 3. Fill in the following fields:
    * **Sign on URL**:  SSO endpoint from application configuration in Cloudflare Zero Trust.

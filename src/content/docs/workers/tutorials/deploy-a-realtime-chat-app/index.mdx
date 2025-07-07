@@ -15,8 +15,6 @@ In this tutorial, you will deploy a serverless, real-time chat application that 
 
 This chat application uses a Durable Object to control each chat room. Users connect to the Object using WebSockets. Messages from one user are broadcast to all the other users. The chat history is also stored in durable storage. Real-time messages are relayed directly from one user to others without going through the storage layer.
 
-To continue with this tutorial, you must purchase the [Workers Paid plan](/workers/platform/pricing/#workers) and enable Durable Objects by logging into the [Cloudflare dashboard](https://dash.cloudflare.com) > **Workers & Pages** > select your Worker > **Durable Objects**.
-
 <Render file="tutorials-before-you-start" />
 
 ## Clone the chat application repository
@@ -98,7 +96,7 @@ bindings = [
 # Indicate that you want the ChatRoom and RateLimiter classes to be callable as Durable Objects.
 [[migrations]]
 tag = "v1" # Should be unique for each entry
-new_classes = ["ChatRoom", "RateLimiter"]
+new_sqlite_classes = ["ChatRoom", "RateLimiter"]
 
 [[migrations]]
 tag = "v2"

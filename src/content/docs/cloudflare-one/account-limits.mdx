@@ -5,6 +5,10 @@ sidebar:
   order: 12
 ---
 
+import { Render } from "~/components";
+
+<Render file="survey" />
+
 This page lists the default account limits for rules, applications, fields, and other features. These limits may be increased on Enterprise accounts. To request a limit increase, contact your account team.
 
 ## Access
@@ -20,6 +24,7 @@ This page lists the default account limits for rules, applications, fields, and 
 | mTLS root certificates      | 50    |
 | Service tokens count        | 50    |
 | IdP count                   | 50    |
+| Reusable policies count     | 500   |
 | Rules count per application | 1,000 |
 | Rules count per group       | 1,000 |
 | Domains per application     | 5     |
@@ -42,6 +47,7 @@ This page lists the default account limits for rules, applications, fields, and 
 | Lists                                     | 100   |
 | Entries per list (Standard users)         | 1,000 |
 | Entries per list (Enterprise users)       | 5,000 |
+| List API requests per minute              | 600   |
 | DNS Logpush jobs                          | 5     |
 | HTTP Logpush jobs                         | 5     |
 
@@ -91,3 +97,10 @@ This page lists the default account limits for rules, applications, fields, and 
 | Application URL               | 63              |
 | Team domain                   | 63              |
 | Gateway API policy expression | 140,000         |
+
+## WARP
+
+| Feature                                                                    | Character limit |
+| -------------------------------------------------------------------------- | --------------- |
+| Device profile expression                                                  | 10,000          |
+| Combined Split Tunnel and Local Domain Fallback entries per device profile | 1,000           |

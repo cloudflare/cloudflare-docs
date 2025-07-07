@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-Cache-tag purging makes multi-file purging easier because you can instantly bulk purge by adding cache-tags to your assets, such as webpages, image files, and more. Note that Tag, Hostname and Prefix purges are only available for Enterprise customers.
+Cache-tag purging makes multi-file purging easier because you can instantly bulk purge by adding cache-tags to your assets, such as webpages, image files, and more.
 
 ## General workflow for cache-tags
 
@@ -53,17 +53,12 @@ When your content reaches our edge network, Cloudflare:
 5. In the text box, enter your tags to use to purge the cached resources. To purge multiple cache-tagged resources, separate each tag with a comma or have one tag per line.
 6. Select **Purge**.
 
-:::note[API]
+For information on rate limits, refer to the [Availability and limits](/cache/how-to/purge-cache/#availability-and-limits) section.
 
-
-You can purge using cache-tags via the Cloudflare API. For more information, refer to the [API documentation](/api/resources/cache/methods/purge/). You can purge up to 30 cache-tags per API call and up to 250,000 cache-tags per a 24-hour period.
-
-
-:::
 
 ## Resulting cache status
 
 Purging by tag deletes the resource, resulting in the `CF-Cache-Status` header being set to [`MISS`](/cache/concepts/cache-responses/#miss) for subsequent requests.
 
-If [tiered cache](/cache/how-to/tiered-cache/) is used, purging by tag may return `EXPIRED`, as the lower tier tries to revalidate with the upper tier to reduce load on the latter.
+If [Tiered Cache](/cache/how-to/tiered-cache/) is used, purging by tag may return `EXPIRED`, as the lower tier tries to revalidate with the upper tier to reduce load on the latter.
 Depending on whether the upper tier has the resource or not, and whether the end user is reaching the lower tier or the upper tier, `EXPIRED` or `MISS` are returned.

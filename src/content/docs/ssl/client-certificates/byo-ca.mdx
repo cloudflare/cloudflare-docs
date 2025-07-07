@@ -10,7 +10,7 @@ description: Cloudflare mTLS now supports client certificates that have not been
 
 ---
 
-import { Render } from "~/components"
+import { Render, APIRequest } from "~/components"
 
 This page explains how you can manage mTLS using client certificates that have not been issued by Cloudflare CA.
 
@@ -95,8 +95,10 @@ If you want to remove a CA that you have previously uploaded, you must first rem
 
 You can also use the [API](/api/resources/certificate_authorities/subresources/hostname_associations/methods/get/) to list the hostname associations. Make sure you include the query parameter `mtls_certificate_id`, where `mtls_certificate_id` is the certificate ID of the uploaded CA (step 2 above).
 
-```bash
-curl "https://api.cloudflare.com/client/v4/zones/zone_id/certificate_authorities/hostname_associations?mtls_certificate_id={id_from_step_2}"  \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>"
-```
+<APIRequest
+  path="/zones/{zone_id}/certificate_authorities/hostname_associations"
+  method="GET"
+  parameters={{
+		mtls_certificate_id: "ID_FROM_STEP_2"
+	}}
+/>

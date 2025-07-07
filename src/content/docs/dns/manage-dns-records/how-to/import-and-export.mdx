@@ -5,7 +5,7 @@ sidebar:
   order: 9
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { Render, TabItem, Tabs, APIRequest } from "~/components";
 
 Use import and export to have more control over your DNS records and make processes like migrating a domain or bulk editing [record comments](/dns/manage-dns-records/reference/record-attributes/) easier.
 
@@ -37,6 +37,14 @@ To import a zone file using the dashboard:
 
 To import records using the API, send a [POST request](/api/resources/dns/subresources/records/methods/import/) with a properly [formatted file](#format-your-zone-file).
 
+<APIRequest
+  path="/zones/{zone_id}/dns_records/import"
+	method="POST"
+	form={{
+		file:"@your_formatted_file.txt"
+	}}
+/>
+
 </TabItem> </Tabs>
 
 ---
@@ -57,6 +65,11 @@ To export records using the dashboard:
 </TabItem> <TabItem label="API">
 
 To export records using the API, send a [GET request](/api/resources/dns/subresources/records/methods/export/).
+
+<APIRequest
+  path="/zones/{zone_id}/dns_records/export"
+	method="GET"
+/>
 
 </TabItem> </Tabs>
 

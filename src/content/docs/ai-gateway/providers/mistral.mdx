@@ -3,6 +3,8 @@ title: Mistral AI
 pcx_content_type: get-started
 ---
 
+import { Render } from "~/components";
+
 [Mistral AI](https://mistral.ai) helps you build quickly with Mistral's advanced AI models.
 
 ## Endpoint
@@ -69,3 +71,17 @@ await client.chat.create({
 	],
 });
 ```
+
+<Render
+	file="chat-completions-providers"
+	product="ai-gateway"
+	params={{
+		name: "Mistral",
+		jsonexample: `
+{
+	"model": "mistral/{model}"
+}`
+
+    }}
+
+/>

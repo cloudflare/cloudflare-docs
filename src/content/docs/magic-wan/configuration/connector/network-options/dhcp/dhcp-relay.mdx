@@ -26,6 +26,10 @@ accTitle: An example of Connector in DHCP Relay mode
 
 _The above graph shows Connector sending DHCP discover messages to a DHCP server offsite._
 
+:::caution
+DHCP relay will not work if your DHCP server is behind a [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/). To enable DHCP relay functionality, use either a Magic WAN tunnel or a CNI connection.
+:::
+
 To configure DHCP relay:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
@@ -42,7 +46,7 @@ To configure DHCP relay:
 
 </TabItem> <TabItem label="API">
 
-<Render file="connector/account-id-api-key" />
+<Render file="account-id-api-key" product="networking-services" />
 
 Create a [`PUT` request](/api/resources/magic_transit/subresources/sites/subresources/lans/methods/update/) to update the LAN where you want to enable DHCP relay:
 

@@ -47,7 +47,7 @@ By default, the Magic static routes are defined with the priority set to `100`. 
 
 3. From the **Static Routes** tab, select **Create**.
 
-4. For the first route, ensure the following settings are defined (refer to [Configure static routes](/magic-wan/configuration/manually/how-to/configure-static-routes/) to learn about settings not mentioned here):
+4. For the first route, ensure the following settings are defined (refer to [Configure static routes](/magic-wan/configuration/manually/how-to/configure-routes/#create-a-static-route) to learn about settings not mentioned here):
 
    - **Prefix**: Specify the [RFC1918](https://datatracker.ietf.org/doc/html/rfc1918) subnet that exists behind the first Magic IPsec tunnel you have defined in the previous section.
    - **Tunnel/Next hop**: Select your first tunnel (Tunnel 01 of 02).
@@ -74,6 +74,28 @@ config system settings
     set asymroute-icmp enable
 end
 ```
+
+### Configure NAT-T (optional)
+
+If you have NAT traversal (NAT-T) on your network, you need to enable this feature and initiate IKE communications on port `4500`.
+
+To set the IKE port, add the following to your system settings:
+
+```txt
+config system settings
+    set ike-port 4500
+end
+```
+
+To enable NAT-T, add `set nattraversal enable` to the IPsec tunnels you are configuring.
+
+```txt
+fortigate # config vpn ipsec phase1-interface
+    edit "<NAME_OF_YOUR_TUNNEL>"
+        set nattraversal enable
+```
+
+Refer to [Fortinet's documentation](https://community.fortinet.com/t5/FortiGate/Technical-Tip-IPSec-VPN-NAT-traversal/ta-p/197873) for more details.
 
 ### Disable anti-replay protection
 
@@ -412,7 +434,8 @@ end
 ## Monitor Cloudflare Magic IPsec tunnel health checks
 
 <Render
-	file="tunnel-healthchecks-dash"
+	file="tunnel-health/check-tunnel-healthchecks-dash"
+	product="networking-services"
 	params={{
 		dashInfo:
 			"The dashboard shows the view of tunnel health as measured from each Cloudflare location where your traffic is likely to land.",

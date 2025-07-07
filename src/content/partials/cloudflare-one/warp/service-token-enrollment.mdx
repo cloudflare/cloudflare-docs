@@ -23,33 +23,33 @@ import { Tabs, TabItem } from '~/components';
    * `auth_client_id`: The **Client ID** of your service token.
    * `auth_client_secret`: The **Client Secret** of your service token.
 
-</TabItem> <TabItem label="Terraform (v4)">
+</TabItem> <TabItem label="Terraform (v5)">
 
-:::note[Provider versions]
-The following example requires Cloudflare provider version `>=4.40.0`.
-:::
-
-1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.40.0/docs/resources/api_token):
+1. Add the following permissions to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
 	- `Access: Apps and Policies Write`
+	- `Access: Service Tokens Write`
 
 2. [Create a service token](/cloudflare-one/identity/service-tokens/#create-a-service-token) and copy its **Client ID** and **Client Secret**.
 
-3. Add the following policy to your [WARP enrollment Access application](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/#set-device-enrollment-permissions):
+3. Create the following Access policy:
 
 	```tf
 	resource "cloudflare_zero_trust_access_policy" "warp_enrollment_service_token" {
-		application_id = cloudflare_zero_trust_access_application.warp_enrollment_app.id
 		account_id     = var.cloudflare_account_id
 		name           = "Allow service token"
 		decision       = "non_identity"
-		precedence     = 2
-
-		include {
-			service_token = [cloudflare_zero_trust_access_service_token.example_service_token.id]
-		}
+		include = [
+			{
+				service_token = {
+					token_id = cloudflare_zero_trust_access_service_token.example_service_token.id
+				}
+			}
+		]
 	}
 	```
-4. In your MDM [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/), add the following fields:
+4. Add the policy to your [`cloudflared_zero_trust_access_application` for WARP](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/#set-device-enrollment-permissions).
+
+5. In your MDM [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/), add the following fields:
    * `auth_client_id`: The **Client ID** of your service token.
    * `auth_client_secret`: The **Client Secret** of your service token.
 

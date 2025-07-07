@@ -5,52 +5,52 @@ head: []
 description: Use environments to create different configurations for the same Worker application.
 ---
 
-import { WranglerConfig } from "~/components";
+import { WranglerConfig, Render, Steps } from "~/components";
 
 Wrangler allows you to use environments to create different configurations for the same Worker application. Environments are configured in the Worker's [Wrangler configuration file](/workers/wrangler/configuration/).
-There is a default (top-level) environment and you can create named environments that provide environment-specific configuration.
+
+When you create an environment, Cloudflare effectively creates a new Worker with the name `<top-level-name>-<environment-name>`. For example, a Worker project named `my-worker` with an environment `dev` would deploy as a Worker named `my-worker-dev`.
 
 Review the following environments flow:
 
+<Steps>
 1. Create a Worker, named `my-worker` for example.
 2. Create an environment, for example `dev`, in the Worker's [Wrangler configuration file](/workers/wrangler/configuration/), by adding a `[env.<ENV_NAME>]` section.
 
-<WranglerConfig>
+    <WranglerConfig>
 
-```json
-{
-	"name": "my-worker",
-	"env": {
-		"<ENV_NAME>": {
-			// environment-specific configuration goes here
-		}
-	}
-}
-```
+    ```json
+    {
+    	"name": "my-worker",
+    	"env": {
+    		"<ENV_NAME>": {
+    			// environment-specific configuration goes here
+    		}
+    	}
+    }
+    ```
+    </WranglerConfig>
 
-</WranglerConfig>
+3.  You can configure the `dev` environment with different values to the top-level environment. Refer [here](/workers/wrangler/configuration/#environments) for how different options are inherited - or not inherited - between environments.
+    For example, to set a different route for a Worker in the `dev` environment:
 
-3. You can configure the `dev` environment with different values to the top-level environment. Refer [here](/workers/wrangler/configuration/#environments) for how different options are inherited - or not inherited - between environments.
+    <WranglerConfig>
 
-For example, to set a different route for a Worker in the `dev` environment:
+    ```toml
+    name = "your-worker"
+    route = "example.com"
 
-<WranglerConfig>
+    [env.dev]
+    route = "dev.example.com"
+    ```
 
-```toml
-name = "your-worker"
-route = "example.com"
+    </WranglerConfig>
 
-[env.dev]
-route = "dev.example.com"
-```
+4.  Environments are used with the `--env` or `-e` flag on Wrangler commands. For example, you can develop the Worker in the `dev` environment by running `npx wrangler dev -e=dev`, and deploy it with `npx wrangler deploy -e=dev`.
 
-</WranglerConfig>
-4. Environments are used with the `--env` or `-e` flag on Wrangler commands. For example, you can develop the Worker in the `dev` environment by running `npx wrangler dev -e=dev`, and deploy it with `npx wrangler deploy -e=dev`.
+        <Render file="vite-environments" />
 
-:::note
-
-Cloudflare effectively creates a new Worker for you when you create a Worker with an environment. Wrangler appends the environment name to the top-level name. For example, a Worker project named `my-worker` with an environment `dev` would deploy a Worker named `my-worker-dev`. You must use this name when referencing a Worker in a particular environment, for example in a [service binding](/workers/wrangler/configuration/#service-bindings).
-:::
+</Steps>
 
 ## Non-inheritable keys and environments
 

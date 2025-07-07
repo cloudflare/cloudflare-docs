@@ -4,7 +4,7 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 275 275" fill="none">
 product:
   title: Pulumi
   url: /pulumi/
-  group: Cloudflare essentials
+  group: Core platform
   additional_groups: [Developer platform]
 
 meta:

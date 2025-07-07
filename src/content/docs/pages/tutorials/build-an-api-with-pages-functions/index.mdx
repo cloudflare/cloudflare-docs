@@ -7,7 +7,7 @@ languages:
   - JavaScript
 ---
 
-import { Stream } from "~/components";
+import { Stream, PackageManagers } from "~/components";
 
 In this tutorial, you will build a full-stack Pages application. Your application will contain:
 
@@ -45,17 +45,7 @@ To set up your React project:
 
 1. Install the [React Router](https://reactrouter.com/en/main/start/tutorial) in the root of your `blog-frontend` directory.
 
-With `npm`:
-
-```sh
-npm install react-router-dom@6
-```
-
-With `yarn`:
-
-```sh
-yarn add react-router-dom@6
-```
+<PackageManagers pkg="react-router-dom@6" />s
 
 2. Clear the contents of `src/App.js`. Copy and paste the following code to import the React Router into `App.js`, and set up a new router with two routes:
 

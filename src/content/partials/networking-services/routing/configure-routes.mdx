@@ -1,0 +1,327 @@
+---
+params:
+  - publicAsnMT?
+  - magicWord
+  - trafficSteeringPage
+  - productName
+  - tunnelEndpoints
+  - routePrioritization
+  - chooseWeights
+  - productGatewayOrEgress
+---
+
+import { Aside, APIRequest, Markdown, Render, TabItem, Tabs } from "~/components";
+
+Magic Networking uses a routing table to steer your traffic via next-hop from Cloudflare's global network to your connected networks. Entries can be added to the Magic routing table via static route configuration or via routes learned through BGP peering (only available over Direct CNI).
+
+Refer to <a href={props.trafficSteeringPage}>Traffic Steering</a> for more information about all the technical aspects related to:
+- Routes' priorities and weights
+- Regional scoping of traffic to reduce latency
+- BGP peering
+
+## Configure static routes
+
+### Create a static route
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+2. Go to **{props.productName}** > **Configuration**.
+3. From the **Routes** tab, select **Create** to add a new route.
+4. Enter a descriptive name for your route in **Description**.
+5. In **Prefix**, enter your range of IP addresses. For example, `10.10.10.100/24`.
+6. In **Tunnel/Next hop** select which tunnel you want your route to go through. Choose from the tunnels you have created in <a href={props.tunnelEndpoints}>Configure tunnel endpoints</a>.
+7. Choose the **Priority** for your route. Lower numbers have higher priorities.
+	:::note
+	<Render file="longest-prefix-match" product="networking-services/reference" /> Have this in mind when configuring priorities for your routes. Refer to <a href={props.routePrioritization}>Route prioritization</a> for more information.
+	:::
+8. (Optional) Choose a **Weight** for your route. Refer to <a href={props.chooseWeights}>Set priority and weights for static routes</a> for examples.
+9. (Optional) If you need to scope your route to a specific region, you can do it in **Region code**.
+10. (Optional) We highly recommend testing your route before adding it by selecting **Test routes**.
+11. Select **Add routes** when you are done.
+
+</TabItem> <TabItem label="API">
+
+<Render file="account-id-api-key" product="networking-services" />
+
+Create a `POST` request [using the API](/api/resources/magic_transit/subresources/routes/methods/create/) to create one or more static routes.
+
+Example:
+
+<APIRequest
+  path="/accounts/{account_id}/magic/routes"
+  method="POST"
+  json={{
+		"nexthop": "<IP_NEXT_HOP>",
+		"prefix": "<YOUR_IP_PREFIX>",
+		"priority": 0,
+		"id": "023e105f4ecef8ad9ca31a8372d0c353",
+		"description": "<ROUTE_DESCRIPTION>",
+		"scope": {
+			"colo_names": [
+				"den01"
+			],
+			"colo_regions": [
+				"APAC"
+			]
+		},
+		"weight": 0
+  }}
+/>
+
+```json output
+{
+  "errors": [
+    {
+      "code": 1000,
+      "message": "message"
+    }
+  ],
+  "messages": [
+    {
+      "code": 1000,
+      "message": "message"
+    }
+  ],
+  "result": {
+    "routes": [
+      {
+        "nexthop": "203.0.113.1",
+        "prefix": "192.0.2.0/24",
+        "priority": 0,
+        "id": "023e105f4ecef8ad9ca31a8372d0c353",
+        "description": "New route for new prefix 203.0.113.1",
+        "scope": {
+          "colo_names": [
+            "den01"
+          ],
+          "colo_regions": [
+            "APAC"
+          ]
+        },
+        "weight": 0
+      }
+    ]
+  },
+  "success": true
+}
+```
+
+</TabItem> </Tabs>
+
+### Edit a static route
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. In **Routes**, select **Edit** next to the route you want to modify.
+2. Enter the updated route information.
+3. (Optional) We highly recommend testing your route before adding it by selecting **Test routes**.
+4. Select **Edit routes** to save the new information when you are done.
+
+</TabItem> <TabItem label="API">
+
+<Render file="account-id-api-key" product="networking-services" />
+
+Create a `PUT` request [using the API](/api/resources/magic_transit/subresources/routes/methods/update/) to update one or more static routes.
+
+Example:
+
+<APIRequest
+  path="/accounts/{account_id}/magic/routes/{route_id}"
+  method="PUT"
+  json={{
+		"nexthop": "<IP_NEXT_HOP>",
+		"prefix": "<YOUR_IP_PREFIX>",
+		"priority": 0,
+		"id": "023e105f4ecef8ad9ca31a8372d0c353",
+		"description": "<ROUTE_DESCRIPTION>",
+		"scope": {
+			"colo_names": [
+				"den01"
+			],
+			"colo_regions": [
+				"APAC"
+			]
+		},
+		"weight": 0
+  }}
+/>
+
+```json output
+{
+  "errors": [
+    {
+      "code": 1000,
+      "message": "message"
+    }
+  ],
+  "messages": [
+    {
+      "code": 1000,
+      "message": "message"
+    }
+  ],
+  "result": {
+    "modified": true,
+    "modified_route": {
+      "nexthop": "203.0.113.1",
+      "prefix": "192.0.2.0/24",
+      "priority": 0,
+      "id": "023e105f4ecef8ad9ca31a8372d0c353",
+      "description": "New route for new prefix 203.0.113.1",
+      "scope": {
+        "colo_names": [
+          "den01"
+        ],
+        "colo_regions": [
+          "APAC"
+        ]
+      },
+      "weight": 0
+    }
+  },
+  "success": true
+}
+```
+
+</TabItem> </Tabs>
+
+### Delete static route
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. In **Routes**, locate the static route you want to modify and select **Delete**.
+2. Confirm the action by selecting the checkbox and select **Delete**.
+
+</TabItem> <TabItem label="API">
+
+<Render file="account-id-api-key" product="networking-services" />
+
+Create a `DELETE` request [using the API](/api/resources/magic_transit/subresources/routes/methods/delete/) to delete a static route.
+
+Example:
+
+<APIRequest
+  path="/accounts/{account_id}/magic/routes/{route_id}"
+  method="DELETE"
+/>
+
+```json output
+{
+  "errors": [
+    {
+      "code": 1000,
+      "message": "message"
+    }
+  ],
+  "messages": [
+    {
+      "code": 1000,
+      "message": "message"
+    }
+  ],
+  "result": {
+    "deleted": true,
+    "deleted_route": {
+      "nexthop": "203.0.113.1",
+      "prefix": "192.0.2.0/24",
+      "priority": 0,
+      "id": "023e105f4ecef8ad9ca31a8372d0c353",
+      "description": "New route for new prefix 203.0.113.1",
+      "scope": {
+        "colo_names": [
+          "den01"
+        ],
+        "colo_regions": [
+          "APAC"
+        ]
+      },
+      "weight": 0
+    }
+  },
+  "success": true
+}
+```
+
+</TabItem> </Tabs>
+
+
+## Configure BGP routes
+
+BGP peering is available when using a [Direct CNI](/network-interconnect/express-cni/) as an on-ramp.
+
+### Choose an ASN for BGP peering
+
+The Magic routing table is managed by the customer, who can select both the Cloudflare-side ASN and the ASN for their customer device. The customer device ASN can be 2-byte or 4-byte. <Markdown text={props.publicAsnMT} />
+
+By default, each BGP peering session will use the same Cloudflare-side ASN to represent peering with the {props.productName} routing table. This ASN is called the **CF Account ASN** and is set to `13335`. This can be configured to a private 2-byte ASN (for example, any values between `64512` and `65534`). To set this ASN:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
+2. Go to **{props.productName}** > **Configuration** > **BGP**.
+3. In **CF Account ASN**, enter Cloudflare's ASN.
+4. Select **Update**.
+
+{ props.magicWord === "Magic Transit" && (
+  <>
+	<Markdown
+    text={`
+		Magic Transit customers should also be aware of the following:
+
+		- The Cloudflare side ASN will never be exposed in \`AS_PATH\` of anycast announcements from the Cloudflare edge. In those announcements, Cloudflare will always use the Cloudflare ASN of \`13335\` optionally prepended with a bring-your-own ASN as described in [Cloudflare ASN vs. your own ASN](/magic-transit/how-to/advertise-prefixes/#cloudflare-asn-vs-your-own-asn).
+		- The customer device ASN can be a private ASN or the ASN they are using for Magic Transit anycast announcements at the edge: this has no impact on the ASN for the anycast announced prefix at the edge of the Cloudflare global network.
+  `}
+    inline={false}
+  />
+  </>
+  )
+}
+
+{ props.magicWord === "Magic WAN" && (
+  <>
+	<Markdown
+    text={`
+		Magic WAN customers should also be aware of the following:
+		- The customer chooses their device ASN, which must be different to the Cloudflare-side ASN.
+		- The Cloudflare side ASN will be included in the \`AS_PATH\` of announced routes to any BGP enabled interconnect.
+		- The customer-announced \`AS_PATH\` is transitive between interconnects — meaning the origin (customer) ASN is visible in the \`AS_PATH\` of routes received from Cloudflare via BGP. Due to default BGP loop prevention mechanisms, a router will reject any route that contains its own ASN in the \`AS_PATH\`. For example, if two Magic WAN-connected sites both use \`ASN 65000\`, site A will not accept routes from site B, and vice versa, because each site sees its own ASN in the advertised \`AS_PATH\`. <br />
+			To enable routing between private networks over Magic WAN, you should either:
+			- Assign a unique ASN to each site/network, or
+			- Configure your edge CPE to accept BGP routes that include its own ASN in the \`AS_PATH\`.
+  `}
+    inline={false}
+  />
+  </>
+  )
+}
+
+### Set up BGP peering
+
+:::caution
+BGP peering is only available to {props.productName} customers with Direct CNI as an on-ramp. If your network is set up with GRE or IPsec tunnels, you cannot use BGP peering.
+:::
+
+You need to configure two ASNs:
+- The Cloudflare [account-scoped ASN](#choose-an-asn-for-bgp-peering) named **CF Account ASN**.
+- One ASN for each interconnect you want to configure with BGP.
+
+If you already have set up your Cloudflare account ASN, you can skip steps two and three below.
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+2. Go to **{props.productName}** > **Configuration** > **BGP configuration**.
+3. In **CF Account ASN**, enter Cloudflare's ASN.
+4. Go to **Interconnects**.
+5. Find the Direct CNI interconnect you want to configure with BGP > select the **three dots** next to it > **Configure BGP**.
+6. In **Customer device ASN**, enter the ASN for your network.
+
+	{ props.magicWord === "Magic WAN" && (
+		<>
+		<Aside type="note">Multiple interconnects with the same ASN will not exchange routes if standard BGP loop prevention is enabled. Consider using a different ASN per session, or enabling duplicate ASNs (like Cisco's <code>allowas-in</code> feature) to exchange routes between networks. </Aside>
+		</>
+		)
+	}
+
+7. In **MD5 key**, you can optionally enter the key for your network. Note that this is meant to prevent accidental misconfigurations, and is not a security mechanism.
+8. (Optional) In **Advertised prefix list**, input the additional prefixes automatically assigned by Cloudflare during the creation of the CNI interconnect, to advertise alongside your existing routes. Leave blank if you do not want to advertise extra routes. <br /> Typical prefixes to configure here include:
+	- A route to `0.0.0.0/0`, the default route — to attract all Internet-bound traffic if using {props.productGatewayOrEgress}.
+	- A route to `100.96.0.0/12`, the portion of CGNAT space [used by default with WARP clients](/cloudflare-one/connections/connect-networks/private-net/warp-connector/user-to-site/#add-route-to-router).
+9. Select **Save**.

@@ -1,0 +1,19 @@
+name: R2 Data Catalog
+
+product:
+  title: R2 Data Catalog
+  url: /r2/data-catalog/
+  group: Developer platform
+  additional_groups: [Storage]
+  tags: [Storage]
+
+meta:
+  title: Cloudflare R2 Data Catalog docs
+  description: Create, manage, and query Iceberg tables stored in R2.
+  author: "@cloudflare"
+
+resources:
+  community: https://community.cloudflare.com/c/developers/workers/40
+  dashboard_link: https://dash.cloudflare.com/?to=/:account/r2
+  discord: https://discord.com/channels/595317990191398933/940663374377783388
+  learning_center: https://www.cloudflare.com/learning/cloud/what-is-object-storage/

@@ -19,7 +19,7 @@ All data in uploaded EDM datasets is encrypted before reaching Cloudflare. To de
 
 ### Custom Wordlist
 
-Custom Wordlist (CWL) protects non-sensitive data, such as intellectual property and SKU numbers.
+Custom Wordlist (CWL) protects non-sensitive data, such as intellectual property and SKU numbers. Optionally, CWL can detect case-sensitive data.
 
 Cloudflare stores data from CWL datasets within DLP. Plaintext matches appear in payload logs.
 
@@ -67,8 +67,9 @@ DLP will encrypt your dataset and save its hash.
 2. Select **Create new dataset**.
 3. Choose **Custom Wordlist**.
 4. Name your dataset. Optionally, add a description.
-5. In **Upload file**, choose your dataset file.
-6. Select **Save**.
+5. (Optional) In **Settings**, turn on **Enforce case sensitivity** to require matched values to contain exact capitalization.
+6. In **Upload file**, choose your dataset file.
+7. Select **Save**.
 
 DLP will save your dataset in cleartext.
 

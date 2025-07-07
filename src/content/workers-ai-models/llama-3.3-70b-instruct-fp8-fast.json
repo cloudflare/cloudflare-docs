@@ -8,11 +8,31 @@
         "name": "Text Generation",
         "description": "Family of generative text models, such as large language models (LLM), that can be adapted for a variety of natural language tasks."
     },
+    "created_at": "2024-12-06 17:09:18.338",
     "tags": [],
     "properties": [
         {
+            "property_id": "async_queue",
+            "value": "true"
+        },
+        {
             "property_id": "context_window",
             "value": "24000"
+        },
+        {
+            "property_id": "price",
+            "value": [
+                {
+                    "unit": "per M input tokens",
+                    "price": 0.29,
+                    "currency": "USD"
+                },
+                {
+                    "unit": "per M output tokens",
+                    "price": 2.25,
+                    "currency": "USD"
+                }
+            ]
         },
         {
             "property_id": "function_calling",
@@ -28,7 +48,7 @@
             "type": "object",
             "oneOf": [
                 {
-                    "title": "Prompt",
+                    "title": "Meta_Llama_3_3_70B_Instruct_Fp8_Fast_Prompt",
                     "properties": {
                         "prompt": {
                             "type": "string",
@@ -77,8 +97,8 @@
                         },
                         "top_p": {
                             "type": "number",
-                            "minimum": 0,
-                            "maximum": 2,
+                            "minimum": 0.001,
+                            "maximum": 1,
                             "description": "Adjusts the creativity of the AI's responses by controlling how many possible words it considers. Lower values make outputs more predictable; higher values allow for more varied and creative responses."
                         },
                         "top_k": {
@@ -101,13 +121,13 @@
                         },
                         "frequency_penalty": {
                             "type": "number",
-                            "minimum": 0,
+                            "minimum": -2,
                             "maximum": 2,
                             "description": "Decreases the likelihood of the model repeating the same lines verbatim."
                         },
                         "presence_penalty": {
                             "type": "number",
-                            "minimum": 0,
+                            "minimum": -2,
                             "maximum": 2,
                             "description": "Increases the likelihood of the model introducing new topics."
                         }
@@ -117,7 +137,7 @@
                     ]
                 },
                 {
-                    "title": "Messages",
+                    "title": "Meta_Llama_3_3_70B_Instruct_Fp8_Fast_Messages",
                     "properties": {
                         "messages": {
                             "type": "array",
@@ -337,8 +357,8 @@
                         },
                         "top_p": {
                             "type": "number",
-                            "minimum": 0,
-                            "maximum": 2,
+                            "minimum": 0.001,
+                            "maximum": 1,
                             "description": "Adjusts the creativity of the AI's responses by controlling how many possible words it considers. Lower values make outputs more predictable; higher values allow for more varied and creative responses."
                         },
                         "top_k": {
@@ -361,13 +381,13 @@
                         },
                         "frequency_penalty": {
                             "type": "number",
-                            "minimum": 0,
+                            "minimum": -2,
                             "maximum": 2,
                             "description": "Decreases the likelihood of the model repeating the same lines verbatim."
                         },
                         "presence_penalty": {
                             "type": "number",
-                            "minimum": 0,
+                            "minimum": -2,
                             "maximum": 2,
                             "description": "Increases the likelihood of the model introducing new topics."
                         }
@@ -375,6 +395,90 @@
                     "required": [
                         "messages"
                     ]
+                },
+                {
+                    "title": "Async Batch",
+                    "type": "object",
+                    "properties": {
+                        "requests": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "external_reference": {
+                                        "type": "string",
+                                        "description": "User-supplied reference. This field will be present in the response as well it can be used to reference the request and response. It's NOT validated to be unique."
+                                    },
+                                    "prompt": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "description": "Prompt for the text generation model"
+                                    },
+                                    "stream": {
+                                        "type": "boolean",
+                                        "default": false,
+                                        "description": "If true, the response will be streamed back incrementally using SSE, Server Sent Events."
+                                    },
+                                    "max_tokens": {
+                                        "type": "integer",
+                                        "default": 256,
+                                        "description": "The maximum number of tokens to generate in the response."
+                                    },
+                                    "temperature": {
+                                        "type": "number",
+                                        "default": 0.6,
+                                        "minimum": 0,
+                                        "maximum": 5,
+                                        "description": "Controls the randomness of the output; higher values produce more random results."
+                                    },
+                                    "top_p": {
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "maximum": 2,
+                                        "description": "Adjusts the creativity of the AI's responses by controlling how many possible words it considers. Lower values make outputs more predictable; higher values allow for more varied and creative responses."
+                                    },
+                                    "seed": {
+                                        "type": "integer",
+                                        "minimum": 1,
+                                        "maximum": 9999999999,
+                                        "description": "Random seed for reproducibility of the generation."
+                                    },
+                                    "repetition_penalty": {
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "maximum": 2,
+                                        "description": "Penalty for repeated tokens; higher values discourage repetition."
+                                    },
+                                    "frequency_penalty": {
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "maximum": 2,
+                                        "description": "Decreases the likelihood of the model repeating the same lines verbatim."
+                                    },
+                                    "presence_penalty": {
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "maximum": 2,
+                                        "description": "Increases the likelihood of the model introducing new topics."
+                                    },
+                                    "response_format": {
+                                        "title": "JSON Mode",
+                                        "type": "object",
+                                        "properties": {
+                                            "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "json_object",
+                                                    "json_schema"
+                                                ]
+                                            },
+                                            "json_schema": {}
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             ]
         },
@@ -435,6 +539,17 @@
                     "type": "string",
                     "contentType": "text/event-stream",
                     "format": "binary"
+                },
+                {
+                    "type": "object",
+                    "contentType": "application/json",
+                    "title": "Async response",
+                    "properties": {
+                        "request_id": {
+                            "type": "string",
+                            "description": "The async request id that can be used to obtain the results."
+                        }
+                    }
                 }
             ]
         }

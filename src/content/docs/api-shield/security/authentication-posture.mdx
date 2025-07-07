@@ -7,7 +7,7 @@ sidebar:
 
 ---
 
-import { GlossaryTooltip, Render } from "~/components"
+import { GlossaryTooltip, Render, Steps } from "~/components"
 
 Authentication Posture helps users identify authentication misconfigurations for APIs and alerts of their presence.
 
@@ -21,13 +21,15 @@ After configuring [session identifiers](/api-shield/get-started/#session-identif
 
 <Render file="label-methodology" />
 
-To examine an endpoint's authentication details in the Cloudflare dashboard:
+### Examine an endpoint's authentication details
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+<Steps>
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **API Shield** > **Endpoint Management**.
 3. Filter Endpoint Management by the `cf-risk-missing-auth` or `cf-risk-mixed-auth` labels.
 4. Select an endpoint to see its authentication posture details on the endpoint details page.
 5. Choose between the 24-hour and 7-day view options, and note any authentication changes over time.
+</Steps>
 
 The main authentication widget displays how many successful requests over the last seven days had session identifiers included with them, and which identifiers were included with the traffic. 
 
@@ -35,7 +37,7 @@ The authentication-over-time chart shows a detailed breakdown over time of how c
 
 Work with your development team to understand which authentication policies may need to be corrected on your API to stop unauthenticated traffic.
 
-## Stop unauthenticated traffic with Cloudflare
+### Stop unauthenticated traffic with Cloudflare
 
 You can use the `cf.api_gateway.auth_id_present` field in [custom rules](/waf/custom-rules/) to trigger when the API Shield configured session identifiers are present or absent on a request. Since this rule would cover your entire zone, Cloudflare recommends adding a host and path match in the rule to pinpoint the protection to exactly what is needed.
 

@@ -1,0 +1,29 @@
+---
+title: FAQs
+pcx_content_type: concept
+sidebar:
+  order: 2
+---
+
+import { Steps } from "~/components";
+
+## Frequently asked questions - site owners
+
+### Can I charge a different price for each AI crawlers?
+
+
+No. Pay per crawl allows setting different configurations (Block, Charge, or Allow) for each crawler, but it only supports setting a single price for all crawlers set to "Charge".
+
+## Frequently asked questions - bot owners
+
+### Will I be charged multiple times if re-crawling the same page?
+
+Every time your AI crawler accesses content in a website protected with pay per crawl, it will incur a cost, as set by the site owner. You must implement mechanisms within your crawler to track its expenditure and to enforce any desired spending limits you wish to set.
+
+### Will I be billed for error HTTP status codes?
+
+No. Charging events are only issued on successful HTTP response codes. Errors are not billed, even if you have sent the `crawler-exact-price` header or the `crawler-max-price` header.
+
+### Do I need to use a specific user agent?
+
+You should use the normal user agents associated with your AI crawler that you have onboarded to Cloudflare and identified using Web Bot Auth.

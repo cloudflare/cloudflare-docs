@@ -5,6 +5,8 @@ sidebar:
   order: 4
 ---
 
+import { WranglerConfig } from "~/components";
+
 A [binding](/workers/runtime-apis/bindings/) connects your [Worker](/workers/) to external resources on the Developer Platform, like [Images](/images/transform-images/transform-via-workers/), [R2 buckets](/r2/buckets/), or [KV Namespaces](/kv/concepts/kv-namespaces/).
 
 You can bind the Images API to your Worker to transform, resize, and encode images without requiring them to be accessible through a URL.
@@ -25,11 +27,17 @@ You can define variables in the `wrangler.toml` file of your Worker project's di
 
 To bind Images to your Worker, add the following to the end of your `wrangler.toml` file:
 
+<WranglerConfig>
 
-```txt
-[images]
-binding = "IMAGES" # i.e. available in your Worker on env.IMAGES
+```jsonc
+{
+	"images": {
+		"binding": "IMAGES", // i.e. available in your Worker on env.IMAGES
+	},
+}
 ```
+
+</WranglerConfig>
 
 Within your Worker code, you can interact with this binding by using `env.IMAGES.input()` to build an object that can manipulate the image (passed as a `ReadableStream`).
 
@@ -69,28 +77,28 @@ return response;
 
 ### `.output()`
 
-* Defines the [output format](/images/transform-images/) for the transformed image such as AVIF, WebP, and JPEG.
+- Defines the [output format](/images/transform-images/) for the transformed image such as AVIF, WebP, and JPEG.
 
 For example, to rotate, resize, and blur an image, then output the image as AVIF:
 
 ```ts
 const info = await env.IMAGES.info(stream);
 // stream contains a valid image, and width/height is available on the info object
- 
+
 const response = (
-  await env.IMAGES.input(stream)
-    .transform({ rotate: 90 })
-    .transform({ width: 128 })
-    .transform({ blur: 20 })
-    .output({ format: "image/avif" })
+	await env.IMAGES.input(stream)
+		.transform({ rotate: 90 })
+		.transform({ width: 128 })
+		.transform({ blur: 20 })
+		.output({ format: "image/avif" })
 ).response();
- 
+
 return response;
 ```
 
 ### `.info()`
 
-- Outputs information about the image, such as `format`, `fileSize`, `width`, and `height`. 
+- Outputs information about the image, such as `format`, `fileSize`, `width`, and `height`.
 
 Responses from the Images binding are not automatically cached. Workers lets you interact directly with the Cache API to customize cache behavior using Workers. You can implement logic in your script to store transformations in Cloudflare’s cache.
 

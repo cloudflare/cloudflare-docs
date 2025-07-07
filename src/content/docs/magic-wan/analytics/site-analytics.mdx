@@ -9,7 +9,13 @@ head:
 
 ---
 
-After adding sites to your Magic WAN, the Network overview (beta) section of the dashboard provides you a summary of the connectivity status and traffic analytics for all your sites. This is a great place to start if you receive a Magic WAN alert, need to begin the troubleshooting process, or are performing routine monitoring.
+import { Render } from "~/components"
 
-Refer to [Set up a site](/magic-wan/configuration/common-settings/sites/) for more information.
+<Render
+	file="analytics/site-analytics"
+	product="networking-services"
+	params={{
+		instructions: "Refer to [Set up a site](/magic-wan/configuration/common-settings/sites/) for more information on how to set up a site."
+		}}
+/>
 

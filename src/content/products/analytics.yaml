@@ -3,7 +3,7 @@ name: Analytics
 product:
   title: Analytics
   url: /analytics/
-  group: Cloudflare essentials
+  group: Core platform
   additional_groups: [Analytics]
 
 meta:
