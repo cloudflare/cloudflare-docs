@@ -1,5 +1,5 @@
 ---
-title: OpenNext apps can now access deployed Cloudflare resources locally
+title: Next.js apps on Workers can now access deployed Cloudflare resources during `next dev` and `next build` with OpenNext
 description: You can now use remote bindings with OpenNext applications, which comes with benefits for pages using ISR.
 products:
   - workers
@@ -10,7 +10,7 @@ import { TypeScriptExample, WranglerConfig } from "~/components";
 
 We [recently announced](https://github.com/cloudflare/workers-sdk/discussions/9660) our public beta for [remote bindings](/workers/development-testing/#remote-bindings), which allow you to connect to deployed resources running on your Cloudflare account (like [R2 buckets](/r2) or [D1 databases](/d1)) while running a local development session.
 
-Now, you can use [remote bindings with your OpenNext applications](https://opennext.js.org/cloudflare/bindings#remote-bindings) by enabling the experimental feature in your `next.config.ts`:
+Now, you can use remote bindings with your Next.js applications through the [`@opennextjs/cloudflare` adaptor](https://opennext.js.org/cloudflare/bindings#remote-bindings) by enabling the experimental feature in your `next.config.ts`:
 
 <TypeScriptExample>
 
