@@ -1,5 +1,5 @@
 ---
-title: Remote bindings support in OpenNext
+title: OpenNext apps can now access deployed Cloudflare resources locally
 description: You can now use remote bindings with OpenNext applications, which comes with benefits for pages using ISR.
 products:
   - workers
@@ -15,9 +15,10 @@ Now, you can use [remote bindings with your OpenNext applications](https://openn
 <TypeScriptExample>
 
 ```ts
-initOpenNextCloudflareForDev({
-	experimental: { remoteBindings: true },
-});
+- initOpenNextCloudflareForDev();
++ initOpenNextCloudflareForDev({
++  experimental: { remoteBindings: true }
++ });
 ```
 
 </TypeScriptExample>
