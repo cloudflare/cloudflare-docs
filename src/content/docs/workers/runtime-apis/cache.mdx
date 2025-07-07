@@ -163,7 +163,7 @@ Our implementation of the Cache API respects the following HTTP headers on the r
 
 * `If-Modified-Since`
 
-  * Results in a `304` response if a matching response is found with a `Last-Modified` header with a value after the time specified in `If-Modified-Since`.
+  * Results in a `304` response if a matching response is found with a `Last-Modified` header with a value before the time specified in `If-Modified-Since`.
 
 * `If-None-Match`
 
