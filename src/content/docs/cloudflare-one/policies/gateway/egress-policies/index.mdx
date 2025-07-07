@@ -41,7 +41,7 @@ For the best performance, we recommend creating a catch-all policy to route all 
 | --------------------- | -------- | -------- | ------------------------ | -------------------------------- |
 | Default egress policy | Protocol | in       | `All options (Protocol)` | Cloudflare default egress method |
 
-Since Gateway policies evaluate from [top to bottom](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence) in the UI, be sure to place the catch-all policy at the bottom of the list. If you do not include a catch-all policy, all other traffic will use the closest dedicated egress IP location.
+Since Gateway policies evaluate from [top to bottom](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence) in the UI, be sure to place the catch-all policy at the bottom of the list. If you do not include a catch-all policy, all other traffic will attempt to use the closest dedicated egress IP location. To control which egress IP Gateway uses, create an egress policy.
 
 ## Egress methods
 
