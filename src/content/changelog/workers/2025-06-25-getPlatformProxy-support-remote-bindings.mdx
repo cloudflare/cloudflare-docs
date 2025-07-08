@@ -12,7 +12,7 @@ We [recently announced](https://github.com/cloudflare/workers-sdk/discussions/96
 
 Now, you can use remote bindings with your Next.js applications through the [`@opennextjs/cloudflare` adaptor](https://opennext.js.org/cloudflare/bindings#remote-bindings) by enabling the experimental feature in your `next.config.ts`:
 
-```ts
+```diff
 - initOpenNextCloudflareForDev();
 + initOpenNextCloudflareForDev({
 +  experimental: { remoteBindings: true }
