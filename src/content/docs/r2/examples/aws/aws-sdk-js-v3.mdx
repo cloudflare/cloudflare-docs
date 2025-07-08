@@ -14,18 +14,6 @@ JavaScript or TypeScript users may continue to use the [`@aws-sdk/client-s3`](ht
 Currently, you cannot use AWS S3-compatible API while developing locally via `wrangler dev`.
 :::
 
-:::note[Compatibility]
-Client version `3.729.0` introduced a modification to the default checksum behavior from the client that is currently incompatible with R2 APIs.
-
-To mitigate, users can use `3.726.1` or add the following to their S3Client config:
-
-```ts
-requestChecksumCalculation: "WHEN_REQUIRED",
-responseChecksumValidation: "WHEN_REQUIRED",
-```
-
-:::
-
 ```ts
 import {
 	S3Client,

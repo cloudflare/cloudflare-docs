@@ -10,6 +10,10 @@ import { DirectoryListing } from "~/components"
 
 Cloudflare supports two types of packet captures: full and sample. Full packet captures is the default behavior.
 
+:::note
+The maximum packet capture runtime is 24 hours for sample and full packet captures.
+:::
+
 ## Sample packet captures
 
 Sample packet captures collects historical data on network traffic that has already passed through Cloudflare's network. It will not collect any new traffic sent to Cloudflare's network after the packet capture has started. All sample packet captures will complete immediately after they are started because they query historical traffic data.

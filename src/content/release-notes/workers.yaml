@@ -5,6 +5,9 @@ productLink: "/workers/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-06-04"
+    description: |-
+      - Updated v8 to version 13.8.
   - publish_date: "2025-05-22"
     description: |-
       - Enabled explicit resource context management and support for Float16Array

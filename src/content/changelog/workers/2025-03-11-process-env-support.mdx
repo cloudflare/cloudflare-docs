@@ -1,6 +1,6 @@
 ---
 title: Access your Worker's environment variables from process.env
-description: With Node.js compatability on, process.env is automatically populated with environment variables and secrets
+description: With Node.js compatibility on, process.env is automatically populated with environment variables and secrets
 products:
   - workers
 date: 2025-03-11T15:00:00Z
@@ -10,7 +10,7 @@ import { WranglerConfig } from "~/components";
 
 You can now access [environment variables](/workers/configuration/environment-variables/) and
 [secrets](/workers/configuration/secrets/) on [`process.env`](/workers/runtime-apis/nodejs/process/#processenv)
-when using the [`nodejs_compat` compatability flag](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag).
+when using the [`nodejs_compat` compatibility flag](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag).
 
 ```js
 const apiClient = ApiClient.new({ apiKey: process.env.API_KEY });

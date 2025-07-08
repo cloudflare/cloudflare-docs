@@ -57,12 +57,11 @@ Go to **Compliance**, and create a [content compliance filter](https://support.g
 If you would like to quarantine the other dispositions, repeat the above steps and use the following strings for the other dispositions:
 
 - `X-CFEmailSecurity-Disposition: BULK`
-- `X-CFEmailSecurity-Disposition: SUSPICIOUS`
 - `X-CFEmailSecurity-Disposition: SPOOF`
 - `X-CFEmailSecurity-Disposition: UCE` (`UCE` is the equivalent of `SPAM`)
 
 If desired, you can create a separate quarantine for each of the dispositions.
 
-## Next steps
+## 4. Set up MX/Inline
 
-Now that you have completed the prerequisite steps, you can set up [MX/Inline](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment-setup/) on the Cloudflare dashboard.
+<Render file="email-security/deployment/set-up-mx-inline-step"/>

@@ -7,7 +7,7 @@ head: []
 description: Configure per-hostname settings such as URL rewriting and custom headers.
 ---
 
-import { Render, APIRequest } from "~/components";
+import { Render, APIRequest, TypeScriptExample } from "~/components";
 
 You may wish to configure per-hostname (customer) settings beyond the scale of Page Rules or Rate Limiting, which have a maximum of 125 rules each.
 
@@ -59,7 +59,9 @@ The metadata object will be accessible on each request using the `request.cf.hos
 
 In the example below we will use the user_id in the Worker that was submitted using the API call above `"custom_metadata":{"customer_id":"12345","redirect_to_https": true,"security_tag":"low"}`, and set a request header to send the `customer_id` to the origin:
 
-```js
+<TypeScriptExample>
+
+```ts
 export default {
   /**
    * Fetch and add a X-Customer-Id header to the origin based on hostname
@@ -78,6 +80,8 @@ export default {
   },
 } satisfies ExportedHandler<Env>;
 ```
+
+</TypeScriptExample>
 
 ## Accessing custom metadata in a rule expression
 

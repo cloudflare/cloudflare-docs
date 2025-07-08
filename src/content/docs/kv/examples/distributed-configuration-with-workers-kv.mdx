@@ -1,8 +1,6 @@
 ---
 type: example
 summary: Use Workers KV to as a geo-distributed, low-latency configuration store for your Workers application
-tags:
-  - KV
 pcx_content_type: configuration
 title: Build a distributed configuration store
 sidebar:
@@ -19,7 +17,7 @@ In this example, application configuration data is used to personalize the Worke
 ## Write your configuration from your external application to Workers KV
 
 In some cases, your source-of-truth for your configuration data may be stored elsewhere than Workers KV.
-If this is the case, use the Workers KV REST API to write the configuration data to your Workers KV namespace. 
+If this is the case, use the Workers KV REST API to write the configuration data to your Workers KV namespace.
 
 The following external Node.js application demonstrates a simple scripts that reads user data from a database and writes it to Workers KV using the REST API library.
 
@@ -31,8 +29,8 @@ const { Cloudflare } = require('cloudflare');
 const { backOff } = require('exponential-backoff');
 
 if(!process.env.DATABASE_CONNECTION_STRING || !process.env.CLOUDFLARE_EMAIL || !process.env.CLOUDFLARE_API_KEY || !process.env.CLOUDFLARE_WORKERS_KV_NAMESPACE_ID || !process.env.CLOUDFLARE_ACCOUNT_ID) {
-	console.error('Missing required environment variables.');
-	process.exit(1);
+console.error('Missing required environment variables.');
+process.exit(1);
 }
 
 // Setup Postgres connection
@@ -40,54 +38,56 @@ const sql = postgres(process.env.DATABASE_CONNECTION_STRING);
 
 // Setup Cloudflare REST API client
 const client = new Cloudflare({
-	apiEmail: process.env.CLOUDFLARE_EMAIL,
-	apiKey: process.env.CLOUDFLARE_API_KEY,
+apiEmail: process.env.CLOUDFLARE_EMAIL,
+apiKey: process.env.CLOUDFLARE_API_KEY,
 });
 
 // Function to sync Postgres data to Workers KV
 async function syncPreviewStatus() {
-	console.log('Starting sync of user preview status...');
+console.log('Starting sync of user preview status...');
 
-	try {
-		// Get all users and their preview status
-		const users = await sql`SELECT id, preview_features_enabled FROM users`;
+    try {
+    	// Get all users and their preview status
+    	const users = await sql`SELECT id, preview_features_enabled FROM users`;
 
-		console.log(users);
+    	console.log(users);
 
-		// Create the bulk update body
-		const bulkUpdateBody = users.map(user => ({
-			key: user.id,
-			value: JSON.stringify({
-				preview_features_enabled: user.preview_features_enabled
-			})
-		}));
+    	// Create the bulk update body
+    	const bulkUpdateBody = users.map(user => ({
+    		key: user.id,
+    		value: JSON.stringify({
+    			preview_features_enabled: user.preview_features_enabled
+    		})
+    	}));
 
-		const response = await backOff(async () => {
-			console.log("trying to update")
-			try{
-				const response = await client.kv.namespaces.bulkUpdate(process.env.CLOUDFLARE_WORKERS_KV_NAMESPACE_ID, {
-					account_id: process.env.CLOUDFLARE_ACCOUNT_ID,
-					body: bulkUpdateBody
-				});
-			}
-			catch(e){
-				// Implement your error handling and logging here
-				console.log(e);
-				throw e; // Rethrow the error to retry
-			}
-		});
+    	const response = await backOff(async () => {
+    		console.log("trying to update")
+    		try{
+    			const response = await client.kv.namespaces.bulkUpdate(process.env.CLOUDFLARE_WORKERS_KV_NAMESPACE_ID, {
+    				account_id: process.env.CLOUDFLARE_ACCOUNT_ID,
+    				body: bulkUpdateBody
+    			});
+    		}
+    		catch(e){
+    			// Implement your error handling and logging here
+    			console.log(e);
+    			throw e; // Rethrow the error to retry
+    		}
+    	});
 
-		console.log(`Sync complete. Updated ${users.length} users.`);
-	} catch (error) {
-		console.error('Error syncing preview status:', error);
-	}
+    	console.log(`Sync complete. Updated ${users.length} users.`);
+    } catch (error) {
+    	console.error('Error syncing preview status:', error);
+    }
+
 }
 
 // Run the sync function
 syncPreviewStatus()
-	.catch(console.error)
-	.finally(() => process.exit(0));
-```
+.catch(console.error)
+.finally(() => process.exit(0));
+
+````
 </TabItem>
 <TabItem label=".env">
 ```md title=".env"
@@ -225,7 +225,7 @@ This code will use the path within the URL and find the file associated to the p
 
 ## Optimize performance for configuration
 
-To optimize performance, you may opt to consolidate values in fewer key-value pairs. By doing so, you may benefit from higher caching efficiency and lower latency. 
+To optimize performance, you may opt to consolidate values in fewer key-value pairs. By doing so, you may benefit from higher caching efficiency and lower latency.
 
 For example, instead of storing each user's configuration in a separate key-value pair, you may store all users' configurations in a single key-value pair. This approach may be suitable for use-cases where the configuration data is small and can be easily managed in a single key-value pair (the [size limit for a Workers KV value is 25 MiB](/kv/platform/limits/)).
 

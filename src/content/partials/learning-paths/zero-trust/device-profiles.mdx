@@ -36,7 +36,7 @@ To customize the default settings:
 
 4. Save the profile.
 
-5. Under [**Global settings**](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#global-settings),
+5. Configure [global settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#global-settings) for all device profiles:
    1. (Recommended) Enable **Admin override code** if you turned on **Lock WARP switch**.
    2. Enable **Install CA to system certificate store** if you want users to see a [custom block page](/cloudflare-one/policies/gateway/block-page/).
 
@@ -105,7 +105,16 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/devices/settings \
 	}
 	```
 
-3. [Global settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#global-settings) are not currently supported by the Terraform v5 provider (as of version 5.3.0). To turn on **Admin override code** and **Install CA to system certificate store**, use the dashboard or API.
+3. Configure [global settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#global-settings) using the [`cloudflare_zero_trust_device_settings`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_device_settings) resource:
+
+	```tf
+	resource "cloudflare_zero_trust_device_settings" "global_warp_settings" {
+		account_id            = var.cloudflare_account_id
+		disable_for_time      = 3600
+		root_certificate_installation_enabled = true
+		use_zt_virtual_ip     = false
+	}
+	```
 
 </TabItem>
 </Tabs>

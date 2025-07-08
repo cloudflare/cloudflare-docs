@@ -1,8 +1,6 @@
 ---
 type: example
 summary: Store routing data in Workers KV to route requests across various web servers with Workers
-tags:
-  - KV
 pcx_content_type: configuration
 title: Route requests across various web servers
 sidebar:
@@ -15,7 +13,6 @@ import { Render, PackageManagers, Tabs, TabItem } from "~/components";
 Using Workers KV to store routing data to route requests across various web servers with Workers is an ideal use case for Workers KV. Routing workloads can have high read volume, and Workers KV's low-latency reads can help ensure that routing decisions are made quickly and efficiently.
 
 Routing can be helpful to route requests coming into a single Cloudflare Worker application to different web servers based on the request's path, hostname, or other request attributes.
-
 
 In single-tenant applications, this can be used to route requests to various origin servers based on the business domain (for example, requests to `/admin` routed to administration server, `/store` routed to storefront server, `/api` routed to the API server).
 
@@ -141,7 +138,6 @@ export default {
 In this example, the Cloudflare Worker receives a request and extracts the storefront ID from the URL path.
 The storefront ID is used to look up the origin server URL from Workers KV using the `get()` method.
 The request is then forwarded to the origin server, and the response is modified to include custom headers before being returned to the client.
-
 
 ## Related resources
 

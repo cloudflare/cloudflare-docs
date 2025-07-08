@@ -1,10 +1,9 @@
 ---
 title: Cerebras
 pcx_content_type: get-started
-sidebar:
-  badge:
-    text: Beta
 ---
+
+import { Render } from "~/components";
 
 [Cerebras](https://inference-docs.cerebras.ai/) offers developers a low-latency solution for AI model inference.
 
@@ -41,3 +40,17 @@ curl https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY/cerebras/chat/comp
     ]
 }'
 ```
+
+<Render
+	file="chat-completions-providers"
+	product="ai-gateway"
+	params={{
+		name: "Cerebras",
+		jsonexample: `
+{
+	"model": "cerebras/{model}"
+}`
+
+    }}
+
+/>

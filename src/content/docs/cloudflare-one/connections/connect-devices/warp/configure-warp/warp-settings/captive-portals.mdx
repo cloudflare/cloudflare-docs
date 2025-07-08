@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { Details, Badge } from "~/components";
+import { Details, Badge, Render } from "~/components";
 
 Captive portals are used by public Wi-Fi networks (such as airports, coffee shops, and hotels) to make a user agree to their Terms of Service or provide payment before allowing access to the Internet. When a user connects to the Wi-Fi, the captive portal blocks all HTTPS traffic until the user completes a captive portal login flow in their browser. This prevents the WARP client from connecting to Cloudflare. At the same time, WARP creates [firewall rules](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#ip-traffic) on the device to send all traffic to Cloudflare. The user is therefore unable to access the captive portal login screen unless they temporarily disable WARP.
 
@@ -38,7 +38,7 @@ If WARP cannot establish a connection to Cloudflare, it will:
 ## Limitations
 
 - Due to [how captive portal detection works](#how-captive-portal-detection-works), it may be possible for an employee to spoof a captive portal in order to turn off WARP.
-- Some captive portals, particularly those on airlines, may be slow to respond and exceed the captive portal detection timeout. Users will likely see a [CF_CAPTIVE_PORTAL_TIMED_OUT](/cloudflare-one/connections/connect-devices/warp/troubleshooting/client-errors/#cf_captive_portal_timed_out) error when they try to connect.
+- Some captive portals, particularly those on airlines, may be slow to respond and exceed the captive portal detection timeout. Users will likely see a [CF_CAPTIVE_PORTAL_TIMED_OUT](/cloudflare-one/connections/connect-devices/warp/troubleshooting/client-errors/#cf_captive_portal_timed_out) error when they try to connect. For context on the steps leading up to these errors, refer to [Connectivity status](/cloudflare-one/connections/connect-devices/warp/troubleshooting/connectivity-status/).
 - WARP may not be able to detect multi-stage captive portals, which redirect the user to different networks during the login process. Users will need to manually turn off WARP to get through the captive portal.
 - Some public Wi-Fi networks are incompatible with running WARP:
 
@@ -51,12 +51,12 @@ If WARP cannot establish a connection to Cloudflare, it will:
 
 | [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-|  All modes   | All plans                                                     |
+| All modes                                                                                 | All plans                                                     |
 
 | System   | Availability | Minimum WARP version |
 | -------- | ------------ | -------------------- |
-| Windows  | ✅           | 2025.4.589.1        |
-| macOS    | ✅           | 2025.4.589.1        |
+| Windows  | ✅           | 2025.4.589.1         |
+| macOS    | ✅           | 2025.4.589.1         |
 | Linux    | ❌           |                      |
 | iOS      | ❌           |                      |
 | Android  | ❌           |                      |
@@ -74,3 +74,7 @@ To get captive portal logs:
 4. The WARP client will ask if the device is connected (or attempting to connect) to the Wi-Fi network that is causing issues. Select **Yes** to confirm.
 
 Once the diagnostic finishes running, WARP will place a `warp-captive-portal-diag-<date>-<time>.zip` file on the user's desktop. The end user can now share this file with their IT administrator.
+
+## Related resources
+
+- [Connectivity status](/cloudflare-one/connections/connect-devices/warp/troubleshooting/connectivity-status/) - Learn about the status messages displayed by the WARP client during its connection process, and understand each stage as WARP establishes a secure tunnel to Cloudflare.

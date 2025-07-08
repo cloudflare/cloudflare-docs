@@ -3,6 +3,8 @@ title: Groq
 pcx_content_type: get-started
 ---
 
+import { Render } from "~/components";
+
 [Groq](https://groq.com/) delivers high-speed processing and low-latency performance.
 
 ## Endpoint
@@ -68,3 +70,17 @@ const chatCompletion = await groq.chat.completions.create({
 	model,
 });
 ```
+
+<Render
+	file="chat-completions-providers"
+	product="ai-gateway"
+	params={{
+		name: "Groq",
+		jsonexample: `
+{
+	"model": "groq/{model}"
+}`
+
+    }}
+
+/>

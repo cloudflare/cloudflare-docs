@@ -21,8 +21,20 @@ To configure blocked senders:
              - **Domains**: Must be a valid domain.
              - **Regular expressions**: Must be valid Java expressions. Regular expressions are matched with fields related to the sender email address (envelope from, header from, reply-to), the originating IP address, and the server name for the email.
          - **Notes**: Provide additional information about the blocked sender policy.
-   - **Upload blocked sender list**: Upload a file no larger than 150 KB. The file cannot can only contain `Blocked_Sender` and `Notes` fields. The first row must be a header row.
+   - **Upload blocked sender list**: Upload a file no larger than 150 KB. The file cannot can only contain `Blocked_Sender`, `Pattern Type,` and `Notes` fields. The first row must be a header row. Refer to [CSV uploads](/cloudflare-one/email-security/detection-settings/blocked-senders/#csv-uploads) for an example file.
 6. Select **Save**.
+
+### CSV uploads
+
+You can upload a file no larger than 150 KB. The file cannot can only contain `Blocked_Sender`, `Pattern Type,` and `Notes` fields. The first row must be a header row. 
+
+An example file would look like this:
+
+```txt
+Blocked Sender, Pattern Type, Notes
+john.smith@gmail.com, EMAIL, John Smith
+example.com, DOMAIN, Melanie Turner
+```
 
 ## Export blocked senders
 

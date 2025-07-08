@@ -446,11 +446,10 @@ Only applies to traffic sent through the [WARP client](/cloudflare-one/connectio
 
 ### Domain
 
-Use this selector to match against a domain and all subdomains -- for example, if you want to block `example.com` and subdomains such as `www.example.com`.
-
-| UI name | API example                                  |
-| ------- | -------------------------------------------- |
-| Domain  | `any(http.conn.domains[*] == "example.com")` |
+<Render
+	file="gateway/selectors/domain"
+	params={{ APIendpoint: "http.conn.domains" }}
+/>
 
 ### Download and Upload File Size
 
@@ -549,15 +548,10 @@ Scans HTTP traffic for the presence of social security numbers and other PII. Yo
 
 ### Host
 
-Use this selector to match only the hostname specified -- for example, if you want to block `test.example.com` but not `example.com` or `www.test.example.com`.
-
-| UI name | API example                                |
-| ------- | ------------------------------------------ |
-| Host    | `http.conn.hostname == "test.example.com"` |
-
-:::note
-Some hostnames (`example.com`) will invisibly redirect to the www subdomain (`www.example.com`). To match this type of website, use the [Domain](#domain) selector instead of the Host selector.
-:::
+<Render
+	file="gateway/selectors/host"
+	params={{ APIendpoint: "http.conn.hostname" }}
+/>
 
 ### HTTP Method
 

@@ -1,16 +1,17 @@
 ---
 pcx_content_type: how-to
 title: Reference zones
+description: Learn about reference zones. Cloudflare Internal DNS allows zones to reference others for query resolution when no direct record is found.
 sidebar:
   order: 4
 ---
 
-import { Example, Render } from "~/components";
+import { Example, Render, Tabs, TabItem } from "~/components";
 
-During an [internal DNS query resolution](/dns/internal-dns/#architecture-overview), if no internal record is found within a matching internal zone, Cloudflare will check if the matching internal zone is referencing another internal zone. Successive references can be followed with a maximum of five references in a chain.
+<Render file="internal-reference-zone-intro"/>
 
 :::note
-A wildcard record (`*.example.local`) in the matching internal zone will take precedence over an exact match in a referenced zone.
+A wildcard record (`*.example.local`) in the matching internal zone will take precedence over an exact match in a reference zone.
 :::
 
 ## Configuration conditions
@@ -22,7 +23,18 @@ A wildcard record (`*.example.local`) in the matching internal zone will take pr
 
 ## Set up
 
-To set up a reference zone, use the [Update DNS settings](/api/resources/dns/subresources/settings/subresources/zone/methods/edit/) endpoint. In `--data`, specify the `internal_dns` object with the parameter `reference_zone_id`.
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
+2. Go to **Internal DNS** and select a zone.
+3. Within the selected zone, go to **Reference zone**.
+4. Select **Add reference zone**. If your zone already has a reference zone set up, you must first remove it. As explained in the [configuration conditions](#configuration-conditions), each internal zone can only reference one other zone at a time.
+5. Find the zone you want to use as reference and choose **Select** in the respective row.
+
+</TabItem>
+<TabItem label="API">
+
+Use the [Update DNS settings](/api/resources/dns/subresources/settings/subresources/zone/methods/edit/) endpoint. In `--json`, specify the `internal_dns` object with the parameter `reference_zone_id`.
 
 <Example>
 <Render file="internal-reference-zone-api"/>
@@ -30,3 +42,5 @@ To set up a reference zone, use the [Update DNS settings](/api/resources/dns/sub
 A third zone (C) could also point to zone B as a reference, but zone A cannot add another zone as a reference while also having zone B configured as its reference zone.
 
 </ Example>
+
+</TabItem> </Tabs>

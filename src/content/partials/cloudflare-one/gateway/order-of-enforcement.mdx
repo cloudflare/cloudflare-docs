@@ -2,7 +2,77 @@
 {}
 ---
 
-import { Render } from "~/components";
+import { Render, Details } from "~/components";
+
+:::caution[Order of enforcement changing on 2025-07-14]
+On 2025-07-14, Gateway will begin evaluating network-level policies before application-level policies and verify the network path to an origin server before accepting a connection. This will only affect your policies if you are applying HTTP policies in your account. For example:
+
+<Details header="Comparison of old and new order of enforcement">
+
+|                                                | Old order of enforcement                                                                                               | New order of enforcement                                                                                                                |
+| ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| **Network Block policy and HTTP Block policy** | Gateway blocks traffic and displays the block page and/or follows the client notification settings on the HTTP policy. | Gateway blocks traffic. Gateway does not display the block page but will follow the client notification settings on the Network policy. |
+| **Network Allow policy and HTTP Block policy** | Gateway blocks traffic and displays the block page and follows the client notification settings on the HTTP policy.    | No change.                                                                                                                              |
+| **Network Block policy and HTTP Allow policy** | Gateway blocks traffic and follows the client notification settings on the Network policy.                             | No change.                                                                                                                              |
+
+```mermaid
+flowchart TB
+    %% Accessibility
+    accTitle: Gateway order of enforcement
+    accDescr: Flowchart describing the order of enforcement for Gateway policies.
+
+ subgraph Resolution["Resolution"]
+        dns2["1.1.1.1"]
+        dns4["Custom resolver"]
+        dns3["Resolver policies <br>(Enterprise users only)"]
+        internal["Internal DNS"]
+  end
+ subgraph DNS["DNS"]
+        dns1["DNS policies"]
+        Resolution
+  end
+ subgraph HTTP["HTTP policies"]
+        http1{{"Do Not Inspect policies"}}
+        http2["Isolate policies  <br>(with Browser Isolation add-on)"]
+        http3["Allow, Block, Do Not Scan, Quarantine, and Redirect policies, DLP, and anti-virus scanning"]
+        https["HTTP (port 80) or<br>HTTPS (port 443)?"]
+  end
+ subgraph Proxy["Proxy"]
+        HTTP
+        network1["Network policies"]
+        nonhttp["Non-HTTP(S) traffic"]
+  end
+ subgraph Egress["Egress"]
+        egress1["Egress policies <br>(Enterprise users only)"]
+  end
+    start(["Traffic"]) --> dns0[/"DNS query"/] & http0["Network connections"]
+    dns0 ----> dns1
+    dns1 -- Resolved by --> dns2
+    dns1 --> dns3
+    dns3 -- Resolved by --> dns4
+    dns2 -----> internet(["Internet"])
+    dns4 -----> internet
+    dns4 ---> cloudflare["Private network services <br>(Cloudflare Tunnel, Magic WAN, WARP Connector)"]
+    http1 -- Do Not Inspect --> internet
+    http1 -- Inspect --> http2
+    http2 --> http3
+    http0 --> magic["Magic Firewall (Enterprise users only)"]
+    magic --> egress1
+    egress1 --> tcp["Check for origin availability (TCP SYN)"]
+    tcp --> network1
+    http3 --> internet
+    https -- HTTPS --> http1
+    https -- HTTP --> http2
+    network1 --> https & nonhttp
+    dns3 -- Resolved by --> internal & dns2
+    nonhttp -----> internet
+
+    https@{ shape: hex}
+    http0@{ shape: lean-r}
+```
+
+</Details>
+:::
 
 ```mermaid
 flowchart TB
@@ -65,6 +135,16 @@ flowchart TB
     egress1-- "Egress with dedicated IP" -->internet
 ```
 
+## Connection establishment
+
+When a user connects to a server with Gateway, Gateway first establishes a TCP connection with the destination server on the port the user requested. Because TCP traffic is proxied by Cloudflare, the connection Gateway establishes with the origin is independent from the connection users establish with Gateway. This means Gateway assigns a new source IP and port to the user's connection and no details from the user's TCP handshake are included in the TCP handshake with the origin server.
+
+If the TCP connection to the destination server is successful, Gateway will apply policies. If Gateway policies allow the connection, Gateway will connect the user to the destination server. If Gateway policies block the connection, Gateway will end the connection and will not send any data between the user and the destination server. If the TCP connection to the destination server is unsuccessful, Gateway will not run any policies and retry TCP connections from the user to the server.
+
+<Render file="gateway/tcp-flowchart" product="cloudflare-one" />
+
+Connections to Zero Trust will always appear in your [Zero Trust network session logs](/logs/reference/log-fields/account/zero_trust_network_sessions/) regardless of connection success. Because Gateway does not inspect failed connections, they will not appear in your [Gateway activity logs](/cloudflare-one/insights/logs/gateway-logs/).
+
 ## Priority between policy builders
 
 Gateway applies your policies in the following order:
@@ -118,17 +198,19 @@ Gateway applies HTTP policies based on a combination of [action type](/cloudflar
 1. All Do Not Inspect policies are evaluated first, in order of precedence.
 2. If no policies match, all Isolate policies are evaluated in order of precedence.
 3. All Allow, Block and Do Not Scan policies are evaluated in order of precedence.
+4. The body of the HTTP request, including Data Loss Prevention (DLP), AV scanning, and file sandboxing, is evaluated.
 
 This order of enforcement allows Gateway to first determine whether decryption should occur. If a site matches a Do Not Inspect policy, it is automatically allowed through Gateway and bypasses all other HTTP policies.
 
 :::note
-
 The only exception is if you are using [Clientless Web Isolation](/cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/) — all sites within the clientless remote browser are implicitly isolated even if they match a Do Not Inspect policy.
 :::
 
 Next, Gateway checks decrypted traffic against your Isolate policies. When a user makes a request which triggers an Isolate policy, the request will be rerouted to a [remote browser](/cloudflare-one/policies/browser-isolation/).
 
-Lastly, Gateway evaluates all Allow, Block, and Do Not Scan policies. These policies apply to both isolated and non-isolated traffic. For example, if `example.com` is isolated and `example.com/subpage` is blocked, Gateway will block the subpage inside of the remote browser.
+Next, Gateway evaluates all Allow, Block, and Do Not Scan policies. These policies apply to both isolated and non-isolated traffic. For example, if `example.com` is isolated and `example.com/subpage` is blocked, Gateway will block the subpage (`example.com/subpage`) inside of the remote browser.
+
+Lastly, Gateway inspects the body of the HTTP request by evaluating it against DLP policies, and running anti-virus scanning and file sandboxing. If DLP Block policies are present, the action Gateway ultimately takes may not match the action it initially logs. For more information, refer to [DLP policy precedence](#dlp-policy-precedence).
 
 ### Resolver policies
 
@@ -136,11 +218,25 @@ When [resolver policies](/cloudflare-one/policies/gateway/resolver-policies/) ar
 
 ### Order of precedence
 
-<Render
-	file="gateway/order-of-precedence"
-	product="cloudflare-one"
-	params={{ one: "DNS, network, or HTTP" }}
-/>
+Order of precedence refers to the priority of individual policies within the DNS, network, or HTTP policy builder. Gateway evaluates policies in ascending order beginning with the lowest value.
+
+The order of precedence follows the first match principle. Once traffic matches an Allow or Block policy, evaluation stops and no subsequent policies can override the decision. Therefore, Cloudflare recommends assigning the most specific policies and exceptions with the highest precedence and the most general policies with the lowest precedence.
+
+#### Zero Trust dashboard
+
+In the Zero Trust dashboard, policies are in order of precedence from top to bottom of the list. Policies begin with precedence `1` and count upward. You can modify the order of precedence by dragging and dropping individual policies in the dashboard.
+
+#### Cloudflare API
+
+To update the precedence of a policy with the Cloudflare API, use the [Update a Zero Trust Gateway rule](/api/resources/zero_trust/subresources/gateway/subresources/rules/methods/update/) endpoint to update the `precedence` field.
+
+#### DLP policy precedence
+
+For Gateway configurations with DLP policies, Gateway will filter and log traffic based on first match, then scan the body of the HTTP request for matching content. Because of the first match principle, Gateway may perform and log a decision for traffic, then perform a contradicting decision. For example, if traffic is first allowed with an Allow HTTP policy, then blocked with a DLP Block policy, Gateway will log the initial Allow action despite ultimately blocking the request.
+
+#### Access applications
+
+If Gateway traffic is headed to a private IP address protected as an Access application, that traffic will still be evaluated by the destination application's Access policies, even if a Gateway Allow policy matched first. Gateway Block policies that match traffic will terminate any other policy evaluation. This is expected behavior. A Gateway Allow policy does not override or bypass Access policies.
 
 <Render file="gateway/terraform-precedence-warning" product="cloudflare-one" />
 

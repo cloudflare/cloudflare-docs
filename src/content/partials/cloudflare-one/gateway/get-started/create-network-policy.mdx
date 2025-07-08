@@ -31,7 +31,7 @@ To create a new network policy:
    | ------- | ---------- | ---------- |
    | Account | Zero Trust | Edit       |
 
-2. (Optional) Configure your API environment variables to include your [account ID](/fundamentals/setup/find-account-and-zone-ids/) and API token.
+2. (Optional) Configure your API environment variables to include your [account ID](/fundamentals/account/find-account-and-zone-ids/) and API token.
 3. Send a `POST` request to the [Create a Zero Trust Gateway rule](/api/resources/zero_trust/subresources/gateway/subresources/rules/methods/create/) endpoint. For example, you can use a list of [device serial numbers](/cloudflare-one/identity/devices/warp-client-checks/corp-device/) to ensure users can only access an application if they connect with the WARP client from a company device:
 
    ```sh title="curl API network policy example"

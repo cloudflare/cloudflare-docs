@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { Render } from "~/components"
+import { Tabs, TabItem, Steps, Render } from '~/components';
 
 <Render file="wordpress-loopback-definition" /> <br/>
 
@@ -19,10 +19,25 @@ Loopback requests may also be blocked by [I’m Under Attack mode](/fundamentals
 
 ## Enable Optimize for WordPress
 
-1. Log in to the [Cloudflare dashboard](http://dash.cloudflare.com) and select your account and domain.
-2. Go to **Security** > **Bots**.
-3. Select **Configure Bot Management**.
-4. Enable **Optimize for WordPress**.
+<Tabs syncKey="dashNewNav"> 
+  <TabItem label="Old dashboard">
+    <Steps>
+      1. Log in to the [Cloudflare dashboard](http://dash.cloudflare.com), and select your account and domain.
+      2. Go to **Security** > **Bots**.
+      3. Select **Configure Bot Management**.
+      4. Enable **Optimize for WordPress**.
+    </Steps>
+  </TabItem> 
+  <TabItem label="New dashboard" icon="rocket">
+    <Steps>
+      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
+      2. Go to **Security** > **Settings**.
+      3. Filter by **Bot traffic**.
+      4. Go to **Super Bot Fight Mode**.
+      4. Under **Configurations**, select the edit icon for **Optimize for WordPress** and turn it on.
+    </Steps>
+  </TabItem>
+</Tabs>
 
 ## Availability
 

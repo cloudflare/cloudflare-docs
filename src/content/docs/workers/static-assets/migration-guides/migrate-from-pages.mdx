@@ -26,13 +26,13 @@ Like Pages, requests for static assets on Workers are free, and Pages Functions 
 
 Unlike Pages, Workers has a distinctly broader set of features available to it, (including Durable Objects, Cron Triggers, and more comprehensive Observability). A complete list can be found at [the bottom of this page](#compatibility-matrix). Workers will receive the focus of Cloudflare's development efforts going forwards, so we therefore [are recommending using Cloudflare Workers over Cloudflare Pages for any new projects](http://blog.cloudflare.com/full-stack-development-on-cloudflare-workers).
 
-## Migration guide
+## Migration 
 
 Migrating from Cloudflare Pages to Cloudflare Workers is often a straightforward process. The following are some of the most common steps you will need to take to migrate your project.
 
 ### Frameworks
 
-If your Pages project uses [a popular framework](/workers/frameworks/), most frameworks already have adaptors available for Cloudflare Workers. Switch out any Pages-specific adaptors for the Workers equivalent and follow any guidance that they provide.
+If your Pages project uses [a popular framework](/workers/framework-guides/), most frameworks already have adapters available for Cloudflare Workers. Switch out any Pages-specific adapters for the Workers equivalent and follow any guidance that they provide.
 
 ### Project configuration
 
@@ -373,6 +373,16 @@ Once you have validated the behavior of Worker, and are satisfied with the devel
 
 <PackageManagers type="exec" pkg="wrangler" args={"pages project delete"} />
 
+## Migrate your project using an AI coding assistant
+
+You can add the following [experimental prompt](https://developers.cloudflare.com/workers/prompts/pages-to-workers.txt) in your preferred coding assistant (e.g. Claude Code, Cursor) to make your project compatible with Workers: 
+
+```
+https://developers.cloudflare.com/workers/prompts/pages-to-workers.txt
+```
+
+You can also use the Cloudflare Documentation [MCP server](https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/docs-vectorize) in your coding assistant to provide better context to your LLM when building with Workers, which includes this prompt when you ask to migrate from Pages to Workers.
+
 ## Compatibility matrix
 
 This compatibility matrix compares the features of Workers and Pages. Unless otherwise stated below, what works in Pages works in Workers, and what works in Workers works in Pages. Think something is missing from this list? [Open a pull request](https://github.com/cloudflare/cloudflare-docs/edit/production/src/content/docs/workers/static-assets/compatibility-matrix.mdx) or [create a GitHub issue](https://github.com/cloudflare/cloudflare-docs/issues/new).
@@ -391,7 +401,7 @@ This compatibility matrix compares the features of Workers and Pages. Unless oth
 | [Gradual Deployments](/workers/configuration/versions-and-deployments/)                                     | ✅      | ❌      |
 | [Preview URLs](/workers/configuration/previews)                                                             | ✅      | ✅      |
 | [Testing tools](/workers/testing)                                                                           | ✅      | ✅      |
-| [Local Development](/workers/local-development/)                                                            | ✅      | ✅      |
+| [Local Development](/workers/development-testing/)                                                            | ✅      | ✅      |
 | [Remote Development (`--remote`)](/workers/wrangler/commands/)                                              | ✅      | ❌      |
 | [Quick Editor in Dashboard](https://blog.cloudflare.com/improved-quick-edit)                                | ✅      | ❌      |
 | **Static Assets**                                                                                           |         |         |
@@ -452,6 +462,6 @@ This compatibility matrix compares the features of Workers and Pages. Unless oth
 
 [^3]: Workers Builds supports enabling [non-production branch builds](/workers/ci-cd/builds/build-branches/#configure-non-production-branch-builds), though does not yet have the same level of configurability as Pages does.
 
-[^4]: Workers [supports popular frameworks](/workers/frameworks/), many of which implement file-based routing. Additionally, you can use Wrangler to [compile your folder of `functions/`](#folder-of-functions) into a Worker to help ease the migration from Pages to Workers.
+[^4]: Workers [supports popular frameworks](/workers/framework-guides/), many of which implement file-based routing. Additionally, you can use Wrangler to [compile your folder of `functions/`](#folder-of-functions) into a Worker to help ease the migration from Pages to Workers.
 
 [^5]: As in <sup>4</sup>, Wrangler can [compile your Pages Functions into a Worker](#folder-of-functions). Or if you are starting from scratch, everything that is possible with Pages Functions can also be achieved by adding code to your Worker or by using framework-specific plugins for relevant third party tools.

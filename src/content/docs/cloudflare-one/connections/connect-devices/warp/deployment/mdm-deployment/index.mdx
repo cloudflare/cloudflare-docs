@@ -19,7 +19,8 @@ This page provides generic instructions for an automated deployment. If you want
 
 ## Prerequisites
 
-Visit the [Download page](/cloudflare-one/connections/connect-devices/warp/download-warp/#windows) to review system requirements and download the installer for your operating system.
+- Refer to the [Download page](/cloudflare-one/connections/connect-devices/warp/download-warp/#windows) to review system requirements and download the installer for your operating system.
+- <Render file="warp/connectivity-status-check" />
 
 ## Windows
 
@@ -57,7 +58,7 @@ IdentifyingNumber                      Name            LocalPackage
 msiexec /x C:\WINDOWS\Installer\<WARP_RELEASE>.msi /quiet
 ```
 
-### Update the configuration
+### Update MDM parameters
 
 The on-disk configuration of the Windows client can be changed at any time by modifying or replacing the contents of `C:\ProgramData\Cloudflare\mdm.xml`. The format of this file is as follows:
 

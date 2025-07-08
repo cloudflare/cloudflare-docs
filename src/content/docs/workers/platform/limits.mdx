@@ -21,7 +21,7 @@ import { Render, WranglerConfig } from "~/components";
 | [Worker startup time](#worker-startup-time)                                      | 400 ms       | 400 ms       |
 | [Number of Workers](#number-of-workers)<sup>1</sup>                              | 100          | 500          |
 | Number of [Cron Triggers](/workers/configuration/cron-triggers/)<br/>per account | 5            | 250          |
-| Number of [Static Asset](#static-assets) files                                   | 20000        | 20000        |
+| Number of [Static Asset](#static-assets) files per Worker version                | 20000        | 20000        |
 | Individual [Static Asset](#static-assets) file size                              | 25 MiB       | 25 MiB       |
 
 <sup>1</sup> If you are running into limits, your project may be a good fit for
@@ -198,7 +198,7 @@ A subrequest is any request that a Worker makes to either Internet resources usi
 
 To make subrequests from your Worker to another Worker on your account, use [Service Bindings](/workers/runtime-apis/bindings/service-bindings/). Service bindings allow you to send HTTP requests to another Worker without those requests going over the Internet.
 
-If you attempt to use global [`fetch()`](/workers/runtime-apis/fetch/) to make a subrequest to another Worker on your account that runs on the same [zone](/fundamentals/setup/accounts-and-zones/#zones), without service bindings, the request will fail.
+If you attempt to use global [`fetch()`](/workers/runtime-apis/fetch/) to make a subrequest to another Worker on your account that runs on the same [zone](/fundamentals/concepts/accounts-and-zones/#zones), without service bindings, the request will fail.
 
 If you make a subrequest from your Worker to a target Worker that runs on a [Custom Domain](/workers/configuration/routing/custom-domains/#worker-to-worker-communication) rather than a route, the request will be allowed.
 
@@ -218,7 +218,7 @@ When the client disconnects, all tasks associated with that client’s request a
 
 ## Simultaneous open connections
 
-You can open up to six connections simultaneously, for each invocation of your Worker. The connections opened by the following API calls all count toward this limit:
+You can open up to six connections simultaneously for each invocation of your Worker. The connections opened by the following API calls all count toward this limit:
 
 - the `fetch()` method of the [Fetch API](/workers/runtime-apis/fetch/).
 - `get()`, `put()`, `list()`, and `delete()` methods of [Workers KV namespace objects](/kv/api/).
@@ -226,6 +226,8 @@ You can open up to six connections simultaneously, for each invocation of your W
 - `list()`, `get()`, `put()`, `delete()`, and `head()` methods of [R2](/r2/).
 - `send()` and `sendBatch()`, methods of [Queues](/queues/).
 - Opening a TCP socket using the [`connect()`](/workers/runtime-apis/tcp-sockets/) API.
+
+Outbound WebSocket connections are just HTTP connections and thus also contribute to the maximum concurrent connections limit.
 
 Once an invocation has six connections open, it can still attempt to open additional connections.
 
@@ -326,7 +328,7 @@ Each zone has a limit of 1,000 [routes](/workers/configuration/routing/routes/).
 
 ### Number of routes per zone when using `wrangler dev --remote`
 
-When you run a [remote development](/workers/local-development/#develop-using-remote-resources-and-bindings) session using the `--remote` flag, a limit of 50 [routes](/workers/configuration/routing/routes/) per zone is enforced. The Quick Editor in the Cloudflare Dashboard also uses `wrangler dev --remote`, so any changes made there are subject to the same 50-route limit. If your zone has more than 50 routes, you **will not be able to run a remote session**. To fix this, you must remove routes until you are under the 50-route limit.
+When you run a [remote development](/workers/development-testing/#remote-bindings) session using the `--remote` flag, a limit of 50 [routes](/workers/configuration/routing/routes/) per zone is enforced. The Quick Editor in the Cloudflare Dashboard also uses `wrangler dev --remote`, so any changes made there are subject to the same 50-route limit. If your zone has more than 50 routes, you **will not be able to run a remote session**. To fix this, you must remove routes until you are under the 50-route limit.
 
 ### Number of custom domains per zone
 

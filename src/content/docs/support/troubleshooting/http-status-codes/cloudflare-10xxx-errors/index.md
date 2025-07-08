@@ -1,10 +1,10 @@
 ---
 pcx_content_type: troubleshooting
-title: Cloudflare 10XXX errors
+title: Cloudflare 10xxx errors
 source: null
 ---
 
-When working with Cloudflare Lists or Bulk Redirects, you may encounter 10XXX error codes. These errors typically point to misconfigurations or unsupported values in your request, such as duplicate list entries, malformed URLs, or incompatible redirect settings. This guide provides detailed explanations and resolutions for each error to help you troubleshoot and resolve issues.
+When working with Cloudflare Lists or Bulk Redirects, you may encounter 10xxx error codes. These errors typically point to misconfigurations or unsupported values in your request, such as duplicate list entries, malformed URLs, or incompatible redirect settings. This guide provides detailed explanations and resolutions for each error to help you troubleshoot and resolve issues.
 
 ## Error 10028: The add list items operation contains duplicate items
 

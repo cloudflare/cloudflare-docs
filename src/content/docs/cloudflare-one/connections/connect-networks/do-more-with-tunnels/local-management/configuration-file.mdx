@@ -48,15 +48,7 @@ Configuration files that contain ingress rules must always include a catch-all r
 
 ### How traffic is matched
 
-When `cloudflared` receives an incoming request, it evaluates each ingress rule from top to bottom to find which rule matches the request. Rules can match either the hostname or path of an incoming request, or both.
-
-:::note[Wildcards]
-
-You can use wildcards to match traffic to multiple subdomains or paths. For example, if you set the `hostname` key to `*.example.com`, both `test.example.com` and `try.example.com` will route traffic to your origin.
-
-:::
-
-If a rule does not specify a hostname, all hostnames will be matched. If a rule does not specify a path, all paths will be matched.
+When `cloudflared` receives an incoming request, it evaluates each ingress rule from top to bottom to find which rule matches the request. Rules can match either the hostname or path of an incoming request, or both. If a rule does not specify a hostname, all hostnames will be matched. If a rule does not specify a path, all paths will be matched.
 
 The last ingress rule must be a catch-all rule that matches all traffic.
 
@@ -80,6 +72,12 @@ ingress:
   # An example of a catch-all rule:
   - service: https://localhost:8003
 ```
+
+#### Wildcards
+
+You can use wildcards to match traffic to multiple subdomains. For example, if you set the `hostname` key to `*.example.com`, both `alpha.example.com` and `beta.example.com` will route traffic to your origin. `cloudflared` does not support wildcards in the middle of the hostname, such as `test.*.example.com`.
+
+You can also enter regular expressions for the `path` key. For example, if `hostname` is `static.example.com` and `path` is `\.(jpg|png|css|js)$`, matching URLs could include `https://static.example.com/data.js`, `http://static.example.com/images/photo.jpg`, and so on. Cloudflare parses the path regex using the [Go `syntax` package](https://pkg.go.dev/regexp/syntax).
 
 ### Supported protocols
 

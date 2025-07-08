@@ -92,7 +92,7 @@ Cloudflare will assign an IPv4 and an IPv6 address to each ACNS name, and these 
 </TabItem>
 <TabItem label="API">
 
-Use the endpoint [Update DNS Settings for a Zone](/api/resources/dns/subresources/settings/methods/edit/) and configure the `nameservers` object accordingly for each zone.
+Use the endpoint [Update DNS Settings for a Zone](/api/resources/dns/subresources/settings/subresources/zone/methods/edit/) and configure the `nameservers` object accordingly for each zone.
 
 </TabItem>
 </Tabs>
@@ -120,7 +120,7 @@ Refer to [DNS zone defaults](/dns/nameservers/nameserver-options/#dns-zone-defau
 </TabItem>
 <TabItem label="API">
 
-Use the endpoint [Update DNS Settings for an Account](/api/resources/dns/subresources/settings/methods/edit/). Within the `zone_defaults` object, set the following:
+Use the endpoint [Update DNS Settings for an Account](/api/resources/dns/subresources/settings/subresources/account/methods/edit/). Within the `zone_defaults` object, set the following:
 
 ```txt
 "zone_defaults": {
@@ -148,8 +148,8 @@ To remove ACNS from a zone, first update your nameservers to stop using ACNS:
 </TabItem>
 <TabItem label="API">
 
-* If you are using [Cloudflare Registrar](/registrar/), use the [Update DNS settings endpoint](/api/resources/dns/subresources/settings/methods/edit/) to change the `enabled` parameter to `false`, and then [contact Cloudflare Support](/support/contacting-cloudflare-support/) to set your nameservers back to the regular Cloudflare branded nameservers.
-* If you are not using [Cloudflare Registrar](/registrar/), modify the domain's registrar to use your regular Cloudflare branded nameservers and then use the [Update DNS settings endpoint](/api/resources/dns/subresources/settings/methods/edit/) to set the `enabled` parameter to `false`.
+* If you are using [Cloudflare Registrar](/registrar/), use the [Update DNS settings endpoint](/api/resources/dns/subresources/settings/subresources/zone/methods/edit/) to set the `type` parameter in the `nameservers` object to `"cloudflare.standard"`. Then, [contact Cloudflare Support](/support/contacting-cloudflare-support/) to set your nameservers back to the regular Cloudflare branded nameservers.
+* If you are not using [Cloudflare Registrar](/registrar/), modify the domain's registrar to use your regular Cloudflare branded nameservers and then use the [Update DNS settings endpoint](/api/resources/dns/subresources/settings/subresources/zone/methods/edit/) to set the `type` parameter in the `nameservers` object to `"cloudflare.standard"`.
 
 </TabItem>
 </Tabs>

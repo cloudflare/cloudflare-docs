@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { APIRequest } from "~/components";
+import { APIRequest, Render } from "~/components";
 
 ## In the dashboard
 
@@ -111,6 +111,7 @@ This example configures a custom error rule returning a [previously created cust
 	json={{
 		rules: [
 			{
+				ref: "serve_500_template",
 				action: "serve_error",
 				action_parameters: {
 					asset_name: "500_error_template",
@@ -122,6 +123,8 @@ This example configures a custom error rule returning a [previously created cust
 		],
 	}}
 />
+
+<Render file="terraform-use-ref-field" params={{ addDocsLocation: true }} />
 
 This `PUT` request, corresponding to the [Update a zone entry point ruleset](/api/resources/rulesets/subresources/phases/methods/update/) operation, replaces any existing rules in the `http_custom_errors` phase entry point ruleset.
 
