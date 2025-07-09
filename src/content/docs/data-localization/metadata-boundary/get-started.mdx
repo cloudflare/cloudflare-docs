@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Details } from "~/components";
+import { Details, APIRequest } from "~/components";
 
 You can configure the Metadata Boundary to select the region where your logs and analytics are stored via API or dashboard.
 
@@ -31,12 +31,10 @@ These are some examples of API requests.
 
 Here is an example request using cURL to get current regions (if any):
 
-```bash
-curl -s -D "/dev/stderr" https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/logs/control/cmb/config -X GET \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <KEY>" \
-| jq '.'
-```
+<APIRequest
+  path="/accounts/{account_id}/logs/control/cmb/config"
+  method="GET"
+/>
 
 </Details>
 
@@ -44,18 +42,14 @@ curl -s -D "/dev/stderr" https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_
 
 Here is an example request using cURL to set regions:
 
-```bash
-curl -s -D "/dev/stderr" https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/logs/control/cmb/config -X POST -d '
-{
-    "regions": "eu",
-    "allow_out_of_region_access": false
-}
-' \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <KEY>" \
-| jq '.'
-
-```
+<APIRequest
+  path="/accounts/{account_id}/logs/control/cmb/config"
+  method="POST"
+  json={{
+    regions: "eu",
+    allow_out_of_region_access: false
+  }}
+/>
 
 This will overwrite any previous regions.
 Change will be in effect after several minutes.
@@ -66,12 +60,10 @@ Change will be in effect after several minutes.
 
 Here is an example request using cURL to delete regions:
 
-```bash
-curl -s -D "/dev/stderr" https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/logs/control/cmb/config -X DELETE \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <KEY>" \
-| jq '.'
-```
+<APIRequest
+  path="/accounts/{account_id}/logs/control/cmb/config"
+  method="DELETE"
+/>
 
 </Details>
 
