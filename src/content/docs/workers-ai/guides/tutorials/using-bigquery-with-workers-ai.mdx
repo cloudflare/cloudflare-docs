@@ -16,9 +16,9 @@ sidebar:
 
 import { WranglerConfig } from "~/components";
 
-The easiest way to get started with [Workers AI](/workers-ai/) is to try it out in the [Multi-modal Playground](https://multi-modal.ai.cloudflare.com/) and the [LLM playground](https://playground.ai.cloudflare.com/). If you decide that you want to integrate your code with Workers AI, you may then decide to then use its [REST API endpoints](/workers-ai/get-started/rest-api/) or via a [Worker binding](/workers-ai/configuration/bindings/).
+The easiest way to get started with [Workers AI](/workers-ai/) is to try it out in the [Multi-modal Playground](https://multi-modal.ai.cloudflare.com/) and the [LLM playground](https://playground.ai.cloudflare.com/). If you decide that you want to integrate your code with Workers AI, you may then decide to use its [REST API endpoints](/workers-ai/get-started/rest-api/) or a [Worker binding](/workers-ai/configuration/bindings/).
 
-But, what about the data? What if what you want these models to ingest data that is stored outside Cloudflare?
+But what about the data? What if you want these models to ingest data that is stored outside Cloudflare?
 
 In this tutorial, you will learn how to bring data from Google BigQuery to a Cloudflare Worker so that it can be used as input for Workers AI models.
 
@@ -32,7 +32,7 @@ You will need:
 
 ## 1. Set up your Cloudflare Worker
 
-To ingest the data into Cloudflare and feed it into Workers AI, you will be using a [Cloudflare Worker](/workers/). If you have not created one yet, please feel free to review our [tutorial on how to get started](/workers/get-started/).
+To ingest the data into Cloudflare and feed it into Workers AI, you will be using a [Cloudflare Worker](/workers/). If you have not created one yet, please review our [tutorial on how to get started](/workers/get-started/).
 
 After following the steps to create a Worker, you should have the following code in your new Worker project:
 
@@ -58,7 +58,7 @@ You should be seeing `Hello World!` in your browser:
 Hello World!
 ```
 
-If you are running into any issues during this step, please make sure to review [Worker's Get Started Guide](/workers/get-started/guide/).
+If you run into any issues during this step, please review the [Worker's Get Started Guide](/workers/get-started/guide/).
 
 ## 2. Import GCP Service key into the Worker as Secrets
 
@@ -82,9 +82,9 @@ Your downloaded key JSON file from Google Cloud Platform should have the followi
 }
 ```
 
-For this tutorial, you will only be needing the values of the following fields: `client_email`, `private_key`, `private_key_id`, and `project_id`.
+For this tutorial, you will only need the values of the following fields: `client_email`, `private_key`, `private_key_id`, and `project_id`.
 
-Instead of storing this information in plain text in the Worker, you will use [secrets](/workers/configuration/secrets/) to make sure its unencrypted content is only accessible via the Worker itself.
+Instead of storing this information in plain text in the Worker, you will use [Secrets](/workers/configuration/secrets/) to make sure its unencrypted content is only accessible via the Worker itself.
 
 Import those three values from the JSON file into Secrets, starting with the field from the JSON key file called `client_email`, which we will now call `BQ_CLIENT_EMAIL` (you can use another variable name):
 
@@ -96,7 +96,7 @@ You will be asked to enter a secret value, which will be the value of the field 
 
 :::note
 
-Do not include any double quotes in the secret that you store, as the Secret will be already interpreted as a string.
+Do not include any double quotes in the secret that you store, as it will already be interpreted as a string.
 
 :::
 
@@ -120,7 +120,7 @@ npx wrangler secret put BQ_PRIVATE_KEY_ID
 npx wrangler secret put BQ_PROJECT_ID
 ```
 
-At this point, you have successfully imported three fields from the JSON key file downloaded from Google Cloud Platform into Cloudflare secrets to be used in a Worker.
+At this point, you have successfully imported three fields from the JSON key file downloaded from Google Cloud Platform into Cloudflare Secrets to be used in a Worker.
 
 [Secrets](/workers/configuration/secrets/) are only made available to Workers once they are deployed. To make them available during development, [create a `.dev.vars`](/workers/configuration/secrets/#local-development-with-secrets) file to locally store these credentials and reference them as environment variables.
 
@@ -133,9 +133,9 @@ BQ_PRIVATE_KEY_ID="<your_private_key_id>"
 BQ_PROJECT_ID="<your_project_id>"
 ```
 
-Make sure to include `.dev.vars` to your `.gitignore` file in your project to prevent getting your credentials uploaded to a repository if you are using a version control system.
+Make sure to include `.dev.vars` in your project `.gitignore` file to prevent your credentials being uploaded to a repository when using version control.
 
-Check that secrets are loaded correctly in `src/index.js` by logging their values into a console output:
+Check the secrets are loaded correctly in `src/index.js` by logging their values into a console output, as follows:
 
 ```javascript
 export default {
@@ -176,7 +176,7 @@ For this tutorial, you will be using the [jose](https://www.npmjs.com/package/jo
 npm i jose
 ```
 
-To verify that the installation succeeded, you can run `npm list`, which lists all the installed packages and see if the `jose` dependency has been added:
+To verify that the installation succeeded, you can run `npm list`, which lists all the installed packages, to check if the `jose` dependency has been added:
 
 ```sh
 <project_name>@0.0.0
@@ -187,9 +187,9 @@ To verify that the installation succeeded, you can run `npm list`, which lists a
 └── wrangler@3.75.0
 ```
 
-## 4. Generate JSON Web Token
+## 4. Generate JSON web token
 
-Now that you have installed the `jose` library, it is time to import it and add a function to your code that generates a signed JWT:
+Now that you have installed the `jose` library, it is time to import it and add a function to your code that generates a signed JSON Web Token (JWT):
 
 ```javascript
 import * as jose from 'jose';
@@ -237,7 +237,7 @@ Now that you have created a JWT, it is time to do an API call to BigQuery to fet
 
 With the JWT token created in the previous step, issue an API request to BigQuery's API to retrieve data from a table.
 
-You will now query the table that you already have created in BigQuery as part of the prerequisites of this tutorial. This example uses a sampled version of the [Hacker News Corpus](https://www.kaggle.com/datasets/hacker-news/hacker-news-corpus) that was used under its MIT licence and uploaded to BigQuery.
+You will now query the table that you created in BigQuery earlier in this tutorial. This example uses a sampled version of the [Hacker News Corpus](https://www.kaggle.com/datasets/hacker-news/hacker-news-corpus) that was used under its MIT licence and uploaded to BigQuery.
 
 ```javascript
 const queryBQ = async (bqJWT, path) => {
@@ -270,11 +270,11 @@ export default {
 };
 ```
 
-Having the raw row data from BigQuery means that you can now format it in a JSON-like style up next.
+Having the raw row data from BigQuery means that you can now format it in a JSON-like style next.
 
 ## 6. Format results from the query
 
-Now that you have retrieved the data from BigQuery, it is time to note that a BigQuery API response looks something like this:
+Now that you have retrieved the data from BigQuery, your BigQuery API response should look something like this:
 
 ```json
 {
@@ -330,7 +330,7 @@ Now that you have retrieved the data from BigQuery, it is time to note that a Bi
 }
 ```
 
-This format may be difficult to read and to work with when iterating through results, which will go on to do later in this tutorial. So you will now implement a function that maps the schema into each individual value, and the resulting output will be easier to read, as shown below. Each row corresponds to an object within an array.
+This format may be difficult to read and work with when iterating through results. So you will now implement a function that maps the schema into each individual value, and the resulting output will be easier to read, as shown below. Each row corresponds to an object within an array.
 
 ```javascript
 [
@@ -353,10 +353,10 @@ Create a `formatRows` function that takes a number of rows and fields returned f
 
 ```javascript
 const formatRows = (rowsWithoutFieldNames, fields) => {
-	// Depending on the position of each value, it is known what field you should assign to it.
+	// Index to fieldName
 	const fieldsByIndex = new Map();
 
-	// Load all fields name and have their index in the array result as their key
+	// Load all fields by name and have their index in the array result as their key
 	fields.forEach((field, index) => {
     	fieldsByIndex.set(index, field.name)
 	})
@@ -500,11 +500,11 @@ Once you access `http://localhost:8787` you should see an output similar to the 
 }
 ```
 
-The actual values and fields will mostly depend on the query made in Step 5 that are then fed into the LLMs models.
+The actual values and fields will mostly depend on the query made in Step 5 that is then fed into the LLM.
 
 ## Final result
 
-All the code shown in the different steps are combined into the following code in `src/index.js`:
+All the code shown in the different steps is combined into the following code in `src/index.js`:
 
 ```javascript
 import * as jose from "jose";
@@ -677,12 +677,12 @@ This will create a public endpoint that you can use to access the Worker globall
 
 In this tutorial, you have learnt how to integrate Google BigQuery and Cloudflare Workers by creating a GCP service account key and storing part of it as Worker secrets. This was later imported in the code, and by using the `jose` npm library, you created a JSON Web Token to authenticate the API query to BigQuery.
 
-Once you obtained the results, you formatted them to later be passed to generative AI models via Workers AI to generate tags and to perform sentiment analysis on the extracted data.
+Once you obtained the results, you formatted them to pass to generative AI models via Workers AI to generate tags and to perform sentiment analysis on the extracted data.
 
 ## Next Steps
 
-If, instead of displaying the results of ingesting the data to the AI model in a browser, your workflow requires fetching and store data (for example in [R2](/r2/) or [D1](/d1/)) on regular intervals, you may want to consider adding a [scheduled handler](/workers/runtime-apis/handlers/scheduled/) for this Worker. It allows triggering the Worker with a predefined cadence via a [Cron Trigger](/workers/configuration/cron-triggers/). Consider reviewing the Reference Architecture Diagrams on [Ingesting BigQuery Data into Workers AI](/reference-architecture/diagrams/ai/bigquery-workers-ai/).
+If, instead of displaying the results of ingesting the data to the AI model in a browser, your workflow requires fetching and store data (for example in [R2](/r2/) or [D1](/d1/)) on regular intervals, you may want to consider adding a [scheduled handler](/workers/runtime-apis/handlers/scheduled/) for this Worker. This enables you to trigger the Worker with a predefined cadence via a [Cron Trigger](/workers/configuration/cron-triggers/). Consider reviewing the Reference Architecture Diagrams on [Ingesting BigQuery Data into Workers AI](/reference-architecture/diagrams/ai/bigquery-workers-ai/).
 
-A use case to ingest data from other sources, like you did in this tutorial, is to create a RAG system. If this sounds relevant to you, please check out the tutorial [Build a Retrieval Augmented Generation (RAG) AI](/workers-ai/guides/tutorials/build-a-retrieval-augmented-generation-ai/).
+A use case to ingest data from other sources, like you did in this tutorial, is to create a RAG system. If this sounds relevant to you, please check out the [Build a Retrieval Augmented Generation (RAG) AI tutorial](/workers-ai/guides/tutorials/build-a-retrieval-augmented-generation-ai/).
 
 To learn more about what other AI models you can use at Cloudflare, please visit the [Workers AI](/workers-ai) section of our docs.
