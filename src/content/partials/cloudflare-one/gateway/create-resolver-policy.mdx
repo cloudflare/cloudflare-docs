@@ -4,6 +4,12 @@
 
 import { TabItem, Tabs } from "~/components";
 
+:::caution[Virtual network limitation]
+Resolver policies do not automatically update when you change the virtual networks associated with a route. If you move a route from one virtual network to another, the resolver policy will still reference the old virtual network. You will need to manually remove and recreate the resolver policy to update the route.
+:::
+
+To create a resolver policy:
+
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Resolver policies**.
@@ -17,10 +23,7 @@ import { TabItem, Tabs } from "~/components";
    Make sure your destination is not subject to [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/#manage-local-domains).
 
 4. In **Select DNS resolver**, choose _Configure custom DNS resolvers_.
-5. Enter the IP addresses of your custom DNS resolver.
-   :::note[Search virtual networks]
-   As you enter an IP address, Gateway will search through your [virtual networks](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) configured in Zero Trust.
-   :::
+5. Enter the IP addresses of your custom DNS resolver. As you enter an IP address, Gateway will search through your [virtual networks](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) configured in Zero Trust.
 6. In **Network**, choose whether to route queries publicly (to the Internet) or privately (to a private network service).
 7. (Optional) Enter a custom port for each IP address.
 8. Select **Create policy**.
@@ -31,40 +34,40 @@ Custom resolvers are saved to your account for future use. You can add up to 10 
 <TabItem label="Terraform (v5)">
 
 1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
-	- `Zero Trust Write`
+
+   - `Zero Trust Write`
 
 2. Create a resolver policy using the [`cloudflare_zero_trust_gateway_policy`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_gateway_policy) resource:
 
-	```tf
-	resource "cloudflare_zero_trust_gateway_policy" "resolver_policy" {
-		name        = "Example resolver policy"
-		enabled     = true
-		account_id  = var.cloudflare_account_id
-		description = "TERRAFORM MANAGED resolver policy"
-		action      = "resolve"
-		traffic     = "dns.fqdn in {\"internal.example.com\"}"
-		identity    = "identity.email in {\"jdoe@example.com\"}"
-		precedence  = 1
-		rule_settings = {
-				dns_resolvers = {
-				# You can add up to 10 IPv4 and 10 IPv6 addresses to a policy.
-					ipv4 = [{
-						ip = "192.0.2.24"
-						port = 53
-						route_through_private_network = true
-						vnet_id = cloudflare_zero_trust_tunnel_cloudflared_virtual_network.staging_vnet.id
-					}]
-					ipv6 = [{
-						ip = "2001:DB8::"
-						port = 53
-						route_through_private_network = true
-						vnet_id = cloudflare_zero_trust_tunnel_cloudflared_virtual_network.staging_vnet.id
-					}]
-				}
-		}
-	}
-	```
-
+   ```tf
+   resource "cloudflare_zero_trust_gateway_policy" "resolver_policy" {
+   	name        = "Example resolver policy"
+   	enabled     = true
+   	account_id  = var.cloudflare_account_id
+   	description = "TERRAFORM MANAGED resolver policy"
+   	action      = "resolve"
+   	traffic     = "dns.fqdn in {\"internal.example.com\"}"
+   	identity    = "identity.email in {\"jdoe@example.com\"}"
+   	precedence  = 1
+   	rule_settings = {
+   			dns_resolvers = {
+   			# You can add up to 10 IPv4 and 10 IPv6 addresses to a policy.
+   				ipv4 = [{
+   					ip = "192.0.2.24"
+   					port = 53
+   					route_through_private_network = true
+   					vnet_id = cloudflare_zero_trust_tunnel_cloudflared_virtual_network.staging_vnet.id
+   				}]
+   				ipv6 = [{
+   					ip = "2001:DB8::"
+   					port = 53
+   					route_through_private_network = true
+   					vnet_id = cloudflare_zero_trust_tunnel_cloudflared_virtual_network.staging_vnet.id
+   				}]
+   			}
+   	}
+   }
+   ```
 
 </TabItem>
 </Tabs>

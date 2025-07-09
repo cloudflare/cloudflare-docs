@@ -1,14 +1,13 @@
 ---
 {}
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 By default, all DNS requests on the user device are resolved by Cloudflare's [public DNS resolver](/1.1.1.1/) except for common top level domains used for local resolution (such as `localhost`). To allow users to connect to internal server names or domains that do not resolve on the public Internet, you have two options:
 
-* [Add internal domains to Local Domain Fallback](#local-domain-fallback)
-* [Build custom resolver policies](#resolver-policies)
+- [Add internal domains to Local Domain Fallback](#local-domain-fallback)
+- [Build custom resolver policies](#resolver-policies)
 
 ## Local Domain Fallback
 
@@ -23,7 +22,6 @@ To learn more about how Local Domain Fallback works, refer to [How the WARP clie
 ## Resolver policies
 
 :::note
-
 Only available on Enterprise plans.
 :::
 
