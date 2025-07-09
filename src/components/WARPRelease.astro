@@ -59,7 +59,7 @@ const sortedPlatforms = Object.entries(release.linuxPlatforms ?? {}).sort(
 		<p>
 			<span>
 				{
-					release.linuxPlatforms ? (
+					sortedPlatforms.length > 0 ? (
 							<select>
 								{sortedPlatforms.map(([platform]) => (
 									<option value={platform}>
@@ -70,7 +70,7 @@ const sortedPlatforms = Object.entries(release.linuxPlatforms ?? {}).sort(
 							<a
 								class="inline-block"
 								data-linux-download
-								href={`https://downloads.cloudflareclient.com/v1/download/${release.linuxPlatforms[0]}/version/${release.version}`}
+								href={`https://downloads.cloudflareclient.com/v1/download/${sortedPlatforms[0][0]}/version/${release.version}`}
 							>
 								Download
 							</a>
