@@ -3,7 +3,7 @@ params:
   - protocol
 ---
 
-import { Tabs, TabItem, Render, Details, APIRequest} from "~/components";
+import { Tabs, TabItem, Render, Details, APIRequest, GlossaryTooltip } from "~/components";
 
 A target represents a single resource in your infrastructure (such as a server, Kubernetes cluster, database, or container) that users will connect to through Cloudflare.
 
@@ -18,7 +18,7 @@ To create a new target:</p>) :
 <TabItem label="Dashboard">
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Networks** > **Targets**.
 2. Select **Add a target**.
-3. In **Target hostname**, enter a user-friendly name for the target resource. We recommend using the server hostname, for example `production-server`. The hostname does not need to be unique and can be reused for multiple targets. Hostnames are used to define the subset of targets included in an infrastructure application and are not used in DNS address resolution.
+3. In **Target hostname**, enter a user-friendly name for the <GlossaryTooltip term="target">target</GlossaryTooltip>. We recommend using the server hostname, for example `production-server`. The target hostname does not need to be unique and can be reused for multiple targets. Hostnames are used to define the targets secured by an Access application; they are not used for DNS address resolution.
 	<Details header="Format restrictions">
 			- Case insensitive
 			- Contain no more than 253 characters

@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Tabs, TabItem } from "~/components";
+import { Tabs, TabItem, APIRequest } from "~/components";
 
 Refer to the sections below to learn about common actions you might want to take when managing your data in Secrets Store.
 
@@ -31,25 +31,24 @@ You must have a [Super Administrator or Secrets Store Admin role](/secrets-store
 A secret `name` cannot contain spaces. Refer to [Secrets Store API](/api/resources/secrets_store/) for the full API documentation.
 :::
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/secrets_store/stores/$STORE_ID/secrets \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---header "Content-Type: application/json" \
---data '[
-  {
-    "name":"<MY_SECRET_NAME>",
-    "value":"<SECRET_VALUE>",
-    "scopes":["workers"],
-    "comment":""
-  },
-  {
-    "name":"<MY_SECRET_NAME_2>",
-    "value":"<SECRET_VALUE>",
-    "scopes":["workers"],
-    "comment":""
-  }
-]'
-```
+<APIRequest
+  path="/accounts/{account_id}/secrets_store/stores/{store_id}/secrets"
+	method="POST"
+	json={[
+		{
+			"name":"<MY_SECRET_NAME>",
+			"value":"<SECRET_VALUE>",
+			"scopes":["workers"],
+			"comment":""
+			},
+		{
+			"name":"<MY_SECRET_NAME_2>",
+			"value":"<SECRET_VALUE>",
+			"scopes":["workers"],
+			"comment":""
+			}
+]}
+/>
 
 </TabItem> </Tabs>
 
@@ -139,10 +138,9 @@ Before deleting a secret, make sure it is not deployed. Secrets Store secrets in
 
 Refer to [Secrets Store API](/api/resources/secrets_store/) for the full API documentation.
 
-```bash
-curl --request DELETE \
-https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/secrets_store/stores/$STORE_ID/secrets/$SECRET_ID \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
-```
+<APIRequest
+  path="/accounts/{account_id}/secrets_store/stores/{store_id}/secrets/{secret_id}"
+	method="DELETE"
+/>
 
 </TabItem> </Tabs>

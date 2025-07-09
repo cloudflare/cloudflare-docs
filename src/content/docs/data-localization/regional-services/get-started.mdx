@@ -8,7 +8,7 @@ head:
     content: Get Started — Regional Services
 ---
 
-import { Details } from "~/components";
+import { Details, APIRequest } from "~/components";
 
 :::note
 
@@ -45,10 +45,10 @@ These are some examples of API requests.
 
 <Details header="List all the available regions">
 
-```bash title="Request"
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/addressing/regional_hostnames/regions" \
---header "Authorization: Bearer <API_TOKEN>" | jq .
-```
+<APIRequest
+  path="/accounts/{account_id}/addressing/regional_hostnames/regions"
+  method="GET"
+/>
 
 ```json title="Response"
 {
@@ -72,12 +72,14 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/addressing/regi
 
 <Details header="Create a new regional hostname entry">
 
-```bash title="Request"
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/addressing/regional_hostnames" \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{"hostname": "ca.regional.ipam.rocks", "region_key": "ca"}' | jq .
-```
+<APIRequest
+  path="/zones/{zone_id}/addressing/regional_hostnames"
+  method="POST"
+  json={{
+    hostname: "ca.regional.ipam.rocks",
+    region_key: "ca"
+  }}
+/>
 
 ```json title="Response"
 {
@@ -96,10 +98,10 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/addressing/regional_h
 
 <Details header="List all regional hostnames for a zone or get a specific one">
 
-```bash title="Request"
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/addressing/regional_hostnames" \
---header "Authorization: Bearer <API_TOKEN>" | jq .
-```
+<APIRequest
+  path="/zones/{zone_id}/addressing/regional_hostnames"
+  method="GET"
+/>
 
 ```json title="Response"
 {
@@ -120,10 +122,10 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/addressing/regional_h
 
 <Details header="List all regional hostnames for a specific zone">
 
-```bash title="Request"
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/addressing/regional_hostnames/ca.regional.ipam.rocks" \
---header "Authorization: Bearer <API_TOKEN>" | jq .
-```
+<APIRequest
+  path="/zones/{zone_id}/addressing/regional_hostnames/{hostname}"
+  method="GET"
+/>
 
 ```json title="Response"
 {
@@ -142,13 +144,13 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/addressing/regional_h
 
 <Details header="Patch the region for a specific hostname">
 
-```bash title="Request"
-curl --request PATCH \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/addressing/regional_hostnames/ca.regional.ipam.rocks" \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{"region_key": "eu"}' | jq .
-```
+<APIRequest
+  path="/zones/{zone_id}/addressing/regional_hostnames/{hostname}"
+  method="PATCH"
+  json={{
+    region_key: "eu"
+  }}
+/>
 
 ```json title="Response"
 {
@@ -167,11 +169,10 @@ curl --request PATCH \
 
 <Details header="Delete the region configuration">
 
-```bash title="Request"
-curl --request DELETE \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/addressing/regional_hostnames/ca.regional.ipam.rocks" \
---header "Authorization: Bearer <API_TOKEN>" | jq .
-```
+<APIRequest
+  path="/zones/{zone_id}/addressing/regional_hostnames/{hostname}"
+  method="DELETE"
+/>
 
 ```json title="Response"
 {

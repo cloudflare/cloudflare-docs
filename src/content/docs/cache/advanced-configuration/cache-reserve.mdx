@@ -3,7 +3,7 @@ title: Cache Reserve
 pcx_content_type: concept
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { Render, TabItem, Tabs, APIRequest } from "~/components";
 
 Cache Reserve is a large, persistent data store [implemented on top of R2](/r2/). By pushing a single button in the dashboard, your website’s cacheable content will be written to Cache Reserve. In the same way that [Tiered Cache](/cache/how-to/tiered-cache/) builds a hierarchy of caches between your visitors and your origin, Cache Reserve serves as the ultimate [upper-tier cache](/cache/how-to/tiered-cache/) that will reserve storage space for your assets for as long as you want. This ensures that your content is served from cache longer, shielding your origin from unneeded egress fees.
 
@@ -201,10 +201,12 @@ Be aware that the deletion may take up to 24 hours to complete.
 
 To delete Cache Reserve data via API use the following example requests. For more information, refer to the [API documentation](/api/resources/cache/subresources/cache_reserve/methods/clear/).
 
-```bash title="Request 1: Get Cache Reserve status"
-curl https://api.cloudflare.com/client/v4/zones/{zone_id}/cache/cache_reserve \
---header "Authorization: Bearer <API_TOKEN>"
-```
+**Request 1: Get Cache Reserve status**
+
+<APIRequest
+  path="/zones/{zone_id}/cache/cache_reserve"
+  method="GET"
+/>
 
 ```json title="Response"
 {
@@ -221,11 +223,12 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/cache/cache_reserve \
 
 If Cache Reserve is turned off, you can proceed to the Cache Reserve Clear operation.
 
-```bash title="Request 2: Start Cache Reserve Clear"
-curl --request POST \
-https://api.cloudflare.com/client/v4/zones/{zone_id}/cache/cache_reserve_clear \
---header "Authorization: Bearer <API_TOKEN>"
-```
+**Request 2: Start Cache Reserve Clear**
+
+<APIRequest
+  path="/zones/{zone_id}/cache/cache_reserve_clear"
+  method="POST"
+/>
 
 ```json title="Response"
 {
