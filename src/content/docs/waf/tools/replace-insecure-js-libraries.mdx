@@ -6,7 +6,7 @@ head:
     content: Replace insecure JavaScript libraries
 ---
 
-import { GlossaryTooltip } from "~/components";
+import { GlossaryTooltip, Tabs, TabItem } from "~/components";
 
 This feature, when turned on, automatically rewrites URLs to external JavaScript libraries to point to Cloudflare-hosted libraries instead. This change improves security and performance, and reduces the risk of malicious code being injected.
 
@@ -36,9 +36,13 @@ The feature is available in all Cloudflare plans, and is turned on by default on
 
 ## Configure
 
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and zone.
 2. Go to **Security** > **Settings**.
 3. For **Replace insecure JavaScript libraries**, set the toggle to **On** or **Off**.
+
+</TabItem> <TabItem label="API">
 
 Issue a `PATCH` request similar to the following:
 
@@ -49,6 +53,8 @@ curl --request PATCH \
 --header "Content-Type: application/json" \
 --data '{ "value": "on" }'
 ```
+
+</TabItem> </Tabs>
 
 ---
 
