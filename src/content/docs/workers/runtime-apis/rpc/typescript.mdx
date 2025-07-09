@@ -29,7 +29,7 @@ For example, if your client Worker had bindings to a Worker in `../sum-worker/` 
 />
 
 :::note
-If your service binding targets a `WorkerEntrypoint` that is a default export, make sure you set `entrypoint: "default"` in your Wrangler config when you configure your service binding.
+Currently, this only works if your service binding targets a [named entrypoint](/workers/runtime-apis/bindings/service-bindings/rpc/#named-entrypoints), rather than the default export. If you are unable to use named entrypoints, we recommend you extend your `Env` type in a separate file in order to manually provide those types without risk of being overwritten by subsequent runs of `wrangler types`. This is a temporary limitation we are working to fix.
 :::
 
 This will produce a `worker-configuration.d.ts` file that includes:
