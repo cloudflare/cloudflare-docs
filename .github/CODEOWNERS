@@ -94,8 +94,8 @@
 
 # Developer Platform
 
-/src/content/containers/ @mikenomitch @cloudflare/pcx-technical-writing
-/src/content/release-notes/containers.yaml @mikenomitch @cloudflare/pcx-technical-writing
+/src/content/containers/ @mikenomitch @th0m @cloudflare/pcx-technical-writing
+/src/content/release-notes/containers.yaml @mikenomitch @th0m @cloudflare/pcx-technical-writing
 /src/content/docs/d1/ @elithrar @rozenmd @vy-ton @joshthoward @oxyjun @harshil1712 @cloudflare/pcx-technical-writing
 /src/content/release-notes/d1.yaml @elithrar @rozenmd @vy-ton @joshthoward @oxyjun @cloudflare/pcx-technical-writing
 /src/content/partials/d1/ @elithrar @rozenmd @vy-ton @joshthoward @oxyjun @harshil1712 @cloudflare/pcx-technical-writing
