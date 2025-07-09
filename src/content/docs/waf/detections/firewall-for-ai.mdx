@@ -61,7 +61,7 @@ The PII category for this request would be `EMAIL_ADDRESS`.
 
 Then, use [Security Analytics](/waf/analytics/security-analytics/) in the new application security dashboard to validate that the WAF is correctly detecting prompts leaking PII data in incoming requests. Filter data by the `cf-llm` managed endpoint label and review the detection results on your traffic.
 
-Alternatively, create a WAF custom rule like the one described in the next step using a _Log_ action. This rule will generate [security events](/waf/analytics/security-events/) that will allow you to validate your configuration.
+Alternatively, create a custom rule like the one described in the next step using a _Log_ action. This rule will generate [security events](/waf/analytics/security-events/) that will allow you to validate your configuration.
 
 ### 3. Mitigate requests containing PII
 

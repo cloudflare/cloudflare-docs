@@ -72,9 +72,9 @@ If you are an Enterprise customer, do the following:
 
    - **If incoming requests match**:
 
-     | Field        | Operator  | Value |
-     | ------------ | --------- | ----- |
-     | Attack Score | less than | `20`  |
+     | Field            | Operator  | Value |
+     | ---------------- | --------- | ----- |
+     | WAF Attack Score | less than | `20`  |
 
    - **Choose action**: Block
 
@@ -173,7 +173,7 @@ Create a rate limiting rule to [apply rate limiting on a login endpoint](/waf/ra
 
 ### Prevent credential stuffing attacks
 
-Use [leaked credential checks](/waf/managed-rules/check-for-exposed-credentials/) to prevent <GlossaryTooltip term="credential stuffing" link="https://www.cloudflare.com/learning/bots/what-is-credential-stuffing/">credential stuffing</GlossaryTooltip> attacks on your applications.
+Use [leaked credentials detection](/waf/detections/leaked-credentials/) to prevent <GlossaryTooltip term="credential stuffing" link="https://www.cloudflare.com/learning/bots/what-is-credential-stuffing/">credential stuffing</GlossaryTooltip> attacks on your applications.
 
 ### Prevent users from uploading malware into your applications
 
