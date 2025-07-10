@@ -5,7 +5,7 @@ sidebar:
   order: 5
 ---
 
-import { Render, RuleID, APIRequest } from "~/components";
+import { Render, RuleID, APIRequest, Tabs, TabItem } from "~/components";
 
 :::note
 This feature requires an Enterprise plan with a paid add-on.
@@ -33,12 +33,32 @@ Currently, Cloudflare Sensitive Data Detection does not support [matched payload
 
 ## Configure in the dashboard
 
+<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+
 To configure Cloudflare Sensitive Data Detection in the Cloudflare dashboard, go to **Security** > **Sensitive Data**.
 
 You can turn the managed ruleset on or off, and configure the following settings:
 
 - Turn on or off specific rules or rules with specific tags.
 - Customize the filter expression. With a custom expression, Cloudflare Sensitive Data Detection applies only to a subset of the incoming requests.
+
+</TabItem> <TabItem label="New dashboard" icon="rocket">
+
+To enable Cloudflare Sensitive Data Detection:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
+2. Go to **Security** > **Settings** and filter by **Detections**.
+3. Next to **Sensitive data detection**, set the toggle to **On**.
+
+To adjust the scope of the managed ruleset or turn off specific rules:
+
+1. In the **Settings** page, under **Sensitive data detection**, select **Configured ruleset**.
+2. To apply the managed ruleset for a subset of incoming requests, select **Custom filter expression** and define the filter expression.
+3. Select **Next**.
+4. To turn specific rules on or off, select **Browse rules** and use the toggle next to each rule to turn it on or off.
+5. Select **Next**, and then select **Save**.
+
+</TabItem> </Tabs>
 
 For details on configuring a managed ruleset in the dashboard, refer to [Configure a managed ruleset](/waf/managed-rules/deploy-zone-dashboard/#configure-a-managed-ruleset).
 
@@ -175,6 +195,7 @@ This example deploys the Cloudflare Sensitive Data Detection managed ruleset to 
 	file="managed-rulesets/api-next-steps"
 	params={{
 		rulesetName: "Cloudflare Sensitive Data Detection managed ruleset",
+		customizableAction: false,
 	}}
 />
 

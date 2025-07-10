@@ -5,6 +5,10 @@ productLink: "/autorag/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-07-08"
+    title: Reduced cooldown between syncs
+    description: |-
+      The cooldown period between sync jobs has been reduced to **3 minutes**, allowing you to trigger syncs more frequently when updating your data. If a sync is requested during the cooldown window, the dashboard and API now return clear response indicating that the sync cannot proceed due to the cooldown.
   - publish_date: "2025-06-16"
     title: Rich format file size limit increased to 4 MB
     description: |-

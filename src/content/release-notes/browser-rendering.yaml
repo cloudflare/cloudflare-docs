@@ -5,6 +5,14 @@ productLink: "/browser-rendering/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-07-03"
+    title: Local development support
+    description: |-
+      * We added local development support to Browser Rendering, making it simpler than ever to test and iterate before deploying.
+  - publish_date: "2025-06-30"
+    title: New Web Bot Auth headers
+    description: |-
+      * Browser Rendering now supports [Web Bot Auth](/reference/automatic-request-headers/) by automatically attaching `Signature-agent`, `Signature`, and `Signature-input ` headers to verify that a request originates from Cloudflare Browser Rendering. 
   - publish_date: "2025-06-27"
     title: Bug fix to debug log noise in Workers
     description: |-

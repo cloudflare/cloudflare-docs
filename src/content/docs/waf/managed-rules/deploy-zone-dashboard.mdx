@@ -9,17 +9,17 @@ head:
     content: Deploy a WAF managed ruleset in the dashboard
 ---
 
-import { Render } from "~/components";
+import { Render, Tabs, TabItem } from "~/components";
 
-You can deploy and configure managed rulesets for a zone in **Security** > **WAF** > **Managed rules**.
+The instructions on this page will guide you through deploying and configuring a managed ruleset for a zone.
 
 To deploy a managed ruleset for several Enterprise domains in your account, refer to [Deploy a managed ruleset in the dashboard for an account](/waf/account/managed-rulesets/deploy-dashboard/).
-
-![Example WAF Managed Rules configuration in the Managed rules tab under Security > WAF. There are two managed rulesets already deployed, and one managed ruleset available for deployment.](~/assets/images/waf/waf-managed-rules-tab.png)
 
 ## Deploy a managed ruleset
 
 To deploy a managed ruleset with the default configuration:
+
+<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 
@@ -27,11 +27,29 @@ To deploy a managed ruleset with the default configuration:
 
 3. Under **Managed Rulesets**, select **Deploy** next to a managed ruleset.
 
-This operation will deploy the managed ruleset for the current zone, creating a new rule with the _Execute_ action.
+   ![Example WAF Managed Rules configuration in the Managed rules tab under Security > WAF. There are two managed rulesets already deployed, and one managed ruleset available for deployment.](~/assets/images/waf/waf-managed-rules-tab.png)
+
+This operation deploys the managed ruleset for the current zone, creating a new rule with the _Execute_ action.
+
+</TabItem> <TabItem label="New dashboard" icon="rocket">
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
+2. Go to **Security** > **Settings** and filter by **Detections**.
+3. Next to the managed ruleset you want to deploy, set the toggle to **On**.
+
+</TabItem> </Tabs>
 
 ## Turn on or off a managed ruleset
 
-Select the **Enabled** toggle next to a managed ruleset to turn it on or off.
+<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+
+In the **Managed rules** tab, next to the managed ruleset you want to turn on or off, switch the **Enabled** toggle.
+
+</TabItem> <TabItem label="New dashboard" icon="rocket">
+
+In the **Settings** page, next to the managed ruleset you want to turn on or off, set the toggle to **On** or **Off**, respectively.
+
+</TabItem> </Tabs>
 
 ## Configure a managed ruleset
 
@@ -40,16 +58,17 @@ Configure a managed ruleset to:
 - Specify a custom filter expression to apply the rules in the ruleset to a subset of incoming requests.
 - Define specific field values for one or more rules (for example, configure a rule with an action different from the action configured by Cloudflare), or turn off those rules.
 
-To skip one or more rules — or even entire WAF managed rulesets — for specific incoming requests, [add an exception](/waf/managed-rules/waf-exceptions/).
+To skip one or more rules — or even entire managed rulesets — for specific incoming requests, [add an exception](/waf/managed-rules/waf-exceptions/).
 
 :::note
-
 Some managed rulesets may not allow custom configuration, depending on your Cloudflare plan.
 :::
 
 ### Configure field values for all the rules
 
 To configure rule field values for all the rules in a managed ruleset:
+
+<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 
@@ -67,26 +86,87 @@ To configure rule field values for all the rules in a managed ruleset:
 
 6. If you are editing a deployed managed ruleset, select **Save**. If you have not deployed the managed ruleset yet, select **Deploy** to deploy the ruleset immediately, or **Save as Draft** to save your deployment settings for later.
 
+</TabItem> <TabItem label="New dashboard" icon="rocket">
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
+
+2. Go to **Security** > **Security rules**.
+
+3. In the rules table, search for the managed ruleset you want to configure. Look for a rule with an _Execute_ action. At the top of the page, you can filter the rules to show **Managed rules** only.
+
+4. Select the rule name (containing the name of the managed ruleset).
+
+5. (Optional) To execute the managed ruleset for a subset of incoming requests, select **Edit scope** and [configure the expression](/ruleset-engine/rules-language/expressions/edit-expressions/) that will determine the scope of the current rule deploying the managed ruleset.
+
+6. In the ruleset configuration section, define settings for all the rules in the ruleset by setting one or more fields using the drop-down lists.
+
+   For example, select the action to perform for all the rules in the ruleset from the **Ruleset action** drop-down list.
+
+   ![The Configure Managed Ruleset page displaying the available options to override all the rules in the ruleset. In the displayed managed ruleset you can override the ruleset action.](~/assets/images/waf/waf-configure-ruleset.png)
+
+7. Select **Save**.
+
+</TabItem> </Tabs>
+
 ### Configure rules in bulk in a managed ruleset
+
+<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
 
 <Render file="managed-rules-browse-zone" />
 
 <Render file="managed-ruleset-configure-rules-in-bulk" />
 
+</TabItem> <TabItem label="New dashboard" icon="rocket">
+
+<Render file="managed-rules-browse-zone-new-nav" />
+
+<Render file="managed-ruleset-configure-rules-in-bulk" />
+
+</TabItem> </Tabs>
+
 ### Configure a single rule in a managed ruleset
+
+<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
 
 <Render file="managed-rules-browse-zone" />
 
 <Render file="managed-ruleset-configure-single-rule" />
 
+</TabItem> <TabItem label="New dashboard" icon="rocket">
+
+<Render file="managed-rules-browse-zone-new-nav" />
+
+<Render file="managed-ruleset-configure-single-rule" />
+
+</TabItem> </Tabs>
+
 ### Browse the rules of a managed ruleset
 
 You can browse the available rules in a managed ruleset and search for individual rules or tags.
 
+<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+
 <Render file="managed-rules-browse-zone" />
 
+</TabItem> <TabItem label="New dashboard" icon="rocket">
+
+<Render file="managed-rules-browse-zone-new-nav" />
+
+</TabItem> </Tabs>
+
 ### Delete a managed ruleset deployment rule or an exception
+
+<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Go to **Security** > **WAF** > **Managed rules**.
 3. Next to the rule or exception (skip rule) you want to delete, select the three dots > **Delete** and confirm the operation.
+
+</TabItem> <TabItem label="New dashboard" icon="rocket">
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
+2. Go to **Security** > **Security rules**.
+3. In the rules table, search for the managed ruleset you want to configure/browse. At the top of the page, you can filter the rules to show **Managed rules** only.
+4. Next to the managed ruleset deployment rule (execute rule) or exception (skip rule) you want to delete, select the three dots > **Delete** and confirm the operation.
+
+</TabItem> </Tabs>

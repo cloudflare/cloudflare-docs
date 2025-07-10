@@ -126,7 +126,7 @@ sbt clean assembly
 
 After building, the output JAR should be located at `target/scala-2.12/R2DataCatalogDemo-assembly-1.0.jar`.
 
-To run the application, you will use `spark-submit`. Below is an example shell script (`submit.sh`) that includes the necessary Java compatability flags for Spark on Java 17:
+To run the application, you will use `spark-submit`. Below is an example shell script (`submit.sh`) that includes the necessary Java compatibility flags for Spark on Java 17:
 
 ```
 # We need to set these "--add-opens" so that Spark can run on Java 17 (it needs access to

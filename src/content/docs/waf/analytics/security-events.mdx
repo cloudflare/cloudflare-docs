@@ -26,7 +26,10 @@ Available features vary according to your Cloudflare plan:
 
 ## Location in the dashboard
 
-Security Events is available for your zone in **Security** > **Events**.
+To open Security Events for a given zone:
+
+- Old dashboard: Go to **Security** > **Events**.
+- New security dashboard: Go to **Security** > **Analytics** > **Events** tab.
 
 Additionally, Enterprise customers have access to the account-level dashboard in Account Home > **Security Center** > **Security Events**.
 
@@ -54,13 +57,16 @@ Take the following into account when entering filter values:
 
 ### Adjust report duration
 
-To adjust report duration, select the desired duration from the dropdown in **Security Events**. The default value is `Previous 24 hours`.
+To adjust report duration, select the desired duration from the dropdown. The default value is `Previous 24 hours`.
 
 The available report duration values depend on your Cloudflare plan. Refer to [Availability](#availability) for details.
 
-## Create custom rule from current filters
+## Create security rule from current filters
 
-To create a [custom rule](/waf/custom-rules/create-dashboard/) based on your current filters and exclusions, select **Create custom rule** in **Security Events**.
+To create a [custom rule](/waf/custom-rules/create-dashboard/) based on your current filters and exclusions:
+
+- Old dashboard: Select **Create custom rule**.
+- New security dashboard: Select **Create custom security rule**.
 
 ## Events summary
 
@@ -72,7 +78,7 @@ You can adjust the displayed data according to one of the values by selecting **
 
 ## Events by service
 
-The **Events by service** section lists the activity per Cloudflare security feature (for example, **Managed rules** or **API Shield**).
+The **Events by service** section lists the activity per Cloudflare security feature (for example, **Managed rules** or **Rate limiting rules**).
 
 You can adjust the scope of Security Events to one of the displayed services by selecting **Filter** or **Exclude** when hovering the legend or by selecting the corresponding graph bar.
 
@@ -83,7 +89,7 @@ In **Top events by source** you can find details of the traffic flagged or actio
 You can adjust the scope of Security Events to one of the listed source values by selecting **Filter** or **Exclude** when hovering the value.
 
 :::note
-A deleted custom/firewall rule or rate limiting rule will show as `Rule unavailable` under **Firewall rules** or **Rate limit rules**. To check the changes made within your Cloudflare account, review your [Audit logs](/fundamentals/account/account-security/review-audit-logs/).
+A deleted custom rule or rate limiting rule will show as `Rule unavailable` under **Firewall rules** or **Rate limit rules**. To check the changes made within your Cloudflare account, review your [Audit logs](/fundamentals/account/account-security/review-audit-logs/).
 :::
 
 ## Sampled logs
@@ -131,7 +137,12 @@ For example, after adding a filter for `Action equals Managed Challenge` and set
 
 ## Print or download PDF report
 
-To print or download a snapshot report from your security events dashboard, select **Print report** in **Security Events**. Your web browser's printing interface will present you with options for printing or downloading the PDF report.
+To print or download a snapshot report:
+
+- Old dashboard: Select **Print report**.
+- New security dashboard: Select the three dots > **Print report**.
+
+Your web browser's printing interface will present you with options for printing or downloading the PDF report.
 
 The generated report will reflect all applied filters.
 

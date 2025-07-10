@@ -6,11 +6,11 @@ import { Render, PackageManagers } from "~/components";
 
 Install the `node-postgres` driver:
 
-<PackageManagers pkg="pg@>8.13.0" />
+<PackageManagers pkg="pg@>8.16.3" />
 
 :::note
 
-The minimum version of `node-postgres` required for Hyperdrive is `8.13.0`.
+The minimum version of `node-postgres` required for Hyperdrive is `8.16.3`.
 
 :::
 
@@ -53,7 +53,7 @@ export default {
 		} catch (error: any) {
 			console.error("Database error:", error.message);
 
-			return Response.error();
+			new Response('Internal error occurred', { status: 500 });
 		}
 	},
 };

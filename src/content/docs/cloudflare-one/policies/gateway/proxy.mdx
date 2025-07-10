@@ -5,7 +5,7 @@ sidebar:
   order: 12
 ---
 
-import { Badge, Tabs, TabItem } from "~/components";
+import { Badge, Tabs, TabItem, Render } from "~/components";
 
 You can forward [HTTP](/cloudflare-one/policies/gateway/initial-setup/http/) and [network](/cloudflare-one/policies/gateway/initial-setup/network/) traffic to Gateway for logging and filtering. Gateway can proxy both outbound traffic and traffic directed to resources connected via a Cloudflare Tunnel, GRE tunnel, or IPsec tunnel. When a user connects to the Gateway proxy, Gateway will accept the connection and establish a new, separate connection to the origin server.
 
@@ -21,26 +21,7 @@ Gateway uses the [Happy Eyeballs algorithm](https://datatracker.ietf.org/doc/htm
 4. Gateway inspects and filters traffic received from the user.
 5. If the traffic passes inspection, Gateway proxies traffic bidirectionally between the user and the origin server.
 
-```mermaid
-flowchart TD
-    %% Accessibility
-    accTitle: How Gateway proxy works
-    accDescr: Flowchart describing how the Gateway proxy uses the Happy Eyeballs algorithm to establish TCP connections and proxy user traffic.
-
-    %% Flowchart
-    A[User's device sends TCP SYN to Gateway] --> B[Gateway sends TCP SYN to origin server]
-    B --> C{{Origin server responds with TCP SYN-ACK?}}
-    C -->|Yes| E[TCP handshakes completed]
-    C -->|No| D[Connection fails]
-    E --> F{{Connection allowed?}}
-    F -->|Yes| G[Gateway proxies traffic bidirectionally]
-    F -->|No| H[Connection blocked by firewall policies]
-
-    %% Styling
-    style D stroke:#D50000
-    style G stroke:#00C853
-    style H stroke:#D50000
-```
+<Render file="gateway/tcp-flowchart" product="cloudflare-one" />
 
 ## Supported protocols
 
@@ -72,55 +53,55 @@ To use the ICMP proxy with Cloudflare Tunnel, you may need to configure the `clo
 
 <Tabs> <TabItem label="Linux" icon="linux">
 
-1. Ensure that `ping_group_range` includes the Group ID (GID) of the user running `cloudflared`:
+1.  Ensure that `ping_group_range` includes the Group ID (GID) of the user running `cloudflared`:
 
-   a. Find the user that owns the `cloudflared` process:
+    a. Find the user that owns the `cloudflared` process:
 
-		```sh
-		ps -aux | grep cloudflared
-		```
+        ```sh
+        ps -aux | grep cloudflared
+        ```
 
-		```sh output
-		johndoe         407  0.8  1.7 1259904 35296 ?       Ssl  21:02   0:00 /usr/bin/cloudflared --no-autoupdate tunnel run --token eyJhI...
-		```
+        ```sh output
+        johndoe         407  0.8  1.7 1259904 35296 ?       Ssl  21:02   0:00 /usr/bin/cloudflared --no-autoupdate tunnel run --token eyJhI...
+        ```
 
-	 b. Get the Group ID of the `cloudflared` user:
+    b. Get the Group ID of the `cloudflared` user:
 
-		```sh
-		id -g johndoe
-		```
+        ```sh
+        id -g johndoe
+        ```
 
-		```sh output
-		10001
-		```
+        ```sh output
+        10001
+        ```
 
-   c. Determine the Group IDs that are allowed to use ICMP:
+    c. Determine the Group IDs that are allowed to use ICMP:
 
-   ```sh
-   sudo sysctl net.ipv4.ping_group_range
-   ```
+    ```sh
+    sudo sysctl net.ipv4.ping_group_range
+    ```
 
-   ```sh output
-   net.ipv4.ping_group_range= 0 10000
-   ```
+    ```sh output
+    net.ipv4.ping_group_range= 0 10000
+    ```
 
-   d. Either add the user to a group within that range, or update the range to encompass a group the user is already in. To update `ping_group_range`:
+    d. Either add the user to a group within that range, or update the range to encompass a group the user is already in. To update `ping_group_range`:
 
-   ```sh
-   echo 0 10001 | sudo tee /proc/sys/net/ipv4/ping_group_range
-	 ```
+    ```sh
+    echo 0 10001 | sudo tee /proc/sys/net/ipv4/ping_group_range
+    ```
 
-	 e. To make the change persist on reboot, update your `systcl` parameters:
+    e. To make the change persist on reboot, update your `systcl` parameters:
 
-	 ```sh
-	 echo "net.ipv4.ping_group_range = 0 10001" | sudo tee -a /etc/sysctl.d/99-cloudflared.conf
-   ```
+    ```sh
+    echo "net.ipv4.ping_group_range = 0 10001" | sudo tee -a /etc/sysctl.d/99-cloudflared.conf
+    ```
 
-2. If you are running multiple network interfaces (for example, `eth0` and `eth1`), configure `cloudflared` to use the external Internet-facing interface:
+2.  If you are running multiple network interfaces (for example, `eth0` and `eth1`), configure `cloudflared` to use the external Internet-facing interface:
 
-   ```sh
-   cloudflared tunnel run --icmpv4-src <IP of primary interface>
-   ```
+    ```sh
+    cloudflared tunnel run --icmpv4-src <IP of primary interface>
+    ```
 
 </TabItem> <TabItem label="Docker" icon="seti:docker">
 
