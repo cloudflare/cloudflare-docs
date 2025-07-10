@@ -38,7 +38,7 @@
 		"@cloudflare/vitest-pool-workers": "0.8.50",
 		"@cloudflare/workers-types": "4.20250703.0",
 		"@codingheads/sticky-header": "1.0.2",
-		"@expressive-code/plugin-collapsible-sections": "0.41.2",
+		"@expressive-code/plugin-collapsible-sections": "0.41.3",
 		"@floating-ui/react": "0.27.13",
 		"@iarna/toml": "2.2.5",
 		"@lottiefiles/dotlottie-react": "0.14.2",
