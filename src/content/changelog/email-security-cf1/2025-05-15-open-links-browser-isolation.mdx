@@ -1,0 +1,23 @@
+---
+title: Open email links with Browser Isolation
+description: New investigation feature for links
+date: 2025-05-15T11:00:00Z
+---
+
+You can now safely open links in emails to view and investigate them.
+
+![Open links with Browser Isolation](~/assets/images/changelog/email-security/browser-rendering-links.jpg)
+
+From **Investigations** → **View details**, look for the **Links Identified** section. Next to each link, an **Open in Browser Isolation** icon allows your team to safely open the link in a clientless, isolated browser with no risk to the analyst or your environment. Learn more about this feature on our [docs](/cloudflare-one/email-security/email-monitoring/search-email/#open-links).
+
+To use this feature, you must:
+
+- Enable **Clientless Web Isolation** in your Zero Trust settings.
+- Have **Browser Isolation (BISO)** seats assigned.
+  For more details, refer to our [setup guide](/cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/).
+
+This feature is available across all CES packages:
+
+- Advantage
+- Enterprise
+- Enterprise + PhishGuard
