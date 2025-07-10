@@ -38,6 +38,7 @@ The following example adds a rule that skips all remaining rules in the entry po
     	parameters={{
     		ruleset_phase: "http_request_firewall_managed",
     	}}
+    	roles={false}
     />
 
     ```json output {3}
@@ -80,6 +81,7 @@ The following example adds a rule that skips all remaining rules in the entry po
     			before: "",
     		},
     	}}
+    	roles={false}
     />
 
 For more information on skipping all remaining rules via API, refer to [Create an exception](/ruleset-engine/managed-rulesets/create-exception/#skip-all-remaining-rules) in the Ruleset Engine documentation.
@@ -96,6 +98,7 @@ The following example adds a rule that skips the [Cloudflare Managed Ruleset](/w
     	parameters={{
     		ruleset_phase: "http_request_firewall_managed",
     	}}
+    	roles={false}
     />
 
     ```json output {3,12,20}
@@ -140,7 +143,6 @@ The following example adds a rule that skips the [Cloudflare Managed Ruleset](/w
     :::
 
     Save the following IDs for the next step:
-
     - The ID of the entry point ruleset (`060013b1eeb14c93b0dcd896537e0d2c` in this example)
     - The ID of the `execute` rule deployment the managed ruleset (`1bdb49371c1f46958fc8b985efcb79e7` in this example)
 
@@ -161,6 +163,7 @@ The following example adds a rule that skips the [Cloudflare Managed Ruleset](/w
     			before: "1bdb49371c1f46958fc8b985efcb79e7",
     		},
     	}}
+    	roles={false}
     />
 
 For more information on skipping one or more managed rulesets via API, refer to [Create an exception](/ruleset-engine/managed-rulesets/create-exception/#skip-one-or-more-managed-rulesets) in the Ruleset Engine documentation.
@@ -182,6 +185,7 @@ The following example adds a rule that skips a particular rule of the [Cloudflar
     	parameters={{
     		ruleset_id: "efb7b8c949ac4650a09736fc376e9aee",
     	}}
+    	roles={false}
     />
 
     ```json output {12}
@@ -226,6 +230,7 @@ The following example adds a rule that skips a particular rule of the [Cloudflar
     	parameters={{
     		ruleset_phase: "http_request_firewall_managed",
     	}}
+    	roles={false}
     />
 
     ```json output {3,12,20}
@@ -270,12 +275,10 @@ The following example adds a rule that skips a particular rule of the [Cloudflar
     :::
 
     Save the following IDs for the next step:
-
     - The ID of the entry point ruleset (`060013b1eeb14c93b0dcd896537e0d2c` in this example)
     - The ID of the `execute` rule deploying the Cloudflare Managed Ruleset (`1bdb49371c1f46958fc8b985efcb79e7` in this example)
 
     You will also use the following IDs:
-
     - The ID of the Cloudflare Managed Ruleset (<RuleID id="efb7b8c949ac4650a09736fc376e9aee" />)
     - The ID of the rule to skip (<RuleID id="d9e350f1b72d4730899c8a420e48a85d" /> in this example)
 
@@ -302,6 +305,7 @@ The following example adds a rule that skips a particular rule of the [Cloudflar
     			before: "1bdb49371c1f46958fc8b985efcb79e7",
     		},
     	}}
+    	roles={false}
     />
 
 The `action_parameters` > `rules` object contains the ID of the Cloudflare Managed Ruleset with an associated list of rule IDs to skip (in this case, only one rule). The [`position` object](/ruleset-engine/rulesets-api/add-rule/#define-the-rule-position-in-the-ruleset) defines the exact rule placement in the entry point ruleset (before rule `1bdb49371c1f46958fc8b985efcb79e7`).

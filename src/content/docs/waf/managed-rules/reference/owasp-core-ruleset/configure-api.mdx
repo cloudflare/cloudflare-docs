@@ -36,7 +36,11 @@ This example sets the Cloudflare OWASP Core Ruleset's paranoia level for a zone 
 
 1.  Get the ID of the Cloudflare OWASP Core Ruleset using the [List account rulesets](/api/resources/rulesets/methods/list/) method, since WAF's managed rulesets exist at the account level. Alternatively, use the following ruleset ID directly: <RuleID id="4814384a9e5d4991b9815dcfc25d2f1f" />.
 
-    <APIRequest path="/accounts/{account_id}/rulesets" method="GET" />
+    <APIRequest
+    	path="/accounts/{account_id}/rulesets"
+    	method="GET"
+    	roles={false}
+    />
 
     ```json output {4-5}
     {
@@ -67,6 +71,7 @@ This example sets the Cloudflare OWASP Core Ruleset's paranoia level for a zone 
     	parameters={{
     		ruleset_phase: "http_request_firewall_managed",
     	}}
+    	roles={false}
     />
 
     ```json output {3,12,14-16}
@@ -133,6 +138,7 @@ This example sets the Cloudflare OWASP Core Ruleset's paranoia level for a zone 
     		expression: "true",
     		enabled: true,
     	}}
+    	roles={false}
     />
 
 For more information on creating overrides, refer to [Override a managed ruleset](/ruleset-engine/managed-rulesets/override-managed-ruleset/).
@@ -150,7 +156,11 @@ This example configures the managed ruleset score threshold and the performed ac
 
 1. Get the ID of the Cloudflare OWASP Core Ruleset using the [List account rulesets](/api/resources/rulesets/methods/list/) method, since WAF's managed rulesets exist at the account level. Alternatively, use the following ruleset ID directly: <RuleID id="4814384a9e5d4991b9815dcfc25d2f1f" />.
 
-   <APIRequest path="/accounts/{account_id}/rulesets" method="GET" />
+   <APIRequest
+   	path="/accounts/{account_id}/rulesets"
+   	method="GET"
+   	roles={false}
+   />
 
    ```json output {4-5}
    {
@@ -179,6 +189,7 @@ This example configures the managed ruleset score threshold and the performed ac
    	path="/accounts/{account_id}/rulesets/{ruleset_id}"
    	method="GET"
    	parameters={{ ruleset_id: "$OWASP_RULESET_ID" }}
+   	roles={false}
    />
 
    ```json output {12,16}
@@ -220,6 +231,7 @@ This example configures the managed ruleset score threshold and the performed ac
    	parameters={{
    		ruleset_phase: "http_request_firewall_managed",
    	}}
+   	roles={false}
    />
 
    ```json output {3,12,14-16}
@@ -258,7 +270,6 @@ This example configures the managed ruleset score threshold and the performed ac
    ```
 
 4. Update the rule you identified in the entry point ruleset using the [Update a zone ruleset rule](/api/resources/rulesets/methods/update/) operation, adding a rule override for the last rule in the OWASP ruleset (identified in step 2) with the following properties and values:
-
    - `"score_threshold": 60`
    - `"action": "managed_challenge"`
 
@@ -286,6 +297,7 @@ This example configures the managed ruleset score threshold and the performed ac
    		expression: "true",
    		enabled: true,
    	}}
+   	roles={false}
    />
 
 ## More resources

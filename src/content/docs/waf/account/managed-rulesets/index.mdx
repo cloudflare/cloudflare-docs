@@ -33,7 +33,6 @@ The second rule logs any matches for PL4 rules, the most strict set of rules in 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Deploy the Cloudflare OWASP Core Ruleset by following the [dashboard instructions](/waf/account/managed-rulesets/deploy-dashboard/#deploy-a-managed-ruleset), customizing the ruleset behavior using these settings:
-
    - **OWASP Anomaly Score Threshold**: _Medium - 40 and higher_
    - **OWASP Paranoia Level**: _PL3_
    - **OWASP Action**: _Managed Challenge_
@@ -41,7 +40,6 @@ The second rule logs any matches for PL4 rules, the most strict set of rules in 
 2. Select **Deploy**.
 
 3. Repeat the deployment procedure for the OWASP ruleset, but with following ruleset configuration:
-
    - **OWASP Anomaly Score Threshold**: _Medium - 40 and higher_
    - **OWASP Paranoia Level**: _PL4_
    - **OWASP Action**: _Log_
@@ -102,6 +100,7 @@ The following `POST` request for the [Create an account ruleset](/api/resources/
 			},
 		],
 	}}
+	roles="account"
 />
 
 </TabItem> </Tabs>

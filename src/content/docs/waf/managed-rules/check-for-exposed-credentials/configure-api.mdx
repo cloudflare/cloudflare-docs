@@ -75,6 +75,7 @@ This `POST` request example creates a new custom ruleset with a rule that checks
 		],
 		phase: "http_request_firewall_custom",
 	}}
+	roles="account"
 />
 
 The response returns the created ruleset. Note the presence of the `exposed_credential_check` object on the rule definition.
@@ -153,6 +154,7 @@ This `POST` request example creates a new custom ruleset with a rule that checks
 		],
 		phase: "http_request_firewall_custom",
 	}}
+	roles="account"
 />
 
 The response returns the created ruleset. Note the presence of the following elements in the rule definition:

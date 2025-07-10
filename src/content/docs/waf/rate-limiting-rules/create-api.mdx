@@ -54,6 +54,7 @@ This example adds a rate limiting rule to the `http_ratelimit` phase entry point
 			mitigation_timeout: 600,
 		},
 	}}
+	roles={false}
 />
 
 <Render file="api-create-ruleset-with-rule" />
@@ -89,6 +90,7 @@ The new rule defines a [custom response](/waf/rate-limiting-rules/create-zone-da
 			mitigation_timeout: 600,
 		},
 	}}
+	roles={false}
 />
 
 <Render file="api-create-ruleset-with-rule" />
@@ -118,6 +120,7 @@ The new rule does not consider requests for cached assets when calculating the r
 			requests_to_origin: true,
 		},
 	}}
+	roles={false}
 />
 
 <Render file="api-create-ruleset-with-rule" />
@@ -148,6 +151,7 @@ The new rule is a complexity-based rate limiting rule that takes the `my-score` 
 			counting_expression: "",
 		},
 	}}
+	roles={false}
 />
 
 <Render file="api-create-ruleset-with-rule" />
