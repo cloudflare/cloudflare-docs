@@ -3,14 +3,14 @@
 
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, APIRequest } from "~/components";
 
 <Tabs> <TabItem label="Linux">
 
-```bash
-curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logs/control/retention/flag \
---header "Authorization: Bearer <API_TOKEN>"
-```
+<APIRequest
+  path="/zones/{zone_id}/logs/control/retention/flag"
+  method="GET"
+/>
 
 </TabItem> <TabItem label="CMD">
 

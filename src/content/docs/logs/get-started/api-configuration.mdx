@@ -6,6 +6,8 @@ sidebar:
 
 ---
 
+import { APIRequest } from "~/components";
+
 ## Endpoints
 
 The table below summarizes the job operations available for both Logpush and Edge Log Delivery jobs. Make sure that Account-scoped datasets use `/accounts/{account_id}` and Zone-scoped datasets use `/zone/{zone_id}`. For more information, refer to the [Log fields](/logs/reference/log-fields/) page.
@@ -37,11 +39,10 @@ For concrete examples, refer to the tutorials in [Logpush examples](/logs/tutori
 
 The Logpush API requires credentials like any other Cloudflare API.
 
-```bash
-curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>"
-```
+<APIRequest
+  path="/zones/{zone_id}/logpush/jobs"
+  method="GET"
+/>
 
 ## Ownership
 
@@ -49,15 +50,13 @@ Before creating a new job, ownership of the destination must be proven.
 
 To issue an ownership challenge token to your destination:
 
-```bash
-curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/ownership \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2"
-}'
-```
+<APIRequest
+  path="/zones/{zone_id}/logpush/ownership"
+  method="POST"
+  json={{
+    destination_conf: "s3://<BUCKET_PATH>?region=us-west-2",
+  }}
+/>
 
 A challenge file will be written to the destination, and the filename will be in the response (the filename may be expressed as a path, if appropriate for your destination):
 
@@ -143,15 +142,13 @@ For more information on the value for your cloud storage provider, consult the f
 
 To check if a destination is already in use:
 
-```bash
-curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/validate/destination/exists \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "destination_conf": "s3://foo"
-}'
-```
+<APIRequest
+  path="/zones/{zone_id}/logpush/validate/destination/exists"
+  method="POST"
+  json={{
+    destination_conf: "s3://foo",
+  }}
+/>
 
 Response
 
@@ -182,22 +179,30 @@ The kind parameter cannot be used to update existing Logpush jobs. You can only 
 
 :::
 
-```bash
-curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "name": "<DOMAIN_NAME>",
-  "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
-  "dataset": "http_requests",
-  "output_options": {
-    "field_names": ["ClientIP", "ClientRequesrHost", "ClientRequestMethod", " ClientRequestURI", "EdgeEndTimestamp", "EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp","RayID"],
-    "timestamp_format": "rfc3339"
-  },
-  "kind": "edge"
-}'
-```
+<APIRequest
+  path="/zones/{zone_id}/logpush/jobs"
+  method="POST"
+  json={{
+    name: "<DOMAIN_NAME>",
+    destination_conf: "s3://<BUCKET_PATH>?region=us-west-2",
+    dataset: "http_requests",
+    output_options: {
+      field_names: [
+        "ClientIP",
+        "ClientRequesrHost",
+        "ClientRequestMethod",
+        " ClientRequestURI",
+        "EdgeEndTimestamp",
+        "EdgeResponseBytes",
+        "EdgeResponseStatus",
+        "EdgeStartTimestamp",
+        "RayID"
+      ],
+      timestamp_format: "rfc3339"
+    },
+    kind: "edge"
+  }}
+/>
 
 ## Options
 
@@ -216,16 +221,14 @@ The **CVE-2021-44228** parameter can only be set through the API at this time. U
 
 To check if the selected **logpull\_options** are valid:
 
-```bash
-curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/validate/origin \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "logpull_options": "fields=RayID,ClientIP,EdgeStartTimestamp&timestamps=rfc3339&CVE-2021-44228=true",
-  "dataset": "http_requests"
-}'
-```
+<APIRequest
+  path="/zones/{zone_id}/logpush/validate/origin"
+  method="POST"
+  json={{
+    logpull_options: "fields=RayID,ClientIP,EdgeStartTimestamp&timestamps=rfc3339&CVE-2021-44228=true",
+    dataset: "http_requests"
+  }}
+/>
 
 Response
 
