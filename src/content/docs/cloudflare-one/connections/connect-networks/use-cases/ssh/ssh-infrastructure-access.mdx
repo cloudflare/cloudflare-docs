@@ -155,6 +155,8 @@ To set up the Logpush job, refer to [Logpush integration](/cloudflare-one/insigh
 
 ## Known limitations
 
+### SSH features
+
 The following SSH features are not supported:
 
 - `sftp` commands
@@ -162,3 +164,7 @@ The following SSH features are not supported:
 - Local and remote port forwarding
 - SSH agent forwarding
 - X11 forwarding
+
+### Session duration
+
+SSH sessions have a maximum expected duration of 10 hours. For more information, refer to the [Troubleshooting FAQ](/cloudflare-one/faq/troubleshooting/#long-lived-ssh-sessions-frequently-disconnect).

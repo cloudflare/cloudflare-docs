@@ -1926,7 +1926,7 @@
 					"ent_plus": "Yes"
 				},
 				"b_script_monitor": {
-					"title": "Script monitor",
+					"title": "Script monitoring",
 					"summary": "Available on all plans",
 					"free": "Yes",
 					"pro": "Yes",
@@ -1935,7 +1935,7 @@
 					"ent_plus": "Yes"
 				},
 				"c_connection_monitor": {
-					"title": "Connection monitor",
+					"title": "Connection monitoring",
 					"summary": "Business and above",
 					"free": "No",
 					"pro": "No",
@@ -1944,7 +1944,7 @@
 					"ent_plus": "Yes"
 				},
 				"d_cookie_monitor": {
-					"title": "Cookie monitor",
+					"title": "Cookie monitoring",
 					"summary": "Business and above",
 					"free": "No",
 					"pro": "No",
@@ -1998,7 +1998,7 @@
 					"ent_plus": "Yes"
 				},
 				"l_cookie_advanced_fields": {
-					"title": "Cookie monitor\n advanced fields",
+					"title": "Cookie monitoring\n advanced fields",
 					"summary": "Enterprise with add-on",
 					"free": "No",
 					"pro": "No",

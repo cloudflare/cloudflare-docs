@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { GlossaryDefinition, GlossaryTooltip, Plan, Steps } from "~/components"
+import { GlossaryDefinition, GlossaryTooltip, Plan, Steps, Tabs, TabItem } from "~/components"
 
 <Plan type="all" />
 
@@ -33,15 +33,28 @@ To view the contents in your learned schema, refer to [Export a schema](/api-shi
 
 ### Add validation by uploading a schema
 
-<Steps>
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Select **Security** > **API Shield**.
-3. Go to **Schema Validation** and select **Add validation**.
-4. Select your schema file for upload.
-5. Observe the listed endpoints, their host, method, and path. Any new endpoints will automatically be added to Endpoint Management.
-6. Choose an action for the non-compliant requests to your endpoints.
-7. Select **Add schema and endpoints**.
-</Steps>
+<Tabs syncKey="dashNewNav">
+   <TabItem label="Old dashboard">
+      <Steps>
+         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+         2. Select **Security** > **API Shield**.
+         3. Go to **Schema Validation** and select **Add validation**.
+         4. Select your schema file for upload.
+         5. Observe the listed endpoints, their host, method, and path. Any new endpoints will automatically be added to Endpoint Management.
+         6. Choose an action for the non-compliant requests to your endpoints.
+         7. Select **Add schema and endpoints**.
+      </Steps>
+   </TabItem>
+   <TabItem label="New dashboard" icon="rocket">
+      <Steps>
+         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
+         2. Go to **Security** > **Web assets** > **Schema Validation**.
+         3. Select **Add validation**.
+         4. Upload a schema file.
+         5. Select **Add schema and endpoints**.
+      </Steps>
+   </TabItem>
+</Tabs>
 
 :::note
 Changes may take a few minutes to process depending on the number of added endpoints. 
@@ -49,27 +62,55 @@ Changes may take a few minutes to process depending on the number of added endpo
 
 ### Add validation by applying a learned schema to a single endpoint
 
-<Steps>
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Select **Security** > **API Shield**.
-3. Go to **Schema Validation** and filter by the learned schema available.
-4. Select **Apply learned schema**.
-5. Choose an action and select **Apply schema**.
-</Steps>
+<Tabs syncKey="dashNewNav">
+   <TabItem label="Old dashboard">
+      <Steps>
+         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+         2. Select **Security** > **API Shield**.
+         3. Go to **Schema Validation** and filter by the learned schema available.
+         4. Select **Apply learned schema**.
+         5. Choose an action and select **Apply schema**.
+      </Steps>
+   </TabItem>
+   <TabItem label="New dashboard" icon="rocket">
+      <Steps>
+         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
+         2. Go to **Security** > **Web assets** > **Schema Validation**.
+         3. Select **Add validation**.
+         4. Select **Apply learned schema**.
+         5. Choose an action and select **Apply schema**.
+      </Steps>
+   </TabItem>
+</Tabs>
 
 ### Add validation by applying a learned schema to an entire hostname
 
 At this time, learned schemas will not overwrite customer-uploaded schemas. If an endpoint is covered by a customer-uploaded schema and also appears in a learned schema, the **Changes** field is set to `Unaffected`.
 
-<Steps>
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Select **Security** > **API Shield**.
-3. Go to **Schema Validation** and select **Add validation**.
-4. Select **Apply learned schema**.
-5. Choose a hostname and review the endpoints that will be protected by the learned schema.
-6. (Optional) Change the action if a request does not match the schema.
-7. Select **Apply schema**.
-</Steps>
+<Tabs syncKey="dashNewNav">
+   <TabItem label="Old dashboard">
+      <Steps>
+         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+         2. Select **Security** > **API Shield**.
+         3. Go to **Schema Validation** and select **Add validation**.
+         4. Select **Apply learned schema**.
+         5. Choose a hostname and review the endpoints that will be protected by the learned schema.
+         6. (Optional) Change the action if a request does not match the schema.
+         7. Select **Apply schema**.
+      </Steps>
+   </TabItem>
+   <TabItem label="New dashboard" icon="rocket">
+      <Steps>
+         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
+         2. Go to **Security** > **Web assets** > **Schema Validation**.
+         3. Select **Add validation**.
+         4. Select **Apply learned schema**.
+         5. Choose a hostname and review the endpoints that will be protected by the learned schema.
+         6. (Optional) Change the action if a request does not match the schema.
+         7. Select **Apply schema**.
+      </Steps>
+   </TabItem>
+</Tabs>
 
 :::note
 If an endpoint is currently protected by a learned schema, the date of the last applied learned schema will be shown in the current schema field. 
@@ -83,18 +124,33 @@ By ensuring that all your endpoints in a schema are added to Endpoint Management
 
 To set up a fallthrough action:
 
-<Steps>
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Go to **Security** > **API Shield**.
-3. Under **Settings**, go to **Fallthrough settings**.
-4. Select **Use Template**.
-5. Choose one or more hostnames from the drop down menu. The fallthrough rule will act on all traffic that does not match an existing endpoint in Endpoint Management to the selected hostnames.
-6. Select **Continue to custom rule**.
-7. Name your rule and select your action.
-8. Select **Save as draft** to deploy later, or **Deploy** to deploy now.
-</Steps>
+<Tabs syncKey="dashNewNav">
+   <TabItem label="Old dashboard">
+      <Steps>
+         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+         2. Go to **Security** > **API Shield**.
+         3. Under **Settings**, go to **Fallthrough settings**.
+         4. Select **Use Template**.
+         5. Choose one or more hostnames from the drop down menu. The fallthrough rule will act on all traffic that does not match an existing endpoint in Endpoint Management to the selected hostnames.
+         6. Select **Continue to custom rule**.
+         7. Name your rule and select your action.
+         8. Select **Save as draft** to deploy later, or **Deploy** to deploy now.
+      </Steps>
+   </TabItem>
+   <TabItem label="New dashboard" icon="rocket">
+      <Steps>
+         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
+         2. Go to **Security** > **Settings**.
+         3. Filter by **API abuse**.
+         4. Under **Custom fallthrough rules**, select **Create custom fallthrough rule** to create a custom fallthrough rule with the template.
+         5. Give your rule a descriptive name.
+         6. Choose one or more hostnames from the dropdown menu and select your action.
+         7. Select **Save as draft** to deploy later, or **Deploy** to deploy now.
+      </Steps>
+   </TabItem>
+</Tabs>
 
-Your current fallthrough rules can be viewed in the custom rules list or in API Shield's settings under **Fallthrough settings**.
+Your current fallthrough rules can be viewed in the custom rules list.
 
 :::note
 You can use the `cf.api_gateway.fallthrough_triggered` syntax in your own custom rule for a more customized logic check. This detection will evaluate as `true` when a request does not match an endpoint in Endpoint Management, so it is important to check against your API's hostname or root path to ensure that you are not blocking any non-API traffic on your zone.
@@ -102,16 +158,30 @@ You can use the `cf.api_gateway.fallthrough_triggered` syntax in your own custom
 
 ### Change the action of an entire schema
 
-<Steps>
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Select **Security** > **API Shield**.
-3. Go to **Schema Validation** and select the schema in the Schema list.
-4. Check the multi-select box to select the endpoints shown on the current page.
-5. Choose **Select all endpoints**.
-6. Select **Change Action**.
-7. Choose an action from the dropdown menu.
-8. Select **Set action**.
-</Steps>
+<Tabs syncKey="dashNewNav">
+   <TabItem label="Old dashboard">
+      <Steps>
+         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+         2. Select **Security** > **API Shield**.
+         3. Go to **Schema Validation** and select the schema in the Schema list.
+         4. Check the multi-select box to select the endpoints shown on the current page.
+         5. Choose **Select all endpoints**.
+         6. Select **Change action**.
+         7. Choose an action from the dropdown menu.
+         8. Select **Set action**.
+      </Steps>
+   </TabItem>
+   <TabItem label="New dashboard" icon="rocket">
+      <Steps>
+         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
+         2. Go to **Security** > **Web assets** > **Schema Validation**.
+         3. Check the multi-select box to select all endpoints associated with the schema.
+         4. Select **Change action**.
+         5. Choose an action from the dropdown menu.
+         6. Select **Set action**.
+      </Steps>
+   </TabItem>
+</Tabs>
 
 ### Change the global default action of Schema Validation
 
@@ -123,16 +193,31 @@ Schema Validation’s default action is visible on the main Schema Validation pa
 
 To change the default action:
 
-<Steps>
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Go to **Security** > **API Shield**.
-3. Select **Schema Validation**.
-4. Under the default `Log` action, select **Change**.
-5. Choose a new action from the dropdown menu.
-6. Observe the current action and accept the change by selecting **Change default action** in the popup window.
-</Steps>
+<Tabs syncKey="dashNewNav">
+   <TabItem label="Old dashboard">
+      <Steps>
+         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+         2. Go to **Security** > **API Shield**.
+         3. Select **Schema Validation**.
+         4. Under the default `Log` action, select **Change**.
+         5. Choose a new action from the dropdown menu.
+         6. Observe the current action and accept the change by selecting **Change default action** in the popup window.
+      </Steps>
+      Alternatively, you can modify the global action via **Security** > **API Shield** > **Settings**.
+   </TabItem>
+   <TabItem label="New dashboard" icon="rocket">
+      <Steps>
+         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
+         2. Go to **Security** > **Web assets** > **Schema Validation**.
+         3. Select **Schema Validation**.
+         4. Under the default `Log` action, select **Change**.
+         5. Choose a new action from the dropdown menu.
+         6. Observe the current action and accept the change by selecting **Change default action** in the popup window.
+      </Steps>
+      Alternatively, you can modify the global action via **Security** > **Settings** > **Schema Validation**.
+   </TabItem>
+</Tabs>
 
-Alternatively, you can modify the global action via **Security** > **API Shield** > **Settings**.
 
 ### Change the action of a single endpoint
 
@@ -142,14 +227,28 @@ This allows you to be stricter on blocking non-compliant requests on certain end
 
 To change the action on an individual endpoint:
 
-<Steps>
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Go to **Security** > **API Shield**.
-3. Select **Schema Validation** and filter the selected endpoint.
-4. Select the ellipses on the endpoint's row.
-5. Select **Change Action**.
-6. Choose a new action from the dropdown menu and select **Set action**.
-</Steps>
+<Tabs syncKey="dashNewNav">
+   <TabItem label="Old dashboard">
+      <Steps>
+         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+         2. Go to **Security** > **API Shield**.
+         3. Select **Schema Validation** and filter the selected endpoint.
+         4. Select the ellipses on the endpoint's row.
+         5. Select **Change action**.
+         6. Choose a new action from the dropdown menu and select **Set action**.
+      </Steps>
+   </TabItem>
+   <TabItem label="New dashboard" icon="rocket">
+      <Steps>
+         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
+         2. Go to **Security** > **Web assets** > **Schema Validation**.
+         3. Select **Schema Validation** and filter the selected endpoint.
+         4. Select the ellipses on the endpoint's row.
+         5. Select **Change action**.
+         6. Choose a new action from the dropdown menu and select **Set action**.
+      </Steps>
+   </TabItem>
+</Tabs>
 
 ### Disable Schema Validation without changing actions
 
@@ -157,24 +256,50 @@ You can disable Schema Validation entirely for temporary troubleshooting. You ca
 
 To disable Schema Validation without changing actions:
 
-<Steps>
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Select **Security** > **API Shield**.
-3. Go to the **Schema Validation** settings.
-4. Select **Disable**.
-</Steps>
+<Tabs syncKey="dashNewNav">
+   <TabItem label="Old dashboard">
+      <Steps>
+         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+         2. Select **Security** > **API Shield**.
+         3. Go to the **Schema Validation** settings.
+         4. Select **Disable**.
+      </Steps>
+   </TabItem>
+   <TabItem label="New dashboard" icon="rocket">
+      <Steps>
+         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
+         2. Go to **Security** > **Web assets** > **Schema Validation**.
+         3. Select **Schema settings**.
+         4. Filter by **API abuse**.
+         5. Turn **Schema Validation** off.
+      </Steps>
+   </TabItem>
+</Tabs>
 
 Your per-endpoint configurations will be saved when modifying the setting, so that you do not lose your configuration. To re-enable your configurations after troubleshooting, navigate back to the settings and select **Enable**.
 
 ### View active schemas
 
-<Steps>
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Select **Security** > **API Shield**.
-3. Go to your **Schema Validation** settings.
-4. View your schemas under **Uploaded Schemas** and **Learned schemas**.
-5. Select **Filter** on the endpoints in either schema.
-</Steps>
+<Tabs syncKey="dashNewNav">
+   <TabItem label="Old dashboard">
+      <Steps>
+         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+         2. Select **Security** > **API Shield**.
+         3. Go to your **Schema Validation** settings.
+         4. View your schemas under **Uploaded Schemas** and **Learned schemas**.
+         5. Select **Filter** on the endpoints in either schema.
+      </Steps>
+   </TabItem>
+   <TabItem label="New dashboard" icon="rocket">
+      <Steps>
+         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
+         2. Go to **Security** > **Web assets** > **Schema Validation**.
+         3. Select **Schema settings**.
+         4. Filter by **API abuse**.
+         5. View your schemas on **Schema Validation** > **Active schemas**.
+      </Steps>
+   </TabItem>
+</Tabs>
 
 ### Delete active schemas
 
@@ -182,13 +307,27 @@ Deleting the schema will remove validation from the currently associated endpoin
 
 To delete currently uploaded or learned schemas:
 
-<Steps>
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Select **Security** > **API Shield**.
-3. Go to your **Schema Validation** settings.
-4. View your schemas under **Uploaded Schemas** and **Learned schemas**.
-5. Select the ellipses to access the menu and download or delete the listed schema.
-</Steps>
+<Tabs syncKey="dashNewNav">
+   <TabItem label="Old dashboard">
+      <Steps>
+         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+         2. Select **Security** > **API Shield**.
+         3. Go to your **Schema Validation** settings.
+         4. View your schemas under **Uploaded Schemas** and **Learned schemas**.
+         5. Select the ellipses to access the menu and download or delete the listed schema.
+      </Steps>
+   </TabItem>
+   <TabItem label="New dashboard" icon="rocket">
+      <Steps>
+         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
+         2. Go to **Security** > **Web assets** > **Schema Validation**.
+         3. Select **Schema settings**.
+         4. Filter by **API abuse**.
+         5. View your schemas on **Schema Validation** > **Active schemas**.
+         6. Select the ellipses to access the menu and download or delete the listed schema.
+      </Steps>
+   </TabItem>
+</Tabs>
 
 ## Specifications
 

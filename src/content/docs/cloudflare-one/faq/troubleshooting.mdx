@@ -372,3 +372,15 @@ Get-ChildItem -Path "HKLM:\SOFTWARE\Microsoft\NET Framework Setup\NDP" -Recurse 
 ## I get an `Invalid session. Please try logging in again.` error from Access when trying to log in to the Cloudflare dashboard via SSO.
 
 Cloudflare Access uses a [`CF_Session` cookie](/cloudflare-one/identity/authorization-cookie/#access-cookies) to validate that the same browser both initiated and completed your sign-in. The `Invalid session` error means Access was unable to validate this cookie. Ensure that there is no software or firewall on your device or network that may be interfering with requests to Access.
+
+## Long-lived SSH sessions frequently disconnect.
+
+All connections proxied through Cloudflare Gateway, including traffic to [Access for Infrastructure](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) SSH targets, have a maximum guaranteed duration of 10 hours. It is possible for connections to last longer than 10 hours. However, if a connection is active at the time of a Gateway release, Gateway will terminate the connection 10 hours later. Releases are not scheduled and can occur multiple times a week.
+
+To prevent long-lived SSH connections from breaking unexpectedly, we recommend terminating sessions on a predefined schedule. For example, you could set an 8-hour idle timeout so that inactive sessions automatically disconnect during off hours. To configure an idle timeout, add the `ChannelTimeout` option to either the SSH server (`/etc/ssh/sshd_config`) or client configuration file (`~/.ssh/config`):
+
+```txt
+ChannelTimeout global=8h
+```
+
+Implementing [`ChannelTimeout` on the client side](https://man.openbsd.org/ssh_config#ChannelTimeout) allows users to choose a time that works for them, whereas implementing it on the [server side](https://man.openbsd.org/sshd_config#ChannelTimeout) removes the configuration burden from the end user.

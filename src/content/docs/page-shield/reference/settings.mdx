@@ -5,11 +5,11 @@ sidebar:
   order: 1
 ---
 
-import { GlossaryTooltip } from "~/components";
+import { GlossaryTooltip, Tabs, TabItem } from "~/components";
 
 ## Reporting endpoint
 
-When enabled, Page Shield uses a <GlossaryTooltip term="content security policy (CSP)">Content Security Policy (CSP)</GlossaryTooltip> [report-only HTTP header](/page-shield/reference/csp-header/) to gather information about all the scripts running on your application.
+When enabled, Page Shield's client-side resource monitoring uses a <GlossaryTooltip term="content security policy (CSP)">Content Security Policy (CSP)</GlossaryTooltip> [report-only HTTP header](/page-shield/reference/csp-header/) to gather information about all the scripts running on your application.
 
 By default, reports are sent to a Cloudflare-owned endpoint:
 
@@ -28,16 +28,28 @@ Enterprise customers with a paid add-on can change the reporting endpoint so tha
 Using the same hostname for CSP reporting may interfere with other Cloudflare products. Before selecting this option, ensure that your Cloudflare configuration complies with the following:
 
 - No rate limiting rules match the `cdn-cgi/*` URL path
-- No WAF custom rules match the `cdn-cgi/*` URL path
+- No custom rules match the `cdn-cgi/*` URL path
 
 ### Configure the reporting endpoint
 
 To configure the CSP reporting endpoint:
 
+<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **Page Shield** > **Settings**.
 3. Under **Reporting endpoint**, select **Cloudflare-owned endpoint** or **Same hostname**.
 4. Select **Apply settings**.
+
+</TabItem> <TabItem label="New dashboard" icon="rocket">
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+2. Go to **Security** > **Settings** and filter by **Client side abuse**.
+3. Under **Continuous script monitoring** > **Configurations**, select the edit icon next to **Reporting endpoint**.
+4. Select **Cloudflare-owned endpoint** or **Same hostname**.
+5. Select **Save**.
+
+</TabItem> </Tabs>
 
 ## Connection target details
 
@@ -47,21 +59,48 @@ By default, Page Shield will only check the domain against malicious threat inte
 
 ### Configure the connection target details to use
 
+<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **Page Shield** > **Settings**.
 3. Under **Connection target details**, select **Log host only** to analyze only the hostname or **Log full URI** to use the full URI in Page Shield.
 4. Select **Apply settings**.
 
-## Turn off Page Shield
+</TabItem> <TabItem label="New dashboard" icon="rocket">
 
-When you turn off Page Shield, you lose visibility on the scripts running on your zone, the outbound connections made from pages in your domain, and cookies detected in HTTP traffic.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+2. Go to **Security** > **Settings** and filter by **Client side abuse**.
+3. Under **Continuous script monitoring** > **Configurations**, select the edit icon next to **Data processing**.
+4. Select **Log host only** to analyze only the hostname or **Log full URI** to use the full URI.
+5. Select **Save**.
 
-To turn off Page Shield:
+</TabItem> </Tabs>
+
+## Turn off client-side resource monitoring
+
+When you turn off Page Shield's client-side resource monitoring, you lose visibility on the scripts running on your zone, the outbound connections made from pages in your domain, and cookies detected in HTTP traffic.
+
+To turn off client-side resource monitoring:
+
+<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **Page Shield** > **Settings**.
 3. In **Disable Page Shield**, select **Disable**.
 
+</TabItem> <TabItem label="New dashboard" icon="rocket">
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+2. Go to **Security** > **Settings** and filter by **Client side abuse**.
+3. Next to **Continuous script monitoring**, set the toggle to **Off**.
+
+</TabItem> </Tabs>
+
 :::note
-Turning off Page Shield will not turn off [policies](/page-shield/policies/). To turn off policies, go to **Page Shield** > **Policies**.
+
+Turning off Page Shield's client-side resource monitoring will not turn off [policies](/page-shield/policies/) (also known as content security rules). To turn off policies:
+
+- Old dashboard: Go to **Security** > **Page Shield** > **Policies**.
+- New security dashboard: Go to **Security** > **Security rules** and filter by `Content security rules`.
+
 :::

@@ -6,14 +6,16 @@ sidebar:
 head:
   - tag: title
     content: Get started with Cloudflare Page Shield
-description: Learn how to set up Page Shield.
+description: Learn how to get started with client-side resource monitoring.
 ---
 
-import { Render } from "~/components";
+import { Tabs, TabItem, Render } from "~/components";
 
-## Activate Page Shield
+## Activate client-side resource monitoring
 
-To enable Page Shield:
+To enable client-side resource monitoring:
+
+<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **Page Shield**.
@@ -21,11 +23,21 @@ To enable Page Shield:
 
 If you do not have access to Page Shield in the Cloudflare dashboard, check if your user has one of the [necessary roles](/page-shield/reference/roles-and-permissions/).
 
+</TabItem> <TabItem label="New dashboard" icon="rocket">
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+2. Go to **Security** > **Settings** and filter by **Client side abuse**.
+3. Next to **Continuous script monitoring**, set the toggle to **On**.
+
+If you do not have access to resource monitoring in the Cloudflare dashboard, check if your user has one of the [necessary roles](/page-shield/reference/roles-and-permissions/).
+
+</TabItem> </Tabs>
+
 ## Review detected scripts
 
-When you enable Page Shield, it may take a while to get the list of detected scripts in your domain.
+When you enable client-side resource monitoring, it may take a while to get the list of detected scripts in your domain.
 
-Review the scripts displayed in the [**Monitors** dashboard](/page-shield/detection/monitor-connections-scripts/), checking them for signs of malicious activity.
+Review the scripts displayed in the [resource monitoring dashboard](/page-shield/detection/monitor-connections-scripts/), checking them for signs of malicious activity.
 
 Depending on your plan, you may be able to also review the connections made by scripts in your domain's pages and check them for malicious activity.
 
@@ -47,7 +59,7 @@ Depending on your plan, you may be able to also review the connections made by s
 Only available to Enterprise customers with a paid add-on.
 :::
 
-[Policies](/page-shield/policies/) define allowed resources on your websites. Create policies to implement a positive security model [^1].
+[Policies](/page-shield/policies/), called content security rules in the [new security dashboard](/security/), define allowed resources on your websites. Create policies to implement a positive security model [^1].
 
 1. [Create a policy](/page-shield/policies/create-dashboard/) with the _Log_ action.
 
