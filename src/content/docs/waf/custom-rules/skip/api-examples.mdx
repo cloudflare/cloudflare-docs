@@ -41,6 +41,7 @@ This example invokes the [Create a zone ruleset rule](/api/resources/rulesets/su
 		expression: 'http.request.uri.path contains "/skip-current-ruleset/"',
 		description: "",
 	}}
+	roles={false}
 />
 
 ## Skip a phase
@@ -58,6 +59,7 @@ This example invokes the [Create a zone ruleset rule](/api/resources/rulesets/su
 		expression: 'http.request.uri.path contains "/skip-phase/"',
 		description: "",
 	}}
+	roles={false}
 />
 
 Refer to [Available skip options](/waf/custom-rules/skip/options/) for the list of phases you can skip.
@@ -83,6 +85,7 @@ This example invokes the [Create a zone ruleset rule](/api/resources/rulesets/su
 		expression: 'http.request.uri.path contains "/disable-logging/"',
 		description: "",
 	}}
+	roles={false}
 />
 
 Refer to [Available skip options: Logging](/waf/custom-rules/skip/options/#logging) for more information on disabling logging for requests that match a skip rule.
@@ -102,6 +105,7 @@ This example uses the [Create a zone ruleset rule](/api/resources/rulesets/subre
 		expression: 'http.request.uri.path contains "/skip-products/"',
 		description: "",
 	}}
+	roles={false}
 />
 
 Refer to [Available skip options](/waf/custom-rules/skip/options/) for the list of products you can skip.

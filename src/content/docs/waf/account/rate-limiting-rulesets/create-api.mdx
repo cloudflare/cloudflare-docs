@@ -64,6 +64,7 @@ The following example creates a rate limiting ruleset with a single rate limitin
 		],
 		phase: "http_ratelimit",
 	}}
+	roles="account"
 />
 
 The available characteristics depend on your Cloudflare plan and product subscriptions. Refer to [Availability](/waf/rate-limiting-rules/#availability) for more information.
@@ -85,6 +86,7 @@ To deploy the rate limiting ruleset, add a rule with `"action": "execute"` to th
     	parameters={{
     		ruleset_phase: "http_ratelimit",
     	}}
+    	roles="account"
     />
 
     ```json output {4}
@@ -129,6 +131,7 @@ To deploy the rate limiting ruleset, add a rule with `"action": "execute"` to th
     		},
     		enabled: true,
     	}}
+    	roles="account"
     />
 
     <Render file="account-enterprise-zones-only-api" />
@@ -159,6 +162,7 @@ To deploy the rate limiting ruleset, add a rule with `"action": "execute"` to th
     		],
     		phase: "http_ratelimit",
     	}}
+    	roles="account"
     />
 
 For examples of rate limiting rule definitions for the API, refer to the [zone-level API documentation](/waf/rate-limiting-rules/create-api/).

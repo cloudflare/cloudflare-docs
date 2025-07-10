@@ -48,6 +48,7 @@ The following example creates a custom ruleset with a single rule in the `rules`
 		],
 		phase: "http_request_firewall_custom",
 	}}
+	roles="account"
 />
 
 Save the ruleset ID in the response for the next step.
@@ -67,6 +68,7 @@ To deploy the custom ruleset, add a rule with `"action": "execute"` to the `http
     	parameters={{
     		ruleset_phase: "http_request_firewall_custom",
     	}}
+    	roles="account"
     />
 
     ```json output {4}
@@ -110,6 +112,7 @@ To deploy the custom ruleset, add a rule with `"action": "execute"` to the `http
     		},
     		enabled: true,
     	}}
+    	roles="account"
     />
 
     :::caution
@@ -142,6 +145,7 @@ To deploy the custom ruleset, add a rule with `"action": "execute"` to the `http
     		],
     		phase: "http_request_firewall_custom",
     	}}
+    	roles="account"
     />
 
 ## Next steps

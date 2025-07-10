@@ -16,7 +16,6 @@ Use the [Rulesets API](/ruleset-engine/rulesets-api/) to configure payload loggi
 ## Configure and enable payload logging
 
 1. Use the [Get a zone entry point ruleset](/api/resources/rulesets/subresources/phases/methods/get/) operation to obtain the following IDs:
-
    - The ID of the [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) of the `http_request_firewall_managed` [phase](/ruleset-engine/about/phases/).
    - The ID of the `execute` rule deploying the WAF managed ruleset, for which you want to configure payload logging.
 
@@ -48,7 +47,7 @@ To configure payload logging for a managed ruleset deployed at the account level
 
 This example configures payload logging for the [Cloudflare Managed Ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/), which is already deployed for a zone with ID `$ZONE_ID`.
 
-1. Invoke the [Get a zone entry point ruleset](/api/resources/rulesets/subresources/phases/methods/get/) operation (a `GET` request) to obtain the rules currently configured in the entry point ruleset of the `http_request_firewall_managed` phase.
+1. Invoke the [Get a zone entry point ruleset](/api/resources/rulesets/subresources/phases/methods/get/) operation to obtain the rules currently configured in the entry point ruleset of the `http_request_firewall_managed` phase.
 
    <APIRequest
    	path="/zones/{zone_id}/rulesets/phases/{ruleset_phase}/entrypoint"
@@ -56,6 +55,7 @@ This example configures payload logging for the [Cloudflare Managed Ruleset](/wa
    	parameters={{
    		ruleset_phase: "http_request_firewall_managed",
    	}}
+   	roles={false}
    />
 
    ```json output {3,12,20}
@@ -94,7 +94,6 @@ This example configures payload logging for the [Cloudflare Managed Ruleset](/wa
    ```
 
 2. Save the following IDs for the next step:
-
    - The ID of the entry point ruleset: `060013b1eeb14c93b0dcd896537e0d2c`
    - The ID of the `execute` rule deploying the Cloudflare Managed Ruleset: `1bdb49371c1f46958fc8b985efcb79e7`
 
@@ -105,7 +104,7 @@ This example configures payload logging for the [Cloudflare Managed Ruleset](/wa
    To get the IDs of existing WAF managed rulesets, refer to [WAF Managed Rules](/waf/managed-rules/#available-managed-rulesets) or use the [List account rulesets](/api/resources/rulesets/methods/list/) operation.
    :::
 
-3. Invoke the [Update a zone ruleset rule](/api/resources/rulesets/methods/update/) operation (a `PATCH` request) to update the configuration of the rule you identified. The rule will now include the payload logging configuration (`matched_data` object).
+3. Invoke the [Update a zone ruleset rule](/api/resources/rulesets/methods/update/) operation to update the configuration of the rule you identified. The rule will now include the payload logging configuration (`matched_data` object).
 
    <APIRequest
    	path="/zones/{zone_id}/rulesets/{ruleset_id}/rules/{rule_id}"
@@ -124,6 +123,10 @@ This example configures payload logging for the [Cloudflare Managed Ruleset](/wa
    		},
    		expression: "true",
    	}}
+   	code={{
+   		mark: [8, 9, 10],
+   	}}
+   	roles={false}
    />
 
    The response will include the complete ruleset after updating the rule.
@@ -136,11 +139,11 @@ For more information on deploying managed rulesets via API, refer to [Deploy a m
 
 To disable payload logging for a managed ruleset:
 
-1. Use the [Update a zone ruleset rule](/api/resources/rulesets/methods/update/) operation (a `PATCH` request) to update the rule deploying the managed ruleset (an `execute` rule).
+1. Use the [Update a zone ruleset rule](/api/resources/rulesets/methods/update/) operation to update the rule deploying the managed ruleset (a rule with `"action": "execute"`).
 
 2. Modify the rule definition so that there is no `matched_data` object in `action_parameters`.
 
-For example, the following `PATCH` request updates rule with ID `$RULE_ID` deploying the [Cloudflare Managed Ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/) so that payload logging is disabled:
+For example, the following `PATCH` request updates the rule with ID `$RULE_ID` deploying the [Cloudflare Managed Ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/) so that payload logging is disabled:
 
 <APIRequest
 	path="/zones/{zone_id}/rulesets/{ruleset_id}/rules/{rule_id}"
@@ -152,6 +155,7 @@ For example, the following `PATCH` request updates rule with ID `$RULE_ID` deplo
 		},
 		expression: "true",
 	}}
+	roles={false}
 />
 
 For details on obtaining the entry point ruleset ID and the ID of the rule to update, refer to [Configure and enable payload logging](/waf/managed-rules/payload-logging/configure-api/#configure-and-enable-payload-logging).
