@@ -9,6 +9,8 @@ import { Render } from "~/components";
 
 <Render file="idp-group-deprecation" />
 
+Once you have [gathered the required data](/fundamentals/account/account-security/scim-setup/#gather-the-required-data), the following steps will be required to finish the provisioning with Okta.
+
 ## Set up your Okta SCIM application
 
 1. In the Okta dashboard, go to **Applications** > **Applications**.
@@ -40,10 +42,6 @@ The **Update User Attributes** option is not supported.
 3. Select **Done**.
 4. In the Assignments tab, add the users you want to synchronize with Cloudflare dashboard. You can add users in batches by assigning a group. If a user is removed from the application assignment via either direct user assignment or removed from the group that was assigned to the app, this will trigger a deprovisioning event from Okta to Cloudflare. 
 5. In the Push Groups tab, add the Okta groups you want to synchronize with Cloudflare dashboard. View these Okta groups in the dashboard under Manage Account > Manage members > Members > User Groups.
-
-:::note
-You must have opted into the Cloudflare User Groups Public Beta to synchronize groups from Okta to Cloudflare. Refer to the [User Groups](/fundamentals/manage-members/user-groups/) documentation for more information.
-:::
 
 To verify the integration, select **View Logs** in the Okta SCIM application, and check the Audit Logs in the Cloudflare dashboard by navigating to **Manage Account** > **Audit Log**. 
 

@@ -4,7 +4,7 @@ title: HTTP/2 to Origin
 
 ---
 
-import { FeatureTable, Details, Render } from "~/components"
+import { FeatureTable, Details, Render, APIRequest } from "~/components"
 
 A protocol is a set of rules governing the exchange or transmission of data between devices. One of the most important protocols that run on the human-computer interaction layer, where applications can access the network services, is HTTP (Hypertext Transfer Protocol).
 
@@ -45,17 +45,14 @@ Connection multiplexing is enabled by default on Free, Pro and Business zones an
 
 <Details header="API">
 
-```bash
-curl --request PATCH \
-https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/settings/origin_h2_max_streams \
---header 'Content-Type: application/json' \
---header "X-Auth-Email: <CLOUDFLARE_EMAIL>" \
---header "X-Auth-Key: <CLOUDFLARE_API_KEY>" \
---data '{
-      "value": <int>
-    }'
-```
-
+<APIRequest
+  path="/zones/{zone_id}/settings/origin_h2_max_streams"
+  method="PATCH"
+  json={{
+    value: 100
+  }}
+/>
+  
 Refer to the [API documentation](/api/python/resources/zones/subresources/settings/methods/edit/) for more information.
 
 </Details>

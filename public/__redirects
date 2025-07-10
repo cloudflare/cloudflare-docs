@@ -138,6 +138,10 @@
 # ai
 /ai/ /use-cases/ai/ 301
 
+# ai-audit
+/ai-audit/features/detect-ai-crawlers/ /ai-audit/features/analyze-ai-crawlers/ 301
+/ai-audit/features/enforce-robots-txt/ /ai-audit/features/analyze-ai-crawlers/ 301
+
 # AI Gateway
 /ai-gateway/get-started/configuring-settings/ /ai-gateway/get-started/ 301
 /ai-gateway/get-started/connecting-applications/ /ai-gateway/get-started/ 301
@@ -153,7 +157,6 @@
 /ai-gateway/configuration/websockets-api/ /ai-gateway/websockets-api/ 301
 /ai-gateway/configuration/websockets-api/non-realtime-api/ /ai-gateway/websockets-api/non-realtime-api/ 301
 /ai-gateway/configuration/websockets-api/realtime-api/ /ai-gateway/websockets-api/realtime-api/ 301
-
 
 # agents
 /agents/capabilities/mcp-server/ /agents/model-context-protocol/ 301
@@ -188,6 +191,7 @@
 /analytics/graphql-api/tutorials/build-your-own-analytics/ /analytics/graphql-api/tutorials/ 301
 /analytics/graphql-api/tutorials/export-graphql-to-csv/ /analytics/graphql-api/tutorials/ 301
 /analytics/analytics-integrations/google-cloud/ /analytics/analytics-integrations/ 301
+/analytics/dashboards/ /log-explorer/custom-dashboards/ 301
 
 # email-security
 /email-security/reporting/search/detection-search/ /email-security/reporting/search/ 301
@@ -211,9 +215,14 @@
 /api-shield/security/sequential-abuse-detection/ /api-shield/security/sequence-analytics/ 301
 /api-shield/security/bola-attack-detection/ /api-shield/security/bola-vulnerability-detection/ 301
 /api-shield/management-and-monitoring/api-routing/configure/ /api-shield/management-and-monitoring/api-routing/ 301
+/api-shield/security/graphql-protection/configure/ /api-shield/security/graphql-protection/api/ 301
+/api-shield/security/jwt-validation/configure/ /api-shield/security/jwt-validation/api/ 301
+/api-shield/security/schema-validation/configure/ /api-shield/security/schema-validation/api/ 301
+/api-shield/security/sequence-mitigation/configure/ /api-shield/security/sequence-mitigation/api/ 301
 
 #autorag
 /autorag/usage/recipes/ /autorag/how-to/ 301
+/autorag/configuration/metadata-filtering/ /autorag/configuration/metadata/ 301
 
 # bots
 /bots/about/plans/ /bots/plans/ 301
@@ -238,11 +247,16 @@
 /bots/get-started/bm-subscription/ /bots/get-started/bot-management/ 301
 /bots/get-started/pro/ /bots/get-started/super-bot-fight-mode/ 301
 /bots/additional-configurations/javascript-detections/ /cloudflare-challenges/challenge-types/javascript-detections/ 301
+/bots/troubleshooting/frequently-asked-questions/ /bots/frequently-asked-questions/ 301
 
 #browser-rendering
-/browser-rendering/get-started/browser-rendering-with-do/ /browser-rendering/workers-binding-api/browser-rendering-with-do/ 301
-/browser-rendering/get-started/reuse-sessions/ /browser-rendering/workers-binding-api/reuse-sessions/ 301
-/browser-rendering/get-started/screenshots/ /browser-rendering/workers-binding-api/screenshots/ 301
+/browser-rendering/get-started/browser-rendering-with-DO/ /browser-rendering/workers-bindings/browser-rendering-with-do/ 301
+/browser-rendering/get-started/reuse-sessions/ /browser-rendering/workers-bindings/reuse-sessions/ 301
+/browser-rendering/get-started/screenshots/ /browser-rendering/workers-bindings/screenshots/ 301
+/browser-rendering/workers-binding-api/ /browser-rendering/workers-bindings/ 301
+/browser-rendering/workers-binding-api/screenshots/ /browser-rendering/workers-bindings/screenshots/ 301
+/browser-rendering/workers-binding-api/browser-rendering-with-do/ /browser-rendering/workers-bindings/browser-rendering-with-do/ 301
+/browser-rendering/workers-binding-api/reuse-sessions/ /browser-rendering/workers-bindings/reuse-sessions/ 301
 
 # byoip
 /byoip/about/dynamic-advertisement/ /byoip/concepts/dynamic-advertisement/ 301
@@ -406,8 +420,16 @@
 /ddos-protection/tcp-protection/rule-settings/ /ddos-protection/advanced-ddos-systems/rule-settings/ 301
 /ddos-protection/dns-protection/ /ddos-protection/advanced-ddos-systems/overview/advanced-dns-protection/ 301
 /ddos-protection/tcp-protection/api/ /ddos-protection/advanced-ddos-systems/api/ 301
+/ddos-protection/managed-rulesets/http/configure-api/ /ddos-protection/managed-rulesets/http/http-overrides/configure-api/ 301
+/ddos-protection/managed-rulesets/http/configure-dashboard/  /ddos-protection/managed-rulesets/http/http-overrides/configure-dashboard/ 301
+/ddos-protection/managed-rulesets/http/link-configure-terraform/  /ddos-protection/managed-rulesets/http/http-overrides/link-configure-terraform/ 301
+/ddos-protection/managed-rulesets/http/override-expressions/  /ddos-protection/managed-rulesets/http/http-overrides/override-expressions/ 301
+/ddos-protection/managed-rulesets/network/configure-api/  /ddos-protection/managed-rulesets/network/network-overrides/configure-api/ 301
+/ddos-protection/managed-rulesets/network/configure-dashboard/  /ddos-protection/managed-rulesets/network/network-overrides/configure-dashboard/ 301
+/ddos-protection/managed-rulesets/network/link-configure-terraform/  /ddos-protection/managed-rulesets/network/network-overrides/link-configure-terraform/ 301
+/ddos-protection/managed-rulesets/network/override-expressions/  /ddos-protection/managed-rulesets/network/network-overrides/override-expressions/ 301
 
-# dns
+ # dns
 /dns/additional-options/cname-flattening/ /dns/cname-flattening/ 301
 /dns/additional-options/dnssec/ /dns/dnssec/ 301
 /dns/foundation-dns/graphql-analytics/ /dns/additional-options/analytics/ 301
@@ -490,6 +512,10 @@
 /cloudflare-one/email-security/directories/manage-ms-directories/manage-groups-directory/ /cloudflare-one/email-security/directories/manage-integrated-directories/manage-groups-directory/ 301
 /cloudflare-one/email-security/directories/manage-ms-directories/manage-users-directory/ /cloudflare-one/email-security/directories/manage-integrated-directories/manage-users-directory/ 301
 /cloudflare-one/email-security/setup/partner-domain-tls/ /cloudflare-one/email-security/setup/pre-delivery-deployment/partner-domain-tls/ 301
+/cloudflare-one/email-security/setup/pre-delivery-deployment/prerequisites/office365-email-security-mx/ /cloudflare-one/email-security/setup/pre-delivery-deployment/prerequisites/microsoft365-email-security-mx/ 301
+/cloudflare-one/email-security/setup/post-delivery-deployment/api/office365-api/ /cloudflare-one/email-security/setup/post-delivery-deployment/api/m365-api/ 301
+/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/journaling-setup/office365-journaling/ /cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/journaling-setup/m365-journaling/ 301
+/cloudflare-one/email-security/setup/pre-delivery-deployment/prerequisites/microsoft365-email-security-mx/ /cloudflare-one/email-security/setup/pre-delivery-deployment/prerequisites/m365-email-security-mx/ 301
 
 # firewall
 /firewall/api/cf-lists/ /waf/tools/lists/lists-api/ 301
@@ -544,8 +570,8 @@
 /fundamentals/speed/prefetch-urls/ /speed/optimization/content/prefetch-urls/ 301
 /fundamentals/data-products/analytics-integrations/sumo-logic/ /logs/get-started/enable-destinations/sumo-logic/ 301
 /support/account-management-billing/account-management/adding-multiple-sites-to-cloudflare-via-automation/ /fundamentals/manage-domains/add-multiple-sites-automation/ 301
-/support/account-management-billing/account-privacy-and-security/securing-user-access-with-two-factor-authentication-2fa/ /fundamentals/account/account-security/2fa/ 301
-/support/account-management-billing/account-privacy-and-security/multi-factor-email-authentication/ /fundamentals/account/account-security/multi-factor-email-authentication/ 301
+/support/account-management-billing/account-privacy-and-security/securing-user-access-with-two-factor-authentication-2fa/ /fundamentals/user-profiles/2fa/ 301
+/support/account-management-billing/account-privacy-and-security/multi-factor-email-authentication/ /fundamentals/user-profiles/multi-factor-email-authentication/ 301
 /support/account-management-billing/billing-cloudflare-plans/troubleshooting-failed-payments/ /billing/troubleshoot-failed-payments/ 301
 /support/account-management-billing/common-account-questions/login-and-account-issues/ /fundamentals/account/account-security/login-and-account-issues/ 301
 /support/other-languages/deutsch/mehrere-websites-automatisch-in-cloudflare-aufnehmen-/ /fundamentals/manage-domains/add-multiple-sites-automation/ 301
@@ -562,23 +588,23 @@
 /fundamentals/security/cybersafe/ /fundamentals/reference/policies-compliances/cybersafe/ 301
 /fundamentals/security/challenge-passage/ /cloudflare-challenges/challenge-types/challenge-pages/#challenge-passage 301
 /fundamentals/glossary/ /fundamentals/reference/glossary/ 301
-/fundamentals/account-and-billing/login/ /fundamentals/account/login/ 301
-/fundamentals/account-and-billing/account-maintenance/delete-account/ /fundamentals/account/delete-account/ 301
+/fundamentals/account-and-billing/login/ /fundamentals/user-profiles/login/ 301
+/fundamentals/account-and-billing/account-maintenance/delete-account/ /fundamentals/user-profiles/delete-account/ 301
 /fundamentals/account-and-billing/account-maintenance/updating-billing-info/ /billing/update-billing-info/ 301
 /fundamentals/account-and-billing/account-maintenance/understand-invoices/ /billing/invoices/ 301
 /fundamentals/account-and-billing/account-maintenance/cancel-subscription/ /fundamentals/subscriptions-and-billing/cancel-subscription/ 301
 /fundamentals/account-and-billing/account-maintenance/change-plan/ /fundamentals/subscriptions-and-billing/change-plan/ 301
-/fundamentals/account-and-billing/account-maintenance/change-password-or-email/ /fundamentals/account/change-password-or-email/ 301
+/fundamentals/account-and-billing/account-maintenance/change-password-or-email/ /fundamentals/user-profiles/change-password-or-email/ 301
 /fundamentals/account-and-billing/account-maintenance/ /fundamentals/subscriptions-and-billing/ 301
 /fundamentals/account-and-billing/members/scope/ /fundamentals/manage-members/scope/ 301
 /fundamentals/account-and-billing/members/manage/ /fundamentals/manage-members/manage/ 301
 /fundamentals/account-and-billing/non-contract-products/ /fundamentals/subscriptions-and-billing/preview-services/ 301
 /fundamentals/account-and-billing/account-setup/create-account/ /fundamentals/account/create-account/ 301
-/fundamentals/account-and-billing/account-setup/verify-email-address/ /fundamentals/account/verify-email-address/ 301
+/fundamentals/account-and-billing/account-setup/verify-email-address/ /fundamentals/user-profiles/verify-email-address/ 301
 /fundamentals/account-and-billing/account-setup/create-billing-profile/ /billing/create-billing-profile/ 301
-/fundamentals/account-and-billing/account-setup/customize-account/language-preference/ /fundamentals/account/customize-account/language-preference/ 301
-/fundamentals/account-and-billing/account-setup/customize-account/account-name/ /fundamentals/account/customize-account/account-name/ 301
-/fundamentals/account-and-billing/account-setup/customize-account/communication-preference/ /fundamentals/account/customize-account/communication-preference/ 301
+/fundamentals/account-and-billing/account-setup/customize-account/language-preference/ /fundamentals/user-profiles/customize-account/#language 301
+/fundamentals/account-and-billing/account-setup/customize-account/account-name/ /fundamentals/account/create-account/#account-name 301
+/fundamentals/account-and-billing/account-setup/customize-account/communication-preference/ /fundamentals/user-profiles/customize-account/#notifications 301
 /fundamentals/account-and-billing/members/ /fundamentals/manage-members/ 301
 /fundamentals/data-products/types-of-analytics/ /analytics/types-of-analytics/ 301
 /fundamentals/data-products/about-analytics/ /analytics/faq/about-analytics/ 301
@@ -646,8 +672,8 @@
 /fundamentals/account-and-billing/account-billing/understand-invoices/ /billing/invoices/ 301
 /fundamentals/account-and-billing/account-billing/updating-billing-info/ /billing/update-billing-info/ 301
 /fundamentals/account-and-billing/account-security/ /fundamentals/account/account-security/ 301
-/fundamentals/account-and-billing/account-security/2fa/ /fundamentals/account/account-security/2fa/ 301
-/fundamentals/account-and-billing/account-security/login-and-account-issues/ /fundamentals/account/account-security/login-and-account-issues/ 301
+/fundamentals/account-and-billing/account-security/2fa/ /fundamentals/user-profiles/2fa/ 301
+/fundamentals/account-and-billing/account-security/login-and-account-issues/ /fundamentals/user-profiles/change-password-or-email/ 301
 /fundamentals/account-and-billing/account-security/manage-active-sessions/ /fundamentals/account/account-security/manage-active-sessions/ 301
 /fundamentals/account-and-billing/account-security/review-audit-logs/ /fundamentals/account/account-security/review-audit-logs/ 301
 /fundamentals/account-and-billing/account-security/securing-a-compromised-account/ /fundamentals/account/account-security/secure-a-compromised-account/ 301
@@ -658,9 +684,9 @@
 /fundamentals/setup/account-setup/add-site/ /fundamentals/manage-domains/add-site/ 301
 /fundamentals/setup/account-setup/create-account/ /fundamentals/account/create-account/ 301
 /fundamentals/setup/account-setup/create-billing-profile/ /billing/create-billing-profile/ 301
-/fundamentals/setup/account-setup/verify-email-address/ /fundamentals/account/verify-email-address/ 301
+/fundamentals/setup/account-setup/verify-email-address/ /fundamentals/user-profiles/verify-email-address/ 301
 /fundamentals/setup/allow-cloudflare-ip-addresses/ /fundamentals/concepts/cloudflare-ip-addresses/ 301
-/fundamentals/basic-tasks/login/ /fundamentals/account/login/ 301
+/fundamentals/basic-tasks/login/ /fundamentals/user-profiles/login/ 301
 /fundamentals/concepts/redirects/ /fundamentals/reference/redirects/ 301
 /fundamentals/reference/changelog/ /fundamentals/reference/ 302
 /fundamentals/basic-tasks/optimize-speed-external-link/ /fundamentals/performance/optimize-speed-external-link/ 301
@@ -693,9 +719,9 @@
 /fundamentals/subscriptions-and-billing/cancel-subscription/ /billing/cancel-subscription/ 301
 /fundamentals/subscriptions-and-billing/change-plan/ /billing/change-plan/ 301
 /fundamentals/subscriptions-and-billing/preview-services/ /billing/preview-services/ 301
-/fundamentals/subscriptions-and-billing/change-password-or-email/ /fundamentals/account/change-password-or-email/  301
+/fundamentals/subscriptions-and-billing/change-password-or-email/ /fundamentals/user-profiles/change-password-or-email/  301
 /fundamentals/subscriptions-and-billing/change-super-admin/ /fundamentals/account/change-super-admin/  301
-/fundamentals/subscriptions-and-billing/delete-account/ /fundamentals/account/delete-account/ 301
+/fundamentals/subscriptions-and-billing/delete-account/ /fundamentals/user-profiles/delete-account/ 301
 /fundamentals/subscriptions-and-billing/ /fundamentals/account/ 301
 /fundamentals/api/building-custom-dashboards/ /fundamentals/api/ 301
 /fundamentals/trace-request/ /rules/trace-request/ 301
@@ -707,11 +733,20 @@
 /fundamentals/setup/find-account-and-zone-ids/ /fundamentals/account/find-account-and-zone-ids/ 301
 /fundamentals/setup/accounts-and-zones/ /fundamentals/concepts/accounts-and-zones/ 301
 /fundamentals/setup/troubleshooting/ /fundamentals/reference/troubleshooting/ 301
-/fundamentals/setup/account/customize-account/account-name/ /fundamentals/account/customize-account/ 301
-/fundamentals/setup/account/customize-account/appearance/ /fundamentals/account/customize-account/ 301
-/fundamentals/setup/account/customize-account/communication-preference/ /fundamentals/account/customize-account/ 301
-/fundamentals/setup/account/customize-account/language-preference/ /fundamentals/account/customize-account/ 301
+/fundamentals/setup/account/customize-account/account-name/ /fundamentals/account/create-account/#account-name 301
+/fundamentals/setup/account/customize-account/appearance/ /fundamentals/user-profiles/customize-account/#dashboard-appearance 301
+/fundamentals/setup/account/customize-account/communication-preference/ /fundamentals/user-profiles/customize-account/#notifications 301
+/fundamentals/setup/account/customize-account/language-preference/ /fundamentals/user-profiles/customize-account/#language 301
 /fundamentals/setup/ /fundamentals/account/ 301
+/fundamentals/account/verify-email-address/ /fundamentals/user-profiles/verify-email-address/ 301
+/fundamentals/account/login/ /fundamentals/user-profiles/login/ 301
+/fundamentals/account/customize-account/ /fundamentals/user-profiles/customize-account/ 301
+/fundamentals/account/account-security/multi-factor-email-authentication/ /fundamentals/user-profiles/multi-factor-email-authentication/ 301
+/fundamentals/account/account-security/2fa/ /fundamentals/user-profiles/2fa/ 301
+/fundamentals/account/account-security/login-and-account-issues/ /fundamentals/user-profiles/change-password-or-email/ 301
+/fundamentals/account/delete-account/ /fundamentals/user-profiles/delete-account/ 301
+/fundamentals/account/change-password-or-email/ /fundamentals/user-profiles/change-password-or-email/ 301
+
 
 # gateway
 /gateway/about/ /cloudflare-one/policies/gateway/ 301
@@ -816,7 +851,7 @@
 /learning-paths/get-started/ /learning-paths/get-started/concepts/ 301
 /learning-paths/load-balancing/ /learning-paths/load-balancing/concepts/ 301
 /learning-paths/mtls/ /learning-paths/mtls/concepts/ 301
-/learning-paths/personal-website/ /learning-paths/personal-website/concepts/ 301
+/learning-paths/personal-website/ /learning-paths/ 301
 /learning-paths/prevent-ddos-attacks/ /learning-paths/prevent-ddos-attacks/concepts/ 301
 /learning-paths/replace-vpn/ /learning-paths/replace-vpn/concepts/ 301
 /learning-paths/secure-internet-traffic/ /learning-paths/secure-internet-traffic/concepts/ 301
@@ -833,8 +868,8 @@
 /learning-paths/get-started/concepts/cloudflare-ips/ /fundamentals/concepts/cloudflare-ip-addresses/ 301
 /learning-paths/get-started/account-setup/ /fundamentals/account/create-account/ 301
 /learning-paths/get-started/account-setup/create-account/ /fundamentals/account/create-account/ 301
-/learning-paths/get-started/account-setup/set-up-2fa/ /fundamentals/account/account-security/2fa/ 301
-/learning-paths/get-started/account-setup/customize-account/ /fundamentals/account/customize-account/account-name/ 301
+/learning-paths/get-started/account-setup/set-up-2fa/ /fundamentals/user-profiles/2fa/ 301
+/learning-paths/get-started/account-setup/customize-account/ /fundamentals/user-profiles/customize-account/ 301
 /learning-paths/get-started/account-setup/add-other-members/ /fundamentals/manage-members/ 301
 /learning-paths/get-started/account-setup/create-api-token/ /fundamentals/api/how-to/create-via-api/ 301
 /learning-paths/get-started/add-domain-to-cf/ /fundamentals/manage-domains/add-site/ 301
@@ -933,6 +968,7 @@
 /logs/reference/logpush-api-configuration/filters/ /logs/reference/filters/ 301
 # Non-slashed version is being used in the Cloudflare dashboard
 /logs/reference/logpush-api-configuration/examples/example-logpush-curl/ /logs/tutorials/examples/example-logpush-curl/ 301
+/logs/log-explorer/ /log-explorer/log-search/ 301
 
 # magic-firewall
 /magic-firewall/reference/examples/ /magic-firewall/how-to/add-rules/ 301
@@ -999,6 +1035,7 @@
 /notifications/create-notifications/configure-webhooks/ /notifications/get-started/configure-webhooks/ 301
 /notifications/edit-notifications/edit-webhook/ /notifications/get-started/configure-webhooks/ 301
 /fundamentals/notifications/notification-available/ /notifications/notification-available/ 301
+/notifications/changelog/ /changelog/ 301
 
 # pages
 /pages/getting-started/ /pages/get-started/ 301
@@ -1281,7 +1318,7 @@
 /support/account-management-billing/billing-cloudflare-add-on-services/ /billing/usage-based-billing/ 301
 /support/cloudflare-client-api/ /fundamentals/api/ 301
 /support/firewall/learn-more/understanding-cloudflare-tor-support-and-onion-routing/ /network/onion-routing/ 301
-/support/firewall/managed-rules-web-application-firewall-waf/migrating-from-waf-managed-rules-to-waf-managed-rulesets/ /waf/reference/migration-guides/waf-managed-rules-migration/ 301
+/support/firewall/managed-rules-web-application-firewall-waf/migrating-from-waf-managed-rules-to-waf-managed-rulesets/ /waf/reference/legacy/old-waf-managed-rules/upgrade/ 301
 /support/firewall/tools/understanding-cloudflare-zone-lockdown/ /waf/tools/zone-lockdown/ 301
 /support/firewall/tools/understanding-cloudflare-user-agent-blocking/ /waf/tools/user-agent-blocking/ 301
 /support/more-dashboard-apps/cloudflare-apps/installing-cloudflare-apps/ /workers/ 301
@@ -1492,6 +1529,10 @@
 /waf/analytics/security-events/additional-information/ /waf/tools/validation-checks/ 301
 /waf/reference/cloudflare-challenges/ /cloudflare-challenges/ 301
 /waf/tools/challenge-passage/ /cloudflare-challenges/challenge-types/challenge-pages/#challenge-passage 301
+/waf/reference/migration-guides/ /waf/reference/legacy/ 301
+/waf/reference/migration-guides/old-rate-limiting-deprecation/ /waf/reference/legacy/old-rate-limiting/upgrade/ 301
+/waf/reference/migration-guides/waf-managed-rules-migration/ /waf/reference/legacy/old-waf-managed-rules/upgrade/ 301
+/waf/reference/migration-guides/firewall-rules-to-custom-rules/ /waf/reference/legacy/firewall-rules-upgrade/ 301
 
 # waiting-room
 /waiting-room/how-to/mobile-traffic/ /waiting-room/how-to/json-response/ 301
@@ -1528,6 +1569,11 @@
 /workers/about/tips/debugging/ /workers/observability/ 301
 /workers/testing/debugging-tools/ /workers/observability/dev-tools/ 301
 /workers/testing/local-development/ /workers/local-development/ 301
+/workers/local-development/ /workers/development-testing/#local-development 301
+/workers/local-development/bindings-per-env/ /workers/development-testing/bindings-per-env/ 301
+/workers/local-development/environment-variables/ /workers/development-testing/environment-variables/ 301
+/workers/local-development/local-data/ /workers/development-testing/local-data/ 301
+/workers/local-development/remote-data/ /workers/development-testing/#remote-bindings 301
 /workers/about/using-cache/ /workers/reference/how-the-cache-works/ 301
 /workers/learning/how-the-cache-works/ /workers/reference/how-the-cache-works/ 301
 /workers/api/ /api/resources/workers/subresources/scripts/methods/list/ 301
@@ -1984,7 +2030,7 @@
 /cloudflare-one/connections/connect-networks/deploy-tunnels/tunnel-with-firewall/ /cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-with-firewall/ 301
 /cloudflare-one/connections/connect-networks/deploy-tunnels/ /cloudflare-one/connections/connect-networks/get-started/ 301
 /cloudflare-one/connections/connect-networks/monitor-tunnels/grafana/ /cloudflare-one/tutorials/grafana/ 301
-/cloudflare-one/connections/connect-networks/use-cases/kubectl/ /cloudflare-one/tutorials/many-cfd-one-tunnel/ 301
+/cloudflare-one/connections/connect-networks/use-cases/kubectl/ /cloudflare-one/connections/connect-networks/deployment-guides/kubernetes/ 301
 /cloudflare-one/examples/ /cloudflare-one/api-terraform/ 301
 /cloudflare-one/faq/tunnel/ /cloudflare-one/faq/cloudflare-tunnels-faq/ 301
 /cloudflare-one/identity/devices/azure-ad/ /cloudflare-one/tutorials/azuread-conditional-access/ 301
@@ -2048,6 +2094,7 @@
 /cloudflare-one/tutorials/credentials-only/ /cloudflare-one/connections/connect-networks/get-started/ 301
 /cloudflare-one/tutorials/do-not-decrypt/ /cloudflare-one/policies/gateway/http-policies/common-policies/#skip-inspection-for-groups-of-applications 301
 /cloudflare-one/tutorials/identity-dns/ /cloudflare-one/policies/gateway/dns-policies/common-policies/#restrict-access-to-specific-groups 301
+/cloudflare-one/tutorials/many-cfd-one-tunnel/ /cloudflare-one/connections/connect-networks/deployment-guides/kubernetes/ 301
 /cloudflare-one/tutorials/multi-origin/ /cloudflare-one/connections/connect-networks/get-started/ 301
 /cloudflare-one/tutorials/review-gateway-block/ /cloudflare-one/analytics/logs/gateway-logs/ 301
 /cloudflare-one/tutorials/require-swg/ /cloudflare-one/identity/devices/ 301

@@ -16,7 +16,7 @@ The Agents SDK exposes two main APIs:
 
 :::note
 
-Agents require [Cloudflare Durable Objects](/durable-objects/), see [Configuration](/agents/getting-started/testing-your-agent/#add-the-agent-configuration) to learn how to add the required bindings to your project. 
+Agents require [Cloudflare Durable Objects](/durable-objects/), see [Configuration](/agents/getting-started/testing-your-agent/#add-the-agent-configuration) to learn how to add the required bindings to your project.
 
 :::
 
@@ -50,6 +50,8 @@ Writing an Agent requires you to define a class that extends the `Agent` class f
 You can also define your own methods on an Agent: it's technically valid to publish an Agent only has your own methods exposed, and create/get Agents directly from a Worker.
 
 Your own methods can access the Agent's environment variables and bindings on `this.env`, state on `this.setState`, and call other methods on the Agent via `this.yourMethodName`.
+
+<TypeScriptExample>
 
 ```ts
 import { Agent } from "agents";
@@ -123,6 +125,8 @@ class MyAgent extends Agent<Env, State> {
   }
 }
 ```
+
+</TypeScriptExample>
 
 <TypeScriptExample>
 

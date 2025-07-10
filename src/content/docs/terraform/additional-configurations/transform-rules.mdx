@@ -67,6 +67,8 @@ resource "cloudflare_ruleset" "transform_url_rewrite" {
 }
 ```
 
+<Render file="terraform-use-ref-field" product="rules" />
+
 <Render file="add-new-rule" params={{ ruleType: "URL rewrite rule" }} /> <br />
 
 For more information on rewriting URLs, refer to [URL Rewrite Rules](/rules/transform/url-rewrite/).
@@ -114,11 +116,12 @@ resource "cloudflare_ruleset" "transform_modify_request_headers" {
 }
 ```
 
+<Render file="terraform-use-ref-field" product="rules" />
+
 <Render
 	file="add-new-rule"
 	params={{ ruleType: "request header transform rule" }}
 />
-<br />
 
 For more information on modifying request headers, refer to [Request Header Transform Rules](/rules/transform/request-header-modification/).
 
@@ -165,11 +168,12 @@ resource "cloudflare_ruleset" "transform_modify_response_headers" {
 }
 ```
 
+<Render file="terraform-use-ref-field" product="rules" />
+
 <Render
 	file="add-new-rule"
 	params={{ ruleType: "response header transform rule" }}
 />
-<br />
 
 For more information on modifying response headers, refer to [Response Header Transform Rules](/rules/transform/response-header-modification/).
 

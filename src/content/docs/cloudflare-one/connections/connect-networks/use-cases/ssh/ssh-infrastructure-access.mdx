@@ -6,7 +6,7 @@ sidebar:
   label: SSH with Access for Infrastructure
 ---
 
-import { Tabs, TabItem, Badge, Render } from "~/components";
+import { Tabs, TabItem, Badge, Render, APIRequest } from "~/components";
 
 [Access for Infrastructure](/cloudflare-one/applications/non-http/infrastructure-apps/) provides granular control over how users can connect to your SSH servers. This feature uses the same deployment model as [WARP-to-Tunnel](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-warp-to-tunnel/) but unlocks more policy options and command logging functionality.
 
@@ -91,7 +91,7 @@ To learn more about user connections, refer to the [Access for Infrastructure do
 
 ## SSH command logs
 
-SSH command logs contain the actual SSH commands that a user ran on the target. Customers on all plans can store SSH logs on Cloudflare. These logs are encrypted using a public key provided by the customer and are not visible to Cloudflare. Additionally, Enterprise customers can configure a Logpush job to send SSH logs to storage destinations. Logpush payloads are not encrypted and do not require uploading a public key.
+SSH command logs contain the actual SSH commands that a user ran on the target. Customers on all plans can store SSH logs on Cloudflare and download the logs from the dashboard. [Downloadable logs](#download-encrypted-ssh-logs) are encrypted using a public key provided by the customer and are not visible to Cloudflare. Delivery of downloadable SSH logs is best effort; for guaranteed delivery, Enterprise customers can [configure a Logpush job](#export-ssh-logs-with-logpush) to send SSH logs to storage destinations. Logpush payloads are not encrypted with a customer-provided public key.
 
 ### Download encrypted SSH logs
 
@@ -121,13 +121,13 @@ Cloudflare will stop logging SSH commands to your targets, as well as any comman
 
 To delete the SSH encryption public key using the [API](/api/resources/zero_trust/subresources/gateway/subresources/audit_ssh_settings/methods/update/):
 
-```sh
-curl --request PUT https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/audit_ssh_settings \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "public_key": ""
-}'
-```
+<APIRequest
+  path="/accounts/{account_id}/gateway/audit_ssh_settings"
+  method="PUT"
+  json={{
+    public_key: "",
+  }}
+/>
 
 </TabItem>
 </Tabs>
@@ -155,6 +155,8 @@ To set up the Logpush job, refer to [Logpush integration](/cloudflare-one/insigh
 
 ## Known limitations
 
+### SSH features
+
 The following SSH features are not supported:
 
 - `sftp` commands
@@ -162,3 +164,7 @@ The following SSH features are not supported:
 - Local and remote port forwarding
 - SSH agent forwarding
 - X11 forwarding
+
+### Session duration
+
+SSH sessions have a maximum expected duration of 10 hours. For more information, refer to the [Troubleshooting FAQ](/cloudflare-one/faq/troubleshooting/#long-lived-ssh-sessions-frequently-disconnect).

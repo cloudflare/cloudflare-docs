@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { AvailableNotifications } from "~/components"
+import { AvailableNotifications, Steps } from "~/components"
 
 Bot alerts inform you when Cloudflare detects spikes in your traffic with any of the following characteristics:
 
@@ -24,7 +24,8 @@ Bot alerts inform you when Cloudflare detects spikes in your traffic with any of
 
 To receive Bot alerts, you must [configure a notification](/notifications/get-started/). Notifications help you stay up to date with your Cloudflare account through email, PagerDuty, or webhooks, depending on your Cloudflare plan.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+<Steps>
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
 2. Go to **Notifications**.
 3. In **Notifications**, select **Add**.
 4. Select **Bot Management** from the Product list.
@@ -36,6 +37,7 @@ To receive Bot alerts, you must [configure a notification](/notifications/get-st
 8. Configure a delivery method for the notification. The available delivery methods depend on your Cloudflare plan. For more information, refer to [Cloudflare Notifications](/notifications/).
 9. If you are creating a notification for Custom Bot Detection Alert, define the parameters that will filter the notifications you will receive.
 10. Select **Save**.
+</Steps>
 
 ---
 

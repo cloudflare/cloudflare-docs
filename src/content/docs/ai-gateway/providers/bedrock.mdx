@@ -83,7 +83,9 @@ export default {
 		});
 
 		// Gateway Url
-    const gatewayUrl = new URL(`https://gateway.ai.cloudflare.com/v1/${cfAccountId}/${gatewayName}/aws-bedrock/bedrock-runtime/${region}/model/amazon.titan-embed-text-v1/invoke`);
+		const gatewayUrl = new URL(
+			`https://gateway.ai.cloudflare.com/v1/${cfAccountId}/${gatewayName}/aws-bedrock/bedrock-runtime/${region}/model/amazon.titan-embed-text-v1/invoke`,
+		);
 
 		// make the request through the gateway url
 		const response = await fetch(gatewayUrl, {

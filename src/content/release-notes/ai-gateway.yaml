@@ -5,6 +5,15 @@ productLink: "/ai-gateway/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-06-18"
+    title: New GA providers
+    description: |-
+      We have moved the following providers out of beta and into GA:
+        - [Cartesia](/ai-gateway/providers/cartesia/)
+        - [Cerebras](/ai-gateway/providers/cerebras/)
+        - [DeepSeek](/ai-gateway/providers/deepseek/)
+        - [ElevenLabs](/ai-gateway/providers/elevenlabs/)
+        - [OpenRouter](/ai-gateway/providers/openrouter/)
   - publish_date: "2025-05-28"
     title: OpenAI Compatibility
     description: |-

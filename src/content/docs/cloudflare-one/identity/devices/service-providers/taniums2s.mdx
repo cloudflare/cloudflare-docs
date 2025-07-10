@@ -15,7 +15,7 @@ import { Render } from "~/components"
 
 ## Prerequisites
 
-* Either Tanium Cloud or on-premise installations of Tanium
+* Either Tanium Cloud or on-premise installations of Tanium with the Benchmark entitlement
 * Tanium agent is deployed on the device.
 * <Render file="posture/prereqs-warp-is-deployed" params={{ name: "Service providers", link: "/cloudflare-one/identity/devices/service-providers/" }} />
 
@@ -26,9 +26,9 @@ import { Render } from "~/components"
 The following Tanium values are needed to set up the Tanium posture check:
 
 * Client Secret
-* Rest API URL
+* REST API URL
 
-To retrieve those values:
+To retrieve the client secret, create an API token:
 
 1. Log in to your Tanium instance.
 2. Go to **Administration** > **API Tokens**.
@@ -36,12 +36,17 @@ To retrieve those values:
 4. Set **Expire in days** to an appropriate value for your organization. When this token expires, all device posture results will begin to fail unless updated.
 5. Set **Trusted IP addresses** to `0.0.0.0/0`.
 6. Select **Save**.
-7. Copy the **Client Secret** and **API URL** to a safe place.
+7. Copy the **Client Secret** to a safe place.
+
+To retrieve the API URL, determine your Tanium Gateway root endpoint:
+
+* Tanium Cloud: `https://<customerName>-api.cloud.tanium.com/plugin/products/gateway/graphql`
+* Tanium On Prem: `https://<server>/plugin/products/gateway/graphql`
 
 ### 2. Add Tanium as a service provider
 
 <Render file="posture/add-service-provider" params={{ provider: "Tanium" }} />
-5. Enter the **Client Secret** and **Rest API URL** you noted down above.
+5. Enter the **Client Secret** and **REST API URL** you noted down above.
 6. Choose a **Polling frequency** for how often Cloudflare Zero Trust should query Tanium for information.
 7. Select **Test and save**.
 

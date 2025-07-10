@@ -1,7 +1,8 @@
 ---
 {}
-
 ---
+
+import { APIRequest } from "~/components";
 
 ## Receive email
 
@@ -23,19 +24,17 @@ To **send and receive** emails from your domain, you need an SMTP provider. Then
       <summary>API example</summary>
       <div>
 
-   ```bash title="Request"
-   curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" \
-   --header "x-auth-email: <EMAIL>" \
-   --header "x-auth-key: <API_KEY>" \
-   --header "Content-Type: application/json" \
-   --data '{
-     "type":"A",
-     "name":"www.example.com",
-     "content":"192.0.2.1",
-     "ttl":3600,
-     "proxied":false
-   }'
-   ```
+	 <APIRequest
+   	path="/zones/{zone_id}/dns_records"
+   	method="POST"
+   	json={{
+       "type":"A",
+       "name":"www.example.com",
+       "content":"192.0.2.1",
+       "ttl":3600,
+       "proxied":false
+     }}
+   />
 
    ```json title="Response"
    {
@@ -77,18 +76,16 @@ To **send and receive** emails from your domain, you need an SMTP provider. Then
       <summary>API example</summary>
       <div>
 
-   ```bash title="Request"
-   curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" \
-   --header "x-auth-email: <EMAIL>" \
-   --header "x-auth-key: <API_KEY>" \
-   --header "Content-Type: application/json" \
-   --data '{
-     "type":"MX",
-     "name":"example.com",
-     "content":"mail.example.com",
-     "ttl":3600
-   }'
-   ```
+	 <APIRequest
+   	path="/zones/{zone_id}/dns_records"
+   	method="POST"
+   	json={{
+      "type":"MX",
+      "name":"example.com",
+      "content":"mail.example.com",
+      "ttl":3600
+    }}
+   />
 
    ```json title="Response"
    {

@@ -6,6 +6,8 @@ sidebar:
 description: Deploy Cloudflare WARP with Kandji on macOS using a custom configuration profile.
 ---
 
+import { Render } from "~/components";
+
 Kandji deploys Cloudflare WARP as a custom app. For an overview of how Kandji deploys custom apps, refer to their [knowledge base article](https://support.kandji.io/custom-apps-overview).
 
 ## macOS
@@ -55,6 +57,8 @@ For the simplest deployment, Kandji has created a downloadable configuration pro
    8. Select **Save**.
 
 To verify that Cloudflare WARP was installed, select the app in the **Custom App** library and view its **Status** tab.
+
+<Render file="warp/connectivity-status-check" />
 
 ## Audit and Enforce Script
 

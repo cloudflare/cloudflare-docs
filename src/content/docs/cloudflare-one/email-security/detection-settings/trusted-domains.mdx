@@ -20,8 +20,20 @@ To configure a trusted domain:
        * **Proximity domain**: Domains with similar spelling to your existing domain.
        * **Recent domain**: Domains created recently.
      * **Notes**: Provide additional information about the trusted domain list.
-   - **Upload trusted domain list**: You can upload a file no larger than 150 KB of multiple trusted domains. The file can only contain `Domain`, `Notes`, `Proximity` and `Recent` fields. The first row must be a header row.
+   - **Upload trusted domain list**: You can upload a file no larger than 150 KB of multiple trusted domains. The file can only contain `Domain`, `Proximity`, `New` and `Notes` fields. The first row must be a header row. Refer to [CSV uploads](/cloudflare-one/email-security/detection-settings/trusted-domains/#csv-uploads) for an example file.
 6. Select **Save**.
+
+### CSV uploads
+
+You can upload a file no larger than 150 KB of multiple trusted domains. The file can only contain `Domain`, `Proximity`, `New` and `Notes` fields. The first row must be a header row.
+
+An example file would look like this:
+
+```txt
+Domain, Proximity, New, Notes
+mydomain.com, true, true, First Person
+testdomain.com, false, true, New Hire
+```
 
 ## Export trusted domains
 

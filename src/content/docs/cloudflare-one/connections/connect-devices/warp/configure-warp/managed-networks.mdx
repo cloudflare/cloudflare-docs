@@ -11,7 +11,7 @@ import { Details, TabItem, Tabs } from "~/components";
 
 | [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| All modes  | All plans                                       |
+| All modes                                                                                 | All plans                                                     |
 
 | System   | Availability | Minimum WARP version |
 | -------- | ------------ | -------------------- |
@@ -24,11 +24,30 @@ import { Details, TabItem, Tabs } from "~/components";
 
 </Details>
 
-Cloudflare WARP allows you to selectively apply WARP client settings if the device is connected to a secure network location such as an office.
+Cloudflare WARP allows you to selectively apply specific [device profiles](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) and WARP client settings when a device connects to a secure network location, such as an office. WARP identifies these managed networks by detecting a TLS endpoint you set up on the network.
+
+On this page, you will learn how to:
+
+- Create a TLS endpoint on your trusted network.
+- Configure the TLS endpoint in Zero Trust to set up a managed network.
+- Apply the appropriate device profile to a device when the WARP client detects it is on your managed network.
+
+## Requirements
+
+- The WARP client scans all managed networks every time it detects a network change event from the operating system. To minimize performance impact, reuse the same TLS endpoint across multiple locations unless you require distinct settings profiles for each location.
+- Ensure that the device can only reach one managed network at any given time. If multiple managed networks are configured and reachable, there is no way to determine which settings profile the device will receive.
+
+## WARP client managed network detection
+
+When you configure a managed network, the WARP client uses the TLS endpoint to determine whether the device is on that network.
+
+The time it takes to apply the correct device profile depends on how quickly the TLS endpoint responds.
+
+If the TLS endpoint times out after 5 seconds, the WARP client will determine that the device is not on a managed network and will apply the default device profile. The WARP client only retries detection if a non-timeout error occurs. A timeout triggers fallback to the default device profile without further retries.
 
 ## 1. Choose a TLS endpoint
 
-A TLS endpoint is a host on your network that serves a TLS certificate. The TLS endpoint acts like a network location beacon — when a device connects to a network, WARP detects the TLS endpoint and validates its certificate against an uploaded SHA-256 fingerprint.
+A TLS endpoint is a host on your network that serves a TLS certificate. The TLS endpoint acts like a network location beacon — when a device connects to a network, the WARP client on the device detects the TLS endpoint and validates the TLS certificate against the SHA-256 fingerprint (if specified) or against the local certificate store to check that it is signed by a public certificate authority.
 
 The TLS certificate can be hosted by any device on your network. However, the endpoint must be inaccessible to users outside of the network location. WARP will automatically exclude the managed network endpoint from all device profiles to ensure that users cannot connect to this endpoint over Cloudflare Tunnel. We recommend choosing a host that is physically in the office which remote users do not need to access, such as a printer.
 
@@ -190,34 +209,39 @@ SHA256 Fingerprint=DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8
 3. Name your network location.
 4. In **Host and Port**, enter the private IP address and port number of your [TLS endpoint](#create-a-new-tls-endpoint) (for example, `192.168.185.198:3333`).
 
-	:::note
-	We recommend using the private IP of your managed network endpoint and not a hostname to prevent issues related to DNS lookups resolving the incorrect IP.
-	:::
+   :::note
+   We recommend using the private IP of your managed network endpoint and not a hostname to prevent issues related to DNS lookups resolving the incorrect IP.
+   :::
+
 5. (Optional) In **TLS Cert SHA-256**, enter the [SHA-256 fingerprint](#2-extract-the-sha-256-fingerprint) of the TLS certificate. This field is only needed for self-signed certificates. If a TLS fingerprint is not supplied, WARP validates the certificate against the local certificate store and checks that it is signed by a public certificate authority.
 
 </TabItem>
 <TabItem label="Terraform (v5)">
 
-1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
-	- `Zero Trust Write`
+1.  Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
 
-2. Add a managed network using the [`cloudflare_zero_trust_device_managed_network`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_device_managed_network) resource:
+    - `Zero Trust Write`
 
-	```tf
-	resource "cloudflare_zero_trust_device_managed_networks" "office" {
-		account_id = var.cloudflare_account_id
-		name       = "Office managed network"
-		type       = "tls"
-		config = {
-			tls_sockaddr = "192.168.185.198:3333"
-			sha256       = "DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8662"
-		}
-	}
-	```
+2.  Add a managed network using the [`cloudflare_zero_trust_device_managed_network`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_device_managed_network) resource:
+
+            ```tf
+            resource "cloudflare_zero_trust_device_managed_networks" "office" {
+            	account_id = var.cloudflare_account_id
+            	name       = "Office managed network"
+            	type       = "tls"
+            	config = {
+            		tls_sockaddr = "192.168.185.198:3333"
+            		sha256       = "DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8662"
+            	}
+            }
+            ```
+
 </TabItem>
 </Tabs>
 
-WARP will automatically exclude the TLS endpoint from all device profiles. This prevents remote users from accessing the endpoint through the WARP tunnel on any port. If a device profile uses [Split Tunnels](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) in **Include** mode, make sure that the Split Tunnel entries do not contain the TLS endpoint IP address; otherwise, the entire IP range will be excluded from the WARP tunnel.
+WARP will automatically exclude the TLS endpoint from all device profiles if it is specified as a private IP address. This exclusion prevents remote users from accessing the endpoint through the WARP tunnel on any port. If the TLS endpoint is specified as a hostname instead of a private IP, WARP will not automatically exclude it.
+
+If a device profile uses [Split Tunnels](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) in **Include** mode, ensure that the Split Tunnel entries do not contain the TLS endpoint IP address; otherwise, the entire IP range will be excluded from the WARP tunnel.
 
 ## 4. Configure device profile
 
@@ -268,7 +292,7 @@ To check if the WARP client detects the network location:
 2. Disconnect and reconnect to the network.
 3. Open a terminal and run `warp-cli debug alternate-network`.
 
-## Best practices
+## Related resources
 
-- The WARP client scans all managed networks every time it detects a network change event from the operating system. To minimize performance impact, we recommend reusing the same TLS endpoint across multiple locations unless you require distinct settings profiles for each location.
-- Ensure that the device can only reach one managed network at any given time. If multiple managed networks are configured and reachable, there is no way to determine which settings profile the device will receive.
+- [Device profiles](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) - How to create and manage the device profiles you apply via managed networks.
+- [WARP settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/) - Defines how WARP behaves and what users can do.

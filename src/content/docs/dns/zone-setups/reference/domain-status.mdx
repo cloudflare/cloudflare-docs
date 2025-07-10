@@ -62,6 +62,8 @@ Cloudflare responds to DNS queries for pending zones on the assigned Cloudflare 
 * [Full setup](/dns/zone-setups/full-setup/): You have either not [changed your authoritative nameservers](/dns/nameservers/update-nameservers/) or your change has not yet been authenticated by Cloudflare.
 * [Partial (CNAME) setup](/dns/zone-setups/partial-setup/): You have either not added the verification TXT record to your authoritative DNS provider or the record has not yet been authenticated by Cloudflare.
 
+After you add your domain, Cloudflare performs checks on a schedule to confirm you have updated your nameservers. The first check occurs after 60 seconds and the following attempts happen at gradually increased intervals. You can re-trigger the check [via API](/api/resources/zones/subresources/activation_check/methods/trigger/) or on the Dashboard, in the respective domain [Overview page](https://dash.cloudflare.com/?to=/:account/:zone/).
+
 ### Expected behavior for different plans
 
 If your domain is on the Free plan, it will be deleted automatically if it is not activated within 28 days.
