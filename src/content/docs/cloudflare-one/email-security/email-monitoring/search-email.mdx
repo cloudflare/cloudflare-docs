@@ -80,7 +80,7 @@ To reclassify a message:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Email Security** and select **Investigation**.
 2. On the **Investigation** page, under **Your matching messages**, select the message you want to reclassify.
-3. Select the three dots, then select **Reclassify**.
+3. Select the three dots, then select **Request reclassification**.
 4. Under **New disposition**, select among the following:
    - **Malicious**: Traffic invoked multiple phishing verdict triggers, met thresholds for bad behavior, and is associated with active campaigns.
    - **Spoof**: Traffic associated with phishing campaigns that is either non-compliant with your email authentication policies (SPF, DKIM, DMARC) or has mismatching Envelope From and `Header From` values.
@@ -89,7 +89,7 @@ To reclassify a message:
    - **Clean**: Traffic not associated with any phishing campaigns.
 5. Select **Save**.
 
-To reclassify messages in bulk, select the messages you want to reclassify > **Action** > **Reclassify**.
+To reclassify messages in bulk, select the messages you want to reclassify > **Action** > **Request reclassification**.
 
 ### Upload EML files
 
@@ -98,7 +98,7 @@ Email Security classifies certain emails as "Clean". If you disagree with the di
 On the **Investigation** page:
 
 1. Go to the email marked as **Clean**.
-2. Select the three dots > **Reclassify**.
+2. Select the three dots > **Request reclassification**.
 3. Upload the EML file.
 4. Select a new disposition.
 5. Select **Save**.
@@ -211,13 +211,13 @@ To view status and actions for each email:
       - **View details**: Refer to [Email details](/cloudflare-one/email-security/email-monitoring/search-email/#email-details) to learn more.
       - **View similar emails**: Find similar emails based on the `value_edf_hash` (Electronic Detection Fingerprint hash).
       - **Release**: Email Security will no longer quarantine your chosen messages.
-      - **Reclassify**: Choose the dispositions of your messages if they are incorrect. Refer to [Reclassify messages](/cloudflare-one/email-security/email-monitoring/search-email/#reclassify-messages) to learn more.
+      - **Request reclassification**: Choose the dispositions of your messages if they are incorrect. Refer to [Reclassify messages](/cloudflare-one/email-security/email-monitoring/search-email/#reclassify-messages) to learn more.
 4. If the email is not quarantined:
    - **View details**.
    - **View similar emails**.
    - **View submission detail**.
    - [Move](/cloudflare-one/email-security/auto-moves/) (only available if you authorized moves).
-   - [Reclassify](/cloudflare-one/email-security/email-monitoring/search-email/#reclassify-messages).
+   - [Request reclassification](/cloudflare-one/email-security/email-monitoring/search-email/#reclassify-messages).
 
 ## Email details
 
