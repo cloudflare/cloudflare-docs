@@ -161,6 +161,7 @@ export default defineConfig({
 				headingLinks: false,
 			},
 			routeMiddleware: "./src/plugins/starlight/route-data.ts",
+			disable404Route: true,
 		}),
 		liveCode({}),
 		icon(),

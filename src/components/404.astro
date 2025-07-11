@@ -1,0 +1,21 @@
+<div class="flex flex-col items-center justify-center md:py-28">
+	<h1>404</h1>
+	<p>
+		Check the URL, try using our <a id="404-search-link" href="/search/"
+			>search</a
+		> or try our LLM-friendly
+		<a href="/llms.txt"> llms.txt directory</a>.
+	</p>
+</div>
+
+<script>
+	const { pathname } = window.location;
+
+	const anchor = document.getElementById("404-search-link");
+
+	if (anchor) {
+		const pretty = pathname.replaceAll("/", " ").replaceAll("-", " ").trim();
+
+		anchor.setAttribute("href", `/search/?q=${encodeURIComponent(pretty)}`);
+	}
+</script>
