@@ -142,7 +142,7 @@ When you use AS prepending to migrate traffic away from Magic Transit, the typic
 BGP has different mechanisms to control route priorities which are set by the peered network, not by Cloudflare. As such, this is a best effort feature. Cloudflare cannot guarantee that peers will honor AS prepends on Cloudflare's transit and peering connections.
 :::
 
-## BGP control with Cloudflare Route Reflectors (via Internet or Classic CNI)
+## BGP control with Cloudflare Route Reflectors
 
 Optionally, you can use BGP to control the advertisement status of your prefix — advertised or withdrawn — from Cloudflare's global network for on-demand deployment scenarios. BGP Control works by establishing BGP sessions to Cloudflare's globally distributed Route Reflectors, which will initiate propagation of your prefix advertisement across Cloudflare's global network.
 
