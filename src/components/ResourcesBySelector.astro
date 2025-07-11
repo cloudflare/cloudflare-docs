@@ -1,7 +1,7 @@
 ---
 import { z } from "astro:schema";
 import { getCollection, type CollectionEntry } from "astro:content";
-import ReactSelect from "./ReactSelect";
+import ResourcesBySelectorReact from "./ResourcesBySelector";
 
 type Props = z.infer<typeof props>;
 type Frontmatter = keyof CollectionEntry<"docs">["data"];
@@ -46,40 +46,9 @@ const facets = resources.reduce(
 );
 ---
 
-{
-	filters && (
-		<div class="not-content">
-			<ReactSelect
-				id="resources-filters"
-				className="mt-2"
-				options={Object.entries(facets).map(([key, values]) => ({
-					label: key,
-					options: values.map((v) => ({
-						value: v,
-						label: v,
-					})),
-				}))}
-				onChange={(opt) => console.log(opt)}
-				client:idle
-			/>
-		</div>
-	)
-}
-
-<div class="grid grid-cols-2 gap-4">
-	{
-		resources.map((page) => (
-			<a
-				href={`/${page.id}/`}
-				class="flex flex-col gap-2 rounded-sm border border-solid border-gray-200 p-6 text-black no-underline hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
-			>
-				<p class="decoration-accent underline decoration-2 underline-offset-4">
-					{page.data.title}
-				</p>
-				<span class="line-clamp-3" title={page.data.description}>
-					{page.data.description}
-				</span>
-			</a>
-		))
-	}
-</div>
+<ResourcesBySelectorReact
+	resources={resources}
+	facets={facets}
+	filters={filters}
+	client:load
+/>
