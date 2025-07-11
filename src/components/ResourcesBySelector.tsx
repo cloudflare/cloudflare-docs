@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReactSelect from "./ReactSelect";
 import type { CollectionEntry } from "astro:content";
 
@@ -21,6 +21,14 @@ export default function ResourcesBySelector({
 		setSelectedFilter(option?.value || null);
 	};
 
+	const options = Object.entries(facets).map(([key, values]) => ({
+		label: key,
+		options: values.map((v) => ({
+			value: v,
+			label: v,
+		})),
+	}));
+
 	const visibleResources = resources.filter((resource) => {
 		if (!selectedFilter || !filters) return true;
 
@@ -39,20 +47,23 @@ export default function ResourcesBySelector({
 		return filterableValues.includes(selectedFilter);
 	});
 
+	useEffect(() => {
+		const params = new URLSearchParams(window.location.search);
+		const value = params.get("filters");
+
+		if (value) {
+			setSelectedFilter(value);
+		}
+	}, []);
+
 	return (
 		<div>
 			{filters && (
 				<div className="not-content">
 					<ReactSelect
-						id="resources-filters"
 						className="mt-2"
-						options={Object.entries(facets).map(([key, values]) => ({
-							label: key,
-							options: values.map((v) => ({
-								value: v,
-								label: v,
-							})),
-						}))}
+						value={{ value: selectedFilter, label: selectedFilter }}
+						options={options}
 						onChange={handleFilterChange}
 						isClearable
 						placeholder="Filter resources..."
