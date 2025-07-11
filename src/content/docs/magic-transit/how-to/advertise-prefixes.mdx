@@ -7,28 +7,28 @@ sidebar:
 
 import { Details, GlossaryTooltip } from "~/components"
 
-Cloudflare measures the Magic Transit prefix count based on the number of <GlossaryTooltip term="prefix">prefixes</GlossaryTooltip> a customer onboards. The size of each prefix does not matter — there are no commercial or technical restrictions based on prefix length. However, prefixes must be announced exactly as they were provisioned. For example, if a customer onboards a `/20` prefix to Magic Transit, it can only be announced as a `/20`. Smaller sub-prefixes (such as `/24s`) within that `/20` cannot be announced individually unless they are onboarded separately. Onboarding a larger aggregate prefix does not automatically include its smaller subnets for announcement or billing purposes.
+You can bring your own public IPs to Cloudflare to use with Magic Transit. This is a two-step process:
+1. Adding an IP  <GlossaryTooltip term="prefix">prefix</GlossaryTooltip> for each IP address block that you bring to Cloudflare. The IP prefix includes the permission (Letter of Agency, or LOA) for Cloudflare to announce the network or its subnets. The IP prefix is also where you define your optional ASN to be included in Cloudflare's advertised AS path.
+2. Defining additional BGP prefixes, which control the announcement of the prefix from Cloudflare. By default there is always one BGP prefix that is identical to the IP prefix, and you may configure multiple additional subnet prefixes of the IP prefix (where the longest prefix length is `/24`).
 
-If a customer wants to announce 16 individual `/24` prefixes that fall within a `/20`, they must onboard all 16 `/24s` as distinct prefixes, in addition to the `/20` if desired. In such a disaggregated setup, the total Magic Transit prefix count increases, as each onboarded prefix — including any sub-prefixes — is treated as a separate billable unit.
+## IP prefixes
+
+Cloudflare measures the Magic Transit prefix count based on the number of BGP prefixes a customer defines. Each prefix is billed separately, even if they overlap. For example, both a `/16` and any `/24` within it are counted individually. Onboarding a larger aggregate prefix does not automatically include its smaller subnets for announcement or billing purposes.
+
+While there is no billing limit on the accepted prefix sizes, technically only prefixes up to `/24` are accepted for onboarding, as longer ones (like `/25`, `/26`) are not globally routable.
 
 Provide all IP prefixes you plan to onboard, along with the [Autonomous System Numbers (ASNs)](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/) from which they will be advertised. When specifying prefixes, observe these guidelines:
 
 - Prefixes must support at least 256 hosts (`/24` in classless inter-domain [routing](https://www.cloudflare.com/learning/network-layer/what-is-routing/) CIDR notation). Refer to [Use a Cloudflare IP](/magic-transit/cloudflare-ips/) if you do not meet the `/24` prefix length requirement.
-- Internet Routing Registry entries and <GlossaryTooltip term="letter of agency">Letters of Agency (LOA)</GlossaryTooltip> must match the prefixes and originating prefixes you submit to Cloudflare.
+- Internet Routing Registry entries and Letters of Agency (LOA) must match the prefixes and originating prefixes you submit to Cloudflare.
 - When using contiguous prefixes, specify aggregate prefixes where possible.
-- When using Route Origin Authorizations (ROAs) to sign routes for [resource public key infrastructure (RPKI)](https://tools.ietf.org/html/rfc8210), the prefix and originating ASN must match the onboarding submission.
+- When using Route Origin Authorizations (ROAs) to sign routes for resource public key infrastructure (RPKI) ↗, the prefix and originating ASN must match the onboarding submission.
 - If you do not own an ASN, you can use the Cloudflare Customer ASN (AS13335).
-- Prefixes using BGP-controlled advertisements cannot be used in conjunction with dynamic advertisement (via dashboard/API). Please specify your preferred on-demand advertisement method during the prefix onboarding.
 
-<Details header="Prefix configuration example">
 
-| Prefix            | Originating AS |
-| ----------------- | -------------- |
-| `103.21.244.0/23` | AS13335       |
-| `131.0.72.0/22`   | AS395747       |
-| `103.21.245.0/24` | AS395747       |
 
-</Details>
+
+
 
 ## Cloudflare ASN vs. your own ASN
 
