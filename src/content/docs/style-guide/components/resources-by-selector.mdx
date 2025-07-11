@@ -16,7 +16,7 @@ import { ResourcesBySelector } from "~/components";
 <ResourcesBySelector
 	directory="workers/examples/"
 	types={["example"]}
-	filters={["languages", "tags"]}
+	filterables={["languages", "tags"]}
 />
 ```
 
@@ -26,9 +26,9 @@ import { ResourcesBySelector } from "~/components";
 
   The directory to search for resources in, relative to `src/content/docs/`. For example, for Workers tutorials, `directory="workers/tutorials/"`.
 
-- `filters` <Type text="string[]" />
+- `filterables` <Type text="string[]" />
 
-  An array of frontmatter properties to filter by. For example, `filters={["languages", "tags"]}`.
+  An array of frontmatter properties to show in the frontend filter dropdown. For example, `filterables={["languages", "tags"]}` will allow users to filter based on each pages `languages` and `tags` frontmatter.
 
 - `types` <Type text="string[]" />
 

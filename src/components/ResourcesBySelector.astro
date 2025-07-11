@@ -11,10 +11,12 @@ const props = z.object({
 	types: z.string().array(),
 	products: z.string().array().optional(),
 	directory: z.string().optional(),
-	filters: z.custom<Frontmatter>().array().optional(),
+	filterables: z.custom<Frontmatter>().array().optional(),
 });
 
-const { tags, types, products, directory, filters } = props.parse(Astro.props);
+const { tags, types, products, directory, filterables } = props.parse(
+	Astro.props,
+);
 
 const resources = await getCollection("docs", ({ id, data }) => {
 	return (
@@ -27,9 +29,9 @@ const resources = await getCollection("docs", ({ id, data }) => {
 
 const facets = resources.reduce(
 	(acc, page) => {
-		if (!filters) return acc;
+		if (!filterables) return acc;
 
-		for (const filter of filters) {
+		for (const filter of filterables) {
 			const val = page.data[filter];
 			if (val) {
 				if (Array.isArray(val) && val.every((v) => typeof v === "string")) {
@@ -49,6 +51,6 @@ const facets = resources.reduce(
 <ResourcesBySelectorReact
 	resources={resources}
 	facets={facets}
-	filters={filters}
+	filters={filterables}
 	client:load
 />
