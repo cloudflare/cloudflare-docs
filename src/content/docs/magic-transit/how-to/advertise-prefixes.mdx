@@ -71,12 +71,40 @@ Create a [POST request](/api/resources/addressing/subresources/prefixes/subresou
 
 ### Advertise or withdraw a BGP prefix
 
+<Tabs syncKey="dashPlusAPI">
 
+  <TabItem label="Dashboard">
+		:::note
+		You can only advertise your prefix after running pre-flight checks with Cloudflare. If your prefix status is greyed out and shows an Withdrawn status, your prefix is locked. Contact your account team to close the pre-flight checks phase with you and unlock your prefixes.
 
+		Currently only the default BGP prefix (that matches the IP prefix) can be controlled via the UI.
+		:::
 
+		1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+		2. Go to **Magic Transit** > **Configuration**.
+		3. From the **IP Prefixes** tab, select the prefix you want to modify > **Edit**.
+		4. From the dropdown menu **Status**, choose weather the status of your IP is **Advertised** or **Withdrawn**.
+		5. (Optional) Edit the description for your prefix.
+		6. Select **Edit IP Prefix** to save your changes.
+  </TabItem>
 
+  <TabItem label="API" icon="moon">
+		Any configured BGP prefix can be controlled via the API using a [PATCH request](/api/resources/addressing/subresources/prefixes/subresources/bgp_prefixes/methods/edit/). For example:
 
+		<APIRequest
+  path="/accounts/{account_id}/addressing/prefixes/{prefix_id}/bgp/prefixes/{bgp_prefix_id}"
+  method="PATCH"
+  json={{
+    "on_demand":{ "advertised": "true" }
+  }}
+/>
+  </TabItem>
 
+</Tabs>
+
+:::caution[Warning: ISP route refresh delays may impact traffic]
+Announcing or withdrawing a prefix means Cloudflare will begin or stop advertising routes, impacting traffic flow to or from that IP range. Changes propagate across our global network almost instantly, typically taking effect within minutes. However, Cloudflare has no control over how quickly ISPs refresh their routes.
+:::
 
 
 
