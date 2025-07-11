@@ -62,7 +62,11 @@ export default function ResourcesBySelector({
 				<div className="not-content">
 					<ReactSelect
 						className="mt-2"
-						value={{ value: selectedFilter, label: selectedFilter }}
+						value={
+							selectedFilter
+								? { value: selectedFilter, label: selectedFilter }
+								: null
+						}
 						options={options}
 						onChange={handleFilterChange}
 						isClearable
