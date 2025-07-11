@@ -1,55 +1,71 @@
----
-pcx_content_type: concept
-title: DNS setups
-sidebar:
-  order: 3
----
+Fitur Odeo
+Apapun Tagihannya, Mudah Dibayarnya
+Pembayaran Tagihan
+Anda dapat membuat berbagai macam tagihan seperti Tagihan Iuran Pemeliharaan Lingkungan (IPL), Tagihan Uang Sekolah, Tagihan Uang Kuliah, dan tagihan-tagihan lainnya
 
-import { Details } from "~/components"
+Laporan
+Anda dapat menggunakan fitur ini untuk menampilkan rincian transaksi juga status pembayaran atas Tagihan yang sudah Anda buat
 
-When using Cloudflare DNS, you have a few options for your DNS zone setup:
+Jual Beli Voucher / PPOB
+Disini kamu dapat melakukan penjualan maupun pembelian Voucher Prabayar (PPOB) seperti: Token Listrik, Pulsa, Paket Data, Voucher Game, dan lainnya.
 
-* [Full setup](/dns/zone-setups/full-setup/) (most common): Use Cloudflare as your primary DNS provider and manage your DNS records on Cloudflare.
-* [Partial (CNAME) setup](/dns/zone-setups/partial-setup/): Keep your primary DNS provider and only use Cloudflare's reverse proxy for individual subdomains.
-* [Subdomain setup](/dns/zone-setups/subdomain-setup/): With your apex domain (`example.com`) on a partial or full setup, independently manage the settings for a specific subdomain (`blog.example.com`) within a separate zone and, potentially, a separate account.
-* [Zone transfers](/dns/zone-setups/zone-transfers/): Use Cloudflare and another DNS provider together across your entire zone to increase availability and fault tolerance. DNS records will be transferred between providers using [AXFR](https://datatracker.ietf.org/doc/html/rfc5936) or [IXFR](https://datatracker.ietf.org/doc/html/rfc1995).
+2/3Image
+3/3Image
+1/3Image
+2/3Image
+3/3Image
+1/3Image
+2/3Image
+Image
+Tentang Kami
+Apa itu Odeo?
+ODEO adalah platform yang dapat membantu Anda dalam mengelola Produk Digital seperti Voucher Prabayar yang akan Anda jual maupun yang akan Anda beli. Selain Voucher Prabayar, Anda juga dapat mengelola Tagihan Pascabayar baik tagihan rutin maupun tidak rutin untuk Sekolah, Universitas, Asuransi, Perumahan, Apartemen, dan tagihan lainnya.
 
-:::note
-If you run your own authoritative nameservers but still want to benefit from Cloudflare's global anycast network, check out [DNS Firewall](/dns/dns-firewall/).
-:::
+Bayar Tagihan
+Pelanggan Anda ingin melakukan pembayaran tagihan?
+Mesin ATM, Mobile Banking, Internet Banking
+Nikmati kemudahan dengan cara pembayaran Virtual Account menggunakan ATM, Mobile Banking, dan Internet Banking.
 
-## Zone status
+about-image
+E-Wallet
+Tinggal klik dengan banyak cara pembayaran melalui e-wallet OVO, Gopay, DANA, Shopeepay, LinkAja.
 
-For details on zone status, consider the [Reference page](/dns/zone-setups/reference/domain-status/).
+about-image
+Gerai Retail
+Lebih praktis dengan cara pembayaran melalui Gerai Ritel Indomaret dan Alfamart Group (Alfamart, Alfamidi, Lawson, Dan+Dan)
 
-:::caution[Do not use pending zones in production]
-If you have a paid plan, make sure not to use pending zones for production traffic. Cloudflare responds to DNS queries for pending zones on the assigned Cloudflare nameserver IPs but there are associated risks, especially if you do not use [zone holds](/fundamentals/account/account-security/zone-holds/).
-:::
+about-image
+Testimoni
+Mereka yang sudah menggunakan Odeo
 
-## Common use cases and availability
+“Karena berjualan di Odeo omset penjualan pulsa saya naik dan semoga semakin naik lagi. Terimakasih Odeo."
 
-If you are unsure of which setup to use, consider the questions below for an overview of common use cases and their correspondence to each setup and [different pricing plans](https://www.cloudflare.com/plans/#overview).
-
-
-<Details header="Are you on a Free or Pro plan?">
-
-If you are on a Free or Pro plan, [full setup](/dns/zone-setups/full-setup/) is the only one available. This is the recommended and most common option.
-
-
-</Details>
-
-
-<Details header="Will you be using Cloudflare with other DNS providers?">
-
-If you are on a Business or Enterprise plan, you can use [partial (CNAME) setup](/dns/zone-setups/partial-setup/) to keep your primary DNS provider and only proxy individual subdomains through Cloudflare.
-
-If you are on an Enterprise plan, you also have the option to use [zone transfers](/dns/zone-setups/zone-transfers/) to set up Cloudflare as either a primary or a secondary DNS provider.
-</Details>
+Ali Sugita
+Pedagang
 
 
-<Details header="Do you need to manage subdomains separately?">
+“Saya sangat berterima kasih dengan adanya aplikasi ini. Semoga bisa tetap free dalam layanannya, terus berinovasi supaya tidak ditinggalkan para user. Sukses selalu team Odeo 👍🙏"
 
-If you are on an Enterprise plan, you can use [subdomain setup](/dns/zone-setups/subdomain-setup/) to manage the Cloudflare settings for one or more subdomains separately from your domain apex.
+Andri Gumilang
+Karyawan Swasta
 
 
-</Details>
+“I'm pretty excited that Odeo has added #ShopeePay to top up free e-wallet"
+
+Hannah
+Pedagang
+
+Artikel
+Artikel Terbaru
+
+Hidup Praktis ala Cashless Society
+
+Indonesia Menuju Cashless Society
+
+Bisnis Pulsa di Era Digital Kian Menjanjikan
+FAQ
+Anda Bertanya? Kami Menjawab
+About Odeo.
+ODEO adalah platform yang dapat membantu Anda dalam mengelola Produk Digital seperti Voucher Prabayar yang akan Anda jual maupun yang akan Anda beli. Selain Voucher Prabayar, Anda juga dapat mengelola Tagihan Pascabayar baik tagihan rutin maupun tidak rutin untuk Sekolah, Universitas, Asuransi, Perumahan, Apartemen, dan tagihan lainnya.
+
+Follow Us
