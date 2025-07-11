@@ -106,6 +106,35 @@ Create a [POST request](/api/resources/addressing/subresources/prefixes/subresou
 Announcing or withdrawing a prefix means Cloudflare will begin or stop advertising routes, impacting traffic flow to or from that IP range. Changes propagate across our global network almost instantly, typically taking effect within minutes. However, Cloudflare has no control over how quickly ISPs refresh their routes.
 :::
 
+### Delete an IP prefix
+
+You can only delete a prefix with an **Unapproved** status. To delete prefixes with a different status, contact your administrator or account manager.
+
+1. From the **IP Prefixes** tab, locate the prefix you want to modify and select **Delete**.
+2. Confirm your choice from the modal by selecting **Delete**.
+
+### Use the API to set AS prepends on a BGP prefix
+
+Use the [Addressing API](/api/resources/addressing/subresources/prefixes/subresources/bgp_prefixes/methods/edit/) to control the number of times Cloudflare prepends its Autonomous System Number (ASN) to a prefix. You can prepend AS13335 up to three times in the `AS_PATH` of BGP updates for your prefixes.
+
+AS prepending helps you gracefully transition traffic between network providers. By adding prepends to Cloudflare's advertisement, you make the route through Cloudflare less preferred for some Internet network providers. This allows you to simultaneously advertise the same prefix from an alternate provider with a shorter, more desirable `AS_PATH`. Advertising from both providers at once can provide a smoother traffic migration and minimize packet loss during a change of provider.
+
+The `"asn_prepend_count"` parameter accepts values from `0` to `3`. A higher value makes the route less preferred.
+
+When you use AS prepending to migrate traffic away from Magic Transit, the typical sequence of events is as follows:
+
+- **Initial state**: Cloudflare advertises your prefix with the default priority (`"asn_prepend_count": 0`). All traffic is routed to your network through the Cloudflare global network.
+- **Deprioritize Cloudflare**: You update the prefix via the API to set an AS prepend count (for example, `"asn_prepend_count": 3`). Cloudflare now advertises your prefix with a longer `AS_PATH`. External networks will update their BGP tables to recognize the Cloudflare path has the new, longer `AS_PATH`.
+- **Introduce new provider**: You begin advertising the same prefix from your alternate provider with a standard (shorter) `AS_PATH`.
+- **Final state**: External networks now receive two advertisements: the prepended route through Cloudflare and the non-prepended route through your new provider. The external network will select a path based on its BGP policy rules.
+
+
+
+
+
+
+
+
 
 
 
