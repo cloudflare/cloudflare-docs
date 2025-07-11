@@ -22,16 +22,24 @@ import { ResourcesBySelector } from "~/components";
 
 ### Inputs
 
+- `directory` <Type text="string" />
+
+  The directory to search for resources in, relative to `src/content/docs/`. For example, for Workers tutorials, `directory="workers/tutorials/"`.
+
+- `filters` <Type text="string[]" />
+
+  An array of frontmatter properties to filter by. For example, `filters={["languages", "tags"]}`.
+
 - `types` <Type text="string[]" />
 
-  An array of `pcx_content_type` values to filter by.
+  An array of `pcx_content_type` values to filter by. For example, `types={["example"]}`.
 
 - `tags` <Type text="string[]" /> <MetaInfo text="optional" />
 
-  An array of `tags` values to filter by.
+  An array of `tags` values to filter by. For example, `tags={["AI"]}`.
 
   To see a list of the available tags, and which pages are associated with them, refer to [this list](/style-guide/frontmatter/tags/).
 
 - `products` <Type text="string[]" /> <MetaInfo text="optional" />
 
-  An array of `products` values to filter by.
+  An array of `products` values to filter by. For example, `products={["D1"]}`.
