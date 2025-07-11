@@ -7,18 +7,20 @@ sidebar:
 
 import { APIRequest, Details, GlossaryTooltip, Tabs, TabItem } from "~/components"
 
+## Onboard prefixes
+
 You can bring your own public IPs to Cloudflare to use with Magic Transit. This is a two-step process:
 
-1. Adding an IP <GlossaryTooltip term="prefix">prefix</GlossaryTooltip> for each IP address block that you bring to Cloudflare. The IP prefix includes the permission (<GlossaryTooltip term="letter of agency">Letters of Agency or LOA</GlossaryTooltip>) for Cloudflare to announce the network or its subnets. The IP prefix is also where you define your optional ASN to be included in Cloudflare's advertised AS path.
+1. Adding an IP <GlossaryTooltip term="prefix">prefix</GlossaryTooltip> for each IP address block that you bring to Cloudflare. The IP prefix includes the permission (<GlossaryTooltip term="letter of agency">Letters of Agency or LOA</GlossaryTooltip>) for Cloudflare to announce the network or its subnets. The IP prefix is also where you define your optional [Autonomous System Number (ASN)](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/) to be included in Cloudflare's advertised AS path.
 2. Defining additional BGP prefixes, which control the announcement of the prefix from Cloudflare. By default there is always one BGP prefix that is identical to the IP prefix, and you may configure multiple additional subnet prefixes of the IP prefix (where the longest prefix length is `/24`).
 
-## IP prefixes
+### IP prefixes
 
 Cloudflare measures the Magic Transit prefix count based on the number of BGP prefixes a customer defines. Each prefix is billed separately, even if they overlap. For example, both a `/16` and any `/24` within it are counted individually. Onboarding a larger aggregate prefix does not automatically include its smaller subnets for announcement or billing purposes.
 
 While there is no billing limit on the accepted prefix sizes, technically only prefixes up to `/24` are accepted for onboarding, as longer ones (like `/25`, `/26`) are not globally routable.
 
-Provide all IP prefixes you plan to onboard, along with the [Autonomous System Numbers (ASNs)](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/) from which they will be advertised. When specifying prefixes, observe these guidelines:
+Provide all IP prefixes you plan to onboard, along with the [ASNs](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/) from which they will be advertised. When specifying prefixes, observe these guidelines:
 
 - Prefixes must support at least 256 hosts (`/24` in classless inter-domain [routing](https://www.cloudflare.com/learning/network-layer/what-is-routing/) CIDR notation). Refer to [Use a Cloudflare IP](/magic-transit/cloudflare-ips/) if you do not meet the `/24` prefix length requirement.
 - Internet Routing Registry entries and Letters of Agency (LOA) must match the prefixes and originating prefixes you submit to Cloudflare.
@@ -26,7 +28,7 @@ Provide all IP prefixes you plan to onboard, along with the [Autonomous System N
 - When using Route Origin Authorizations (ROAs) to sign routes for [resource public key infrastructure (RPKI)](https://tools.ietf.org/html/rfc8210), the prefix and originating ASN must match the onboarding submission.
 - If you do not own an ASN, you can use the Cloudflare Customer ASN (AS13335).
 
-### Cloudflare ASN vs. your own ASN
+#### Cloudflare ASN vs. your own ASN
 
 As a part of your IP prefix onboarding process, you need to decide the ASN Cloudflare will use to announce your prefixes. If you supply your own ASN, Cloudflare prepends the main Cloudflare ASN (AS13335) to the BGP `AS_PATH`. For example, if your ASN is `AS64496`, anyone directly peering with Cloudflare sees the path as `13335 64496`.
 
@@ -36,7 +38,7 @@ If you do not have an ASN or do not want to bring your ASN to Cloudflare, you ca
 For all future onboardings, you must use AS13335. Current customers who are already using Cloudflare's AS209242 do not need to make any changes and can continue using that ASN.
 :::
 
-## BGP prefixes
+### BGP prefixes
 
 BGP prefixes represent the prefix that will be announced through anycast from Cloudflare's global network. By default there is always at least one BGP prefix that is identical to the onboarded IP prefix.
 
@@ -44,7 +46,7 @@ For example, if a customer onboards a `/20` IP prefix to Magic Transit, it can o
 
 Note that for billing purposes, Cloudflare measures the Magic Transit prefix count based on the number of BGP prefixes a customer defines.
 
-## BGP prefix advertisement control methods
+### BGP prefix advertisement control methods
 
 Cloudflare offers multiple mechanisms for customers to control the announcement and withdrawal of on-demand prefixes. Customers can choose to manage advertisements through one of the following methods:
 - The [Addressing API](/api/resources/addressing/subresources/prefixes/subresources/bgp_prefixes/methods/edit/).
