@@ -8,7 +8,7 @@ head:
     content: Enable Logpush to Splunk
 ---
 
-import { Render } from "~/components";
+import { Render, APIRequest } from "~/components";
 
 The [HTTP Event Collector (HEC)](https://dev.splunk.com/enterprise/docs/devtools/httpeventcollector/) is a reliable method to receive data from Splunk Enterprise or Splunk Cloud Platform. Cloudflare Logpush supports pushing logs directly to Splunk HEC via the Cloudflare dashboard or API.
 
@@ -89,21 +89,29 @@ Cloudflare highly recommends setting this value to <code class="InlineCode">fals
 
 Example request using cURL:
 
-```bash
-curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "name": "<DOMAIN_NAME>",
-  "destination_conf": "splunk://<SPLUNK_ENDPOINT_URL>?channel=<SPLUNK_CHANNEL_ID>&insecure-skip-verify=<INSECURE_SKIP_VERIFY>&sourcetype=<SOURCE_TYPE>&header_Authorization=<SPLUNK_AUTH_TOKEN>",
-  "output_options": {
-    "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
-    "timestamp_format": "rfc3339"
-  },
-  "dataset": "http_requests"
-}'
-```
+<APIRequest
+  path="/zones/{zone_id}/logpush/jobs"
+  method="POST"
+  json={{
+    name: "<DOMAIN_NAME>",
+    destination_conf: "splunk://<SPLUNK_ENDPOINT_URL>?channel=<SPLUNK_CHANNEL_ID>&insecure-skip-verify=<INSECURE_SKIP_VERIFY>&sourcetype=<SOURCE_TYPE>&header_Authorization=<SPLUNK_AUTH_TOKEN>",
+    output_options: {
+      field_names: [
+        "ClientIP",
+        "ClientRequestHost",
+        "ClientRequestMethod",
+        "ClientRequestURI",
+        "EdgeEndTimestamp",
+        "EdgeResponseBytes",
+        "EdgeResponseStatus",
+        "EdgeStartTimestamp",
+        "RayID"
+      ],
+      timestamp_format: "rfc3339"
+    },
+    dataset: "http_requests"
+  }}
+/>
 
 Response:
 
@@ -135,16 +143,13 @@ To enable a job, make a `PUT` request to the Logpush jobs endpoint. Use the job 
 
 Example request using cURL:
 
-```bash
-curl --request PUT \
-https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs/{job_id} \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "enabled": true
-}'
-```
+<APIRequest
+  method="PUT"
+  path="/zones/{zone_id}/logpush/jobs/{job_id}"
+  json={{
+    enabled: true
+  }}
+/>
 
 Response:
 
