@@ -20,7 +20,7 @@ Cloudflare measures the Magic Transit prefix count based on the number of BGP pr
 
 While there is no billing limit on the accepted prefix sizes, technically only prefixes up to `/24` are accepted for onboarding, as longer ones (like `/25`, `/26`) are not globally routable.
 
-Provide all IP prefixes you plan to onboard, along with the [ASNs](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/) from which they will be advertised. When specifying prefixes, observe these guidelines:
+Provide all IP prefixes you plan to onboard, along with the ASNs from which they will be advertised. When specifying prefixes, observe these guidelines:
 
 - Prefixes must support at least 256 hosts (`/24` in classless inter-domain [routing](https://www.cloudflare.com/learning/network-layer/what-is-routing/) CIDR notation). Refer to [Use a Cloudflare IP](/magic-transit/cloudflare-ips/) if you do not meet the `/24` prefix length requirement.
 - Internet Routing Registry entries and Letters of Agency (LOA) must match the prefixes and originating prefixes you submit to Cloudflare.
