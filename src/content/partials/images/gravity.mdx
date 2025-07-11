@@ -17,6 +17,9 @@ When cropping with `fit: "cover"` and `fit: "crop"`, this parameter defines the 
 You must subtract the height of the image before you calculate the focal point.
 :::
 
+- `face`\
+	Selects focal point based on face detection (with minimum bounding box surounding all faces within the image). Only works with `fit: "crop"` and falls back to the center of the image as focalpoint if face(s) are not found.
+
 <Tabs>
   <TabItem label="URL format">
     ```js
@@ -29,6 +32,10 @@ You must subtract the height of the image before you calculate the focal point.
     OR
 
     gravity=0x1
+
+    OR
+
+    gravity=face
     ```
 
   </TabItem>
@@ -43,6 +50,10 @@ You must subtract the height of the image before you calculate the focal point.
     OR
 
     g=0x1
+
+    OR
+
+    g=face
     ```
 
   </TabItem>
@@ -58,6 +69,9 @@ OR
 
 cf: {image: {gravity: {x:0.5, y:0.2}}}
 
+OR
+
+cf: {image: {gravity: "face"}}
 ```
 </TabItem>
 </Tabs>

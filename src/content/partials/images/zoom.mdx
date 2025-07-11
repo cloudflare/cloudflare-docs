@@ -1,0 +1,30 @@
+---
+{}
+---
+import { Tabs, TabItem } from "~/components"
+
+Used alongside `gravity: "face"` and `fit: "crop"` to control the zoom level.
+
+Valid options range from 0 to 1 where 0 should return the entire image and 1 should return only the face.
+Only takes effect if face(s) are found.
+
+<Tabs>
+  <TabItem label="URL format">
+    ```js
+    zoom=0.1
+    ```
+  </TabItem>
+  <TabItem label="URL format alias">
+    ```js
+    zoom=0.2
+    OR
+
+    face-zoom=0.2
+    ```
+  </TabItem>
+  <TabItem label="Workers">
+  ```js
+  cf: {image: {zoom: 0.5}}
+  ```
+  </TabItem>
+</Tabs>
