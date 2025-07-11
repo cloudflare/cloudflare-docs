@@ -28,7 +28,7 @@ export default {
 			key: state.query,
 			props: {
 				onclick: () => {
-					track("serp from widget", { query: state.query });
+					track("serp from location", { value: "widget", query: state.query });
 				},
 				id: "docsearch-search-link",
 				href: `/search/?query=${state.query}`,

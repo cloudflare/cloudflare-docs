@@ -20,7 +20,7 @@
 
 		anchor.setAttribute("href", `/search/?q=${encodeURIComponent(pretty)}`);
 		anchor.addEventListener("click", () => {
-			track("serp from 404", { query: pretty });
+			track("serp from location", { value: "404", query: pretty });
 		});
 	}
 </script>
