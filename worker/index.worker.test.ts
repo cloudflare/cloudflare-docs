@@ -24,7 +24,7 @@ describe("Cloudflare Docs", () => {
 			const request = new Request("http://fakehost/non-existent");
 			const response = await SELF.fetch(request);
 			expect(response.status).toBe(404);
-			expect(await response.text()).toContain("Page not found.");
+			expect(await response.text()).toContain("Check the URL,");
 		});
 	});
 
@@ -283,7 +283,7 @@ describe("Cloudflare Docs", () => {
 			const request = new Request("http://fakehost/non-existent/index.md");
 			const response = await SELF.fetch(request);
 			expect(response.status).toBe(404);
-			expect(await response.text()).toContain("Page not found.");
+			expect(await response.text()).toContain("Check the URL,");
 		});
 	});
 
